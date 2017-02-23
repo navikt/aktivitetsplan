@@ -1,0 +1,10 @@
+{ type, select,
+egen { Egen }
+stilling { Stilling }
+} / { status, select,
+PLANLAGT { Planlagt }
+BRUKER_ER_INTERESSERT { Foreslått }
+GJENNOMFOERT { Gjennomføres }
+FULLFOERT { Fullført }
+AVBRUTT { Avbrutt }
+}
