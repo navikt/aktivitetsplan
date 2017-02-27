@@ -1,6 +1,6 @@
 { type, select,
-egen { Egen }
-stilling { Stilling }
+EGEN { Egen }
+STILLING { Stilling }
 } / { status, select,
 PLANLAGT { Planlagt }
 BRUKER_ER_INTERESSERT { Foreslått }
