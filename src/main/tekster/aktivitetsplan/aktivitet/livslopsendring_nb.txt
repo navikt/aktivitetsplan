@@ -1,0 +1,13 @@
+Livsløpsstatus endret fra { fraStatus, select,
+BRUKER_ER_INTERESSERT { Foreslått }
+PLANLAGT { Planlagt }
+GJENNOMFOERT { Gjennomføres }
+FULLFOERT { Fullført }
+AVBRUTT { Avbrutt }
+} til { tilStatus, select,
+BRUKER_ER_INTERESSERT { Foreslått }
+PLANLAGT { Planlagt }
+GJENNOMFOERT { Gjennomføres }
+FULLFOERT { Fullført }
+AVBRUTT { Avbrutt }
+}
