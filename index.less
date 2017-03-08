@@ -1,0 +1,34 @@
+// Modig-frontend setup
+@appPrefixUrl: "veiviserarbeidssoker";
+@imgDir: "./../img";
+@modig-frontend-root-url: "./node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources";
+
+@import "@{modig-frontend-root-url}/less/decorator/normalize";
+@import "@{modig-frontend-root-url}/less/includes/variables";
+@import "@{modig-frontend-root-url}/less/includes/mixins";
+
+@import "@{modig-frontend-root-url}/less/nav_extra/typografi";
+@import "@{modig-frontend-root-url}/less/decorator/typografi";
+@import "@{modig-frontend-root-url}/less/decorator/grid";
+@import "@{modig-frontend-root-url}/less/nav_extra/paneler";
+@import "@{modig-frontend-root-url}/less/decorator/knapper";
+@import "@{modig-frontend-root-url}/less/decorator/lenker";
+@import "@{modig-frontend-root-url}/less/decorator/utilities";
+@import "@{modig-frontend-root-url}/less/nav_extra/utilities";
+@import "@{modig-frontend-root-url}/less/nav_extra/knapperader";
+@import "@{modig-frontend-root-url}/less/nav_extra/spinner";
+@import "@{modig-frontend-root-url}/less/decorator/modus";
+
+//App styling
+@import "src/fluid-columns";
+
+body {
+  background-color: @gray-background;
+}
+pre {
+  margin-left: 1rem;
+}
+.sidetittel {
+  margin: 1rem;
+  line-height: 2.375rem;
+}
