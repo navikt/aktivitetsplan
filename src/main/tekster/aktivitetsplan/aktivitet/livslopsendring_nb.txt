@@ -1,13 +1,13 @@
-Livsløpsstatus endret fra { fraStatus, select,
-BRUKER_ER_INTERESSERT { Foreslått }
-PLANLAGT { Planlagt }
-GJENNOMFOERT { Gjennomføres }
-FULLFOERT { Fullført }
-AVBRUTT { Avbrutt }
+flyttet aktiviteten fra { fraStatus, select,
+BRUKER_ER_INTERESSERT { foreslått }
+PLANLAGT { planlagt }
+GJENNOMFOERT { gjennomføres }
+FULLFOERT { fullført }
+AVBRUTT { avbrutt }
 } til { tilStatus, select,
-BRUKER_ER_INTERESSERT { Foreslått }
-PLANLAGT { Planlagt }
-GJENNOMFOERT { Gjennomføres }
-FULLFOERT { Fullført }
-AVBRUTT { Avbrutt }
+BRUKER_ER_INTERESSERT { foreslått }
+PLANLAGT { planlagt }
+GJENNOMFOERT { gjennomføres }
+FULLFOERT { fullført }
+AVBRUTT { avbrutt }
 }
