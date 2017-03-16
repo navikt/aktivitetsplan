@@ -1,0 +1,33 @@
+.ny-aktivitet-modal {
+  min-width: 472px;
+
+  &__bilde {
+    margin: 0 auto;
+    width: 125px;
+  }
+  &__header {
+    .ny-aktivitet-tittel {
+      display: flex;
+      justify-content: center;
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &__ny-aktivitet-lenker {
+    .blokk-m();
+  }
+  &__linje {
+    .blokk-s();
+    display: block;
+  }
+  &__info-lenker {
+    .blokk-s();
+    display: inline-block;
+    & .lenke {
+      .blokk-xs();
+      float: left;
+      clear: left;
+    }
+  }
+}

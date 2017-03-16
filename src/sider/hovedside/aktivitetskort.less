@@ -1,0 +1,82 @@
+@import "./tavle";
+
+@color-background-hover: #eee;
+@color-background: @white;
+
+@color-type: #84807d;
+
+@color-hr: #efefef;
+
+@color-ok: rgba(155, 208, 176, 0.6);
+@color-varsling: rgba(255, 201, 131, 0.9);
+@color-info: #cce1f3;
+
+// NB: vi kanselerer default modig styling for lenker
+.aktivitetsplan {
+  a.aktivitetskort {
+    border: 2px solid @color-background;
+    &:hover {
+      border: 2px solid @color-background-hover;
+    }
+    &:focus {
+      border-color: @orange-focus;
+      background-color: @color-background;
+    }
+    &:active {
+      color: @gray-text;
+    }
+  }
+}
+
+.aktivitetskort {
+  display: block;
+  background-color: @color-background;
+  padding: 0;
+  position: relative;
+  text-align: left;
+  margin-bottom: 10px;
+  color: @gray-text;
+  width: 284px;
+
+  &--flyttbar {
+    cursor: pointer;
+
+    &:hover {
+      background-color: @color-background-hover;
+    }
+    &:focus {
+      border-color: @orange-focus;
+    }
+  }
+
+  &__blokk {
+    margin: 0;
+    padding: 0.75rem;
+
+    & > * {
+      margin: 0;
+    }
+  }
+
+  &__delelinje {
+    margin: 0;
+    border: 1px solid @color-hr;
+  }
+
+  &__tittel {
+    font-weight: bold;
+  }
+
+  &__type {
+    color: @color-type;
+    text-transform: uppercase;
+    font-size: 80%;
+  }
+
+  &__ikon-blokk {
+    padding: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+}
