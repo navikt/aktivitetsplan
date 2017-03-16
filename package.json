@@ -1,69 +1,97 @@
 {
-  "name": "aktivitetsplan-felles",
-  "version": "0.0.1",
-  "description": "React komponenter for elementer i modig-frontend",
-  "main": "dist/index.js",
-  "files": [
-    "dist/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+http://stash.devillo.no/scm/fo/aktivitetsplan-felles.git"
-  },
-  "keywords": [
-    "react",
-    "modig-frontend",
-    "design"
-  ],
-  "author": "",
-  "publishConfig": {
-    "registry": "http://maven.adeo.no/nexus/content/repositories/npm-internal/"
-  },
-  "scripts": {
-    "prepublish": "in-publish && npm run build || not-in-publish",
-    "lint": "esw src/",
-    "clean": "rm -rf dist/ && mkdir dist",
-    "build:js": "babel src/ --out-dir dist",
-    "build:less": "copyfiles -f src/*.less dist",
-    "build": "npm run clean && npm run build:less && npm run build:js",
-    "start": "webpack-dev-server --config webpack-config.js --hot --inline --port 8080",
-    "test": "lessc src/fluid-columns.less > compiled.less"
-  },
-  "dependencies": {
-    "classnames": "2.2.3",
-    "nav-react-datepicker": "0.0.29"
-  },
-  "peerDependencies": {
-    "react": "^15.0.1",
-    "react-dom": "^15.0.1"
-  },
-  "devDependencies": {
-    "babel-cli": "6.7.5",
-    "babel-core": "^6.18.2",
-    "babel-eslint": "6.1.2",
-    "babel-loader": "^6.2.8",
-    "babel-preset-es2015": "6.6.0",
-    "babel-preset-react": "6.5.0",
-    "babel-preset-stage-2": "6.5.0",
-    "babelify": "7.2.0",
-    "browserify": "13.0.0",
-    "chokidar": "git+https://github.com/paulmillr/chokidar.git#1.5.0",
-    "copyfiles": "^1.0.0",
-    "eslint": "2.13.1",
-    "eslint-config-airbnb": "9.0.1",
-    "eslint-plugin-import": "1.10.2",
-    "eslint-plugin-jsx-a11y": "1.5.5",
-    "eslint-plugin-react": "5.2.2",
-    "eslint-watch": "2.1.13",
-    "gulp": "3.9.1",
-    "in-publish": "2.0.0",
-    "less": "^2.7.1",
-    "modig-frontend": "git+http://stash.devillo.no/scm/felles/modig-frontend.git#modig-frontend-3.0.52",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "rimraf": "2.5.2",
-    "watchify": "3.7.0",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
-  }
+    "name": "aktivitetsplan-felles",
+    "version": "0.0.1",
+    "description": "React komponenter for elementer i modig-frontend",
+    "main": "dist/index.js",
+    "files": [
+        "src/"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+http://stash.devillo.no/scm/fo/aktivitetsplan-felles.git"
+    },
+    "keywords": [
+        "react",
+        "modig-frontend",
+        "design"
+    ],
+    "author": "",
+    "publishConfig": {
+        "registry": "http://maven.adeo.no/nexus/content/repositories/npm-internal/"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 0",
+        "lint": "eslint app --ext .js --ext .jsx || true",
+        "eslint": "eslint app --ext .js --ext .jsx || true",
+        "lint:fix": "eslint app --fix --ext .js --ext .jsx",
+        "dev": "webpack --watch",
+        "build-js": "webpack --optimize-minimize",
+        "build": "cross-env NODE_ENV=production npm run build-js --silent"
+    },
+    "dependencies": {
+        "classnames": "^2.2.5",
+        "jsdom": "^9.9.1",
+        "moment": "^2.17.1",
+        "query-string": "^4.2.3",
+        "react": "15.4.1",
+        "react-dom": "15.4.1",
+        "react-document-title": "^2.0.2",
+        "react-intl": "^2.1.5",
+        "react-redux": "^5.0.1",
+        "redux": "^3.6.0",
+        "redux-devtools": "^3.3.1",
+        "redux-devtools-dock-monitor": "^1.1.1",
+        "redux-devtools-log-monitor": "^1.1.1",
+        "redux-thunk": "^2.1.0",
+        "history": "2.0.1",
+        "intl": "1.2.5",
+        "invariant": "2.2.2",
+        "nav-logger": "1.0.5",
+        "nav-react-design": "0.1.14",
+        "react-dnd": "2.1.4",
+        "react-dnd-html5-backend": "2.1.2",
+        "react-height": "2.1.1",
+        "react-modal": "^1.6.5",
+        "react-motion": "0.4.5",
+        "react-router": "3.0.0",
+        "react-router-redux": "4.0.7",
+        "react-router-scroll": "0.4.1",
+        "react-scrollbar": "^0.5.1",
+        "redux-form": "^6.4.3",
+        "modig-frontend": "git+http://stash.devillo.no/scm/felles/modig-frontend.git#modig-frontend-3.0.52"
+    },
+    "devDependencies": {
+        "babel-core": "^6.18.2",
+        "babel-eslint": "^7.1.0",
+        "babel-loader": "^6.2.10",
+        "babel-plugin-react-html-attrs": "^2.0.0",
+        "babel-plugin-react-intl": "^2.2.0",
+        "babel-plugin-transform-class-properties": "^6.22.0",
+        "babel-plugin-transform-decorators-legacy": "^1.3.4",
+        "babel-polyfill": "^6.20.0",
+        "babel-preset-es2015": "^6.18.0",
+        "babel-preset-react": "^6.16.0",
+        "babel-preset-stage-2": "^6.18.0",
+        "chai": "^3.5.0",
+        "chai-enzyme": "^0.6.1",
+        "cross-env": "^3.1.4",
+        "css-loader": "^0.26.1",
+        "enzyme": "^2.7.0",
+        "eslint": "^3.12.2",
+        "eslint-config-airbnb": "^13.0.0",
+        "eslint-loader": "^1.6.3",
+        "eslint-plugin-import": "^2.2.0",
+        "eslint-plugin-jsx-a11y": "^2.2.3",
+        "eslint-plugin-react": "^6.8.0",
+        "file-loader": "^0.10.0",
+        "html-webpack-plugin": "^2.28.0",
+        "copy-webpack-plugin": "4.0.1",
+        "less": "^2.7.2",
+        "less-loader": "^2.2.3",
+        "react-addons-test-utils": "15.4.1",
+        "style-loader": "^0.13.1",
+        "url-loader": "^0.5.7",
+        "webpack": "^2.2.1",
+        "yargs": "^6.5.0"
+    }
 }

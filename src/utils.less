@@ -1,0 +1,42 @@
+.clearfix {
+  *zoom: 1;
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+  }
+}
+
+.dynamic-text-orientation {
+  text-align: center;
+  @media (max-width: 730px) {
+    text-align: left;
+  }
+}
+
+.text-left {
+  text-align: left;
+}
+
+.blokk-center {
+  margin: 0 auto;
+}
+
+.blokk-null {
+  margin-bottom: 0;
+}
+
+.unsafe-html {
+  *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.no-resize {
+  resize: none;
+}
+
+.round-corner {
+  border-radius: 0.5rem;
+}

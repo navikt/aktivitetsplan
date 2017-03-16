@@ -1,0 +1,32 @@
+.aktivitet-modal-portal {
+  position: relative;
+  z-index: 9999;
+
+  .aktivitet-modal {
+    position: relative;
+    border: 1px solid #ccc;
+    background: @gray-background;
+    overflow: auto;
+    outline: none;
+    padding: 1.7rem 2rem;
+    max-width: 45rem;
+    border-radius: 3px;
+
+    .lenketekst {
+      margin-bottom: 0;
+      padding-right: 0.5rem;
+    }
+
+    &__overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.74902);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

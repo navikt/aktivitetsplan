@@ -1,0 +1,50 @@
+@color-ok: rgba(155, 208, 176, 0.6);
+@color-varsling: rgba(255, 201, 131, 0.9);
+@color-info: #cce1f3;
+
+.etikett-knapp-mixin(@farge) {
+  .knapp();
+  .knapp-liten();
+
+  color: @gray-text;
+  border-color: @farge;
+  @farge-hover: darken(@farge, 10%);
+
+  &:hover, &:active {
+    color: @gray-text;
+    border-color: @farge-hover;
+    background-color: @farge-hover;
+  }
+
+  &-valgt {
+    background-color: @farge;
+  }
+}
+
+.endre-aktivitet-etikett {
+  margin-bottom: 1rem;
+
+  &__etikett {
+    // kanseller skjema-innlogget-styling, da vi ikke har placeholdere
+    // TODO ta en ny vurdering på default skjema styling i skjema-innlogget.less
+    position: relative !important;
+    left: auto !important;;
+
+    &-radio {
+      opacity: 0;
+      &:focus + .endre-aktivitet-etikett__etikett {
+        .mixin-focus-outline(3px);
+      }
+    }
+
+    &--ok {
+      .etikett-knapp-mixin(@color-ok);
+    }
+    &--varsling {
+      .etikett-knapp-mixin(@color-varsling);
+    }
+    &--info {
+      .etikett-knapp-mixin(@color-info);
+    }
+  }
+}

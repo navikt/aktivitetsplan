@@ -1,0 +1,26 @@
+.aktivitetvisning {
+  &__etikett {
+    .blokk-m();
+  }
+  &__detaljer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .aktivitetsdetaljer, .aktivitetsbeskrivelse {
+    .detaljfelt {
+      margin-right: 2rem;
+      .blokk-s();
+      &__tittel {
+        .blokk-xxxs();
+      }
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 0 0 13rem;
+    }
+  }
+}
+
+p.detaljfelt__tekst, p.aktivitetsbeskrivelse {
+  margin-bottom: 0 !important;
+}
