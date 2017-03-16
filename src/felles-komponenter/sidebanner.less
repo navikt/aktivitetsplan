@@ -1,0 +1,47 @@
+.sidebanner {
+  background-color: #c2eaf7;
+  padding-top: 22px;
+  border-bottom: 5px solid;
+  border-color: #88d5f0;
+  display: flex;
+  justify-content: center;
+
+
+  &__container {
+    max-width: 800px;
+  }
+
+  &__tittel-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  &__tittel-tekst {
+    padding-right: 1rem;
+    align-self: center;
+  }
+
+  &__tittel {
+    .blokk-xxs();
+  }
+  &__ingress {
+    .blokk-m();
+  }
+
+  &__illustrasjon {
+    flex-shrink: 0;
+    height: 160px;
+    position: relative;
+  }
+
+  @media (max-width: 48rem) {
+    &__container {
+      margin: 10px;
+    }
+    .blokk-l();
+    &__illustrasjon {
+      display: none;
+    }
+  }
+  .blokk-l();
+}

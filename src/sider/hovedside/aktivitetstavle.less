@@ -1,0 +1,34 @@
+@import "./tavle";
+@import "./aktivitetskort";
+
+@color-kolonne-background: #e5e5e5;
+@color-background-drag: #ddd;
+
+@min-height: 6rem;
+
+.aktivitetstavle {
+
+  &__kolonne {
+    background-color: @color-kolonne-background;
+    padding: 10px;
+    transition: padding 0.2s ease-in-out;
+    width: 304px;
+    min-height: @min-height;
+
+    &-wrapper {
+      height: 100%;
+    }
+
+    &-header {
+      .blokk-xs();
+      font-weight: bold;
+      text-align: left;
+    }
+
+    &--drag {
+      background-color: @color-background-drag;
+      padding-bottom: @min-height;
+    }
+  }
+}
+

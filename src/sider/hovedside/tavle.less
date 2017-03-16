@@ -1,0 +1,67 @@
+@tavle-min-width: 48rem;
+
+.tavle {
+  position: relative;
+  margin: 40px;
+  width: 90%;
+
+  @media (max-width: @tavle-min-width) {
+    margin: 0;
+    width: 100%;
+    .knapp-tavle {
+      display: none;
+    }
+  }
+
+  .knapp-forrige {
+    position: absolute;
+    top: 50%;
+    left: -25px;
+  }
+
+  .knapp-neste {
+    position: absolute;
+    top: 50%;
+    right: -25px;
+  }
+
+  .viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  @media (min-width: @tavle-min-width) {
+    .scrollarea-content {
+      width: 1713px;
+    }
+  }
+  @media (max-width: @tavle-min-width) {
+    display: flex;
+    justify-content: center;
+  }
+
+  .kolonner {
+    max-width: 100%;
+
+    // tavle
+    @media (min-width: @tavle-min-width) {
+      max-width: none;
+      display: flex;
+      justify-content: center;
+      transition: margin 0.2s ease-in-out;
+
+      .tavle-kolonne:not(:last-child) {
+        margin-right: 35px;
+      }
+    }
+
+    // liste
+    @media (max-width: @tavle-min-width) {
+
+      .tavle-kolonne {
+        margin: 10px;
+      }
+    }
+
+  }
+}

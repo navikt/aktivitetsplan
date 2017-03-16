@@ -1,0 +1,49 @@
+.aktivitetvisning {
+  padding: 2rem 3rem 2rem 2rem;
+
+  &__etikett {
+    .blokk-m();
+  }
+  &__detaljer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 32rem
+  }
+  .aktivitetsdetaljer, .aktivitetsbeskrivelse {
+    .detaljfelt {
+      .blokk-s();
+      margin-right: 2rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 0 0 13rem;
+
+      &__tittel {
+        .blokk-xxxs();
+      }
+    }
+  }
+  .aktivitetsbeskrivelse {
+    .blokk-m();
+  }
+  &__delelinje {
+    .blokk-m();
+  }
+  &__historikk {
+    .blokk-m();
+  }
+}
+
+p.detaljfelt__tekst, p.aktivitetsbeskrivelse {
+  margin-bottom: 0 !important;
+}
+
+.aktivitetvisning__historikk .endringslogg-for-aktivitet {
+  &__lenke-knapp {
+    .blokk-m();
+    display: inline-block;
+  }
+  &__innslag {
+    .blokk-s();
+  }
+}
