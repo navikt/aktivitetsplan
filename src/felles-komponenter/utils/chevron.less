@@ -1,0 +1,61 @@
+.chevron--ned, .chevron--opp, .chevron--hoyre, .chevron--venstre {
+  position: relative;
+  text-align: center;
+  transition: 200ms transform;
+
+  &:before, &:after {
+    transition: 200ms transform;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+    transform: skew(0deg, 45deg);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+    transform: skew(0deg, -45deg);
+  }
+}
+
+.chevron--opp {
+  &:before {
+    transform: skew(0deg, -45deg)
+  }
+
+  &:after {
+    transform: skew(0deg, 45deg)
+  }
+}
+
+.chevron--hoyre {
+  transform: rotate(-90deg);
+}
+
+.chevron--venstre {
+  transform: rotate(-90deg);
+  &:before {
+    transform: skew(0deg, -45deg)
+  }
+  &:after {
+    transform: skew(0deg, 45deg)
+  }
+}
+.chevronboks {
+  width: 20px;
+  height: 2px;
+  display: inline-block;
+  flex-shrink: 0;
+}

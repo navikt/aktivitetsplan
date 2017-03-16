@@ -1,0 +1,124 @@
+@appPrefixUrl: "aktivitetsplan";
+@imgDir: "./../img";
+@modig-frontend-root-url: "~modig-frontend/modig-frontend-ressurser/src/main/resources";
+
+@import "@{modig-frontend-root-url}/less/decorator/normalize";
+@import "@{modig-frontend-root-url}/less/nav_extra/skjema";
+@import "@{modig-frontend-root-url}/less/includes/variables";
+@import "@{modig-frontend-root-url}/less/includes/mixins";
+
+@import "@{modig-frontend-root-url}/less/nav_extra/typografi";
+@import "@{modig-frontend-root-url}/less/decorator/typografi";
+@import "@{modig-frontend-root-url}/less/nav_extra/paneler";
+@import "@{modig-frontend-root-url}/less/decorator/knapper";
+@import "@{modig-frontend-root-url}/less/decorator/lenker";
+@import "@{modig-frontend-root-url}/less/decorator/utilities";
+@import "@{modig-frontend-root-url}/less/nav_extra/utilities";
+@import "@{modig-frontend-root-url}/less/nav_extra/knapperader";
+@import "@{modig-frontend-root-url}/less/nav_extra/spinner";
+@import "@{modig-frontend-root-url}/less/nav_extra/modaler";
+@import "@{modig-frontend-root-url}/less/nav_extra/datovelger";
+
+@import "./utils";
+@import "./modal/modal"; // Må ligge utenfor app-scope
+@import "./modal/modal-header";
+@import "./felles-komponenter/utils/lenkepanel";
+@import "./felles-komponenter/utils/chevron";
+@import "./felles-komponenter/sidebanner";
+@import "./felles-komponenter/utils/lukk-knapp";
+@import "./modal/aktivitet-header";
+@import "./felles-komponenter/aktivitet-etiketter";
+@import "./modal/visning/aktivitetvisning";
+@import "./modal/skjema/stilling-aktivitet";
+@import "./modal/ny-aktivitet";
+@import "./modal/redigering/endre-aktivitet-status";
+@import "./modal/redigering/endre-aktivitet-etikett";
+@import "modal/skjema/skjema-innlogget";
+@import "./sider/hovedside/hovedside";
+@import "./sider/oppfolging/vilkar";
+@import "./felles-komponenter/utils/tilbakeknapp";
+
+
+// GLOBAL STYLING
+.spinner {
+  display: flex;
+  align-self: center;
+}
+
+// OVERSTYRINGER AV modig-frontend:
+
+.maincontent {
+  padding-top: 0;
+}
+
+// Feil i reglene i modig frontend, må lage sterker selector for knapp-hoved og knapp-liten for å matche knapp
+.knapp-hoved, .side-innhold .knapp-hoved {
+  background-color: #0067c5;
+  color: #fff;
+  box-shadow: 0 -2px 0 #3e3832 inset;
+
+  &:hover {
+    background-color: #1976CB;
+    border-color: #1976CB;
+    border-bottom-color: #3e3832;
+    box-shadow: 0 -2px 0 #3e3832 inset, 0 1px 0 #3e3832;
+  }
+}
+
+.knapp-liten, .side-innhold .knapp-liten {
+  font-size: 0.875rem;
+  padding: 8px 18px 10px 18px;
+}
+
+input[type=search] {
+  padding: 0;
+}
+
+.nav-datovelger .bn_date {
+  top: -7px;
+  background-size: inherit;
+}
+
+input.datovelger {
+  width: 135px;
+}
+
+input.datovelger::-ms-clear {
+  display: none;
+}
+
+input:-ms-input-placeholder {
+  color: #7F756C;
+}
+
+.typo-undertittel {
+  margin-bottom: 0.7rem;
+}
+
+.typo-element {
+  margin-bottom: 0.5rem;
+}
+
+.aktivitet-knapperad {
+  .knapp {
+    width: 100%;
+    margin: 0.5rem 0 0.4rem 0;
+  }
+  .knapp + .knapp, .side-innhold .knapp + .knapp {
+    margin-left: 0;
+  }
+}
+
+.nav-radioknapp-vannrett {
+  & + label {
+    display: inline-block;
+  }
+}
+
+.sitesearch input.input-sitesearch {
+  border: none;
+}
+
+.datePickerContainer {
+  position: relative;
+}

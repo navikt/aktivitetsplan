@@ -1,6 +1,4 @@
 .idea/
 node_modules/
-
+example/build/
 npm-debug.log
-dist/
-example/bundle.js
