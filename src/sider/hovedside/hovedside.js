@@ -4,7 +4,6 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import Modal from '../../modal/modal';
 import AktivitetsTavle from './aktivitetstavle';
 import OppfolgingStatus from '../oppfolging/oppfolging-status';
-import SideBanner from '../../felles-komponenter/sidebanner';
 import history from '../../history';
 
 function Hovedside({ children, routes }) {
@@ -12,7 +11,6 @@ function Hovedside({ children, routes }) {
 
     return (
         <div className="hovedside">
-            <SideBanner />
             <div className="hovedsideinnhold">
                 <OppfolgingStatus visVilkar={false}>
                     <Lenke className="hovedsideinnhold__aktivitetsknapp" href="/aktivitet/ny">
