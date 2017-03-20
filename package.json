@@ -16,13 +16,11 @@
         "registry": "http://maven.adeo.no/nexus/content/repositories/npm-internal/"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 0",
-        "lint": "eslint app --ext .js --ext .jsx || true",
-        "eslint": "eslint app --ext .js --ext .jsx || true",
-        "lint:fix": "eslint app --fix --ext .js --ext .jsx",
+        "test": "mocha",
+        "eslint": "eslint src --ext .js --ext .jsx",
+        "eslint:fix": "eslint src --ext .js --ext .jsx --fix",
         "dev": " webpack-dev-server --progress --hot --watch",
-        "build-js": "webpack --optimize-minimize",
-        "build": "cross-env NODE_ENV=production npm run build-js --silent"
+        "build": "webpack --optimize-minimize"
     },
     "dependencies": {
         "classnames": "^2.2.5",
@@ -69,14 +67,16 @@
         "babel-preset-es2015": "^6.18.0",
         "babel-preset-react": "^6.16.0",
         "babel-preset-stage-2": "^6.18.0",
-        "chai": "^3.5.0",
-        "chai-enzyme": "^0.6.1",
-        "cross-env": "^3.1.4",
-        "css-loader": "^0.26.1",
-        "enzyme": "^2.7.0",
-        "eslint": "^3.12.2",
-        "eslint-config-airbnb": "^13.0.0",
-        "eslint-loader": "^1.6.3",
+        "sinon": "1.17.6",
+        "sinon-chai": "2.8.0",
+        "chai": "3.5.0",
+        "chai-enzyme": "0.6.1",
+        "cross-env": "3.1.4",
+        "css-loader": "0.26.1",
+        "enzyme": "2.7.0",
+        "eslint": "3.12.2",
+        "eslint-config-airbnb": "13.0.0",
+        "eslint-loader": "1.6.3",
         "eslint-plugin-import": "^2.2.0",
         "eslint-plugin-jsx-a11y": "^2.2.3",
         "eslint-plugin-react": "^6.8.0",
@@ -91,6 +91,7 @@
         "webpack": "^2.2.1",
         "webpack-dev-server": "2.4.2",
         "image-webpack-loader": "3.2.0",
-        "yargs": "^6.5.0"
+        "yargs": "^6.5.0",
+        "mocha": "3.2.0"
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Bilde } from 'nav-react-design';
 import { Sidetittel, Normaltekst } from 'nav-react-design/dist/typografi';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
-import aktivitetsplanSvg from "../img/aktivitetsplan.svg"
+import aktivitetsplanSvg from '../img/aktivitetsplan.svg';
 
 function Sidebanner() {
     return (

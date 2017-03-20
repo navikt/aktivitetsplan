@@ -4,7 +4,7 @@ import { Innholdstittel, Undertittel } from 'nav-react-design/dist/typografi';
 import Bilde from 'nav-react-design/dist/bilde';
 import Lenkepanel from '../felles-komponenter/utils/lenkepanel';
 import ModalHeader from './modal-header';
-import leggTilAktivitetSvg from "../img/legg-til-aktivitet-illustrasjon.svg"
+import leggTilAktivitetSvg from '../img/legg-til-aktivitet-illustrasjon.svg';
 
 function NyAktivitet() {
     return (

@@ -44,16 +44,14 @@ class EndringsloggForAktivitet extends Component {
         }
 
         const cls = (givenClass) => classNames('endringslogg-for-aktivitet', givenClass);
+        const visSkjulTekst = `${endringslogg.length === 0 ? 'Vis ' : 'Skjul '}historikk`;
         return (
             <section className={cls(className)}>
                 <a
                     href="javascript:" // eslint-disable-line no-script-url
                     className="endringslogg-for-aktivitet__lenke-knapp"
                     onClick={this.handleClick}
-                >
-                    {/* TODO: Tekster*/}
-                    {endringslogg.length === 0 ? 'Vis ' : 'Skjul '}historikk
-                    </a>
+                >{visSkjulTekst}</a>
                 {lagEndringslogg(endringslogg)}
             </section>
         );

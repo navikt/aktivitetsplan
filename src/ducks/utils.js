@@ -1,4 +1,4 @@
-import { fetchInterceptor } from '~config';
+import { fetchInterceptor } from '~config'; // eslint-disable-line
 
 /* eslint-env browser */
 export const STATUS = {
@@ -60,7 +60,7 @@ export const getCookie = (name) => {
 
 export function fetchToJson(url, config = {}) {
     const configMedCredentials = { ...CREDENTIALS, ...config };
-    return (fetchInterceptor ?  fetchInterceptor(fetch, url, configMedCredentials) : fetch(url, configMedCredentials))
+    return (fetchInterceptor ? fetchInterceptor(fetch, url, configMedCredentials) : fetch(url, configMedCredentials))
         .then(sjekkStatuskode)
         .then(toJson);
 }

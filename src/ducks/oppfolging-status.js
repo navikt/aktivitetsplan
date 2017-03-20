@@ -1,6 +1,6 @@
 import * as Api from './api';
 import { STATUS, doThenDispatch } from './utils';
-import { INGEN_SJEKK_AV_VILKAR } from '~config';
+import { INGEN_SJEKK_AV_VILKAR } from '~config'; // eslint-disable-line
 
 // Actions
 export const OK = 'oppfolgingStatus/OK';
@@ -35,17 +35,16 @@ export default function reducer(state = initalState, action) {
 
 // Action Creators
 export function hentOppfolgingStatus() {
-
     // TODO vet ikke nok om hvordan vilkårs-sjekk som skal gjøres, så da gjør vi det foreløping veldig enkelt:
-    if(INGEN_SJEKK_AV_VILKAR){
+    if (INGEN_SJEKK_AV_VILKAR) {
         return (dispatch) => {
             dispatch({
                 type: OK,
                 data: {
-                    status: "GODKJENT"
+                    status: 'GODKJENT'
                 }
-            })
-        }
+            });
+        };
     }
 
     return doThenDispatch(() => Api.hentOppfolgingStatus(), {

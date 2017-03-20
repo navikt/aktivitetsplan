@@ -11,7 +11,7 @@ import { godtaVilkar } from '../../ducks/oppfolging-status';
 import { hentVilkar } from '../../ducks/vilkar';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import leggTilAktivitetSvg from "../../img/legg-til-aktivitet-illustrasjon.svg"
+import leggTilAktivitetSvg from '../../img/legg-til-aktivitet-illustrasjon.svg';
 
 
 class Vilkar extends Component {
