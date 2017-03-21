@@ -16,6 +16,7 @@ const aktiviteter = {
     id: "1",
     tittel: "asdfasdf",
     type: "EGEN",
+    lenke: "https://www.nav.no",
     status: "PLANLAGT",
     beskrivelse: "Beskrivelse med\t\t tab og \n\nlinjeskift."
 };
