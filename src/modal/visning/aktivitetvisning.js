@@ -11,7 +11,7 @@ import AktivitetsDetaljer from './aktivitetsdetaljer';
 import { slettAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
-import ModalScrollVindu from './../modal-scroll-vindu';
+import ModalContainer from '../modal-container';
 
 
 function Aktivitetvisning({ params, aktiviteter, doSlettAktivitet }) {
@@ -32,9 +32,8 @@ function Aktivitetvisning({ params, aktiviteter, doSlettAktivitet }) {
             normalTekstId="aktivitetvisning.header"
             normalTekstValues={{ status: valgtAktivitet.status, type: valgtAktivitet.type }}
             className="side-innhold"
-            aria-labelledby="modal-aktivitetsvisning-header"
-        >
-            <ModalScrollVindu>
+            aria-labelledby="modal-aktivitetsvisning-header">
+            <ModalContainer>
                 <div className="aktivitetvisning">
                     <Sidetittel id="modal-aktivitetsvisning-header">
                         {valgtAktivitet.tittel}
@@ -50,7 +49,7 @@ function Aktivitetvisning({ params, aktiviteter, doSlettAktivitet }) {
 
                     <EndringsloggForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__historikk" />
                 </div>
-            </ModalScrollVindu>
+            </ModalContainer>
 
             <ModalFooter>
                 {/* TODO: tekster*/}

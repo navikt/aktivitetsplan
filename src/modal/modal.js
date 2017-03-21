@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
+import './modal.less';
 
 function Modal(props) {
     return (

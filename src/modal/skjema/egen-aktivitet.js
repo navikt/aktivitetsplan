@@ -5,7 +5,7 @@ import history from './../../history';
 import ModalHeader from '../modal-header';
 import { lagNyAktivitet } from '../../ducks/aktiviteter';
 import { EGEN_AKTIVITET_TYPE } from '../../constant';
-import ModalScrollVindu from '../modal-scroll-vindu';
+import ModalContainer from '../modal-container';
 import ModalFooter from '../modal-footer';
 import RemoteSubmitKnapp from './remote-submit-knapp';
 
@@ -19,9 +19,9 @@ function EgenAktivitet({ onLagreNyAktivitet }) {
     return (
         <article className="egen-aktivitet" aria-labelledby="modal-egen-aktivitet-header">
             <ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />
-            <ModalScrollVindu>
+            <ModalContainer>
                 <EgenAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
-            </ModalScrollVindu>
+            </ModalContainer>
             <ModalFooter>
                 <RemoteSubmitKnapp formNavn="egen-aktivitet" className="modal-footer__knapp" />
             </ModalFooter>
