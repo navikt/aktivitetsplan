@@ -1,5 +1,5 @@
 import React, { PropTypes as PT } from 'react';
-import { EtikettLiten } from 'nav-react-design/dist/typografi';
+import { EtikettLiten } from 'nav-frontend-typografi';
 import { visibleIfHOC } from '../../hocs/visible-if';
 
 function DetaljFelt({ tittel, children }) {

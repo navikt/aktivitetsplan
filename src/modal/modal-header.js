@@ -1,5 +1,5 @@
 import React, { PropTypes as PT } from 'react';
-import { Normaltekst } from 'nav-react-design/dist/typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import OppfolgingStatus from '../sider/oppfolging/oppfolging-status';

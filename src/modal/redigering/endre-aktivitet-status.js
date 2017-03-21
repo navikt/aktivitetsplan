@@ -1,7 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-react-design/dist/typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 
 function Status({ statusId, tekstId }) {
     const htmlId = `aktivitet-status-${statusId}`;

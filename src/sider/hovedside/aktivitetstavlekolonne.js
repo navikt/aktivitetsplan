@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-react-design/dist/typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import { flyttAktivitet } from '../../ducks/aktiviteter';
 import AktivitetsKort from './aktivitetskort';
 

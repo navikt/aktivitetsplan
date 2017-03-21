@@ -2,7 +2,7 @@ import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-react-design/dist/typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import * as AppPT from '../../proptypes';
 import { hentEtiketter } from '../../ducks/etiketter';

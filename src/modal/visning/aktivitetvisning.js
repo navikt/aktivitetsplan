@@ -1,6 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
-import { Sidetittel } from 'nav-react-design/dist/typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-react-design/dist/knapp';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import EndringsloggForAktivitet from './endringslogg-for-aktivitet';

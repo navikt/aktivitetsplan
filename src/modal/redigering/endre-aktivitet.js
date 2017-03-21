@@ -1,7 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-react-design/dist/typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalHeader from '../modal-header';

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-react-design/dist/knapp';
 import { Link } from 'react-router';
 import Bilde from 'nav-react-design/dist/bilde';
-import { Innholdstittel } from 'nav-react-design/dist/typografi';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import history from './../../history';
 import UnsafeHtml from '../../felles-komponenter/utils/unsafe-html';
 import { godtaVilkar } from '../../ducks/oppfolging-status';
