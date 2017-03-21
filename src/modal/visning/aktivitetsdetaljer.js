@@ -59,7 +59,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
     const lenkeKomponent = () => (
         <DetaljFelt key="lenke" tittel="Lenke" visible={lenke != null}>
-            <Link to={lenke} className="detaljfelt__lenke">
+            <Link href={lenke} className="detaljfelt__lenke" target="_blank">
                 {lenke}
             </Link>
         </DetaljFelt>
