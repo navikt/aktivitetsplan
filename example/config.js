@@ -21,8 +21,8 @@ const aktiviteter = {
 const etiketter = [{"id":"SOEKNAD_SENDT","type":"ok","visningsTekst":"Søknad sendt"},{"id":"INNKALDT_TIL_INTERVJU","type":"info","visningsTekst":"Innkalt til intervju"},{"id":"AVSLAG","type":"varsling","visningsTekst":"Avslag"},{"id":"JOBBTILBUD","type":"ok","visningsTekst":"Jobbtilbud"}];
 
 const mockData = {
-    "/veilarbsituasjon/api/vilkar": {text: "<h2>Dette er vilkårene!</h2>"},
-    "/veilarbsituasjon/api/oppfolgingstatus": {status: "GODKJENT"},
+    "/veilarbsituasjon/api/situasjon/vilkar": {text: "<h2>Dette er vilkårene!</h2>"},
+    "/veilarbsituasjon/api/situasjon": {fnr: "10108000398", reservasjonKRR: false, manuell: false, underOppfolging: false, vilkarMaBesvares: true},
     "/veilarbaktivitet/api/aktivitet": {aktiviteter: [aktiviteter]},
     "/veilarbaktivitet/api/aktivitet/etiketter" : etiketter,
     "/veilarbaktivitet/api/aktivitet/1/endringslogg": []

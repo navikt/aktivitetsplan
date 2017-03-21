@@ -18,7 +18,7 @@ class Vilkar extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { checked: false };
+        this.state = {checked: false, valid: true};
     }
 
     componentDidMount() {
@@ -26,13 +26,20 @@ class Vilkar extends Component {
     }
 
     godta = (hash) => {
-        history.push('/');
-        this.props.doGodtaVilkar(hash);
+        if (this.state.checked) {
+            history.push('/');
+            this.props.doGodtaVilkar(hash);
+        }
+        else {
+            this.setState({valid: false});
+        }
+        console.log("Valid: " + this.state.valid)
     };
 
     check = () => {
         this.setState({
-            checked: true
+            checked: !this.state.checked,
+            valid: true
         });
     };
 
@@ -57,23 +64,28 @@ class Vilkar extends Component {
                     </div>
                 )}
 
-                { visVilkar && visGodkjenning && (<hr className="vis-vilkar__delelinje" />)}
+                { visVilkar && visGodkjenning && (<hr className="vis-vilkar__delelinje"/>)}
 
                 { visGodkjenning && (
-                    <div>
+                    <div className={!this.state.valid && "feil"}>
                         <div className="vis-vilkar">
                             <input
-                                id={name} name={name} type="radio" className="nav-radioknapp nav-radioknapp-vannrett"
+                                id={name} name={name} type="checkbox" className="nav-checkbox"
                                 required checked={this.state.checked} onChange={this.check}
                             />
                             <label
                                 htmlFor={name}
                                 className="vis-vilkar__label"
-                            >{visVilkar ? <FormattedMessage id="vilkar.ja-jeg-samtykker" /> : <FormattedMessage id="vilkar.ja-ta-i-bruk" />}</label>
-                            {!visVilkar && (<Link to="/vilkar"><FormattedMessage id="vilkar.se-vilkar-her" /></Link>)}
+                            >{visVilkar ? <FormattedMessage id="vilkar.ja-jeg-samtykker"/> :
+                                <FormattedMessage id="vilkar.ja-ta-i-bruk"/>}</label>
+                            {!visVilkar && (
+                                <Link to="/vilkar"><FormattedMessage id="vilkar.se-vilkar-her"/></Link>)}
                         </div>
+                        {!this.state.valid && (
+                            <span className="skjema-feilmelding"><FormattedMessage id="vilkar.ma-krysse-av"/></span>)}
                         <div className="vis-vilkar">
-                            <Hovedknapp onClick={() => this.godta(vilkar.data.hash)} disabled={!this.state.checked}><FormattedMessage id="vilkar.ga-til-aktivitetsplan" /></Hovedknapp>
+                            <Hovedknapp onClick={() => this.godta(vilkar.data.hash)}><FormattedMessage
+                                id="vilkar.ga-til-aktivitetsplan"/></Hovedknapp>
                         </div>
                     </div>
                 )}
