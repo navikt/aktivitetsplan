@@ -11,7 +11,7 @@ import { godtaVilkar } from '../../ducks/oppfolging-status';
 import { hentVilkar } from '../../ducks/vilkar';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import leggTilAktivitetSvg from '../../img/legg-til-aktivitet-illustrasjon.svg';
+import vilkarSvg from '../../img/vilkar-illustrasjon.svg';
 
 
 class Vilkar extends Component {
@@ -54,7 +54,7 @@ class Vilkar extends Component {
                     <div className="vis-vilkar ny-aktivitet-modal__header">
                         <Bilde
                             className="ny-aktivitet-modal__bilde"
-                            src={leggTilAktivitetSvg}
+                            src={vilkarSvg}
                             alt="Dekorativ illustrajon"
                         />
                         <Innholdstittel className="ny-aktivitet-tittel"><FormattedMessage id="vilkar.tittel" /></Innholdstittel>

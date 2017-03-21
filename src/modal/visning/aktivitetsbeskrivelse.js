@@ -5,7 +5,7 @@ function Aktivitetsbeskrivelse({ beskrivelse }) {
     return beskrivelse ? (
         <section className="aktivitetsbeskrivelse">
             <EtikettLiten className="aktivitetsbeskrivelse__tittel">Beskrivelse</EtikettLiten>
-            <Normaltekst>{beskrivelse}</Normaltekst>
+            <Normaltekst className="aktivitetsbeskrivelse__tekst">{beskrivelse}</Normaltekst>
         </section>
     ) : null;
 }

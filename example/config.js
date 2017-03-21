@@ -17,7 +17,8 @@ const aktiviteter = {
     tittel: "asdfasdf",
     type: "EGEN",
     lenke: "https://www.nav.no",
-    status: "PLANLAGT"
+    status: "PLANLAGT",
+    beskrivelse: "Beskrivelse med\t\t tab og \n\nlinjeskift."
 };
 const etiketter = [{"id":"SOEKNAD_SENDT","type":"ok","visningsTekst":"Søknad sendt"},{"id":"INNKALDT_TIL_INTERVJU","type":"info","visningsTekst":"Innkalt til intervju"},{"id":"AVSLAG","type":"varsling","visningsTekst":"Avslag"},{"id":"JOBBTILBUD","type":"ok","visningsTekst":"Jobbtilbud"}];
 
