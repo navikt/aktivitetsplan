@@ -16,13 +16,14 @@ const aktiviteter = {
     id: "1",
     tittel: "asdfasdf",
     type: "EGEN",
-    status: "PLANLAGT"
+    status: "PLANLAGT",
+    beskrivelse: "Beskrivelse med\t\t tab og \n\nlinjeskift."
 };
 const etiketter = [{"id":"SOEKNAD_SENDT","type":"ok","visningsTekst":"Søknad sendt"},{"id":"INNKALDT_TIL_INTERVJU","type":"info","visningsTekst":"Innkalt til intervju"},{"id":"AVSLAG","type":"varsling","visningsTekst":"Avslag"},{"id":"JOBBTILBUD","type":"ok","visningsTekst":"Jobbtilbud"}];
 
 const mockData = {
     "/veilarbsituasjon/api/situasjon/vilkar": {text: "<h2>Dette er vilkårene!</h2>"},
-    "/veilarbsituasjon/api/situasjon": {fnr: "10108000398", reservasjonKRR: false, manuell: false, underOppfolging: false, vilkarMaBesvares: true},
+    "/veilarbsituasjon/api/situasjon": {fnr: "10108000398", reservasjonKRR: false, manuell: false, underOppfolging: false, vilkarMaBesvares: false},
     "/veilarbaktivitet/api/aktivitet": {aktiviteter: [aktiviteter]},
     "/veilarbaktivitet/api/aktivitet/etiketter" : etiketter,
     "/veilarbaktivitet/api/aktivitet/1/endringslogg": [{"endringsBeskrivelse":"livslopsendring, {\"fraStatus\": \"PLANLAGT\", \"tilStatus\": \"GJENNOMFORT\"}","endretAv":"1010800039824","endretDato":1490085292048}]
