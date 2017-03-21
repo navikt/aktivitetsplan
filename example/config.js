@@ -25,7 +25,7 @@ const mockData = {
     "/veilarbsituasjon/api/situasjon": {fnr: "10108000398", reservasjonKRR: false, manuell: false, underOppfolging: false, vilkarMaBesvares: true},
     "/veilarbaktivitet/api/aktivitet": {aktiviteter: [aktiviteter]},
     "/veilarbaktivitet/api/aktivitet/etiketter" : etiketter,
-    "/veilarbaktivitet/api/aktivitet/1/endringslogg": []
+    "/veilarbaktivitet/api/aktivitet/1/endringslogg": [{"endringsBeskrivelse":"livslopsendring, {\"fraStatus\": \"PLANLAGT\", \"tilStatus\": \"GJENNOMFORT\"}","endretAv":"1010800039824","endretDato":1490085292048}]
 };
 
 const FETCH_DELAY = 0;
