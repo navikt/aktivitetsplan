@@ -1,10 +1,10 @@
 import React, { PropTypes as PT } from 'react';
-import { Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 function Aktivitetsbeskrivelse({ beskrivelse }) {
     return beskrivelse ? (
         <section className="aktivitetsbeskrivelse">
-            <EtikettLiten className="aktivitetsbeskrivelse__tittel">Beskrivelse</EtikettLiten>
+            <Element className="aktivitetsbeskrivelse__tittel">Beskrivelse</Element>
             <Normaltekst className="aktivitetsbeskrivelse__tekst">{beskrivelse}</Normaltekst>
         </section>
     ) : null;

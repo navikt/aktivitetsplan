@@ -2,8 +2,9 @@ import React, { PropTypes as PT } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import LukkKnapp from '../felles-komponenter/utils/lukk-knapp';
+import LukkKnapp from '../felles-komponenter/utils/lukk-knapp/lukk-knapp';
 import Tilbakeknapp from '../felles-komponenter/utils/tilbakeknapp';
+import './modal-header.less';
 
 function ModalHeader({ tilbakeTekstId, normalTekstId, normalTekstValues, className, children, ...props }) {
     return (

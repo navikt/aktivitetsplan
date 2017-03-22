@@ -1,0 +1,23 @@
+@modal-innhold-padding: 2rem;
+
+.modal-container {
+  height: 100%;
+  .aktivitetskjema {
+    padding: @modal-innhold-padding;
+    &__redigering-header {
+      display: flex;
+    }
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    &__datofelt-wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+    &__datofelt, .datovelger {
+      font-size: 1rem;
+    }
+  }
+}

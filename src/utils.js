@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-moment.locale("nb");
+moment.locale('nb');
 
 export function fn(value) {
     return typeof value === 'function' ? value : () => value;
