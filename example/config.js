@@ -18,8 +18,13 @@ const aktiviteter = {
     type: "EGEN",
     lenke: "https://www.nav.no",
     status: "PLANLAGT",
-    beskrivelse: "Beskrivelse med\t\t tab og \n\nlinjeskift."
+    beskrivelse: "Beskrivelse med\t\t tab og \n\nlinjeskift.",
+    tagger: [{
+        type: "ok",
+        tag: "Søknad sendt"
+    }]
 };
+
 const etiketter = [{"id":"SOEKNAD_SENDT","type":"ok","visningsTekst":"Søknad sendt"},{"id":"INNKALDT_TIL_INTERVJU","type":"info","visningsTekst":"Innkalt til intervju"},{"id":"AVSLAG","type":"varsling","visningsTekst":"Avslag"},{"id":"JOBBTILBUD","type":"ok","visningsTekst":"Jobbtilbud"}];
 
 const mockData = {
