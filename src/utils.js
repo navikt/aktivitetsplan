@@ -93,7 +93,12 @@ export function formaterDatoTid(dato) {
     return datoVerdi.isValid() ? datoVerdi.format('DD.MM.YYYY HH:mm') : undefined;
 }
 
-export function formaterDatoKortManed(dato) {
+export function formaterDatoKortManad(dato) {
+    const datoVerdi = moment(dato);
+    return datoVerdi.isValid() ? datoVerdi.format('DD MMM YYYY') : undefined;
+}
+
+export function formaterDatoKortManedTid(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid() ? datoVerdi.format('Do MMM YYYY [kl] HH:mm') : undefined;
 }
@@ -114,6 +119,6 @@ export function formaterDatoDatoEllerTidSiden(dato) {
     return datoVerdi.isValid
         ? erMerEnnEnDagSiden(dato)
             ? formaterDatoTidSiden(dato)
-            : formaterDatoKortManed(dato)
+            : formaterDatoKortManedTid(dato)
         : undefined
 }

@@ -2,7 +2,7 @@ import React, { Component, PropTypes as PT } from 'react';
 import ScrollArea from 'react-scrollbar';
 import classNames from 'classnames';
 import { autobind } from '../../../utils';
-import './tavle.less'
+import './tavle.less';
 
 const KOLLONE_BREDDE = 343;
 const VIEWPORT_BREDDE = 1713;
@@ -65,7 +65,8 @@ class Tavle extends Component {
                 <ScrollArea
                     ref={this.lagreScrollArea}
                     onScroll={this.updateScroll}
-                    smoothScrolling>
+                    smoothScrolling
+                >
                     <div className="viewport">
                         <div className="kolonner">
                             {kolonner}

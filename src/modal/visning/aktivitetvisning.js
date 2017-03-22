@@ -32,7 +32,8 @@ function Aktivitetvisning({ params, aktiviteter, doSlettAktivitet }) {
             normalTekstId="aktivitetvisning.header"
             normalTekstValues={{ status: valgtAktivitet.status, type: valgtAktivitet.type }}
             className="side-innhold"
-            aria-labelledby="modal-aktivitetsvisning-header">
+            aria-labelledby="modal-aktivitetsvisning-header"
+        >
             <ModalContainer>
                 <div className="aktivitetvisning">
                     <Sidetittel id="modal-aktivitetsvisning-header">

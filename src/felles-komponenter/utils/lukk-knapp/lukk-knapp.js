@@ -1,6 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { Link } from 'react-router';
-import "./lukk-knapp.less";
+import './lukk-knapp.less';
 
 function LukkKnapp({ href = '/' }) {
     return (

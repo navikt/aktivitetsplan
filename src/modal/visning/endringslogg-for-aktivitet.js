@@ -41,8 +41,8 @@ class EndringsloggForAktivitet extends Component {
         }
 
         function lagEndringslogg(logg) {
-            return (logg.length == 0 && status == STATUS.OK ) ?
-                <p><FormattedMessage id="livslopsendring.empty"/></p> :
+            return (logg.length === 0 && status === STATUS.OK) ?
+                <p><FormattedMessage id="livslopsendring.empty" /></p> :
                 logg.map((log, i) => lagEndringsloggInnslag(log)); // eslint-disable-line no-unused-vars
         }
 

@@ -1,7 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import ModalHeader from './modal/modal-header';
 import Hovedside from './sider/hovedside/hovedside';
 import NyAktivitet from './modal/ny-aktivitet';
 import EgenAktivitet from './modal/skjema/egen-aktivitet';

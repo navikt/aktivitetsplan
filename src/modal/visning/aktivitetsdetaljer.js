@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Link } from 'react-router';
 import * as AppPT from '../../proptypes';
-import { formaterDato } from '../../utils';
+import { formaterDatoKortManad } from '../../utils';
 import { EGEN_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE } from '../../constant';
 import DetaljFelt from './detalj-felt';
 
@@ -32,28 +32,28 @@ function Informasjonsfelt({ tittel, innhold }) {
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt, id } = valgtAktivitet;
 
-    const fraDato = formaterDato(valgtAktivitet.fraDato);
-    const tilDato = formaterDato(valgtAktivitet.tilDato);
+    const fraDato = formaterDatoKortManad(valgtAktivitet.fraDato);
+    const tilDato = formaterDatoKortManad(valgtAktivitet.tilDato);
 
     const fraDatoTekst = (aktivitet) => {
         switch (aktivitet) {
             case EGEN_AKTIVITET_TYPE:
-                return 'fra dato';
+                return 'Fra dato';
             case STILLING_AKTIVITET_TYPE:
-                return 'startdato';
+                return 'Startdato';
             default:
-                return 'fra dato';
+                return 'Fra dato';
         }
     };
 
     const tilDatoTekst = (aktivitet) => {
         switch (aktivitet) {
             case EGEN_AKTIVITET_TYPE:
-                return 'til dato';
+                return 'Til dato';
             case STILLING_AKTIVITET_TYPE:
-                return 'søknadsfrist';
+                return 'Søknadsfrist';
             default:
-                return 'til dato';
+                return 'Til dato';
         }
     };
 
