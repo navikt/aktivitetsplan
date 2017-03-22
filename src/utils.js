@@ -76,6 +76,67 @@ export function proxy(func, { before, after } = {}) {
     };
 }
 
+export const fraInputdatoTilJSDato = (inputDato) => {
+    const d = parsedato(inputDato);
+    return new Date(d);
+};
+
+export const erGyldigDatoformat = (dato) => {
+    const d = dato.replace(/\./g, '');
+    let s = `${parseInt(d, 10)}`;
+    if (dato.startsWith('0')) {
+        s = `0${s}`;
+    }
+    if (dato.trim().length !== 10) {
+        return false;
+    }
+    if (s.length !== 8) {
+        return false;
+    }
+    return true;
+};
+
+export const erGyldigDato = (dato) => {
+    const re = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+    if (!re.test(dato)) {
+        return false;
+    }
+    return erGyldigDatoformat(dato);
+};
+
+const erLocalDate = (dato) => { return dato.year && dato.monthValue && dato.dayOfMonth; };
+
+export const toDate = (dato) => {
+    if (typeof dato === 'undefined' || dato === null) {
+        return null;
+    }
+    return erLocalDate(dato) ? new Date(dato.year, dato.monthValue - 1, dato.dayOfMonth) : new Date(dato);
+};
+
+export const toDatePrettyPrint = (dato) => {
+    if (typeof dato === 'undefined' || dato === null) {
+        return null;
+    }
+
+    const _dato = toDate(dato);
+
+    const days = _dato.getDate() < 10 ? `0${_dato.getDate()}` : `${_dato.getDate()}`;
+    const months = _dato.getMonth() + 1 < 10 ? `0${_dato.getMonth() + 1}` : `${_dato.getMonth() + 1}`;
+    const years = _dato.getFullYear();
+
+    return `${days}.${months}.${years}`;
+};
+
+export const datePickerToISODate = (dato) => {
+    console.log("iso " + dato);
+    return moment(dato, 'DD.MM.YYYY').toISOString();
+};
+
+export const ISODateToDatePicker = (dato) => {
+    console.log("date " + dato);
+    return moment(dato).format('DD.MM.YYYY');
+};
+
 moment.updateLocale('nb', {
     monthsShort: [
         'jan', 'feb', 'mar', 'apr', 'mai', 'jun',

@@ -1,124 +1,45 @@
-import React, { Component, PropTypes as PT } from 'react';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import React, { PropTypes as PT } from 'react';
+import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
-import DateField from '../../felles-komponenter/date-field';
+import { LabelledField, validForm, rules } from 'react-redux-form-validation';
 
-// Skriv om til stateless når ting har stabiliert seg litt mer
-// eslint-disable-next-line react/prefer-stateless-function
-class StillingAktivitetForm extends Component {
-// TODO: Flytt aktivitetskjema__header til eget komponent
-    render() {
-        const { handleSubmit } = this.props;
-
-        return (
-            <form onSubmit={handleSubmit} className="skjema-innlogget aktivitetskjema">
-                <div className="aktivitetskjema__header">
-                    <Element tag="h1">
-                        <FormattedMessage id="stilling-aktivitet-form.header" />
-                    </Element>
-                    <Undertekst>
-                        <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                    </Undertekst>
-                </div>
-                <div className="nav-input">
-                    <label htmlFor="stilling-aktivitet-tittel">
-                        <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
-                    </label>
-                    <Field
-                        name="tittel" type="text"
-                        className="input-fullbredde aktivitetskjema__tekstfelt"
-                        component="input"
-                        required
-                        autoFocus
-                        id="stilling-aktivitet-tittel"
-                    />
-                </div>
-                <div className="felt-vannrett aktivitetskjema__datofelt-wrapper">
-                    <div className="nav-input">
-                        <DateField name="fraDato" label="fra dato" className="aktivitetskjema__datofelt" disabled />
-                    </div>
-                    <div className="nav-input">
-                        <DateField name="tilDato" label="til dato" className="aktivitetskjema__datofelt" required />
-                    </div>
-                </div>
-                <div className="nav-input">
-                    <label htmlFor="stilling-aktivitet-lenke">
-                        <FormattedMessage id="stilling-aktivitet-form.label.lenke" />
-                    </label>
-                    <Field
-                        name="lenke"
-                        className="input-fullbredde aktivitetskjema__tekstfelt"
-                        type="text"
-                        component="input"
-                        id="stilling-aktivitet-lenke"
-                    />
-                </div>
-                <div className="nav-input">
-                    <label htmlFor="stilling-aktivitet-beskrivelse">
-                        <FormattedMessage id="stilling-aktivitet-form.label.beskrivelse" />
-                    </label>
-                    <Field
-                        name="beskrivelse"
-                        className="input-fullbredde aktivitetskjema__tekstomrade"
-                        type="text"
-                        component="textarea"
-                        id="stilling-aktivitet-beskrivelse"
-                    />
-                </div>
-                <div className="nav-input">
-                    <label htmlFor="stilling-aktivitet-arbeidssted">
-                        <FormattedMessage id="stilling-aktivitet-form.label.arbeidssted" />
-                    </label>
-                    <Field
-                        name="arbeidssted"
-                        className="input-fullbredde aktivitetskjema__tekstfelt"
-                        type="text"
-                        component="input"
-                        id="stilling-aktivitet-arbeidssted"
-                    />
-                </div>
-                <div className="nav-input">
-                    <label htmlFor="stilling-aktivitet-arbeidsgiver">
-                        <FormattedMessage id="stilling-aktivitet-form.label.arbeidsgiver" />
-                    </label>
-                    <Field
-                        name="arbeidsgiver"
-                        className="input-fullbredde aktivitetskjema__tekstfelt"
-                        type="text"
-                        component="input"
-                        id="stilling-aktivitet-arbeidsgiver"
-                    />
-                </div>
-                <div className="nav-input">
-                    <label htmlFor="stilling-aktivitet-kontaktperson">
-                        <FormattedMessage id="stilling-aktivitet-form.label.kontaktperson" />
-                    </label>
-                    <Field
-                        name="kontaktperson"
-                        className="input-fullbredde aktivitetskjema__tekstfelt"
-                        type="text"
-                        component="input"
-                        id="stilling-aktivitet-kontaktperson"
-                    />
-                </div>
+function StillingAktivitetForm(props) {
+    return (
+        <div className="skjema-innlogget aktivitetskjema">
+            <div className="aktivitetskjema__header">
+                <Element tag="h1">
+                    <FormattedMessage id="stilling-aktivitet-form.header" />
+                </Element>
+                <Undertekst>
+                    <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
+                </Undertekst>
+            </div>
+            <form onSubmit={props.handleSubmit}>
+                {props.errorSummary}
+                <LabelledField name="tittel" type="text">
+                    lumpe
+                </LabelledField>
             </form>
-        );
-    }
+        </div>
+    );
 }
 
 StillingAktivitetForm.propTypes = {
-    // fra redux-form
     handleSubmit: PT.func.isRequired,
-    change: PT.func.isRequired // eslint-disable-line react/no-unused-prop-types
+    errorSummary: PT.node.isRequired
 };
 
 const formNavn = 'stilling-aktivitet';
-const StillingAktivitetReduxForm = reduxForm({
+const StillingAktivitetReduxForm = validForm({
     form: formNavn,
-    onSubmit: () => null
+    onSubmit: () => null,
+    validate: {
+        tittel: [rules.required],
+        fraDato: [rules.required]
+    }
 })(StillingAktivitetForm);
 
 const selector = formValueSelector(formNavn);

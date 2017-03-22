@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
+import { reducer as formReducer } from 'react-redux-form-validation';
 import ledetekstReducer from './ducks/ledetekster-ressurs';
-import oppfølgingStatusReducer from './ducks/oppfolging-status';
+import oppfolgingStatusReducer from './ducks/oppfolging-status';
 import vilkarReducer from './ducks/vilkar';
 import aktiviteterReducer from './ducks/aktiviteter';
 import etiketterReducer from './ducks/etiketter';
@@ -12,7 +12,7 @@ export default combineReducers({
     form: formReducer,
     data: combineReducers({
         ledetekster: ledetekstReducer,
-        oppfolgingStatus: oppfølgingStatusReducer,
+        oppfolgingStatus: oppfolgingStatusReducer,
         vilkar: vilkarReducer,
         aktiviteter: aktiviteterReducer,
         etiketter: etiketterReducer,
