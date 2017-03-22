@@ -64,8 +64,7 @@ class Tavle extends Component {
                 <ScrollArea
                     ref={this.lagreScrollArea}
                     onScroll={this.updateScroll}
-                    smoothScrolling
-                >
+                    smoothScrolling>
                     <div className="viewport">
                         <div className="kolonner">
                             {kolonner}
