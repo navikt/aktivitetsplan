@@ -5,7 +5,7 @@ import AktivitetHeader from '../aktivitet-header';
 import { lagNyAktivitet } from '../../ducks/aktiviteter';
 import history from './../../history';
 import { STILLING_AKTIVITET_TYPE } from '../../constant';
-import ModalScrollVindu from './../modal-scroll-vindu';
+import ModalContainer from '../modal-container';
 import ModalFooter from './../modal-footer';
 import RemoteSubmitKnapp from './remote-submit-knapp';
 
@@ -20,9 +20,9 @@ function StillingAktivitet({ onLagreNyAktivitet }) {
     return (
         <section className="stilling-aktivitet" aria-labelledby="modal-stillings-aktivitet-header">
             <AktivitetHeader aktivitetType="Ledig stilling" />
-            <ModalScrollVindu>
+            <ModalContainer>
                 <StillingAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
-            </ModalScrollVindu>
+            </ModalContainer>
             <ModalFooter>
                 <RemoteSubmitKnapp formNavn="stilling-aktivitet" className="modal-footer__knapp" />
             </ModalFooter>

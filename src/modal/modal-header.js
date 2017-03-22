@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import OppfolgingStatus from '../sider/oppfolging/oppfolging-status';
 import LukkKnapp from '../felles-komponenter/utils/lukk-knapp';
 import Tilbakeknapp from '../felles-komponenter/utils/tilbakeknapp';
+import './modal-header.less';
 
 function ModalHeader({ tilbakeTekstId, normalTekstId, normalTekstValues, visVilkar, className, children, ...props }) {
     return (
