@@ -3,7 +3,7 @@ import { Normaltekst } from 'nav-react-design/dist/typografi';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import OppfolgingStatus from '../sider/oppfolging/oppfolging-status';
-import LukkKnapp from '../felles-komponenter/utils/lukk-knapp';
+import LukkKnapp from '../felles-komponenter/utils/lukk-knapp/lukk-knapp';
 import Tilbakeknapp from '../felles-komponenter/utils/tilbakeknapp';
 
 function ModalHeader({ tilbakeTekstId, normalTekstId, normalTekstValues, visVilkar, className, children, ...props }) {
