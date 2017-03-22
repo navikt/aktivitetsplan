@@ -6,8 +6,6 @@ export const SITUASJON_PROXY_BASE_URL = '/veilarbsituasjon/api';
 
 export const CONTEXT_PATH = "/test";
 
-export const INGEN_SJEKK_AV_VILKAR = false;
-
 export const getDynamicBasePath = () => {
     return null;
 };

@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import Modal from '../../modal/modal';
 import AktivitetsTavle from './aktivitetstavle';
-import OppfolgingStatus from '../oppfolging/oppfolging-status';
 import history from '../../history';
 
 function Hovedside({ children, routes }) {
@@ -12,12 +11,10 @@ function Hovedside({ children, routes }) {
     return (
         <div className="hovedside">
             <div className="hovedsideinnhold">
-                <OppfolgingStatus visVilkar={false}>
-                    <Lenke className="hovedsideinnhold__aktivitetsknapp" href="/aktivitet/ny">
-                        <FormattedMessage id="nyaktivitetsknapp" />
-                    </Lenke>
-                    <AktivitetsTavle />
-                </OppfolgingStatus>
+                <Lenke className="hovedsideinnhold__aktivitetsknapp" href="/aktivitet/ny">
+                    <FormattedMessage id="nyaktivitetsknapp" />
+                </Lenke>
+                <AktivitetsTavle />
             </div>
             <Modal
                 key={modalId}

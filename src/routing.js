@@ -9,14 +9,9 @@ import StillingAktivitet from './modal/skjema/stilling-aktivitet';
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
 
-const VisVilkar = () => <ModalHeader visVilkar />;
-
 export default (
     <Route>
         <IndexRoute component={Hovedside} />
-        <Route path="vilkar" component={Hovedside}>
-            <IndexRoute component={VisVilkar} />
-        </Route>
         <Route path="aktivitet" component={Hovedside}>
             <Route modalId="modal1" path="ny" component={NyAktivitet} />
             <Route modalId="modal2" path="ny/egen" component={EgenAktivitet} />
