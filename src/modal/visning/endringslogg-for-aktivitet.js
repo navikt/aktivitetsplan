@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { hentEndringsloggForAktivtet, fjernEndringsLogg } from '../../ducks/endringslogg';
 import * as AppPT from '../../proptypes';
 import { formaterDatoDatoEllerTidSiden } from '../../utils';
+import { STATUS } from '../../ducks/utils';
 
 class EndringsloggForAktivitet extends Component {
 
@@ -22,7 +23,7 @@ class EndringsloggForAktivitet extends Component {
     };
 
     render() {
-        const { endringslogg, className } = this.props;
+        const { status, endringslogg, className } = this.props;
 
         function lagEndringsloggInnslag(log) {
             const beskrivelse = log.endringsBeskrivelse.split(/,(.+)/);
@@ -40,7 +41,9 @@ class EndringsloggForAktivitet extends Component {
         }
 
         function lagEndringslogg(logg) {
-            return logg.map((log, i) => lagEndringsloggInnslag(log)); // eslint-disable-line no-unused-vars
+            return (logg.length == 0 && status == STATUS.OK ) ?
+                <p><FormattedMessage id="livslopsendring.empty"/></p> :
+                logg.map((log, i) => lagEndringsloggInnslag(log)); // eslint-disable-line no-unused-vars
         }
 
         const cls = (givenClass) => classNames('endringslogg-for-aktivitet', givenClass);
@@ -64,11 +67,12 @@ EndringsloggForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     doHentEndringsloggForAktivitet: PT.func.isRequired,
     doFjernEndringsLogg: PT.func.isRequired,
+    status: PT.string,
     className: PT.string
 };
 
 const mapStateToProps = (state) => ({
-    status: state.status,
+    status: state.data.endringslogg.status,
     endringslogg: state.data.endringslogg.data
 });
 
