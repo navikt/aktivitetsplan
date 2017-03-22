@@ -1,9 +1,27 @@
+
 @tavle-min-width: 48rem;
+@knapp-storrelse: 40px;
 
 .tavle {
   position: relative;
   margin: 40px;
-  width: 90%;
+  width: 85%;
+
+  &__scrollarea {
+    margin: 20px;
+  }
+
+  .knapp-tavle {
+    height: @knapp-storrelse;
+    width: @knapp-storrelse;
+    border: none;
+    background: url("./pil.svg");
+    background-size: contain;
+
+    &:hover{
+      background-image: url("./pil-hover.svg");
+    }
+  }
 
   @media (max-width: @tavle-min-width) {
     margin: 0;
@@ -23,6 +41,7 @@
     position: absolute;
     top: 50%;
     right: -25px;
+    transform: rotate(180deg);
   }
 
   .viewport {

@@ -1,7 +1,8 @@
 import React, { Component, PropTypes as PT } from 'react';
 import ScrollArea from 'react-scrollbar';
 import classNames from 'classnames';
-import { autobind } from '../../utils';
+import { autobind } from '../../../utils';
+import './tavle.less'
 
 const KOLLONE_BREDDE = 343;
 const VIEWPORT_BREDDE = 1713;
@@ -50,11 +51,11 @@ class Tavle extends Component {
         ));
 
         const venstreKnapp = this.state.leftPosition > 0 && (
-        <button className="knapp-forrige knapp-tavle" onClick={this.onVisForrige}>&lt;</button>
+        <button className="knapp-forrige knapp-tavle" onClick={this.onVisForrige} />
             );
 
         const hoyreKnapp = this.state.leftPosition + this.state.containerWidth < VIEWPORT_BREDDE && (
-        <button className="knapp-neste knapp-tavle" onClick={this.onVisNeste}>&gt;</button>
+        <button className="knapp-neste knapp-tavle" onClick={this.onVisNeste} />
             );
 
 
@@ -64,6 +65,7 @@ class Tavle extends Component {
                 <ScrollArea
                     ref={this.lagreScrollArea}
                     onScroll={this.updateScroll}
+                    className="tavle__scrollarea"
                     smoothScrolling
                 >
                     <div className="viewport">

@@ -1,6 +1,6 @@
 import React, { PropTypes as PT, Component } from 'react';
 import { connect } from 'react-redux';
-import Tavle from './tavle';
+import Tavle from './tavle/tavle';
 import Kolonne from './aktivitetstavlekolonne';
 import { hentAktiviteter } from '../../ducks/aktiviteter';
 import {
