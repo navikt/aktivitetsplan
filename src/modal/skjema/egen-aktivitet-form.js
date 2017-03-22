@@ -2,7 +2,7 @@ import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Element, Undertekst } from 'nav-react-design/dist/typografi';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import DateField from '../../felles-komponenter/date-field';
 
 const validerTittel = (value) => {

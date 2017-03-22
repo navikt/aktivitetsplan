@@ -3,7 +3,7 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
-import { Element, Undertekst } from 'nav-react-design/dist/typografi';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import DateField from '../../felles-komponenter/date-field';
 
 // Skriv om til stateless når ting har stabiliert seg litt mer

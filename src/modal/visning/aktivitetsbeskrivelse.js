@@ -1,5 +1,5 @@
 import React, { PropTypes as PT } from 'react';
-import { Normaltekst, EtikettLiten } from 'nav-react-design/dist/typografi';
+import { Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
 
 function Aktivitetsbeskrivelse({ beskrivelse }) {
     return beskrivelse ? (

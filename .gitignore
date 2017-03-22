@@ -1,4 +1,6 @@
-.idea/
+.idea/*
+!.idea/runConfigurations/
 node_modules/
 example/build/
-npm-debug.log
+npm-debug.log*
+*.iml

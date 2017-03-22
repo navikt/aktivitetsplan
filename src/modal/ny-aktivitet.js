@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Undertittel } from 'nav-react-design/dist/typografi';
+import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
 import Bilde from 'nav-react-design/dist/bilde';
 import Lenkepanel from '../felles-komponenter/utils/lenkepanel';
 import ModalHeader from './modal-header';

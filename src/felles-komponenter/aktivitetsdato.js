@@ -1,5 +1,5 @@
 import React, { PropTypes as PT } from 'react';
-import { Normaltekst, EtikettStor } from 'nav-react-design/dist/typografi';
+import { Normaltekst, EtikettStor } from 'nav-frontend-typografi';
 import Lenke from './utils/lenke';
 
 const datoklasse = 'aktivitetvisning-info aktivitetsdato__tekst';

@@ -28,6 +28,13 @@
   .viewport {
     width: 100%;
     overflow: hidden;
+
+    margin-bottom: 40px;
+
+    @media (max-width: @tavle-min-width) {
+      margin-bottom: 0;
+    }
+
   }
 
   @media (min-width: @tavle-min-width) {

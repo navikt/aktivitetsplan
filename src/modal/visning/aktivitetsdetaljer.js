@@ -1,7 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-react-design/dist/typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { Link } from 'react-router';
 import * as AppPT from '../../proptypes';
 import { formaterDato } from '../../utils';
