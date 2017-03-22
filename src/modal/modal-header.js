@@ -9,7 +9,7 @@ import './modal-header.less';
 function ModalHeader({ tilbakeTekstId, normalTekstId, normalTekstValues, className, children, ...props }) {
     return (
         <div className={classNames('modal-header-wrapper', className)} {...props} >
-            {children}
+            <div>{children}</div>
             { /* header til slutt for å få denne sist i tabrekkefølgen */ }
             <header className="modal-header">
                 {tilbakeTekstId && <Tilbakeknapp /> }
