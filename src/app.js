@@ -9,13 +9,11 @@ import './index.less';
 const shouldScroll = (prevRouterProps, nextRouterProps) =>
     !(prevRouterProps && nextRouterProps && prevRouterProps.params.temaid && nextRouterProps.params.temaid);
 
-function App({ applicationComponent, routing }) {
+function App({ routing }) {
     return (
         <Provider>
             <Router history={history} render={applyRouterMiddleware(useScroll(shouldScroll))}>
-                <Route path="/" component={applicationComponent}>
-                    {routing}
-                </Route>
+                {routing}
             </Router>
         </Provider>
     );
@@ -23,7 +21,6 @@ function App({ applicationComponent, routing }) {
 
 App.propTypes = {
     routing: PT.node.isRequired,
-    applicationComponent: PT.func.isRequired
 };
 
 export default App;

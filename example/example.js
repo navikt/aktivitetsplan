@@ -9,11 +9,6 @@ import aktivitetsplanRouting from "../src/routing";
 
 ReactModal.setAppElement('#modal-a11y-wrapper');
 
-function ExampleApp({children}) {
-    return <div className="example">{children}</div>
-}
-
 render(<App
-    applicationComponent={ExampleApp}
     routing={aktivitetsplanRouting}
 />, document.getElementById('app'));
