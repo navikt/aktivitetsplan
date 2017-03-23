@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import React, { PropTypes as PT } from 'react';
-import { Router, Route, applyRouterMiddleware } from 'react-router';
+import { Router, applyRouterMiddleware } from 'react-router';
 import { useScroll } from 'react-router-scroll';
 import history from './history';
 import Provider from './provider';
@@ -20,7 +20,7 @@ function App({ routing }) {
 }
 
 App.propTypes = {
-    routing: PT.node.isRequired,
+    routing: PT.node.isRequired
 };
 
 export default App;
