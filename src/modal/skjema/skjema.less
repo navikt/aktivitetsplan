@@ -1,5 +1,30 @@
+@import "~nav-frontend-skjema-style/src/index";
+@import "./../../variables";
+
 .dato-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+// Overskriver nav-frontend
+.input--m {
+  width: 210px;
+}
+
+.has-errors {
+  input {
+    .input--feil();
+  }
+}
+
+.feedbacksummary {
+  .blokk-m();
+  padding: 1rem 1rem;
+  background-color: @red-error;
+  color: @hvit;
+  a {
+    color: @hvit;
+    text-decoration: underline;
+  }
 }

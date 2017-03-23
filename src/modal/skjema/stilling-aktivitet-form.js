@@ -6,6 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { LabelledField, validForm, rules } from 'react-redux-form-validation';
 
+const pakrevd = () => rules.required.apply(this, arguments) && 'Dette er påkrevd';
+
 function StillingAktivitetForm(props) {
     return (
         <div className="skjema-innlogget aktivitetskjema">
@@ -54,8 +56,8 @@ const StillingAktivitetReduxForm = validForm({
     form: formNavn,
     onSubmit: () => null,
     validate: {
-        tittel: [rules.required],
-        fraDato: [rules.required]
+        tittel: [pakrevd],
+        fraDato: [pakrevd]
     }
 })(StillingAktivitetForm);
 

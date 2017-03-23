@@ -11,6 +11,8 @@ import './skjema.less';
 const fraDatoComponent = () => <Datovelger label="Fra dato" skjemanavn="egen-aktivitet" />;
 const tilDatoComponent = () => <Datovelger label="Til dato" skjemanavn="egen-aktivitet" />;
 
+const pakrevd = (tekst) => rules.required.apply(this, arguments) && tekst;
+
 function Textarea(props) {
     const cls = (className) => classNames(className);
 
@@ -51,7 +53,8 @@ Textarea.propTypes = {
 
 function EgenAktivitetForm(props) {
     return (
-        <div className="aktivitetskjema">
+        <form className="aktivitetskjema" onSubmit={props.handleSubmit} noValidate="noValidate">
+            {props.errorSummary}
             <div className="aktivitetskjema__header">
                 <Element tag="h1">
                     <FormattedMessage id="egen-aktivitet-form.header" />
@@ -60,45 +63,42 @@ function EgenAktivitetForm(props) {
                     <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
                 </Undertekst>
             </div>
-            <form onSubmit={props.handleSubmit} noValidate="noValidate">
-                {props.errorSummary}
 
-                <LabelledField
-                    name="tittel"
-                    type="text"
-                    className="skjema__input aktivitetskjema__tekstfelt"
-                    inputClass="input--fullbredde"
-                    labelClass="skjema__label"
-                ><FormattedMessage id="egen-aktivitet-form.label.overskrift" /></LabelledField>
-                <div className="dato-container">
-                    <CustomField name="fraDato" customComponent={fraDatoComponent()} />
-                    <CustomField name="tilDato" customComponent={tilDatoComponent()} />
-                </div>
-                <LabelledField
-                    name="lenke"
-                    type="text"
-                    className="skjema__input aktivitetskjema__tekstfelt"
-                    inputClass="input--fullbredde"
-                    labelClass="skjema__label"
-                ><FormattedMessage id="egen-aktivitet-form.label.lenke" /></LabelledField>
-                <LabelledField
-                    name="hensikt"
-                    type="text"
-                    className="skjema__input aktivitetskjema__tekstfelt"
-                    inputClass="input--fullbredde"
-                    labelClass="skjema__label"
-                ><FormattedMessage id="egen-aktivitet-form.label.hensikt" /></LabelledField>
-                <CustomField
-                    name="beskrivelse"
-                    customComponent={
-                        <Textarea
-                            id="besrkivelse-textarea"
-                            className="skjema__input input--fullbredde aktivitetskjema__tekstomrade"
-                            label={<FormattedMessage id="egen-aktivitet-form.label.beskrivelse" />}
-                        />}
-                />
-            </form>
-        </div>
+            <LabelledField
+                name="tittel"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            ><FormattedMessage id="egen-aktivitet-form.label.overskrift" /></LabelledField>
+            <div className="dato-container">
+                <CustomField name="fraDato" customComponent={fraDatoComponent()} />
+                <CustomField name="tilDato" customComponent={tilDatoComponent()} />
+            </div>
+            <LabelledField
+                name="lenke"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            ><FormattedMessage id="egen-aktivitet-form.label.lenke" /></LabelledField>
+            <LabelledField
+                name="hensikt"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            ><FormattedMessage id="egen-aktivitet-form.label.hensikt" /></LabelledField>
+            <CustomField
+                name="beskrivelse"
+                customComponent={
+                    <Textarea
+                        id="besrkivelse-textarea"
+                        className="skjema__input input--fullbredde aktivitetskjema__tekstomrade"
+                        label={<FormattedMessage id="egen-aktivitet-form.label.beskrivelse" />}
+                    />}
+            />
+        </form>
     );
 }
 
@@ -109,11 +109,12 @@ EgenAktivitetForm.propTypes = {
 
 const EgenAktivitetReduxForm = validForm({
     form: 'egen-aktivitet',
-    onSubmit: () => {},
+    onSubmit: () => {
+    },
     validate: {
-        tittel: [rules.required],
-        fraDato: [rules.required],
-        tilDato: [rules.required]
+        tittel: [() => pakrevd('Du må fylle ut overskrivten')],
+        fraDato: [() => pakrevd('Du må fylle ut fra datoen')],
+        tilDato: [() => pakrevd('Du må fylle ut fristen')]
     }
 })(EgenAktivitetForm);
 
