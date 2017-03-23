@@ -43,11 +43,11 @@ class DatoField extends Component {
     }
 
     render() {
-        const { meta, input, id, tidligsteFom, senesteTom } = this.props;
+        const { meta, input, id, label, tidligsteFom, senesteTom } = this.props;
 
         return (
             <div className="datovelger">
-                <label htmlFor={id}>Label</label>
+                <label htmlFor={id}>{label}</label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions
                     className="datovelger__inner"
                     tabIndex=""
@@ -112,6 +112,7 @@ class DatoField extends Component {
 DatoField.propTypes = {
     meta: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     id: PropTypes.string.isRequired,
+    label: PropTypes.string.isReqired,
     input: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     dispatch: PropTypes.func.isRequired,
     skjemanavn: PropTypes.string.isRequired,

@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
 import Datovelger from './datovelger/datovelger';
+import './skjema.less';
 
 
 const fraDatoComponent = () => <Datovelger label="Fra dato" skjemanavn="egen-aktivitet" />;
@@ -13,9 +14,11 @@ const tilDatoComponent = () => <Datovelger label="Til dato" skjemanavn="egen-akt
 function Textarea(props) {
     const cls = (className) => classNames(className);
 
-    let tekstomrade = null;
-    let antall = null;
-    const tell = () => { antall = tekstomrade.value.length; };
+    // let tekstomrade = null;
+    // let antall = null;
+    // const tell = () => { antall = tekstomrade.value.length; };
+    //                 ref={(textarea) => { tekstomrade = textarea; }}
+    //                 onKeyUp={tell}
     return (
         <div>
             <div className="skjema__input">
@@ -23,15 +26,13 @@ function Textarea(props) {
                     {props.label}
                 </label>
                 <textarea
-                    ref={(textarea) => { tekstomrade = textarea; }}
                     className={cls(props.className)}
                     type="text"
                     id={props.id}
                     style={{ maxWidth: '100%' }}
                     maxLength={props.maxLength}
-                    onKeyUp={tell}
                 />
-                <span>{props.maxLength - antall}</span>
+                {/* <span>{props.maxLength - antall}</span>*/}
             </div>
         </div>
     );

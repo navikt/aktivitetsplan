@@ -20,7 +20,24 @@ function StillingAktivitetForm(props) {
             <form onSubmit={props.handleSubmit}>
                 {props.errorSummary}
                 <LabelledField name="tittel" type="text">
-                    lumpe
+                    <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
+                </LabelledField>
+
+
+                <LabelledField name="lenke" type="text">
+                    <FormattedMessage id="stilling-aktivitet-form.label.lenke" />
+                </LabelledField>
+                <LabelledField name="beskrivelse" type="text">
+                    <FormattedMessage id="stilling-aktivitet-form.label.beskrivelse" />
+                </LabelledField>
+                <LabelledField name="arbeidssted" type="text">
+                    <FormattedMessage id="stilling-aktivitet-form.label.arbeidssted" />
+                </LabelledField>
+                <LabelledField name="arbeidsgiver" type="text">
+                    <FormattedMessage id="stilling-aktivitet-form.label.arbeidsgiver" />
+                </LabelledField>
+                <LabelledField name="kontaktperson" type="text">
+                    <FormattedMessage id="stilling-aktivitet-form.label.kontaktperson" />
                 </LabelledField>
             </form>
         </div>
