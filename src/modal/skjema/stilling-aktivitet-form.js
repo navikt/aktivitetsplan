@@ -3,46 +3,107 @@ import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
-import { Element, Undertekst } from 'nav-frontend-typografi';
-import { LabelledField, validForm, rules } from 'react-redux-form-validation';
+import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import { LabelledField, CustomField, validForm } from 'react-redux-form-validation';
+import Datovelger from './datovelger/datovelger';
+import Textarea from './textarea';
+import './skjema.less';
 
-const pakrevd = () => rules.required.apply(this, arguments) && 'Dette er påkrevd';
+
+const fraDatoComponent = () => (
+    <Datovelger
+        disabled
+        label={<FormattedMessage id="stilling-aktivitet-form.fra-dato" />}
+        skjemanavn="stilling-aktivitet"
+    />
+);
+const tilDatoComponent = () => (
+    <Datovelger
+        label={<FormattedMessage id="stilling-aktivitet-form.til-dato" />}
+        skjemanavn="stilling-aktivitet"
+    />
+);
+
+function minLength(min, error = 'min-length') {
+    return (value) => (value && value.length >= min ? undefined : error);
+}
+
+const pakrevdTittel = minLength(0, 'Du må fylle ut overskriften');
+const pakrevdFraDato = minLength(0, 'Du må fylle ut fra datoen');
+const pakrevdTilDato = minLength(0, 'Du må fylle ut fristen');
 
 function StillingAktivitetForm(props) {
     return (
-        <div className="skjema-innlogget aktivitetskjema">
+        <form onSubmit={props.handleSubmit} className="skjema-innlogget aktivitetskjema">
+            {props.errorSummary}
             <div className="aktivitetskjema__header">
-                <Element tag="h1">
+                <Innholdstittel>
                     <FormattedMessage id="stilling-aktivitet-form.header" />
-                </Element>
+                </Innholdstittel>
                 <Undertekst>
                     <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
                 </Undertekst>
             </div>
-            <form onSubmit={props.handleSubmit}>
-                {props.errorSummary}
-                <LabelledField name="tittel" type="text">
-                    <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
-                </LabelledField>
 
-
-                <LabelledField name="lenke" type="text">
-                    <FormattedMessage id="stilling-aktivitet-form.label.lenke" />
-                </LabelledField>
-                <LabelledField name="beskrivelse" type="text">
-                    <FormattedMessage id="stilling-aktivitet-form.label.beskrivelse" />
-                </LabelledField>
-                <LabelledField name="arbeidssted" type="text">
-                    <FormattedMessage id="stilling-aktivitet-form.label.arbeidssted" />
-                </LabelledField>
-                <LabelledField name="arbeidsgiver" type="text">
-                    <FormattedMessage id="stilling-aktivitet-form.label.arbeidsgiver" />
-                </LabelledField>
-                <LabelledField name="kontaktperson" type="text">
-                    <FormattedMessage id="stilling-aktivitet-form.label.kontaktperson" />
-                </LabelledField>
-            </form>
-        </div>
+            <LabelledField
+                name="tittel"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            >
+                <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
+            </LabelledField>
+            <div className="dato-container">
+                <CustomField name="fraDato" customComponent={fraDatoComponent()} />
+                <CustomField name="tilDato" customComponent={tilDatoComponent()} />
+            </div>
+            <LabelledField
+                name="lenke"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            >
+                <FormattedMessage id="stilling-aktivitet-form.label.lenke" />
+            </LabelledField>
+            <CustomField
+                name="beskrivelse"
+                customComponent={
+                    <Textarea
+                        id="besrkivelse-textarea"
+                        className="skjema__input input--fullbredde aktivitetskjema__tekstomrade"
+                        label={<FormattedMessage id="stilling-aktivitet-form.label.beskrivelse" />}
+                    />}
+            />
+            <LabelledField
+                name="arbeidssted"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            >
+                <FormattedMessage id="stilling-aktivitet-form.label.arbeidssted" />
+            </LabelledField>
+            <LabelledField
+                name="arbeidsgiver"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            >
+                <FormattedMessage id="stilling-aktivitet-form.label.arbeidsgiver" />
+            </LabelledField>
+            <LabelledField
+                name="kontaktperson"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            >
+                <FormattedMessage id="stilling-aktivitet-form.label.kontaktperson" />
+            </LabelledField>
+        </form>
     );
 }
 
@@ -56,8 +117,9 @@ const StillingAktivitetReduxForm = validForm({
     form: formNavn,
     onSubmit: () => null,
     validate: {
-        tittel: [pakrevd],
-        fraDato: [pakrevd]
+        tittel: [pakrevdTittel],
+        fraDato: [pakrevdFraDato],
+        tilDato: [pakrevdTilDato]
     }
 })(StillingAktivitetForm);
 
@@ -67,7 +129,7 @@ const mapStateToProps = (state, props) => {
     return {
         initialValues: {
             status: 'PLANLAGT',
-            fraDato: moment().format(), // eslint-disable-line no-undef
+            fraDato: moment().format('DD.MM.YYYY'), // eslint-disable-line no-undef
             ...aktivitet
         },
         etikett: selector(state, 'etikett')

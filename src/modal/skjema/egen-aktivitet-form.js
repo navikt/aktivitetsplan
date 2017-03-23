@@ -1,64 +1,42 @@
 import React, { PropTypes as PT } from 'react';
-import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Element, Undertekst } from 'nav-frontend-typografi';
-import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
+import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import { LabelledField, CustomField, validForm } from 'react-redux-form-validation';
 import Datovelger from './datovelger/datovelger';
+import Textarea from './textarea';
 import './skjema.less';
 
+const fraDatoComponent = () => (
+    <Datovelger
+        disabled
+        label={<FormattedMessage id="egen-aktivitet-form.fra-dato" />}
+        skjemanavn="egen-aktivitet"
+    />
+);
+const tilDatoComponent = () => (
+    <Datovelger
+        label={<FormattedMessage id="egen-aktivitet-form.til-dato" />}
+        skjemanavn="egen-aktivitet"
+    />
+);
 
-const fraDatoComponent = () => <Datovelger label="Fra dato" skjemanavn="egen-aktivitet" />;
-const tilDatoComponent = () => <Datovelger label="Til dato" skjemanavn="egen-aktivitet" />;
-
-const pakrevd = (tekst) => rules.required.apply(this, arguments) && tekst;
-
-function Textarea(props) {
-    const cls = (className) => classNames(className);
-
-    // let tekstomrade = null;
-    // let antall = null;
-    // const tell = () => { antall = tekstomrade.value.length; };
-    //                 ref={(textarea) => { tekstomrade = textarea; }}
-    //                 onKeyUp={tell}
-    return (
-        <div>
-            <div className="skjema__input">
-                <label className="skjema__label" htmlFor={props.id}>
-                    {props.label}
-                </label>
-                <textarea
-                    className={cls(props.className)}
-                    type="text"
-                    id={props.id}
-                    style={{ maxWidth: '100%' }}
-                    maxLength={props.maxLength}
-                />
-                {/* <span>{props.maxLength - antall}</span>*/}
-            </div>
-        </div>
-    );
+function minLength(min, error = 'min-length') {
+    return (value) => (value && value.length >= min ? undefined : error);
 }
 
-Textarea.defaultProps = {
-    maxLength: 255
-};
-
-Textarea.propTypes = {
-    id: PT.string.isRequired,
-    label: PT.node.isRequired,
-    maxLength: PT.number,
-    className: PT.string
-};
+const pakrevdTittel = minLength(0, 'Du må fylle ut overskriften');
+const pakrevdFraDato = minLength(0, 'Du må fylle ut fra datoen');
+const pakrevdTilDato = minLength(0, 'Du må fylle ut fristen');
 
 function EgenAktivitetForm(props) {
     return (
         <form className="aktivitetskjema" onSubmit={props.handleSubmit} noValidate="noValidate">
             {props.errorSummary}
             <div className="aktivitetskjema__header">
-                <Element tag="h1">
+                <Innholdstittel>
                     <FormattedMessage id="egen-aktivitet-form.header" />
-                </Element>
+                </Innholdstittel>
                 <Undertekst>
                     <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
                 </Undertekst>
@@ -112,9 +90,9 @@ const EgenAktivitetReduxForm = validForm({
     onSubmit: () => {
     },
     validate: {
-        tittel: [() => pakrevd('Du må fylle ut overskrivten')],
-        fraDato: [() => pakrevd('Du må fylle ut fra datoen')],
-        tilDato: [() => pakrevd('Du må fylle ut fristen')]
+        tittel: [pakrevdTittel],
+        fraDato: [pakrevdFraDato],
+        tilDato: [pakrevdTilDato]
     }
 })(EgenAktivitetForm);
 

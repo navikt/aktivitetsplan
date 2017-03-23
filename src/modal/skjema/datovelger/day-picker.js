@@ -36,15 +36,17 @@ export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showN
     return (<div role="toolbar">
         <button
             tabIndex="-1"
+            aria-label="Forrige måned"
             className={`${className} DayPicker-NavButton--prev`}
             disabled={!showPreviousButton}
             type="button" onClick={(e) => {
                 e.preventDefault();
                 onPreviousClick();
             }}
-        >            Forrige måned</button>
+        />
         <button
             tabIndex="-1"
+            aria-label="Neste måned"
             className={`${className} DayPicker-NavButton--next`}
             disabled={!showNextButton}
             type="button"
@@ -52,7 +54,7 @@ export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showN
                 e.preventDefault();
                 onNextClick();
             }}
-        >            Neste måned</button>
+        />
     </div>);
 };
 

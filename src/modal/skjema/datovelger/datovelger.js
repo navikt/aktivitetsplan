@@ -43,15 +43,14 @@ class DatoField extends Component {
     }
 
     render() {
-        const { meta, input, id, label, tidligsteFom, senesteTom } = this.props;
+        const { meta, input, id, label, disabled, tidligsteFom, senesteTom } = this.props;
 
         return (
             <div className="datovelger">
-                <label htmlFor={id}>{label}</label>
-                <div // eslint-disable-line jsx-a11y/no-static-element-interactions
+                <label className="skjema__label" htmlFor={id}>{label}</label>
+                <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"
                     tabIndex=""
-                    role="button"
                     onClick={(event) => {
                         try {
                             event.nativeEvent.stopImmediatePropagation();
@@ -67,12 +66,15 @@ class DatoField extends Component {
                             autoComplete="off"
                             placeholder="dd.mm.åååå"
                             id={id}
+                            disabled={disabled}
                             className={`input--m datovelger__input${meta.touched && meta.error ? ' input--feil' : ''}`} {...input}
                         />
                         <button
                             className="js-toggle datovelger__toggleDayPicker"
+                            aria-label={this.state.erApen ? 'Skjul datovelger' : 'Vis datovelger'}
                             ref={(toggle) => { this.toggleButton = toggle; }}
                             id={`toggle-${id}`}
+                            disabled={disabled}
                             onKeyUp={(e) => {
                                 this.onKeyUp(e);
                             }}
@@ -81,9 +83,7 @@ class DatoField extends Component {
                                 this.toggle();
                             }}
                             aria-pressed={this.erApen}
-                        >
-                            {this.state.erApen ? 'Skjul datovelger' : 'Vis datovelger'}
-                        </button>
+                        />
                     </div>
                     { this.state.erApen && <DayPickerComponent
                         {...this.props}
@@ -112,10 +112,11 @@ class DatoField extends Component {
 DatoField.propTypes = {
     meta: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     id: PropTypes.string.isRequired,
-    label: PropTypes.string.isReqired,
+    label: PropTypes.string.isRequired,
     input: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     dispatch: PropTypes.func.isRequired,
     skjemanavn: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
     tidligsteFom: PropTypes.instanceOf(Date),
     senesteTom: PropTypes.instanceOf(Date)
 };
@@ -163,13 +164,15 @@ const Datovelger = (props) => (
                 til: props.senesteTom
             })
         )}
+        disabled={props.disabled}
         {...props}
     />
 );
 
 Datovelger.propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     skjemanavn: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
     tidligsteFom: PropTypes.instanceOf(Date),
     senesteTom: PropTypes.instanceOf(Date)
 };
