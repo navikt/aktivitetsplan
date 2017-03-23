@@ -1,13 +1,13 @@
 flyttet aktiviteten fra { fraStatus, select,
 BRUKER_ER_INTERESSERT { foreslått }
 PLANLAGT { planlagt }
-GJENNOMFOERT { gjennomføres }
-FULLFOERT { fullført }
+GJENNOMFORT { gjennomføres }
+FULLFORT { fullført }
 AVBRUTT { avbrutt }
 } til { tilStatus, select,
 BRUKER_ER_INTERESSERT { foreslått }
 PLANLAGT { planlagt }
-GJENNOMFOERT { gjennomføres }
-FULLFOERT { fullført }
+GJENNOMFORT { gjennomføres }
+FULLFORT { fullført }
 AVBRUTT { avbrutt }
 }
