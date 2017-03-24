@@ -1,3 +1,5 @@
+@import "../../../variables";
+@import "@{modig-frontend-root-url}/decorator/knapper";
 
 @tavle-min-width: 48rem;
 @knapp-storrelse: 40px;
@@ -12,14 +14,17 @@
   }
 
   .knapp-tavle {
+    .knapp;
     height: @knapp-storrelse;
     width: @knapp-storrelse;
+    padding: 0;
     border: none;
     background: url("./pil.svg");
     background-size: contain;
 
-    &:hover{
-      background-image: url("./pil-hover.svg");
+    &:hover, &:active, &:active:hover  {
+      border: none;
+      background: transparent url("./pil-hover.svg");
     }
   }
 
@@ -34,14 +39,20 @@
   .knapp-forrige {
     position: absolute;
     top: 50%;
-    left: -25px;
+    left: -45px;
   }
 
   .knapp-neste {
     position: absolute;
     top: 50%;
-    right: -25px;
+    right: -45px;
     transform: rotate(180deg);
+    &:hover {
+      transform: rotate(180deg);
+    }
+    &:active, &:active:hover {
+      transform: rotate(180deg) translateY(-2px);
+    }
   }
 
   .viewport {
