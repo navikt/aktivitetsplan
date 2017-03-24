@@ -1,88 +1,117 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Element, Undertekst } from 'nav-frontend-typografi';
-import DateField from '../../felles-komponenter/date-field';
+import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
+import Datovelger from './datovelger/datovelger';
+import Textarea from './textarea';
+import './skjema.less';
 
-const validerTittel = (value) => {
-    if (value !== '') {
-        return undefined;
-    }
-    return 'Fyll inn tittel';
-};
-function EgenAktivitetForm({ handleSubmit }) {
+const fraDatoComponent = () => (
+    <Datovelger
+        disabled
+        label={<FormattedMessage id="egen-aktivitet-form.fra-dato" />}
+        skjemanavn="egen-aktivitet"
+    />
+);
+const tilDatoComponent = () => (
+    <Datovelger
+        label={<FormattedMessage id="egen-aktivitet-form.til-dato" />}
+        skjemanavn="egen-aktivitet"
+    />
+);
+
+// TODO Feil i rules, rettet i PR, overskriver imens. Bytt når ny versjon av react-redux-form-validation er klar
+export function maxLength(max, error = 'max-length') {
+    return (value) => (value && value.length > max ? error : undefined);
+}
+
+const TITTEL_MAKS_LENGDE = 255;
+const HENSIKT_MAKS_LENGDE = 255;
+const LENKE_MAKS_LENGDE = 2000;
+const BESKRIVELSE_MAKS_LENGDE = 5000;
+
+const pakrevdTittel = rules.minLength(0, 'Du må fylle ut overskriften');
+const begrensetTittelLengde =
+    maxLength(TITTEL_MAKS_LENGDE, `Overskriften kan ikke være lenger en ${TITTEL_MAKS_LENGDE} tegn`);
+const pakrevdFraDato = rules.minLength(0, 'Du må fylle ut fra datoen');
+const pakrevdTilDato = rules.minLength(0, 'Du må fylle ut fristen');
+const begrensetHensiktLengde =
+    maxLength(HENSIKT_MAKS_LENGDE, `Hensiktteksten kan ikke være lenger en ${HENSIKT_MAKS_LENGDE} tegn`);
+const begrensetLenkeLengde =
+    maxLength(LENKE_MAKS_LENGDE, `Lenken kan ikke være lenger en ${LENKE_MAKS_LENGDE} tegn`);
+const begrensetBeskrivelseLengde =
+    maxLength(BESKRIVELSE_MAKS_LENGDE, `Beskrivelsen kan ikke være lenger en ${BESKRIVELSE_MAKS_LENGDE} tegn`);
+
+
+function EgenAktivitetForm(props) {
     return (
-        <form onSubmit={handleSubmit} className="skjema-innlogget aktivitetskjema">
+        <form className="aktivitetskjema" onSubmit={props.handleSubmit} noValidate="noValidate">
+            {props.errorSummary}
             <div className="aktivitetskjema__header">
-                <Element tag="h1">
+                <Innholdstittel>
                     <FormattedMessage id="egen-aktivitet-form.header" />
-                </Element>
+                </Innholdstittel>
                 <Undertekst>
                     <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
                 </Undertekst>
             </div>
-            <div className="nav-input">
-                <label htmlFor="egen-aktivitet-overskrift">
-                    <FormattedMessage id="egen-aktivitet-form.label.overskrift" />
-                </label>
-                <Field
-                    name="tittel"
-                    type="text"
-                    className="input-fullbredde aktivitetskjema__tekstfelt"
-                    id="egent-aktivitet-overskrift"
-                    component="input"
-                    required
-                    autoFocus
-                    validate={validerTittel}
-                />
+
+            <LabelledField
+                name="tittel"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            ><FormattedMessage id="egen-aktivitet-form.label.overskrift" /></LabelledField>
+            <div className="dato-container">
+                <CustomField name="fraDato" customComponent={fraDatoComponent()} />
+                <CustomField name="tilDato" customComponent={tilDatoComponent()} />
             </div>
-            <div className="felt-vannrett aktivitetskjema__datofelt-wrapper">
-                <div className="nav-input">
-                    <DateField name="fraDato" label="fra dato" className="aktivitetskjema__datofelt" />
-                </div>
-                <div className="nav-input">
-                    <DateField name="tilDato" label="til dato" className="aktivitetskjema__datofelt" />
-                </div>
-            </div>
-            <div className="nav-input">
-                <label htmlFor="egen-aktivitet-lenke">
-                    <FormattedMessage id="egen-aktivitet-form.label.lenke" />
-                </label>
-                <Field
-                    name="lenke" className="input-fullbredde aktivitetskjema__tekstfelt" type="text"
-                    component="input" id="egen-aktivitet-lenke"
-                />
-            </div>
-            <div className="nav-input">
-                <label htmlFor="egen-aktivitet-hensikt">
-                    <FormattedMessage id="egen-aktivitet-form.label.hensikt" />
-                </label>
-                <Field
-                    name="hensikt" className="input-fullbredde aktivitetskjema__tekstfelt" type="text"
-                    component="input" id="egen-aktivitet-hensikt"
-                />
-            </div>
-            <div className="nav-input">
-                <label htmlFor="egen-aktivitet-beskrivelse">
-                    <FormattedMessage id="egen-aktivitet-form.label.beskrivelse" />
-                </label>
-                <Field
-                    name="beskrivelse" className="input-fullbredde aktivitetskjema__tekstomrade" type="text"
-                    component="textarea" id="egen-aktivitet-beskrivelse"
-                />
-            </div>
+            <LabelledField
+                name="lenke"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            ><FormattedMessage id="egen-aktivitet-form.label.lenke" /></LabelledField>
+            <LabelledField
+                name="hensikt"
+                type="text"
+                className="skjema__input aktivitetskjema__tekstfelt"
+                inputClass="input--fullbredde"
+                labelClass="skjema__label"
+            ><FormattedMessage id="egen-aktivitet-form.label.hensikt" /></LabelledField>
+            <CustomField
+                name="beskrivelse"
+                customComponent={
+                    <Textarea
+                        id="besrkivelse-textarea"
+                        className="skjema__input input--fullbredde aktivitetskjema__tekstomrade"
+                        label={<FormattedMessage id="egen-aktivitet-form.label.beskrivelse" />}
+                    />}
+            />
         </form>
     );
 }
 
 EgenAktivitetForm.propTypes = {
-    handleSubmit: PT.func
+    handleSubmit: PT.func,
+    errorSummary: PT.node.isRequired
 };
 
-const EgenAktivitetReduxForm = reduxForm({
+const EgenAktivitetReduxForm = validForm({
     form: 'egen-aktivitet',
-    onSubmit: () => null
+    onSubmit: () => {
+    },
+    validate: {
+        tittel: [pakrevdTittel, begrensetTittelLengde],
+        fraDato: [pakrevdFraDato],
+        tilDato: [pakrevdTilDato],
+        lenke: [begrensetLenkeLengde],
+        hensikt: [begrensetHensiktLengde],
+        beskrivelse: [begrensetBeskrivelseLengde]
+    }
 })(EgenAktivitetForm);
 
 const mapStateToProps = (state, props) => {
