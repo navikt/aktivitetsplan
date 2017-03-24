@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes as PT } from 'react';
 import { Field, autofill, touch } from 'redux-form';
 import { connect } from 'react-redux';
 import MaskedInput from 'react-maskedinput';
@@ -110,15 +110,15 @@ class DatoField extends Component {
 }
 
 DatoField.propTypes = {
-    meta: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    input: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    dispatch: PropTypes.func.isRequired,
-    skjemanavn: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
-    tidligsteFom: PropTypes.instanceOf(Date),
-    senesteTom: PropTypes.instanceOf(Date)
+    meta: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    id: PT.string.isRequired,
+    label: PT.string.isRequired,
+    input: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    dispatch: PT.func.isRequired,
+    skjemanavn: PT.string.isRequired,
+    disabled: PT.bool,
+    tidligsteFom: PT.instanceOf(Date),
+    senesteTom: PT.instanceOf(Date)
 };
 
 const ConnectedDatoField = connect()(DatoField);
@@ -170,11 +170,11 @@ const Datovelger = (props) => (
 );
 
 Datovelger.propTypes = {
-    label: PropTypes.node.isRequired,
-    skjemanavn: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
-    tidligsteFom: PropTypes.instanceOf(Date),
-    senesteTom: PropTypes.instanceOf(Date)
+    label: PT.node.isRequired,
+    skjemanavn: PT.string.isRequired,
+    disabled: PT.bool,
+    tidligsteFom: PT.instanceOf(Date),
+    senesteTom: PT.instanceOf(Date)
 };
 
 export default Datovelger;
