@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
-import { LabelledField, CustomField, validForm } from 'react-redux-form-validation';
+import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
 import Datovelger from './datovelger/datovelger';
 import Textarea from './textarea';
 import './skjema.less';
@@ -24,13 +24,33 @@ const tilDatoComponent = () => (
     />
 );
 
-function minLength(min, error = 'min-length') {
-    return (value) => (value && value.length >= min ? undefined : error);
+// TODO Feil i rules, rettet i PR, overskriver imens. Bytt når ny versjon av react-redux-form-validation er klar
+export function maxLength(max, error = 'max-length') {
+    return (value) => (value && value.length > max ? error : undefined);
 }
 
-const pakrevdTittel = minLength(0, 'Du må fylle ut overskriften');
-const pakrevdFraDato = minLength(0, 'Du må fylle ut fra datoen');
-const pakrevdTilDato = minLength(0, 'Du må fylle ut fristen');
+const TITTEL_MAKS_LENGDE = 255;
+const LENKE_MAKS_LENGDE = 2000;
+const BESKRIVELSE_MAKS_LENGDE = 5000;
+const ARBEIDSSTED_MAKS_LENGDE = 255;
+const ARBEIDSGIVER_MAKS_LENGDE = 255;
+const KONTAKTPERSON_MAKS_LENGDE = 255;
+
+const pakrevdTittel = rules.minLength(0, 'Du må fylle ut overskriften');
+const begrensetTittelLengde =
+    maxLength(TITTEL_MAKS_LENGDE, `Overskriften kan ikke være lenger en ${TITTEL_MAKS_LENGDE} tegn`);
+const pakrevdFraDato = rules.minLength(0, 'Du må fylle ut fra datoen');
+const pakrevdTilDato = rules.minLength(0, 'Du må fylle ut fristen');
+const begrensetLenkeLengde =
+    maxLength(LENKE_MAKS_LENGDE, `Lenken kan ikke være lenger en ${LENKE_MAKS_LENGDE} tegn`);
+const begrensetBeskrivelseLengde =
+    maxLength(BESKRIVELSE_MAKS_LENGDE, `Besrkivelsen kan ikke være lenger en ${BESKRIVELSE_MAKS_LENGDE} tegn`);
+const begrensetArbeidsstedLengde =
+    maxLength(ARBEIDSSTED_MAKS_LENGDE, `Arbeidsstedtekst kan ikke være lenger en ${ARBEIDSSTED_MAKS_LENGDE} tegn`);
+const begrensetArbeidsgiverLengde =
+    maxLength(ARBEIDSGIVER_MAKS_LENGDE, `Arbeidsgivertekst kan ikke være lenger en ${ARBEIDSGIVER_MAKS_LENGDE} tegn`);
+const begrensetKontaktpersonLengde =
+    maxLength(KONTAKTPERSON_MAKS_LENGDE, `Kontaktpersontekst kan ikke være lenger en ${KONTAKTPERSON_MAKS_LENGDE} tegn`);
 
 function StillingAktivitetForm(props) {
     return (
@@ -117,9 +137,14 @@ const StillingAktivitetReduxForm = validForm({
     form: formNavn,
     onSubmit: () => null,
     validate: {
-        tittel: [pakrevdTittel],
+        tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
-        tilDato: [pakrevdTilDato]
+        tilDato: [pakrevdTilDato],
+        lenke: [begrensetLenkeLengde],
+        beskrivelse: [begrensetBeskrivelseLengde],
+        arbeidssted: [begrensetArbeidsstedLengde],
+        arbeidsgiver: [begrensetArbeidsgiverLengde],
+        kontaktperson: [begrensetKontaktpersonLengde]
     }
 })(StillingAktivitetForm);
 
