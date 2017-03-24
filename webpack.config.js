@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PLUGINS = [
     new HtmlWebpackPlugin({
         template: 'example/index.html'
-    }),
+    })
 ];
 
 const BABEL_INCLUDE = [
@@ -21,18 +21,19 @@ const RULES = [
         loader: 'babel-loader',
     },
     {
-        test: /src.*\.(svg|png)$/,
-        loaders: [
-            'file-loader?has=sha512&digest=hex&name=[hash].[ext]',
-            'image-webpack-loader'
-        ]
-    },
-    {
         test: /node_modules.*\.(svg|png)$/,
         use: {
             loader: 'url-loader',
             options: {'noquotes': true}
         }
+    },
+    {
+        test: /\.(svg|png)$/,
+        exclude: /node_modules/,
+        loaders: [
+            'file-loader?name=[name]-[hash].[ext]',
+            'image-webpack-loader'
+        ]
     },
     {
         test: /\.less$/,
