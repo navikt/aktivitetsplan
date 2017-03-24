@@ -81,6 +81,15 @@ export const fraInputdatoTilJSDato = (inputDato) => {
     return new Date(d);
 };
 
+
+export const erGyldigISODato = (isoDato) => {
+    return !!(isoDato && isoDato.length === 24 && moment(isoDato).isValid());
+};
+
+export const erGyldigFormattertDato = (formattertDato) => {
+    return !!(formattertDato && formattertDato.length === 10 && moment(formattertDato, 'DD.MM.YYYY', true).isValid());
+};
+
 export const erGyldigDatoformat = (dato) => {
     const d = dato.replace(/\./g, '');
     let s = `${parseInt(d, 10)}`;
@@ -128,13 +137,18 @@ export const toDatePrettyPrint = (dato) => {
 };
 
 export const datePickerToISODate = (dato) => {
-    console.log("iso " + dato);
-    return moment(dato, 'DD.MM.YYYY').toISOString();
+    const parsetDato = moment(dato, 'DD.MM.YYYY', true);
+    return parsetDato.isValid() ? parsetDato.toISOString() : "";
+};
+
+export const dateToISODate = (dato) => {
+    const parsetDato = moment(dato);
+    return dato && parsetDato.isValid() ? parsetDato.toISOString() : "";
 };
 
 export const ISODateToDatePicker = (dato) => {
-    console.log("date " + dato);
-    return moment(dato).format('DD.MM.YYYY');
+    const parsetDato = moment(dato);
+    return dato && parsetDato.isValid() ? parsetDato.format('DD.MM.YYYY') : "";
 };
 
 moment.updateLocale('nb', {

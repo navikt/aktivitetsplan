@@ -2,13 +2,47 @@ import React, { Component, PropTypes as PT } from 'react';
 import { Field, autofill, touch } from 'redux-form';
 import { connect } from 'react-redux';
 import MaskedInput from 'react-maskedinput';
-import { erGyldigDato, erGyldigDatoformat, fraInputdatoTilJSDato, toDatePrettyPrint } from '../../../utils';
+import { autobind, fraInputdatoTilJSDato, dateToISODate, toDatePrettyPrint, erGyldigISODato, ISODateToDatePicker } from '../../../utils';
 import DayPickerComponent from './day-picker';
 
+function validerPeriode(input, alternativer) {
+    const { fra, til } = alternativer;
+    const inputDato = fraInputdatoTilJSDato(input);
+    if (fra && til && (inputDato < fra || inputDato > til)) {
+        return `Datoen må være innenfor perioden ${toDatePrettyPrint(fra)}-${toDatePrettyPrint(til)}`;
+    }
+    if (til && inputDato > til) {
+        return `Datoen må være før ${toDatePrettyPrint(til)}`;
+    }
+    if (fra && inputDato < fra) {
+        return `Datoen må være etter ${toDatePrettyPrint(fra)}`;
+    }
+    return undefined;
+}
+
+function validerDatoField(input, alternativer) {
+    if (!input) {
+        return undefined;
+    } else if (!erGyldigISODato(input)) {
+        return 'Datoen må være på formatet dd.mm.åååå';
+    } else if (alternativer && (alternativer.fra || alternativer.til)) {
+        return validerPeriode(input, alternativer);
+    }
+    return undefined;
+}
+
+function stopEvent(event) {
+    try {
+        event.nativeEvent.stopImmediatePropagation();
+    } catch (e) {
+        event.stopPropagation();
+    }
+}
 
 class DatoField extends Component {
     constructor(props) {
         super(props);
+        autobind(this);
         this.state = {
             erApen: false
         };
@@ -21,7 +55,17 @@ class DatoField extends Component {
         }
     }
 
-    toggle() {
+    onDayClick(event) {
+        const { input, dispatch, skjemanavn } = this.props;
+        const inputName = input.name;
+        const isoDate = dateToISODate(new Date(event));
+        dispatch(autofill(skjemanavn, inputName, isoDate));
+        dispatch(touch(skjemanavn, inputName));
+        this.lukk();
+    }
+
+    toggle(e) {
+        e.preventDefault();
         if (this.state.erApen) {
             this.lukk();
         } else {
@@ -45,19 +89,18 @@ class DatoField extends Component {
     render() {
         const { meta, input, id, label, disabled, tidligsteFom, senesteTom } = this.props;
 
+        const value = input.value;
+        const maskedInputProps = { ...input,
+            value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value
+        };
+
         return (
             <div className="datovelger">
                 <label className="skjema__label" htmlFor={id}>{label}</label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"
                     tabIndex=""
-                    onClick={(event) => {
-                        try {
-                            event.nativeEvent.stopImmediatePropagation();
-                        } catch (e) {
-                            event.stopPropagation();
-                        }
-                    }}
+                    onClick={stopEvent}
                 >
                     <div className="datovelger__inputContainer skjema__input">
                         <MaskedInput
@@ -67,7 +110,8 @@ class DatoField extends Component {
                             placeholder="dd.mm.åååå"
                             id={id}
                             disabled={disabled}
-                            className={`input--m datovelger__input${meta.touched && meta.error ? ' input--feil' : ''}`} {...input}
+                            className={`input--m datovelger__input${meta.touched && meta.error ? ' input--feil' : ''}`}
+                            {...maskedInputProps}
                         />
                         <button
                             className="js-toggle datovelger__toggleDayPicker"
@@ -75,13 +119,8 @@ class DatoField extends Component {
                             ref={(toggle) => { this.toggleButton = toggle; }}
                             id={`toggle-${id}`}
                             disabled={disabled}
-                            onKeyUp={(e) => {
-                                this.onKeyUp(e);
-                            }}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                this.toggle();
-                            }}
+                            onKeyUp={this.onKeyUp}
+                            onClick={this.toggle}
                             aria-pressed={this.erApen}
                         />
                     </div>
@@ -90,19 +129,9 @@ class DatoField extends Component {
                         ariaControls={`toggle-${id}`}
                         tidligsteFom={tidligsteFom}
                         senesteTom={senesteTom}
-                        onDayClick={(event) => {
-                            const { dispatch, skjemanavn } = this.props;
-                            const s = toDatePrettyPrint(new Date(event));
-                            dispatch(autofill(skjemanavn, this.props.input.name, s));
-                            dispatch(touch(skjemanavn, this.props.input.name));
-                            this.lukk();
-                        }}
-                        onKeyUp={(e) => {
-                            this.onKeyUp(e);
-                        }}
-                        lukk={() => {
-                            this.lukk();
-                        }}
+                        onDayClick={this.onDayClick}
+                        onKeyUp={this.onKeyUp}
+                        lukk={this.lukk}
                     />}
                 </div>
             </div>);
@@ -112,10 +141,10 @@ class DatoField extends Component {
 DatoField.propTypes = {
     meta: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
     id: PT.string.isRequired,
-    label: PT.string.isRequired,
+    label: PT.oneOfType([PT.string, PT.node]).isRequired,
     input: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    dispatch: PT.func.isRequired,
-    skjemanavn: PT.string.isRequired,
+    dispatch: PT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    skjemanavn: PT.string.isRequired, // eslint-disable-line react/no-unused-prop-types
     disabled: PT.bool,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date)
@@ -123,56 +152,33 @@ DatoField.propTypes = {
 
 const ConnectedDatoField = connect()(DatoField);
 
-export const validerPeriode = (input, alternativer) => {
-    const { fra, til } = alternativer;
-    const inputDato = fraInputdatoTilJSDato(input);
-    if (fra && til && (inputDato < fra || inputDato > til)) {
-        return `Datoen må være innenfor perioden ${toDatePrettyPrint(fra)}-${toDatePrettyPrint(til)}`;
-    }
-    if (til && inputDato > til) {
-        return `Datoen må være før ${toDatePrettyPrint(til)}`;
-    }
-    if (fra && inputDato < fra) {
-        return `Datoen må være etter ${toDatePrettyPrint(fra)}`;
-    }
-    return undefined;
-};
-
-export const validerDatoField = (input, alternativer) => {
-    if (!input) {
-        return undefined;
-    } else if (!erGyldigDatoformat(input)) {
-        return 'Datoen må være på formatet dd.mm.åååå';
-    } else if (!erGyldigDato(input)) {
-        return 'Datoen er ikke gyldig';
-    } else if (alternativer && (alternativer.fra || alternativer.til)) {
-        return validerPeriode(input, alternativer);
-    }
-    return undefined;
-};
-
-// TODO fiks skjemanavn og name
-const Datovelger = (props) => (
-    <Field
-        name={'navn'}
-        label={props.label}
-        component={ConnectedDatoField}
-        skjemanavn={props.skjemanavn}
-        validate={(input) => (
-            validerDatoField(input, {
-                fra: props.tidligsteFom,
-                til: props.senesteTom
-            })
-        )}
-        disabled={props.disabled}
-        {...props}
-    />
-);
+function Datovelger(props) {
+    const { meta, tidligsteFom, senesteTom, label, input } = props;
+    const { name } = input;
+    const { form } = meta;
+    return (
+        <Field
+            name={name}
+            label={label}
+            component={ConnectedDatoField}
+            skjemanavn={form}
+            validate={(value) => (
+                validerDatoField(value, {
+                    fra: tidligsteFom,
+                    til: senesteTom
+                })
+            )}
+            disabled={props.disabled}
+            {...props}
+        />
+    );
+}
 
 Datovelger.propTypes = {
     label: PT.node.isRequired,
-    skjemanavn: PT.string.isRequired,
     disabled: PT.bool,
+    meta: PT.object, // eslint-disable-line react/forbid-prop-types
+    input: PT.object, // eslint-disable-line react/forbid-prop-types
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date)
 };

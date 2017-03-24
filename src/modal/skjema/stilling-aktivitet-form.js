@@ -1,28 +1,13 @@
 import React, { PropTypes as PT } from 'react';
 import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
-import Datovelger from './datovelger/datovelger';
+import { dateToISODate } from '../../utils';
+import DatoFelt from './datovelger/dato-felt';
 import Textarea from './textarea';
 import './skjema.less';
-
-
-const fraDatoComponent = () => (
-    <Datovelger
-        disabled
-        label={<FormattedMessage id="stilling-aktivitet-form.fra-dato" />}
-        skjemanavn="stilling-aktivitet"
-    />
-);
-const tilDatoComponent = () => (
-    <Datovelger
-        label={<FormattedMessage id="stilling-aktivitet-form.til-dato" />}
-        skjemanavn="stilling-aktivitet"
-    />
-);
 
 // TODO Feil i rules, rettet i PR, overskriver imens. Bytt når ny versjon av react-redux-form-validation er klar
 export function maxLength(max, error = 'max-length') {
@@ -75,8 +60,8 @@ function StillingAktivitetForm(props) {
                 <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
             </LabelledField>
             <div className="dato-container">
-                <CustomField name="fraDato" customComponent={fraDatoComponent()} />
-                <CustomField name="tilDato" customComponent={tilDatoComponent()} />
+                <DatoFelt feltNavn="fraDato" labelId="stilling-aktivitet-form.fra-dato" />
+                <DatoFelt feltNavn="tilDato" labelId="stilling-aktivitet-form.til-dato" />
             </div>
             <LabelledField
                 name="lenke"
@@ -154,7 +139,7 @@ const mapStateToProps = (state, props) => {
     return {
         initialValues: {
             status: 'PLANLAGT',
-            fraDato: moment().format('DD.MM.YYYY'), // eslint-disable-line no-undef
+            fraDato: dateToISODate(new Date()),
             ...aktivitet
         },
         etikett: selector(state, 'etikett')

@@ -19,6 +19,7 @@
   },
   "scripts": {
     "test": "mocha",
+    "test:watch": "mocha --watch",
     "eslint": "eslint src --ext .js --ext .jsx",
     "eslint:fix": "eslint src --ext .js --ext .jsx --fix",
     "dev": " webpack-dev-server --progress --hot --watch",
