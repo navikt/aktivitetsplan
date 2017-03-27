@@ -21,19 +21,11 @@ const RULES = [
         loader: 'babel-loader',
     },
     {
-        test: /node_modules.*\.(svg|png)$/,
+        test: /\.(svg|png)$/,
         use: {
             loader: 'url-loader',
             options: {'noquotes': true}
         }
-    },
-    {
-        test: /\.(svg|png)$/,
-        exclude: /node_modules/,
-        loaders: [
-            'file-loader?name=[name]-[hash].[ext]',
-            'image-webpack-loader'
-        ]
     },
     {
         test: /\.less$/,
@@ -41,7 +33,8 @@ const RULES = [
             'style-loader',
             {
                 loader: 'css-loader', options: {
-                importLoaders: 1
+                importLoaders: 1,
+                sourceMap: true
             }
             },
             {
@@ -52,7 +45,8 @@ const RULES = [
                     "baseImagePath": "\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/\'",
                     "nodeModulesPath":"\'./../../\'",
                     "coreModulePath":"\'./../../\'"
-                }
+                },
+                sourceMap: true
             }
             }
         ]
@@ -70,27 +64,30 @@ const LOADERS = [
     }
 ];
 
-module.exports = {
-    context: __dirname,
-    devtool: false,
-    entry: [
-        'whatwg-fetch',
-        './example/example.js'
-    ],
-    module: {
-        rules: RULES,
-        loaders: LOADERS
-    },
-    resolve: {
-        alias: {
-            "~config": path.resolve(__dirname, "./example/config")
+module.exports = function (env) {
+    const dev = env.dev;
+    return {
+        context: __dirname,
+        devtool: dev ? 'source-map' : false,
+        entry: [
+            'whatwg-fetch',
+            './example/example.js'
+        ],
+        module: {
+            rules: RULES,
+            loaders: LOADERS
         },
-        extensions: ['.js', '.jsx', '.json']
-    },
-    output: {
-        path: path.resolve(__dirname, "build"),
-        publicPath: "/aktivitetsplanfelles/",
-        filename: "bundle.js"
-    },
-    plugins: PLUGINS,
+        resolve: {
+            alias: {
+                "~config": path.resolve(__dirname, "./example/config")
+            },
+            extensions: ['.js', '.jsx', '.json']
+        },
+        output: {
+            path: path.resolve(__dirname, "build"),
+            publicPath: "/aktivitetsplanfelles/",
+            filename: "bundle.js"
+        },
+        plugins: PLUGINS,
+    };
 };
