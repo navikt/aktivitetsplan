@@ -152,4 +152,70 @@ describe('app utils', () => {
             expect(after).to.be.calledAfter(spy);
         });
     });
+
+
+    describe('dateToISODate', () => {
+        it('Skal formattere korrekt', () => {
+            expect(Utils.dateToISODate(new Date(2014, 1, 14))).to.equal('2014-02-13T23:00:00.000Z');
+        });
+
+        it('Skal ikke formattere ugyldige eller tomme datoer', () => {
+            expect(Utils.dateToISODate('14.02.2014')).to.equal('');
+            expect(Utils.dateToISODate('ugyldig')).to.equal('');
+            expect(Utils.dateToISODate('')).to.equal('');
+            expect(Utils.dateToISODate(null)).to.equal('');
+            expect(Utils.dateToISODate(undefined)).to.equal('');
+        });
+    });
+
+    describe('datePickerToISODate', () => {
+        it('Skal formattere korrekt', () => {
+            expect(Utils.datePickerToISODate('14.02.2014')).to.equal('2014-02-13T23:00:00.000Z');
+        });
+
+        it('Skal ikke formattere ugyldige eller tomme datoer', () => {
+            expect(Utils.datePickerToISODate('ugyldig')).to.equal('');
+            expect(Utils.datePickerToISODate('')).to.equal('');
+            expect(Utils.datePickerToISODate(null)).to.equal('');
+            expect(Utils.datePickerToISODate(undefined)).to.equal('');
+        });
+    });
+
+    describe('ISODateToDatePicker', () => {
+        it('Skal formattere korrekt', () => {
+            expect(Utils.ISODateToDatePicker('2014-02-13T23:00:00.000Z')).to.equal('14.02.2014');
+        });
+
+        it('Skal ikke formattere ugyldige eller tomme datoer', () => {
+            expect(Utils.ISODateToDatePicker('ugyldig')).to.equal('');
+            expect(Utils.ISODateToDatePicker('')).to.equal('');
+            expect(Utils.ISODateToDatePicker(null)).to.equal('');
+            expect(Utils.ISODateToDatePicker(undefined)).to.equal('');
+        });
+    });
+
+
+    describe('erGyldigISODato', () => {
+        it('Tolker ISO-datoer riktig', () => {
+            expect(Utils.erGyldigISODato('2014-02-13T23:00:00.000Z')).to.equal(true);
+            expect(Utils.erGyldigISODato('2014-02-13')).to.equal(false);
+            expect(Utils.erGyldigISODato('13.02.2014')).to.equal(false);
+            expect(Utils.erGyldigISODato('')).to.equal(false);
+            expect(Utils.erGyldigISODato(null)).to.equal(false);
+            expect(Utils.erGyldigISODato(undefined)).to.equal(false);
+        });
+    });
+
+
+    describe('erGyldigFormattertDato', () => {
+        it('Tolker formatterte datoer riktig', () => {
+            expect(Utils.erGyldigFormattertDato('13.02.2014')).to.equal(true);
+            expect(Utils.erGyldigFormattertDato('2014.02.13')).to.equal(false);
+            expect(Utils.erGyldigFormattertDato('2014-02-13')).to.equal(false);
+            expect(Utils.erGyldigFormattertDato('2014-02-13T23:00:00.000Z')).to.equal(false);
+            expect(Utils.erGyldigFormattertDato('')).to.equal(false);
+            expect(Utils.erGyldigFormattertDato(null)).to.equal(false);
+            expect(Utils.erGyldigFormattertDato(undefined)).to.equal(false);
+        });
+    });
 });

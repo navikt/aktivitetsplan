@@ -8,16 +8,13 @@ import { EGEN_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
 import ModalFooter from '../modal-footer';
 import RemoteSubmitKnapp from './remote-submit-knapp';
-import { datePickerToISODate } from './../../utils';
 
 
 function EgenAktivitet({ onLagreNyAktivitet }) {
     const onLagNyAktivitetSubmit = (aktivitet) => {
         const nyAktivitet = {
             ...aktivitet,
-            type: EGEN_AKTIVITET_TYPE,
-            fraDato: datePickerToISODate(aktivitet.fraDato),
-            tilDato: datePickerToISODate(aktivitet.tilDato)
+            type: EGEN_AKTIVITET_TYPE
         };
         onLagreNyAktivitet(nyAktivitet);
         history.push('/');
