@@ -3,23 +3,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
-import Datovelger from './datovelger/datovelger';
+import DatoFelt from './datovelger/dato-felt';
 import Textarea from './textarea';
 import './skjema.less';
-
-const fraDatoComponent = () => (
-    <Datovelger
-        disabled
-        label={<FormattedMessage id="egen-aktivitet-form.fra-dato" />}
-        skjemanavn="egen-aktivitet"
-    />
-);
-const tilDatoComponent = () => (
-    <Datovelger
-        label={<FormattedMessage id="egen-aktivitet-form.til-dato" />}
-        skjemanavn="egen-aktivitet"
-    />
-);
 
 // TODO Feil i rules, rettet i PR, overskriver imens. Bytt når ny versjon av react-redux-form-validation er klar
 export function maxLength(max, error = 'max-length') {
@@ -65,8 +51,8 @@ function EgenAktivitetForm(props) {
                 labelClass="skjema__label"
             ><FormattedMessage id="egen-aktivitet-form.label.overskrift" /></LabelledField>
             <div className="dato-container">
-                <CustomField name="fraDato" customComponent={fraDatoComponent()} />
-                <CustomField name="tilDato" customComponent={tilDatoComponent()} />
+                <DatoFelt feltNavn="fraDato" labelId="egen-aktivitet-form.fra-dato" />
+                <DatoFelt feltNavn="tilDato" labelId="egen-aktivitet-form.til-dato" />
             </div>
             <LabelledField
                 name="lenke"
