@@ -22,7 +22,7 @@
     "test:watch": "mocha --watch",
     "eslint": "eslint src --ext .js --ext .jsx",
     "eslint:fix": "eslint src --ext .js --ext .jsx --fix",
-    "dev": " webpack-dev-server --progress --hot --watch",
+    "dev": " webpack-dev-server --progress --hot --watch --env.dev=true",
     "build": "webpack --optimize-minimize"
   },
   "dependencies": {
