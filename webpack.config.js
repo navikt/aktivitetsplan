@@ -65,7 +65,7 @@ const LOADERS = [
 ];
 
 module.exports = function (env) {
-    const dev = env.dev;
+    const dev = env && env.dev;
     return {
         context: __dirname,
         devtool: dev ? 'source-map' : false,
