@@ -4,7 +4,7 @@ STILLING { Stilling }
 } / { status, select,
 PLANLAGT { Planlagt }
 BRUKER_ER_INTERESSERT { Foreslått }
-GJENNOMFOERT { Gjennomføres }
-FULLFOERT { Fullført }
+GJENNOMFORT { Gjennomføres }
+FULLFORT { Fullført }
 AVBRUTT { Avbrutt }
 }
