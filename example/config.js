@@ -6,6 +6,8 @@ export const SITUASJON_PROXY_BASE_URL = '/veilarbsituasjon/api';
 
 export const CONTEXT_PATH = "/aktivitetsplanfelles";
 
+export const TILLAT_SLETTING = true;
+
 export const getDynamicBasePath = () => {
     return null;
 };
@@ -16,6 +18,7 @@ const aktiviteter = {
     type: "EGEN",
     lenke: "https://www.nav.no",
     status: "PLANLAGT",
+    opprettetDato: 1490777727199,
     beskrivelse: "Beskrivelse med\t\t tab og \n\nlinjeskift.",
     tagger: [{
         type: "ok",

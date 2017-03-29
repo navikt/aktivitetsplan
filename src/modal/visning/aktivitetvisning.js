@@ -1,6 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Sidetittel } from 'nav-frontend-typografi';
+import moment from 'moment';
 import { Knapp } from 'nav-react-design/dist/knapp';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
@@ -12,9 +13,10 @@ import { slettAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
+import { TILLAT_SLETTING } from '~config' // eslint-disable-line
 
 
-function Aktivitetvisning({ params, aktiviteter, doSlettAktivitet }) {
+function Aktivitetvisning({ params, aktiviteter, oppfolgingStatus, doSlettAktivitet }) {
     const { id } = params;
     const valgtAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === id);
 
@@ -26,6 +28,11 @@ function Aktivitetvisning({ params, aktiviteter, doSlettAktivitet }) {
         doSlettAktivitet(valgtAktivitet);
         history.push('/');
     }
+
+    const tillatSletting = TILLAT_SLETTING  && (
+        !oppfolgingStatus.underOppfolging ||
+        moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
+        );
 
     return (
         <ModalHeader
@@ -54,7 +61,7 @@ function Aktivitetvisning({ params, aktiviteter, doSlettAktivitet }) {
 
             <ModalFooter>
                 {/* TODO: tekster*/}
-                <Knapp onClick={slett} className="knapp-liten modal-footer__knapp">Slett</Knapp>
+                {tillatSletting && <Knapp onClick={slett} className="knapp-liten modal-footer__knapp">Slett</Knapp>}
             </ModalFooter>
         </ModalHeader>
     );
@@ -66,7 +73,8 @@ Aktivitetvisning.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter
+    aktiviteter: state.data.aktiviteter,
+    oppfolgingStatus: state.data.oppfolgingStatus.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
