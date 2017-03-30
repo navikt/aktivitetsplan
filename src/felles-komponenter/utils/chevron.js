@@ -1,5 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import classNames from 'classnames';
+import 'nav-frontend-chevron-style'; // eslint-disable-line import/extensions
 
 const cls = (orientasjon, className) => classNames('chevronboks', className, {
     'chevron--hoyre': orientasjon === 'høyre',

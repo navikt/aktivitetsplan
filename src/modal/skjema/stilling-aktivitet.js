@@ -6,9 +6,6 @@ import { lagNyAktivitet } from '../../ducks/aktiviteter';
 import history from './../../history';
 import { STILLING_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
-import ModalFooter from './../modal-footer';
-import RemoteSubmitKnapp from './remote-submit-knapp';
-
 
 function StillingAktivitet({ onLagreNyAktivitet }) {
     const onLagNyAktivitetSubmit = (aktivitet) => {
@@ -23,9 +20,6 @@ function StillingAktivitet({ onLagreNyAktivitet }) {
             <ModalContainer>
                 <StillingAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
             </ModalContainer>
-            <ModalFooter>
-                <RemoteSubmitKnapp formNavn="stilling-aktivitet" className="modal-footer__knapp" />
-            </ModalFooter>
         </section>
     );
 }
