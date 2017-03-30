@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import Textarea from 'nav-frontend-skjema/src/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
+import { LabelledField, validForm, rules } from 'react-redux-form-validation';
 import { dateToISODate } from '../../utils';
 import DatoFelt from './datovelger/dato-felt';
 import './skjema.less';
@@ -70,15 +70,10 @@ function StillingAktivitetForm(props) {
                 >
                     <FormattedMessage id="stilling-aktivitet-form.label.lenke" />
                 </LabelledField>
-                <CustomField
-                    name="beskrivelse"
-                    customComponent={
-                        <Textarea
-                            id="besrkivelse-textarea"
-                            className="skjemaelement__input input--fullbredde"
-                            label={<FormattedMessage id="stilling-aktivitet-form.label.beskrivelse" />}
-                            maxLength={BESKRIVELSE_MAKS_LENGDE}
-                        />}
+                <Textarea
+                    feltNavn="beskrivelse"
+                    labelId="stilling-aktivitet-form.label.beskrivelse"
+                    maxLength={BESKRIVELSE_MAKS_LENGDE}
                 />
                 <LabelledField
                     name="arbeidssted"
