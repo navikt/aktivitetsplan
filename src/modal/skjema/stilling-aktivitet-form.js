@@ -72,15 +72,10 @@ function StillingAktivitetForm(props) {
             >
                 <FormattedMessage id="stilling-aktivitet-form.label.lenke" />
             </LabelledField>
-            <CustomField
-                name="beskrivelse"
-                customComponent={
-                    <Textarea
-                        id="besrkivelse-textarea"
-                        className="skjemaelement__input input--fullbredde"
-                        label={<FormattedMessage id="stilling-aktivitet-form.label.beskrivelse" />}
-                        maxLength={BESKRIVELSE_MAKS_LENGDE}
-                    />}
+            <Textarea
+                feltNavn="beskrivelse"
+                labelId="stilling-aktivitet-form.label.beskrivelse"
+                maxLength={BESKRIVELSE_MAKS_LENGDE}
             />
             <LabelledField
                 name="arbeidssted"

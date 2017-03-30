@@ -13,6 +13,8 @@ const BABEL_INCLUDE = [
     /example/
 ];
 
+const nodeModulesPath = __dirname + "/node_modules";
+
 const RULES = [
     {
         test: /\.jsx?/,
@@ -43,8 +45,8 @@ const RULES = [
                 modifyVars: {
                     "modig-frontend-images-root-url": "\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/img\'",
                     "baseImagePath": "\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/\'",
-                    "nodeModulesPath":"\'./../../\'",
-                    "coreModulePath":"\'./../../\'"
+                    "nodeModulesPath": JSON.stringify(nodeModulesPath),
+                    "coreModulePath": JSON.stringify(nodeModulesPath)
                 },
                 sourceMap: true
             }
