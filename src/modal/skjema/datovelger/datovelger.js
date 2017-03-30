@@ -24,7 +24,7 @@ function validerDatoField(input, alternativer) {
     if (!input) {
         return undefined;
     } else if (!erGyldigISODato(input)) {
-        return 'Datoen må være på formatet dd.mm.åååå';
+        return 'Ugyldig dato';
     } else if (alternativer && (alternativer.fra || alternativer.til)) {
         return validerPeriode(input, alternativer);
     }
