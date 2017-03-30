@@ -10,51 +10,7 @@
         <version>3.2</version>
     </parent>
 
-    <artifactId>aktivitetsplan-tekster</artifactId>
+    <artifactId>aktivitetsplan-felles-tekster</artifactId>
     <version>0.1-SNAPSHOT</version>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>no.nav.maven.plugins</groupId>
-                <artifactId>aura-maven-plugin</artifactId>
-                <version>6.1.0</version>
-                <configuration>
-                    <apps>${project.parent.artifactId}:${project.version}</apps>
-                    <envConfigUrl>https://envconfig.adeo.no/conf</envConfigUrl>
-                    <username>admin</username>
-                    <password>admin</password>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>no.nav.sbl.tekster</groupId>
-                <artifactId>maven-tekster-merger</artifactId>
-                <version>1.11</version>
-                <executions>
-                    <execution>
-                        <id>merge</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>merge</goal>
-                        </goals>
-                        <configuration>
-                            <tekster>src/main/tekster</tekster>
-                            <outputDirectory>${project.build.outputDirectory}/tekster</outputDirectory>
-                            <!--<autoFix>true</autoFix>-->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    <scm>
-      <developerConnection>scm:git:http://stash.devillo.no/scm/sbl/aktivitetsplan.git</developerConnection>
-      <url>http://stash.devillo.no/projects/SBL/repos/aktivitetsplan/browse</url>
-    </scm>
 </project>
