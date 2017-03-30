@@ -51,8 +51,8 @@ function EgenAktivitetForm(props) {
                 labelClass="skjemaelement__label"
             ><FormattedMessage id="egen-aktivitet-form.label.overskrift" /></LabelledField>
             <div className="dato-container">
-                <DatoFelt feltNavn="fraDato" labelId="egen-aktivitet-form.fra-dato" />
-                <DatoFelt feltNavn="tilDato" labelId="egen-aktivitet-form.til-dato" />
+                <DatoFelt feltNavn="fraDato" labelId="egen-aktivitet-form.label.fra-dato" />
+                <DatoFelt feltNavn="tilDato" labelId="egen-aktivitet-form.label.til-dato" />
             </div>
             <LabelledField
                 name="lenke"

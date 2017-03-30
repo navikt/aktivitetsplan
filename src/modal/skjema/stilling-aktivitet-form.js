@@ -60,8 +60,8 @@ function StillingAktivitetForm(props) {
                 <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
             </LabelledField>
             <div className="dato-container">
-                <DatoFelt feltNavn="fraDato" labelId="stilling-aktivitet-form.fra-dato" />
-                <DatoFelt feltNavn="tilDato" labelId="stilling-aktivitet-form.til-dato" />
+                <DatoFelt feltNavn="fraDato" labelId="stilling-aktivitet-form.label.fra-dato" />
+                <DatoFelt feltNavn="tilDato" labelId="stilling-aktivitet-form.label.til-dato" />
             </div>
             <LabelledField
                 name="lenke"
