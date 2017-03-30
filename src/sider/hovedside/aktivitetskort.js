@@ -1,7 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
-import { Link } from 'react-router';
+import Linke from './../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import { formaterDato } from '../../utils';
@@ -27,8 +27,8 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
 
     const aktivitetsKort = (
         <div style={{ opacity: isDragging ? 0.4 : 1 }}>
-            <Link
-                to={`aktivitet/aktivitet/${aktivitet.id}`}
+            <Linke
+                href={`aktivitet/aktivitet/${aktivitet.id}`}
                 className={classNames('aktivitetskort', erFlyttbar && 'aktivitetskort--flyttbar')}
             >
                 <div>
@@ -40,7 +40,7 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
                     </div>
                     <AktivitetskortTillegg aktivitet={aktivitet} />
                 </div>
-            </Link>
+            </Linke>
         </div>
     );
 
