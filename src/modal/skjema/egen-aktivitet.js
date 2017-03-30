@@ -6,8 +6,6 @@ import ModalHeader from '../modal-header';
 import { lagNyAktivitet } from '../../ducks/aktiviteter';
 import { EGEN_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
-import ModalFooter from '../modal-footer';
-import RemoteSubmitKnapp from './remote-submit-knapp';
 
 
 function EgenAktivitet({ onLagreNyAktivitet }) {
@@ -26,9 +24,6 @@ function EgenAktivitet({ onLagreNyAktivitet }) {
             <ModalContainer>
                 <EgenAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
             </ModalContainer>
-            <ModalFooter>
-                <RemoteSubmitKnapp formNavn="egen-aktivitet" className="modal-footer__knapp" />
-            </ModalFooter>
         </article>
     );
 }
@@ -43,4 +38,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(EgenAktivitet);
-
