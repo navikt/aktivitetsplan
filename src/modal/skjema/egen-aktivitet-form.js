@@ -2,9 +2,10 @@ import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import Textarea from 'nav-frontend-skjema/src/textarea';
 import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
 import DatoFelt from './datovelger/dato-felt';
-import Textarea from './textarea';
+// import Textarea from './textarea';
 import './skjema.less';
 
 // TODO Feil i rules, rettet i PR, overskriver imens. Bytt når ny versjon av react-redux-form-validation er klar
@@ -32,7 +33,7 @@ const begrensetBeskrivelseLengde =
 
 function EgenAktivitetForm(props) {
     return (
-        <form className="aktivitetskjema" onSubmit={props.handleSubmit} noValidate="noValidate">
+        <form onSubmit={props.handleSubmit} noValidate="noValidate" className="skjema-innlogget aktivitetskjema">
             {props.errorSummary}
             <div className="aktivitetskjema__header">
                 <Innholdstittel>
@@ -46,9 +47,9 @@ function EgenAktivitetForm(props) {
             <LabelledField
                 name="tittel"
                 type="text"
-                className="skjema__input aktivitetskjema__tekstfelt"
-                inputClass="input--fullbredde"
-                labelClass="skjema__label"
+                className="skjemaelement"
+                inputClass="skjemaelement__input input--fullbredde"
+                labelClass="skjemaelement__label"
             ><FormattedMessage id="egen-aktivitet-form.label.overskrift" /></LabelledField>
             <div className="dato-container">
                 <DatoFelt feltNavn="fraDato" labelId="egen-aktivitet-form.fra-dato" />
@@ -57,24 +58,25 @@ function EgenAktivitetForm(props) {
             <LabelledField
                 name="lenke"
                 type="text"
-                className="skjema__input aktivitetskjema__tekstfelt"
-                inputClass="input--fullbredde"
-                labelClass="skjema__label"
+                className="skjemaelement"
+                inputClass="skjemaelement__input input--fullbredde"
+                labelClass="skjemaelement__label"
             ><FormattedMessage id="egen-aktivitet-form.label.lenke" /></LabelledField>
             <LabelledField
                 name="hensikt"
                 type="text"
-                className="skjema__input aktivitetskjema__tekstfelt"
-                inputClass="input--fullbredde"
-                labelClass="skjema__label"
+                className="skjemaelement"
+                inputClass="skjemaelement__input input--fullbredde"
+                labelClass="skjemaelement__label"
             ><FormattedMessage id="egen-aktivitet-form.label.hensikt" /></LabelledField>
             <CustomField
                 name="beskrivelse"
                 customComponent={
                     <Textarea
                         id="besrkivelse-textarea"
-                        className="skjema__input input--fullbredde aktivitetskjema__tekstomrade"
+                        className="skjemaelement__input input--fullbredde"
                         label={<FormattedMessage id="egen-aktivitet-form.label.beskrivelse" />}
+                        maxLength={BESKRIVELSE_MAKS_LENGDE}
                     />}
             />
         </form>

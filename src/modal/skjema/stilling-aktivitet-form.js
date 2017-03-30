@@ -3,10 +3,10 @@ import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import Textarea from 'nav-frontend-skjema/src/textarea';
 import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
 import { dateToISODate } from '../../utils';
 import DatoFelt from './datovelger/dato-felt';
-import Textarea from './textarea';
 import './skjema.less';
 
 // TODO Feil i rules, rettet i PR, overskriver imens. Bytt når ny versjon av react-redux-form-validation er klar
@@ -53,9 +53,9 @@ function StillingAktivitetForm(props) {
             <LabelledField
                 name="tittel"
                 type="text"
-                className="skjema__input aktivitetskjema__tekstfelt"
-                inputClass="input--fullbredde"
-                labelClass="skjema__label"
+                className="skjemaelement"
+                inputClass="skjemaelement__input input--fullbredde"
+                labelClass="skjemaelement__label"
             >
                 <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
             </LabelledField>
@@ -66,9 +66,9 @@ function StillingAktivitetForm(props) {
             <LabelledField
                 name="lenke"
                 type="text"
-                className="skjema__input aktivitetskjema__tekstfelt"
-                inputClass="input--fullbredde"
-                labelClass="skjema__label"
+                className="skjemaelement"
+                inputClass="skjemaelement__input input--fullbredde"
+                labelClass="skjemaelement__label"
             >
                 <FormattedMessage id="stilling-aktivitet-form.label.lenke" />
             </LabelledField>
@@ -77,34 +77,35 @@ function StillingAktivitetForm(props) {
                 customComponent={
                     <Textarea
                         id="besrkivelse-textarea"
-                        className="skjema__input input--fullbredde aktivitetskjema__tekstomrade"
+                        className="skjemaelement__input input--fullbredde"
                         label={<FormattedMessage id="stilling-aktivitet-form.label.beskrivelse" />}
+                        maxLength={BESKRIVELSE_MAKS_LENGDE}
                     />}
             />
             <LabelledField
                 name="arbeidssted"
                 type="text"
-                className="skjema__input aktivitetskjema__tekstfelt"
-                inputClass="input--fullbredde"
-                labelClass="skjema__label"
+                className="skjemaelement"
+                inputClass="skjemaelement__input input--fullbredde"
+                labelClass="skjemaelement__label"
             >
                 <FormattedMessage id="stilling-aktivitet-form.label.arbeidssted" />
             </LabelledField>
             <LabelledField
                 name="arbeidsgiver"
                 type="text"
-                className="skjema__input aktivitetskjema__tekstfelt"
-                inputClass="input--fullbredde"
-                labelClass="skjema__label"
+                className="skjemaelement"
+                inputClass="skjemaelement__input input--fullbredde"
+                labelClass="skjemaelement__label"
             >
                 <FormattedMessage id="stilling-aktivitet-form.label.arbeidsgiver" />
             </LabelledField>
             <LabelledField
                 name="kontaktperson"
                 type="text"
-                className="skjema__input aktivitetskjema__tekstfelt"
-                inputClass="input--fullbredde"
-                labelClass="skjema__label"
+                className="skjemaelement"
+                inputClass="skjemaelement__input input--fullbredde"
+                labelClass="skjemaelement__label"
             >
                 <FormattedMessage id="stilling-aktivitet-form.label.kontaktperson" />
             </LabelledField>
