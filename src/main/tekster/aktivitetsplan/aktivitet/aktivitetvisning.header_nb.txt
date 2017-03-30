@@ -1,10 +1,10 @@
-{ type, select,
-EGEN { Egen }
-STILLING { Stilling }
-} / { status, select,
+{ status, select,
 PLANLAGT { Planlagt }
 BRUKER_ER_INTERESSERT { Foreslått }
 GJENNOMFORT { Gjennomføres }
 FULLFORT { Fullført }
 AVBRUTT { Avbrutt }
+} / { type, select,
+EGEN { Egen }
+STILLING { Stilling }
 }
