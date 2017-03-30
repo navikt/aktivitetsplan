@@ -30,7 +30,8 @@ const mockData = {
     "/veilarbsituasjon/api/situasjon": {fnr: "10108000398", reservasjonKRR: false, manuell: false, underOppfolging: false, vilkarMaBesvares: false},
     "/veilarbaktivitet/api/aktivitet": {aktiviteter: [aktiviteter]},
     "/veilarbaktivitet/api/aktivitet/etiketter" : etiketter,
-    "/veilarbaktivitet/api/aktivitet/1/endringslogg": [{"endringsBeskrivelse":"livslopsendring, {\"fraStatus\": \"PLANLAGT\", \"tilStatus\": \"GJENNOMFORT\"}","endretAv":"1010800039824","endretDato":1490085292048}]
+    "/veilarbaktivitet/api/aktivitet/1/endringslogg": [{"endringsBeskrivelse":"livslopsendring, {\"fraStatus\": \"PLANLAGT\", \"tilStatus\": \"GJENNOMFORT\"}","endretAv":"1010800039824","endretDato":1490085292048}],
+    "/veilarbsituasjon/api/situasjon/mal": {mal: "Jeg er syk og skal oppereres nå i februar.\nJeg er i 50% stilling etter mars, men jeg ønsker på sikt å komme i fulltid.", endretAv: "1010800039824", dato: "1490847258890"}
 };
 
 const FETCH_DELAY = 0;
