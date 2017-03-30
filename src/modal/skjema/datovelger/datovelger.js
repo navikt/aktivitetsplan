@@ -2,12 +2,13 @@ import React, { Component, PropTypes as PT } from 'react';
 import { Field, autofill, touch } from 'redux-form';
 import { connect } from 'react-redux';
 import MaskedInput from 'react-maskedinput';
-import { autobind, fraInputdatoTilJSDato, dateToISODate, toDatePrettyPrint, erGyldigISODato, ISODateToDatePicker } from '../../../utils';
+import moment from 'moment';
+import { autobind, dateToISODate, toDatePrettyPrint, erGyldigISODato, ISODateToDatePicker } from '../../../utils';
 import DayPickerComponent from './day-picker';
 
 function validerPeriode(input, alternativer) {
     const { fra, til } = alternativer;
-    const inputDato = fraInputdatoTilJSDato(input);
+    const inputDato = moment(input).toDate();
     if (fra && til && (inputDato < fra || inputDato > til)) {
         return `Datoen må være innenfor perioden ${toDatePrettyPrint(fra)}-${toDatePrettyPrint(til)}`;
     }
