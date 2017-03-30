@@ -5,7 +5,6 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import Textarea from 'nav-frontend-skjema/src/textarea';
 import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
 import DatoFelt from './datovelger/dato-felt';
-// import Textarea from './textarea';
 import './skjema.less';
 
 // TODO Feil i rules, rettet i PR, overskriver imens. Bytt når ny versjon av react-redux-form-validation er klar
