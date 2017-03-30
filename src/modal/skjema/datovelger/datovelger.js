@@ -96,13 +96,13 @@ class DatoField extends Component {
 
         return (
             <div className="datovelger">
-                <label className="skjema__label" htmlFor={id}>{label}</label>
+                <label className="skjemaelement__label" htmlFor={id}>{label}</label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"
                     tabIndex=""
                     onClick={stopEvent}
                 >
-                    <div className="datovelger__inputContainer skjema__input">
+                    <div className="datovelger__inputContainer">
                         <MaskedInput
                             type="tel"
                             mask="11.11.1111"
@@ -110,7 +110,7 @@ class DatoField extends Component {
                             placeholder="dd.mm.åååå"
                             id={id}
                             disabled={disabled}
-                            className={`input--m datovelger__input${meta.touched && meta.error ? ' input--feil' : ''}`}
+                            className={`skjemaelement__input input--m datovelger__input${meta.touched && meta.error ? ' input--feil' : ''}`}
                             {...maskedInputProps}
                         />
                         <button
