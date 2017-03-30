@@ -35,7 +35,7 @@
     "modig-frontend": "git+http://stash.devillo.no/scm/felles/modig-frontend.git#modig-frontend-3.0.52",
     "moment": "^2.17.1",
     "nav-frontend-chevron-style": "0.1.1",
-    "nav-frontend-modal": "0.1.3",
+    "nav-frontend-modal": "0.1.7",
     "react-modal": "1.7.3",
     "nav-frontend-skjema": "0.0.3",
     "nav-frontend-skjema-style": "0.1.4",
