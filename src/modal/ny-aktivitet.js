@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { PropTypes as PT } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import { Link } from 'react-router';
 import Bilde from 'nav-react-design/dist/bilde';
-import Lenkepanel from '../felles-komponenter/utils/lenkepanel';
+import Lenkepanel from 'nav-frontend-lenkepanel';
 import ModalHeader from './modal-header';
 import leggTilAktivitetSvg from '../img/legg-til-aktivitet-illustrasjon.svg';
+
+function ReactRouterLink({ href, children, ...props }) {
+    return <Link to={href} {...props} >{children}</Link>;
+}
+ReactRouterLink.propTypes = {
+    href: PT.string.isRequired,
+    children: PT.node.isRequired
+};
 
 function NyAktivitet() {
     return (
@@ -16,15 +25,11 @@ function NyAktivitet() {
                 </Innholdstittel>
             </div>
             <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
-                <Lenkepanel url="/aktivitet/ny/stilling">
-                    <Undertittel className="lenketekst">
-                        <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
-                    </Undertittel>
+                <Lenkepanel href="/aktivitet/ny/stilling" linkCreator={ReactRouterLink}>
+                    <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
                 </Lenkepanel>
-                <Lenkepanel url="/aktivitet/ny/egen">
-                    <Undertittel className="lenketekst">
-                        <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
-                    </Undertittel>
+                <Lenkepanel href="/aktivitet/ny/egen" linkCreator={ReactRouterLink}>
+                    <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
                 </Lenkepanel>
             </div>
         </ModalHeader>

@@ -4,7 +4,7 @@
 
 .etikett-knapp-mixin(@farge) {
   .knapp();
-  .knapp-liten();
+  //.knapp-liten();
 
   color: @gray-text;
   border-color: @farge;
@@ -25,15 +25,11 @@
   margin-bottom: 1rem;
 
   &__etikett {
-    // kanseller skjema-innlogget-styling, da vi ikke har placeholdere
-    // TODO ta en ny vurdering på default skjema styling i skjema-innlogget.less
-    position: relative !important;
-    left: auto !important;;
 
     &-radio {
       opacity: 0;
       &:focus + .endre-aktivitet-etikett__etikett {
-        .mixin-focus-outline(3px);
+        //.mixin-focus-outline(3px);
       }
     }
 
