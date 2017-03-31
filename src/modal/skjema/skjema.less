@@ -12,14 +12,20 @@
   width: 210px;
 }
 
+.aktivitetskjema__lagre-knapp {
+  padding: 1.5rem 3.69rem 1.5rem 2.56rem;
+  border-top: 1px #cccccc solid;
+}
+
 .has-errors {
-  input {
-    .input--feil();
-  }
+  .skjemaelement--harFeil();
 }
 
 .inline-error-message {
-  .skjema__feilmelding();
+  font-style: italic;
+  color: @advarselRoed;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
 }
 
 .feedbacksummary {

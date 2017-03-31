@@ -8,6 +8,14 @@ import AktivitetsMal from './aktivitetsmal';
 
 function Hovedside({ children, routes }) {
     const modalId = routes[routes.length - 1].modalId;
+    const modal = !children ? (null) : (<Modal
+        key={modalId}
+        isOpen={children != null}
+        onRequestClose={() => history.push('/')}
+        contentLabel="aktivitet-modal"
+    >
+        {children}
+    </Modal>);
 
     return (
         <div className="hovedside">
@@ -18,14 +26,7 @@ function Hovedside({ children, routes }) {
                 </Lenke>
                 <AktivitetsTavle />
             </div>
-            <Modal
-                key={modalId}
-                isOpen={children != null}
-                onRequestClose={() => history.push('/')}
-                contentLabel="aktivitet-modal"
-            >
-                {children}
-            </Modal>
+            {modal}
         </div>
 
     );

@@ -7,8 +7,6 @@ import "../src/index.less";
 import App from "../src/app";
 import aktivitetsplanRouting from "../src/routing";
 
-ReactModal.setAppElement('#modal-a11y-wrapper');
-
 render(<App
     routing={aktivitetsplanRouting}
 />, document.getElementById('app'));

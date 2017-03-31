@@ -6,20 +6,20 @@
 @min-height: 6rem;
 
 .aktivitetstavle {
-
   &__kolonne {
     background-color: @color-kolonne-background;
     padding: 10px;
     transition: padding 0.2s ease-in-out;
     width: 304px;
     min-height: @min-height;
+    border-radius: 4px;
 
     &-wrapper {
       height: 100%;
     }
 
     &-header {
-      .blokk-xs();
+      .blokk-xs() !important; // oversktiver nav-frontend
       font-weight: bold;
       text-align: left;
     }
