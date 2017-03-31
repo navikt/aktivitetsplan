@@ -96,7 +96,7 @@ class DatoField extends Component {
         };
 
         return (
-            <div className="datovelger">
+            <div className="datovelger skjemaelement">
                 <label className="skjemaelement__label" htmlFor={id}>{label}</label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"

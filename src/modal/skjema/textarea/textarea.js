@@ -1,7 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
-import NavFrontendTextarea from 'nav-frontend-skjema/src/textarea';
+import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 
 
 function InnerTextAreaComponent({ input, labelId, maxLength }) {
