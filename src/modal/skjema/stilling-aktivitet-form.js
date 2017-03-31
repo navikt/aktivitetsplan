@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import Textarea from 'nav-frontend-skjema/src/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { LabelledField, validForm, rules } from 'react-redux-form-validation';
 import { dateToISODate } from '../../utils';
+import Textarea from './textarea/textarea';
 import DatoFelt from './datovelger/dato-felt';
 import './skjema.less';
 
