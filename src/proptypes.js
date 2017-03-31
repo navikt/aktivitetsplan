@@ -4,6 +4,7 @@ export const aktivitet = PT.shape({
     tittel: PT.string,
     fraDato: PT.number,
     tilDato: PT.number,
+    opprettetDato: PT.number,
     detaljer: PT.object,
     beskrivelse: PT.string
 });
