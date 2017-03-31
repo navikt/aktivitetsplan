@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { LabelledField, validForm, rules } from 'react-redux-form-validation';
+import { validForm, rules } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Textarea from './textarea/textarea';
+import Input from './input/input';
 import DatoFelt from './datovelger/dato-felt';
 import './skjema.less';
 
@@ -43,31 +44,13 @@ function EgenAktivitetForm(props) {
                     </Undertekst>
                 </div>
 
-                <LabelledField
-                    name="tittel"
-                    type="text"
-                    className="skjemaelement"
-                    inputClass="skjemaelement__input input--fullbredde"
-                    labelClass="skjemaelement__label"
-                ><FormattedMessage id="egen-aktivitet-form.label.overskrift" /></LabelledField>
+                <Input feltNavn="tittel" labelId="egen-aktivitet-form.label.overskrift" bredde="fullbredde" />
                 <div className="dato-container">
                     <DatoFelt feltNavn="fraDato" labelId="egen-aktivitet-form.label.fra-dato" senesteTom={props.currentTilDato} />
                     <DatoFelt feltNavn="tilDato" labelId="egen-aktivitet-form.label.til-dato" tidligsteFom={props.currentFraDato} />
                 </div>
-                <LabelledField
-                    name="lenke"
-                    type="text"
-                    className="skjemaelement"
-                    inputClass="skjemaelement__input input--fullbredde"
-                    labelClass="skjemaelement__label"
-                ><FormattedMessage id="egen-aktivitet-form.label.lenke" /></LabelledField>
-                <LabelledField
-                    name="hensikt"
-                    type="text"
-                    className="skjemaelement"
-                    inputClass="skjemaelement__input input--fullbredde"
-                    labelClass="skjemaelement__label"
-                ><FormattedMessage id="egen-aktivitet-form.label.hensikt" /></LabelledField>
+                <Input feltNavn="lenke" labelId="egen-aktivitet-form.label.lenke" bredde="fullbredde" />
+                <Input feltNavn="hensikt" labelId="egen-aktivitet-form.label.hensikt" bredde="fullbredde" />
                 <Textarea
                     feltNavn="beskrivelse"
                     labelId="egen-aktivitet-form.label.beskrivelse"
