@@ -1,8 +1,8 @@
 import React, { PropTypes as PT } from 'react';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
-import Linke from './../../felles-komponenter/utils/lenke';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
+import Linke from './../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import { formaterDato } from '../../utils';
