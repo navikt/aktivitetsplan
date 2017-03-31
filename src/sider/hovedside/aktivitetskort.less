@@ -35,6 +35,7 @@
   margin-bottom: 10px;
   color: @gray-text;
   width: 284px;
+  border-radius: 4px;
 
   &--flyttbar {
     cursor: pointer;
@@ -61,14 +62,13 @@
     border: 1px solid @color-hr;
   }
 
+  // Overskriver nav-frontend
   &__tittel {
-    font-weight: bold;
+    .blokk-xs() !important;
   }
 
   &__type {
-    color: @color-type;
     text-transform: uppercase;
-    font-size: 80%;
   }
 
   &__ikon-blokk {

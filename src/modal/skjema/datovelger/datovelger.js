@@ -2,12 +2,13 @@ import React, { Component, PropTypes as PT } from 'react';
 import { Field, autofill, touch } from 'redux-form';
 import { connect } from 'react-redux';
 import MaskedInput from 'react-maskedinput';
-import { autobind, fraInputdatoTilJSDato, dateToISODate, toDatePrettyPrint, erGyldigISODato, ISODateToDatePicker } from '../../../utils';
+import moment from 'moment';
+import { autobind, dateToISODate, toDatePrettyPrint, erGyldigISODato, ISODateToDatePicker } from '../../../utils';
 import DayPickerComponent from './day-picker';
 
 function validerPeriode(input, alternativer) {
     const { fra, til } = alternativer;
-    const inputDato = fraInputdatoTilJSDato(input);
+    const inputDato = moment(input).toDate();
     if (fra && til && (inputDato < fra || inputDato > til)) {
         return `Datoen må være innenfor perioden ${toDatePrettyPrint(fra)}-${toDatePrettyPrint(til)}`;
     }
@@ -24,7 +25,7 @@ function validerDatoField(input, alternativer) {
     if (!input) {
         return undefined;
     } else if (!erGyldigISODato(input)) {
-        return 'Datoen må være på formatet dd.mm.åååå';
+        return 'Ugyldig dato';
     } else if (alternativer && (alternativer.fra || alternativer.til)) {
         return validerPeriode(input, alternativer);
     }
@@ -96,13 +97,13 @@ class DatoField extends Component {
 
         return (
             <div className="datovelger">
-                <label className="skjema__label" htmlFor={id}>{label}</label>
+                <label className="skjemaelement__label" htmlFor={id}>{label}</label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"
                     tabIndex=""
                     onClick={stopEvent}
                 >
-                    <div className="datovelger__inputContainer skjema__input">
+                    <div className="datovelger__inputContainer">
                         <MaskedInput
                             type="tel"
                             mask="11.11.1111"
@@ -110,7 +111,7 @@ class DatoField extends Component {
                             placeholder="dd.mm.åååå"
                             id={id}
                             disabled={disabled}
-                            className={`input--m datovelger__input${meta.touched && meta.error ? ' input--feil' : ''}`}
+                            className={`skjemaelement__input input--m datovelger__input${meta.touched && meta.error ? ' input--feil' : ''}`}
                             {...maskedInputProps}
                         />
                         <button
