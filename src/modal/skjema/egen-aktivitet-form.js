@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import Textarea from 'nav-frontend-skjema/src/textarea';
-import { LabelledField, CustomField, validForm, rules } from 'react-redux-form-validation';
+import { LabelledField, validForm, rules } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import Textarea from './textarea/textarea';
 import DatoFelt from './datovelger/dato-felt';
 import './skjema.less';
 
@@ -68,15 +68,10 @@ function EgenAktivitetForm(props) {
                     inputClass="skjemaelement__input input--fullbredde"
                     labelClass="skjemaelement__label"
                 ><FormattedMessage id="egen-aktivitet-form.label.hensikt" /></LabelledField>
-                <CustomField
-                    name="beskrivelse"
-                    customComponent={
-                        <Textarea
-                            id="besrkivelse-textarea"
-                            className="skjemaelement__input input--fullbredde"
-                            label={<FormattedMessage id="egen-aktivitet-form.label.beskrivelse" />}
-                            maxLength={BESKRIVELSE_MAKS_LENGDE}
-                        />}
+                <Textarea
+                    feltNavn="beskrivelse"
+                    labelId="egen-aktivitet-form.label.beskrivelse"
+                    maxLength={BESKRIVELSE_MAKS_LENGDE}
                 />
             </div>
             <div className="aktivitetskjema__lagre-knapp">
