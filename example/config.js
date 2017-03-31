@@ -6,6 +6,8 @@ export const SITUASJON_PROXY_BASE_URL = '/veilarbsituasjon/api';
 
 export const CONTEXT_PATH = "/aktivitetsplanfelles";
 
+export const TILLAT_SLETTING = true;
+
 export const getDynamicBasePath = () => {
     return null;
 };

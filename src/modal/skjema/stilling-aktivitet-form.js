@@ -5,9 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { LabelledField, validForm, rules } from 'react-redux-form-validation';
+import { validForm, rules } from 'react-redux-form-validation';
 import { dateToISODate } from '../../utils';
 import Textarea from './textarea/textarea';
+import Input from './input/input';
 import DatoFelt from './datovelger/dato-felt';
 import './skjema.less';
 
@@ -49,60 +50,20 @@ function StillingAktivitetForm(props) {
                     </Undertekst>
                 </div>
 
-                <LabelledField
-                    name="tittel"
-                    type="text"
-                    className="skjemaelement"
-                    inputClass="skjemaelement__input input--fullbredde"
-                    labelClass="skjemaelement__label"
-                >
-                    <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
-                </LabelledField>
+                <Input feltNavn="tittel" labelId="stilling-aktivitet-form.label.overskrift" />
                 <div className="dato-container">
                     <DatoFelt feltNavn="fraDato" labelId="stilling-aktivitet-form.label.fra-dato" senesteTom={props.currentTilDato} />
                     <DatoFelt feltNavn="tilDato" labelId="stilling-aktivitet-form.label.til-dato" tidligsteFom={props.currentFraDato} />
                 </div>
-                <LabelledField
-                    name="lenke"
-                    type="text"
-                    className="skjemaelement"
-                    inputClass="skjemaelement__input input--fullbredde"
-                    labelClass="skjemaelement__label"
-                >
-                    <FormattedMessage id="stilling-aktivitet-form.label.lenke" />
-                </LabelledField>
+                <Input feltNavn="lenke" labelId="stilling-aktivitet-form.label.lenke" />
                 <Textarea
                     feltNavn="beskrivelse"
                     labelId="stilling-aktivitet-form.label.beskrivelse"
                     maxLength={BESKRIVELSE_MAKS_LENGDE}
                 />
-                <LabelledField
-                    name="arbeidssted"
-                    type="text"
-                    className="skjemaelement"
-                    inputClass="skjemaelement__input input--fullbredde"
-                    labelClass="skjemaelement__label"
-                >
-                    <FormattedMessage id="stilling-aktivitet-form.label.arbeidssted" />
-                </LabelledField>
-                <LabelledField
-                    name="arbeidsgiver"
-                    type="text"
-                    className="skjemaelement"
-                    inputClass="skjemaelement__input input--fullbredde"
-                    labelClass="skjemaelement__label"
-                >
-                    <FormattedMessage id="stilling-aktivitet-form.label.arbeidsgiver" />
-                </LabelledField>
-                <LabelledField
-                    name="kontaktperson"
-                    type="text"
-                    className="skjemaelement"
-                    inputClass="skjemaelement__input input--fullbredde"
-                    labelClass="skjemaelement__label"
-                >
-                    <FormattedMessage id="stilling-aktivitet-form.label.kontaktperson" />
-                </LabelledField>
+                <Input feltNavn="arbeidssted" labelId="stilling-aktivitet-form.label.arbeidssted" />
+                <Input feltNavn="arbeidsgiver" labelId="stilling-aktivitet-form.label.arbeidsgiver" />
+                <Input feltNavn="kontaktperson" labelId="stilling-aktivitet-form.label.kontaktperson" />
             </div>
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
