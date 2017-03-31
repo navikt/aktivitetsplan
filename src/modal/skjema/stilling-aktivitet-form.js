@@ -3,6 +3,7 @@ import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import moment from 'moment';
 import Textarea from 'nav-frontend-skjema/src/textarea';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { LabelledField, validForm, rules } from 'react-redux-form-validation';
@@ -58,8 +59,8 @@ function StillingAktivitetForm(props) {
                     <FormattedMessage id="stilling-aktivitet-form.label.overskrift" />
                 </LabelledField>
                 <div className="dato-container">
-                    <DatoFelt feltNavn="fraDato" labelId="stilling-aktivitet-form.label.fra-dato" />
-                    <DatoFelt feltNavn="tilDato" labelId="stilling-aktivitet-form.label.til-dato" />
+                    <DatoFelt feltNavn="fraDato" labelId="stilling-aktivitet-form.label.fra-dato" senesteTom={props.currentTilDato} />
+                    <DatoFelt feltNavn="tilDato" labelId="stilling-aktivitet-form.label.til-dato" tidligsteFom={props.currentFraDato} />
                 </div>
                 <LabelledField
                     name="lenke"
@@ -112,7 +113,9 @@ function StillingAktivitetForm(props) {
 
 StillingAktivitetForm.propTypes = {
     handleSubmit: PT.func.isRequired,
-    errorSummary: PT.node.isRequired
+    errorSummary: PT.node.isRequired,
+    currentFraDato: PT.instanceOf(Date),
+    currentTilDato: PT.instanceOf(Date)
 };
 
 const formNavn = 'stilling-aktivitet';
@@ -140,7 +143,9 @@ const mapStateToProps = (state, props) => {
             fraDato: dateToISODate(new Date()),
             ...aktivitet
         },
-        etikett: selector(state, 'etikett')
+        etikett: selector(state, 'etikett'),
+        currentFraDato: moment(selector(state, 'fraDato')).toDate(),
+        currentTilDato: moment(selector(state, 'tilDato')).toDate()
     };
 };
 

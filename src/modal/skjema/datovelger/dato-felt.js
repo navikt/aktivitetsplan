@@ -8,11 +8,13 @@ function parseDato(dato) {
     return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
 }
 
-function DatoFelt({ feltNavn, labelId, disabled }) {
+function DatoFelt({ feltNavn, labelId, disabled, tidligsteFom, senesteTom }) {
     const datoVelger = (
         <Datovelger
             label={<FormattedMessage id={labelId} />}
             disabled={disabled}
+            tidligsteFom={tidligsteFom}
+            senesteTom={senesteTom}
         />
     );
     return (
@@ -27,7 +29,9 @@ function DatoFelt({ feltNavn, labelId, disabled }) {
 DatoFelt.propTypes = {
     feltNavn: PT.string.isRequired,
     labelId: PT.string.isRequired,
-    disabled: PT.bool
+    disabled: PT.bool,
+    tidligsteFom: PT.instanceOf(Date),
+    senesteTom: PT.instanceOf(Date)
 };
 
 export default DatoFelt;

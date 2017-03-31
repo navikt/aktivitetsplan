@@ -76,12 +76,6 @@ export function proxy(func, { before, after } = {}) {
     };
 }
 
-export const fraInputdatoTilJSDato = (inputDato) => {
-    const d = parsedato(inputDato);
-    return new Date(d);
-};
-
-
 export const erGyldigISODato = (isoDato) => {
     return !!(isoDato && isoDato.length === 24 && moment(isoDato).isValid());
 };
