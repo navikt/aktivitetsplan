@@ -47,3 +47,11 @@ export function slettAktivitet(aktivitet) {
 export function hentMal() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`);
 }
+
+export function hentMalListe() {
+    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/malListe`);
+}
+
+export function lagreMal(mal) {
+    return putAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`);
+}
