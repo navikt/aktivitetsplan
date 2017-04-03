@@ -11,6 +11,7 @@ import Textarea from './textarea/textarea';
 import Input from './input/input';
 import DatoFelt from './datovelger/dato-felt';
 import './skjema.less';
+import { STATUS_PLANLAGT } from '../../constant';
 
 
 const TITTEL_MAKS_LENGDE = 255;
@@ -100,7 +101,7 @@ const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {
-            status: 'PLANLAGT',
+            status: STATUS_PLANLAGT,
             fraDato: dateToISODate(new Date()),
             ...aktivitet
         },

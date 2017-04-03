@@ -10,7 +10,7 @@ import Textarea from './textarea/textarea';
 import Input from './input/input';
 import DatoFelt from './datovelger/dato-felt';
 import './skjema.less';
-
+import { STATUS_BRUKER_ER_INTRESSERT } from '../../constant';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -91,7 +91,7 @@ const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {
-            status: 'PLANLAGT',
+            status: STATUS_BRUKER_ER_INTRESSERT,
             ...aktivitet
         },
         currentFraDato: moment(selector(state, 'fraDato')).toDate(),
