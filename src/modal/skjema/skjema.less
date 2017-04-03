@@ -17,20 +17,19 @@
   border-top: 1px #cccccc solid;
 }
 
-.inline-error-message {
-  font-style: italic;
-  color: @red-error;
-  margin-top: 0.5rem;
-  margin-bottom: 0;
-}
-
 .feedbacksummary {
   .blokk-m();
   padding: 1rem 1rem;
+  border-radius: 4px;
   background-color: @red-error;
   color: @hvit;
   a {
     color: @hvit;
     text-decoration: underline;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px @fokusOrange;
   }
 }

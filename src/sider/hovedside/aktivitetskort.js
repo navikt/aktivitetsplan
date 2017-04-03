@@ -34,10 +34,9 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
             >
                 <div className="aktivitetskort__wrapper">
                     <div className="aktivitetskort__blokk">
-                        <Undertekst className="aktivitetskort__type">{aktivitet.type}</Undertekst>
-                        <Element className="aktivitetskort__tittel">{aktivitet.tittel}</Element>
+                        <Undertekst tag="p" className="aktivitetskort__type">{aktivitet.type}</Undertekst>
+                        <Element tag="h3" className="aktivitetskort__tittel">{aktivitet.tittel}</Element>
                         <Normaltekst>{ [formaterDato(aktivitet.fraDato), formaterDato(aktivitet.tilDato)].filter((d) => d).join(' - ') }</Normaltekst>
-                        <p style={{ color: 'red' }}>{ /* TODO hvordan håndtere feil? */ aktivitet.error}</p>
                     </div>
                     <AktivitetskortTillegg aktivitet={aktivitet} />
                 </div>
