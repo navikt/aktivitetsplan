@@ -1,8 +1,8 @@
 import React, {Component, PropTypes as PT} from "react";
 import {connect} from "react-redux";
-import * as AppPT from "../../proptypes";
+import * as AppPT from "../../../proptypes";
 import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
-import {hentMal, hentMalListe, fjernMalListe, oppdaterMal} from "../../ducks/mal";
+import {hentMal, hentMalListe, fjernMalListe, oppdaterMal} from "../../../ducks/mal";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {Textarea} from "nav-frontend-skjema";
 import "./aktivitetsmal.less";

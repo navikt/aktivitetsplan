@@ -4,7 +4,7 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import Modal from '../../modal/modal';
 import AktivitetsTavle from './aktivitetstavle';
 import history from '../../history';
-import AktivitetsMal from './aktivitetsmal';
+import AktivitetsMal from './mal/aktivitetsmal';
 
 function Hovedside({ children, routes }) {
     const modalId = routes[routes.length - 1].modalId;
