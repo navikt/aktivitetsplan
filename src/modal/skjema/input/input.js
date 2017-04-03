@@ -3,21 +3,27 @@ import { Input as NavInput } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 
-function InnerInputComponent({ input, labelId, bredde }) {
+function InnerInputComponent({ input, labelId, bredde, inlineError }) {
+    const feil = inlineError ? { feilmelding: inlineError && inlineError.props.children[0] } : undefined;
     return (
-        <NavInput label={<FormattedMessage id={labelId} />} bredde={bredde} {...input} />
+        <NavInput label={<FormattedMessage id={labelId} />} bredde={bredde} feil={feil} {...input} />
     );
 }
 
 InnerInputComponent.propTypes = {
     labelId: PT.string.isRequired,
     bredde: PT.string,
+    inlineError: PT.node,
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
 function Input({ feltNavn, ...rest }) {
     return (
-        <CustomField name={feltNavn} customComponent={<InnerInputComponent {...rest} />} />
+        <CustomField
+            name={feltNavn}
+            errorClass="skjemaelement--harFeil"
+            customComponent={<InnerInputComponent {...rest} />}
+        />
     );
 }
 
