@@ -9,7 +9,7 @@ import { validForm, rules } from 'react-redux-form-validation';
 import { dateToISODate } from '../../utils';
 import Textarea from './textarea/textarea';
 import Input from './input/input';
-import DatoFelt from './datovelger/dato-felt';
+import Datovelger from './datovelger/datovelger';
 import './skjema.less';
 
 
@@ -52,8 +52,16 @@ function StillingAktivitetForm(props) {
 
                 <Input feltNavn="tittel" labelId="stilling-aktivitet-form.label.overskrift" />
                 <div className="dato-container">
-                    <DatoFelt feltNavn="fraDato" labelId="stilling-aktivitet-form.label.fra-dato" senesteTom={props.currentTilDato} />
-                    <DatoFelt feltNavn="tilDato" labelId="stilling-aktivitet-form.label.til-dato" tidligsteFom={props.currentFraDato} />
+                    <Datovelger
+                        feltNavn="fraDato"
+                        labelId="stilling-aktivitet-form.label.fra-dato"
+                        senesteTom={props.currentTilDato}
+                    />
+                    <Datovelger
+                        feltNavn="tilDato"
+                        labelId="stilling-aktivitet-form.label.til-dato"
+                        tidligsteFom={props.currentFraDato}
+                    />
                 </div>
                 <Input feltNavn="lenke" labelId="stilling-aktivitet-form.label.lenke" />
                 <Textarea

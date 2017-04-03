@@ -1,9 +1,11 @@
 import React, { Component, PropTypes as PT } from 'react';
-import { Field, autofill, touch } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+import { autofill, touch } from 'redux-form';
+import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
 import MaskedInput from 'react-maskedinput';
 import moment from 'moment';
-import { autobind, dateToISODate, toDatePrettyPrint, erGyldigISODato, ISODateToDatePicker } from '../../../utils';
+import { autobind, dateToISODate, toDatePrettyPrint, erGyldigISODato, ISODateToDatePicker, datePickerToISODate, erGyldigFormattertDato } from '../../../utils';
 import DayPickerComponent from './day-picker';
 
 function validerPeriode(input, alternativer) {
@@ -41,6 +43,7 @@ function stopEvent(event) {
 }
 
 class DatoField extends Component {
+
     constructor(props) {
         super(props);
         autobind(this);
@@ -57,7 +60,8 @@ class DatoField extends Component {
     }
 
     onDayClick(event) {
-        const { input, dispatch, skjemanavn } = this.props;
+        const { input, dispatch, meta } = this.props;
+        const skjemanavn = meta.form;
         const inputName = input.name;
         const isoDate = dateToISODate(new Date(event));
         dispatch(autofill(skjemanavn, inputName, isoDate));
@@ -88,8 +92,9 @@ class DatoField extends Component {
     }
 
     render() {
-        const { meta, input, id, label, disabled, tidligsteFom, senesteTom } = this.props;
+        const { meta, input, id, label, disabled, tidligsteFom, senesteTom, inlineError } = this.props;
 
+        const feil = inlineError ? inlineError.props.children[0] : undefined;
         const value = input.value;
         const maskedInputProps = { ...input,
             value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value
@@ -135,6 +140,7 @@ class DatoField extends Component {
                         lukk={this.lukk}
                     />}
                 </div>
+                <div role="alert" aria-live="assertive" className="skjemaelement__feilmelding">{feil}</div>
             </div>);
     }
 }
@@ -145,41 +151,41 @@ DatoField.propTypes = {
     label: PT.oneOfType([PT.string, PT.node]).isRequired,
     input: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
     dispatch: PT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
-    skjemanavn: PT.string.isRequired, // eslint-disable-line react/no-unused-prop-types
     disabled: PT.bool,
     tidligsteFom: PT.instanceOf(Date),
-    senesteTom: PT.instanceOf(Date)
+    senesteTom: PT.instanceOf(Date),
+    inlineError: PT.shape({ feilmelding: PT.string })
 };
+
+function parseDato(dato) {
+    return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
+}
 
 const ConnectedDatoField = connect()(DatoField);
 
 function Datovelger(props) {
-    const { meta, tidligsteFom, senesteTom, label, input } = props;
-    const { name } = input;
-    const { form } = meta;
+    const { feltNavn, labelId, tidligsteFom, senesteTom } = props;
+
+    const datoFelt = <ConnectedDatoField label={<FormattedMessage id={labelId} />} {...props} />;
     return (
-        <Field
-            name={name}
-            label={label}
-            component={ConnectedDatoField}
-            skjemanavn={form}
+        <CustomField
+            name={feltNavn}
+            parse={parseDato}
+            errorClass="skjemaelement--harFeil"
+            customComponent={datoFelt}
             validate={(value) => (
                 validerDatoField(value, {
                     fra: tidligsteFom,
                     til: senesteTom
                 })
             )}
-            disabled={props.disabled}
-            {...props}
         />
     );
 }
 
 Datovelger.propTypes = {
-    label: PT.node.isRequired,
-    disabled: PT.bool,
-    meta: PT.object, // eslint-disable-line react/forbid-prop-types
-    input: PT.object, // eslint-disable-line react/forbid-prop-types
+    feltNavn: PT.string.isRequired,
+    labelId: PT.string.isRequired,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date)
 };

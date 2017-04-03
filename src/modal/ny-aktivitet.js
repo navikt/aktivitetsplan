@@ -26,10 +26,10 @@ function NyAktivitet() {
             </div>
             <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
                 <Lenkepanel href="/aktivitet/ny/stilling" linkCreator={ReactRouterLink}>
-                    <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
+                    <FormattedMessage key="stilling" id="ny-aktivitet-modal.ledig-stilling" />
                 </Lenkepanel>
                 <Lenkepanel href="/aktivitet/ny/egen" linkCreator={ReactRouterLink}>
-                    <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
+                    <FormattedMessage key="egen" id="ny-aktivitet-modal.egen-aktivitet" />
                 </Lenkepanel>
             </div>
         </ModalHeader>
