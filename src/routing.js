@@ -7,10 +7,12 @@ import EgenAktivitet from './modal/skjema/egen-aktivitet';
 import StillingAktivitet from './modal/skjema/stilling-aktivitet';
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
+import Dialog from './dialog/dialog';
 
 export default (
     <Route>
         <IndexRoute component={Hovedside} />
+        <Route path="dialog" component={Dialog} />
         <Route path="aktivitet" component={Hovedside}>
             <Route modalId="modal1" path="ny" component={NyAktivitet} />
             <Route modalId="modal2" path="ny/egen" component={EgenAktivitet} />
