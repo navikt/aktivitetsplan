@@ -77,7 +77,6 @@ class DatoField extends Component {
             this.apne();
         }
     }
-
     apne() {
         this.setState({
             erApen: true
@@ -116,7 +115,7 @@ class DatoField extends Component {
                             placeholder="dd.mm.åååå"
                             id={id}
                             disabled={disabled}
-                            className={`skjemaelement__input input--m datovelger__input${meta.touched && meta.error ? ' input--feil' : ''}`}
+                            className={`skjemaelement__input input--m datovelger__input ${meta.touched && meta.error ? 'input--feil' : ''}`}
                             {...maskedInputProps}
                         />
                         <button
