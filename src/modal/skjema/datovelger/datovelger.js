@@ -10,15 +10,23 @@ import DayPickerComponent from './day-picker';
 
 function validerPeriode(input, alternativer) {
     const { fra, til } = alternativer;
-    const inputDato = moment(input).toDate();
-    if (fra && til && (inputDato < fra || inputDato > til)) {
-        return `Datoen må være innenfor perioden ${toDatePrettyPrint(fra)}-${toDatePrettyPrint(til)}`;
+    const inputDato = moment(input);
+
+    const fraDato = moment(fra);
+    const tilDato = moment(til);
+
+    if (fra && til && (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))) {
+        tilDato.add(1, 'day');
+        fraDato.subtract(1, 'day');
+        return `Datoen må være innenfor perioden ${toDatePrettyPrint(fraDato.toDate())}-${toDatePrettyPrint(tilDato.toDate())}`;
     }
-    if (til && inputDato > til) {
-        return `Datoen må være før ${toDatePrettyPrint(til)}`;
+    if (til && inputDato.isAfter(tilDato, 'day')) {
+        tilDato.add(1, 'day');
+        return `Datoen må være før ${toDatePrettyPrint(tilDato.toDate())}`;
     }
-    if (fra && inputDato < fra) {
-        return `Datoen må være etter ${toDatePrettyPrint(fra)}`;
+    if (fra && fraDato.isAfter(inputDato, 'day')) {
+        fraDato.subtract(1, 'day');
+        return `Datoen må være etter ${toDatePrettyPrint(fraDato.toDate())}`;
     }
     return undefined;
 }
