@@ -65,18 +65,18 @@ NavBar.propTypes = {
     showNextButton: PT.bool
 };
 
-let lukk;
-
 class DayPickerComponent extends Component {
     componentDidMount() {
-        lukk = () => {
+        const lukk = this.lukk = () => {
             this.props.lukk();
         };
+
+        document.body.click(); // fjern andre datepickere
         document.addEventListener('click', lukk);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('click', lukk);
+        document.removeEventListener('click', this.lukk);
     }
 
     getDateFromValue() {
