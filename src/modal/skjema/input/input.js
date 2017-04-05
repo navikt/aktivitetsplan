@@ -3,8 +3,8 @@ import { Input as NavInput } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 
-function InnerInputComponent({ input, labelId, bredde, inlineError }) {
-    const feil = inlineError ? { feilmelding: inlineError && inlineError.props.children[0] } : undefined;
+function InnerInputComponent({ input, labelId, bredde, errorMessage }) {
+    const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     return (
         <NavInput label={<FormattedMessage id={labelId} />} bredde={bredde} feil={feil} {...input} />
     );
@@ -13,7 +13,7 @@ function InnerInputComponent({ input, labelId, bredde, inlineError }) {
 InnerInputComponent.propTypes = {
     labelId: PT.string.isRequired,
     bredde: PT.string,
-    inlineError: PT.node,
+    errorMessage: PT.arrayOf(PT.string),
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
