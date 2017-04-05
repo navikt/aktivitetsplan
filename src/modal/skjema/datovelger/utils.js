@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { toDatePrettyPrint, erGyldigISODato } from '../../../utils';
 
-export function dateLessOrEqual(date1, date2) {
+export function dateLess(date1, date2) {
     const year1 = date1.getFullYear();
     const year2 = date2.getFullYear();
 
@@ -14,10 +14,10 @@ export function dateLessOrEqual(date1, date2) {
     if (year1 < year2) return true;
     else if (year1 === year2 && mon1 < mon2) return true;
 
-    return year1 === year2 && mon1 === mon2 && day1 <= day2;
+    return year1 === year2 && mon1 === mon2 && day1 < day2;
 }
 
-export function dateGreaterOrEqual(date1, date2) {
+export function dateGreater(date1, date2) {
     const year1 = date1.getFullYear();
     const year2 = date2.getFullYear();
 
@@ -30,7 +30,7 @@ export function dateGreaterOrEqual(date1, date2) {
     if (year1 > year2) return true;
     else if (year1 === year2 && mon1 > mon2) return true;
 
-    return year1 === year2 && mon1 === mon2 && day1 >= day2;
+    return year1 === year2 && mon1 === mon2 && day1 > day2;
 }
 
 export function validerPeriode(input, alternativer) {

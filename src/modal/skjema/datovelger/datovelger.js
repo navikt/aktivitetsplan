@@ -5,7 +5,7 @@ import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
 import MaskedInput from 'react-maskedinput';
 import { autobind, dateToISODate, erGyldigISODato, ISODateToDatePicker, datePickerToISODate, erGyldigFormattertDato } from '../../../utils';
-import { validerDatoField } from './utils'
+import { validerDatoField } from './utils';
 import DayPickerComponent from './day-picker';
 
 function stopEvent(event) {
