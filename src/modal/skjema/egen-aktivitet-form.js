@@ -8,9 +8,9 @@ import { validForm, rules } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Textarea from './textarea/textarea';
 import Input from './input/input';
-import DatoFelt from './datovelger/dato-felt';
+import Datovelger from './datovelger/datovelger';
 import './skjema.less';
-
+import { STATUS_BRUKER_ER_INTRESSERT } from '../../constant';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -46,8 +46,16 @@ function EgenAktivitetForm(props) {
 
                 <Input feltNavn="tittel" labelId="egen-aktivitet-form.label.overskrift" bredde="fullbredde" />
                 <div className="dato-container">
-                    <DatoFelt feltNavn="fraDato" labelId="egen-aktivitet-form.label.fra-dato" senesteTom={props.currentTilDato} />
-                    <DatoFelt feltNavn="tilDato" labelId="egen-aktivitet-form.label.til-dato" tidligsteFom={props.currentFraDato} />
+                    <Datovelger
+                        feltNavn="fraDato"
+                        labelId="egen-aktivitet-form.label.fra-dato"
+                        senesteTom={props.currentTilDato}
+                    />
+                    <Datovelger
+                        feltNavn="tilDato"
+                        labelId="egen-aktivitet-form.label.til-dato"
+                        tidligsteFom={props.currentFraDato}
+                    />
                 </div>
                 <Input feltNavn="lenke" labelId="egen-aktivitet-form.label.lenke" bredde="fullbredde" />
                 <Input feltNavn="hensikt" labelId="egen-aktivitet-form.label.hensikt" bredde="fullbredde" />
@@ -74,6 +82,7 @@ EgenAktivitetForm.propTypes = {
 const formNavn = 'egen-aktivitet';
 const EgenAktivitetReduxForm = validForm({
     form: formNavn,
+    errorSummaryTitle: <FormattedMessage id="egen-aktivitet-form.feiloppsummering-tittel" />,
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
@@ -89,7 +98,7 @@ const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {
-            status: 'PLANLAGT',
+            status: STATUS_BRUKER_ER_INTRESSERT,
             ...aktivitet
         },
         currentFraDato: moment(selector(state, 'fraDato')).toDate(),

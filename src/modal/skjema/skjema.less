@@ -17,24 +17,28 @@
   border-top: 1px #cccccc solid;
 }
 
-.has-errors {
-  .skjemaelement--harFeil();
-}
-
-.inline-error-message {
-  font-style: italic;
-  color: @advarselRoed;
-  margin-top: 0.5rem;
-  margin-bottom: 0;
-}
-
 .feedbacksummary {
   .blokk-m();
-  padding: 1rem 1rem;
+  padding: 1.5rem;
+  border-radius: 4px;
   background-color: @red-error;
   color: @hvit;
+  list-style-position: inside;
+  ul {
+    margin: 0;
+    padding-left: 0;
+  }
+  h3 {
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
   a {
     color: @hvit;
     text-decoration: underline;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px @fokusOrange;
   }
 }

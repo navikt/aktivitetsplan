@@ -9,29 +9,13 @@
 @color-varsling: rgba(255, 201, 131, 0.9);
 @color-info: #cce1f3;
 
-// NB: vi kanselerer default modig styling for lenker
-.aktivitetsplan {
-  a.aktivitetskort {
-    border: 2px solid @color-background;
-    &:hover {
-      border: 2px solid @color-background-hover;
-    }
-    &:focus {
-      border-color: @orange-focus;
-      background-color: @color-background;
-    }
-    &:active {
-      color: @gray-text;
-    }
-  }
-}
-
 .aktivitetskort {
   display: block;
   background-color: @color-background;
   padding: 0;
   position: relative;
   text-align: left;
+  text-decoration: none;
   margin-bottom: 10px;
   color: @gray-text;
   width: 284px;

@@ -2,6 +2,7 @@
 import React, { Component, PropTypes as PT } from 'react';
 import DayPicker, { DateUtils, LocaleUtils } from 'react-day-picker';
 import { erGyldigDato, erGyldigDatoformat } from '../../../utils';
+import { dateGreater, dateLess } from './utils';
 import './day-picker.less';
 
 export const MONTHS = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
@@ -65,18 +66,18 @@ NavBar.propTypes = {
     showNextButton: PT.bool
 };
 
-let lukk;
-
 class DayPickerComponent extends Component {
     componentDidMount() {
-        lukk = () => {
+        const lukk = this.lukk = () => {
             this.props.lukk();
         };
+
+        document.body.click(); // fjern andre datepickere
         document.addEventListener('click', lukk);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('click', lukk);
+        document.removeEventListener('click', this.lukk);
     }
 
     getDateFromValue() {
@@ -107,7 +108,9 @@ class DayPickerComponent extends Component {
     erDeaktivertDag(day) {
         const { tidligsteFom, senesteTom } = this.props;
         const tempDay = new Date(`${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())}`);
-        return tempDay < tidligsteFom || tempDay > senesteTom;
+
+        return (tidligsteFom && dateGreater(tidligsteFom, tempDay)) ||
+            (senesteTom && dateLess(senesteTom, tempDay));
     }
 
     render() {

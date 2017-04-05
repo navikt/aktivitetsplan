@@ -70,7 +70,7 @@
 
 .DayPicker-Caption {
   display: table-caption;
-  .mixin-typo-undertittel();
+  .typo-undertittel();
   height: 2em;
   line-height: 2em;
   text-align: center;
@@ -90,7 +90,7 @@
   display: table-cell;
   padding: .5em;
   text-align: center;
-  .mixin-typo-element();
+  .typo-element();
 
   abbr {
     text-decoration: none;
@@ -171,9 +171,12 @@
 
 .datovelger {
   position: relative;
-  width:50%;
+  width:100%;
   &__input {
     width:210px;
+    &::-ms-clear {
+      display: none;
+    }
   }
   &__inner {
     display: inline-block;
@@ -213,7 +216,7 @@
       right: 0;
       text-indent: -9999px;
       width: 2rem;
-      height: 2.2rem; // TODO Mega kjip pixelpushing
+      height: 2.4rem; // TODO Mega kjip pixelpushing
       border: 0;
       border-left: 1px solid @gray-icon;
       background-color: transparent;
