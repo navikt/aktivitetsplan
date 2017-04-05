@@ -127,6 +127,7 @@ class DatoField extends Component {
                             onKeyUp={this.onKeyUp}
                             onClick={this.toggle}
                             aria-pressed={this.erApen}
+                            type="button"
                         />
                     </div>
                     { this.state.erApen && <DayPickerComponent
