@@ -9,7 +9,7 @@ import './bekreftslettvisning.less';
 function BekreftSlettVisning({ slettAction, avbrytAction }) {
     return (
         <div className="bekreftSlettContainer">
-            <header className="modal-header"/>
+            <header className="modal-header" />
 
             <Bilde className="bekreftSlettContainer__stop-svg" src={stopVG} alt="stop icon" />
             <Systemtittel tag="h1" className="bekreftSlettContainer__stop-tekst">
