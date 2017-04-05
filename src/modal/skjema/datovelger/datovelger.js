@@ -91,9 +91,9 @@ class DatoField extends Component {
     }
 
     render() {
-        const { meta, input, id, label, disabled, tidligsteFom, senesteTom, inlineError } = this.props;
+        const { meta, input, id, label, disabled, tidligsteFom, senesteTom, errorMessage } = this.props;
 
-        const feil = inlineError ? inlineError.props.children[0] : undefined;
+        const feil = errorMessage ? errorMessage[0] : undefined;
         const value = input.value;
         const maskedInputProps = { ...input,
             value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value
@@ -153,7 +153,7 @@ DatoField.propTypes = {
     disabled: PT.bool,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date),
-    inlineError: PT.shape({ feilmelding: PT.string })
+    errorMessage: PT.arrayOf(PT.string)
 };
 
 function parseDato(dato) {
