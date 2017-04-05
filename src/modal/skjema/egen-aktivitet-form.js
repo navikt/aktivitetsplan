@@ -74,8 +74,6 @@ EgenAktivitetForm.propTypes = {
 const formNavn = 'egen-aktivitet';
 const EgenAktivitetReduxForm = validForm({
     form: formNavn,
-    onSubmit: () => {
-    },
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],

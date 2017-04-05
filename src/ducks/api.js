@@ -53,5 +53,5 @@ export function hentMalListe() {
 }
 
 export function lagreMal(mal) {
-    return putAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`);
+    return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`, mal);
 }

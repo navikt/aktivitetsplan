@@ -5,6 +5,7 @@ import EkspanderbartPanel from "nav-frontend-ekspanderbartpanel";
 import {hentMal, hentMalListe, fjernMalListe, oppdaterMal} from "../../../ducks/mal";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {Textarea} from "nav-frontend-skjema";
+import AktivitetsmalForm from "./aktivitetsmal-form"
 import "./aktivitetsmal.less";
 
 class AktivitetsMal extends Component {
@@ -29,15 +30,9 @@ class AktivitetsMal extends Component {
         }
     };
 
-    rediger = () => {
+    toggleRedigering = () => {
         this.setState({
-            redigering: true
-        })
-    };
-
-    lagre = () => {
-        this.setState({
-            redigering: false
+            redigering: !this.state.redigering
         })
     };
 
@@ -49,17 +44,12 @@ class AktivitetsMal extends Component {
                 <EkspanderbartPanel tittel="Mål" onClick={this.hentGjeldendeMal}>
                     {this.state.redigering ? (
                             <div>
-                                <Textarea feltNavn="mal"
-                                          labelId="todo.mal.label"
-                                          label="Hva er ditt mål?"
-                                          defaultValue={mal}
-                                          maxLength={500}/>
-                                <Hovedknapp onClick={this.lagre}>Lagre</Hovedknapp>
+                                <AktivitetsmalForm mal={this.props.mal} onSubmit={(mal) => this.props.doOppdaterMal(mal, this.toggleRedigering)} />
                             </div>
                         ) : (
                             <div>
                                 <div>{mal}</div>
-                                <Hovedknapp onClick={this.rediger}>Rediger</Hovedknapp>
+                                <Hovedknapp onClick={this.toggleRedigering}>Rediger</Hovedknapp>
                                 {}
                             </div>
                         )}
@@ -98,7 +88,10 @@ const mapDispatchToProps = (dispatch) => ({
     doHentMal: () => hentMal()(dispatch),
     doHentMalListe: () => hentMalListe()(dispatch),
     doFjernMalListe: () => fjernMalListe()(dispatch),
-    doOppdaterMal: (mal) => oppdaterMal(mal)(dispatch)
+    doOppdaterMal: (mal, callback) => {
+        oppdaterMal(mal)(dispatch);
+        callback();
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal);

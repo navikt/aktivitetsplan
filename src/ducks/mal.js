@@ -37,11 +37,11 @@ export default function reducer(state = initalState, action) {
             return { ...state, status: STATUS.OK, liste: action.data };
         case LISTE_FJERN:
             return { ...state, status: STATUS.OK, liste: [] };
-        case OPPDATER_FEILET:
+        case OPPDATER_PENDING:
             return { ...state, status: STATUS.PENDING };
         case OPPDATER_FEILET:
             return { ...state, status: STATUS.ERROR, gjeldende: action.data };
-        case OPPDATER_FEILET:
+        case OPPDATER_OK:
             return { ...state, status: STATUS.OK, gjeldende: action.data };
         default:
             return state;
@@ -70,7 +70,7 @@ export function fjernMalListe() {
 }
 
 export function oppdaterMal(mal) {
-    return doThenDispatch(() => Api.hentMalListe(), {
+    return doThenDispatch(() => Api.lagreMal(mal), {
         OK: OPPDATER_OK,
         FEILET: OPPDATER_FEILET,
         PENDING: OPPDATER_PENDING

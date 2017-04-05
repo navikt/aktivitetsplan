@@ -82,7 +82,6 @@ StillingAktivitetForm.propTypes = {
 const formNavn = 'stilling-aktivitet';
 const StillingAktivitetReduxForm = validForm({
     form: formNavn,
-    onSubmit: () => null,
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
