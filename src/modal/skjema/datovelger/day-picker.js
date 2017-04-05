@@ -2,6 +2,7 @@
 import React, { Component, PropTypes as PT } from 'react';
 import DayPicker, { DateUtils, LocaleUtils } from 'react-day-picker';
 import { erGyldigDato, erGyldigDatoformat } from '../../../utils';
+import { dateGreaterOrEqual, dateLessOrEqual } from './utils';
 import './day-picker.less';
 
 export const MONTHS = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
@@ -107,7 +108,9 @@ class DayPickerComponent extends Component {
     erDeaktivertDag(day) {
         const { tidligsteFom, senesteTom } = this.props;
         const tempDay = new Date(`${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())}`);
-        return tempDay < tidligsteFom || tempDay > senesteTom;
+
+        return (tidligsteFom && dateGreaterOrEqual(tidligsteFom, tempDay)) ||
+            (senesteTom && dateLessOrEqual(senesteTom, tempDay));
     }
 
     render() {

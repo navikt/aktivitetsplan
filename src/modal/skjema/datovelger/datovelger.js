@@ -4,35 +4,9 @@ import { autofill, touch } from 'redux-form';
 import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
 import MaskedInput from 'react-maskedinput';
-import moment from 'moment';
-import { autobind, dateToISODate, toDatePrettyPrint, erGyldigISODato, ISODateToDatePicker, datePickerToISODate, erGyldigFormattertDato } from '../../../utils';
+import { autobind, dateToISODate, erGyldigISODato, ISODateToDatePicker, datePickerToISODate, erGyldigFormattertDato } from '../../../utils';
+import { validerDatoField } from './utils'
 import DayPickerComponent from './day-picker';
-
-function validerPeriode(input, alternativer) {
-    const { fra, til } = alternativer;
-    const inputDato = moment(input).toDate();
-    if (fra && til && (inputDato < fra || inputDato > til)) {
-        return `Datoen må være innenfor perioden ${toDatePrettyPrint(fra)}-${toDatePrettyPrint(til)}`;
-    }
-    if (til && inputDato > til) {
-        return `Datoen må være før ${toDatePrettyPrint(til)}`;
-    }
-    if (fra && inputDato < fra) {
-        return `Datoen må være etter ${toDatePrettyPrint(fra)}`;
-    }
-    return undefined;
-}
-
-function validerDatoField(input, alternativer) {
-    if (!input) {
-        return undefined;
-    } else if (!erGyldigISODato(input)) {
-        return 'Ugyldig dato';
-    } else if (alternativer && (alternativer.fra || alternativer.til)) {
-        return validerPeriode(input, alternativer);
-    }
-    return undefined;
-}
 
 function stopEvent(event) {
     try {
