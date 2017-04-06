@@ -1,4 +1,48 @@
+@import "../../../variables";
+
+@color-hr: #979797;
+
 .aktivitetmal {
-  width: 640px;
+  width: 940px;
   text-align: left;
+
+  &__tekst {
+    .blokk-m();
+    white-space: pre;
+  }
+
+  &__delelinje {
+    .blokk-s();
+    margin-top: 0;
+    border: 1px solid @color-hr;
+  }
+
+  &__innhold {
+    padding: 1rem;
+  }
+
+  &__link {
+    .blokk-s();
+    display: inline-block;
+  }
+
+  &__redigering--knapp {
+    margin-right: 1rem;
+  }
+
+  &__historikk {
+    .blokk-s();
+
+    &-skrevetav {
+      font-weight: bold;
+    }
+
+    &-tekst {
+      white-space: pre;
+    }
+  }
+}
+
+.ekspanderbartPanel__innhold {
+  padding: 0;
 }
