@@ -62,7 +62,7 @@ class AktivitetsMal extends Component {
                                     <hr className="aktivitetmal__delelinje"/>
                                     <div className="aktivitetmal__innhold">
                                         <a href="#" className="aktivitetmal__link"
-                                           onClick={this.hentMalListe}>{malListe.length !== 0 ? 'Vis ' : 'Skjul '}
+                                           onClick={this.hentMalListe}>{malListe.length === 0 ? 'Vis ' : 'Skjul '}
                                             tidligere lagrede mål</a>
                                         {malListe.map((mal, i) => {
                                             return (

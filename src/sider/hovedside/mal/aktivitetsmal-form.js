@@ -15,8 +15,7 @@ function AktivitetsmalForm(props) {
             <Hovedknapp className="aktivitetmal__redigering--knapp"><FormattedMessage id="Lagre"/></Hovedknapp>
             <button type="button" className="knapp knapp--hoved" onClick={props.handleCancel}><FormattedMessage
                 id="Avbryt"/></button>
-            // TODO: Bruk Hovedknapp når den er fikset til ikke å overskrive type attributt. Må ha type button for at
-            det ikke skal bli submit by default.
+            {/*TODO: Bruk Hovedknapp når den er fikset til ikke å overskrive type attributt. Må ha type button for at det ikke skal bli submit by default.*/}
         </form>
     );
 }
