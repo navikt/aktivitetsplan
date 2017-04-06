@@ -1,4 +1,4 @@
-import { API_BASE_URL, AKTIVITET_PROXY_BASE_URL, SITUASJON_PROXY_BASE_URL } from '~config'; // eslint-disable-line
+import { API_BASE_URL, DIALOG_BASE_URL, AKTIVITET_PROXY_BASE_URL, SITUASJON_PROXY_BASE_URL } from '~config'; // eslint-disable-line
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
 export function hentLedetekster() { // eslint-disable-line  import/prefer-default-export
@@ -15,6 +15,14 @@ export function godtaVilkar(hash) {
 
 export function hentVilkar() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/vilkar`);
+}
+
+export function hentDialog() {
+    return fetchToJson(`${DIALOG_BASE_URL}/dialog`);
+}
+
+export function nyDialog(dialog) {
+    return postAsJson(`${DIALOG_BASE_URL}/dialog`, dialog);
 }
 
 export function hentAktiviteter() {

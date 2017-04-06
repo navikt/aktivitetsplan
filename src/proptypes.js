@@ -9,6 +9,11 @@ export const aktivitet = PT.shape({
     beskrivelse: PT.string
 });
 
+export const dialog = PT.shape({
+    id: PT.string,
+    overskrift: PT.string
+});
+
 export const etikett = PT.shape({
     id: PT.string,
     type: PT.string,
