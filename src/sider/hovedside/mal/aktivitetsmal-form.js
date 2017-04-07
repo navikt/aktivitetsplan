@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { reduxForm } from 'redux-form';
 import Textarea from '../../../modal/skjema/textarea/textarea';
-import '../../../modal/skjema/skjema.less';
 
 
 function AktivitetsmalForm(props) {

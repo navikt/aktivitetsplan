@@ -10,9 +10,9 @@ export const LISTE_FEILET = 'malListe/FEILET';
 export const LISTE_PENDING = 'malListe/PENDING';
 export const LISTE_FJERN = 'malListe/FJERN';
 
-export const OPPDATER_OK = 'oppdaterMall/OK';
-export const OPPDATER_FEILET = 'oppdaterMall/FEILET';
-export const OPPDATER_PENDING = 'oppdaterMall/PENDING';
+export const OPPDATER_OK = 'oppdaterMal/OK';
+export const OPPDATER_FEILET = 'oppdaterMal/FEILET';
+export const OPPDATER_PENDING = 'oppdaterMal/PENDING';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
