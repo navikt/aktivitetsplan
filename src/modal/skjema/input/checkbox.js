@@ -3,31 +3,32 @@ import { Checkbox as NavCheckbox } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 
-function InnerInputComponent({ input, labelId, errorMessage }) {
+function InnerCheckboxComponent({ input, labelId, errorMessage }) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     return (
-        <NavCheckbox label={<FormattedMessage id={labelId} />} feil={feil} {...input} />
+        <NavCheckbox label={<FormattedMessage id={labelId} />} feil={feil} checked={input.value} {...input} />
     );
 }
 
-InnerInputComponent.propTypes = {
+InnerCheckboxComponent.propTypes = {
     labelId: PT.string.isRequired,
     errorMessage: PT.arrayOf(PT.string),
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
-function Input({ feltNavn, ...rest }) {
+function Checkbox({ feltNavn, className, ...rest }) {
     return (
         <CustomField
             name={feltNavn}
+            className={className}
             errorClass="skjemaelement--harFeil"
-            customComponent={<InnerInputComponent {...rest} />}
+            customComponent={<InnerCheckboxComponent {...rest} />}
         />
     );
 }
 
-Input.propTypes = {
+Checkbox.propTypes = {
     feltNavn: PT.string.isRequired
 };
 
-export default Input;
+export default Checkbox;
