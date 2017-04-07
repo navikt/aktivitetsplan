@@ -1,6 +1,6 @@
 {
   "name": "aktivitetsplan-felles",
-  "version": "0.1.1",
+  "version": "1.116.21-checkbox",
   "description": "Aktivitetsplan felles",
   "main": "src/app.js",
   "files": [
