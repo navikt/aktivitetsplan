@@ -1,6 +1,6 @@
 {
   "name": "aktivitetsplan-felles",
-  "version": "1.119.25-checkbox",
+  "version": "1.122.27-farge-variables",
   "description": "Aktivitetsplan felles",
   "main": "src/app.js",
   "files": [
