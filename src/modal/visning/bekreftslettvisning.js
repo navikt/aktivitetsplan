@@ -17,7 +17,7 @@ function BekreftSlettVisning({ slettAction, avbrytAction }) {
             </Systemtittel>
             <div className="bekreftSlettContainer__button-row">
                 <Fareknapp onClick={slettAction} autoFocus className="knapp-liten">Slett</Fareknapp>
-                <Knapp onClick={avbrytAction}  className="knapp-liten">Avbryt</Knapp>
+                <Knapp onClick={avbrytAction} className="knapp-liten">Avbryt</Knapp>
             </div>
         </div>
     );

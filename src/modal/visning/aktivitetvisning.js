@@ -85,7 +85,8 @@ class Aktivitetvisning extends Component {
                     {tillatSletting &&
                     <Knapp
                         onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
-                        className="knapp-liten modal-footer__knapp" autoFocus={this.state.settAutoFocusSlett}>
+                        className="knapp-liten modal-footer__knapp" autoFocus={this.state.settAutoFocusSlett}
+                    >
                         Slett
                     </Knapp>}
                 </ModalFooter>
