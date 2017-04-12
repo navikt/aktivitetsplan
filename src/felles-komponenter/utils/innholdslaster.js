@@ -1,5 +1,5 @@
 import React, { PropTypes as PT } from 'react';
-import Spinner from 'nav-react-design/dist/spinner';
+import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
 
 const array = (value) => (Array.isArray(value) ? value : [value]);
@@ -42,7 +42,7 @@ Innholdslaster.propTypes = {
     avhengigheter: PT.arrayOf(PT.object).isRequired,
     children: PT.oneOfType([PT.node, PT.func]).isRequired,
     className: PT.string,
-    spinnerStorrelse: PT.oneOf(['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl'])
+    spinnerStorrelse: PT.string
 };
 
 export default Innholdslaster;
