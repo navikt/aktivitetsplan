@@ -1,6 +1,6 @@
 {
   "name": "aktivitetsplan-felles",
-  "version": "1.124.29-redirect",
+  "version": "1.126.31-ie-bugs",
   "description": "Aktivitetsplan felles",
   "main": "src/app.js",
   "files": [
