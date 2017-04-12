@@ -1,19 +1,10 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
-import { Link } from 'react-router';
 import Bilde from 'nav-react-design/dist/bilde';
-import Lenkepanel from 'nav-frontend-lenkepanel';
+import Lenkepanel from '../felles-komponenter/lenkepanel';
 import ModalHeader from './modal-header';
 import leggTilAktivitetSvg from '../img/legg-til-aktivitet-illustrasjon.svg';
-
-function ReactRouterLink({ href, children, ...props }) {
-    return <Link to={href} {...props} >{children}</Link>;
-}
-ReactRouterLink.propTypes = {
-    href: PT.string.isRequired,
-    children: PT.node.isRequired
-};
 
 function NyAktivitet() {
     return (
@@ -25,17 +16,15 @@ function NyAktivitet() {
                 </Innholdstittel>
             </div>
             <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
-                <Lenkepanel href="/aktivitet/ny/stilling" linkCreator={ReactRouterLink}>
+                <Lenkepanel href="/aktivitet/ny/stilling">
                     <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
                 </Lenkepanel>
-                <Lenkepanel href="/aktivitet/ny/egen" linkCreator={ReactRouterLink}>
+                <Lenkepanel href="/aktivitet/ny/egen">
                     <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
                 </Lenkepanel>
             </div>
         </ModalHeader>
     );
 }
-
-NyAktivitet.propTypes = {};
 
 export default NyAktivitet;
