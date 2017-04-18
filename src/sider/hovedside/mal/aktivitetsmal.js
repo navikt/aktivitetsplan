@@ -69,9 +69,8 @@ class AktivitetsMal extends Component {
                                             tidligere lagrede mål</a>
                                         {malListe.map((mal) => (
                                             <div key={mal.dato} className="aktivitetmal__historikk">
-                                                <span
-                                                    className="aktivitetmal__historikk-skrevetav"
-                                                >Skrevet av deg</span> {formaterDatoDatoEllerTidSiden(mal.dato)}
+                                                <span className="aktivitetmal__historikk-skrevetav">
+                                                    Skrevet av deg</span> {formaterDatoDatoEllerTidSiden(mal.dato)}
                                                 <br />
                                                 <span className="aktivitetmal__historikk-tekst">{mal.mal}</span>
                                             </div>
