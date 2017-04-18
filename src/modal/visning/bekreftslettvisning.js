@@ -16,8 +16,8 @@ function BekreftSlettVisning({ slettAction, avbrytAction }) {
                 Er du sikker på at du vil slette aktiviteten?
             </Systemtittel>
             <div className="bekreftSlettContainer__button-row">
-                <Fareknapp onClick={slettAction} className="knapp-liten">Slett</Fareknapp>
-                <Knapp onClick={avbrytAction} className="knapp-liten modal-footer__knapp">Avbryt</Knapp>
+                <Fareknapp onClick={slettAction} autoFocus className="knapp-liten">Slett</Fareknapp>
+                <Knapp onClick={avbrytAction} className="knapp-liten">Avbryt</Knapp>
             </div>
         </div>
     );

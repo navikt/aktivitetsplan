@@ -9,15 +9,16 @@ export const STATUS = {
     ERROR: 'ERROR'
 };
 
-const CREDENTIALS = {
-    credentials: 'same-origin'
+const DEFAULT_CONFIG = {
+    credentials: 'same-origin',
+    redirect: 'manual' // ikke bli lurt av at backenden plutseling redirecter til login- eller feilside
 };
 
 export function sjekkStatuskode(response) {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;
     }
-    const error = new Error(response.statusText);
+    const error = new Error(response.statusText || response.type);
     error.response = response;
     throw error;
 }
@@ -59,7 +60,7 @@ export const getCookie = (name) => {
 };
 
 export function fetchToJson(url, config = {}) {
-    const configMedCredentials = { ...CREDENTIALS, ...config };
+    const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
     return (fetchInterceptor ? fetchInterceptor(fetch, url, configMedCredentials) : fetch(url, configMedCredentials))
         .then(sjekkStatuskode)
         .then(toJson);
