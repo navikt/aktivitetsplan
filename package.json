@@ -1,6 +1,6 @@
 {
   "name": "aktivitetsplan-felles",
-  "version": "1.128.33",
+  "version": "1.144.37",
   "description": "Aktivitetsplan felles",
   "main": "src/app.js",
   "files": [
