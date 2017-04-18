@@ -35,3 +35,9 @@ export const vilkar = PT.shape({
     text: PT.string,
     hash: PT.string
 });
+
+export const mal = PT.shape({
+    mal: PT.string,
+    endretAv: PT.string,
+    dato: PT.number
+});

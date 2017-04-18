@@ -5,6 +5,7 @@ import Modal from '../../modal/modal';
 import AktivitetsTavle from './aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje';
 import history from '../../history';
+import AktivitetsMal from './mal/aktivitetsmal';
 
 function Hovedside({ children, routes }) {
     const modalId = routes[routes.length - 1].modalId;
@@ -21,6 +22,7 @@ function Hovedside({ children, routes }) {
         <div className="hovedside">
             <div className="hovedsideinnhold">
                 <Navigasjonslinje />
+                <AktivitetsMal />
                 <Lenke className="hovedsideinnhold__aktivitetsknapp" href="/aktivitet/ny">
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenke>
