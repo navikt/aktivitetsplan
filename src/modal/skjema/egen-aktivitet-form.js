@@ -101,8 +101,8 @@ const mapStateToProps = (state, props) => {
             status: STATUS_BRUKER_ER_INTRESSERT,
             ...aktivitet
         },
-        currentFraDato: moment(selector(state, 'fraDato')).toDate(),
-        currentTilDato: moment(selector(state, 'tilDato')).toDate()
+        currentFraDato: selector(state, 'fraDato') ? moment(selector(state, 'fraDato')).toDate() : undefined,
+        currentTilDato: selector(state, 'tilDato') ? moment(selector(state, 'tilDato')).toDate() : undefined
     };
 };
 const mapDispatchToProps = () => ({});
