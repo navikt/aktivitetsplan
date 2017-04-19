@@ -40,10 +40,12 @@ export default function reducer(state = initalState, action) {
         case OPPRETTET:
             return [...state, data];
         case FLYTTER:
-            return nyStateMedOppdatertAktivitet(state, data.aktivitet, { nesteStatus: data.status });
+            return nyStateMedOppdatertAktivitet(state, data.aktivitet, { nesteStatus: data.status, laster: true });
+        case OPPDATER:
+            return nyStateMedOppdatertAktivitet(state, data.aktivitet, { laster: true });
         case FLYTT_OK:
         case OPPDATER_OK:
-            return nyStateMedOppdatertAktivitet(state, data);
+            return nyStateMedOppdatertAktivitet(state, data, { laster: false });
         case FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { error: data.error });
         case SLETT_OK:
@@ -82,6 +84,25 @@ export function oppdaterAktivitet(aktivitet) {
     });
 }
 
+export function avbrytAktivitet(aktivitet, begrunnelse) {
+    return (dispatch) => {
+        dispatch({ type: FLYTTER, data: { aktivitet } });
+        return doThenDispatch(() => new Promise(resolve => setTimeout(() => resolve(aktivitet), 1000)), {
+            OK: FLYTT_OK,
+            FEILET: FLYTT_FAIL
+        })(dispatch);
+    };
+}
+
+export function fullforAktivitet(aktivitet, begrunnelse) {
+    return (dispatch) => {
+        dispatch({ type: FLYTTER, data: { aktivitet } });
+        return doThenDispatch(() => new Promise(resolve => setTimeout(() => resolve(aktivitet), 1000)), {
+            OK: FLYTT_OK,
+            FEILET: FLYTT_FAIL
+        })(dispatch);
+    };
+}
 
 export function lagNyAktivitet(aktivitet) {
     return doThenDispatch(() => Api.lagNyAktivitet(aktivitet), {

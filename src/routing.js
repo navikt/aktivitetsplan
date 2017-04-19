@@ -8,6 +8,8 @@ import StillingAktivitet from './modal/skjema/stilling-aktivitet';
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
 import Dialog from './dialog/dialog';
+import BegrunnelseFullfortAktivitet from './modal/begrunnelse/begrunnelse-fullfort-aktivitet';
+import BegrunnelseAvbruttAktivitet from './modal/begrunnelse/begrunnelse-avbrutt-aktivitet';
 
 export default (
     <Route>
@@ -19,6 +21,8 @@ export default (
             <Route modalId="modal4" path="ny/stilling" component={StillingAktivitet} />
             <Route modalId="modal5" path="aktivitet/:id" component={Aktivitetvisning} />
             <Route modalId="modal6" path="aktivitet/:id/endre" component={EndreAktivitet} />
+            <Route modalId="begrunnelseAvbrutt" path="aktivitet/:id/avbryt" component={BegrunnelseAvbruttAktivitet} />
+            <Route modalId="begrunnelseFullfor" path="aktivitet/:id/fullfor" component={BegrunnelseFullfortAktivitet} />
         </Route>
         <Route path="*" component={Hovedside} />
     </Route>
