@@ -86,7 +86,12 @@ module.exports = function (env) {
         output: {
             path: path.resolve(__dirname, "build"),
             publicPath: "/aktivitetsplanfelles/",
-            filename: "bundle.js"
+            filename: "bundle.js",
+        },
+        devServer: {
+            historyApiFallback: {
+                index: '/aktivitetsplanfelles/'
+            }
         },
         plugins: PLUGINS,
     };
