@@ -1,5 +1,6 @@
 import * as Api from './api';
 import { doThenDispatch, STATUS } from './utils';
+import * as statuskoder from '../constant';
 
 // Actions
 export const HENTER = 'aktivitet/hent';
@@ -77,9 +78,15 @@ export function flyttAktivitet(aktivitet, status) {
     return (dispatch) => {
         dispatch({ type: FLYTTER, data: { aktivitet, status } });
 
-        Api.oppdaterAktivitetStatus(aktivitet, status)
-            .then((response) => dispatch({ type: FLYTT_OK, data: response }))
-            .catch((error) => dispatch({ type: FLYTT_FAIL, data: { aktivitet, error } }));
+        return Api.oppdaterAktivitetStatus({ ...aktivitet, status }, status)
+            .then((response) => {
+                dispatch({ type: FLYTT_OK, data: response });
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                dispatch({ type: FLYTT_FAIL, data: { aktivitet, error } });
+                return Promise.reject(error);
+            });
     };
 }
 
@@ -92,23 +99,13 @@ export function oppdaterAktivitet(aktivitet) {
 }
 
 export function avbrytAktivitet(aktivitet, begrunnelse) {
-    return (dispatch) => {
-        dispatch({ type: FLYTTER, data: { aktivitet } });
-        return doThenDispatch(() => new Promise(resolve => setTimeout(() => resolve(aktivitet), 1000)), {
-            OK: FLYTT_OK,
-            FEILET: FLYTT_FAIL
-        })(dispatch);
-    };
+    const nyAktivitet = { ...aktivitet, begrunnelse };
+    return flyttAktivitet(nyAktivitet, statuskoder.STATUS_AVBRUTT);
 }
 
 export function fullforAktivitet(aktivitet, begrunnelse) {
-    return (dispatch) => {
-        dispatch({ type: FLYTTER, data: { aktivitet } });
-        return doThenDispatch(() => new Promise(resolve => setTimeout(() => resolve(aktivitet), 1000)), {
-            OK: FLYTT_OK,
-            FEILET: FLYTT_FAIL
-        })(dispatch);
-    };
+    const nyAktivitet = { ...aktivitet, begrunnelse };
+    return flyttAktivitet(nyAktivitet, statuskoder.STATUS_FULLFOERT);
 }
 
 export function lagNyAktivitet(aktivitet) {

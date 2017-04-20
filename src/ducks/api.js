@@ -41,7 +41,7 @@ export function oppdaterAktivitet(aktivitet) {
 }
 
 export function oppdaterAktivitetStatus(aktivitet, status) {
-    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status/${status}`);
+    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
 }
 
 export function hentEtiketter() {

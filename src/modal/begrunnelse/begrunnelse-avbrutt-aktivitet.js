@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter
+    aktiviteter: state.data.aktiviteter.data
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BegrunnelseAvbruttAktivitet);

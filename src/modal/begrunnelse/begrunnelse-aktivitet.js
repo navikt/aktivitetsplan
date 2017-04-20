@@ -7,6 +7,13 @@ import Textarea from "nav-frontend-skjema/src/textarea";
 import Hovedknapp from "nav-frontend-knapper/src/hovedknapp";
 
 class BegrunnelseAktivitet extends Component {
+    onLagre() {
+        const onSuccess = () => history.goBack();
+        const onError = () => {};
+        this.props.onLagre(this.refs.beskrivelse.tekstomrade.value)
+            .then(onSuccess, onError);
+    }
+
     render() {
         return (
             <section>
@@ -31,7 +38,7 @@ class BegrunnelseAktivitet extends Component {
                         spinner={this.props.lagrer}
                         mini
                         autoDisableVedSpinner={true}
-                        onClick={() => this.props.onLagre(this.refs.beskrivelse.tekstomrade.value)}
+                        onClick={() => this.onLagre()}
                     >
                         Lagre
                     </Hovedknapp>
