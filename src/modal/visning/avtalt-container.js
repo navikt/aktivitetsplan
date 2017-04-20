@@ -5,9 +5,10 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Radio } from 'nav-frontend-skjema';
 import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
+import { FormattedMessage } from 'react-intl';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
+import { TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
 import * as AppPT from '../../proptypes';
-import {TILLAT_SET_AVTALT} from '~config' // eslint-disable-line
 
 
 class AvtaltContainer extends Component {
@@ -25,12 +26,17 @@ class AvtaltContainer extends Component {
         if (!TILLAT_SET_AVTALT) return null;
 
         const setAvtaltInnhold = (<div>
-            <Undertittel>Noe tull med nav</Undertittel>
+            <Undertittel>
+                <FormattedMessage id="sett-avtalt.header" />
+            </Undertittel>
             <div className="avtaltRadio">
-            <Radio onClick={() => this.setState({ visBekreftAvtalt: true })} label="Avtalt med NAV" name="avtalt" />
-            <HjelpetekstOver>
-                Dette er en lang hjelpetekst med noe sært innhold
-            </HjelpetekstOver>
+                <Radio
+                    onClick={() => this.setState({ visBekreftAvtalt: true })}
+                    label={<FormattedMessage id="sett-avtalt.label" />} name="avtalt"
+                />
+                <HjelpetekstOver>
+                    <FormattedMessage id="sett-avtalt.hjelpetekst" />
+                </HjelpetekstOver>
             </div>
             {this.state.visBekreftAvtalt &&
             <Knapp
@@ -42,7 +48,7 @@ class AvtaltContainer extends Component {
         const visAvtalt = (<div className="visAvtalt">
             <Icon kind="ok-sirkel-fylt" height="21px" />
             <Undertittel>
-                Aktivitet er satt til avtalt med NAV
+                <FormattedMessage id="satt-til-avtalt.tekst" />
             </Undertittel>
         </div>);
 
