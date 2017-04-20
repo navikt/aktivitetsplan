@@ -15,6 +15,8 @@ import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
 import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
+import BegrunnelseBoks from './begrunnelse-boks';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 
 
 class Aktivitetvisning extends Component {
@@ -55,6 +57,9 @@ class Aktivitetvisning extends Component {
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
 
+        const visBegrunnelse = valgtAktivitet.avtalt === true &&
+            (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
+
         return (
             <ModalHeader
                 normalTekstId="aktivitetvisning.header"
@@ -64,6 +69,12 @@ class Aktivitetvisning extends Component {
             >
                 <ModalContainer>
                     <div className="aktivitetvisning">
+
+                        <BegrunnelseBoks
+                            begrunnelse={valgtAktivitet.avsluttetKommentar}
+                            visible={visBegrunnelse}
+                        />
+
                         <Sidetittel id="modal-aktivitetsvisning-header">
                             {valgtAktivitet.tittel}
                         </Sidetittel>
