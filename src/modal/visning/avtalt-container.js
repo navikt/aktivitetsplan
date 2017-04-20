@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import { TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
 import * as AppPT from '../../proptypes';
+import './avtalt-container.less';
 
 
 class AvtaltContainer extends Component {

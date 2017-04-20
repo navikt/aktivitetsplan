@@ -19,6 +19,8 @@ import ModalContainer from '../modal-container';
 import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
 import AvtaltContainer from './avtalt-container';
+import './aktivitetvisning.less';
+
 
 const VisibleHenvendelser = visibleIfHOC(Henvendelser);
 
