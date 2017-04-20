@@ -1,6 +1,25 @@
+@import "./../../variables";
+
 .tilbakeknapp {
-  .chevronboks {
-    top: -5px;
-    margin-right: 0.75rem;
+  text-decoration: none;
+  .tilbakeknapp-innhold {
+    border-bottom: 0 !important;
+    .lenke();
+    .chevronboks {
+      top: -5px;
+      margin-right: 0.75rem;
+    }
+    &__tekst {
+      text-decoration: none;
+      .lenke();
+    }
+  }
+
+  &:focus {
+    outline: none;
+    .tilbakeknapp-innhold__tekst {
+      background: @orange-focus;
+    }
   }
 }
+
