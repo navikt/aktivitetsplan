@@ -24,16 +24,14 @@ class AvtaltContainer extends Component {
 
         if (!TILLAT_SET_AVTALT) return null;
 
-        const avtaltLabel = (<div>
-            Avtalt med NAV
+        const setAvtaltInnhold = (<div>
+            <Undertittel>Noe tull med nav</Undertittel>
+            <div className="avtaltRadio">
+            <Radio onClick={() => this.setState({ visBekreftAvtalt: true })} label="Avtalt med NAV" name="avtalt" />
             <HjelpetekstOver>
                 Dette er en lang hjelpetekst med noe sært innhold
             </HjelpetekstOver>
-        </div>);
-
-        const setAvtaltInnhold = (<div>
-            <Undertittel>Noe tull med nav</Undertittel>
-            <Radio onClick={() => this.setState({ visBekreftAvtalt: true })} label={avtaltLabel} name="avtalt" />
+            </div>
             {this.state.visBekreftAvtalt &&
             <Knapp
                 spinner={aktivitetData.oppdaterer}
@@ -41,9 +39,9 @@ class AvtaltContainer extends Component {
             >Bekreft</Knapp> }
         </div>);
 
-        const visAvtalt = (<div>
+        const visAvtalt = (<div className="visAvtalt">
+            <Icon kind="ok-sirkel-fylt" height="21px" />
             <Undertittel>
-                <Icon kind="ok-sirkel-fylt" height="21px" />
                 Aktivitet er satt til avtalt med NAV
             </Undertittel>
         </div>);
