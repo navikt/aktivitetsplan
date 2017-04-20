@@ -8,7 +8,7 @@ function InnerTextAreaComponent({ input, labelId, maxLength }) {
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"
-            label={<FormattedMessage id={labelId} />}
+            label={labelId && <FormattedMessage id={labelId} />}
             maxLength={maxLength}
             {...input}
         />
@@ -31,7 +31,7 @@ function Textarea({ feltNavn, ...rest }) {
 }
 
 Textarea.propTypes = {
-    feltNavn: PT.string.isRequired
+    feltNavn: PT.string
 };
 
 export default Textarea;

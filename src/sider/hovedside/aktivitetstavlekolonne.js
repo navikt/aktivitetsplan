@@ -9,8 +9,8 @@ import AktivitetsKort from './aktivitetskort';
 
 const mottaAktivitetsKort = {
 
-    canDrop() {
-        return true;
+    canDrop(props, monitor) {
+        return (props.status !== monitor.getItem().status);
     },
 
     drop({ doFlyttAktivitet, status }, monitor) {
