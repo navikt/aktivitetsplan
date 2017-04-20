@@ -26,7 +26,8 @@ class Aktivitetvisning extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            deleting: false
+            visBekreftSletting: false,
+            settAutoFocusSlett: false
         };
     }
 
@@ -38,7 +39,7 @@ class Aktivitetvisning extends Component {
 
         if (!valgtAktivitet) {
             return null;
-        } else if (this.state.deleting) {
+        } else if (this.state.visBekreftSletting) {
             const slettAction = () => {
                 doSlettAktivitet(valgtAktivitet);
                 history.push('/');
@@ -47,7 +48,9 @@ class Aktivitetvisning extends Component {
             return (
                 <BekreftSlettVisning
                     slettAction={slettAction}
-                    avbrytAction={() => this.setState({ deleting: false })}
+                    avbrytAction={() => this.setState({
+                        visBekreftSletting: false,
+                        settAutoFocusSlett: true })}
                 />
             );
         }
@@ -90,9 +93,11 @@ class Aktivitetvisning extends Component {
                     {/* TODO: tekster*/}
                     {tillatSletting &&
                     <Knapp
-                        onClick={() => this.setState({ deleting: true })}
-                        className="knapp-liten modal-footer__knapp"
-                    >                        Slett</Knapp>}
+                        onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
+                        className="knapp-liten modal-footer__knapp" autoFocus={this.state.settAutoFocusSlett}
+                    >
+                        Slett
+                    </Knapp>}
                 </ModalFooter>
             </ModalHeader>
         );
@@ -107,7 +112,7 @@ Aktivitetvisning.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter,
+    aktiviteter: state.data.aktiviteter.data,
     oppfolgingStatus: state.data.oppfolgingStatus.data,
     dialoger: state.data.dialog.data
 });

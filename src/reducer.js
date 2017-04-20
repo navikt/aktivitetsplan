@@ -7,6 +7,7 @@ import aktiviteterReducer from './ducks/aktiviteter';
 import etiketterReducer from './ducks/etiketter';
 import endringsloggReducer from './ducks/endringslogg';
 import dialogReducer from './ducks/dialog';
+import malReducer from './ducks/mal';
 
 
 export default combineReducers({
@@ -18,6 +19,7 @@ export default combineReducers({
         aktiviteter: aktiviteterReducer,
         etiketter: etiketterReducer,
         endringslogg: endringsloggReducer,
-        dialog: dialogReducer
+        dialog: dialogReducer,
+        mal: malReducer
     })
 });

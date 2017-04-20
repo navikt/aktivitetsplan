@@ -55,3 +55,15 @@ export function hentEtiketter() {
 export function slettAktivitet(aktivitet) {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`, { method: 'delete' });
 }
+
+export function hentMal() {
+    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`);
+}
+
+export function hentMalListe() {
+    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/malListe`);
+}
+
+export function lagreMal(mal) {
+    return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`, mal);
+}

@@ -53,7 +53,7 @@ const mapStateToProps = (state, props) => {
     const dialogId = props.dialogId;
 
     const dialoger = state.data.dialog.data;
-    const aktiviteter = state.data.aktiviteter;
+    const aktiviteter = state.data.aktiviteter.data;
 
     const dialog = dialoger.find((d) => d.id === dialogId) || {};
     const aktivitet = aktiviteter.find((a) => a.id === aktivitetId) || {};
