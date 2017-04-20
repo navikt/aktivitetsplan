@@ -5,7 +5,6 @@ import moment from 'moment';
 import { Knapp } from 'nav-react-design/dist/knapp';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
-import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
@@ -15,7 +14,7 @@ import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
 import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
-
+import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 
 class Aktivitetvisning extends Component {
 
@@ -67,12 +66,15 @@ class Aktivitetvisning extends Component {
                         <Sidetittel id="modal-aktivitetsvisning-header">
                             {valgtAktivitet.tittel}
                         </Sidetittel>
-                        <AktivitetEtiketter etiketter={valgtAktivitet.tagger} className="aktivitetvisning__etikett" />
                         <AktivitetsDetaljer
                             className="aktivitetvisning__detaljer"
                             valgtAktivitet={valgtAktivitet}
                         />
                         <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
+
+                        <hr className="aktivitetvisning__delelinje" />
+
+                        <OppdaterAktivitetStatus status={valgtAktivitet.status} tagger={valgtAktivitet.tagger} />
 
                         <hr className="aktivitetvisning__delelinje" />
 

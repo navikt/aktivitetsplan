@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
     doFlyttAktivitet: (aktivitet, status) => {
         if (status === STATUS_FULLFOERT) { //TODO legge til && avtalt
             history.push("/aktivitet/aktivitet/" + aktivitet.id + "/fullfor");
-        } else if(status === STATUS_AVBRUTT) { //TODO legge til && avtalt
+        } else if (status === STATUS_AVBRUTT) { //TODO legge til && avtalt
             history.push("/aktivitet/aktivitet/" + aktivitet.id + "/avbryt");
         } else {
             flyttAktivitet(aktivitet, status)(dispatch);
