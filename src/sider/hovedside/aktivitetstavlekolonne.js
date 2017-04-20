@@ -51,7 +51,7 @@ KolonneFunction.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter
+    aktiviteter: state.data.aktiviteter.data
 });
 
 const mapDispatchToProps = (dispatch) => ({

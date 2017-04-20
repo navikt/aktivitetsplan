@@ -2,17 +2,18 @@ import React, { PropTypes as PT } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router';
 import { erInternlenke } from '../../utils';
+import { visibleIfHOC } from '../../hocs/visible-if';
 
 const cls = (className, lenkeType) => classNames(className, lenkeType, 'lenke');
 
-function Lenke({ href, className, children }) {
+function Lenke({ href, className, children, ...rest }) {
     if (erInternlenke(href)) {
         return (
-            <Link to={href} className={cls(className, 'internlenke')}>{children}</Link>
+            <Link {...rest} to={href} className={cls(className, 'internlenke')}>{children}</Link>
         );
     }
     return (
-        <a href={href} className={cls(className, 'eksternlenke')} >{children}</a>
+        <a {...rest} href={href} className={cls(className, 'eksternlenke')} >{children}</a>
     );
 }
 
@@ -22,4 +23,4 @@ Lenke.propTypes = {
     className: PT.string
 };
 
-export default Lenke;
+export default visibleIfHOC(Lenke);

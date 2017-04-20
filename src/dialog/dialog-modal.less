@@ -1,0 +1,69 @@
+@import "../variables";
+
+/////////////////
+// TODO flyttes til nav-frontend
+.lukk-knapp {
+  float: right;
+}
+
+/////////////////
+
+@maxHeight: @mobil-hoyde;
+@headerHeight: 60px;
+
+.dialog-modal {
+  position: fixed;
+  margin: 0;
+  bottom: 0;
+  max-height: @maxHeight;
+  height: 100%;
+
+  @media (max-height: @maxHeight) {
+    background-color: red;
+  }
+
+  &__innhold {
+    display: flex;
+  }
+
+  &__ny-dialog {
+    padding: 1rem;
+  }
+
+  &__kolonne {
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+
+    &--dialog {
+      background-color: @gray-background;
+      right: 0;
+      z-index: 1;
+    }
+
+    &--dialoger {
+      background-color: white;
+      z-index: 2;
+    }
+
+    &-header {
+      position: relative;
+      padding: 1rem;
+      border-bottom: 1px solid @gray-foreground;
+      height: @headerHeight;
+
+      &--dialoger {
+        background-color: white;
+      }
+    }
+
+    &-innhold {
+      overflow-y: auto;
+      height: @maxHeight - @headerHeight;
+
+      &--dialog {
+        padding: 1rem;
+      }
+    }
+  }
+}
