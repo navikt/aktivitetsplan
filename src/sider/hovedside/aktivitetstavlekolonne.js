@@ -6,6 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { flyttAktivitet } from '../../ducks/aktiviteter';
 import AktivitetsKort from './aktivitetskort';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
+import history from './../../history';
 
 const mottaAktivitetsKort = {
 
@@ -55,7 +57,15 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
+    doFlyttAktivitet: (aktivitet, status) => {
+        if (status === STATUS_FULLFOERT) { //TODO legge til && avtalt
+            history.push("/aktivitet/aktivitet/" + aktivitet.id + "/fullfor");
+        } else if(status === STATUS_AVBRUTT) { //TODO legge til && avtalt
+            history.push("/aktivitet/aktivitet/" + aktivitet.id + "/avbryt");
+        } else {
+            flyttAktivitet(aktivitet, status)(dispatch);
+        }
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

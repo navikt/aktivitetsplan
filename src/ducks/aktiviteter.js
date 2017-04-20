@@ -98,13 +98,13 @@ export function oppdaterAktivitet(aktivitet) {
     });
 }
 
-export function avbrytAktivitet(aktivitet, begrunnelse) {
-    const nyAktivitet = { ...aktivitet, begrunnelse };
+export function avbrytAktivitet(aktivitet, avsluttetKommentar) {
+    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, statuskoder.STATUS_AVBRUTT);
 }
 
-export function fullforAktivitet(aktivitet, begrunnelse) {
-    const nyAktivitet = { ...aktivitet, begrunnelse };
+export function fullforAktivitet(aktivitet, avsluttetKommentar) {
+    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, statuskoder.STATUS_FULLFOERT);
 }
 
