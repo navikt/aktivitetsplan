@@ -1,5 +1,5 @@
 import * as Api from './api';
-import { doThenDispatch } from './utils';
+import { doThenDispatch, STATUS } from './utils';
 
 // Actions
 export const HENTER = 'aktivitet/hent';
@@ -22,13 +22,18 @@ export const SLETT = 'aktivitet/slett';
 export const SLETT_OK = 'aktivitet/slett/ok';
 export const SLETT_FAIL = 'aktivitet/slett/fail';
 
-const initalState = [];
+
+const initalState = {
+    data: [],
+    status: STATUS.NOT_STARTED
+};
+
 
 function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
-    const aktivitetIndex = state.findIndex((a) => a.id === aktivitet.id);
-    const nyState = [...state];
+    const aktivitetIndex = state.data.findIndex((a) => a.id === aktivitet.id);
+    const nyState = [...state.data];
     nyState[aktivitetIndex] = { ...aktivitet, ...aktivitetData };
-    return nyState;
+    return { ...state, data: nyState };
 }
 
 // Reducer
@@ -36,9 +41,11 @@ export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
         case HENTET:
-            return data.aktiviteter;
+            return { status: STATUS.OK, data: data.aktiviteter };
+        case HENTING_FEILET:
+            return { ...state, status: STATUS.ERROR };
         case OPPRETTET:
-            return [...state, data];
+            return { ...state, data: [...state.data, data] };
         case FLYTTER:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { nesteStatus: data.status });
         case FLYTT_OK:
@@ -47,7 +54,7 @@ export default function reducer(state = initalState, action) {
         case FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { error: data.error });
         case SLETT_OK:
-            return state.filter((a) => a.id !== data.id);
+            return state.data.filter((a) => a.id !== data.id);
         case SLETT:
         case SLETT_FAIL:
         default:

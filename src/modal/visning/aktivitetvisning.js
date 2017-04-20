@@ -102,7 +102,7 @@ Aktivitetvisning.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter,
+    aktiviteter: state.data.aktiviteter.data,
     oppfolgingStatus: state.data.oppfolgingStatus.data
 });
 
