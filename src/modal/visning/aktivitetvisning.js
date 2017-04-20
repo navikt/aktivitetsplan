@@ -2,7 +2,7 @@ import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { Knapp } from 'nav-react-design/dist/knapp';
+import { Knapp } from 'nav-frontend-knapper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
@@ -18,6 +18,7 @@ import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
 import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
+import AvtaltContainer from './avtalt-container';
 
 const VisibleHenvendelser = visibleIfHOC(Henvendelser);
 
@@ -34,7 +35,7 @@ class Aktivitetvisning extends Component {
     render() {
         const { params, aktiviteter, dialoger, doSlettAktivitet, oppfolgingStatus } = this.props;
         const { id } = params;
-        const valgtAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === id);
+        const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === id);
         const dialog = dialoger.find((d) => d.aktivitetId === id);
 
         if (!valgtAktivitet) {
@@ -79,14 +80,11 @@ class Aktivitetvisning extends Component {
                             valgtAktivitet={valgtAktivitet}
                         />
                         <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
-
-                        <hr className="aktivitetvisning__delelinje" />
-
-                        <EndringsloggForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__historikk" />
-
-                        <NyHenvendelse formNavn={`ny-henvendelse-aktivitet-${valgtAktivitetId}`} dialogId={dialog && dialog.id} aktivitetId={valgtAktivitetId} />
-                        <VisibleHenvendelser visible={!!dialog} dialog={dialog} />
                     </div>
+                    <AvtaltContainer aktivitet={valgtAktivitet} />
+                    <EndringsloggForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__historikk" />
+                    <NyHenvendelse formNavn={`ny-henvendelse-aktivitet-${valgtAktivitetId}`} dialogId={dialog && dialog.id} aktivitetId={valgtAktivitetId} />
+                    <VisibleHenvendelser visible={!!dialog} dialog={dialog} />
                 </ModalContainer>
 
                 <ModalFooter>
@@ -107,12 +105,14 @@ Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus,
-    aktiviteter: PT.arrayOf(AppPT.aktivitet),
+    aktiviteter: PT.shape({
+        data: PT.arrayOf(AppPT.aktivitet)
+    }),
     dialoger: PT.arrayOf(AppPT.dialog)
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter.data,
+    aktiviteter: state.data.aktiviteter,
     oppfolgingStatus: state.data.oppfolgingStatus.data,
     dialoger: state.data.dialog.data
 });

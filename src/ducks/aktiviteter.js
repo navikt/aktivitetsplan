@@ -25,7 +25,8 @@ export const SLETT_FAIL = 'aktivitet/slett/fail';
 
 const initalState = {
     data: [],
-    status: STATUS.NOT_STARTED
+    status: STATUS.NOT_STARTED,
+    oppdaterer: false
 };
 
 
@@ -49,8 +50,12 @@ export default function reducer(state = initalState, action) {
         case FLYTTER:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { nesteStatus: data.status });
         case FLYTT_OK:
+        case OPPDATER:
+            return { ...state, oppdaterer: true };
         case OPPDATER_OK:
-            return nyStateMedOppdatertAktivitet(state, data);
+            return nyStateMedOppdatertAktivitet({ ...state, oppdaterer: false }, data);
+        case OPPDATER_FEILET:
+            return { ...state, oppdaterer: false };
         case FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { error: data.error });
         case SLETT_OK:
