@@ -1,0 +1,28 @@
+@import "../../variables";
+
+.underelement-knapp(@image) {
+  background: url(@image) no-repeat left;
+  background-size: 1rem;
+  background-position-x: 1rem;
+
+  &--aktiv {
+    background-color: @navDypBla;
+    color: @white;
+  }
+}
+
+.underelementer-aktivitet {
+  text-align: center;
+
+  .underelementer-aktivitet { // Må gjøre knappe-selectorene litt sterkere for å kunne overstyre standard knappestyling
+    &__dialog-knapp {
+      // TODO erstatt med riktig bilde
+      .underelement-knapp("stop.svg");
+    }
+
+    &__historikk-knapp {
+      // TODO erstatt med riktig bilde
+      .underelement-knapp("stop.svg");
+    }
+  }
+}

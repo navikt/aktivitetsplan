@@ -1,61 +1,48 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import classNames from 'classnames';
 import { hentEndringsloggForAktivtet, fjernEndringsLogg } from '../../ducks/endringslogg';
 import * as AppPT from '../../proptypes';
 import { formaterDatoDatoEllerTidSiden } from '../../utils';
+import { visibleIfHOC } from '../../hocs/visible-if';
 import { STATUS } from '../../ducks/utils';
+
+
+function EndringsloggInnslag({ log }) {
+    const beskrivelse = log.endringsBeskrivelse.split(/,(.+)/);
+    return (
+        <p key={log.endretDato} className="endringslogg-for-aktivitet__innslag">
+            <b>Du </b>
+            <FormattedMessage
+                id={beskrivelse[0]}
+                values={JSON.parse(beskrivelse[1])}
+            />
+            <br />
+            {formaterDatoDatoEllerTidSiden(log.endretDato)}
+        </p>
+    );
+}
+EndringsloggInnslag.propTypes = {
+    log: AppPT.endringslogg.isRequired
+};
 
 class EndringsloggForAktivitet extends Component {
 
     componentWillMount() {
-        this.props.doFjernEndringsLogg();
+        const { doFjernEndringsLogg, doHentEndringsloggForAktivitet, aktivitet } = this.props;
+        doFjernEndringsLogg();
+        doHentEndringsloggForAktivitet(aktivitet);
     }
 
-    handleClick = () => {
-        const { endringslogg, doHentEndringsloggForAktivitet, aktivitet, doFjernEndringsLogg } = this.props;
-        if (endringslogg.length === 0) {
-            doHentEndringsloggForAktivitet(aktivitet);
-        } else {
-            doFjernEndringsLogg();
-        }
-    };
-
     render() {
-        const { status, endringslogg, className } = this.props;
+        const { status, endringslogg } = this.props;
 
-        function lagEndringsloggInnslag(log) {
-            const beskrivelse = log.endringsBeskrivelse.split(/,(.+)/);
-            return (
-                <p key={log.endretDato} className="endringslogg-for-aktivitet__innslag">
-                    <b>Du </b>
-                    <FormattedMessage
-                        id={beskrivelse[0]}
-                        values={JSON.parse(beskrivelse[1])}
-                    />
-                    <br />
-                    {formaterDatoDatoEllerTidSiden(log.endretDato)}
-                </p>
-            );
-        }
-
-        function lagEndringslogg(logg) {
-            return (logg.length === 0 && status === STATUS.OK) ?
-                <p><FormattedMessage id="livslopsendring.empty" /></p> :
-                logg.map((log, i) => lagEndringsloggInnslag(log)); // eslint-disable-line no-unused-vars
-        }
-
-        const cls = (givenClass) => classNames('endringslogg-for-aktivitet', givenClass);
-        const visSkjulTekst = `${endringslogg.length === 0 ? 'Vis ' : 'Skjul '}historikk`;
         return (
-            <section className={cls(className)}>
-                <a
-                    href="javascript:" // eslint-disable-line no-script-url
-                    className="endringslogg-for-aktivitet__lenke-knapp"
-                    onClick={this.handleClick}
-                >{visSkjulTekst}</a>
-                {lagEndringslogg(endringslogg)}
+            <section>
+                {endringslogg.length === 0 && status === STATUS.OK && (
+                    <p><FormattedMessage id="livslopsendring.empty" /></p>
+                )}
+                {endringslogg.map((log) => <EndringsloggInnslag log={log} />)}
             </section>
         );
     }
@@ -67,8 +54,7 @@ EndringsloggForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     doHentEndringsloggForAktivitet: PT.func.isRequired,
     doFjernEndringsLogg: PT.func.isRequired,
-    status: PT.string,
-    className: PT.string
+    status: PT.string
 };
 
 const mapStateToProps = (state) => ({
@@ -81,4 +67,4 @@ const mapDispatchToProps = (dispatch) => ({
     doFjernEndringsLogg: () => fjernEndringsLogg()(dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EndringsloggForAktivitet);
+export default visibleIfHOC(connect(mapStateToProps, mapDispatchToProps)(EndringsloggForAktivitet));

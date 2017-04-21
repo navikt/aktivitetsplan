@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import Lenke from '../../felles-komponenter/utils/lenke';
+import TallAlert from '../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../ducks/dialog';
 import './navigasjonslinje.less';
 
 function NavigasjonsElement({ sti, tekstId, children }) {
     return (
         <Lenke href={sti} className="navigasjonslinje__element">
-            <Element><FormattedMessage id={tekstId} />{children}</Element>
+            <Element><FormattedMessage id={tekstId} /><span className="navigasjonslinje__element-content">{children}</span></Element>
         </Lenke>
     );
 }
@@ -27,11 +28,13 @@ class Navigasjonslinje extends Component {
     }
 
     render() {
-        const { antallDialoger } = this.props;
+        const { antallUlesteDialoger } = this.props;
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement sti="/" tekstId="navigasjon.min-plan" />
-                <NavigasjonsElement sti="/dialog" tekstId="navigasjon.dialog">{antallDialoger && `(${antallDialoger})` }</NavigasjonsElement>
+                <NavigasjonsElement sti="/dialog" tekstId="navigasjon.dialog">
+                    <TallAlert visible={antallUlesteDialoger > 0}>{antallUlesteDialoger}</TallAlert>
+                </NavigasjonsElement>
                 <NavigasjonsElement sti="/vilkar" tekstId="navigasjon.vilkar" />
             </nav>
         );
@@ -40,13 +43,13 @@ class Navigasjonslinje extends Component {
 
 Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
-    antallDialoger: PT.number.isRequired
+    antallUlesteDialoger: PT.number.isRequired
 };
 
 const mapStateToProps = (state) => {
     const dialog = state.data.dialog.data;
     return {
-        antallDialoger: dialog.length
+        antallUlesteDialoger: dialog.filter((d) => !d.lest).length
     };
 };
 
