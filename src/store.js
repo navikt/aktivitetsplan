@@ -2,6 +2,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState } from 'redux-devtools';
 import thunkMiddleware from 'redux-thunk';
+import freeze from 'redux-freeze';
 import { routerMiddleware } from 'react-router-redux';
 import DevTools from './devtools';
 import reducer from './reducer';
@@ -14,7 +15,7 @@ function getDebugSessionKey() {
 
 function getDevStoreCompose(history) {
     return compose(
-        applyMiddleware(thunkMiddleware, routerMiddleware(history)),
+        applyMiddleware(thunkMiddleware, routerMiddleware(history), freeze),
         DevTools.instrument(),
         persistState(getDebugSessionKey())
     );
