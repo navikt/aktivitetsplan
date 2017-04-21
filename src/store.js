@@ -1,33 +1,20 @@
 /* eslint-env browser */
 import { createStore, applyMiddleware, compose } from 'redux';
-import { persistState } from 'redux-devtools';
 import thunkMiddleware from 'redux-thunk';
+import freeze from 'redux-freeze';
 import { routerMiddleware } from 'react-router-redux';
-import DevTools from './devtools';
 import reducer from './reducer';
-import { erDev } from './utils';
 
-function getDebugSessionKey() {
-    const matches = window.location.href.match(/[?&]debug_session=([^&]+)\b/);
-    return (matches && matches.length > 0) ? matches[1] : null;
-}
-
-function getDevStoreCompose(history) {
-    return compose(
-        applyMiddleware(thunkMiddleware, routerMiddleware(history)),
-        DevTools.instrument(),
-        persistState(getDebugSessionKey())
-    );
-}
-
+/* eslint-disable no-underscore-dangle */
 function getStoreCompose(history) {
-    return compose(
-        applyMiddleware(thunkMiddleware, routerMiddleware(history))
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+    return composeEnhancers(
+        applyMiddleware(thunkMiddleware, routerMiddleware(history), freeze)
     );
 }
+/* eslint-enable */
 
 export default function create(history) {
-    const composed = erDev() ? getDevStoreCompose(history) : getStoreCompose(history);
-
-    return composed(createStore)(reducer, {});
+    return getStoreCompose(history)(createStore)(reducer, {});
 }

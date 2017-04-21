@@ -4,6 +4,7 @@ import { Normaltekst, Infotekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
 import Dato from '../felles-komponenter/dato';
 import { markerDialogSomLest } from '../ducks/dialog';
+import { visibleIfHOC } from '../hocs/visible-if';
 
 function Henvendelse({ henvendelse }) {
     return (
@@ -57,4 +58,4 @@ const mapDispatchToProps = (dispatch, props) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dialog);
+export default visibleIfHOC(connect(mapStateToProps, mapDispatchToProps)(Dialog));

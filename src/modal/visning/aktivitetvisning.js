@@ -4,15 +4,12 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Knapp } from 'nav-react-design/dist/knapp';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
-import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
+import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
-import NyHenvendelse from '../../dialog/ny-henvendelse';
-import Henvendelser from '../../dialog/henvendelser';
 import { slettAktivitet } from '../../ducks/aktiviteter';
-import { visibleIfHOC } from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
@@ -21,7 +18,6 @@ import BekreftSlettVisning from './bekreftslettvisning';
 import BegrunnelseBoks from './begrunnelse-boks';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 
-const VisibleHenvendelser = visibleIfHOC(Henvendelser);
 
 class Aktivitetvisning extends Component {
 
@@ -34,10 +30,9 @@ class Aktivitetvisning extends Component {
     }
 
     render() {
-        const { params, aktiviteter, dialoger, doSlettAktivitet, oppfolgingStatus } = this.props;
+        const { params, aktiviteter, doSlettAktivitet, oppfolgingStatus } = this.props;
         const { id } = params;
         const valgtAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === id);
-        const dialog = dialoger.find((d) => d.aktivitetId === id);
 
         if (!valgtAktivitet) {
             return null;
@@ -57,7 +52,6 @@ class Aktivitetvisning extends Component {
             );
         }
 
-        const valgtAktivitetId = valgtAktivitet.id;
         const tillatSletting = TILLAT_SLETTING && (
                 !oppfolgingStatus.underOppfolging ||
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
@@ -93,10 +87,7 @@ class Aktivitetvisning extends Component {
 
                         <hr className="aktivitetvisning__delelinje" />
 
-                        <EndringsloggForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__historikk" />
-
-                        <NyHenvendelse formNavn={`ny-henvendelse-aktivitet-${valgtAktivitetId}`} dialogId={dialog && dialog.id} aktivitetId={valgtAktivitetId} />
-                        <VisibleHenvendelser visible={!!dialog} dialog={dialog} />
+                        <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
                     </div>
                 </ModalContainer>
 
@@ -118,14 +109,12 @@ Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus,
-    aktiviteter: PT.arrayOf(AppPT.aktivitet),
-    dialoger: PT.arrayOf(AppPT.dialog)
+    aktiviteter: PT.arrayOf(AppPT.aktivitet)
 };
 
 const mapStateToProps = (state) => ({
     aktiviteter: state.data.aktiviteter.data,
-    oppfolgingStatus: state.data.oppfolgingStatus.data,
-    dialoger: state.data.dialog.data
+    oppfolgingStatus: state.data.oppfolgingStatus.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
