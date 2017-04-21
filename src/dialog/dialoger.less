@@ -1,0 +1,33 @@
+@import "../variables";
+
+
+.dialoger {
+
+  &__dialog {
+    margin: 0;
+    border-radius: 0;
+    text-decoration: none;
+
+    border-top: 2px solid @gray-foreground;
+
+    &-henvendelser {
+      position: absolute;
+      top: 36%;
+      right: 40px;
+    }
+
+    &--valgt {
+      background-color: @bla;
+      color: white;
+    }
+
+    &--ulest {
+      border-left: 6px solid @bla;
+    }
+  }
+  &__gruppe {
+    &-tittel {
+      padding: 15px
+    }
+  }
+}

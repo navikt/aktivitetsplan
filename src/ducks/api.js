@@ -21,8 +21,12 @@ export function hentDialog() {
     return fetchToJson(`${DIALOG_BASE_URL}/dialog`);
 }
 
-export function nyDialog(dialog) {
-    return postAsJson(`${DIALOG_BASE_URL}/dialog`, dialog);
+export function nyHenvendelse(henvendelse) {
+    return postAsJson(`${DIALOG_BASE_URL}/dialog`, henvendelse);
+}
+
+export function markerDialogSomLest(dialogId) {
+    return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/les`);
 }
 
 export function hentAktiviteter() {
@@ -50,4 +54,16 @@ export function hentEtiketter() {
 
 export function slettAktivitet(aktivitet) {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`, { method: 'delete' });
+}
+
+export function hentMal() {
+    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`);
+}
+
+export function hentMalListe() {
+    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/malListe`);
+}
+
+export function lagreMal(mal) {
+    return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`, mal);
 }

@@ -9,8 +9,8 @@ import AktivitetsKort from './aktivitetskort';
 
 const mottaAktivitetsKort = {
 
-    canDrop() {
-        return true;
+    canDrop(props, monitor) {
+        return (props.status !== monitor.getItem().status);
     },
 
     drop({ doFlyttAktivitet, status }, monitor) {
@@ -51,7 +51,7 @@ KolonneFunction.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter
+    aktiviteter: state.data.aktiviteter.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
