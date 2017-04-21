@@ -4,13 +4,13 @@ import { FormattedMessage } from 'react-intl';
 import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 
 
-function InnerTextAreaComponent({ input, labelId, maxLength }) {
+function InnerTextAreaComponent({ input, labelId, ...rest }) {
+    const textareaProps = { ...input, ...rest };
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"
             label={labelId && <FormattedMessage id={labelId} />}
-            maxLength={maxLength}
-            {...input}
+            {...textareaProps}
         />
     );
 }
