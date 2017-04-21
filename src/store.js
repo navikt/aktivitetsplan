@@ -2,11 +2,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState } from 'redux-devtools';
 import thunkMiddleware from 'redux-thunk';
+import freeze from 'redux-freeze';
 import { routerMiddleware } from 'react-router-redux';
 import DevTools from './devtools';
 import reducer from './reducer';
 import { erDev } from './utils';
-import freeze from 'redux-freeze';
 
 function getDebugSessionKey() {
     const matches = window.location.href.match(/[?&]debug_session=([^&]+)\b/);
