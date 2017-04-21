@@ -6,6 +6,7 @@ import { routerMiddleware } from 'react-router-redux';
 import DevTools from './devtools';
 import reducer from './reducer';
 import { erDev } from './utils';
+import freeze from 'redux-freeze';
 
 function getDebugSessionKey() {
     const matches = window.location.href.match(/[?&]debug_session=([^&]+)\b/);
@@ -14,7 +15,7 @@ function getDebugSessionKey() {
 
 function getDevStoreCompose(history) {
     return compose(
-        applyMiddleware(thunkMiddleware, routerMiddleware(history)),
+        applyMiddleware(thunkMiddleware, routerMiddleware(history), freeze),
         DevTools.instrument(),
         persistState(getDebugSessionKey())
     );
