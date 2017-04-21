@@ -15,6 +15,7 @@ import ModalContainer from '../modal-container';
 import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
+import {Hovedknapp} from "nav-frontend-knapper";
 
 class Aktivitetvisning extends Component {
 
@@ -54,6 +55,10 @@ class Aktivitetvisning extends Component {
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
 
+        const onLagre = (aktivitet) => {
+
+        };
+
         return (
             <ModalHeader
                 normalTekstId="aktivitetvisning.header"
@@ -84,6 +89,14 @@ class Aktivitetvisning extends Component {
 
                 <ModalFooter>
                     {/* TODO: tekster*/}
+                    <Hovedknapp
+                        spinner={false} //TODO
+                        autoDisableVedSpinner={true}
+                        onClick={() => this.onLagre()}
+                    >
+                        Lagre
+                    </Hovedknapp>
+
                     {tillatSletting &&
                     <Knapp
                         onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
@@ -109,7 +122,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    doSlettAktivitet: (aktivitet) => slettAktivitet(aktivitet)(dispatch)
+    doSlettAktivitet: (aktivitet) => slettAktivitet(aktivitet)(dispatch),
+    // doOppdaterAktivitet: (aktivitet) =>
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);
