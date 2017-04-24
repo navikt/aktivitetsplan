@@ -20,7 +20,7 @@ function OppdaterAktivitetStatus(props) {
     };
 
     const radioSkjema = (
-        <form className="skjema blokk-m">
+        <form className="skjema blokk-m oppdaterstatus-skjema">
             <Radio
                 feltNavn={`aktivitetstatus`}
                 label="Foreslått"
