@@ -6,6 +6,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import { hentMal, hentMalListe, fjernMalListe, oppdaterMal } from '../../../ducks/mal';
 import * as AppPT from '../../../proptypes';
 import AktivitetsmalForm from './aktivitetsmal-form';
+import NavFrontendChevron from 'nav-frontend-chevron';
 import { formaterDatoDatoEllerTidSiden } from '../../../utils';
 import './aktivitetsmal.less';
 
@@ -40,6 +41,7 @@ class AktivitetsMal extends Component {
 
     render() {
         const { mal, malListe, doOppdaterMal } = this.props;
+        const historikkVises = malListe.length !== 0;
 
         return (
             <div className="aktivitetmal">
@@ -63,17 +65,17 @@ class AktivitetsMal extends Component {
                                 <div>
                                     <hr className="aktivitetmal__delelinje" />
                                     <div className="aktivitetmal__innhold">
+                                        <NavFrontendChevron orientasjon={historikkVises ? 'opp' : 'ned'} className="aktivitetmal__chevron" />
                                         <a
                                             href="/"
                                             className="aktivitetmal__link"
                                             onClick={this.hentMalListe}
-                                        >{malListe.length === 0 ? 'Vis ' : 'Skjul '}
+                                        >{historikkVises ? 'Skjul ' : 'Vis '}
                                             tidligere lagrede mål</a>
                                         {malListe.map((malet) => (
                                             <div key={malet.dato} className="aktivitetmal__historikk">
                                                 <span className="aktivitetmal__historikk-skrevetav">
                                                     Skrevet av {({ BRUKER: 'deg', VEILEDER: 'NAV' }[malet.endretAv])}</span> {formaterDatoDatoEllerTidSiden(malet.dato)}
-                                                <br />
                                                 <Tekstomrade className="aktivitetmal__historikk-tekst">{malet.mal}</Tekstomrade>
                                             </div>
                                             ))}
