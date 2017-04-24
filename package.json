@@ -33,6 +33,8 @@
     "inputmask-core": "2.2.0",
     "intl": "1.2.5",
     "invariant": "2.2.2",
+    "jsdom": "10.0.0",
+    "moment": "2.18.1",
     "nav-frontend-alertstriper": "0.0.17",
     "nav-frontend-alertstriper-style": "0.0.12",
     "nav-frontend-chevron": "0.0.2",
@@ -43,8 +45,6 @@
     "nav-frontend-knapper-style": "0.1.6",
     "nav-frontend-lenkepanel": "0.1.15",
     "nav-frontend-lenkepanel-style": "0.1.9",
-    "jsdom": "10.0.0",
-    "moment": "2.18.1",
     "nav-frontend-lenker-style": "0.0.4",
     "nav-frontend-modal": "0.1.11",
     "nav-frontend-skjema": "0.0.227",
@@ -77,8 +77,8 @@
     "redux-devtools-dock-monitor": "1.1.1",
     "redux-devtools-log-monitor": "1.2.0",
     "redux-form": "6.6.3",
-    "redux-thunk": "2.2.0",
-    "redux-freeze": "0.1.5"
+    "redux-freeze": "0.1.5",
+    "redux-thunk": "2.2.0"
   },
   "devDependencies": {
     "babel-core": "6.24.1",
