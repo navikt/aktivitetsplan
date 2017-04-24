@@ -45,6 +45,8 @@
     "nav-frontend-modal": "0.1.11",
     "nav-frontend-skjema": "0.0.227",
     "nav-frontend-spinner": "0.0.6",
+    "nav-frontend-tekstomrade": "0.0.2",
+    "sanitize-html": "1.14.1",
     "nav-frontend-typografi": "0.1.8",
     "nav-logger": "1.0.5",
     "nav-react-design": "0.1.14",

@@ -2,6 +2,7 @@ import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import { hentMal, hentMalListe, fjernMalListe, oppdaterMal } from '../../../ducks/mal';
 import * as AppPT from '../../../proptypes';
 import AktivitetsmalForm from './aktivitetsmal-form';
@@ -55,7 +56,7 @@ class AktivitetsMal extends Component {
                         ) : (
                             <div>
                                 <div className="aktivitetmal__innhold">
-                                    <div className="aktivitetmal__tekst">{mal.mal}</div>
+                                    <Tekstomrade className="aktivitetmal__tekst">{mal.mal}</Tekstomrade>
                                     <Hovedknapp onClick={this.toggleRedigering}>Rediger</Hovedknapp>
 
                                 </div>
@@ -73,7 +74,7 @@ class AktivitetsMal extends Component {
                                                 <span className="aktivitetmal__historikk-skrevetav">
                                                     Skrevet av {({ BRUKER: 'deg', VEILEDER: 'NAV' }[malet.endretAv])}</span> {formaterDatoDatoEllerTidSiden(malet.dato)}
                                                 <br />
-                                                <span className="aktivitetmal__historikk-tekst">{malet.mal}</span>
+                                                <Tekstomrade className="aktivitetmal__historikk-tekst">{malet.mal}</Tekstomrade>
                                             </div>
                                             ))}
                                     </div>
