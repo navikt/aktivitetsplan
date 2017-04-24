@@ -5,7 +5,6 @@ import * as aktivitetstatus from '../../constant';
 import Undertittel from "nav-frontend-typografi/src/undertittel";
 import Bilde from 'nav-react-design/dist/bilde';
 import Radio from '../skjema/input/radio';
-import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
 import hengelaasSVG from './hengelas.svg';
 
 function OppdaterAktivitetStatus(props) {
@@ -75,7 +74,6 @@ function OppdaterAktivitetStatus(props) {
                 Oppdater status
             </Undertittel>
             {radioSkjema}
-            <AktivitetEtiketter etiketter={props.tagger} className="aktivitetvisning__etikett" />
         </section>
     );
 }
