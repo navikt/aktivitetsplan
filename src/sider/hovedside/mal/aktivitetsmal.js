@@ -38,7 +38,8 @@ class AktivitetsMal extends Component {
     };
 
     render() {
-        const malListe = this.props.malListe;
+        const { mal, malListe, doOppdaterMal } = this.props;
+
         return (
             <div className="aktivitetmal">
                 <EkspanderbartPanel tittel="Mitt mål">
@@ -46,15 +47,15 @@ class AktivitetsMal extends Component {
                     {this.state.redigering ? (
                         <div className="aktivitetmal__innhold">
                             <AktivitetsmalForm
-                                mal={this.props.mal}
-                                onSubmit={(mal) => this.props.doOppdaterMal(mal, this.toggleRedigering)}
+                                mal={mal}
+                                onSubmit={(malet) => doOppdaterMal(malet, this.toggleRedigering)}
                                 handleCancel={this.toggleRedigering}
                             />
                         </div>
                         ) : (
                             <div>
                                 <div className="aktivitetmal__innhold">
-                                    <div className="aktivitetmal__tekst">{this.props.mal.mal}</div>
+                                    <div className="aktivitetmal__tekst">{mal.mal}</div>
                                     <Hovedknapp onClick={this.toggleRedigering}>Rediger</Hovedknapp>
 
                                 </div>
@@ -67,12 +68,12 @@ class AktivitetsMal extends Component {
                                             onClick={this.hentMalListe}
                                         >{malListe.length === 0 ? 'Vis ' : 'Skjul '}
                                             tidligere lagrede mål</a>
-                                        {malListe.map((mal) => (
-                                            <div key={mal.dato} className="aktivitetmal__historikk">
+                                        {malListe.map((malet) => (
+                                            <div key={malet.dato} className="aktivitetmal__historikk">
                                                 <span className="aktivitetmal__historikk-skrevetav">
-                                                    Skrevet av deg</span> {formaterDatoDatoEllerTidSiden(mal.dato)}
+                                                    Skrevet av {({ BRUKER: 'deg', VEILEDER: 'NAV' }[malet.endretAv])}</span> {formaterDatoDatoEllerTidSiden(malet.dato)}
                                                 <br />
-                                                <span className="aktivitetmal__historikk-tekst">{mal.mal}</span>
+                                                <span className="aktivitetmal__historikk-tekst">{malet.mal}</span>
                                             </div>
                                             ))}
                                     </div>

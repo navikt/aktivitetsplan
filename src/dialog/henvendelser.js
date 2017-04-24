@@ -31,11 +31,10 @@ class Dialog extends Component {
 
     render() {
         const { dialog } = this.props;
-        return (
-            <div>
-                {dialog.henvendelser.map((h) => <Henvendelse key={h.id} henvendelse={h} />)}
-            </div>
-        );
+        const henvendelser = [...dialog.henvendelser]
+            .sort((a, b) => b.sendt - a.sendt)
+            .map((h) => <Henvendelse key={h.id} henvendelse={h} />);
+        return <div>{henvendelser}</div>;
     }
 }
 
