@@ -7,11 +7,6 @@ import Textarea from "nav-frontend-skjema/src/textarea";
 import Hovedknapp from "nav-frontend-knapper/src/hovedknapp";
 
 class BegrunnelseAktivitet extends Component {
-
-    componentDidUnmount() {
-
-    }
-
     onLagre() {
         const onSuccess = () => history.goBack();
         const onError = () => {};

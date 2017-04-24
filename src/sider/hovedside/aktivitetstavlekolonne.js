@@ -16,7 +16,14 @@ const mottaAktivitetsKort = {
     },
 
     drop({ doFlyttAktivitet, status }, monitor) {
-        doFlyttAktivitet(monitor.getItem(), status);
+        const aktivitet = monitor.getItem();
+        if (status === STATUS_FULLFOERT && aktivitet.avtalt) {
+            history.push("/aktivitet/aktivitet/" + aktivitet.id + "/fullfor");
+        } else if (status === STATUS_AVBRUTT && aktivitet.avtalt) {
+            history.push("/aktivitet/aktivitet/" + aktivitet.id + "/avbryt");
+        } else {
+            doFlyttAktivitet(aktivitet, status);
+        }
     }
 };
 
@@ -57,15 +64,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    doFlyttAktivitet: (aktivitet, status) => {
-        if (status === STATUS_FULLFOERT) { //TODO legge til && avtalt
-            history.push("/aktivitet/aktivitet/" + aktivitet.id + "/fullfor");
-        } else if (status === STATUS_AVBRUTT) { //TODO legge til && avtalt
-            history.push("/aktivitet/aktivitet/" + aktivitet.id + "/avbryt");
-        } else {
-            flyttAktivitet(aktivitet, status)(dispatch);
-        }
-    }
+    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

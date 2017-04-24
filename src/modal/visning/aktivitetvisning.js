@@ -8,7 +8,7 @@ import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
-import { slettAktivitet } from '../../ducks/aktiviteter';
+import { slettAktivitet, flyttAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
@@ -16,6 +16,8 @@ import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import {Hovedknapp} from "nav-frontend-knapper";
+import { formValueSelector } from 'redux-form';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 
 class Aktivitetvisning extends Component {
 
@@ -56,7 +58,17 @@ class Aktivitetvisning extends Component {
             );
 
         const onLagre = (aktivitet) => {
-
+            if (aktivitet.status === this.props.valgtStatus) {
+                return history.push('/');
+            }
+            else if (this.props.valgtStatus === STATUS_FULLFOERT && aktivitet.avtalt) {
+                history.push("/aktivitet/aktivitet/" + aktivitet.id + "/fullfor");
+            } else if (this.props.valgtStatus === STATUS_AVBRUTT && aktivitet.avtalt) {
+                history.push("/aktivitet/aktivitet/" + aktivitet.id + "/avbryt");
+            } else {
+                this.props.doFlyttAktivitet(aktivitet, this.props.valgtStatus);
+                history.push('/');
+            }
         };
 
         return (
@@ -90,9 +102,10 @@ class Aktivitetvisning extends Component {
                 <ModalFooter>
                     {/* TODO: tekster*/}
                     <Hovedknapp
-                        spinner={false} //TODO
+                        className="aktivitetvisning__lagre--knapp"
+                        spinner={valgtAktivitet.laster}
                         autoDisableVedSpinner={true}
-                        onClick={() => this.onLagre()}
+                        onClick={() => onLagre(valgtAktivitet)}
                     >
                         Lagre
                     </Hovedknapp>
@@ -113,17 +126,19 @@ Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus,
-    aktiviteter: PT.arrayOf(AppPT.aktivitet)
+    aktiviteter: PT.arrayOf(AppPT.aktivitet),
+    valgtStatus: PT.string
 };
 
 const mapStateToProps = (state) => ({
     aktiviteter: state.data.aktiviteter.data,
-    oppfolgingStatus: state.data.oppfolgingStatus.data
+    oppfolgingStatus: state.data.oppfolgingStatus.data,
+    valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus')
 });
 
 const mapDispatchToProps = (dispatch) => ({
     doSlettAktivitet: (aktivitet) => slettAktivitet(aktivitet)(dispatch),
-    // doOppdaterAktivitet: (aktivitet) =>
+    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);

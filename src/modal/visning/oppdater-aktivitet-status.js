@@ -12,8 +12,6 @@ function OppdaterAktivitetStatus(props) {
     const disableStatusEndring = props.status === aktivitetstatus.STATUS_AVBRUTT ||
         props.status === aktivitetstatus.STATUS_FULLFOERT;
 
-    console.log(props);
-
     const radioSkjema = (
         <form className="skjema blokk-m">
             <Radio

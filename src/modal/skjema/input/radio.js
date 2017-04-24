@@ -9,7 +9,14 @@ function Radio({ feltNavn, className, value, checked, ...resten }) {
             className={className}
             type="radio"
             value={value}
-            component={ props => <NavRadio {...resten} checked={checked} value={props.value} onChange={e => props.input.onChange(value) }/> }
+            component={props =>
+                <NavRadio
+                    {...resten}
+                    checked={checked}
+                    value={value}
+                    onChange={e => props.input.onChange(value) }
+                />
+            }
         />
     );
 }

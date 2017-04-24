@@ -12,7 +12,7 @@ const BegrunnelseAvbruttAktivitet = (props) => {
         <BegrunnelseAktivitet
             headerTekst={headerTekst}
             beskrivelseTekst={beskrivelseTekst}
-            lagrer={valgtAktivitet.laster}
+            lagrer={valgtAktivitet.laster || false}
             onLagre={(begrunnelse) => props.lagreBegrunnelse(valgtAktivitet, begrunnelse)}
         />
     );

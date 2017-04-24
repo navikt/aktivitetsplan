@@ -28,7 +28,7 @@ export const endringslogg = PT.shape({
 });
 
 export const oppfolgingStatus = PT.shape({
-    status: PT.string.isRequired,
+    status: PT.string,
     data: PT.object
 });
 
