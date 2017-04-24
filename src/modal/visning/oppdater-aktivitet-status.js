@@ -3,14 +3,21 @@ import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 import * as aktivitetstatus from '../../constant';
 import Undertittel from "nav-frontend-typografi/src/undertittel";
+import Bilde from 'nav-react-design/dist/bilde';
 import Radio from '../skjema/input/radio';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
+import hengelaasSVG from './hengelas.svg';
 
 function OppdaterAktivitetStatus(props) {
 
     const erChecked = id => props.valgtStatus === id;
     const disableStatusEndring = props.status === aktivitetstatus.STATUS_AVBRUTT ||
         props.status === aktivitetstatus.STATUS_FULLFOERT;
+    const leggTilHengelaas = (tekst) => {
+        return <span>
+            {tekst}&nbsp;&nbsp;<Bilde style={{position: 'absolute'}} src={hengelaasSVG} alt="hengelås ikon"/>
+        </span>
+    };
 
     const radioSkjema = (
         <form className="skjema blokk-m">
@@ -43,7 +50,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={`aktivitetstatus`}
-                label="Fullført"
+                label={leggTilHengelaas("Fullført")}
                 value={aktivitetstatus.STATUS_FULLFOERT}
                 id={`id--${aktivitetstatus.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
@@ -52,7 +59,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={`aktivitetstatus`}
-                label="Avbrutt"
+                label={leggTilHengelaas("Avbrutt")}
                 value={aktivitetstatus.STATUS_AVBRUTT}
                 id={`id--${aktivitetstatus.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"
