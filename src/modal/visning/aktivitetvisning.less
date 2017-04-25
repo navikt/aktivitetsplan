@@ -18,8 +18,13 @@
     .blokk-m();
 
     .tekst--kollapset {
+      @media(min-width: 641px) {
+        max-width: 30.1rem;
+      }
+      @media(max-width: 640px) {
+        max-width: 27.9rem;
+      }
       display: inline-block;
-      max-width: 30rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
