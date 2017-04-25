@@ -19,11 +19,22 @@
 
   &__innhold {
     padding: 1rem;
+    width: 600px;
+  }
+
+  &__chevron {
+    margin-right: .5rem;
   }
 
   &__link {
     .blokk-s();
     display: inline-block;
+    color: @navMorkGra;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__redigering--knapp {
@@ -38,6 +49,7 @@
     }
 
     &-tekst {
+      .blokk-s();
       white-space: pre-wrap;
     }
   }
