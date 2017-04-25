@@ -21,7 +21,7 @@ const RULES = [
         loader: 'babel-loader',
     },
     {
-        test: /\.(svg|png)$/,
+        test: /\.(svg)$/,
         use: {
             loader: 'url-loader',
             options: {'noquotes': true}

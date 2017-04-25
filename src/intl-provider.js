@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import nb from 'react-intl/locale-data/nb';
 import Innholdslaster from './felles-komponenter/utils/innholdslaster';
 import { hentLedetekster } from './ducks/ledetekster-ressurs';
-import DevTools from './devtools';
 
 addLocaleData(nb);
 
@@ -24,9 +23,6 @@ class IntlProvider extends Component {
                     <Innholdslaster avhengigheter={[ledetekster]}>
                         {children}
                     </Innholdslaster>
-                    <div aria-hidden="true">
-                        <DevTools />
-                    </div>
                 </div>
             </Provider>
         );

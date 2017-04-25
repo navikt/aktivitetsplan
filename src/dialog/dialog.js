@@ -1,45 +1,25 @@
 import React, { PropTypes as PT } from 'react';
-import { connect } from 'react-redux';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import NyDialog from './ny-dialog';
+import { Element, Undertittel } from 'nav-frontend-typografi';
+import NyHenvendelse from './ny-henvendelse';
+import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
 
-function DialogVisning({ dialog }) {
+
+function Dialog({ dialog, className }) {
+    const dialogId = dialog.id;
     return (
-        <div>
-            <Element>{dialog.overskrift}</Element>
-            <Normaltekst>{dialog.sisteTekst}</Normaltekst>
+        <div className={className}>
+            <Undertittel >{dialog.overskrift}</Undertittel>
+            <Element>Dialog mellom deg og NAV</Element>
+            <NyHenvendelse formNavn={`ny-henvendelse-dialog-${dialogId}`} dialogId={dialogId} />
+            <Henvendelser dialog={dialog} />
         </div>
     );
 }
-
-DialogVisning.propTypes = {
-    dialog: AppPT.dialog
-};
-
-function Dialog({ dialoger }) {
-    return (
-        <div>
-            <NyDialog />
-            <div>
-                {dialoger.map((d) => <DialogVisning dialog={d} />)}
-            </div>
-        </div>
-    );
-}
-
 
 Dialog.propTypes = {
-    dialoger: PT.arrayOf(AppPT.dialog)
+    className: PT.string,
+    dialog: AppPT.dialog.isRequired
 };
 
-const mapStateToProps = (state) => {
-    const dialoger = state.data.dialog.data;
-    return {
-        dialoger
-    };
-};
-
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dialog);
+export default Dialog;

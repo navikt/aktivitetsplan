@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import { VenstreChevron } from './chevron';
+import { VenstreChevron } from 'nav-frontend-chevron';
 import history from '../../history';
 import { TILBAKE_MODAL } from '../../ducks/modal';
 
@@ -15,14 +15,17 @@ function Tilbakeknapp(props) {
 
     return (
         <Link href="/" onClick={tilbake} className="tilbakeknapp">
-            <VenstreChevron />
-            <FormattedMessage id="aktivitetsplan.tilbakeknapp" />
+            <div className="tilbakeknapp-innhold">
+                <VenstreChevron />
+                <span className="tilbakeknapp-innhold__tekst">
+                    <FormattedMessage id="aktivitetsplan.tilbakeknapp" />
+                </span>
+            </div>
         </Link>
     );
 }
 
-Tilbakeknapp.propTypes = {
-};
+Tilbakeknapp.propTypes = {};
 const mapDispatchToProps = (dispatch) => ({
     tilbakeModal: () => dispatch({ type: TILBAKE_MODAL })
 });

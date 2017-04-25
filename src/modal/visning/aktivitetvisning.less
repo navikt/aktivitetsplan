@@ -24,6 +24,12 @@
       &__tittel {
         .blokk-xxxs();
       }
+
+      &__lenke {
+        text-overflow: ellipsis;
+        overflow :hidden;
+        white-space: nowrap;
+      }
     }
   }
   .aktivitetsbeskrivelse {
@@ -47,14 +53,3 @@
     border-right: 1px solid @color-border;
   }
 }
-
-.aktivitetvisning__historikk .endringslogg-for-aktivitet {
-  &__lenke-knapp {
-    .blokk-m();
-    display: inline-block;
-  }
-  &__innslag {
-    .blokk-s();
-  }
-}
-

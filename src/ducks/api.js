@@ -21,8 +21,12 @@ export function hentDialog() {
     return fetchToJson(`${DIALOG_BASE_URL}/dialog`);
 }
 
-export function nyDialog(dialog) {
-    return postAsJson(`${DIALOG_BASE_URL}/dialog`, dialog);
+export function nyHenvendelse(henvendelse) {
+    return postAsJson(`${DIALOG_BASE_URL}/dialog`, henvendelse);
+}
+
+export function markerDialogSomLest(dialogId) {
+    return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/les`);
 }
 
 export function hentAktiviteter() {

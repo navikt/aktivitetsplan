@@ -132,13 +132,9 @@ class DayPickerComponent extends Component {
                 firstDayOfWeek={1}
                 captionElement={<Caption />}
                 navbarElement={<NavBar />}
-                disabledDays={(day) => this.erDeaktivertDag(day)}
                 selectedDays={(day) => this.selectedDays(day)}
-                onDayClick={(event, jsDato) => {
-                    if (!this.erDeaktivertDag(event)) {
-                        this.props.onDayClick(event, jsDato);
-                    }
-                }}
+                onDayClick={(event, jsDato) => this.props.onDayClick(event, jsDato)}
+
             />
         </div>);
     }

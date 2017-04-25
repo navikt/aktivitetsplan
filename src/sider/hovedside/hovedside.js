@@ -10,7 +10,7 @@ import AktivitetsMal from './mal/aktivitetsmal';
 import { LUKK_MODAL } from '../../ducks/modal';
 
 function Hovedside({ children, routes, lukkModal }) {
-    const modalId = routes[routes.length - 1].modalId;
+    const modalId = routes && routes[routes.length - 1].modalId;
     const modal = !children ? (null) : (<Modal
         key={modalId}
         isOpen={children != null}
@@ -43,7 +43,7 @@ function Hovedside({ children, routes, lukkModal }) {
 
 Hovedside.propTypes = {
     children: PT.node,
-    routes: PT.arrayOf(PT.shape({ modalId: PT.string })).isRequired
+    routes: PT.arrayOf(PT.shape({ modalId: PT.string }))
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -31,6 +31,7 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
             <Lenke
                 href={`aktivitet/aktivitet/${aktivitet.id}`}
                 className={classNames('aktivitetskort', erFlyttbar && 'aktivitetskort--flyttbar')}
+                brukLenkestyling={false}
             >
                 <div className="aktivitetskort__wrapper">
                     <div className="aktivitetskort__blokk">

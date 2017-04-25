@@ -4,7 +4,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Knapp } from 'nav-react-design/dist/knapp';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
-import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
+import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
@@ -95,7 +95,7 @@ class Aktivitetvisning extends Component {
 
                         <hr className="aktivitetvisning__delelinje" />
 
-                        <EndringsloggForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__historikk" />
+                        <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
                     </div>
                 </ModalContainer>
 
