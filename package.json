@@ -42,12 +42,13 @@
     "nav-frontend-lenkepanel": "0.1.10",
     "nav-frontend-lenkepanel-style": "0.1.5",
     "nav-frontend-lenker-style": "0.0.4",
+    "nav-frontend-lukknapp": "0.0.2",
+    "nav-frontend-lukknapp-style": "0.0.2",
     "nav-frontend-modal": "0.1.11",
     "nav-frontend-paneler": "0.1.11",
     "nav-frontend-skjema": "0.0.227",
     "nav-frontend-spinner": "0.0.6",
     "nav-frontend-tekstomrade": "0.0.2",
-    "sanitize-html": "1.14.1",
     "nav-frontend-typografi": "0.1.8",
     "nav-logger": "1.0.5",
     "nav-react-design": "0.1.14",
@@ -74,7 +75,8 @@
     "redux": "3.6.0",
     "redux-form": "6.4.3",
     "redux-freeze": "0.1.5",
-    "redux-thunk": "2.1.0"
+    "redux-thunk": "2.1.0",
+    "sanitize-html": "1.14.1"
   },
   "devDependencies": {
     "babel-core": "6.18.2",
