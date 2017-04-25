@@ -14,7 +14,16 @@
     width: 32rem
   }
   .begrunnelse-boks {
+    cursor: pointer;
     .blokk-m();
+
+    .tekst--kollapset {
+      display: inline-block;
+      max-width: 30rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
   .aktivitetsdetaljer, .aktivitetsbeskrivelse {
     .detaljfelt {
