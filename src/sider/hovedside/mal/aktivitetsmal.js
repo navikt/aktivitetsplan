@@ -1,12 +1,12 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import NavFrontendChevron from 'nav-frontend-chevron';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { hentMal, hentMalListe, fjernMalListe, oppdaterMal } from '../../../ducks/mal';
 import * as AppPT from '../../../proptypes';
 import AktivitetsmalForm from './aktivitetsmal-form';
-import NavFrontendChevron from 'nav-frontend-chevron';
 import { formaterDatoDatoEllerTidSiden } from '../../../utils';
 import './aktivitetsmal.less';
 
