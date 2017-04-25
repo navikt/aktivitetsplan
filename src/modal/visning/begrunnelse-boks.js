@@ -16,13 +16,14 @@ class BegrunnelseBoks extends Component {
         e.preventDefault();
         this.setState({
             kollapset: !this.state.kollapset
-        })
+        });
     }
     render() {
         const classes = classNames({
             'tekst--kollapset': this.state.kollapset,
-            'tekst': !this.state.kollapset
+            tekst: !this.state.kollapset
         });
+        /* eslint-disable */
         return (
             <div className="begrunnelse-boks" onClick={this.settKollapset}>
                 <AlertStripeInfo>
@@ -32,6 +33,7 @@ class BegrunnelseBoks extends Component {
                 </AlertStripeInfo>
             </div>
         );
+        /* eslint-enable */
     }
 }
 
