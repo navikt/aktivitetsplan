@@ -5,7 +5,7 @@ import * as aktivitetstatus from '../../constant';
 import Undertittel from "nav-frontend-typografi/src/undertittel";
 import Bilde from 'nav-react-design/dist/bilde';
 import Radio from '../skjema/input/radio';
-import hengelaasSVG from './hengelas.svg';
+import hengelaasSVG from '../../img/hengelas.svg';
 
 function OppdaterAktivitetStatus(props) {
 
