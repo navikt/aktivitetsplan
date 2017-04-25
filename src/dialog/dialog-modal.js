@@ -14,7 +14,7 @@ import './dialog-modal.less';
 import * as AppPT from '../proptypes';
 
 const animationTime = 300;
-const width = 600;
+const width = 750;
 const initialLeft = -(width + 10);
 const dialogHeight = 250;
 const initialDialogMargin = -dialogHeight;
