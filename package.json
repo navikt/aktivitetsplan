@@ -52,6 +52,8 @@
     "nav-frontend-spinner": "0.0.6",
     "nav-frontend-typografi": "0.1.12",
     "nav-frontend-typografi-style": "0.1.10",
+    "nav-frontend-tekstomrade": "0.0.2",
+    "sanitize-html": "1.14.1",
     "nav-logger": "1.0.5",
     "nav-react-design": "0.1.18",
     "query-string": "4.3.4",

@@ -1,11 +1,14 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import Bilde from 'nav-react-design/dist/bilde';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { flyttAktivitet } from '../../ducks/aktiviteter';
 import AktivitetsKort from './aktivitetskort';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
+import hengelasSvg from '../../img/hengelas.svg';
 
 const mottaAktivitetsKort = {
 
@@ -36,6 +39,9 @@ function KolonneFunction({ aktiviteter, status, tittelId, connectDropTarget, dra
             <section className={classNames('aktivitetstavle__kolonne', drag && 'aktivitetstavle__kolonne--drag')}>
                 <Undertittel className="aktivitetstavle__kolonne-header">
                     <FormattedMessage id={tittelId} />
+                    {{ [STATUS_FULLFOERT]: true, [STATUS_AVBRUTT]: true }[status] &&
+                        <Bilde className="aktivitetstavle__kolonne-header-bilde" src={hengelasSvg} alt="hengelåsikon" />
+                    }
                 </Undertittel>
                 {aktivitetsKort}
             </section>

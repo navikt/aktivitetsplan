@@ -61,7 +61,11 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
     const lenkeKomponent = () => (
         <DetaljFelt key="lenke" tittel="Lenke" visible={lenke != null}>
-            <Link href={lenke.match(httpRegex) ? lenke : `http://${lenke}`} className="detaljfelt__lenke" target="_blank">
+            <Link
+                href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
+                className="detaljfelt__lenke"
+                target="_blank"
+            >
                 {lenke}
             </Link>
         </DetaljFelt>
