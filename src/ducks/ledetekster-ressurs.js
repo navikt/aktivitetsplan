@@ -36,14 +36,13 @@ function konverterledetekster(ledetekster) {
 }
 
 function hentLedeteksterMedKeys() {
-    return Api.hentLedetekster().then((data) => {
-        return Object.keys(data)
-            .map((sprak) => ({ sprak, keys: konverterledetekster(data[sprak]) }))
-            .reduce((previous, current) => {
-                previous[current.sprak] = current.keys; // eslint-disable-line no-param-reassign
-                return previous;
-            }, {});
-    });
+    return Api.hentLedetekster().then((data) => Object.keys(data)
+        .map((sprak) => ({ sprak, keys: konverterledetekster(data[sprak]) }))
+        .reduce((previous, current) => {
+            previous[current.sprak] = current.keys; // eslint-disable-line no-param-reassign
+            return previous;
+        }, {})
+    );
 }
 
 // Action Creators
