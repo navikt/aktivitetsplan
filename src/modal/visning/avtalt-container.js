@@ -64,7 +64,7 @@ AvtaltContainer.propTypes = {
     doSetAktivitetTilAvtalt: PT.func.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
     aktivitetData: PT.shape({
-        oppdaterer: PT.string
+        oppdaterer: PT.bool
     })
 };
 
