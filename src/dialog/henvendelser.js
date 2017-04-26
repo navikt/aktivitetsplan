@@ -1,15 +1,44 @@
 import React, { Component, PropTypes as PT } from 'react';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { Normaltekst, Infotekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Panel } from 'nav-frontend-paneler';
 import * as AppPT from '../proptypes';
 import Dato from '../felles-komponenter/dato';
 import { markerDialogSomLest } from '../ducks/dialog';
+import { visibleIfHOC } from '../hocs/visible-if';
+
+
+const henvendelseCls = (hoyre) => classNames('henvendelse', {
+    'henvendelse--hoyre': hoyre, 'henvendelse--venstre': !hoyre
+});
+
+const henvendelsePilCls = (hoyre) => classNames('henvendelse__snakkebole-pil', {
+    'henvendelse__snakkebole-pil--hoyre': hoyre,
+    'henvendelse__snakkebole-pil--venstre': !hoyre
+});
+
+const henvendelseIkonCls = (fraVeileder) => classNames('henvendelse__ikon', {
+    'henvendelse__ikon--veileder': fraVeileder,
+    'henvendelse__ikon--bruker': !fraVeileder
+});
+
+const henvendelsePanelCls = (hoyre) => classNames('henvendelse__panel henvendelse-panel', {
+    'hoyrejustert-tekst': hoyre
+});
 
 function Henvendelse({ henvendelse }) {
+    const avsenderVeileder = henvendelse.avsender === 'VEILEDER';
     return (
-        <div>
-            <Infotekst><Dato>{henvendelse.sendt}</Dato></Infotekst>
-            <Normaltekst>{henvendelse.tekst}</Normaltekst>
+        <div className={henvendelseCls(avsenderVeileder)}>
+            <i className={henvendelseIkonCls(avsenderVeileder)} />
+            <div className="henvendelse__snakkeboble-pil-container">
+                <i className={henvendelsePilCls(avsenderVeileder)} />
+            </div>
+            <Panel className={henvendelsePanelCls(avsenderVeileder)}>
+                <Undertekst className="henvendelse-panel__dato"><Dato>{henvendelse.sendt}</Dato></Undertekst>
+                <Normaltekst className="henvendelse-panel__tekst">{henvendelse.tekst}</Normaltekst>
+            </Panel>
         </div>
     );
 }
@@ -30,11 +59,10 @@ class Dialog extends Component {
 
     render() {
         const { dialog } = this.props;
-        return (
-            <div>
-                {dialog.henvendelser.map((h) => <Henvendelse key={h.id} henvendelse={h} />)}
-            </div>
-        );
+        const henvendelser = [...dialog.henvendelser]
+            .sort((a, b) => b.sendt - a.sendt)
+            .map((h) => <Henvendelse key={h.id} henvendelse={h} />);
+        return <div className="dialog-henvendelser">{henvendelser}</div>;
     }
 }
 
@@ -57,4 +85,4 @@ const mapDispatchToProps = (dispatch, props) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dialog);
+export default visibleIfHOC(connect(mapStateToProps, mapDispatchToProps)(Dialog));

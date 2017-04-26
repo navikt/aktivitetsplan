@@ -4,15 +4,12 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
-import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
+import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
-import NyHenvendelse from '../../dialog/ny-henvendelse';
-import Henvendelser from '../../dialog/henvendelser';
 import { slettAktivitet } from '../../ducks/aktiviteter';
-import { visibleIfHOC } from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
@@ -20,7 +17,12 @@ import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
-
+import BegrunnelseBoks from './begrunnelse-boks';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
+import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
+import NyHenvendelse from '../../dialog/ny-henvendelse';
+import Henvendelser from '../../dialog/henvendelser';
+import { visibleIfHOC } from '../../hocs/visible-if';
 
 const VisibleHenvendelser = visibleIfHOC(Henvendelser);
 
@@ -35,7 +37,7 @@ class Aktivitetvisning extends Component {
     }
 
     render() {
-        const { params, aktiviteter, dialoger, doSlettAktivitet, oppfolgingStatus } = this.props;
+        const { params, aktiviteter, doSlettAktivitet, oppfolgingStatus, dialoger } = this.props;
         const { id } = params;
         const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === id);
         const dialog = dialoger.find((d) => d.aktivitetId === id);
@@ -57,12 +59,13 @@ class Aktivitetvisning extends Component {
                 />
             );
         }
-
-        const valgtAktivitetId = valgtAktivitet.id;
         const tillatSletting = TILLAT_SLETTING && (
                 !oppfolgingStatus.underOppfolging ||
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
+
+        const visBegrunnelse = valgtAktivitet.avtalt === true &&
+            (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
         return (
             <ModalHeader
@@ -73,6 +76,12 @@ class Aktivitetvisning extends Component {
             >
                 <ModalContainer>
                     <div className="aktivitetvisning">
+
+                        <BegrunnelseBoks
+                            begrunnelse={valgtAktivitet.avsluttetKommentar}
+                            visible={visBegrunnelse}
+                        />
+
                         <Sidetittel id="modal-aktivitetsvisning-header">
                             {valgtAktivitet.tittel}
                         </Sidetittel>
@@ -82,10 +91,14 @@ class Aktivitetvisning extends Component {
                             valgtAktivitet={valgtAktivitet}
                         />
                         <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
+
+                        <hr className="aktivitetvisning__delelinje" />
+
+                        <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
                     </div>
                     <AvtaltContainer aktivitet={valgtAktivitet} />
                     <EndringsloggForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__historikk" />
-                    <NyHenvendelse formNavn={`ny-henvendelse-aktivitet-${valgtAktivitetId}`} dialogId={dialog && dialog.id} aktivitetId={valgtAktivitetId} />
+                    <NyHenvendelse formNavn={`ny-henvendelse-aktivitet-${valgtAktivitet.id}`} dialogId={dialog && dialog.id} aktivitetId={valgtAktivitet.id} />
                     <VisibleHenvendelser visible={!!dialog} dialog={dialog} />
                 </ModalContainer>
 

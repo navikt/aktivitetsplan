@@ -33,7 +33,11 @@ function Gruppe({ dialoger, valgtDialog, labelId }) {
     return (
         <VisibleDiv visible={dialoger.length}>
             <Undertittel className="dialoger__gruppe-tittel"><FormattedMessage id={labelId} /></Undertittel>
-            {dialoger.map((d) => <DialogVisning dialog={d} erValgt={d === valgtDialog} />)}
+            {
+                [...dialoger]
+                    .sort((a, b) => b.sisteDato - a.sisteDato)
+                    .map((d) => <DialogVisning dialog={d} erValgt={d === valgtDialog} />)
+            }
         </VisibleDiv>
     );
 }
