@@ -11,7 +11,6 @@ const initalState = {
     data: {}
 };
 
-
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
@@ -27,9 +26,30 @@ export default function reducer(state = initalState, action) {
     }
 }
 
+function konverterledetekster(ledetekster) {
+    return Object.keys(ledetekster)
+        .map((key) => ({ key, value: `${ledetekster[key]} [${key}]` }))
+        .reduce((previous, current) => {
+            previous[current.key] = current.value; // eslint-disable-line no-param-reassign
+            return previous;
+        }, {});
+}
+
+function hentLedeteksterMedKeys() {
+    return Api.hentLedetekster().then((data) => {
+        return Object.keys(data)
+            .map((sprak) => ({ sprak, keys: konverterledetekster(data[sprak]) }))
+            .reduce((previous, current) => {
+                previous[current.sprak] = current.keys; // eslint-disable-line no-param-reassign
+                return previous;
+            }, {});
+    });
+}
+
 // Action Creators
 export function hentLedetekster() {
-    return doThenDispatch(() => Api.hentLedetekster(), {
+    const vistekster = window.location.search.indexOf('vistekster') !== -1;
+    return doThenDispatch(vistekster ? hentLedeteksterMedKeys : Api.hentLedetekster, {
         OK,
         FEILET,
         PENDING
