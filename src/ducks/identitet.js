@@ -31,12 +31,12 @@ export default function reducer(state = initalState, action) {
 export function hentIdentitet() {
     return (dispatch, getState) => {
         const status = getState().data.identitet.status;
-        if(status == STATUS.NOT_STARTED || status == STATUS.ERROR){
+        if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
             doThenDispatch(() => Api.hentIdentitet(), {
                 OK,
                 FEILET,
                 PENDING
             })(dispatch);
         }
-    }
+    };
 }

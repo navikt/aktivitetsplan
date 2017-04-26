@@ -1,6 +1,6 @@
-import React, {Component, PropTypes as PT} from "react";
-import {connect} from "react-redux";
-import {hentIdentitet} from "../ducks/identitet";
+import React, { Component, PropTypes as PT } from 'react';
+import { connect } from 'react-redux';
+import { hentIdentitet } from '../ducks/identitet';
 
 
 class Identitet extends Component {
@@ -10,9 +10,9 @@ class Identitet extends Component {
     }
 
     render() {
-        const {children, ident} = this.props;
+        const { children, ident } = this.props;
         return (
-            <span>{ident === children ? "deg" : children}</span>
+            <span>{ident === children ? 'deg' : children}</span>
         );
     }
 

@@ -81,7 +81,7 @@ class AktivitetsMal extends Component {
                                                 <div key={malet.dato} className="aktivitetmal__historikk">
                                                     <span className="aktivitetmal__historikk-skrevetav">
                                                         Skrevet av <Identitet>{({ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv]) || malet.endretAv}</Identitet>
-                                                        </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
+                                                    </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
                                                     <Tekstomrade className="aktivitetmal__historikk-tekst">{malet.mal}</Tekstomrade>
                                                 </div>
                                                 ))}
