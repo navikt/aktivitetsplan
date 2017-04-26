@@ -3,6 +3,7 @@ import { Element, Undertittel } from 'nav-frontend-typografi';
 import NyHenvendelse from './ny-henvendelse';
 import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
+import './dialog.less';
 
 
 function Dialog({ dialog, className }) {
