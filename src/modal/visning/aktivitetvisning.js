@@ -94,12 +94,9 @@ class Aktivitetvisning extends Component {
 
                         <hr className="aktivitetvisning__delelinje" />
 
+                        <AvtaltContainer aktivitet={valgtAktivitet} />
                         <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
                     </div>
-                    <AvtaltContainer aktivitet={valgtAktivitet} />
-                    <EndringsloggForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__historikk" />
-                    <NyHenvendelse formNavn={`ny-henvendelse-aktivitet-${valgtAktivitet.id}`} dialogId={dialog && dialog.id} aktivitetId={valgtAktivitet.id} />
-                    <VisibleHenvendelser visible={!!dialog} dialog={dialog} />
                 </ModalContainer>
 
                 <ModalFooter>
