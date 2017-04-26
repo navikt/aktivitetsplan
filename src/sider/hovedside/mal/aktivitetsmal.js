@@ -9,6 +9,7 @@ import * as AppPT from '../../../proptypes';
 import AktivitetsmalForm from './aktivitetsmal-form';
 import { formaterDatoDatoEllerTidSiden } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import Identitet from '../../../felles-komponenter/identitet';
 import './aktivitetsmal.less';
 
 class AktivitetsMal extends Component {
@@ -79,7 +80,8 @@ class AktivitetsMal extends Component {
                                             {malListe.map((malet) => (
                                                 <div key={malet.dato} className="aktivitetmal__historikk">
                                                     <span className="aktivitetmal__historikk-skrevetav">
-                                                        Skrevet av {({ BRUKER: 'deg', VEILEDER: 'NAV' }[malet.endretAv])}</span> {formaterDatoDatoEllerTidSiden(malet.dato)}
+                                                        Skrevet av <Identitet>{({ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv]) || malet.endretAv}</Identitet>
+                                                        </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
                                                     <Tekstomrade className="aktivitetmal__historikk-tekst">{malet.mal}</Tekstomrade>
                                                 </div>
                                                 ))}
