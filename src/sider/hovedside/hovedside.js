@@ -1,6 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { FormattedMessage } from 'react-intl';
-import Lenke from '../../felles-komponenter/utils/lenke';
+import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Modal from '../../modal/modal';
 import AktivitetsTavle from './aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje';
@@ -23,9 +23,9 @@ function Hovedside({ children, routes }) {
             <div className="hovedsideinnhold">
                 <Navigasjonslinje />
                 <AktivitetsMal />
-                <Lenke className="hovedsideinnhold__aktivitetsknapp" href="/aktivitet/ny">
+                <Lenkeknapp href="/aktivitet/ny">
                     <FormattedMessage id="nyaktivitetsknapp" />
-                </Lenke>
+                </Lenkeknapp>
                 <AktivitetsTavle />
             </div>
             {modal}

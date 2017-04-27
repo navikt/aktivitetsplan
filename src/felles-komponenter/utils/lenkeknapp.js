@@ -1,19 +1,22 @@
 import React, { PropTypes as PT } from 'react';
+import classNames from 'classnames';
 import Lenke from './lenke';
+import './lenkeknapp.less';
 
-function Lenkeknapp({ onClick, ...rest }) {
-    function click(e) {
-        e.preventDefault();
-        onClick(e);
-    }
-
+function Lenkeknapp({ href, className, ...rest }) {
     return (
-        <Lenke {...rest} href="#" onClick={click} />
+        <Lenke
+            {...rest}
+            role="button"
+            className={classNames('lenkeknapp', className)}
+            href={href}
+        />
     );
 }
 
 Lenkeknapp.propTypes = {
-    onClick: PT.func.isRequired
+    href: PT.string.isRequired,
+    className: PT.string
 };
 
 export default Lenkeknapp;

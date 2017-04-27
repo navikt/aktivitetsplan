@@ -8,7 +8,7 @@ import Dialoger from './dialoger';
 import Modal from '../modal/modal';
 import Hovedside from '../sider/hovedside/hovedside';
 import history from '../history';
-import Lenkeknapp from '../felles-komponenter/utils/lenkeknapp';
+import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import NyHenvendelse from './ny-henvendelse';
 import { visibleIfHOC } from '../hocs/visible-if';
 import './dialog-modal.less';
@@ -102,10 +102,10 @@ class DialogModalContent extends Component {
                     style={kolonneStyle}
                 >
                     <div className="dialog-modal__kolonne-header">
-                        <Lenkeknapp
+                        <Knappelenke
                             visible={!!valgtAktivitetId}
                             onClick={() => navigerTil(`/aktivitet/aktivitet/${valgtAktivitetId}`)}
-                        >Gå til aktiviteten</Lenkeknapp>
+                        >Gå til aktiviteten</Knappelenke>
                         <Lukknapp overstHjorne onClick={lukkDialog}>Lukk dialog</Lukknapp>
                     </div>
                     <Dialog className="dialog-modal__kolonne-innhold dialog-modal__kolonne-innhold--dialog" dialog={valgtDialog} />

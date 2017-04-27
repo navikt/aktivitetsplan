@@ -47,7 +47,7 @@ class AktivitetsMal extends Component {
         const historikkVises = malListe.length !== 0;
 
         return (
-            <div className="aktivitetmal">
+            <section className="aktivitetmal">
                 <Innholdslaster avhengigheter={[this.props.malData]}>
                     <EkspanderbartPanel tittel={malOpprettet ? 'Mitt mål' : 'Opprett ditt mål'}>
                         <hr className="aktivitetmal__delelinje" />
@@ -78,12 +78,12 @@ class AktivitetsMal extends Component {
                                             >{historikkVises ? 'Skjul ' : 'Vis '}
                                                 tidligere lagrede mål</a>
                                             {malListe.map((malet) => (
-                                                <div key={malet.dato} className="aktivitetmal__historikk">
+                                                <article key={malet.dato} className="aktivitetmal__historikk">
                                                     <span className="aktivitetmal__historikk-skrevetav">
                                                         Skrevet av <Identitet>{({ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv]) || malet.endretAv}</Identitet>
                                                     </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
                                                     <Tekstomrade className="aktivitetmal__historikk-tekst">{malet.mal}</Tekstomrade>
-                                                </div>
+                                                </article>
                                                 ))}
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@ class AktivitetsMal extends Component {
                             )}
                     </EkspanderbartPanel>
                 </Innholdslaster>
-            </div>
+            </section>
 
         );
     }
