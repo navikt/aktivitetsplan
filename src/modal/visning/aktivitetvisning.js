@@ -19,12 +19,6 @@ import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
 import BegrunnelseBoks from './begrunnelse-boks';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
-import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
-import NyHenvendelse from '../../dialog/ny-henvendelse';
-import Henvendelser from '../../dialog/henvendelser';
-import { visibleIfHOC } from '../../hocs/visible-if';
-
-const VisibleHenvendelser = visibleIfHOC(Henvendelser);
 
 class Aktivitetvisning extends Component {
 
@@ -37,10 +31,9 @@ class Aktivitetvisning extends Component {
     }
 
     render() {
-        const { params, aktiviteter, doSlettAktivitet, oppfolgingStatus, dialoger } = this.props;
+        const { params, aktiviteter, doSlettAktivitet, oppfolgingStatus } = this.props;
         const { id } = params;
         const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === id);
-        const dialog = dialoger.find((d) => d.aktivitetId === id);
 
         if (!valgtAktivitet) {
             return null;
@@ -119,8 +112,7 @@ Aktivitetvisning.propTypes = {
     oppfolgingStatus: AppPT.oppfolgingStatus,
     aktiviteter: PT.shape({
         data: PT.arrayOf(AppPT.aktivitet)
-    }),
-    dialoger: PT.arrayOf(AppPT.dialog)
+    })
 };
 
 const mapStateToProps = (state) => ({
