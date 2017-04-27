@@ -5,7 +5,7 @@ import { avbrytAktivitet } from '../../ducks/aktiviteter';
 
 const BegrunnelseAvbruttAktivitet = (props) => {
     const headerTekst = <span>Begrunnelse for avbrutt aktivitet</span>;
-    const beskrivelseTekst = <span>Aktiviteteter bla bla bla</span>;
+    const beskrivelseTekst = <span>Aktiviteteter med denne lilvsløpstatus kan ikke lenger oppdateres og redigeres</span>;
     const valgtAktivitet = props.aktiviteter.find((aktivitet) => aktivitet.id === props.params.id) || {};
 
     return (
