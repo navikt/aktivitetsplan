@@ -44,7 +44,7 @@ export function oppdaterAktivitet(aktivitet) {
     return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 }
 
-export function oppdaterAktivitetStatus(aktivitet, status) {
+export function oppdaterAktivitetStatus(aktivitet) {
     return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
 }
 

@@ -1,10 +1,11 @@
 import React, { PropTypes as PT, Component } from 'react';
+import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
+import Textarea from 'nav-frontend-skjema/src/textarea';
+import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
 import ModalHeader from '../modal-header';
 import ModalContainer from '../modal-container';
 import ModalFooter from '../modal-footer';
-import Innholdstittel from "nav-frontend-typografi/src/innholdstittel";
-import Textarea from "nav-frontend-skjema/src/textarea";
-import Hovedknapp from "nav-frontend-knapper/src/hovedknapp";
+import history from '../../history';
 
 class BegrunnelseAktivitet extends Component {
     onLagre() {
@@ -25,7 +26,7 @@ class BegrunnelseAktivitet extends Component {
                         </Innholdstittel>
 
                         <Textarea
-                            label={ this.props.beskrivelseTekst }
+                            label={this.props.beskrivelseTekst}
                             name="begrunnelse-aktivitet"
                             maxLength={250}
                             disabled={this.props.lagrer}
@@ -37,7 +38,7 @@ class BegrunnelseAktivitet extends Component {
                     <Hovedknapp
                         spinner={this.props.lagrer}
                         mini
-                        autoDisableVedSpinner={true}
+                        autoDisableVedSpinner
                         onClick={() => this.onLagre()}
                     >
                         Lagre

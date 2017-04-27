@@ -78,7 +78,7 @@ export function flyttAktivitet(aktivitet, status) {
     return (dispatch) => {
         dispatch({ type: FLYTTER, data: { aktivitet, status } });
 
-        return Api.oppdaterAktivitetStatus({ ...aktivitet, status }, status)
+        return Api.oppdaterAktivitetStatus({ ...aktivitet, status })
             .then((response) => {
                 dispatch({ type: FLYTT_OK, data: response });
                 return Promise.resolve(response);

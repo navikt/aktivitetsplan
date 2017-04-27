@@ -12,7 +12,7 @@ function AktivitetskortIkoner({ kommentarer }) {
 }
 
 function AktivitetskortTillegg({ aktivitet }) {
-    const etiketter = aktivitet.avtalt ? aktivitet.tagger.concat({tag: "Avtalt med NAV", type: "avtalt"}) : aktivitet.tagger;
+    const etiketter = aktivitet.avtalt ? aktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) : aktivitet.tagger;
     const kommentarer = aktivitet.kommentarer;
     const harKommentarer = kommentarer && kommentarer.length;
     const harEtiketter = etiketter && etiketter.length;
