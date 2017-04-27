@@ -1,6 +1,7 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Knapp } from 'nav-frontend-knapper';
+import Lukknapp from 'nav-frontend-lukknapp';
 import { autobind } from '../utils';
 import Dialog from './dialog';
 import Dialoger from './dialoger';
@@ -14,7 +15,7 @@ import './dialog-modal.less';
 import * as AppPT from '../proptypes';
 
 const animationTime = 300;
-const width = 600;
+const width = 750;
 const initialLeft = -(width + 10);
 const dialogHeight = 250;
 const initialDialogMargin = -dialogHeight;
@@ -23,10 +24,6 @@ const kolonneStyle = {
 };
 
 const VisibleDiv = visibleIfHOC((props) => <div {...props} />);
-
-function LukkKnapp(props) {
-    return <button className="lukk-knapp" {...props} >X</button>;
-}
 
 class DialogModalContent extends Component {
 
@@ -74,7 +71,7 @@ class DialogModalContent extends Component {
                 >
                     <div className="dialog-modal__kolonne-header dialog-modal__kolonne-header--dialoger">
                         <Knapp onClick={this.nyDialog} disabled={nyDialogApen}>Ny dialog</Knapp>
-                        <LukkKnapp onClick={() => navigerTil('/')} />
+                        <Lukknapp overstHjorne onClick={() => navigerTil('/')}>Lukk dialog</Lukknapp>
                     </div>
                     <div
                         style={{
@@ -89,9 +86,7 @@ class DialogModalContent extends Component {
                             }}
                         >
                             <VisibleDiv visible={nyDialogApen}>
-                                <LukkKnapp
-                                    onClick={this.lukkNyDialog}
-                                />
+                                <Lukknapp overstHjorne onClick={this.lukkNyDialog}>Lukk ny dialog</Lukknapp>
                                 <NyHenvendelse
                                     formNavn="ny-dialog"
                                     onComplete={this.dialogOpprettet} // TODO velg denne dialogen!
@@ -111,7 +106,7 @@ class DialogModalContent extends Component {
                             visible={!!valgtAktivitetId}
                             onClick={() => navigerTil(`/aktivitet/aktivitet/${valgtAktivitetId}`)}
                         >Gå til aktiviteten</Lenkeknapp>
-                        <LukkKnapp onClick={lukkDialog} />
+                        <Lukknapp overstHjorne onClick={lukkDialog}>Lukk dialog</Lukknapp>
                     </div>
                     <Dialog className="dialog-modal__kolonne-innhold dialog-modal__kolonne-innhold--dialog" dialog={valgtDialog} />
                 </VisibleDiv>

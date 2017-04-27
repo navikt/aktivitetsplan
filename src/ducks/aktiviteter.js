@@ -57,7 +57,7 @@ export default function reducer(state = initalState, action) {
         case FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { error: data.error });
         case SLETT_OK:
-            return state.data.filter((a) => a.id !== data.id);
+            return { ...state, data: state.data.filter((a) => a.id !== data.id) };
         case SLETT:
         case SLETT_FAIL:
         default:

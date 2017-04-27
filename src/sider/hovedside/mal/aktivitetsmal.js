@@ -72,7 +72,7 @@ class AktivitetsMal extends Component {
                                             <NavFrontendChevron orientasjon={historikkVises ? 'opp' : 'ned'} className="aktivitetmal__chevron" />
                                             <a
                                                 href="/"
-                                                className="aktivitetmal__link"
+                                                className={historikkVises ? 'aktivitetmal__link aktivitetmal__link-apen' : 'aktivitetmal__link'}
                                                 onClick={this.hentMalListe}
                                             >{historikkVises ? 'Skjul ' : 'Vis '}
                                                 tidligere lagrede mål</a>

@@ -17,7 +17,8 @@ export const dialog = PT.shape({
 
 export const henvendelse = PT.shape({
     dialogId: PT.string,
-    tekst: PT.string
+    tekst: PT.string,
+    avsender: PT.string
 });
 
 export const etikett = PT.shape({

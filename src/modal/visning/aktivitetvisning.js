@@ -18,6 +18,7 @@ import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
+import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
 
 class Aktivitetvisning extends Component {
@@ -58,6 +59,9 @@ class Aktivitetvisning extends Component {
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
 
+        const visBegrunnelse = valgtAktivitet.avtalt === true &&
+            (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
+
         const onLagre = (aktivitet) => {
             if (aktivitet.status === this.props.valgtStatus) {
                 return history.push('/');
@@ -82,6 +86,12 @@ class Aktivitetvisning extends Component {
             >
                 <ModalContainer>
                     <div className="aktivitetvisning">
+
+                        <BegrunnelseBoks
+                            begrunnelse={valgtAktivitet.avsluttetKommentar}
+                            visible={visBegrunnelse}
+                        />
+
                         <Sidetittel id="modal-aktivitetsvisning-header">
                             {valgtAktivitet.tittel}
                         </Sidetittel>

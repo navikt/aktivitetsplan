@@ -1,6 +1,5 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { autofill, touch } from 'redux-form';
 import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
 import MaskedInput from 'react-maskedinput';
@@ -34,12 +33,8 @@ class DatoField extends Component {
     }
 
     onDayClick(event) {
-        const { input, dispatch, meta } = this.props;
-        const skjemanavn = meta.form;
-        const inputName = input.name;
         const isoDate = dateToISODate(new Date(event));
-        dispatch(autofill(skjemanavn, inputName, isoDate));
-        dispatch(touch(skjemanavn, inputName));
+        this.props.input.onChange(isoDate);
         this.lukk();
     }
 
