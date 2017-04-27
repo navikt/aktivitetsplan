@@ -9,6 +9,8 @@ export const CONTEXT_PATH = "/aktivitetsplanfelles";
 
 export const TILLAT_SLETTING = true;
 
+export const TILLAT_SET_AVTALT = true;
+
 export const getDynamicBasePath = () => {
     return null;
 };

@@ -13,7 +13,7 @@ const TEKST_MAKS_LENGDE = 2000;
 
 function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter }) {
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="ny-henvendelse-form">
             { harEksisterendeOverskrift || (
                 <Input
                     feltNavn="overskrift"

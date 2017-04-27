@@ -2,7 +2,7 @@ import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { Knapp } from 'nav-react-design/dist/knapp';
+import { Knapp } from 'nav-frontend-knapper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
@@ -15,7 +15,10 @@ import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
 import {TILLAT_SLETTING} from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
-
+import AvtaltContainer from './avtalt-container';
+import './aktivitetvisning.less';
+import BegrunnelseBoks from './begrunnelse-boks';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 
 class Aktivitetvisning extends Component {
 
@@ -30,7 +33,7 @@ class Aktivitetvisning extends Component {
     render() {
         const { params, aktiviteter, doSlettAktivitet, oppfolgingStatus } = this.props;
         const { id } = params;
-        const valgtAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === id);
+        const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === id);
 
         if (!valgtAktivitet) {
             return null;
@@ -49,11 +52,13 @@ class Aktivitetvisning extends Component {
                 />
             );
         }
-
         const tillatSletting = TILLAT_SLETTING && (
                 !oppfolgingStatus.underOppfolging ||
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
+
+        const visBegrunnelse = valgtAktivitet.avtalt === true &&
+            (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
         return (
             <ModalHeader
@@ -64,6 +69,12 @@ class Aktivitetvisning extends Component {
             >
                 <ModalContainer>
                     <div className="aktivitetvisning">
+
+                        <BegrunnelseBoks
+                            begrunnelse={valgtAktivitet.avsluttetKommentar}
+                            visible={visBegrunnelse}
+                        />
+
                         <Sidetittel id="modal-aktivitetsvisning-header">
                             {valgtAktivitet.tittel}
                         </Sidetittel>
@@ -76,6 +87,7 @@ class Aktivitetvisning extends Component {
 
                         <hr className="aktivitetvisning__delelinje" />
 
+                        <AvtaltContainer aktivitet={valgtAktivitet} />
                         <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
                     </div>
                 </ModalContainer>
@@ -98,12 +110,15 @@ Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus,
-    aktiviteter: PT.arrayOf(AppPT.aktivitet)
+    aktiviteter: PT.shape({
+        data: PT.arrayOf(AppPT.aktivitet)
+    })
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter.data,
-    oppfolgingStatus: state.data.oppfolgingStatus.data
+    aktiviteter: state.data.aktiviteter,
+    oppfolgingStatus: state.data.oppfolgingStatus.data,
+    dialoger: state.data.dialog.data
 });
 
 const mapDispatchToProps = (dispatch) => ({

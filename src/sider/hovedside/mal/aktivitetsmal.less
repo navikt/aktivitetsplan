@@ -12,18 +12,35 @@
   }
 
   &__delelinje {
-    .blokk-s();
-    margin-top: 0;
+    margin: 0;
     border: 1px solid @color-hr;
   }
 
   &__innhold {
     padding: 1rem;
+    width: 600px;
+
+    p:not(.textarea--medMeta__teller) {
+      margin-top: 0;
+    }
+  }
+
+  &__chevron {
+    margin-right: .5rem;
   }
 
   &__link {
-    .blokk-s();
     display: inline-block;
+    color: @navMorkGra;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &-apen {
+      .blokk-s();
+    }
   }
 
   &__redigering--knapp {
@@ -38,6 +55,7 @@
     }
 
     &-tekst {
+      .blokk-s();
       white-space: pre-wrap;
     }
   }
