@@ -10,17 +10,17 @@ const MALTEKST_MAKSLENGDE = 500;
 function AktivitetsmalForm(props) {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Textarea feltNavn="mal" labelId="aktivitetsmal.tekst.label" maxLength={MALTEKST_MAKSLENGDE}/>
+            <Textarea feltNavn="mal" labelId="aktivitetsmal.tekst.label" maxLength={MALTEKST_MAKSLENGDE} />
             <Hovedknapp className="aktivitetmal__redigering--knapp"><FormattedMessage id="aktivitetsmal.lagre" /></Hovedknapp>
             <Knapp type="button" onClick={props.handleCancel}>
-                <FormattedMessage id="aktivitetsmal.avbryt"/>
+                <FormattedMessage id="aktivitetsmal.avbryt" />
             </Knapp>
         </form>
     );
 }
 
 const forLangMaltekst = rules.maxLength(MALTEKST_MAKSLENGDE,
-    <FormattedMessage id='aktivitetsmal.tekst.makslengde.feilmelding' values={{antall_tegn: MALTEKST_MAKSLENGDE}} />
+    <FormattedMessage id="aktivitetsmal.tekst.makslengde.feilmelding" values={{ antall_tegn: MALTEKST_MAKSLENGDE }} />
 );
 
 AktivitetsmalForm.propTypes = {

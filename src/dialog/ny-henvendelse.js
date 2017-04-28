@@ -43,14 +43,14 @@ NyHenvendelseForm.propTypes = {
     oppretter: PT.bool.isRequired
 };
 
-const pakrevdOverskrift = rules.minLength(0, <FormattedMessage id='dialog.ny-henvendelse.overskrift.mangler.feilmelding' />);
-const pakrevdTekst = rules.minLength(0, <FormattedMessage id='dialog.ny-henvendelse.tekst.mangler.feilmelding' />);
+const pakrevdOverskrift = rules.minLength(0, <FormattedMessage id="dialog.ny-henvendelse.overskrift.mangler.feilmelding" />);
+const pakrevdTekst = rules.minLength(0, <FormattedMessage id="dialog.ny-henvendelse.tekst.mangler.feilmelding" />);
 
 const begrensetTittelLengde = rules.maxLength(OVERSKRIFT_MAKS_LENGDE,
-    <FormattedMessage id='dialog.ny-henvendelse.overskrift.for-lang.feilmelding' values={{antall_tegn: OVERSKRIFT_MAKS_LENGDE}} />
+    <FormattedMessage id="dialog.ny-henvendelse.overskrift.for-lang.feilmelding" values={{ antall_tegn: OVERSKRIFT_MAKS_LENGDE }} />
 );
 const begrensetTekstLengde = rules.maxLength(TEKST_MAKS_LENGDE,
-    <FormattedMessage id='dialog.ny-henvendelse.tekst.for-lang.feilmelding' values={{antall_tegn: TEKST_MAKS_LENGDE}} />
+    <FormattedMessage id="dialog.ny-henvendelse.tekst.for-lang.feilmelding" values={{ antall_tegn: TEKST_MAKS_LENGDE }} />
 );
 
 const NyHenvendelseReduxForm = validForm({

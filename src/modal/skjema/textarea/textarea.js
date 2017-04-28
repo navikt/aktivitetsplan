@@ -3,7 +3,7 @@ import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 
-
+// eslint-disable-next-line no-unused-vars
 function InnerTextAreaComponent({ input, labelId, maxLength, errorMessage, meta, ...rest }) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     return (
@@ -20,7 +20,8 @@ function InnerTextAreaComponent({ input, labelId, maxLength, errorMessage, meta,
 InnerTextAreaComponent.propTypes = {
     labelId: PT.string.isRequired,
     maxLength: PT.number.isRequired,
-
+    errorMessage: PT.arrayOf(PT.anyOf(PT.string, PT.node)),
+    meta: PT.object, // eslint-disable-line react/forbid-prop-types
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
