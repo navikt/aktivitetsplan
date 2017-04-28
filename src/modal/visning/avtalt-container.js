@@ -53,11 +53,7 @@ class AvtaltContainer extends Component {
             </Undertittel>
         </div>);
 
-        return (
-            <div>
-                {aktivitet.avtalt ? visAvtalt : setAvtaltInnhold}
-            </div>
-        );
+        return aktivitet.avtalt ? visAvtalt : setAvtaltInnhold;
     }
 }
 AvtaltContainer.propTypes = {
