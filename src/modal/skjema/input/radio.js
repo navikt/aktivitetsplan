@@ -9,21 +9,28 @@ function Radio({ feltNavn, className, value, checked, ...resten }) {
             className={className}
             type="radio"
             value={value}
-            component={props =>
+            component={(props) =>
                 <NavRadio
                     {...resten}
                     checked={checked}
                     value={value}
-                    onChange={e => props.input.onChange(value) }
+                    onChange={() => props.input.onChange(value)}
                 />
             }
         />
     );
 }
 
+Radio.defaultProps = {
+    className: ''
+};
+
 Radio.propTypes = {
     feltNavn: PT.string.isRequired,
-    className: PT.string
+    className: PT.string,
+    value: PT.string.isRequired,
+    checked: PT.bool.isRequired,
+    input: PT.object // eslint-disable-line
 };
 
 export default Radio;

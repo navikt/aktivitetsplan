@@ -16,8 +16,10 @@ class BegrunnelseAktivitet extends Component {
         autobind(this);
     }
     onLagre() {
+        const onSuccess = () => history.goBack();
+        const onError = () => {}; // TODO legge til feilhåndtering
         this.props.onLagre(this.beskrivelse.tekstomrade.value)
-            .then(history.goBack);
+            .then(onSuccess, onError);
     }
     onChange() {
         this.forceUpdate();

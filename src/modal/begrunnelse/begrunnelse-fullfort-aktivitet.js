@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import * as AppPT from '../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-aktivitet';
 import { fullforAktivitet } from '../../ducks/aktiviteter';
 
@@ -16,6 +17,12 @@ const BegrunnelseFullfortAktivitet = (props) => {
             onLagre={(begrunnelse) => props.lagreBegrunnelse(valgtAktivitet, begrunnelse)}
         />
     );
+};
+
+BegrunnelseFullfortAktivitet.propTypes = {
+    aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
+    params: PT.shape({ id: PT.string }).isRequired,
+    lagreBegrunnelse: PT.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({

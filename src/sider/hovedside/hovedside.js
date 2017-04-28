@@ -43,7 +43,8 @@ function Hovedside({ children, routes, lukkModal }) {
 
 Hovedside.propTypes = {
     children: PT.node,
-    routes: PT.arrayOf(PT.shape({ modalId: PT.string }))
+    routes: PT.arrayOf(PT.shape({ modalId: PT.string })),
+    lukkModal: PT.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({

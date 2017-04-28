@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import history from '../../history';
 import { TILBAKE_MODAL } from '../../ducks/modal';
-
 
 function Tilbakeknapp(props) {
     function tilbake() {
@@ -24,6 +23,10 @@ function Tilbakeknapp(props) {
         </Link>
     );
 }
+
+Tilbakeknapp.propTypes = {
+    tilbakeModal: PT.func.isRequired
+};
 
 Tilbakeknapp.propTypes = {};
 const mapDispatchToProps = (dispatch) => ({
