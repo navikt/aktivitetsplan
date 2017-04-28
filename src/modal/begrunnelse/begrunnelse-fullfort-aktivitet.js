@@ -1,12 +1,13 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-aktivitet';
 import { fullforAktivitet } from '../../ducks/aktiviteter';
 
 const BegrunnelseFullfortAktivitet = (props) => {
-    const headerTekst = <span>Begrunnelse for fullført aktivitet</span>;
-    const beskrivelseTekst = <span>Aktiviteteter med denne lilvsløpstatus kan ikke lenger oppdateres og redigeres</span>;
+    const headerTekst = <FormattedMessage id="opprett-begrunnelse.fullfoert.header" />;
+    const beskrivelseTekst = <FormattedMessage id="opprett-begrunnelse.fullfoert.melding" />;
     const valgtAktivitet = props.aktiviteter.find((aktivitet) => aktivitet.id === props.params.id) || {};
 
     return (

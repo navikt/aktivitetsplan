@@ -2,6 +2,7 @@ import React, { PropTypes as PT, Component } from 'react';
 import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
 import { Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { FormattedMessage } from 'react-intl';
 import ModalHeader from '../modal-header';
 import ModalContainer from '../modal-container';
 import ModalFooter from '../modal-footer';
@@ -27,7 +28,7 @@ class BegrunnelseAktivitet extends Component {
     getFeilmelding() {
         const beskrivelse = this.beskrivelse;
         if (beskrivelse && beskrivelse.tekstomrade.value.length > MAKS_LENGDE) {
-            return { feilmelding: `Du må korte ned teksten til ${MAKS_LENGDE} tegn` }; // TODO dra ut tekst
+            return { feilmelding: <FormattedMessage id="opprett-begrunnelse.melding.feilmelding" /> };
         }
         return null;
     }
