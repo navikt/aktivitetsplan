@@ -5,6 +5,10 @@ export function hentLedetekster() { // eslint-disable-line  import/prefer-defaul
     return fetchToJson(`${API_BASE_URL}/tekster`);
 }
 
+export function hentIdentitet() {
+    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/me`);
+}
+
 export function hentOppfolgingStatus() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon`);
 }
@@ -44,8 +48,8 @@ export function oppdaterAktivitet(aktivitet) {
     return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 }
 
-export function oppdaterAktivitetStatus(aktivitet, status) {
-    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status/${status}`);
+export function oppdaterAktivitetStatus(aktivitet) {
+    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status/`, aktivitet);
 }
 
 export function hentEtiketter() {

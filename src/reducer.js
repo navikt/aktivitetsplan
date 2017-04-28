@@ -8,6 +8,7 @@ import etiketterReducer from './ducks/etiketter';
 import endringsloggReducer from './ducks/endringslogg';
 import dialogReducer from './ducks/dialog';
 import malReducer from './ducks/mal';
+import identitetReducer from './ducks/identitet';
 
 
 export default combineReducers({
@@ -20,6 +21,7 @@ export default combineReducers({
         etiketter: etiketterReducer,
         endringslogg: endringsloggReducer,
         dialog: dialogReducer,
-        mal: malReducer
+        mal: malReducer,
+        identitet: identitetReducer
     })
 });

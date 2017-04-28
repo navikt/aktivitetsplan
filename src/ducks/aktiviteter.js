@@ -48,13 +48,17 @@ export default function reducer(state = initalState, action) {
             return { ...state, data: [...state.data, data] };
         case FLYTTER:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { nesteStatus: data.status });
-        case FLYTT_OK:
+        case OPPDATER:
+            return { ...state, status: STATUS.PENDING };
         case OPPDATER_OK:
-            return nyStateMedOppdatertAktivitet(state, data);
+        case FLYTT_OK:
+            return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, data);
+        case OPPDATER_FEILET:
+            return { ...state, status: STATUS.ERROR };
         case FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { error: data.error });
         case SLETT_OK:
-            return state.data.filter((a) => a.id !== data.id);
+            return { ...state, data: state.data.filter((a) => a.id !== data.id) };
         case SLETT:
         case SLETT_FAIL:
         default:
@@ -75,7 +79,8 @@ export function flyttAktivitet(aktivitet, status) {
     return (dispatch) => {
         dispatch({ type: FLYTTER, data: { aktivitet, status } });
 
-        Api.oppdaterAktivitetStatus(aktivitet, status)
+        // TODO kan vi bruke oppdaterAktivitet?
+        Api.oppdaterAktivitetStatus({ ...aktivitet, status })
             .then((response) => dispatch({ type: FLYTT_OK, data: response }))
             .catch((error) => dispatch({ type: FLYTT_FAIL, data: { aktivitet, error } }));
     };
