@@ -19,6 +19,7 @@ import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
 import BegrunnelseBoks from './begrunnelse-boks';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
+import SimpleDiv from '../../felles-komponenter/utils/SimpleDiv';
 
 class Aktivitetvisning extends Component {
 
@@ -69,26 +70,31 @@ class Aktivitetvisning extends Component {
             >
                 <ModalContainer>
                     <div className="aktivitetvisning">
-
-                        <BegrunnelseBoks
-                            begrunnelse={valgtAktivitet.avsluttetKommentar}
-                            visible={visBegrunnelse}
-                        />
-
-                        <Sidetittel id="modal-aktivitetsvisning-header">
-                            {valgtAktivitet.tittel}
-                        </Sidetittel>
-                        <AktivitetEtiketter etiketter={valgtAktivitet.tagger} className="aktivitetvisning__etikett" />
-                        <AktivitetsDetaljer
-                            className="aktivitetvisning__detaljer"
-                            valgtAktivitet={valgtAktivitet}
-                        />
-                        <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
-
+                        <SimpleDiv visible={visBegrunnelse} classes="aktivitetvisning__underseksjon">
+                            <BegrunnelseBoks
+                                begrunnelse={valgtAktivitet.avsluttetKommentar}
+                                visible={visBegrunnelse}
+                            />
+                        </SimpleDiv>
+                        <div className="aktivitetvisning__underseksjon">
+                            <Sidetittel id="modal-aktivitetsvisning-header">
+                                {valgtAktivitet.tittel}
+                            </Sidetittel>
+                            <AktivitetEtiketter etiketter={valgtAktivitet.tagger} className="aktivitetvisning__etikett" />
+                            <AktivitetsDetaljer
+                                className="aktivitetvisning__detaljer"
+                                valgtAktivitet={valgtAktivitet}
+                            />
+                            <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
+                        </div>
                         <hr className="aktivitetvisning__delelinje" />
-
-                        <AvtaltContainer aktivitet={valgtAktivitet} />
-                        <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
+                        <div className="aktivitetvisning__underseksjon">
+                            <AvtaltContainer aktivitet={valgtAktivitet} />
+                        </div>
+                        <hr className="aktivitetvisning__delelinje" />
+                        <div className="aktivitetvisning__underseksjon">
+                            <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
+                        </div>
                     </div>
                 </ModalContainer>
 

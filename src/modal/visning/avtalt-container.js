@@ -54,7 +54,7 @@ class AvtaltContainer extends Component {
         </div>);
 
         return (
-            <div className="avtaltContainer">
+            <div>
                 {aktivitet.avtalt ? visAvtalt : setAvtaltInnhold}
             </div>
         );
