@@ -5,17 +5,18 @@ import Undertittel from 'nav-frontend-typografi/src/undertittel';
 import Bilde from 'nav-react-design/dist/bilde';
 import * as aktivitetstatus from '../../constant';
 import Radio from '../skjema/input/radio';
-import hengelaasSVG from '../../img/hengelas.svg';
+import hengelasSVG from '../../img/hengelas.svg';
+
+const leggTilHengelas = (tekst) => (
+    <span>
+        {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelasSVG} alt="hengelås ikon" />
+    </span>
+);
 
 function OppdaterAktivitetStatus(props) {
     const erChecked = (id) => props.valgtStatus === id;
     const disableStatusEndring = props.status === aktivitetstatus.STATUS_AVBRUTT ||
         props.status === aktivitetstatus.STATUS_FULLFOERT;
-    const leggTilHengelaas = (tekst) => {
-        return (<span>
-            {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelaasSVG} alt="hengelås ikon" />
-        </span>);
-    };
 
     const radioSkjema = (
         <form className="skjema blokk-m oppdaterstatus-skjema">
@@ -48,7 +49,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelaas('Fullført')}
+                label={leggTilHengelas('Fullført')}
                 value={aktivitetstatus.STATUS_FULLFOERT}
                 id={`id--${aktivitetstatus.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
@@ -57,7 +58,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelaas('Avbrutt')}
+                label={leggTilHengelas('Avbrutt')}
                 value={aktivitetstatus.STATUS_AVBRUTT}
                 id={`id--${aktivitetstatus.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"

@@ -6,29 +6,33 @@ import ModalHeader from '../modal-header';
 import ModalContainer from '../modal-container';
 import ModalFooter from '../modal-footer';
 import history from '../../history';
+import { autobind } from '../../utils';
 
 const MAKS_LENGDE = 255;
 
 class BegrunnelseAktivitet extends Component {
+    constructor(props) {
+        super(props);
+        autobind(this);
+    }
     onLagre() {
-        const onSuccess = () => history.goBack();
-        const onError = () => {};
         this.props.onLagre(this.beskrivelse.tekstomrade.value)
-            .then(onSuccess, onError);
+            .then(history.goBack);
     }
     onChange() {
         this.forceUpdate();
     }
     getFeilmelding() {
         const beskrivelse = this.beskrivelse;
-        if (beskrivelse !== undefined && beskrivelse.tekstomrade.value.length > 255) {
+        if (beskrivelse && beskrivelse.tekstomrade.value.length > MAKS_LENGDE) {
             return { feilmelding: `Du må korte ned teksten til ${MAKS_LENGDE} tegn` }; // TODO dra ut tekst
         }
         return null;
     }
     render() {
+        const feilmelding = this.getFeilmelding();
         return (
-            <section>
+            <div>
                 <ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />
                 <div className="aktivitetvisning">
                     <ModalContainer>
@@ -36,13 +40,13 @@ class BegrunnelseAktivitet extends Component {
                             { this.props.headerTekst }
                         </Innholdstittel>
                         <Textarea
-                            feil={this.getFeilmelding()}
+                            feil={feilmelding}
                             label={this.props.beskrivelseTekst}
                             name="begrunnelse-aktivitet"
                             maxLength={MAKS_LENGDE}
                             disabled={this.props.lagrer}
                             ref={(ref) => { this.beskrivelse = ref; }}
-                            onChange={() => this.onChange()}
+                            onChange={this.onChange}
                         />
                     </ModalContainer>
                 </div>
@@ -51,13 +55,13 @@ class BegrunnelseAktivitet extends Component {
                         spinner={this.props.lagrer}
                         mini
                         autoDisableVedSpinner
-                        onClick={() => this.onLagre()}
-                        disabled={!!this.getFeilmelding()}
+                        onClick={this.onLagre}
+                        disabled={!!feilmelding}
                     >
                         Lagre
                     </Hovedknapp>
                 </ModalFooter>
-            </section>
+            </div>
         );
     }
 }
