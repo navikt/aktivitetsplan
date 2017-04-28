@@ -19,7 +19,7 @@ import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
 import BegrunnelseBoks from './begrunnelse-boks';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
-import SimpleDiv from '../../felles-komponenter/utils/SimpleDiv';
+import VisibleIfDiv from '../../felles-komponenter/utils/visibleIfDiv';
 
 class Aktivitetvisning extends Component {
 
@@ -70,12 +70,12 @@ class Aktivitetvisning extends Component {
             >
                 <ModalContainer>
                     <div className="aktivitetvisning">
-                        <SimpleDiv visible={visBegrunnelse} classes="aktivitetvisning__underseksjon">
+                        <VisibleIfDiv visible={visBegrunnelse} className="aktivitetvisning__underseksjon">
                             <BegrunnelseBoks
                                 begrunnelse={valgtAktivitet.avsluttetKommentar}
                                 visible={visBegrunnelse}
                             />
-                        </SimpleDiv>
+                        </VisibleIfDiv>
                         <div className="aktivitetvisning__underseksjon">
                             <Sidetittel id="modal-aktivitetsvisning-header">
                                 {valgtAktivitet.tittel}
