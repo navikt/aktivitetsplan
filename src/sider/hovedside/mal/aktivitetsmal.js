@@ -1,5 +1,6 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -51,7 +52,7 @@ class AktivitetsMal extends Component {
         return (
             <div className="aktivitetmal">
                 <Innholdslaster avhengigheter={[this.props.malData]}>
-                    <EkspanderbartPanel tittel={malOpprettet ? 'Mitt mål' : 'Opprett ditt mål'}>
+                    <EkspanderbartPanel tittel={<FormattedMessage id={malOpprettet ? 'aktivitetsmal.mitt-mal' : 'aktivitetsmal.opprett-mal'} />}>
                         <hr className="aktivitetmal__delelinje" />
                         {this.state.redigering ? (
                             <div className="aktivitetmal__innhold">
@@ -64,24 +65,24 @@ class AktivitetsMal extends Component {
                             ) : (
                                 <div>
                                     <div className="aktivitetmal__innhold">
-                                        {!malOpprettet && <p>Opprett ditt mål for oppfølgingen i NAV ved å klikke på knappen under.</p>}
+                                        {!malOpprettet && <p><FormattedMessage id="aktivitetsmal.opprett-mal-tekst" /></p>}
                                         <Tekstomrade className="aktivitetmal__tekst">{mal.mal}</Tekstomrade>
-                                        <Hovedknapp onClick={this.toggleRedigering}>{malOpprettet ? 'Rediger' : 'Opprett'}</Hovedknapp>
+                                        <Hovedknapp onClick={this.toggleRedigering}>{<FormattedMessage id={malOpprettet ? 'aktivitetsmal.rediger' : 'aktivitetsmal.opprett'} />}</Hovedknapp>
                                     </div>
                                     <div>
                                         <hr className="aktivitetmal__delelinje" />
                                         <div className="aktivitetmal__innhold">
-                                            <NavFrontendChevron orientasjon={historikkVises ? 'opp' : 'ned'} className="aktivitetmal__chevron" />
                                             <a
                                                 href="/"
                                                 className={historikkVises ? 'aktivitetmal__link aktivitetmal__link-apen' : 'aktivitetmal__link'}
                                                 onClick={this.hentMalListe}
-                                            >{historikkVises ? 'Skjul ' : 'Vis '}
-                                                tidligere lagrede mål</a>
+                                            ><NavFrontendChevron orientasjon={historikkVises ? 'opp' : 'ned'} className="aktivitetmal__chevron" />
+                                                {<FormattedMessage id={historikkVises ? 'aktivitetsmal.vis' : 'aktivitetsmal.skjul'} />}
+                                            </a>
                                             {malListe.slice(1, malListe.length).map((malet) => (
                                                 <div key={malet.dato} className="aktivitetmal__historikk">
                                                     <span className="aktivitetmal__historikk-skrevetav">
-                                                        {malet.mal ? 'Skrevet av ' : 'Mål slettet av '}
+                                                        <FormattedMessage id={malet.mal ? 'aktivitetsmal.skrevet-av' : 'aktivitetsmal.slettet-av'} />
                                                         <Identitet>{({ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv]) || malet.endretAv}</Identitet>
                                                     </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
                                                     <Tekstomrade className="aktivitetmal__historikk-tekst">{malet.mal}</Tekstomrade>
