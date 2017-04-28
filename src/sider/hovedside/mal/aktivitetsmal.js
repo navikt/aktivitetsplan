@@ -12,6 +12,8 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Identitet from '../../../felles-komponenter/identitet';
 import './aktivitetsmal.less';
 
+const trim = function (str) { return str ? str.trim() : ''; };
+
 class AktivitetsMal extends Component {
 
     constructor(props) {
@@ -55,7 +57,7 @@ class AktivitetsMal extends Component {
                             <div className="aktivitetmal__innhold">
                                 <AktivitetsmalForm
                                     mal={mal}
-                                    onSubmit={(malet) => doOppdaterMal(malet, this.toggleRedigering)}
+                                    onSubmit={(malet) => doOppdaterMal(malet, this.props.mal, this.toggleRedigering)}
                                     handleCancel={this.toggleRedigering}
                                 />
                             </div>
@@ -65,7 +67,6 @@ class AktivitetsMal extends Component {
                                         {!malOpprettet && <p>Opprett ditt mål for oppfølgingen i NAV ved å klikke på knappen under.</p>}
                                         <Tekstomrade className="aktivitetmal__tekst">{mal.mal}</Tekstomrade>
                                         <Hovedknapp onClick={this.toggleRedigering}>{malOpprettet ? 'Rediger' : 'Opprett'}</Hovedknapp>
-
                                     </div>
                                     <div>
                                         <hr className="aktivitetmal__delelinje" />
@@ -77,10 +78,11 @@ class AktivitetsMal extends Component {
                                                 onClick={this.hentMalListe}
                                             >{historikkVises ? 'Skjul ' : 'Vis '}
                                                 tidligere lagrede mål</a>
-                                            {malListe.map((malet) => (
+                                            {malListe.slice(1, malListe.length).map((malet) => (
                                                 <div key={malet.dato} className="aktivitetmal__historikk">
                                                     <span className="aktivitetmal__historikk-skrevetav">
-                                                        Skrevet av <Identitet>{({ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv]) || malet.endretAv}</Identitet>
+                                                        {malet.mal ? 'Skrevet av ' : 'Mål slettet av '}
+                                                        <Identitet>{({ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv]) || malet.endretAv}</Identitet>
                                                     </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
                                                     <Tekstomrade className="aktivitetmal__historikk-tekst">{malet.mal}</Tekstomrade>
                                                 </div>
@@ -92,7 +94,6 @@ class AktivitetsMal extends Component {
                     </EkspanderbartPanel>
                 </Innholdslaster>
             </div>
-
         );
     }
 }
@@ -119,8 +120,10 @@ const mapDispatchToProps = (dispatch) => ({
     doHentMal: () => hentMal()(dispatch),
     doHentMalListe: () => hentMalListe()(dispatch),
     doFjernMalListe: () => fjernMalListe()(dispatch),
-    doOppdaterMal: (mal, callback) => {
-        oppdaterMal(mal)(dispatch);
+    doOppdaterMal: (newMal, oldMal, callback) => {
+        if (trim(newMal.mal) !== trim(oldMal.mal)) {
+            oppdaterMal({ mal: trim(newMal.mal) })(dispatch);
+        }
         callback();
     }
 });
