@@ -20,7 +20,7 @@ function InnerTextAreaComponent({ input, labelId, maxLength, errorMessage, meta,
 InnerTextAreaComponent.propTypes = {
     labelId: PT.string.isRequired,
     maxLength: PT.number.isRequired,
-    errorMessage: PT.arrayOf(PT.anyOf(PT.string, PT.node)),
+    errorMessage: PT.arrayOf(PT.oneOfType([PT.string, PT.node])),
     meta: PT.object, // eslint-disable-line react/forbid-prop-types
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
