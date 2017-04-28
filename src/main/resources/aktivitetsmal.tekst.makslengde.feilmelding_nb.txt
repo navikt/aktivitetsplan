@@ -1,0 +1,1 @@
+Kontaktpersontekst kan ikke være lenger en {antall_tegn} tegn
