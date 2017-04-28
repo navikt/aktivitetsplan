@@ -77,7 +77,7 @@ class AktivitetsMal extends Component {
                                                 className={historikkVises ? 'aktivitetmal__link aktivitetmal__link-apen' : 'aktivitetmal__link'}
                                                 onClick={this.hentMalListe}
                                             ><NavFrontendChevron orientasjon={historikkVises ? 'opp' : 'ned'} className="aktivitetmal__chevron" />
-                                                {<FormattedMessage id={historikkVises ? 'aktivitetsmal.vis' : 'aktivitetsmal.skjul'} />}
+                                                {<FormattedMessage id={historikkVises ? 'aktivitetsmal.skjul' : 'aktivitetsmal.vis'} />}
                                             </a>
                                             {malListe.slice(1, malListe.length).map((malet) => (
                                                 <div key={malet.dato} className="aktivitetmal__historikk">
