@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
+import { STATUS } from '../ducks/utils';
 import { nyHenvendelse } from '../ducks/dialog';
 import Textarea from '../modal/skjema/textarea/textarea';
 import Input from '../modal/skjema/input/input';
@@ -10,13 +11,14 @@ import Input from '../modal/skjema/input/input';
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 2000;
 
-function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift }) {
+function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter }) {
     return (
         <form onSubmit={handleSubmit} className="ny-henvendelse-form">
             { harEksisterendeOverskrift || (
                 <Input
                     feltNavn="overskrift"
                     labelId="dialog.overskrift-label"
+                    disabled={oppretter}
                     autoFocus
                 />
             )}
@@ -24,15 +26,21 @@ function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift }) {
                 feltNavn="tekst"
                 placeholder="Skriv her"
                 maxLength={TEKST_MAKS_LENGDE}
+                disabled={oppretter}
             />
-            <Hovedknapp type="submit" ><FormattedMessage id="dialog.lag-ny-dialog" /></Hovedknapp>
+            <Hovedknapp
+                type="submit"
+                spinner={oppretter}
+                disabled={oppretter}
+            ><FormattedMessage id="dialog.lag-ny-dialog" /></Hovedknapp>
         </form>
     );
 }
 
 NyHenvendelseForm.propTypes = {
     handleSubmit: PT.func.isRequired,
-    harEksisterendeOverskrift: PT.bool.isRequired
+    harEksisterendeOverskrift: PT.bool.isRequired,
+    oppretter: PT.bool.isRequired
 };
 
 const pakrevdOverskrift = rules.minLength(0, 'Du må fylle ut overskriften');
@@ -52,7 +60,8 @@ const mapStateToProps = (state, props) => {
     const aktivitetId = props.aktivitetId;
     const dialogId = props.dialogId;
 
-    const dialoger = state.data.dialog.data;
+    const dialogState = state.data.dialog;
+    const dialoger = dialogState.data;
     const aktiviteter = state.data.aktiviteter.data;
 
     const dialog = dialoger.find((d) => d.id === dialogId) || {};
@@ -64,7 +73,8 @@ const mapStateToProps = (state, props) => {
         initialValues: {
             overskrift
         },
-        harEksisterendeOverskrift: !!overskrift
+        harEksisterendeOverskrift: !!overskrift,
+        oppretter: dialogState.status !== STATUS.OK
     };
 };
 
@@ -77,9 +87,12 @@ const mapDispatchToProps = () => ({
         })(dispatch);
 
         const onComplete = props.onComplete;
-        if (onComplete) {
-            nyHenvendelsePromise.then((action) => onComplete(action.data));
-        }
+        nyHenvendelsePromise.then((action) => {
+            props.reset();
+            if (onComplete) {
+                onComplete(action.data);
+            }
+        });
     }
 });
 
