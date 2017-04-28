@@ -4,13 +4,21 @@ import { FormattedMessage } from 'react-intl';
 import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 
 
-function InnerTextAreaComponent({ input, labelId, maxLength }) {
+function InnerTextAreaComponent({ input, labelId, maxLength, errorMessage, meta, ...rest }) {
+    const getFeilmelding = (feilliste) => {
+        if (feilliste) {
+            return { feilmelding: <div>{ feilliste.map(feil => feil) }</div> };
+        }
+    };
+
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"
             label={labelId && <FormattedMessage id={labelId} />}
             maxLength={maxLength}
+            feil={getFeilmelding(errorMessage)}
             {...input}
+            {...rest}
         />
     );
 }

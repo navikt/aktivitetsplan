@@ -3,7 +3,7 @@ import { Input as NavInput } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 
-function InnerInputComponent({ input, labelId, errorMessage, ...rest }) {
+function InnerInputComponent({ input, labelId, errorMessage, meta, ...rest }) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     const inputProps = { ...input, ...rest };
     return (
