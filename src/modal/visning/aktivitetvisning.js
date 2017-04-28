@@ -73,6 +73,7 @@ class Aktivitetvisning extends Component {
                 this.props.doFlyttAktivitet(aktivitet, this.props.valgtStatus);
                 history.push('/');
             }
+            return null;
         };
 
         const etiketter = valgtAktivitet.avtalt ? valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) : valgtAktivitet.tagger;
