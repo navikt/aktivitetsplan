@@ -5,18 +5,13 @@ import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 
 
 function InnerTextAreaComponent({ input, labelId, maxLength, errorMessage, meta, ...rest }) {
-    const getFeilmelding = (feilliste) => {
-        if (feilliste) {
-            return { feilmelding: <div>{ feilliste.map(feil => feil) }</div> };
-        }
-    };
-
+    const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"
             label={labelId && <FormattedMessage id={labelId} />}
             maxLength={maxLength}
-            feil={getFeilmelding(errorMessage)}
+            feil={feil}
             {...input}
             {...rest}
         />
