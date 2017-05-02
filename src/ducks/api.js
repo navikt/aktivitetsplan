@@ -5,6 +5,10 @@ export function hentLedetekster() { // eslint-disable-line  import/prefer-defaul
     return fetchToJson(`${API_BASE_URL}/tekster`);
 }
 
+export function hentIdentitet() {
+    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/me`);
+}
+
 export function hentOppfolgingStatus() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon`);
 }

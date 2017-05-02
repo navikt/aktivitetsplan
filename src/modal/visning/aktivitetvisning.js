@@ -2,8 +2,7 @@ import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { Knapp } from 'nav-react-design/dist/knapp';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { formValueSelector } from 'redux-form';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
@@ -14,9 +13,11 @@ import { slettAktivitet, flyttAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
-import {TILLAT_SLETTING} from '~config' // eslint-disable-line
+import { TILLAT_SLETTING } from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
+import AvtaltContainer from './avtalt-container';
+import './aktivitetvisning.less';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
@@ -34,7 +35,7 @@ class Aktivitetvisning extends Component {
     render() {
         const { params, aktiviteter, doSlettAktivitet, oppfolgingStatus } = this.props;
         const { id } = params;
-        const valgtAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === id);
+        const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === id);
 
         if (!valgtAktivitet) {
             return null;
@@ -53,7 +54,6 @@ class Aktivitetvisning extends Component {
                 />
             );
         }
-
         const tillatSletting = TILLAT_SLETTING && (
                 !oppfolgingStatus.underOppfolging ||
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
@@ -106,8 +106,7 @@ class Aktivitetvisning extends Component {
                         <hr className="aktivitetvisning__delelinje" />
 
                         <OppdaterAktivitetStatus status={valgtAktivitet.status} tagger={valgtAktivitet.tagger} />
-
-                        <hr className="aktivitetvisning__delelinje" />
+                        <AvtaltContainer aktivitet={valgtAktivitet} />
 
                         <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
                     </div>
@@ -140,15 +139,18 @@ Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus,
-    aktiviteter: PT.arrayOf(AppPT.aktivitet),
+    aktiviteter: PT.shape({
+        data: PT.arrayOf(AppPT.aktivitet)
+    }),
     valgtStatus: PT.string,
     doFlyttAktivitet: PT.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter.data,
     oppfolgingStatus: state.data.oppfolgingStatus.data,
-    valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus')
+    valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus'),
+    aktiviteter: state.data.aktiviteter,
+    dialoger: state.data.dialog.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
