@@ -87,11 +87,11 @@ class Aktivitetvisning extends Component {
                             />
                             <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
                         </div>
-                        <hr />
+                        <hr className="aktivitetvisning__delelinje" />
                         <div className="aktivitetvisning__underseksjon">
                             <AvtaltContainer aktivitet={valgtAktivitet} />
                         </div>
-                        <hr />
+                        <hr className="aktivitetvisning__delelinje" />
                         <div className="aktivitetvisning__underseksjon">
                             <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
                         </div>
