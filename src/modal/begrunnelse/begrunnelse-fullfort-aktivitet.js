@@ -16,7 +16,7 @@ const BegrunnelseFullfortAktivitet = (props) => {
         <BegrunnelseAktivitet
             headerTekst={headerTekst}
             beskrivelseTekst={beskrivelseTekst}
-            lagrer={this.props.aktiviteter.status !== STATUS.OK}
+            lagrer={props.aktiviteter.status !== STATUS.OK}
             onLagre={(begrunnelse) => props.lagreBegrunnelse(valgtAktivitet, begrunnelse)}
         />
     );

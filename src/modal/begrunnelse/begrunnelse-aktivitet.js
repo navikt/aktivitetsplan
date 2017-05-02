@@ -37,7 +37,7 @@ class BegrunnelseAktivitet extends Component {
         return (
             <div>
                 <ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />
-                <div className="aktivitetvisning">
+                <div className="aktivitetvisning__underseksjon">
                     <ModalContainer>
                         <Innholdstittel>
                             { this.props.headerTekst }

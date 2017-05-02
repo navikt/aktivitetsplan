@@ -107,7 +107,7 @@ class Aktivitetvisning extends Component {
                             <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
                         </div>
                         <hr className="aktivitetvisning__delelinje" />
-                        <div>
+                        <div className="aktivitetvisning__underseksjon" >
                             <OppdaterAktivitetStatus status={valgtAktivitet.status} tagger={valgtAktivitet.tagger} />
                         </div>
                         <hr className="aktivitetvisning__delelinje" />
