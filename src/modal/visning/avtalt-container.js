@@ -11,7 +11,6 @@ import { TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
 import * as AppPT from '../../proptypes';
 import './avtalt-container.less';
 
-
 class AvtaltContainer extends Component {
 
     constructor(props) {

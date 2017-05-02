@@ -2,7 +2,6 @@ import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { hentIdentitet } from '../ducks/identitet';
 
-
 class Identitet extends Component {
 
     componentDidMount() {
@@ -15,9 +14,7 @@ class Identitet extends Component {
             <span>{ident === children ? 'deg' : children}</span>
         );
     }
-
 }
-
 
 Identitet.propTypes = {
     ident: PT.string,
@@ -36,6 +33,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     doHentIdentitet: () => dispatch(hentIdentitet())
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Identitet);

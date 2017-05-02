@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 export const API_BASE_URL = '/veilarbaktivitetsplanfs/api';
 export const DIALOG_BASE_URL = '/veilarbdialog/api';
 export const AKTIVITET_PROXY_BASE_URL = '/veilarbaktivitet/api';
 export const SITUASJON_PROXY_BASE_URL = '/veilarbsituasjon/api';
 
-export const CONTEXT_PATH = "/aktivitetsplanfelles";
+export const CONTEXT_PATH = '/aktivitetsplanfelles';
 
 export const TILLAT_SLETTING = true;
 

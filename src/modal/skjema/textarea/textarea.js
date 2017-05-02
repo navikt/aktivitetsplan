@@ -3,21 +3,25 @@ import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 
-
-function InnerTextAreaComponent({ input, labelId, ...rest }) {
-    const textareaProps = { ...input, ...rest };
+// eslint-disable-next-line no-unused-vars
+function InnerTextAreaComponent({ input, labelId, maxLength, errorMessage, meta, ...rest }) {
+    const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"
             label={labelId && <FormattedMessage id={labelId} />}
-            {...textareaProps}
+            maxLength={maxLength}
+            feil={feil}
+            {...input}
+            {...rest}
         />
     );
 }
 InnerTextAreaComponent.propTypes = {
     labelId: PT.string.isRequired,
     maxLength: PT.number.isRequired,
-
+    errorMessage: PT.arrayOf(PT.oneOfType([PT.string, PT.node])),
+    meta: PT.object, // eslint-disable-line react/forbid-prop-types
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 

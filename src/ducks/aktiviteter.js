@@ -1,5 +1,6 @@
 import * as Api from './api';
 import { doThenDispatch, STATUS } from './utils';
+import * as statuskoder from '../constant';
 
 // Actions
 export const HENTER = 'aktivitet/hent';
@@ -78,11 +79,16 @@ export function hentAktiviteter() {
 export function flyttAktivitet(aktivitet, status) {
     return (dispatch) => {
         dispatch({ type: FLYTTER, data: { aktivitet, status } });
-
         // TODO kan vi bruke oppdaterAktivitet?
-        Api.oppdaterAktivitetStatus({ ...aktivitet, status })
-            .then((response) => dispatch({ type: FLYTT_OK, data: response }))
-            .catch((error) => dispatch({ type: FLYTT_FAIL, data: { aktivitet, error } }));
+        return Api.oppdaterAktivitetStatus({ ...aktivitet, status })
+            .then((response) => {
+                dispatch({ type: FLYTT_OK, data: response });
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                dispatch({ type: FLYTT_FAIL, data: { aktivitet, error } });
+                return Promise.reject(error);
+            });
     };
 }
 
@@ -94,6 +100,15 @@ export function oppdaterAktivitet(aktivitet) {
     });
 }
 
+export function avbrytAktivitet(aktivitet, avsluttetKommentar) {
+    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
+    return flyttAktivitet(nyAktivitet, statuskoder.STATUS_AVBRUTT);
+}
+
+export function fullforAktivitet(aktivitet, avsluttetKommentar) {
+    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
+    return flyttAktivitet(nyAktivitet, statuskoder.STATUS_FULLFOERT);
+}
 
 export function lagNyAktivitet(aktivitet) {
     return doThenDispatch(() => Api.lagNyAktivitet(aktivitet), {

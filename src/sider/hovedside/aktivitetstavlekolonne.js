@@ -8,6 +8,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { flyttAktivitet } from '../../ducks/aktiviteter';
 import AktivitetsKort from './aktivitetskort';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
+import history from './../../history';
 import hengelasSvg from '../../img/hengelas.svg';
 
 const mottaAktivitetsKort = {
@@ -17,7 +18,14 @@ const mottaAktivitetsKort = {
     },
 
     drop({ doFlyttAktivitet, status }, monitor) {
-        doFlyttAktivitet(monitor.getItem(), status);
+        const aktivitet = monitor.getItem();
+        if (status === STATUS_FULLFOERT && aktivitet.avtalt) {
+            history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
+        } else if (status === STATUS_AVBRUTT && aktivitet.avtalt) {
+            history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
+        } else {
+            doFlyttAktivitet(aktivitet, status);
+        }
     }
 };
 

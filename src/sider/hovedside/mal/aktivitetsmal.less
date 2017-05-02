@@ -1,10 +1,12 @@
 @import "../../../variables";
 
-@color-hr: @navGra40;
-
 .aktivitetmal {
   width: 940px;
   text-align: left;
+
+  & .ekspanderbartPanel {
+    .blokk-m();
+  }
 
   &__tekst {
     .blokk-m();
@@ -36,6 +38,7 @@
 
     &:hover {
       text-decoration: underline;
+      color: @blue-active;
     }
 
     &-apen {

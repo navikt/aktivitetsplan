@@ -49,7 +49,7 @@ export function oppdaterAktivitet(aktivitet) {
 }
 
 export function oppdaterAktivitetStatus(aktivitet) {
-    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status/`, aktivitet);
+    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
 }
 
 export function hentEtiketter() {
