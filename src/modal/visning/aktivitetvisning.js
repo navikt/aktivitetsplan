@@ -21,6 +21,7 @@ import './aktivitetvisning.less';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
+import { STATUS } from '../../ducks/utils';
 
 class Aktivitetvisning extends Component {
 
@@ -116,7 +117,7 @@ class Aktivitetvisning extends Component {
                     {/* TODO: tekster*/}
                     <Hovedknapp
                         className="aktivitetvisning__lagre--knapp"
-                        spinner={valgtAktivitet.laster}
+                        spinner={this.props.aktiviteter.status !== STATUS.OK}
                         autoDisableVedSpinner
                         onClick={() => onLagre(valgtAktivitet)}
                     >
@@ -140,6 +141,7 @@ Aktivitetvisning.propTypes = {
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus,
     aktiviteter: PT.shape({
+        status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet)
     }),
     valgtStatus: PT.string,
