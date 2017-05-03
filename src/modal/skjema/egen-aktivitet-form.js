@@ -44,10 +44,12 @@ function EgenAktivitetForm(props) {
                     </Undertekst>
                 </div>
 
-                <Input feltNavn="tittel"
-                       disabled={props.avtalt === true}
-                       labelId="egen-aktivitet-form.label.overskrift"
-                       bredde="fullbredde" />
+                <Input
+                    feltNavn="tittel"
+                    disabled={props.avtalt === true}
+                    labelId="egen-aktivitet-form.label.overskrift"
+                    bredde="fullbredde"
+                />
                 <div className="dato-container">
                     <Datovelger
                         feltNavn="fraDato"
@@ -61,14 +63,18 @@ function EgenAktivitetForm(props) {
                         tidligsteFom={props.currentFraDato}
                     />
                 </div>
-                <Input feltNavn="lenke"
-                       disabled={props.avtalt === true}
-                       labelId="egen-aktivitet-form.label.lenke"
-                       bredde="fullbredde" />
-                <Input feltNavn="hensikt"
-                       disabled={props.avtalt === true}
-                       labelId="egen-aktivitet-form.label.hensikt"
-                       bredde="fullbredde" />
+                <Input
+                    feltNavn="lenke"
+                    disabled={props.avtalt === true}
+                    labelId="egen-aktivitet-form.label.lenke"
+                    bredde="fullbredde"
+                />
+                <Input
+                    feltNavn="hensikt"
+                    disabled={props.avtalt === true}
+                    labelId="egen-aktivitet-form.label.hensikt"
+                    bredde="fullbredde"
+                />
                 <Textarea
                     feltNavn="beskrivelse"
                     disabled={props.avtalt === true}

@@ -132,13 +132,13 @@ class Aktivitetvisning extends Component {
                         autoDisableVedSpinner
                         onClick={() => onLagre(valgtAktivitet)}
                     >
-                        <FormattedMessage id="aktivitetvisning.lagre-knapp"/>
+                        <FormattedMessage id="aktivitetvisning.lagre-knapp" />
                     </Hovedknapp>
                     { tillattEndring && <Knapp
                         onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
                         className="knapp-liten modal-footer__knapp"
                     >
-                        <FormattedMessage id="aktivitetvisning.endre-knapp"/>
+                        <FormattedMessage id="aktivitetvisning.endre-knapp" />
                     </Knapp>}
 
                     {tillatSletting &&
@@ -146,7 +146,7 @@ class Aktivitetvisning extends Component {
                         onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
                         className="knapp-liten modal-footer__knapp" autoFocus={this.state.settAutoFocusSlett}
                     >
-                        <FormattedMessage id="aktivitetvisning.slett-knapp"/>
+                        <FormattedMessage id="aktivitetvisning.slett-knapp" />
                     </Knapp>}
                 </ModalFooter>
             </ModalHeader>

@@ -51,9 +51,11 @@ function StillingAktivitetForm(props) {
                     </Undertekst>
                 </div>
 
-                <Input feltNavn="tittel"
-                       disabled={props.avtalt === true}
-                       labelId="stilling-aktivitet-form.label.overskrift" />
+                <Input
+                    feltNavn="tittel"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.overskrift"
+                />
                 <div className="dato-container">
                     <Datovelger
                         feltNavn="fraDato"
@@ -67,24 +69,32 @@ function StillingAktivitetForm(props) {
                         tidligsteFom={props.currentFraDato}
                     />
                 </div>
-                <Input feltNavn="lenke"
-                       disabled={props.avtalt === true}
-                       labelId="stilling-aktivitet-form.label.lenke" />
+                <Input
+                    feltNavn="lenke"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.lenke"
+                />
                 <Textarea
                     feltNavn="beskrivelse"
                     disabled={props.avtalt === true}
                     labelId="stilling-aktivitet-form.label.beskrivelse"
                     maxLength={BESKRIVELSE_MAKS_LENGDE}
                 />
-                <Input feltNavn="arbeidssted"
-                       disabled={props.avtalt === true}
-                       labelId="stilling-aktivitet-form.label.arbeidssted" />
-                <Input feltNavn="arbeidsgiver"
-                       disabled={props.avtalt === true}
-                       labelId="stilling-aktivitet-form.label.arbeidsgiver" />
-                <Input feltNavn="kontaktperson"
-                       disabled={props.avtalt === true}
-                       labelId="stilling-aktivitet-form.label.kontaktperson" />
+                <Input
+                    feltNavn="arbeidssted"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.arbeidssted"
+                />
+                <Input
+                    feltNavn="arbeidsgiver"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.arbeidsgiver"
+                />
+                <Input
+                    feltNavn="kontaktperson"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.kontaktperson"
+                />
             </div>
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
@@ -97,7 +107,8 @@ StillingAktivitetForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
     currentFraDato: PT.instanceOf(Date),
-    currentTilDato: PT.instanceOf(Date)
+    currentTilDato: PT.instanceOf(Date),
+    avtalt: PT.bool
 };
 
 const formNavn = 'stilling-aktivitet';
