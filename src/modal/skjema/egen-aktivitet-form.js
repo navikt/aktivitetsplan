@@ -44,10 +44,14 @@ function EgenAktivitetForm(props) {
                     </Undertekst>
                 </div>
 
-                <Input feltNavn="tittel" labelId="egen-aktivitet-form.label.overskrift" bredde="fullbredde" />
+                <Input feltNavn="tittel"
+                       disabled={props.avtalt === true}
+                       labelId="egen-aktivitet-form.label.overskrift"
+                       bredde="fullbredde" />
                 <div className="dato-container">
                     <Datovelger
                         feltNavn="fraDato"
+                        disabled={props.avtalt === true}
                         labelId="egen-aktivitet-form.label.fra-dato"
                         senesteTom={props.currentTilDato}
                     />
@@ -57,10 +61,17 @@ function EgenAktivitetForm(props) {
                         tidligsteFom={props.currentFraDato}
                     />
                 </div>
-                <Input feltNavn="lenke" labelId="egen-aktivitet-form.label.lenke" bredde="fullbredde" />
-                <Input feltNavn="hensikt" labelId="egen-aktivitet-form.label.hensikt" bredde="fullbredde" />
+                <Input feltNavn="lenke"
+                       disabled={props.avtalt === true}
+                       labelId="egen-aktivitet-form.label.lenke"
+                       bredde="fullbredde" />
+                <Input feltNavn="hensikt"
+                       disabled={props.avtalt === true}
+                       labelId="egen-aktivitet-form.label.hensikt"
+                       bredde="fullbredde" />
                 <Textarea
                     feltNavn="beskrivelse"
+                    disabled={props.avtalt === true}
                     labelId="egen-aktivitet-form.label.beskrivelse"
                     maxLength={BESKRIVELSE_MAKS_LENGDE}
                 />
@@ -76,7 +87,8 @@ EgenAktivitetForm.propTypes = {
     handleSubmit: PT.func,
     errorSummary: PT.node.isRequired,
     currentFraDato: PT.instanceOf(Date),
-    currentTilDato: PT.instanceOf(Date)
+    currentTilDato: PT.instanceOf(Date),
+    avtalt: PT.bool
 };
 
 const formNavn = 'egen-aktivitet';
@@ -102,7 +114,8 @@ const mapStateToProps = (state, props) => {
             ...aktivitet
         },
         currentFraDato: selector(state, 'fraDato') ? moment(selector(state, 'fraDato')).toDate() : undefined,
-        currentTilDato: selector(state, 'tilDato') ? moment(selector(state, 'tilDato')).toDate() : undefined
+        currentTilDato: selector(state, 'tilDato') ? moment(selector(state, 'tilDato')).toDate() : undefined,
+        avtalt: aktivitet && aktivitet.avtalt
     };
 };
 const mapDispatchToProps = () => ({});

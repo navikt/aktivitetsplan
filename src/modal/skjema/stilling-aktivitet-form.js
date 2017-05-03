@@ -51,10 +51,13 @@ function StillingAktivitetForm(props) {
                     </Undertekst>
                 </div>
 
-                <Input feltNavn="tittel" labelId="stilling-aktivitet-form.label.overskrift" />
+                <Input feltNavn="tittel"
+                       disabled={props.avtalt === true}
+                       labelId="stilling-aktivitet-form.label.overskrift" />
                 <div className="dato-container">
                     <Datovelger
                         feltNavn="fraDato"
+                        disabled={props.avtalt === true}
                         labelId="stilling-aktivitet-form.label.fra-dato"
                         senesteTom={props.currentTilDato}
                     />
@@ -64,15 +67,24 @@ function StillingAktivitetForm(props) {
                         tidligsteFom={props.currentFraDato}
                     />
                 </div>
-                <Input feltNavn="lenke" labelId="stilling-aktivitet-form.label.lenke" />
+                <Input feltNavn="lenke"
+                       disabled={props.avtalt === true}
+                       labelId="stilling-aktivitet-form.label.lenke" />
                 <Textarea
                     feltNavn="beskrivelse"
+                    disabled={props.avtalt === true}
                     labelId="stilling-aktivitet-form.label.beskrivelse"
                     maxLength={BESKRIVELSE_MAKS_LENGDE}
                 />
-                <Input feltNavn="arbeidssted" labelId="stilling-aktivitet-form.label.arbeidssted" />
-                <Input feltNavn="arbeidsgiver" labelId="stilling-aktivitet-form.label.arbeidsgiver" />
-                <Input feltNavn="kontaktperson" labelId="stilling-aktivitet-form.label.kontaktperson" />
+                <Input feltNavn="arbeidssted"
+                       disabled={props.avtalt === true}
+                       labelId="stilling-aktivitet-form.label.arbeidssted" />
+                <Input feltNavn="arbeidsgiver"
+                       disabled={props.avtalt === true}
+                       labelId="stilling-aktivitet-form.label.arbeidsgiver" />
+                <Input feltNavn="kontaktperson"
+                       disabled={props.avtalt === true}
+                       labelId="stilling-aktivitet-form.label.kontaktperson" />
             </div>
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
@@ -115,7 +127,8 @@ const mapStateToProps = (state, props) => {
         },
         etikett: selector(state, 'etikett'),
         currentFraDato: moment(selector(state, 'fraDato')).toDate(),
-        currentTilDato: moment(selector(state, 'tilDato')).toDate()
+        currentTilDato: moment(selector(state, 'tilDato')).toDate(),
+        avtalt: aktivitet && aktivitet.avtalt
     };
 };
 

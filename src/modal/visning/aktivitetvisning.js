@@ -13,7 +13,7 @@ import { slettAktivitet, flyttAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
-import { TILLAT_SLETTING } from '~config' // eslint-disable-line
+import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
 import BekreftSlettVisning from './bekreftslettvisning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import AvtaltContainer from './avtalt-container';
@@ -60,6 +60,8 @@ class Aktivitetvisning extends Component {
                 !oppfolgingStatus.underOppfolging ||
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
+
+        const tillattEndring = valgtAktivitet.avtalt !== true || TILLAT_SET_AVTALT;
 
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
@@ -131,12 +133,12 @@ class Aktivitetvisning extends Component {
                     >
                         Lagre
                     </Hovedknapp>
-                    <Knapp
+                    { tillattEndring && <Knapp
                         onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
                         className="knapp-liten modal-footer__knapp"
                     >
                         Endre
-                    </Knapp>
+                    </Knapp>}
 
                     {tillatSletting &&
                     <Knapp
