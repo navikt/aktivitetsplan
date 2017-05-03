@@ -4,6 +4,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { formValueSelector } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
@@ -61,7 +62,7 @@ class Aktivitetvisning extends Component {
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
 
-        const tillattEndring = valgtAktivitet.avtalt !== true || TILLAT_SET_AVTALT;
+        const tillattEndring = valgtAktivitet.avtalt !== true || TILLAT_SLETTING;
 
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
@@ -131,13 +132,13 @@ class Aktivitetvisning extends Component {
                         autoDisableVedSpinner
                         onClick={() => onLagre(valgtAktivitet)}
                     >
-                        Lagre
+                        <FormattedMessage id="aktivitetvisning.lagre-knapp"/>
                     </Hovedknapp>
                     { tillattEndring && <Knapp
                         onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
                         className="knapp-liten modal-footer__knapp"
                     >
-                        Endre
+                        <FormattedMessage id="aktivitetvisning.endre-knapp"/>
                     </Knapp>}
 
                     {tillatSletting &&
@@ -145,7 +146,7 @@ class Aktivitetvisning extends Component {
                         onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
                         className="knapp-liten modal-footer__knapp" autoFocus={this.state.settAutoFocusSlett}
                     >
-                        Slett
+                        <FormattedMessage id="aktivitetvisning.slett-knapp"/>
                     </Knapp>}
                 </ModalFooter>
             </ModalHeader>
