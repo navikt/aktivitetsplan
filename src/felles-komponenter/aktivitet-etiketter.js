@@ -1,7 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import classNames from 'classnames';
 import * as AppPT from '../proptypes';
-
+import './aktivitet-etiketter.less';
 
 const cls = (type) => classNames('etikett', `etikett--${type}`);
 const etikettCls = (className) => classNames(className, 'etiketter');

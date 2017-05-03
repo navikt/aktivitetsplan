@@ -6,7 +6,8 @@ export const aktivitet = PT.shape({
     tilDato: PT.number,
     opprettetDato: PT.number,
     detaljer: PT.object,
-    beskrivelse: PT.string
+    beskrivelse: PT.string,
+    avtalt: PT.bool
 });
 
 export const dialog = PT.shape({
@@ -33,7 +34,7 @@ export const endringslogg = PT.shape({
 });
 
 export const oppfolgingStatus = PT.shape({
-    status: PT.string.isRequired,
+    status: PT.string,
     data: PT.object
 });
 

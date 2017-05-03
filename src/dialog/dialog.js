@@ -1,4 +1,5 @@
 import React, { PropTypes as PT } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 import NyHenvendelse from './ny-henvendelse';
 import Henvendelser from './henvendelser';
@@ -11,7 +12,9 @@ function Dialog({ dialog, className }) {
     return (
         <div className={className}>
             <Undertittel >{dialog.overskrift}</Undertittel>
-            <Element>Dialog mellom deg og NAV</Element>
+            <Element>
+                <FormattedMessage id="dialog.deg-og-nav.tittel" />
+            </Element>
             <NyHenvendelse formNavn={`ny-henvendelse-dialog-${dialogId}`} dialogId={dialogId} />
             <Henvendelser dialog={dialog} />
         </div>

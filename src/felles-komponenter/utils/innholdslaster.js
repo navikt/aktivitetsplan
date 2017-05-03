@@ -1,4 +1,5 @@
 import React, { PropTypes as PT } from 'react';
+import { FormattedMessage } from 'react-intl';
 import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
 
@@ -6,9 +7,26 @@ const array = (value) => (Array.isArray(value) ? value : [value]);
 const harStatus = (...status) => (element) => array(status).includes(element.status);
 const noenHarFeil = (avhengigheter) => avhengigheter && avhengigheter.some(harStatus(STATUS.ERROR));
 const alleLastet = (avhengigheter) => avhengigheter && avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
-const medFeil = (avhengigheter) => avhengigheter.find(harStatus(STATUS.ERROR));
 
-const Feilmelding = ({ children }) => <h1>FEIL: {children}</h1>; // eslint-disable-line react/prop-types
+const tekster = {
+    feilmeldingTittel: {
+        id: 'innholdslaster.feilmelding.tittel',
+        defaultMessage: 'Oops, det skjedde noe feil...'
+    },
+    feilmeldingTekst: {
+        id: 'innholdslaster.feilmelding.tekst',
+        defaultMessage: 'Det skjedde en feil ved innlastning av data fra baksystemene'
+    }
+};
+
+// eslint-disable-next-line react/prop-types
+const Feilmelding = ({ tittel, children }) => (
+    <div>
+        <h1>{tittel}</h1>
+        <p>{children}</p>
+    </div>
+);
+
 
 function Innholdslaster({ avhengigheter, spinnerStorrelse, className, children }) {
     if (alleLastet(avhengigheter)) {
@@ -19,14 +37,9 @@ function Innholdslaster({ avhengigheter, spinnerStorrelse, className, children }
     }
 
     if (noenHarFeil(avhengigheter)) {
-        const feilendeReducer = medFeil(avhengigheter);
-        console.log(feilendeReducer); // eslint-disable-line no-console
-
-        const feilmelding = 'Det skjedde en feil ved innlastningen av data';
-
         return (
-            <Feilmelding tittel="Oops" className={className}>
-                <p>{feilmelding}</p>
+            <Feilmelding className={className} tittel={<FormattedMessage {...tekster.feilmeldingTittel} />}>
+                <FormattedMessage {...tekster.feilmeldingTekst} />
             </Feilmelding>
         );
     }

@@ -3,7 +3,8 @@ import { Input as NavInput } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 
-function InnerInputComponent({ input, labelId, errorMessage, ...rest }) {
+// eslint-disable-next-line no-unused-vars
+function InnerInputComponent({ input, labelId, errorMessage, meta, ...rest }) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     const inputProps = { ...input, ...rest };
     return (
@@ -15,6 +16,7 @@ InnerInputComponent.propTypes = {
     labelId: PT.string.isRequired,
     bredde: PT.string,
     errorMessage: PT.arrayOf(PT.string),
+    meta: PT.object, // eslint-disable-line react/forbid-prop-types
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
