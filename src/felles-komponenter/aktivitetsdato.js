@@ -8,7 +8,7 @@ const erDatoSatt = (fraDato, tilDato) => fraDato === '' || tilDato === '';
 
 const visDato = (fraDato, tilDato) => (
     <Normaltekst className={datoklasse}>
-        <FormattedMessage id="aktivitetsdato.vis-dato" values={{fraDato, tilDato}} />
+        <FormattedMessage id="aktivitetsdato.vis-dato" values={{ fraDato, tilDato }} />
     </Normaltekst>);
 
 const visSettDato = () => (
