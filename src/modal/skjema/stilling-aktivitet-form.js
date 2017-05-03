@@ -21,21 +21,27 @@ const ARBEIDSSTED_MAKS_LENGDE = 255;
 const ARBEIDSGIVER_MAKS_LENGDE = 255;
 const KONTAKTPERSON_MAKS_LENGDE = 255;
 
-const pakrevdTittel = rules.minLength(0, 'Du må fylle ut overskriften');
-const begrensetTittelLengde =
-    rules.maxLength(TITTEL_MAKS_LENGDE, `Overskriften kan ikke være lenger en ${TITTEL_MAKS_LENGDE} tegn`);
-const pakrevdFraDato = rules.minLength(0, 'Du må fylle ut fra datoen');
-const pakrevdTilDato = rules.minLength(0, 'Du må fylle ut fristen');
-const begrensetLenkeLengde =
-    rules.maxLength(LENKE_MAKS_LENGDE, `Lenken kan ikke være lenger en ${LENKE_MAKS_LENGDE} tegn`);
-const begrensetBeskrivelseLengde =
-    rules.maxLength(BESKRIVELSE_MAKS_LENGDE, `Besrkivelsen kan ikke være lenger en ${BESKRIVELSE_MAKS_LENGDE} tegn`);
-const begrensetArbeidsstedLengde =
-    rules.maxLength(ARBEIDSSTED_MAKS_LENGDE, `Arbeidsstedtekst kan ikke være lenger en ${ARBEIDSSTED_MAKS_LENGDE} tegn`);
-const begrensetArbeidsgiverLengde =
-    rules.maxLength(ARBEIDSGIVER_MAKS_LENGDE, `Arbeidsgivertekst kan ikke være lenger en ${ARBEIDSGIVER_MAKS_LENGDE} tegn`);
-const begrensetKontaktpersonLengde =
-    rules.maxLength(KONTAKTPERSON_MAKS_LENGDE, `Kontaktpersontekst kan ikke være lenger en ${KONTAKTPERSON_MAKS_LENGDE} tegn`);
+const pakrevdTittel = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tittel" />);
+const begrensetTittelLengde = rules.maxLength(TITTEL_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.tittel-lengde" values={{ TITTEL_MAKS_LENGDE }} />
+);
+const pakrevdFraDato = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-fradato" />);
+const pakrevdTilDato = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tildato" />);
+const begrensetLenkeLengde = rules.maxLength(LENKE_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.lenke-lengde" values={{ LENKE_MAKS_LENGDE }} />
+);
+const begrensetBeskrivelseLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.beskrivelse-lengde" values={{ BESKRIVELSE_MAKS_LENGDE }} />
+);
+const begrensetArbeidsstedLengde = rules.maxLength(ARBEIDSSTED_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.arbeidssted-lengde" values={{ ARBEIDSSTED_MAKS_LENGDE }} />
+);
+const begrensetArbeidsgiverLengde = rules.maxLength(ARBEIDSGIVER_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.arbeidsgiver-lengde" values={{ ARBEIDSGIVER_MAKS_LENGDE }} />
+);
+const begrensetKontaktpersonLengde = rules.maxLength(KONTAKTPERSON_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.kontaktperson-lengde" values={{ KONTAKTPERSON_MAKS_LENGDE }} />
+);
 
 function StillingAktivitetForm(props) {
     return (
