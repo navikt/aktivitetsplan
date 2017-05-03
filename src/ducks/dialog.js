@@ -28,15 +28,17 @@ function nyStateMedOppdatertDialog(state, dialog) {
     } else {
         nyData.push(dialog);
     }
-    return { ...state, data: nyData };
+    return { ...state, status: STATUS.OK, data: nyData };
 }
 
 // Reducer
 export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
+        case OPPRETTER_HENVENDELSE:
+            return { ...state, status: STATUS.PENDING };
         case HENTET:
-            return { ...state, data };
+            return { ...state, status: STATUS.OK, data };
         case OPPRETTET_HENVENDELSE:
         case DIALOG_LEST_OK:
             return nyStateMedOppdatertDialog(state, data);

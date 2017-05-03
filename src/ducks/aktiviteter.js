@@ -1,5 +1,6 @@
 import * as Api from './api';
 import { doThenDispatch, STATUS } from './utils';
+import * as statuskoder from '../constant';
 
 // Actions
 export const HENTER = 'aktivitet/hent';
@@ -48,9 +49,13 @@ export default function reducer(state = initalState, action) {
             return { ...state, data: [...state.data, data] };
         case FLYTTER:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { nesteStatus: data.status });
-        case FLYTT_OK:
+        case OPPDATER:
+            return { ...state, status: STATUS.PENDING };
         case OPPDATER_OK:
-            return nyStateMedOppdatertAktivitet(state, data);
+        case FLYTT_OK:
+            return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, data);
+        case OPPDATER_FEILET:
+            return { ...state, status: STATUS.ERROR };
         case FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { error: data.error });
         case SLETT_OK:
@@ -74,10 +79,16 @@ export function hentAktiviteter() {
 export function flyttAktivitet(aktivitet, status) {
     return (dispatch) => {
         dispatch({ type: FLYTTER, data: { aktivitet, status } });
-
-        Api.oppdaterAktivitetStatus(aktivitet, status)
-            .then((response) => dispatch({ type: FLYTT_OK, data: response }))
-            .catch((error) => dispatch({ type: FLYTT_FAIL, data: { aktivitet, error } }));
+        // TODO kan vi bruke oppdaterAktivitet?
+        return Api.oppdaterAktivitetStatus({ ...aktivitet, status })
+            .then((response) => {
+                dispatch({ type: FLYTT_OK, data: response });
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                dispatch({ type: FLYTT_FAIL, data: { aktivitet, error } });
+                return Promise.reject(error);
+            });
     };
 }
 
@@ -89,6 +100,15 @@ export function oppdaterAktivitet(aktivitet) {
     });
 }
 
+export function avbrytAktivitet(aktivitet, avsluttetKommentar) {
+    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
+    return flyttAktivitet(nyAktivitet, statuskoder.STATUS_AVBRUTT);
+}
+
+export function fullforAktivitet(aktivitet, avsluttetKommentar) {
+    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
+    return flyttAktivitet(nyAktivitet, statuskoder.STATUS_FULLFOERT);
+}
 
 export function lagNyAktivitet(aktivitet) {
     return doThenDispatch(() => Api.lagNyAktivitet(aktivitet), {

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { PropTypes as PT } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import history from '../../history';
+import { TILBAKE_MODAL } from '../../ducks/modal';
 
-
-function Tilbakeknapp() {
-    function tilbake() {
+function Tilbakeknapp(props) {
+    function tilbake(e) {
+        e.preventDefault();
+        props.tilbakeModal();
         history.goBack();
     }
 
@@ -22,6 +25,13 @@ function Tilbakeknapp() {
     );
 }
 
-Tilbakeknapp.propTypes = {};
+Tilbakeknapp.propTypes = {
+    tilbakeModal: PT.func.isRequired
+};
 
-export default Tilbakeknapp;
+Tilbakeknapp.propTypes = {};
+const mapDispatchToProps = (dispatch) => ({
+    tilbakeModal: () => dispatch({ type: TILBAKE_MODAL })
+});
+
+export default connect(null, mapDispatchToProps)(Tilbakeknapp);

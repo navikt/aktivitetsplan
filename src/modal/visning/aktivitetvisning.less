@@ -2,8 +2,10 @@
 
 
 .aktivitetvisning {
-  padding: 2rem 3rem 2rem 2rem;
-
+  &__underseksjon {
+    padding: 0 3rem 0 2rem;
+    .blokk-m();
+  }
   &__etikett {
     .blokk-m();
   }
@@ -15,7 +17,6 @@
   }
   .begrunnelse-boks {
     cursor: pointer;
-    .blokk-m();
 
     .tekst--kollapset {
       @media(min-width: 641px) {
@@ -57,9 +58,27 @@
     }
   }
   &__delelinje {
+    margin-top: 0;
     .blokk-m();
   }
   &__historikk {
     .blokk-m();
+  }
+  &__lagre--knapp {
+    margin-right: 1rem;
+  }
+  .oppdaterstatus-skjema {
+    width: 33%;
+    border-right: 1px solid @color-border;
+  }
+}
+
+.aktivitetvisning__historikk .endringslogg-for-aktivitet {
+  &__lenke-knapp {
+    .blokk-m();
+    display: inline-block;
+  }
+  &__innslag {
+    .blokk-s();
   }
 }
