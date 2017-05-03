@@ -1,11 +1,16 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Undertittel from 'nav-frontend-typografi/src/undertittel';
 import Bilde from 'nav-react-design/dist/bilde';
 import * as aktivitetstatus from '../../constant';
+import { flyttAktivitet } from '../../ducks/aktiviteter';
 import Radio from '../skjema/input/radio';
 import hengelasSVG from '../../img/hengelas.svg';
+import * as AppPT from '../../proptypes';
+import { STATUS } from '../../ducks/utils';
+import history from '../../history';
 
 const leggTilHengelas = (tekst) => (
     <span>
@@ -14,9 +19,24 @@ const leggTilHengelas = (tekst) => (
 );
 
 function OppdaterAktivitetStatus(props) {
-    const erChecked = (id) => props.valgtStatus === id;
+    const { valgtStatus, doFlyttAktivitet, aktiviteter, paramsId } = props;
+    const onLagre = (aktivitet) => {
+        if (aktivitet.status === valgtStatus) {
+            return history.push('/');
+        } else if (valgtStatus === aktivitetstatus.STATUS_FULLFOERT && aktivitet.avtalt) {
+            history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
+        } else if (valgtStatus === aktivitetstatus.STATUS_AVBRUTT && aktivitet.avtalt) {
+            history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
+        } else {
+            doFlyttAktivitet(aktivitet, valgtStatus);
+            history.push('/');
+        }
+        return null;
+    };
+    const erChecked = (statusId) => valgtStatus === statusId;
     const disableStatusEndring = props.status === aktivitetstatus.STATUS_AVBRUTT ||
         props.status === aktivitetstatus.STATUS_FULLFOERT;
+    const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId);
 
     const radioSkjema = (
         <form className="skjema blokk-m oppdaterstatus-skjema">
@@ -74,6 +94,16 @@ function OppdaterAktivitetStatus(props) {
                 Oppdater status
             </Undertittel>
             {radioSkjema}
+            {props.dirty &&
+                <Hovedknapp
+                    className="aktivitetvisning__lagre--knapp"
+                    spinner={aktiviteter.status !== STATUS.OK}
+                    autoDisableVedSpinner
+                    onClick={() => onLagre(valgtAktivitet)}
+                >
+                    Lagre
+                </Hovedknapp>
+            }
         </section>
     );
 }
@@ -84,16 +114,26 @@ const OppdaterStatusReduxForm = reduxForm({
 
 OppdaterAktivitetStatus.propTypes = {
     status: PT.string.isRequired,
-    valgtStatus: PT.string
+    valgtStatus: PT.string,
+    doFlyttAktivitet: PT.func.isRequired,
+    paramsId: PT.string.isRequired,
+    aktiviteter: PT.shape({
+        status: PT.string,
+        data: PT.arrayOf(AppPT.aktivitet)
+    }),
+    dirty: PT.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => ({
-    aktiviteter: state.data.aktiviteter.data,
+    aktiviteter: state.data.aktiviteter,
     valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus'),
     initialValues: {
         aktivitetstatus: props.status
     }
 });
 
+const mapDispatchToProps = (dispatch) => ({
+    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
+});
 
-export default connect(mapStateToProps, null)(OppdaterStatusReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(OppdaterStatusReduxForm);

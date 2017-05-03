@@ -2,14 +2,13 @@ import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { formValueSelector } from 'redux-form';
+import { Knapp } from 'nav-frontend-knapper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
-import { slettAktivitet, flyttAktivitet } from '../../ducks/aktiviteter';
+import { slettAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
@@ -22,7 +21,6 @@ import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import VisibleIfDiv from '../../felles-komponenter/utils/visibleIfDiv';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
-import { STATUS } from '../../ducks/utils';
 
 class Aktivitetvisning extends Component {
 
@@ -64,20 +62,6 @@ class Aktivitetvisning extends Component {
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
-        const onLagre = (aktivitet) => {
-            if (aktivitet.status === this.props.valgtStatus) {
-                return history.push('/');
-            } else if (this.props.valgtStatus === STATUS_FULLFOERT && aktivitet.avtalt) {
-                history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
-            } else if (this.props.valgtStatus === STATUS_AVBRUTT && aktivitet.avtalt) {
-                history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
-            } else {
-                this.props.doFlyttAktivitet(aktivitet, this.props.valgtStatus);
-                history.push('/');
-            }
-            return null;
-        };
-
         const etiketter = valgtAktivitet.avtalt ? valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) : valgtAktivitet.tagger;
 
         return (
@@ -108,7 +92,11 @@ class Aktivitetvisning extends Component {
                         </div>
                         <hr className="aktivitetvisning__delelinje" />
                         <div className="aktivitetvisning__underseksjon" >
-                            <OppdaterAktivitetStatus status={valgtAktivitet.status} tagger={valgtAktivitet.tagger} />
+                            <OppdaterAktivitetStatus
+                                status={valgtAktivitet.status}
+                                tagger={valgtAktivitet.tagger}
+                                paramsId={id}
+                            />
                         </div>
                         <hr className="aktivitetvisning__delelinje" />
                         <div className="aktivitetvisning__underseksjon">
@@ -123,15 +111,6 @@ class Aktivitetvisning extends Component {
 
                 <ModalFooter>
                     {/* TODO: tekster*/}
-                    <Hovedknapp
-                        className="aktivitetvisning__lagre--knapp"
-                        spinner={this.props.aktiviteter.status !== STATUS.OK}
-                        autoDisableVedSpinner
-                        onClick={() => onLagre(valgtAktivitet)}
-                    >
-                        Lagre
-                    </Hovedknapp>
-
                     {tillatSletting &&
                     <Knapp
                         onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
@@ -151,21 +130,17 @@ Aktivitetvisning.propTypes = {
     aktiviteter: PT.shape({
         status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet)
-    }),
-    valgtStatus: PT.string,
-    doFlyttAktivitet: PT.func.isRequired
+    })
 };
 
 const mapStateToProps = (state) => ({
     oppfolgingStatus: state.data.oppfolgingStatus.data,
-    valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus'),
     aktiviteter: state.data.aktiviteter,
     dialoger: state.data.dialog.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    doSlettAktivitet: (aktivitet) => slettAktivitet(aktivitet)(dispatch),
-    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
+    doSlettAktivitet: (aktivitet) => slettAktivitet(aktivitet)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);
