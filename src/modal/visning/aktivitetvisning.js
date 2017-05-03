@@ -131,6 +131,12 @@ class Aktivitetvisning extends Component {
                     >
                         Lagre
                     </Hovedknapp>
+                    <Knapp
+                        onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
+                        className="knapp-liten modal-footer__knapp"
+                    >
+                        Endre
+                    </Knapp>
 
                     {tillatSletting &&
                     <Knapp

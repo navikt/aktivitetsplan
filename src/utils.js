@@ -77,7 +77,7 @@ export function proxy(func, { before, after } = {}) {
 }
 
 export const erGyldigISODato = (isoDato) => {
-    return !!(isoDato && isoDato.length === 24 && moment(isoDato).isValid());
+    return !!(isoDato && moment(isoDato).isValid());
 };
 
 export const erGyldigFormattertDato = (formattertDato) => {

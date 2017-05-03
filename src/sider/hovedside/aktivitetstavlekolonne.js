@@ -39,7 +39,7 @@ function collect(theConnect, monitor) {
 function KolonneFunction({ aktiviteter, status, tittelId, connectDropTarget, drag }) {
     const aktivitetsKort = aktiviteter
         .filter((a) => (a.nesteStatus ? a.nesteStatus === status : a.status === status))
-        .sort((a, b) => b.opprettetDato - a.opprettetDato)
+        .sort((a, b) => b.opprettetDato > a.opprettetDato)
         .map((a) => <AktivitetsKort key={a.id} aktivitet={a} />);
 
     return connectDropTarget(
