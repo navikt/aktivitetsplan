@@ -1,7 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Knapp } from 'nav-frontend-knapper';
 import Undertittel from 'nav-frontend-typografi/src/undertittel';
 import Bilde from 'nav-react-design/dist/bilde';
 import * as aktivitetstatus from '../../constant';
@@ -39,7 +39,7 @@ function OppdaterAktivitetStatus(props) {
     const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId);
 
     const radioSkjema = (
-        <form className="skjema blokk-m oppdaterstatus-skjema">
+        <form className="skjema blokk-m">
             <Radio
                 feltNavn={'aktivitetstatus'}
                 label="Foreslått"
@@ -89,21 +89,22 @@ function OppdaterAktivitetStatus(props) {
     );
 
     return (
-        <section>
+        <section >
             <Undertittel className="blokk-s">
                 Oppdater status
             </Undertittel>
-            {radioSkjema}
-            {props.dirty &&
-                <Hovedknapp
-                    className="aktivitetvisning__lagre--knapp"
-                    spinner={aktiviteter.status !== STATUS.OK}
-                    autoDisableVedSpinner
-                    onClick={() => onLagre(valgtAktivitet)}
-                >
-                    Lagre
-                </Hovedknapp>
-            }
+            <div className="oppdaterstatus-skjema">
+                {radioSkjema}
+                {props.dirty &&
+                    <Knapp
+                        spinner={aktiviteter.status !== STATUS.OK}
+                        autoDisableVedSpinner
+                        onClick={() => onLagre(valgtAktivitet)}
+                    >
+                        Lagre
+                    </Knapp>
+                }
+            </div>
         </section>
     );
 }
