@@ -1,0 +1,1 @@
+Arbeidsstedtekst kan ikke være lenger en {ARBEIDSSTED_MAKS_LENGDE} tegn
