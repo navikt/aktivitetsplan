@@ -1,6 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
 import { Knapp } from 'nav-frontend-knapper';
 import Undertittel from 'nav-frontend-typografi/src/undertittel';
 import Bilde from 'nav-react-design/dist/bilde';
@@ -42,7 +43,7 @@ function OppdaterAktivitetStatus(props) {
         <form className="skjema blokk-m">
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label="Foreslått"
+                label={<FormattedMessage id="aktivitetstavle.brukerErInteressert" />}
                 value={aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}
                 id={`id--${aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}`}
                 name="aktivitetstatus"
@@ -51,7 +52,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label="Planlagt"
+                label={<FormattedMessage id="aktivitetstavle.planlagt" />}
                 value={aktivitetstatus.STATUS_PLANLAGT}
                 id={`id--${aktivitetstatus.STATUS_PLANLAGT}`}
                 name="aktivitetstatus"
@@ -60,7 +61,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label="Gjennomføres"
+                label={<FormattedMessage id="aktivitetstavle.gjennomfoert" />}
                 value={aktivitetstatus.STATUS_GJENNOMFOERT}
                 id={`id--${aktivitetstatus.STATUS_GJENNOMFOERT}`}
                 name="aktivitetstatus"
@@ -69,7 +70,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas('Fullført')}
+                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />)}
                 value={aktivitetstatus.STATUS_FULLFOERT}
                 id={`id--${aktivitetstatus.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
@@ -78,7 +79,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas('Avbrutt')}
+                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />)}
                 value={aktivitetstatus.STATUS_AVBRUTT}
                 id={`id--${aktivitetstatus.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"
