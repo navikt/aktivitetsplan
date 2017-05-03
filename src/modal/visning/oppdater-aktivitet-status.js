@@ -69,7 +69,7 @@ function OppdaterAktivitetStatus(props) {
     );
 
     return (
-        <section>
+        <section className={props.className}>
             <Undertittel className="blokk-s">
                 Oppdater status
             </Undertittel>
@@ -84,7 +84,8 @@ const OppdaterStatusReduxForm = reduxForm({
 
 OppdaterAktivitetStatus.propTypes = {
     status: PT.string.isRequired,
-    valgtStatus: PT.string
+    valgtStatus: PT.string,
+    className: PT.string
 };
 
 const mapStateToProps = (state, props) => ({

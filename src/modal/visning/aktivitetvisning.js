@@ -81,7 +81,9 @@ class Aktivitetvisning extends Component {
             return null;
         };
 
-        const etiketter = valgtAktivitet.avtalt ? valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) : valgtAktivitet.tagger;
+        const etiketter = valgtAktivitet.avtalt ?
+            valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) :
+            valgtAktivitet.tagger;
 
         return (
             <ModalHeader
@@ -110,22 +112,19 @@ class Aktivitetvisning extends Component {
                             <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
                         </div>
                         <hr className="aktivitetvisning__delelinje" />
-                        <div className="aktivitetvisning__underseksjon" >
-                            <OppdaterAktivitetStatus status={valgtAktivitet.status} tagger={valgtAktivitet.tagger} />
-                        </div>
+                        <OppdaterAktivitetStatus
+                            status={valgtAktivitet.status}
+                            tagger={valgtAktivitet.tagger}
+                            className="aktivitetvisning__underseksjon"
+                        />
                         <hr className="aktivitetvisning__delelinje" />
-                        <div className="aktivitetvisning__underseksjon">
-                            <AvtaltContainer aktivitet={valgtAktivitet} />
-                        </div>
+                        <AvtaltContainer aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
                         <hr className="aktivitetvisning__delelinje" />
-                        <div className="aktivitetvisning__underseksjon">
-                            <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
-                        </div>
+                        <UnderelementerForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
                     </div>
                 </ModalContainer>
 
                 <ModalFooter>
-                    {/* TODO: tekster*/}
                     <Hovedknapp
                         className="aktivitetvisning__lagre--knapp"
                         spinner={this.props.aktiviteter.status !== STATUS.OK}
