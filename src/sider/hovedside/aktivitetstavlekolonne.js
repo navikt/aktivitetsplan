@@ -45,7 +45,7 @@ function KolonneFunction({ aktiviteter, status, tittelId, connectDropTarget, dra
     return connectDropTarget(
         <div className="aktivitetstavle__kolonne-wrapper">
             <div className={classNames('aktivitetstavle__kolonne', drag && 'aktivitetstavle__kolonne--drag')}>
-                <Undertittel className="aktivitetstavle__kolonne-header">
+                <Undertittel className="aktivitetstavle__kolonne-header" tag="h1">
                     <FormattedMessage id={tittelId} />
                     {{ [STATUS_FULLFOERT]: true, [STATUS_AVBRUTT]: true }[status] &&
                         <Bilde className="aktivitetstavle__kolonne-header-bilde" src={hengelasSvg} alt="hengelåsikon" />
