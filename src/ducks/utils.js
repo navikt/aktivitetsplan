@@ -9,6 +9,10 @@ export const STATUS = {
     ERROR: 'ERROR'
 };
 
+export const FEILTYPE = {
+    VERSJONSKONFLIKT: 'VERSJONSKONFLIKT'
+};
+
 const DEFAULT_CONFIG = {
     credentials: 'same-origin',
     redirect: 'manual' // ikke bli lurt av at backenden plutseling redirecter til login- eller feilside
@@ -39,17 +43,28 @@ export function sendResultatTilDispatch(dispatch, action) {
     };
 }
 
+function parseError(errorData) {
+    try {
+        return JSON.parse(errorData);
+    } catch (e) {
+        console.error(e); // eslint-disable-line no-console
+        return errorData;
+    }
+}
+
 export function handterFeil(dispatch, action) {
     return (error) => {
-        if (error.response) {
-            error.response.text().then((data) => {
+        const response = error.response;
+        if (response) {
+            response.text().then((data) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({ type: action, data: { response: error.response, data } });
+                dispatch({ type: action, data: parseError(data) });
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
             dispatch({ type: action, data: error.toString() });
         }
+        return Promise.reject(error);
     };
 }
 
