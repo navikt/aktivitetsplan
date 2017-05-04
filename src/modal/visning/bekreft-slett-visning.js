@@ -3,7 +3,7 @@ import Bilde from 'nav-react-design/dist/bilde';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Knapp, Fareknapp } from 'nav-frontend-knapper';
 import stopVG from './stop.svg';
-import './bekreftslettvisning.less';
+import './bekreft-slett-visning.less';
 
 
 function BekreftSlettVisning({ slettAction, avbrytAction }) {
