@@ -119,7 +119,6 @@ class Aktivitetvisning extends Component {
                         />
                         <hr className="aktivitetvisning__delelinje" />
                         <AvtaltContainer aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
-                        <hr className="aktivitetvisning__delelinje" />
                         <UnderelementerForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
                     </div>
                 </ModalContainer>
