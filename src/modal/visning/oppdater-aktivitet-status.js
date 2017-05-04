@@ -19,7 +19,7 @@ function OppdaterAktivitetStatus(props) {
     const disableStatusEndring = props.status === aktivitetstatus.STATUS_AVBRUTT ||
         props.status === aktivitetstatus.STATUS_FULLFOERT;
 
-    const hengelasAlt = props.intl.formatMessage('hengelas-icon-alt');
+    const hengelasAlt = props.intl.formatMessage({ id: 'hengelas-icon-alt' });
 
     const radioSkjema = (
         <form className="skjema blokk-m oppdaterstatus-skjema">
