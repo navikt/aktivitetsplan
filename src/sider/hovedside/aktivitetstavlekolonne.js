@@ -44,7 +44,7 @@ function KolonneFunction({ aktiviteter, status, tittelId, connectDropTarget, dra
 
     return connectDropTarget(
         <div className="aktivitetstavle__kolonne-wrapper">
-            <section className={classNames('aktivitetstavle__kolonne', drag && 'aktivitetstavle__kolonne--drag')}>
+            <div className={classNames('aktivitetstavle__kolonne', drag && 'aktivitetstavle__kolonne--drag')}>
                 <Undertittel className="aktivitetstavle__kolonne-header">
                     <FormattedMessage id={tittelId} />
                     {{ [STATUS_FULLFOERT]: true, [STATUS_AVBRUTT]: true }[status] &&
@@ -52,7 +52,7 @@ function KolonneFunction({ aktiviteter, status, tittelId, connectDropTarget, dra
                     }
                 </Undertittel>
                 {aktivitetsKort}
-            </section>
+            </div>
         </div>
     );
 }

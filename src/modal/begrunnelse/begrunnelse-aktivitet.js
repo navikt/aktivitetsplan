@@ -61,7 +61,7 @@ class BegrunnelseAktivitet extends Component {
                         onClick={this.onLagre}
                         disabled={!!feilmelding}
                     >
-                        Lagre
+                        <FormattedMessage id="begrunnelse-aktivitet.modal.lagre" />
                     </Hovedknapp>
                 </ModalFooter>
             </div>

@@ -7,7 +7,8 @@ import history from '../../history';
 import { TILBAKE_MODAL } from '../../ducks/modal';
 
 function Tilbakeknapp(props) {
-    function tilbake() {
+    function tilbake(e) {
+        e.preventDefault();
         props.tilbakeModal();
         history.goBack();
     }
