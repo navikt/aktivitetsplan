@@ -38,22 +38,22 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const fraDatoTekst = (aktivitet) => {
         switch (aktivitet) {
             case EGEN_AKTIVITET_TYPE:
-                return 'Fra dato';
+                return <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.egen" />;
             case STILLING_AKTIVITET_TYPE:
-                return 'Startdato';
+                return <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.stilling" />;
             default:
-                return 'Fra dato';
+                return <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />;
         }
     };
 
     const tilDatoTekst = (aktivitet) => {
         switch (aktivitet) {
             case EGEN_AKTIVITET_TYPE:
-                return 'Til dato';
+                return <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.egen" />;
             case STILLING_AKTIVITET_TYPE:
-                return 'Søknadsfrist';
+                return <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.stilling" />;
             default:
-                return 'Til dato';
+                return <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />;
         }
     };
 
@@ -74,11 +74,26 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const ledigStillingFelter = () => (
         [
             <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} id={id} />,
-            <Informasjonsfelt key="arbeidsgiver" tittel="arbeidsgiver" innhold={arbeidsgiver} id={id} />,
+            <Informasjonsfelt
+                key="arbeidsgiver"
+                tittel={<FormattedMessage id="aktivitetdetaljer.arbeidsgiver-label" />}
+                innhold={arbeidsgiver}
+                id={id}
+            />,
             <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} id={id} />,
-            <Informasjonsfelt key="arbeidssted" tittel="arbeidssted" innhold={arbeidssted} id={id} />,
+            <Informasjonsfelt
+                key="arbeidssted"
+                tittel={<FormattedMessage id="aktivitetdetaljer.arbeidssted-label" />}
+                innhold={arbeidssted}
+                id={id}
+            />,
             lenkeKomponent(),
-            <Informasjonsfelt key="kontaktperson" tittel="kontaktperson" innhold={kontaktperson} id={id} />
+            <Informasjonsfelt
+                key="kontaktperson"
+                tittel={<FormattedMessage id="aktivitetdetaljer.kontaktperson-label" />}
+                innhold={kontaktperson}
+                id={id}
+            />
         ]
     );
 
@@ -87,7 +102,12 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} id={id} />,
             <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} id={id} />,
             lenkeKomponent(),
-            <Informasjonsfelt key="hensikt" tittel="hensikt" innhold={hensikt} id={id} />
+            <Informasjonsfelt
+                key="hensikt"
+                tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
+                innhold={hensikt}
+                id={id}
+            />
         ]
     );
 

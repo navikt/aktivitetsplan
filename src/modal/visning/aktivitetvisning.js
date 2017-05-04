@@ -14,7 +14,7 @@ import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
 import { TILLAT_SLETTING } from '~config' // eslint-disable-line
-import BekreftSlettVisning from './bekreftslettvisning';
+import BekreftSlettVisning from './bekreft-slett-visning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
