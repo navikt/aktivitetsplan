@@ -1,27 +1,34 @@
-import React, { Component, PropTypes as PT } from 'react';
-import { connect } from 'react-redux';
-import { Sidetittel } from 'nav-frontend-typografi';
-import moment from 'moment';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { formValueSelector } from 'redux-form';
-import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
-import UnderelementerForAktivitet from './underelementer-for-aktivitet';
-import ModalHeader from '../modal-header';
-import history from '../../history';
-import AktivitetsDetaljer from './aktivitetsdetaljer';
-import { slettAktivitet, flyttAktivitet } from '../../ducks/aktiviteter';
-import * as AppPT from '../../proptypes';
-import ModalFooter from './../modal-footer';
-import ModalContainer from '../modal-container';
-import { TILLAT_SLETTING } from '~config' // eslint-disable-line
-import BekreftSlettVisning from './bekreftslettvisning';
-import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
-import AvtaltContainer from './avtalt-container';
-import './aktivitetvisning.less';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
-import BegrunnelseBoks from './begrunnelse-boks';
-import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
-import { STATUS } from '../../ducks/utils';
+import React, {Component, PropTypes as PT} from "react";
+import {connect} from "react-redux";
+import {Sidetittel} from "nav-frontend-typografi";
+import moment from "moment";
+import {Hovedknapp, Knapp} from "nav-frontend-knapper";
+import {formValueSelector} from "redux-form";
+import Aktivitetsbeskrivelse from "./aktivitetsbeskrivelse";
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import UnderelementerForAktivitet from "./underelementer-for-aktivitet";
+import ModalHeader from "../modal-header";
+import history from "../../history";
+import AktivitetsDetaljer from "./aktivitetsdetaljer";
+import {slettAktivitet, flyttAktivitet} from "../../ducks/aktiviteter";
+import * as AppPT from "../../proptypes";
+import ModalFooter from "./../modal-footer";
+import ModalContainer from "../modal-container";
+import {TILLAT_SLETTING} from "~config"; // eslint-disable-line
+import BekreftSlettVisning from "./bekreftslettvisning";
+import OppdaterAktivitetStatus from "./oppdater-aktivitet-status";
+import AvtaltContainer from "./avtalt-container";
+import "./aktivitetvisning.less";
+import {
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+    TILTAK_AKTIVITET_TYPE,
+    GRUPPE_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE
+} from "../../constant";
+import BegrunnelseBoks from "./begrunnelse-boks";
+import AktivitetEtiketter from "../../felles-komponenter/aktivitet-etiketter";
+import {STATUS} from "../../ducks/utils";
 
 class Aktivitetvisning extends Component {
 
@@ -78,6 +85,7 @@ class Aktivitetvisning extends Component {
         };
 
         const etiketter = valgtAktivitet.avtalt ? valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) : valgtAktivitet.tagger;
+        const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(valgtAktivitet.type);
 
         return (
             <ModalHeader
@@ -106,14 +114,21 @@ class Aktivitetvisning extends Component {
 
                         <hr className="aktivitetvisning__delelinje" />
 
-                        <OppdaterAktivitetStatus status={valgtAktivitet.status} tagger={valgtAktivitet.tagger} />
+                        {arenaAktivitet ? (
+                                <AlertStripeInfo className="aktivitetvisning__alert">Denne aktiviteten administreres av veilerder. Endringer er ikke mulig.</AlertStripeInfo>
+                            ) : (
+                                <OppdaterAktivitetStatus status={valgtAktivitet.status} tagger={valgtAktivitet.tagger}/>
+                            )
+                        }
+
+
                         <AvtaltContainer aktivitet={valgtAktivitet} />
 
                         <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
                     </div>
                 </ModalContainer>
 
-                <ModalFooter>
+                <ModalFooter visible={false}>
                     {/* TODO: tekster*/}
                     <Hovedknapp
                         className="aktivitetvisning__lagre--knapp"

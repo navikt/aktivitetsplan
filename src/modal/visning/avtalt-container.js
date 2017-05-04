@@ -6,6 +6,7 @@ import { Radio } from 'nav-frontend-skjema';
 import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
+import { TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../constant';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import { TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
 import * as AppPT from '../../proptypes';
@@ -23,7 +24,9 @@ class AvtaltContainer extends Component {
     render() {
         const { aktivitet, aktivitetData, doSetAktivitetTilAvtalt } = this.props;
 
-        if (!TILLAT_SET_AVTALT) return null;
+        const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === aktivitet.type;
+
+        if (!TILLAT_SET_AVTALT || arenaAktivitet) return null;
 
         const setAvtaltInnhold = (<div>
             <Undertittel>

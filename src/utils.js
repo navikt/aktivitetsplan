@@ -172,6 +172,11 @@ export function formaterDatoKortManedTid(dato) {
     return datoVerdi.isValid() ? datoVerdi.format('Do MMM YYYY [kl] HH:mm') : undefined;
 }
 
+export function formaterTid(dato) {
+    const datoVerdi = moment(dato);
+    return datoVerdi.isValid() ? datoVerdi.format('HH:mm') : undefined;
+}
+
 export function formaterDatoTidSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid() ? 'for ' + datoVerdi.fromNow() : undefined;

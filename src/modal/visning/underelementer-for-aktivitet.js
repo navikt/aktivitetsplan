@@ -9,6 +9,7 @@ import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import NyHenvendelse from '../../dialog/ny-henvendelse';
 import Henvendelser from '../../dialog/henvendelser';
+import {TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE} from "../../constant";
 import './underelementer-for-aktivitet.less';
 
 const VisibleDiv = visibleIfHOC((props) => <div {...props} />);
@@ -42,6 +43,7 @@ class UnderelementerForAktivitet extends Component {
         const aktivitetId = aktivitet.id;
         const visHistorikk = vis === HISTORIKK;
         const visDialog = vis === DIALOG;
+        const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(aktivitet.type);
         return (
             <section className="underelementer-aktivitet">
                 <Knapp
@@ -51,10 +53,10 @@ class UnderelementerForAktivitet extends Component {
                     <span><FormattedMessage id="aktivitetvisning.dialog-knapp" /></span>
                     <TallAlert visible={antallUlesteHenvendelser > 0}>{antallUlesteHenvendelser}</TallAlert>
                 </Knapp>
-                <Knapp
+                {!arenaAktivitet && (<Knapp
                     className={`underelementer-aktivitet__historikk-knapp ${visHistorikk && 'underelementer-aktivitet__historikk-knapp--aktiv'}`}
                     onClick={this.toggleHistorikk}
-                ><FormattedMessage id="aktivitetvisning.historikk-knapp" /></Knapp>
+                ><FormattedMessage id="aktivitetvisning.historikk-knapp"/></Knapp>)}
 
                 <EndringsloggForAktivitet visible={visHistorikk} aktivitet={aktivitet} />
 

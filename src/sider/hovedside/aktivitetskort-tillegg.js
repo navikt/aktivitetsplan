@@ -5,8 +5,8 @@ import * as AppPT from '../../proptypes';
 function AktivitetskortIkoner({ kommentarer }) {
     return (
         <div className="aktivitetskort__ikoner">
-            <span><i className="komentar-ikon">X</i>{kommentarer && kommentarer.length}</span>
-            <i className="vedlegg-ikon">O</i>
+            <span><i className="komentar-ikon"></i>{kommentarer && kommentarer.length}</span>
+            <i className="vedlegg-ikon"></i>
         </div>
     );
 }

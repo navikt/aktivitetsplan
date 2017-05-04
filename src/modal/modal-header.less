@@ -2,12 +2,23 @@
 
 .modal-header {
   display: flex;
-  align-items: flex-start;
-  flex-direction: row;
-  justify-content: space-between;
   height: 4rem;
   border-bottom: 1px solid @navGra40;
   padding: 1.5rem 1rem 1rem;
+
+  &-bilde {
+    display: flex;
+    padding-right: 1rem;
+
+    &:after {
+      width: 1px;
+      background-color: @navGra40;
+      height: 100%;
+      position: relative;
+      left: 0.55rem;
+      content: ''
+    }
+  }
 }
 
 .modal-header-wrapper {
