@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Knapp } from 'nav-frontend-knapper';
 import Undertittel from 'nav-frontend-typografi/src/undertittel';
 import Bilde from 'nav-react-design/dist/bilde';
-import * as aktivitetstatus from '../../constant';
+import * as statuser from '../../constant';
 import { flyttAktivitet } from '../../ducks/aktiviteter';
 import Radio from '../skjema/input/radio';
 import hengelasSVG from '../../img/hengelas.svg';
@@ -20,103 +20,149 @@ const leggTilHengelas = (tekst) => (
 );
 
 function OppdaterAktivitetStatus(props) {
-    const { valgtStatus, doFlyttAktivitet, aktiviteter, paramsId } = props;
+    const { valgtAktivitetStatus, valgtEtikettStatus, doFlyttAktivitet, aktiviteter, paramsId } = props;
     const onLagre = (aktivitet) => {
-        if (aktivitet.status === valgtStatus) {
+        if (aktivitet.status === valgtAktivitetStatus) {
             return history.push('/');
-        } else if (valgtStatus === aktivitetstatus.STATUS_FULLFOERT && aktivitet.avtalt) {
+        } else if (valgtAktivitetStatus === statuser.STATUS_FULLFOERT && aktivitet.avtalt) {
             history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
-        } else if (valgtStatus === aktivitetstatus.STATUS_AVBRUTT && aktivitet.avtalt) {
+        } else if (valgtAktivitetStatus === statuser.STATUS_AVBRUTT && aktivitet.avtalt) {
             history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
         } else {
-            doFlyttAktivitet(aktivitet, valgtStatus);
+            doFlyttAktivitet(aktivitet, valgtAktivitetStatus);
             history.push('/');
         }
         return null;
     };
-    const erChecked = (statusId) => valgtStatus === statusId;
-    const disableStatusEndring = props.status === aktivitetstatus.STATUS_AVBRUTT ||
-        props.status === aktivitetstatus.STATUS_FULLFOERT;
+    const erAktivitetChecked = (statusId) => valgtAktivitetStatus === statusId;
+    const erEtikettChecked = (statusId) => valgtEtikettStatus === statusId;
+    const disableStatusEndring = props.status === statuser.STATUS_AVBRUTT ||
+        props.status === statuser.STATUS_FULLFOERT;
     const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId);
-
-    const radioSkjema = (
-        <form className="skjema blokk-m">
+    const erStillingsAktivitet = valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;
+    const statusRadioGroup = (
+        <div className="oppdaterstatus-skjema">
             <Radio
                 feltNavn={'aktivitetstatus'}
                 label={<FormattedMessage id="aktivitetstavle.brukerErInteressert" />}
-                value={aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}
-                id={`id--${aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}`}
+                value={statuser.STATUS_BRUKER_ER_INTRESSERT}
+                id={`id--${statuser.STATUS_BRUKER_ER_INTRESSERT}`}
                 name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT)}
+                checked={erAktivitetChecked(statuser.STATUS_BRUKER_ER_INTRESSERT)}
                 disabled={disableStatusEndring}
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
                 label={<FormattedMessage id="aktivitetstavle.planlagt" />}
-                value={aktivitetstatus.STATUS_PLANLAGT}
-                id={`id--${aktivitetstatus.STATUS_PLANLAGT}`}
+                value={statuser.STATUS_PLANLAGT}
+                id={`id--${statuser.STATUS_PLANLAGT}`}
                 name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_PLANLAGT)}
+                checked={erAktivitetChecked(statuser.STATUS_PLANLAGT)}
                 disabled={disableStatusEndring}
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
                 label={<FormattedMessage id="aktivitetstavle.gjennomfoert" />}
-                value={aktivitetstatus.STATUS_GJENNOMFOERT}
-                id={`id--${aktivitetstatus.STATUS_GJENNOMFOERT}`}
+                value={statuser.STATUS_GJENNOMFOERT}
+                id={`id--${statuser.STATUS_GJENNOMFOERT}`}
                 name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_GJENNOMFOERT)}
+                checked={erAktivitetChecked(statuser.STATUS_GJENNOMFOERT)}
                 disabled={disableStatusEndring}
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
                 label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />)}
-                value={aktivitetstatus.STATUS_FULLFOERT}
-                id={`id--${aktivitetstatus.STATUS_FULLFOERT}`}
+                value={statuser.STATUS_FULLFOERT}
+                id={`id--${statuser.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_FULLFOERT)}
+                checked={erAktivitetChecked(statuser.STATUS_FULLFOERT)}
                 disabled={disableStatusEndring}
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
                 label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />)}
-                value={aktivitetstatus.STATUS_AVBRUTT}
-                id={`id--${aktivitetstatus.STATUS_AVBRUTT}`}
+                value={statuser.STATUS_AVBRUTT}
+                id={`id--${statuser.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_AVBRUTT)}
+                checked={erAktivitetChecked(statuser.STATUS_AVBRUTT)}
                 disabled={disableStatusEndring}
             />
+        </div>
+    );
+    const etikettRadioGroup = (
+        <div className="oppdateretikett-skjema">
+            <Radio
+                feltNavn={'etikettstatus'}
+                label={<FormattedMessage id="stilling.aktivitet.status.soknad-sendt" />}
+                value={statuser.SOKNAD_SENDT}
+                id={`id--${statuser.SOKNAD_SENDT}`}
+                name="etikettstatus"
+                checked={erEtikettChecked(statuser.SOKNAD_SENDT)}
+                disabled={disableStatusEndring}
+            />
+            <Radio
+                feltNavn={'etikettstatus'}
+                label={<FormattedMessage id="stilling.aktivitet.status.innkalt-til-intervju" />}
+                value={statuser.INNKALT_TIL_INTERVJU}
+                id={`id--${statuser.INNKALT_TIL_INTERVJU}`}
+                name="etikettstatus"
+                checked={erEtikettChecked(statuser.INNKALT_TIL_INTERVJU)}
+                disabled={disableStatusEndring}
+            />
+            <Radio
+                feltNavn={'etikettstatus'}
+                label={<FormattedMessage id="stilling.aktivitet.status.avslag" />}
+                value={statuser.AVSLAG}
+                id={`id--${statuser.AVSLAG}`}
+                name="etikettstatus"
+                checked={erEtikettChecked(statuser.AVSLAG)}
+                disabled={disableStatusEndring}
+            />
+            <Radio
+                feltNavn={'etikettstatus'}
+                label={<FormattedMessage id="stilling.aktivitet.status.jobbtilbud" />}
+                value={statuser.JOBBTILBUD}
+                id={`id--${statuser.JOBBTILBUD}`}
+                name="etikettstatus"
+                checked={erEtikettChecked(statuser.JOBBTILBUD)}
+                disabled={disableStatusEndring}
+            />
+        </div>
+    );
+    const radioSkjema = (
+        <form className="skjema oppdater-statuser-radioform blokk-m">
+            {statusRadioGroup}
+            {erStillingsAktivitet && etikettRadioGroup}
         </form>
     );
 
     return (
-        <section >
+        <section>
             <Undertittel className="blokk-s">
                 Oppdater status
             </Undertittel>
-            <div className="oppdaterstatus-skjema">
-                {radioSkjema}
-                {props.dirty &&
-                    <Knapp
-                        spinner={aktiviteter.status !== STATUS.OK}
-                        autoDisableVedSpinner
-                        onClick={() => onLagre(valgtAktivitet)}
-                    >
-                        Lagre
-                    </Knapp>
-                }
-            </div>
+            {radioSkjema}
+            {props.dirty &&
+                <Knapp
+                    spinner={aktiviteter.status !== STATUS.OK}
+                    autoDisableVedSpinner
+                    onClick={() => onLagre(valgtAktivitet)}
+                >
+                    Lagre
+                </Knapp>
+            }
         </section>
     );
 }
 
-const OppdaterStatusReduxForm = reduxForm({
-    form: 'oppdaterStatus-form'
+const OppdaterReduxForm = reduxForm({
+    form: 'oppdater-form'
 })(OppdaterAktivitetStatus);
 
 OppdaterAktivitetStatus.propTypes = {
     status: PT.string.isRequired,
-    valgtStatus: PT.string,
+    valgtAktivitetStatus: PT.string,
+    valgtEtikettStatus: PT.string,
     doFlyttAktivitet: PT.func.isRequired,
     paramsId: PT.string.isRequired,
     aktiviteter: PT.shape({
@@ -128,7 +174,8 @@ OppdaterAktivitetStatus.propTypes = {
 
 const mapStateToProps = (state, props) => ({
     aktiviteter: state.data.aktiviteter,
-    valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus'),
+    valgtAktivitetStatus: formValueSelector('oppdater-form')(state, 'aktivitetstatus'),
+    valgtEtikettStatus: formValueSelector('oppdater-form')(state, 'etikettstatus'),
     initialValues: {
         aktivitetstatus: props.status
     }
@@ -138,4 +185,4 @@ const mapDispatchToProps = (dispatch) => ({
     doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OppdaterStatusReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);

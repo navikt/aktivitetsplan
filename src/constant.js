@@ -7,3 +7,8 @@ export const STATUS_AVBRUTT = 'AVBRUTT';
 
 export const EGEN_AKTIVITET_TYPE = 'EGEN';
 export const STILLING_AKTIVITET_TYPE = 'STILLING';
+
+export const SOKNAD_SENDT = 'SØKNAD_SENDT';
+export const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
+export const AVSLAG = 'AVSLAG';
+export const JOBBTILBUD = 'JOBBTILBUD';
