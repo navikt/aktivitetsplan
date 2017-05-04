@@ -23,7 +23,7 @@ function OppdaterAktivitetStatus(props) {
         <form className="skjema blokk-m oppdaterstatus-skjema">
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.brukerErInteressert"/>}
+                label={<FormattedMessage id="aktivitetstavle.brukerErInteressert" />}
                 value={aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}
                 id={`id--${aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}`}
                 name="aktivitetstatus"
@@ -32,7 +32,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.planlagt"/>}
+                label={<FormattedMessage id="aktivitetstavle.planlagt" />}
                 value={aktivitetstatus.STATUS_PLANLAGT}
                 id={`id--${aktivitetstatus.STATUS_PLANLAGT}`}
                 name="aktivitetstatus"
@@ -41,7 +41,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.gjennomfoert"/>}
+                label={<FormattedMessage id="aktivitetstavle.gjennomfoert" />}
                 value={aktivitetstatus.STATUS_GJENNOMFOERT}
                 id={`id--${aktivitetstatus.STATUS_GJENNOMFOERT}`}
                 name="aktivitetstatus"
@@ -50,7 +50,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert"/>)}
+                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />)}
                 value={aktivitetstatus.STATUS_FULLFOERT}
                 id={`id--${aktivitetstatus.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
@@ -59,7 +59,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt"/>)}
+                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />)}
                 value={aktivitetstatus.STATUS_AVBRUTT}
                 id={`id--${aktivitetstatus.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"
