@@ -12,6 +12,7 @@ import * as AppPT from '../../proptypes';
 import './avtalt-container.less';
 import {TILLAT_SET_AVTALT} from '~config' // eslint-disable-line
 
+
 class AvtaltContainer extends Component {
 
     constructor(props) {
@@ -27,11 +28,11 @@ class AvtaltContainer extends Component {
         if (!TILLAT_SET_AVTALT) return null;
 
         const setAvtaltInnhold = (
-            <div className={className}>
+            <div className={`${className} avtalt-container`}>
                 <Undertittel>
                     <FormattedMessage id="sett-avtalt.header" />
                 </Undertittel>
-                <div className="avtalt_radio">
+                <div className="avtalt-container__radio">
                     <Radio
                         onClick={() => this.setState({ visBekreftAvtalt: true })}
                         label={<FormattedMessage id="sett-avtalt.label" />} name="avtalt"
@@ -47,7 +48,7 @@ class AvtaltContainer extends Component {
                 >Bekreft</Knapp> }
             </div>);
 
-        const cls = (classes) => classNames('vis_avtalt', classes);
+        const cls = (classes) => classNames('avtalt-container__vis-avtalt', classes);
         const visAvtalt = (
             <div className={cls(className)}>
                 <Icon kind="ok-sirkel-fylt" height="21px" />

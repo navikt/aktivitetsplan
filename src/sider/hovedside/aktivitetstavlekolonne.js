@@ -36,16 +36,10 @@ function collect(theConnect, monitor) {
     };
 }
 
-function compareOpprettetDate(a, b) {
-    if (b > a) return 1;
-    else if (b < a) return -1;
-    return 0;
-}
-
 function KolonneFunction({ aktiviteter, status, tittelId, connectDropTarget, drag }) {
     const aktivitetsKort = aktiviteter
         .filter((a) => (a.nesteStatus ? a.nesteStatus === status : a.status === status))
-        .sort((a, b) => compareOpprettetDate(a.opprettetDato, b.opprettetDato))
+        .sort((a, b) => b.opprettetDato.localeCompare(a.opprettetDato))
         .map((a) => <AktivitetsKort key={a.id} aktivitet={a} />);
 
     return connectDropTarget(
