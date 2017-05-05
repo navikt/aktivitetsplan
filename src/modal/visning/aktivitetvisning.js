@@ -65,9 +65,9 @@ class Aktivitetvisning extends Component {
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
-        const etiketter = valgtAktivitet.avtalt ?
-            valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) :
-            valgtAktivitet.tagger;
+        // const etiketter = valgtAktivitet.avtalt ?
+        //     valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) :
+        //     valgtAktivitet.tagger;
 
         return (
             <ModalHeader
@@ -88,7 +88,7 @@ class Aktivitetvisning extends Component {
                             <Sidetittel id="modal-aktivitetsvisning-header">
                                 {valgtAktivitet.tittel}
                             </Sidetittel>
-                            <AktivitetEtiketter etiketter={etiketter} className="aktivitetvisning__etikett" />
+                            <AktivitetEtiketter etiketter={[]} className="aktivitetvisning__etikett" />
                             <AktivitetsDetaljer
                                 className="aktivitetvisning__detaljer"
                                 valgtAktivitet={valgtAktivitet}
