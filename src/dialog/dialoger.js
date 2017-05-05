@@ -51,8 +51,16 @@ Gruppe.propTypes = {
 function Dialoger({ dialoger, valgtDialog, className }) {
     return (
         <div className={className}>
-            <Gruppe dialoger={dialoger.filter((d) => !d.lest)} valgtDialog={valgtDialog} labelId="Nye meldinger" />
-            <Gruppe dialoger={dialoger.filter((d) => d.lest)} valgtDialog={valgtDialog} labelId="Leste meldinger" />
+            <Gruppe
+                dialoger={dialoger.filter((d) => !d.lest)}
+                valgtDialog={valgtDialog}
+                labelId="dialoggruppe.nye-meldinger"
+            />
+            <Gruppe
+                dialoger={dialoger.filter((d) => d.lest)}
+                valgtDialog={valgtDialog}
+                labelId="dialoggruppe.leste-meldinger"
+            />
         </div>
     );
 }

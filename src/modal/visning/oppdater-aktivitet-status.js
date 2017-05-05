@@ -1,4 +1,5 @@
 import React, { PropTypes as PT } from 'react';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 import Undertittel from 'nav-frontend-typografi/src/undertittel';
@@ -7,9 +8,9 @@ import * as aktivitetstatus from '../../constant';
 import Radio from '../skjema/input/radio';
 import hengelasSVG from '../../img/hengelas.svg';
 
-const leggTilHengelas = (tekst) => (
+const leggTilHengelas = (tekst, altTekst) => (
     <span>
-        {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelasSVG} alt="hengelås ikon" />
+        {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelasSVG} alt={altTekst} />
     </span>
 );
 
@@ -18,11 +19,13 @@ function OppdaterAktivitetStatus(props) {
     const disableStatusEndring = props.status === aktivitetstatus.STATUS_AVBRUTT ||
         props.status === aktivitetstatus.STATUS_FULLFOERT;
 
+    const hengelasAlt = props.intl.formatMessage({ id: 'hengelas-icon-alt' });
+
     const radioSkjema = (
         <form className="skjema blokk-m oppdaterstatus-skjema">
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label="Foreslått"
+                label={<FormattedMessage id="aktivitetstavle.brukerErInteressert" />}
                 value={aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}
                 id={`id--${aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}`}
                 name="aktivitetstatus"
@@ -31,7 +34,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label="Planlagt"
+                label={<FormattedMessage id="aktivitetstavle.planlagt" />}
                 value={aktivitetstatus.STATUS_PLANLAGT}
                 id={`id--${aktivitetstatus.STATUS_PLANLAGT}`}
                 name="aktivitetstatus"
@@ -40,7 +43,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label="Gjennomføres"
+                label={<FormattedMessage id="aktivitetstavle.gjennomfoert" />}
                 value={aktivitetstatus.STATUS_GJENNOMFOERT}
                 id={`id--${aktivitetstatus.STATUS_GJENNOMFOERT}`}
                 name="aktivitetstatus"
@@ -49,7 +52,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas('Fullført')}
+                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />, hengelasAlt)}
                 value={aktivitetstatus.STATUS_FULLFOERT}
                 id={`id--${aktivitetstatus.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
@@ -58,7 +61,7 @@ function OppdaterAktivitetStatus(props) {
             />
             <Radio
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas('Avbrutt')}
+                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />, hengelasAlt)}
                 value={aktivitetstatus.STATUS_AVBRUTT}
                 id={`id--${aktivitetstatus.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"
@@ -85,7 +88,8 @@ const OppdaterStatusReduxForm = reduxForm({
 OppdaterAktivitetStatus.propTypes = {
     status: PT.string.isRequired,
     valgtStatus: PT.string,
-    className: PT.string
+    className: PT.string,
+    intl: intlShape
 };
 
 const mapStateToProps = (state, props) => ({
@@ -97,4 +101,4 @@ const mapStateToProps = (state, props) => ({
 });
 
 
-export default connect(mapStateToProps, null)(OppdaterStatusReduxForm);
+export default connect(mapStateToProps, null)(injectIntl(OppdaterStatusReduxForm));

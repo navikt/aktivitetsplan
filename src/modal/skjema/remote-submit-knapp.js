@@ -1,4 +1,5 @@
 import React, { PropTypes as PT } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-react-design/dist/knapp';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
@@ -6,7 +7,9 @@ import { submit } from 'redux-form';
 
 const cls = (className) => classNames(className, 'knapp-liten');
 const RemoteSubmitKnapp = ({ className, dispatch, formNavn }) => (
-    <Hovedknapp className={cls(className)} onClick={() => dispatch(submit(formNavn))}>Lagre</Hovedknapp>
+    <Hovedknapp className={cls(className)} onClick={() => dispatch(submit(formNavn))}>
+        <FormattedMessage id="modal.skjema.lagre" />
+    </Hovedknapp>
 );
 
 RemoteSubmitKnapp.propTypes = {

@@ -15,7 +15,7 @@ import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
 import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
-import BekreftSlettVisning from './bekreftslettvisning';
+import BekreftSlettVisning from './bekreft-slett-visning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
@@ -62,7 +62,7 @@ class Aktivitetvisning extends Component {
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
 
-        const tillattEndring = valgtAktivitet.avtalt !== true || TILLAT_SLETTING;
+        const tillattEndring = valgtAktivitet.avtalt !== true || TILLAT_SET_AVTALT;
 
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
@@ -119,7 +119,6 @@ class Aktivitetvisning extends Component {
                         />
                         <hr className="aktivitetvisning__delelinje" />
                         <AvtaltContainer aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
-                        <hr className="aktivitetvisning__delelinje" />
                         <UnderelementerForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
                     </div>
                 </ModalContainer>
