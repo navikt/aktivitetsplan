@@ -12,7 +12,7 @@ function AktivitetsmalModal() {
         <div>
             <Hovedside />
             <Modal isOpen onRequestClose={() => history.push('/')} contentLabel="aktivitetsmal-modal">
-                <ModalHeader normalTekstId="aktivitetsmal.mitt-mal" className="side-innhold">
+                <ModalHeader normalTekstId="aktivitetsmal.mitt-mal" className="aktivitetmal__modal">
                     <ModalContainer>
                         <AktivitetsMal />
                     </ModalContainer>

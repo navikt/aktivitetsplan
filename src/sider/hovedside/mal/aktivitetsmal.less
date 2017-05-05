@@ -3,8 +3,8 @@
 .aktivitetmal {
   text-align: left;
 
-  & .ekspanderbartPanel {
-    .blokk-m();
+  &__modal .modal-header {
+    margin: 0 !important;
   }
 
   &__tekst {
@@ -23,25 +23,6 @@
 
     p:not(.textarea--medMeta__teller) {
       margin-top: 0;
-    }
-  }
-
-  &__chevron {
-    margin-right: .5rem;
-  }
-
-  &__link {
-    display: inline-block;
-    color: @navMorkGra;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-      color: @blue-active;
-    }
-
-    &-apen {
-      .blokk-s();
     }
   }
 

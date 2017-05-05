@@ -1,8 +1,6 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import classNames from 'classnames';
-import NavFrontendChevron from 'nav-frontend-chevron';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { hentMal, hentMalListe, fjernMalListe, oppdaterMal } from '../../../ducks/mal';
@@ -11,6 +9,7 @@ import AktivitetsmalForm from './aktivitetsmal-form';
 import { formaterDatoDatoEllerTidSiden } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Identitet from '../../../felles-komponenter/identitet';
+import Accordion from '../../../felles-komponenter/accordion';
 import { visibleIfHOC } from '../../../hocs/visible-if';
 import './aktivitetsmal.less';
 
@@ -19,6 +18,20 @@ function trim(str) {
 }
 
 const VisibleDiv = visibleIfHOC((props) => <div {...props} />);
+
+function malListeVisning(malet) {
+    return (
+        <article key={malet.dato} className="aktivitetmal__historikk">
+            <span className="aktivitetmal__historikk-skrevetav">
+                <FormattedMessage id={malet.mal ? 'aktivitetsmal.skrevet-av' : 'aktivitetsmal.slettet-av'} />
+                <Identitet>{({ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv]) || malet.endretAv}</Identitet>
+            </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
+            <Tekstomrade className="aktivitetmal__historikk-tekst">
+                {malet.mal}
+            </Tekstomrade>
+        </article>
+    );
+}
 
 class AktivitetsMal extends Component {
 
@@ -69,31 +82,20 @@ class AktivitetsMal extends Component {
                             {!malOpprettet && <p><FormattedMessage id="aktivitetsmal.opprett-mal-tekst" /></p>}
                             <Tekstomrade className="aktivitetmal__tekst">{mal.mal}</Tekstomrade>
                             <Hovedknapp onClick={this.toggleRedigering}>
-                                <FormattedMessage id={malOpprettet ? 'aktivitetsmal.rediger' : 'aktivitetsmal.opprett'} />
+                                <FormattedMessage
+                                    id={malOpprettet ? 'aktivitetsmal.rediger' : 'aktivitetsmal.opprett'}
+                                />
                             </Hovedknapp>
                         </div>
                         <div>
                             <hr className="aktivitetmal__delelinje" />
                             <div className="aktivitetmal__innhold">
-                                <a
-                                    href="/"
-                                    className={classNames('aktivitetmal__link', { 'aktivitetmal__link-apen': historikkVises })}
+                                <Accordion
+                                    labelId={historikkVises ? 'aktivitetsmal.skjul' : 'aktivitetsmal.vis'}
                                     onClick={this.hentMalListe}
                                 >
-                                    <NavFrontendChevron orientasjon={historikkVises ? 'opp' : 'ned'} className="aktivitetmal__chevron" />
-                                    <FormattedMessage id={historikkVises ? 'aktivitetsmal.skjul' : 'aktivitetsmal.vis'} />
-                                </a>
-                                {malListe.slice(1, malListe.length).map((malet) => (
-                                    <article key={malet.dato} className="aktivitetmal__historikk">
-                                        <span className="aktivitetmal__historikk-skrevetav">
-                                            <FormattedMessage id={malet.mal ? 'aktivitetsmal.skrevet-av' : 'aktivitetsmal.slettet-av'} />
-                                            <Identitet>{({ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv]) || malet.endretAv}</Identitet>
-                                        </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
-                                        <Tekstomrade className="aktivitetmal__historikk-tekst">
-                                            {malet.mal}
-                                        </Tekstomrade>
-                                    </article>
-                                ))}
+                                    {malListe.slice(1, malListe.length).map((malet) => malListeVisning(malet))}
+                                </Accordion>
                             </div>
                         </div>
                     </VisibleDiv>
