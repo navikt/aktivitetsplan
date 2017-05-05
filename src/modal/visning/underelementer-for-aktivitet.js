@@ -1,18 +1,17 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import Knapp from 'nav-frontend-knapper/src/knapp';
+import classNames from 'classnames';
+import { ToggleGruppe, ToggleKnapp } from 'nav-frontend-toggle';
 import * as AppPT from '../../proptypes';
 import { autobind } from '../../utils';
-import { visibleIfHOC } from '../../hocs/visible-if';
 import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import NyHenvendelse from '../../dialog/ny-henvendelse';
 import Henvendelser from '../../dialog/henvendelser';
 import './underelementer-for-aktivitet.less';
+import VisibleDiv from '../../felles-komponenter/utils/visible-if-div';
 
-const VisibleDiv = visibleIfHOC((props) => <div {...props} />);
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
@@ -41,28 +40,58 @@ class UnderelementerForAktivitet extends Component {
         const { aktivitet, antallUlesteHenvendelser, dialog, className } = this.props;
         const { vis } = this.state;
         const aktivitetId = aktivitet.id;
-        const visHistorikk = vis === HISTORIKK;
         const visDialog = vis === DIALOG;
         const cls = (classes) => classNames('underelementer-aktivitet', classes);
+        const visHistorikk = vis === HISTORIKK;
+
+        const dialogknappCls = (dialogAktiv) => classNames('underelementer-aktivitet__dialog-knapp', {
+            'underelementer-aktivitet__dialog-knapp--aktiv': dialogAktiv
+        });
+
+        const historikknappCls = (historikkAktiv) => classNames('underelementer-aktivitet__historikk-knapp', {
+            'underelementer-aktivitet__historikk-knapp--aktiv': historikkAktiv
+        });
+
+        const toggleVis = (e) => {
+            if (e.target.value === HISTORIKK) {
+                this.toggleHistorikk();
+            } else if (e.target.value === DIALOG) {
+                this.toggleDialog();
+            }
+        };
+
         return (
             <section className={cls(className)}>
-                <Knapp
-                    className={`underelementer-aktivitet__dialog-knapp ${visDialog && 'underelementer-aktivitet__dialog-knapp--aktiv'}`}
-                    onClick={this.toggleDialog}
+                <ToggleGruppe
+                    name="dialog-historikk-toggle"
+                    onChange={toggleVis}
+                    className="underelementer-aktivitet__toggle"
                 >
-                    <span><FormattedMessage id="aktivitetvisning.dialog-knapp" /></span>
-                    <TallAlert visible={antallUlesteHenvendelser > 0}>{antallUlesteHenvendelser}</TallAlert>
-                </Knapp>
-                <Knapp
-                    className={`underelementer-aktivitet__historikk-knapp ${visHistorikk && 'underelementer-aktivitet__historikk-knapp--aktiv'}`}
-                    onClick={this.toggleHistorikk}
-                ><FormattedMessage id="aktivitetvisning.historikk-knapp" /></Knapp>
+                    <ToggleKnapp
+                        value={DIALOG}
+                        className={dialogknappCls(visDialog)}
+                    >
+                        <FormattedMessage id="aktivitetvisning.dialog-knapp" />
+                        <TallAlert visible={antallUlesteHenvendelser > 0}>{antallUlesteHenvendelser}</TallAlert>
+                    </ToggleKnapp>
+                    <ToggleKnapp
+                        value={HISTORIKK}
+                        className={historikknappCls(visHistorikk)}
+                    >
+                        <FormattedMessage id="aktivitetvisning.historikk-knapp" />
+                    </ToggleKnapp>
+                </ToggleGruppe>
 
-                <EndringsloggForAktivitet visible={visHistorikk} aktivitet={aktivitet} />
+                <EndringsloggForAktivitet
+                    visible={visHistorikk}
+                    aktivitet={aktivitet}
+                    className="underelementer-aktivitet__historikkvisning"
+                />
 
-                <VisibleDiv visible={visDialog}>
+                <VisibleDiv visible={visDialog} className="underelementer-aktivitet__dialogvisning">
                     <NyHenvendelse
-                        formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`} dialogId={dialog && dialog.id}
+                        formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`}
+                        dialogId={dialog && dialog.id}
                         aktivitetId={aktivitetId}
                     />
                     <Henvendelser visible={!!dialog} dialog={dialog} />

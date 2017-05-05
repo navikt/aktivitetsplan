@@ -20,7 +20,7 @@ import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
-import VisibleIfDiv from '../../felles-komponenter/utils/visibleIfDiv';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
 import { STATUS } from '../../ducks/utils';

@@ -35,12 +35,12 @@ class EndringsloggForAktivitet extends Component {
     }
 
     render() {
-        const { status, endringslogg } = this.props;
+        const { status, endringslogg, className } = this.props;
 
         return (
-            <section>
+            <section className={className}>
                 {endringslogg.length === 0 && status === STATUS.OK && (
-                    <p><FormattedMessage id="livslopsendring.empty" /></p>
+                    <FormattedMessage id="livslopsendring.empty" />
                 )}
                 {endringslogg.map((log) => <EndringsloggInnslag log={log} />)}
             </section>
@@ -54,7 +54,8 @@ EndringsloggForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     doHentEndringsloggForAktivitet: PT.func.isRequired,
     doFjernEndringsLogg: PT.func.isRequired,
-    status: PT.string
+    status: PT.string,
+    className: PT.string
 };
 
 const mapStateToProps = (state) => ({
