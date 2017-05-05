@@ -39,7 +39,7 @@ const RULES = [
             },
             {
                 loader: 'less-loader', options: {
-                relativeUrls: false,
+                relativeUrls: true,
                 modifyVars: {
                     "modig-frontend-images-root-url": "\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/img\'",
                     "baseImagePath": "\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/\'",

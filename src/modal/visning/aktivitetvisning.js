@@ -167,8 +167,7 @@ Aktivitetvisning.propTypes = {
 const mapStateToProps = (state) => ({
     oppfolgingStatus: state.data.oppfolgingStatus.data,
     valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus'),
-    aktiviteter: state.data.aktiviteter,
-    dialoger: state.data.dialog.data
+    aktiviteter: state.data.aktiviteter
 });
 
 const mapDispatchToProps = (dispatch) => ({
