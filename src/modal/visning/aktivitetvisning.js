@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
+import { FormattedMessage } from 'react-intl';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
@@ -12,8 +13,8 @@ import { slettAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
-import { TILLAT_SLETTING } from '~config' // eslint-disable-line
-import BekreftSlettVisning from './bekreftslettvisning';
+import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
+import BekreftSlettVisning from './bekreft-slett-visning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
@@ -59,10 +60,14 @@ class Aktivitetvisning extends Component {
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
 
+        const tillattEndring = valgtAktivitet.avtalt !== true || TILLAT_SET_AVTALT;
+
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
-        const etiketter = valgtAktivitet.avtalt ? valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) : valgtAktivitet.tagger;
+        const etiketter = valgtAktivitet.avtalt ?
+            valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) :
+            valgtAktivitet.tagger;
 
         return (
             <ModalHeader
@@ -91,31 +96,31 @@ class Aktivitetvisning extends Component {
                             <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
                         </div>
                         <hr className="aktivitetvisning__delelinje" />
-                        <div className="aktivitetvisning__underseksjon" >
-                            <OppdaterAktivitetStatus
-                                status={valgtAktivitet.status}
-                                paramsId={id}
-                            />
-                        </div>
+                        <OppdaterAktivitetStatus
+                            status={valgtAktivitet.status}
+                            paramsId={id}
+                            className="aktivitetvisning__underseksjon"
+                        />
                         <hr className="aktivitetvisning__delelinje" />
-                        <div className="aktivitetvisning__underseksjon">
-                            <AvtaltContainer aktivitet={valgtAktivitet} />
-                        </div>
-                        <hr className="aktivitetvisning__delelinje" />
-                        <div className="aktivitetvisning__underseksjon">
-                            <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
-                        </div>
+                        <AvtaltContainer aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
+                        <UnderelementerForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
                     </div>
                 </ModalContainer>
 
                 <ModalFooter>
-                    {/* TODO: tekster*/}
+                    { tillattEndring && <Knapp
+                        onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
+                        className="knapp-liten modal-footer__knapp"
+                    >
+                        <FormattedMessage id="aktivitetvisning.endre-knapp" />
+                    </Knapp>}
+
                     {tillatSletting &&
                     <Knapp
                         onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
                         className="knapp-liten modal-footer__knapp" autoFocus={this.state.settAutoFocusSlett}
                     >
-                        Slett
+                        <FormattedMessage id="aktivitetvisning.slett-knapp" />
                     </Knapp>}
                 </ModalFooter>
             </ModalHeader>

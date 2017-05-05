@@ -1,4 +1,5 @@
 import React, { Component, PropTypes as PT } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Knapp } from 'nav-frontend-knapper';
 import Lukknapp from 'nav-frontend-lukknapp';
@@ -8,7 +9,7 @@ import Dialoger from './dialoger';
 import Modal from '../modal/modal';
 import Hovedside from '../sider/hovedside/hovedside';
 import history from '../history';
-import Lenkeknapp from '../felles-komponenter/utils/lenkeknapp';
+import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import NyHenvendelse from './ny-henvendelse';
 import { visibleIfHOC } from '../hocs/visible-if';
 import './dialog-modal.less';
@@ -70,8 +71,12 @@ class DialogModalContent extends Component {
                     style={kolonneStyle}
                 >
                     <div className="dialog-modal__kolonne-header dialog-modal__kolonne-header--dialoger">
-                        <Knapp onClick={this.nyDialog} disabled={nyDialogApen}>Ny dialog</Knapp>
-                        <Lukknapp overstHjorne onClick={() => navigerTil('/')}>Lukk dialog</Lukknapp>
+                        <Knapp onClick={this.nyDialog} disabled={nyDialogApen}>
+                            <FormattedMessage id="dialog.modal.ny-dialog" />
+                        </Knapp>
+                        <Lukknapp overstHjorne onClick={() => navigerTil('/')}>
+                            <FormattedMessage id="dialog.modal.lukk-dialog" />
+                        </Lukknapp>
                     </div>
                     <div
                         style={{
@@ -86,7 +91,9 @@ class DialogModalContent extends Component {
                             }}
                         >
                             <VisibleDiv visible={nyDialogApen}>
-                                <Lukknapp overstHjorne onClick={this.lukkNyDialog}>Lukk ny dialog</Lukknapp>
+                                <Lukknapp overstHjorne onClick={this.lukkNyDialog}>
+                                    <FormattedMessage id="dialog.modal.lukk-ny-dialog" />
+                                </Lukknapp>
                                 <NyHenvendelse
                                     formNavn="ny-dialog"
                                     onComplete={this.dialogOpprettet} // TODO velg denne dialogen!
@@ -102,11 +109,15 @@ class DialogModalContent extends Component {
                     style={kolonneStyle}
                 >
                     <div className="dialog-modal__kolonne-header">
-                        <Lenkeknapp
+                        <Knappelenke
                             visible={!!valgtAktivitetId}
                             onClick={() => navigerTil(`/aktivitet/aktivitet/${valgtAktivitetId}`)}
-                        >Gå til aktiviteten</Lenkeknapp>
-                        <Lukknapp overstHjorne onClick={lukkDialog}>Lukk dialog</Lukknapp>
+                        >
+                            <FormattedMessage id="dialog.modal.til-aktiviteten" />
+                        </Knappelenke>
+                        <Lukknapp overstHjorne onClick={lukkDialog}>
+                            <FormattedMessage id="dialog.modal.lukk-dialog" />
+                        </Lukknapp>
                     </div>
                     <Dialog className="dialog-modal__kolonne-innhold dialog-modal__kolonne-innhold--dialog" dialog={valgtDialog} />
                 </VisibleDiv>

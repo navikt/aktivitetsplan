@@ -21,21 +21,27 @@ const ARBEIDSSTED_MAKS_LENGDE = 255;
 const ARBEIDSGIVER_MAKS_LENGDE = 255;
 const KONTAKTPERSON_MAKS_LENGDE = 255;
 
-const pakrevdTittel = rules.minLength(0, 'Du må fylle ut overskriften');
-const begrensetTittelLengde =
-    rules.maxLength(TITTEL_MAKS_LENGDE, `Overskriften kan ikke være lenger en ${TITTEL_MAKS_LENGDE} tegn`);
-const pakrevdFraDato = rules.minLength(0, 'Du må fylle ut fra datoen');
-const pakrevdTilDato = rules.minLength(0, 'Du må fylle ut fristen');
-const begrensetLenkeLengde =
-    rules.maxLength(LENKE_MAKS_LENGDE, `Lenken kan ikke være lenger en ${LENKE_MAKS_LENGDE} tegn`);
-const begrensetBeskrivelseLengde =
-    rules.maxLength(BESKRIVELSE_MAKS_LENGDE, `Besrkivelsen kan ikke være lenger en ${BESKRIVELSE_MAKS_LENGDE} tegn`);
-const begrensetArbeidsstedLengde =
-    rules.maxLength(ARBEIDSSTED_MAKS_LENGDE, `Arbeidsstedtekst kan ikke være lenger en ${ARBEIDSSTED_MAKS_LENGDE} tegn`);
-const begrensetArbeidsgiverLengde =
-    rules.maxLength(ARBEIDSGIVER_MAKS_LENGDE, `Arbeidsgivertekst kan ikke være lenger en ${ARBEIDSGIVER_MAKS_LENGDE} tegn`);
-const begrensetKontaktpersonLengde =
-    rules.maxLength(KONTAKTPERSON_MAKS_LENGDE, `Kontaktpersontekst kan ikke være lenger en ${KONTAKTPERSON_MAKS_LENGDE} tegn`);
+const pakrevdTittel = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tittel" />);
+const begrensetTittelLengde = rules.maxLength(TITTEL_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.tittel-lengde" values={{ TITTEL_MAKS_LENGDE }} />
+);
+const pakrevdFraDato = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-fradato" />);
+const pakrevdTilDato = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tildato" />);
+const begrensetLenkeLengde = rules.maxLength(LENKE_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.lenke-lengde" values={{ LENKE_MAKS_LENGDE }} />
+);
+const begrensetBeskrivelseLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.beskrivelse-lengde" values={{ BESKRIVELSE_MAKS_LENGDE }} />
+);
+const begrensetArbeidsstedLengde = rules.maxLength(ARBEIDSSTED_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.arbeidssted-lengde" values={{ ARBEIDSSTED_MAKS_LENGDE }} />
+);
+const begrensetArbeidsgiverLengde = rules.maxLength(ARBEIDSGIVER_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.arbeidsgiver-lengde" values={{ ARBEIDSGIVER_MAKS_LENGDE }} />
+);
+const begrensetKontaktpersonLengde = rules.maxLength(KONTAKTPERSON_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.kontaktperson-lengde" values={{ KONTAKTPERSON_MAKS_LENGDE }} />
+);
 
 function StillingAktivitetForm(props) {
     return (
@@ -51,10 +57,15 @@ function StillingAktivitetForm(props) {
                     </Undertekst>
                 </div>
 
-                <Input feltNavn="tittel" labelId="stilling-aktivitet-form.label.overskrift" />
+                <Input
+                    feltNavn="tittel"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.overskrift"
+                />
                 <div className="dato-container">
                     <Datovelger
                         feltNavn="fraDato"
+                        disabled={props.avtalt === true}
                         labelId="stilling-aktivitet-form.label.fra-dato"
                         senesteTom={props.currentTilDato}
                     />
@@ -64,15 +75,32 @@ function StillingAktivitetForm(props) {
                         tidligsteFom={props.currentFraDato}
                     />
                 </div>
-                <Input feltNavn="lenke" labelId="stilling-aktivitet-form.label.lenke" />
+                <Input
+                    feltNavn="lenke"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.lenke"
+                />
                 <Textarea
                     feltNavn="beskrivelse"
+                    disabled={props.avtalt === true}
                     labelId="stilling-aktivitet-form.label.beskrivelse"
                     maxLength={BESKRIVELSE_MAKS_LENGDE}
                 />
-                <Input feltNavn="arbeidssted" labelId="stilling-aktivitet-form.label.arbeidssted" />
-                <Input feltNavn="arbeidsgiver" labelId="stilling-aktivitet-form.label.arbeidsgiver" />
-                <Input feltNavn="kontaktperson" labelId="stilling-aktivitet-form.label.kontaktperson" />
+                <Input
+                    feltNavn="arbeidssted"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.arbeidssted"
+                />
+                <Input
+                    feltNavn="arbeidsgiver"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.arbeidsgiver"
+                />
+                <Input
+                    feltNavn="kontaktperson"
+                    disabled={props.avtalt === true}
+                    labelId="stilling-aktivitet-form.label.kontaktperson"
+                />
             </div>
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
@@ -85,7 +113,8 @@ StillingAktivitetForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
     currentFraDato: PT.instanceOf(Date),
-    currentTilDato: PT.instanceOf(Date)
+    currentTilDato: PT.instanceOf(Date),
+    avtalt: PT.bool
 };
 
 const formNavn = 'stilling-aktivitet';
@@ -115,7 +144,8 @@ const mapStateToProps = (state, props) => {
         },
         etikett: selector(state, 'etikett'),
         currentFraDato: moment(selector(state, 'fraDato')).toDate(),
-        currentTilDato: moment(selector(state, 'tilDato')).toDate()
+        currentTilDato: moment(selector(state, 'tilDato')).toDate(),
+        avtalt: aktivitet && aktivitet.avtalt
     };
 };
 

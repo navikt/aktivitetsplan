@@ -2,9 +2,9 @@ import { PropTypes as PT } from 'react';
 
 export const aktivitet = PT.shape({
     tittel: PT.string,
-    fraDato: PT.number,
-    tilDato: PT.number,
-    opprettetDato: PT.number,
+    fraDato: PT.string,
+    tilDato: PT.string,
+    opprettetDato: PT.string,
     detaljer: PT.object,
     beskrivelse: PT.string,
     avtalt: PT.bool

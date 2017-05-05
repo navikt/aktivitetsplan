@@ -17,17 +17,21 @@ const HENSIKT_MAKS_LENGDE = 255;
 const LENKE_MAKS_LENGDE = 2000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 
-const pakrevdTittel = rules.minLength(0, 'Du må fylle ut overskriften');
-const begrensetTittelLengde =
-    rules.maxLength(TITTEL_MAKS_LENGDE, `Overskriften kan ikke være lenger en ${TITTEL_MAKS_LENGDE} tegn`);
-const pakrevdFraDato = rules.minLength(0, 'Du må fylle ut fra datoen');
-const pakrevdTilDato = rules.minLength(0, 'Du må fylle ut fristen');
-const begrensetHensiktLengde =
-    rules.maxLength(HENSIKT_MAKS_LENGDE, `Hensiktteksten kan ikke være lenger en ${HENSIKT_MAKS_LENGDE} tegn`);
-const begrensetLenkeLengde =
-    rules.maxLength(LENKE_MAKS_LENGDE, `Lenken kan ikke være lenger en ${LENKE_MAKS_LENGDE} tegn`);
-const begrensetBeskrivelseLengde =
-    rules.maxLength(BESKRIVELSE_MAKS_LENGDE, `Beskrivelsen kan ikke være lenger en ${BESKRIVELSE_MAKS_LENGDE} tegn`);
+const pakrevdTittel = rules.minLength(0, <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tittel" />);
+const begrensetTittelLengde = rules.maxLength(TITTEL_MAKS_LENGDE,
+    <FormattedMessage id="egen-aktivitet-form.feilmelding.tittel-lengde" values={{ TITTEL_MAKS_LENGDE }} />
+);
+const pakrevdFraDato = rules.minLength(0, <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-fradato" />);
+const pakrevdTilDato = rules.minLength(0, <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tildato" />);
+const begrensetHensiktLengde = rules.maxLength(HENSIKT_MAKS_LENGDE,
+    <FormattedMessage id="egen-aktivitet-form.feilmelding.hensikt-lengde" values={{ HENSIKT_MAKS_LENGDE }} />
+);
+const begrensetLenkeLengde = rules.maxLength(LENKE_MAKS_LENGDE,
+    <FormattedMessage id="egen-aktivitet-form.feilmelding.lenke-lengde" values={{ LENKE_MAKS_LENGDE }} />
+);
+const begrensetBeskrivelseLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
+    <FormattedMessage id="egen-aktivitet-form.feilmelding.beskrivelse-lengde" values={{ BESKRIVELSE_MAKS_LENGDE }} />
+);
 
 
 function EgenAktivitetForm(props) {
@@ -44,10 +48,16 @@ function EgenAktivitetForm(props) {
                     </Undertekst>
                 </div>
 
-                <Input feltNavn="tittel" labelId="egen-aktivitet-form.label.overskrift" bredde="fullbredde" />
+                <Input
+                    feltNavn="tittel"
+                    disabled={props.avtalt === true}
+                    labelId="egen-aktivitet-form.label.overskrift"
+                    bredde="fullbredde"
+                />
                 <div className="dato-container">
                     <Datovelger
                         feltNavn="fraDato"
+                        disabled={props.avtalt === true}
                         labelId="egen-aktivitet-form.label.fra-dato"
                         senesteTom={props.currentTilDato}
                     />
@@ -57,10 +67,21 @@ function EgenAktivitetForm(props) {
                         tidligsteFom={props.currentFraDato}
                     />
                 </div>
-                <Input feltNavn="lenke" labelId="egen-aktivitet-form.label.lenke" bredde="fullbredde" />
-                <Input feltNavn="hensikt" labelId="egen-aktivitet-form.label.hensikt" bredde="fullbredde" />
+                <Input
+                    feltNavn="lenke"
+                    disabled={props.avtalt === true}
+                    labelId="egen-aktivitet-form.label.lenke"
+                    bredde="fullbredde"
+                />
+                <Input
+                    feltNavn="hensikt"
+                    disabled={props.avtalt === true}
+                    labelId="egen-aktivitet-form.label.hensikt"
+                    bredde="fullbredde"
+                />
                 <Textarea
                     feltNavn="beskrivelse"
+                    disabled={props.avtalt === true}
                     labelId="egen-aktivitet-form.label.beskrivelse"
                     maxLength={BESKRIVELSE_MAKS_LENGDE}
                 />
@@ -76,7 +97,8 @@ EgenAktivitetForm.propTypes = {
     handleSubmit: PT.func,
     errorSummary: PT.node.isRequired,
     currentFraDato: PT.instanceOf(Date),
-    currentTilDato: PT.instanceOf(Date)
+    currentTilDato: PT.instanceOf(Date),
+    avtalt: PT.bool
 };
 
 const formNavn = 'egen-aktivitet';
@@ -102,7 +124,8 @@ const mapStateToProps = (state, props) => {
             ...aktivitet
         },
         currentFraDato: selector(state, 'fraDato') ? moment(selector(state, 'fraDato')).toDate() : undefined,
-        currentTilDato: selector(state, 'tilDato') ? moment(selector(state, 'tilDato')).toDate() : undefined
+        currentTilDato: selector(state, 'tilDato') ? moment(selector(state, 'tilDato')).toDate() : undefined,
+        avtalt: aktivitet && aktivitet.avtalt
     };
 };
 const mapDispatchToProps = () => ({});

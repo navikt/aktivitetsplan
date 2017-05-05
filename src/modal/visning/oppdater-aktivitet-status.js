@@ -14,7 +14,7 @@ function OppdaterAktivitetStatus(props) {
     const erStillingsAktivitet = valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;
 
     return (
-        <section>
+        <section className={props.className}>
             <Undertittel className="blokk-s">
                 Oppdater status
             </Undertittel>
@@ -29,9 +29,14 @@ function OppdaterAktivitetStatus(props) {
     );
 }
 
+OppdaterAktivitetStatus.defaultProps = {
+    className: ''
+};
+
 OppdaterAktivitetStatus.propTypes = {
     status: PT.string.isRequired,
     paramsId: PT.string.isRequired,
+    className: PT.string,
     aktiviteter: PT.shape({
         status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet)

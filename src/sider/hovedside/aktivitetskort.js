@@ -27,7 +27,7 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
     const erFlyttbar = !aktivitet.nesteStatus && ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status);
 
     const aktivitetsKort = (
-        <div style={{ opacity: isDragging ? 0.4 : 1 }}>
+        <article style={{ opacity: isDragging ? 0.4 : 1 }}>
             <Lenke
                 href={`aktivitet/aktivitet/${aktivitet.id}`}
                 className={classNames('aktivitetskort', erFlyttbar && 'aktivitetskort--flyttbar')}
@@ -36,13 +36,13 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
                 <div className="aktivitetskort__wrapper">
                     <div className="aktivitetskort__blokk">
                         <Undertekst tag="p" className="aktivitetskort__type">{aktivitet.type}</Undertekst>
-                        <Element tag="h3" className="aktivitetskort__tittel">{aktivitet.tittel}</Element>
+                        <Element tag="h1" className="aktivitetskort__tittel">{aktivitet.tittel}</Element>
                         <Normaltekst>{ [formaterDato(aktivitet.fraDato), formaterDato(aktivitet.tilDato)].filter((d) => d).join(' - ') }</Normaltekst>
                     </div>
                     <AktivitetskortTillegg aktivitet={aktivitet} />
                 </div>
             </Lenke>
-        </div>
+        </article>
     );
 
     return erFlyttbar ? connectDragSource(aktivitetsKort) : aktivitetsKort;

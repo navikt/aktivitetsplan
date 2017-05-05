@@ -45,9 +45,9 @@ class Tavle extends Component {
         const { children, className } = this.props;
 
         const kolonner = children.map((child, index) => (
-            <div key={child.key || index} className="tavle-kolonne">
+            <section key={child.key || index} className="tavle-kolonne">
                 {child}
-            </div>
+            </section>
         ));
 
         const venstreKnapp = this.state.leftPosition > 0 && (
@@ -60,7 +60,7 @@ class Tavle extends Component {
 
 
         return (
-            <div className={tavleClassname(className)}>
+            <section className={tavleClassname(className)}>
                 {venstreKnapp}
                 <ScrollArea
                     ref={this.lagreScrollArea}
@@ -74,7 +74,7 @@ class Tavle extends Component {
                     </div>
                 </ScrollArea>
                 {hoyreKnapp}
-            </div>
+            </section>
         );
     }
 }
