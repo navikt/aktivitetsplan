@@ -42,15 +42,15 @@ function Hovedside({ children, routes, lukkModal }) {
     );
 }
 
+Hovedside.defaultProps = {
+    children: null,
+    routes: null
+};
+
 Hovedside.propTypes = {
     children: PT.node,
     routes: PT.arrayOf(PT.shape({ modalId: PT.string })),
     lukkModal: PT.func.isRequired
-};
-
-Hovedside.defaultProps = {
-    children: null,
-    routes: null
 };
 
 const mapDispatchToProps = (dispatch) => ({

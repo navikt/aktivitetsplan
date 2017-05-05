@@ -15,14 +15,14 @@ function NavigasjonsElement({ sti, tekstId, children }) {
     );
 }
 
+NavigasjonsElement.defaultProps = {
+    children: null
+};
+
 NavigasjonsElement.propTypes = {
     sti: PT.string.isRequired,
     tekstId: PT.string.isRequired,
     children: PT.node
-};
-
-NavigasjonsElement.defaultProps = {
-    children: null
 };
 
 class Navigasjonslinje extends Component {
