@@ -1,7 +1,6 @@
 @import "../../../variables";
 
 .aktivitetmal {
-  width: 940px;
   text-align: left;
 
   & .ekspanderbartPanel {
@@ -15,12 +14,12 @@
 
   &__delelinje {
     margin: 0;
-    border: 1px solid @color-hr;
+    border: 0;
+    border-bottom: 1px solid @color-hr;
   }
 
   &__innhold {
     padding: 1rem;
-    width: 600px;
 
     p:not(.textarea--medMeta__teller) {
       margin-top: 0;
@@ -62,8 +61,4 @@
       white-space: pre-wrap;
     }
   }
-}
-
-.ekspanderbartPanel__innhold {
-  padding: 0;
 }
