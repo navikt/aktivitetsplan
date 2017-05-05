@@ -89,9 +89,13 @@ const OppdaterReduxForm = reduxForm({
     form: 'aktivitet-status-form'
 })(AktivitetStatusForm);
 
+AktivitetStatusForm.defaultProps = {
+    valgtAktivitetStatus: statuser.INGEN_VALGT
+};
+
 AktivitetStatusForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
-    valgtAktivitetStatus: PT.string.isRequired,
+    valgtAktivitetStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
     doFlyttAktivitet: PT.func.isRequired
 };

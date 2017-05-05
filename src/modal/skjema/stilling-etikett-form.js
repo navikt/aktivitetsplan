@@ -21,10 +21,10 @@ function StillingEtikettForm(props) {
                 onChange={onChange}
                 feltNavn={'etikettstatus'}
                 label={<FormattedMessage id="stilling-aktivitet.status.ingen" />}
-                value={null}
-                id="id--ingen"
+                value={statuser.INGEN_VALGT}
+                id={`id--${statuser.INGEN_VALGT}`}
                 name="etikettstatus"
-                checked={!props.valgtEtikettStatus}
+                checked={!props.valgtEtikettStatus || erEtikettChecked(statuser.INGEN_VALGT)}
                 disabled={props.disableStatusEndring || laster}
             />
             <Radio
@@ -76,12 +76,13 @@ const OppdaterReduxForm = reduxForm({
 })(StillingEtikettForm);
 
 StillingEtikettForm.defaultProps = {
-    aktiviteterStatus: 'OK'
+    aktiviteterStatus: 'OK',
+    valgtEtikettStatus: statuser.INGEN_VALGT
 };
 
 StillingEtikettForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
-    valgtEtikettStatus: PT.string.isRequired,
+    valgtEtikettStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
     oppdaterEtikett: PT.func.isRequired,
     aktiviteterStatus: PT.string
