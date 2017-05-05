@@ -137,6 +137,12 @@ StillingAktivitetForm.propTypes = {
     avtalt: PT.bool
 };
 
+StillingAktivitetForm.defaultProps = {
+    currentFraDato: undefined,
+    currentTilDato: undefined,
+    avtalt: false
+};
+
 export const formNavn = 'stilling-aktivitet';
 const StillingAktivitetReduxForm = validForm({
     form: formNavn,

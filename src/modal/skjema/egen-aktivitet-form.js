@@ -121,6 +121,14 @@ EgenAktivitetForm.propTypes = {
     intl: intlShape.isRequired
 };
 
+EgenAktivitetForm.defaultProps = {
+    handleSubmit: undefined,
+    currentFraDato: undefined,
+    currentTilDato: undefined,
+    avtalt: false
+};
+
+
 export const formNavn = 'egen-aktivitet';
 const EgenAktivitetReduxForm = validForm({
     form: formNavn,

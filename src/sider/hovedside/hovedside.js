@@ -26,4 +26,8 @@ Hovedside.propTypes = {
     children: PT.node
 };
 
+Hovedside.defaultProps = {
+    children: undefined
+};
+
 export default Hovedside;

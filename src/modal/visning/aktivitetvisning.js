@@ -140,6 +140,12 @@ Aktivitetvisning.propTypes = {
     })
 };
 
+Aktivitetvisning.defaultProps = {
+    params: undefined,
+    oppfolgingStatus: undefined,
+    aktiviteter: undefined
+};
+
 const mapStateToProps = (state) => ({
     oppfolgingStatus: state.data.oppfolgingStatus.data,
     aktiviteter: state.data.aktiviteter,

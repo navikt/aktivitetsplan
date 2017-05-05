@@ -71,6 +71,10 @@ EndreAktivitet.propTypes = {
     lukkModal: PT.func.isRequired
 };
 
+EndreAktivitet.defaultProps = {
+    aktivitet: undefined
+};
+
 const mapStateToProps = (state, props) => {
     const id = props.params.id;
     const aktivitet = state.data.aktiviteter.data.find((a) => a.id === id);
