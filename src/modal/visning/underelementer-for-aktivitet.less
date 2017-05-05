@@ -4,25 +4,54 @@
   background: url(@image) no-repeat left;
   background-size: 1rem;
   background-position-x: 1rem;
-
-  &--aktiv {
-    background-color: @navDypBla;
-    color: @white;
-  }
 }
 
 .underelementer-aktivitet {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  .underelementer-aktivitet { // Må gjøre knappe-selectorene litt sterkere for å kunne overstyre standard knappestyling
-    &__dialog-knapp {
-      // TODO erstatt med riktig bilde
-      .underelement-knapp("stop.svg");
+  .tall-alert {
+    margin-left: 0.2rem;
+  }
+
+  &__toggle {
+    .blokk-m();
+  }
+
+  &__dialog-knapp {
+    padding-left: 2.5rem;
+    .underelement-knapp("dialog-regular.svg");
+
+    &--aktiv {
+      .underelement-knapp("dialog-aktiv.svg");
     }
 
-    &__historikk-knapp {
-      // TODO erstatt med riktig bilde
-      .underelement-knapp("stop.svg");
+    &:hover {
+      .underelement-knapp("dialog-hover.svg");
     }
   }
+
+  &__historikk-knapp {
+    padding-left: 2.5rem;
+    .underelement-knapp("historikk-regular.svg");
+
+    &--aktiv {
+      .underelement-knapp("historikk-aktiv.svg");
+    }
+
+    &:hover {
+      .underelement-knapp("historikk-hover.svg");
+    }
+  }
+
+  &__historikkvisning {
+    align-self: baseline;
+  }
+
+  &__dialogvisning {
+    align-self: baseline;
+    width: 100%;
+  }
 }
+

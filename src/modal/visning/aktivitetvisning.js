@@ -19,7 +19,7 @@ import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
-import VisibleIfDiv from '../../felles-komponenter/utils/visibleIfDiv';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
 
@@ -130,11 +130,15 @@ class Aktivitetvisning extends Component {
 Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
-    oppfolgingStatus: AppPT.oppfolgingStatus,
+    oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
     aktiviteter: PT.shape({
         status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet)
     })
+};
+
+Aktivitetvisning.defaultProps = {
+    params: undefined
 };
 
 const mapStateToProps = (state) => ({
