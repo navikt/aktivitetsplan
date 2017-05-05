@@ -1,13 +1,17 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
-import StillingAktivitetForm from './stilling-aktivitet-form';
-import AktivitetHeader from '../aktivitet-header';
+import { isDirty } from 'redux-form';
+import { injectIntl, intlShape } from 'react-intl';
+import StillingAktivitetForm, { formNavn } from './stilling-aktivitet-form';
 import { lagNyAktivitet } from '../../ducks/aktiviteter';
 import history from './../../history';
 import { STILLING_AKTIVITET_TYPE } from '../../constant';
+import ModalHeader from '../modal-header';
 import ModalContainer from '../modal-container';
+import Modal from '../modal';
+import { LUKK_MODAL } from '../../ducks/modal';
 
-function StillingAktivitet({ onLagreNyAktivitet }) {
+function StillingAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
     const onLagNyAktivitetSubmit = (aktivitet) => {
         const nyAktivitet = { ...aktivitet, type: STILLING_AKTIVITET_TYPE };
         onLagreNyAktivitet(nyAktivitet);
@@ -15,21 +19,44 @@ function StillingAktivitet({ onLagreNyAktivitet }) {
     };
 
     return (
-        <section className="stilling-aktivitet" aria-labelledby="modal-stillings-aktivitet-header">
-            <AktivitetHeader aktivitetType="Ledig stilling" />
-            <ModalContainer>
-                <StillingAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
-            </ModalContainer>
-        </section>
+        <Modal
+            isOpen
+            key="stillingAktivitetModal"
+            onRequestClose={
+                () => {
+                    const dialogTekst = intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' });
+                    if (!formIsDirty || confirm(dialogTekst)) { // eslint-disable-line no-alert
+                        history.push('/');
+                        lukkModal();
+                    }
+                }
+            }
+            contentLabel="aktivitet-modal"
+        >
+            <section className="stilling-aktivitet" aria-labelledby="modal-stillings-aktivitet-header">
+                <ModalHeader visConfirmDialog={formIsDirty} />
+                <ModalContainer>
+                    <StillingAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
+                </ModalContainer>
+            </section>
+        </Modal>
     );
 }
 
 StillingAktivitet.propTypes = {
-    onLagreNyAktivitet: PT.func.isRequired
+    onLagreNyAktivitet: PT.func.isRequired,
+    formIsDirty: PT.bool.isRequired,
+    intl: intlShape.isRequired,
+    lukkModal: PT.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    onLagreNyAktivitet: (aktivitet) => lagNyAktivitet(aktivitet)(dispatch)
+    onLagreNyAktivitet: (aktivitet) => lagNyAktivitet(aktivitet)(dispatch),
+    lukkModal: () => dispatch({ type: LUKK_MODAL })
 });
 
-export default connect(null, mapDispatchToProps)(StillingAktivitet);
+const mapStateToProps = (state) => ({
+    formIsDirty: isDirty(formNavn)(state)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(StillingAktivitet));
