@@ -17,7 +17,7 @@ const leggTilHengelas = (tekst) => (
 );
 
 function AktivitetStatusForm(props) {
-    const { aktivitet } = props;
+    const { aktivitet, doFlyttAktivitet } = props;
     const onChange = (event) => {
         const valgtAktivitetStatus = event.currentTarget.value;
         if (valgtAktivitetStatus === statuser.STATUS_FULLFOERT && aktivitet.avtalt) {
@@ -25,9 +25,8 @@ function AktivitetStatusForm(props) {
         } else if (valgtAktivitetStatus === statuser.STATUS_AVBRUTT && aktivitet.avtalt) {
             history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
         } else {
-            props.flyttAktivitet(aktivitet, valgtAktivitetStatus);
+            doFlyttAktivitet(aktivitet, valgtAktivitetStatus);
         }
-        return null;
     };
     const erAktivitetChecked = (statusId) => props.valgtAktivitetStatus === statusId;
     return (
@@ -93,11 +92,11 @@ const OppdaterReduxForm = reduxForm({
 AktivitetStatusForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
     valgtAktivitetStatus: PT.string.isRequired,
-    aktivitet: aktivitetPT.isRequired
+    aktivitet: aktivitetPT.isRequired,
+    doFlyttAktivitet: PT.func.isRequired
 };
 
 const mapStateToProps = (state, props) => ({
-    flyttAktivitet: PT.func.isRequired,
     valgtAktivitetStatus: formValueSelector('aktivitet-status-form')(state, 'aktivitetstatus'),
     initialValues: {
         aktivitetstatus: props.aktivitet.status
@@ -105,7 +104,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    flyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
+    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);
