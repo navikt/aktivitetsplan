@@ -28,7 +28,7 @@ class BegrunnelseAktivitet extends Component {
     getFeilmelding() {
         const beskrivelse = this.beskrivelse;
         if (beskrivelse && beskrivelse.tekstomrade.value.length > MAKS_LENGDE) {
-            return { feilmelding: <FormattedMessage id="opprett-begrunnelse.melding.feilmelding" /> };
+            return { feilmelding: <FormattedMessage id="opprett-begrunnelse.melding.feilmelding" values={{ MAKS_LENGDE }} /> };
         }
         return null;
     }

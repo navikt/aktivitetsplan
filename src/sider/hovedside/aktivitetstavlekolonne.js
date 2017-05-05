@@ -36,10 +36,19 @@ function collect(theConnect, monitor) {
     };
 }
 
+function compareAktivitet(a, b) {
+    if (b.avtalt && !a.avtalt) {
+        return 1;
+    } else if (!b.avtalt && a.avtalt) {
+        return -1;
+    }
+    return b.opprettetDato.localeCompare(a.opprettetDato);
+}
+
 function KolonneFunction({ aktiviteter, status, tittelId, connectDropTarget, drag }) {
     const aktivitetsKort = aktiviteter
         .filter((a) => (a.nesteStatus ? a.nesteStatus === status : a.status === status))
-        .sort((a, b) => b.opprettetDato.localeCompare(a.opprettetDato))
+        .sort((a, b) => compareAktivitet(a, b))
         .map((a) => <AktivitetsKort key={a.id} aktivitet={a} />);
 
     return connectDropTarget(

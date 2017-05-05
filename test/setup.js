@@ -2,6 +2,10 @@
 require("babel-core/register");
 require('core-js/shim');
 
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+
 const Module = require("module").Module;
 
 var jsdom = require('jsdom');

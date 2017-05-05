@@ -7,7 +7,7 @@ import Lenke from './../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import TallAlert from '../../felles-komponenter/tall-alert';
-import VisibleIfDiv from '../../felles-komponenter/utils/visibleIfDiv';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import { formaterDato } from '../../utils';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 

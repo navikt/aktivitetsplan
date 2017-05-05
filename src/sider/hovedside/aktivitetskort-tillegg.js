@@ -12,19 +12,21 @@ function AktivitetskortIkoner({ kommentarer }) {
 }
 
 function AktivitetskortTillegg({ aktivitet }) {
-    const etiketter = aktivitet.avtalt ? aktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) : aktivitet.tagger;
+    // const etiketter = aktivitet.avtalt ?
+    //     { tag: 'Avtalt med NAV', type: 'avtalt' }.concat({ tag: aktivitet.etikett, type: aktivitet.etikett }) :
+    //     aktivitet.tagger;
     const kommentarer = aktivitet.kommentarer;
     const harKommentarer = kommentarer && kommentarer.length;
-    const harEtiketter = etiketter && etiketter.length;
+    // const harEtiketter = etiketter && etiketter.length;
     const harVedlegg = false;
 
     return (
-        harEtiketter || harKommentarer || harVedlegg
+        /* harEtiketter || */ harKommentarer || harVedlegg
         ? (
             <div>
                 <hr className="aktivitetskort__delelinje" />
                 <div className="aktivitetskort__ikon-blokk">
-                    <AktivitetEtiketter etiketter={etiketter} className="aktivitetskort__etiketter" />
+                    <AktivitetEtiketter etiketter={[]} className="aktivitetskort__etiketter" />
                     <AktivitetskortIkoner kommentarer={kommentarer} />
                 </div>
             </div>

@@ -6,6 +6,19 @@
   flex-direction: column;
   text-align: center;
   background: @gray-background;
+
+  & .container {
+    & .lenkeknapp {
+     float: right;
+    }
+  }
+}
+
+/* nav-frontend-overrides */
+.container {
+  @media (min-width: 1200px){
+    max-width: 63rem;
+  }
 }
 
 .fullbredde {
