@@ -155,13 +155,17 @@ class Aktivitetvisning extends Component {
 Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
-    oppfolgingStatus: AppPT.oppfolgingStatus,
+    oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
     aktiviteter: PT.shape({
         status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet)
-    }),
-    valgtStatus: PT.string,
+    }).isRequired,
+    valgtStatus: PT.string.isRequired,
     doFlyttAktivitet: PT.func.isRequired
+};
+
+Aktivitetvisning.defaultProps = {
+    params: undefined
 };
 
 const mapStateToProps = (state) => ({

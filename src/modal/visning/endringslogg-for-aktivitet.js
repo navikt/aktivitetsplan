@@ -58,6 +58,12 @@ EndringsloggForAktivitet.propTypes = {
     className: PT.string
 };
 
+EndringsloggForAktivitet.defaultProps = {
+    endringslogg: undefined,
+    status: undefined,
+    className: ''
+};
+
 const mapStateToProps = (state) => ({
     status: state.data.endringslogg.status,
     endringslogg: state.data.endringslogg.data
