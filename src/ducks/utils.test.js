@@ -51,7 +51,7 @@ describe('utils', () => {
         const action = 'action';
 
         it('Sjekk at funksjonen returnerer et rejected promise', () => {
-            expect(handterFeil(sinon.spy(), action)(new Error('message'))).to.be.rejected;
+            expect(handterFeil(sinon.spy(), action)(new Error('message'))).to.be.rejected; // eslint-disable-line no-unused-expressions
         });
         it('Sjekk at funksjonen dispatcher parset feil', (done) => {
             const dispatch = sinon.spy();

@@ -1,11 +1,10 @@
 import React, { PropTypes as PT } from 'react';
-import { connect } from 'react-redux';
 import { Bilde } from 'nav-react-design';
 import { FormattedMessage } from 'react-intl';
-import versjonskonfliktSvg from './versjonskonflikt.svg';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { visibleIfHOC } from '../../hocs/visible-if';
+import versjonskonfliktSvg from './versjonskonflikt.svg';
 import './versjonskonflikt.less';
 
 
