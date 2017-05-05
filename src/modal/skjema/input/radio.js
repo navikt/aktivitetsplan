@@ -2,7 +2,7 @@ import React, { PropTypes as PT } from 'react';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
 import { Field } from 'redux-form';
 
-function Radio({ feltNavn, className, value, checked, ...resten }) {
+function Radio({ feltNavn, className, value, checked, onChange, ...resten }) {
     return (
         <Field
             name={feltNavn}
@@ -14,7 +14,10 @@ function Radio({ feltNavn, className, value, checked, ...resten }) {
                     {...resten}
                     checked={checked}
                     value={value}
-                    onChange={() => props.input.onChange(value)}
+                    onChange={(e) => {
+                        props.input.onChange(value);
+                        onChange(e);
+                    }}
                 />
             }
         />
@@ -22,7 +25,8 @@ function Radio({ feltNavn, className, value, checked, ...resten }) {
 }
 
 Radio.defaultProps = {
-    className: ''
+    className: '',
+    onChange: () => {}
 };
 
 Radio.propTypes = {
@@ -30,7 +34,8 @@ Radio.propTypes = {
     className: PT.string,
     value: PT.string.isRequired,
     checked: PT.bool.isRequired,
-    input: PT.object // eslint-disable-line
+    input: PT.object, // eslint-disable-line
+    onChange: PT.func
 };
 
 export default Radio;

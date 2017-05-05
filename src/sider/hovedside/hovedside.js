@@ -1,12 +1,12 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import { Container } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Modal from '../../modal/modal';
 import AktivitetsTavle from './aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje';
 import history from '../../history';
-import AktivitetsMal from './mal/aktivitetsmal';
 import { LUKK_MODAL } from '../../ducks/modal';
 
 function Hovedside({ children, routes, lukkModal }) {
@@ -28,11 +28,12 @@ function Hovedside({ children, routes, lukkModal }) {
     return (
         <div className="hovedside">
             <div className="hovedsideinnhold">
-                <Navigasjonslinje />
-                <AktivitetsMal />
-                <Lenkeknapp href="/aktivitet/ny">
-                    <FormattedMessage id="nyaktivitetsknapp" />
-                </Lenkeknapp>
+                <Container>
+                    <Navigasjonslinje />
+                    <Lenkeknapp href="/aktivitet/ny">
+                        <FormattedMessage id="nyaktivitetsknapp" />
+                    </Lenkeknapp>
+                </Container>
                 <AktivitetsTavle />
             </div>
             {modal}
@@ -40,6 +41,11 @@ function Hovedside({ children, routes, lukkModal }) {
 
     );
 }
+
+Hovedside.defaultProps = {
+    children: null,
+    routes: null
+};
 
 Hovedside.propTypes = {
     children: PT.node,

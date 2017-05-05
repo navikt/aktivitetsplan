@@ -15,6 +15,10 @@ function NavigasjonsElement({ sti, tekstId, children }) {
     );
 }
 
+NavigasjonsElement.defaultProps = {
+    children: null
+};
+
 NavigasjonsElement.propTypes = {
     sti: PT.string.isRequired,
     tekstId: PT.string.isRequired,
@@ -31,10 +35,10 @@ class Navigasjonslinje extends Component {
         const { antallUlesteDialoger } = this.props;
         return (
             <nav className="navigasjonslinje">
-                <NavigasjonsElement sti="/" tekstId="navigasjon.min-plan" />
                 <NavigasjonsElement sti="/dialog" tekstId="navigasjon.dialog">
                     <TallAlert visible={antallUlesteDialoger > 0}>{antallUlesteDialoger}</TallAlert>
                 </NavigasjonsElement>
+                <NavigasjonsElement sti="/mal" tekstId="aktivitetsmal.mitt-mal" />
                 <NavigasjonsElement sti="/vilkar" tekstId="navigasjon.vilkar" />
             </nav>
         );
