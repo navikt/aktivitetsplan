@@ -1,104 +1,53 @@
 import React, { PropTypes as PT } from 'react';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
 import Undertittel from 'nav-frontend-typografi/src/undertittel';
-import Bilde from 'nav-react-design/dist/bilde';
-import * as aktivitetstatus from '../../constant';
-import Radio from '../skjema/input/radio';
-import hengelasSVG from '../../img/hengelas.svg';
-
-const leggTilHengelas = (tekst, altTekst) => (
-    <span>
-        {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelasSVG} alt={altTekst} />
-    </span>
-);
+import * as statuser from '../../constant';
+import * as AppPT from '../../proptypes';
+import StillingEtikettForm from '../skjema/stilling-etikett-form';
+import AktivitetStatusForm from '../skjema/aktivitet-status-form';
 
 function OppdaterAktivitetStatus(props) {
-    const erChecked = (id) => props.valgtStatus === id;
-    const disableStatusEndring = props.status === aktivitetstatus.STATUS_AVBRUTT ||
-        props.status === aktivitetstatus.STATUS_FULLFOERT;
-
-    const hengelasAlt = props.intl.formatMessage({ id: 'hengelas-icon-alt' });
-
-    const radioSkjema = (
-        <form className="skjema blokk-m oppdaterstatus-skjema">
-            <Radio
-                feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.brukerErInteressert" />}
-                value={aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}
-                id={`id--${aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT}`}
-                name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_BRUKER_ER_INTRESSERT)}
-                disabled={disableStatusEndring}
-            />
-            <Radio
-                feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.planlagt" />}
-                value={aktivitetstatus.STATUS_PLANLAGT}
-                id={`id--${aktivitetstatus.STATUS_PLANLAGT}`}
-                name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_PLANLAGT)}
-                disabled={disableStatusEndring}
-            />
-            <Radio
-                feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.gjennomfoert" />}
-                value={aktivitetstatus.STATUS_GJENNOMFOERT}
-                id={`id--${aktivitetstatus.STATUS_GJENNOMFOERT}`}
-                name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_GJENNOMFOERT)}
-                disabled={disableStatusEndring}
-            />
-            <Radio
-                feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />, hengelasAlt)}
-                value={aktivitetstatus.STATUS_FULLFOERT}
-                id={`id--${aktivitetstatus.STATUS_FULLFOERT}`}
-                name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_FULLFOERT)}
-                disabled={disableStatusEndring}
-            />
-            <Radio
-                feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />, hengelasAlt)}
-                value={aktivitetstatus.STATUS_AVBRUTT}
-                id={`id--${aktivitetstatus.STATUS_AVBRUTT}`}
-                name="aktivitetstatus"
-                checked={erChecked(aktivitetstatus.STATUS_AVBRUTT)}
-                disabled={disableStatusEndring}
-            />
-        </form>
-    );
+    const { aktiviteter, paramsId } = props;
+    const disableStatusEndring = props.status === statuser.STATUS_AVBRUTT ||
+        props.status === statuser.STATUS_FULLFOERT;
+    const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId);
+    const erStillingsAktivitet = valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;
 
     return (
         <section className={props.className}>
             <Undertittel className="blokk-s">
                 Oppdater status
             </Undertittel>
-            {radioSkjema}
+            <div className="skjema oppdater-statuser-radioform blokk-m">
+                <AktivitetStatusForm disableStatusEndring={disableStatusEndring} aktivitet={valgtAktivitet} />
+                {
+                    erStillingsAktivitet &&
+                    <StillingEtikettForm disableStatusEndring={disableStatusEndring} aktivitet={valgtAktivitet} />
+                }
+            </div>
         </section>
     );
 }
 
-const OppdaterStatusReduxForm = reduxForm({
-    form: 'oppdaterStatus-form'
-})(OppdaterAktivitetStatus);
+OppdaterAktivitetStatus.defaultProps = {
+    className: ''
+};
 
 OppdaterAktivitetStatus.propTypes = {
     status: PT.string.isRequired,
-    valgtStatus: PT.string,
+    paramsId: PT.string.isRequired,
     className: PT.string,
-    intl: intlShape
+    aktiviteter: PT.shape({
+        status: PT.string,
+        data: PT.arrayOf(AppPT.aktivitet)
+    }).isRequired
 };
 
 const mapStateToProps = (state, props) => ({
-    aktiviteter: state.data.aktiviteter.data,
-    valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus'),
+    aktiviteter: state.data.aktiviteter,
     initialValues: {
         aktivitetstatus: props.status
     }
 });
 
-
-export default connect(mapStateToProps, null)(injectIntl(OppdaterStatusReduxForm));
+export default connect(mapStateToProps, null)(OppdaterAktivitetStatus);
