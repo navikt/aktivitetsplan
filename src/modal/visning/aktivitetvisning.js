@@ -94,7 +94,6 @@ class Aktivitetvisning extends Component {
                         <div className="aktivitetvisning__underseksjon" >
                             <OppdaterAktivitetStatus
                                 status={valgtAktivitet.status}
-                                tagger={valgtAktivitet.tagger}
                                 paramsId={id}
                             />
                         </div>
