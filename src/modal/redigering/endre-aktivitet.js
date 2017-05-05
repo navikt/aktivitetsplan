@@ -1,7 +1,5 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalHeader from '../modal-header';
@@ -10,8 +8,6 @@ import EgenAktivitetForm from '../skjema/egen-aktivitet-form';
 import history from '../../history';
 import { EGEN_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
-import ModalFooter from './../modal-footer';
-import RemoteSubmitKnapp from './../skjema/remote-submit-knapp';
 
 
 function EndreAktivitet(props) {
@@ -37,29 +33,13 @@ function EndreAktivitet(props) {
         }
     }
 
-    function renderKnapper() {
-        switch (aktivitet.type) {
-            case STILLING_AKTIVITET_TYPE:
-                return <RemoteSubmitKnapp formNavn="stilling-aktivitet" className="modal-footer__knapp" />;
-            case EGEN_AKTIVITET_TYPE:
-                return <RemoteSubmitKnapp formNavn="egen-aktivitet" className="modal-footer__knapp" />;
-            default:
-                return null;
-        }
-    }
-
     return (
-        <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake">
+        <article className="egen-aktivitet" aria-labelledby="modal-egen-aktivitet-header">
+            <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake" />
             <ModalContainer>
-                <Undertittel className="aktivitetskjema__redigering-header">
-                    <FormattedMessage id="endre-aktivitet.overskrift" />
-                </Undertittel>
                 {renderForm()}
             </ModalContainer>
-            <ModalFooter>
-                {renderKnapper()}
-            </ModalFooter>
-        </ModalHeader>
+        </article>
     );
 }
 

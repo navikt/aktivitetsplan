@@ -1,5 +1,6 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import Knapp from 'nav-frontend-knapper/src/knapp';
 import * as AppPT from '../../proptypes';
@@ -37,13 +38,14 @@ class UnderelementerForAktivitet extends Component {
     }
 
     render() {
-        const { aktivitet, antallUlesteHenvendelser, dialog } = this.props;
+        const { aktivitet, antallUlesteHenvendelser, dialog, className } = this.props;
         const { vis } = this.state;
         const aktivitetId = aktivitet.id;
         const visHistorikk = vis === HISTORIKK;
         const visDialog = vis === DIALOG;
+        const cls = (classes) => classNames('underelementer-aktivitet', classes);
         return (
-            <section className="underelementer-aktivitet">
+            <section className={cls(className)}>
                 <Knapp
                     className={`underelementer-aktivitet__dialog-knapp ${visDialog && 'underelementer-aktivitet__dialog-knapp--aktiv'}`}
                     onClick={this.toggleDialog}
@@ -74,7 +76,8 @@ class UnderelementerForAktivitet extends Component {
 UnderelementerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     dialog: AppPT.dialog,
-    antallUlesteHenvendelser: PT.number.isRequired
+    antallUlesteHenvendelser: PT.number.isRequired,
+    className: PT.string
 };
 
 const mapStateToProps = (state, props) => {

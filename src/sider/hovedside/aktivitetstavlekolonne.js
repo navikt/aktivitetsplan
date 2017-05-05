@@ -36,16 +36,25 @@ function collect(theConnect, monitor) {
     };
 }
 
+function compareAktivitet(a, b) {
+    if (b.avtalt && !a.avtalt) {
+        return 1;
+    } else if (!b.avtalt && a.avtalt) {
+        return -1;
+    }
+    return b.opprettetDato.localeCompare(a.opprettetDato);
+}
+
 function KolonneFunction({ aktiviteter, status, tittelId, connectDropTarget, drag }) {
     const aktivitetsKort = aktiviteter
         .filter((a) => (a.nesteStatus ? a.nesteStatus === status : a.status === status))
-        .sort((a, b) => b.opprettetDato - a.opprettetDato)
+        .sort((a, b) => compareAktivitet(a, b))
         .map((a) => <AktivitetsKort key={a.id} aktivitet={a} />);
 
     return connectDropTarget(
         <div className="aktivitetstavle__kolonne-wrapper">
             <div className={classNames('aktivitetstavle__kolonne', drag && 'aktivitetstavle__kolonne--drag')}>
-                <Undertittel className="aktivitetstavle__kolonne-header">
+                <Undertittel className="aktivitetstavle__kolonne-header" tag="h1">
                     <FormattedMessage id={tittelId} />
                     {{ [STATUS_FULLFOERT]: true, [STATUS_AVBRUTT]: true }[status] &&
                         <Bilde className="aktivitetstavle__kolonne-header-bilde" src={hengelasSvg} alt="hengelåsikon" />

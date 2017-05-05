@@ -198,7 +198,8 @@ describe('app utils', () => {
     describe('erGyldigISODato', () => {
         it('Tolker ISO-datoer riktig', () => {
             expect(Utils.erGyldigISODato('2014-02-13T23:00:00.000Z')).to.equal(true);
-            expect(Utils.erGyldigISODato('2014-02-13')).to.equal(false);
+            expect(Utils.erGyldigISODato('2014-02-13T23:00:00.000+0000')).to.equal(true);
+            expect(Utils.erGyldigISODato('2014-02-13')).to.equal(true);
             expect(Utils.erGyldigISODato('13.02.2014')).to.equal(false);
             expect(Utils.erGyldigISODato('')).to.equal(false);
             expect(Utils.erGyldigISODato(null)).to.equal(false);
