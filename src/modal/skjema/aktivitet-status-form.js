@@ -1,7 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import Bilde from 'nav-react-design/dist/bilde';
 import * as statuser from '../../constant';
 import Radio from './input/radio';
@@ -10,14 +10,15 @@ import { flyttAktivitet } from '../../ducks/aktiviteter';
 import history from '../../history';
 import { aktivitet as aktivitetPT } from '../../proptypes';
 
-const leggTilHengelas = (tekst) => (
+const leggTilHengelas = (tekst, altTekst) => (
     <span>
-        {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelasSVG} alt="hengelås ikon" />
+        {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelasSVG} alt={altTekst} />
     </span>
 );
 
 function AktivitetStatusForm(props) {
     const { aktivitet, doFlyttAktivitet } = props;
+    const hengelasAlt = props.intl.formatMessage({ id: 'hengelas-icon-alt' });
     const onChange = (event) => {
         const valgtAktivitetStatus = event.currentTarget.value;
         if (valgtAktivitetStatus === statuser.STATUS_FULLFOERT && aktivitet.avtalt) {
@@ -64,7 +65,7 @@ function AktivitetStatusForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />)}
+                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />, hengelasAlt)}
                 value={statuser.STATUS_FULLFOERT}
                 id={`id--${statuser.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
@@ -74,7 +75,7 @@ function AktivitetStatusForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />)}
+                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />, hengelasAlt)}
                 value={statuser.STATUS_AVBRUTT}
                 id={`id--${statuser.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"
@@ -97,7 +98,8 @@ AktivitetStatusForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
     valgtAktivitetStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
-    doFlyttAktivitet: PT.func.isRequired
+    doFlyttAktivitet: PT.func.isRequired,
+    intl: intlShape
 };
 
 const mapStateToProps = (state, props) => ({
@@ -111,4 +113,4 @@ const mapDispatchToProps = (dispatch) => ({
     doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(OppdaterReduxForm));
