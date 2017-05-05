@@ -10,14 +10,12 @@ import { formaterDatoDatoEllerTidSiden } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Identitet from '../../../felles-komponenter/identitet';
 import Accordion from '../../../felles-komponenter/accordion';
-import { visibleIfHOC } from '../../../hocs/visible-if';
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import './aktivitetsmal.less';
 
 function trim(str) {
     return str ? str.trim() : '';
 }
-
-const VisibleDiv = visibleIfHOC((props) => <div {...props} />);
 
 function malListeVisning(malet) {
     return (
@@ -70,14 +68,14 @@ class AktivitetsMal extends Component {
         return (
             <Innholdslaster avhengigheter={[this.props.malData]}>
                 <section className="aktivitetmal">
-                    <VisibleDiv className="aktivitetmal__innhold" visible={this.state.redigering}>
+                    <VisibleIfDiv className="aktivitetmal__innhold" visible={this.state.redigering}>
                         <AktivitetsmalForm
                             mal={mal}
                             onSubmit={(malet) => doOppdaterMal(malet, this.props.mal, this.toggleRedigering)}
                             handleCancel={this.toggleRedigering}
                         />
-                    </VisibleDiv>
-                    <VisibleDiv visible={!this.state.redigering}>
+                    </VisibleIfDiv>
+                    <VisibleIfDiv visible={!this.state.redigering}>
                         <div className="aktivitetmal__innhold">
                             {!malOpprettet && <p><FormattedMessage id="aktivitetsmal.opprett-mal-tekst" /></p>}
                             <Tekstomrade className="aktivitetmal__tekst">{mal.mal}</Tekstomrade>
@@ -98,7 +96,7 @@ class AktivitetsMal extends Component {
                                 </Accordion>
                             </div>
                         </div>
-                    </VisibleDiv>
+                    </VisibleIfDiv>
                 </section>
             </Innholdslaster>
         );
