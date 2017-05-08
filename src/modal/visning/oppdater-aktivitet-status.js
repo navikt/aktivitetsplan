@@ -29,14 +29,10 @@ function OppdaterAktivitetStatus(props) {
     );
 }
 
-OppdaterAktivitetStatus.defaultProps = {
-    className: ''
-};
-
 OppdaterAktivitetStatus.propTypes = {
     status: PT.string.isRequired,
     paramsId: PT.string.isRequired,
-    className: PT.string,
+    className: PT.string.isRequired,
     aktiviteter: PT.shape({
         status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet)

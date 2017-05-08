@@ -93,16 +93,16 @@ class Aktivitetvisning extends Component {
                                 </Sidetittel>
                                 <div className="aktivitetskort__etiketter blokk-s">
                                     { valgtAktivitet.etikett &&
-                                    <AktivitetEtikett
-                                        etikett={valgtAktivitet.etikett}
-                                        id={`etikett.${valgtAktivitet.etikett}`}
-                                    />
+                                        <AktivitetEtikett
+                                            etikett={valgtAktivitet.etikett}
+                                            id={`etikett.${valgtAktivitet.etikett}`}
+                                        />
                                     }
                                     { valgtAktivitet.avtalt &&
-                                    <AktivitetEtikett
-                                        etikett={AVTALT_MED_NAV}
-                                        id={AVTALT_MED_NAV}
-                                    />
+                                        <AktivitetEtikett
+                                            etikett={AVTALT_MED_NAV}
+                                            id={AVTALT_MED_NAV}
+                                        />
                                     }
                                 </div>
                                 <AktivitetsDetaljer
