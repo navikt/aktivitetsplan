@@ -58,7 +58,7 @@ export default function reducer(state = initalState, action) {
         case FLYTTER:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, { nesteStatus: data.status });
         case OPPDATER:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: STATUS.RELOADING };
         case OPPDATER_OK:
         case FLYTT_OK:
             return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, data);

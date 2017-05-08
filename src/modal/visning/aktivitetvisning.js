@@ -21,7 +21,7 @@ import './aktivitetvisning.less';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT, AVTALT_MED_NAV } from '../../constant';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
-import AktivitetEtikett from '../../felles-komponenter/aktivitet-etiketter';
+import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
 import StandardModal from '../modal-standard';
 
 class Aktivitetvisning extends Component {
@@ -52,12 +52,14 @@ class Aktivitetvisning extends Component {
             };
 
             return (
-                <BekreftSlettVisning
-                    slettAction={slettAction}
-                    avbrytAction={() => this.setState({
-                        visBekreftSletting: false,
-                        settAutoFocusSlett: true })}
-                />
+                <StandardModal name="aktivitetsvisningModal">
+                    <BekreftSlettVisning
+                        slettAction={slettAction}
+                        avbrytAction={() => this.setState({
+                            visBekreftSletting: false,
+                            settAutoFocusSlett: true })}
+                    />
+                </StandardModal>
             );
         }
         const tillatSletting = TILLAT_SLETTING && (
@@ -92,18 +94,16 @@ class Aktivitetvisning extends Component {
                                     {valgtAktivitet.tittel}
                                 </Sidetittel>
                                 <div className="aktivitetskort__etiketter blokk-s">
-                                    { valgtAktivitet.etikett &&
-                                        <AktivitetEtikett
-                                            etikett={valgtAktivitet.etikett}
-                                            id={`etikett.${valgtAktivitet.etikett}`}
-                                        />
-                                    }
-                                    { valgtAktivitet.avtalt &&
-                                        <AktivitetEtikett
-                                            etikett={AVTALT_MED_NAV}
-                                            id={AVTALT_MED_NAV}
-                                        />
-                                    }
+                                    <AktivitetEtikett
+                                        visible={!!valgtAktivitet.etikett}
+                                        etikett={valgtAktivitet.etikett}
+                                        id={`etikett.${valgtAktivitet.etikett}`}
+                                    />
+                                    <AktivitetEtikett
+                                        visible={valgtAktivitet.avtalt}
+                                        etikett={AVTALT_MED_NAV}
+                                        id={AVTALT_MED_NAV}
+                                    />
                                 </div>
                                 <AktivitetsDetaljer
                                     className="aktivitetvisning__detaljer"

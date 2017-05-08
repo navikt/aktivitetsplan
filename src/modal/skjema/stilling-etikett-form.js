@@ -9,12 +9,11 @@ import { aktivitet as aktivitetPT } from '../../proptypes';
 import { STATUS } from '../../ducks/utils';
 
 function StillingEtikettForm(props) {
-    const { aktivitet, oppdaterEtikett, aktiviteterStatus } = props;
+    const { aktivitet, oppdaterEtikett, disabled } = props;
     const onChange = (event) => {
         oppdaterEtikett(aktivitet, event.currentTarget.value);
     };
     const erEtikettChecked = (statusId) => props.valgtEtikettStatus === statusId;
-    const laster = aktiviteterStatus === STATUS.PENDING;
     return (
         <form className="skjema oppdateretikett-skjema">
             <Radio
@@ -25,7 +24,7 @@ function StillingEtikettForm(props) {
                 id={`id--${statuser.INGEN_VALGT}`}
                 name="etikettstatus"
                 checked={!props.valgtEtikettStatus || erEtikettChecked(statuser.INGEN_VALGT)}
-                disabled={props.disableStatusEndring || laster}
+                disabled={disabled}
             />
             <Radio
                 onChange={onChange}
@@ -35,7 +34,7 @@ function StillingEtikettForm(props) {
                 id={`id--${statuser.SOKNAD_SENDT}`}
                 name="etikettstatus"
                 checked={erEtikettChecked(statuser.SOKNAD_SENDT)}
-                disabled={props.disableStatusEndring || laster}
+                disabled={disabled}
             />
             <Radio
                 onChange={onChange}
@@ -45,7 +44,7 @@ function StillingEtikettForm(props) {
                 id={`id--${statuser.INNKALT_TIL_INTERVJU}`}
                 name="etikettstatus"
                 checked={erEtikettChecked(statuser.INNKALT_TIL_INTERVJU)}
-                disabled={props.disableStatusEndring || laster}
+                disabled={disabled}
             />
             <Radio
                 onChange={onChange}
@@ -55,7 +54,7 @@ function StillingEtikettForm(props) {
                 id={`id--${statuser.AVSLAG}`}
                 name="etikettstatus"
                 checked={erEtikettChecked(statuser.AVSLAG)}
-                disabled={props.disableStatusEndring || laster}
+                disabled={disabled}
             />
             <Radio
                 onChange={onChange}
@@ -65,7 +64,7 @@ function StillingEtikettForm(props) {
                 id={`id--${statuser.JOBBTILBUD}`}
                 name="etikettstatus"
                 checked={erEtikettChecked(statuser.JOBBTILBUD)}
-                disabled={props.disableStatusEndring || laster}
+                disabled={disabled}
             />
         </form>
     );
@@ -81,15 +80,15 @@ StillingEtikettForm.defaultProps = {
 };
 
 StillingEtikettForm.propTypes = {
-    disableStatusEndring: PT.bool.isRequired,
+    disableStatusEndring: PT.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
     valgtEtikettStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
     oppdaterEtikett: PT.func.isRequired,
-    aktiviteterStatus: PT.string
+    disabled: PT.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => ({
-    aktiviteterStatus: state.data.aktiviteter.status,
+    disabled: state.data.aktiviteter.status !== STATUS.OK || props.disableStatusEndring,
     valgtEtikettStatus: formValueSelector('etikett-status-form')(state, 'etikettstatus'),
     initialValues: {
         etikettstatus: props.aktivitet.etikett

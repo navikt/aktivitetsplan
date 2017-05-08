@@ -1,7 +1,8 @@
 import React, { PropTypes as PT } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import './aktivitet-etiketter.less';
+import './aktivitet-etikett.less';
+import { visibleIfHOC } from '../hocs/visible-if';
 import * as statuskoder from '../constant';
 
 const cls = (type) => classNames('etikett', `etikett--${type}`);
@@ -23,10 +24,9 @@ const setType = (etikettnavn) => {
 
 function AktivitetEtikett({ etikett, id }) {
     return (
-        etikett ?
-            <span key={etikett} className={cls(setType(etikett))}>
-                <FormattedMessage id={id} />
-            </span> : null
+        <span key={etikett} className={cls(setType(etikett))}>
+            <FormattedMessage id={id} />
+        </span>
     );
 }
 
@@ -35,4 +35,4 @@ AktivitetEtikett.propTypes = {
     id: PT.string.isRequired
 };
 
-export default AktivitetEtikett;
+export default visibleIfHOC(AktivitetEtikett);

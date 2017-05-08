@@ -1,5 +1,5 @@
 import React, { PropTypes as PT } from 'react';
-import AktivitetEtikett from '../../felles-komponenter/aktivitet-etiketter';
+import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
 import * as AppPT from '../../proptypes';
 import { AVTALT_MED_NAV } from '../../constant';
 
@@ -25,12 +25,16 @@ function AktivitetskortTillegg({ aktivitet }) {
                 <hr className="aktivitetskort__delelinje" />
                 <div className="aktivitetskort__ikon-blokk">
                     <div className="aktivitetskort__etiketter">
-                        { aktivitet.etikett &&
-                            <AktivitetEtikett etikett={aktivitet.etikett} id={`etikett.${aktivitet.etikett}`} />
-                        }
-                        { aktivitet.avtalt &&
-                            <AktivitetEtikett etikett={AVTALT_MED_NAV} id={AVTALT_MED_NAV} />
-                        }
+                        <AktivitetEtikett
+                            visible={!!aktivitet.etikett}
+                            etikett={aktivitet.etikett}
+                            id={`etikett.${aktivitet.etikett}`}
+                        />
+                        <AktivitetEtikett
+                            visible={aktivitet.avtalt}
+                            etikett={AVTALT_MED_NAV}
+                            id={AVTALT_MED_NAV}
+                        />
                     </div>
                     <AktivitetskortIkoner kommentarer={kommentarer} />
                 </div>
