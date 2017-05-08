@@ -2,6 +2,7 @@ import React, { PropTypes as PT } from 'react';
 import { Container } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
+import Feil from './feil';
 import AktivitetsTavle from './aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje';
 
@@ -10,6 +11,7 @@ function Hovedside({ children }) {
         <div className="hovedside">
             <div className="hovedsideinnhold">
                 <Container>
+                    <Feil />
                     <Navigasjonslinje />
                     <Lenkeknapp href="/aktivitet/ny">
                         <FormattedMessage id="nyaktivitetsknapp" />
