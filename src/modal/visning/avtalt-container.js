@@ -11,6 +11,7 @@ import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import './avtalt-container.less';
 import {TILLAT_SET_AVTALT} from '~config' // eslint-disable-line
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 
 
 class AvtaltContainer extends Component {
@@ -25,7 +26,12 @@ class AvtaltContainer extends Component {
     render() {
         const { aktivitet, aktivitetData, doSetAktivitetTilAvtalt, className } = this.props;
 
-        if (!TILLAT_SET_AVTALT) return null;
+        if (!TILLAT_SET_AVTALT ||
+            aktivitet.status === STATUS_FULLFOERT ||
+            aktivitet.status === STATUS_AVBRUTT) return null;
+
+        // Kun vis bekreftet hvis nettopp satt til avtalt.
+        if (this.state.visBekreftAvtalt === false && aktivitet.avtalt) return null;
 
         const setAvtaltInnhold = (
             <div className={`${className} avtalt-container`}>
