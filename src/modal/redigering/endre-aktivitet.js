@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
+import { SKJUL_VERSJONSKONFLIKT_ACTION } from '../../ducks/endre-aktivitet';
 import * as AppPT from '../../proptypes';
 import ModalHeader from '../modal-header';
 import StillingAktivitetForm, { formNavn as stillingFormNavn } from '../skjema/stilling-aktivitet-form';
@@ -10,21 +11,25 @@ import EgenAktivitetForm, { formNavn as egenFormNavn } from '../skjema/egen-akti
 import history from '../../history';
 import { EGEN_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
+import Versjonskonflikt from './versjonskonflikt';
 import Modal from '../modal';
 import { LUKK_MODAL } from '../../ducks/modal';
 
 
-function EndreAktivitet(props) {
-    const { doOppdaterAktivitet, aktivitet, intl, formIsDirty, lukkModal } = props;
+function EndreAktivitet({ doOppdaterAktivitet, aktivitet, visVersjonskonflikt, skjulVersjonskonflikt, intl, formIsDirty, lukkModal }) {
     if (!aktivitet) {
         return null;
+    }
+
+    function visAktivitet() {
+        history.push(`aktivitet/aktivitet/${aktivitet.id}`);
+        skjulVersjonskonflikt();
     }
 
     function renderForm() {
         function oppdater(aktivitetData) {
             const oppdatertAktivitet = { ...aktivitet, ...aktivitetData };
-            doOppdaterAktivitet(oppdatertAktivitet);
-            history.push(`aktivitet/aktivitet/${oppdatertAktivitet.id}`);
+            doOppdaterAktivitet(oppdatertAktivitet).then(visAktivitet);
         }
 
         switch (aktivitet.type) {
@@ -53,18 +58,20 @@ function EndreAktivitet(props) {
             contentLabel="aktivitet-modal"
         >
             <article className="egen-aktivitet" aria-labelledby="modal-egen-aktivitet-header">
-                <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake" />
-                <ModalContainer>
-                    {renderForm()}
-                </ModalContainer>
-            </article>
-        </Modal>
+            <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake" />
+            <ModalContainer>
+                <Versjonskonflikt visible={visVersjonskonflikt} tilbake={skjulVersjonskonflikt} slett={visAktivitet} />
+                <div className={visVersjonskonflikt && 'hidden'}>{renderForm()}</div>
+            </ModalContainer>
+        </article></Modal>
     );
 }
 
 
 EndreAktivitet.propTypes = {
     doOppdaterAktivitet: PT.func.isRequired,
+    visVersjonskonflikt: PT.bool.isRequired,
+    skjulVersjonskonflikt: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
     formIsDirty: PT.bool.isRequired,
     intl: intlShape.isRequired,
@@ -81,13 +88,15 @@ const mapStateToProps = (state, props) => {
     const formNavn = aktivitet.type === STILLING_AKTIVITET_TYPE ? stillingFormNavn : egenFormNavn;
     return {
         aktivitet,
+        visVersjonskonflikt: state.view.endreAktivitet.visVersjonskonflikt,
         formIsDirty: isDirty(formNavn)(state)
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
     doOppdaterAktivitet: (aktivitet) => oppdaterAktivitet(aktivitet)(dispatch),
-    lukkModal: () => dispatch({ type: LUKK_MODAL })
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
+    skjulVersjonskonflikt: () => dispatch(SKJUL_VERSJONSKONFLIKT_ACTION)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(EndreAktivitet));

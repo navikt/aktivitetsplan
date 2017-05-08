@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import { sjekkStatuskode, toJson, getCookie } from './utils';
+import sinon from 'sinon';
+import { sjekkStatuskode, handterFeil, toJson, getCookie } from './utils';
 
 describe('utils', () => {
     describe('Sjekk-statuskode', () => {
@@ -45,6 +46,32 @@ describe('utils', () => {
             expect(() => sjekkStatuskode(response)).to.throw(Error);
         });
     });
+
+    describe('handterFeil', () => {
+        const action = 'action';
+
+        it('Sjekk at funksjonen returnerer et rejected promise', () => {
+            expect(handterFeil(sinon.spy(), action)(new Error('message'))).to.be.rejected; // eslint-disable-line no-unused-expressions
+        });
+        it('Sjekk at funksjonen dispatcher parset feil', (done) => {
+            const dispatch = sinon.spy();
+            const response = {
+                text: () => Promise.resolve('{"type":"FEILTYPE"}')
+            };
+            handterFeil(dispatch, action)({ response });
+            setTimeout(() => {
+                expect(dispatch).to.be.calledWith({ data: { type: 'FEILTYPE' }, type: action });
+                done();
+            }, 0);
+        });
+        it('Sjekk at funksjonen dispatcher error message', () => {
+            const dispatch = sinon.spy();
+            const error = new Error('message');
+            handterFeil(dispatch, action)(error);
+            expect(dispatch).to.be.calledWith({ data: error.toString(), type: action });
+        });
+    });
+
     describe('toJson', () => {
         it('Sjekk at funksjonen returnere json ved gyldig status', () => {
             const response = {

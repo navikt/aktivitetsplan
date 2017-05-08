@@ -148,8 +148,7 @@ Aktivitetvisning.defaultProps = {
 
 const mapStateToProps = (state) => ({
     oppfolgingStatus: state.data.oppfolgingStatus.data,
-    aktiviteter: state.data.aktiviteter,
-    dialoger: state.data.dialog.data
+    aktiviteter: state.data.aktiviteter
 });
 
 const mapDispatchToProps = (dispatch) => ({
