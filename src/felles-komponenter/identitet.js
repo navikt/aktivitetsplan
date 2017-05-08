@@ -12,7 +12,7 @@ class Identitet extends Component {
     render() {
         const { children, ident } = this.props;
         return (
-            <span>{ident === children ? this.props.intl.formatMessage({ id: 'idenditet.deg' }) : children}</span>
+            <span>{ident === children ? this.props.intl.formatMessage({ id: 'identitet.deg' }) : children}</span>
         );
     }
 }
