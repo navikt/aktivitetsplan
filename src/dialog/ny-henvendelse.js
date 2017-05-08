@@ -109,7 +109,7 @@ function DynamiskNyHenvendelseReduxFormConnected(props) {
 }
 
 DynamiskNyHenvendelseReduxFormConnected.propTypes = {
-    formNavn: PT.string
+    formNavn: PT.string.isRequired
 };
 
 export default DynamiskNyHenvendelseReduxFormConnected;

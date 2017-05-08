@@ -1,7 +1,7 @@
-import React, { PropTypes as PT } from 'react';
-import { formValueSelector } from 'redux-form';
+import React, { PropTypes as PT, Component } from 'react';
+import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm, rules } from 'react-redux-form-validation';
@@ -34,63 +34,81 @@ const begrensetBeskrivelseLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
 );
 
 
-function EgenAktivitetForm(props) {
-    return (
-        <form onSubmit={props.handleSubmit} noValidate="noValidate">
-            <div className="skjema-innlogget aktivitetskjema">
-                {props.errorSummary}
-                <div className="aktivitetskjema__header">
-                    <Innholdstittel>
-                        <FormattedMessage id="egen-aktivitet-form.header" />
-                    </Innholdstittel>
-                    <Undertekst>
-                        <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                    </Undertekst>
-                </div>
+class EgenAktivitetForm extends Component {
+    componentDidMount() {
+        window.onbeforeunload = this.visLukkDialog.bind(this);
+    }
 
-                <Input
-                    feltNavn="tittel"
-                    disabled={props.avtalt === true}
-                    labelId="egen-aktivitet-form.label.overskrift"
-                    bredde="fullbredde"
-                />
-                <div className="dato-container">
-                    <Datovelger
-                        feltNavn="fraDato"
-                        disabled={props.avtalt === true}
-                        labelId="egen-aktivitet-form.label.fra-dato"
-                        senesteTom={props.currentTilDato}
+    componentWillUnmount() {
+        window.onbeforeunload = null;
+    }
+
+    visLukkDialog(e) { // eslint-disable-line
+        if (this.props.isDirty) {
+            const melding = this.props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' }); // TODO: React-intl
+            e.returnValue = melding;
+            return melding;
+        }
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.props.handleSubmit} noValidate="noValidate">
+                <div className="skjema-innlogget aktivitetskjema">
+                    {this.props.errorSummary}
+                    <div className="aktivitetskjema__header">
+                        <Innholdstittel>
+                            <FormattedMessage id="egen-aktivitet-form.header" />
+                        </Innholdstittel>
+                        <Undertekst>
+                            <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
+                        </Undertekst>
+                    </div>
+
+                    <Input
+                        feltNavn="tittel"
+                        disabled={this.props.avtalt === true}
+                        labelId="egen-aktivitet-form.label.overskrift"
+                        bredde="fullbredde"
                     />
-                    <Datovelger
-                        feltNavn="tilDato"
-                        labelId="egen-aktivitet-form.label.til-dato"
-                        tidligsteFom={props.currentFraDato}
+                    <div className="dato-container">
+                        <Datovelger
+                            feltNavn="fraDato"
+                            disabled={this.props.avtalt === true}
+                            labelId="egen-aktivitet-form.label.fra-dato"
+                            senesteTom={this.props.currentTilDato}
+                        />
+                        <Datovelger
+                            feltNavn="tilDato"
+                            labelId="egen-aktivitet-form.label.til-dato"
+                            tidligsteFom={this.props.currentFraDato}
+                        />
+                    </div>
+                    <Input
+                        feltNavn="lenke"
+                        disabled={this.props.avtalt === true}
+                        labelId="egen-aktivitet-form.label.lenke"
+                        bredde="fullbredde"
+                    />
+                    <Input
+                        feltNavn="hensikt"
+                        disabled={this.props.avtalt === true}
+                        labelId="egen-aktivitet-form.label.hensikt"
+                        bredde="fullbredde"
+                    />
+                    <Textarea
+                        feltNavn="beskrivelse"
+                        disabled={this.props.avtalt === true}
+                        labelId="egen-aktivitet-form.label.beskrivelse"
+                        maxLength={BESKRIVELSE_MAKS_LENGDE}
                     />
                 </div>
-                <Input
-                    feltNavn="lenke"
-                    disabled={props.avtalt === true}
-                    labelId="egen-aktivitet-form.label.lenke"
-                    bredde="fullbredde"
-                />
-                <Input
-                    feltNavn="hensikt"
-                    disabled={props.avtalt === true}
-                    labelId="egen-aktivitet-form.label.hensikt"
-                    bredde="fullbredde"
-                />
-                <Textarea
-                    feltNavn="beskrivelse"
-                    disabled={props.avtalt === true}
-                    labelId="egen-aktivitet-form.label.beskrivelse"
-                    maxLength={BESKRIVELSE_MAKS_LENGDE}
-                />
-            </div>
-            <div className="aktivitetskjema__lagre-knapp">
-                <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
-            </div>
-        </form>
-    );
+                <div className="aktivitetskjema__lagre-knapp">
+                    <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
+                </div>
+            </form>
+        );
+    }
 }
 
 EgenAktivitetForm.propTypes = {
@@ -98,10 +116,20 @@ EgenAktivitetForm.propTypes = {
     errorSummary: PT.node.isRequired,
     currentFraDato: PT.instanceOf(Date),
     currentTilDato: PT.instanceOf(Date),
-    avtalt: PT.bool
+    avtalt: PT.bool,
+    isDirty: PT.bool.isRequired,
+    intl: intlShape.isRequired
 };
 
-const formNavn = 'egen-aktivitet';
+EgenAktivitetForm.defaultProps = {
+    handleSubmit: undefined,
+    currentFraDato: undefined,
+    currentTilDato: undefined,
+    avtalt: false
+};
+
+
+export const formNavn = 'egen-aktivitet';
 const EgenAktivitetReduxForm = validForm({
     form: formNavn,
     errorSummaryTitle: <FormattedMessage id="egen-aktivitet-form.feiloppsummering-tittel" />,
@@ -125,9 +153,10 @@ const mapStateToProps = (state, props) => {
         },
         currentFraDato: selector(state, 'fraDato') ? moment(selector(state, 'fraDato')).toDate() : undefined,
         currentTilDato: selector(state, 'tilDato') ? moment(selector(state, 'tilDato')).toDate() : undefined,
+        isDirty: isDirty(formNavn)(state),
         avtalt: aktivitet && aktivitet.avtalt
     };
 };
 const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(EgenAktivitetReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(EgenAktivitetReduxForm));

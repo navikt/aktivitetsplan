@@ -10,8 +10,14 @@
   padding: 1rem;
 
   &__element {
-    color: black;
+    color: @navMorkGra;
+    text-decoration: none;
     margin-right: 1rem;
+
+    &:hover {
+      text-decoration: underline;
+      color: @bla;
+    }
 
     &-content {
       &:empty{

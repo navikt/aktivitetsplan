@@ -19,4 +19,8 @@ Lenkeknapp.propTypes = {
     className: PT.string
 };
 
+Lenkeknapp.defaultProps = {
+    className: undefined
+};
+
 export default Lenkeknapp;

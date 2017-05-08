@@ -13,4 +13,8 @@ Dato.propTypes = {
     children: PT.number
 };
 
+Dato.defaultProps = {
+    children: undefined
+};
+
 export default visibleIfHOC(Dato);

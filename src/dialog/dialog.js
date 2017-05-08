@@ -26,4 +26,8 @@ Dialog.propTypes = {
     dialog: AppPT.dialog.isRequired
 };
 
+Dialog.defaultProps = {
+    className: undefined
+};
+
 export default Dialog;

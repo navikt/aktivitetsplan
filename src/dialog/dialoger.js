@@ -48,6 +48,10 @@ Gruppe.propTypes = {
     labelId: PT.string.isRequired
 };
 
+Gruppe.defaultProps = {
+    valgtDialog: undefined
+};
+
 function Dialoger({ dialoger, valgtDialog, className }) {
     return (
         <div className={className}>
@@ -70,6 +74,11 @@ Dialoger.propTypes = {
     className: PT.string,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     valgtDialog: AppPT.dialog
+};
+
+Dialoger.defaultProps = {
+    className: undefined,
+    valgtDialog: undefined
 };
 
 const mapStateToProps = (state) => {

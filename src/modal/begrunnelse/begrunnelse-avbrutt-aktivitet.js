@@ -5,6 +5,7 @@ import * as AppPT from '../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-aktivitet';
 import { avbrytAktivitet } from '../../ducks/aktiviteter';
 import { STATUS } from '../../ducks/utils';
+import StandardModal from '../modal-standard';
 
 const BegrunnelseAvbruttAktivitet = (props) => {
     const headerTekst = <FormattedMessage id="opprett-begrunnelse.avbrutt.header" />;
@@ -13,12 +14,14 @@ const BegrunnelseAvbruttAktivitet = (props) => {
     const valgtAktivitet = props.aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId) || {};
 
     return (
-        <BegrunnelseAktivitet
-            headerTekst={headerTekst}
-            beskrivelseTekst={beskrivelseTekst}
-            lagrer={props.aktiviteter.status !== STATUS.OK}
-            onLagre={(begrunnelse) => props.lagreBegrunnelse(valgtAktivitet, begrunnelse)}
-        />
+        <StandardModal name="BegrunnelseModal">
+            <BegrunnelseAktivitet
+                headerTekst={headerTekst}
+                beskrivelseTekst={beskrivelseTekst}
+                lagrer={props.aktiviteter.status !== STATUS.OK}
+                onLagre={(begrunnelse) => props.lagreBegrunnelse(valgtAktivitet, begrunnelse)}
+            />
+        </StandardModal>
     );
 };
 

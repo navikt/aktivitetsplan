@@ -48,3 +48,9 @@ export const mal = PT.shape({
     endretAv: PT.string,
     dato: PT.number
 });
+
+export const feil = PT.shape({
+    is: PT.string.isRequired,
+    type: PT.string.isRequired,
+    detaljer: PT.string
+});

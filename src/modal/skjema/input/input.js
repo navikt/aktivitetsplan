@@ -20,6 +20,13 @@ InnerInputComponent.propTypes = {
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
+InnerInputComponent.defaultProps = {
+    bredde: undefined,
+    errorMessage: undefined,
+    meta: undefined,
+    input: undefined
+};
+
 function Input({ feltNavn, ...rest }) {
     return (
         <CustomField

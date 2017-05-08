@@ -12,7 +12,7 @@ class Identitet extends Component {
     render() {
         const { children, ident } = this.props;
         return (
-            <span>{ident === children ? this.props.intl.formatMessage({ id: 'idenditet.deg' }) : children}</span>
+            <span>{ident === children ? this.props.intl.formatMessage({ id: 'identitet.deg' }) : children}</span>
         );
     }
 }
@@ -20,8 +20,13 @@ class Identitet extends Component {
 Identitet.propTypes = {
     ident: PT.string,
     children: PT.string,
-    intl: intlShape,
+    intl: intlShape.isRequired,
     doHentIdentitet: PT.func.isRequired
+};
+
+Identitet.defaultProps = {
+    ident: undefined,
+    children: undefined
 };
 
 const mapStateToProps = (state) => {

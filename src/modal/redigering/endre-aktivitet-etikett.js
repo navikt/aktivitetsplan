@@ -106,6 +106,10 @@ EndreAktivitetEtikett.propTypes = {
     velgEtikett: PT.func.isRequired
 };
 
+EndreAktivitetEtikett.defaultProps = {
+    valgtEtikett: undefined
+};
+
 const mapStateToProps = (state) => ({
     etiketter: state.data.etiketter.data
 });

@@ -47,6 +47,10 @@ Henvendelse.propTypes = {
     henvendelse: AppPT.henvendelse
 };
 
+Henvendelse.defaultProps = {
+    henvendelse: undefined
+};
+
 class Dialog extends Component {
 
     componentDidMount() {

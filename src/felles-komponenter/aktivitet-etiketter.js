@@ -35,4 +35,8 @@ AktivitetEtikett.propTypes = {
     id: PT.string.isRequired
 };
 
+AktivitetEtikett.defaultProps = {
+    className: undefined
+};
+
 export default AktivitetEtikett;

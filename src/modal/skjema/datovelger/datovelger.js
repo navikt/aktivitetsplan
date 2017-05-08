@@ -126,6 +126,13 @@ DatoField.propTypes = {
     errorMessage: PT.oneOfType([PT.arrayOf(PT.string), PT.string])
 };
 
+DatoField.defaultProps = {
+    disabled: false,
+    tidligsteFom: undefined,
+    senesteTom: undefined,
+    errorMessage: undefined
+};
+
 function parseDato(dato) {
     return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
 }
@@ -157,6 +164,11 @@ Datovelger.propTypes = {
     labelId: PT.string.isRequired,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date)
+};
+
+Datovelger.defaultProps = {
+    tidligsteFom: undefined,
+    senesteTom: undefined
 };
 
 export default Datovelger;

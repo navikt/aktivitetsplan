@@ -12,4 +12,8 @@ Applikasjon.propTypes = {
     children: PT.node
 };
 
+Applikasjon.defaultProps = {
+    children: undefined
+};
+
 export default Applikasjon;

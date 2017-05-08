@@ -13,4 +13,8 @@ ModalContainer.propTypes = {
     children: PT.node
 };
 
+ModalContainer.defaultProps = {
+    children: undefined
+};
+
 export default ModalContainer;

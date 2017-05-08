@@ -18,4 +18,10 @@ RemoteSubmitKnapp.propTypes = {
     formNavn: PT.string
 };
 
+RemoteSubmitKnapp.defaultProps = {
+    className: undefined,
+    dispatch: undefined,
+    formNavn: undefined
+};
+
 export default connect()(RemoteSubmitKnapp);

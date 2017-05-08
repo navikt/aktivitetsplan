@@ -29,4 +29,8 @@ AktivitetKnapperad.propTypes = {
     handterSlett: PT.func.isRequired
 };
 
+AktivitetKnapperad.defaultProps = {
+    className: undefined
+};
+
 export default AktivitetKnapperad;

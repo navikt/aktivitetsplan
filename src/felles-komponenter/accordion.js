@@ -10,7 +10,7 @@ class Accordion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            apen: false
+            apen: props.apen
         };
     }
 
@@ -44,13 +44,15 @@ class Accordion extends Component {
 
 Accordion.defaultProps = {
     onClick: () => {},
+    apen: false,
     children: null
 };
 
 Accordion.propTypes = {
     labelId: PT.string.isRequired,
     onClick: PT.func,
-    children: PT.string
+    apen: PT.bool,
+    children: PT.arrayOf(PT.node)
 };
 
 export default Accordion;

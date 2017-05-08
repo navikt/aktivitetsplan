@@ -90,6 +90,7 @@ class AktivitetsMal extends Component {
                             <div className="aktivitetmal__innhold">
                                 <Accordion
                                     labelId={historikkVises ? 'aktivitetsmal.skjul' : 'aktivitetsmal.vis'}
+                                    apen={historikkVises}
                                     onClick={this.hentMalListe}
                                 >
                                     {malListe.slice(1, malListe.length).map((malet) => malListeVisning(malet))}

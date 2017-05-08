@@ -7,6 +7,10 @@ export const HENTER = 'aktivitet/hent';
 export const HENTET = 'aktivitet/hent/ok';
 export const HENTING_FEILET = 'aktivitet/hent/fail';
 
+export const HENT_AKTIVITET = 'aktivitet/hent-aktivitet';
+export const HENT_AKTIVITET_OK = 'aktivitet/hent-aktivitet/ok';
+export const HENT_AKTIVITET_FEILET = 'aktivitet/hent-aktivitet/fail';
+
 export const FLYTTER = 'aktivitet/flytt';
 export const FLYTT_OK = 'aktivitet/flytt/ok';
 export const FLYTT_FAIL = 'aktivitet/flytt/fail';
@@ -45,6 +49,10 @@ export default function reducer(state = initalState, action) {
             return { status: STATUS.OK, data: data.aktiviteter };
         case HENTING_FEILET:
             return { ...state, status: STATUS.ERROR };
+        case HENT_AKTIVITET_OK:
+            return { status: STATUS.OK, data: state.data.filter((aktivitet) => aktivitet.id !== data.id).concat(data) };
+        case HENT_AKTIVITET_FEILET:
+            return { ...state, status: STATUS.ERROR };
         case OPPRETTET:
             return { ...state, data: [...state.data, data] };
         case FLYTTER:
@@ -73,6 +81,14 @@ export function hentAktiviteter() {
         OK: HENTET,
         FEILET: HENTING_FEILET,
         PENDING: HENTER
+    });
+}
+
+export function hentAktivitet(aktivitetId) {
+    return doThenDispatch(() => Api.hentAktivitet(aktivitetId), {
+        OK: HENT_AKTIVITET_OK,
+        FEILET: HENT_AKTIVITET_FEILET,
+        PENDING: HENT_AKTIVITET
     });
 }
 
@@ -117,7 +133,6 @@ export function lagNyAktivitet(aktivitet) {
         PENDING: OPPRETT
     });
 }
-
 
 export function slettAktivitet(aktivitet) {
     return (dispatch) => {

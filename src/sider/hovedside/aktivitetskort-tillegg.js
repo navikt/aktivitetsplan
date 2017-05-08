@@ -48,4 +48,8 @@ AktivitetskortIkoner.propTypes = {
     kommentarer: PT.arrayOf(PT.object)
 };
 
+AktivitetskortIkoner.defaultProps = {
+    kommentarer: undefined
+};
+
 export default AktivitetskortTillegg;
