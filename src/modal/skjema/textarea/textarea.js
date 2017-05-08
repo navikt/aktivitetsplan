@@ -6,14 +6,15 @@ import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 // eslint-disable-next-line no-unused-vars
 function InnerTextAreaComponent({ input, labelId, maxLength, errorMessage, meta, ...rest }) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
+    const inputValues = { ...input, value: undefined, defaultValue: input.value };
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"
             label={labelId && <FormattedMessage id={labelId} />}
             maxLength={maxLength}
             feil={feil}
-            {...input}
             {...rest}
+            {...inputValues}
         />
     );
 }
