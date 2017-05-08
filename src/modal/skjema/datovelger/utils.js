@@ -47,11 +47,11 @@ export function validerPeriode(input, alternativer) {
     }
     if (til && inputDato.isAfter(tilDato, 'day')) {
         tilDato.add(1, 'day');
-        return `Datoen må være før ${toDatePrettyPrint(tilDato.toDate())}`;
+        return 'Fra dato kan ikke være etter fristen';
     }
     if (fra && fraDato.isAfter(inputDato, 'day')) {
         fraDato.subtract(1, 'day');
-        return `Datoen må være etter ${toDatePrettyPrint(fraDato.toDate())}`;
+        return 'Til dato kan ikke være før fra dato';
     }
     return undefined;
 }
