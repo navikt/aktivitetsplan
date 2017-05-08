@@ -1,6 +1,7 @@
 import React, { PropTypes as PT } from 'react';
-import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
+import AktivitetEtikett from '../../felles-komponenter/aktivitet-etiketter';
 import * as AppPT from '../../proptypes';
+import { AVTALT_MED_NAV } from '../../constant';
 
 function AktivitetskortIkoner({ kommentarer }) {
     return (
@@ -12,21 +13,25 @@ function AktivitetskortIkoner({ kommentarer }) {
 }
 
 function AktivitetskortTillegg({ aktivitet }) {
-    // const etiketter = aktivitet.avtalt ?
-    //     { tag: 'Avtalt med NAV', type: 'avtalt' }.concat({ tag: aktivitet.etikett, type: aktivitet.etikett }) :
-    //     aktivitet.tagger;
     const kommentarer = aktivitet.kommentarer;
     const harKommentarer = kommentarer && kommentarer.length;
-    // const harEtiketter = etiketter && etiketter.length;
+    const harEtikett = aktivitet.etikett || aktivitet.avtalt;
     const harVedlegg = false;
 
     return (
-        /* harEtiketter || */ harKommentarer || harVedlegg
+        harEtikett || harKommentarer || harVedlegg
         ? (
             <div>
                 <hr className="aktivitetskort__delelinje" />
                 <div className="aktivitetskort__ikon-blokk">
-                    <AktivitetEtiketter etiketter={[]} className="aktivitetskort__etiketter" />
+                    <div className="aktivitetskort__etiketter">
+                        { aktivitet.etikett &&
+                            <AktivitetEtikett etikett={aktivitet.etikett} id={`etikett.${aktivitet.etikett}`} />
+                        }
+                        { aktivitet.avtalt &&
+                            <AktivitetEtikett etikett={AVTALT_MED_NAV} id={AVTALT_MED_NAV} />
+                        }
+                    </div>
                     <AktivitetskortIkoner kommentarer={kommentarer} />
                 </div>
             </div>

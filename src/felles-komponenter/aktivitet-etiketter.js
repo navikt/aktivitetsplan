@@ -1,25 +1,38 @@
 import React, { PropTypes as PT } from 'react';
+import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import * as AppPT from '../proptypes';
 import './aktivitet-etiketter.less';
+import * as statuskoder from '../constant';
 
 const cls = (type) => classNames('etikett', `etikett--${type}`);
-const etikettCls = (className) => classNames(className, 'etiketter');
-function AktivitetEtikett({ etiketter, className }) {
-    const etikettVisning = (taggs) => taggs.map((tag) => (
-        <span key={tag.tag} className={cls(tag.type)}>
-            {tag.tag}
-        </span>
-    ));
+const setType = (etikettnavn) => {
+    switch (etikettnavn) {
+        case statuskoder.SOKNAD_SENDT:
+            return 'ok';
+        case statuskoder.INNKALT_TIL_INTERVJU:
+        case statuskoder.JOBBTILBUD:
+            return 'info';
+        case statuskoder.AVSLAG:
+            return 'varsling';
+        case statuskoder.AVTALT_MED_NAV:
+            return 'avtalt';
+        default:
+            return '';
+    }
+};
 
+function AktivitetEtikett({ etikett, id }) {
     return (
-        <div className={etikettCls(className)}>{ etiketter ? etikettVisning(etiketter) : null }</div>
+        etikett ?
+            <span key={etikett} className={cls(setType(etikett))}>
+                <FormattedMessage id={id} />
+            </span> : null
     );
 }
 
 AktivitetEtikett.propTypes = {
-    etiketter: PT.arrayOf(AppPT.etikett).isRequired,
-    className: PT.string
+    etikett: PT.string.isRequired,
+    id: PT.string.isRequired
 };
 
 export default AktivitetEtikett;

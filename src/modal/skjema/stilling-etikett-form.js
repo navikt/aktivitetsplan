@@ -20,7 +20,7 @@ function StillingEtikettForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'etikettstatus'}
-                label={<FormattedMessage id="stilling-aktivitet.status.ingen" />}
+                label={<FormattedMessage id="etikett.INGEN_VALGT" />}
                 value={statuser.INGEN_VALGT}
                 id={`id--${statuser.INGEN_VALGT}`}
                 name="etikettstatus"
@@ -30,7 +30,7 @@ function StillingEtikettForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'etikettstatus'}
-                label={<FormattedMessage id="stilling-aktivitet.status.soknad-sendt" />}
+                label={<FormattedMessage id="etikett.SOKNAD_SENDT" />}
                 value={statuser.SOKNAD_SENDT}
                 id={`id--${statuser.SOKNAD_SENDT}`}
                 name="etikettstatus"
@@ -40,7 +40,7 @@ function StillingEtikettForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'etikettstatus'}
-                label={<FormattedMessage id="stilling-aktivitet.status.innkalt-til-intervju" />}
+                label={<FormattedMessage id="etikett.INNKALT_TIL_INTERVJU" />}
                 value={statuser.INNKALT_TIL_INTERVJU}
                 id={`id--${statuser.INNKALT_TIL_INTERVJU}`}
                 name="etikettstatus"
@@ -50,7 +50,7 @@ function StillingEtikettForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'etikettstatus'}
-                label={<FormattedMessage id="stilling-aktivitet.status.avslag" />}
+                label={<FormattedMessage id="etikett.AVSLAG" />}
                 value={statuser.AVSLAG}
                 id={`id--${statuser.AVSLAG}`}
                 name="etikettstatus"
@@ -60,7 +60,7 @@ function StillingEtikettForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'etikettstatus'}
-                label={<FormattedMessage id="stilling-aktivitet.status.jobbtilbud" />}
+                label={<FormattedMessage id="etikett.JOBBTILBUD" />}
                 value={statuser.JOBBTILBUD}
                 id={`id--${statuser.JOBBTILBUD}`}
                 name="etikettstatus"
@@ -77,7 +77,7 @@ const OppdaterReduxForm = reduxForm({
 
 StillingEtikettForm.defaultProps = {
     aktiviteterStatus: 'OK',
-    valgtEtikettStatus: statuser.INGEN_VALGT
+    valgtEtikettStatus: null
 };
 
 StillingEtikettForm.propTypes = {
@@ -97,7 +97,10 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    oppdaterEtikett: (aktivitet, etikett) => oppdaterAktivitet({ ...aktivitet, etikett })(dispatch)
+    oppdaterEtikett: (aktivitet, etikett) => {
+        const nyEtikett = etikett === statuser.INGEN_VALGT ? null : etikett;
+        oppdaterAktivitet({ ...aktivitet, etikett: nyEtikett })(dispatch);
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);

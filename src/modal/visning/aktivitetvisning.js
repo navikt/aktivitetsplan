@@ -18,10 +18,10 @@ import BekreftSlettVisning from './bekreft-slett-visning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT, AVTALT_MED_NAV } from '../../constant';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
-import AktivitetEtiketter from '../../felles-komponenter/aktivitet-etiketter';
+import AktivitetEtikett from '../../felles-komponenter/aktivitet-etiketter';
 
 class Aktivitetvisning extends Component {
 
@@ -65,10 +65,6 @@ class Aktivitetvisning extends Component {
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
-        // const etiketter = valgtAktivitet.avtalt ?
-        //     valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) :
-        //     valgtAktivitet.tagger;
-
         return (
             <ModalHeader
                 normalTekstId="aktivitetvisning.header"
@@ -88,7 +84,20 @@ class Aktivitetvisning extends Component {
                             <Sidetittel id="modal-aktivitetsvisning-header">
                                 {valgtAktivitet.tittel}
                             </Sidetittel>
-                            <AktivitetEtiketter etiketter={[]} className="aktivitetvisning__etikett" />
+                            <div className="aktivitetskort__etiketter blokk-s">
+                                { valgtAktivitet.etikett &&
+                                    <AktivitetEtikett
+                                        etikett={valgtAktivitet.etikett}
+                                        id={`etikett.${valgtAktivitet.etikett}`}
+                                    />
+                                }
+                                { valgtAktivitet.avtalt &&
+                                    <AktivitetEtikett
+                                        etikett={AVTALT_MED_NAV}
+                                        id={AVTALT_MED_NAV}
+                                    />
+                                }
+                            </div>
                             <AktivitetsDetaljer
                                 className="aktivitetvisning__detaljer"
                                 valgtAktivitet={valgtAktivitet}

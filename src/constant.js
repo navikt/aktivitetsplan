@@ -13,3 +13,5 @@ export const SOKNAD_SENDT = 'SOKNAD_SENDT';
 export const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
 export const AVSLAG = 'AVSLAG';
 export const JOBBTILBUD = 'JOBBTILBUD';
+
+export const AVTALT_MED_NAV = 'sett-avtalt.label';
