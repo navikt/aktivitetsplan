@@ -1,61 +1,93 @@
 @import "../variables";
 
-
-@maxHeight: @mobil-hoyde;
-@headerHeight: 60px;
+@padding: 1rem 2rem;
+@animationTime: 300ms;
+@grunn-bredde: 350px;
 
 .dialog-modal {
   position: fixed;
+  max-width: 100%;
+  height: 100%;
+  left: -100%;
+  width: @grunn-bredde;
   margin: 0;
   bottom: 0;
-  max-height: @maxHeight;
-  height: 100%;
+  transition: left @animationTime, width @animationTime;
+  transition-timing-function: ease-out;
 
-  @media (max-height: @maxHeight) {
-    background-color: red;
+  &--vis {
+    left: 0;
+  }
+
+  &--full-bredde {
+    width: @mobil-bredde;
+  }
+
+  @media (max-width: @mobil-bredde) {
+    min-width: 100%;
+  }
+
+  // TODO kan forenkles etter http://stash.devillo.no/projects/NAVFRONT/repos/nav-frontend-moduler/pull-requests/106/overview
+  & > section {
+    height: 100%;
+  }
+  ////
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &__header {
+    border-bottom: 1px solid @gray-foreground;
+    padding: @padding;
+    display: flex;
+  }
+
+  &__tilbake-knapp {
+    margin-right: 1rem;
+    @media (min-width: @mobil-bredde) {
+      display: none;
+    }
   }
 
   &__innhold {
     display: flex;
+    height: 100%;
+    overflow: hidden;
   }
 
   &__ny-dialog {
-    padding: 1rem;
+    padding: @padding;
+    border-bottom: 1px solid @gray-foreground;
+  }
+
+  &__dialoger {
+    overflow-y: auto;
   }
 
   &__kolonne {
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    position: absolute;
-    overflow: hidden;
+    width: 100%;
 
     &--dialog {
       background-color: @gray-background;
-      right: 0;
-      z-index: 1;
+      overflow-y: auto;
+      padding: 2rem;
     }
 
     &--dialoger {
       background-color: white;
-      z-index: 2;
-    }
-
-    &-header {
-      position: relative;
-      padding: 1rem;
-      border-bottom: 1px solid @gray-foreground;
-      height: @headerHeight;
-
-      &--dialoger {
-        background-color: white;
-      }
-    }
-
-    &-innhold {
-      overflow-y: auto;
-      height: @maxHeight - @headerHeight;
-
-      &--dialog {
-        padding: 1rem;
+      width: @grunn-bredde;
+      z-index: 1;
+      @media (max-width: @mobil-bredde) {
+        width: 100%;
+        &-valgt-dialog {
+          display: none;
+        }
       }
     }
   }
