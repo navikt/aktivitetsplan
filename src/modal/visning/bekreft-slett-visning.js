@@ -29,8 +29,8 @@ function BekreftSlettVisning({ slettAction, avbrytAction }) {
 }
 
 BekreftSlettVisning.propTypes = {
-    slettAction: PT.func,
-    avbrytAction: PT.func
+    slettAction: PT.func.isRequired,
+    avbrytAction: PT.func.isRequired
 };
 
 export default BekreftSlettVisning;

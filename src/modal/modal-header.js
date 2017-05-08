@@ -28,4 +28,14 @@ ModalHeader.propTypes = {
     children: PT.node
 };
 
+ModalHeader.defaultProps = {
+    tilbakeTekstId: undefined,
+    tilbakeTekstValues: undefined,
+    normalTekstId: undefined,
+    normalTekstValues: undefined,
+    visConfirmDialog: false,
+    className: undefined,
+    children: undefined
+};
+
 export default ModalHeader;

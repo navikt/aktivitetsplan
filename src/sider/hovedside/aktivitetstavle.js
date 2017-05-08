@@ -41,6 +41,10 @@ AktivitetsTavle.propTypes = {
     })
 };
 
+AktivitetsTavle.defaultProps = {
+    aktivitet: undefined
+};
+
 const mapStateToProps = (state) => ({
     aktivitet: state.data.aktiviteter
 });

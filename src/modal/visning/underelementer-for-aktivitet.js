@@ -110,7 +110,7 @@ UnderelementerForAktivitet.propTypes = {
 };
 
 UnderelementerForAktivitet.defaultProps = {
-    classNames: ''
+    className: ''
 };
 
 const mapStateToProps = (state, props) => {

@@ -20,8 +20,13 @@ class Identitet extends Component {
 Identitet.propTypes = {
     ident: PT.string,
     children: PT.string,
-    intl: intlShape,
+    intl: intlShape.isRequired,
     doHentIdentitet: PT.func.isRequired
+};
+
+Identitet.defaultProps = {
+    ident: undefined,
+    children: undefined
 };
 
 const mapStateToProps = (state) => {

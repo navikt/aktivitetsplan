@@ -22,4 +22,8 @@ AktivitetEtikett.propTypes = {
     className: PT.string
 };
 
+AktivitetEtikett.defaultProps = {
+    className: undefined
+};
+
 export default AktivitetEtikett;

@@ -132,6 +132,11 @@ DialogModalContent.propTypes = {
     navigerTil: PT.func.isRequired
 };
 
+DialogModalContent.defaultProps = {
+    valgtDialog: undefined,
+    valgtAktivitetId: undefined
+};
+
 class DialogModal extends Component { // eslint-disable-line react/no-multi-comp
 
     constructor() {
@@ -185,6 +190,10 @@ class DialogModal extends Component { // eslint-disable-line react/no-multi-comp
 
 DialogModal.propTypes = {
     valgtDialog: AppPT.dialog
+};
+
+DialogModal.defaultProps = {
+    valgtDialog: undefined
 };
 
 const mapStateToProps = (state, props) => {

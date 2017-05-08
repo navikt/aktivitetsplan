@@ -30,6 +30,18 @@ PanelBase.propTypes = {
     komprimert: PT.bool
 };
 
+PanelBase.defaultProps = {
+    className: undefined,
+    ramme: false,
+    ekstra: false,
+    skjema: false,
+    relatert: false,
+    stablet: false,
+    fremhevet: false,
+    negativ: false,
+    komprimert: false
+};
+
 export default PanelBase;
 
 export const Panel = (props) => <PanelBase {...props} />;

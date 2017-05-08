@@ -29,6 +29,10 @@ Caption.propTypes = {
     date: PT.instanceOf(Date)
 };
 
+Caption.defaultProps = {
+    date: undefined
+};
+
 export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showNextButton, intl }) => {
     const className = 'DayPicker-NavButton';
     return (<div role="toolbar">
@@ -61,7 +65,14 @@ NavBar.propTypes = {
     onPreviousClick: PT.func,
     showPreviousButton: PT.bool,
     showNextButton: PT.bool,
-    intl: intlShape
+    intl: intlShape.isRequired
+};
+
+NavBar.defaultProps = {
+    onNextClick: undefined,
+    onPreviousClick: undefined,
+    showPreviousButton: false,
+    showNextButton: false
 };
 
 class DayPickerComponent extends Component {
@@ -143,7 +154,13 @@ DayPickerComponent.propTypes = {
     onDayClick: PT.func.isRequired,
     senesteTom: PT.instanceOf(Date),
     tidligsteFom: PT.instanceOf(Date),
-    intl: intlShape
+    intl: intlShape.isRequired
+};
+
+DayPickerComponent.defaultProps = {
+    ariaControlledBy: undefined,
+    senesteTom: undefined,
+    tidligsteFom: undefined
 };
 
 export default injectIntl(DayPickerComponent);

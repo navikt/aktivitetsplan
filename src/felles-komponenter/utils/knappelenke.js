@@ -23,4 +23,8 @@ Knappelenke.propTypes = {
     className: PT.string
 };
 
+Knappelenke.defaultProps = {
+    className: undefined
+};
+
 export default visibleIfHOC(Knappelenke);

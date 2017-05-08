@@ -17,4 +17,8 @@ Aktivitetsbeskrivelse.propTypes = {
     beskrivelse: PT.string
 };
 
+Aktivitetsbeskrivelse.defaultProps = {
+    beskrivelse: undefined
+};
+
 export default Aktivitetsbeskrivelse;

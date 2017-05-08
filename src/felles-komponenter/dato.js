@@ -11,4 +11,8 @@ Dato.propTypes = {
     children: PT.string
 };
 
+Dato.defaultProps = {
+    children: undefined
+};
+
 export default Dato;

@@ -25,6 +25,12 @@ InnerTextAreaComponent.propTypes = {
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
+InnerTextAreaComponent.defaultProps = {
+    errorMessage: undefined,
+    meta: undefined,
+    input: undefined
+};
+
 function Textarea({ feltNavn, ...rest }) {
     return (
         <CustomField
@@ -36,6 +42,10 @@ function Textarea({ feltNavn, ...rest }) {
 
 Textarea.propTypes = {
     feltNavn: PT.string
+};
+
+Textarea.defaultProps = {
+    feltNavn: undefined
 };
 
 export default Textarea;

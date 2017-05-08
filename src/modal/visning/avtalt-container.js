@@ -71,6 +71,11 @@ AvtaltContainer.propTypes = {
     className: PT.string
 };
 
+AvtaltContainer.defaultProps = {
+    aktivitetData: undefined,
+    className: undefined
+};
+
 const mapStateToProps = (state) => ({
     aktivitetData: state.data.aktiviteter
 });

@@ -15,4 +15,8 @@ UnsafeHtml.propTypes = {
     className: PT.string
 };
 
+UnsafeHtml.defaultProps = {
+    className: undefined
+};
+
 export default UnsafeHtml;

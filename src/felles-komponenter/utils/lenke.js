@@ -30,4 +30,8 @@ Lenke.propTypes = {
     className: PT.string
 };
 
+Lenke.defaultProps = {
+    className: undefined
+};
+
 export default visibleIfHOC(Lenke);

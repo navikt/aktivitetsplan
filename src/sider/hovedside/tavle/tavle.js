@@ -84,4 +84,8 @@ Tavle.propTypes = {
     children: PT.arrayOf(PT.element).isRequired
 };
 
+Tavle.defaultProps = {
+    className: ''
+};
+
 export default Tavle;

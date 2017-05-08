@@ -124,9 +124,18 @@ Informasjonsfelt.propTypes = {
     innhold: PT.string
 };
 
+Informasjonsfelt.defaultProps = {
+    tittel: undefined,
+    innhold: undefined
+};
+
 Aktivitetsdetaljer.propTypes = {
     className: PT.string,
     valgtAktivitet: AppPT.aktivitet.isRequired
+};
+
+Aktivitetsdetaljer.defaultProps = {
+    className: undefined
 };
 
 export default Aktivitetsdetaljer;
