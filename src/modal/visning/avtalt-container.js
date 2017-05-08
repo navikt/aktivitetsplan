@@ -12,7 +12,7 @@ import * as AppPT from '../../proptypes';
 import './avtalt-container.less';
 import {TILLAT_SET_AVTALT} from '~config' // eslint-disable-line
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
-
+import { STATUS } from '../../ducks/utils';
 
 class AvtaltContainer extends Component {
 
@@ -25,7 +25,7 @@ class AvtaltContainer extends Component {
 
     render() {
         const { aktivitet, aktivitetData, doSetAktivitetTilAvtalt, className } = this.props;
-
+        const lasterData = aktivitetData.status !== STATUS.OK;
         if (!TILLAT_SET_AVTALT ||
             aktivitet.status === STATUS_FULLFOERT ||
             aktivitet.status === STATUS_AVBRUTT) return null;
@@ -42,6 +42,7 @@ class AvtaltContainer extends Component {
                     <Radio
                         onClick={() => this.setState({ visBekreftAvtalt: true })}
                         label={<FormattedMessage id="sett-avtalt.label" />} name="avtalt"
+                        disabled={lasterData}
                     />
                     <HjelpetekstOver>
                         <FormattedMessage id="sett-avtalt.hjelpetekst" />
@@ -51,6 +52,7 @@ class AvtaltContainer extends Component {
                 <Knapp
                     spinner={aktivitetData.oppdaterer}
                     onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
+                    disabled={lasterData}
                 >Bekreft</Knapp> }
             </div>);
 

@@ -9,6 +9,7 @@ import hengelasSVG from '../../img/hengelas.svg';
 import { flyttAktivitet } from '../../ducks/aktiviteter';
 import history from '../../history';
 import { aktivitet as aktivitetPT } from '../../proptypes';
+import { STATUS } from '../../ducks/utils';
 
 const leggTilHengelas = (tekst, altTekst) => (
     <span>
@@ -17,7 +18,8 @@ const leggTilHengelas = (tekst, altTekst) => (
 );
 
 function AktivitetStatusForm(props) {
-    const { aktivitet, doFlyttAktivitet } = props;
+    const { aktivitet, doFlyttAktivitet, aktivitetDataStatus } = props;
+    const lasterData = aktivitetDataStatus !== STATUS.OK;
     const hengelasAlt = props.intl.formatMessage({ id: 'hengelas-icon-alt' });
     const onChange = (event) => {
         const valgtAktivitetStatus = event.currentTarget.value;
@@ -40,7 +42,7 @@ function AktivitetStatusForm(props) {
                 id={`id--${statuser.STATUS_BRUKER_ER_INTRESSERT}`}
                 name="aktivitetstatus"
                 checked={erAktivitetChecked(statuser.STATUS_BRUKER_ER_INTRESSERT)}
-                disabled={props.disableStatusEndring}
+                disabled={props.disableStatusEndring || lasterData}
             />
             <Radio
                 onChange={onChange}
@@ -50,7 +52,7 @@ function AktivitetStatusForm(props) {
                 id={`id--${statuser.STATUS_PLANLAGT}`}
                 name="aktivitetstatus"
                 checked={erAktivitetChecked(statuser.STATUS_PLANLAGT)}
-                disabled={props.disableStatusEndring}
+                disabled={props.disableStatusEndring || lasterData}
             />
             <Radio
                 onChange={onChange}
@@ -60,7 +62,7 @@ function AktivitetStatusForm(props) {
                 id={`id--${statuser.STATUS_GJENNOMFOERT}`}
                 name="aktivitetstatus"
                 checked={erAktivitetChecked(statuser.STATUS_GJENNOMFOERT)}
-                disabled={props.disableStatusEndring}
+                disabled={props.disableStatusEndring || lasterData}
             />
             <Radio
                 onChange={onChange}
@@ -70,7 +72,7 @@ function AktivitetStatusForm(props) {
                 id={`id--${statuser.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
                 checked={erAktivitetChecked(statuser.STATUS_FULLFOERT)}
-                disabled={props.disableStatusEndring}
+                disabled={props.disableStatusEndring || lasterData}
             />
             <Radio
                 onChange={onChange}
@@ -80,7 +82,7 @@ function AktivitetStatusForm(props) {
                 id={`id--${statuser.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"
                 checked={erAktivitetChecked(statuser.STATUS_AVBRUTT)}
-                disabled={props.disableStatusEndring}
+                disabled={props.disableStatusEndring || lasterData}
             />
         </form>
     );
@@ -91,7 +93,8 @@ const OppdaterReduxForm = reduxForm({
 })(AktivitetStatusForm);
 
 AktivitetStatusForm.defaultProps = {
-    valgtAktivitetStatus: statuser.INGEN_VALGT
+    valgtAktivitetStatus: statuser.INGEN_VALGT,
+    aktivitetDataStatus: STATUS.NOT_STARTED
 };
 
 AktivitetStatusForm.propTypes = {
@@ -99,10 +102,12 @@ AktivitetStatusForm.propTypes = {
     valgtAktivitetStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
     doFlyttAktivitet: PT.func.isRequired,
+    aktivitetDataStatus: PT.string,
     intl: intlShape
 };
 
 const mapStateToProps = (state, props) => ({
+    aktivitetDataStatus: state.data.aktiviteter.status,
     valgtAktivitetStatus: formValueSelector('aktivitet-status-form')(state, 'aktivitetstatus'),
     initialValues: {
         aktivitetstatus: props.aktivitet.status
