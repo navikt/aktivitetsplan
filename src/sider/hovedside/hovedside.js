@@ -4,6 +4,7 @@ import { Container } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Modal from '../../modal/modal';
+import Feil from './feil';
 import AktivitetsTavle from './aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje';
 import history from '../../history';
@@ -29,6 +30,7 @@ function Hovedside({ children, routes, lukkModal }) {
         <div className="hovedside">
             <div className="hovedsideinnhold">
                 <Container>
+                    <Feil />
                     <Navigasjonslinje />
                     <Lenkeknapp href="/aktivitet/ny">
                         <FormattedMessage id="nyaktivitetsknapp" />
