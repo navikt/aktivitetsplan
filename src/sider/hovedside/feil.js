@@ -29,6 +29,10 @@ Feil.propTypes = {
     sisteFeilSkjult: PT.bool.isRequired
 };
 
+Feil.defaultProps = {
+    sisteFeil: undefined
+};
+
 const mapStateToProps = (state) => {
     const feilState = state.feil;
     return ({
