@@ -1,0 +1,19 @@
+@import "../../variables";
+
+@knapp-storrelse: 32px;
+
+.pil-knapp {
+  .knapp;
+  height: @knapp-storrelse;
+  width: @knapp-storrelse;
+  padding: 0;
+  border: none;
+  background: url("./pil.svg");
+  background-size: @knapp-storrelse;
+
+  &:hover, &:active, &:active:hover  {
+    border: none;
+    background: transparent url("./pil-hover.svg");
+    background-size: @knapp-storrelse;
+  }
+}

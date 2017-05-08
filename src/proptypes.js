@@ -33,6 +33,11 @@ export const endringslogg = PT.shape({
     endretDato: PT.number
 });
 
+export const reducer = PT.shape({
+    status: PT.string,
+    data: PT.object
+});
+
 export const oppfolgingStatus = PT.shape({
     status: PT.string,
     data: PT.object
