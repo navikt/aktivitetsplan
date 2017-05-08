@@ -7,6 +7,11 @@ import * as AppPT from '../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import { formaterDato } from '../../utils';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
+import {
+    TILTAK_AKTIVITET_TYPE,
+    GRUPPE_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE
+} from "../../constant";
 
 const dndSpec = {
 
@@ -24,7 +29,8 @@ function collect(connect, monitor) {
 }
 
 function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
-    const erFlyttbar = !aktivitet.nesteStatus && ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status);
+    const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(aktivitet.type);
+    const erFlyttbar = !aktivitet.nesteStatus && ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) && !arenaAktivitet;
 
     const aktivitetsKort = (
         <div style={{ opacity: isDragging ? 0.4 : 1 }}>
