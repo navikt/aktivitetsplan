@@ -9,7 +9,7 @@ export const EGEN_AKTIVITET_TYPE = 'EGEN';
 export const STILLING_AKTIVITET_TYPE = 'STILLING';
 
 export const INGEN_VALGT = 'INGEN_VALGT';
-export const SOKNAD_SENDT = 'SØKNAD_SENDT';
+export const SOKNAD_SENDT = 'SOKNAD_SENDT';
 export const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
 export const AVSLAG = 'AVSLAG';
 export const JOBBTILBUD = 'JOBBTILBUD';
