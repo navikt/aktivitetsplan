@@ -4,7 +4,7 @@ import { Infotekst, Element, Normaltekst, Undertittel } from 'nav-frontend-typog
 import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../proptypes';
 import './dialoger.less';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 

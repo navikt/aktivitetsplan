@@ -2,7 +2,7 @@ import React, { PropTypes as PT } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router';
 import { erInternlenke } from '../../utils';
-import { visibleIfHOC } from '../../hocs/visible-if';
+import visibleIfHOC from '../../hocs/visible-if';
 
 const cls = (className, lenkeType, lenkestyling) => classNames(className, lenkeType, {
     lenke: lenkestyling

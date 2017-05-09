@@ -1,6 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import classNames from 'classnames';
-import { visibleIfHOC } from '../../hocs/visible-if';
+import visibleIfHOC from '../../hocs/visible-if';
 import './knappelenke.less';
 
 function Knappelenke({ onClick, className, ...rest }) {
