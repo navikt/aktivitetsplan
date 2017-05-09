@@ -21,7 +21,7 @@ function Tilbakeknapp(props) {
             <div className="tilbakeknapp-innhold">
                 <VenstreChevron />
                 <span className="tilbakeknapp-innhold__tekst">
-                    <FormattedMessage id="aktivitetsplan.tilbakeknapp" />
+                    <FormattedMessage id={props.tekstId} values={props.tekstValues} />
                 </span>
             </div>
         </Link>
@@ -30,10 +30,13 @@ function Tilbakeknapp(props) {
 
 
 Tilbakeknapp.defaultProps = {
+    tekstValues: undefined,
     visConfirmDialog: false
 };
 
 Tilbakeknapp.propTypes = {
+    tekstId: PT.string.isRequired,
+    tekstValues: PT.object, // eslint-disable-line react/forbid-prop-types
     tilbakeModal: PT.func.isRequired,
     visConfirmDialog: PT.bool,
     intl: intlShape.isRequired
