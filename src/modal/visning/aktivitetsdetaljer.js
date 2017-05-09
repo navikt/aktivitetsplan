@@ -31,7 +31,11 @@ function Informasjonsfelt({ tittel, innhold }) {
 
 Informasjonsfelt.propTypes = {
     tittel: PT.node.isRequired,
-    innhold: PT.string.isRequired
+    innhold: PT.string
+};
+
+Informasjonsfelt.defaultProps = {
+    innhold: undefined
 };
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
