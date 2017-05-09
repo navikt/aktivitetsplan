@@ -5,7 +5,7 @@ import Snakkeboble from 'nav-frontend-snakkeboble';
 import { formaterDatoTid } from './../utils';
 import * as AppPT from '../proptypes';
 import { markerDialogSomLest } from '../ducks/dialog';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 
 
 function Henvendelse({ henvendelse }) {

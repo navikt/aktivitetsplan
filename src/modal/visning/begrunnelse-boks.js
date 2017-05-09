@@ -1,7 +1,7 @@
 import React, { PropTypes as PT, Component } from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import classNames from 'classnames';
-import { visibleIfHOC } from '../../hocs/visible-if';
+import visibleIfHOC from '../../hocs/visible-if';
 import { autobind } from '../../utils';
 
 class BegrunnelseBoks extends Component {

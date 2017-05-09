@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
 import * as AppPT from '../../proptypes';
 import { AVTALT_MED_NAV } from '../../constant';
-import { visibleIfHOC } from '../../hocs/visible-if';
+import visibleIfHOC from '../../hocs/visible-if';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 

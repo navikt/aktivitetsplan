@@ -11,7 +11,7 @@ import Hovedside from '../sider/hovedside/hovedside';
 import history from '../history';
 import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import NyHenvendelse from './ny-henvendelse';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 import './dialog-modal.less';
 import * as AppPT from '../proptypes';
 
