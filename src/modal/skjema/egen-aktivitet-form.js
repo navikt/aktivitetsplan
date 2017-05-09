@@ -101,6 +101,7 @@ class EgenAktivitetForm extends Component {
                         disabled={this.props.avtalt === true}
                         labelId="egen-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
+                        visTellerFra={500}
                     />
                 </div>
                 <div className="aktivitetskjema__lagre-knapp">
