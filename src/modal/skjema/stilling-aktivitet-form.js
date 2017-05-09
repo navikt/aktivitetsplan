@@ -102,6 +102,7 @@ class StillingAktivitetForm extends Component {
                         disabled={this.props.avtalt === true}
                         labelId="stilling-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
+                        visTellerFra={500}
                     />
                     <Input
                         feltNavn="arbeidssted"
