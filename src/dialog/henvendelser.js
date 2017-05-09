@@ -6,7 +6,7 @@ import { Panel } from 'nav-frontend-paneler';
 import * as AppPT from '../proptypes';
 import Dato from '../felles-komponenter/dato';
 import { markerDialogSomLest } from '../ducks/dialog';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 
 
 const henvendelseCls = (hoyre) => classNames('henvendelse', {

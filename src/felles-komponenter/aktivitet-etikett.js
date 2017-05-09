@@ -2,7 +2,7 @@ import React, { PropTypes as PT } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import './aktivitet-etikett.less';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 import * as statuskoder from '../constant';
 
 const cls = (type) => classNames('etikett', `etikett--${type}`);

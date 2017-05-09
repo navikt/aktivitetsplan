@@ -1,6 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { Element } from 'nav-frontend-typografi';
-import { visibleIfHOC } from '../../hocs/visible-if';
+import visibleIfHOC from '../../hocs/visible-if';
 
 function DetaljFelt({ tittel, children }) {
     return (

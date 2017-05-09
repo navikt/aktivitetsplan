@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { hentEndringsloggForAktivtet, fjernEndringsLogg } from '../../ducks/endringslogg';
 import * as AppPT from '../../proptypes';
 import { formaterDatoDatoEllerTidSiden } from '../../utils';
-import { visibleIfHOC } from '../../hocs/visible-if';
+import visibleIfHOC from '../../hocs/visible-if';
 import { STATUS } from '../../ducks/utils';
 
 
