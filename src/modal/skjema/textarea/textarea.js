@@ -12,7 +12,7 @@ function getTellerTekst(antallTegn, maxLength, visTellerFra) {
     } else if (visTellerFra === 0 || visTellerFra >= tegnIgjen) {
         return <FormattedMessage id="tekstfelt.antalltegn.flere-igjen" values={{ antall: tegnIgjen }} />;
     }
-    return '';
+    return <span>&nbsp;</span>;
 }
 
 // eslint-disable-next-line no-unused-vars
