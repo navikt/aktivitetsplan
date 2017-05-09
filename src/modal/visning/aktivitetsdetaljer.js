@@ -35,7 +35,7 @@ Informasjonsfelt.propTypes = {
 };
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
-    const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt, id } = valgtAktivitet;
+    const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManad(valgtAktivitet.fraDato);
     const tilDato = formaterDatoKortManad(valgtAktivitet.tilDato);
