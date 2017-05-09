@@ -27,6 +27,7 @@ function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter 
                 placeholder="Skriv her"
                 maxLength={TEKST_MAKS_LENGDE}
                 disabled={oppretter}
+                visTellerFra={500}
             />
             <Hovedknapp
                 type="hoved"
