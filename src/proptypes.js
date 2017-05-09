@@ -10,15 +10,19 @@ export const aktivitet = PT.shape({
     avtalt: PT.bool
 });
 
-export const dialog = PT.shape({
-    id: PT.string,
-    overskrift: PT.string
-});
-
 export const henvendelse = PT.shape({
     dialogId: PT.string,
     tekst: PT.string,
     avsender: PT.string
+});
+
+export const dialog = PT.shape({
+    id: PT.string.isRequired,
+    overskrift: PT.string.isRequired,
+    lest: PT.bool,
+    sisteDato: PT.number,
+    sisteTekst: PT.string,
+    henvendelser: PT.arrayOf(henvendelse)
 });
 
 export const etikett = PT.shape({

@@ -1,5 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import { Infotekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
 import './dialoger.less';
@@ -11,11 +12,13 @@ import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 const Prikk = visibleIfHOC((props) => <div className="dialoger__prikk" {...props} />);
 
 function DialogVisning({ dialog, erValgt }) {
+    const dialogCls = (valgt, ulest) => classNames('dialoger__dialog', {
+        'dialoger__dialog--valgt': valgt,
+        'dialoger__dialog--ulest': ulest
+    });
+
     return (
-        <Lenkepanel
-            className={`dialoger__dialog ${erValgt && 'dialoger__dialog--valgt'} ${dialog.lest || 'dialoger__dialog--ulest'}`}
-            href={`/dialog/${dialog.id}`}
-        >
+        <Lenkepanel className={dialogCls(erValgt, !dialog.lest)} href={`/dialog/${dialog.id}`}>
             <Prikk visible={!dialog.lest} />
             <Infotekst><Dato>{dialog.sisteDato}</Dato></Infotekst>
             <Element>{dialog.overskrift}</Element>
