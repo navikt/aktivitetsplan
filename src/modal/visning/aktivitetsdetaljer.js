@@ -29,6 +29,11 @@ function Informasjonsfelt({ tittel, innhold }) {
     );
 }
 
+Informasjonsfelt.propTypes = {
+    tittel: PT.node.isRequired,
+    innhold: PT.string.isRequired
+};
+
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt, id } = valgtAktivitet;
 
@@ -73,40 +78,36 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
     const ledigStillingFelter = () => (
         [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} id={id} />,
+            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} />,
             <Informasjonsfelt
                 key="arbeidsgiver"
                 tittel={<FormattedMessage id="aktivitetdetaljer.arbeidsgiver-label" />}
                 innhold={arbeidsgiver}
-                id={id}
             />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} id={id} />,
+            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} />,
             <Informasjonsfelt
                 key="arbeidssted"
                 tittel={<FormattedMessage id="aktivitetdetaljer.arbeidssted-label" />}
                 innhold={arbeidssted}
-                id={id}
             />,
             lenkeKomponent(),
             <Informasjonsfelt
                 key="kontaktperson"
                 tittel={<FormattedMessage id="aktivitetdetaljer.kontaktperson-label" />}
                 innhold={kontaktperson}
-                id={id}
             />
         ]
     );
 
     const egenStillingFelter = () => (
         [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} id={id} />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} id={id} />,
+            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} />,
+            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} />,
             lenkeKomponent(),
             <Informasjonsfelt
                 key="hensikt"
                 tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
                 innhold={hensikt}
-                id={id}
             />
         ]
     );
@@ -118,16 +119,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         </section>
     );
 }
-
-Informasjonsfelt.propTypes = {
-    tittel: PT.string,
-    innhold: PT.string
-};
-
-Informasjonsfelt.defaultProps = {
-    tittel: undefined,
-    innhold: undefined
-};
 
 Aktivitetsdetaljer.propTypes = {
     className: PT.string,

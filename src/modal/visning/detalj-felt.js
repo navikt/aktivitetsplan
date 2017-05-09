@@ -13,7 +13,7 @@ function DetaljFelt({ tittel, children }) {
 
 DetaljFelt.propTypes = {
     children: PT.node.isRequired,
-    tittel: PT.string.isRequired
+    tittel: PT.oneOfType([PT.string.isRequired, PT.node.isRequired]).isRequired
 };
 
 export default visibleIfHOC(DetaljFelt);
