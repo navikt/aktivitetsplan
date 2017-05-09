@@ -45,7 +45,7 @@ class EgenAktivitetForm extends Component {
 
     visLukkDialog(e) { // eslint-disable-line
         if (this.props.isDirty) {
-            const melding = this.props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' }); // TODO: React-intl
+            const melding = this.props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' });
             e.returnValue = melding;
             return melding;
         }
