@@ -21,7 +21,6 @@ const BegrunnelseFullfortAktivitet = (props) => {
                 beskrivelseTekst={beskrivelseTekst}
                 lagrer={props.aktiviteter.status !== STATUS.OK}
                 onSubmit={(beskrivelseForm) => {
-                    console.log(beskrivelseForm)
                     props.lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
                     history.goBack();
                 }}
