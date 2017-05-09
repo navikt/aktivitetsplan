@@ -1,6 +1,7 @@
 import React, { PropTypes as PT } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
 function Aktivitetsbeskrivelse({ beskrivelse }) {
     return beskrivelse ? (
@@ -8,7 +9,7 @@ function Aktivitetsbeskrivelse({ beskrivelse }) {
             <Element className="aktivitetsbeskrivelse__tittel">
                 <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
             </Element>
-            <Normaltekst className="aktivitetsbeskrivelse__tekst">{beskrivelse}</Normaltekst>
+            <Tekstomrade className="aktivitetsbeskrivelse__tekst">{beskrivelse}</Tekstomrade>
         </section>
     ) : null;
 }
