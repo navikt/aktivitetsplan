@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
 import Lenke from './../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
@@ -38,7 +39,9 @@ function AktivitetsKort({ aktivitet, antallUlesteHenvendelser, isDragging, conne
             >
                 <div className="aktivitetskort__wrapper">
                     <div className="aktivitetskort__blokk">
-                        <Undertekst tag="p" className="aktivitetskort__type">{aktivitet.type}</Undertekst>
+                        <Undertekst tag="p" className="aktivitetskort__type">
+                            <FormattedMessage id={(`aktivitetskort.type.${aktivitet.type}`).toLowerCase()} />
+                        </Undertekst>
                         <Element tag="h1" className="aktivitetskort__tittel">{aktivitet.tittel}</Element>
                         <Normaltekst>{ [formaterDato(aktivitet.fraDato), formaterDato(aktivitet.tilDato)].filter((d) => d).join(' - ') }</Normaltekst>
                         <VisibleIfDiv visible={antallUlesteHenvendelser > 0} className="aktivitetskort__henvendelser">

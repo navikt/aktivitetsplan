@@ -58,7 +58,7 @@ function EndreAktivitet({ doOppdaterAktivitet, aktivitet, visVersjonskonflikt, s
             contentLabel="aktivitet-modal"
         >
             <article className="egen-aktivitet" aria-labelledby="modal-egen-aktivitet-header">
-                <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake" />
+                <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake" visConfirmDialog={formIsDirty} />
                 <ModalContainer>
                     <Versjonskonflikt visible={visVersjonskonflikt} tilbake={skjulVersjonskonflikt} slett={visAktivitet} />
                     <div className={visVersjonskonflikt && 'hidden'}>{renderForm()}</div>
