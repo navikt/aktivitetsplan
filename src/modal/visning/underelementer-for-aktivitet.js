@@ -11,10 +11,13 @@ import NyHenvendelse from '../../dialog/ny-henvendelse';
 import Henvendelser from '../../dialog/henvendelser';
 import './underelementer-for-aktivitet.less';
 import VisibleDiv from '../../felles-komponenter/utils/visible-if-div';
-
+import VisibleIfHOC from '../../hocs/visible-if';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
+
+const VisibleIfNyHenvendelse = VisibleIfHOC(NyHenvendelse);
 
 class UnderelementerForAktivitet extends Component {
 
@@ -41,6 +44,7 @@ class UnderelementerForAktivitet extends Component {
         const { vis } = this.state;
         const aktivitetId = aktivitet.id;
         const visDialog = vis === DIALOG;
+        const skjulNyHenvendelse = aktivitet.status === STATUS_FULLFOERT || aktivitet.status === STATUS_AVBRUTT;
         const cls = (classes) => classNames('underelementer-aktivitet', classes);
         const visHistorikk = vis === HISTORIKK;
 
@@ -89,10 +93,11 @@ class UnderelementerForAktivitet extends Component {
                 />
 
                 <VisibleDiv visible={visDialog} className="underelementer-aktivitet__dialogvisning">
-                    <NyHenvendelse
+                    <VisibleIfNyHenvendelse
                         formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
                         aktivitetId={aktivitetId}
+                        visible={!skjulNyHenvendelse}
                     />
                     <Henvendelser visible={!!dialog} dialog={dialog} />
                 </VisibleDiv>

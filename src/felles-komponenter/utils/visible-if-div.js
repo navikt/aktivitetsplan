@@ -1,5 +1,5 @@
 import React, { PropTypes as PT } from 'react';
-import { visibleIfHOC } from '../../hocs/visible-if';
+import visibleIfHOC from '../../hocs/visible-if';
 
 function VisibleIfDiv(props) {
     return <div {...props}>{props.children}</div>;

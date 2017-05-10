@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Infotekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
 import './dialoger.less';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';

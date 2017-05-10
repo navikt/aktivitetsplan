@@ -45,7 +45,7 @@ class EgenAktivitetForm extends Component {
 
     visLukkDialog(e) { // eslint-disable-line
         if (this.props.isDirty) {
-            const melding = this.props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' }); // TODO: React-intl
+            const melding = this.props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' });
             e.returnValue = melding;
             return melding;
         }
@@ -101,6 +101,7 @@ class EgenAktivitetForm extends Component {
                         disabled={this.props.avtalt === true}
                         labelId="egen-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
+                        visTellerFra={500}
                     />
                 </div>
                 <div className="aktivitetskjema__lagre-knapp">

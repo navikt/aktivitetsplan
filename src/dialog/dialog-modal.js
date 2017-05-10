@@ -13,7 +13,7 @@ import history from '../history';
 import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import PilKnapp from '../felles-komponenter/utils/pil-knapp';
 import NyHenvendelse from './ny-henvendelse';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 import './dialog-modal.less';
 import * as AppPT from '../proptypes';
 

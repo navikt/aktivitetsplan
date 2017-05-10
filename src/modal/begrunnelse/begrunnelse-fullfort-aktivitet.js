@@ -6,6 +6,7 @@ import BegrunnelseAktivitet from './begrunnelse-aktivitet';
 import { fullforAktivitet } from '../../ducks/aktiviteter';
 import { STATUS } from '../../ducks/utils';
 import StandardModal from '../modal-standard';
+import history from '../../history';
 
 const BegrunnelseFullfortAktivitet = (props) => {
     const headerTekst = <FormattedMessage id="opprett-begrunnelse.fullfoert.header" />;
@@ -19,7 +20,10 @@ const BegrunnelseFullfortAktivitet = (props) => {
                 headerTekst={headerTekst}
                 beskrivelseTekst={beskrivelseTekst}
                 lagrer={props.aktiviteter.status !== STATUS.OK}
-                onLagre={(begrunnelse) => props.lagreBegrunnelse(valgtAktivitet, begrunnelse)}
+                onSubmit={(beskrivelseForm) => {
+                    props.lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
+                    history.goBack();
+                }}
             />
         </StandardModal>
     );

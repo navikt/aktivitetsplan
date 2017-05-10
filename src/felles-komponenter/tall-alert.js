@@ -1,6 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import './tall-alert.less';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 
 
 function Dato({ children }) {

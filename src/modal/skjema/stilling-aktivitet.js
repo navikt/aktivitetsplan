@@ -34,7 +34,7 @@ function StillingAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl })
             contentLabel="aktivitet-modal"
         >
             <section className="stilling-aktivitet" aria-labelledby="modal-stillings-aktivitet-header">
-                <ModalHeader visConfirmDialog={formIsDirty} />
+                <ModalHeader visConfirmDialog={formIsDirty} tilbakeTekstId="ny-aktivitet-modal.tilbake" />
                 <ModalContainer>
                     <StillingAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
                 </ModalContainer>
