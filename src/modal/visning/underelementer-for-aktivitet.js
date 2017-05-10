@@ -109,13 +109,14 @@ class UnderelementerForAktivitet extends Component {
 
 UnderelementerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    dialog: AppPT.dialog.isRequired,
+    dialog: AppPT.dialog,
     antallUlesteHenvendelser: PT.number.isRequired,
     className: PT.string
 };
 
 UnderelementerForAktivitet.defaultProps = {
-    className: ''
+    className: '',
+    dialog: undefined
 };
 
 const mapStateToProps = (state, props) => {
