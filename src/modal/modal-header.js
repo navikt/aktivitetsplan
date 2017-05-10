@@ -1,6 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
 import Bilde from 'nav-react-design/dist/bilde';
 import Tilbakeknapp from '../felles-komponenter/utils/tilbakeknapp';
@@ -15,7 +15,7 @@ function ModalHeader({ tilbakeTekstId, normalTekstId, tilbakeTekstValues, normal
             { /* header til slutt for å få denne sist i tabrekkefølgen */ }
             <header className="modal-header">
                 <VisibleIfSpan className="modal-header-skillestrek" visible={aktivitetErLaast}>
-                    <Bilde className="modal-header-bilde" src={hengelasSvg} alt="hengelåsikon" />
+                    <Bilde className="modal-header-bilde" src={hengelasSvg} alt={props.intl.formatMessage({ id: 'hengelas-icon-alt' })} />
                 </VisibleIfSpan>
                 {tilbakeTekstId && <Tilbakeknapp tekstId={tilbakeTekstId} tekstValues={tilbakeTekstValues} visConfirmDialog={visConfirmDialog} /> }
                 {normalTekstId && <Normaltekst><FormattedMessage id={normalTekstId} values={normalTekstValues} /></Normaltekst>}
@@ -32,7 +32,8 @@ ModalHeader.propTypes = {
     visConfirmDialog: PT.bool,
     className: PT.string,
     children: PT.node,
-    aktivitetErLaast: PT.bool
+    aktivitetErLaast: PT.bool,
+    intl: intlShape.isRequired
 };
 
 ModalHeader.defaultProps = {
@@ -46,4 +47,4 @@ ModalHeader.defaultProps = {
     aktivitetErLaast: false
 };
 
-export default ModalHeader;
+export default injectIntl(ModalHeader);
