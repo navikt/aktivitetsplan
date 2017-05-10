@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { Router, applyRouterMiddleware } from 'react-router';
 import { useScroll } from 'react-router-scroll';
 import history from './history';

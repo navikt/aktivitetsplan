@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-react-design/dist/knapp';
 import classNames from 'classnames';

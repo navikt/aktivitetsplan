@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { addLocaleData, IntlProvider as Provider } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

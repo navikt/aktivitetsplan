@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';

@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';

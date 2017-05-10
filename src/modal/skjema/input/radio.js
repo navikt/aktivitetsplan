@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
 import { Field } from 'redux-form';
 

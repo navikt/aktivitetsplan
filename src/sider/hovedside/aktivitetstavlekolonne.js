@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import Bilde from 'nav-react-design/dist/bilde';

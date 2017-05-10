@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { formaterDatoTid } from '../utils';
 
 function Dato({ children }) {

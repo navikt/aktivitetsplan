@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { Element } from 'nav-frontend-typografi';
 import visibleIfHOC from '../../hocs/visible-if';
 

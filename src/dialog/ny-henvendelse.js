@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';

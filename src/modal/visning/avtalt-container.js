@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import Icon from 'nav-frontend-ikoner-assets';
 import { connect } from 'react-redux';
 import classNames from 'classnames';

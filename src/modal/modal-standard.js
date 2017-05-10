@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Modal from './modal';
 import { LUKK_MODAL } from '../ducks/modal';

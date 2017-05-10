@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import './modal-footer.less';
 
 function ModalFooter({ children }) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Knapp } from 'nav-frontend-knapper';

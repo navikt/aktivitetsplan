@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { Link } from 'react-router';
 import NavLenkepanel from 'nav-frontend-lenkepanel';
 

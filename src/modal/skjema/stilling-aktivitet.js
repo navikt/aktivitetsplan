@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { injectIntl, intlShape } from 'react-intl';

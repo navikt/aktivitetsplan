@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router';
 import { erInternlenke } from '../../utils';

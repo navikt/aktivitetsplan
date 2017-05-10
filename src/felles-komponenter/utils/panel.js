@@ -1,5 +1,5 @@
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import classNames from 'classnames';
 
 export const cls = (className, props, ...args) => classNames('panel', className, ...args, {

@@ -1,6 +1,6 @@
 /* eslint-env browser*/
 import React, { Component } from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { FormattedDate, injectIntl, intlShape } from 'react-intl';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';

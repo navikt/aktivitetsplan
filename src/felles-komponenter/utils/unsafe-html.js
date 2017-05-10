@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger */
 import React from 'react';
-import PT from 'prop-types'
+import PT from 'prop-types';
 import classNames from 'classnames';
 
 const cls = (className) => classNames('unsafe-html', className);
