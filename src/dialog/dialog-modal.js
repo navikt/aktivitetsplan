@@ -33,56 +33,106 @@ function dialogOpprettet(dialog) {
     history.push(`/dialog/${dialog.id}`);
 }
 
-function DialogModalContent({ valgtDialog, valgtAktivitetId, navigerTil, harNyDialog, harNyDialogEllerValgtDialog }) {
-    const harValgtDialog = !!valgtDialog;
+
+function Header({ navigerTil, harNyDialogEllerValgtDialog }) {
+    return (
+        <div className="dialog-modal__header">
+            <PilKnapp visible={harNyDialogEllerValgtDialog} className="dialog-modal__tilbake-knapp" onClick={tilbake} />
+            <Undertittel className="dialog-modal__tittel">
+                <FormattedMessage id="dialog.tittel" />
+            </Undertittel>
+            <Lukknapp overstHjorne onClick={() => navigerTil('/')}>
+                <FormattedMessage id="dialog.modal.lukk-dialog" />
+            </Lukknapp>
+        </div>
+    );
+}
+
+Header.propTypes = {
+    navigerTil: PT.func.isRequired,
+    harNyDialogEllerValgtDialog: PT.bool.isRequired
+};
+
+function VenstreKolonne({ valgtDialog, harNyDialog, harNyDialogEllerValgtDialog }) {
+    const className = classNames(
+        "dialog-modal__kolonne",
+        "dialog-modal__kolonne--dialoger", {
+            "dialog-modal__kolonne--dialoger-valgt-dialog": harNyDialogEllerValgtDialog
+        });
 
     return (
-        <div className="dialog-modal__wrapper">
-            <div className="dialog-modal__header">
-                <PilKnapp visible={harNyDialogEllerValgtDialog} className="dialog-modal__tilbake-knapp" onClick={tilbake} />
-                <Undertittel className="dialog-modal__tittel">
-                    <FormattedMessage id="dialog.tittel" />
-                </Undertittel>
-                <Lukknapp overstHjorne onClick={() => navigerTil('/')}>
-                    <FormattedMessage id="dialog.modal.lukk-dialog" />
-                </Lukknapp>
-            </div>
-            <div className="dialog-modal__innhold">
-                <div className={`dialog-modal__kolonne dialog-modal__kolonne--dialoger ${harNyDialogEllerValgtDialog && 'dialog-modal__kolonne--dialoger-valgt-dialog'}`}>
-                    <section className="dialog-modal__ny-dialog">
-                        <Knapp
-                            onClick={nyDialog}
-                            disabled={harNyDialog}
-                            className="dialog-modal__ny-dialog-knapp"
-                        >
-                            <FormattedMessage id="dialog.modal.ny-dialog" />
-                        </Knapp>
-                    </section>
-                    <Dialoger className="dialog-modal__dialoger" valgtDialog={valgtDialog} />
-                </div>
-                <VisibleDiv
-                    visible={harNyDialogEllerValgtDialog}
-                    className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
+        <div className={className}>
+            <section className="dialog-modal__ny-dialog">
+                <Knapp
+                    onClick={nyDialog}
+                    disabled={harNyDialog}
+                    className="dialog-modal__ny-dialog-knapp"
                 >
-                    <VisibleDiv visible={harNyDialog}>
-                        <Undertittel>
-                            <FormattedMessage id="dialog.ny-dialog" />
-                        </Undertittel>
-                        <NyHenvendelse
-                            formNavn="ny-dialog"
-                            onComplete={dialogOpprettet}
-                        />
-                    </VisibleDiv>
-                    <VisibleDiv visible={harValgtDialog}>
-                        <Knappelenke
-                            visible={!!valgtAktivitetId}
-                            onClick={() => navigerTil(`/aktivitet/aktivitet/${valgtAktivitetId}`)}
-                        >
-                            <FormattedMessage id="dialog.modal.til-aktiviteten" />
-                        </Knappelenke>
-                        <Dialog dialog={valgtDialog} />
-                    </VisibleDiv>
-                </VisibleDiv>
+                    <FormattedMessage id="dialog.modal.ny-dialog" />
+                </Knapp>
+            </section>
+            <Dialoger className="dialog-modal__dialoger" valgtDialog={valgtDialog} />
+        </div>
+    );
+}
+
+
+VenstreKolonne.propTypes = {
+    valgtDialog: AppPT.dialog,
+    harNyDialog: PT.bool.isRequired,
+    harNyDialogEllerValgtDialog: PT.bool.isRequired
+};
+
+VenstreKolonne.defaultProps = {
+    valgtDialog: undefined
+};
+
+
+function HoyreKolonne({ navigerTil, valgtDialog, harValgtDialog, harNyDialog, harNyDialogEllerValgtDialog, valgtAktivitetId }) {
+
+    function apneAktivitet(){
+        navigerTil(`/aktivitet/aktivitet/${valgtAktivitetId}`);
+    }
+
+    return (
+        <VisibleDiv visible={harNyDialogEllerValgtDialog} className="dialog-modal__kolonne dialog-modal__kolonne--dialog">
+            <VisibleDiv visible={harNyDialog}>
+                <Undertittel>
+                    <FormattedMessage id="dialog.ny-dialog" />
+                </Undertittel>
+                <NyHenvendelse formNavn="ny-dialog" onComplete={dialogOpprettet}/>
+            </VisibleDiv>
+            <VisibleDiv visible={harValgtDialog}>
+                <Knappelenke visible={!!valgtAktivitetId} onClick={apneAktivitet}>
+                    <FormattedMessage id="dialog.modal.til-aktiviteten" />
+                </Knappelenke>
+                <Dialog dialog={valgtDialog} />
+            </VisibleDiv>
+        </VisibleDiv>
+    );
+}
+
+HoyreKolonne.propTypes = {
+    valgtDialog: AppPT.dialog,
+    valgtAktivitetId: PT.string,
+    navigerTil: PT.func.isRequired,
+    harNyDialog: PT.bool.isRequired,
+    harValgtDialog: PT.bool.isRequired,
+    harNyDialogEllerValgtDialog: PT.bool.isRequired
+};
+
+HoyreKolonne.defaultProps = {
+    valgtDialog: undefined,
+    valgtAktivitetId: undefined
+};
+
+function DialogModalContent(props) {
+    return (
+        <div className="dialog-modal__wrapper">
+            <Header {...props} />
+            <div className="dialog-modal__innhold">
+                <VenstreKolonne {...props} />
+                <HoyreKolonne {...props} />
             </div>
         </div>
     );
@@ -126,15 +176,19 @@ class DialogModal extends Component { // eslint-disable-line react/no-multi-comp
     render() {
         const state = this.state || {};
         const { harNyDialogEllerValgtDialog } = this.props;
+        const className = classNames('dialog-modal', {
+            'dialog-modal--vis': state.vis,
+            'dialog-modal--full-bredde': harNyDialogEllerValgtDialog
+        });
+
+        function lukkModal() {
+            this.navigerTil('/');
+        }
+
         return (
             <div>
                 <Hovedside />
-                <Modal
-                    className={classNames('dialog-modal', state.vis && 'dialog-modal--vis', harNyDialogEllerValgtDialog && 'dialog-modal--full-bredde')}
-                    isOpen
-                    closeButton={false}
-                    onRequestClose={() => this.navigerTil('/')}
-                >
+                <Modal className={className} closeButton={false} onRequestClose={lukkModal} isOpen>
                     <DialogModalContent navigerTil={this.navigerTil} {...this.props} />
                 </Modal>
             </div>
