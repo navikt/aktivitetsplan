@@ -50,7 +50,7 @@ BegrunnelseAktivitet.propTypes = {
 };
 
 const forLang = rules.maxLength(MAKS_LENGDE,
-    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-lang" values={{ MAKS_LENGDE: MAKS_LENGDE }} />
+    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-lang" values={{ MAKS_LENGDE }} />
 );
 
 const pakrevd = rules.minLength(0, <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-kort" />);
