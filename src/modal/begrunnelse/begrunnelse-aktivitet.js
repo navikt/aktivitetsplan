@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
 import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
@@ -50,7 +51,7 @@ BegrunnelseAktivitet.propTypes = {
 };
 
 const forLang = rules.maxLength(MAKS_LENGDE,
-    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-lang" values={{ antall_tegn: MAKS_LENGDE }} />
+    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-lang" values={{ MAKS_LENGDE }} />
 );
 
 const pakrevd = rules.minLength(0, <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-kort" />);

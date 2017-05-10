@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
 import * as AppPT from '../../proptypes';

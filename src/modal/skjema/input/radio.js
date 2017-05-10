@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
 import { Field } from 'redux-form';
 
@@ -9,7 +10,7 @@ function Radio({ feltNavn, className, value, checked, onChange, ...props }) {
             className={className}
             type="radio"
             value={value}
-            component={(compProp) =>
+            component={(compProp) => (
                 <NavRadio
                     {...props}
                     checked={checked}
@@ -19,7 +20,7 @@ function Radio({ feltNavn, className, value, checked, onChange, ...props }) {
                         onChange(e);
                     }}
                 />
-            }
+            )}
         />
     );
 }

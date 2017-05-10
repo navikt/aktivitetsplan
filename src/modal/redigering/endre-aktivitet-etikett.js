@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
@@ -75,13 +76,14 @@ class EndreAktivitetEtikett extends Component {
 
         const etikettKnapper = etiketter
             .sort((a, b) => typePrioritet[b.type] - typePrioritet[a.type])
-            .map((e) => <EtikettKnapp
-                key={e.id}
-                etikett={e}
-                erValgt={e.id === valgtEtikett}
-                velgEtikett={velgEtikett}
-            />
-            );
+            .map((e) => (
+                <EtikettKnapp
+                    key={e.id}
+                    etikett={e}
+                    erValgt={e.id === valgtEtikett}
+                    velgEtikett={velgEtikett}
+                />
+            ));
 
         return (
             <section className="endre-aktivitet-etikett">

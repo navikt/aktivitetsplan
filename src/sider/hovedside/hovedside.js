@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { Container } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import ScrollArea from 'react-scrollbar';
 import classNames from 'classnames';
 import { autobind } from '../../../utils';

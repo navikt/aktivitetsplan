@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
@@ -73,6 +74,8 @@ class Aktivitetvisning extends Component {
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
+        const aktivitetErLaast = valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT;
+
         return (
             <StandardModal name="aktivitetsvisningModal">
                 <ModalHeader
@@ -80,6 +83,7 @@ class Aktivitetvisning extends Component {
                     normalTekstValues={{ status: valgtAktivitet.status, type: valgtAktivitet.type }}
                     className="side-innhold"
                     aria-labelledby="modal-aktivitetsvisning-header"
+                    aktivitetErLaast={aktivitetErLaast}
                 >
                     <ModalContainer>
                         <div className="aktivitetvisning">

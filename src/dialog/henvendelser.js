@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';
@@ -47,7 +48,7 @@ class Dialog extends Component {
         const { dialog } = this.props;
         const henvendelser = [...dialog.henvendelser]
             .sort((a, b) => b.sendt - a.sendt)
-            .map((h) => <Henvendelse key={h.id} henvendelse={h} />);
+            .map((h) => <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />);
         return <div className="dialog-henvendelser">{henvendelser}</div>;
     }
 }

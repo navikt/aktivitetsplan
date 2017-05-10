@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
@@ -109,13 +110,14 @@ class UnderelementerForAktivitet extends Component {
 
 UnderelementerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    dialog: AppPT.dialog.isRequired,
+    dialog: AppPT.dialog,
     antallUlesteHenvendelser: PT.number.isRequired,
     className: PT.string
 };
 
 UnderelementerForAktivitet.defaultProps = {
-    className: ''
+    className: '',
+    dialog: undefined
 };
 
 const mapStateToProps = (state, props) => {

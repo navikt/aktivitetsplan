@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';

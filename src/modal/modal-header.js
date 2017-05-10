@@ -1,16 +1,23 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
+import Bilde from 'nav-react-design/dist/bilde';
 import Tilbakeknapp from '../felles-komponenter/utils/tilbakeknapp';
 import './modal-header.less';
+import hengelasSvg from '../img/hengelas.svg';
+import VisibleIfSpan from '../felles-komponenter/utils/visible-if-span';
 
-function ModalHeader({ tilbakeTekstId, normalTekstId, tilbakeTekstValues, normalTekstValues, className, children, visConfirmDialog, ...props }) {
+function ModalHeader({ tilbakeTekstId, normalTekstId, tilbakeTekstValues, normalTekstValues, className, children, visConfirmDialog, aktivitetErLaast, intl, ...props }) {
     return (
         <div className={classNames('modal-header-wrapper', className)} {...props} >
             <div>{children}</div>
             { /* header til slutt for å få denne sist i tabrekkefølgen */ }
             <header className="modal-header">
+                <VisibleIfSpan className="modal-header-skillestrek" visible={aktivitetErLaast}>
+                    <Bilde className="modal-header-bilde" src={hengelasSvg} alt={intl.formatMessage({ id: 'hengelas-icon-alt' })} />
+                </VisibleIfSpan>
                 {tilbakeTekstId && <Tilbakeknapp tekstId={tilbakeTekstId} tekstValues={tilbakeTekstValues} visConfirmDialog={visConfirmDialog} /> }
                 {normalTekstId && <Normaltekst><FormattedMessage id={normalTekstId} values={normalTekstValues} /></Normaltekst>}
             </header>
@@ -25,7 +32,9 @@ ModalHeader.propTypes = {
     normalTekstValues: PT.object, // eslint-disable-line react/forbid-prop-types
     visConfirmDialog: PT.bool,
     className: PT.string,
-    children: PT.node
+    children: PT.node,
+    aktivitetErLaast: PT.bool,
+    intl: intlShape.isRequired
 };
 
 ModalHeader.defaultProps = {
@@ -35,7 +44,8 @@ ModalHeader.defaultProps = {
     normalTekstValues: undefined,
     visConfirmDialog: false,
     className: undefined,
-    children: undefined
+    children: undefined,
+    aktivitetErLaast: false
 };
 
-export default ModalHeader;
+export default injectIntl(ModalHeader);
