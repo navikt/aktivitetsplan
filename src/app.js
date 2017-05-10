@@ -20,7 +20,7 @@ function App({ routing }) {
                     {routing}
                 </Router>
                 <Feature name="timeoutbox">
-                    <Timeoutbox currentTime={Date.now()} />
+                    <Timeoutbox />
                 </Feature>
             </div>
         </Provider>
