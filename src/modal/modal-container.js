@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types'
 import './modal-container.less';
 
 function ModalContainer({ children }) {

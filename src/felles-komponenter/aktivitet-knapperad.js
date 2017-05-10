@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types'
 import classNames from 'classnames';
 import { Hovedknapp, Knapp } from 'nav-react-design/dist/knapp';
 

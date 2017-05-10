@@ -1,4 +1,4 @@
-import { PropTypes as PT } from 'react';
+import PT from 'prop-types';
 
 export const aktivitet = PT.shape({
     tittel: PT.string.isRequired,

@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types'
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
