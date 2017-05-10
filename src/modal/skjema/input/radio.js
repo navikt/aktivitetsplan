@@ -10,7 +10,7 @@ function Radio({ feltNavn, className, value, checked, onChange, ...props }) {
             className={className}
             type="radio"
             value={value}
-            component={(compProp) =>
+            component={(compProp) => (
                 <NavRadio
                     {...props}
                     checked={checked}
@@ -20,7 +20,7 @@ function Radio({ feltNavn, className, value, checked, onChange, ...props }) {
                         onChange(e);
                     }}
                 />
-            }
+            )}
         />
     );
 }

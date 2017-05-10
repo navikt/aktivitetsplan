@@ -48,7 +48,7 @@ class Dialog extends Component {
         const { dialog } = this.props;
         const henvendelser = [...dialog.henvendelser]
             .sort((a, b) => b.sendt - a.sendt)
-            .map((h) => <Henvendelse key={h.id} henvendelse={h} />);
+            .map((h) => <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />);
         return <div className="dialog-henvendelser">{henvendelser}</div>;
     }
 }
