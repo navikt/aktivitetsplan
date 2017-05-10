@@ -55,9 +55,9 @@ Header.propTypes = {
 
 function VenstreKolonne({ valgtDialog, harNyDialog, harNyDialogEllerValgtDialog }) {
     const className = classNames(
-        "dialog-modal__kolonne",
-        "dialog-modal__kolonne--dialoger", {
-            "dialog-modal__kolonne--dialoger-valgt-dialog": harNyDialogEllerValgtDialog
+        'dialog-modal__kolonne',
+        'dialog-modal__kolonne--dialoger', {
+            'dialog-modal__kolonne--dialoger-valgt-dialog': harNyDialogEllerValgtDialog
         });
 
     return (
@@ -89,8 +89,7 @@ VenstreKolonne.defaultProps = {
 
 
 function HoyreKolonne({ navigerTil, valgtDialog, harValgtDialog, harNyDialog, harNyDialogEllerValgtDialog, valgtAktivitetId }) {
-
-    function apneAktivitet(){
+    function apneAktivitet() {
         navigerTil(`/aktivitet/aktivitet/${valgtAktivitetId}`);
     }
 
@@ -100,7 +99,7 @@ function HoyreKolonne({ navigerTil, valgtDialog, harValgtDialog, harNyDialog, ha
                 <Undertittel>
                     <FormattedMessage id="dialog.ny-dialog" />
                 </Undertittel>
-                <NyHenvendelse formNavn="ny-dialog" onComplete={dialogOpprettet}/>
+                <NyHenvendelse formNavn="ny-dialog" onComplete={dialogOpprettet} />
             </VisibleDiv>
             <VisibleDiv visible={harValgtDialog}>
                 <Knappelenke visible={!!valgtAktivitetId} onClick={apneAktivitet}>
