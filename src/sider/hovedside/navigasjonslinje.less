@@ -2,28 +2,28 @@
 
 .navigasjonslinje {
   .blokk-s();
-
   display: flex;
   justify-content: flex-start;
   background: @hvit;
-  border-radius: .25rem;
-  padding: 1rem;
+  border-radius: @border-radius-base;
+  padding: 0.5rem 1rem;
 
-  &__element {
-    color: @navMorkGra;
-    text-decoration: none;
-    margin-right: 1rem;
+  &:hover {
+    text-decoration: underline;
+    color: @bla;
+  }
+}
 
-    &:hover {
-      text-decoration: underline;
-      color: @bla;
-    }
+.navigasjonslinje__element {
+  color: @navMorkGra;
+  text-decoration: none;
+  margin-right: 1rem;
+}
 
-    &-content {
-      &:empty{
-        display: none;
-      }
-      margin-left: 0.25rem;
-    }
+.navigasjonslinje__element-content {
+  margin-left: 0.25rem;
+
+  &:empty {
+    display: none;
   }
 }

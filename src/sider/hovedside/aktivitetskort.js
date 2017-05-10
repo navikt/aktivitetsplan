@@ -34,21 +34,18 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
                 className={classNames('aktivitetskort', erFlyttbar && 'aktivitetskort--flyttbar')}
                 brukLenkestyling={false}
             >
-                <div className="aktivitetskort__wrapper">
-                    <div className="aktivitetskort__blokk">
-                        <Undertekst tag="p" className="aktivitetskort__type">
-                            <FormattedMessage id={(`aktivitetskort.type.${aktivitet.type}`).toLowerCase()} />
-                        </Undertekst>
-                        <Element tag="h1" className="aktivitetskort__tittel">{aktivitet.tittel}</Element>
-                        <Normaltekst>
-                            {
-                                [formaterDato(aktivitet.fraDato), formaterDato(aktivitet.tilDato)]
-                                    .filter((d) => d).join(' - ')
-                            }
-                        </Normaltekst>
-                    </div>
-                    <AktivitetskortTillegg aktivitet={aktivitet} visible={!!visible} />
-                </div>
+                <Undertekst tag="p" className="aktivitetskort__type">
+                    <FormattedMessage id={(`aktivitetskort.type.${aktivitet.type}`).toLowerCase()} />
+                </Undertekst>
+                <Element tag="h1" className="aktivitetskort__tittel">{aktivitet.tittel}</Element>
+                <Normaltekst className="aktivitetskort__dato">
+                    {
+                        [formaterDato(aktivitet.fraDato), formaterDato(aktivitet.tilDato)]
+                            .filter((d) => d)
+                            .join(' - ')
+                    }
+                </Normaltekst>
+                <AktivitetskortTillegg aktivitet={aktivitet} visible={!!visible} />
             </Lenke>
         </article>
     );
