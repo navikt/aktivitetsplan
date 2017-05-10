@@ -73,6 +73,8 @@ class Aktivitetvisning extends Component {
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
+        const aktivitetErLaast = valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT;
+
         return (
             <StandardModal name="aktivitetsvisningModal">
                 <ModalHeader
@@ -80,6 +82,7 @@ class Aktivitetvisning extends Component {
                     normalTekstValues={{ status: valgtAktivitet.status, type: valgtAktivitet.type }}
                     className="side-innhold"
                     aria-labelledby="modal-aktivitetsvisning-header"
+                    aktivitetErLaast={aktivitetErLaast}
                 >
                     <ModalContainer>
                         <div className="aktivitetvisning">
