@@ -85,7 +85,7 @@ EndreAktivitet.defaultProps = {
 
 const mapStateToProps = (state, props) => {
     const id = props.params.id;
-    const aktivitet = state.data.aktiviteter.data.find((a) => a.id === id);
+    const aktivitet = state.data.aktiviteter.data.find((a) => a.id === id) || {};
     const formNavn = aktivitet.type === STILLING_AKTIVITET_TYPE ? stillingFormNavn : egenFormNavn;
     return {
         aktivitet,
