@@ -8,14 +8,14 @@ import './modal-header.less';
 import hengelasSvg from '../img/hengelas.svg';
 import VisibleIfSpan from '../felles-komponenter/utils/visible-if-span';
 
-function ModalHeader({ tilbakeTekstId, normalTekstId, tilbakeTekstValues, normalTekstValues, className, children, visConfirmDialog, aktivitetErLaast, ...props }) {
+function ModalHeader({ tilbakeTekstId, normalTekstId, tilbakeTekstValues, normalTekstValues, className, children, visConfirmDialog, aktivitetErLaast, intl, ...props }) {
     return (
         <div className={classNames('modal-header-wrapper', className)} {...props} >
             <div>{children}</div>
             { /* header til slutt for å få denne sist i tabrekkefølgen */ }
             <header className="modal-header">
                 <VisibleIfSpan className="modal-header-skillestrek" visible={aktivitetErLaast}>
-                    <Bilde className="modal-header-bilde" src={hengelasSvg} alt={props.intl.formatMessage({ id: 'hengelas-icon-alt' })} />
+                    <Bilde className="modal-header-bilde" src={hengelasSvg} alt={intl.formatMessage({ id: 'hengelas-icon-alt' })} />
                 </VisibleIfSpan>
                 {tilbakeTekstId && <Tilbakeknapp tekstId={tilbakeTekstId} tekstValues={tilbakeTekstValues} visConfirmDialog={visConfirmDialog} /> }
                 {normalTekstId && <Normaltekst><FormattedMessage id={normalTekstId} values={normalTekstValues} /></Normaltekst>}
