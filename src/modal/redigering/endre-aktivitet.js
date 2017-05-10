@@ -14,13 +14,9 @@ import ModalContainer from '../modal-container';
 import Versjonskonflikt from './versjonskonflikt';
 import Modal from '../modal';
 import { LUKK_MODAL } from '../../ducks/modal';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
-
-function EndreAktivitet({ doOppdaterAktivitet, aktivitet, visVersjonskonflikt, skjulVersjonskonflikt, intl, formIsDirty, lukkModal }) {
-    if (!aktivitet) {
-        return null;
-    }
-
+function EndreAktivitet({ aktivitet, doOppdaterAktivitet, visVersjonskonflikt, skjulVersjonskonflikt, intl, lukkModal, formIsDirty, aktiviteter }) {
     function visAktivitet() {
         history.push(`aktivitet/aktivitet/${aktivitet.id}`);
         skjulVersjonskonflikt();
@@ -59,10 +55,12 @@ function EndreAktivitet({ doOppdaterAktivitet, aktivitet, visVersjonskonflikt, s
         >
             <article className="egen-aktivitet" aria-labelledby="modal-egen-aktivitet-header">
                 <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake" visConfirmDialog={formIsDirty} />
-                <ModalContainer>
-                    <Versjonskonflikt visible={visVersjonskonflikt} tilbake={skjulVersjonskonflikt} slett={visAktivitet} />
-                    <div className={visVersjonskonflikt && 'hidden'}>{renderForm()}</div>
-                </ModalContainer>
+                <Innholdslaster avhengigheter={[aktiviteter]}>
+                    <ModalContainer>
+                        <Versjonskonflikt visible={visVersjonskonflikt} tilbake={skjulVersjonskonflikt} slett={visAktivitet} />
+                        <div className={visVersjonskonflikt && 'hidden'}>{renderForm()}</div>
+                    </ModalContainer>
+                </Innholdslaster>
             </article>
         </Modal>
     );
@@ -74,13 +72,16 @@ EndreAktivitet.propTypes = {
     visVersjonskonflikt: PT.bool.isRequired,
     skjulVersjonskonflikt: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
+    aktiviteter: PT.shape({
+        status: PT.string.isRequired
+    }).isRequired,
     formIsDirty: PT.bool.isRequired,
     intl: intlShape.isRequired,
     lukkModal: PT.func.isRequired
 };
 
 EndreAktivitet.defaultProps = {
-    aktivitet: undefined
+    aktivitet: {}
 };
 
 const mapStateToProps = (state, props) => {
@@ -89,6 +90,7 @@ const mapStateToProps = (state, props) => {
     const formNavn = aktivitet.type === STILLING_AKTIVITET_TYPE ? stillingFormNavn : egenFormNavn;
     return {
         aktivitet,
+        aktiviteter: state.data.aktiviteter,
         visVersjonskonflikt: state.view.endreAktivitet.visVersjonskonflikt,
         formIsDirty: isDirty(formNavn)(state)
     };
