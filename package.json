@@ -65,7 +65,7 @@
     "nav-frontend-typografi-style": "0.1.10",
     "nav-logger": "1.0.5",
     "nav-react-design": "0.1.18",
-    "prop-types": "^15.5.9",
+    "prop-types": "15.5.9",
     "query-string": "4.3.4",
     "react": "15.5.4",
     "react-collapse": "2.3.3",
