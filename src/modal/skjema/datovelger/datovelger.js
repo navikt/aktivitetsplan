@@ -26,6 +26,21 @@ class DatoField extends Component {
         };
     }
 
+    componentDidMount() {
+        this.container.addEventListener('focusout', this.onFocusOut);
+    }
+
+    componentWillUnmount() {
+        this.container.removeEventListener('focusout', this.onFocusOut);
+    }
+
+    onFocusOut(e) {
+        const targetErChildnode = this.container.contains(e.relatedTarget);
+        if (!targetErChildnode) {
+            this.lukk(false);
+        }
+    }
+
     onKeyUp(e) {
         const ESCAPE_KEYCODE = 27;
         if (e.which === ESCAPE_KEYCODE) {
@@ -53,11 +68,13 @@ class DatoField extends Component {
         });
     }
 
-    lukk() {
+    lukk(settFokus = true) {
         this.setState({
             erApen: false
         });
-        this.toggleButton.focus();
+        if (settFokus) {
+            this.toggleButton.focus();
+        }
     }
 
     render() {
@@ -70,7 +87,7 @@ class DatoField extends Component {
         };
 
         return (
-            <div className="datovelger skjemaelement">
+            <div className="datovelger skjemaelement" ref={(container) => { this.container = container; }}>
                 <label className="skjemaelement__label" htmlFor={id}>{label}</label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"
