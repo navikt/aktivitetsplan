@@ -36,7 +36,7 @@ export default function reducer(state = initalState, action) {
     }
 }
 
-// Action Creators
+// Action Creators - NB! Disse brukes av aktivitetsplan
 export function hentOppfolgingStatus() {
     return doThenDispatch(() => Api.hentOppfolgingStatus(), {
         OK,
