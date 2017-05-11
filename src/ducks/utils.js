@@ -1,4 +1,5 @@
 import { fetchInterceptor } from '~config'; // eslint-disable-line
+import { update as resetTimeout } from '../felles-komponenter/timeoutbox/timeoutbox';
 
 /* eslint-env browser */
 export const STATUS = {
@@ -76,6 +77,7 @@ export const getCookie = (name) => {
 };
 
 export function fetchToJson(url, config = {}) {
+    resetTimeout();
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
     return (fetchInterceptor ? fetchInterceptor(fetch, url, configMedCredentials) : fetch(url, configMedCredentials))
         .then(sjekkStatuskode)

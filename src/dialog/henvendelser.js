@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';

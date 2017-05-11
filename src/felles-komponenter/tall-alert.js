@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import './tall-alert.less';
 import visibleIfHOC from '../hocs/visible-if';
 

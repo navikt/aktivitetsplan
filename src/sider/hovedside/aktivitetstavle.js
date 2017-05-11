@@ -1,4 +1,5 @@
-import React, { PropTypes as PT, Component } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Tavle from './tavle/tavle';
 import Kolonne from './aktivitetstavlekolonne';
