@@ -21,11 +21,11 @@ export const henvendelse = PT.shape({
 export const dialog = PT.shape({
     id: PT.string.isRequired,
     overskrift: PT.string.isRequired,
-    aktivitetId: PT.string.isRequired,
-    henvendelser: PT.arrayOf(henvendelse).isRequired,
-    lest: PT.bool.isRequired,
-    sisteDato: PT.string.isRequired,
-    sisteTekst: PT.string.isRequired
+    aktivitetId: PT.string,
+    lest: PT.bool,
+    sisteDato: PT.number,
+    sisteTekst: PT.string,
+    henvendelser: PT.arrayOf(henvendelse).isRequired
 });
 
 export const etikett = PT.shape({
@@ -38,6 +38,11 @@ export const endringslogg = PT.shape({
     endringsBeskrivelse: PT.string,
     endretAv: PT.string,
     endretDato: PT.number
+});
+
+export const reducer = PT.shape({
+    status: PT.string,
+    data: PT.object
 });
 
 export const oppfolgingStatus = PT.shape({

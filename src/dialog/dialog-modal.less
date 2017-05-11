@@ -1,61 +1,98 @@
 @import "../variables";
 
-
-@maxHeight: @mobil-hoyde;
-@headerHeight: 60px;
+@padding: 1rem 2rem;
+@animationTime: 300ms;
+@bredde-skjerm-dialoger: 25%;
+@bredde-skjerm-dialog: 50%;
+@full-bredde-skjerm-modal: @bredde-skjerm-dialoger+@bredde-skjerm-dialog;
 
 .dialog-modal {
   position: fixed;
+  max-width: 100%;
+  height: 100%;
+  left: -100%;
+  width: @bredde-skjerm-dialoger;
   margin: 0;
   bottom: 0;
-  max-height: @maxHeight;
-  height: 100%;
+  transition: left @animationTime, width @animationTime;
+  transition-timing-function: ease-out;
 
-  @media (max-height: @maxHeight) {
-    background-color: red;
+  &--vis {
+    left: 0;
+  }
+
+  &--full-bredde {
+    width: @full-bredde-skjerm-modal
+  }
+
+  @media (max-width: @mobil-bredde) {
+    min-width: 100%;
+  }
+
+  // TODO kan forenkles etter http://stash.devillo.no/projects/NAVFRONT/repos/nav-frontend-moduler/pull-requests/106/overview
+  & > section {
+    height: 100%;
+  }
+  ////
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &__header {
+    border-bottom: 1px solid @gray-foreground;
+    padding: @padding;
+    display: flex;
+  }
+
+  &__tilbake-knapp {
+    margin-right: 1rem;
+    @media (min-width: @mobil-bredde) {
+      display: none;
+    }
   }
 
   &__innhold {
     display: flex;
+    height: 100%;
+    overflow: hidden;
   }
 
   &__ny-dialog {
-    padding: 1rem;
+    padding: @padding;
+    border-bottom: 1px solid @gray-foreground;
+  }
+
+  &__dialoger {
+    overflow-y: auto;
   }
 
   &__kolonne {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     height: 100%;
-    position: absolute;
-    overflow: hidden;
+    width: 100%;
 
     &--dialog {
+      flex-basis: percentage(@bredde-skjerm-dialog/@full-bredde-skjerm-modal);
+      padding: 2rem;
       background-color: @gray-background;
-      right: 0;
-      z-index: 1;
+      width: @bredde-skjerm-dialog;
+      overflow-y: auto;
     }
 
     &--dialoger {
+      flex-basis: percentage(@bredde-skjerm-dialoger/@full-bredde-skjerm-modal);
       background-color: white;
-      z-index: 2;
-    }
-
-    &-header {
-      position: relative;
-      padding: 1rem;
-      border-bottom: 1px solid @gray-foreground;
-      height: @headerHeight;
-
-      &--dialoger {
-        background-color: white;
-      }
-    }
-
-    &-innhold {
-      overflow-y: auto;
-      height: @maxHeight - @headerHeight;
-
-      &--dialog {
-        padding: 1rem;
+      z-index: 1;
+      @media (max-width: @mobil-bredde) {
+        width: 100%;
+        &-valgt-dialog {
+          display: none;
+        }
       }
     }
   }
