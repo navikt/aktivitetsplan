@@ -8,19 +8,11 @@ import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
 const TIMEOUT_TID = Moment.duration(30, 'minutes');
 const DISPLAY_TID = Moment.duration(5, 'minutes');
 
-export const init = () => {
+export const update = () => {
     window.timeout = {
         lastRequest: Moment.now(),
         hidden: false
     };
-};
-
-export const update = () => {
-    if (window.timeout == null) {
-        init();
-    }
-    window.timeout.lastRequest = Moment.now();
-    window.timeout.hidden = false;
 };
 
 class Timeoutbox extends Component {
