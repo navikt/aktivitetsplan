@@ -1,55 +1,48 @@
 @import '../../variables';
 
+@aktivitetskort-bredde: 288px;
+
 .aktivitetskort {
+  .blokk-xxs();
   display: block;
   background-color: @color-background;
-  padding: 0;
+  color: @gray-text;
   position: relative;
   text-align: left;
   text-decoration: none;
-  margin-bottom: 10px;
-  color: @gray-text;
-  width: 284px;
-  border-radius: 4px;
+  width: @aktivitetskort-bredde;
+  border-radius: @border-radius-base;
+  padding: 0.75rem 1rem 1rem 1rem;
+}
 
-  &--flyttbar {
-    cursor: pointer;
+.aktivitetskort__type {
+  text-transform: uppercase;
+}
 
-    &:hover {
-      background-color: @color-background-hover;
-    }
-    &:focus {
-      border-color: @orange-focus;
-    }
+.aktivitetskort__tittel {
+  .blokk-xxxs() !important; // Overskriver nav-frontend
+}
+
+.aktivitetskort__ikon-blokk {
+  margin-top: 1rem;
+}
+
+.aktivitetskort__henvendelser {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0;
+  padding: 0.5rem 1rem 1rem 1.25rem;
+  background: url("./aktivitetskort-henvendelser.svg") no-repeat left bottom;
+}
+
+.aktivitetskort--flyttbar {
+  cursor: pointer;
+
+  &:hover {
+    background-color: @color-background-hover;
   }
-
-  &__blokk {
-    margin: 0;
-    padding: 0.75rem;
-
-    & > * {
-      margin: 0;
-    }
-  }
-
-  &__delelinje {
-    margin: 0;
-    border: 1px solid @color-hr;
-  }
-
-  // Overskriver nav-frontend
-  &__tittel {
-    .blokk-xs() !important;
-  }
-
-  &__type {
-    text-transform: uppercase;
-  }
-
-  &__ikon-blokk {
-    padding: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
+  &:focus {
+    border-color: @orange-focus;
   }
 }
+

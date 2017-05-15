@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { Link } from 'react-router';
 import NavLenkepanel from 'nav-frontend-lenkepanel';
 

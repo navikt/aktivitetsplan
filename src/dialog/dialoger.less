@@ -3,12 +3,27 @@
 
 .dialoger {
 
+  &__prikk {
+    position: absolute;
+    top: 43%;
+    left: 0.5rem;
+    background-color: @bla;
+    border-radius: 50%;
+    height: 1rem;
+    width: 1rem;
+  }
+
   &__dialog {
     margin: 0;
     border-radius: 0;
     text-decoration: none;
+    padding-left: 2rem;
 
-    border-top: 2px solid @gray-foreground;
+    border-top: 1px solid @gray-foreground;
+
+    &:focus {
+      background-color: @orange-focus;
+    }
 
     &-henvendelser {
       position: absolute;
@@ -19,15 +34,6 @@
     &--valgt {
       background-color: @bla;
       color: white;
-    }
-
-    &--ulest {
-      border-left: 6px solid @bla;
-    }
-  }
-  &__gruppe {
-    &-tittel {
-      padding: 15px
     }
   }
 }

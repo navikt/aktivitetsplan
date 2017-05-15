@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 
 function Applikasjon({ children }) {
     return (
@@ -10,6 +11,10 @@ function Applikasjon({ children }) {
 
 Applikasjon.propTypes = {
     children: PT.node
+};
+
+Applikasjon.defaultProps = {
+    children: undefined
 };
 
 export default Applikasjon;

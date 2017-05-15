@@ -1,30 +1,32 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
+import { injectIntl, intlShape } from 'react-intl';
+import { isDirty } from 'redux-form';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
+import { SKJUL_VERSJONSKONFLIKT_ACTION } from '../../ducks/endre-aktivitet';
 import * as AppPT from '../../proptypes';
 import ModalHeader from '../modal-header';
-import StillingAktivitetForm from '../skjema/stilling-aktivitet-form';
-import EgenAktivitetForm from '../skjema/egen-aktivitet-form';
+import StillingAktivitetForm, { formNavn as stillingFormNavn } from '../skjema/stilling-aktivitet-form';
+import EgenAktivitetForm, { formNavn as egenFormNavn } from '../skjema/egen-aktivitet-form';
 import history from '../../history';
 import { EGEN_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
-import ModalFooter from './../modal-footer';
-import RemoteSubmitKnapp from './../skjema/remote-submit-knapp';
+import Versjonskonflikt from './versjonskonflikt';
+import Modal from '../modal';
+import { LUKK_MODAL } from '../../ducks/modal';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
-
-function EndreAktivitet(props) {
-    const { doOppdaterAktivitet, aktivitet } = props;
-    if (!aktivitet) {
-        return null;
+function EndreAktivitet({ aktivitet, doOppdaterAktivitet, visVersjonskonflikt, skjulVersjonskonflikt, intl, lukkModal, formIsDirty, aktiviteter }) {
+    function visAktivitet() {
+        history.push(`aktivitet/aktivitet/${aktivitet.id}`);
+        skjulVersjonskonflikt();
     }
 
     function renderForm() {
         function oppdater(aktivitetData) {
             const oppdatertAktivitet = { ...aktivitet, ...aktivitetData };
-            doOppdaterAktivitet(oppdatertAktivitet);
-            history.push(`aktivitet/aktivitet/${oppdatertAktivitet.id}`);
+            doOppdaterAktivitet(oppdatertAktivitet).then(visAktivitet);
         }
 
         switch (aktivitet.type) {
@@ -37,48 +39,68 @@ function EndreAktivitet(props) {
         }
     }
 
-    function renderKnapper() {
-        switch (aktivitet.type) {
-            case STILLING_AKTIVITET_TYPE:
-                return <RemoteSubmitKnapp formNavn="stilling-aktivitet" className="modal-footer__knapp" />;
-            case EGEN_AKTIVITET_TYPE:
-                return <RemoteSubmitKnapp formNavn="egen-aktivitet" className="modal-footer__knapp" />;
-            default:
-                return null;
-        }
-    }
-
     return (
-        <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake">
-            <ModalContainer>
-                <Undertittel className="aktivitetskjema__redigering-header">
-                    <FormattedMessage id="endre-aktivitet.overskrift" />
-                </Undertittel>
-                {renderForm()}
-            </ModalContainer>
-            <ModalFooter>
-                {renderKnapper()}
-            </ModalFooter>
-        </ModalHeader>
+        <Modal
+            isOpen
+            key="endreAktivitetModal"
+            onRequestClose={
+                () => {
+                    const dialogTekst = intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' });
+                    if (!formIsDirty || confirm(dialogTekst)) { // eslint-disable-line no-alert
+                        history.push('/');
+                        lukkModal();
+                    }
+                }
+            }
+            contentLabel="aktivitet-modal"
+        >
+            <article className="egen-aktivitet" aria-labelledby="modal-egen-aktivitet-header">
+                <ModalHeader tilbakeTekstId="endre-aktivitet.tilbake" visConfirmDialog={formIsDirty} />
+                <Innholdslaster avhengigheter={[aktiviteter]}>
+                    <ModalContainer>
+                        <Versjonskonflikt visible={visVersjonskonflikt} tilbake={skjulVersjonskonflikt} slett={visAktivitet} />
+                        <div className={visVersjonskonflikt && 'hidden'}>{renderForm()}</div>
+                    </ModalContainer>
+                </Innholdslaster>
+            </article>
+        </Modal>
     );
 }
 
 
 EndreAktivitet.propTypes = {
     doOppdaterAktivitet: PT.func.isRequired,
-    aktivitet: AppPT.aktivitet
+    visVersjonskonflikt: PT.bool.isRequired,
+    skjulVersjonskonflikt: PT.func.isRequired,
+    aktivitet: AppPT.aktivitet,
+    aktiviteter: PT.shape({
+        status: PT.string.isRequired
+    }).isRequired,
+    formIsDirty: PT.bool.isRequired,
+    intl: intlShape.isRequired,
+    lukkModal: PT.func.isRequired
+};
+
+EndreAktivitet.defaultProps = {
+    aktivitet: {}
 };
 
 const mapStateToProps = (state, props) => {
     const id = props.params.id;
-    const aktivitet = state.data.aktiviteter.data.find((a) => a.id === id);
+    const aktivitet = state.data.aktiviteter.data.find((a) => a.id === id) || {};
+    const formNavn = aktivitet.type === STILLING_AKTIVITET_TYPE ? stillingFormNavn : egenFormNavn;
     return {
-        aktivitet
+        aktivitet,
+        aktiviteter: state.data.aktiviteter,
+        visVersjonskonflikt: state.view.endreAktivitet.visVersjonskonflikt,
+        formIsDirty: isDirty(formNavn)(state)
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    doOppdaterAktivitet: (aktivitet) => oppdaterAktivitet(aktivitet)(dispatch)
+    doOppdaterAktivitet: (aktivitet) => oppdaterAktivitet(aktivitet)(dispatch),
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
+    skjulVersjonskonflikt: () => dispatch(SKJUL_VERSJONSKONFLIKT_ACTION)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EndreAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(EndreAktivitet));

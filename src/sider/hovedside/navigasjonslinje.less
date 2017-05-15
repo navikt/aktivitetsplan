@@ -1,17 +1,29 @@
+@import "../../variables";
 
 .navigasjonslinje {
+  .blokk-s();
   display: flex;
-  justify-content: space-around;
-  width: 20rem;
-  padding: 1rem;
+  justify-content: flex-start;
+  background: @hvit;
+  border-radius: @border-radius-base;
+  padding: 0.5rem 1rem;
 
-  &__element {
-    color: black;
-    &-content {
-      &:empty{
-        display: none;
-      }
-      margin-left: 0.25rem;
-    }
+  &:hover {
+    text-decoration: underline;
+    color: @bla;
+  }
+}
+
+.navigasjonslinje__element {
+  color: @navMorkGra;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+.navigasjonslinje__element-content {
+  margin-left: 0.25rem;
+
+  &:empty {
+    display: none;
   }
 }

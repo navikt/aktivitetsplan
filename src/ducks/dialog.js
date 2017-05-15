@@ -36,7 +36,7 @@ export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
         case OPPRETTER_HENVENDELSE:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: STATUS.RELOADING };
         case HENTET:
             return { ...state, status: STATUS.OK, data };
         case OPPRETTET_HENVENDELSE:

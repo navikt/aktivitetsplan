@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { Checkbox as NavCheckbox } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
@@ -16,6 +17,11 @@ InnerCheckboxComponent.propTypes = {
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
+InnerCheckboxComponent.defaultProps = {
+    errorMessage: undefined,
+    input: undefined
+};
+
 function Checkbox({ feltNavn, className, ...rest }) {
     return (
         <CustomField
@@ -30,6 +36,10 @@ function Checkbox({ feltNavn, className, ...rest }) {
 Checkbox.propTypes = {
     feltNavn: PT.string.isRequired,
     className: PT.string
+};
+
+Checkbox.defaultProps = {
+    className: undefined
 };
 
 export default Checkbox;

@@ -1,10 +1,13 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-aktivitet';
 import { avbrytAktivitet } from '../../ducks/aktiviteter';
 import { STATUS } from '../../ducks/utils';
+import StandardModal from '../modal-standard';
+import history from '../../history';
 
 const BegrunnelseAvbruttAktivitet = (props) => {
     const headerTekst = <FormattedMessage id="opprett-begrunnelse.avbrutt.header" />;
@@ -13,12 +16,17 @@ const BegrunnelseAvbruttAktivitet = (props) => {
     const valgtAktivitet = props.aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId) || {};
 
     return (
-        <BegrunnelseAktivitet
-            headerTekst={headerTekst}
-            beskrivelseTekst={beskrivelseTekst}
-            lagrer={this.props.aktiviteter.status !== STATUS.OK}
-            onLagre={(begrunnelse) => props.lagreBegrunnelse(valgtAktivitet, begrunnelse)}
-        />
+        <StandardModal name="BegrunnelseModal">
+            <BegrunnelseAktivitet
+                headerTekst={headerTekst}
+                beskrivelseTekst={beskrivelseTekst}
+                lagrer={props.aktiviteter.status !== STATUS.OK}
+                onSubmit={(beskrivelseForm) => {
+                    props.lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
+                    history.goBack();
+                }}
+            />
+        </StandardModal>
     );
 };
 

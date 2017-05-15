@@ -7,8 +7,17 @@
   text-align: center;
   background: @gray-background;
 
-  a.hovedsideinnhold__aktivitetsknapp {
-    .knapp();
+  & .container {
+    & .lenkeknapp {
+     float: right;
+    }
+  }
+}
+
+/* nav-frontend-overrides */
+.container {
+  @media (min-width: 1200px){
+    max-width: 63rem;
   }
 }
 

@@ -32,22 +32,24 @@ const RULES = [
         use: [
             'style-loader',
             {
-                loader: 'css-loader', options: {
-                importLoaders: 1,
-                sourceMap: true
-            }
+                loader: 'css-loader',
+                options: {
+                    importLoaders: 1,
+                    sourceMap: true
+                }
             },
             {
-                loader: 'less-loader', options: {
-                relativeUrls: false,
-                modifyVars: {
-                    "modig-frontend-images-root-url": "\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/img\'",
-                    "baseImagePath": "\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/\'",
-                    "nodeModulesPath":"\'./../../\'",
-                    "coreModulePath":"\'./../../\'"
-                },
-                sourceMap: true
-            }
+                loader: 'less-loader',
+                options: {
+                    relativeUrls: true,
+                    modifyVars: {
+                        'modig-frontend-images-root-url': '\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/img\'',
+                        'baseImagePath': '\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/\'',
+                        'nodeModulesPath': '\'./../../\'',
+                        'coreModulePath': '\'./../../\''
+                    },
+                    sourceMap: true
+                }
             }
         ]
     }
@@ -59,7 +61,7 @@ const LOADERS = [
         include: BABEL_INCLUDE,
         loader: 'babel-loader',
         query: {
-            plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
+            plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties']
         }
     }
 ];
@@ -79,20 +81,20 @@ module.exports = function (env) {
         },
         resolve: {
             alias: {
-                "~config": path.resolve(__dirname, "./example/config")
+                '~config': path.resolve(__dirname, './example/config')
             },
             extensions: ['.js', '.jsx', '.json']
         },
         output: {
-            path: path.resolve(__dirname, "build"),
-            publicPath: "/aktivitetsplanfelles/",
-            filename: "bundle.js",
+            path: path.resolve(__dirname, 'build'),
+            publicPath: '/aktivitetsplanfelles/',
+            filename: 'bundle.js'
         },
         devServer: {
             historyApiFallback: {
                 index: '/aktivitetsplanfelles/'
             }
         },
-        plugins: PLUGINS,
+        plugins: PLUGINS
     };
 };

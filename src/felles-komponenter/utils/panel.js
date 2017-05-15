@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import classNames from 'classnames';
 
 export const cls = (className, props, ...args) => classNames('panel', className, ...args, {
@@ -28,6 +29,18 @@ PanelBase.propTypes = {
     fremhevet: PT.bool,
     negativ: PT.bool,
     komprimert: PT.bool
+};
+
+PanelBase.defaultProps = {
+    className: undefined,
+    ramme: false,
+    ekstra: false,
+    skjema: false,
+    relatert: false,
+    stablet: false,
+    fremhevet: false,
+    negativ: false,
+    komprimert: false
 };
 
 export default PanelBase;

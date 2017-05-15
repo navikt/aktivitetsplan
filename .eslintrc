@@ -8,7 +8,6 @@
     "max-len": [2, 200, 4],
     "no-unused-vars": [2, {"varsIgnorePattern": "_", "argsIgnorePattern": "_"}],
     "react/jsx-filename-extension": [0],
-    "react/require-default-props": [1],
     "arrow-parens": [2, "always"],
     "import/no-extraneous-dependencies": [0],
     "jsx-a11y/aria-props": 2,

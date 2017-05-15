@@ -9,6 +9,8 @@ import endringsloggReducer from './ducks/endringslogg';
 import dialogReducer from './ducks/dialog';
 import malReducer from './ducks/mal';
 import identitetReducer from './ducks/identitet';
+import endreAktivitetReducer from './ducks/endre-aktivitet';
+import feilReducer from './ducks/feil';
 
 
 export default combineReducers({
@@ -23,5 +25,9 @@ export default combineReducers({
         dialog: dialogReducer,
         mal: malReducer,
         identitet: identitetReducer
-    })
+    }),
+    view: combineReducers({
+        endreAktivitet: endreAktivitetReducer
+    }),
+    feil: feilReducer
 });

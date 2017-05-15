@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
@@ -23,6 +24,21 @@ class DatoField extends Component {
         this.state = {
             erApen: false
         };
+    }
+
+    componentDidMount() {
+        this.container.addEventListener('focusout', this.onFocusOut);
+    }
+
+    componentWillUnmount() {
+        this.container.removeEventListener('focusout', this.onFocusOut);
+    }
+
+    onFocusOut(e) {
+        const targetErChildnode = this.container.contains(e.relatedTarget);
+        if (!targetErChildnode) {
+            this.lukk(false);
+        }
     }
 
     onKeyUp(e) {
@@ -52,11 +68,13 @@ class DatoField extends Component {
         });
     }
 
-    lukk() {
+    lukk(settFokus = true) {
         this.setState({
             erApen: false
         });
-        this.toggleButton.focus();
+        if (settFokus) {
+            this.toggleButton.focus();
+        }
     }
 
     render() {
@@ -69,7 +87,7 @@ class DatoField extends Component {
         };
 
         return (
-            <div className="datovelger skjemaelement">
+            <div className="datovelger skjemaelement" ref={(container) => { this.container = container; }}>
                 <label className="skjemaelement__label" htmlFor={id}>{label}</label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"
@@ -126,6 +144,13 @@ DatoField.propTypes = {
     errorMessage: PT.oneOfType([PT.arrayOf(PT.string), PT.string])
 };
 
+DatoField.defaultProps = {
+    disabled: false,
+    tidligsteFom: undefined,
+    senesteTom: undefined,
+    errorMessage: undefined
+};
+
 function parseDato(dato) {
     return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
 }
@@ -157,6 +182,11 @@ Datovelger.propTypes = {
     labelId: PT.string.isRequired,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date)
+};
+
+Datovelger.defaultProps = {
+    tidligsteFom: undefined,
+    senesteTom: undefined
 };
 
 export default Datovelger;

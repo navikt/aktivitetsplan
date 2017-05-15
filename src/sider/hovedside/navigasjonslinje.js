@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
@@ -14,6 +15,10 @@ function NavigasjonsElement({ sti, tekstId, children }) {
         </Lenke>
     );
 }
+
+NavigasjonsElement.defaultProps = {
+    children: null
+};
 
 NavigasjonsElement.propTypes = {
     sti: PT.string.isRequired,
@@ -31,10 +36,10 @@ class Navigasjonslinje extends Component {
         const { antallUlesteDialoger } = this.props;
         return (
             <nav className="navigasjonslinje">
-                <NavigasjonsElement sti="/" tekstId="navigasjon.min-plan" />
                 <NavigasjonsElement sti="/dialog" tekstId="navigasjon.dialog">
                     <TallAlert visible={antallUlesteDialoger > 0}>{antallUlesteDialoger}</TallAlert>
                 </NavigasjonsElement>
+                <NavigasjonsElement sti="/mal" tekstId="aktivitetsmal.mitt-mal" />
                 <NavigasjonsElement sti="/vilkar" tekstId="navigasjon.vilkar" />
             </nav>
         );

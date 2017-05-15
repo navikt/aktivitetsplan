@@ -1,34 +1,37 @@
-import React, {Component, PropTypes as PT} from "react";
-import {connect} from "react-redux";
-import {Sidetittel} from "nav-frontend-typografi";
-import moment from "moment";
-import {Hovedknapp, Knapp} from "nav-frontend-knapper";
-import {formValueSelector} from "redux-form";
-import Aktivitetsbeskrivelse from "./aktivitetsbeskrivelse";
+import React, { Component } from 'react';
+import PT from 'prop-types';
+import { connect } from 'react-redux';
+import { Sidetittel } from 'nav-frontend-typografi';
+import moment from 'moment';
+import { Knapp } from 'nav-frontend-knapper';
+import { FormattedMessage } from 'react-intl';
+import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import UnderelementerForAktivitet from "./underelementer-for-aktivitet";
-import ModalHeader from "../modal-header";
-import history from "../../history";
-import AktivitetsDetaljer from "./aktivitetsdetaljer";
-import {slettAktivitet, flyttAktivitet} from "../../ducks/aktiviteter";
-import * as AppPT from "../../proptypes";
-import ModalFooter from "./../modal-footer";
-import ModalContainer from "../modal-container";
-import {TILLAT_SLETTING} from "~config"; // eslint-disable-line
-import BekreftSlettVisning from "./bekreftslettvisning";
-import OppdaterAktivitetStatus from "./oppdater-aktivitet-status";
-import AvtaltContainer from "./avtalt-container";
-import "./aktivitetvisning.less";
+import UnderelementerForAktivitet from './underelementer-for-aktivitet';
+import ModalHeader from '../modal-header';
+import history from '../../history';
+import AktivitetsDetaljer from './aktivitetsdetaljer';
+import { slettAktivitet, hentAktivitet } from '../../ducks/aktiviteter';
+import * as AppPT from '../../proptypes';
+import ModalFooter from './../modal-footer';
+import ModalContainer from '../modal-container';
+import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
+import BekreftSlettVisning from './bekreft-slett-visning';
+import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
+import AvtaltContainer from './avtalt-container';
+import './aktivitetvisning.less';
 import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE
+    UTDANNING_AKTIVITET_TYPE,
+    AVTALT_MED_NAV
 } from "../../constant";
-import BegrunnelseBoks from "./begrunnelse-boks";
-import AktivitetEtiketter from "../../felles-komponenter/aktivitet-etiketter";
-import {STATUS} from "../../ducks/utils";
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import BegrunnelseBoks from './begrunnelse-boks';
+import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
+import StandardModal from '../modal-standard';
 
 class Aktivitetvisning extends Component {
 
@@ -38,6 +41,10 @@ class Aktivitetvisning extends Component {
             visBekreftSletting: false,
             settAutoFocusSlett: false
         };
+    }
+
+    componentDidMount() {
+        this.props.doHentAktivitet(this.props.params.id);
     }
 
     render() {
@@ -54,12 +61,14 @@ class Aktivitetvisning extends Component {
             };
 
             return (
-                <BekreftSlettVisning
-                    slettAction={slettAction}
-                    avbrytAction={() => this.setState({
-                        visBekreftSletting: false,
-                        settAutoFocusSlett: true })}
-                />
+                <StandardModal name="aktivitetsvisningModal">
+                    <BekreftSlettVisning
+                        slettAction={slettAction}
+                        avbrytAction={() => this.setState({
+                            visBekreftSletting: false,
+                            settAutoFocusSlett: true })}
+                    />
+                </StandardModal>
             );
         }
         const tillatSletting = TILLAT_SLETTING && (
@@ -67,112 +76,117 @@ class Aktivitetvisning extends Component {
                 moment(oppfolgingStatus.oppfolgingUtgang).isAfter(valgtAktivitet.opprettetDato)
             );
 
+        const tillattEndring = (valgtAktivitet.avtalt !== true || TILLAT_SET_AVTALT) &&
+            (valgtAktivitet.status !== STATUS_FULLFOERT && valgtAktivitet.status !== STATUS_AVBRUTT);
+
         const visBegrunnelse = valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
-        const onLagre = (aktivitet) => {
-            if (aktivitet.status === this.props.valgtStatus) {
-                return history.push('/');
-            } else if (this.props.valgtStatus === STATUS_FULLFOERT && aktivitet.avtalt) {
-                history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
-            } else if (this.props.valgtStatus === STATUS_AVBRUTT && aktivitet.avtalt) {
-                history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
-            } else {
-                this.props.doFlyttAktivitet(aktivitet, this.props.valgtStatus);
-                history.push('/');
-            }
-            return null;
-        };
-
-        const etiketter = valgtAktivitet.avtalt ? valgtAktivitet.tagger.concat({ tag: 'Avtalt med NAV', type: 'avtalt' }) : valgtAktivitet.tagger;
+        const aktivitetErLaast = valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT;
         const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(valgtAktivitet.type);
 
         return (
-            <ModalHeader
-                normalTekstId="aktivitetvisning.header"
-                normalTekstValues={{ status: valgtAktivitet.status, type: valgtAktivitet.type }}
-                className="side-innhold"
-                aria-labelledby="modal-aktivitetsvisning-header"
-            >
-                <ModalContainer>
-                    <div className="aktivitetvisning">
+            <StandardModal name="aktivitetsvisningModal">
+                <ModalHeader
+                    normalTekstId="aktivitetvisning.header"
+                    normalTekstValues={{ status: valgtAktivitet.status, type: valgtAktivitet.type }}
+                    className="side-innhold"
+                    aria-labelledby="modal-aktivitetsvisning-header"
+                    aktivitetErLaast={aktivitetErLaast}
+                >
+                    <ModalContainer>
+                        <div className="aktivitetvisning">
+                            <VisibleIfDiv visible={visBegrunnelse} className="aktivitetvisning__underseksjon">
+                                <BegrunnelseBoks
+                                    begrunnelse={valgtAktivitet.avsluttetKommentar}
+                                    visible={visBegrunnelse}
+                                />
+                            </VisibleIfDiv>
+                            <div className="aktivitetvisning__underseksjon">
+                                <Sidetittel id="modal-aktivitetsvisning-header">
+                                    {valgtAktivitet.tittel}
+                                </Sidetittel>
+                                <div className="aktivitetskort__etiketter blokk-s">
+                                    <AktivitetEtikett
+                                        visible={!!valgtAktivitet.etikett}
+                                        etikett={valgtAktivitet.etikett}
+                                        id={`etikett.${valgtAktivitet.etikett}`}
+                                    />
+                                    <AktivitetEtikett
+                                        visible={valgtAktivitet.avtalt}
+                                        etikett={AVTALT_MED_NAV}
+                                        id={AVTALT_MED_NAV}
+                                    />
+                                </div>
+                                <AktivitetsDetaljer
+                                    className="aktivitetvisning__detaljer"
+                                    valgtAktivitet={valgtAktivitet}
+                                />
+                                <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
+                            </div>
+                            <hr className="aktivitetvisning__delelinje" />
+                            {arenaAktivitet ? (
+                                    <AlertStripeInfo className="aktivitetvisning__alert">Denne aktiviteten administreres av veilerder. Endringer er ikke mulig.</AlertStripeInfo>
+                                ) : (
+                                    <OppdaterAktivitetStatus
+                                        status={valgtAktivitet.status}
+                                        paramsId={id}
+                                        className="aktivitetvisning__underseksjon"
+                                    />
+                                )
+                            }
+                            <hr className="aktivitetvisning__delelinje" />
+                            <AvtaltContainer aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
+                            <UnderelementerForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
+                        </div>
+                    </ModalContainer>
 
-                        <BegrunnelseBoks
-                            begrunnelse={valgtAktivitet.avsluttetKommentar}
-                            visible={visBegrunnelse}
-                        />
+                    <ModalFooter>
+                        { tillattEndring && <Knapp
+                            onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
+                            className="knapp-liten modal-footer__knapp"
+                        >
+                            <FormattedMessage id="aktivitetvisning.endre-knapp" />
+                        </Knapp>}
 
-                        <Sidetittel id="modal-aktivitetsvisning-header">
-                            {valgtAktivitet.tittel}
-                        </Sidetittel>
-                        <AktivitetEtiketter etiketter={etiketter} className="aktivitetvisning__etikett" />
-                        <AktivitetsDetaljer
-                            className="aktivitetvisning__detaljer"
-                            valgtAktivitet={valgtAktivitet}
-                        />
-                        <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
-
-                        <hr className="aktivitetvisning__delelinje" />
-
-                        {arenaAktivitet ? (
-                                <AlertStripeInfo className="aktivitetvisning__alert">Denne aktiviteten administreres av veilerder. Endringer er ikke mulig.</AlertStripeInfo>
-                            ) : (
-                                <OppdaterAktivitetStatus status={valgtAktivitet.status} tagger={valgtAktivitet.tagger}/>
-                            )
-                        }
-
-
-                        <AvtaltContainer aktivitet={valgtAktivitet} />
-
-                        <UnderelementerForAktivitet aktivitet={valgtAktivitet} />
-                    </div>
-                </ModalContainer>
-
-                <ModalFooter visible={false}>
-                    {/* TODO: tekster*/}
-                    <Hovedknapp
-                        className="aktivitetvisning__lagre--knapp"
-                        spinner={this.props.aktiviteter.status !== STATUS.OK}
-                        autoDisableVedSpinner
-                        onClick={() => onLagre(valgtAktivitet)}
-                    >
-                        Lagre
-                    </Hovedknapp>
-
-                    {tillatSletting &&
-                    <Knapp
-                        onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
-                        className="knapp-liten modal-footer__knapp" autoFocus={this.state.settAutoFocusSlett}
-                    >
-                        Slett
-                    </Knapp>}
-                </ModalFooter>
-            </ModalHeader>
+                        {tillatSletting &&
+                        <Knapp
+                            onClick={() => this.setState({ visBekreftSletting: true, settAutoFocusSlett: false })}
+                            className="knapp-liten modal-footer__knapp" autoFocus={this.state.settAutoFocusSlett}
+                        >
+                            <FormattedMessage id="aktivitetvisning.slett-knapp" />
+                        </Knapp>}
+                    </ModalFooter>
+                </ModalHeader>
+            </StandardModal>
         );
     }
 }
 Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
+    doHentAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
-    oppfolgingStatus: AppPT.oppfolgingStatus,
+    oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
     aktiviteter: PT.shape({
         status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet)
-    }),
-    valgtStatus: PT.string,
-    doFlyttAktivitet: PT.func.isRequired
+    })
+};
+
+Aktivitetvisning.defaultProps = {
+    params: undefined,
+    oppfolgingStatus: undefined,
+    aktiviteter: undefined
 };
 
 const mapStateToProps = (state) => ({
     oppfolgingStatus: state.data.oppfolgingStatus.data,
-    valgtStatus: formValueSelector('oppdaterStatus-form')(state, 'aktivitetstatus'),
-    aktiviteter: state.data.aktiviteter,
-    dialoger: state.data.dialog.data
+    aktiviteter: state.data.aktiviteter
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    doSlettAktivitet: (aktivitet) => slettAktivitet(aktivitet)(dispatch),
-    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
-});
+const mapDispatchToProps = {
+    doSlettAktivitet: (aktivitet) => slettAktivitet(aktivitet),
+    doHentAktivitet: (aktivitetId) => hentAktivitet(aktivitetId)
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);

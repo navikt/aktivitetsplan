@@ -1,8 +1,9 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router';
 import { erInternlenke } from '../../utils';
-import { visibleIfHOC } from '../../hocs/visible-if';
+import visibleIfHOC from '../../hocs/visible-if';
 
 const cls = (className, lenkeType, lenkestyling) => classNames(className, lenkeType, {
     lenke: lenkestyling
@@ -28,6 +29,10 @@ Lenke.propTypes = {
     children: PT.node.isRequired,
     brukLenkestyling: PT.bool,
     className: PT.string
+};
+
+Lenke.defaultProps = {
+    className: undefined
 };
 
 export default visibleIfHOC(Lenke);

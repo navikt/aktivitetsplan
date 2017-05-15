@@ -2,13 +2,14 @@
 
 
 .aktivitetvisning {
-  padding: 2rem 3rem 2rem 2rem;
-
-  &__alert {
+  &__underseksjon {
+    padding: 0 3rem 0 2rem;
     .blokk-m();
   }
-
   &__etikett {
+    .blokk-m();
+  }
+  &__alert {
     .blokk-m();
   }
   &__detaljer {
@@ -19,7 +20,6 @@
   }
   .begrunnelse-boks {
     cursor: pointer;
-    .blokk-m();
 
     .tekst--kollapset {
       @media(min-width: 641px) {
@@ -61,17 +61,22 @@
     }
   }
   &__delelinje {
+    margin-top: 0;
+    color: @color-hr;
     .blokk-m();
   }
   &__historikk {
     .blokk-m();
   }
-  &__lagre--knapp {
-    margin-right: 1rem;
-  }
   .oppdaterstatus-skjema {
     width: 33%;
     border-right: 1px solid @color-border;
+  }
+  .oppdateretikett-skjema {
+    padding-left: 2rem;
+  }
+  .oppdater-statuser-radioform {
+    display: flex;
   }
 }
 

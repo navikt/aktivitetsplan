@@ -1,79 +1,68 @@
-import React, { PropTypes as PT, Component } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
-import { Textarea } from 'nav-frontend-skjema';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { connect } from 'react-redux';
+import { validForm, rules } from 'react-redux-form-validation';
+import Hovedknapp from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import ModalHeader from '../modal-header';
 import ModalContainer from '../modal-container';
 import ModalFooter from '../modal-footer';
-import history from '../../history';
-import { autobind } from '../../utils';
+import Textarea from '../skjema/textarea/textarea';
 
 const MAKS_LENGDE = 255;
 
-class BegrunnelseAktivitet extends Component {
-    constructor(props) {
-        super(props);
-        autobind(this);
-    }
-    onLagre() {
-        const onSuccess = () => history.goBack();
-        const onError = () => {}; // TODO legge til feilhåndtering
-        this.props.onLagre(this.beskrivelse.tekstomrade.value)
-            .then(onSuccess, onError);
-    }
-    onChange() {
-        this.forceUpdate();
-    }
-    getFeilmelding() {
-        const beskrivelse = this.beskrivelse;
-        if (beskrivelse && beskrivelse.tekstomrade.value.length > MAKS_LENGDE) {
-            return { feilmelding: <FormattedMessage id="opprett-begrunnelse.melding.feilmelding" /> };
-        }
-        return null;
-    }
-    render() {
-        const feilmelding = this.getFeilmelding();
-        return (
-            <div>
-                <ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />
-                <div className="aktivitetvisning">
-                    <ModalContainer>
-                        <Innholdstittel>
-                            { this.props.headerTekst }
-                        </Innholdstittel>
-                        <Textarea
-                            feil={feilmelding}
-                            label={this.props.beskrivelseTekst}
-                            name="begrunnelse-aktivitet"
-                            maxLength={MAKS_LENGDE}
-                            disabled={this.props.lagrer}
-                            ref={(ref) => { this.beskrivelse = ref; }}
-                            onChange={this.onChange}
-                        />
-                    </ModalContainer>
-                </div>
-                <ModalFooter>
-                    <Hovedknapp
-                        spinner={this.props.lagrer}
-                        mini
-                        autoDisableVedSpinner
-                        onClick={this.onLagre}
-                        disabled={!!feilmelding}
-                    >
-                        Lagre
-                    </Hovedknapp>
-                </ModalFooter>
+function BegrunnelseAktivitet(props) {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />
+            <div className="aktivitetvisning__underseksjon">
+                <ModalContainer>
+                    <Innholdstittel>
+                        { props.headerTekst }
+                    </Innholdstittel>
+                    <Textarea
+                        feltNavn="begrunnelse"
+                        labelId={props.beskrivelseTekst}
+                        name="begrunnelse-aktivitet"
+                        maxLength={MAKS_LENGDE}
+                        disabled={props.lagrer}
+                    />
+                </ModalContainer>
             </div>
-        );
-    }
+            <ModalFooter>
+                <Hovedknapp
+                    spinner={props.lagrer}
+                    mini
+                    autoDisableVedSpinner
+                >
+                    <FormattedMessage id="begrunnelse-aktivitet.modal.lagre" />
+                </Hovedknapp>
+            </ModalFooter>
+        </form>
+    );
 }
 
 BegrunnelseAktivitet.propTypes = {
     headerTekst: PT.element.isRequired,
     beskrivelseTekst: PT.element.isRequired,
     lagrer: PT.bool.isRequired,
-    onLagre: PT.func.isRequired
+    handleSubmit: PT.func.isRequired
 };
 
-export default BegrunnelseAktivitet;
+const forLang = rules.maxLength(MAKS_LENGDE,
+    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-lang" values={{ MAKS_LENGDE }} />
+);
+
+const pakrevd = rules.minLength(0, <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-kort" />);
+
+const BegrunnelseAktivitetReduxForm = validForm({
+    form: 'begrunnelse-aktivitet-form',
+    validate: {
+        begrunnelse: [forLang, pakrevd]
+    }
+})(BegrunnelseAktivitet);
+
+const mapDispatchToProps = () => ({});
+
+export default connect(null, mapDispatchToProps)(BegrunnelseAktivitetReduxForm);

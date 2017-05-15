@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { formaterDatoTid } from '../utils';
 
 function Dato({ children }) {
@@ -9,6 +10,10 @@ function Dato({ children }) {
 
 Dato.propTypes = {
     children: PT.string
+};
+
+Dato.defaultProps = {
+    children: undefined
 };
 
 export default Dato;

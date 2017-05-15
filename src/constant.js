@@ -10,3 +10,11 @@ export const STILLING_AKTIVITET_TYPE = 'STILLING';
 export const TILTAK_AKTIVITET_TYPE = 'TILTAK';
 export const GRUPPE_AKTIVITET_TYPE = "GRUPPE";
 export const UTDANNING_AKTIVITET_TYPE = "UTDANNING";
+
+export const INGEN_VALGT = 'INGEN_VALGT';
+export const SOKNAD_SENDT = 'SOKNAD_SENDT';
+export const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
+export const AVSLAG = 'AVSLAG';
+export const JOBBTILBUD = 'JOBBTILBUD';
+
+export const AVTALT_MED_NAV = 'sett-avtalt.label';

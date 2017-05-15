@@ -1,7 +1,8 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { fn } from './../utils';
 
-export function visibleIfHOC(WrappingComponent) { // eslint-disable-line import/prefer-default-export
+export default function visibleIfHOC(WrappingComponent) {
     class visibleIf extends Component {
         render() {
             const { visible, ...props } = this.props;

@@ -1,6 +1,6 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { visibleIfHOC } from '../hocs/visible-if';
-
 import './modal-footer.less';
 
 function ModalFooter({ children }) {
@@ -13,6 +13,10 @@ function ModalFooter({ children }) {
 
 ModalFooter.propTypes = {
     children: PT.node
+};
+
+ModalFooter.defaultProps = {
+    children: undefined
 };
 
 export default visibleIfHOC(ModalFooter);

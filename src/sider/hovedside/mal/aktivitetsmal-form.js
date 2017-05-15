@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -8,11 +9,16 @@ import Textarea from '../../../modal/skjema/textarea/textarea';
 const MALTEKST_MAKSLENGDE = 500;
 
 function AktivitetsmalForm(props) {
+    function avbryt(e) {
+        e.preventDefault();
+        props.handleCancel();
+    }
+
     return (
         <form onSubmit={props.handleSubmit}>
             <Textarea feltNavn="mal" labelId="aktivitetsmal.tekst.label" maxLength={MALTEKST_MAKSLENGDE} />
             <Hovedknapp className="aktivitetmal__redigering--knapp"><FormattedMessage id="aktivitetsmal.lagre" /></Hovedknapp>
-            <Knapp type="button" onClick={props.handleCancel}>
+            <Knapp onClick={avbryt}> {/* TODO: Vi må få inn type="button"*/}
                 <FormattedMessage id="aktivitetsmal.avbryt" />
             </Knapp>
         </form>

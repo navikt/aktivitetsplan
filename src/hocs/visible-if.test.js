@@ -3,7 +3,7 @@ import React from 'react';
 
 import { mount } from 'enzyme';
 import { expect } from 'chai';
-import { visibleIfHOC } from './visible-if';
+import visibleIfHOC from './visible-if';
 
 describe('visible-if', () => {
     it('Skal rendre hvis visible er true', () => {

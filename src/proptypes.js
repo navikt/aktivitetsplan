@@ -1,10 +1,10 @@
-import { PropTypes as PT } from 'react';
+import PT from 'prop-types';
 
 export const aktivitet = PT.shape({
-    tittel: PT.string,
-    fraDato: PT.number,
-    tilDato: PT.number,
-    opprettetDato: PT.number,
+    tittel: PT.string.isRequired,
+    fraDato: PT.string.isRequired,
+    tilDato: PT.string.isRequired,
+    opprettetDato: PT.string,
     detaljer: PT.object,
     beskrivelse: PT.string,
     avtalt: PT.bool,
@@ -13,15 +13,22 @@ export const aktivitet = PT.shape({
     dagerPerUke: PT.number
 });
 
-export const dialog = PT.shape({
-    id: PT.string,
-    overskrift: PT.string
+export const henvendelse = PT.shape({
+    dialogId: PT.string.isRequired,
+    tekst: PT.string.isRequired,
+    avsender: PT.string.isRequired,
+    sendt: PT.string.isRequired,
+    lest: PT.bool.isRequired
 });
 
-export const henvendelse = PT.shape({
-    dialogId: PT.string,
-    tekst: PT.string,
-    avsender: PT.string
+export const dialog = PT.shape({
+    id: PT.string.isRequired,
+    overskrift: PT.string.isRequired,
+    aktivitetId: PT.string,
+    lest: PT.bool,
+    sisteDato: PT.number,
+    sisteTekst: PT.string,
+    henvendelser: PT.arrayOf(henvendelse).isRequired
 });
 
 export const etikett = PT.shape({
@@ -34,6 +41,11 @@ export const endringslogg = PT.shape({
     endringsBeskrivelse: PT.string,
     endretAv: PT.string,
     endretDato: PT.number
+});
+
+export const reducer = PT.shape({
+    status: PT.string,
+    data: PT.object
 });
 
 export const oppfolgingStatus = PT.shape({
@@ -50,4 +62,10 @@ export const mal = PT.shape({
     mal: PT.string,
     endretAv: PT.string,
     dato: PT.number
+});
+
+export const feil = PT.shape({
+    is: PT.string.isRequired,
+    type: PT.string.isRequired,
+    detaljer: PT.string
 });

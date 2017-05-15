@@ -1,21 +1,26 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Infotekst, Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import classNames from 'classnames';
+import { Infotekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
 import './dialoger.less';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
+import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 
-const VisibleDiv = visibleIfHOC((props) => <div {...props} />);
+const Prikk = visibleIfHOC((props) => <div className="dialoger__prikk" {...props} />);
 
 function DialogVisning({ dialog, erValgt }) {
+    const dialogCls = (valgt, ulest) => classNames('dialoger__dialog', {
+        'dialoger__dialog--valgt': valgt,
+        'dialoger__dialog--ulest': ulest
+    });
+
     return (
-        <Lenkepanel
-            className={`dialoger__dialog ${erValgt && 'dialoger__dialog--valgt'} ${dialog.lest || 'dialoger__dialog--ulest'}`}
-            href={`/dialog/${dialog.id}`}
-        >
+        <Lenkepanel className={dialogCls(erValgt, !dialog.lest)} href={`/dialog/${dialog.id}`}>
+            <Prikk visible={!dialog.lest} />
             <Infotekst><Dato>{dialog.sisteDato}</Dato></Infotekst>
             <Element>{dialog.overskrift}</Element>
             <Normaltekst>{dialog.sisteTekst}</Normaltekst>
@@ -29,44 +34,44 @@ DialogVisning.propTypes = {
     erValgt: PT.bool.isRequired
 };
 
-function Gruppe({ dialoger, valgtDialog, labelId }) {
-    return (
-        <VisibleDiv visible={dialoger.length}>
-            <Undertittel className="dialoger__gruppe-tittel"><FormattedMessage id={labelId} /></Undertittel>
-            {
-                [...dialoger]
-                    .sort((a, b) => b.sisteDato - a.sisteDato)
-                    .map((d) => <DialogVisning dialog={d} erValgt={d === valgtDialog} />)
-            }
-        </VisibleDiv>
-    );
+function compareDialoger(a, b) {
+    if (a.lest !== b.lest) {
+        return a.lest ? 1 : -1;
+    }
+    return b.sisteDato - a.sisteDato;
 }
 
-Gruppe.propTypes = {
-    dialoger: PT.arrayOf(AppPT.dialog).isRequired,
-    valgtDialog: AppPT.dialog,
-    labelId: PT.string.isRequired
-};
-
-function Dialoger({ dialoger, valgtDialog, className }) {
+function Dialoger({ dialog, dialoger, valgtDialog, className }) {
     return (
-        <div className={className}>
-            <Gruppe dialoger={dialoger.filter((d) => !d.lest)} valgtDialog={valgtDialog} labelId="Nye meldinger" />
-            <Gruppe dialoger={dialoger.filter((d) => d.lest)} valgtDialog={valgtDialog} labelId="Leste meldinger" />
-        </div>
+        <Innholdslaster avhengigheter={[dialog]}>
+            <div className={className}>
+                {
+                    [...dialoger]
+                        .sort(compareDialoger)
+                        .map((d) => <DialogVisning dialog={d} erValgt={d === valgtDialog} />)
+                }
+            </div>
+        </Innholdslaster>
     );
 }
-
 
 Dialoger.propTypes = {
     className: PT.string,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
+    dialog: AppPT.reducer.isRequired,
     valgtDialog: AppPT.dialog
 };
 
+Dialoger.defaultProps = {
+    className: undefined,
+    valgtDialog: undefined
+};
+
 const mapStateToProps = (state) => {
-    const dialoger = state.data.dialog.data;
+    const dialog = state.data.dialog;
+    const dialoger = dialog.data;
     return {
+        dialog,
         dialoger
     };
 };

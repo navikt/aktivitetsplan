@@ -1,7 +1,8 @@
-import React, { PropTypes as PT } from 'react';
-import { formValueSelector } from 'redux-form';
+import React, { Component } from 'react';
+import PT from 'prop-types';
+import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -21,74 +22,130 @@ const ARBEIDSSTED_MAKS_LENGDE = 255;
 const ARBEIDSGIVER_MAKS_LENGDE = 255;
 const KONTAKTPERSON_MAKS_LENGDE = 255;
 
-const pakrevdTittel = rules.minLength(0, 'Du må fylle ut overskriften');
-const begrensetTittelLengde =
-    rules.maxLength(TITTEL_MAKS_LENGDE, `Overskriften kan ikke være lenger en ${TITTEL_MAKS_LENGDE} tegn`);
-const pakrevdFraDato = rules.minLength(0, 'Du må fylle ut fra datoen');
-const pakrevdTilDato = rules.minLength(0, 'Du må fylle ut fristen');
-const begrensetLenkeLengde =
-    rules.maxLength(LENKE_MAKS_LENGDE, `Lenken kan ikke være lenger en ${LENKE_MAKS_LENGDE} tegn`);
-const begrensetBeskrivelseLengde =
-    rules.maxLength(BESKRIVELSE_MAKS_LENGDE, `Besrkivelsen kan ikke være lenger en ${BESKRIVELSE_MAKS_LENGDE} tegn`);
-const begrensetArbeidsstedLengde =
-    rules.maxLength(ARBEIDSSTED_MAKS_LENGDE, `Arbeidsstedtekst kan ikke være lenger en ${ARBEIDSSTED_MAKS_LENGDE} tegn`);
-const begrensetArbeidsgiverLengde =
-    rules.maxLength(ARBEIDSGIVER_MAKS_LENGDE, `Arbeidsgivertekst kan ikke være lenger en ${ARBEIDSGIVER_MAKS_LENGDE} tegn`);
-const begrensetKontaktpersonLengde =
-    rules.maxLength(KONTAKTPERSON_MAKS_LENGDE, `Kontaktpersontekst kan ikke være lenger en ${KONTAKTPERSON_MAKS_LENGDE} tegn`);
+const pakrevdTittel = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tittel" />);
+const begrensetTittelLengde = rules.maxLength(TITTEL_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.tittel-lengde" values={{ TITTEL_MAKS_LENGDE }} />
+);
+const pakrevdFraDato = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-fradato" />);
+const pakrevdTilDato = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tildato" />);
+const begrensetLenkeLengde = rules.maxLength(LENKE_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.lenke-lengde" values={{ LENKE_MAKS_LENGDE }} />
+);
+const begrensetBeskrivelseLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.beskrivelse-lengde" values={{ BESKRIVELSE_MAKS_LENGDE }} />
+);
+const begrensetArbeidsstedLengde = rules.maxLength(ARBEIDSSTED_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.arbeidssted-lengde" values={{ ARBEIDSSTED_MAKS_LENGDE }} />
+);
+const begrensetArbeidsgiverLengde = rules.maxLength(ARBEIDSGIVER_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.arbeidsgiver-lengde" values={{ ARBEIDSGIVER_MAKS_LENGDE }} />
+);
+const begrensetKontaktpersonLengde = rules.maxLength(KONTAKTPERSON_MAKS_LENGDE,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.kontaktperson-lengde" values={{ KONTAKTPERSON_MAKS_LENGDE }} />
+);
 
-function StillingAktivitetForm(props) {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div className="skjema-innlogget aktivitetskjema">
-                {props.errorSummary}
-                <div className="aktivitetskjema__header">
-                    <Innholdstittel>
-                        <FormattedMessage id="stilling-aktivitet-form.header" />
-                    </Innholdstittel>
-                    <Undertekst>
-                        <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                    </Undertekst>
-                </div>
+class StillingAktivitetForm extends Component {
+    componentDidMount() {
+        window.onbeforeunload = this.visLukkDialog.bind(this);
+    }
 
-                <Input feltNavn="tittel" labelId="stilling-aktivitet-form.label.overskrift" />
-                <div className="dato-container">
-                    <Datovelger
-                        feltNavn="fraDato"
-                        labelId="stilling-aktivitet-form.label.fra-dato"
-                        senesteTom={props.currentTilDato}
+    componentWillUnmount() {
+        window.onbeforeunload = null;
+    }
+
+    visLukkDialog(e) { // eslint-disable-line
+        if (this.props.isDirty) {
+            const melding = this.props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' });
+            e.returnValue = melding;
+            return melding;
+        }
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.props.handleSubmit}>
+                <div className="skjema-innlogget aktivitetskjema">
+                    {this.props.errorSummary}
+                    <div className="aktivitetskjema__header">
+                        <Innholdstittel>
+                            <FormattedMessage id="stilling-aktivitet-form.header" />
+                        </Innholdstittel>
+                        <Undertekst>
+                            <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
+                        </Undertekst>
+                    </div>
+
+                    <Input
+                        feltNavn="tittel"
+                        disabled={this.props.avtalt === true}
+                        labelId="stilling-aktivitet-form.label.overskrift"
                     />
-                    <Datovelger
-                        feltNavn="tilDato"
-                        labelId="stilling-aktivitet-form.label.til-dato"
-                        tidligsteFom={props.currentFraDato}
+                    <div className="dato-container">
+                        <Datovelger
+                            feltNavn="fraDato"
+                            disabled={this.props.avtalt === true}
+                            labelId="stilling-aktivitet-form.label.fra-dato"
+                            senesteTom={this.props.currentTilDato}
+                        />
+                        <Datovelger
+                            feltNavn="tilDato"
+                            labelId="stilling-aktivitet-form.label.til-dato"
+                            tidligsteFom={this.props.currentFraDato}
+                        />
+                    </div>
+                    <Input
+                        feltNavn="lenke"
+                        disabled={this.props.avtalt === true}
+                        labelId="stilling-aktivitet-form.label.lenke"
+                    />
+                    <Textarea
+                        feltNavn="beskrivelse"
+                        disabled={this.props.avtalt === true}
+                        labelId="stilling-aktivitet-form.label.beskrivelse"
+                        maxLength={BESKRIVELSE_MAKS_LENGDE}
+                        visTellerFra={500}
+                    />
+                    <Input
+                        feltNavn="arbeidssted"
+                        disabled={this.props.avtalt === true}
+                        labelId="stilling-aktivitet-form.label.arbeidssted"
+                    />
+                    <Input
+                        feltNavn="arbeidsgiver"
+                        disabled={this.props.avtalt === true}
+                        labelId="stilling-aktivitet-form.label.arbeidsgiver"
+                    />
+                    <Input
+                        feltNavn="kontaktperson"
+                        disabled={this.props.avtalt === true}
+                        labelId="stilling-aktivitet-form.label.kontaktperson"
                     />
                 </div>
-                <Input feltNavn="lenke" labelId="stilling-aktivitet-form.label.lenke" />
-                <Textarea
-                    feltNavn="beskrivelse"
-                    labelId="stilling-aktivitet-form.label.beskrivelse"
-                    maxLength={BESKRIVELSE_MAKS_LENGDE}
-                />
-                <Input feltNavn="arbeidssted" labelId="stilling-aktivitet-form.label.arbeidssted" />
-                <Input feltNavn="arbeidsgiver" labelId="stilling-aktivitet-form.label.arbeidsgiver" />
-                <Input feltNavn="kontaktperson" labelId="stilling-aktivitet-form.label.kontaktperson" />
-            </div>
-            <div className="aktivitetskjema__lagre-knapp">
-                <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
-            </div>
-        </form>
-    );
+                <div className="aktivitetskjema__lagre-knapp">
+                    <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
+                </div>
+            </form>
+        );
+    }
 }
 
 StillingAktivitetForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
     currentFraDato: PT.instanceOf(Date),
-    currentTilDato: PT.instanceOf(Date)
+    currentTilDato: PT.instanceOf(Date),
+    isDirty: PT.bool.isRequired,
+    intl: intlShape.isRequired,
+    avtalt: PT.bool
 };
 
-const formNavn = 'stilling-aktivitet';
+StillingAktivitetForm.defaultProps = {
+    currentFraDato: undefined,
+    currentTilDato: undefined,
+    avtalt: false
+};
+
+export const formNavn = 'stilling-aktivitet';
 const StillingAktivitetReduxForm = validForm({
     form: formNavn,
     errorSummaryTitle: <FormattedMessage id="stilling-aktivitet-form.feiloppsummering-tittel" />,
@@ -113,12 +170,14 @@ const mapStateToProps = (state, props) => {
             fraDato: dateToISODate(new Date()),
             ...aktivitet
         },
+        isDirty: isDirty(formNavn)(state),
         etikett: selector(state, 'etikett'),
         currentFraDato: moment(selector(state, 'fraDato')).toDate(),
-        currentTilDato: moment(selector(state, 'tilDato')).toDate()
+        currentTilDato: moment(selector(state, 'tilDato')).toDate(),
+        avtalt: aktivitet && aktivitet.avtalt
     };
 };
 
 const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(StillingAktivitetReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(StillingAktivitetReduxForm));

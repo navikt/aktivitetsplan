@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
@@ -27,6 +28,7 @@ function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter 
                 placeholder="Skriv her"
                 maxLength={TEKST_MAKS_LENGDE}
                 disabled={oppretter}
+                visTellerFra={500}
             />
             <Hovedknapp
                 type="hoved"
@@ -109,7 +111,7 @@ function DynamiskNyHenvendelseReduxFormConnected(props) {
 }
 
 DynamiskNyHenvendelseReduxFormConnected.propTypes = {
-    formNavn: PT.string
+    formNavn: PT.string.isRequired
 };
 
 export default DynamiskNyHenvendelseReduxFormConnected;

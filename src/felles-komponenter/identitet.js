@@ -1,4 +1,6 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
+import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { hentIdentitet } from '../ducks/identitet';
 
@@ -11,7 +13,7 @@ class Identitet extends Component {
     render() {
         const { children, ident } = this.props;
         return (
-            <span>{ident === children ? 'deg' : children}</span>
+            <span>{ident === children ? this.props.intl.formatMessage({ id: 'identitet.deg' }) : children}</span>
         );
     }
 }
@@ -19,8 +21,13 @@ class Identitet extends Component {
 Identitet.propTypes = {
     ident: PT.string,
     children: PT.string,
-
+    intl: intlShape.isRequired,
     doHentIdentitet: PT.func.isRequired
+};
+
+Identitet.defaultProps = {
+    ident: undefined,
+    children: undefined
 };
 
 const mapStateToProps = (state) => {
@@ -34,4 +41,4 @@ const mapDispatchToProps = (dispatch) => ({
     doHentIdentitet: () => dispatch(hentIdentitet())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Identitet);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(Identitet));

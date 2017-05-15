@@ -1,6 +1,7 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import './tall-alert.less';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 
 
 function Dato({ children }) {
@@ -11,6 +12,10 @@ function Dato({ children }) {
 
 Dato.propTypes = {
     children: PT.number
+};
+
+Dato.defaultProps = {
+    children: undefined
 };
 
 export default visibleIfHOC(Dato);

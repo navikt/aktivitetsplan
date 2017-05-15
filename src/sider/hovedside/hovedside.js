@@ -1,54 +1,42 @@
-import React, { PropTypes as PT } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import PT from 'prop-types';
+import { Container } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
-import Lenke from '../../felles-komponenter/utils/lenke';
-import Modal from '../../modal/modal';
+import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
+import Feil from './feil';
 import AktivitetsTavle from './aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje';
-import history from '../../history';
-import AktivitetsMal from './mal/aktivitetsmal';
-import { LUKK_MODAL } from '../../ducks/modal';
 
-function Hovedside({ children, routes, lukkModal }) {
-    const modalId = routes && routes[routes.length - 1].modalId;
-    const modal = !children ? (null) : (<Modal
-        key={modalId}
-        isOpen={children != null}
-        onRequestClose={
-            () => {
-                history.push('/');
-                lukkModal();
-            }
-        }
-        contentLabel="aktivitet-modal"
-    >
-        {children}
-    </Modal>);
-
+function Hovedside({ children }) {
     return (
         <div className="hovedside">
             <div className="hovedsideinnhold">
-                <Navigasjonslinje />
-                <AktivitetsMal />
-                <Lenke className="hovedsideinnhold__aktivitetsknapp" href="/aktivitet/ny">
-                    <FormattedMessage id="nyaktivitetsknapp" />
-                </Lenke>
+                <Container>
+                    <Feil />
+                    <Navigasjonslinje />
+                    <Lenkeknapp href="/aktivitet/ny">
+                        <FormattedMessage id="nyaktivitetsknapp" />
+                    </Lenkeknapp>
+                </Container>
                 <AktivitetsTavle />
             </div>
-            {modal}
+            {children}
         </div>
 
     );
 }
 
-Hovedside.propTypes = {
-    children: PT.node,
-    routes: PT.arrayOf(PT.shape({ modalId: PT.string })),
-    lukkModal: PT.func.isRequired
+Hovedside.defaultProps = {
+    children: null,
+    routes: null
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    lukkModal: () => dispatch({ type: LUKK_MODAL })
-});
+Hovedside.propTypes = {
+    children: PT.node
+};
 
-export default connect(null, mapDispatchToProps)(Hovedside);
+Hovedside.defaultProps = {
+    children: undefined
+};
+
+export default Hovedside;

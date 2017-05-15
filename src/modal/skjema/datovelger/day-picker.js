@@ -1,21 +1,17 @@
 /* eslint-env browser*/
-import React, { Component, PropTypes as PT } from 'react';
-import DayPicker, { DateUtils, LocaleUtils } from 'react-day-picker';
+import React, { Component } from 'react';
+import PT from 'prop-types';
+import { FormattedDate, injectIntl, intlShape } from 'react-intl';
+import DayPicker, { DateUtils } from 'react-day-picker';
+import MomentLocaleUtils from 'react-day-picker/moment';
 import { erGyldigDato, erGyldigDatoformat } from '../../../utils';
 import { dateGreater, dateLess } from './utils';
 import './day-picker.less';
 
-export const MONTHS = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
-export const WEEKDAYS_LONG = ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'];
-export const WEEKDAYS_SHORT = ['søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør'];
-
-export const formatDay = (date) =>
-    // aria-label på dager
-     `${WEEKDAYS_LONG[date.getDay()]} ${date.getDate()}. ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
-
-const localeUtils = Object.assign({}, LocaleUtils, {
-    formatDay
-});
+const localeUtils = {
+    ...MomentLocaleUtils,
+    formatWeekdayShort: (i, locale) => MomentLocaleUtils.formatWeekdayLong(i, locale).substring(0, 3)
+};
 
 const pad = (nr) => {
     if (nr > 9 || nr.length > 1) {
@@ -24,20 +20,26 @@ const pad = (nr) => {
     return `0${nr}`;
 };
 
-export const Caption = ({ date }) => (<div className="DayPicker-Caption" role="heading" aria-live="assertive" aria-atomic="true">
-    {`${MONTHS[date.getMonth()]} ${date.getFullYear()}`}
-</div>);
+export const Caption = ({ date }) => (
+    <div className="DayPicker-Caption" role="heading" aria-live="assertive" aria-atomic="true">
+        <FormattedDate month="long" year="numeric" value={date} />
+    </div>
+);
 
 Caption.propTypes = {
     date: PT.instanceOf(Date)
 };
 
-export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showNextButton }) => {
+Caption.defaultProps = {
+    date: undefined
+};
+
+export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showNextButton, intl }) => {
     const className = 'DayPicker-NavButton';
     return (<div role="toolbar">
         <button
             tabIndex="-1"
-            aria-label="Forrige måned"
+            aria-label={intl.formatMessage({ id: 'datepicker.forrige-maaned' })}
             className={`${className} DayPicker-NavButton--prev`}
             disabled={!showPreviousButton}
             type="button" onClick={(e) => {
@@ -47,7 +49,7 @@ export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showN
         />
         <button
             tabIndex="-1"
-            aria-label="Neste måned"
+            aria-label={intl.formatMessage({ id: 'datepicker.neste-maaned' })}
             className={`${className} DayPicker-NavButton--next`}
             disabled={!showNextButton}
             type="button"
@@ -63,7 +65,15 @@ NavBar.propTypes = {
     onNextClick: PT.func,
     onPreviousClick: PT.func,
     showPreviousButton: PT.bool,
-    showNextButton: PT.bool
+    showNextButton: PT.bool,
+    intl: intlShape.isRequired
+};
+
+NavBar.defaultProps = {
+    onNextClick: undefined,
+    onPreviousClick: undefined,
+    showPreviousButton: false,
+    showNextButton: false
 };
 
 class DayPickerComponent extends Component {
@@ -124,14 +134,11 @@ class DayPickerComponent extends Component {
         >
             <DayPicker
                 locale="no"
-                months={MONTHS}
-                weekdaysLong={WEEKDAYS_LONG}
-                weekdaysShort={WEEKDAYS_SHORT}
                 initialMonth={this.getInitialMonth()}
                 localeUtils={localeUtils}
                 firstDayOfWeek={1}
                 captionElement={<Caption />}
-                navbarElement={<NavBar />}
+                navbarElement={<NavBar intl={this.props.intl} />}
                 selectedDays={(day) => this.selectedDays(day)}
                 onDayClick={(event, jsDato) => this.props.onDayClick(event, jsDato)}
 
@@ -147,7 +154,14 @@ DayPickerComponent.propTypes = {
     ariaControlledBy: PT.string,
     onDayClick: PT.func.isRequired,
     senesteTom: PT.instanceOf(Date),
-    tidligsteFom: PT.instanceOf(Date)
+    tidligsteFom: PT.instanceOf(Date),
+    intl: intlShape.isRequired
 };
 
-export default DayPickerComponent;
+DayPickerComponent.defaultProps = {
+    ariaControlledBy: undefined,
+    senesteTom: undefined,
+    tidligsteFom: undefined
+};
+
+export default injectIntl(DayPickerComponent);

@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import classNames from 'classnames';
 import { Hovedknapp, Knapp } from 'nav-react-design/dist/knapp';
 
@@ -27,6 +28,10 @@ AktivitetKnapperad.propTypes = {
     className: PT.string,
     handterRediger: PT.func.isRequired,
     handterSlett: PT.func.isRequired
+};
+
+AktivitetKnapperad.defaultProps = {
+    className: undefined
 };
 
 export default AktivitetKnapperad;

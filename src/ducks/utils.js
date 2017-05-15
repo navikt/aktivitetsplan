@@ -1,4 +1,5 @@
 import { fetchInterceptor } from '~config'; // eslint-disable-line
+import { update as resetTimeout } from '../felles-komponenter/timeoutbox/timeoutbox';
 
 /* eslint-env browser */
 export const STATUS = {
@@ -7,6 +8,11 @@ export const STATUS = {
     OK: 'OK',
     RELOADING: 'RELOADING',
     ERROR: 'ERROR'
+};
+
+export const FEILTYPE = {
+    VERSJONSKONFLIKT: 'VERSJONSKONFLIKT',
+    UKJENT: 'UKJENT'
 };
 
 const DEFAULT_CONFIG = {
@@ -39,17 +45,28 @@ export function sendResultatTilDispatch(dispatch, action) {
     };
 }
 
+function parseError(errorData) {
+    try {
+        return JSON.parse(errorData);
+    } catch (e) {
+        console.error(e); // eslint-disable-line no-console
+        return errorData;
+    }
+}
+
 export function handterFeil(dispatch, action) {
     return (error) => {
-        if (error.response) {
-            error.response.text().then((data) => {
+        const response = error.response;
+        if (response) {
+            response.text().then((data) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({ type: action, data: { response: error.response, data } });
+                dispatch({ type: action, data: parseError(data) });
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
             dispatch({ type: action, data: error.toString() });
         }
+        return Promise.reject(error);
     };
 }
 
@@ -60,6 +77,7 @@ export const getCookie = (name) => {
 };
 
 export function fetchToJson(url, config = {}) {
+    resetTimeout();
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
     return (fetchInterceptor ? fetchInterceptor(fetch, url, configMedCredentials) : fetch(url, configMedCredentials))
         .then(sjekkStatuskode)

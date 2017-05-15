@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { Input as NavInput } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
@@ -18,6 +19,13 @@ InnerInputComponent.propTypes = {
     errorMessage: PT.arrayOf(PT.string),
     meta: PT.object, // eslint-disable-line react/forbid-prop-types
     input: PT.object // eslint-disable-line react/forbid-prop-types
+};
+
+InnerInputComponent.defaultProps = {
+    bredde: undefined,
+    errorMessage: undefined,
+    meta: undefined,
+    input: undefined
 };
 
 function Input({ feltNavn, ...rest }) {
