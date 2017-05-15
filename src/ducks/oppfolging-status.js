@@ -6,7 +6,9 @@ export const OK = 'oppfolgingStatus/OK';
 export const FEILET = 'oppfolgingStatus/FEILET';
 export const PENDING = 'oppfolgingStatus/PENDING';
 
-export const AVSLAG = 'oppfolgingStatus/avslag';
+export const AVSLA_OK = 'oppfolgingStatus/avsla/OK';
+export const AVSLA_FEILET = 'oppfolgingStatus/avsla/FEILET';
+export const AVSLA_PENDING = 'oppfolgingStatus/avsla/PNEDING';
 
 export const GODTA_OK = 'oppfolgingStatus/godta/OK';
 export const GODTA_FEILET = 'oppfolgingStatus/godta/FEILET';
@@ -29,8 +31,12 @@ export default function reducer(state = initalState, action) {
             return { ...state, status: STATUS.OK, data: action.data };
         case GODTA_OK:
             return { ...state, data: action.data };
-        case AVSLAG:
-            return { ...state, data: { ...state.data, avslag: true } };
+        case AVSLA_OK:
+            return { ...state, status: STATUS.OK, data: action.data };
+        case AVSLA_FEILET:
+            return { ...state, status: STATUS.ERROR, data: action.data };
+        case AVSLA_PENDING:
+            return { ...state, status: STATUS.PENDING, data: action.data };
         default:
             return state;
     }
@@ -53,7 +59,11 @@ export function godtaVilkar(hash) {
     });
 }
 
-export function avslaVilkar() {
-    return (dipatch) => dipatch({ type: AVSLAG });
+export function avslaVilkar(hash) {
+    return doThenDispatch(() => Api.avslaaVilkar(hash), {
+        OK: AVSLA_OK,
+        FEILET: AVSLA_FEILET,
+        PENDING: AVSLA_PENDING
+    });
 }
 

@@ -17,6 +17,10 @@ export function godtaVilkar(hash) {
     return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/godta/${hash}`);
 }
 
+export function avslaaVilkar(hash) {
+    return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/avslaa/${hash}`);
+}
+
 export function hentVilkar() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/vilkar`);
 }
