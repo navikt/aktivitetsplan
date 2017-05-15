@@ -1,35 +1,35 @@
 import React from 'react';
 import PT from 'prop-types';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { Knapp } from 'nav-frontend-knapper';
+import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import ModalContainer from '../../modal/modal-container';
 import ModalFooter from '../../modal/modal-footer';
+import ModalHeader from '../../modal/modal-header';
 
 function TimeoutboxNedtelling({ tidIgjen }) {
     return (
         <div>
+            <ModalHeader />
             <ModalContainer>
                 <div className="varselmodal">
                     <Innholdstittel className="blokk-m" tag="h1">
                         <FormattedMessage id="timeoutbox.tittel" />
                     </Innholdstittel>
-                    <Normaltekst>
+                    <Normaltekst className="blokk-xxs">
                         <FormattedMessage id="timeoutbox.innhold.nedtelling" values={{ tid: tidIgjen.format('mm:ss') }} />
                     </Normaltekst>
                 </div>
             </ModalContainer>
             <ModalFooter>
-                <Knapp
+                <Hovedknapp
                     className="modal-footer__knapp"
-                    mini
                     onClick={() => window.location.reload()}
                 >
                     <FormattedMessage id="timeoutbox.knapp.fortsett" />
-                </Knapp>
+                </Hovedknapp>
                 <Knapp
                     className="modal-footer__knapp"
-                    mini
                     onClick={() => document.querySelector('#logout').click()}
                 >
                     <FormattedMessage id="timeoutbox.knapp.loggut" />
