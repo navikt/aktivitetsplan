@@ -13,7 +13,7 @@ function TimeoutboxNedtelling({ tidIgjen }) {
             <ModalHeader />
             <ModalContainer>
                 <div className="varselmodal">
-                    <Innholdstittel className="blokk-m" tag="h1">
+                    <Innholdstittel className="blokk-s" tag="h1">
                         <FormattedMessage id="timeoutbox.tittel" />
                     </Innholdstittel>
                     <Normaltekst className="blokk-xxs">
