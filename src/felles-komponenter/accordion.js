@@ -28,7 +28,7 @@ class Accordion extends Component {
 
     render() {
         return (
-            <div>
+            <div className={this.props.className}>
                 <a
                     href="/"
                     className={classNames('accordion__link', { 'accordion__link-apen': this.state.apen })}
@@ -46,14 +46,16 @@ class Accordion extends Component {
 Accordion.defaultProps = {
     onClick: () => {},
     apen: false,
-    children: null
+    children: null,
+    className: ''
 };
 
 Accordion.propTypes = {
     labelId: PT.string.isRequired,
     onClick: PT.func,
     apen: PT.bool,
-    children: PT.arrayOf(PT.node)
+    children: PT.arrayOf(PT.node),
+    className: PT.string
 };
 
 export default Accordion;
