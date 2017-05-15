@@ -1,6 +1,7 @@
 @import "../variables";
+@import "./dialoger";
 
-@padding: 1rem 2rem;
+@padding: 1rem 1rem 1rem @padding-left;
 @animationTime: 300ms;
 @bredde-skjerm-dialoger: 25%;
 @bredde-skjerm-dialog: 50%;
@@ -9,7 +10,7 @@
 .dialog-modal {
   position: fixed;
   max-width: 100%;
-  height: 100%;
+  height: 75%;
   left: -100%;
   width: @bredde-skjerm-dialoger;
   margin: 0;
@@ -27,13 +28,12 @@
 
   @media (max-width: @mobil-bredde) {
     min-width: 100%;
-  }
-
-  // TODO kan forenkles etter http://stash.devillo.no/projects/NAVFRONT/repos/nav-frontend-moduler/pull-requests/106/overview
-  & > section {
     height: 100%;
   }
-  ////
+
+  &__content {
+    height: 100%;
+  }
 
   &__wrapper {
     display: flex;

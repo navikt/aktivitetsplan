@@ -188,7 +188,7 @@ class DialogModal extends Component { // eslint-disable-line react/no-multi-comp
         return (
             <div>
                 <Hovedside />
-                <Modal className={className} closeButton={false} onRequestClose={lukkModal} isOpen>
+                <Modal className={className} closeButton={false} onRequestClose={lukkModal} isOpen contentClass="dialog-modal__content">
                     <DialogModalContent navigerTil={this.navigerTil} {...this.props} />
                 </Modal>
             </div>
