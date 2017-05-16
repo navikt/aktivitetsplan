@@ -13,7 +13,7 @@ function InnerCheckboxComponent({ input, labelId, errorMessage }) {
 
 InnerCheckboxComponent.propTypes = {
     labelId: PT.string.isRequired,
-    errorMessage: PT.arrayOf(PT.string),
+    errorMessage: PT.arrayOf(PT.oneOfType([PT.string, PT.instanceOf(FormattedMessage)])),
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
