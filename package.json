@@ -20,7 +20,7 @@
   "scripts": {
     "test": "mocha",
     "test:watch": "mocha --watch",
-    "depcheck": "node ./node_modules/npm-check-updates/bin/npm-check-updates -e 2 -x history,react-motion,react-router,react-collapse,jsdom,mocha,react-height --packageFile ./package.json",
+    "depcheck": "node ./node_modules/npm-check-updates/bin/npm-check-updates -e 2 -x history,react-motion,react-router,react-collapse,mocha,react-height --packageFile ./package.json",
     "eslint": "eslint src --ext .js --ext .jsx",
     "eslint:fix": "eslint src --ext .js --ext .jsx --fix",
     "dev": "webpack-dev-server --progress --hot --watch --env.dev=true --port 8888",
@@ -32,7 +32,7 @@
     "inputmask-core": "2.2.0",
     "intl": "1.2.5",
     "invariant": "2.2.2",
-    "jsdom": "10.1.0",
+    "jsdom": "9.9.1",
     "moment": "2.18.1",
     "nav-frontend-alertstriper": "0.0.20",
     "nav-frontend-alertstriper-style": "0.0.15",
