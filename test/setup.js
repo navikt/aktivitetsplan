@@ -8,9 +8,11 @@ chai.use(chaiAsPromised);
 
 const Module = require("module").Module;
 
-var jsdom = require('jsdom');
-var document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-var window = document.defaultView;
+var jsdom = require('jsdom').JSDOM;
+var dom = (new jsdom('<!doctype html><html><body></body></html>'));
+
+var window = dom.window;
+var document = window.document;
 window.call = function(){};
 
 global.document = document;
