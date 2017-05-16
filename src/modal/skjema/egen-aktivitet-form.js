@@ -12,6 +12,7 @@ import Input from './input/input';
 import Datovelger from './datovelger/datovelger';
 import './skjema.less';
 import { STATUS_BRUKER_ER_INTRESSERT } from '../../constant';
+import PeriodeValidering from './datovelger/periode-validering';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -72,19 +73,28 @@ class EgenAktivitetForm extends Component {
                         labelId="egen-aktivitet-form.label.overskrift"
                         bredde="fullbredde"
                     />
-                    <div className="dato-container">
-                        <Datovelger
-                            feltNavn="fraDato"
-                            disabled={this.props.avtalt === true}
-                            labelId="egen-aktivitet-form.label.fra-dato"
-                            senesteTom={this.props.currentTilDato}
-                        />
-                        <Datovelger
-                            feltNavn="tilDato"
-                            labelId="egen-aktivitet-form.label.til-dato"
-                            tidligsteFom={this.props.currentFraDato}
-                        />
-                    </div>
+
+                    <PeriodeValidering
+                        feltNavn="periodeValidering"
+                        fraDato={this.props.currentFraDato}
+                        tilDato={this.props.currentTilDato}
+                        errorMessage={this.props.intl.formatMessage({ id: 'datepicker.feilmelding.fradato-etter-frist' })}
+                    >
+                        <div className="dato-container">
+                            <Datovelger
+                                feltNavn="fraDato"
+                                disabled={this.props.avtalt === true}
+                                labelId="egen-aktivitet-form.label.fra-dato"
+                                senesteTom={this.props.currentTilDato}
+                            />
+                            <Datovelger
+                                feltNavn="tilDato"
+                                labelId="egen-aktivitet-form.label.til-dato"
+                                tidligsteFom={this.props.currentFraDato}
+                            />
+                        </div>
+                    </PeriodeValidering>
+
                     <Input
                         feltNavn="lenke"
                         disabled={this.props.avtalt === true}
@@ -141,7 +151,8 @@ const EgenAktivitetReduxForm = validForm({
         tilDato: [pakrevdTilDato],
         lenke: [begrensetLenkeLengde],
         hensikt: [begrensetHensiktLengde],
-        beskrivelse: [begrensetBeskrivelseLengde]
+        beskrivelse: [begrensetBeskrivelseLengde],
+        periodeValidering: []
     }
 })(EgenAktivitetForm);
 

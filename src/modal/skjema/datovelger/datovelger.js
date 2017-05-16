@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
+import { change, touch } from 'redux-form';
 import MaskedInput from 'react-maskedinput';
 import { autobind, dateToISODate, erGyldigISODato, ISODateToDatePicker, datePickerToISODate, erGyldigFormattertDato } from '../../../utils';
 import { validerDatoField } from './utils';
@@ -49,8 +50,10 @@ class DatoField extends Component {
     }
 
     onDayClick(event) {
+        const { feltNavn, meta } = this.props;
         const isoDate = dateToISODate(new Date(event));
-        this.props.input.onChange(isoDate);
+        this.props.dispatch(change(meta.form, feltNavn, isoDate));
+        this.props.dispatch(touch(meta.form, feltNavn));
         this.lukk();
     }
 
@@ -135,6 +138,7 @@ class DatoField extends Component {
 DatoField.propTypes = {
     meta: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
     id: PT.string.isRequired,
+    feltNavn: PT.string.isRequired,
     label: PT.oneOfType([PT.string, PT.node]).isRequired,
     input: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
     dispatch: PT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
