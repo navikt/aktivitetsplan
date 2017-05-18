@@ -68,13 +68,13 @@ function PeriodeValidering(props) {
 
     return (
         <div className={classNames({ skjema__periodevalidering: true, 'skjema--harFeil': !valid })}>
-            <div className={classNames({ skjema__feilomrade: !valid })}>
+            <div className={classNames({ skjema__feilomrade: !valid })} id={props.feltNavn} tabIndex={valid ? undefined : -1}>
                 {props.children}
 
                 <CustomField
                     name={props.feltNavn}
                     customComponent={<ConnectedInputComponent feltNavn={props.feltNavn} fraDato={props.fraDato} tilDato={props.tilDato} />}
-                    validate={(value) => value ? undefined : props.errorMessage} // eslint-disable-line no-confusing-arrow
+                    validate={() => valid ? undefined : props.errorMessage} // eslint-disable-line no-confusing-arrow
                 />
             </div>
         </div>
