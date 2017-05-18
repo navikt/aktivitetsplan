@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 import NyHenvendelse from './ny-henvendelse';
+import EndreDialog from './endre-dialog';
 import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
 import './dialog.less';
@@ -17,6 +18,7 @@ function Dialog({ dialog, className }) {
                 <FormattedMessage id="dialog.deg-og-nav.tittel" />
             </Element>
             <NyHenvendelse formNavn={`ny-henvendelse-dialog-${dialogId}`} dialogId={dialogId} />
+            <EndreDialog formNavn={`endre-dialog-${dialogId}`} dialog={dialog} />
             <Henvendelser dialog={dialog} />
         </div>
     );

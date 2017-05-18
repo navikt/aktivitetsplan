@@ -14,6 +14,10 @@ export const DIALOG_LEST = 'dialog/lest';
 export const DIALOG_LEST_OK = 'dialog/lest/ok';
 export const DIALOG_LEST_FEILET = 'dialog/lest/fail';
 
+export const OPPDATER_DIALOG = 'dialog/oppdater';
+export const OPPDATER_DIALOG_OK = 'dialog/oppdater/ok';
+export const OPPDATER_DIALOG_FEILET = 'dialog/oppdater/fail';
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: []
@@ -41,6 +45,7 @@ export default function reducer(state = initalState, action) {
             return { ...state, status: STATUS.OK, data };
         case OPPRETTET_HENVENDELSE:
         case DIALOG_LEST_OK:
+        case OPPDATER_DIALOG_OK:
             return nyStateMedOppdatertDialog(state, data);
         default:
             return state;
@@ -69,5 +74,13 @@ export function markerDialogSomLest(dialogId) {
         OK: DIALOG_LEST_OK,
         FEILET: DIALOG_LEST_FEILET,
         PENDING: DIALOG_LEST
+    });
+}
+
+export function oppdaterDialog(dialog) {
+    return doThenDispatch(() => Api.oppdaterDialog(dialog), {
+        OK: OPPDATER_DIALOG_OK,
+        FEILET: OPPDATER_DIALOG_FEILET,
+        PENDING: OPPDATER_DIALOG
     });
 }

@@ -15,6 +15,13 @@
     width: 1rem;
   }
 
+  &__slash {
+    display: inline;
+    &::after{
+      content: ' / '
+    }
+  }
+
   &__dialog {
     margin: 0;
     padding-left: @padding-left;
@@ -33,9 +40,35 @@
       right: 40px;
     }
 
+    &--venter-pa-svar {
+      .venter-pa-svar {
+        color: @navRodDarken20;
+      }
+    }
+
+    &--ferdigbehandlet {
+      .ferdigbehandlet {
+        color: @navGronnDarken20;
+      }
+    }
+
     &--valgt {
       background-color: @bla;
       color: white;
+
+      // fjerne lenkepanel sin hover-styling
+      &:hover {
+        color: white;
+        cursor: auto;
+
+        .lenkepanel__heading {
+          text-decoration: none;
+        }
+      }
+
+      .venter-pa-svar, .ferdigbehandlet  {
+        color: white;
+      }
     }
   }
 }
