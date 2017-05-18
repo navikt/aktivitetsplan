@@ -145,7 +145,7 @@ DatoField.propTypes = {
     disabled: PT.bool,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date),
-    errorMessage: PT.oneOfType([PT.arrayOf(PT.string), PT.string])
+    errorMessage: PT.oneOfType([PT.arrayOf(PT.node), PT.node])
 };
 
 DatoField.defaultProps = {
