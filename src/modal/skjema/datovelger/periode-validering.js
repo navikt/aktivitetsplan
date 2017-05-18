@@ -33,7 +33,7 @@ class InnerInputComponent extends Component {
         const { input, errorMessage } = this.props;
         return (
             <div>
-                <input type="hidden" name={input.name} id={input.id} {...input} />
+                <input type="hidden" {...input} />
                 <div role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
                     <span>{errorMessage}</span>
                 </div>
