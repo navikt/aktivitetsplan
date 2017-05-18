@@ -167,7 +167,8 @@ const StillingAktivitetReduxForm = validForm({
         beskrivelse: [begrensetBeskrivelseLengde],
         arbeidssted: [begrensetArbeidsstedLengde],
         arbeidsgiver: [begrensetArbeidsgiverLengde],
-        kontaktperson: [begrensetKontaktpersonLengde]
+        kontaktperson: [begrensetKontaktpersonLengde],
+        periodeValidering: []
     }
 })(StillingAktivitetForm);
 
