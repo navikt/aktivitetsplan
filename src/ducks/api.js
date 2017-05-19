@@ -37,6 +37,10 @@ export function markerDialogSomLest(dialogId) {
     return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/les`);
 }
 
+export function oppdaterDialog(dialog) {
+    return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialog.id}`, dialog);
+}
+
 export function hentAktiviteter() {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet`);
 }
