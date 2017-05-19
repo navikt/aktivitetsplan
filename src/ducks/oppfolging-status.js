@@ -16,6 +16,7 @@ export const GODTA_PENDING = 'oppfolgingStatus/godta/PNEDING';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
+    brukerHarAvslatt: false,
     data: {}
 };
 
@@ -30,9 +31,9 @@ export default function reducer(state = initalState, action) {
         case OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case GODTA_OK:
-            return { ...state, data: action.data };
+            return { ...state, brukerHarAvslatt: false, data: action.data };
         case AVSLA_OK:
-            return { ...state, status: STATUS.OK, data: action.data };
+            return { ...state, status: STATUS.OK, brukerHarAvslatt: true, data: action.data };
         case AVSLA_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case AVSLA_PENDING:
