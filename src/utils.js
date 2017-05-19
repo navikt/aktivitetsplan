@@ -195,3 +195,7 @@ export function formaterDatoDatoEllerTidSiden(dato) {
             : formaterDatoKortManedTid(dato)
         : undefined
 }
+
+export function datoComparator(a, b) {
+    return a && b ? moment(a).diff(b) : (a ? 1 : 0) - (b ? 1 : 0);
+}

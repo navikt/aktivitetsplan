@@ -73,13 +73,13 @@ function VenstreKolonne({ valgtDialog, harNyDialog, harNyDialogEllerValgtDialog 
     return (
         <div className={className}>
             <section className="dialog-modal__ny-dialog">
-                <Knapp
+                <Knappelenke
                     onClick={nyDialog}
                     disabled={harNyDialog}
                     className="dialog-modal__ny-dialog-knapp"
                 >
                     <FormattedMessage id="dialog.modal.ny-dialog" />
-                </Knapp>
+                </Knappelenke>
             </section>
             <Dialoger className="dialog-modal__dialoger" valgtDialog={valgtDialog} />
         </div>

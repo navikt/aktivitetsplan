@@ -1,19 +1,20 @@
 import React from 'react';
 import PT from 'prop-types';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 import NyHenvendelse from './ny-henvendelse';
 import EndreDialog from './endre-dialog';
 import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
-import './dialog.less';
 
 
-function Dialog({ dialog, className }) {
+
+function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;
     return (
         <div className={className}>
-            <Undertittel >{dialog.overskrift}</Undertittel>
+            <Undertittel >{overskrift}</Undertittel>
             <Element>
                 <FormattedMessage id="dialog.deg-og-nav.tittel" />
             </Element>
@@ -26,11 +27,21 @@ function Dialog({ dialog, className }) {
 
 Dialog.propTypes = {
     className: PT.string,
+    overskrift: PT.string,
     dialog: AppPT.dialog.isRequired
 };
 
 Dialog.defaultProps = {
+    overskrift: undefined,
     className: undefined
 };
 
-export default Dialog;
+const mapStateToProps = (state,props) => {
+    const dialog = props.dialog;
+    const aktivitet = state.data.aktiviteter.data.find(a => a.id === dialog.aktivitetId) || {};
+    return {
+        overskrift: aktivitet.tittel || dialog.overskrift
+    };
+};
+
+export default connect(mapStateToProps)(Dialog);
