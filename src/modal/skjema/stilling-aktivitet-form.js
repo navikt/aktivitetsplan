@@ -86,7 +86,7 @@ class StillingAktivitetForm extends Component {
                         feltNavn="periodeValidering"
                         fraDato={this.props.currentFraDato}
                         tilDato={this.props.currentTilDato}
-                        errorMessage={this.props.intl.formatMessage({ id: 'datepicker.feilmelding.fradato-etter-frist' })}
+                        errorMessage={this.props.intl.formatMessage({ id: 'datepicker.feilmelding.stilling.fradato-etter-frist' })}
                     >
                         <div className="dato-container">
                             <Datovelger
