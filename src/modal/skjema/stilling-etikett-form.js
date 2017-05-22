@@ -5,7 +5,7 @@ import { reduxForm, formValueSelector } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import * as statuser from '../../constant';
 import Radio from './input/radio';
-import { oppdaterAktivitet } from '../../ducks/aktiviteter';
+import { oppdaterAktivitetEtikett } from '../../ducks/aktiviteter';
 import { aktivitet as aktivitetPT } from '../../proptypes';
 import { STATUS } from '../../ducks/utils';
 
@@ -99,7 +99,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch) => ({
     oppdaterEtikett: (aktivitet, etikett) => {
         const nyEtikett = etikett === statuser.INGEN_VALGT ? null : etikett;
-        oppdaterAktivitet({ ...aktivitet, etikett: nyEtikett })(dispatch);
+        oppdaterAktivitetEtikett({ ...aktivitet, etikett: nyEtikett })(dispatch);
     }
 });
 

@@ -30,13 +30,18 @@ InnerCheckboxComponent.propTypes = {
     labelId: PT.string.isRequired,
     errorMessage: PT.arrayOf(PT.oneOfType([PT.string, PT.instanceOf(FormattedMessage)])),
     submitOnChange: PT.bool,
-    input: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    meta: PT.object.isRequired // eslint-disable-line react/forbid-prop-types
+
+    input: PT.object, // eslint-disable-line react/forbid-prop-types
+    meta: PT.object // eslint-disable-line react/forbid-prop-types
 };
 
 InnerCheckboxComponent.defaultProps = {
     errorMessage: undefined,
-    submitOnChange: false
+    submitOnChange: false,
+
+    // Vil alltid bli overskrevet av CustomField
+    input: {},
+    meta: {}
 };
 
 function Checkbox({ feltNavn, className, ...rest }) {

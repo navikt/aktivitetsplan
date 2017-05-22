@@ -68,6 +68,10 @@ export function oppdaterAktivitetStatus(aktivitet) {
     return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
 }
 
+export function oppdaterAktivitetEtikett(aktivitet) {
+    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/etikett`, aktivitet);
+}
+
 export function hentEtiketter() {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/etiketter`);
 }

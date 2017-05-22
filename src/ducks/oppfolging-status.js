@@ -8,11 +8,11 @@ export const PENDING = 'oppfolgingStatus/PENDING';
 
 export const AVSLA_OK = 'oppfolgingStatus/avsla/OK';
 export const AVSLA_FEILET = 'oppfolgingStatus/avsla/FEILET';
-export const AVSLA_PENDING = 'oppfolgingStatus/avsla/PNEDING';
+export const AVSLA_PENDING = 'oppfolgingStatus/avsla/PENDING';
 
 export const GODTA_OK = 'oppfolgingStatus/godta/OK';
 export const GODTA_FEILET = 'oppfolgingStatus/godta/FEILET';
-export const GODTA_PENDING = 'oppfolgingStatus/godta/PNEDING';
+export const GODTA_PENDING = 'oppfolgingStatus/godta/PENDING';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
@@ -31,7 +31,11 @@ export default function reducer(state = initalState, action) {
         case OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case GODTA_OK:
-            return { ...state, brukerHarAvslatt: false, data: action.data };
+            return { ...state, status: STATUS.OK, brukerHarAvslatt: false, data: action.data };
+        case GODTA_FEILET:
+            return { ...state, status: STATUS.ERROR, data: action.data };
+        case GODTA_PENDING:
+            return { ...state, status: STATUS.PENDING, data: action.data };
         case AVSLA_OK:
             return { ...state, status: STATUS.OK, brukerHarAvslatt: true, data: action.data };
         case AVSLA_FEILET:
