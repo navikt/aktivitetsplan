@@ -16,7 +16,7 @@ function InnerInputComponent({ input, labelId, errorMessage, meta, ...rest }) {
 InnerInputComponent.propTypes = {
     labelId: PT.string.isRequired,
     bredde: PT.string,
-    errorMessage: PT.arrayOf(PT.string),
+    errorMessage: PT.arrayOf(PT.node),
     meta: PT.object, // eslint-disable-line react/forbid-prop-types
     input: PT.object // eslint-disable-line react/forbid-prop-types
 };

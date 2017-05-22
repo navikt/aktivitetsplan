@@ -1,8 +1,12 @@
-import { API_BASE_URL, DIALOG_BASE_URL, AKTIVITET_PROXY_BASE_URL, SITUASJON_PROXY_BASE_URL } from '~config'; // eslint-disable-line
+import { API_BASE_URL, DIALOG_BASE_URL, AKTIVITET_PROXY_BASE_URL, SITUASJON_PROXY_BASE_URL, PERSON_BASE_URL } from '~config'; // eslint-disable-line
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
 export function hentLedetekster() { // eslint-disable-line  import/prefer-default-export
     return fetchToJson(`${API_BASE_URL}/tekster`);
+}
+
+export function hentPerson(fnr) {
+    return fetchToJson(`${PERSON_BASE_URL}/person/${fnr}`);
 }
 
 export function hentIdentitet() {
@@ -35,6 +39,10 @@ export function nyHenvendelse(henvendelse) {
 
 export function markerDialogSomLest(dialogId) {
     return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/les`);
+}
+
+export function oppdaterDialog(dialog) {
+    return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialog.id}`, dialog);
 }
 
 export function hentAktiviteter() {

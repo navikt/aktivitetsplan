@@ -42,10 +42,13 @@ export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showN
             aria-label={intl.formatMessage({ id: 'datepicker.forrige-maaned' })}
             className={`${className} DayPicker-NavButton--prev`}
             disabled={!showPreviousButton}
-            type="button" onClick={(e) => {
-                e.preventDefault();
-                onPreviousClick();
-            }}
+            type="button"
+            onClick={
+                (e) => {
+                    e.preventDefault();
+                    onPreviousClick();
+                }
+            }
         />
         <button
             tabIndex="-1"

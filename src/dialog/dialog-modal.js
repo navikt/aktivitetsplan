@@ -17,6 +17,7 @@ import NyHenvendelse from './ny-henvendelse';
 import visibleIfHOC from '../hocs/visible-if';
 import './dialog-modal.less';
 import * as AppPT from '../proptypes';
+import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 
 const animationTime = 300;
 const VisibleDiv = visibleIfHOC((props) => <div {...props} />);
@@ -35,13 +36,15 @@ function dialogOpprettet(dialog) {
 }
 
 
-function Header({ navigerTil, harNyDialogEllerValgtDialog }) {
+function Header({ navigerTil, harNyDialogEllerValgtDialog, motpart, navnPaMotpart }) {
     return (
         <div className="dialog-modal__header">
             <PilKnapp visible={harNyDialogEllerValgtDialog} className="dialog-modal__tilbake-knapp" onClick={tilbake} />
-            <Undertittel className="dialog-modal__tittel">
-                <FormattedMessage id="dialog.tittel" />
-            </Undertittel>
+            <Innholdslaster avhengigheter={[motpart]} spinnerStorrelse="m">
+                <Undertittel className="dialog-modal__tittel">
+                    <FormattedMessage id="dialog.tittel" values={{ motpart: navnPaMotpart }} />
+                </Undertittel>
+            </Innholdslaster>
             <Lukknapp overstHjorne onClick={() => navigerTil('/')}>
                 <FormattedMessage id="dialog.modal.lukk-dialog" />
             </Lukknapp>
@@ -49,9 +52,15 @@ function Header({ navigerTil, harNyDialogEllerValgtDialog }) {
     );
 }
 
+Header.defaultProps = {
+    navnPaMotpart: null
+};
+
 Header.propTypes = {
     navigerTil: PT.func.isRequired,
-    harNyDialogEllerValgtDialog: PT.bool.isRequired
+    harNyDialogEllerValgtDialog: PT.bool.isRequired,
+    motpart: AppPT.reducer.isRequired,
+    navnPaMotpart: PT.string
 };
 
 function VenstreKolonne({ valgtDialog, harNyDialog, harNyDialogEllerValgtDialog }) {
@@ -188,7 +197,7 @@ class DialogModal extends Component { // eslint-disable-line react/no-multi-comp
         return (
             <div>
                 <Hovedside />
-                <Modal className={className} closeButton={false} onRequestClose={lukkModal} isOpen>
+                <Modal className={className} closeButton={false} onRequestClose={lukkModal} isOpen contentClass="dialog-modal__content">
                     <DialogModalContent navigerTil={this.navigerTil} {...this.props} />
                 </Modal>
             </div>
@@ -203,6 +212,7 @@ DialogModal.propTypes = {
 const mapStateToProps = (state, props) => {
     const { routeParams } = props;
     const { id } = routeParams;
+    const motpart = state.data.motpart;
     const dialoger = state.data.dialog.data;
     const valgtDialog = dialoger.find((d) => d.id === id);
     const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
@@ -214,7 +224,9 @@ const mapStateToProps = (state, props) => {
         valgtDialog,
         harValgtDialog,
         harNyDialogEllerValgtDialog: harNyDialog || harValgtDialog,
-        valgtAktivitetId
+        valgtAktivitetId,
+        motpart,
+        navnPaMotpart: motpart.data.navn
     };
 };
 

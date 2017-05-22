@@ -76,6 +76,10 @@ export function proxy(func, { before, after } = {}) {
     };
 }
 
+export function storeForbokstaver(tekst) {
+    return tekst && tekst.replace(/\w\S*/g, (ord) => ord.charAt(0).toUpperCase() + ord.substr(1).toLowerCase())
+}
+
 export const erGyldigISODato = (isoDato) => {
     return !!(isoDato && moment(isoDato, moment.ISO_8601).isValid());
 };

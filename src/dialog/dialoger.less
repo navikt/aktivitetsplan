@@ -1,5 +1,7 @@
 @import "../variables";
 
+@padding-left: 3rem;
+
 
 .dialoger {
 
@@ -13,11 +15,18 @@
     width: 1rem;
   }
 
+  &__slash {
+    display: inline;
+    &::after{
+      content: ' / '
+    }
+  }
+
   &__dialog {
     margin: 0;
+    padding-left: @padding-left;
     border-radius: 0;
     text-decoration: none;
-    padding-left: 2rem;
 
     border-top: 1px solid @gray-foreground;
 
@@ -31,9 +40,35 @@
       right: 40px;
     }
 
+    &--venter-pa-svar {
+      .venter-pa-svar {
+        color: @navRodDarken20;
+      }
+    }
+
+    &--ferdigbehandlet {
+      .ferdigbehandlet {
+        color: @navGronnDarken20;
+      }
+    }
+
     &--valgt {
       background-color: @bla;
       color: white;
+
+      // fjerne lenkepanel sin hover-styling
+      &:hover {
+        color: white;
+        cursor: auto;
+
+        .lenkepanel__heading {
+          text-decoration: none;
+        }
+      }
+
+      .venter-pa-svar, .ferdigbehandlet  {
+        color: white;
+      }
     }
   }
 }
