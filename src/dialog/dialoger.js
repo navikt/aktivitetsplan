@@ -3,20 +3,22 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import { Infotekst, Element, Normaltekst } from 'nav-frontend-typografi';
+import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
+import { DIALOG_FERDIGBEHANDLET, DIALOG_MA_BESVARES } from '../constant';
 import './dialoger.less';
 import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
+import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { datoComparator } from '../utils';
 
 const Prikk = visibleIfHOC((props) => <div className="dialoger__prikk" {...props} />);
 const Info = visibleIfHOC(({ slash, className, children }) => (
     <span>
-        {slash && <Infotekst className="dialoger__slash" /> }
-        <Infotekst className={className} tag="span">{children}</Infotekst>
+        {slash && <Undertekst className="dialoger__slash" /> }
+        <Undertekst className={className} tag="span">{children}</Undertekst>
     </span>
     ));
 
@@ -42,11 +44,14 @@ function DialogVisning({ dialog, erValgt, aktiviteter }) {
             <div>
                 <Info><Dato>{dialog.sisteDato}</Dato></Info>
                 <Info visible={harAktivitetType} slash><FormattedMessage id={`aktivitet.type.${aktivitetType}`.toLowerCase()} /></Info>
-                <Info visible={venterPaSvar} className="venter-pa-svar" slash><FormattedMessage id="dialog.venter-pa-svar" /></Info>
-                <Info visible={ferdigBehandlet} className="ferdigbehandlet" slash><FormattedMessage id="dialog.ferdigbehandlet" /></Info>
+                <Info visible={dialog.erLestAvBruker} className="venter-pa-svar" slash><FormattedMessage id="dialog.lest-av-bruker" /></Info>
             </div>
             <Element>{aktivitet ? aktivitet.tittel : dialog.overskrift}</Element>
             <Normaltekst>{dialog.sisteTekst}</Normaltekst>
+            <div className="dialoger__dialog-etiketter">
+                <Etikett visible={venterPaSvar} id="dialog.venter-pa-svar" etikett={DIALOG_MA_BESVARES} />
+                <Etikett visible={ferdigBehandlet} id="dialog.ferdigbehandlet" etikett={DIALOG_FERDIGBEHANDLET} />
+            </div>
             <div className="dialoger__dialog-henvendelser">{dialog.henvendelser.length}</div>
         </Lenkepanel>
     );
@@ -74,12 +79,12 @@ function Dialoger({ dialog, dialoger, valgtDialog, className, aktiviteter }) {
                 {
                     [...dialoger]
                         .sort(compareDialoger)
-                        .map((d) => <DialogVisning
-                                key={d.id}
-                                dialog={d}
-                                erValgt={d === valgtDialog}
-                                aktiviteter={aktiviteter}
-                            />
+                        .map((d) => (<DialogVisning
+                            key={d.id}
+                            dialog={d}
+                            erValgt={d === valgtDialog}
+                            aktiviteter={aktiviteter}
+                        />)
                         )
                 }
             </div>

@@ -8,18 +8,16 @@ import TallAlert from '../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../ducks/dialog';
 import { hentOppfolgingStatus } from '../../ducks/oppfolging-status';
 import './navigasjonslinje.less';
-import visibleIfHOC from '../../hocs/visible-if'
+import visibleIfHOC from '../../hocs/visible-if';
 
-const NavigasjonsElement = visibleIfHOC(function ({sti, tekstId, children}) {
-    return (
-        <Lenke href={sti} className="navigasjonslinje__element">
-            <Element>
-                <FormattedMessage id={tekstId}/>
-                <span className="navigasjonslinje__element-content">{children}</span>
-            </Element>
-        </Lenke>
-    );
-});
+const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
+    <Lenke href={sti} className="navigasjonslinje__element">
+        <Element>
+            <FormattedMessage id={tekstId} />
+            <span className="navigasjonslinje__element-content">{children}</span>
+        </Element>
+    </Lenke>
+    ));
 
 NavigasjonsElement.defaultProps = {
     children: null
@@ -54,7 +52,9 @@ class Navigasjonslinje extends Component {
 
 Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
-    antallUlesteDialoger: PT.number.isRequired
+    doHentOppfolgingStatus: PT.func.isRequired,
+    antallUlesteDialoger: PT.number.isRequired,
+    underOppfolging: PT.bool.isRequired
 };
 
 const mapStateToProps = (state) => {

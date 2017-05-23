@@ -9,7 +9,6 @@ import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
 
 
-
 function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;
     return (
@@ -36,9 +35,9 @@ Dialog.defaultProps = {
     className: undefined
 };
 
-const mapStateToProps = (state,props) => {
+const mapStateToProps = (state, props) => {
     const dialog = props.dialog;
-    const aktivitet = state.data.aktiviteter.data.find(a => a.id === dialog.aktivitetId) || {};
+    const aktivitet = state.data.aktiviteter.data.find((a) => a.id === dialog.aktivitetId) || {};
     return {
         overskrift: aktivitet.tittel || dialog.overskrift
     };
