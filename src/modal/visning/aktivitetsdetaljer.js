@@ -113,7 +113,14 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 key="hensikt"
                 tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
                 innhold={hensikt}
+            />,
+
+            <Informasjonsfelt
+                key="oppfolging"
+                tittel={<FormattedMessage id="aktivitetdetaljer.oppfolging-label" />}
+                innhold={hensikt}
             />
+
         ]
     );
 
