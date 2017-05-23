@@ -35,13 +35,13 @@ export default function reducer(state = initalState, action) {
         case GODTA_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case GODTA_PENDING:
-            return { ...state, status: STATUS.PENDING, data: action.data };
+            return { ...state, status: STATUS.PENDING };
         case AVSLA_OK:
             return { ...state, status: STATUS.OK, brukerHarAvslatt: true, data: action.data };
         case AVSLA_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case AVSLA_PENDING:
-            return { ...state, status: STATUS.PENDING, data: action.data };
+            return { ...state, status: STATUS.PENDING };
         default:
             return state;
     }
