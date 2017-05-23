@@ -30,7 +30,6 @@ describe('visible-if', () => {
             <Komp visible={() => undefined} />
         );
 
-        expect(wrapper.find('div').hasClass('test')).to.be.true;
+        expect(wrapper.find('div').hasClass('test')).to.be.true; // eslint-disable-line no-unused-expressions
     });
-
 });

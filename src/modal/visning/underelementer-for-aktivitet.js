@@ -110,6 +110,7 @@ UnderelementerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     dialog: AppPT.dialog,
     antallUlesteHenvendelser: PT.number.isRequired,
+    underOppfolging: PT.bool.isRequired,
     className: PT.string
 };
 
