@@ -44,7 +44,8 @@ class AvtaltContainer extends Component {
                 <div className="avtalt-container__radio">
                     <Radio
                         onClick={() => this.setState({ visBekreftAvtalt: true })}
-                        label={<FormattedMessage id="sett-avtalt.label" />} name="avtalt"
+                        label={<FormattedMessage id="sett-avtalt.label" />}
+                        name="avtalt"
                         disabled={lasterData}
                     />
                     <HjelpetekstOver>

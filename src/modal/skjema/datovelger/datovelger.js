@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
+import { change, touch } from 'redux-form';
 import MaskedInput from 'react-maskedinput';
 import { autobind, dateToISODate, erGyldigISODato, ISODateToDatePicker, datePickerToISODate, erGyldigFormattertDato } from '../../../utils';
 import { validerDatoField } from './utils';
@@ -49,8 +50,10 @@ class DatoField extends Component {
     }
 
     onDayClick(event) {
+        const { feltNavn, meta } = this.props;
         const isoDate = dateToISODate(new Date(event));
-        this.props.input.onChange(isoDate);
+        this.props.dispatch(change(meta.form, feltNavn, isoDate));
+        this.props.dispatch(touch(meta.form, feltNavn));
         this.lukk();
     }
 
@@ -135,13 +138,14 @@ class DatoField extends Component {
 DatoField.propTypes = {
     meta: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
     id: PT.string.isRequired,
+    feltNavn: PT.string.isRequired,
     label: PT.oneOfType([PT.string, PT.node]).isRequired,
     input: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
     dispatch: PT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
     disabled: PT.bool,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date),
-    errorMessage: PT.oneOfType([PT.arrayOf(PT.string), PT.string])
+    errorMessage: PT.oneOfType([PT.arrayOf(PT.node), PT.node])
 };
 
 DatoField.defaultProps = {
@@ -158,7 +162,7 @@ function parseDato(dato) {
 const ConnectedDatoField = connect()(DatoField);
 
 function Datovelger(props) {
-    const { feltNavn, labelId, tidligsteFom, senesteTom } = props;
+    const { feltNavn, labelId, tidligsteFom, senesteTom, intl } = props;
 
     const datoFelt = <ConnectedDatoField label={<FormattedMessage id={labelId} />} {...props} />;
     return (
@@ -168,7 +172,7 @@ function Datovelger(props) {
             errorClass="skjemaelement--harFeil"
             customComponent={datoFelt}
             validate={(value) => (
-                validerDatoField(value, {
+                validerDatoField(value, intl, {
                     fra: tidligsteFom,
                     til: senesteTom
                 })
@@ -181,7 +185,8 @@ Datovelger.propTypes = {
     feltNavn: PT.string.isRequired,
     labelId: PT.string.isRequired,
     tidligsteFom: PT.instanceOf(Date),
-    senesteTom: PT.instanceOf(Date)
+    senesteTom: PT.instanceOf(Date),
+    intl: intlShape.isRequired
 };
 
 Datovelger.defaultProps = {
@@ -189,4 +194,4 @@ Datovelger.defaultProps = {
     senesteTom: undefined
 };
 
-export default Datovelger;
+export default injectIntl(Datovelger);

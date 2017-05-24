@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PT from 'prop-types';
 import { fn } from './../utils';
 
 export default function visibleIfHOC(WrappingComponent) {
-    class visibleIf extends Component {
-        render() {
-            const { visible, ...props } = this.props;
-            if (fn(visible)(props)) {
-                return React.createElement(WrappingComponent, props);
-            }
-            return null;
+    function visibleIf({ visible, ...props }) {
+        const isVisible = fn(visible)(props);
+        if (isVisible || isVisible === undefined) {
+            return React.createElement(WrappingComponent, props);
         }
+        return null;
     }
 
     visibleIf.defaultProps = {

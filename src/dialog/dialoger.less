@@ -1,5 +1,7 @@
 @import "../variables";
 
+@padding-left: 3rem;
+
 
 .dialoger {
 
@@ -13,11 +15,18 @@
     width: 1rem;
   }
 
+  &__slash {
+    display: inline;
+    &::after{
+      content: ' / '
+    }
+  }
+
   &__dialog {
     margin: 0;
+    padding-left: @padding-left;
     border-radius: 0;
     text-decoration: none;
-    padding-left: 2rem;
 
     border-top: 1px solid @gray-foreground;
 
@@ -25,15 +34,32 @@
       background-color: @orange-focus;
     }
 
+    &-etiketter {
+      min-height: 1.3rem; // alltid reserver plass slik at dialogene blir like høye
+      margin-top: 0.3rem;
+      font-size: 75%;
+    }
+
     &-henvendelser {
       position: absolute;
-      top: 36%;
+      top: 50%;
+      line-height: 0;
       right: 40px;
     }
 
     &--valgt {
       background-color: @bla;
       color: white;
+
+      // fjerne lenkepanel sin hover-styling
+      &:hover {
+        color: white;
+        cursor: auto;
+
+        .lenkepanel__heading {
+          text-decoration: none;
+        }
+      }
     }
   }
 }

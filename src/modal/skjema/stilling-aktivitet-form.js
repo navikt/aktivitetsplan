@@ -13,6 +13,7 @@ import Input from './input/input';
 import Datovelger from './datovelger/datovelger';
 import './skjema.less';
 import { STATUS_PLANLAGT } from '../../constant';
+import PeriodeValidering from './datovelger/periode-validering';
 
 
 const TITTEL_MAKS_LENGDE = 255;
@@ -80,19 +81,28 @@ class StillingAktivitetForm extends Component {
                         disabled={this.props.avtalt === true}
                         labelId="stilling-aktivitet-form.label.overskrift"
                     />
-                    <div className="dato-container">
-                        <Datovelger
-                            feltNavn="fraDato"
-                            disabled={this.props.avtalt === true}
-                            labelId="stilling-aktivitet-form.label.fra-dato"
-                            senesteTom={this.props.currentTilDato}
-                        />
-                        <Datovelger
-                            feltNavn="tilDato"
-                            labelId="stilling-aktivitet-form.label.til-dato"
-                            tidligsteFom={this.props.currentFraDato}
-                        />
-                    </div>
+
+                    <PeriodeValidering
+                        feltNavn="periodeValidering"
+                        fraDato={this.props.currentFraDato}
+                        tilDato={this.props.currentTilDato}
+                        errorMessage={this.props.intl.formatMessage({ id: 'datepicker.feilmelding.stilling.fradato-etter-frist' })}
+                    >
+                        <div className="dato-container">
+                            <Datovelger
+                                feltNavn="fraDato"
+                                disabled={this.props.avtalt === true}
+                                labelId="stilling-aktivitet-form.label.fra-dato"
+                                senesteTom={this.props.currentTilDato}
+                            />
+                            <Datovelger
+                                feltNavn="tilDato"
+                                labelId="stilling-aktivitet-form.label.til-dato"
+                                tidligsteFom={this.props.currentFraDato}
+                            />
+                        </div>
+                    </PeriodeValidering>
+
                     <Input
                         feltNavn="lenke"
                         disabled={this.props.avtalt === true}
@@ -157,11 +167,14 @@ const StillingAktivitetReduxForm = validForm({
         beskrivelse: [begrensetBeskrivelseLengde],
         arbeidssted: [begrensetArbeidsstedLengde],
         arbeidsgiver: [begrensetArbeidsgiverLengde],
-        kontaktperson: [begrensetKontaktpersonLengde]
+        kontaktperson: [begrensetKontaktpersonLengde],
+        periodeValidering: []
     }
 })(StillingAktivitetForm);
 
 const selector = formValueSelector(formNavn);
+const getDateFromField = (field) => field == null ? null : moment(field).toDate(); // eslint-disable-line no-confusing-arrow
+
 const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet || {};
     return {
@@ -172,8 +185,8 @@ const mapStateToProps = (state, props) => {
         },
         isDirty: isDirty(formNavn)(state),
         etikett: selector(state, 'etikett'),
-        currentFraDato: moment(selector(state, 'fraDato')).toDate(),
-        currentTilDato: moment(selector(state, 'tilDato')).toDate(),
+        currentFraDato: getDateFromField(selector(state, 'fraDato')),
+        currentTilDato: getDateFromField(selector(state, 'tilDato')),
         avtalt: aktivitet && aktivitet.avtalt
     };
 };

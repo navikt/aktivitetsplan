@@ -16,7 +16,7 @@ export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
         case PENDING:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
         case FEILET:
             return { ...state, status: STATUS.ERROR, error: data };
         case OK: {

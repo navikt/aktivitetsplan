@@ -6,15 +6,18 @@ import { Element } from 'nav-frontend-typografi';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../ducks/dialog';
+import { hentOppfolgingStatus } from '../../ducks/oppfolging-status';
 import './navigasjonslinje.less';
+import visibleIfHOC from '../../hocs/visible-if';
 
-function NavigasjonsElement({ sti, tekstId, children }) {
-    return (
-        <Lenke href={sti} className="navigasjonslinje__element">
-            <Element><FormattedMessage id={tekstId} /><span className="navigasjonslinje__element-content">{children}</span></Element>
-        </Lenke>
-    );
-}
+const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
+    <Lenke href={sti} className="navigasjonslinje__element">
+        <Element>
+            <FormattedMessage id={tekstId} />
+            <span className="navigasjonslinje__element-content">{children}</span>
+        </Element>
+    </Lenke>
+    ));
 
 NavigasjonsElement.defaultProps = {
     children: null
@@ -30,13 +33,14 @@ class Navigasjonslinje extends Component {
 
     componentDidMount() {
         this.props.doHentDialog();
+        this.props.doHentOppfolgingStatus();
     }
 
     render() {
-        const { antallUlesteDialoger } = this.props;
+        const { antallUlesteDialoger, underOppfolging } = this.props;
         return (
             <nav className="navigasjonslinje">
-                <NavigasjonsElement sti="/dialog" tekstId="navigasjon.dialog">
+                <NavigasjonsElement sti="/dialog" tekstId="navigasjon.dialog" visible={underOppfolging} >
                     <TallAlert visible={antallUlesteDialoger > 0}>{antallUlesteDialoger}</TallAlert>
                 </NavigasjonsElement>
                 <NavigasjonsElement sti="/mal" tekstId="aktivitetsmal.mitt-mal" />
@@ -48,18 +52,22 @@ class Navigasjonslinje extends Component {
 
 Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
-    antallUlesteDialoger: PT.number.isRequired
+    doHentOppfolgingStatus: PT.func.isRequired,
+    antallUlesteDialoger: PT.number.isRequired,
+    underOppfolging: PT.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
     const dialog = state.data.dialog.data;
     return {
-        antallUlesteDialoger: dialog.filter((d) => !d.lest).length
+        antallUlesteDialoger: dialog.filter((d) => !d.lest).length,
+        underOppfolging: !!state.data.oppfolgingStatus.data.underOppfolging
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    doHentDialog: () => hentDialog()(dispatch)
+    doHentDialog: () => dispatch(hentDialog()),
+    doHentOppfolgingStatus: () => dispatch(hentOppfolgingStatus())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigasjonslinje);

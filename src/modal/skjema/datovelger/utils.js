@@ -33,36 +33,24 @@ export function dateGreater(date1, date2) {
     return year1 === year2 && mon1 === mon2 && day1 > day2;
 }
 
-export function validerPeriode(input, alternativer) {
+export function validerDatoField(input, intl, alternativer) {
     const { fra, til } = alternativer;
     const inputDato = moment(input);
 
     const fraDato = moment(fra);
     const tilDato = moment(til);
 
-    if (fra && til && (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))) {
+    if (input && !erGyldigISODato(input)) {
+        return intl.formatMessage({ id: 'datepicker.feilmelding.ugyldig-dato' });
+    } else if (fra && til && (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))) {
         tilDato.add(1, 'day');
         fraDato.subtract(1, 'day');
-        return `Datoen må være innenfor perioden ${toDatePrettyPrint(fraDato.toDate())}-${toDatePrettyPrint(tilDato.toDate())}`;
-    }
-    if (til && inputDato.isAfter(tilDato, 'day')) {
-        tilDato.add(1, 'day');
-        return 'Fra dato kan ikke være etter fristen';
-    }
-    if (fra && fraDato.isAfter(inputDato, 'day')) {
-        fraDato.subtract(1, 'day');
-        return 'Til dato kan ikke være før fra dato';
-    }
-    return undefined;
-}
 
-export function validerDatoField(input, alternativer) {
-    if (!input) {
-        return undefined;
-    } else if (!erGyldigISODato(input)) {
-        return 'Ugyldig dato';
-    } else if (alternativer && (alternativer.fra || alternativer.til)) {
-        return validerPeriode(input, alternativer);
+        const msgValues = {
+            fradato: toDatePrettyPrint(fraDato.toDate()),
+            tildato: toDatePrettyPrint(tilDato.toDate())
+        };
+        return intl.formatMessage({ id: 'datepicker.feilmelding.innenfor-periode', values: msgValues });
     }
     return undefined;
 }

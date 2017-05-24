@@ -17,4 +17,7 @@ export const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
 export const AVSLAG = 'AVSLAG';
 export const JOBBTILBUD = 'JOBBTILBUD';
 
+export const DIALOG_FERDIGBEHANDLET = 'DIALOG_FERDIGBEHANDLET';
+export const DIALOG_MA_BESVARES = 'DIALOG_MA_BESVARES';
+
 export const AVTALT_MED_NAV = 'sett-avtalt.label';

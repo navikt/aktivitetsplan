@@ -10,12 +10,15 @@ const cls = (type) => classNames('etikett', `etikett--${type}`);
 const setType = (etikettnavn) => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
+        case statuskoder.DIALOG_FERDIGBEHANDLET:
             return 'ok';
         case statuskoder.INNKALT_TIL_INTERVJU:
         case statuskoder.JOBBTILBUD:
             return 'info';
         case statuskoder.AVSLAG:
             return 'varsling';
+        case statuskoder.DIALOG_MA_BESVARES:
+            return 'feil';
         case statuskoder.AVTALT_MED_NAV:
             return 'avtalt';
         default:

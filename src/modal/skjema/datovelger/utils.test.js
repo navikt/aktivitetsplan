@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import { dateGreater, dateLess, validerPeriode } from './utils';
+import { dateGreater, dateLess } from './utils';
 
 describe('utils', () => {
     describe('dateLess', () => {
@@ -70,42 +70,6 @@ describe('utils', () => {
             date1.setYear(date1.getFullYear() - 1);
 
             expect(dateGreater(date1, date2)).to.equal(false);
-        });
-    });
-
-    describe('validerPeriode', () => {
-        it('Skal validere at input dato er før til datoen', () => {
-            const input = new Date();
-            const til = new Date();
-            til.setDate(input.getDate() + 1);
-
-            expect(validerPeriode(input, { til })).to.be.a('undefined');
-            expect(validerPeriode(input, { til: input })).to.be.a('undefined');
-            expect(validerPeriode(til, { til: input })).to.be.a('string');
-        });
-
-        it('Skal validere at input dato er etter fra datoen', () => {
-            const input = new Date();
-            const fra = new Date();
-            fra.setDate(input.getDate() - 1);
-
-            expect(validerPeriode(input, { fra })).to.be.a('undefined');
-            expect(validerPeriode(input, { fra: input })).to.be.a('undefined');
-            expect(validerPeriode(fra, { fra: input })).to.be.a('string');
-        });
-
-        it('Skal validere at input dato er innenfor parioden fra og til', () => {
-            const input = new Date();
-
-            const fra = new Date();
-            fra.setDate(input.getDate() - 1);
-
-            const til = new Date();
-            til.setDate(input.getDate() + 1);
-
-            expect(validerPeriode(input, { fra, til })).to.be.a('undefined');
-            expect(validerPeriode(fra, { fra: input, til })).to.be.a('string');
-            expect(validerPeriode(til, { fra, til: input })).to.be.a('string');
         });
     });
 });

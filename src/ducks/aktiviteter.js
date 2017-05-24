@@ -108,6 +108,14 @@ export function flyttAktivitet(aktivitet, status) {
     };
 }
 
+export function oppdaterAktivitetEtikett(aktivitet) {
+    return doThenDispatch(() => Api.oppdaterAktivitetEtikett(aktivitet), {
+        OK: OPPDATER_OK,
+        FEILET: OPPDATER_FEILET,
+        PENDING: OPPDATER
+    });
+}
+
 export function oppdaterAktivitet(aktivitet) {
     return doThenDispatch(() => Api.oppdaterAktivitet(aktivitet), {
         OK: OPPDATER_OK,

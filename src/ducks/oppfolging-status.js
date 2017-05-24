@@ -6,14 +6,17 @@ export const OK = 'oppfolgingStatus/OK';
 export const FEILET = 'oppfolgingStatus/FEILET';
 export const PENDING = 'oppfolgingStatus/PENDING';
 
-export const AVSLAG = 'oppfolgingStatus/avslag';
+export const AVSLA_OK = 'oppfolgingStatus/avsla/OK';
+export const AVSLA_FEILET = 'oppfolgingStatus/avsla/FEILET';
+export const AVSLA_PENDING = 'oppfolgingStatus/avsla/PENDING';
 
 export const GODTA_OK = 'oppfolgingStatus/godta/OK';
 export const GODTA_FEILET = 'oppfolgingStatus/godta/FEILET';
-export const GODTA_PENDING = 'oppfolgingStatus/godta/PNEDING';
+export const GODTA_PENDING = 'oppfolgingStatus/godta/PENDING';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
+    brukerHarAvslatt: false,
     data: {}
 };
 
@@ -22,15 +25,23 @@ const initalState = {
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case PENDING:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
         case FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case GODTA_OK:
-            return { ...state, data: action.data };
-        case AVSLAG:
-            return { ...state, data: { ...state.data, avslag: true } };
+            return { ...state, status: STATUS.OK, brukerHarAvslatt: false, data: action.data };
+        case GODTA_FEILET:
+            return { ...state, status: STATUS.ERROR, data: action.data };
+        case GODTA_PENDING:
+            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
+        case AVSLA_OK:
+            return { ...state, status: STATUS.OK, brukerHarAvslatt: true, data: action.data };
+        case AVSLA_FEILET:
+            return { ...state, status: STATUS.ERROR, data: action.data };
+        case AVSLA_PENDING:
+            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
         default:
             return state;
     }
@@ -53,7 +64,11 @@ export function godtaVilkar(hash) {
     });
 }
 
-export function avslaVilkar() {
-    return (dipatch) => dipatch({ type: AVSLAG });
+export function avslaVilkar(hash) {
+    return doThenDispatch(() => Api.avslaaVilkar(hash), {
+        OK: AVSLA_OK,
+        FEILET: AVSLA_FEILET,
+        PENDING: AVSLA_PENDING
+    });
 }
 

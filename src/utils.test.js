@@ -219,4 +219,37 @@ describe('app utils', () => {
             expect(Utils.erGyldigFormattertDato(undefined)).to.equal(false);
         });
     });
+
+
+    describe('datoComparator', () => {
+        it('Returner 0 ved like datoer', () => {
+            expect(Utils.datoComparator('2014-02-13T23:00:00.000Z', '2014-02-13T23:00:00.000Z')).to.equal(0);
+        });
+
+        it('Returner > 0 hvis venstre er senere enn høyre', () => {
+            expect(Utils.datoComparator('2014-02-16T23:00:00.000Z', '2014-02-13T23:00:00.000Z')).to.be.above(0);
+        });
+
+        it('Returner < 0 hvis venstre er tidligere enn høyre', () => {
+            expect(Utils.datoComparator('2014-02-13T23:00:00.000Z', '2014-02-16T23:00:00.000Z')).to.be.below(0);
+        });
+
+        it('Fornuftig håndtering av null og undefined', () => {
+            expect(Utils.datoComparator('2014-02-13T23:00:00.000Z', null)).to.be.above(0);
+            expect(Utils.datoComparator('2014-02-13T23:00:00.000Z', undefined)).to.be.above(0);
+
+            expect(Utils.datoComparator(null, '2014-02-16T23:00:00.000Z')).to.be.below(0);
+            expect(Utils.datoComparator(undefined, '2014-02-16T23:00:00.000Z')).to.be.below(0);
+        });
+    });
+
+    describe('storeForbokstaver', () => {
+        it('Formatterer ord med stor forbokstav', () => {
+            expect(Utils.storeForbokstaver('KARI')).to.equal('Kari');
+            expect(Utils.storeForbokstaver('PER OLAV KNUTSON')).to.equal('Per Olav Knutson');
+            expect(Utils.storeForbokstaver('pelle parafin')).to.equal('Pelle Parafin');
+            expect(Utils.storeForbokstaver(null)).to.equal(null);
+            expect(Utils.storeForbokstaver(undefined)).to.equal(undefined);
+        });
+    });
 });
