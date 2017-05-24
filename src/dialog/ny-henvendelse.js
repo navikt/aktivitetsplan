@@ -41,8 +41,8 @@ function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter,
                 disabled={oppretter}
             ><FormattedMessage id="dialog.lag-ny-dialog" /></Hovedknapp>
 
-            <VisibleAlertStripeSuksessSolid style={{marginTop: "1rem"}} visible={visBrukerInfo}>
-                <FormattedMessage id="dialog.info-til-bruker"/>
+            <VisibleAlertStripeSuksessSolid style={{ marginTop: '1rem' }} visible={visBrukerInfo}>
+                <FormattedMessage id="dialog.info-til-bruker" />
             </VisibleAlertStripeSuksessSolid>
         </form>
     );
@@ -51,7 +51,8 @@ function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter,
 NyHenvendelseForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     harEksisterendeOverskrift: PT.bool.isRequired,
-    oppretter: PT.bool.isRequired
+    oppretter: PT.bool.isRequired,
+    visBrukerInfo: PT.bool.isRequired
 };
 
 const pakrevdOverskrift = rules.minLength(0, <FormattedMessage id="dialog.ny-henvendelse.overskrift.mangler.feilmelding" />);

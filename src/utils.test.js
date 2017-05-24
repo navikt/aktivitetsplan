@@ -222,7 +222,6 @@ describe('app utils', () => {
 
 
     describe('datoComparator', () => {
-
         it('Returner 0 ved like datoer', () => {
             expect(Utils.datoComparator('2014-02-13T23:00:00.000Z', '2014-02-13T23:00:00.000Z')).to.equal(0);
         });
@@ -242,7 +241,6 @@ describe('app utils', () => {
             expect(Utils.datoComparator(null, '2014-02-16T23:00:00.000Z')).to.be.below(0);
             expect(Utils.datoComparator(undefined, '2014-02-16T23:00:00.000Z')).to.be.below(0);
         });
-
     });
 
     describe('storeForbokstaver', () => {

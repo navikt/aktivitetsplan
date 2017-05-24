@@ -34,22 +34,17 @@
       background-color: @orange-focus;
     }
 
+    &-etiketter {
+      min-height: 1.3rem; // alltid reserver plass slik at dialogene blir like høye
+      margin-top: 0.3rem;
+      font-size: 75%;
+    }
+
     &-henvendelser {
       position: absolute;
-      top: 36%;
+      top: 50%;
+      line-height: 0;
       right: 40px;
-    }
-
-    &--venter-pa-svar {
-      .venter-pa-svar {
-        color: @navRodDarken20;
-      }
-    }
-
-    &--ferdigbehandlet {
-      .ferdigbehandlet {
-        color: @navGronnDarken20;
-      }
     }
 
     &--valgt {
@@ -64,10 +59,6 @@
         .lenkepanel__heading {
           text-decoration: none;
         }
-      }
-
-      .venter-pa-svar, .ferdigbehandlet  {
-        color: white;
       }
     }
   }
