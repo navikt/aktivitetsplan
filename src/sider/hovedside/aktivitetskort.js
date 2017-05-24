@@ -8,12 +8,13 @@ import Lenke from './../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import { formaterDato } from '../../utils';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE
-} from "../../constant";
+    UTDANNING_AKTIVITET_TYPE,
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT
+} from '../../constant';
 
 const dndSpec = {
 
@@ -32,7 +33,7 @@ function collect(connector, monitor) {
 
 function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
     const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(aktivitet.type);
-    const erFlyttbar = !aktivitet.nesteStatus && ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status)  && !arenaAktivitet;
+    const erFlyttbar = !aktivitet.nesteStatus && ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) && !arenaAktivitet;
     const visible = aktivitet.etikett || aktivitet.avtalt;
     const aktivitetsKort = (
         <article style={{ opacity: isDragging ? 0.4 : 1 }}>

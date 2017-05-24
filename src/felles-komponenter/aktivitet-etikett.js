@@ -19,7 +19,7 @@ const setType = (etikettnavn) => {
         case statuskoder.AVTALT_MED_NAV:
             return 'avtalt';
         default:
-            return '';
+            return 'info';
     }
 };
 

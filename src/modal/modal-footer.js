@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { visibleIfHOC } from '../hocs/visible-if';
+import visibleIfHOC from '../hocs/visible-if';
 import './modal-footer.less';
 
 function ModalFooter({ children }) {

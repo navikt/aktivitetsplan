@@ -41,7 +41,7 @@ Informasjonsfelt.defaultProps = {
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt,
-        tiltaksarrangor, deltakelsesprosent, dagerPerUke, gruppeAktivitetSted, gruppeAktivitetStatus, moteplan } = valgtAktivitet;
+        arrangoer, deltakelseProsent, dagerPerUke, gruppeAktivitetSted, gruppeAktivitetStatus, moeteplanListe } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManad(valgtAktivitet.fraDato);
     const tilDato = formaterDatoKortManad(valgtAktivitet.tilDato);
@@ -120,24 +120,24 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
     const tiltakFelter = () => (
         [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} id={id} />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} id={id} />,
-            <Informasjonsfelt key="tiltaksarrangor" tittel="Tiltaksarrangør" innhold={tiltaksarrangor} id={id} />,
-            <Informasjonsfelt key="deltakelsesprosent" tittel="Deltakelsesprosent" innhold={deltakelsesprosent + '%'} id={id} />,
-            <Informasjonsfelt key="dagerPerUke" tittel="Antall dager per uke" innhold={dagerPerUke} id={id} />
+            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato || 'Dato ikke satt'} />,
+            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />,
+            <Informasjonsfelt key="arrangoer" tittel="Aarrangør" innhold={arrangoer} />,
+            <Informasjonsfelt key="deltakelsesprosent" tittel="Deltakelsesprosent" innhold={deltakelseProsent && `${deltakelseProsent}%`} />,
+            <Informasjonsfelt key="dagerPerUke" tittel="Antall dager per uke" innhold={dagerPerUke && `${dagerPerUke}`} />
         ]
     );
 
     const gruppeFelter = () => (
         [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} id={id} />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} id={id} />,
-            <Informasjonsfelt key="gruppeAktivitetSted" tittel="Sted" innhold={gruppeAktivitetSted} id={id} />,
-            <Informasjonsfelt key="gruppeAktivitetStatus" tittel="Status" innhold={gruppeAktivitetStatus} id={id} />,
-            <section className="aktivitetsbeskrivelse">
+            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato || 'Dato ikke satt'} />,
+            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />,
+            <Informasjonsfelt key="gruppeAktivitetSted" tittel="Sted" innhold={gruppeAktivitetSted} />,
+            <Informasjonsfelt key="gruppeAktivitetStatus" tittel="Status" innhold={gruppeAktivitetStatus} />,
+            <section key="moteplan" className="aktivitetsbeskrivelse">
                 <Element className="aktivitetsbeskrivelse__tittel">Møteplan</Element>
-                {moteplan.map((mote) => (
-                    <Normaltekst key={mote.start} className="detaljfelt__tekst">{formaterDatoKortManedTid(mote.start)} - {formaterTid(mote.stop)}, på {mote.sted}</Normaltekst>
+                {moeteplanListe.map((mote) => (
+                    <Normaltekst key={mote.startDato} className="detaljfelt__tekst">{formaterDatoKortManedTid(mote.startDato)} - {formaterTid(mote.sluttDato)} på {mote.sted}</Normaltekst>
                 ))}
             </section>
         ]
@@ -145,8 +145,8 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
     const utdanningFelter = () => (
         [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} id={id} />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} id={id} />,
+            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato || 'Dato ikke satt'} />,
+            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />
         ]
     );
 

@@ -8,12 +8,11 @@ import { Radio } from 'nav-frontend-skjema';
 import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import { TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../constant';
+import { TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE, STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import './avtalt-container.less';
 import {TILLAT_SET_AVTALT} from '~config' // eslint-disable-line
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import { STATUS } from '../../ducks/utils';
 
 class AvtaltContainer extends Component {

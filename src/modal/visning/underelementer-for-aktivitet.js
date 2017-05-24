@@ -10,7 +10,6 @@ import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import NyHenvendelse from '../../dialog/ny-henvendelse';
 import Henvendelser from '../../dialog/henvendelser';
-import {TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE} from "../../constant";
 import './underelementer-for-aktivitet.less';
 import VisibleDiv from '../../felles-komponenter/utils/visible-if-div';
 import VisibleIfHOC from '../../hocs/visible-if';
@@ -46,7 +45,6 @@ class UnderelementerForAktivitet extends Component {
         const { vis } = this.state;
         const aktivitetId = aktivitet.id;
         const visDialog = vis === DIALOG;
-        const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(aktivitet.type);
         const skjulNyHenvendelse = aktivitet.status === STATUS_FULLFOERT || aktivitet.status === STATUS_AVBRUTT;
         const cls = (classes) => classNames('underelementer-aktivitet', classes);
         const visHistorikk = vis === HISTORIKK;
@@ -81,12 +79,12 @@ class UnderelementerForAktivitet extends Component {
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
                         <TallAlert visible={antallUlesteHenvendelser > 0}>{antallUlesteHenvendelser}</TallAlert>
                     </ToggleKnapp>
-                    {!arenaAktivitet && (<ToggleKnapp
+                    <ToggleKnapp
                         value={HISTORIKK}
                         className={historikknappCls(visHistorikk)}
                     >
                         <FormattedMessage id="aktivitetvisning.historikk-knapp" />
-                    </ToggleKnapp>)}
+                    </ToggleKnapp>
                 </ToggleGruppe>
 
                 <EndringsloggForAktivitet

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Tavle from './tavle/tavle';
 import Kolonne from './aktivitetstavlekolonne';
 import { hentAktiviteter } from '../../ducks/aktiviteter';
+import { hentArenaAktiviteter } from '../../ducks/arena-aktiviteter';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
 import {
@@ -18,6 +19,7 @@ class AktivitetsTavle extends Component {
 
     componentDidMount() {
         this.props.doHentAktiviteter();
+        this.props.doHentArenaAktiviteter();
     }
 
     render() {
@@ -37,6 +39,7 @@ class AktivitetsTavle extends Component {
 
 AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
+    doHentArenaAktiviteter: PT.func.isRequired,
     aktivitet: PT.shape({
         status: PT.string.isRequired
     })
@@ -51,7 +54,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    doHentAktiviteter: () => hentAktiviteter()(dispatch)
+    doHentAktiviteter: () => hentAktiviteter()(dispatch),
+    doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsTavle);
