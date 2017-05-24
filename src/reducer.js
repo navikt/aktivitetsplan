@@ -12,6 +12,7 @@ import identitetReducer from './ducks/identitet';
 import motpartReducer from './ducks/motpart';
 import endreAktivitetReducer from './ducks/endre-aktivitet';
 import feilReducer from './ducks/feil';
+import historiskeVilkarReducer from './ducks/historiske-vilkar';
 
 
 export default combineReducers({
@@ -20,6 +21,7 @@ export default combineReducers({
         ledetekster: ledetekstReducer,
         oppfolgingStatus: oppfolgingStatusReducer,
         vilkar: vilkarReducer,
+        historiskeVilkar: historiskeVilkarReducer,
         aktiviteter: aktiviteterReducer,
         etiketter: etiketterReducer,
         endringslogg: endringsloggReducer,

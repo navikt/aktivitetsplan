@@ -29,6 +29,10 @@ export function hentVilkar() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/vilkar`);
 }
 
+export function hentHistoriskeVilkar() {
+    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/hentVilkaarStatusListe`);
+}
+
 export function hentDialog() {
     return fetchToJson(`${DIALOG_BASE_URL}/dialog`);
 }
