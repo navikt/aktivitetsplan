@@ -23,4 +23,14 @@ describe('visible-if', () => {
 
         expect(wrapper.find('div').length === 0).to.be.true; // eslint-disable-line no-unused-expressions
     });
+
+    it('Skal rendre hvis visible er undefined', () => {
+        const Komp = visibleIfHOC(() => <div className="test" />);
+        const wrapper = mount(
+            <Komp visible={() => undefined} />
+        );
+
+        expect(wrapper.find('div').hasClass('test')).to.be.true;
+    });
+
 });

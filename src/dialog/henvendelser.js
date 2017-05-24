@@ -3,10 +3,11 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';
-import { formaterDatoTid } from './../utils';
+import { formaterDatoTid, datoComparator } from './../utils';
 import * as AppPT from '../proptypes';
 import { markerDialogSomLest } from '../ducks/dialog';
 import visibleIfHOC from '../hocs/visible-if';
+import './henvendelser.less';
 
 
 function Henvendelse({ henvendelse }) {
@@ -47,7 +48,7 @@ class Dialog extends Component {
     render() {
         const { dialog } = this.props;
         const henvendelser = [...dialog.henvendelser]
-            .sort((a, b) => b.sendt - a.sendt)
+            .sort((a, b) => datoComparator(b.sendt, a.sendt))
             .map((h) => <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />);
         return <div className="dialog-henvendelser">{henvendelser}</div>;
     }

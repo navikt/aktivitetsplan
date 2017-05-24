@@ -10,6 +10,7 @@ import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
+import { datoComparator } from '../utils';
 
 const Prikk = visibleIfHOC((props) => <div className="dialoger__prikk" {...props} />);
 const Info = visibleIfHOC(({ slash, className, children }) => (
@@ -44,7 +45,7 @@ function DialogVisning({ dialog, erValgt, aktiviteter }) {
                 <Info visible={venterPaSvar} className="venter-pa-svar" slash><FormattedMessage id="dialog.venter-pa-svar" /></Info>
                 <Info visible={ferdigBehandlet} className="ferdigbehandlet" slash><FormattedMessage id="dialog.ferdigbehandlet" /></Info>
             </div>
-            <Element>{dialog.overskrift}</Element>
+            <Element>{aktivitet ? aktivitet.tittel : dialog.overskrift}</Element>
             <Normaltekst>{dialog.sisteTekst}</Normaltekst>
             <div className="dialoger__dialog-henvendelser">{dialog.henvendelser.length}</div>
         </Lenkepanel>
@@ -59,11 +60,11 @@ DialogVisning.propTypes = {
 
 function compareDialoger(a, b) {
     if (a.ferdigBehandlet !== b.ferdigBehandlet) {
-        return a.lest ? 1 : -1;
+        return a.ferdigBehandlet ? 1 : -1;
     } else if (a.lest !== b.lest) {
         return a.lest ? 1 : -1;
     }
-    return b.sisteDato - a.sisteDato;
+    return datoComparator(b.sisteDato, a.sisteDato);
 }
 
 function Dialoger({ dialog, dialoger, valgtDialog, className, aktiviteter }) {
@@ -73,7 +74,13 @@ function Dialoger({ dialog, dialoger, valgtDialog, className, aktiviteter }) {
                 {
                     [...dialoger]
                         .sort(compareDialoger)
-                        .map((d) => <DialogVisning dialog={d} erValgt={d === valgtDialog} aktiviteter={aktiviteter} />)
+                        .map((d) => <DialogVisning
+                                key={d.id}
+                                dialog={d}
+                                erValgt={d === valgtDialog}
+                                aktiviteter={aktiviteter}
+                            />
+                        )
                 }
             </div>
         </Innholdslaster>
