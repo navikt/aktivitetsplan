@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import Hovedside from './sider/hovedside/hovedside';
 import AktivitetsmalModal from './sider/hovedside/mal/aktivitetsmal-modal';
+import VilkarModal from './modal/vilkar/vilkar-modal';
 import NyAktivitet from './modal/ny-aktivitet';
 import EgenAktivitet from './modal/skjema/egen-aktivitet';
 import StillingAktivitet from './modal/skjema/stilling-aktivitet';
@@ -18,6 +19,7 @@ export default (
         <Route modalId="aktivitetsmalModal" path="mal" component={AktivitetsmalModal} />
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
+        <Route path="vilkar" component={VilkarModal} />
         <Route path="aktivitet" component={Hovedside}>
             <Route path="ny" component={NyAktivitet} />
             <Route path="ny/egen" component={EgenAktivitet} />
