@@ -12,7 +12,9 @@ function isValidDate(dato) {
 
 function validerPeriode(fradato, tildato) {
     if (isValidDate(fradato) && isValidDate(tildato)) {
-        return moment(tildato).isSameOrAfter(moment(fradato));
+        const momentTilDato = moment(tildato).startOf('day');
+        const momentFraDato = moment(fradato).startOf('day');
+        return momentTilDato.isSameOrAfter(momentFraDato);
     }
     return true;
 }
