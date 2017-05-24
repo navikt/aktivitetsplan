@@ -40,7 +40,7 @@ Informasjonsfelt.defaultProps = {
 };
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
-    const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt } = valgtAktivitet;
+    const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt, oppfolging } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManad(valgtAktivitet.fraDato);
     const tilDato = formaterDatoKortManad(valgtAktivitet.tilDato);
@@ -118,7 +118,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             <Informasjonsfelt
                 key="oppfolging"
                 tittel={<FormattedMessage id="aktivitetdetaljer.oppfolging-label" />}
-                innhold={hensikt}
+                innhold={oppfolging}
             />
 
         ]
