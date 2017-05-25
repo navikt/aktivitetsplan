@@ -75,7 +75,7 @@ KolonneFunction.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter.data
+    aktiviteter: state.data.aktiviteter.data.concat(state.data.arenaAktiviteter.data)
 });
 
 const mapDispatchToProps = (dispatch) => ({

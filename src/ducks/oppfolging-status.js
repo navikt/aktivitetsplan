@@ -25,7 +25,7 @@ const initalState = {
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case PENDING:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
         case FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case OK:
@@ -35,13 +35,13 @@ export default function reducer(state = initalState, action) {
         case GODTA_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case GODTA_PENDING:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
         case AVSLA_OK:
             return { ...state, status: STATUS.OK, brukerHarAvslatt: true, data: action.data };
         case AVSLA_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case AVSLA_PENDING:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
         default:
             return state;
     }

@@ -4,6 +4,7 @@ import ledetekstReducer from './ducks/ledetekster-ressurs';
 import oppfolgingStatusReducer from './ducks/oppfolging-status';
 import vilkarReducer from './ducks/vilkar';
 import aktiviteterReducer from './ducks/aktiviteter';
+import arenaAktiviteterReducer from './ducks/arena-aktiviteter';
 import etiketterReducer from './ducks/etiketter';
 import endringsloggReducer from './ducks/endringslogg';
 import dialogReducer from './ducks/dialog';
@@ -23,6 +24,7 @@ export default combineReducers({
         vilkar: vilkarReducer,
         historiskeVilkar: historiskeVilkarReducer,
         aktiviteter: aktiviteterReducer,
+        arenaAktiviteter: arenaAktiviteterReducer,
         etiketter: etiketterReducer,
         endringslogg: endringsloggReducer,
         dialog: dialogReducer,

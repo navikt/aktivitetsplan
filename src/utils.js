@@ -176,6 +176,11 @@ export function formaterDatoKortManedTid(dato) {
     return datoVerdi.isValid() ? datoVerdi.format('Do MMM YYYY [kl] HH:mm') : undefined;
 }
 
+export function formaterTid(dato) {
+    const datoVerdi = moment(dato);
+    return datoVerdi.isValid() ? datoVerdi.format('HH:mm') : undefined;
+}
+
 export function formaterDatoTidSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid() ? 'for ' + datoVerdi.fromNow() : undefined;
@@ -194,4 +199,8 @@ export function formaterDatoDatoEllerTidSiden(dato) {
             ? formaterDatoTidSiden(dato)
             : formaterDatoKortManedTid(dato)
         : undefined
+}
+
+export function datoComparator(a, b) {
+    return a && b ? moment(a).diff(b) : (a ? 1 : 0) - (b ? 1 : 0);
 }

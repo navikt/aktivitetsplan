@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Knapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
 import classNames from 'classnames';
@@ -73,13 +72,13 @@ function VenstreKolonne({ valgtDialog, harNyDialog, harNyDialogEllerValgtDialog 
     return (
         <div className={className}>
             <section className="dialog-modal__ny-dialog">
-                <Knapp
+                <Knappelenke
                     onClick={nyDialog}
                     disabled={harNyDialog}
                     className="dialog-modal__ny-dialog-knapp"
                 >
                     <FormattedMessage id="dialog.modal.ny-dialog" />
-                </Knapp>
+                </Knappelenke>
             </section>
             <Dialoger className="dialog-modal__dialoger" valgtDialog={valgtDialog} />
         </div>

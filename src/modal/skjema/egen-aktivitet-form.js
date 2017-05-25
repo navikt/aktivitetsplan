@@ -18,6 +18,7 @@ const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
 const LENKE_MAKS_LENGDE = 2000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
+const OPPFOLGING_MAKS_LENGDE = 255;
 
 const pakrevdTittel = rules.minLength(0, <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tittel" />);
 const begrensetTittelLengde = rules.maxLength(TITTEL_MAKS_LENGDE,
@@ -33,6 +34,10 @@ const begrensetLenkeLengde = rules.maxLength(LENKE_MAKS_LENGDE,
 );
 const begrensetBeskrivelseLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
     <FormattedMessage id="egen-aktivitet-form.feilmelding.beskrivelse-lengde" values={{ BESKRIVELSE_MAKS_LENGDE }} />
+);
+
+const begrensetoppfolginLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
+    <FormattedMessage id="egen-aktivitet-form.feilmelding.oppfolging-lengde" values={{ OPPFOLGING_MAKS_LENGDE }} />
 );
 
 
@@ -114,6 +119,12 @@ class EgenAktivitetForm extends Component {
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
                         visTellerFra={500}
                     />
+                    <Input
+                        feltNavn="oppfolging"
+                        disabled={this.props.avtalt === true}
+                        labelId="egen-aktivitet-form.label.oppfolging"
+                        bredde="fullbredde"
+                    />
                 </div>
                 <div className="aktivitetskjema__lagre-knapp">
                     <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
@@ -152,6 +163,7 @@ const EgenAktivitetReduxForm = validForm({
         lenke: [begrensetLenkeLengde],
         hensikt: [begrensetHensiktLengde],
         beskrivelse: [begrensetBeskrivelseLengde],
+        oppfolging: [begrensetoppfolginLengde],
         periodeValidering: []
     }
 })(EgenAktivitetForm);

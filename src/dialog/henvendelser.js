@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';
-import { formaterDatoTid } from './../utils';
+import { formaterDatoTid, datoComparator } from './../utils';
 import * as AppPT from '../proptypes';
+import Dato from '../felles-komponenter/dato';
 import { markerDialogSomLest } from '../ducks/dialog';
 import visibleIfHOC from '../hocs/visible-if';
+import './henvendelser.less';
 
+
+const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) => (
+    <div className="henvendelser__lest-av-bruker">
+        <FormattedMessage id="dialog.lest-av-bruker" />
+        <span>&nbsp;</span>
+        <Dato visTidspunkt>{lestAvBrukerTidspunkt}</Dato>
+    </div>
+    ));
 
 function Henvendelse({ henvendelse }) {
     const avsenderVeileder = henvendelse.avsender === 'VEILEDER';
@@ -46,10 +57,19 @@ class Dialog extends Component {
 
     render() {
         const { dialog } = this.props;
-        const henvendelser = [...dialog.henvendelser]
-            .sort((a, b) => b.sendt - a.sendt)
-            .map((h) => <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />);
-        return <div className="dialog-henvendelser">{henvendelser}</div>;
+        const henvendelser = dialog.henvendelser;
+        const lestAvBrukerTidspunkt = dialog.lestAvBrukerTidspunkt;
+        const henvendelserSynkende = [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));
+        const sisteHenvendelseLestAvBruker = lestAvBrukerTidspunkt && henvendelserSynkende.find((h) => datoComparator(lestAvBrukerTidspunkt, h.sendt) >= 0);
+
+        const henvendelseKomponenter = henvendelserSynkende
+            .map((h) => (
+                <div>
+                    <LestAvBruker visible={h === sisteHenvendelseLestAvBruker} lestAvBrukerTidspunkt={lestAvBrukerTidspunkt} />
+                    <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />
+                </div>
+            ));
+        return <div className="dialog-henvendelser">{henvendelseKomponenter}</div>;
     }
 }
 

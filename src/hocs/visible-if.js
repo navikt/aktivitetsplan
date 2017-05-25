@@ -4,7 +4,8 @@ import { fn } from './../utils';
 
 export default function visibleIfHOC(WrappingComponent) {
     function visibleIf({ visible, ...props }) {
-        if (fn(visible)(props)) {
+        const isVisible = fn(visible)(props);
+        if (isVisible || isVisible === undefined) {
             return React.createElement(WrappingComponent, props);
         }
         return null;

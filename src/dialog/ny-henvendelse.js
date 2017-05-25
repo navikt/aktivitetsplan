@@ -3,16 +3,21 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
+import { AlertStripeSuksessSolid } from 'nav-frontend-alertstriper';
 import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
+import moment from 'moment';
 import { STATUS } from '../ducks/utils';
 import { nyHenvendelse } from '../ducks/dialog';
 import Textarea from '../modal/skjema/textarea/textarea';
 import Input from '../modal/skjema/input/input';
+import visibleIf from '../hocs/visible-if';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 2000;
 
-function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter }) {
+const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeSuksessSolid);
+
+function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter, visBrukerInfo }) {
     return (
         <form onSubmit={handleSubmit} className="ny-henvendelse-form">
             { harEksisterendeOverskrift || (
@@ -35,6 +40,10 @@ function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter 
                 spinner={oppretter}
                 disabled={oppretter}
             ><FormattedMessage id="dialog.lag-ny-dialog" /></Hovedknapp>
+
+            <VisibleAlertStripeSuksessSolid style={{ marginTop: '1rem' }} visible={visBrukerInfo}>
+                <FormattedMessage id="dialog.info-til-bruker" />
+            </VisibleAlertStripeSuksessSolid>
         </form>
     );
 }
@@ -42,7 +51,8 @@ function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter 
 NyHenvendelseForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     harEksisterendeOverskrift: PT.bool.isRequired,
-    oppretter: PT.bool.isRequired
+    oppretter: PT.bool.isRequired,
+    visBrukerInfo: PT.bool.isRequired
 };
 
 const pakrevdOverskrift = rules.minLength(0, <FormattedMessage id="dialog.ny-henvendelse.overskrift.mangler.feilmelding" />);
@@ -72,15 +82,18 @@ const mapStateToProps = (state, props) => {
 
     const dialog = dialoger.find((d) => d.id === dialogId) || {};
     const aktivitet = aktiviteter.find((a) => a.id === aktivitetId) || {};
+    const erBruker = state.data.identitet.data.erBruker;
 
     const overskrift = aktivitet.tittel || dialog.overskrift;
+    const sisteDato = dialog.sisteDato;
     return {
         form: props.formNavn,
         initialValues: {
             overskrift
         },
         harEksisterendeOverskrift: !!overskrift,
-        oppretter: dialogState.status !== STATUS.OK
+        oppretter: dialogState.status !== STATUS.OK,
+        visBrukerInfo: !!(erBruker && dialogState.sisteHenvendelseData === dialog && moment(sisteDato).add(5, 's').isAfter(moment()))
     };
 };
 

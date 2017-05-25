@@ -8,11 +8,11 @@ import { Radio } from 'nav-frontend-skjema';
 import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
+import { TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE, STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import './avtalt-container.less';
 import {TILLAT_SET_AVTALT} from '~config' // eslint-disable-line
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import { STATUS } from '../../ducks/utils';
 
 class AvtaltContainer extends Component {
@@ -27,9 +27,11 @@ class AvtaltContainer extends Component {
     render() {
         const { aktivitet, aktivitetData, doSetAktivitetTilAvtalt, className } = this.props;
         const lasterData = aktivitetData.status !== STATUS.OK;
+        const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === aktivitet.type;
         if (!TILLAT_SET_AVTALT ||
             aktivitet.status === STATUS_FULLFOERT ||
-            aktivitet.status === STATUS_AVBRUTT) return null;
+            aktivitet.status === STATUS_AVBRUTT ||
+            arenaAktivitet) return null;
 
         // Kun vis bekreftet hvis nettopp satt til avtalt.
         if (this.state.visBekreftAvtalt === false && aktivitet.avtalt) return null;
