@@ -29,7 +29,7 @@ class Accordion extends Component {
 
     render() {
         const ChevronLink = VisibleIfHOC(() =>
-            <a
+            (<a
                 href="/"
                 className={classNames(
                     'accordion__link',
@@ -51,7 +51,7 @@ class Accordion extends Component {
                     className={classNames('accordion__chevron', this.props.chevronClassName)}
                 />
                 }
-            </a>
+            </a>)
         );
 
         return (
