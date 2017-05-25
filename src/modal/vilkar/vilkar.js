@@ -8,7 +8,7 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
 function Vilkar({ vilkarListe, vilkar, visHistorikk }) {
     const gjeldendeVilkar = visHistorikk ? vilkarListe[0] : vilkar;
-    const resterendeVilkar = visHistorikk && [...vilkarListe].splice(1);
+    const resterendeVilkar = visHistorikk ? [...vilkarListe].splice(1) : [];
 
     return (
         <div className="vilkar">

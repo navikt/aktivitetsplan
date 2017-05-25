@@ -17,7 +17,7 @@ function VilkarHistorikk({ resterendeVilkar }) {
 
     return (
         <div>
-            <Accordion labelId="vilkar.modal.vis-siste-historiske-vilkar">
+            <Accordion labelId="vilkar.modal.vis-siste-historiske-vilkar" chevronIBunnen>
                 {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.hash))}
                 {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.hash))}
                 {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.hash))}
