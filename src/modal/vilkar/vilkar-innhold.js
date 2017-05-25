@@ -13,7 +13,7 @@ function VilkarInnhold({ vilkar }) {
     return (
         <div className="vilkar__innhold">
             <Bilde src={vilkarSvg} alt="Dekorativ illustrajon" />
-            <Innholdstittel className="vilkar__tittel"><FormattedMessage id="vilkar.tittel" /></Innholdstittel>
+            <Innholdstittel className="vilkar__tittel"><FormattedMessage id="vilkar.modal.gjeldende-tittel" /></Innholdstittel>
             <UnsafeHtml className="vilkar__tekst">{vilkar.tekst}</UnsafeHtml>
             <VisibleIfFormattedMessage
                 visible={!!vilkar.vilkarstatus && !!vilkar.dato}
