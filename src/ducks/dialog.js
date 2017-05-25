@@ -20,7 +20,8 @@ export const OPPDATER_DIALOG_FEILET = 'dialog/oppdater/fail';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
-    data: []
+    data: [],
+    sisteHenvendelseData: null
 };
 
 function nyStateMedOppdatertDialog(state, dialog) {
@@ -44,6 +45,7 @@ export default function reducer(state = initalState, action) {
         case HENTET:
             return { ...state, status: STATUS.OK, data };
         case OPPRETTET_HENVENDELSE:
+            return { ...nyStateMedOppdatertDialog(state, data), sisteHenvendelseData: data };
         case DIALOG_LEST_OK:
         case OPPDATER_DIALOG_OK:
             return nyStateMedOppdatertDialog(state, data);
