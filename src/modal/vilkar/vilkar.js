@@ -1,26 +1,36 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import Bilde from 'nav-react-design/dist/bilde';
-import { Innholdstittel } from 'nav-frontend-typografi';
-import UnsafeHtml from '../../felles-komponenter/utils/unsafe-html';
-import vilkarSvg from './vilkar-illustrasjon.svg';
+import PT from 'prop-types';
 import './vilkar.less';
 import * as AppPT from '../../proptypes';
+import VilkarInnhold from './vilkar-innhold';
+import VilkarHistorikk from './vilkar-historikk';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
-function Vilkar({ historiskeVilkarListe }) {
+function Vilkar({ vilkarListe, vilkar, visHistorikk }) {
+    const gjeldendeVilkar = visHistorikk ? vilkarListe[0] : vilkar;
+    const resterendeVilkar = visHistorikk && [...vilkarListe].splice(1);
+
     return (
         <div className="vilkar">
-            <div className="vilkar__innhold">
-                <Bilde src={vilkarSvg} alt="Dekorativ illustrajon" />
-                <Innholdstittel className="vilkar__tittel"><FormattedMessage id="vilkar.tittel" /></Innholdstittel>
-                <UnsafeHtml className="vilkar__tekst">{historiskeVilkarListe[0].tekst}</UnsafeHtml>
-            </div>
+            <VilkarInnhold vilkar={gjeldendeVilkar} />
+            <VisibleIfDiv visible={visHistorikk} className="vilkar__historikk-container">
+                <hr className="vilkar__delelinje" />
+                <VilkarHistorikk resterendeVilkar={resterendeVilkar} />
+            </VisibleIfDiv>
         </div>
     );
 }
 
 Vilkar.propTypes = {
-    historiskeVilkarListe: AppPT.vilkar.isRequired
+    vilkarListe: PT.arrayOf(AppPT.vilkar),
+    vilkar: AppPT.vilkar,
+    visHistorikk: PT.bool
+};
+
+Vilkar.defaultProps = {
+    visHistorikk: false,
+    vilkarListe: undefined,
+    vilkar: undefined
 };
 
 export default Vilkar;
