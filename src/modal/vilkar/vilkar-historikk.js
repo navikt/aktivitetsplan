@@ -9,15 +9,21 @@ import Accordion from '../../felles-komponenter/accordion';
 function VilkarHistorikk({ resterendeVilkar }) {
     function historiskVilkarLink(status, dato, hash) {
         return (
-            <Link to={`vilkar/${hash}`} key={hash}>
+            <Link to={`vilkar/${hash}`} key={hash} className="vilkar__link lenke lenke--frittstaende">
                 <FormattedMessage id="vilkar.modal.gjeldende-status-dato-link" values={{ status, dato }} />
             </Link>
         );
     }
 
     return (
-        <div>
-            <Accordion labelId="vilkar.modal.vis-siste-historiske-vilkar" chevronIBunnen>
+        <div className="vilkar__historikk">
+            <Accordion
+                labelId="vilkar.modal.vis-siste-historiske-vilkar"
+                linkIBunnen
+                chevronIBunnen
+                linkClassName="vilkar__historikk-accordion-link"
+                chevronClassName="vilkar__historikk-chevron"
+            >
                 {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.hash))}
                 {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.hash))}
                 {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.hash))}

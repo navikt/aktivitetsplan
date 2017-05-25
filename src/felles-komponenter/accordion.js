@@ -28,22 +28,33 @@ class Accordion extends Component {
     };
 
     render() {
-        const Chevron = VisibleIfHOC(() =>
+        const ChevronLink = VisibleIfHOC(() =>
             <a
                 href="/"
-                className={classNames('accordion__link', { 'accordion__link-apen': this.state.apen })}
+                className={classNames('accordion__link', this.props.linkClassName, { 'accordion__link-apen': this.state.apen })}
                 onClick={this.apne}
             >
-                <NavFrontendChevron orientasjon={this.state.apen ? 'opp' : 'ned'} className="accordion__chevron" />
+                {!this.props.chevronIBunnen &&
+                    <NavFrontendChevron
+                        orientasjon={this.state.apen ? 'opp' : 'ned'}
+                        className={classNames('accordion__chevron', this.props.chevronClassName)}
+                    />
+                }
                 <FormattedMessage id={this.props.labelId} />
+                {this.props.chevronIBunnen &&
+                <NavFrontendChevron
+                    orientasjon={this.state.apen ? 'opp' : 'ned'}
+                    className={classNames('accordion__chevron', this.props.chevronClassName)}
+                />
+                }
             </a>
         );
 
         return (
             <div className={this.props.className}>
-                <Chevron visible={!this.props.chevronIBunnen} />
+                <ChevronLink visible={!this.props.linkIBunnen} />
                 <VisibleIfDiv visible={this.state.apen}>{this.props.children}</VisibleIfDiv>
-                <Chevron visible={this.props.chevronIBunnen} />
+                <ChevronLink visible={this.props.linkIBunnen} />
             </div>
         );
     }
@@ -54,7 +65,10 @@ Accordion.defaultProps = {
     apen: false,
     children: null,
     className: '',
-    chevronIBunnen: false
+    linkIBunnen: false,
+    chevronIBunnen: false,
+    linkClassName: '',
+    chevronClassName: ''
 };
 
 Accordion.propTypes = {
@@ -63,7 +77,10 @@ Accordion.propTypes = {
     apen: PT.bool,
     children: PT.arrayOf(PT.node),
     className: PT.string,
-    chevronIBunnen: PT.bool
+    linkIBunnen: PT.bool,
+    chevronIBunnen: PT.bool,
+    linkClassName: PT.string,
+    chevronClassName: PT.string
 };
 
 export default Accordion;
