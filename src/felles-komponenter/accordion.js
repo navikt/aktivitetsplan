@@ -31,7 +31,11 @@ class Accordion extends Component {
         const ChevronLink = VisibleIfHOC(() =>
             <a
                 href="/"
-                className={classNames('accordion__link', this.props.linkClassName, { 'accordion__link-apen': this.state.apen })}
+                className={classNames(
+                    'accordion__link',
+                    this.props.linkClassName,
+                    { 'accordion__link-apen': this.state.apen }
+                )}
                 onClick={this.apne}
             >
                 {!this.props.chevronIBunnen &&
