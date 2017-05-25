@@ -10,7 +10,7 @@ function VilkarHistorikk({ resterendeVilkar }) {
     function historiskVilkarLink(status, dato, hash) {
         return (
             <Link to={`vilkar/${hash}`} key={hash}>
-                <b><FormattedMessage id="vilkar.modal.gjeldende-status-dato-link" values={{ status, dato }} /></b>
+                <FormattedMessage id="vilkar.modal.gjeldende-status-dato-link" values={{ status, dato }} />
             </Link>
         );
     }
