@@ -15,7 +15,7 @@ const initalState = {
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case HENT_HISTORISKE_PENDING:
-            return { ...state, status: STATUS.PENDING };
+            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
         case HENT_HISTORISKE_OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case HENT_HISTORISKE_FEILET:
