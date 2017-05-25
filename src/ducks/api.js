@@ -53,6 +53,10 @@ export function hentAktivitet(aktivitetId) {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitetId}`);
 }
 
+export function hentArenaAktiviteter() {
+    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/arena`);
+}
+
 export function hentEndringsloggTilAktivitet(aktivitet) {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/endringslogg`);
 }

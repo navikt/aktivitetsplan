@@ -5,6 +5,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
@@ -14,12 +15,19 @@ import { slettAktivitet, hentAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
-import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config' // eslint-disable-line
+import {TILLAT_SLETTING, TILLAT_SET_AVTALT} from "~config"; // eslint-disable-line
 import BekreftSlettVisning from './bekreft-slett-visning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT, AVTALT_MED_NAV } from '../../constant';
+import {
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+    TILTAK_AKTIVITET_TYPE,
+    GRUPPE_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+    AVTALT_MED_NAV
+} from '../../constant';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
@@ -36,13 +44,15 @@ class Aktivitetvisning extends Component {
     }
 
     componentDidMount() {
-        this.props.doHentAktivitet(this.props.params.id);
+        if (!this.props.params.id.startsWith('arena')) {
+            this.props.doHentAktivitet(this.props.params.id);
+        }
     }
 
     render() {
         const { params, aktiviteter, doSlettAktivitet, oppfolgingStatus } = this.props;
         const { id } = params;
-        const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === id);
+        const valgtAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === id);
 
         if (!valgtAktivitet) {
             return null;
@@ -58,7 +68,8 @@ class Aktivitetvisning extends Component {
                         slettAction={slettAction}
                         avbrytAction={() => this.setState({
                             visBekreftSletting: false,
-                            settAutoFocusSlett: true })}
+                            settAutoFocusSlett: true
+                        })}
                     />
                 </StandardModal>
             );
@@ -71,7 +82,9 @@ class Aktivitetvisning extends Component {
         const tillattEndring = (valgtAktivitet.avtalt !== true || TILLAT_SET_AVTALT) &&
             (valgtAktivitet.status !== STATUS_FULLFOERT && valgtAktivitet.status !== STATUS_AVBRUTT);
 
-        const visBegrunnelse = valgtAktivitet.avtalt === true &&
+        const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(valgtAktivitet.type);
+
+        const visBegrunnelse = !arenaAktivitet && valgtAktivitet.avtalt === true &&
             (valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT);
 
         const aktivitetErLaast = valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT;
@@ -116,18 +129,29 @@ class Aktivitetvisning extends Component {
                                 <Aktivitetsbeskrivelse beskrivelse={valgtAktivitet.beskrivelse} />
                             </div>
                             <hr className="aktivitetvisning__delelinje" />
-                            <OppdaterAktivitetStatus
-                                status={valgtAktivitet.status}
-                                paramsId={id}
-                                className="aktivitetvisning__underseksjon"
-                            />
+                            {arenaAktivitet ? (
+                                <div className="aktivitetvisning__underseksjon">
+                                    <AlertStripeInfo className="aktivitetvisning__alert">Denne aktiviteten
+                                            administreres av veilerder. Endringer er ikke mulig.</AlertStripeInfo>
+                                </div>
+                                ) : (
+                                    <OppdaterAktivitetStatus
+                                        status={valgtAktivitet.status}
+                                        paramsId={id}
+                                        className="aktivitetvisning__underseksjon"
+                                    />
+                                )
+                            }
                             <hr className="aktivitetvisning__delelinje" />
                             <AvtaltContainer aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
-                            <UnderelementerForAktivitet aktivitet={valgtAktivitet} className="aktivitetvisning__underseksjon" />
+                            <UnderelementerForAktivitet
+                                aktivitet={valgtAktivitet}
+                                className="aktivitetvisning__underseksjon"
+                            />
                         </div>
                     </ModalContainer>
 
-                    <ModalFooter>
+                    <ModalFooter visible={!arenaAktivitet}>
                         { tillattEndring && <Knapp
                             onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
                             className="knapp-liten modal-footer__knapp"
@@ -154,10 +178,7 @@ Aktivitetvisning.propTypes = {
     doHentAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
-    aktiviteter: PT.shape({
-        status: PT.string,
-        data: PT.arrayOf(AppPT.aktivitet)
-    })
+    aktiviteter: PT.arrayOf(PT.object)
 };
 
 Aktivitetvisning.defaultProps = {
@@ -166,10 +187,13 @@ Aktivitetvisning.defaultProps = {
     aktiviteter: undefined
 };
 
-const mapStateToProps = (state) => ({
-    oppfolgingStatus: state.data.oppfolgingStatus.data,
-    aktiviteter: state.data.aktiviteter
-});
+const mapStateToProps = (state) => {
+    const aktivitetListe = state.data.aktiviteter.data || [];
+    return {
+        oppfolgingStatus: state.data.oppfolgingStatus.data,
+        aktiviteter: aktivitetListe.concat(state.data.arenaAktiviteter.data)
+    };
+};
 
 const mapDispatchToProps = {
     doSlettAktivitet: (aktivitet) => slettAktivitet(aktivitet),

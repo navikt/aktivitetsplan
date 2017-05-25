@@ -1,5 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
+import visibleIfHOC from '../hocs/visible-if';
 import './modal-footer.less';
 
 function ModalFooter({ children }) {
@@ -18,4 +19,4 @@ ModalFooter.defaultProps = {
     children: undefined
 };
 
-export default ModalFooter;
+export default visibleIfHOC(ModalFooter);
