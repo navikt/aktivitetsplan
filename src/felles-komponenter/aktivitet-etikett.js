@@ -16,9 +16,8 @@ const setType = (etikettnavn) => {
         case statuskoder.JOBBTILBUD:
             return 'info';
         case statuskoder.AVSLAG:
-            return 'varsling';
         case statuskoder.DIALOG_MA_BESVARES:
-            return 'feil';
+            return 'varsling';
         case statuskoder.AVTALT_MED_NAV:
             return 'avtalt';
         default:

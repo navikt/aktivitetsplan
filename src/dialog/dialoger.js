@@ -12,7 +12,6 @@ import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
-import { datoComparator } from '../utils';
 
 const Prikk = visibleIfHOC((props) => <div className="dialoger__prikk" {...props} />);
 const Info = visibleIfHOC(({ slash, className, children }) => (
@@ -38,13 +37,15 @@ function DialogVisning({ dialog, erValgt, aktiviteter }) {
     const aktivitetType = aktivitet && aktivitet.type;
     const harAktivitetType = !!aktivitetType;
 
+    const henvendelser = dialog.henvendelser;
+    const harHenvendelseFraVeileder = !!henvendelser.find((a) => a.avsender === 'VEILEDER');
     return (
         <Lenkepanel className={dialogCls(erValgt, !dialog.lest)} href={`/dialog/${dialog.id}`}>
             <Prikk visible={!dialog.lest} />
             <div>
                 <Info><Dato>{dialog.sisteDato}</Dato></Info>
                 <Info visible={harAktivitetType} slash><FormattedMessage id={`aktivitet.type.${aktivitetType}`.toLowerCase()} /></Info>
-                <Info visible={dialog.erLestAvBruker} className="venter-pa-svar" slash><FormattedMessage id="dialog.lest-av-bruker" /></Info>
+                <Info visible={dialog.erLestAvBruker && harHenvendelseFraVeileder} className="venter-pa-svar" slash><FormattedMessage id="dialog.lest-av-bruker" /></Info>
             </div>
             <Element>{aktivitet ? aktivitet.tittel : dialog.overskrift}</Element>
             <Normaltekst>{dialog.sisteTekst}</Normaltekst>
@@ -52,7 +53,7 @@ function DialogVisning({ dialog, erValgt, aktiviteter }) {
                 <Etikett visible={venterPaSvar} id="dialog.venter-pa-svar" etikett={DIALOG_MA_BESVARES} />
                 <Etikett visible={ferdigBehandlet} id="dialog.ferdigbehandlet" etikett={DIALOG_FERDIGBEHANDLET} />
             </div>
-            <div className="dialoger__dialog-henvendelser">{dialog.henvendelser.length}</div>
+            <div className="dialoger__dialog-henvendelser">{henvendelser.length}</div>
         </Lenkepanel>
     );
 }
@@ -63,29 +64,18 @@ DialogVisning.propTypes = {
     aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired
 };
 
-function compareDialoger(a, b) {
-    if (a.ferdigBehandlet !== b.ferdigBehandlet) {
-        return a.ferdigBehandlet ? 1 : -1;
-    } else if (a.lest !== b.lest) {
-        return a.lest ? 1 : -1;
-    }
-    return datoComparator(b.sisteDato, a.sisteDato);
-}
-
 function Dialoger({ dialog, dialoger, valgtDialog, className, aktiviteter }) {
     return (
         <Innholdslaster avhengigheter={[dialog]}>
             <div className={className}>
                 {
-                    [...dialoger]
-                        .sort(compareDialoger)
-                        .map((d) => (<DialogVisning
-                            key={d.id}
-                            dialog={d}
-                            erValgt={d === valgtDialog}
-                            aktiviteter={aktiviteter}
-                        />)
-                        )
+                    dialoger.map((d) => (<DialogVisning
+                        key={d.id}
+                        dialog={d}
+                        erValgt={d === valgtDialog}
+                        aktiviteter={aktiviteter}
+                    />)
+                    )
                 }
             </div>
         </Innholdslaster>

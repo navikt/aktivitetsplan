@@ -1,5 +1,6 @@
 import * as Api from './api';
 import { doThenDispatch, STATUS } from './utils';
+import { datoComparator } from '../utils';
 
 // Actions
 export const HENTER = 'dialog/hent';
@@ -36,6 +37,15 @@ function nyStateMedOppdatertDialog(state, dialog) {
     return { ...state, status: STATUS.OK, data: nyData };
 }
 
+function compareDialoger(a, b) {
+    if (a.ferdigBehandlet !== b.ferdigBehandlet) {
+        return a.ferdigBehandlet ? 1 : -1;
+    } else if (a.lest !== b.lest) {
+        return a.lest ? 1 : -1;
+    }
+    return datoComparator(b.sisteDato, a.sisteDato);
+}
+
 // Reducer
 export default function reducer(state = initalState, action) {
     const data = action.data;
@@ -43,7 +53,9 @@ export default function reducer(state = initalState, action) {
         case OPPRETTER_HENVENDELSE:
             return { ...state, status: STATUS.RELOADING };
         case HENTET:
-            return { ...state, status: STATUS.OK, data };
+            // Tilsynelatende litt rart å sortere dialogene her, men det støtter opp under krav om at
+            // en dialog ikke skal endre plass i lista unntatt ved full innlastning av lista
+            return { ...state, status: STATUS.OK, data: data.sort(compareDialoger) };
         case OPPRETTET_HENVENDELSE:
             return { ...nyStateMedOppdatertDialog(state, data), sisteHenvendelseData: data };
         case DIALOG_LEST_OK:
