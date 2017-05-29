@@ -99,7 +99,7 @@ class UnderelementerForAktivitet extends Component {
                         dialogId={dialog && dialog.id}
                         aktivitetId={aktivitetId}
                     />
-                    <EndreDialog formNavn={`dialog-aktivitet-${aktivitetId}`} dialog={dialog} />
+                    <EndreDialog visible={!!dialog} formNavn={`dialog-aktivitet-${aktivitetId}`} dialog={dialog} />
                     <Henvendelser visible={!!dialog} dialog={dialog} />
                 </VisibleDiv>
             </section>
