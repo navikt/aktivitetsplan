@@ -1,0 +1,1 @@
+Oppfølgingteksten kan ikke være lenger en {OPPFOLGING_MAKS_LENGDE} tegn
