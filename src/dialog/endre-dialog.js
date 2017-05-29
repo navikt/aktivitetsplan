@@ -5,6 +5,7 @@ import { reduxForm } from 'redux-form';
 import { oppdaterDialog } from '../ducks/dialog';
 import { hentIdentitet } from '../ducks/identitet';
 import Checkbox from '../modal/skjema/input/checkbox';
+import visibleIf from '../hocs/visible-if';
 import './endre-dialog.less';
 
 class EndreDialogStatusForm extends Component {
@@ -77,4 +78,4 @@ DynamiskEndreDialogStatusReduxFormConnected.propTypes = {
     formNavn: PT.string.isRequired
 };
 
-export default DynamiskEndreDialogStatusReduxFormConnected;
+export default visibleIf(DynamiskEndreDialogStatusReduxFormConnected);
