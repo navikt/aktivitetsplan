@@ -54,8 +54,10 @@ export const oppfolgingStatus = PT.shape({
 });
 
 export const vilkar = PT.shape({
-    text: PT.string,
-    hash: PT.string
+    tekst: PT.string,
+    hash: PT.string,
+    dato: PT.string,
+    vilkarstatus: PT.string
 });
 
 export const mal = PT.shape({

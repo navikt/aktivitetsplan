@@ -1,0 +1,63 @@
+@import "../../variables";
+
+.column-flex() {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.vilkar {
+  width: 100%;
+  .column-flex;
+
+  &__delelinje {
+    width: 100%;
+    border: 1px solid @navGra40;
+  }
+
+  &__tittel {
+    text-align: center;
+  }
+
+  &__innhold {
+    .column-flex;
+    padding: 1rem 3rem;
+    width: 100%;
+  }
+
+  &__tekst {
+    width: 100%;
+  }
+
+  &__godkjenning {
+    .column-flex;
+    padding-top: 1rem;
+  }
+
+  &__historikk-container {
+    width: 100%;
+  }
+
+  &__historikk {
+    padding: 1rem 4rem;
+  }
+
+  &__historikk-accordion-link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  &__historikk-chevron {
+    display: block;
+    margin: 0.5rem auto;
+  }
+
+  &__link {
+    display: block;
+  }
+
+  &__metaData {
+    align-self: flex-start;
+  }
+}
