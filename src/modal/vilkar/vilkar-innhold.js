@@ -7,6 +7,7 @@ import UnsafeHtml from '../../felles-komponenter/utils/unsafe-html';
 import vilkarSvg from './vilkar-illustrasjon.svg';
 import VisibleIfHOC from '../../hocs/visible-if';
 import { formaterDatoKortManad } from '../../utils';
+import { mapStatusTilStreng } from './utils';
 
 const VisibleIfElementFormattedMessage = VisibleIfHOC((props) => (
     <Element className="vilkar__metaData">
@@ -16,6 +17,7 @@ const VisibleIfElementFormattedMessage = VisibleIfHOC((props) => (
 
 function VilkarInnhold({ vilkar }) {
     const formattertDato = formaterDatoKortManad(vilkar.dato);
+    const statusString = mapStatusTilStreng(vilkar.vilkarstatus);
     return (
         <div className="vilkar__innhold">
             <Bilde src={vilkarSvg} alt="Dekorativ illustrajon" />
@@ -26,7 +28,7 @@ function VilkarInnhold({ vilkar }) {
             <VisibleIfElementFormattedMessage
                 visible={!!vilkar.vilkarstatus && !!vilkar.dato}
                 id="vilkar.modal.gjeldende-status-dato"
-                values={{ status: vilkar.vilkarstatus, dato: formattertDato }}
+                values={{ status: statusString, dato: formattertDato }}
             />
         </div>
     );
