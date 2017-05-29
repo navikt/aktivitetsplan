@@ -11,7 +11,7 @@ function VilkarHistorikk({ resterendeVilkar }) {
     function historiskVilkarLink(status, dato, hash) {
         const formattertDato = formaterDatoKortManad(dato);
         return (
-            <Link to={`vilkar/${hash}`} key={hash} className="vilkar__link lenke lenke--frittstaende">
+            <Link to={`vilkarhistorikk/${hash}`} key={hash} className="vilkar__link lenke lenke--frittstaende">
                 <FormattedMessage
                     id="vilkar.modal.gjeldende-status-dato-link"
                     values={{ status, dato: formattertDato }}
