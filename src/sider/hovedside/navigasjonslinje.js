@@ -44,7 +44,7 @@ class Navigasjonslinje extends Component {
                     <TallAlert visible={antallUlesteDialoger > 0}>{antallUlesteDialoger}</TallAlert>
                 </NavigasjonsElement>
                 <NavigasjonsElement sti="/mal" tekstId="aktivitetsmal.mitt-mal" />
-                <NavigasjonsElement sti="/vilkar" tekstId="navigasjon.vilkar" />
+                <NavigasjonsElement sti="/vilkarhistorikk" tekstId="navigasjon.vilkar" />
             </nav>
         );
     }
