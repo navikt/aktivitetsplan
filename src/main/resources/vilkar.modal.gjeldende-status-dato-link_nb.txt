@@ -1,1 +1,1 @@
-Vilkår {{status}} {{dato}}
+Vilkår {status} {dato}
