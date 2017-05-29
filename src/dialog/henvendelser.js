@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import { formaterDatoTid, datoComparator } from './../utils';
 import * as AppPT from '../proptypes';
 import Dato from '../felles-komponenter/dato';
@@ -30,7 +31,7 @@ function Henvendelse({ henvendelse }) {
     return (
         <Snakkeboble
             dato={formaterDatoTid(henvendelse.sendt)}
-            tekst={henvendelse.tekst}
+            tekst={<Tekstomrade>{henvendelse.tekst}</Tekstomrade>}
             ikonClass={ikonCls(avsenderVeileder, false)}
             pilHoyre={avsenderVeileder}
         />

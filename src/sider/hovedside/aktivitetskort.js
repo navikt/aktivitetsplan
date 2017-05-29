@@ -34,7 +34,6 @@ function collect(connector, monitor) {
 function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
     const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(aktivitet.type);
     const erFlyttbar = !aktivitet.nesteStatus && ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) && !arenaAktivitet;
-    const visible = aktivitet.etikett || aktivitet.avtalt;
     const aktivitetsKort = (
         <article style={{ opacity: isDragging ? 0.4 : 1 }}>
             <Lenke
@@ -53,7 +52,7 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
                             .join(' - ')
                     }
                 </Normaltekst>
-                <AktivitetskortTillegg aktivitet={aktivitet} visible={!!visible} />
+                <AktivitetskortTillegg aktivitet={aktivitet} />
             </Lenke>
         </article>
     );
