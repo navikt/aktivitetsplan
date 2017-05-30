@@ -112,14 +112,14 @@ class Aktivitetvisning extends Component {
                                 </Sidetittel>
                                 <div className="aktivitetskort__etiketter blokk-s">
                                     <AktivitetEtikett
-                                        visible={!!valgtAktivitet.etikett}
-                                        etikett={valgtAktivitet.etikett}
-                                        id={`etikett.${valgtAktivitet.etikett}`}
-                                    />
-                                    <AktivitetEtikett
                                         visible={valgtAktivitet.avtalt}
                                         etikett={AVTALT_MED_NAV}
                                         id={AVTALT_MED_NAV}
+                                    />
+                                    <AktivitetEtikett
+                                        visible={!!valgtAktivitet.etikett}
+                                        etikett={valgtAktivitet.etikett}
+                                        id={`etikett.${valgtAktivitet.etikett}`}
                                     />
                                 </div>
                                 <AktivitetsDetaljer
