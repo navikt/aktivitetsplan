@@ -41,7 +41,7 @@ Informasjonsfelt.defaultProps = {
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt,
-        arrangoer, deltakelseProsent, dagerPerUke, gruppeAktivitetSted, gruppeAktivitetStatus, moeteplanListe, oppfolging } = valgtAktivitet;
+        arrangoer, deltakelseProsent, antallDagerPerUke, gruppeAktivitetSted, gruppeAktivitetStatus, moeteplanListe, oppfolging } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManad(valgtAktivitet.fraDato);
     const tilDato = formaterDatoKortManad(valgtAktivitet.tilDato);
@@ -131,7 +131,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />,
             <Informasjonsfelt key="arrangoer" tittel="Aarrangør" innhold={arrangoer} />,
             <Informasjonsfelt key="deltakelsesprosent" tittel="Deltakelsesprosent" innhold={deltakelseProsent && `${deltakelseProsent}%`} />,
-            <Informasjonsfelt key="dagerPerUke" tittel="Antall dager per uke" innhold={dagerPerUke && `${dagerPerUke}`} />
+            <Informasjonsfelt key="dagerPerUke" tittel="Antall dager per uke" innhold={antallDagerPerUke && `${antallDagerPerUke}`} />
         ]
     );
 
