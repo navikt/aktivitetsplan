@@ -57,7 +57,8 @@ export const vilkar = PT.shape({
     tekst: PT.string,
     hash: PT.string,
     dato: PT.string,
-    vilkarstatus: PT.string
+    vilkarstatus: PT.string,
+    guid: PT.string
 });
 
 export const mal = PT.shape({

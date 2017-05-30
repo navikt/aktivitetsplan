@@ -19,8 +19,8 @@ class VilkarUtenHistorikkStoreConnector extends Component {
     }
 
     finnVilkar() {
-        const hash = this.props.params.hash;
-        return this.props.historiskeVilkar.data.find((vilkar) => vilkar.hash === hash);
+        const key = this.props.params.key;
+        return this.props.historiskeVilkar.data.find((vilkar) => vilkar.guid === key);
     }
 
     render() {
@@ -39,7 +39,7 @@ VilkarUtenHistorikkStoreConnector.propTypes = {
         status: PT.string,
         data: PT.arrayOf(AppPT.vilkar)
     }).isRequired,
-    params: PT.shape({ hash: PT.string }).isRequired
+    params: PT.shape({ key: PT.string }).isRequired
 };
 
 const mapStateToProps = (state) => ({

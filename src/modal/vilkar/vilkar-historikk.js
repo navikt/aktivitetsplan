@@ -5,18 +5,16 @@ import { FormattedMessage } from 'react-intl';
 import './vilkar.less';
 import * as AppPT from '../../proptypes';
 import Accordion from '../../felles-komponenter/accordion';
-import { formaterDatoKortManad, guid } from '../../utils';
-import { mapStatusTilStreng } from './utils';
+import { formaterDatoKortManad } from '../../utils';
 
 function VilkarHistorikk({ resterendeVilkar }) {
-    function historiskVilkarLink(status, dato, hash) {
+    function historiskVilkarLink(status, dato, guid) {
         const formattertDato = formaterDatoKortManad(dato);
-        const statusString = mapStatusTilStreng(status);
         return (
-            <Link to={`vilkarhistorikk/${hash}`} key={`${hash}--${guid()}`} className="vilkar__link lenke lenke--frittstaende">
+            <Link to={`vilkarhistorikk/${guid}`} key={`${guid}`} className="vilkar__link lenke lenke--frittstaende">
                 <FormattedMessage
                     id="vilkar.modal.gjeldende-status-dato-link"
-                    values={{ status: statusString, dato: formattertDato }}
+                    values={{ status, dato: formattertDato }}
                 />
             </Link>
         );
@@ -31,7 +29,7 @@ function VilkarHistorikk({ resterendeVilkar }) {
                 linkClassName="vilkar__historikk-accordion-link"
                 chevronClassName="vilkar__historikk-chevron"
             >
-                {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.hash))}
+                {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.guid))}
             </Accordion>
         </div>
     );
