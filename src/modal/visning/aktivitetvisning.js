@@ -131,8 +131,9 @@ class Aktivitetvisning extends Component {
                             <hr className="aktivitetvisning__delelinje" />
                             {arenaAktivitet ? (
                                 <div className="aktivitetvisning__underseksjon">
-                                    <AlertStripeInfo className="aktivitetvisning__alert">Denne aktiviteten
-                                            administreres av veilerder. Endringer er ikke mulig.</AlertStripeInfo>
+                                    <AlertStripeInfo className="aktivitetvisning__alert">
+                                        {<FormattedMessage id="aktivitetvisning.administreres-av-veileder" />}
+                                    </AlertStripeInfo>
                                 </div>
                                 ) : (
                                     <OppdaterAktivitetStatus

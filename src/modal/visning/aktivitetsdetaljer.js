@@ -129,9 +129,9 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         [
             <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato || 'Dato ikke satt'} />,
             <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />,
-            <Informasjonsfelt key="arrangoer" tittel="Aarrangør" innhold={arrangoer} />,
-            <Informasjonsfelt key="deltakelsesprosent" tittel="Deltakelsesprosent" innhold={deltakelseProsent && `${deltakelseProsent}%`} />,
-            <Informasjonsfelt key="dagerPerUke" tittel="Antall dager per uke" innhold={antallDagerPerUke && `${antallDagerPerUke}`} />
+            <Informasjonsfelt key="arrangoer" tittel={<FormattedMessage id="aktivitetdetaljer.aarrangor-label" />} innhold={arrangoer} />,
+            <Informasjonsfelt key="deltakelsesprosent" tittel={<FormattedMessage id="aktivitetdetaljer.deltakelsesprosent-label" />} innhold={deltakelseProsent && `${deltakelseProsent}%`} />,
+            <Informasjonsfelt key="dagerPerUke" tittel={<FormattedMessage id="aktivitetdetaljer.antall-dager-per-uke-label" />} innhold={antallDagerPerUke && `${antallDagerPerUke}`} />
         ]
     );
 
@@ -139,10 +139,10 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         [
             <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato || 'Dato ikke satt'} />,
             <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />,
-            <Informasjonsfelt key="gruppeAktivitetSted" tittel="Sted" innhold={gruppeAktivitetSted} />,
-            <Informasjonsfelt key="gruppeAktivitetStatus" tittel="Status" innhold={gruppeAktivitetStatus} />,
+            <Informasjonsfelt key="gruppeAktivitetSted" tittel={<FormattedMessage id="aktivitetdetaljer.sted-label" />} innhold={gruppeAktivitetSted} />,
+            <Informasjonsfelt key="gruppeAktivitetStatus" tittel={<FormattedMessage id="aktivitetdetaljer.status-label" />} innhold={gruppeAktivitetStatus} />,
             <section key="moteplan" className="aktivitetsbeskrivelse">
-                <Element className="aktivitetsbeskrivelse__tittel">Møteplan</Element>
+                <Element className="aktivitetsbeskrivelse__tittel"><FormattedMessage id="aktivitetdetaljer.moteplan-label" /></Element>
                 {moeteplanListe.map((mote) => (
                     <Normaltekst key={mote.startDato} className="detaljfelt__tekst">{formaterDatoKortManedTid(mote.startDato)} - {formaterTid(mote.sluttDato)} på {mote.sted}</Normaltekst>
                 ))}
