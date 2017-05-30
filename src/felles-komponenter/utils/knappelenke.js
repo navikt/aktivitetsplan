@@ -21,11 +21,11 @@ function Knappelenke({ onClick, className, ...rest }) {
 
 Knappelenke.propTypes = {
     onClick: PT.func.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 Knappelenke.defaultProps = {
-    className: undefined
+    className: undefined,
 };
 
 export default visibleIfHOC(Knappelenke);

@@ -11,7 +11,11 @@ function VilkarHistorikk({ resterendeVilkar }) {
     function historiskVilkarLink(status, dato, guid) {
         const formattertDato = formaterDatoKortManad(dato);
         return (
-            <Link to={`vilkarhistorikk/${guid}`} key={`${guid}`} className="vilkar__link lenke lenke--frittstaende">
+            <Link
+                to={`vilkarhistorikk/${guid}`}
+                key={`${guid}`}
+                className="vilkar__link lenke lenke--frittstaende"
+            >
                 <FormattedMessage
                     id="vilkar.modal.gjeldende-status-dato-link"
                     values={{ status, dato: formattertDato }}
@@ -29,14 +33,20 @@ function VilkarHistorikk({ resterendeVilkar }) {
                 linkClassName="vilkar__historikk-accordion-link"
                 chevronClassName="vilkar__historikk-chevron"
             >
-                {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.guid))}
+                {resterendeVilkar.map(vilkar =>
+                    historiskVilkarLink(
+                        vilkar.vilkarstatus,
+                        vilkar.dato,
+                        vilkar.guid
+                    )
+                )}
             </Accordion>
         </div>
     );
 }
 
 VilkarHistorikk.propTypes = {
-    resterendeVilkar: PT.arrayOf(AppPT.vilkar).isRequired
+    resterendeVilkar: PT.arrayOf(AppPT.vilkar).isRequired,
 };
 
 export default VilkarHistorikk;

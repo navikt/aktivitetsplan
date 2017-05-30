@@ -14,7 +14,13 @@ import { STATUS } from '../../ducks/utils';
 
 const leggTilHengelas = (tekst, altTekst) => (
     <span>
-        {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelasSVG} alt={altTekst} />
+        {tekst}
+        &nbsp;&nbsp;
+        <Bilde
+            style={{ position: 'absolute' }}
+            src={hengelasSVG}
+            alt={altTekst}
+        />
     </span>
 );
 
@@ -22,27 +28,38 @@ function AktivitetStatusForm(props) {
     const { aktivitet, doFlyttAktivitet, aktivitetDataStatus } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
     const hengelasAlt = props.intl.formatMessage({ id: 'hengelas-icon-alt' });
-    const onChange = (event) => {
+    const onChange = event => {
         const valgtAktivitetStatus = event.currentTarget.value;
-        if (valgtAktivitetStatus === statuser.STATUS_FULLFOERT && aktivitet.avtalt) {
+        if (
+            valgtAktivitetStatus === statuser.STATUS_FULLFOERT &&
+            aktivitet.avtalt
+        ) {
             history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
-        } else if (valgtAktivitetStatus === statuser.STATUS_AVBRUTT && aktivitet.avtalt) {
+        } else if (
+            valgtAktivitetStatus === statuser.STATUS_AVBRUTT &&
+            aktivitet.avtalt
+        ) {
             history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
         } else {
             doFlyttAktivitet(aktivitet, valgtAktivitetStatus);
         }
     };
-    const erAktivitetChecked = (statusId) => props.valgtAktivitetStatus === statusId;
+    const erAktivitetChecked = statusId =>
+        props.valgtAktivitetStatus === statusId;
     return (
         <form className="skjema oppdaterstatus-skjema">
             <Radio
                 onChange={onChange}
                 feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.brukerErInteressert" />}
+                label={
+                    <FormattedMessage id="aktivitetstavle.brukerErInteressert" />
+                }
                 value={statuser.STATUS_BRUKER_ER_INTRESSERT}
                 id={`id--${statuser.STATUS_BRUKER_ER_INTRESSERT}`}
                 name="aktivitetstatus"
-                checked={erAktivitetChecked(statuser.STATUS_BRUKER_ER_INTRESSERT)}
+                checked={erAktivitetChecked(
+                    statuser.STATUS_BRUKER_ER_INTRESSERT
+                )}
                 disabled={props.disableStatusEndring || lasterData}
             />
             <Radio
@@ -68,7 +85,10 @@ function AktivitetStatusForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />, hengelasAlt)}
+                label={leggTilHengelas(
+                    <FormattedMessage id="aktivitetstavle.fullfoert" />,
+                    hengelasAlt
+                )}
                 value={statuser.STATUS_FULLFOERT}
                 id={`id--${statuser.STATUS_FULLFOERT}`}
                 name="aktivitetstatus"
@@ -78,7 +98,10 @@ function AktivitetStatusForm(props) {
             <Radio
                 onChange={onChange}
                 feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />, hengelasAlt)}
+                label={leggTilHengelas(
+                    <FormattedMessage id="aktivitetstavle.avbrutt" />,
+                    hengelasAlt
+                )}
                 value={statuser.STATUS_AVBRUTT}
                 id={`id--${statuser.STATUS_AVBRUTT}`}
                 name="aktivitetstatus"
@@ -90,12 +113,12 @@ function AktivitetStatusForm(props) {
 }
 
 const OppdaterReduxForm = reduxForm({
-    form: 'aktivitet-status-form'
+    form: 'aktivitet-status-form',
 })(AktivitetStatusForm);
 
 AktivitetStatusForm.defaultProps = {
     valgtAktivitetStatus: statuser.INGEN_VALGT,
-    aktivitetDataStatus: STATUS.NOT_STARTED
+    aktivitetDataStatus: STATUS.NOT_STARTED,
 };
 
 AktivitetStatusForm.propTypes = {
@@ -104,19 +127,25 @@ AktivitetStatusForm.propTypes = {
     aktivitet: aktivitetPT.isRequired,
     doFlyttAktivitet: PT.func.isRequired,
     aktivitetDataStatus: PT.string,
-    intl: intlShape
+    intl: intlShape,
 };
 
 const mapStateToProps = (state, props) => ({
     aktivitetDataStatus: state.data.aktiviteter.status,
-    valgtAktivitetStatus: formValueSelector('aktivitet-status-form')(state, 'aktivitetstatus'),
+    valgtAktivitetStatus: formValueSelector('aktivitet-status-form')(
+        state,
+        'aktivitetstatus'
+    ),
     initialValues: {
-        aktivitetstatus: props.aktivitet.status
-    }
+        aktivitetstatus: props.aktivitet.status,
+    },
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
+const mapDispatchToProps = dispatch => ({
+    doFlyttAktivitet: (aktivitet, status) =>
+        flyttAktivitet(aktivitet, status)(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(OppdaterReduxForm));
+export default connect(mapStateToProps, mapDispatchToProps)(
+    injectIntl(OppdaterReduxForm)
+);

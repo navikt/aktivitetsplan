@@ -11,7 +11,7 @@ export const OPPDATER_MOTPART = 'motpart/oppdater';
 
 const initalState = {
     data: {},
-    status: STATUS.NOT_STARTED
+    status: STATUS.NOT_STARTED,
 };
 
 // Reducer
@@ -24,8 +24,8 @@ export default function reducer(state = initalState, action) {
             return {
                 status: STATUS.OK,
                 data: {
-                    navn: storeForbokstaver(data.sammensattNavn)
-                }
+                    navn: storeForbokstaver(data.sammensattNavn),
+                },
             };
         case HENTING_AV_PERSON_FEILET:
             return { ...state, status: STATUS.ERROR };
@@ -38,7 +38,7 @@ export function hentPerson(fnr) {
     return doThenDispatch(() => Api.hentPerson(fnr), {
         OK: HENTET_PERSON,
         FEILET: HENTING_AV_PERSON_FEILET,
-        PENDING: HENTER_PERSON
+        PENDING: HENTER_PERSON,
     });
 }
 
@@ -46,8 +46,7 @@ export function setNAVsomMotpart() {
     return {
         type: OPPDATER_MOTPART,
         data: {
-            navn: 'NAV'
-        }
+            navn: 'NAV',
+        },
     };
 }
-

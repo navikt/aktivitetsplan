@@ -17,11 +17,11 @@ function Lenkeknapp({ href, className, ...rest }) {
 
 Lenkeknapp.propTypes = {
     href: PT.string.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 Lenkeknapp.defaultProps = {
-    className: undefined
+    className: undefined,
 };
 
 export default Lenkeknapp;

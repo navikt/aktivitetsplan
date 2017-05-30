@@ -7,7 +7,7 @@ export const SKJUL_SISTE_FEIL_ACTION = { type: SKJUL_SISTE_FEIL };
 
 const initalState = {
     sisteFeil: null,
-    sisteFeilSkjult: false
+    sisteFeilSkjult: false,
 };
 
 export default function reducer(state = initalState, action) {
@@ -21,7 +21,5 @@ export default function reducer(state = initalState, action) {
                 return { ...state, sisteFeil: data, sisteFeilSkjult: false };
             }
             return state;
-
     }
 }
-

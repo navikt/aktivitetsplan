@@ -17,31 +17,55 @@ export const GODTA_PENDING = 'oppfolgingStatus/godta/PENDING';
 const initalState = {
     status: STATUS.NOT_STARTED,
     brukerHarAvslatt: false,
-    data: {}
+    data: {},
 };
-
 
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case PENDING:
-            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
+            return {
+                ...state,
+                status: state.status === STATUS.NOT_STARTED
+                    ? STATUS.PENDING
+                    : STATUS.RELOADING,
+            };
         case FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case GODTA_OK:
-            return { ...state, status: STATUS.OK, brukerHarAvslatt: false, data: action.data };
+            return {
+                ...state,
+                status: STATUS.OK,
+                brukerHarAvslatt: false,
+                data: action.data,
+            };
         case GODTA_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case GODTA_PENDING:
-            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
+            return {
+                ...state,
+                status: state.status === STATUS.NOT_STARTED
+                    ? STATUS.PENDING
+                    : STATUS.RELOADING,
+            };
         case AVSLA_OK:
-            return { ...state, status: STATUS.OK, brukerHarAvslatt: true, data: action.data };
+            return {
+                ...state,
+                status: STATUS.OK,
+                brukerHarAvslatt: true,
+                data: action.data,
+            };
         case AVSLA_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case AVSLA_PENDING:
-            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
+            return {
+                ...state,
+                status: state.status === STATUS.NOT_STARTED
+                    ? STATUS.PENDING
+                    : STATUS.RELOADING,
+            };
         default:
             return state;
     }
@@ -52,7 +76,7 @@ export function hentOppfolgingStatus() {
     return doThenDispatch(() => Api.hentOppfolgingStatus(), {
         OK,
         FEILET,
-        PENDING
+        PENDING,
     });
 }
 
@@ -60,7 +84,7 @@ export function godtaVilkar(hash) {
     return doThenDispatch(() => Api.godtaVilkar(hash), {
         OK: GODTA_OK,
         FEILET: GODTA_FEILET,
-        PENDING: GODTA_PENDING
+        PENDING: GODTA_PENDING,
     });
 }
 
@@ -68,7 +92,6 @@ export function avslaVilkar(hash) {
     return doThenDispatch(() => Api.avslaaVilkar(hash), {
         OK: AVSLA_OK,
         FEILET: AVSLA_FEILET,
-        PENDING: AVSLA_PENDING
+        PENDING: AVSLA_PENDING,
     });
 }
-

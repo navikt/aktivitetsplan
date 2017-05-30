@@ -14,23 +14,24 @@ const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
     <Lenke href={sti} className="navigasjonslinje__element">
         <Element>
             <FormattedMessage id={tekstId} />
-            <span className="navigasjonslinje__element-content">{children}</span>
+            <span className="navigasjonslinje__element-content">
+                {children}
+            </span>
         </Element>
     </Lenke>
-    ));
+));
 
 NavigasjonsElement.defaultProps = {
-    children: null
+    children: null,
 };
 
 NavigasjonsElement.propTypes = {
     sti: PT.string.isRequired,
     tekstId: PT.string.isRequired,
-    children: PT.node
+    children: PT.node,
 };
 
 class Navigasjonslinje extends Component {
-
     componentDidMount() {
         this.props.doHentDialog();
         this.props.doHentOppfolgingStatus();
@@ -40,11 +41,23 @@ class Navigasjonslinje extends Component {
         const { antallUlesteDialoger, underOppfolging } = this.props;
         return (
             <nav className="navigasjonslinje">
-                <NavigasjonsElement sti="/dialog" tekstId="navigasjon.dialog" visible={underOppfolging} >
-                    <TallAlert visible={antallUlesteDialoger > 0}>{antallUlesteDialoger}</TallAlert>
+                <NavigasjonsElement
+                    sti="/dialog"
+                    tekstId="navigasjon.dialog"
+                    visible={underOppfolging}
+                >
+                    <TallAlert visible={antallUlesteDialoger > 0}>
+                        {antallUlesteDialoger}
+                    </TallAlert>
                 </NavigasjonsElement>
-                <NavigasjonsElement sti="/mal" tekstId="aktivitetsmal.mitt-mal" />
-                <NavigasjonsElement sti="/vilkarhistorikk" tekstId="navigasjon.vilkar" />
+                <NavigasjonsElement
+                    sti="/mal"
+                    tekstId="aktivitetsmal.mitt-mal"
+                />
+                <NavigasjonsElement
+                    sti="/vilkarhistorikk"
+                    tekstId="navigasjon.vilkar"
+                />
             </nav>
         );
     }
@@ -54,20 +67,20 @@ Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
     doHentOppfolgingStatus: PT.func.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
-    underOppfolging: PT.bool.isRequired
+    underOppfolging: PT.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     const dialog = state.data.dialog.data;
     return {
-        antallUlesteDialoger: dialog.filter((d) => !d.lest).length,
-        underOppfolging: !!state.data.oppfolgingStatus.data.underOppfolging
+        antallUlesteDialoger: dialog.filter(d => !d.lest).length,
+        underOppfolging: !!state.data.oppfolgingStatus.data.underOppfolging,
     };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     doHentDialog: () => dispatch(hentDialog()),
-    doHentOppfolgingStatus: () => dispatch(hentOppfolgingStatus())
+    doHentOppfolgingStatus: () => dispatch(hentOppfolgingStatus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigasjonslinje);

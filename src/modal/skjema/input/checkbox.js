@@ -5,7 +5,13 @@ import { Checkbox as NavCheckbox } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 
-function InnerCheckboxComponent({ input, meta, labelId, errorMessage, submitOnChange }) {
+function InnerCheckboxComponent({
+    input,
+    meta,
+    labelId,
+    errorMessage,
+    submitOnChange,
+}) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
 
     function onChange(...args) {
@@ -28,11 +34,13 @@ function InnerCheckboxComponent({ input, meta, labelId, errorMessage, submitOnCh
 
 InnerCheckboxComponent.propTypes = {
     labelId: PT.string.isRequired,
-    errorMessage: PT.arrayOf(PT.oneOfType([PT.string, PT.instanceOf(FormattedMessage)])),
+    errorMessage: PT.arrayOf(
+        PT.oneOfType([PT.string, PT.instanceOf(FormattedMessage)])
+    ),
     submitOnChange: PT.bool,
 
     input: PT.object, // eslint-disable-line react/forbid-prop-types
-    meta: PT.object // eslint-disable-line react/forbid-prop-types
+    meta: PT.object, // eslint-disable-line react/forbid-prop-types
 };
 
 InnerCheckboxComponent.defaultProps = {
@@ -41,7 +49,7 @@ InnerCheckboxComponent.defaultProps = {
 
     // Vil alltid bli overskrevet av CustomField
     input: {},
-    meta: {}
+    meta: {},
 };
 
 function Checkbox({ feltNavn, className, ...rest }) {
@@ -57,11 +65,11 @@ function Checkbox({ feltNavn, className, ...rest }) {
 
 Checkbox.propTypes = {
     feltNavn: PT.string.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 Checkbox.defaultProps = {
-    className: undefined
+    className: undefined,
 };
 
 export default Checkbox;

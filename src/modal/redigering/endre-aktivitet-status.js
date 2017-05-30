@@ -17,7 +17,10 @@ function Status({ statusId, tekstId }) {
                 required
                 id={htmlId}
             />
-            <label htmlFor={htmlId} className="endre-aktivitet-status__status-label">
+            <label
+                htmlFor={htmlId}
+                className="endre-aktivitet-status__status-label"
+            >
                 <FormattedMessage id={tekstId} />
             </label>
         </span>
@@ -26,16 +29,21 @@ function Status({ statusId, tekstId }) {
 
 Status.propTypes = {
     statusId: PT.string.isRequired,
-    tekstId: PT.string.isRequired
+    tekstId: PT.string.isRequired,
 };
-
 
 export default () => (
     <section className="endre-aktivitet-status">
         <Undertittel><FormattedMessage id="aktivitet.status" /></Undertittel>
-        <Status statusId="BRUKER_ER_INTERESSERT" tekstId="aktivitetstavle.brukerErInteressert" />
+        <Status
+            statusId="BRUKER_ER_INTERESSERT"
+            tekstId="aktivitetstavle.brukerErInteressert"
+        />
         <Status statusId="PLANLAGT" tekstId="aktivitetstavle.planlagt" />
-        <Status statusId="GJENNOMFOERT" tekstId="aktivitetstavle.gjennomfoert" />
+        <Status
+            statusId="GJENNOMFOERT"
+            tekstId="aktivitetstavle.gjennomfoert"
+        />
         <Status statusId="FULLFOERT" tekstId="aktivitetstavle.fullfoert" />
         <Status statusId="AVBRUTT" tekstId="aktivitetstavle.avbrutt" />
     </section>

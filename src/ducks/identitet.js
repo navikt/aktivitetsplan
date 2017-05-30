@@ -8,15 +8,19 @@ export const PENDING = 'identitet/PENDING';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
-    data: {}
+    data: {},
 };
-
 
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case PENDING:
-            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
+            return {
+                ...state,
+                status: state.status === STATUS.NOT_STARTED
+                    ? STATUS.PENDING
+                    : STATUS.RELOADING,
+            };
         case FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case OK: {
@@ -35,7 +39,7 @@ export function hentIdentitet() {
             doThenDispatch(() => Api.hentIdentitet(), {
                 OK,
                 FEILET,
-                PENDING
+                PENDING,
             })(dispatch);
         }
     };

@@ -10,11 +10,11 @@ function Applikasjon({ children }) {
 }
 
 Applikasjon.propTypes = {
-    children: PT.node
+    children: PT.node,
 };
 
 Applikasjon.defaultProps = {
-    children: undefined
+    children: undefined,
 };
 
 export default Applikasjon;

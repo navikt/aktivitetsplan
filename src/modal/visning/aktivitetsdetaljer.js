@@ -5,21 +5,34 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { Link } from 'react-router';
 import * as AppPT from '../../proptypes';
-import { formaterDatoKortManad, formaterDatoKortManedTid, formaterTid } from '../../utils';
-import { EGEN_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../constant';
+import {
+    formaterDatoKortManad,
+    formaterDatoKortManedTid,
+    formaterTid,
+} from '../../utils';
+import {
+    EGEN_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE,
+    TILTAK_AKTIVITET_TYPE,
+    GRUPPE_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+} from '../../constant';
 import DetaljFelt from './detalj-felt';
 
 function RedigerLink({ id, felt }) {
     return (
         <Link to={`/aktivitet/aktivitet/${id}/endre`}>
-            <FormattedMessage id="aktivitetsdetaljer.legg-til-felt" values={{ felt }} />
+            <FormattedMessage
+                id="aktivitetsdetaljer.legg-til-felt"
+                values={{ felt }}
+            />
         </Link>
     );
 }
 
 RedigerLink.propTypes = {
     id: PT.string.isRequired,
-    felt: PT.string.isRequired
+    felt: PT.string.isRequired,
 };
 
 function Informasjonsfelt({ tittel, innhold }) {
@@ -32,39 +45,64 @@ function Informasjonsfelt({ tittel, innhold }) {
 
 Informasjonsfelt.propTypes = {
     tittel: PT.node.isRequired,
-    innhold: PT.string
+    innhold: PT.string,
 };
 
 Informasjonsfelt.defaultProps = {
-    innhold: undefined
+    innhold: undefined,
 };
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
-    const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt,
-        arrangoer, deltakelseProsent, dagerPerUke, gruppeAktivitetSted, gruppeAktivitetStatus, moeteplanListe, oppfolging } = valgtAktivitet;
+    const {
+        type: aktivitetstype,
+        lenke,
+        arbeidsgiver,
+        arbeidssted,
+        kontaktperson,
+        hensikt,
+        arrangoer,
+        deltakelseProsent,
+        dagerPerUke,
+        gruppeAktivitetSted,
+        gruppeAktivitetStatus,
+        moeteplanListe,
+        oppfolging,
+    } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManad(valgtAktivitet.fraDato);
     const tilDato = formaterDatoKortManad(valgtAktivitet.tilDato);
 
-    const fraDatoTekst = (aktivitet) => {
+    const fraDatoTekst = aktivitet => {
         switch (aktivitet) {
             case EGEN_AKTIVITET_TYPE:
-                return <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.egen" />;
+                return (
+                    <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.egen" />
+                );
             case STILLING_AKTIVITET_TYPE:
-                return <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.stilling" />;
+                return (
+                    <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.stilling" />
+                );
             default:
-                return <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />;
+                return (
+                    <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />
+                );
         }
     };
 
-    const tilDatoTekst = (aktivitet) => {
+    const tilDatoTekst = aktivitet => {
         switch (aktivitet) {
             case EGEN_AKTIVITET_TYPE:
-                return <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.egen" />;
+                return (
+                    <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.egen" />
+                );
             case STILLING_AKTIVITET_TYPE:
-                return <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.stilling" />;
+                return (
+                    <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.stilling" />
+                );
             default:
-                return <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />;
+                return (
+                    <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />
+                );
         }
     };
 
@@ -73,7 +111,9 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const lenkeKomponent = () => (
         <DetaljFelt key="lenke" tittel="Lenke" visible={lenke != null}>
             <Link
-                href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
+                href={
+                    lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`
+                }
                 className="detaljfelt__lenke"
                 target="_blank"
             >
@@ -82,90 +122,159 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         </DetaljFelt>
     );
 
-    const ledigStillingFelter = () => (
-        [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} />,
-            <Informasjonsfelt
-                key="arbeidsgiver"
-                tittel={<FormattedMessage id="aktivitetdetaljer.arbeidsgiver-label" />}
-                innhold={arbeidsgiver}
-            />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} />,
-            <Informasjonsfelt
-                key="arbeidssted"
-                tittel={<FormattedMessage id="aktivitetdetaljer.arbeidssted-label" />}
-                innhold={arbeidssted}
-            />,
-            lenkeKomponent(),
-            <Informasjonsfelt
-                key="kontaktperson"
-                tittel={<FormattedMessage id="aktivitetdetaljer.kontaktperson-label" />}
-                innhold={kontaktperson}
-            />
-        ]
-    );
+    const ledigStillingFelter = () => [
+        <Informasjonsfelt
+            key="fradato"
+            tittel={fraDatoTekst(aktivitetstype)}
+            innhold={fraDato}
+        />,
+        <Informasjonsfelt
+            key="arbeidsgiver"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.arbeidsgiver-label" />
+            }
+            innhold={arbeidsgiver}
+        />,
+        <Informasjonsfelt
+            key="tildato"
+            tittel={tilDatoTekst(aktivitetstype)}
+            innhold={tilDato}
+        />,
+        <Informasjonsfelt
+            key="arbeidssted"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.arbeidssted-label" />
+            }
+            innhold={arbeidssted}
+        />,
+        lenkeKomponent(),
+        <Informasjonsfelt
+            key="kontaktperson"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.kontaktperson-label" />
+            }
+            innhold={kontaktperson}
+        />,
+    ];
 
-    const egenStillingFelter = () => (
-        [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato} />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato} />,
-            lenkeKomponent(),
-            <Informasjonsfelt
-                key="hensikt"
-                tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
-                innhold={hensikt}
-            />,
+    const egenStillingFelter = () => [
+        <Informasjonsfelt
+            key="fradato"
+            tittel={fraDatoTekst(aktivitetstype)}
+            innhold={fraDato}
+        />,
+        <Informasjonsfelt
+            key="tildato"
+            tittel={tilDatoTekst(aktivitetstype)}
+            innhold={tilDato}
+        />,
+        lenkeKomponent(),
+        <Informasjonsfelt
+            key="hensikt"
+            tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
+            innhold={hensikt}
+        />,
 
-            <Informasjonsfelt
-                key="oppfolging"
-                tittel={<FormattedMessage id="aktivitetdetaljer.oppfolging-label" />}
-                innhold={oppfolging}
-            />
+        <Informasjonsfelt
+            key="oppfolging"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.oppfolging-label" />
+            }
+            innhold={oppfolging}
+        />,
+    ];
 
-        ]
-    );
+    const tiltakFelter = () => [
+        <Informasjonsfelt
+            key="fradato"
+            tittel={fraDatoTekst(aktivitetstype)}
+            innhold={fraDato || 'Dato ikke satt'}
+        />,
+        <Informasjonsfelt
+            key="tildato"
+            tittel={tilDatoTekst(aktivitetstype)}
+            innhold={tilDato || 'Dato ikke satt'}
+        />,
+        <Informasjonsfelt
+            key="arrangoer"
+            tittel="Aarrangør"
+            innhold={arrangoer}
+        />,
+        <Informasjonsfelt
+            key="deltakelsesprosent"
+            tittel="Deltakelsesprosent"
+            innhold={deltakelseProsent && `${deltakelseProsent}%`}
+        />,
+        <Informasjonsfelt
+            key="dagerPerUke"
+            tittel="Antall dager per uke"
+            innhold={dagerPerUke && `${dagerPerUke}`}
+        />,
+    ];
 
-    const tiltakFelter = () => (
-        [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato || 'Dato ikke satt'} />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />,
-            <Informasjonsfelt key="arrangoer" tittel="Aarrangør" innhold={arrangoer} />,
-            <Informasjonsfelt key="deltakelsesprosent" tittel="Deltakelsesprosent" innhold={deltakelseProsent && `${deltakelseProsent}%`} />,
-            <Informasjonsfelt key="dagerPerUke" tittel="Antall dager per uke" innhold={dagerPerUke && `${dagerPerUke}`} />
-        ]
-    );
+    const gruppeFelter = () => [
+        <Informasjonsfelt
+            key="fradato"
+            tittel={fraDatoTekst(aktivitetstype)}
+            innhold={fraDato || 'Dato ikke satt'}
+        />,
+        <Informasjonsfelt
+            key="tildato"
+            tittel={tilDatoTekst(aktivitetstype)}
+            innhold={tilDato || 'Dato ikke satt'}
+        />,
+        <Informasjonsfelt
+            key="gruppeAktivitetSted"
+            tittel="Sted"
+            innhold={gruppeAktivitetSted}
+        />,
+        <Informasjonsfelt
+            key="gruppeAktivitetStatus"
+            tittel="Status"
+            innhold={gruppeAktivitetStatus}
+        />,
+        <section key="moteplan" className="aktivitetsbeskrivelse">
+            <Element className="aktivitetsbeskrivelse__tittel">
+                Møteplan
+            </Element>
+            {moeteplanListe.map(mote => (
+                <Normaltekst key={mote.startDato} className="detaljfelt__tekst">
+                    {formaterDatoKortManedTid(mote.startDato)}
+                    {' '}
+                    -
+                    {' '}
+                    {formaterTid(mote.sluttDato)}
+                    {' '}
+                    på
+                    {' '}
+                    {mote.sted}
+                </Normaltekst>
+            ))}
+        </section>,
+    ];
 
-    const gruppeFelter = () => (
-        [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato || 'Dato ikke satt'} />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />,
-            <Informasjonsfelt key="gruppeAktivitetSted" tittel="Sted" innhold={gruppeAktivitetSted} />,
-            <Informasjonsfelt key="gruppeAktivitetStatus" tittel="Status" innhold={gruppeAktivitetStatus} />,
-            <section key="moteplan" className="aktivitetsbeskrivelse">
-                <Element className="aktivitetsbeskrivelse__tittel">Møteplan</Element>
-                {moeteplanListe.map((mote) => (
-                    <Normaltekst key={mote.startDato} className="detaljfelt__tekst">{formaterDatoKortManedTid(mote.startDato)} - {formaterTid(mote.sluttDato)} på {mote.sted}</Normaltekst>
-                ))}
-            </section>
-        ]
-    );
-
-    const utdanningFelter = () => (
-        [
-            <Informasjonsfelt key="fradato" tittel={fraDatoTekst(aktivitetstype)} innhold={fraDato || 'Dato ikke satt'} />,
-            <Informasjonsfelt key="tildato" tittel={tilDatoTekst(aktivitetstype)} innhold={tilDato || 'Dato ikke satt'} />
-        ]
-    );
+    const utdanningFelter = () => [
+        <Informasjonsfelt
+            key="fradato"
+            tittel={fraDatoTekst(aktivitetstype)}
+            innhold={fraDato || 'Dato ikke satt'}
+        />,
+        <Informasjonsfelt
+            key="tildato"
+            tittel={tilDatoTekst(aktivitetstype)}
+            innhold={tilDato || 'Dato ikke satt'}
+        />,
+    ];
 
     const map = {
         [EGEN_AKTIVITET_TYPE]: egenStillingFelter,
         [STILLING_AKTIVITET_TYPE]: ledigStillingFelter,
         [TILTAK_AKTIVITET_TYPE]: tiltakFelter,
         [GRUPPE_AKTIVITET_TYPE]: gruppeFelter,
-        [UTDANNING_AKTIVITET_TYPE]: utdanningFelter
+        [UTDANNING_AKTIVITET_TYPE]: utdanningFelter,
     };
 
-    const cls = (clsName) => classNames(clsName, 'aktivitetsdetaljer');
+    const cls = clsName => classNames(clsName, 'aktivitetsdetaljer');
     return (
         <section className={cls(className)}>
             {map[aktivitetstype]()}
@@ -175,11 +284,11 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
 Aktivitetsdetaljer.propTypes = {
     className: PT.string,
-    valgtAktivitet: AppPT.aktivitet.isRequired
+    valgtAktivitet: AppPT.aktivitet.isRequired,
 };
 
 Aktivitetsdetaljer.defaultProps = {
-    className: undefined
+    className: undefined,
 };
 
 export default Aktivitetsdetaljer;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getDisplayName } from './utils';
 
 export default function componentize(sideEffects) {
-    return (InnerComponent) => {
+    return InnerComponent => {
         class WrappingComponent extends Component {
             componentWillMount() {
                 if (sideEffects && sideEffects.componentWillMount) {

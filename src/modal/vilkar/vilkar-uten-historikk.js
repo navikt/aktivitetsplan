@@ -11,7 +11,6 @@ import { STATUS } from '../../ducks/utils';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
 class VilkarUtenHistorikkStoreConnector extends Component {
-
     componentDidMount() {
         if (this.props.historiskeVilkar.status === STATUS.NOT_STARTED) {
             this.props.doHentHistoriskeVilkar();
@@ -20,7 +19,9 @@ class VilkarUtenHistorikkStoreConnector extends Component {
 
     finnVilkar() {
         const key = this.props.params.key;
-        return this.props.historiskeVilkar.data.find((vilkar) => vilkar.guid === key);
+        return this.props.historiskeVilkar.data.find(
+            vilkar => vilkar.guid === key
+        );
     }
 
     render() {
@@ -28,7 +29,6 @@ class VilkarUtenHistorikkStoreConnector extends Component {
             <Innholdslaster avhengigheter={[this.props.historiskeVilkar]}>
                 <Vilkar vilkar={this.finnVilkar()} />
             </Innholdslaster>
-
         );
     }
 }
@@ -37,17 +37,21 @@ VilkarUtenHistorikkStoreConnector.propTypes = {
     doHentHistoriskeVilkar: PT.func.isRequired,
     historiskeVilkar: PT.shape({
         status: PT.string,
-        data: PT.arrayOf(AppPT.vilkar)
+        data: PT.arrayOf(AppPT.vilkar),
     }).isRequired,
-    params: PT.shape({ key: PT.string }).isRequired
+    params: PT.shape({ key: PT.string }).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    historiskeVilkar: state.data.historiskeVilkar
+const mapStateToProps = state => ({
+    historiskeVilkar: state.data.historiskeVilkar,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    doHentHistoriskeVilkar: () => dispatch(hentHistoriskeVilkar())
+const mapDispatchToProps = dispatch => ({
+    doHentHistoriskeVilkar: () => dispatch(hentHistoriskeVilkar()),
 });
 
-export default VilkarModal(connect(mapStateToProps, mapDispatchToProps)(withRouter(VilkarUtenHistorikkStoreConnector)));
+export default VilkarModal(
+    connect(mapStateToProps, mapDispatchToProps)(
+        withRouter(VilkarUtenHistorikkStoreConnector)
+    )
+);

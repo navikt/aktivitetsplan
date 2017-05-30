@@ -9,15 +9,20 @@ export const HENT_FEILET = 'vilkar/hent/fail';
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: {
-        tekst: ''
-    }
+        tekst: '',
+    },
 };
 
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case HENT_PENDING:
-            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
+            return {
+                ...state,
+                status: state.status === STATUS.NOT_STARTED
+                    ? STATUS.PENDING
+                    : STATUS.RELOADING,
+            };
         case HENT_OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case HENT_FEILET:
@@ -32,7 +37,6 @@ export function hentVilkar() {
     return doThenDispatch(() => Api.hentVilkar(), {
         OK: HENT_OK,
         FEILET: HENT_FEILET,
-        PENDING: HENT_PENDING
+        PENDING: HENT_PENDING,
     });
 }
-

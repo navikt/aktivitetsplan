@@ -8,6 +8,5 @@ export default function Feature({ name, children }) {
 
 Feature.propTypes = {
     name: PT.string.isRequired,
-    children: PT.node.isRequired
+    children: PT.node.isRequired,
 };
-

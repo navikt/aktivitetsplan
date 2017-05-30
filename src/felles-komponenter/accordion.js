@@ -8,18 +8,17 @@ import './accordion.less';
 import VisibleIfHOC from '../hocs/visible-if';
 
 class Accordion extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            apen: props.apen
+            apen: props.apen,
         };
     }
 
-    apne = (e) => {
+    apne = e => {
         e.preventDefault();
         this.setState({
-            apen: !this.state.apen
+            apen: !this.state.apen,
         });
 
         if (this.props.onClick !== undefined) {
@@ -28,8 +27,8 @@ class Accordion extends Component {
     };
 
     render() {
-        const ChevronLink = VisibleIfHOC(() =>
-            (<a
+        const ChevronLink = VisibleIfHOC(() => (
+            <a
                 href="/"
                 className={classNames(
                     'accordion__link',
@@ -41,23 +40,29 @@ class Accordion extends Component {
                 {!this.props.chevronIBunnen &&
                     <NavFrontendChevron
                         orientasjon={this.state.apen ? 'opp' : 'ned'}
-                        className={classNames('accordion__chevron', this.props.chevronClassName)}
-                    />
-                }
+                        className={classNames(
+                            'accordion__chevron',
+                            this.props.chevronClassName
+                        )}
+                    />}
                 <FormattedMessage id={this.props.labelId} />
                 {this.props.chevronIBunnen &&
-                <NavFrontendChevron
-                    orientasjon={this.state.apen ? 'opp' : 'ned'}
-                    className={classNames('accordion__chevron', this.props.chevronClassName)}
-                />
-                }
-            </a>)
-        );
+                    <NavFrontendChevron
+                        orientasjon={this.state.apen ? 'opp' : 'ned'}
+                        className={classNames(
+                            'accordion__chevron',
+                            this.props.chevronClassName
+                        )}
+                    />}
+            </a>
+        ));
 
         return (
             <div className={this.props.className}>
                 <ChevronLink visible={!this.props.linkIBunnen} />
-                <VisibleIfDiv visible={this.state.apen}>{this.props.children}</VisibleIfDiv>
+                <VisibleIfDiv visible={this.state.apen}>
+                    {this.props.children}
+                </VisibleIfDiv>
                 <ChevronLink visible={this.props.linkIBunnen} />
             </div>
         );
@@ -72,7 +77,7 @@ Accordion.defaultProps = {
     linkIBunnen: false,
     chevronIBunnen: false,
     linkClassName: '',
-    chevronClassName: ''
+    chevronClassName: '',
 };
 
 Accordion.propTypes = {
@@ -84,7 +89,7 @@ Accordion.propTypes = {
     linkIBunnen: PT.bool,
     chevronIBunnen: PT.bool,
     linkClassName: PT.string,
-    chevronClassName: PT.string
+    chevronClassName: PT.string,
 };
 
 export default Accordion;

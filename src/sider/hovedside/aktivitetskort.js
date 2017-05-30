@@ -13,44 +13,57 @@ import {
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT
+    STATUS_AVBRUTT,
 } from '../../constant';
 
 const dndSpec = {
-
     beginDrag({ aktivitet }) {
         return aktivitet;
-    }
-
+    },
 };
 
 function collect(connector, monitor) {
     return {
         connectDragSource: connector.dragSource(),
-        isDragging: monitor.isDragging()
+        isDragging: monitor.isDragging(),
     };
 }
 
 function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
-    const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(aktivitet.type);
-    const erFlyttbar = !aktivitet.nesteStatus && ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) && !arenaAktivitet;
+    const arenaAktivitet = [
+        TILTAK_AKTIVITET_TYPE,
+        GRUPPE_AKTIVITET_TYPE,
+        UTDANNING_AKTIVITET_TYPE,
+    ].includes(aktivitet.type);
+    const erFlyttbar =
+        !aktivitet.nesteStatus &&
+        ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) &&
+        !arenaAktivitet;
     const aktivitetsKort = (
         <article style={{ opacity: isDragging ? 0.4 : 1 }}>
             <Lenke
                 href={`aktivitet/aktivitet/${aktivitet.id}`}
-                className={classNames('aktivitetskort', erFlyttbar && 'aktivitetskort--flyttbar')}
+                className={classNames(
+                    'aktivitetskort',
+                    erFlyttbar && 'aktivitetskort--flyttbar'
+                )}
                 brukLenkestyling={false}
             >
                 <Undertekst tag="p" className="aktivitetskort__type">
-                    <FormattedMessage id={(`aktivitetskort.type.${aktivitet.type}`).toLowerCase()} />
+                    <FormattedMessage
+                        id={`aktivitetskort.type.${aktivitet.type}`.toLowerCase()}
+                    />
                 </Undertekst>
-                <Element tag="h1" className="aktivitetskort__tittel">{aktivitet.tittel}</Element>
+                <Element tag="h1" className="aktivitetskort__tittel">
+                    {aktivitet.tittel}
+                </Element>
                 <Normaltekst className="aktivitetskort__dato">
-                    {
-                        [formaterDato(aktivitet.fraDato), formaterDato(aktivitet.tilDato)]
-                            .filter((d) => d)
-                            .join(' - ')
-                    }
+                    {[
+                        formaterDato(aktivitet.fraDato),
+                        formaterDato(aktivitet.tilDato),
+                    ]
+                        .filter(d => d)
+                        .join(' - ')}
                 </Normaltekst>
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </Lenke>
@@ -63,7 +76,7 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
 AktivitetsKort.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     isDragging: PT.bool.isRequired,
-    connectDragSource: PT.func.isRequired
+    connectDragSource: PT.func.isRequired,
 };
 
-export default DragSource('AktivitetsKort', dndSpec, collect)((AktivitetsKort));
+export default DragSource('AktivitetsKort', dndSpec, collect)(AktivitetsKort);

@@ -22,21 +22,20 @@ function Hovedside({ children }) {
             </div>
             {children}
         </div>
-
     );
 }
 
 Hovedside.defaultProps = {
     children: null,
-    routes: null
+    routes: null,
 };
 
 Hovedside.propTypes = {
-    children: PT.node
+    children: PT.node,
 };
 
 Hovedside.defaultProps = {
-    children: undefined
+    children: undefined,
 };
 
 export default Hovedside;

@@ -41,16 +41,25 @@ export function validerDatoField(input, intl, alternativer) {
     const tilDato = moment(til);
 
     if (input && !erGyldigISODato(input)) {
-        return intl.formatMessage({ id: 'datepicker.feilmelding.ugyldig-dato' });
-    } else if (fra && til && (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))) {
+        return intl.formatMessage({
+            id: 'datepicker.feilmelding.ugyldig-dato',
+        });
+    } else if (
+        fra &&
+        til &&
+        (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))
+    ) {
         tilDato.add(1, 'day');
         fraDato.subtract(1, 'day');
 
         const msgValues = {
             fradato: toDatePrettyPrint(fraDato.toDate()),
-            tildato: toDatePrettyPrint(tilDato.toDate())
+            tildato: toDatePrettyPrint(tilDato.toDate()),
         };
-        return intl.formatMessage({ id: 'datepicker.feilmelding.innenfor-periode', values: msgValues });
+        return intl.formatMessage({
+            id: 'datepicker.feilmelding.innenfor-periode',
+            values: msgValues,
+        });
     }
     return undefined;
 }

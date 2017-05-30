@@ -1,7 +1,14 @@
-import { API_BASE_URL, DIALOG_BASE_URL, AKTIVITET_PROXY_BASE_URL, SITUASJON_PROXY_BASE_URL, PERSON_BASE_URL } from '~config'; // eslint-disable-line
+import {
+    API_BASE_URL,
+    DIALOG_BASE_URL,
+    AKTIVITET_PROXY_BASE_URL,
+    SITUASJON_PROXY_BASE_URL,
+    PERSON_BASE_URL,
+} from '~config'; // eslint-disable-line
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
-export function hentLedetekster() { // eslint-disable-line  import/prefer-default-export
+export function hentLedetekster() {
+    // eslint-disable-line  import/prefer-default-export
     return fetchToJson(`${API_BASE_URL}/tekster`);
 }
 
@@ -30,7 +37,9 @@ export function hentVilkar() {
 }
 
 export function hentHistoriskeVilkar() {
-    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/hentVilkaarStatusListe`);
+    return fetchToJson(
+        `${SITUASJON_PROXY_BASE_URL}/situasjon/hentVilkaarStatusListe`
+    );
 }
 
 export function hentDialog() {
@@ -62,22 +71,33 @@ export function hentArenaAktiviteter() {
 }
 
 export function hentEndringsloggTilAktivitet(aktivitet) {
-    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/endringslogg`);
+    return fetchToJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/endringslogg`
+    );
 }
 
 export function lagNyAktivitet(aktivitet) {
     return postAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/ny`, aktivitet);
 }
 export function oppdaterAktivitet(aktivitet) {
-    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
+    return putAsJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`,
+        aktivitet
+    );
 }
 
 export function oppdaterAktivitetStatus(aktivitet) {
-    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
+    return putAsJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status`,
+        aktivitet
+    );
 }
 
 export function oppdaterAktivitetEtikett(aktivitet) {
-    return putAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/etikett`, aktivitet);
+    return putAsJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/etikett`,
+        aktivitet
+    );
 }
 
 export function hentEtiketter() {
@@ -85,7 +105,10 @@ export function hentEtiketter() {
 }
 
 export function slettAktivitet(aktivitet) {
-    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`, { method: 'delete' });
+    return fetchToJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`,
+        { method: 'delete' }
+    );
 }
 
 export function hentMal() {

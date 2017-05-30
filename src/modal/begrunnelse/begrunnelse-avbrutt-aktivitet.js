@@ -9,11 +9,17 @@ import { STATUS } from '../../ducks/utils';
 import StandardModal from '../modal-standard';
 import history from '../../history';
 
-const BegrunnelseAvbruttAktivitet = (props) => {
-    const headerTekst = <FormattedMessage id="opprett-begrunnelse.avbrutt.header" />;
-    const beskrivelseTekst = <FormattedMessage id="opprett-begrunnelse.avbrutt.melding" />;
+const BegrunnelseAvbruttAktivitet = props => {
+    const headerTekst = (
+        <FormattedMessage id="opprett-begrunnelse.avbrutt.header" />
+    );
+    const beskrivelseTekst = (
+        <FormattedMessage id="opprett-begrunnelse.avbrutt.melding" />
+    );
     const paramsId = props.params.id;
-    const valgtAktivitet = props.aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId) || {};
+    const valgtAktivitet = props.aktiviteter.data.find(
+        aktivitet => aktivitet.id === paramsId
+    ) || {};
 
     return (
         <StandardModal name="BegrunnelseModal">
@@ -21,8 +27,11 @@ const BegrunnelseAvbruttAktivitet = (props) => {
                 headerTekst={headerTekst}
                 beskrivelseTekst={beskrivelseTekst}
                 lagrer={props.aktiviteter.status !== STATUS.OK}
-                onSubmit={(beskrivelseForm) => {
-                    props.lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
+                onSubmit={beskrivelseForm => {
+                    props.lagreBegrunnelse(
+                        valgtAktivitet,
+                        beskrivelseForm.begrunnelse
+                    );
                     history.goBack();
                 }}
             />
@@ -33,18 +42,21 @@ const BegrunnelseAvbruttAktivitet = (props) => {
 BegrunnelseAvbruttAktivitet.propTypes = {
     aktiviteter: PT.shape({
         status: PT.string,
-        data: PT.arrayOf(AppPT.aktivitet)
+        data: PT.arrayOf(AppPT.aktivitet),
     }).isRequired,
     params: PT.shape({ id: PT.string }).isRequired,
-    lagreBegrunnelse: PT.func.isRequired
+    lagreBegrunnelse: PT.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    lagreBegrunnelse: (aktivitet, begrunnelse) => dispatch(avbrytAktivitet(aktivitet, begrunnelse))
+const mapDispatchToProps = dispatch => ({
+    lagreBegrunnelse: (aktivitet, begrunnelse) =>
+        dispatch(avbrytAktivitet(aktivitet, begrunnelse)),
 });
 
-const mapStateToProps = (state) => ({
-    aktiviteter: state.data.aktiviteter
+const mapStateToProps = state => ({
+    aktiviteter: state.data.aktiviteter,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BegrunnelseAvbruttAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    BegrunnelseAvbruttAktivitet
+);

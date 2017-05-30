@@ -8,7 +8,7 @@ export const HENTING_FEILET = 'arenaAktivitet/hent/fail';
 
 const initalState = {
     data: [],
-    status: STATUS.NOT_STARTED
+    status: STATUS.NOT_STARTED,
 };
 
 // Reducer
@@ -28,6 +28,6 @@ export function hentArenaAktiviteter() {
     return doThenDispatch(() => Api.hentArenaAktiviteter(), {
         OK: HENTET,
         FEILET: HENTING_FEILET,
-        PENDING: HENTER
+        PENDING: HENTER,
     });
 }

@@ -13,47 +13,77 @@ import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 
-const Prikk = visibleIfHOC((props) => <div className="dialoger__prikk" {...props} />);
+const Prikk = visibleIfHOC(props => (
+    <div className="dialoger__prikk" {...props} />
+));
 const Info = visibleIfHOC(({ slash, className, children }) => (
     <span>
-        {slash && <Undertekst className="dialoger__slash" /> }
+        {slash && <Undertekst className="dialoger__slash" />}
         <Undertekst className={className} tag="span">{children}</Undertekst>
     </span>
-    ));
+));
 
 function DialogVisning({ dialog, erValgt, aktiviteter }) {
     const venterPaSvar = dialog.venterPaSvar;
     const ferdigBehandlet = dialog.ferdigBehandlet;
 
-    const dialogCls = (valgt, ulest) => classNames('dialoger__dialog', {
-        'dialoger__dialog--valgt': valgt,
-        'dialoger__dialog--ulest': ulest,
-        'dialoger__dialog--venter-pa-svar': venterPaSvar,
-        'dialoger__dialog--ferdigbehandlet': ferdigBehandlet
-    });
+    const dialogCls = (valgt, ulest) =>
+        classNames('dialoger__dialog', {
+            'dialoger__dialog--valgt': valgt,
+            'dialoger__dialog--ulest': ulest,
+            'dialoger__dialog--venter-pa-svar': venterPaSvar,
+            'dialoger__dialog--ferdigbehandlet': ferdigBehandlet,
+        });
 
     const aktivitetId = dialog && dialog.aktivitetId;
-    const aktivitet = aktiviteter.find((a) => a.id === aktivitetId);
+    const aktivitet = aktiviteter.find(a => a.id === aktivitetId);
     const aktivitetType = aktivitet && aktivitet.type;
     const harAktivitetType = !!aktivitetType;
 
     const henvendelser = dialog.henvendelser;
-    const harHenvendelseFraVeileder = !!henvendelser.find((a) => a.avsender === 'VEILEDER');
+    const harHenvendelseFraVeileder = !!henvendelser.find(
+        a => a.avsender === 'VEILEDER'
+    );
     return (
-        <Lenkepanel className={dialogCls(erValgt, !dialog.lest)} href={`/dialog/${dialog.id}`}>
+        <Lenkepanel
+            className={dialogCls(erValgt, !dialog.lest)}
+            href={`/dialog/${dialog.id}`}
+        >
             <Prikk visible={!dialog.lest} />
             <div>
                 <Info><Dato>{dialog.sisteDato}</Dato></Info>
-                <Info visible={harAktivitetType} slash><FormattedMessage id={`aktivitet.type.${aktivitetType}`.toLowerCase()} /></Info>
-                <Info visible={dialog.erLestAvBruker && harHenvendelseFraVeileder} className="venter-pa-svar" slash><FormattedMessage id="dialog.lest-av-bruker" /></Info>
+                <Info visible={harAktivitetType} slash>
+                    <FormattedMessage
+                        id={`aktivitet.type.${aktivitetType}`.toLowerCase()}
+                    />
+                </Info>
+                <Info
+                    visible={dialog.erLestAvBruker && harHenvendelseFraVeileder}
+                    className="venter-pa-svar"
+                    slash
+                >
+                    <FormattedMessage id="dialog.lest-av-bruker" />
+                </Info>
             </div>
-            <Element>{aktivitet ? aktivitet.tittel : dialog.overskrift}</Element>
+            <Element>
+                {aktivitet ? aktivitet.tittel : dialog.overskrift}
+            </Element>
             <Normaltekst>{dialog.sisteTekst}</Normaltekst>
             <div className="dialoger__dialog-etiketter">
-                <Etikett visible={venterPaSvar} id="dialog.venter-pa-svar" etikett={DIALOG_MA_BESVARES} />
-                <Etikett visible={ferdigBehandlet} id="dialog.ferdigbehandlet" etikett={DIALOG_FERDIGBEHANDLET} />
+                <Etikett
+                    visible={venterPaSvar}
+                    id="dialog.venter-pa-svar"
+                    etikett={DIALOG_MA_BESVARES}
+                />
+                <Etikett
+                    visible={ferdigBehandlet}
+                    id="dialog.ferdigbehandlet"
+                    etikett={DIALOG_FERDIGBEHANDLET}
+                />
             </div>
-            <div className="dialoger__dialog-henvendelser">{henvendelser.length}</div>
+            <div className="dialoger__dialog-henvendelser">
+                {henvendelser.length}
+            </div>
         </Lenkepanel>
     );
 }
@@ -61,22 +91,21 @@ function DialogVisning({ dialog, erValgt, aktiviteter }) {
 DialogVisning.propTypes = {
     dialog: AppPT.dialog.isRequired,
     erValgt: PT.bool.isRequired,
-    aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired
+    aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
 };
 
 function Dialoger({ dialog, dialoger, valgtDialog, className, aktiviteter }) {
     return (
         <Innholdslaster avhengigheter={[dialog]}>
             <div className={className}>
-                {
-                    dialoger.map((d) => (<DialogVisning
+                {dialoger.map(d => (
+                    <DialogVisning
                         key={d.id}
                         dialog={d}
                         erValgt={d === valgtDialog}
                         aktiviteter={aktiviteter}
-                    />)
-                    )
-                }
+                    />
+                ))}
             </div>
         </Innholdslaster>
     );
@@ -87,21 +116,21 @@ Dialoger.propTypes = {
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
     dialog: AppPT.reducer.isRequired,
-    valgtDialog: AppPT.dialog
+    valgtDialog: AppPT.dialog,
 };
 
 Dialoger.defaultProps = {
     className: undefined,
-    valgtDialog: undefined
+    valgtDialog: undefined,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     const dialog = state.data.dialog;
     const dialoger = dialog.data;
     return {
         dialog,
         dialoger,
-        aktiviteter: state.data.aktiviteter.data
+        aktiviteter: state.data.aktiviteter.data,
     };
 };
 

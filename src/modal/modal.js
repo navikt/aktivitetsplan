@@ -10,7 +10,8 @@ function Modal(props) {
             portalClassName="aktivitet-modal-portal"
             shouldCloseOnOverlayClick={false}
             {...props}
-        />);
+        />
+    );
 }
 
 export default Modal;

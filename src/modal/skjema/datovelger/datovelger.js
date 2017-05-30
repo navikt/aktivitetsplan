@@ -5,7 +5,14 @@ import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
 import { change, touch } from 'redux-form';
 import MaskedInput from 'react-maskedinput';
-import { autobind, dateToISODate, erGyldigISODato, ISODateToDatePicker, datePickerToISODate, erGyldigFormattertDato } from '../../../utils';
+import {
+    autobind,
+    dateToISODate,
+    erGyldigISODato,
+    ISODateToDatePicker,
+    datePickerToISODate,
+    erGyldigFormattertDato,
+} from '../../../utils';
 import { validerDatoField } from './utils';
 import DayPickerComponent from './day-picker';
 
@@ -18,12 +25,11 @@ function stopEvent(event) {
 }
 
 class DatoField extends Component {
-
     constructor(props) {
         super(props);
         autobind(this);
         this.state = {
-            erApen: false
+            erApen: false,
         };
     }
 
@@ -67,13 +73,13 @@ class DatoField extends Component {
     }
     apne() {
         this.setState({
-            erApen: true
+            erApen: true,
         });
     }
 
     lukk(settFokus = true) {
         this.setState({
-            erApen: false
+            erApen: false,
         });
         if (settFokus) {
             this.toggleButton.focus();
@@ -81,17 +87,34 @@ class DatoField extends Component {
     }
 
     render() {
-        const { meta, input, id, label, disabled, tidligsteFom, senesteTom, errorMessage } = this.props;
+        const {
+            meta,
+            input,
+            id,
+            label,
+            disabled,
+            tidligsteFom,
+            senesteTom,
+            errorMessage,
+        } = this.props;
 
         const feil = errorMessage && errorMessage;
         const value = input.value;
-        const maskedInputProps = { ...input,
-            value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value
+        const maskedInputProps = {
+            ...input,
+            value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value,
         };
 
         return (
-            <div className="datovelger skjemaelement" ref={(container) => { this.container = container; }}>
-                <label className="skjemaelement__label" htmlFor={id}>{label}</label>
+            <div
+                className="datovelger skjemaelement"
+                ref={container => {
+                    this.container = container;
+                }}
+            >
+                <label className="skjemaelement__label" htmlFor={id}>
+                    {label}
+                </label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"
                     tabIndex=""
@@ -110,8 +133,14 @@ class DatoField extends Component {
                         />
                         <button
                             className="js-toggle datovelger__toggleDayPicker"
-                            aria-label={this.state.erApen ? 'Skjul datovelger' : 'Vis datovelger'}
-                            ref={(toggle) => { this.toggleButton = toggle; }}
+                            aria-label={
+                                this.state.erApen
+                                    ? 'Skjul datovelger'
+                                    : 'Vis datovelger'
+                            }
+                            ref={toggle => {
+                                this.toggleButton = toggle;
+                            }}
                             id={`toggle-${id}`}
                             disabled={disabled}
                             onKeyUp={this.onKeyUp}
@@ -120,18 +149,26 @@ class DatoField extends Component {
                             type="button"
                         />
                     </div>
-                    { this.state.erApen && <DayPickerComponent
-                        {...this.props}
-                        ariaControls={`toggle-${id}`}
-                        tidligsteFom={tidligsteFom}
-                        senesteTom={senesteTom}
-                        onDayClick={this.onDayClick}
-                        onKeyUp={this.onKeyUp}
-                        lukk={this.lukk}
-                    />}
+                    {this.state.erApen &&
+                        <DayPickerComponent
+                            {...this.props}
+                            ariaControls={`toggle-${id}`}
+                            tidligsteFom={tidligsteFom}
+                            senesteTom={senesteTom}
+                            onDayClick={this.onDayClick}
+                            onKeyUp={this.onKeyUp}
+                            lukk={this.lukk}
+                        />}
                 </div>
-                <div role="alert" aria-live="assertive" className="skjemaelement__feilmelding">{feil}</div>
-            </div>);
+                <div
+                    role="alert"
+                    aria-live="assertive"
+                    className="skjemaelement__feilmelding"
+                >
+                    {feil}
+                </div>
+            </div>
+        );
     }
 }
 
@@ -145,14 +182,14 @@ DatoField.propTypes = {
     disabled: PT.bool,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date),
-    errorMessage: PT.oneOfType([PT.arrayOf(PT.node), PT.node])
+    errorMessage: PT.oneOfType([PT.arrayOf(PT.node), PT.node]),
 };
 
 DatoField.defaultProps = {
     disabled: false,
     tidligsteFom: undefined,
     senesteTom: undefined,
-    errorMessage: undefined
+    errorMessage: undefined,
 };
 
 function parseDato(dato) {
@@ -164,19 +201,23 @@ const ConnectedDatoField = connect()(DatoField);
 function Datovelger(props) {
     const { feltNavn, labelId, tidligsteFom, senesteTom, intl } = props;
 
-    const datoFelt = <ConnectedDatoField label={<FormattedMessage id={labelId} />} {...props} />;
+    const datoFelt = (
+        <ConnectedDatoField
+            label={<FormattedMessage id={labelId} />}
+            {...props}
+        />
+    );
     return (
         <CustomField
             name={feltNavn}
             parse={parseDato}
             errorClass="skjemaelement--harFeil"
             customComponent={datoFelt}
-            validate={(value) => (
+            validate={value =>
                 validerDatoField(value, intl, {
                     fra: tidligsteFom,
-                    til: senesteTom
-                })
-            )}
+                    til: senesteTom,
+                })}
         />
     );
 }
@@ -186,12 +227,12 @@ Datovelger.propTypes = {
     labelId: PT.string.isRequired,
     tidligsteFom: PT.instanceOf(Date),
     senesteTom: PT.instanceOf(Date),
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
 };
 
 Datovelger.defaultProps = {
     tidligsteFom: undefined,
-    senesteTom: undefined
+    senesteTom: undefined,
 };
 
 export default injectIntl(Datovelger);

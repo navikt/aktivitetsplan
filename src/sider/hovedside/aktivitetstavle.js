@@ -12,11 +12,10 @@ import {
     STATUS_PLANLAGT,
     STATUS_GJENNOMFOERT,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT
+    STATUS_AVBRUTT,
 } from '../../constant';
 
 class AktivitetsTavle extends Component {
-
     componentDidMount() {
         this.props.doHentAktiviteter();
         this.props.doHentArenaAktiviteter();
@@ -25,12 +24,31 @@ class AktivitetsTavle extends Component {
     render() {
         return (
             <Innholdslaster avhengigheter={[this.props.aktivitet]}>
-                <Tavle defaultStartKolonne={1} antallKolonner={3} className="aktivitetstavle">
-                    <Kolonne status={STATUS_BRUKER_ER_INTRESSERT} tittelId="aktivitetstavle.brukerErInteressert" />
-                    <Kolonne status={STATUS_PLANLAGT} tittelId="aktivitetstavle.planlagt" />
-                    <Kolonne status={STATUS_GJENNOMFOERT} tittelId="aktivitetstavle.gjennomfoert" />
-                    <Kolonne status={STATUS_FULLFOERT} tittelId="aktivitetstavle.fullfoert" />
-                    <Kolonne status={STATUS_AVBRUTT} tittelId="aktivitetstavle.avbrutt" />
+                <Tavle
+                    defaultStartKolonne={1}
+                    antallKolonner={3}
+                    className="aktivitetstavle"
+                >
+                    <Kolonne
+                        status={STATUS_BRUKER_ER_INTRESSERT}
+                        tittelId="aktivitetstavle.brukerErInteressert"
+                    />
+                    <Kolonne
+                        status={STATUS_PLANLAGT}
+                        tittelId="aktivitetstavle.planlagt"
+                    />
+                    <Kolonne
+                        status={STATUS_GJENNOMFOERT}
+                        tittelId="aktivitetstavle.gjennomfoert"
+                    />
+                    <Kolonne
+                        status={STATUS_FULLFOERT}
+                        tittelId="aktivitetstavle.fullfoert"
+                    />
+                    <Kolonne
+                        status={STATUS_AVBRUTT}
+                        tittelId="aktivitetstavle.avbrutt"
+                    />
                 </Tavle>
             </Innholdslaster>
         );
@@ -41,21 +59,21 @@ AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
     aktivitet: PT.shape({
-        status: PT.string.isRequired
-    })
+        status: PT.string.isRequired,
+    }),
 };
 
 AktivitetsTavle.defaultProps = {
-    aktivitet: undefined
+    aktivitet: undefined,
 };
 
-const mapStateToProps = (state) => ({
-    aktivitet: state.data.aktiviteter
+const mapStateToProps = state => ({
+    aktivitet: state.data.aktiviteter,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     doHentAktiviteter: () => hentAktiviteter()(dispatch),
-    doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch)
+    doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsTavle);

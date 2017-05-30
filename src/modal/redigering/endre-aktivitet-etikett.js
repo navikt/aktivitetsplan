@@ -47,26 +47,28 @@ function EtikettKnapp({ etikett, velgEtikett, erValgt }) {
                 className={classNames(
                     'endre-aktivitet-etikett__etikett',
                     `endre-aktivitet-etikett__etikett--${etikett.type}`,
-                    erValgt && `endre-aktivitet-etikett__etikett--${etikett.type}-valgt`
+                    erValgt &&
+                        `endre-aktivitet-etikett__etikett--${etikett.type}-valgt`
                 )}
-            >{etikett.visningsTekst}</label>
+            >
+                {etikett.visningsTekst}
+            </label>
         </span>
     );
 }
 EtikettKnapp.propTypes = {
     etikett: AppPT.etikett.isRequired,
     erValgt: PT.bool.isRequired,
-    velgEtikett: PT.func.isRequired
+    velgEtikett: PT.func.isRequired,
 };
 
 const typePrioritet = {
     ok: 3,
     varsling: 1,
-    info: 2
+    info: 2,
 };
 
 class EndreAktivitetEtikett extends Component {
-
     componentDidMount() {
         this.props.doHentEtiketter();
     }
@@ -76,7 +78,7 @@ class EndreAktivitetEtikett extends Component {
 
         const etikettKnapper = etiketter
             .sort((a, b) => typePrioritet[b.type] - typePrioritet[a.type])
-            .map((e) => (
+            .map(e => (
                 <EtikettKnapp
                     key={e.id}
                     etikett={e}
@@ -87,7 +89,9 @@ class EndreAktivitetEtikett extends Component {
 
         return (
             <section className="endre-aktivitet-etikett">
-                <Undertittel><FormattedMessage id="aktivitet.etikett" /></Undertittel>
+                <Undertittel>
+                    <FormattedMessage id="aktivitet.etikett" />
+                </Undertittel>
                 {etikettKnapper}
                 <Field
                     name="etikett"
@@ -105,19 +109,21 @@ EndreAktivitetEtikett.propTypes = {
     etiketter: PT.arrayOf(PT.object).isRequired,
 
     valgtEtikett: PT.string,
-    velgEtikett: PT.func.isRequired
+    velgEtikett: PT.func.isRequired,
 };
 
 EndreAktivitetEtikett.defaultProps = {
-    valgtEtikett: undefined
+    valgtEtikett: undefined,
 };
 
-const mapStateToProps = (state) => ({
-    etiketter: state.data.etiketter.data
+const mapStateToProps = state => ({
+    etiketter: state.data.etiketter.data,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    doHentEtiketter: () => hentEtiketter()(dispatch)
+const mapDispatchToProps = dispatch => ({
+    doHentEtiketter: () => hentEtiketter()(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EndreAktivitetEtikett);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    EndreAktivitetEtikett
+);

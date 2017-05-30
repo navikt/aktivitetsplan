@@ -8,7 +8,7 @@ import './tavle.less';
 const KOLLONE_BREDDE = 343;
 const VIEWPORT_BREDDE = 1713;
 
-const tavleClassname = (className) => classNames('tavle', className);
+const tavleClassname = className => classNames('tavle', className);
 
 class Tavle extends Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class Tavle extends Component {
         this.state = {
             leftPosition: 0,
             containerWidth: 0,
-            scrollArea: null
+            scrollArea: null,
         };
         autobind(this);
     }
@@ -27,14 +27,22 @@ class Tavle extends Component {
     }
 
     onVisNeste() {
-        const index = Math.floor((this.state.containerWidth + this.state.leftPosition) / KOLLONE_BREDDE) + 1;
-        this.state.scrollArea.scrollXTo((index * KOLLONE_BREDDE) - this.state.containerWidth);
+        const index =
+            Math.floor(
+                (this.state.containerWidth + this.state.leftPosition) /
+                    KOLLONE_BREDDE
+            ) + 1;
+        this.state.scrollArea.scrollXTo(
+            index * KOLLONE_BREDDE - this.state.containerWidth
+        );
     }
 
     updateScroll(value) {
         this.setState({
-            leftPosition: typeof value.leftPosition !== 'undefined' ? value.leftPosition : this.state.leftPosition,
-            containerWidth: value.containerWidth || this.state.containerWidth
+            leftPosition: typeof value.leftPosition !== 'undefined'
+                ? value.leftPosition
+                : this.state.leftPosition,
+            containerWidth: value.containerWidth || this.state.containerWidth,
         });
     }
 
@@ -51,14 +59,20 @@ class Tavle extends Component {
             </section>
         ));
 
-        const venstreKnapp = this.state.leftPosition > 0 && (
-        <button className="knapp-forrige knapp-tavle" onClick={this.onVisForrige} />
-            );
+        const venstreKnapp =
+            this.state.leftPosition > 0 &&
+            <button
+                className="knapp-forrige knapp-tavle"
+                onClick={this.onVisForrige}
+            />;
 
-        const hoyreKnapp = this.state.leftPosition + this.state.containerWidth < VIEWPORT_BREDDE && (
-        <button className="knapp-neste knapp-tavle" onClick={this.onVisNeste} />
-            );
-
+        const hoyreKnapp =
+            this.state.leftPosition + this.state.containerWidth <
+                VIEWPORT_BREDDE &&
+            <button
+                className="knapp-neste knapp-tavle"
+                onClick={this.onVisNeste}
+            />;
 
         return (
             <section className={tavleClassname(className)}>
@@ -82,11 +96,11 @@ class Tavle extends Component {
 
 Tavle.propTypes = {
     className: PT.string,
-    children: PT.arrayOf(PT.element).isRequired
+    children: PT.arrayOf(PT.element).isRequired,
 };
 
 Tavle.defaultProps = {
-    className: ''
+    className: '',
 };
 
 export default Tavle;

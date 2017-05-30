@@ -10,7 +10,7 @@ export const aktivitet = PT.shape({
     avtalt: PT.bool,
     tiltaksarrangør: PT.string,
     deltakelsesprosent: PT.number,
-    dagerPerUke: PT.number
+    dagerPerUke: PT.number,
 });
 
 export const henvendelse = PT.shape({
@@ -18,7 +18,7 @@ export const henvendelse = PT.shape({
     tekst: PT.string.isRequired,
     avsender: PT.string.isRequired,
     sendt: PT.string.isRequired,
-    lest: PT.bool.isRequired
+    lest: PT.bool.isRequired,
 });
 
 export const dialog = PT.shape({
@@ -28,29 +28,29 @@ export const dialog = PT.shape({
     lest: PT.bool,
     sisteDato: PT.number,
     sisteTekst: PT.string,
-    henvendelser: PT.arrayOf(henvendelse).isRequired
+    henvendelser: PT.arrayOf(henvendelse).isRequired,
 });
 
 export const etikett = PT.shape({
     id: PT.string,
     type: PT.string,
-    visningsTekst: PT.string
+    visningsTekst: PT.string,
 });
 
 export const endringslogg = PT.shape({
     endringsBeskrivelse: PT.string,
     endretAv: PT.string,
-    endretDato: PT.number
+    endretDato: PT.number,
 });
 
 export const reducer = PT.shape({
     status: PT.string,
-    data: PT.object
+    data: PT.object,
 });
 
 export const oppfolgingStatus = PT.shape({
     status: PT.string,
-    data: PT.object
+    data: PT.object,
 });
 
 export const vilkar = PT.shape({
@@ -58,17 +58,17 @@ export const vilkar = PT.shape({
     hash: PT.string,
     dato: PT.string,
     vilkarstatus: PT.string,
-    guid: PT.string
+    guid: PT.string,
 });
 
 export const mal = PT.shape({
     mal: PT.string,
     endretAv: PT.string,
-    dato: PT.number
+    dato: PT.number,
 });
 
 export const feil = PT.shape({
     is: PT.string.isRequired,
     type: PT.string.isRequired,
-    detaljer: PT.string
+    detaljer: PT.string,
 });

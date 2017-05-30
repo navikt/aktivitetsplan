@@ -27,15 +27,13 @@ export const SLETT = 'aktivitet/slett';
 export const SLETT_OK = 'aktivitet/slett/ok';
 export const SLETT_FAIL = 'aktivitet/slett/fail';
 
-
 const initalState = {
     data: [],
-    status: STATUS.NOT_STARTED
+    status: STATUS.NOT_STARTED,
 };
 
-
 function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
-    const aktivitetIndex = state.data.findIndex((a) => a.id === aktivitet.id);
+    const aktivitetIndex = state.data.findIndex(a => a.id === aktivitet.id);
     const nyState = [...state.data];
     nyState[aktivitetIndex] = { ...aktivitet, ...aktivitetData };
     return { ...state, data: nyState };
@@ -50,24 +48,36 @@ export default function reducer(state = initalState, action) {
         case HENTING_FEILET:
             return { ...state, status: STATUS.ERROR };
         case HENT_AKTIVITET_OK:
-            return { status: STATUS.OK, data: state.data.filter((aktivitet) => aktivitet.id !== data.id).concat(data) };
+            return {
+                status: STATUS.OK,
+                data: state.data
+                    .filter(aktivitet => aktivitet.id !== data.id)
+                    .concat(data),
+            };
         case HENT_AKTIVITET_FEILET:
             return { ...state, status: STATUS.ERROR };
         case OPPRETTET:
             return { ...state, data: [...state.data, data] };
         case FLYTTER:
-            return nyStateMedOppdatertAktivitet(state, data.aktivitet, { nesteStatus: data.status });
+            return nyStateMedOppdatertAktivitet(state, data.aktivitet, {
+                nesteStatus: data.status,
+            });
         case OPPDATER:
             return { ...state, status: STATUS.RELOADING };
         case OPPDATER_OK:
         case FLYTT_OK:
-            return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, data);
+            return nyStateMedOppdatertAktivitet(
+                { ...state, status: STATUS.OK },
+                data
+            );
         case OPPDATER_FEILET:
             return { ...state, status: STATUS.ERROR };
         case FLYTT_FAIL:
-            return nyStateMedOppdatertAktivitet(state, data.aktivitet, { error: data.error });
+            return nyStateMedOppdatertAktivitet(state, data.aktivitet, {
+                error: data.error,
+            });
         case SLETT_OK:
-            return { ...state, data: state.data.filter((a) => a.id !== data.id) };
+            return { ...state, data: state.data.filter(a => a.id !== data.id) };
         case SLETT:
         case SLETT_FAIL:
         default:
@@ -80,7 +90,7 @@ export function hentAktiviteter() {
     return doThenDispatch(() => Api.hentAktiviteter(), {
         OK: HENTET,
         FEILET: HENTING_FEILET,
-        PENDING: HENTER
+        PENDING: HENTER,
     });
 }
 
@@ -88,20 +98,20 @@ export function hentAktivitet(aktivitetId) {
     return doThenDispatch(() => Api.hentAktivitet(aktivitetId), {
         OK: HENT_AKTIVITET_OK,
         FEILET: HENT_AKTIVITET_FEILET,
-        PENDING: HENT_AKTIVITET
+        PENDING: HENT_AKTIVITET,
     });
 }
 
 export function flyttAktivitet(aktivitet, status) {
-    return (dispatch) => {
+    return dispatch => {
         dispatch({ type: FLYTTER, data: { aktivitet, status } });
         // TODO kan vi bruke oppdaterAktivitet?
         return Api.oppdaterAktivitetStatus({ ...aktivitet, status })
-            .then((response) => {
+            .then(response => {
                 dispatch({ type: FLYTT_OK, data: response });
                 return Promise.resolve(response);
             })
-            .catch((error) => {
+            .catch(error => {
                 dispatch({ type: FLYTT_FAIL, data: { aktivitet, error } });
                 return Promise.reject(error);
             });
@@ -112,7 +122,7 @@ export function oppdaterAktivitetEtikett(aktivitet) {
     return doThenDispatch(() => Api.oppdaterAktivitetEtikett(aktivitet), {
         OK: OPPDATER_OK,
         FEILET: OPPDATER_FEILET,
-        PENDING: OPPDATER
+        PENDING: OPPDATER,
     });
 }
 
@@ -120,7 +130,7 @@ export function oppdaterAktivitet(aktivitet) {
     return doThenDispatch(() => Api.oppdaterAktivitet(aktivitet), {
         OK: OPPDATER_OK,
         FEILET: OPPDATER_FEILET,
-        PENDING: OPPDATER
+        PENDING: OPPDATER,
     });
 }
 
@@ -138,12 +148,12 @@ export function lagNyAktivitet(aktivitet) {
     return doThenDispatch(() => Api.lagNyAktivitet(aktivitet), {
         OK: OPPRETTET,
         FEILET: OPPRETT_FEILET,
-        PENDING: OPPRETT
+        PENDING: OPPRETT,
     });
 }
 
 export function slettAktivitet(aktivitet) {
-    return (dispatch) => {
+    return dispatch => {
         dispatch({ type: SLETT, data: aktivitet });
 
         Api.slettAktivitet(aktivitet)
@@ -151,4 +161,3 @@ export function slettAktivitet(aktivitet) {
             .catch(() => dispatch({ type: SLETT_FAIL, data: aktivitet }));
     };
 }
-

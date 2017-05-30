@@ -11,10 +11,10 @@ import { STATUS } from '../../ducks/utils';
 
 function StillingEtikettForm(props) {
     const { aktivitet, oppdaterEtikett, disabled } = props;
-    const onChange = (event) => {
+    const onChange = event => {
         oppdaterEtikett(aktivitet, event.currentTarget.value);
     };
-    const erEtikettChecked = (statusId) => props.valgtEtikettStatus === statusId;
+    const erEtikettChecked = statusId => props.valgtEtikettStatus === statusId;
     return (
         <form className="skjema oppdateretikett-skjema">
             <Radio
@@ -24,7 +24,10 @@ function StillingEtikettForm(props) {
                 value={statuser.INGEN_VALGT}
                 id={`id--${statuser.INGEN_VALGT}`}
                 name="etikettstatus"
-                checked={!props.valgtEtikettStatus || erEtikettChecked(statuser.INGEN_VALGT)}
+                checked={
+                    !props.valgtEtikettStatus ||
+                        erEtikettChecked(statuser.INGEN_VALGT)
+                }
                 disabled={disabled}
             />
             <Radio
@@ -72,12 +75,12 @@ function StillingEtikettForm(props) {
 }
 
 const OppdaterReduxForm = reduxForm({
-    form: 'etikett-status-form'
+    form: 'etikett-status-form',
 })(StillingEtikettForm);
 
 StillingEtikettForm.defaultProps = {
     aktiviteterStatus: 'OK',
-    valgtEtikettStatus: null
+    valgtEtikettStatus: null,
 };
 
 StillingEtikettForm.propTypes = {
@@ -85,22 +88,28 @@ StillingEtikettForm.propTypes = {
     valgtEtikettStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
     oppdaterEtikett: PT.func.isRequired,
-    disabled: PT.bool.isRequired
+    disabled: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
-    disabled: state.data.aktiviteter.status !== STATUS.OK || props.disableStatusEndring,
-    valgtEtikettStatus: formValueSelector('etikett-status-form')(state, 'etikettstatus'),
+    disabled: state.data.aktiviteter.status !== STATUS.OK ||
+        props.disableStatusEndring,
+    valgtEtikettStatus: formValueSelector('etikett-status-form')(
+        state,
+        'etikettstatus'
+    ),
     initialValues: {
-        etikettstatus: props.aktivitet.etikett
-    }
+        etikettstatus: props.aktivitet.etikett,
+    },
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     oppdaterEtikett: (aktivitet, etikett) => {
         const nyEtikett = etikett === statuser.INGEN_VALGT ? null : etikett;
-        oppdaterAktivitetEtikett({ ...aktivitet, etikett: nyEtikett })(dispatch);
-    }
+        oppdaterAktivitetEtikett({ ...aktivitet, etikett: nyEtikett })(
+            dispatch
+        );
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);

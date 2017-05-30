@@ -9,8 +9,12 @@ const erDatoSatt = (fraDato, tilDato) => fraDato === '' || tilDato === '';
 
 const visDato = (fraDato, tilDato) => (
     <Normaltekst className={datoklasse}>
-        <FormattedMessage id="aktivitetsdato.vis-dato" values={{ fraDato, tilDato }} />
-    </Normaltekst>);
+        <FormattedMessage
+            id="aktivitetsdato.vis-dato"
+            values={{ fraDato, tilDato }}
+        />
+    </Normaltekst>
+);
 
 const visSettDato = () => (
     <Lenke href="/" className={datoklasse}>
@@ -31,7 +35,7 @@ function Aktivitetsdato({ fra, til }) {
 
 Aktivitetsdato.propTypes = {
     fra: PT.string,
-    til: PT.string
+    til: PT.string,
 };
 
 export default Aktivitetsdato;
