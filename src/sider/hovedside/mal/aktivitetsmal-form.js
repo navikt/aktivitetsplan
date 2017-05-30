@@ -25,7 +25,7 @@ function AktivitetsmalForm(props) {
                 <FormattedMessage id="aktivitetsmal.lagre" />
             </Hovedknapp>
             <Knapp onClick={avbryt}>
-                {' '}{/* TODO: Vi må få inn type="button"*/}
+                {/* TODO: Vi må få inn type="button"*/}
                 <FormattedMessage id="aktivitetsmal.avbryt" />
             </Knapp>
         </form>

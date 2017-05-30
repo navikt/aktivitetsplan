@@ -8,7 +8,6 @@ import {
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
 export function hentLedetekster() {
-    // eslint-disable-line  import/prefer-default-export
     return fetchToJson(`${API_BASE_URL}/tekster`);
 }
 
