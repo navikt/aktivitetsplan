@@ -71,7 +71,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const httpRegex = /^(https?):\/\/.*$/;
 
     const lenkeKomponent = () => (
-        <DetaljFelt key="lenke" tittel="Lenke" visible={lenke != null}>
+        <DetaljFelt key="lenke" tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />} visible={lenke != null}>
             <Link
                 href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
                 className="detaljfelt__lenke"
