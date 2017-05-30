@@ -8,10 +8,11 @@ import * as AppPT from '../../proptypes';
 import { formaterDatoKortManad, formaterDatoKortManedTid, formaterTid } from '../../utils';
 import { EGEN_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../constant';
 import DetaljFelt from './detalj-felt';
+import { endreAktivitetRoute } from '../../routing';
 
 function RedigerLink({ id, felt }) {
     return (
-        <Link to={`/aktivitet/aktivitet/${id}/endre`}>
+        <Link to={endreAktivitetRoute(id)}>
             <FormattedMessage id="aktivitetsdetaljer.legg-til-felt" values={{ felt }} />
         </Link>
     );

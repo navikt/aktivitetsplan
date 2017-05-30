@@ -14,6 +14,11 @@ import DialogModal from './dialog/dialog-modal';
 import BegrunnelseFullfortAktivitet from './modal/begrunnelse/begrunnelse-fullfort-aktivitet';
 import BegrunnelseAvbruttAktivitet from './modal/begrunnelse/begrunnelse-avbrutt-aktivitet';
 
+export const aktivitetRoute = (aktivitetId) => `/aktivitet/aktivitet/${aktivitetId}`;
+export const endreAktivitetRoute = (aktivitetId) => `${aktivitetRoute(aktivitetId)}/endre`;
+export const fullforAktivitetRoute = (aktivitetId) => `${aktivitetRoute(aktivitetId)}/fullfor`;
+export const avbrytAktivitetRoute = (aktivitetId) => `${aktivitetRoute(aktivitetId)}/avbryt`;
+
 export default (
     <Route>
         <IndexRoute component={Hovedside} />

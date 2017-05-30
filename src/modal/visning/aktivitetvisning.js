@@ -32,6 +32,7 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
 import StandardModal from '../modal-standard';
+import { endreAktivitetRoute } from '../../routing';
 
 class Aktivitetvisning extends Component {
 
@@ -154,7 +155,7 @@ class Aktivitetvisning extends Component {
 
                     <ModalFooter visible={!arenaAktivitet}>
                         { tillattEndring && <Knapp
-                            onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
+                            onClick={() => history.push(endreAktivitetRoute(valgtAktivitet.id))}
                             className="knapp-liten modal-footer__knapp"
                         >
                             <FormattedMessage id="aktivitetvisning.endre-knapp" />
