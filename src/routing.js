@@ -20,14 +20,14 @@ export const fullforAktivitetRoute = (aktivitetId) => `/aktivitet/fullfor/${akti
 export const avbrytAktivitetRoute = (aktivitetId) => `/aktivitet/avbryt/${aktivitetId}`;
 
 export default (
-    <Route>
-        <IndexRoute component={Hovedside} />
+    <Route component={Hovedside}>
+        <IndexRoute />
         <Route modalId="aktivitetsmalModal" path="mal" component={AktivitetsmalModal} />
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
         <Route path="vilkarhistorikk" component={VilkarModalMedHistorikk} />
         <Route path="vilkarhistorikk/:key" component={VilkarModalUtenHistorikk} />
-        <Route path="aktivitet" component={Hovedside}>
+        <Route path="aktivitet">
             <Route path="ny" component={NyAktivitet} />
             <Route path="ny/egen" component={EgenAktivitet} />
             <Route path="ny/stilling" component={StillingAktivitet} />
@@ -36,6 +36,6 @@ export default (
             <Route path="avbryt/:id" component={BegrunnelseAvbruttAktivitet} />
             <Route path="fullfor/:id" component={BegrunnelseFullfortAktivitet} />
         </Route>
-        <Route path="*" component={Hovedside} />
+        <Route path="*" />
     </Route>
 );

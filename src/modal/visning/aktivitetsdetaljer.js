@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { Link } from 'react-router';
 import * as AppPT from '../../proptypes';
-import { formaterDatoKortManad, formaterDatoKortManedTid, formaterTid } from '../../utils';
+import { formaterDatoKortManed, formaterDatoKortManedTid, formaterTid } from '../../utils';
 import { EGEN_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../constant';
 import DetaljFelt from './detalj-felt';
 import { endreAktivitetRoute } from '../../routing';
@@ -44,8 +44,8 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const { type: aktivitetstype, lenke, arbeidsgiver, arbeidssted, kontaktperson, hensikt,
         arrangoer, deltakelseProsent, antallDagerPerUke, gruppeAktivitetSted, gruppeAktivitetStatus, moeteplanListe, oppfolging } = valgtAktivitet;
 
-    const fraDato = formaterDatoKortManad(valgtAktivitet.fraDato);
-    const tilDato = formaterDatoKortManad(valgtAktivitet.tilDato);
+    const fraDato = formaterDatoKortManed(valgtAktivitet.fraDato);
+    const tilDato = formaterDatoKortManed(valgtAktivitet.tilDato);
 
     const fraDatoTekst = (aktivitet) => {
         switch (aktivitet) {
@@ -72,7 +72,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const httpRegex = /^(https?):\/\/.*$/;
 
     const lenkeKomponent = () => (
-        <DetaljFelt key="lenke" tittel="Lenke" visible={lenke != null}>
+        <DetaljFelt key="lenke" tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />} visible={lenke != null}>
             <Link
                 href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
                 className="detaljfelt__lenke"

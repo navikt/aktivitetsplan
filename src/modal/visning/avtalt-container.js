@@ -57,7 +57,7 @@ class AvtaltContainer extends Component {
                     spinner={aktivitetData.oppdaterer}
                     onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
                     disabled={lasterData}
-                >Bekreft</Knapp> }
+                ><FormattedMessage id="sett-til-avtalt.bekreft-knapp" /></Knapp> }
             </div>);
 
         const cls = (classes) => classNames('avtalt-container__vis-avtalt', classes);

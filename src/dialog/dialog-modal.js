@@ -8,7 +8,6 @@ import classNames from 'classnames';
 import Dialog from './dialog';
 import Dialoger from './dialoger';
 import Modal from '../modal/modal';
-import Hovedside from '../sider/hovedside/hovedside';
 import history from '../history';
 import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import PilKnapp from '../felles-komponenter/utils/pil-knapp';
@@ -196,7 +195,6 @@ class DialogModal extends Component { // eslint-disable-line react/no-multi-comp
 
         return (
             <div>
-                <Hovedside />
                 <Modal className={className} closeButton={false} onRequestClose={lukkModal} isOpen contentClass="dialog-modal__content">
                     <DialogModalContent navigerTil={this.navigerTil} {...this.props} />
                 </Modal>
