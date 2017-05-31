@@ -16,10 +16,11 @@ import Versjonskonflikt from './versjonskonflikt';
 import Modal from '../modal';
 import { LUKK_MODAL } from '../../ducks/modal';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { aktivitetRoute } from '../../routing';
 
 function EndreAktivitet({ aktivitet, doOppdaterAktivitet, visVersjonskonflikt, skjulVersjonskonflikt, intl, lukkModal, formIsDirty, aktiviteter }) {
     function visAktivitet() {
-        history.push(`aktivitet/aktivitet/${aktivitet.id}`);
+        history.push(aktivitetRoute(aktivitet.id));
         skjulVersjonskonflikt();
     }
 

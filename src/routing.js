@@ -14,10 +14,10 @@ import DialogModal from './dialog/dialog-modal';
 import BegrunnelseFullfortAktivitet from './modal/begrunnelse/begrunnelse-fullfort-aktivitet';
 import BegrunnelseAvbruttAktivitet from './modal/begrunnelse/begrunnelse-avbrutt-aktivitet';
 
-export const aktivitetRoute = (aktivitetId) => `/aktivitet/aktivitet/${aktivitetId}`;
-export const endreAktivitetRoute = (aktivitetId) => `${aktivitetRoute(aktivitetId)}/endre`;
-export const fullforAktivitetRoute = (aktivitetId) => `${aktivitetRoute(aktivitetId)}/fullfor`;
-export const avbrytAktivitetRoute = (aktivitetId) => `${aktivitetRoute(aktivitetId)}/avbryt`;
+export const aktivitetRoute = (aktivitetId) => `/aktivitet/vis/${aktivitetId}`;
+export const endreAktivitetRoute = (aktivitetId) => `/aktivitet/endre/${aktivitetId}`;
+export const fullforAktivitetRoute = (aktivitetId) => `/aktivitet/fullfor/${aktivitetId}`;
+export const avbrytAktivitetRoute = (aktivitetId) => `/aktivitet/avbryt/${aktivitetId}`;
 
 export default (
     <Route>
@@ -31,10 +31,10 @@ export default (
             <Route path="ny" component={NyAktivitet} />
             <Route path="ny/egen" component={EgenAktivitet} />
             <Route path="ny/stilling" component={StillingAktivitet} />
-            <Route path="aktivitet/:id" component={Aktivitetvisning} />
-            <Route path="aktivitet/:id/endre" component={EndreAktivitet} />
-            <Route path="aktivitet/:id/avbryt" component={BegrunnelseAvbruttAktivitet} />
-            <Route path="aktivitet/:id/fullfor" component={BegrunnelseFullfortAktivitet} />
+            <Route path="vis/:id" component={Aktivitetvisning} />
+            <Route path="endre/:id" component={EndreAktivitet} />
+            <Route path="avbryt/:id" component={BegrunnelseAvbruttAktivitet} />
+            <Route path="fullfor/:id" component={BegrunnelseFullfortAktivitet} />
         </Route>
         <Route path="*" component={Hovedside} />
     </Route>
