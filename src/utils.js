@@ -166,7 +166,7 @@ export function formaterDatoTid(dato) {
     return datoVerdi.isValid() ? datoVerdi.format('DD.MM.YYYY HH:mm') : undefined;
 }
 
-export function formaterDatoKortManad(dato) {
+export function formaterDatoKortManed(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid() ? datoVerdi.format('DD MMM YYYY') : undefined;
 }

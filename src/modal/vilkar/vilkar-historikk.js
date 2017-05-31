@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import './vilkar.less';
 import * as AppPT from '../../proptypes';
 import Accordion from '../../felles-komponenter/accordion';
-import { formaterDatoKortManad, autobind } from '../../utils';
+import { formaterDatoKortManed, autobind } from '../../utils';
 
 class VilkarHistorikk extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class VilkarHistorikk extends Component {
     }
     render() {
         function historiskVilkarLink(status, dato, guid) {
-            const formattertDato = formaterDatoKortManad(dato);
+            const formattertDato = formaterDatoKortManed(dato);
             return (
                 <Link to={`vilkarhistorikk/${guid}`} key={`${guid}`} className="vilkar__link lenke lenke--frittstaende">
                     <FormattedMessage
