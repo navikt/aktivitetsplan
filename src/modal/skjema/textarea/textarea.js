@@ -36,11 +36,6 @@ function InnerTextAreaComponent({
     ...rest
 }) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
-    const inputValues = {
-        ...input,
-        value: undefined,
-        defaultValue: input.value,
-    };
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"
@@ -49,8 +44,8 @@ function InnerTextAreaComponent({
             feil={feil}
             tellerTekst={antallTegn =>
                 getTellerTekst(antallTegn, maxLength, visTellerFra)}
+            {...input}
             {...rest}
-            {...inputValues}
         />
     );
 }
