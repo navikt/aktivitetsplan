@@ -15,7 +15,7 @@ const shouldScroll = (prevRouterProps, nextRouterProps) =>
 function App({ routing }) {
     return (
         <Provider>
-            <div>
+            <div className="fullbredde">
                 <Router history={history} render={applyRouterMiddleware(useScroll(shouldScroll))}>
                     {routing}
                 </Router>
