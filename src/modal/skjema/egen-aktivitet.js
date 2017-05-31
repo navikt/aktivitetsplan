@@ -10,6 +10,7 @@ import { lagNyAktivitet } from '../../ducks/aktiviteter';
 import { EGEN_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
 import { LUKK_MODAL } from '../../ducks/modal';
+import { aktivitetRoute } from '../../routing';
 import Modal from '../modal';
 
 
@@ -19,8 +20,9 @@ function EgenAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
             ...aktivitet,
             type: EGEN_AKTIVITET_TYPE
         };
-        onLagreNyAktivitet(nyAktivitet);
-        history.push('/');
+
+        onLagreNyAktivitet(nyAktivitet)
+            .then((action) => history.push(aktivitetRoute(action.data.id)));
     };
 
     return (
@@ -57,7 +59,7 @@ EgenAktivitet.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    onLagreNyAktivitet: (aktivitet) => lagNyAktivitet(aktivitet)(dispatch),
+    onLagreNyAktivitet: (aktivitet) => dispatch(lagNyAktivitet(aktivitet)),
     lukkModal: () => dispatch({ type: LUKK_MODAL })
 });
 

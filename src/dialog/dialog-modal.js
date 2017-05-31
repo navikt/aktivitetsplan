@@ -16,6 +16,7 @@ import visibleIfHOC from '../hocs/visible-if';
 import './dialog-modal.less';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
+import { aktivitetRoute } from '../routing';
 
 const animationTime = 300;
 const VisibleDiv = visibleIfHOC((props) => <div {...props} />);
@@ -98,7 +99,7 @@ VenstreKolonne.defaultProps = {
 
 function HoyreKolonne({ navigerTil, valgtDialog, harValgtDialog, harNyDialog, harNyDialogEllerValgtDialog, valgtAktivitetId }) {
     function apneAktivitet() {
-        navigerTil(`/aktivitet/aktivitet/${valgtAktivitetId}`);
+        navigerTil(aktivitetRoute(valgtAktivitetId));
     }
 
     return (
