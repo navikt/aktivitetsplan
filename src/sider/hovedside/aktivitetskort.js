@@ -8,6 +8,7 @@ import Lenke from './../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import { formaterDato } from '../../utils';
+import { aktivitetRoute } from '../../routing';
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
@@ -37,7 +38,7 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
     const aktivitetsKort = (
         <article style={{ opacity: isDragging ? 0.4 : 1 }}>
             <Lenke
-                href={`aktivitet/aktivitet/${aktivitet.id}`}
+                href={aktivitetRoute(aktivitet.id)}
                 className={classNames('aktivitetskort', erFlyttbar && 'aktivitetskort--flyttbar')}
                 brukLenkestyling={false}
             >

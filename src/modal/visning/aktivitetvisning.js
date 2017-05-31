@@ -32,6 +32,7 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
 import StandardModal from '../modal-standard';
+import { endreAktivitetRoute } from '../../routing';
 
 class Aktivitetvisning extends Component {
 
@@ -112,14 +113,14 @@ class Aktivitetvisning extends Component {
                                 </Sidetittel>
                                 <div className="aktivitetskort__etiketter blokk-s">
                                     <AktivitetEtikett
-                                        visible={!!valgtAktivitet.etikett}
-                                        etikett={valgtAktivitet.etikett}
-                                        id={`etikett.${valgtAktivitet.etikett}`}
-                                    />
-                                    <AktivitetEtikett
                                         visible={valgtAktivitet.avtalt}
                                         etikett={AVTALT_MED_NAV}
                                         id={AVTALT_MED_NAV}
+                                    />
+                                    <AktivitetEtikett
+                                        visible={!!valgtAktivitet.etikett}
+                                        etikett={valgtAktivitet.etikett}
+                                        id={`etikett.${valgtAktivitet.etikett}`}
                                     />
                                 </div>
                                 <AktivitetsDetaljer
@@ -131,8 +132,9 @@ class Aktivitetvisning extends Component {
                             <hr className="aktivitetvisning__delelinje" />
                             {arenaAktivitet ? (
                                 <div className="aktivitetvisning__underseksjon">
-                                    <AlertStripeInfo className="aktivitetvisning__alert">Denne aktiviteten
-                                            administreres av veilerder. Endringer er ikke mulig.</AlertStripeInfo>
+                                    <AlertStripeInfo className="aktivitetvisning__alert">
+                                        {<FormattedMessage id="aktivitetvisning.administreres-av-veileder" />}
+                                    </AlertStripeInfo>
                                 </div>
                                 ) : (
                                     <OppdaterAktivitetStatus
@@ -153,7 +155,7 @@ class Aktivitetvisning extends Component {
 
                     <ModalFooter visible={!arenaAktivitet}>
                         { tillattEndring && <Knapp
-                            onClick={() => history.push(`/aktivitet/aktivitet/${valgtAktivitet.id}/endre`)}
+                            onClick={() => history.push(endreAktivitetRoute(valgtAktivitet.id))}
                             className="knapp-liten modal-footer__knapp"
                         >
                             <FormattedMessage id="aktivitetvisning.endre-knapp" />

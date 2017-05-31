@@ -11,12 +11,13 @@ import ModalHeader from '../modal-header';
 import ModalContainer from '../modal-container';
 import Modal from '../modal';
 import { LUKK_MODAL } from '../../ducks/modal';
+import { aktivitetRoute } from '../../routing';
 
 function StillingAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
     const onLagNyAktivitetSubmit = (aktivitet) => {
         const nyAktivitet = { ...aktivitet, type: STILLING_AKTIVITET_TYPE };
-        onLagreNyAktivitet(nyAktivitet);
-        history.push('/');
+        onLagreNyAktivitet(nyAktivitet)
+            .then((action) => history.push(aktivitetRoute(action.data.id)));
     };
 
     return (

@@ -1,38 +1,54 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import './vilkar.less';
 import * as AppPT from '../../proptypes';
 import Accordion from '../../felles-komponenter/accordion';
-import { formaterDatoKortManad } from '../../utils';
+import { formaterDatoKortManed, autobind } from '../../utils';
 
-function VilkarHistorikk({ resterendeVilkar }) {
-    function historiskVilkarLink(status, dato, hash) {
-        const formattertDato = formaterDatoKortManad(dato);
+class VilkarHistorikk extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            apen: false
+        };
+        autobind(this);
+    }
+    onClick() {
+        this.setState({
+            apen: !this.state.apen
+        });
+    }
+    render() {
+        function historiskVilkarLink(status, dato, guid) {
+            const formattertDato = formaterDatoKortManed(dato);
+            return (
+                <Link to={`vilkarhistorikk/${guid}`} key={`${guid}`} className="vilkar__link lenke lenke--frittstaende">
+                    <FormattedMessage
+                        id="vilkar.modal.gjeldende-status-dato-link"
+                        values={{ status, dato: formattertDato }}
+                    />
+                </Link>
+            );
+        }
+        const accordionLabelId = this.state.apen ? 'vilkar.modal.skjul-siste-historiske-vilkar' :
+            'vilkar.modal.vis-siste-historiske-vilkar';
         return (
-            <Link to={`vilkar/${hash}`} key={hash} className="vilkar__link lenke lenke--frittstaende">
-                <FormattedMessage
-                    id="vilkar.modal.gjeldende-status-dato-link"
-                    values={{ status, dato: formattertDato }}
-                />
-            </Link>
+            <div className="vilkar__historikk">
+                <Accordion
+                    labelId={accordionLabelId}
+                    linkIBunnen
+                    chevronIBunnen
+                    linkClassName="vilkar__historikk-accordion-link"
+                    chevronClassName="vilkar__historikk-chevron"
+                    onClick={this.onClick}
+                >
+                    {this.props.resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.guid))}
+                </Accordion>
+            </div>
         );
     }
-
-    return (
-        <div className="vilkar__historikk">
-            <Accordion
-                labelId="vilkar.modal.vis-siste-historiske-vilkar"
-                linkIBunnen
-                chevronIBunnen
-                linkClassName="vilkar__historikk-accordion-link"
-                chevronClassName="vilkar__historikk-chevron"
-            >
-                {resterendeVilkar.map((vilkar) => historiskVilkarLink(vilkar.vilkarstatus, vilkar.dato, vilkar.hash))}
-            </Accordion>
-        </div>
-    );
 }
 
 VilkarHistorikk.propTypes = {
