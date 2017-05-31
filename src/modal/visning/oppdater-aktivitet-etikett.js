@@ -1,11 +1,11 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Undertittel } from 'nav-frontend-typografi';
+import Undertittel from 'nav-frontend-typografi/src/undertittel';
 import { FormattedMessage } from 'react-intl';
 import * as statuser from '../../constant';
 import * as AppPT from '../../proptypes';
-import AktivitetStatusForm from '../skjema/aktivitet-status-form';
+import StillingEtikettForm from '../skjema/stilling-etikett-form';
 
 function OppdaterAktivitetStatus(props) {
     const { aktiviteter, paramsId } = props;
@@ -15,16 +15,20 @@ function OppdaterAktivitetStatus(props) {
     const valgtAktivitet = aktiviteter.data.find(
         aktivitet => aktivitet.id === paramsId
     );
+    const erStillingsAktivitet =
+        valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;
 
     return (
         <section className={props.className}>
             <Undertittel>
-                <FormattedMessage id="oppdater-aktivitet-status.header" />
+                <FormattedMessage id="oppdater-aktivitet-etikett.header" />
             </Undertittel>
-            <AktivitetStatusForm
+            <StillingEtikettForm
+                visible={erStillingsAktivitet}
                 disableStatusEndring={disableStatusEndring}
                 aktivitet={valgtAktivitet}
             />
+
         </section>
     );
 }

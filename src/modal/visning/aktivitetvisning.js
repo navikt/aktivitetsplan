@@ -18,12 +18,14 @@ import ModalContainer from '../modal-container';
 import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import BekreftSlettVisning from './bekreft-slett-visning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
+import OppdaterAktivitetEtikett from './oppdater-aktivitet-etikett';
 import AvtaltContainer from './avtalt-container';
 import './aktivitetvisning.less';
 import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
     TILTAK_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
     AVTALT_MED_NAV,
@@ -32,7 +34,6 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
 import StandardModal from '../modal-standard';
-import { endreAktivitetRoute } from '../../routing';
 
 class Aktivitetvisning extends Component {
     constructor(props) {
@@ -141,14 +142,14 @@ class Aktivitetvisning extends Component {
                                 </Sidetittel>
                                 <div className="aktivitetskort__etiketter blokk-s">
                                     <AktivitetEtikett
-                                        visible={valgtAktivitet.avtalt}
-                                        etikett={AVTALT_MED_NAV}
-                                        id={AVTALT_MED_NAV}
-                                    />
-                                    <AktivitetEtikett
                                         visible={!!valgtAktivitet.etikett}
                                         etikett={valgtAktivitet.etikett}
                                         id={`etikett.${valgtAktivitet.etikett}`}
+                                    />
+                                    <AktivitetEtikett
+                                        visible={valgtAktivitet.avtalt}
+                                        etikett={AVTALT_MED_NAV}
+                                        id={AVTALT_MED_NAV}
                                     />
                                 </div>
                                 <AktivitetsDetaljer
@@ -158,26 +159,54 @@ class Aktivitetvisning extends Component {
                                 <Aktivitetsbeskrivelse
                                     beskrivelse={valgtAktivitet.beskrivelse}
                                 />
+                                <VisibleIfDiv
+                                    visible={tillattEndring && !arenaAktivitet}
+                                >
+                                    <Knapp
+                                        onClick={() =>
+                                            history.push(
+                                                `/aktivitet/aktivitet/${valgtAktivitet.id}/endre`
+                                            )}
+                                        className="knapp-liten modal-footer__knapp"
+                                    >
+                                        <FormattedMessage id="aktivitetvisning.endre-knapp" />
+                                    </Knapp>
+                                </VisibleIfDiv>
                             </div>
-                            <hr className="aktivitetvisning__delelinje" />
-                            {arenaAktivitet
-                                ? <div className="aktivitetvisning__underseksjon">
-                                      <AlertStripeInfo className="aktivitetvisning__alert">
-                                          {
-                                              <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
-                                          }
-                                      </AlertStripeInfo>
-                                  </div>
-                                : <OppdaterAktivitetStatus
-                                      status={valgtAktivitet.status}
-                                      paramsId={id}
-                                      className="aktivitetvisning__underseksjon"
-                                  />}
                             <hr className="aktivitetvisning__delelinje" />
                             <AvtaltContainer
                                 aktivitet={valgtAktivitet}
                                 className="aktivitetvisning__underseksjon"
                             />
+                            {arenaAktivitet
+                                ? <div className="aktivitetvisning__underseksjon">
+                                      <AlertStripeInfo className="aktivitetvisning__alert">
+                                          Denne aktiviteten
+                                          administreres av veilerder. Endringer er ikke mulig.
+                                      </AlertStripeInfo>
+                                  </div>
+                                : <div>
+                                      <OppdaterAktivitetStatus
+                                          status={valgtAktivitet.status}
+                                          paramsId={id}
+                                          className="aktivitetvisning__underseksjon"
+                                      />
+
+                                      <VisibleIfDiv
+                                          visible={
+                                              valgtAktivitet.type ===
+                                                  STILLING_AKTIVITET_TYPE
+                                          }
+                                      >
+                                          <hr className="aktivitetvisning__delelinje" />
+                                          <OppdaterAktivitetEtikett
+                                              status={valgtAktivitet.status}
+                                              paramsId={id}
+                                              className="aktivitetvisning__underseksjon"
+                                          />
+                                      </VisibleIfDiv>
+                                  </div>}
+                            <hr className="aktivitetvisning__delelinje" />
                             <UnderelementerForAktivitet
                                 aktivitet={valgtAktivitet}
                                 className="aktivitetvisning__underseksjon"
@@ -185,30 +214,18 @@ class Aktivitetvisning extends Component {
                         </div>
                     </ModalContainer>
 
-                    <ModalFooter visible={!arenaAktivitet}>
-                        {tillattEndring &&
-                            <Knapp
-                                onClick={() =>
-                                    history.push(
-                                        endreAktivitetRoute(valgtAktivitet.id)
-                                    )}
-                                className="knapp-liten modal-footer__knapp"
-                            >
-                                <FormattedMessage id="aktivitetvisning.endre-knapp" />
-                            </Knapp>}
-
-                        {tillatSletting &&
-                            <Knapp
-                                onClick={() =>
-                                    this.setState({
-                                        visBekreftSletting: true,
-                                        settAutoFocusSlett: false,
-                                    })}
-                                className="knapp-liten modal-footer__knapp"
-                                autoFocus={this.state.settAutoFocusSlett}
-                            >
-                                <FormattedMessage id="aktivitetvisning.slett-knapp" />
-                            </Knapp>}
+                    <ModalFooter visible={tillatSletting && !arenaAktivitet}>
+                        <Knapp
+                            onClick={() =>
+                                this.setState({
+                                    visBekreftSletting: true,
+                                    settAutoFocusSlett: false,
+                                })}
+                            className="knapp-liten modal-footer__knapp"
+                            autoFocus={this.state.settAutoFocusSlett}
+                        >
+                            <FormattedMessage id="aktivitetvisning.slett-knapp" />
+                        </Knapp>
                     </ModalFooter>
                 </ModalHeader>
             </StandardModal>

@@ -27,6 +27,7 @@ function Radio({ feltNavn, className, value, checked, onChange, ...props }) {
 
 Radio.defaultProps = {
     className: '',
+    onChange: () => {},
 };
 
 Radio.propTypes = {
@@ -35,7 +36,7 @@ Radio.propTypes = {
     value: PT.string.isRequired,
     checked: PT.bool.isRequired,
     input: PT.object, // eslint-disable-line
-    onChange: PT.func.isRequired,
+    onChange: PT.func,
 };
 
 export default Radio;

@@ -11,7 +11,6 @@ import AktivitetsKort from './aktivitetskort';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
 import history from './../../history';
 import hengelasSvg from '../../img/hengelas.svg';
-import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -20,10 +19,10 @@ const mottaAktivitetsKort = {
 
     drop({ doFlyttAktivitet, status }, monitor) {
         const aktivitet = monitor.getItem();
-        if (status === STATUS_FULLFOERT && aktivitet.avtalt) {
-            history.push(fullforAktivitetRoute(aktivitet.id));
-        } else if (status === STATUS_AVBRUTT && aktivitet.avtalt) {
-            history.push(avbrytAktivitetRoute(aktivitet.id));
+        if (status === STATUS_FULLFOERT) {
+            history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
+        } else if (status === STATUS_AVBRUTT) {
+            history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
         } else {
             doFlyttAktivitet(aktivitet, status);
         }
