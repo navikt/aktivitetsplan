@@ -1,33 +1,57 @@
 @import "../../../variables";
 
 @tavle-min-width: 48rem;
-@knapp-storrelse: 40px;
+@knapp-storrelse: 42px;
+@planbredde: 1713px;
 
 .tavle {
-  position: relative;
-  padding: 1.25rem;
+  display: flex;
+  justify-content: space-around;
   width: 100vw;
 
-  &__scrollarea {
-    margin: 20px;
-  }
-
-  .knapp-tavle {
+  .tavle__scrollknapp {
     .knapp;
     height: @knapp-storrelse;
     width: @knapp-storrelse;
-    padding: 0;
+    padding: calc(@knapp-storrelse / 2);
     border: none;
-    background: url("./pil.svg");
     background-size: contain;
+    background: url("./pil.svg") no-repeat;
 
     &:hover, &:active, &:active:hover  {
       border: none;
-      background: transparent url("./pil-hover.svg");
+      background: transparent url("./pil-hover.svg") no-repeat;
+    }
+
+  }
+    @media (min-width: @planbredde) {
+      justify-content: center;
+      .tavle__scrollknapp {
+        .hidden();
+      }
+      .kolonner {
+        justify-content: center;
+      }
+    }
+
+  .knapp-forrige {
+    margin-right: 3rem;
+    margin-left: 1rem;
+  }
+
+  .knapp-neste {
+    margin-left: 3rem;
+    margin-right: 1rem;
+    transform: rotate(180deg);
+
+    &:hover, &:disabled, &:hover:disabled {
+      transform: rotate(180deg);
     }
   }
 
   @media (max-width: @tavle-min-width) {
+    display: flex;
+    justify-content: center;
     margin: 0;
     width: 100%;
     .knapp-tavle {
@@ -35,69 +59,29 @@
     }
   }
 
-  .knapp-forrige {
-    position: absolute;
-    top: 50%;
-    left: -45px;
-  }
-
-  .knapp-neste {
-    position: absolute;
-    top: 50%;
-    right: -45px;
-    transform: rotate(180deg);
-    &:hover {
-      transform: rotate(180deg);
-    }
-    &:active, &:active:hover {
-      transform: rotate(180deg) translateY(-2px);
-    }
-  }
-
-  .viewport {
-    width: 100%;
-    overflow: hidden;
-
-    margin-bottom: 40px;
-
-    @media (max-width: @tavle-min-width) {
-      margin-bottom: 0;
-    }
-
-  }
-
-  @media (min-width: @tavle-min-width) {
-    .scrollarea-content {
-      width: 1713px;
-    }
-  }
-  @media (max-width: @tavle-min-width) {
-    display: flex;
-    justify-content: center;
-  }
-
   .kolonner {
-    max-width: 100%;
+    display: inline-block;
+    padding-bottom: 2rem;
 
-    // tavle
+    // tavle for desktop
     @media (min-width: @tavle-min-width) {
       max-width: none;
       display: flex;
-      justify-content: center;
       transition: margin 0.2s ease-in-out;
+      margin-bottom: 0;
 
       .tavle-kolonne:not(:last-child) {
         margin-right: 35px;
       }
     }
 
-    // liste
+    // liste for mobil
     @media (max-width: @tavle-min-width) {
+      justify-content: center;
 
       .tavle-kolonne {
         margin: 10px;
       }
     }
-
   }
 }
