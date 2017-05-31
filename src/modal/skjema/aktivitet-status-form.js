@@ -11,6 +11,7 @@ import { flyttAktivitet } from '../../ducks/aktiviteter';
 import history from '../../history';
 import { aktivitet as aktivitetPT } from '../../proptypes';
 import { STATUS } from '../../ducks/utils';
+import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
 
 const leggTilHengelas = (tekst, altTekst) => (
     <span>
@@ -34,12 +35,12 @@ function AktivitetStatusForm(props) {
             valgtAktivitetStatus === statuser.STATUS_FULLFOERT &&
             aktivitet.avtalt
         ) {
-            history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
+            history.push(fullforAktivitetRoute(aktivitet.id));
         } else if (
             valgtAktivitetStatus === statuser.STATUS_AVBRUTT &&
             aktivitet.avtalt
         ) {
-            history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
+            history.push(avbrytAktivitetRoute(aktivitet.id));
         } else {
             doFlyttAktivitet(aktivitet, valgtAktivitetStatus);
         }

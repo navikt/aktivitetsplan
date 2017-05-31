@@ -6,7 +6,7 @@ import * as AppPT from '../../proptypes';
 import UnsafeHtml from '../../felles-komponenter/utils/unsafe-html';
 import vilkarSvg from './vilkar-illustrasjon.svg';
 import VisibleIfHOC from '../../hocs/visible-if';
-import { formaterDatoKortManad } from '../../utils';
+import { formaterDatoKortManed } from '../../utils';
 
 const VisibleIfElementFormattedMessage = VisibleIfHOC(props => (
     <Element className="vilkar__metaData">
@@ -15,7 +15,7 @@ const VisibleIfElementFormattedMessage = VisibleIfHOC(props => (
 ));
 
 function VilkarInnhold({ vilkar }) {
-    const formattertDato = formaterDatoKortManad(vilkar.dato);
+    const formattertDato = formaterDatoKortManed(vilkar.dato);
     return (
         <div className="vilkar__innhold">
             <Bilde src={vilkarSvg} alt="Dekorativ illustrajon" />
