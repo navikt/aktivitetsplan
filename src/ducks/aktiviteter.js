@@ -134,6 +134,11 @@ export function oppdaterAktivitet(aktivitet) {
     });
 }
 
+export function flyttAktivitetMedBegrunnelse(aktivitet, status, avsluttetKommentar) {
+    const nyAktivitet = { ...aktivitet, avsluttetKommentar };
+    return flyttAktivitet(nyAktivitet, status);
+}
+
 export function avbrytAktivitet(aktivitet, avsluttetKommentar) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, statuskoder.STATUS_AVBRUTT);

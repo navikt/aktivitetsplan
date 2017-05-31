@@ -1,152 +1,165 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { formValueSelector } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import Bilde from 'nav-react-design/dist/bilde';
+import { rules, validForm } from 'react-redux-form-validation';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import * as statuser from '../../constant';
 import Radio from './input/radio';
 import hengelasSVG from '../../img/hengelas.svg';
-import { flyttAktivitet } from '../../ducks/aktiviteter';
-import history from '../../history';
+import { flyttAktivitetMedBegrunnelse } from '../../ducks/aktiviteter';
 import { aktivitet as aktivitetPT } from '../../proptypes';
 import { STATUS } from '../../ducks/utils';
-import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import visibleIf from '../../hocs/visible-if';
+import Textarea from '../skjema/textarea/textarea';
+
 
 const leggTilHengelas = (tekst, altTekst) => (
     <span>
-        {tekst}
-        &nbsp;&nbsp;
-        <Bilde
-            style={{ position: 'absolute' }}
-            src={hengelasSVG}
-            alt={altTekst}
-        />
+        {tekst}&nbsp;&nbsp;<Bilde style={{ position: 'absolute' }} src={hengelasSVG} alt={altTekst} />
     </span>
 );
 
+const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
+const MAKS_LENGDE = 255;
+
+const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);
+
 function AktivitetStatusForm(props) {
-    const { aktivitet, doFlyttAktivitet, aktivitetDataStatus } = props;
+    const { aktivitet, dirty, handleSubmit, aktivitetDataStatus } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
     const hengelasAlt = props.intl.formatMessage({ id: 'hengelas-icon-alt' });
-    const onChange = event => {
-        const valgtAktivitetStatus = event.currentTarget.value;
-        if (
-            valgtAktivitetStatus === statuser.STATUS_FULLFOERT &&
-            aktivitet.avtalt
-        ) {
-            history.push(fullforAktivitetRoute(aktivitet.id));
-        } else if (
-            valgtAktivitetStatus === statuser.STATUS_AVBRUTT &&
-            aktivitet.avtalt
-        ) {
-            history.push(avbrytAktivitetRoute(aktivitet.id));
-        } else {
-            doFlyttAktivitet(aktivitet, valgtAktivitetStatus);
-        }
-    };
-    const erAktivitetChecked = statusId =>
-        props.valgtAktivitetStatus === statusId;
+
+    const visAdvarsel = props.valgtAktivitetStatus === statuser.STATUS_FULLFOERT ||
+        props.valgtAktivitetStatus === statuser.STATUS_AVBRUTT;
+
+    const erAktivitetChecked = (statusId) => props.valgtAktivitetStatus === statusId;
     return (
-        <form className="skjema oppdaterstatus-skjema">
-            <Radio
-                onChange={onChange}
-                feltNavn={'aktivitetstatus'}
-                label={
-                    <FormattedMessage id="aktivitetstavle.brukerErInteressert" />
-                }
-                value={statuser.STATUS_BRUKER_ER_INTRESSERT}
-                id={`id--${statuser.STATUS_BRUKER_ER_INTRESSERT}`}
-                name="aktivitetstatus"
-                checked={erAktivitetChecked(
-                    statuser.STATUS_BRUKER_ER_INTRESSERT
-                )}
-                disabled={props.disableStatusEndring || lasterData}
-            />
-            <Radio
-                onChange={onChange}
-                feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.planlagt" />}
-                value={statuser.STATUS_PLANLAGT}
-                id={`id--${statuser.STATUS_PLANLAGT}`}
-                name="aktivitetstatus"
-                checked={erAktivitetChecked(statuser.STATUS_PLANLAGT)}
-                disabled={props.disableStatusEndring || lasterData}
-            />
-            <Radio
-                onChange={onChange}
-                feltNavn={'aktivitetstatus'}
-                label={<FormattedMessage id="aktivitetstavle.gjennomfoert" />}
-                value={statuser.STATUS_GJENNOMFOERT}
-                id={`id--${statuser.STATUS_GJENNOMFOERT}`}
-                name="aktivitetstatus"
-                checked={erAktivitetChecked(statuser.STATUS_GJENNOMFOERT)}
-                disabled={props.disableStatusEndring || lasterData}
-            />
-            <Radio
-                onChange={onChange}
-                feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(
-                    <FormattedMessage id="aktivitetstavle.fullfoert" />,
-                    hengelasAlt
-                )}
-                value={statuser.STATUS_FULLFOERT}
-                id={`id--${statuser.STATUS_FULLFOERT}`}
-                name="aktivitetstatus"
-                checked={erAktivitetChecked(statuser.STATUS_FULLFOERT)}
-                disabled={props.disableStatusEndring || lasterData}
-            />
-            <Radio
-                onChange={onChange}
-                feltNavn={'aktivitetstatus'}
-                label={leggTilHengelas(
-                    <FormattedMessage id="aktivitetstavle.avbrutt" />,
-                    hengelasAlt
-                )}
-                value={statuser.STATUS_AVBRUTT}
-                id={`id--${statuser.STATUS_AVBRUTT}`}
-                name="aktivitetstatus"
-                checked={erAktivitetChecked(statuser.STATUS_AVBRUTT)}
-                disabled={props.disableStatusEndring || lasterData}
-            />
+        <form onSubmit={handleSubmit}>
+            <div className="row">
+                <div className="col col-xs-6">
+                    <Radio
+                        feltNavn={'aktivitetstatus'}
+                        label={<FormattedMessage id="aktivitetstavle.brukerErInteressert" />}
+                        value={statuser.STATUS_BRUKER_ER_INTRESSERT}
+                        id={`id--${statuser.STATUS_BRUKER_ER_INTRESSERT}`}
+                        name="aktivitetstatus"
+                        checked={erAktivitetChecked(statuser.STATUS_BRUKER_ER_INTRESSERT)}
+                        disabled={props.disableStatusEndring || lasterData}
+                    />
+                    <Radio
+                        feltNavn={'aktivitetstatus'}
+                        label={<FormattedMessage id="aktivitetstavle.planlagt" />}
+                        value={statuser.STATUS_PLANLAGT}
+                        id={`id--${statuser.STATUS_PLANLAGT}`}
+                        name="aktivitetstatus"
+                        checked={erAktivitetChecked(statuser.STATUS_PLANLAGT)}
+                        disabled={props.disableStatusEndring || lasterData}
+                    />
+                    <Radio
+                        feltNavn={'aktivitetstatus'}
+                        label={<FormattedMessage id="aktivitetstavle.gjennomfoert" />}
+                        value={statuser.STATUS_GJENNOMFOERT}
+                        id={`id--${statuser.STATUS_GJENNOMFOERT}`}
+                        name="aktivitetstatus"
+                        checked={erAktivitetChecked(statuser.STATUS_GJENNOMFOERT)}
+                        disabled={props.disableStatusEndring || lasterData}
+                    />
+                </div>
+                <div className="col col-xs-6">
+                    <Radio
+                        feltNavn={'aktivitetstatus'}
+                        label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.fullfoert" />, hengelasAlt)}
+                        value={statuser.STATUS_FULLFOERT}
+                        id={`id--${statuser.STATUS_FULLFOERT}`}
+                        name="aktivitetstatus"
+                        checked={erAktivitetChecked(statuser.STATUS_FULLFOERT)}
+                        disabled={props.disableStatusEndring || lasterData}
+                    />
+                    <Radio
+                        feltNavn={'aktivitetstatus'}
+                        label={leggTilHengelas(<FormattedMessage id="aktivitetstavle.avbrutt" />, hengelasAlt)}
+                        value={statuser.STATUS_AVBRUTT}
+                        id={`id--${statuser.STATUS_AVBRUTT}`}
+                        name="aktivitetstatus"
+                        checked={erAktivitetChecked(statuser.STATUS_AVBRUTT)}
+                        disabled={props.disableStatusEndring || lasterData}
+                    />
+                </div>
+            </div>
+            <VisibleIfDiv className="row" visible={dirty}>
+                <VisibleAlertStripeSuksessSolid visible={visAdvarsel}>
+                    <FormattedMessage id="aktivitetstatus.oppdater-status-advarsel" />
+                </VisibleAlertStripeSuksessSolid>
+
+                <VisibleIfDiv visible={aktivitet.avtalt && visAdvarsel}>
+                    <Textarea
+                        labelId={<FormattedMessage id="aktivitetstatus.oppdater-status-begrunnelse" />}
+                        feltNavn="begrunnelse"
+                        name="begrunnelse-aktivitet"
+                        maxLength={MAKS_LENGDE}
+                        disabled={lasterData}
+                    />
+                </VisibleIfDiv>
+
+
+                <Hovedknapp
+                    spinner={lasterData}
+                    mini
+                    autoDisableVedSpinner
+                >
+                    <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
+                </Hovedknapp>
+            </VisibleIfDiv>
         </form>
     );
 }
 
-const OppdaterReduxForm = reduxForm({
-    form: 'aktivitet-status-form',
+const forLang = rules.maxLength(MAKS_LENGDE,
+    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-lang" values={{ MAKS_LENGDE }} />
+);
+
+const pakrevd = rules.minLength(0, <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-kort" />);
+
+const OppdaterReduxForm = validForm({
+    form: AKTIVITET_STATUS_FORM_NAME,
+    validate: {
+        begrunnelse: [forLang, pakrevd]
+    }
 })(AktivitetStatusForm);
 
 AktivitetStatusForm.defaultProps = {
     valgtAktivitetStatus: statuser.INGEN_VALGT,
-    aktivitetDataStatus: STATUS.NOT_STARTED,
+    aktivitetDataStatus: STATUS.NOT_STARTED
 };
 
 AktivitetStatusForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
+    handleSubmit: PT.func,
+    dirty: PT.bool,
     valgtAktivitetStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
-    doFlyttAktivitet: PT.func.isRequired,
     aktivitetDataStatus: PT.string,
-    intl: intlShape,
+    intl: intlShape
 };
 
 const mapStateToProps = (state, props) => ({
     aktivitetDataStatus: state.data.aktiviteter.status,
-    valgtAktivitetStatus: formValueSelector('aktivitet-status-form')(
-        state,
-        'aktivitetstatus'
-    ),
+    valgtAktivitetStatus: formValueSelector(AKTIVITET_STATUS_FORM_NAME)(state, 'aktivitetstatus'),
     initialValues: {
-        aktivitetstatus: props.aktivitet.status,
-    },
+        begrunnelse: props.aktivitet.avsluttetKommentar,
+        aktivitetstatus: props.aktivitet.status
+    }
 });
 
-const mapDispatchToProps = dispatch => ({
-    doFlyttAktivitet: (aktivitet, status) =>
-        flyttAktivitet(aktivitet, status)(dispatch),
+const mapDispatchToProps = () => ({
+    onSubmit: (values, dispatch, props) => {
+        dispatch(flyttAktivitetMedBegrunnelse(props.aktivitet, values.aktivitetstatus, values.begrunnelse));
+    }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(OppdaterReduxForm)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(OppdaterReduxForm));
