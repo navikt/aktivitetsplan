@@ -64,7 +64,7 @@ export const vilkar = PT.shape({
 export const mal = PT.shape({
     mal: PT.string,
     endretAv: PT.string,
-    dato: PT.number,
+    dato: PT.string,
 });
 
 export const feil = PT.shape({

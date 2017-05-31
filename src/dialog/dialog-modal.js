@@ -8,7 +8,6 @@ import classNames from 'classnames';
 import Dialog from './dialog';
 import Dialoger from './dialoger';
 import Modal from '../modal/modal';
-import Hovedside from '../sider/hovedside/hovedside';
 import history from '../history';
 import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import PilKnapp from '../felles-komponenter/utils/pil-knapp';
@@ -17,6 +16,7 @@ import visibleIfHOC from '../hocs/visible-if';
 import './dialog-modal.less';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
+import { aktivitetRoute } from '../routing';
 
 const animationTime = 300;
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
@@ -123,7 +123,7 @@ function HoyreKolonne({
     valgtAktivitetId,
 }) {
     function apneAktivitet() {
-        navigerTil(`/aktivitet/aktivitet/${valgtAktivitetId}`);
+        navigerTil(aktivitetRoute(valgtAktivitetId));
     }
 
     return (
@@ -193,6 +193,8 @@ DialogModalContent.defaultProps = {
 };
 
 class DialogModal extends Component {
+    // eslint-disable-line react/no-multi-comp
+
     constructor() {
         super();
         this.navigerTil = this.navigerTil.bind(this);
@@ -228,7 +230,6 @@ class DialogModal extends Component {
 
         return (
             <div>
-                <Hovedside />
                 <Modal
                     className={className}
                     closeButton={false}

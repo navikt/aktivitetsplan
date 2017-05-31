@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
+import Collapse from 'react-collapse/src/Collapse';
 import classNames from 'classnames';
 import VisibleIfDiv from './utils/visible-if-div';
 import './accordion.less';
@@ -60,9 +61,11 @@ class Accordion extends Component {
         return (
             <div className={this.props.className}>
                 <ChevronLink visible={!this.props.linkIBunnen} />
-                <VisibleIfDiv visible={this.state.apen}>
-                    {this.props.children}
-                </VisibleIfDiv>
+                <Collapse isOpened={this.state.apen}>
+                    <VisibleIfDiv visible={this.state.apen}>
+                        {this.props.children}
+                    </VisibleIfDiv>
+                </Collapse>
                 <ChevronLink visible={this.props.linkIBunnen} />
             </div>
         );

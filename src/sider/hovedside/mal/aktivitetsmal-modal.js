@@ -4,12 +4,10 @@ import Modal from '../../../modal/modal';
 import ModalHeader from '../../../modal/modal-header';
 import ModalContainer from '../../../modal/modal-container';
 import history from '../../../history';
-import Hovedside from '../hovedside';
 
 function AktivitetsmalModal() {
     return (
         <div>
-            <Hovedside />
             <Modal
                 isOpen
                 onRequestClose={() => history.push('/')}

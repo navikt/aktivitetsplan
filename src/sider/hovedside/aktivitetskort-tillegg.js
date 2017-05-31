@@ -13,14 +13,14 @@ function AktivitetskortTillegg({ aktivitet, antallUlesteHenvendelser }) {
         <div className="aktivitetskort__ikon-blokk">
             <div className="aktivitetskort__etiketter">
                 <AktivitetEtikett
-                    visible={!!aktivitet.etikett}
-                    etikett={aktivitet.etikett}
-                    id={`etikett.${aktivitet.etikett}`}
-                />
-                <AktivitetEtikett
                     visible={aktivitet.avtalt}
                     etikett={AVTALT_MED_NAV}
                     id={AVTALT_MED_NAV}
+                />
+                <AktivitetEtikett
+                    visible={!!aktivitet.etikett}
+                    etikett={aktivitet.etikett}
+                    id={`etikett.${aktivitet.etikett}`}
                 />
             </div>
             <VisibleIfDiv

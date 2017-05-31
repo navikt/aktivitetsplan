@@ -196,7 +196,7 @@ export function formaterDatoTid(dato) {
         : undefined;
 }
 
-export function formaterDatoKortManad(dato) {
+export function formaterDatoKortManed(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid() ? datoVerdi.format('DD MMM YYYY') : undefined;
 }

@@ -6,7 +6,7 @@ import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { Link } from 'react-router';
 import * as AppPT from '../../proptypes';
 import {
-    formaterDatoKortManad,
+    formaterDatoKortManed,
     formaterDatoKortManedTid,
     formaterTid,
 } from '../../utils';
@@ -18,10 +18,11 @@ import {
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
 import DetaljFelt from './detalj-felt';
+import { endreAktivitetRoute } from '../../routing';
 
 function RedigerLink({ id, felt }) {
     return (
-        <Link to={`/aktivitet/aktivitet/${id}/endre`}>
+        <Link to={endreAktivitetRoute(id)}>
             <FormattedMessage
                 id="aktivitetsdetaljer.legg-til-felt"
                 values={{ felt }}
@@ -62,15 +63,15 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         hensikt,
         arrangoer,
         deltakelseProsent,
-        dagerPerUke,
+        antallDagerPerUke,
         gruppeAktivitetSted,
         gruppeAktivitetStatus,
         moeteplanListe,
         oppfolging,
     } = valgtAktivitet;
 
-    const fraDato = formaterDatoKortManad(valgtAktivitet.fraDato);
-    const tilDato = formaterDatoKortManad(valgtAktivitet.tilDato);
+    const fraDato = formaterDatoKortManed(valgtAktivitet.fraDato);
+    const tilDato = formaterDatoKortManed(valgtAktivitet.tilDato);
 
     const fraDatoTekst = aktivitet => {
         switch (aktivitet) {
@@ -109,7 +110,11 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const httpRegex = /^(https?):\/\/.*$/;
 
     const lenkeKomponent = () => (
-        <DetaljFelt key="lenke" tittel="Lenke" visible={lenke != null}>
+        <DetaljFelt
+            key="lenke"
+            tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
+            visible={lenke != null}
+        >
             <Link
                 href={
                     lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`
@@ -197,18 +202,22 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         />,
         <Informasjonsfelt
             key="arrangoer"
-            tittel="Aarrangør"
+            tittel={<FormattedMessage id="aktivitetdetaljer.aarrangor-label" />}
             innhold={arrangoer}
         />,
         <Informasjonsfelt
             key="deltakelsesprosent"
-            tittel="Deltakelsesprosent"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.deltakelsesprosent-label" />
+            }
             innhold={deltakelseProsent && `${deltakelseProsent}%`}
         />,
         <Informasjonsfelt
             key="dagerPerUke"
-            tittel="Antall dager per uke"
-            innhold={dagerPerUke && `${dagerPerUke}`}
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.antall-dager-per-uke-label" />
+            }
+            innhold={antallDagerPerUke && `${antallDagerPerUke}`}
         />,
     ];
 
@@ -225,17 +234,17 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         />,
         <Informasjonsfelt
             key="gruppeAktivitetSted"
-            tittel="Sted"
+            tittel={<FormattedMessage id="aktivitetdetaljer.sted-label" />}
             innhold={gruppeAktivitetSted}
         />,
         <Informasjonsfelt
             key="gruppeAktivitetStatus"
-            tittel="Status"
+            tittel={<FormattedMessage id="aktivitetdetaljer.status-label" />}
             innhold={gruppeAktivitetStatus}
         />,
         <section key="moteplan" className="aktivitetsbeskrivelse">
             <Element className="aktivitetsbeskrivelse__tittel">
-                Møteplan
+                <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
             </Element>
             {moeteplanListe.map(mote => (
                 <Normaltekst key={mote.startDato} className="detaljfelt__tekst">

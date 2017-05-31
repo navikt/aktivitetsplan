@@ -29,7 +29,7 @@ export default function reducer(state = initalState, action) {
                 data: action.data.map(v => ({ ...v, guid: guid() })),
             };
         case HENT_HISTORISKE_FEILET:
-            return { ...state, status: STATUS.ERROR, data: action.data };
+            return { ...state, status: STATUS.ERROR };
         default:
             return state;
     }

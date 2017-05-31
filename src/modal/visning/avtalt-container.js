@@ -36,8 +36,10 @@ class AvtaltContainer extends Component {
             doSetAktivitetTilAvtalt,
             className,
         } = this.props;
+
         const lasterData = aktivitetData.status !== STATUS.OK;
         const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === aktivitet.type;
+
         if (
             !TILLAT_SET_AVTALT ||
             aktivitet.status === STATUS_FULLFOERT ||
@@ -75,7 +77,7 @@ class AvtaltContainer extends Component {
                         onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
                         disabled={lasterData}
                     >
-                        Bekreft
+                        <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
                     </Knapp>}
             </div>
         );
