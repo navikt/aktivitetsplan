@@ -11,7 +11,7 @@ function Hovedside({ children }) {
     return (
         <div className="hovedside">
             <div className="hovedsideinnhold">
-                <Container>
+                <Container className="hovedsideinnhold__meny-container blokk-s">
                     <Feil />
                     <Navigasjonslinje />
                     <Lenkeknapp href="/aktivitet/ny">
