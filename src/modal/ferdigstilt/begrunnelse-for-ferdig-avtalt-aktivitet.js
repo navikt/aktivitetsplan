@@ -12,7 +12,7 @@ import Textarea from '../skjema/textarea/textarea';
 
 const MAKS_LENGDE = 255;
 
-function BegrunnelseAktivitet(props) {
+function BegrunnelseForFerdigAvtaltAktivitet(props) {
     return (
         <form onSubmit={props.handleSubmit}>
             <ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />
@@ -43,7 +43,7 @@ function BegrunnelseAktivitet(props) {
     );
 }
 
-BegrunnelseAktivitet.propTypes = {
+BegrunnelseForFerdigAvtaltAktivitet.propTypes = {
     headerTekst: PT.element.isRequired,
     beskrivelseTekst: PT.element.isRequired,
     lagrer: PT.bool.isRequired,
@@ -61,7 +61,7 @@ const BegrunnelseAktivitetReduxForm = validForm({
     validate: {
         begrunnelse: [forLang, pakrevd]
     }
-})(BegrunnelseAktivitet);
+})(BegrunnelseForFerdigAvtaltAktivitet);
 
 const mapDispatchToProps = () => ({});
 

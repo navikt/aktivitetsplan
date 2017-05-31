@@ -20,9 +20,9 @@ const mottaAktivitetsKort = {
 
     drop({ doFlyttAktivitet, status }, monitor) {
         const aktivitet = monitor.getItem();
-        if (status === STATUS_FULLFOERT && aktivitet.avtalt) {
+        if (status === STATUS_FULLFOERT) {
             history.push(`/aktivitet/aktivitet/${aktivitet.id}/fullfor`);
-        } else if (status === STATUS_AVBRUTT && aktivitet.avtalt) {
+        } else if (status === STATUS_AVBRUTT) {
             history.push(`/aktivitet/aktivitet/${aktivitet.id}/avbryt`);
         } else {
             doFlyttAktivitet(aktivitet, status);

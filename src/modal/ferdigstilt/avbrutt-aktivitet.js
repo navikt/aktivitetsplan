@@ -3,34 +3,44 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../proptypes';
-import BegrunnelseAktivitet from './begrunnelse-aktivitet';
+import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
+import VisAdvarsel from './vis-advarsel';
 import { avbrytAktivitet } from '../../ducks/aktiviteter';
 import { STATUS } from '../../ducks/utils';
 import StandardModal from '../modal-standard';
 import history from '../../history';
 
-const BegrunnelseAvbruttAktivitet = (props) => {
-    const headerTekst = <FormattedMessage id="opprett-begrunnelse.avbrutt.header" />;
-    const beskrivelseTekst = <FormattedMessage id="opprett-begrunnelse.avbrutt.melding" />;
+const AvbruttAktivitet = (props) => {
     const paramsId = props.params.id;
     const valgtAktivitet = props.aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId) || {};
 
+    const begrunnelse = (<BegrunnelseAktivitet
+        headerTekst={<FormattedMessage id="opprett-begrunnelse.avbrutt.header" />}
+        beskrivelseTekst={<FormattedMessage id="opprett-begrunnelse.avbrutt.melding" />}
+        lagrer={props.aktiviteter.status !== STATUS.OK}
+        onSubmit={(beskrivelseForm) => {
+            props.lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
+            history.goBack();
+        }}
+    />);
+
+    const advarsel = (<VisAdvarsel
+        headerTekst={<FormattedMessage id="advarsel.avbrutt.header" />}
+        onSubmit={() => {
+            props.lagreBegrunnelse(valgtAktivitet, null);
+            history.goBack();
+        }}
+    />);
+
+
     return (
         <StandardModal name="BegrunnelseModal">
-            <BegrunnelseAktivitet
-                headerTekst={headerTekst}
-                beskrivelseTekst={beskrivelseTekst}
-                lagrer={props.aktiviteter.status !== STATUS.OK}
-                onSubmit={(beskrivelseForm) => {
-                    props.lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
-                    history.goBack();
-                }}
-            />
+            {valgtAktivitet.avtalt ? begrunnelse : advarsel}
         </StandardModal>
     );
 };
 
-BegrunnelseAvbruttAktivitet.propTypes = {
+AvbruttAktivitet.propTypes = {
     aktiviteter: PT.shape({
         status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet)
@@ -47,4 +57,4 @@ const mapStateToProps = (state) => ({
     aktiviteter: state.data.aktiviteter
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BegrunnelseAvbruttAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(AvbruttAktivitet);

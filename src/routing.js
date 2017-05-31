@@ -11,8 +11,8 @@ import StillingAktivitet from './modal/skjema/stilling-aktivitet';
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
-import BegrunnelseFullfortAktivitet from './modal/begrunnelse/begrunnelse-fullfort-aktivitet';
-import BegrunnelseAvbruttAktivitet from './modal/begrunnelse/begrunnelse-avbrutt-aktivitet';
+import BegrunnelseFullfortAktivitet from './modal/ferdigstilt/fullfort-aktivitet';
+import BegrunnelseAvbruttAktivitet from './modal/ferdigstilt/avbrutt-aktivitet';
 
 export default (
     <Route>
