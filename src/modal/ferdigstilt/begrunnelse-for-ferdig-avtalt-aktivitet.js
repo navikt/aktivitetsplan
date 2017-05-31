@@ -19,7 +19,7 @@ function BegrunnelseForFerdigAvtaltAktivitet(props) {
             <div className="aktivitetvisning__underseksjon">
                 <ModalContainer>
                     <Innholdstittel>
-                        { props.headerTekst }
+                        {props.headerTekst}
                     </Innholdstittel>
                     <Textarea
                         feltNavn="begrunnelse"
@@ -31,11 +31,7 @@ function BegrunnelseForFerdigAvtaltAktivitet(props) {
                 </ModalContainer>
             </div>
             <ModalFooter>
-                <Hovedknapp
-                    spinner={props.lagrer}
-                    mini
-                    autoDisableVedSpinner
-                >
+                <Hovedknapp spinner={props.lagrer} mini autoDisableVedSpinner>
                     <FormattedMessage id="begrunnelse-aktivitet.modal.lagre" />
                 </Hovedknapp>
             </ModalFooter>
@@ -47,20 +43,27 @@ BegrunnelseForFerdigAvtaltAktivitet.propTypes = {
     headerTekst: PT.element.isRequired,
     beskrivelseTekst: PT.element.isRequired,
     lagrer: PT.bool.isRequired,
-    handleSubmit: PT.func.isRequired
+    handleSubmit: PT.func.isRequired,
 };
 
-const forLang = rules.maxLength(MAKS_LENGDE,
-    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-lang" values={{ MAKS_LENGDE }} />
+const forLang = rules.maxLength(
+    MAKS_LENGDE,
+    <FormattedMessage
+        id="opprett-begrunnelse.melding.feilmelding.for-lang"
+        values={{ MAKS_LENGDE }}
+    />
 );
 
-const pakrevd = rules.minLength(0, <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-kort" />);
+const pakrevd = rules.minLength(
+    0,
+    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-kort" />
+);
 
 const BegrunnelseAktivitetReduxForm = validForm({
     form: 'begrunnelse-aktivitet-form',
     validate: {
-        begrunnelse: [forLang, pakrevd]
-    }
+        begrunnelse: [forLang, pakrevd],
+    },
 })(BegrunnelseForFerdigAvtaltAktivitet);
 
 const mapDispatchToProps = () => ({});

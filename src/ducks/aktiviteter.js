@@ -134,7 +134,11 @@ export function oppdaterAktivitet(aktivitet) {
     });
 }
 
-export function flyttAktivitetMedBegrunnelse(aktivitet, status, avsluttetKommentar) {
+export function flyttAktivitetMedBegrunnelse(
+    aktivitet,
+    status,
+    avsluttetKommentar
+) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, status);
 }

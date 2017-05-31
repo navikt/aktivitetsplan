@@ -11,13 +11,17 @@ import StillingAktivitet from './modal/skjema/stilling-aktivitet';
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
-import BegrunnelseFullfortAktivitet from './modal/ferdigstilt/fullfort-aktivitet';
-import BegrunnelseAvbruttAktivitet from './modal/ferdigstilt/avbrutt-aktivitet';
+import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
+import AvbryttAktivitet from './modal/ferdigstilt/avbrytt-aktivitet';
 
 export default (
     <Route>
         <IndexRoute component={Hovedside} />
-        <Route modalId="aktivitetsmalModal" path="mal" component={AktivitetsmalModal} />
+        <Route
+            modalId="aktivitetsmalModal"
+            path="mal"
+            component={AktivitetsmalModal}
+        />
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
         <Route path="vilkar" component={VilkarModalMedHistorikk} />
@@ -28,8 +32,8 @@ export default (
             <Route path="ny/stilling" component={StillingAktivitet} />
             <Route path="aktivitet/:id" component={Aktivitetvisning} />
             <Route path="aktivitet/:id/endre" component={EndreAktivitet} />
-            <Route path="aktivitet/:id/avbryt" component={BegrunnelseAvbruttAktivitet} />
-            <Route path="aktivitet/:id/fullfor" component={BegrunnelseFullfortAktivitet} />
+            <Route path="aktivitet/:id/avbryt" component={AvbryttAktivitet} />
+            <Route path="aktivitet/:id/fullfor" component={FullforAktivitet} />
         </Route>
         <Route path="*" component={Hovedside} />
     </Route>
