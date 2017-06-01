@@ -6,7 +6,6 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import visibleIfHOC from '../../hocs/visible-if';
 import versjonskonfliktSvg from './versjonskonflikt.svg';
-import './versjonskonflikt.less';
 
 function Versjonskonflikt({ tilbake, slett }) {
     return (

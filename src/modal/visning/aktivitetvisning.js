@@ -20,7 +20,6 @@ import BekreftSlettVisning from './bekreft-slett-visning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
 import OppdaterAktivitetEtikett from './oppdater-aktivitet-etikett';
 import AvtaltContainer from './avtalt-container';
-import './aktivitetvisning.less';
 import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,

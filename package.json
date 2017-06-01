@@ -3,6 +3,7 @@
     "version": "1.128.33",
     "description": "Aktivitetsplan felles",
     "main": "src/app.js",
+    "styles": "src/index.less",
     "files": [
         "src/"
     ],
@@ -23,8 +24,12 @@
         "depcheck": "node ./node_modules/npm-check-updates/bin/npm-check-updates -e 2 -x history,react-motion,react-router,react-collapse,mocha,react-height --packageFile ./package.json",
         "eslint": "eslint src --ext .js --ext .jsx",
         "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js",
-        "dev": "webpack-dev-server --progress --hot --watch --env.dev=true --port 8888",
-        "build": "webpack --optimize-minimize",
+        "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\"",
+        "dev:js": "webpack-dev-server --progress --hot --watch --env.dev=true --port 8888",
+        "dev:less": "autoless --interval 100 ./src ./example/aktivitetsplanfelles",
+        "build": "npm run build:less && npm run build:js",
+        "build:js": "webpack --optimize-minimize",
+        "build:less": "node ./node_modules/less/bin/lessc src/index.less ./example/aktivitetsplanfelles/index.css",
         "precommit": "lint-staged"
     },
     "lint-staged": {
@@ -102,6 +107,7 @@
         "sanitize-html": "1.14.1"
     },
     "devDependencies": {
+        "autoless": "0.1.7",
         "babel-core": "6.24.1",
         "babel-eslint": "7.2.3",
         "babel-loader": "7.0.0",
@@ -118,7 +124,6 @@
         "chai-enzyme": "0.6.1",
         "copy-webpack-plugin": "4.0.1",
         "cross-env": "4.0.0",
-        "css-loader": "0.28.1",
         "enzyme": "2.8.2",
         "eslint": "3.19.0",
         "eslint-config-airbnb": "15.0.1",
@@ -129,17 +134,17 @@
         "file-loader": "0.11.1",
         "html-webpack-plugin": "2.28.0",
         "husky": "0.13.4",
+        "ignore-loader": "0.1.2",
         "ignore-styles": "5.0.1",
         "less": "2.7.2",
-        "less-loader": "4.0.3",
         "lint-staged": "3.5.1",
         "mocha": "3.4.1",
         "npm-check-updates": "2.11.1",
+        "parallelshell": "2.0.0",
         "prettier": "1.3.1",
         "react-addons-test-utils": "15.5.1",
         "sinon": "2.2.0",
         "sinon-chai": "2.10.0",
-        "style-loader": "0.17.0",
         "url-loader": "0.5.8",
         "webpack": "2.5.1",
         "webpack-dev-server": "2.4.5",

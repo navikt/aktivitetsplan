@@ -18,41 +18,16 @@ const RULES = [
         test: /\.jsx?/,
         include: BABEL_INCLUDE,
         enforce: 'pre',
-        loader: 'babel-loader',
+        loader: 'babel-loader'
     },
     {
         test: /\.(svg)$/,
         use: {
             loader: 'url-loader',
-            options: {'noquotes': true}
+            options: { noquotes: true }
         }
     },
-    {
-        test: /\.less$/,
-        use: [
-            'style-loader',
-            {
-                loader: 'css-loader',
-                options: {
-                    importLoaders: 1,
-                    sourceMap: true
-                }
-            },
-            {
-                loader: 'less-loader',
-                options: {
-                    relativeUrls: true,
-                    modifyVars: {
-                        'modig-frontend-images-root-url': '\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/img\'',
-                        'baseImagePath': '\'../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources/META-INF/resources/\'',
-                        'nodeModulesPath': '\'./../../\'',
-                        'coreModulePath': '\'./../../\''
-                    },
-                    sourceMap: true
-                }
-            }
-        ]
-    }
+    { test: /\.less$/, loader: 'ignore-loader' }
 ];
 
 const LOADERS = [
@@ -86,11 +61,11 @@ module.exports = function (env) {
             extensions: ['.js', '.jsx', '.json']
         },
         output: {
-            path: path.resolve(__dirname, 'build'),
-            publicPath: '/aktivitetsplanfelles/',
-            filename: 'bundle.js'
+            path: path.resolve(__dirname, 'example/build'),
+            publicPath: '/aktivitetsplanfelles/'
         },
         devServer: {
+            contentBase: path.resolve(__dirname, 'example'),
             historyApiFallback: {
                 index: '/aktivitetsplanfelles/'
             }

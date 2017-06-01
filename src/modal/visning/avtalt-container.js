@@ -17,7 +17,6 @@ import {
 } from '../../constant';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
-import './avtalt-container.less';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import { STATUS } from '../../ducks/utils';
 

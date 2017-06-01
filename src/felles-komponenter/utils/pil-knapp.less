@@ -8,12 +8,12 @@
   width: @knapp-storrelse;
   padding: 0;
   border: none;
-  background: url("./pil.svg");
+  background: data-uri("./felles-komponenter/utils/pil.svg");
   background-size: @knapp-storrelse;
 
   &:hover, &:active, &:active:hover  {
     border: none;
-    background: transparent url("./pil-hover.svg");
+    background: transparent data-uri("./felles-komponenter/utils/pil-hover.svg");
     background-size: @knapp-storrelse;
   }
 }

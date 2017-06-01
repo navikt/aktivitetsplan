@@ -2,5 +2,7 @@
 !.idea/runConfigurations/
 node_modules/
 example/build/
+example/aktivitetsplanfelles/*
+!example/aktivitetsplanfelles/file.txt
 npm-debug.log*
 *.iml
