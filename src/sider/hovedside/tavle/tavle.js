@@ -32,11 +32,10 @@ class Tavle extends Component {
         const clientWidth = this.scrollbars.getClientWidth();
         const scrollLeft = this.scrollbars.getScrollLeft();
         const clientWidthWithOffset = clientWidth + 35;
-        this.state.clickIndex = Math.max(
-            Math.floor((clientWidthWithOffset + scrollLeft) / KOLLONEBREDDE) +
-                1,
-            this.state.clickIndex + 1
+        const nesteIndex = Math.floor(
+            (clientWidthWithOffset + scrollLeft) / KOLLONEBREDDE
         );
+        this.state.clickIndex = Math.max(nesteIndex, this.state.clickIndex) + 1;
         const scrollTo =
             this.state.clickIndex * KOLLONEBREDDE - clientWidthWithOffset;
         this.scrollbars.scrollLeft(scrollTo);
@@ -46,7 +45,7 @@ class Tavle extends Component {
         this.setState({
             currentIndex: Math.ceil(values.scrollLeft / KOLLONEBREDDE),
             venstreKnappDisabled: values.left === 0,
-            hoyreKnappDisabled: values.left === 1,
+            hoyreKnappDisabled: values.left >= 0.99,
         });
     }
 
