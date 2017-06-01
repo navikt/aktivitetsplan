@@ -13,17 +13,20 @@ function AktivitetskortTillegg({ aktivitet, antallUlesteHenvendelser }) {
         <div className="aktivitetskort__ikon-blokk">
             <div className="aktivitetskort__etiketter">
                 <AktivitetEtikett
-                    visible={!!aktivitet.etikett}
-                    etikett={aktivitet.etikett}
-                    id={`etikett.${aktivitet.etikett}`}
-                />
-                <AktivitetEtikett
                     visible={aktivitet.avtalt}
                     etikett={AVTALT_MED_NAV}
                     id={AVTALT_MED_NAV}
                 />
+                <AktivitetEtikett
+                    visible={!!aktivitet.etikett}
+                    etikett={aktivitet.etikett}
+                    id={`etikett.${aktivitet.etikett}`}
+                />
             </div>
-            <VisibleIfDiv visible={antallUlesteHenvendelser > 0} className="aktivitetskort__henvendelser">
+            <VisibleIfDiv
+                visible={antallUlesteHenvendelser > 0}
+                className="aktivitetskort__henvendelser"
+            >
                 <TallAlert>{antallUlesteHenvendelser}</TallAlert>
             </VisibleIfDiv>
         </div>
@@ -32,16 +35,20 @@ function AktivitetskortTillegg({ aktivitet, antallUlesteHenvendelser }) {
 
 AktivitetskortTillegg.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    antallUlesteHenvendelser: PT.number.isRequired
+    antallUlesteHenvendelser: PT.number.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
     const dialoger = state.data.dialog.data;
-    const dialog = dialoger.find((d) => d.aktivitetId === props.aktivitet.id);
-    const antallUlesteHenvendelser = dialog ? dialog.henvendelser.filter((h) => !h.lest).length : 0;
-    return ({
-        antallUlesteHenvendelser
-    });
+    const dialog = dialoger.find(d => d.aktivitetId === props.aktivitet.id);
+    const antallUlesteHenvendelser = dialog
+        ? dialog.henvendelser.filter(h => !h.lest).length
+        : 0;
+    return {
+        antallUlesteHenvendelser,
+    };
 };
 
-export default visibleIfHOC(connect(mapStateToProps, null)(AktivitetskortTillegg));
+export default visibleIfHOC(
+    connect(mapStateToProps, null)(AktivitetskortTillegg)
+);

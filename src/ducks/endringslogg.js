@@ -10,14 +10,19 @@ export const FJERN = 'endringslogg/fjern';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
-    data: []
+    data: [],
 };
 
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case PENDING:
-            return { ...state, status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING };
+            return {
+                ...state,
+                status: state.status === STATUS.NOT_STARTED
+                    ? STATUS.PENDING
+                    : STATUS.RELOADING,
+            };
         case FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case OK:
@@ -34,11 +39,12 @@ export function hentEndringsloggForAktivtet(aktivitet) {
     return doThenDispatch(() => Api.hentEndringsloggTilAktivitet(aktivitet), {
         OK,
         FEILET,
-        PENDING
+        PENDING,
     });
 }
 
 export function fjernEndringsLogg() {
-    return (dispatch) => { dispatch({ type: FJERN }); };
+    return dispatch => {
+        dispatch({ type: FJERN });
+    };
 }
-

@@ -17,7 +17,7 @@ function VisAdvarsel(props) {
             <div className="aktivitetvisning__underseksjon">
                 <ModalContainer>
                     <Innholdstittel>
-                        { props.headerTekst }
+                        {props.headerTekst}
                     </Innholdstittel>
                     <AlertStripeInfoSolid>
                         <FormattedMessage id="ferdigstilt.advarsel.message" />
@@ -35,11 +35,11 @@ function VisAdvarsel(props) {
 
 VisAdvarsel.propTypes = {
     headerTekst: PT.element.isRequired,
-    handleSubmit: PT.func.isRequired
+    handleSubmit: PT.func.isRequired,
 };
 
 const BegrunnelseAktivitetReduxForm = reduxForm({
-    form: 'bekreft-advarsel-aktivitet-form'
+    form: 'bekreft-advarsel-aktivitet-form',
 })(VisAdvarsel);
 
 const mapDispatchToProps = () => ({});

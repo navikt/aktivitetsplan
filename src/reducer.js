@@ -15,7 +15,6 @@ import endreAktivitetReducer from './ducks/endre-aktivitet';
 import feilReducer from './ducks/feil';
 import historiskeVilkarReducer from './ducks/historiske-vilkar';
 
-
 export default combineReducers({
     form: formReducer,
     data: combineReducers({
@@ -30,10 +29,10 @@ export default combineReducers({
         dialog: dialogReducer,
         mal: malReducer,
         motpart: motpartReducer,
-        identitet: identitetReducer
+        identitet: identitetReducer,
     }),
     view: combineReducers({
-        endreAktivitet: endreAktivitetReducer
+        endreAktivitet: endreAktivitetReducer,
     }),
-    feil: feilReducer
+    feil: feilReducer,
 });

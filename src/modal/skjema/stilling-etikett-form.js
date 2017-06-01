@@ -13,10 +13,10 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
 function StillingEtikettForm(props) {
     const { aktivitet, oppdaterEtikett, dirty, handleSubmit, disabled } = props;
-    const onChange = (values) => {
+    const onChange = values => {
         oppdaterEtikett(aktivitet, values.etikettstatus);
     };
-    const erEtikettChecked = (statusId) => props.valgtEtikettStatus === statusId;
+    const erEtikettChecked = statusId => props.valgtEtikettStatus === statusId;
 
     return (
         <form onSubmit={handleSubmit(onChange)}>
@@ -28,7 +28,10 @@ function StillingEtikettForm(props) {
                         value={statuser.INGEN_VALGT}
                         id={`id--${statuser.INGEN_VALGT}`}
                         name="etikettstatus"
-                        checked={!props.valgtEtikettStatus || erEtikettChecked(statuser.INGEN_VALGT)}
+                        checked={
+                            !props.valgtEtikettStatus ||
+                                erEtikettChecked(statuser.INGEN_VALGT)
+                        }
                         disabled={disabled}
                     />
                     <Radio
@@ -42,11 +45,15 @@ function StillingEtikettForm(props) {
                     />
                     <Radio
                         feltNavn={'etikettstatus'}
-                        label={<FormattedMessage id="etikett.INNKALT_TIL_INTERVJU" />}
+                        label={
+                            <FormattedMessage id="etikett.INNKALT_TIL_INTERVJU" />
+                        }
                         value={statuser.INNKALT_TIL_INTERVJU}
                         id={`id--${statuser.INNKALT_TIL_INTERVJU}`}
                         name="etikettstatus"
-                        checked={erEtikettChecked(statuser.INNKALT_TIL_INTERVJU)}
+                        checked={erEtikettChecked(
+                            statuser.INNKALT_TIL_INTERVJU
+                        )}
                         disabled={disabled}
                     />
                 </div>
@@ -81,12 +88,12 @@ function StillingEtikettForm(props) {
 }
 
 const OppdaterReduxForm = reduxForm({
-    form: 'etikett-status-form'
+    form: 'etikett-status-form',
 })(StillingEtikettForm);
 
 StillingEtikettForm.defaultProps = {
     aktiviteterStatus: 'OK',
-    valgtEtikettStatus: null
+    valgtEtikettStatus: null,
 };
 
 StillingEtikettForm.propTypes = {
@@ -96,22 +103,28 @@ StillingEtikettForm.propTypes = {
     dirty: PT.bool.isRequired,
     aktivitet: aktivitetPT.isRequired,
     oppdaterEtikett: PT.func.isRequired,
-    disabled: PT.bool.isRequired
+    disabled: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
-    disabled: state.data.aktiviteter.status !== STATUS.OK || props.disableStatusEndring,
-    valgtEtikettStatus: formValueSelector('etikett-status-form')(state, 'etikettstatus'),
+    disabled: state.data.aktiviteter.status !== STATUS.OK ||
+        props.disableStatusEndring,
+    valgtEtikettStatus: formValueSelector('etikett-status-form')(
+        state,
+        'etikettstatus'
+    ),
     initialValues: {
-        etikettstatus: props.aktivitet.etikett
-    }
+        etikettstatus: props.aktivitet.etikett,
+    },
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     oppdaterEtikett: (aktivitet, etikett) => {
         const nyEtikett = etikett === statuser.INGEN_VALGT ? null : etikett;
-        oppdaterAktivitetEtikett({ ...aktivitet, etikett: nyEtikett })(dispatch);
-    }
+        oppdaterAktivitetEtikett({ ...aktivitet, etikett: nyEtikett })(
+            dispatch
+        );
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);

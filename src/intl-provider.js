@@ -36,17 +36,20 @@ IntlProvider.propTypes = {
     locale: PT.string.isRequired,
     ledetekster: PT.shape({
         status: PT.string.isRequired,
-        data: PT.object
-    }).isRequired
+        data: PT.object,
+    }).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    ledetekster: state.data.ledetekster
+const mapStateToProps = state => ({
+    ledetekster: state.data.ledetekster,
 });
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({
-        hentLedetekster
-    }, dispatch)
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(
+        {
+            hentLedetekster,
+        },
+        dispatch
+    ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IntlProvider);

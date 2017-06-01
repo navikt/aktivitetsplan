@@ -12,7 +12,11 @@ function NyAktivitet() {
         <StandardModal name="nyAktivitetModal">
             <ModalHeader className="ny-aktivitet-modal side-innhold">
                 <div className="ny-aktivitet-modal__header">
-                    <Bilde className="ny-aktivitet-modal__bilde" src={leggTilAktivitetSvg} alt="Dekorativ illustrajon" />
+                    <Bilde
+                        className="ny-aktivitet-modal__bilde"
+                        src={leggTilAktivitetSvg}
+                        alt="Dekorativ illustrajon"
+                    />
                     <Innholdstittel className="ny-aktivitet-tittel">
                         <FormattedMessage id="ny-aktivitet-modal.tittel" />
                     </Innholdstittel>

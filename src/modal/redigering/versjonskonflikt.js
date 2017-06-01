@@ -8,7 +8,6 @@ import visibleIfHOC from '../../hocs/visible-if';
 import versjonskonfliktSvg from './versjonskonflikt.svg';
 import './versjonskonflikt.less';
 
-
 function Versjonskonflikt({ tilbake, slett }) {
     return (
         <article className="versjonskonflikt">
@@ -31,10 +30,9 @@ function Versjonskonflikt({ tilbake, slett }) {
     );
 }
 
-
 Versjonskonflikt.propTypes = {
     slett: PT.func.isRequired,
-    tilbake: PT.bool.isRequired
+    tilbake: PT.bool.isRequired,
 };
 
 export default visibleIfHOC(Versjonskonflikt);

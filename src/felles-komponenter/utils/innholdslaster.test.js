@@ -53,7 +53,12 @@ describe('innholdslaster', () => {
     it('Skal rendre feilmelding om noen av avhengighetene er ok, men andre har feilet', () => {
         const wrapper = mount(
             <IntlProvider>
-                <Innholdslaster avhengigheter={[{ status: STATUS.OK }, { status: STATUS.ERROR }]}>
+                <Innholdslaster
+                    avhengigheter={[
+                        { status: STATUS.OK },
+                        { status: STATUS.ERROR },
+                    ]}
+                >
                     Children
                 </Innholdslaster>
             </IntlProvider>

@@ -7,7 +7,7 @@ function VisibleIfDiv(props) {
 }
 
 VisibleIfDiv.propTypes = {
-    children: PT.node.isRequired
+    children: PT.node.isRequired,
 };
 
 export default visibleIfHOC(VisibleIfDiv);

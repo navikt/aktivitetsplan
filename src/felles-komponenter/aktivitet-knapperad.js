@@ -3,21 +3,16 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { Hovedknapp, Knapp } from 'nav-react-design/dist/knapp';
 
-const aktivitetKnapperadCls = (className) => classNames('aktivitet-knapperad', className);
+const aktivitetKnapperadCls = className =>
+    classNames('aktivitet-knapperad', className);
 
 function AktivitetKnapperad({ className, handterRediger, handterSlett }) {
     return (
         <section className={aktivitetKnapperadCls(className)}>
-            <Hovedknapp
-                className="rad-knapp"
-                onClick={handterRediger}
-            >
+            <Hovedknapp className="rad-knapp" onClick={handterRediger}>
                 Rediger
             </Hovedknapp>
-            <Knapp
-                className="rad-knapp"
-                onClick={handterSlett}
-            >
+            <Knapp className="rad-knapp" onClick={handterSlett}>
                 Slett
             </Knapp>
         </section>
@@ -27,11 +22,11 @@ function AktivitetKnapperad({ className, handterRediger, handterSlett }) {
 AktivitetKnapperad.propTypes = {
     className: PT.string,
     handterRediger: PT.func.isRequired,
-    handterSlett: PT.func.isRequired
+    handterSlett: PT.func.isRequired,
 };
 
 AktivitetKnapperad.defaultProps = {
-    className: undefined
+    className: undefined,
 };
 
 export default AktivitetKnapperad;

@@ -1,5 +1,6 @@
 import * as Api from './api';
 import { doThenDispatch, STATUS } from './utils';
+import { datoComparator } from '../utils';
 
 // Actions
 export const HENTER = 'dialog/hent';
@@ -21,12 +22,12 @@ export const OPPDATER_DIALOG_FEILET = 'dialog/oppdater/fail';
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
-    sisteHenvendelseData: null
+    sisteHenvendelseData: null,
 };
 
 function nyStateMedOppdatertDialog(state, dialog) {
     const data = state.data;
-    const dialogIndeks = data.findIndex((d) => d.id === dialog.id);
+    const dialogIndeks = data.findIndex(d => d.id === dialog.id);
     const nyData = [...data];
     if (dialogIndeks >= 0) {
         nyData[dialogIndeks] = dialog;
@@ -36,6 +37,15 @@ function nyStateMedOppdatertDialog(state, dialog) {
     return { ...state, status: STATUS.OK, data: nyData };
 }
 
+function compareDialoger(a, b) {
+    if (a.ferdigBehandlet !== b.ferdigBehandlet) {
+        return a.ferdigBehandlet ? 1 : -1;
+    } else if (a.lest !== b.lest) {
+        return a.lest ? 1 : -1;
+    }
+    return datoComparator(b.sisteDato, a.sisteDato);
+}
+
 // Reducer
 export default function reducer(state = initalState, action) {
     const data = action.data;
@@ -43,9 +53,18 @@ export default function reducer(state = initalState, action) {
         case OPPRETTER_HENVENDELSE:
             return { ...state, status: STATUS.RELOADING };
         case HENTET:
-            return { ...state, status: STATUS.OK, data };
+            // Tilsynelatende litt rart å sortere dialogene her, men det støtter opp under krav om at
+            // en dialog ikke skal endre plass i lista unntatt ved full innlastning av lista
+            return {
+                ...state,
+                status: STATUS.OK,
+                data: data.sort(compareDialoger),
+            };
         case OPPRETTET_HENVENDELSE:
-            return { ...nyStateMedOppdatertDialog(state, data), sisteHenvendelseData: data };
+            return {
+                ...nyStateMedOppdatertDialog(state, data),
+                sisteHenvendelseData: data,
+            };
         case DIALOG_LEST_OK:
         case OPPDATER_DIALOG_OK:
             return nyStateMedOppdatertDialog(state, data);
@@ -59,7 +78,7 @@ export function hentDialog() {
     return doThenDispatch(() => Api.hentDialog(), {
         OK: HENTET,
         FEILET: HENTING_FEILET,
-        PENDING: HENTER
+        PENDING: HENTER,
     });
 }
 
@@ -67,7 +86,7 @@ export function nyHenvendelse(henvendelse) {
     return doThenDispatch(() => Api.nyHenvendelse(henvendelse), {
         OK: OPPRETTET_HENVENDELSE,
         FEILET: OPPRETT_HENVENDELSE_FEILET,
-        PENDING: OPPRETTER_HENVENDELSE
+        PENDING: OPPRETTER_HENVENDELSE,
     });
 }
 
@@ -75,7 +94,7 @@ export function markerDialogSomLest(dialogId) {
     return doThenDispatch(() => Api.markerDialogSomLest(dialogId), {
         OK: DIALOG_LEST_OK,
         FEILET: DIALOG_LEST_FEILET,
-        PENDING: DIALOG_LEST
+        PENDING: DIALOG_LEST,
     });
 }
 
@@ -83,6 +102,6 @@ export function oppdaterDialog(dialog) {
     return doThenDispatch(() => Api.oppdaterDialog(dialog), {
         OK: OPPDATER_DIALOG_OK,
         FEILET: OPPDATER_DIALOG_FEILET,
-        PENDING: OPPDATER_DIALOG
+        PENDING: OPPDATER_DIALOG,
     });
 }

@@ -1,5 +1,7 @@
 import { fetchInterceptor } from '~config'; // eslint-disable-line
-import { update as resetTimeout } from '../felles-komponenter/timeoutbox/timeoutbox';
+import {
+    update as resetTimeout,
+} from '../felles-komponenter/timeoutbox/timeoutbox';
 
 /* eslint-env browser */
 export const STATUS = {
@@ -7,17 +9,17 @@ export const STATUS = {
     PENDING: 'PENDING',
     OK: 'OK',
     RELOADING: 'RELOADING',
-    ERROR: 'ERROR'
+    ERROR: 'ERROR',
 };
 
 export const FEILTYPE = {
     VERSJONSKONFLIKT: 'VERSJONSKONFLIKT',
-    UKJENT: 'UKJENT'
+    UKJENT: 'UKJENT',
 };
 
 const DEFAULT_CONFIG = {
     credentials: 'same-origin',
-    redirect: 'manual' // ikke bli lurt av at backenden plutseling redirecter til login- eller feilside
+    redirect: 'manual', // ikke bli lurt av at backenden plutseling redirecter til login- eller feilside
 };
 
 export function sjekkStatuskode(response) {
@@ -30,7 +32,8 @@ export function sjekkStatuskode(response) {
 }
 
 export function toJson(response) {
-    if (response.status !== 204) { // No content
+    if (response.status !== 204) {
+        // No content
         return response.json();
     }
     return response;
@@ -55,10 +58,10 @@ function parseError(errorData) {
 }
 
 export function handterFeil(dispatch, action) {
-    return (error) => {
+    return error => {
         const response = error.response;
         if (response) {
-            response.text().then((data) => {
+            response.text().then(data => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
                 dispatch({ type: action, data: parseError(data) });
             });
@@ -70,7 +73,7 @@ export function handterFeil(dispatch, action) {
     };
 }
 
-export const getCookie = (name) => {
+export const getCookie = name => {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
@@ -79,7 +82,9 @@ export const getCookie = (name) => {
 export function fetchToJson(url, config = {}) {
     resetTimeout();
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
-    return (fetchInterceptor ? fetchInterceptor(fetch, url, configMedCredentials) : fetch(url, configMedCredentials))
+    return (fetchInterceptor
+        ? fetchInterceptor(fetch, url, configMedCredentials)
+        : fetch(url, configMedCredentials))
         .then(sjekkStatuskode)
         .then(toJson);
 }
@@ -89,11 +94,11 @@ function methodToJson(method, url, data, config) {
         ...{
             method,
             headers: new Headers({
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             }),
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         },
-        ...config
+        ...config,
     });
 }
 
@@ -106,7 +111,7 @@ export function putAsJson(url, data = {}, config = {}) {
 }
 
 export function doThenDispatch(fn, { OK, FEILET, PENDING }) {
-    return (dispatch) => {
+    return dispatch => {
         if (PENDING) {
             dispatch({ type: PENDING });
         }

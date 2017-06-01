@@ -14,10 +14,18 @@ const VisibleAlertStripeAdvarsel = visibleIfHOC(AlertStripeAdvarsel);
 
 function Feil({ sisteFeil, sisteFeilSkjult, skjulFeil }) {
     return (
-        <VisibleAlertStripeAdvarsel visible={!!sisteFeil && !sisteFeilSkjult} className="feil">
+        <VisibleAlertStripeAdvarsel
+            visible={!!sisteFeil && !sisteFeilSkjult}
+            className="feil"
+        >
             <Lukknapp overstHjorne onClick={skjulFeil} />
-            <Undertittel>Feil i aktivitetsplan - {sisteFeil && sisteFeil.type}</Undertittel>
-            <VisibleIfDiv visible={sisteFeil && sisteFeil.detaljer} className="feil__detaljer">
+            <Undertittel>
+                Feil i aktivitetsplan - {sisteFeil && sisteFeil.type}
+            </Undertittel>
+            <VisibleIfDiv
+                visible={sisteFeil && sisteFeil.detaljer}
+                className="feil__detaljer"
+            >
                 <pre>{sisteFeil && sisteFeil.detaljer}</pre>
             </VisibleIfDiv>
         </VisibleAlertStripeAdvarsel>
@@ -27,23 +35,23 @@ function Feil({ sisteFeil, sisteFeilSkjult, skjulFeil }) {
 Feil.propTypes = {
     skjulFeil: PT.func.isRequired,
     sisteFeil: AppPT.feil,
-    sisteFeilSkjult: PT.bool.isRequired
+    sisteFeilSkjult: PT.bool.isRequired,
 };
 
 Feil.defaultProps = {
-    sisteFeil: undefined
+    sisteFeil: undefined,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     const feilState = state.feil;
-    return ({
+    return {
         sisteFeil: feilState.sisteFeil,
-        sisteFeilSkjult: feilState.sisteFeilSkjult
-    });
+        sisteFeilSkjult: feilState.sisteFeilSkjult,
+    };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    skjulFeil: () => dispatch(SKJUL_SISTE_FEIL_ACTION)
+const mapDispatchToProps = dispatch => ({
+    skjulFeil: () => dispatch(SKJUL_SISTE_FEIL_ACTION),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feil);

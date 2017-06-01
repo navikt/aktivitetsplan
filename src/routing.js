@@ -11,26 +11,41 @@ import StillingAktivitet from './modal/skjema/stilling-aktivitet';
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
-import BegrunnelseFullfortAktivitet from './modal/ferdigstilt/fullfort-aktivitet';
-import BegrunnelseAvbruttAktivitet from './modal/ferdigstilt/avbrutt-aktivitet';
+import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
+import AvbryttAktivitet from './modal/ferdigstilt/avbrytt-aktivitet';
+
+export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
+export const endreAktivitetRoute = aktivitetId =>
+    `/aktivitet/endre/${aktivitetId}`;
+export const fullforAktivitetRoute = aktivitetId =>
+    `/aktivitet/fullfor/${aktivitetId}`;
+export const avbrytAktivitetRoute = aktivitetId =>
+    `/aktivitet/avbryt/${aktivitetId}`;
 
 export default (
-    <Route>
-        <IndexRoute component={Hovedside} />
-        <Route modalId="aktivitetsmalModal" path="mal" component={AktivitetsmalModal} />
+    <Route component={Hovedside}>
+        <IndexRoute />
+        <Route
+            modalId="aktivitetsmalModal"
+            path="mal"
+            component={AktivitetsmalModal}
+        />
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
-        <Route path="vilkar" component={VilkarModalMedHistorikk} />
-        <Route path="vilkar/:hash" component={VilkarModalUtenHistorikk} />
-        <Route path="aktivitet" component={Hovedside}>
+        <Route path="vilkarhistorikk" component={VilkarModalMedHistorikk} />
+        <Route
+            path="vilkarhistorikk/:key"
+            component={VilkarModalUtenHistorikk}
+        />
+        <Route path="aktivitet">
             <Route path="ny" component={NyAktivitet} />
             <Route path="ny/egen" component={EgenAktivitet} />
             <Route path="ny/stilling" component={StillingAktivitet} />
-            <Route path="aktivitet/:id" component={Aktivitetvisning} />
-            <Route path="aktivitet/:id/endre" component={EndreAktivitet} />
-            <Route path="aktivitet/:id/avbryt" component={BegrunnelseAvbruttAktivitet} />
-            <Route path="aktivitet/:id/fullfor" component={BegrunnelseFullfortAktivitet} />
+            <Route path="vis/:id" component={Aktivitetvisning} />
+            <Route path="endre/:id" component={EndreAktivitet} />
+            <Route path="avbryt/:id" component={AvbryttAktivitet} />
+            <Route path="fullfor/:id" component={FullforAktivitet} />
         </Route>
-        <Route path="*" component={Hovedside} />
+        <Route path="*" />
     </Route>
 );

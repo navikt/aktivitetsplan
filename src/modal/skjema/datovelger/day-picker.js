@@ -10,10 +10,11 @@ import './day-picker.less';
 
 const localeUtils = {
     ...MomentLocaleUtils,
-    formatWeekdayShort: (i, locale) => MomentLocaleUtils.formatWeekdayLong(i, locale).substring(0, 3)
+    formatWeekdayShort: (i, locale) =>
+        MomentLocaleUtils.formatWeekdayLong(i, locale).substring(0, 3),
 };
 
-const pad = (nr) => {
+const pad = nr => {
     if (nr > 9 || nr.length > 1) {
         return nr;
     }
@@ -21,47 +22,62 @@ const pad = (nr) => {
 };
 
 export const Caption = ({ date }) => (
-    <div className="DayPicker-Caption" role="heading" aria-live="assertive" aria-atomic="true">
+    <div
+        className="DayPicker-Caption"
+        role="heading"
+        aria-live="assertive"
+        aria-atomic="true"
+    >
         <FormattedDate month="long" year="numeric" value={date} />
     </div>
 );
 
 Caption.propTypes = {
-    date: PT.instanceOf(Date)
+    date: PT.instanceOf(Date),
 };
 
 Caption.defaultProps = {
-    date: undefined
+    date: undefined,
 };
 
-export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showNextButton, intl }) => {
+export const NavBar = ({
+    onNextClick,
+    onPreviousClick,
+    showPreviousButton,
+    showNextButton,
+    intl,
+}) => {
     const className = 'DayPicker-NavButton';
-    return (<div role="toolbar">
-        <button
-            tabIndex="-1"
-            aria-label={intl.formatMessage({ id: 'datepicker.forrige-maaned' })}
-            className={`${className} DayPicker-NavButton--prev`}
-            disabled={!showPreviousButton}
-            type="button"
-            onClick={
-                (e) => {
+    return (
+        <div role="toolbar">
+            <button
+                tabIndex="-1"
+                aria-label={intl.formatMessage({
+                    id: 'datepicker.forrige-maaned',
+                })}
+                className={`${className} DayPicker-NavButton--prev`}
+                disabled={!showPreviousButton}
+                type="button"
+                onClick={e => {
                     e.preventDefault();
                     onPreviousClick();
-                }
-            }
-        />
-        <button
-            tabIndex="-1"
-            aria-label={intl.formatMessage({ id: 'datepicker.neste-maaned' })}
-            className={`${className} DayPicker-NavButton--next`}
-            disabled={!showNextButton}
-            type="button"
-            onClick={(e) => {
-                e.preventDefault();
-                onNextClick();
-            }}
-        />
-    </div>);
+                }}
+            />
+            <button
+                tabIndex="-1"
+                aria-label={intl.formatMessage({
+                    id: 'datepicker.neste-maaned',
+                })}
+                className={`${className} DayPicker-NavButton--next`}
+                disabled={!showNextButton}
+                type="button"
+                onClick={e => {
+                    e.preventDefault();
+                    onNextClick();
+                }}
+            />
+        </div>
+    );
 };
 
 NavBar.propTypes = {
@@ -69,14 +85,14 @@ NavBar.propTypes = {
     onPreviousClick: PT.func,
     showPreviousButton: PT.bool,
     showNextButton: PT.bool,
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
 };
 
 NavBar.defaultProps = {
     onNextClick: undefined,
     onPreviousClick: undefined,
     showPreviousButton: false,
-    showNextButton: false
+    showNextButton: false,
 };
 
 class DayPickerComponent extends Component {
@@ -120,33 +136,39 @@ class DayPickerComponent extends Component {
 
     erDeaktivertDag(day) {
         const { tidligsteFom, senesteTom } = this.props;
-        const tempDay = new Date(`${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())}`);
+        const tempDay = new Date(
+            `${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())}`
+        );
 
-        return (tidligsteFom && dateGreater(tidligsteFom, tempDay)) ||
-            (senesteTom && dateLess(senesteTom, tempDay));
+        return (
+            (tidligsteFom && dateGreater(tidligsteFom, tempDay)) ||
+            (senesteTom && dateLess(senesteTom, tempDay))
+        );
     }
 
     render() {
         const { ariaControlledBy, onKeyUp } = this.props;
-        return (<div // eslint-disable-line jsx-a11y/no-static-element-interactions
-            className="datovelger__DayPicker"
-            aria-controlledby={ariaControlledBy} // eslint-disable-line jsx-a11y/aria-props
-            onKeyUp={(e) => {
-                onKeyUp(e);
-            }}
-        >
-            <DayPicker
-                locale="no"
-                initialMonth={this.getInitialMonth()}
-                localeUtils={localeUtils}
-                firstDayOfWeek={1}
-                captionElement={<Caption />}
-                navbarElement={<NavBar intl={this.props.intl} />}
-                selectedDays={(day) => this.selectedDays(day)}
-                onDayClick={(event, jsDato) => this.props.onDayClick(event, jsDato)}
-
-            />
-        </div>);
+        return (
+            <div // eslint-disable-line jsx-a11y/no-static-element-interactions
+                className="datovelger__DayPicker"
+                aria-controlledby={ariaControlledBy} // eslint-disable-line jsx-a11y/aria-props
+                onKeyUp={e => {
+                    onKeyUp(e);
+                }}
+            >
+                <DayPicker
+                    locale="no"
+                    initialMonth={this.getInitialMonth()}
+                    localeUtils={localeUtils}
+                    firstDayOfWeek={1}
+                    captionElement={<Caption />}
+                    navbarElement={<NavBar intl={this.props.intl} />}
+                    selectedDays={day => this.selectedDays(day)}
+                    onDayClick={(event, jsDato) =>
+                        this.props.onDayClick(event, jsDato)}
+                />
+            </div>
+        );
     }
 }
 
@@ -158,13 +180,13 @@ DayPickerComponent.propTypes = {
     onDayClick: PT.func.isRequired,
     senesteTom: PT.instanceOf(Date),
     tidligsteFom: PT.instanceOf(Date),
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
 };
 
 DayPickerComponent.defaultProps = {
     ariaControlledBy: undefined,
     senesteTom: undefined,
-    tidligsteFom: undefined
+    tidligsteFom: undefined,
 };
 
 export default injectIntl(DayPickerComponent);

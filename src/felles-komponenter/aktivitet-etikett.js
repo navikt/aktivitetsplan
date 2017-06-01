@@ -6,8 +6,8 @@ import './aktivitet-etikett.less';
 import visibleIfHOC from '../hocs/visible-if';
 import * as statuskoder from '../constant';
 
-const cls = (type) => classNames('etikett', `etikett--${type}`);
-const setType = (etikettnavn) => {
+const cls = type => classNames('etikett', `etikett--${type}`);
+const setType = etikettnavn => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
         case statuskoder.DIALOG_FERDIGBEHANDLET:
@@ -16,9 +16,8 @@ const setType = (etikettnavn) => {
         case statuskoder.JOBBTILBUD:
             return 'info';
         case statuskoder.AVSLAG:
-            return 'varsling';
         case statuskoder.DIALOG_MA_BESVARES:
-            return 'feil';
+            return 'varsling';
         case statuskoder.AVTALT_MED_NAV:
             return 'avtalt';
         default:
@@ -36,7 +35,7 @@ function AktivitetEtikett({ etikett, id }) {
 
 AktivitetEtikett.propTypes = {
     etikett: PT.string.isRequired,
-    id: PT.string.isRequired
+    id: PT.string.isRequired,
 };
 
 export default visibleIfHOC(AktivitetEtikett);

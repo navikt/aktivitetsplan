@@ -10,13 +10,19 @@ import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Feature from './felles-komponenter/feature/feature';
 
 const shouldScroll = (prevRouterProps, nextRouterProps) =>
-    !(prevRouterProps && nextRouterProps && prevRouterProps.params.temaid && nextRouterProps.params.temaid);
+    !(prevRouterProps &&
+        nextRouterProps &&
+        prevRouterProps.params.temaid &&
+        nextRouterProps.params.temaid);
 
 function App({ routing }) {
     return (
         <Provider>
-            <div>
-                <Router history={history} render={applyRouterMiddleware(useScroll(shouldScroll))}>
+            <div className="fullbredde">
+                <Router
+                    history={history}
+                    render={applyRouterMiddleware(useScroll(shouldScroll))}
+                >
                     {routing}
                 </Router>
                 <Feature name="timeoutbox">
@@ -28,7 +34,7 @@ function App({ routing }) {
 }
 
 App.propTypes = {
-    routing: PT.node.isRequired
+    routing: PT.node.isRequired,
 };
 
 export default App;

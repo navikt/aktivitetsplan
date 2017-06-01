@@ -17,17 +17,21 @@ const TEKST_MAKS_LENGDE = 2000;
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeSuksessSolid);
 
-function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter, visBrukerInfo }) {
+function NyHenvendelseForm({
+    handleSubmit,
+    harEksisterendeOverskrift,
+    oppretter,
+    visBrukerInfo,
+}) {
     return (
         <form onSubmit={handleSubmit} className="ny-henvendelse-form">
-            { harEksisterendeOverskrift || (
+            {harEksisterendeOverskrift ||
                 <Input
                     feltNavn="overskrift"
                     labelId="dialog.overskrift-label"
                     disabled={oppretter}
                     autoFocus
-                />
-            )}
+                />}
             <Textarea
                 feltNavn="tekst"
                 placeholder="Skriv her"
@@ -35,13 +39,14 @@ function NyHenvendelseForm({ handleSubmit, harEksisterendeOverskrift, oppretter,
                 disabled={oppretter}
                 visTellerFra={500}
             />
-            <Hovedknapp
-                type="hoved"
-                spinner={oppretter}
-                disabled={oppretter}
-            ><FormattedMessage id="dialog.lag-ny-dialog" /></Hovedknapp>
+            <Hovedknapp type="hoved" spinner={oppretter} disabled={oppretter}>
+                <FormattedMessage id="dialog.lag-ny-dialog" />
+            </Hovedknapp>
 
-            <VisibleAlertStripeSuksessSolid style={{ marginTop: '1rem' }} visible={visBrukerInfo}>
+            <VisibleAlertStripeSuksessSolid
+                style={{ marginTop: '1rem' }}
+                visible={visBrukerInfo}
+            >
                 <FormattedMessage id="dialog.info-til-bruker" />
             </VisibleAlertStripeSuksessSolid>
         </form>
@@ -52,24 +57,38 @@ NyHenvendelseForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     harEksisterendeOverskrift: PT.bool.isRequired,
     oppretter: PT.bool.isRequired,
-    visBrukerInfo: PT.bool.isRequired
+    visBrukerInfo: PT.bool.isRequired,
 };
 
-const pakrevdOverskrift = rules.minLength(0, <FormattedMessage id="dialog.ny-henvendelse.overskrift.mangler.feilmelding" />);
-const pakrevdTekst = rules.minLength(0, <FormattedMessage id="dialog.ny-henvendelse.tekst.mangler.feilmelding" />);
-
-const begrensetTittelLengde = rules.maxLength(OVERSKRIFT_MAKS_LENGDE,
-    <FormattedMessage id="dialog.ny-henvendelse.overskrift.for-lang.feilmelding" values={{ antall_tegn: OVERSKRIFT_MAKS_LENGDE }} />
+const pakrevdOverskrift = rules.minLength(
+    0,
+    <FormattedMessage id="dialog.ny-henvendelse.overskrift.mangler.feilmelding" />
 );
-const begrensetTekstLengde = rules.maxLength(TEKST_MAKS_LENGDE,
-    <FormattedMessage id="dialog.ny-henvendelse.tekst.for-lang.feilmelding" values={{ antall_tegn: TEKST_MAKS_LENGDE }} />
+const pakrevdTekst = rules.minLength(
+    0,
+    <FormattedMessage id="dialog.ny-henvendelse.tekst.mangler.feilmelding" />
+);
+
+const begrensetTittelLengde = rules.maxLength(
+    OVERSKRIFT_MAKS_LENGDE,
+    <FormattedMessage
+        id="dialog.ny-henvendelse.overskrift.for-lang.feilmelding"
+        values={{ antall_tegn: OVERSKRIFT_MAKS_LENGDE }}
+    />
+);
+const begrensetTekstLengde = rules.maxLength(
+    TEKST_MAKS_LENGDE,
+    <FormattedMessage
+        id="dialog.ny-henvendelse.tekst.for-lang.feilmelding"
+        values={{ antall_tegn: TEKST_MAKS_LENGDE }}
+    />
 );
 
 const NyHenvendelseReduxForm = validForm({
     validate: {
         overskrift: [pakrevdOverskrift, begrensetTittelLengde],
-        tekst: [pakrevdTekst, begrensetTekstLengde]
-    }
+        tekst: [pakrevdTekst, begrensetTekstLengde],
+    },
 })(NyHenvendelseForm);
 
 const mapStateToProps = (state, props) => {
@@ -80,8 +99,8 @@ const mapStateToProps = (state, props) => {
     const dialoger = dialogState.data;
     const aktiviteter = state.data.aktiviteter.data;
 
-    const dialog = dialoger.find((d) => d.id === dialogId) || {};
-    const aktivitet = aktiviteter.find((a) => a.id === aktivitetId) || {};
+    const dialog = dialoger.find(d => d.id === dialogId) || {};
+    const aktivitet = aktiviteter.find(a => a.id === aktivitetId) || {};
     const erBruker = state.data.identitet.data.erBruker;
 
     const overskrift = aktivitet.tittel || dialog.overskrift;
@@ -89,11 +108,13 @@ const mapStateToProps = (state, props) => {
     return {
         form: props.formNavn,
         initialValues: {
-            overskrift
+            overskrift,
         },
         harEksisterendeOverskrift: !!overskrift,
         oppretter: dialogState.status !== STATUS.OK,
-        visBrukerInfo: !!(erBruker && dialogState.sisteHenvendelseData === dialog && moment(sisteDato).add(5, 's').isAfter(moment()))
+        visBrukerInfo: !!(erBruker &&
+            dialogState.sisteHenvendelseData === dialog &&
+            moment(sisteDato).add(5, 's').isAfter(moment())),
     };
 };
 
@@ -102,20 +123,23 @@ const mapDispatchToProps = () => ({
         const nyHenvendelsePromise = nyHenvendelse({
             aktivitetId: props.aktivitetId,
             dialogId: props.dialogId,
-            ...dialogData
+            ...dialogData,
         })(dispatch);
 
         const onComplete = props.onComplete;
-        nyHenvendelsePromise.then((action) => {
+        nyHenvendelsePromise.then(action => {
             props.reset();
             if (onComplete) {
                 onComplete(action.data);
             }
         });
-    }
+    },
 });
 
-const NyHenvendelseReduxFormConnected = connect(mapStateToProps, mapDispatchToProps)(NyHenvendelseReduxForm);
+const NyHenvendelseReduxFormConnected = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NyHenvendelseReduxForm);
 
 function DynamiskNyHenvendelseReduxFormConnected(props) {
     // TODO setter key=formNavn for å tvinge unmount/mount hvis denne endrer seg.
@@ -124,7 +148,7 @@ function DynamiskNyHenvendelseReduxFormConnected(props) {
 }
 
 DynamiskNyHenvendelseReduxFormConnected.propTypes = {
-    formNavn: PT.string.isRequired
+    formNavn: PT.string.isRequired,
 };
 
 export default DynamiskNyHenvendelseReduxFormConnected;

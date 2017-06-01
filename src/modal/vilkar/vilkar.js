@@ -13,7 +13,10 @@ function Vilkar({ vilkarListe, vilkar, visHistorikk }) {
     return (
         <div className="vilkar">
             <VilkarInnhold vilkar={gjeldendeVilkar} />
-            <VisibleIfDiv visible={visHistorikk} className="vilkar__historikk-container">
+            <VisibleIfDiv
+                visible={visHistorikk}
+                className="vilkar__historikk-container"
+            >
                 <hr className="vilkar__delelinje" />
                 <VilkarHistorikk resterendeVilkar={resterendeVilkar} />
             </VisibleIfDiv>
@@ -24,13 +27,13 @@ function Vilkar({ vilkarListe, vilkar, visHistorikk }) {
 Vilkar.propTypes = {
     vilkarListe: PT.arrayOf(AppPT.vilkar),
     vilkar: AppPT.vilkar,
-    visHistorikk: PT.bool
+    visHistorikk: PT.bool,
 };
 
 Vilkar.defaultProps = {
     visHistorikk: false,
     vilkarListe: undefined,
-    vilkar: undefined
+    vilkar: undefined,
 };
 
 export default Vilkar;

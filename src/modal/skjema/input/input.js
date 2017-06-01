@@ -9,7 +9,11 @@ function InnerInputComponent({ input, labelId, errorMessage, meta, ...rest }) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     const inputProps = { ...input, ...rest };
     return (
-        <NavInput label={<FormattedMessage id={labelId} />} feil={feil} {...inputProps} />
+        <NavInput
+            label={<FormattedMessage id={labelId} />}
+            feil={feil}
+            {...inputProps}
+        />
     );
 }
 
@@ -18,14 +22,14 @@ InnerInputComponent.propTypes = {
     bredde: PT.string,
     errorMessage: PT.arrayOf(PT.node),
     meta: PT.object, // eslint-disable-line react/forbid-prop-types
-    input: PT.object // eslint-disable-line react/forbid-prop-types
+    input: PT.object, // eslint-disable-line react/forbid-prop-types
 };
 
 InnerInputComponent.defaultProps = {
     bredde: undefined,
     errorMessage: undefined,
     meta: undefined,
-    input: undefined
+    input: undefined,
 };
 
 function Input({ feltNavn, ...rest }) {
@@ -39,7 +43,7 @@ function Input({ feltNavn, ...rest }) {
 }
 
 Input.propTypes = {
-    feltNavn: PT.string.isRequired
+    feltNavn: PT.string.isRequired,
 };
 
 export default Input;
