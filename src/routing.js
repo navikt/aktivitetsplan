@@ -12,7 +12,7 @@ import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
 import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
-import AvbryttAktivitet from './modal/ferdigstilt/avbrytt-aktivitet';
+import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
 export const endreAktivitetRoute = aktivitetId =>
@@ -43,7 +43,7 @@ export default (
             <Route path="ny/stilling" component={StillingAktivitet} />
             <Route path="vis/:id" component={Aktivitetvisning} />
             <Route path="endre/:id" component={EndreAktivitet} />
-            <Route path="avbryt/:id" component={AvbryttAktivitet} />
+            <Route path="avbryt/:id" component={AvbrytAktivitet} />
             <Route path="fullfor/:id" component={FullforAktivitet} />
         </Route>
         <Route path="*" />

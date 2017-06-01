@@ -20,7 +20,7 @@ function VisAdvarsel(props) {
                         {props.headerTekst}
                     </Innholdstittel>
                     <AlertStripeInfoSolid>
-                        <FormattedMessage id="ferdigstilt.advarsel.message" />
+                        <FormattedMessage id="ferdigstilt.modal.message" />
                     </AlertStripeInfoSolid>
                 </ModalContainer>
             </div>
@@ -42,6 +42,4 @@ const BegrunnelseAktivitetReduxForm = reduxForm({
     form: 'bekreft-advarsel-aktivitet-form',
 })(VisAdvarsel);
 
-const mapDispatchToProps = () => ({});
-
-export default connect(null, mapDispatchToProps)(BegrunnelseAktivitetReduxForm);
+export default connect()(BegrunnelseAktivitetReduxForm);

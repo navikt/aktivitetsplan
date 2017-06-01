@@ -10,7 +10,7 @@ import { STATUS } from '../../ducks/utils';
 import StandardModal from '../modal-standard';
 import history from '../../history';
 
-const AvbryttAktivitet = props => {
+const AvbrytAktivitet = props => {
     const paramsId = props.params.id;
     const valgtAktivitet = props.aktiviteter.data.find(
         aktivitet => aktivitet.id === paramsId
@@ -52,7 +52,7 @@ const AvbryttAktivitet = props => {
     );
 };
 
-AvbryttAktivitet.propTypes = {
+AvbrytAktivitet.propTypes = {
     aktiviteter: PT.shape({
         status: PT.string,
         data: PT.arrayOf(AppPT.aktivitet),
@@ -70,4 +70,4 @@ const mapStateToProps = state => ({
     aktiviteter: state.data.aktiviteter,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AvbryttAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(AvbrytAktivitet);
