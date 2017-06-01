@@ -27,6 +27,7 @@ function Radio({ feltNavn, className, value, checked, onChange, ...props }) {
 
 Radio.defaultProps = {
     className: '',
+    onChange: () => {},
 };
 
 Radio.propTypes = {
