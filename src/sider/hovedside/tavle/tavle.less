@@ -23,6 +23,9 @@
       background: transparent url("./pil-hover.svg") no-repeat;
     }
 
+    &:disabled {
+      visibility: hidden;
+    }
   }
     @media (min-width: @planbredde) {
       justify-content: center;
@@ -54,8 +57,9 @@
     justify-content: center;
     margin: 0;
     width: 100%;
-    .knapp-tavle {
-      display: none;
+
+    .tavle__scrollknapp {
+      .hidden();
     }
   }
 
