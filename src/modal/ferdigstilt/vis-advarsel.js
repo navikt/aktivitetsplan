@@ -14,16 +14,14 @@ function VisAdvarsel(props) {
     return (
         <form onSubmit={props.handleSubmit}>
             <ModalHeader />
-            <div className="aktivitetvisning__underseksjon">
-                <ModalContainer>
-                    <Innholdstittel>
-                        {props.headerTekst}
-                    </Innholdstittel>
-                    <AlertStripeInfoSolid>
-                        <FormattedMessage id="ferdigstilt.modal.message" />
-                    </AlertStripeInfoSolid>
-                </ModalContainer>
-            </div>
+            <ModalContainer className="aktivitetvisning__underseksjon">
+                <Innholdstittel>
+                    {props.headerTekst}
+                </Innholdstittel>
+                <AlertStripeInfoSolid>
+                    <FormattedMessage id="ferdigstilt.modal.message" />
+                </AlertStripeInfoSolid>
+            </ModalContainer>
             <ModalFooter>
                 <Hovedknapp mini>
                     <FormattedMessage id="ferdigstilt.modal.lagre" />

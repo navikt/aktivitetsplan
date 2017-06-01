@@ -112,6 +112,38 @@ class Aktivitetvisning extends Component {
             valgtAktivitet.status === STATUS_FULLFOERT ||
             valgtAktivitet.status === STATUS_AVBRUTT;
 
+        const gaTilEndreAktivitet = () =>
+            history.push(endreAktivitetRoute(valgtAktivitet.id));
+
+        const visAdministreresAvVeileder = (
+            <div className="aktivitetvisning__underseksjon">
+                <AlertStripeInfo className="aktivitetvisning__alert">
+                    <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
+                </AlertStripeInfo>
+            </div>
+        );
+
+        const visOppdaterStatusContainer = (
+            <div>
+                <OppdaterAktivitetStatus
+                    status={valgtAktivitet.status}
+                    paramsId={id}
+                    className="aktivitetvisning__underseksjon"
+                />
+
+                <VisibleIfDiv
+                    visible={valgtAktivitet.type === STILLING_AKTIVITET_TYPE}
+                >
+                    <hr className="aktivitetvisning__delelinje" />
+                    <OppdaterAktivitetEtikett
+                        status={valgtAktivitet.status}
+                        paramsId={id}
+                        className="aktivitetvisning__underseksjon"
+                    />
+                </VisibleIfDiv>
+            </div>
+        );
+
         return (
             <StandardModal name="aktivitetsvisningModal">
                 <ModalHeader
@@ -164,12 +196,7 @@ class Aktivitetvisning extends Component {
                                     visible={tillattEndring && !arenaAktivitet}
                                 >
                                     <Knapp
-                                        onClick={() =>
-                                            history.push(
-                                                endreAktivitetRoute(
-                                                    valgtAktivitet.id
-                                                )
-                                            )}
+                                        onClick={gaTilEndreAktivitet}
                                         className="knapp-liten modal-footer__knapp"
                                     >
                                         <FormattedMessage id="aktivitetvisning.endre-knapp" />
@@ -182,32 +209,8 @@ class Aktivitetvisning extends Component {
                                 className="aktivitetvisning__underseksjon"
                             />
                             {arenaAktivitet
-                                ? <div className="aktivitetvisning__underseksjon">
-                                      <AlertStripeInfo className="aktivitetvisning__alert">
-                                          <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
-                                      </AlertStripeInfo>
-                                  </div>
-                                : <div>
-                                      <OppdaterAktivitetStatus
-                                          status={valgtAktivitet.status}
-                                          paramsId={id}
-                                          className="aktivitetvisning__underseksjon"
-                                      />
-
-                                      <VisibleIfDiv
-                                          visible={
-                                              valgtAktivitet.type ===
-                                                  STILLING_AKTIVITET_TYPE
-                                          }
-                                      >
-                                          <hr className="aktivitetvisning__delelinje" />
-                                          <OppdaterAktivitetEtikett
-                                              status={valgtAktivitet.status}
-                                              paramsId={id}
-                                              className="aktivitetvisning__underseksjon"
-                                          />
-                                      </VisibleIfDiv>
-                                  </div>}
+                                ? visAdministreresAvVeileder
+                                : visOppdaterStatusContainer}
                             <hr className="aktivitetvisning__delelinje" />
                             <UnderelementerForAktivitet
                                 aktivitet={valgtAktivitet}
