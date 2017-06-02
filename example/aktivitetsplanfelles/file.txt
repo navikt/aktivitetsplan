@@ -1,3 +1,0 @@
-En tom fil for å beholde mappen i git-repoet.
-
-Prøvde å legge inn en mkdir i package.json, men fant ikke en god cross-platform måte å gjøre det på :(
