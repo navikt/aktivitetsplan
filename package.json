@@ -3,7 +3,7 @@
     "version": "1.128.33",
     "description": "Aktivitetsplan felles",
     "main": "src/app.js",
-    "styles": "src/index.less",
+    "styles": "src/main.less",
     "files": [
         "src/"
     ],

@@ -1,14 +1,9 @@
 @nodeModulesPath: './../../';
 @coreModulePath: './../../';
+@aktivitetsplanPath: ".";
 
 .aktivitetsplanfs {
-  @import "./variables";
-  @import "./vendors";
-  @import "./utils";
-  @import "./dialog/dialog";
-  @import "./felles-komponenter/felles-komponenter";
-  @import "./modal/modal";
-  @import "./sider/hovedside/hovedside";
+  @import "./main";
 
   // hentet fra nav-frontend-typografi som setter dette direkte på body
   .typo-normal-mixin();
