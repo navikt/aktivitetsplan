@@ -5,7 +5,6 @@ import Bilde from 'nav-react-design/dist/bilde';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Knapp, Fareknapp } from 'nav-frontend-knapper';
 import stopSvg from './stop.svg';
-import './bekreft-slett-visning.less';
 
 function BekreftSlettVisning({ slettAction, avbrytAction }) {
     return (

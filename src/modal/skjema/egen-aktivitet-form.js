@@ -10,7 +10,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import Textarea from './textarea/textarea';
 import Input from './input/input';
 import Datovelger from './datovelger/datovelger';
-import './skjema.less';
 import { STATUS_BRUKER_ER_INTRESSERT } from '../../constant';
 import PeriodeValidering from './datovelger/periode-validering';
 

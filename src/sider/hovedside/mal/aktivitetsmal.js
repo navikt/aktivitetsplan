@@ -12,7 +12,6 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Identitet from '../../../felles-komponenter/identitet';
 import Accordion from '../../../felles-komponenter/accordion';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
-import './aktivitetsmal.less';
 
 function malListeVisning(malet) {
     return (

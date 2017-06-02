@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import './vilkar.less';
 import * as AppPT from '../../proptypes';
 import Vilkar from './vilkar';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';

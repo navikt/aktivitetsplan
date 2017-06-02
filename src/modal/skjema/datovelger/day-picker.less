@@ -1,5 +1,4 @@
 @import "../../../variables";
-@import "~nav-frontend-skjema-style/src/index.less";
 
 .DayPicker {
   display: -webkit-box;
@@ -49,7 +48,7 @@
   cursor: pointer;
   border: 0;
   background-color: transparent;
-  background-image: data-uri("./pil-videre.svg");
+  background-image: data-uri("@{aktivitetsplanPath}/modal/skjema/datovelger/pil-videre.svg");
   background-size: 1.25em 1.25em;
 
   &:focus {
@@ -57,7 +56,7 @@
     box-shadow: 0 0 0 3px @orange-focus;
   }
   &:focus, &:hover {
-    background-image: data-uri("./pil-videre--hover.svg");
+    background-image: data-uri("@{aktivitetsplanPath}/modal/skjema/datovelger/pil-videre--hover.svg");
   }
   &--prev {
     left: 1em;
@@ -232,7 +231,7 @@
       background-color: transparent;
       padding: 0;
       position: absolute;
-      background-image: data-uri("kalender.svg");
+      background-image: data-uri("@{aktivitetsplanPath}/modal/skjema/datovelger/kalender.svg");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 16px 16px;
@@ -243,11 +242,11 @@
       }
 
       &:hover:not(:disabled), &:focus {
-        background-image: data-uri("./kalender--hover.svg");
+        background-image: data-uri("@{aktivitetsplanPath}/modal/skjema/datovelger/kalender--hover.svg");
       }
 
       &:active {
-        background-image: date-uri("./kalender--aktiv.svg");
+        background-image: data-uri("@{aktivitetsplanPath}/modal/skjema/datovelger/kalender--aktiv.svg");
       }
     }
   }

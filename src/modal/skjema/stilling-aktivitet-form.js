@@ -11,7 +11,6 @@ import { dateToISODate } from '../../utils';
 import Textarea from './textarea/textarea';
 import Input from './input/input';
 import Datovelger from './datovelger/datovelger';
-import './skjema.less';
 import { STATUS_PLANLAGT } from '../../constant';
 import PeriodeValidering from './datovelger/periode-validering';
 

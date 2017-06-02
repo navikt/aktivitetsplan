@@ -9,7 +9,6 @@ import Feature from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
 import { hentOppfolgingStatus } from '../../../ducks/oppfolging-status';
-import './navigasjonslinje.less';
 import visibleIfHOC from '../../../hocs/visible-if';
 
 const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (

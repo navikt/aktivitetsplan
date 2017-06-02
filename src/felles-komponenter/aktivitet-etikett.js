@@ -2,7 +2,6 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import './aktivitet-etikett.less';
 import visibleIfHOC from '../hocs/visible-if';
 import * as statuskoder from '../constant';
 

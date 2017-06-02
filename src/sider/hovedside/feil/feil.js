@@ -8,7 +8,6 @@ import * as AppPT from '../../../proptypes';
 import visibleIfHOC from '../../../hocs/visible-if';
 import { SKJUL_SISTE_FEIL_ACTION } from '../../../ducks/feil';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
-import './feil.less';
 
 const VisibleAlertStripeAdvarsel = visibleIfHOC(AlertStripeAdvarsel);
 

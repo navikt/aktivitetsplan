@@ -10,7 +10,6 @@ import * as AppPT from '../proptypes';
 import Dato from '../felles-komponenter/dato';
 import { markerDialogSomLest } from '../ducks/dialog';
 import visibleIfHOC from '../hocs/visible-if';
-import './henvendelser.less';
 
 const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) => (
     <div className="henvendelser__lest-av-bruker">
