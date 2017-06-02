@@ -3,7 +3,7 @@ import React from 'react';
 function NavigasjonslinjeMeny() {
     return (
         <div className="navigasjonslinje-meny">
-            Meny
+            <button className="navigasjonslinje-meny__innstillinger-knapp" />
         </div>
     );
 }

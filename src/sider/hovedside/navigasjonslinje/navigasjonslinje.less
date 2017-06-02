@@ -1,5 +1,7 @@
 @import "../../../variables";
 
+@knapp-storrelse: 1.2rem;
+
 .navigasjonslinje {
   .blokk-s();
   display: flex;
@@ -30,4 +32,21 @@
 
 .navigasjonslinje-meny {
   margin-left: auto;
+}
+
+.navigasjonslinje-meny__innstillinger-knapp {
+  .knapp();
+  height: @knapp-storrelse;
+  width: @knapp-storrelse;
+  border: 0;
+  padding: 0;
+  // TODO: Bytt ut midlertidig svg
+  background: data-uri('./tannhjul.svg') no-repeat;
+
+  &:hover,
+  &:active {
+    // TODO: Bytt ut midlertidig styling
+    background: data-uri('./tannhjul.svg') no-repeat;
+    background-color: cyan;
+  }
 }
