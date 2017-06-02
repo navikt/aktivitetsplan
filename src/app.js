@@ -17,19 +17,21 @@ const shouldScroll = (prevRouterProps, nextRouterProps) =>
 
 function App({ routing }) {
     return (
-        <Provider>
-            <div className="fullbredde">
-                <Router
-                    history={history}
-                    render={applyRouterMiddleware(useScroll(shouldScroll))}
-                >
-                    {routing}
-                </Router>
-                <Feature name="timeoutbox">
-                    <Timeoutbox />
-                </Feature>
-            </div>
-        </Provider>
+        <div className="aktivitetsplanfs">
+            <Provider>
+                <div className="fullbredde">
+                    <Router
+                        history={history}
+                        render={applyRouterMiddleware(useScroll(shouldScroll))}
+                    >
+                        {routing}
+                    </Router>
+                    <Feature name="timeoutbox">
+                        <Timeoutbox />
+                    </Feature>
+                </div>
+            </Provider>
+        </div>
     );
 }
 
