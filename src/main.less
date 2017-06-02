@@ -1,21 +1,19 @@
 @import "./variables";
-@import "../node_modules/nav-frontend-typografi-style/src/index";
 
 .aktivitetsplanfs {
   @import "./vendors";
   @import "./utils";
   @import "./dialog/dialog";
   @import "./felles-komponenter/felles-komponenter";
-  @import "./modal/modal";
   @import "./sider/hovedside/hovedside";
-}
+  @import "./modal/modal";
 
-body {
   .typo-normal-mixin();
   color: @navMorkGra;
   font-family: @font-family;
   line-height: @line-height-base;
 }
 
-@import "../node_modules/nav-frontend-paneler-style/src/mixins";
-@import "../node_modules/nav-frontend-modal-style/src/index";
+.ReactModal__Body--open {
+  overflow: hidden;
+}
