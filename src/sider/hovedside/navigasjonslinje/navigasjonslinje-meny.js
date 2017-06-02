@@ -8,6 +8,4 @@ function NavigasjonslinjeMeny() {
     );
 }
 
-NavigasjonslinjeMeny.propTypes = {};
-
 export default NavigasjonslinjeMeny;
