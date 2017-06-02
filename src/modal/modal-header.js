@@ -5,7 +5,6 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
 import Bilde from 'nav-react-design/dist/bilde';
 import Tilbakeknapp from '../felles-komponenter/utils/tilbakeknapp';
-import './modal-header.less';
 import hengelasSvg from '../img/hengelas.svg';
 import VisibleIfSpan from '../felles-komponenter/utils/visible-if-span';
 

@@ -6,7 +6,6 @@ import { oppdaterDialog } from '../ducks/dialog';
 import { hentIdentitet } from '../ducks/identitet';
 import Checkbox from '../modal/skjema/input/checkbox';
 import visibleIf from '../hocs/visible-if';
-import './endre-dialog.less';
 
 class EndreDialogStatusForm extends Component {
     componentDidMount() {

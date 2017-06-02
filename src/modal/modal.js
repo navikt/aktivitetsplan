@@ -1,6 +1,5 @@
 import React from 'react';
 import NavFrontendModal from 'nav-frontend-modal';
-import './modal.less';
 
 function Modal(props) {
     return (

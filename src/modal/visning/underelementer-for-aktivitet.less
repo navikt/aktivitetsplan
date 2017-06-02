@@ -1,7 +1,7 @@
 @import "../../variables";
 
 .underelement-knapp(@image) {
-  background: url(@image) no-repeat left;
+  background: data-uri("@{aktivitetsplanPath}/modal/visning/@{image}") no-repeat left;
   background-size: 1rem;
   background-position-x: 1rem;
 }
