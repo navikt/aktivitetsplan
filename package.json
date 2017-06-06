@@ -39,6 +39,9 @@
             "prettier --write --single-quote --trailing-comma es5 --tab-width 4",
             "eslint",
             "git add"
+        ],
+        "*.less": [
+            "lesshint"
         ]
     },
     "dependencies": {
