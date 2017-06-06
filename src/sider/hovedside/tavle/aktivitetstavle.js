@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import Tavle from './tavle/tavle';
+import Tavle from './tavle';
 import Kolonne from './aktivitetstavlekolonne';
-import { hentAktiviteter } from '../../ducks/aktiviteter';
-import { hentArenaAktiviteter } from '../../ducks/arena-aktiviteter';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { hentAktiviteter } from '../../../ducks/aktiviteter';
+import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 
 import {
     STATUS_BRUKER_ER_INTRESSERT,
@@ -13,7 +13,7 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
-} from '../../constant';
+} from '../../../constant';
 
 class AktivitetsTavle extends Component {
     componentDidMount() {

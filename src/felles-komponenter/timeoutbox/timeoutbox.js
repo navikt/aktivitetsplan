@@ -37,7 +37,7 @@ class Timeoutbox extends Component {
                 isOpen={skalViseModal}
                 shouldCloseOnOverlayClick={false}
                 overlayClassName="aktivitet-modal__overlay"
-                portalClassName="timeout-modal-portal"
+                portalClassName="aktivitetsplanfs timeout-modal-portal"
                 onRequestClose={() => {
                     window.timeout.hidden = true;
                 }}

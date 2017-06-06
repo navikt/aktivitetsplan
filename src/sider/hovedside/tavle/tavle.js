@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
-import SprettendeScrollbars from '../sprettende-scrollbars';
+import SprettendeScrollbars from './sprettende-scrollbars';
 import { autobind } from '../../../utils';
 
 const KOLLONEBREDDE = 339;

@@ -3,11 +3,13 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
-import Lenke from '../../felles-komponenter/utils/lenke';
-import TallAlert from '../../felles-komponenter/tall-alert';
-import { hentDialog } from '../../ducks/dialog';
-import { hentOppfolgingStatus } from '../../ducks/oppfolging-status';
-import visibleIfHOC from '../../hocs/visible-if';
+import NavigasjonslinjeMeny from './navigasjonslinje-meny';
+import Lenke from '../../../felles-komponenter/utils/lenke';
+import Feature from '../../../felles-komponenter/feature/feature';
+import TallAlert from '../../../felles-komponenter/tall-alert';
+import { hentDialog } from '../../../ducks/dialog';
+import { hentOppfolgingStatus } from '../../../ducks/oppfolging-status';
+import visibleIfHOC from '../../../hocs/visible-if';
 
 const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
     <Lenke href={sti} className="navigasjonslinje__element">
@@ -57,6 +59,9 @@ class Navigasjonslinje extends Component {
                     sti="/vilkarhistorikk"
                     tekstId="navigasjon.vilkar"
                 />
+                <Feature name="navigasjonslinjemeny">
+                    <NavigasjonslinjeMeny />
+                </Feature>
             </nav>
         );
     }

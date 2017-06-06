@@ -6,7 +6,7 @@ function Modal(props) {
         <NavFrontendModal
             className="aktivitet-modal"
             overlayClassName="aktivitet-modal__overlay"
-            portalClassName="aktivitet-modal-portal"
+            portalClassName="aktivitetsplanfs aktivitet-modal-portal"
             shouldCloseOnOverlayClick={false}
             {...props}
         />
