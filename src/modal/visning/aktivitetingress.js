@@ -2,7 +2,6 @@ import React from 'react';
 import PT from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import './aktivitetingress.less';
 
 function AktivitetIngress({ type, intl }) {
     const ingress = intl.formatMessage({
