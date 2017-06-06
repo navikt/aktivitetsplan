@@ -7,6 +7,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
+import AktivitetIngress from './aktivitetingress';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
 import history from '../../history';
@@ -173,6 +174,7 @@ class Aktivitetvisning extends Component {
                                 <Sidetittel id="modal-aktivitetsvisning-header">
                                     {valgtAktivitet.tittel}
                                 </Sidetittel>
+                                <AktivitetIngress type={valgtAktivitet.type} />
                                 <div className="aktivitetskort__etiketter blokk-s">
                                     <AktivitetEtikett
                                         visible={valgtAktivitet.avtalt}

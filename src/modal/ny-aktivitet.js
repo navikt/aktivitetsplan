@@ -28,6 +28,9 @@ function NyAktivitet() {
                     <Lenkepanel href="/aktivitet/ny/egen">
                         <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
                     </Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/sokeavtale">
+                        <FormattedMessage id="ny-aktivitet-modal.sokeavtale-aktivitet" />
+                    </Lenkepanel>
                 </div>
             </ModalHeader>
         </StandardModal>

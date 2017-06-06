@@ -9,10 +9,12 @@ import * as AppPT from '../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import { formaterDato } from '../../utils';
 import { aktivitetRoute } from '../../routing';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
+    SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
 } from '../../constant';
@@ -66,6 +68,13 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
                         .filter(d => d)
                         .join(' - ')}
                 </Normaltekst>
+                <VisibleIfDiv
+                    visible={aktivitet.type === SOKEAVTALE_AKTIVITET_TYPE}
+                >
+                    <FormattedMessage id="aktivitetskort.antall-label" />
+                    &nbsp;
+                    {aktivitet.antall}
+                </VisibleIfDiv>
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </Lenke>
         </article>
