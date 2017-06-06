@@ -1,4 +1,8 @@
-@import "aktivitetstavle";
+@import './feil/feil';
+@import './navigasjonslinje/navigasjonslinje';
+@import './mal/aktivitetsmal';
+@import './tavle/tavle';
+@import './tavle/aktivitetstavle';
 
 .hovedsideinnhold {
   display: flex;
@@ -9,14 +13,14 @@
 
   & .container {
     & .lenkeknapp {
-     float: right;
+     float: left;
     }
   }
 }
 
 /* nav-frontend-overrides */
 .container {
-  @media (min-width: 1200px){
+  @media (min-width: 1200px) {
     max-width: 63rem;
   }
 }

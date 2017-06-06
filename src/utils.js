@@ -186,7 +186,7 @@ moment.updateLocale('nb', {
 
 export function formaterDato(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? datoVerdi.format('DD.MM.YYYY') : undefined;
+    return datoVerdi.isValid() ? datoVerdi.format('DD. MMM YYYY') : undefined;
 }
 
 export function formaterDatoTid(dato) {

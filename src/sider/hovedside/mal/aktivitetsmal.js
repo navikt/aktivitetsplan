@@ -4,12 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import {
-    hentMal,
-    hentMalListe,
-    fjernMalListe,
-    oppdaterMal,
-} from '../../../ducks/mal';
+import { hentMal, hentMalListe, fjernMalListe } from '../../../ducks/mal';
 import * as AppPT from '../../../proptypes';
 import AktivitetsmalForm from './aktivitetsmal-form';
 import { formaterDatoDatoEllerTidSiden } from '../../../utils';
@@ -17,11 +12,6 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Identitet from '../../../felles-komponenter/identitet';
 import Accordion from '../../../felles-komponenter/accordion';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
-import './aktivitetsmal.less';
-
-function trim(str) {
-    return str ? str.trim() : '';
-}
 
 function malListeVisning(malet) {
     return (
@@ -75,7 +65,7 @@ class AktivitetsMal extends Component {
     };
 
     render() {
-        const { mal, malListe, doOppdaterMal } = this.props;
+        const { mal, malListe } = this.props;
         const malOpprettet = !!mal.mal;
         const historikkVises = malListe.length !== 0;
 
@@ -88,13 +78,7 @@ class AktivitetsMal extends Component {
                     >
                         <AktivitetsmalForm
                             mal={mal}
-                            onSubmit={malet =>
-                                doOppdaterMal(
-                                    malet,
-                                    this.props.mal,
-                                    this.toggleRedigering
-                                )}
-                            handleCancel={this.toggleRedigering}
+                            handleComplete={this.toggleRedigering}
                         />
                     </VisibleIfDiv>
                     <VisibleIfDiv visible={!this.state.redigering}>
@@ -153,7 +137,6 @@ AktivitetsMal.propTypes = {
     doHentMal: PT.func.isRequired,
     doHentMalListe: PT.func.isRequired,
     doFjernMalListe: PT.func.isRequired,
-    doOppdaterMal: PT.func.isRequired,
     malData: PT.shape({
         status: PT.string.isRequired,
     }),
@@ -169,12 +152,6 @@ const mapDispatchToProps = dispatch => ({
     doHentMal: () => hentMal()(dispatch),
     doHentMalListe: () => hentMalListe()(dispatch),
     doFjernMalListe: () => fjernMalListe()(dispatch),
-    doOppdaterMal: (newMal, oldMal, callback) => {
-        if (trim(newMal.mal) !== trim(oldMal.mal)) {
-            oppdaterMal({ mal: trim(newMal.mal) })(dispatch);
-        }
-        callback();
-    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal);

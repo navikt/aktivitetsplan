@@ -4,12 +4,12 @@ import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import Lenke from './../../felles-komponenter/utils/lenke';
-import * as AppPT from '../../proptypes';
+import Lenke from '../../../felles-komponenter/utils/lenke';
+import * as AppPT from '../../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
-import { formaterDato } from '../../utils';
-import { aktivitetRoute } from '../../routing';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import { formaterDato } from '../../../utils';
+import { aktivitetRoute } from '../../../routing';
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
@@ -17,7 +17,7 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
-} from '../../constant';
+} from '../../../constant';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {

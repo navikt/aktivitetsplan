@@ -1,7 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
-import './modal-container.less';
 
 const cls = className => classNames(className, 'modal-container');
 

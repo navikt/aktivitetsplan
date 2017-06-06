@@ -6,7 +6,6 @@ import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import { erGyldigDato, erGyldigDatoformat } from '../../../utils';
 import { dateGreater, dateLess } from './utils';
-import './day-picker.less';
 
 const localeUtils = {
     ...MomentLocaleUtils,

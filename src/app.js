@@ -5,9 +5,9 @@ import { Router, applyRouterMiddleware } from 'react-router';
 import { useScroll } from 'react-router-scroll';
 import history from './history';
 import Provider from './provider';
-import './index.less';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Feature from './felles-komponenter/feature/feature';
+import './index.less';
 
 const shouldScroll = (prevRouterProps, nextRouterProps) =>
     !(prevRouterProps &&
@@ -17,19 +17,21 @@ const shouldScroll = (prevRouterProps, nextRouterProps) =>
 
 function App({ routing }) {
     return (
-        <Provider>
-            <div className="fullbredde">
-                <Router
-                    history={history}
-                    render={applyRouterMiddleware(useScroll(shouldScroll))}
-                >
-                    {routing}
-                </Router>
-                <Feature name="timeoutbox">
-                    <Timeoutbox />
-                </Feature>
-            </div>
-        </Provider>
+        <div className="aktivitetsplanfs">
+            <Provider>
+                <div className="fullbredde">
+                    <Router
+                        history={history}
+                        render={applyRouterMiddleware(useScroll(shouldScroll))}
+                    >
+                        {routing}
+                    </Router>
+                    <Feature name="timeoutbox">
+                        <Timeoutbox />
+                    </Feature>
+                </div>
+            </Provider>
+        </div>
     );
 }
 
