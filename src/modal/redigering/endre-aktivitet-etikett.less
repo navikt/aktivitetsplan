@@ -4,13 +4,13 @@
 
 .etikett-knapp-mixin(@farge) {
   .knapp();
-  //.knapp-liten();
 
   color: @gray-text;
   border-color: @farge;
   @farge-hover: darken(@farge, 10%);
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     color: @gray-text;
     border-color: @farge-hover;
     background-color: @farge-hover;
@@ -28,17 +28,16 @@
 
     &-radio {
       opacity: 0;
-      &:focus + .endre-aktivitet-etikett__etikett {
-        //.mixin-focus-outline(3px);
-      }
     }
 
     &--ok {
       .etikett-knapp-mixin(@color-ok);
     }
+
     &--varsling {
       .etikett-knapp-mixin(@color-varsling);
     }
+
     &--info {
       .etikett-knapp-mixin(@color-info);
     }
