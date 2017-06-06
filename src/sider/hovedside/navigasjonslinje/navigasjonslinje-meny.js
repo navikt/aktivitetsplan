@@ -8,7 +8,7 @@ function NavigasjonslinjeMeny({ intl }) {
             <button
                 className="navigasjonslinje-meny__innstillinger-knapp"
                 aria-label={intl.formatMessage({
-                    id: 'navigasjonslinje-meny.innstillinger',
+                    id: 'navigasjon.innstillinger',
                 })}
             />
         </div>
