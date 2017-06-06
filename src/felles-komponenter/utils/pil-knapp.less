@@ -1,4 +1,4 @@
-@import "../../variables";
+@import '../../variables';
 
 @knapp-storrelse: 32px;
 
@@ -7,13 +7,15 @@
   height: @knapp-storrelse;
   width: @knapp-storrelse;
   padding: 0;
-  border: none;
-  background: data-uri("@{aktivitetsplanPath}/felles-komponenter/utils/pil.svg");
+  border: 0;
+  background: data-uri('@{aktivitetsplanPath}/felles-komponenter/utils/pil.svg');
   background-size: @knapp-storrelse;
 
-  &:hover, &:active, &:active:hover  {
-    border: none;
-    background: transparent data-uri("@{aktivitetsplanPath}/felles-komponenter/utils/pil-hover.svg");
+  &:hover,
+  &:active,
+  &:active:hover {
+    border: 0;
+    background: transparent data-uri('@{aktivitetsplanPath}/felles-komponenter/utils/pil-hover.svg');
     background-size: @knapp-storrelse;
   }
 }
