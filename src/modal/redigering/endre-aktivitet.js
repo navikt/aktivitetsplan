@@ -13,8 +13,15 @@ import StillingAktivitetForm, {
 import EgenAktivitetForm, {
     formNavn as egenFormNavn,
 } from '../skjema/egen-aktivitet-form';
+import SokeavtaleAktivitetForm, {
+    formNavn as sokeavtaleFormNavn,
+} from '../skjema/sokeavtale-aktivitet-form';
 import history from '../../history';
-import { EGEN_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE } from '../../constant';
+import {
+    EGEN_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE,
+    SOKEAVTALE_AKTIVITET_TYPE,
+} from '../../constant';
 import ModalContainer from '../modal-container';
 import Versjonskonflikt from './versjonskonflikt';
 import Modal from '../modal';
@@ -54,6 +61,13 @@ function EndreAktivitet({
             case EGEN_AKTIVITET_TYPE:
                 return (
                     <EgenAktivitetForm
+                        aktivitet={aktivitet}
+                        onSubmit={oppdater}
+                    />
+                );
+            case SOKEAVTALE_AKTIVITET_TYPE:
+                return (
+                    <SokeavtaleAktivitetForm
                         aktivitet={aktivitet}
                         onSubmit={oppdater}
                     />
@@ -124,9 +138,11 @@ EndreAktivitet.defaultProps = {
 const mapStateToProps = (state, props) => {
     const id = props.params.id;
     const aktivitet = state.data.aktiviteter.data.find(a => a.id === id) || {};
-    const formNavn = aktivitet.type === STILLING_AKTIVITET_TYPE
-        ? stillingFormNavn
-        : egenFormNavn;
+    const formNavn = {
+        [STILLING_AKTIVITET_TYPE]: stillingFormNavn,
+        [EGEN_AKTIVITET_TYPE]: egenFormNavn,
+        [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFormNavn,
+    }[aktivitet.type];
     return {
         aktivitet,
         aktiviteter: state.data.aktiviteter,
