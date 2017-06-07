@@ -26,10 +26,12 @@ const pakrevdTilDato = rules.minLength(
     0,
     <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-tildato" />
 );
-const pakrevdAntall = rules.minLength(
-    0,
-    <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-antall" />
-);
+
+// eslint-disable-next-line no-confusing-arrow
+const pakrevdAntall = value =>
+    value && value.toString().length > 0
+        ? undefined
+        : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-antall" />;
 
 // eslint-disable-next-line no-confusing-arrow
 const numericAntall = value =>
@@ -128,7 +130,6 @@ class SokeAvtaleAktivitetForm extends Component {
 
                     <Input
                         feltNavn="antall"
-                        disabled={avtalt === true}
                         labelId="sokeavtale-aktivitet-form.label.antall"
                         bredde="s"
                     />
@@ -197,7 +198,6 @@ const mapStateToProps = (state, props) => {
         initialValues: {
             status: STATUS_GJENNOMFOERT,
             tittel: props.defaultTittel,
-            // tittel: "Avtale om stillingssøk",
             avtalt: true,
             ...aktivitet,
         },
