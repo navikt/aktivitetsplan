@@ -43,73 +43,57 @@ function AktivitetStatusForm(props) {
         props.valgtAktivitetStatus === statuser.STATUS_FULLFOERT ||
         props.valgtAktivitetStatus === statuser.STATUS_AVBRUTT;
 
-    const erAktivitetChecked = statusId =>
-        props.valgtAktivitetStatus === statusId;
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
                 <div className="col col-xs-6">
                     <Radio
-                        feltNavn={'aktivitetstatus'}
+                        feltNavn="aktivitetstatus"
                         label={
                             <FormattedMessage id="aktivitetstavle.brukerErInteressert" />
                         }
                         value={statuser.STATUS_BRUKER_ER_INTRESSERT}
                         id={`id--${statuser.STATUS_BRUKER_ER_INTRESSERT}`}
-                        name="aktivitetstatus"
-                        checked={erAktivitetChecked(
-                            statuser.STATUS_BRUKER_ER_INTRESSERT
-                        )}
                         disabled={props.disableStatusEndring || lasterData}
                     />
                     <Radio
-                        feltNavn={'aktivitetstatus'}
+                        feltNavn="aktivitetstatus"
                         label={
                             <FormattedMessage id="aktivitetstavle.planlagt" />
                         }
                         value={statuser.STATUS_PLANLAGT}
                         id={`id--${statuser.STATUS_PLANLAGT}`}
-                        name="aktivitetstatus"
-                        checked={erAktivitetChecked(statuser.STATUS_PLANLAGT)}
                         disabled={props.disableStatusEndring || lasterData}
                     />
                     <Radio
-                        feltNavn={'aktivitetstatus'}
+                        feltNavn="aktivitetstatus"
                         label={
                             <FormattedMessage id="aktivitetstavle.gjennomfoert" />
                         }
                         value={statuser.STATUS_GJENNOMFOERT}
                         id={`id--${statuser.STATUS_GJENNOMFOERT}`}
-                        name="aktivitetstatus"
-                        checked={erAktivitetChecked(
-                            statuser.STATUS_GJENNOMFOERT
-                        )}
                         disabled={props.disableStatusEndring || lasterData}
                     />
                 </div>
                 <div className="col col-xs-6">
                     <Radio
-                        feltNavn={'aktivitetstatus'}
+                        feltNavn="aktivitetstatus"
                         label={leggTilHengelas(
                             <FormattedMessage id="aktivitetstavle.fullfoert" />,
                             hengelasAlt
                         )}
                         value={statuser.STATUS_FULLFOERT}
                         id={`id--${statuser.STATUS_FULLFOERT}`}
-                        name="aktivitetstatus"
-                        checked={erAktivitetChecked(statuser.STATUS_FULLFOERT)}
                         disabled={props.disableStatusEndring || lasterData}
                     />
                     <Radio
-                        feltNavn={'aktivitetstatus'}
+                        feltNavn="aktivitetstatus"
                         label={leggTilHengelas(
                             <FormattedMessage id="aktivitetstavle.avbrutt" />,
                             hengelasAlt
                         )}
                         value={statuser.STATUS_AVBRUTT}
                         id={`id--${statuser.STATUS_AVBRUTT}`}
-                        name="aktivitetstatus"
-                        checked={erAktivitetChecked(statuser.STATUS_AVBRUTT)}
                         disabled={props.disableStatusEndring || lasterData}
                     />
                 </div>

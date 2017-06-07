@@ -1,14 +1,17 @@
-@import "./../../variables";
+@import './../../variables';
 
 .tilbakeknapp {
   text-decoration: none;
+
   .tilbakeknapp-innhold {
-    border-bottom: 0 !important;
+    border-bottom: 0 !important; // lesshint importantRule: false
     .lenke();
+
     .chevronboks {
       top: -1px;
       margin-right: 0.75rem;
     }
+
     &__tekst {
       text-decoration: none;
       .lenke();
@@ -17,9 +20,9 @@
 
   &:focus {
     outline: none;
+
     .tilbakeknapp-innhold__tekst {
       background: @orange-focus;
     }
   }
 }
-

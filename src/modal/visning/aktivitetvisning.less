@@ -1,40 +1,49 @@
-@import "../../variables";
-
+@import '../../variables';
 
 .aktivitetvisning {
+
   &__underseksjon {
     padding: 0 3rem 0 2rem;
     .blokk-m();
   }
+
   &__etikett {
     .blokk-m();
   }
+
   &__alert {
     .blokk-m();
   }
+
   &__detaljer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 32rem
+    width: 32rem;
   }
+
   .begrunnelse-boks {
     cursor: pointer;
 
     .tekst--kollapset {
+
       @media(min-width: 641px) {
         max-width: 30.1rem;
       }
+
       @media(max-width: 640px) {
         max-width: 27.9rem;
       }
+
       display: inline-block;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
   }
-  .aktivitetsdetaljer, .aktivitetsbeskrivelse {
+
+  .aktivitetsdetaljer,
+  .aktivitetsbeskrivelse {
     .detaljfelt {
       .blokk-s();
       margin-right: 2rem;
@@ -48,11 +57,12 @@
 
       &__lenke {
         text-overflow: ellipsis;
-        overflow :hidden;
+        overflow: hidden;
         white-space: nowrap;
       }
     }
   }
+
   .aktivitetsbeskrivelse {
     .blokk-m();
 
@@ -60,11 +70,13 @@
       white-space: pre-wrap;
     }
   }
+
   &__delelinje {
     margin-top: 0;
     color: @color-hr;
     .blokk-m();
   }
+
   &__historikk {
     .blokk-m();
   }
@@ -75,6 +87,7 @@
     .blokk-m();
     display: inline-block;
   }
+
   &__innslag {
     .blokk-s();
   }

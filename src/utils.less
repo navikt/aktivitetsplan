@@ -1,5 +1,6 @@
 .clearfix {
   *zoom: 1;
+
   &:after {
     content: '';
     display: block;
@@ -10,6 +11,7 @@
 
 .dynamic-text-orientation {
   text-align: center;
+
   @media (max-width: 730px) {
     text-align: left;
   }
@@ -28,7 +30,7 @@
 }
 
 .unsafe-html {
-  *:last-child {
+  *:last-child { // lesshint universalSelector: false
     margin-bottom: 0;
   }
 }
@@ -42,4 +44,3 @@
   display: flex;
   align-self: center;
 }
-
