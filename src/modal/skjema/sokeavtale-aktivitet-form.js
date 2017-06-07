@@ -199,7 +199,7 @@ const mapStateToProps = (state, props) => {
         initialValues: {
             status: STATUS_GJENNOMFOERT,
             tittel: props.defaultTittel,
-            avtalt: true,
+            avtalt: false,
             ...aktivitet,
         },
         currentFraDato: selector(state, 'fraDato')
