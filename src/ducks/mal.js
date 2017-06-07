@@ -23,6 +23,8 @@ const initalState = {
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
+        case OPPDATER_PENDING:
+            return { ...state, status: STATUS.RELOADING };
         case GJELDENDE_FEILET:
             return { ...state, status: STATUS.ERROR, gjeldende: action.data };
         case GJELDENDE_OK:

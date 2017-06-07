@@ -5,7 +5,6 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 import Collapse from 'react-collapse/src/Collapse';
 import classNames from 'classnames';
 import VisibleIfDiv from './utils/visible-if-div';
-import './accordion.less';
 import VisibleIfHOC from '../hocs/visible-if';
 
 class Accordion extends Component {

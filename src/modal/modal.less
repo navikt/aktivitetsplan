@@ -1,14 +1,27 @@
-@import "../variables";
+@import '../variables';
+@import './aktivitet-header';
+@import './modal';
+@import './modal-container';
+@import './modal-footer';
+@import './modal-header';
+@import './ny-aktivitet';
+@import './redigering/redigering';
+@import './skjema/skjema';
+@import './vilkar/vilkar';
+@import './visning/modalvisning';
 
 @modal-bredde: 640px;
 
 .ReactModal {
+
   &__Body--open {
     overflow: hidden;
   }
+
   &__Overlay {
     overflow-y: auto;
   }
+
   &__Content {
     width: @modal-bredde;
     margin: 4rem auto;
@@ -26,13 +39,13 @@
   display: block;
 }
 
-.aktivitet-modal-portal {
+&.aktivitet-modal-portal {
   position: relative;
   z-index: 9999;
 
   .aktivitet-modal {
     position: relative;
-    border: 1px solid #ccc;
+    border: 1px solid #c0c0c0;
     background: @gray-background;
     outline: none;
     max-width: 45rem;
@@ -53,7 +66,7 @@
   }
 }
 
-.timeout-modal-portal {
+&.timeout-modal-portal {
   .aktivitet-modal-portal;
   z-index: 10000;
 }
@@ -66,10 +79,10 @@
 
     .aktivitetskjema {
       width: 100%;
+
       &__datofelt-wrapper {
         flex-direction: column;
       }
     }
   }
 }
-

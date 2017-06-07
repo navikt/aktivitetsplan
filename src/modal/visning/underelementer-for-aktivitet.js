@@ -11,7 +11,6 @@ import TallAlert from '../../felles-komponenter/tall-alert';
 import NyHenvendelse from '../../dialog/ny-henvendelse';
 import Henvendelser from '../../dialog/henvendelser';
 import EndreDialog from '../../dialog/endre-dialog';
-import './underelementer-for-aktivitet.less';
 import VisibleDiv from '../../felles-komponenter/utils/visible-if-div';
 import visibleIfHoc from '../../hocs/visible-if';
 

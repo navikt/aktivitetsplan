@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
 import { DIALOG_FERDIGBEHANDLET, DIALOG_MA_BESVARES } from '../constant';
-import './dialoger.less';
 import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';

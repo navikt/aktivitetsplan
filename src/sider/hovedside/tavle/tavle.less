@@ -1,4 +1,4 @@
-@import "../../../variables";
+@import '../../../variables';
 
 @tavle-min-width: 48rem;
 @knapp-storrelse: 42px;
@@ -14,25 +14,33 @@
     height: @knapp-storrelse;
     width: @knapp-storrelse;
     padding: calc(@knapp-storrelse / 2);
-    border: none;
+    border: 0;
     background-size: contain;
-    background: url("./pil.svg") no-repeat;
+    background: data-uri('@{aktivitetsplanPath}/sider/hovedside/tavle/pil.svg') no-repeat;
 
-    &:hover, &:active, &:active:hover  {
-      border: none;
-      background: transparent url("./pil-hover.svg") no-repeat;
+    &:hover,
+    &:active,
+    &:active:hover {
+      border: 0;
+      background: transparent data-uri('@{aktivitetsplanPath}/sider/hovedside/tavle/pil-hover.svg') no-repeat;
     }
 
+    &:disabled {
+      visibility: hidden;
+    }
   }
-    @media (min-width: @planbredde) {
-      justify-content: center;
-      .tavle__scrollknapp {
-        .hidden();
-      }
-      .kolonner {
-        justify-content: center;
-      }
+
+  @media (min-width: @planbredde) {
+    justify-content: center;
+
+    .tavle__scrollknapp {
+      .hidden();
     }
+
+    .kolonner {
+      justify-content: center;
+    }
+  }
 
   .knapp-forrige {
     margin-right: 3rem;
@@ -44,7 +52,9 @@
     margin-right: 1rem;
     transform: rotate(180deg);
 
-    &:hover, &:disabled, &:hover:disabled {
+    &:hover,
+    &:disabled,
+    &:hover:disabled {
       transform: rotate(180deg);
     }
   }
@@ -54,8 +64,9 @@
     justify-content: center;
     margin: 0;
     width: 100%;
-    .knapp-tavle {
-      display: none;
+
+    .tavle__scrollknapp {
+      .hidden();
     }
   }
 
