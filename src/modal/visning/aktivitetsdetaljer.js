@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Link } from 'react-router';
 import * as AppPT from '../../proptypes';
 import {
@@ -16,6 +17,7 @@ import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
+    SOKEAVTALE_AKTIVITET_TYPE,
 } from '../../constant';
 import DetaljFelt from './detalj-felt';
 import { endreAktivitetRoute } from '../../routing';
@@ -68,6 +70,8 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         gruppeAktivitetStatus,
         moeteplanListe,
         oppfolging,
+        antall,
+        avtaleOppfolging,
     } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManed(valgtAktivitet.fraDato);
@@ -275,12 +279,46 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         />,
     ];
 
+    const sokeavtaleFelter = () => {
+        const oppfolgingSection =
+            avtaleOppfolging &&
+            <section key="avtaleOppfolging" className="aktivitetsbeskrivelse">
+                <Element className="aktivitetsbeskrivelse__tittel">
+                    <FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />
+                </Element>
+                <Tekstomrade className="aktivitetsbeskrivelse__tekst">
+                    {avtaleOppfolging}
+                </Tekstomrade>
+            </section>;
+        return [
+            <Informasjonsfelt
+                key="fradato"
+                tittel={fraDatoTekst(aktivitetstype)}
+                innhold={fraDato}
+            />,
+            <Informasjonsfelt
+                key="tildato"
+                tittel={tilDatoTekst(aktivitetstype)}
+                innhold={tilDato}
+            />,
+            <Informasjonsfelt
+                key="antallStillinger"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.antall-label" />
+                }
+                innhold={`${antall}`}
+            />,
+            oppfolgingSection,
+        ];
+    };
+
     const map = {
         [EGEN_AKTIVITET_TYPE]: egenStillingFelter,
         [STILLING_AKTIVITET_TYPE]: ledigStillingFelter,
         [TILTAK_AKTIVITET_TYPE]: tiltakFelter,
         [GRUPPE_AKTIVITET_TYPE]: gruppeFelter,
         [UTDANNING_AKTIVITET_TYPE]: utdanningFelter,
+        [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFelter,
     };
 
     const cls = clsName => classNames(clsName, 'aktivitetsdetaljer');
