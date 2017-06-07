@@ -130,6 +130,7 @@ class SokeAvtaleAktivitetForm extends Component {
 
                     <Input
                         feltNavn="antall"
+                        disabled={avtalt === true}
                         labelId="sokeavtale-aktivitet-form.label.antall"
                         bredde="s"
                     />
