@@ -6,12 +6,12 @@ import Bilde from 'nav-react-design/dist/bilde';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import { flyttAktivitet } from '../../ducks/aktiviteter';
-import AktivitetsKort from './aktivitetskort';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
-import history from './../../history';
-import hengelasSvg from '../../img/hengelas.svg';
-import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
+import { flyttAktivitet } from '../../../ducks/aktiviteter';
+import AktivitetsKort from '../aktivitetskort/aktivitetskort';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+import history from '../../../history';
+import hengelasSvg from '../../../img/hengelas.svg';
+import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {

@@ -1,5 +1,5 @@
-@import "../variables";
-@import "./dialoger";
+@import '../variables';
+@import './dialoger';
 
 @padding: 1rem 1rem 1rem @padding-left;
 @animationTime: 300ms;
@@ -23,7 +23,7 @@
   }
 
   &--full-bredde {
-    width: @full-bredde-skjerm-modal
+    width: @full-bredde-skjerm-modal;
   }
 
   @media (max-width: @mobil-bredde) {
@@ -49,6 +49,7 @@
 
   &__tilbake-knapp {
     margin-right: 1rem;
+
     @media (min-width: @mobil-bredde) {
       display: none;
     }
@@ -66,9 +67,9 @@
   }
 
   &__ny-dialog-knapp {
-    border: none;
+    border: 0;
     padding-left: 2rem;
-    background: url('./dialog-modal-ny-henvendelse.svg') no-repeat;
+    background: data-uri('@{aktivitetsplanPath}/dialog/dialog-modal-ny-henvendelse.svg') no-repeat;
     background-size: contain;
   }
 
@@ -84,7 +85,7 @@
     width: 100%;
 
     &--dialog {
-      flex-basis: percentage(@bredde-skjerm-dialog/@full-bredde-skjerm-modal);
+      flex-basis: percentage(@bredde-skjerm-dialog / @full-bredde-skjerm-modal);
       padding: 2rem;
       background-color: @gray-background;
       width: @bredde-skjerm-dialog;
@@ -92,11 +93,13 @@
     }
 
     &--dialoger {
-      flex-basis: percentage(@bredde-skjerm-dialoger/@full-bredde-skjerm-modal);
+      flex-basis: percentage(@bredde-skjerm-dialoger / @full-bredde-skjerm-modal);
       background-color: white;
       z-index: 1;
+
       @media (max-width: @mobil-bredde) {
         width: 100%;
+
         &-valgt-dialog {
           display: none;
         }

@@ -1,6 +1,5 @@
 import React from 'react';
 import PT from 'prop-types';
-import './vilkar.less';
 import * as AppPT from '../../proptypes';
 import VilkarInnhold from './vilkar-innhold';
 import VilkarHistorikk from './vilkar-historikk';

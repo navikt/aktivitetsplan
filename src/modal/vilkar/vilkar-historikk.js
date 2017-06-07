@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import './vilkar.less';
 import * as AppPT from '../../proptypes';
 import Accordion from '../../felles-komponenter/accordion';
 import { formaterDatoKortManed, autobind } from '../../utils';

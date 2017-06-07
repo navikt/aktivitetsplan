@@ -2,7 +2,6 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import Lenke from './lenke';
-import './lenkeknapp.less';
 
 function Lenkeknapp({ href, className, ...rest }) {
     return (

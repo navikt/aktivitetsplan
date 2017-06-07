@@ -1,0 +1,19 @@
+@import './variables';
+
+.aktivitetsplanfs {
+  @import './vendors';
+  @import './utils';
+  @import './dialog/dialog';
+  @import './felles-komponenter/felles-komponenter';
+  @import './sider/hovedside/hovedside';
+  @import './modal/modal';
+
+  .typo-normal-mixin();
+  color: @navMorkGra;
+  font-family: @font-family;
+  line-height: @line-height-base;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}
