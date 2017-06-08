@@ -16,64 +16,48 @@ function StillingEtikettForm(props) {
     const onChange = values => {
         oppdaterEtikett(aktivitet, values.etikettstatus);
     };
-    const erEtikettChecked = statusId => props.valgtEtikettStatus === statusId;
-
     return (
         <form onSubmit={handleSubmit(onChange)}>
             <div className="row">
                 <div className="col col-xs-6">
                     <Radio
-                        feltNavn={'etikettstatus'}
+                        feltNavn="etikettstatus"
                         label={<FormattedMessage id="etikett.INGEN_VALGT" />}
                         value={statuser.INGEN_VALGT}
                         id={`id--${statuser.INGEN_VALGT}`}
-                        name="etikettstatus"
-                        checked={
-                            !props.valgtEtikettStatus ||
-                                erEtikettChecked(statuser.INGEN_VALGT)
-                        }
                         disabled={disabled}
+                        forhandsvalgt={!props.valgtEtikettStatus}
                     />
                     <Radio
-                        feltNavn={'etikettstatus'}
+                        feltNavn="etikettstatus"
                         label={<FormattedMessage id="etikett.SOKNAD_SENDT" />}
                         value={statuser.SOKNAD_SENDT}
                         id={`id--${statuser.SOKNAD_SENDT}`}
-                        name="etikettstatus"
-                        checked={erEtikettChecked(statuser.SOKNAD_SENDT)}
                         disabled={disabled}
                     />
                     <Radio
-                        feltNavn={'etikettstatus'}
+                        feltNavn="etikettstatus"
                         label={
                             <FormattedMessage id="etikett.INNKALT_TIL_INTERVJU" />
                         }
                         value={statuser.INNKALT_TIL_INTERVJU}
                         id={`id--${statuser.INNKALT_TIL_INTERVJU}`}
-                        name="etikettstatus"
-                        checked={erEtikettChecked(
-                            statuser.INNKALT_TIL_INTERVJU
-                        )}
                         disabled={disabled}
                     />
                 </div>
                 <div className="col col-xs-6">
                     <Radio
-                        feltNavn={'etikettstatus'}
+                        feltNavn="etikettstatus"
                         label={<FormattedMessage id="etikett.AVSLAG" />}
                         value={statuser.AVSLAG}
                         id={`id--${statuser.AVSLAG}`}
-                        name="etikettstatus"
-                        checked={erEtikettChecked(statuser.AVSLAG)}
                         disabled={disabled}
                     />
                     <Radio
-                        feltNavn={'etikettstatus'}
+                        feltNavn="etikettstatus"
                         label={<FormattedMessage id="etikett.JOBBTILBUD" />}
                         value={statuser.JOBBTILBUD}
                         id={`id--${statuser.JOBBTILBUD}`}
-                        name="etikettstatus"
-                        checked={erEtikettChecked(statuser.JOBBTILBUD)}
                         disabled={disabled}
                     />
                 </div>
@@ -89,6 +73,7 @@ function StillingEtikettForm(props) {
 
 const OppdaterReduxForm = reduxForm({
     form: 'etikett-status-form',
+    enableReinitialize: true,
 })(StillingEtikettForm);
 
 StillingEtikettForm.defaultProps = {

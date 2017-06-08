@@ -20,13 +20,16 @@ const mottaAktivitetsKort = {
 
     drop({ doFlyttAktivitet, status }, monitor) {
         const aktivitet = monitor.getItem();
-        if (status === STATUS_FULLFOERT) {
-            history.push(fullforAktivitetRoute(aktivitet.id));
-        } else if (status === STATUS_AVBRUTT) {
-            history.push(avbrytAktivitetRoute(aktivitet.id));
-        } else {
-            doFlyttAktivitet(aktivitet, status);
-        }
+        // utsett håndteringen til droppet er fullført. Unngår f.eks. F17HL3-144
+        setTimeout(() => {
+            if (status === STATUS_FULLFOERT) {
+                history.push(fullforAktivitetRoute(aktivitet.id));
+            } else if (status === STATUS_AVBRUTT) {
+                history.push(avbrytAktivitetRoute(aktivitet.id));
+            } else {
+                doFlyttAktivitet(aktivitet, status);
+            }
+        });
     },
 };
 
