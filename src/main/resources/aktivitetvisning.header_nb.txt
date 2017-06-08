@@ -10,4 +10,5 @@ STILLING { Stilling }
 TILTAKSAKTIVITET { Tiltak }
 GRUPPEAKTIVITET { Gruppaktivitet }
 UTDANNINGSAKTIVITET { Utdanning }
+SOKEAVTALE { Avtale med NAV }
 }
