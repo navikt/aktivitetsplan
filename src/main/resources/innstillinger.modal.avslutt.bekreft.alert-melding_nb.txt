@@ -1,0 +1,1 @@
+Er du sikker på at {navn} sin oppfølgingsperiode skal avsluttes? Du må i arena for å sette bruker aktiv igjen.
