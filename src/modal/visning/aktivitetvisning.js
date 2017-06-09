@@ -92,7 +92,7 @@ class Aktivitetvisning extends Component {
                 ));
 
         const tillattEndring =
-            (valgtAktivitet.avtalt !== true || TILLAT_SET_AVTALT) &&
+            (valgtAktivitet.avtalt !== true || !!TILLAT_SET_AVTALT) &&
             (valgtAktivitet.status !== STATUS_FULLFOERT &&
                 valgtAktivitet.status !== STATUS_AVBRUTT);
 
