@@ -22,32 +22,6 @@ function Prosesser({ kanAvslutte, intl }) {
                     })}
                     onClick={() => history.push('/innstillinger/avslutt/')}
                 />}
-            <StartProsess
-                className="innstillinger__prosess"
-                tittel={intl.formatMessage({
-                    id: 'innstillinger.prosess.avslutt.tittel',
-                })}
-                tekst={intl.formatMessage({
-                    id: 'innstillinger.prosess.avslutt.tekst',
-                })}
-                knappetekst={intl.formatMessage({
-                    id: 'innstillinger.prosess.avslutt.tittel',
-                })}
-                onClick={() => history.push('/innstillinger/avslutt/')}
-            />
-            <StartProsess
-                className="innstillinger__prosess"
-                tittel={intl.formatMessage({
-                    id: 'innstillinger.prosess.avslutt.tittel',
-                })}
-                tekst={intl.formatMessage({
-                    id: 'innstillinger.prosess.avslutt.tekst',
-                })}
-                knappetekst={intl.formatMessage({
-                    id: 'innstillinger.prosess.avslutt.tittel',
-                })}
-                onClick={() => history.push('/innstillinger/avslutt/')}
-            />
         </div>
     );
 }
@@ -60,7 +34,7 @@ Prosesser.propTypes = {
     kanAvslutte: PT.bool,
     intl: intlShape.isRequired,
 };
-
+// TODO: må hente avslutningStatus
 // const mapStateToProps = state => ({
 //     kanAvslutte: true // state.data.avslutningStatus.data.kanAvslutte
 // });
