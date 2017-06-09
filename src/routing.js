@@ -39,7 +39,7 @@ export default (
             component={AktivitetsmalModal}
         />
         {VIS_INNSTILLINGER &&
-            <Route path=":fnr/innstillinger" component={InnstillingerModal}>
+            <Route path="innstillinger" component={InnstillingerModal}>
                 <IndexRoute component={Prosesser} />
                 <Route path="avslutt" component={AvsluttOppfolging} />
                 <Route
@@ -49,7 +49,7 @@ export default (
             </Route>}
         {VIS_INNSTILLINGER &&
             <Route
-                path=":fnr/innstillinger/avslutt/kvittering"
+                path="innstillinger/avslutt/kvittering"
                 component={() => (
                     <KvitteringModal tekstId="innstillinger.modal.avslutt.oppfolging.kvittering" />
                 )}
