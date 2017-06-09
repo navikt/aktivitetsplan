@@ -232,7 +232,7 @@ class DialogModal extends Component {
                     closeButton={false}
                     onRequestClose={lukkModal}
                     isOpen
-                    contentClass="dialog-modal__content"
+                    contentClass="aktivitetsplanfs dialog-modal__content"
                 >
                     <DialogModalContent
                         navigerTil={this.navigerTil}
