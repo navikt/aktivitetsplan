@@ -67,7 +67,9 @@ function DialogVisning({ dialog, erValgt, aktiviteter }) {
             <Element>
                 {aktivitet ? aktivitet.tittel : dialog.overskrift}
             </Element>
-            <Normaltekst>{dialog.sisteTekst}</Normaltekst>
+            <Normaltekst className="dialoger__dialog-tekst">
+                {dialog.sisteTekst}
+            </Normaltekst>
             <div className="dialoger__dialog-etiketter">
                 <Etikett
                     visible={venterPaSvar}

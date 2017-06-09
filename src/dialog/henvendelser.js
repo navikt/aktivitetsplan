@@ -30,10 +30,11 @@ function Henvendelse({ henvendelse }) {
     return (
         <Snakkeboble
             dato={formaterDatoTid(henvendelse.sendt)}
-            tekst={<Tekstomrade>{henvendelse.tekst}</Tekstomrade>}
             ikonClass={ikonCls(avsenderVeileder, false)}
             pilHoyre={avsenderVeileder}
-        />
+        >
+            <Tekstomrade>{henvendelse.tekst}</Tekstomrade>
+        </Snakkeboble>
     );
 }
 
