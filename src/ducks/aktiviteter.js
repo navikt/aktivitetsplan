@@ -27,9 +27,13 @@ export const SLETT = 'aktivitet/slett';
 export const SLETT_OK = 'aktivitet/slett/ok';
 export const SLETT_FAIL = 'aktivitet/slett/fail';
 
+export const SETT_AKTIV_AKTIVITET_ID = 'aktivitet/aktiv/sett';
+export const FJERN_AKTIV_AKTIVITET_ID = 'aktivitet/aktiv/fjern';
+
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
+    aktivAktivitetId: undefined,
 };
 
 function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
@@ -78,6 +82,8 @@ export default function reducer(state = initalState, action) {
             });
         case SLETT_OK:
             return { ...state, data: state.data.filter(a => a.id !== data.id) };
+        case SETT_AKTIV_AKTIVITET_ID:
+            return { ...state, aktivAktivitetId: action.id };
         case SLETT:
         case SLETT_FAIL:
         default:
@@ -168,5 +174,12 @@ export function slettAktivitet(aktivitet) {
         Api.slettAktivitet(aktivitet)
             .then(() => dispatch({ type: SLETT_OK, data: aktivitet }))
             .catch(() => dispatch({ type: SLETT_FAIL, data: aktivitet }));
+    };
+}
+
+export function settAktivAktivitetId(id) {
+    return {
+        type: SETT_AKTIV_AKTIVITET_ID,
+        id,
     };
 }

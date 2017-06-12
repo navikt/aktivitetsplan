@@ -1,5 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
+import { connect } from 'react-redux';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
@@ -32,7 +33,7 @@ function collect(connector, monitor) {
     };
 }
 
-function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
+function AktivitetsKort({ aktivitet, isDragging, connectDragSource, aktivAktivitetId }) {
     const arenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
         GRUPPE_AKTIVITET_TYPE,
@@ -80,6 +81,10 @@ function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
         </article>
     );
 
+    if (aktivAktivitetId && aktivAktivitetId === aktivitet.id) {
+        aktivitetsKort.focus();
+    }
+
     return erFlyttbar ? connectDragSource(aktivitetsKort) : aktivitetsKort;
 }
 
@@ -87,6 +92,17 @@ AktivitetsKort.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     isDragging: PT.bool.isRequired,
     connectDragSource: PT.func.isRequired,
+    aktivAktivitetId: PT.string,
 };
 
-export default DragSource('AktivitetsKort', dndSpec, collect)(AktivitetsKort);
+AktivitetsKort.defaultProps = {
+    aktivAktivitetId: undefined,
+};
+
+const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)((AktivitetsKort));
+
+const mapStateToProps = state => ({
+    aktivAktivitetId: state.data.aktiviteter.aktivAktivitetId,
+});
+
+export default connect(mapStateToProps)(dragbartAktivitetskort);
