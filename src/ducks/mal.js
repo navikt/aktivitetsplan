@@ -17,12 +17,14 @@ export const OPPDATER_PENDING = 'oppdaterMal/PENDING';
 const initalState = {
     status: STATUS.NOT_STARTED,
     gjeldende: {},
-    liste: []
+    liste: [],
 };
 
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
+        case OPPDATER_PENDING:
+            return { ...state, status: STATUS.RELOADING };
         case GJELDENDE_FEILET:
             return { ...state, status: STATUS.ERROR, gjeldende: action.data };
         case GJELDENDE_OK:
@@ -47,7 +49,7 @@ export function hentMal() {
     return doThenDispatch(() => Api.hentMal(), {
         OK: GJELDENDE_OK,
         FEILET: GJELDENDE_FEILET,
-        PENDING: GJELDENDE_PENDING
+        PENDING: GJELDENDE_PENDING,
     });
 }
 
@@ -55,18 +57,20 @@ export function hentMalListe() {
     return doThenDispatch(() => Api.hentMalListe(), {
         OK: LISTE_OK,
         FEILET: LISTE_FEILET,
-        PENDING: LISTE_PENDING
+        PENDING: LISTE_PENDING,
     });
 }
 
 export function fjernMalListe() {
-    return (dispatch) => { dispatch({ type: LISTE_FJERN }); };
+    return dispatch => {
+        dispatch({ type: LISTE_FJERN });
+    };
 }
 
 export function oppdaterMal(mal) {
     return doThenDispatch(() => Api.lagreMal(mal), {
         OK: OPPDATER_OK,
         FEILET: OPPDATER_FEILET,
-        PENDING: OPPDATER_PENDING
+        PENDING: OPPDATER_PENDING,
     });
 }

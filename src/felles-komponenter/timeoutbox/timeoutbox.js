@@ -11,7 +11,7 @@ const DISPLAY_TID = Moment.duration(5, 'minutes');
 export const update = () => {
     window.timeout = {
         lastRequest: Moment.now(),
-        hidden: false
+        hidden: false,
     };
 };
 
@@ -29,25 +29,32 @@ class Timeoutbox extends Component {
         const tidIgjen = TIMEOUT_TID.asMilliseconds() - tidSidenForrigeKall;
         const tidIgjenMoment = Moment(tidIgjen);
 
-        const skalViseModal = tidIgjen <= DISPLAY_TID.asMilliseconds() && !window.timeout.hidden;
+        const skalViseModal =
+            tidIgjen <= DISPLAY_TID.asMilliseconds() && !window.timeout.hidden;
 
         return (
             <NavFrontendModal
                 isOpen={skalViseModal}
                 shouldCloseOnOverlayClick={false}
                 overlayClassName="aktivitet-modal__overlay"
-                portalClassName="timeout-modal-portal"
-                onRequestClose={() => { window.timeout.hidden = true; }}
-                contentLabel={this.props.intl.formatMessage({ id: 'timeoutbox.aria.label' })}
+                portalClassName="aktivitetsplanfs timeout-modal-portal"
+                onRequestClose={() => {
+                    window.timeout.hidden = true;
+                }}
+                contentLabel={this.props.intl.formatMessage({
+                    id: 'timeoutbox.aria.label',
+                })}
             >
-                {tidIgjen > 0 ? <TimeoutboxNedtelling tidIgjen={tidIgjenMoment} /> : <TimeoutboxLoggetUt /> }
+                {tidIgjen > 0
+                    ? <TimeoutboxNedtelling tidIgjen={tidIgjenMoment} />
+                    : <TimeoutboxLoggetUt />}
             </NavFrontendModal>
         );
     }
 }
 
 Timeoutbox.propTypes = {
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
 };
 
 export default injectIntl(Timeoutbox);

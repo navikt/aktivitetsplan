@@ -6,8 +6,14 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { validForm, rules } from 'react-redux-form-validation';
 import Textarea from '../../../modal/skjema/textarea/textarea';
 import { autobind } from '../../../utils';
+import { STATUS } from '../../../ducks/utils';
+import { oppdaterMal } from '../../../ducks/mal';
 
 const MALTEKST_MAKSLENGDE = 500;
+
+function trim(str) {
+    return str ? str.trim() : '';
+}
 
 class AktivitetsmalForm extends Component {
     constructor(props) {
@@ -19,19 +25,29 @@ class AktivitetsmalForm extends Component {
     }
     avbryt(e) {
         e.preventDefault();
-        this.props.handleCancel();
+        this.props.handleComplete();
     }
     render() {
+        const { oppdaterer, handleSubmit } = this.props;
         return (
-            <form onSubmit={this.props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <Textarea
                     feltNavn="mal"
                     labelId="aktivitetsmal.tekst.label"
                     maxLength={MALTEKST_MAKSLENGDE}
-                    textareaRef={(textarea) => { this.textarea = textarea; }}
+                    textareaRef={textarea => {
+                        this.textarea = textarea;
+                    }}
                 />
-                <Hovedknapp className="aktivitetmal__redigering--knapp"><FormattedMessage id="aktivitetsmal.lagre" /></Hovedknapp>
-                <Knapp onClick={this.avbryt}> {/* TODO: Vi må få inn type="button"*/}
+                <Hovedknapp
+                    className="aktivitetmal__redigering--knapp"
+                    spinner={oppdaterer}
+                    disabled={oppdaterer}
+                >
+                    <FormattedMessage id="aktivitetsmal.lagre" />
+                </Hovedknapp>
+                <Knapp onClick={this.avbryt} disabled={oppdaterer}>
+                    {' '}{/* TODO: Vi må få inn type="button"*/}
                     <FormattedMessage id="aktivitetsmal.avbryt" />
                 </Knapp>
             </form>
@@ -39,26 +55,48 @@ class AktivitetsmalForm extends Component {
     }
 }
 
-const forLangMaltekst = rules.maxLength(MALTEKST_MAKSLENGDE,
-    <FormattedMessage id="aktivitetsmal.tekst.makslengde.feilmelding" values={{ antall_tegn: MALTEKST_MAKSLENGDE }} />
+const forLangMaltekst = rules.maxLength(
+    MALTEKST_MAKSLENGDE,
+    <FormattedMessage
+        id="aktivitetsmal.tekst.makslengde.feilmelding"
+        values={{ antall_tegn: MALTEKST_MAKSLENGDE }}
+    />
 );
 
 AktivitetsmalForm.propTypes = {
+    oppdaterer: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
-    handleCancel: PT.func.isRequired
+    handleComplete: PT.func.isRequired,
 };
 
 const AktivitetsmalReduxForm = validForm({
     form: 'aktivitetsmal-form',
     validate: {
-        mal: [forLangMaltekst]
-    }
+        mal: [forLangMaltekst],
+    },
 })(AktivitetsmalForm);
 
-const mapStateToProps = (state, props) => ({
-    initialValues: { mal: props.mal.mal }
+const mapStateToProps = (state, props) => {
+    const malReducer = state.data.mal;
+    return {
+        initialValues: { mal: props.mal.mal },
+        oppdaterer: malReducer.status === STATUS.RELOADING,
+    };
+};
+
+const mapDispatchToProps = () => ({
+    onSubmit: (newMal, dispatch, props) => {
+        const handleComplete = props.handleComplete;
+        const newMalTrimmed = trim(newMal.mal);
+        const oldMalTimmed = trim(props.mal.mal);
+        if (newMalTrimmed !== oldMalTimmed) {
+            dispatch(oppdaterMal({ mal: newMalTrimmed })).then(handleComplete);
+        } else {
+            handleComplete();
+        }
+    },
 });
 
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsmalReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    AktivitetsmalReduxForm
+);

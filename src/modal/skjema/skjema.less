@@ -1,5 +1,7 @@
-@import "~nav-frontend-skjema-style/src/index";
-@import "./../../variables";
+@import './../../variables';
+@import './skjema';
+@import './stilling-aktivitet';
+@import './datovelger/day-picker';
 
 .dato-container {
   display: flex;
@@ -24,14 +26,17 @@
   background-color: @red-error;
   color: @hvit;
   list-style-position: inside;
+
   ul {
     margin: 0;
     padding-left: 0;
   }
+
   h3 {
     margin: 0;
     margin-bottom: 0.5rem;
   }
+
   a {
     color: @hvit;
     text-decoration: underline;

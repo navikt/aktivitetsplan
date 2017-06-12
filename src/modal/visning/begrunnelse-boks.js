@@ -9,20 +9,20 @@ class BegrunnelseBoks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            kollapset: true
+            kollapset: true,
         };
         autobind(this);
     }
     settKollapset(e) {
         e.preventDefault();
         this.setState({
-            kollapset: !this.state.kollapset
+            kollapset: !this.state.kollapset,
         });
     }
     render() {
         const classes = classNames({
             'tekst--kollapset': this.state.kollapset,
-            tekst: !this.state.kollapset
+            tekst: !this.state.kollapset,
         });
         /* eslint-disable */
         return (
@@ -39,7 +39,7 @@ class BegrunnelseBoks extends Component {
 }
 
 BegrunnelseBoks.propTypes = {
-    begrunnelse: PT.string.isRequired
+    begrunnelse: PT.string.isRequired,
 };
 
 export default visibleIfHOC(BegrunnelseBoks);

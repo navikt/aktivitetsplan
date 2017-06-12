@@ -1,45 +1,51 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import ScrollArea from 'react-scrollbar';
 import classNames from 'classnames';
+import SprettendeScrollbars from './sprettende-scrollbars';
 import { autobind } from '../../../utils';
-import './tavle.less';
 
-const KOLLONE_BREDDE = 343;
-const VIEWPORT_BREDDE = 1713;
+const KOLLONEBREDDE = 339;
 
-const tavleClassname = (className) => classNames('tavle', className);
+const tavleClassname = className => classNames('tavle', className);
 
 class Tavle extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            leftPosition: 0,
-            containerWidth: 0,
-            scrollArea: null
+            currentIndex: 0,
+            clickIndex: 0,
+            venstreKnappDisabled: true,
+            hoyreKnappDisabled: false,
         };
         autobind(this);
     }
 
-    onVisForrige() {
-        const index = Math.ceil(this.state.leftPosition / KOLLONE_BREDDE) - 1;
-        this.state.scrollArea.scrollXTo(index * KOLLONE_BREDDE);
+    visForrige() {
+        this.state.clickIndex =
+            Math.min(this.state.currentIndex, this.state.clickIndex) - 1;
+        const scrollTo = this.state.clickIndex * KOLLONEBREDDE;
+        this.scrollbars.scrollLeft(scrollTo);
     }
 
-    onVisNeste() {
-        const index = Math.floor((this.state.containerWidth + this.state.leftPosition) / KOLLONE_BREDDE) + 1;
-        this.state.scrollArea.scrollXTo((index * KOLLONE_BREDDE) - this.state.containerWidth);
+    visNeste() {
+        const clientWidth = this.scrollbars.getClientWidth();
+        const scrollLeft = this.scrollbars.getScrollLeft();
+        const clientWidthWithOffset = clientWidth + 35;
+        const nesteIndex = Math.floor(
+            (clientWidthWithOffset + scrollLeft) / KOLLONEBREDDE
+        );
+        this.state.clickIndex = Math.max(nesteIndex, this.state.clickIndex) + 1;
+        const scrollTo =
+            this.state.clickIndex * KOLLONEBREDDE - clientWidthWithOffset;
+        this.scrollbars.scrollLeft(scrollTo);
     }
 
-    updateScroll(value) {
+    updateState(values) {
         this.setState({
-            leftPosition: typeof value.leftPosition !== 'undefined' ? value.leftPosition : this.state.leftPosition,
-            containerWidth: value.containerWidth || this.state.containerWidth
+            currentIndex: Math.ceil(values.scrollLeft / KOLLONEBREDDE),
+            venstreKnappDisabled: values.left === 0,
+            hoyreKnappDisabled: values.left >= 0.99,
         });
-    }
-
-    lagreScrollArea(ref) {
-        this.setState({ scrollArea: ref });
     }
 
     render() {
@@ -51,29 +57,38 @@ class Tavle extends Component {
             </section>
         ));
 
-        const venstreKnapp = this.state.leftPosition > 0 && (
-        <button className="knapp-forrige knapp-tavle" onClick={this.onVisForrige} />
-            );
+        const venstreKnapp = (
+            <button
+                className="tavle__scrollknapp knapp-forrige"
+                onClick={this.visForrige}
+                disabled={this.state.venstreKnappDisabled}
+            />
+        );
 
-        const hoyreKnapp = this.state.leftPosition + this.state.containerWidth < VIEWPORT_BREDDE && (
-        <button className="knapp-neste knapp-tavle" onClick={this.onVisNeste} />
-            );
-
+        const hoyreKnapp = (
+            <button
+                className="tavle__scrollknapp knapp-neste"
+                onClick={this.visNeste}
+                disabled={this.state.hoyreKnappDisabled}
+            />
+        );
 
         return (
             <section className={tavleClassname(className)}>
                 {venstreKnapp}
-                <ScrollArea
-                    ref={this.lagreScrollArea}
-                    onScroll={this.updateScroll}
-                    smoothScrolling
+                <SprettendeScrollbars
+                    className="tavle__scrollarea"
+                    autoHeight
+                    autoHeightMax={9999}
+                    onScrollFrame={this.updateState}
+                    ref={scrollbars => {
+                        this.scrollbars = scrollbars;
+                    }}
                 >
-                    <div className="viewport">
-                        <div className="kolonner">
-                            {kolonner}
-                        </div>
+                    <div className="kolonner">
+                        {kolonner}
                     </div>
-                </ScrollArea>
+                </SprettendeScrollbars>
                 {hoyreKnapp}
             </section>
         );
@@ -82,11 +97,11 @@ class Tavle extends Component {
 
 Tavle.propTypes = {
     className: PT.string,
-    children: PT.arrayOf(PT.element).isRequired
+    children: PT.arrayOf(PT.element).isRequired,
 };
 
 Tavle.defaultProps = {
-    className: ''
+    className: '',
 };
 
 export default Tavle;

@@ -10,15 +10,13 @@ function StandardModal({ lukkModal, name, children }) {
         <Modal
             isOpen
             key={name}
-            onRequestClose={
-                () => {
-                    history.push('/');
-                    lukkModal();
-                }
-            }
+            onRequestClose={() => {
+                history.push('/');
+                lukkModal();
+            }}
             contentLabel="aktivitet-modal"
         >
-            { children }
+            {children}
         </Modal>
     );
 }
@@ -26,11 +24,11 @@ function StandardModal({ lukkModal, name, children }) {
 StandardModal.propTypes = {
     lukkModal: PT.func.isRequired,
     name: PT.string.isRequired,
-    children: PT.node.isRequired
+    children: PT.node.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    lukkModal: () => dispatch({ type: LUKK_MODAL })
+const mapDispatchToProps = dispatch => ({
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
 });
 
 export default connect(null, mapDispatchToProps)(StandardModal);

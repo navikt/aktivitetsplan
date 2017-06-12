@@ -2,7 +2,6 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import visibleIfHOC from '../../hocs/visible-if';
-import './knappelenke.less';
 
 function Knappelenke({ onClick, className, ...rest }) {
     function click(e) {
@@ -21,11 +20,11 @@ function Knappelenke({ onClick, className, ...rest }) {
 
 Knappelenke.propTypes = {
     onClick: PT.func.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 Knappelenke.defaultProps = {
-    className: undefined
+    className: undefined,
 };
 
 export default visibleIfHOC(Knappelenke);

@@ -3,15 +3,15 @@ import PT from 'prop-types';
 import { Container } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
-import Feil from './feil';
-import AktivitetsTavle from './aktivitetstavle';
-import Navigasjonslinje from './navigasjonslinje';
+import Feil from './feil/feil';
+import AktivitetsTavle from './tavle/aktivitetstavle';
+import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 
 function Hovedside({ children }) {
     return (
         <div className="hovedside">
             <div className="hovedsideinnhold">
-                <Container>
+                <Container className="hovedsideinnhold__meny-container blokk-s">
                     <Feil />
                     <Navigasjonslinje />
                     <Lenkeknapp href="/aktivitet/ny">
@@ -22,21 +22,20 @@ function Hovedside({ children }) {
             </div>
             {children}
         </div>
-
     );
 }
 
 Hovedside.defaultProps = {
     children: null,
-    routes: null
+    routes: null,
 };
 
 Hovedside.propTypes = {
-    children: PT.node
+    children: PT.node,
 };
 
 Hovedside.defaultProps = {
-    children: undefined
+    children: undefined,
 };
 
 export default Hovedside;

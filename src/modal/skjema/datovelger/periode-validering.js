@@ -36,13 +36,16 @@ class InnerInputComponent extends Component {
         return (
             <div>
                 <input type="hidden" {...input} />
-                <div role="alert" aria-live="assertive" className="skjemaelement__feilmelding">
+                <div
+                    role="alert"
+                    aria-live="assertive"
+                    className="skjemaelement__feilmelding"
+                >
                     <span>{errorMessage}</span>
                 </div>
             </div>
         );
     }
-
 }
 
 const ConnectedInputComponent = connect()(InnerInputComponent);
@@ -54,7 +57,7 @@ InnerInputComponent.propTypes = {
     feltNavn: PT.string.isRequired,
     dispatch: PT.func.isRequired,
     meta: PT.object, // eslint-disable-line react/forbid-prop-types
-    input: PT.object // eslint-disable-line react/forbid-prop-types
+    input: PT.object, // eslint-disable-line react/forbid-prop-types
 };
 
 InnerInputComponent.defaultProps = {
@@ -62,21 +65,36 @@ InnerInputComponent.defaultProps = {
     fraDato: undefined,
     tilDato: undefined,
     meta: undefined,
-    input: undefined
+    input: undefined,
 };
 
 function PeriodeValidering(props) {
     const valid = validerPeriode(props.fraDato, props.tilDato);
 
     return (
-        <div className={classNames({ skjema__periodevalidering: true, 'skjema--harFeil': !valid })}>
-            <div className={classNames({ skjema__feilomrade: !valid })} id={props.feltNavn} tabIndex={valid ? undefined : -1}>
+        <div
+            className={classNames({
+                skjema__periodevalidering: true,
+                'skjema--harFeil': !valid,
+            })}
+        >
+            <div
+                className={classNames({ skjema__feilomrade: !valid })}
+                id={props.feltNavn}
+                tabIndex={valid ? undefined : -1}
+            >
                 {props.children}
 
                 <CustomField
                     name={props.feltNavn}
-                    customComponent={<ConnectedInputComponent feltNavn={props.feltNavn} fraDato={props.fraDato} tilDato={props.tilDato} />}
-                    validate={() => valid ? undefined : props.errorMessage} // eslint-disable-line no-confusing-arrow
+                    customComponent={
+                        <ConnectedInputComponent
+                            feltNavn={props.feltNavn}
+                            fraDato={props.fraDato}
+                            tilDato={props.tilDato}
+                        />
+                    }
+                    validate={() => (valid ? undefined : props.errorMessage)} // eslint-disable-line no-confusing-arrow
                 />
             </div>
         </div>
@@ -88,13 +106,13 @@ PeriodeValidering.propTypes = {
     fraDato: PT.object, // eslint-disable-line react/forbid-prop-types
     tilDato: PT.object, // eslint-disable-line react/forbid-prop-types
     errorMessage: PT.string.isRequired,
-    children: PT.node
+    children: PT.node,
 };
 
 PeriodeValidering.defaultProps = {
     fraDato: undefined,
     tilDato: undefined,
-    children: undefined
+    children: undefined,
 };
 
 export default PeriodeValidering;

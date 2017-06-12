@@ -11,10 +11,8 @@ import { dateToISODate } from '../../utils';
 import Textarea from './textarea/textarea';
 import Input from './input/input';
 import Datovelger from './datovelger/datovelger';
-import './skjema.less';
 import { STATUS_PLANLAGT } from '../../constant';
 import PeriodeValidering from './datovelger/periode-validering';
-
 
 const TITTEL_MAKS_LENGDE = 255;
 const LENKE_MAKS_LENGDE = 2000;
@@ -23,26 +21,59 @@ const ARBEIDSSTED_MAKS_LENGDE = 255;
 const ARBEIDSGIVER_MAKS_LENGDE = 255;
 const KONTAKTPERSON_MAKS_LENGDE = 255;
 
-const pakrevdTittel = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tittel" />);
-const begrensetTittelLengde = rules.maxLength(TITTEL_MAKS_LENGDE,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.tittel-lengde" values={{ TITTEL_MAKS_LENGDE }} />
+const pakrevdTittel = rules.minLength(
+    0,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tittel" />
 );
-const pakrevdFraDato = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-fradato" />);
-const pakrevdTilDato = rules.minLength(0, <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tildato" />);
-const begrensetLenkeLengde = rules.maxLength(LENKE_MAKS_LENGDE,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.lenke-lengde" values={{ LENKE_MAKS_LENGDE }} />
+const begrensetTittelLengde = rules.maxLength(
+    TITTEL_MAKS_LENGDE,
+    <FormattedMessage
+        id="stilling-aktivitet-form.feilmelding.tittel-lengde"
+        values={{ TITTEL_MAKS_LENGDE }}
+    />
 );
-const begrensetBeskrivelseLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.beskrivelse-lengde" values={{ BESKRIVELSE_MAKS_LENGDE }} />
+const pakrevdFraDato = rules.minLength(
+    0,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-fradato" />
 );
-const begrensetArbeidsstedLengde = rules.maxLength(ARBEIDSSTED_MAKS_LENGDE,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.arbeidssted-lengde" values={{ ARBEIDSSTED_MAKS_LENGDE }} />
+const pakrevdTilDato = rules.minLength(
+    0,
+    <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tildato" />
 );
-const begrensetArbeidsgiverLengde = rules.maxLength(ARBEIDSGIVER_MAKS_LENGDE,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.arbeidsgiver-lengde" values={{ ARBEIDSGIVER_MAKS_LENGDE }} />
+const begrensetLenkeLengde = rules.maxLength(
+    LENKE_MAKS_LENGDE,
+    <FormattedMessage
+        id="stilling-aktivitet-form.feilmelding.lenke-lengde"
+        values={{ LENKE_MAKS_LENGDE }}
+    />
 );
-const begrensetKontaktpersonLengde = rules.maxLength(KONTAKTPERSON_MAKS_LENGDE,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.kontaktperson-lengde" values={{ KONTAKTPERSON_MAKS_LENGDE }} />
+const begrensetBeskrivelseLengde = rules.maxLength(
+    BESKRIVELSE_MAKS_LENGDE,
+    <FormattedMessage
+        id="stilling-aktivitet-form.feilmelding.beskrivelse-lengde"
+        values={{ BESKRIVELSE_MAKS_LENGDE }}
+    />
+);
+const begrensetArbeidsstedLengde = rules.maxLength(
+    ARBEIDSSTED_MAKS_LENGDE,
+    <FormattedMessage
+        id="stilling-aktivitet-form.feilmelding.arbeidssted-lengde"
+        values={{ ARBEIDSSTED_MAKS_LENGDE }}
+    />
+);
+const begrensetArbeidsgiverLengde = rules.maxLength(
+    ARBEIDSGIVER_MAKS_LENGDE,
+    <FormattedMessage
+        id="stilling-aktivitet-form.feilmelding.arbeidsgiver-lengde"
+        values={{ ARBEIDSGIVER_MAKS_LENGDE }}
+    />
+);
+const begrensetKontaktpersonLengde = rules.maxLength(
+    KONTAKTPERSON_MAKS_LENGDE,
+    <FormattedMessage
+        id="stilling-aktivitet-form.feilmelding.kontaktperson-lengde"
+        values={{ KONTAKTPERSON_MAKS_LENGDE }}
+    />
 );
 
 class StillingAktivitetForm extends Component {
@@ -54,9 +85,12 @@ class StillingAktivitetForm extends Component {
         window.onbeforeunload = null;
     }
 
-    visLukkDialog(e) { // eslint-disable-line
+    // eslint-disable-next-line consistent-return
+    visLukkDialog(e) {
         if (this.props.isDirty) {
-            const melding = this.props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' });
+            const melding = this.props.intl.formatMessage({
+                id: 'aktkivitet-skjema.lukk-advarsel',
+            });
             e.returnValue = melding;
             return melding;
         }
@@ -86,7 +120,9 @@ class StillingAktivitetForm extends Component {
                         feltNavn="periodeValidering"
                         fraDato={this.props.currentFraDato}
                         tilDato={this.props.currentTilDato}
-                        errorMessage={this.props.intl.formatMessage({ id: 'datepicker.feilmelding.stilling.fradato-etter-frist' })}
+                        errorMessage={this.props.intl.formatMessage({
+                            id: 'datepicker.feilmelding.stilling.fradato-etter-frist',
+                        })}
                     >
                         <div className="dato-container">
                             <Datovelger
@@ -132,7 +168,9 @@ class StillingAktivitetForm extends Component {
                     />
                 </div>
                 <div className="aktivitetskjema__lagre-knapp">
-                    <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
+                    <Hovedknapp>
+                        <FormattedMessage id="egen-aktivitet-form.lagre" />
+                    </Hovedknapp>
                 </div>
             </form>
         );
@@ -146,19 +184,21 @@ StillingAktivitetForm.propTypes = {
     currentTilDato: PT.instanceOf(Date),
     isDirty: PT.bool.isRequired,
     intl: intlShape.isRequired,
-    avtalt: PT.bool
+    avtalt: PT.bool,
 };
 
 StillingAktivitetForm.defaultProps = {
     currentFraDato: undefined,
     currentTilDato: undefined,
-    avtalt: false
+    avtalt: false,
 };
 
 export const formNavn = 'stilling-aktivitet';
 const StillingAktivitetReduxForm = validForm({
     form: formNavn,
-    errorSummaryTitle: <FormattedMessage id="stilling-aktivitet-form.feiloppsummering-tittel" />,
+    errorSummaryTitle: (
+        <FormattedMessage id="stilling-aktivitet-form.feiloppsummering-tittel" />
+    ),
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
@@ -168,12 +208,14 @@ const StillingAktivitetReduxForm = validForm({
         arbeidssted: [begrensetArbeidsstedLengde],
         arbeidsgiver: [begrensetArbeidsgiverLengde],
         kontaktperson: [begrensetKontaktpersonLengde],
-        periodeValidering: []
-    }
+        periodeValidering: [],
+    },
 })(StillingAktivitetForm);
 
 const selector = formValueSelector(formNavn);
-const getDateFromField = (field) => field == null ? null : moment(field).toDate(); // eslint-disable-line no-confusing-arrow
+// eslint-disable-next-line no-confusing-arrow
+const getDateFromField = field =>
+    field == null ? null : moment(field).toDate();
 
 const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet || {};
@@ -181,16 +223,18 @@ const mapStateToProps = (state, props) => {
         initialValues: {
             status: STATUS_PLANLAGT,
             fraDato: dateToISODate(new Date()),
-            ...aktivitet
+            ...aktivitet,
         },
         isDirty: isDirty(formNavn)(state),
         etikett: selector(state, 'etikett'),
         currentFraDato: getDateFromField(selector(state, 'fraDato')),
         currentTilDato: getDateFromField(selector(state, 'tilDato')),
-        avtalt: aktivitet && aktivitet.avtalt
+        avtalt: aktivitet && aktivitet.avtalt,
     };
 };
 
 const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(StillingAktivitetReduxForm));
+export default connect(mapStateToProps, mapDispatchToProps)(
+    injectIntl(StillingAktivitetReduxForm)
+);

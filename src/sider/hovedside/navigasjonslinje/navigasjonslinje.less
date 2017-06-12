@@ -1,0 +1,55 @@
+@import '../../../variables';
+
+@meny-knapp-storrelse: 1.25rem;
+
+.navigasjonslinje {
+  .blokk-s();
+  display: flex;
+  justify-content: flex-start;
+  background: @hvit;
+  border-radius: @border-radius-base;
+  padding: 0.5rem 1rem;
+}
+
+.navigasjonslinje__element {
+  color: @navMorkGra;
+  text-decoration: none;
+  margin-right: 1rem;
+
+  &:hover {
+    text-decoration: underline;
+    color: @bla;
+  }
+}
+
+.navigasjonslinje__element-content {
+  margin-left: 0.25rem;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.navigasjonslinje-meny {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.navigasjonslinje-meny__innstillinger-knapp {
+  .knapp();
+  height: @meny-knapp-storrelse;
+  width: @meny-knapp-storrelse;
+  border: 0;
+  padding: 0;
+  background: data-uri('@{aktivitetsplanPath}/sider/hovedside/navigasjonslinje/tannhjul.svg') no-repeat;
+  background-size: contain;
+
+  &:hover {
+    background: data-uri('@{aktivitetsplanPath}/sider/hovedside/navigasjonslinje/tannhjul-hover.svg') no-repeat;
+  }
+
+  &:active {
+    background: data-uri('@{aktivitetsplanPath}/sider/hovedside/navigasjonslinje/tannhjul-active.svg') no-repeat;
+  }
+}

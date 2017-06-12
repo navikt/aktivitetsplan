@@ -1,7 +1,7 @@
-@import "../../variables";
+@import '../../variables';
 
 .underelement-knapp(@image) {
-  background: url(@image) no-repeat left;
+  background: data-uri('@{aktivitetsplanPath}/modal/visning/@{image}') no-repeat left;
   background-size: 1rem;
   background-position-x: 1rem;
 }
@@ -21,27 +21,27 @@
 
   &__dialog-knapp {
     padding-left: 2.5rem;
-    .underelement-knapp("dialog-regular.svg");
+    .underelement-knapp('dialog-regular.svg');
 
     &--aktiv {
-      .underelement-knapp("dialog-aktiv.svg");
+      .underelement-knapp('dialog-aktiv.svg');
     }
 
     &:hover {
-      .underelement-knapp("dialog-hover.svg");
+      .underelement-knapp('dialog-hover.svg');
     }
   }
 
   &__historikk-knapp {
     padding-left: 2.5rem;
-    .underelement-knapp("historikk-regular.svg");
+    .underelement-knapp('historikk-regular.svg');
 
     &--aktiv {
-      .underelement-knapp("historikk-aktiv.svg");
+      .underelement-knapp('historikk-aktiv.svg');
     }
 
     &:hover {
-      .underelement-knapp("historikk-hover.svg");
+      .underelement-knapp('historikk-hover.svg');
     }
   }
 
@@ -54,4 +54,3 @@
     width: 100%;
   }
 }
-

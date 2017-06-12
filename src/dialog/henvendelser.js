@@ -10,8 +10,6 @@ import * as AppPT from '../proptypes';
 import Dato from '../felles-komponenter/dato';
 import { markerDialogSomLest } from '../ducks/dialog';
 import visibleIfHOC from '../hocs/visible-if';
-import './henvendelser.less';
-
 
 const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) => (
     <div className="henvendelser__lest-av-bruker">
@@ -19,15 +17,16 @@ const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) => (
         <span>&nbsp;</span>
         <Dato visTidspunkt>{lestAvBrukerTidspunkt}</Dato>
     </div>
-    ));
+));
 
 function Henvendelse({ henvendelse }) {
     const avsenderVeileder = henvendelse.avsender === 'VEILEDER';
-    const ikonCls = (fraVeileder, brukerMann) => classNames('ikon', {
-        'ikon--veileder': fraVeileder,
-        'ikon--bruker-mann': !fraVeileder && brukerMann,
-        'ikon--bruker-kvinne': !fraVeileder && !brukerMann
-    });
+    const ikonCls = (fraVeileder, brukerMann) =>
+        classNames('ikon', {
+            'ikon--veileder': fraVeileder,
+            'ikon--bruker-mann': !fraVeileder && brukerMann,
+            'ikon--bruker-kvinne': !fraVeileder && !brukerMann,
+        });
     return (
         <Snakkeboble
             dato={formaterDatoTid(henvendelse.sendt)}
@@ -39,15 +38,14 @@ function Henvendelse({ henvendelse }) {
 }
 
 Henvendelse.propTypes = {
-    henvendelse: AppPT.henvendelse
+    henvendelse: AppPT.henvendelse,
 };
 
 Henvendelse.defaultProps = {
-    henvendelse: undefined
+    henvendelse: undefined,
 };
 
 class Dialog extends Component {
-
     componentDidMount() {
         this.props.doMarkerDialogSomLest();
     }
@@ -60,23 +58,33 @@ class Dialog extends Component {
         const { dialog } = this.props;
         const henvendelser = dialog.henvendelser;
         const lestAvBrukerTidspunkt = dialog.lestAvBrukerTidspunkt;
-        const henvendelserSynkende = [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));
-        const sisteHenvendelseLestAvBruker = lestAvBrukerTidspunkt && henvendelserSynkende.find((h) => datoComparator(lestAvBrukerTidspunkt, h.sendt) >= 0);
+        const henvendelserSynkende = [...henvendelser].sort((a, b) =>
+            datoComparator(b.sendt, a.sendt)
+        );
+        const sisteHenvendelseLestAvBruker =
+            lestAvBrukerTidspunkt &&
+            henvendelserSynkende.find(
+                h => datoComparator(lestAvBrukerTidspunkt, h.sendt) >= 0
+            );
 
-        const henvendelseKomponenter = henvendelserSynkende
-            .map((h) => (
-                <div>
-                    <LestAvBruker visible={h === sisteHenvendelseLestAvBruker} lestAvBrukerTidspunkt={lestAvBrukerTidspunkt} />
-                    <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />
-                </div>
-            ));
-        return <div className="dialog-henvendelser">{henvendelseKomponenter}</div>;
+        const henvendelseKomponenter = henvendelserSynkende.map(h => (
+            <div>
+                <LestAvBruker
+                    visible={h === sisteHenvendelseLestAvBruker}
+                    lestAvBrukerTidspunkt={lestAvBrukerTidspunkt}
+                />
+                <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />
+            </div>
+        ));
+        return (
+            <div className="dialog-henvendelser">{henvendelseKomponenter}</div>
+        );
     }
 }
 
 Dialog.propTypes = {
     dialog: AppPT.dialog.isRequired,
-    doMarkerDialogSomLest: PT.func.isRequired
+    doMarkerDialogSomLest: PT.func.isRequired,
 };
 
 const mapStateToProps = () => ({});
@@ -89,8 +97,10 @@ const mapDispatchToProps = (dispatch, props) => {
             if (!dialog.lest) {
                 markerDialogSomLest(dialogId)(dispatch);
             }
-        }
+        },
     };
 };
 
-export default visibleIfHOC(connect(mapStateToProps, mapDispatchToProps)(Dialog));
+export default visibleIfHOC(
+    connect(mapStateToProps, mapDispatchToProps)(Dialog)
+);

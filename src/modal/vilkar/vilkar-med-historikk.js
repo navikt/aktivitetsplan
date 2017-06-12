@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import './vilkar.less';
 import * as AppPT from '../../proptypes';
 import Vilkar from './vilkar';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
@@ -20,7 +19,10 @@ class VilkarMedHistorikkStoreConnector extends Component {
         const { historiskeVilkar } = this.props;
         return (
             <Innholdslaster avhengigheter={[historiskeVilkar]}>
-                <Vilkar vilkarListe={historiskeVilkar.data} visHistorikk={historiskeVilkar.data.length > 1} />
+                <Vilkar
+                    vilkarListe={historiskeVilkar.data}
+                    visHistorikk={historiskeVilkar.data.length > 1}
+                />
             </Innholdslaster>
         );
     }
@@ -30,16 +32,20 @@ VilkarMedHistorikkStoreConnector.propTypes = {
     doHentHistoriskeVilkar: PT.func.isRequired,
     historiskeVilkar: PT.shape({
         status: PT.string,
-        data: PT.arrayOf(AppPT.vilkar)
-    }).isRequired
+        data: PT.arrayOf(AppPT.vilkar),
+    }).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    historiskeVilkar: state.data.historiskeVilkar
+const mapStateToProps = state => ({
+    historiskeVilkar: state.data.historiskeVilkar,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    doHentHistoriskeVilkar: () => dispatch(hentHistoriskeVilkar())
+const mapDispatchToProps = dispatch => ({
+    doHentHistoriskeVilkar: () => dispatch(hentHistoriskeVilkar()),
 });
 
-export default VilkarModal(connect(mapStateToProps, mapDispatchToProps)(VilkarMedHistorikkStoreConnector));
+export default VilkarModal(
+    connect(mapStateToProps, mapDispatchToProps)(
+        VilkarMedHistorikkStoreConnector
+    )
+);

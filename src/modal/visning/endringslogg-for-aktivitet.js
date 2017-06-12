@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { hentEndringsloggForAktivtet, fjernEndringsLogg } from '../../ducks/endringslogg';
+import {
+    hentEndringsloggForAktivtet,
+    fjernEndringsLogg,
+} from '../../ducks/endringslogg';
 import * as AppPT from '../../proptypes';
 import { formaterDatoDatoEllerTidSiden } from '../../utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import { STATUS } from '../../ducks/utils';
-
 
 function EndringsloggInnslag({ log }) {
     const beskrivelse = log.endringsBeskrivelse.split(/,(.+)/);
@@ -24,13 +26,16 @@ function EndringsloggInnslag({ log }) {
     );
 }
 EndringsloggInnslag.propTypes = {
-    log: AppPT.endringslogg.isRequired
+    log: AppPT.endringslogg.isRequired,
 };
 
 class EndringsloggForAktivitet extends Component {
-
     componentWillMount() {
-        const { doFjernEndringsLogg, doHentEndringsloggForAktivitet, aktivitet } = this.props;
+        const {
+            doFjernEndringsLogg,
+            doHentEndringsloggForAktivitet,
+            aktivitet,
+        } = this.props;
         doFjernEndringsLogg();
         doHentEndringsloggForAktivitet(aktivitet);
     }
@@ -40,15 +45,14 @@ class EndringsloggForAktivitet extends Component {
 
         return (
             <section className={className}>
-                {endringslogg.length === 0 && status === STATUS.OK && (
-                    <FormattedMessage id="livslopsendring.empty" />
-                )}
-                {endringslogg.map((log) => <EndringsloggInnslag log={log} />)}
+                {endringslogg.length === 0 &&
+                    status === STATUS.OK &&
+                    <FormattedMessage id="livslopsendring.empty" />}
+                {endringslogg.map(log => <EndringsloggInnslag log={log} />)}
             </section>
         );
     }
 }
-
 
 EndringsloggForAktivitet.propTypes = {
     endringslogg: PT.arrayOf(AppPT.endringslogg),
@@ -56,23 +60,26 @@ EndringsloggForAktivitet.propTypes = {
     doHentEndringsloggForAktivitet: PT.func.isRequired,
     doFjernEndringsLogg: PT.func.isRequired,
     status: PT.string,
-    className: PT.string
+    className: PT.string,
 };
 
 EndringsloggForAktivitet.defaultProps = {
     endringslogg: undefined,
     status: undefined,
-    className: ''
+    className: '',
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     status: state.data.endringslogg.status,
-    endringslogg: state.data.endringslogg.data
+    endringslogg: state.data.endringslogg.data,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    doHentEndringsloggForAktivitet: (aktivitet) => hentEndringsloggForAktivtet(aktivitet)(dispatch),
-    doFjernEndringsLogg: () => fjernEndringsLogg()(dispatch)
+const mapDispatchToProps = dispatch => ({
+    doHentEndringsloggForAktivitet: aktivitet =>
+        hentEndringsloggForAktivtet(aktivitet)(dispatch),
+    doFjernEndringsLogg: () => fjernEndringsLogg()(dispatch),
 });
 
-export default visibleIfHOC(connect(mapStateToProps, mapDispatchToProps)(EndringsloggForAktivitet));
+export default visibleIfHOC(
+    connect(mapStateToProps, mapDispatchToProps)(EndringsloggForAktivitet)
+);

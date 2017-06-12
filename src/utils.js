@@ -8,17 +8,15 @@ export function fn(value) {
 
 export function autobind(ctx) {
     Object.getOwnPropertyNames(ctx.constructor.prototype)
-        .filter((prop) => typeof ctx[prop] === 'function')
-        .forEach((method) => {
+        .filter(prop => typeof ctx[prop] === 'function')
+        .forEach(method => {
             // eslint-disable-next-line
             ctx[method] = ctx[method].bind(ctx);
         });
 }
 
 function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-        .toString()
-        .substring(1);
+    return Math.floor((1 + Math.random()) * 0x10000).toString().substring(1);
 }
 
 export function guid() {
@@ -28,7 +26,7 @@ export function guid() {
 export function mergeObject(mergeFn) {
     return (acc, element) => ({
         ...acc,
-        ...mergeFn(element)
+        ...mergeFn(element),
     });
 }
 
@@ -44,7 +42,7 @@ export function throttle(fn, threshold = 250) {
         const args = arguments;
         if (last && now < last + threshold) {
             clearTimeout(deferTimer);
-            deferTimer = setTimeout(function () {
+            deferTimer = setTimeout(function() {
                 last = now;
                 fn.apply(context, args);
             }, threshold);
@@ -57,11 +55,15 @@ export function throttle(fn, threshold = 250) {
 
 export function erDev() {
     const url = window.location.href;
-    return url.includes('debug=true') || url.includes('devillo.no:8282') || url.includes('localhost');
+    return (
+        url.includes('debug=true') ||
+        url.includes('devillo.no:8282') ||
+        url.includes('localhost')
+    );
 }
 
 export function getDisplayName(WrappedComponent) {
-    return WrappedComponent.displayName || WrappedComponent.name || 'Component'
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
 export function erInternlenke(href) {
@@ -77,18 +79,26 @@ export function proxy(func, { before, after } = {}) {
 }
 
 export function storeForbokstaver(tekst) {
-    return tekst && tekst.replace(/\w\S*/g, (ord) => ord.charAt(0).toUpperCase() + ord.substr(1).toLowerCase())
+    return (
+        tekst &&
+        tekst.replace(
+            /\w\S*/g,
+            ord => ord.charAt(0).toUpperCase() + ord.substr(1).toLowerCase()
+        )
+    );
 }
 
-export const erGyldigISODato = (isoDato) => {
+export const erGyldigISODato = isoDato => {
     return !!(isoDato && moment(isoDato, moment.ISO_8601).isValid());
 };
 
-export const erGyldigFormattertDato = (formattertDato) => {
-    return !!(formattertDato && formattertDato.length === 10 && moment(formattertDato, 'DD.MM.YYYY', true).isValid());
+export const erGyldigFormattertDato = formattertDato => {
+    return !!(formattertDato &&
+        formattertDato.length === 10 &&
+        moment(formattertDato, 'DD.MM.YYYY', true).isValid());
 };
 
-export const erGyldigDatoformat = (dato) => {
+export const erGyldigDatoformat = dato => {
     const d = dato.replace(/\./g, '');
     let s = `${parseInt(d, 10)}`;
     if (dato.startsWith('0')) {
@@ -103,7 +113,7 @@ export const erGyldigDatoformat = (dato) => {
     return true;
 };
 
-export const erGyldigDato = (dato) => {
+export const erGyldigDato = dato => {
     const re = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
     if (!re.test(dato)) {
         return false;
@@ -111,59 +121,79 @@ export const erGyldigDato = (dato) => {
     return erGyldigDatoformat(dato);
 };
 
-const erLocalDate = (dato) => { return dato.year && dato.monthValue && dato.dayOfMonth; };
+const erLocalDate = dato => {
+    return dato.year && dato.monthValue && dato.dayOfMonth;
+};
 
-export const toDate = (dato) => {
+export const toDate = dato => {
     if (typeof dato === 'undefined' || dato === null) {
         return null;
     }
-    return erLocalDate(dato) ? new Date(dato.year, dato.monthValue - 1, dato.dayOfMonth) : new Date(dato);
+    return erLocalDate(dato)
+        ? new Date(dato.year, dato.monthValue - 1, dato.dayOfMonth)
+        : new Date(dato);
 };
 
-export const toDatePrettyPrint = (dato) => {
+export const toDatePrettyPrint = dato => {
     if (typeof dato === 'undefined' || dato === null) {
         return null;
     }
 
     const _dato = toDate(dato);
 
-    const days = _dato.getDate() < 10 ? `0${_dato.getDate()}` : `${_dato.getDate()}`;
-    const months = _dato.getMonth() + 1 < 10 ? `0${_dato.getMonth() + 1}` : `${_dato.getMonth() + 1}`;
+    const days = _dato.getDate() < 10
+        ? `0${_dato.getDate()}`
+        : `${_dato.getDate()}`;
+    const months = _dato.getMonth() + 1 < 10
+        ? `0${_dato.getMonth() + 1}`
+        : `${_dato.getMonth() + 1}`;
     const years = _dato.getFullYear();
 
     return `${days}.${months}.${years}`;
 };
 
-export const datePickerToISODate = (dato) => {
+export const datePickerToISODate = dato => {
     const parsetDato = moment(dato, 'DD.MM.YYYY', true);
-    return parsetDato.isValid() ? parsetDato.toISOString() : "";
+    return parsetDato.isValid() ? parsetDato.toISOString() : '';
 };
 
-export const dateToISODate = (dato) => {
+export const dateToISODate = dato => {
     const parsetDato = moment(dato);
-    return dato && parsetDato.isValid() ? parsetDato.toISOString() : "";
+    return dato && parsetDato.isValid() ? parsetDato.toISOString() : '';
 };
 
-export const ISODateToDatePicker = (dato) => {
+export const ISODateToDatePicker = dato => {
     const parsetDato = moment(dato);
-    return dato && parsetDato.isValid() ? parsetDato.format('DD.MM.YYYY') : "";
+    return dato && parsetDato.isValid() ? parsetDato.format('DD.MM.YYYY') : '';
 };
 
 moment.updateLocale('nb', {
     monthsShort: [
-        'jan', 'feb', 'mar', 'apr', 'mai', 'jun',
-        'jul', 'aug', 'sep', 'okt', 'nov', 'des'
-    ]
+        'jan',
+        'feb',
+        'mar',
+        'apr',
+        'mai',
+        'jun',
+        'jul',
+        'aug',
+        'sep',
+        'okt',
+        'nov',
+        'des',
+    ],
 });
 
 export function formaterDato(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? datoVerdi.format('DD.MM.YYYY') : undefined;
+    return datoVerdi.isValid() ? datoVerdi.format('DD. MMM YYYY') : undefined;
 }
 
 export function formaterDatoTid(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? datoVerdi.format('DD.MM.YYYY HH:mm') : undefined;
+    return datoVerdi.isValid()
+        ? datoVerdi.format('DD.MM.YYYY HH:mm')
+        : undefined;
 }
 
 export function formaterDatoKortManed(dato) {
@@ -173,7 +203,9 @@ export function formaterDatoKortManed(dato) {
 
 export function formaterDatoKortManedTid(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? datoVerdi.format('Do MMM YYYY [kl] HH:mm') : undefined;
+    return datoVerdi.isValid()
+        ? datoVerdi.format('Do MMM YYYY [kl] HH:mm')
+        : undefined;
 }
 
 export function formaterTid(dato) {
@@ -196,9 +228,9 @@ export function formaterDatoDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
         ? erMerEnnEnDagSiden(dato)
-            ? formaterDatoTidSiden(dato)
-            : formaterDatoKortManedTid(dato)
-        : undefined
+              ? formaterDatoTidSiden(dato)
+              : formaterDatoKortManedTid(dato)
+        : undefined;
 }
 
 export function datoComparator(a, b) {

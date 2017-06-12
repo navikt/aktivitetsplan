@@ -10,8 +10,11 @@ import { TILBAKE_MODAL } from '../../ducks/modal';
 function Tilbakeknapp(props) {
     function tilbake(e) {
         e.preventDefault();
-        const dialogTekst = props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' });
-        if (!props.visConfirmDialog || confirm(dialogTekst)) { // eslint-disable-line no-alert
+        const dialogTekst = props.intl.formatMessage({
+            id: 'aktkivitet-skjema.lukk-advarsel',
+        });
+        // eslint-disable-next-line no-alert
+        if (!props.visConfirmDialog || confirm(dialogTekst)) {
             props.tilbakeModal();
             history.goBack();
         }
@@ -22,17 +25,19 @@ function Tilbakeknapp(props) {
             <div className="tilbakeknapp-innhold">
                 <VenstreChevron />
                 <span className="tilbakeknapp-innhold__tekst">
-                    <FormattedMessage id={props.tekstId} values={props.tekstValues} />
+                    <FormattedMessage
+                        id={props.tekstId}
+                        values={props.tekstValues}
+                    />
                 </span>
             </div>
         </Link>
     );
 }
 
-
 Tilbakeknapp.defaultProps = {
     tekstValues: undefined,
-    visConfirmDialog: false
+    visConfirmDialog: false,
 };
 
 Tilbakeknapp.propTypes = {
@@ -40,11 +45,11 @@ Tilbakeknapp.propTypes = {
     tekstValues: PT.object, // eslint-disable-line react/forbid-prop-types
     tilbakeModal: PT.func.isRequired,
     visConfirmDialog: PT.bool,
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    tilbakeModal: () => dispatch({ type: TILBAKE_MODAL })
+const mapDispatchToProps = dispatch => ({
+    tilbakeModal: () => dispatch({ type: TILBAKE_MODAL }),
 });
 
 export default connect(null, mapDispatchToProps)(injectIntl(Tilbakeknapp));

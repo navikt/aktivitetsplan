@@ -6,8 +6,6 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import visibleIfHOC from '../../hocs/visible-if';
 import versjonskonfliktSvg from './versjonskonflikt.svg';
-import './versjonskonflikt.less';
-
 
 function Versjonskonflikt({ tilbake, slett }) {
     return (
@@ -31,10 +29,9 @@ function Versjonskonflikt({ tilbake, slett }) {
     );
 }
 
-
 Versjonskonflikt.propTypes = {
     slett: PT.func.isRequired,
-    tilbake: PT.bool.isRequired
+    tilbake: PT.bool.isRequired,
 };
 
 export default visibleIfHOC(Versjonskonflikt);

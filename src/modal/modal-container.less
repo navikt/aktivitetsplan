@@ -7,20 +7,32 @@
 
   .aktivitetskjema {
     padding: @modal-innhold-padding;
+
     &__redigering-header {
       display: flex;
     }
+
     &__header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
     }
+
     &__datofelt-wrapper {
       display: flex;
       justify-content: space-between;
     }
-    &__datofelt, .datovelger {
+
+    &__datofelt,
+    .datovelger {
       font-size: 1rem;
     }
+  }
+}
+
+.modal-header-wrapper {
+  .spinner {
+    display: block;
+    margin: 0 auto;
   }
 }

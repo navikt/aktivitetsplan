@@ -6,9 +6,12 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form';
 
-const cls = (className) => classNames(className, 'knapp-liten');
+const cls = className => classNames(className, 'knapp-liten');
 const RemoteSubmitKnapp = ({ className, dispatch, formNavn }) => (
-    <Hovedknapp className={cls(className)} onClick={() => dispatch(submit(formNavn))}>
+    <Hovedknapp
+        className={cls(className)}
+        onClick={() => dispatch(submit(formNavn))}
+    >
         <FormattedMessage id="modal.skjema.lagre" />
     </Hovedknapp>
 );
@@ -16,13 +19,13 @@ const RemoteSubmitKnapp = ({ className, dispatch, formNavn }) => (
 RemoteSubmitKnapp.propTypes = {
     className: PT.string,
     dispatch: PT.func,
-    formNavn: PT.string
+    formNavn: PT.string,
 };
 
 RemoteSubmitKnapp.defaultProps = {
     className: undefined,
     dispatch: undefined,
-    formNavn: undefined
+    formNavn: undefined,
 };
 
 export default connect()(RemoteSubmitKnapp);

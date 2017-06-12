@@ -8,8 +8,15 @@ import history from '../../../history';
 function AktivitetsmalModal() {
     return (
         <div>
-            <Modal isOpen onRequestClose={() => history.push('/')} contentLabel="aktivitetsmal-modal">
-                <ModalHeader normalTekstId="aktivitetsmal.mitt-mal" className="aktivitetmal__modal">
+            <Modal
+                isOpen
+                onRequestClose={() => history.push('/')}
+                contentLabel="aktivitetsmal-modal"
+            >
+                <ModalHeader
+                    normalTekstId="aktivitetsmal.mitt-mal"
+                    className="aktivitetmal__modal"
+                >
                     <ModalContainer>
                         <AktivitetsMal />
                     </ModalContainer>

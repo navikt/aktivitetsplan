@@ -10,7 +10,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import Textarea from './textarea/textarea';
 import Input from './input/input';
 import Datovelger from './datovelger/datovelger';
-import './skjema.less';
 import { STATUS_BRUKER_ER_INTRESSERT } from '../../constant';
 import PeriodeValidering from './datovelger/periode-validering';
 
@@ -20,26 +19,54 @@ const LENKE_MAKS_LENGDE = 2000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 const OPPFOLGING_MAKS_LENGDE = 255;
 
-const pakrevdTittel = rules.minLength(0, <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tittel" />);
-const begrensetTittelLengde = rules.maxLength(TITTEL_MAKS_LENGDE,
-    <FormattedMessage id="egen-aktivitet-form.feilmelding.tittel-lengde" values={{ TITTEL_MAKS_LENGDE }} />
+const pakrevdTittel = rules.minLength(
+    0,
+    <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tittel" />
 );
-const pakrevdFraDato = rules.minLength(0, <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-fradato" />);
-const pakrevdTilDato = rules.minLength(0, <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tildato" />);
-const begrensetHensiktLengde = rules.maxLength(HENSIKT_MAKS_LENGDE,
-    <FormattedMessage id="egen-aktivitet-form.feilmelding.hensikt-lengde" values={{ HENSIKT_MAKS_LENGDE }} />
+const begrensetTittelLengde = rules.maxLength(
+    TITTEL_MAKS_LENGDE,
+    <FormattedMessage
+        id="egen-aktivitet-form.feilmelding.tittel-lengde"
+        values={{ TITTEL_MAKS_LENGDE }}
+    />
 );
-const begrensetLenkeLengde = rules.maxLength(LENKE_MAKS_LENGDE,
-    <FormattedMessage id="egen-aktivitet-form.feilmelding.lenke-lengde" values={{ LENKE_MAKS_LENGDE }} />
+const pakrevdFraDato = rules.minLength(
+    0,
+    <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-fradato" />
 );
-const begrensetBeskrivelseLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage id="egen-aktivitet-form.feilmelding.beskrivelse-lengde" values={{ BESKRIVELSE_MAKS_LENGDE }} />
+const pakrevdTilDato = rules.minLength(
+    0,
+    <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tildato" />
+);
+const begrensetHensiktLengde = rules.maxLength(
+    HENSIKT_MAKS_LENGDE,
+    <FormattedMessage
+        id="egen-aktivitet-form.feilmelding.hensikt-lengde"
+        values={{ HENSIKT_MAKS_LENGDE }}
+    />
+);
+const begrensetLenkeLengde = rules.maxLength(
+    LENKE_MAKS_LENGDE,
+    <FormattedMessage
+        id="egen-aktivitet-form.feilmelding.lenke-lengde"
+        values={{ LENKE_MAKS_LENGDE }}
+    />
+);
+const begrensetBeskrivelseLengde = rules.maxLength(
+    BESKRIVELSE_MAKS_LENGDE,
+    <FormattedMessage
+        id="egen-aktivitet-form.feilmelding.beskrivelse-lengde"
+        values={{ BESKRIVELSE_MAKS_LENGDE }}
+    />
 );
 
-const begrensetoppfolginLengde = rules.maxLength(BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage id="egen-aktivitet-form.feilmelding.oppfolging-lengde" values={{ OPPFOLGING_MAKS_LENGDE }} />
+const begrensetoppfolginLengde = rules.maxLength(
+    BESKRIVELSE_MAKS_LENGDE,
+    <FormattedMessage
+        id="egen-aktivitet-form.feilmelding.oppfolging-lengde"
+        values={{ OPPFOLGING_MAKS_LENGDE }}
+    />
 );
-
 
 class EgenAktivitetForm extends Component {
     componentDidMount() {
@@ -50,9 +77,12 @@ class EgenAktivitetForm extends Component {
         window.onbeforeunload = null;
     }
 
-    visLukkDialog(e) { // eslint-disable-line
+    // eslint-disable-next-line consistent-return
+    visLukkDialog(e) {
         if (this.props.isDirty) {
-            const melding = this.props.intl.formatMessage({ id: 'aktkivitet-skjema.lukk-advarsel' });
+            const melding = this.props.intl.formatMessage({
+                id: 'aktkivitet-skjema.lukk-advarsel',
+            });
             e.returnValue = melding;
             return melding;
         }
@@ -83,7 +113,9 @@ class EgenAktivitetForm extends Component {
                         feltNavn="periodeValidering"
                         fraDato={this.props.currentFraDato}
                         tilDato={this.props.currentTilDato}
-                        errorMessage={this.props.intl.formatMessage({ id: 'datepicker.feilmelding.egen.fradato-etter-frist' })}
+                        errorMessage={this.props.intl.formatMessage({
+                            id: 'datepicker.feilmelding.egen.fradato-etter-frist',
+                        })}
                     >
                         <div className="dato-container">
                             <Datovelger
@@ -127,7 +159,9 @@ class EgenAktivitetForm extends Component {
                     />
                 </div>
                 <div className="aktivitetskjema__lagre-knapp">
-                    <Hovedknapp><FormattedMessage id="egen-aktivitet-form.lagre" /></Hovedknapp>
+                    <Hovedknapp>
+                        <FormattedMessage id="egen-aktivitet-form.lagre" />
+                    </Hovedknapp>
                 </div>
             </form>
         );
@@ -141,21 +175,22 @@ EgenAktivitetForm.propTypes = {
     currentTilDato: PT.instanceOf(Date),
     avtalt: PT.bool,
     isDirty: PT.bool.isRequired,
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
 };
 
 EgenAktivitetForm.defaultProps = {
     handleSubmit: undefined,
     currentFraDato: undefined,
     currentTilDato: undefined,
-    avtalt: false
+    avtalt: false,
 };
-
 
 export const formNavn = 'egen-aktivitet';
 const EgenAktivitetReduxForm = validForm({
     form: formNavn,
-    errorSummaryTitle: <FormattedMessage id="egen-aktivitet-form.feiloppsummering-tittel" />,
+    errorSummaryTitle: (
+        <FormattedMessage id="egen-aktivitet-form.feiloppsummering-tittel" />
+    ),
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
@@ -164,8 +199,8 @@ const EgenAktivitetReduxForm = validForm({
         hensikt: [begrensetHensiktLengde],
         beskrivelse: [begrensetBeskrivelseLengde],
         oppfolging: [begrensetoppfolginLengde],
-        periodeValidering: []
-    }
+        periodeValidering: [],
+    },
 })(EgenAktivitetForm);
 
 const selector = formValueSelector(formNavn);
@@ -174,14 +209,20 @@ const mapStateToProps = (state, props) => {
     return {
         initialValues: {
             status: STATUS_BRUKER_ER_INTRESSERT,
-            ...aktivitet
+            ...aktivitet,
         },
-        currentFraDato: selector(state, 'fraDato') ? moment(selector(state, 'fraDato')).toDate() : undefined,
-        currentTilDato: selector(state, 'tilDato') ? moment(selector(state, 'tilDato')).toDate() : undefined,
+        currentFraDato: selector(state, 'fraDato')
+            ? moment(selector(state, 'fraDato')).toDate()
+            : undefined,
+        currentTilDato: selector(state, 'tilDato')
+            ? moment(selector(state, 'tilDato')).toDate()
+            : undefined,
         isDirty: isDirty(formNavn)(state),
-        avtalt: aktivitet && aktivitet.avtalt
+        avtalt: aktivitet && aktivitet.avtalt,
     };
 };
 const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(EgenAktivitetReduxForm));
+export default connect(mapStateToProps, mapDispatchToProps)(
+    injectIntl(EgenAktivitetReduxForm)
+);

@@ -11,7 +11,6 @@ import TallAlert from '../../felles-komponenter/tall-alert';
 import NyHenvendelse from '../../dialog/ny-henvendelse';
 import Henvendelser from '../../dialog/henvendelser';
 import EndreDialog from '../../dialog/endre-dialog';
-import './underelementer-for-aktivitet.less';
 import VisibleDiv from '../../felles-komponenter/utils/visible-if-div';
 import visibleIfHoc from '../../hocs/visible-if';
 
@@ -21,7 +20,6 @@ const HISTORIKK = 'historikk';
 const VisibleToggleKnapp = visibleIfHoc(ToggleKnapp);
 
 class UnderelementerForAktivitet extends Component {
-
     constructor() {
         super();
         autobind(this);
@@ -30,33 +28,41 @@ class UnderelementerForAktivitet extends Component {
 
     toggleDialog() {
         this.setState({
-            vis: DIALOG
+            vis: DIALOG,
         });
     }
 
     toggleHistorikk() {
         this.setState({
-            vis: HISTORIKK
+            vis: HISTORIKK,
         });
     }
 
     render() {
-        const { aktivitet, antallUlesteHenvendelser, dialog, className, underOppfolging } = this.props;
+        const {
+            aktivitet,
+            antallUlesteHenvendelser,
+            dialog,
+            className,
+            underOppfolging,
+        } = this.props;
         const { vis } = this.state;
         const aktivitetId = aktivitet.id;
         const visDialog = vis === DIALOG;
-        const cls = (classes) => classNames('underelementer-aktivitet', classes);
+        const cls = classes => classNames('underelementer-aktivitet', classes);
         const visHistorikk = vis === HISTORIKK;
 
-        const dialogknappCls = (dialogAktiv) => classNames('underelementer-aktivitet__dialog-knapp', {
-            'underelementer-aktivitet__dialog-knapp--aktiv': dialogAktiv
-        });
+        const dialogknappCls = dialogAktiv =>
+            classNames('underelementer-aktivitet__dialog-knapp', {
+                'underelementer-aktivitet__dialog-knapp--aktiv': dialogAktiv,
+            });
 
-        const historikknappCls = (historikkAktiv) => classNames('underelementer-aktivitet__historikk-knapp', {
-            'underelementer-aktivitet__historikk-knapp--aktiv': historikkAktiv
-        });
+        const historikknappCls = historikkAktiv =>
+            classNames('underelementer-aktivitet__historikk-knapp', {
+                'underelementer-aktivitet__historikk-knapp--aktiv': historikkAktiv,
+            });
 
-        const toggleVis = (e) => {
+        const toggleVis = e => {
             if (e.target.value === HISTORIKK) {
                 this.toggleHistorikk();
             } else if (e.target.value === DIALOG) {
@@ -77,7 +83,9 @@ class UnderelementerForAktivitet extends Component {
                         visible={underOppfolging}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
-                        <TallAlert visible={antallUlesteHenvendelser > 0}>{antallUlesteHenvendelser}</TallAlert>
+                        <TallAlert visible={antallUlesteHenvendelser > 0}>
+                            {antallUlesteHenvendelser}
+                        </TallAlert>
                     </VisibleToggleKnapp>
                     <ToggleKnapp
                         value={HISTORIKK}
@@ -93,13 +101,20 @@ class UnderelementerForAktivitet extends Component {
                     className="underelementer-aktivitet__historikkvisning"
                 />
 
-                <VisibleDiv visible={visDialog} className="underelementer-aktivitet__dialogvisning">
+                <VisibleDiv
+                    visible={visDialog}
+                    className="underelementer-aktivitet__dialogvisning"
+                >
                     <NyHenvendelse
                         formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
                         aktivitetId={aktivitetId}
                     />
-                    <EndreDialog visible={!!dialog} formNavn={`dialog-aktivitet-${aktivitetId}`} dialog={dialog} />
+                    <EndreDialog
+                        visible={!!dialog}
+                        formNavn={`dialog-aktivitet-${aktivitetId}`}
+                        dialog={dialog}
+                    />
                     <Henvendelser visible={!!dialog} dialog={dialog} />
                 </VisibleDiv>
             </section>
@@ -107,34 +122,37 @@ class UnderelementerForAktivitet extends Component {
     }
 }
 
-
 UnderelementerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     dialog: AppPT.dialog,
     antallUlesteHenvendelser: PT.number.isRequired,
     underOppfolging: PT.bool.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 UnderelementerForAktivitet.defaultProps = {
     className: '',
-    dialog: undefined
+    dialog: undefined,
 };
 
 const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet;
     const stateData = state.data;
     const dialoger = stateData.dialog.data;
-    const dialog = dialoger.find((d) => d.aktivitetId === aktivitet.id);
-    const antallUlesteHenvendelser = dialog ? dialog.henvendelser.filter((h) => !h.lest).length : 0;
+    const dialog = dialoger.find(d => d.aktivitetId === aktivitet.id);
+    const antallUlesteHenvendelser = dialog
+        ? dialog.henvendelser.filter(h => !h.lest).length
+        : 0;
     return {
         dialog,
         antallUlesteHenvendelser,
         endringslogg: stateData.endringslogg.data,
-        underOppfolging: !!stateData.oppfolgingStatus.data.underOppfolging
+        underOppfolging: !!stateData.oppfolgingStatus.data.underOppfolging,
     };
 };
 
 const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnderelementerForAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    UnderelementerForAktivitet
+);

@@ -17,7 +17,10 @@ function TimeoutboxNedtelling({ tidIgjen }) {
                         <FormattedMessage id="timeoutbox.tittel" />
                     </Innholdstittel>
                     <Normaltekst className="blokk-xxs">
-                        <FormattedMessage id="timeoutbox.innhold.nedtelling" values={{ tid: tidIgjen.format('mm:ss') }} />
+                        <FormattedMessage
+                            id="timeoutbox.innhold.nedtelling"
+                            values={{ tid: tidIgjen.format('mm:ss') }}
+                        />
                     </Normaltekst>
                 </div>
             </ModalContainer>
@@ -40,7 +43,7 @@ function TimeoutboxNedtelling({ tidIgjen }) {
 }
 
 TimeoutboxNedtelling.propTypes = {
-    tidIgjen: PT.object.isRequired // eslint-disable-line react/forbid-prop-types
+    tidIgjen: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default TimeoutboxNedtelling;

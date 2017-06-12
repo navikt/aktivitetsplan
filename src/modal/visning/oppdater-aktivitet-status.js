@@ -1,31 +1,30 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import Undertittel from 'nav-frontend-typografi/src/undertittel';
+import { Undertittel } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
 import * as statuser from '../../constant';
 import * as AppPT from '../../proptypes';
-import StillingEtikettForm from '../skjema/stilling-etikett-form';
 import AktivitetStatusForm from '../skjema/aktivitet-status-form';
 
 function OppdaterAktivitetStatus(props) {
     const { aktiviteter, paramsId } = props;
-    const disableStatusEndring = props.status === statuser.STATUS_AVBRUTT ||
+    const disableStatusEndring =
+        props.status === statuser.STATUS_AVBRUTT ||
         props.status === statuser.STATUS_FULLFOERT;
-    const valgtAktivitet = aktiviteter.data.find((aktivitet) => aktivitet.id === paramsId);
-    const erStillingsAktivitet = valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;
+    const valgtAktivitet = aktiviteter.data.find(
+        aktivitet => aktivitet.id === paramsId
+    );
 
     return (
         <section className={props.className}>
-            <Undertittel className="blokk-s">
-                Oppdater status
+            <Undertittel>
+                <FormattedMessage id="oppdater-aktivitet-status.header" />
             </Undertittel>
-            <div className="skjema oppdater-statuser-radioform blokk-m">
-                <AktivitetStatusForm disableStatusEndring={disableStatusEndring} aktivitet={valgtAktivitet} />
-                {
-                    erStillingsAktivitet &&
-                    <StillingEtikettForm disableStatusEndring={disableStatusEndring} aktivitet={valgtAktivitet} />
-                }
-            </div>
+            <AktivitetStatusForm
+                disableStatusEndring={disableStatusEndring}
+                aktivitet={valgtAktivitet}
+            />
         </section>
     );
 }
@@ -36,15 +35,15 @@ OppdaterAktivitetStatus.propTypes = {
     className: PT.string.isRequired,
     aktiviteter: PT.shape({
         status: PT.string,
-        data: PT.arrayOf(AppPT.aktivitet)
-    }).isRequired
+        data: PT.arrayOf(AppPT.aktivitet),
+    }).isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
     aktiviteter: state.data.aktiviteter,
     initialValues: {
-        aktivitetstatus: props.status
-    }
+        aktivitetstatus: props.status,
+    },
 });
 
 export default connect(mapStateToProps, null)(OppdaterAktivitetStatus);

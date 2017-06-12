@@ -2,12 +2,11 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import './aktivitet-etikett.less';
 import visibleIfHOC from '../hocs/visible-if';
 import * as statuskoder from '../constant';
 
-const cls = (type) => classNames('etikett', `etikett--${type}`);
-const setType = (etikettnavn) => {
+const cls = type => classNames('etikett', `etikett--${type}`);
+const setType = etikettnavn => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
         case statuskoder.DIALOG_FERDIGBEHANDLET:
@@ -35,7 +34,7 @@ function AktivitetEtikett({ etikett, id }) {
 
 AktivitetEtikett.propTypes = {
     etikett: PT.string.isRequired,
-    id: PT.string.isRequired
+    id: PT.string.isRequired,
 };
 
 export default visibleIfHOC(AktivitetEtikett);

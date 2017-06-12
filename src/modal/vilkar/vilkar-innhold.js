@@ -8,7 +8,7 @@ import vilkarSvg from './vilkar-illustrasjon.svg';
 import VisibleIfHOC from '../../hocs/visible-if';
 import { formaterDatoKortManed } from '../../utils';
 
-const VisibleIfElementFormattedMessage = VisibleIfHOC((props) => (
+const VisibleIfElementFormattedMessage = VisibleIfHOC(props => (
     <Element className="vilkar__metaData">
         <FormattedMessage {...props} />
     </Element>
@@ -33,7 +33,7 @@ function VilkarInnhold({ vilkar }) {
 }
 
 VilkarInnhold.propTypes = {
-    vilkar: AppPT.vilkar.isRequired
+    vilkar: AppPT.vilkar.isRequired,
 };
 
 export default VilkarInnhold;

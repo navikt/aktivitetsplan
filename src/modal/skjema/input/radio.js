@@ -1,41 +1,62 @@
 import React from 'react';
 import PT from 'prop-types';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
-import { Field } from 'redux-form';
+import { CustomField } from 'react-redux-form-validation';
 
-function Radio({ feltNavn, className, value, checked, onChange, ...props }) {
+function InnerInputComponent({
+    input,
+    forhandsvalgt,
+    errorMessage, // eslint-disable-line no-unused-vars
+    meta, // eslint-disable-line no-unused-vars
+    ...rest
+}) {
+    const inputProps = {
+        ...input,
+        ...rest,
+    };
     return (
-        <Field
+        <NavRadio
+            {...inputProps}
+            checked={input.value === rest.value || forhandsvalgt}
+        />
+    );
+}
+
+InnerInputComponent.defaultProps = {
+    input: undefined,
+    errorMessage: undefined,
+    meta: undefined,
+    forhandsvalgt: false,
+};
+
+InnerInputComponent.propTypes = {
+    input: PT.object, // eslint-disable-line react/forbid-prop-types
+    errorMessage: PT.object, // eslint-disable-line react/forbid-prop-types
+    meta: PT.object, // eslint-disable-line react/forbid-prop-types
+    forhandsvalgt: PT.bool,
+};
+
+function Radio({ id, feltNavn, className, ...rest }) {
+    return (
+        <CustomField
             name={feltNavn}
+            errorClass="skjemaelement--harFeil"
             className={className}
-            type="radio"
-            value={value}
-            component={(compProp) => (
-                <NavRadio
-                    {...props}
-                    checked={checked}
-                    value={value}
-                    onChange={(e) => {
-                        compProp.input.onChange(value);
-                        onChange(e);
-                    }}
-                />
-            )}
+            id={id}
+            customComponent={<InnerInputComponent {...rest} />}
         />
     );
 }
 
 Radio.defaultProps = {
-    className: ''
+    className: '',
+    id: undefined,
 };
 
 Radio.propTypes = {
     feltNavn: PT.string.isRequired,
+    id: PT.string,
     className: PT.string,
-    value: PT.string.isRequired,
-    checked: PT.bool.isRequired,
-    input: PT.object, // eslint-disable-line
-    onChange: PT.func.isRequired
 };
 
 export default Radio;
