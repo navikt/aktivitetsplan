@@ -33,7 +33,12 @@ function collect(connector, monitor) {
     };
 }
 
-function AktivitetsKort({ aktivitet, isDragging, connectDragSource, aktivAktivitetId }) {
+function AktivitetsKort({
+    aktivitet,
+    isDragging,
+    connectDragSource,
+    aktivAktivitetId,
+}) {
     const arenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
         GRUPPE_AKTIVITET_TYPE,
@@ -99,7 +104,9 @@ AktivitetsKort.defaultProps = {
     aktivAktivitetId: undefined,
 };
 
-const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)((AktivitetsKort));
+const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
+    AktivitetsKort
+);
 
 const mapStateToProps = state => ({
     aktivAktivitetId: state.data.aktiviteter.aktivAktivitetId,

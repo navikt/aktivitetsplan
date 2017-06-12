@@ -12,7 +12,11 @@ import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
-import { slettAktivitet, hentAktivitet, settAktivAktivitetId } from '../../ducks/aktiviteter';
+import {
+    slettAktivitet,
+    hentAktivitet,
+    settAktivAktivitetId,
+} from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
