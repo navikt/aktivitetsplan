@@ -12,14 +12,16 @@ export const TILLAT_SLETTING = true;
 
 export const TILLAT_SET_AVTALT = true;
 
+export const VIS_INNSTILLINGER = true;
+
 export const EKSEMPEL_FNR = '10108000398';
 
 export const getDynamicBasePath = () => {
     return null;
 };
 
-export const fetchInterceptor = function (fetch, url, config) {
+export const fetchInterceptor = function(fetch, url, config) {
     const fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${EKSEMPEL_FNR}`;
-    console.log("fetch: " + fetchUrl, config);
+    console.log('fetch: ' + fetchUrl, config);
     return fetch(fetchUrl, config);
 };
