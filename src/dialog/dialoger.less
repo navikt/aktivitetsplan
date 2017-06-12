@@ -39,11 +39,22 @@
       font-size: 75%;
     }
 
+    &-tekst {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+
     &-henvendelser {
       position: absolute;
       top: 50%;
       line-height: 0;
       right: 40px;
+    }
+
+    .lenkepanel__heading {
+      width: calc(~'100% - 3rem');
     }
 
     &--valgt {
