@@ -83,7 +83,7 @@
     height: 100%;
 
     &--dialog {
-      width: 66.666666%;
+      width: percentage(@bredde-skjerm-dialog / @full-bredde-skjerm-modal);
       padding: 2rem;
       background-color: @gray-background;
       overflow-y: auto;
@@ -95,12 +95,10 @@
       z-index: 1;
 
       &-valgt-dialog {
-        width: 33.333333%;
+        width: percentage(@bredde-skjerm-dialoger / @full-bredde-skjerm-modal);
       }
 
       @media (max-width: @mobil-bredde) {
-        width: 100%;
-
         &-valgt-dialog {
           display: none;
         }
