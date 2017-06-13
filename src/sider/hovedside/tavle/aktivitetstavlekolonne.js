@@ -2,16 +2,24 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import Bilde from 'nav-react-design/dist/bilde';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
+import { HjelpetekstVenstre } from 'nav-frontend-hjelpetekst';
 import { flyttAktivitet } from '../../../ducks/aktiviteter';
 import AktivitetsKort from '../aktivitetskort/aktivitetskort';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+import {
+    STATUS_PLANLAGT,
+    STATUS_GJENNOMFOERT,
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+} from '../../../constant';
 import history from '../../../history';
-import hengelasSvg from '../../../img/hengelas.svg';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
+import HoverBilde from './hover-bilde';
+import hengelasSvg from '../../../img/hengelas.svg';
+import hengelasHoverSvg from '../../../img/hengelas_hover.svg';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -32,6 +40,17 @@ const mottaAktivitetsKort = {
         });
     },
 };
+
+function HengelaasAnchor() {
+    return (
+        <HoverBilde
+            className="modal-header-bilde"
+            imgSrc={hengelasSvg}
+            imgSrcHover={hengelasHoverSvg}
+            alt="Aktiviteten er låst og kan ikke flyttes."
+        />
+    );
+}
 
 function collect(theConnect, monitor) {
     return {
@@ -74,20 +93,28 @@ function KolonneFunction({
                     drag && 'aktivitetstavle__kolonne--drag'
                 )}
             >
-                <Undertittel
-                    className="aktivitetstavle__kolonne-header"
-                    tag="h1"
-                >
-                    <FormattedMessage id={tittelId} />
+                <div className="aktivitetstavle__kolonne-header-wrapper">
+                    <Undertittel
+                        className="aktivitetstavle__kolonne-header"
+                        tag="h1"
+                    >
+                        <FormattedMessage id={tittelId} />
+                    </Undertittel>
                     {{ [STATUS_FULLFOERT]: true, [STATUS_AVBRUTT]: true }[
                         status
                     ] &&
-                        <Bilde
-                            className="aktivitetstavle__kolonne-header-bilde"
-                            src={hengelasSvg}
-                            alt="hengelåsikon"
-                        />}
-                </Undertittel>
+                        <HjelpetekstVenstre anchor={HengelaasAnchor}>
+                            <FormattedMessage id="laasikon.hjelpetekst" />
+                        </HjelpetekstVenstre>}
+                    {{
+                        [STATUS_BRUKER_ER_INTRESSERT]: true,
+                        [STATUS_PLANLAGT]: true,
+                        [STATUS_GJENNOMFOERT]: true,
+                    }[status] &&
+                        <HjelpetekstVenstre>
+                            <FormattedMessage id="sporsmalikon.hjelpetekst" />
+                        </HjelpetekstVenstre>}
+                </div>
                 {aktivitetsKort}
             </div>
         </div>

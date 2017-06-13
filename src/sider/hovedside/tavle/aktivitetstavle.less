@@ -20,16 +20,41 @@
   height: 100%;
 }
 
-.aktivitetstavle__kolonne-header {
-  .blokk-xs() !important; // oversktiver nav-frontend
-
+.aktivitetstavle__kolonne-header-wrapper {
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
+  padding-bottom: 0.5rem;
+
+  .hjelpetekst {
+    min-height: 65px;
+  }
+}
+
+.aktivitetstavle__kolonne-header {
   text-align: left;
 }
 
 .aktivitetstavle--drag {
   background-color: @color-background-drag;
   padding-bottom: @min-height;
+}
+
+.hjelpetekst--venstre {
+  top: -6px;
+  right: 42px;
+  text-align: left;
+
+  &:after {
+    top: 14px;
+  }
+}
+
+.hjelpetekst__apneknapp {
+  margin-right: 0;
+  padding-right: 0;
+
+  .hjelpetekst__anchor {
+    width: 24px;
+    height: 24px;
+  }
 }
