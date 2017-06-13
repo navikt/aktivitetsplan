@@ -51,4 +51,6 @@ const mapDispatchToProps = dispatch => ({
     doHentMal: () => hentMal()(dispatch),
 });
 
-export default AktivitetsmalModal(connect(mapStateToProps, mapDispatchToProps)(AktivitetmalEndre));
+export default AktivitetsmalModal(
+    connect(mapStateToProps, mapDispatchToProps)(AktivitetmalEndre)
+);

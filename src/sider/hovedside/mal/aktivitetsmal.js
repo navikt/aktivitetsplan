@@ -130,4 +130,6 @@ const mapDispatchToProps = dispatch => ({
     doFjernMalListe: () => fjernMalListe()(dispatch),
 });
 
-export default AktivitetsmalModal(connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal));
+export default AktivitetsmalModal(
+    connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal)
+);
