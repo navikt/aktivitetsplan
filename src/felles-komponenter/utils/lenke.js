@@ -33,10 +33,6 @@ function Lenke({ href, className, brukLenkestyling, children, ...rest }) {
     );
 }
 
-Lenke.defaultProps = {
-    brukLenkestyling: true,
-};
-
 Lenke.propTypes = {
     href: PT.string.isRequired,
     children: PT.node.isRequired,
@@ -46,6 +42,7 @@ Lenke.propTypes = {
 
 Lenke.defaultProps = {
     className: undefined,
+    brukLenkestyling: true,
 };
 
 export default visibleIfHOC(Lenke);
