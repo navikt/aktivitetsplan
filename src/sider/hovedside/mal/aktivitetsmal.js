@@ -6,12 +6,12 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { hentMal, hentMalListe, fjernMalListe } from '../../../ducks/mal';
 import * as AppPT from '../../../proptypes';
-import AktivitetsmalForm from './aktivitetsmal-form';
 import { formaterDatoDatoEllerTidSiden } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Identitet from '../../../felles-komponenter/identitet';
 import Accordion from '../../../felles-komponenter/accordion';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import history from '../../../history';
+import AktivitetsmalModal from './aktivitetsmal-modal';
 
 function malListeVisning(malet) {
     return (
@@ -37,13 +37,6 @@ function malListeVisning(malet) {
 }
 
 class AktivitetsMal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            redigering: false,
-        };
-    }
-
     componentDidMount() {
         this.props.doHentMal();
     }
@@ -58,12 +51,6 @@ class AktivitetsMal extends Component {
         }
     };
 
-    toggleRedigering = () => {
-        this.setState({
-            redigering: !this.state.redigering,
-        });
-    };
-
     render() {
         const { mal, malListe } = this.props;
         const malOpprettet = !!mal.mal;
@@ -72,53 +59,42 @@ class AktivitetsMal extends Component {
         return (
             <Innholdslaster avhengigheter={[this.props.malData]}>
                 <section className="aktivitetmal">
-                    <VisibleIfDiv
-                        className="aktivitetmal__innhold"
-                        visible={this.state.redigering}
-                    >
-                        <AktivitetsmalForm
-                            mal={mal}
-                            handleComplete={this.toggleRedigering}
-                        />
-                    </VisibleIfDiv>
-                    <VisibleIfDiv visible={!this.state.redigering}>
+                    <div className="aktivitetmal__innhold">
+                        {!malOpprettet &&
+                            <p>
+                                <FormattedMessage id="aktivitetsmal.opprett-mal-tekst" />
+                            </p>}
+                        <Tekstomrade className="aktivitetmal__tekst">
+                            {mal.mal}
+                        </Tekstomrade>
+                        <Hovedknapp onClick={() => history.push('mal/endre')}>
+                            <FormattedMessage
+                                id={
+                                    malOpprettet
+                                        ? 'aktivitetsmal.rediger'
+                                        : 'aktivitetsmal.opprett'
+                                }
+                            />
+                        </Hovedknapp>
+                    </div>
+                    <div>
+                        <hr className="aktivitetmal__delelinje" />
                         <div className="aktivitetmal__innhold">
-                            {!malOpprettet &&
-                                <p>
-                                    <FormattedMessage id="aktivitetsmal.opprett-mal-tekst" />
-                                </p>}
-                            <Tekstomrade className="aktivitetmal__tekst">
-                                {mal.mal}
-                            </Tekstomrade>
-                            <Hovedknapp onClick={this.toggleRedigering}>
-                                <FormattedMessage
-                                    id={
-                                        malOpprettet
-                                            ? 'aktivitetsmal.rediger'
-                                            : 'aktivitetsmal.opprett'
-                                    }
-                                />
-                            </Hovedknapp>
+                            <Accordion
+                                labelId={
+                                    historikkVises
+                                        ? 'aktivitetsmal.skjul'
+                                        : 'aktivitetsmal.vis'
+                                }
+                                apen={historikkVises}
+                                onClick={this.hentMalListe}
+                            >
+                                {malListe
+                                    .slice(1, malListe.length)
+                                    .map(malet => malListeVisning(malet))}
+                            </Accordion>
                         </div>
-                        <div>
-                            <hr className="aktivitetmal__delelinje" />
-                            <div className="aktivitetmal__innhold">
-                                <Accordion
-                                    labelId={
-                                        historikkVises
-                                            ? 'aktivitetsmal.skjul'
-                                            : 'aktivitetsmal.vis'
-                                    }
-                                    apen={historikkVises}
-                                    onClick={this.hentMalListe}
-                                >
-                                    {malListe
-                                        .slice(1, malListe.length)
-                                        .map(malet => malListeVisning(malet))}
-                                </Accordion>
-                            </div>
-                        </div>
-                    </VisibleIfDiv>
+                    </div>
                 </section>
             </Innholdslaster>
         );
@@ -154,4 +130,4 @@ const mapDispatchToProps = dispatch => ({
     doFjernMalListe: () => fjernMalListe()(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal);
+export default AktivitetsmalModal(connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal));
