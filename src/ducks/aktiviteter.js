@@ -84,6 +84,8 @@ export default function reducer(state = initalState, action) {
             return { ...state, data: state.data.filter(a => a.id !== data.id) };
         case SETT_AKTIV_AKTIVITET_ID:
             return { ...state, aktivAktivitetId: action.id };
+        case FJERN_AKTIV_AKTIVITET_ID:
+            return { ...state, aktivAktivitetId: undefined };
         case SLETT:
         case SLETT_FAIL:
         default:
@@ -181,5 +183,11 @@ export function settAktivAktivitetId(id) {
     return {
         type: SETT_AKTIV_AKTIVITET_ID,
         id,
+    };
+}
+
+export function fjernAktivAktivitetId() {
+    return {
+        type: FJERN_AKTIV_AKTIVITET_ID,
     };
 }

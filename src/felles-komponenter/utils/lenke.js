@@ -10,13 +10,21 @@ const cls = (className, lenkeType, lenkestyling) =>
         lenke: lenkestyling,
     });
 
-function Lenke({ href, className, brukLenkestyling, children, ...rest }) {
+function Lenke({
+    href,
+    className,
+    brukLenkestyling,
+    children,
+    focusRef,
+    ...rest
+}) {
     if (erInternlenke(href)) {
         return (
             <Link
                 {...rest}
                 to={href}
                 className={cls(className, 'internlenke', brukLenkestyling)}
+                ref={focusRef}
             >
                 {children}
             </Link>
@@ -27,6 +35,7 @@ function Lenke({ href, className, brukLenkestyling, children, ...rest }) {
             {...rest}
             href={href}
             className={cls(className, 'eksternlenke', brukLenkestyling)}
+            ref={focusRef}
         >
             {children}
         </a>
@@ -38,10 +47,12 @@ Lenke.propTypes = {
     children: PT.node.isRequired,
     brukLenkestyling: PT.bool,
     className: PT.string,
+    focusRef: PT.func,
 };
 
 Lenke.defaultProps = {
     className: undefined,
+    focusRef: () => {},
     brukLenkestyling: true,
 };
 

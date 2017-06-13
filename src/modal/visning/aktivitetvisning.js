@@ -16,6 +16,7 @@ import {
     slettAktivitet,
     hentAktivitet,
     settAktivAktivitetId,
+    fjernAktivAktivitetId,
 } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
@@ -47,6 +48,7 @@ class Aktivitetvisning extends Component {
             visBekreftSletting: false,
             settAutoFocusSlett: false,
         };
+        this.props.doFjernAktivAktivitetId();
     }
 
     componentDidMount() {
@@ -253,6 +255,7 @@ Aktivitetvisning.propTypes = {
     oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
     aktiviteter: PT.arrayOf(PT.object),
     doSettAktivAktivitetId: PT.func.isRequired,
+    doFjernAktivAktivitetId: PT.func.isRequired,
 };
 
 Aktivitetvisning.defaultProps = {
@@ -273,6 +276,7 @@ const mapDispatchToProps = dispatch => ({
     doSlettAktivitet: aktivitet => slettAktivitet(aktivitet),
     doHentAktivitet: aktivitetId => hentAktivitet(aktivitetId),
     doSettAktivAktivitetId: id => dispatch(settAktivAktivitetId(id)),
+    doFjernAktivAktivitetId: () => dispatch(fjernAktivAktivitetId()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);
