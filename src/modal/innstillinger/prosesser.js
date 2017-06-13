@@ -18,7 +18,7 @@ function Prosesser({ kanAvslutte, intl }) {
                         id: 'innstillinger.prosess.avslutt.tekst',
                     })}
                     knappetekst={intl.formatMessage({
-                        id: 'innstillinger.prosess.avslutt.tittel',
+                        id: 'innstillinger.modal.prosess.start.knapp',
                     })}
                     onClick={() => history.push('/innstillinger/avslutt/')}
                 />}
