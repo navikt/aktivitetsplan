@@ -35,7 +35,6 @@ function collect(connector, monitor) {
 }
 
 class AktivitetsKort extends Component {
-
     componentDidUpdate() {
         const { aktivAktivitetId, aktivitet } = this.props;
         if (aktivAktivitetId && aktivAktivitetId === aktivitet.id) {
@@ -44,11 +43,7 @@ class AktivitetsKort extends Component {
     }
 
     render() {
-        const {
-            aktivitet,
-            isDragging,
-            connectDragSource,
-        } = this.props;
+        const { aktivitet, isDragging, connectDragSource } = this.props;
 
         const arenaAktivitet = [
             TILTAK_AKTIVITET_TYPE,
@@ -60,9 +55,7 @@ class AktivitetsKort extends Component {
             ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) &&
             !arenaAktivitet;
         const aktivitetsKort = (
-            <article
-                style={{ opacity: isDragging ? 0.4 : 1 }}
-            >
+            <article style={{ opacity: isDragging ? 0.4 : 1 }}>
                 <Lenke
                     href={aktivitetRoute(aktivitet.id)}
                     className={classNames(
