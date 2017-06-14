@@ -49,15 +49,16 @@ class VilkarHistorikk extends Component {
                     onClick={this.onClick}
                 >
                     {this.props.resterendeVilkar
-                        .filter(vilkar => vilkar.vilkarstatus !== 'IKKE_BESVART')
+                        .filter(
+                            vilkar => vilkar.vilkarstatus !== 'IKKE_BESVART'
+                        )
                         .map(vilkar =>
                             historiskVilkarLink(
                                 vilkar.vilkarstatus,
                                 vilkar.dato,
                                 vilkar.guid
                             )
-                        )
-                    }
+                        )}
                 </Accordion>
             </div>
         );
