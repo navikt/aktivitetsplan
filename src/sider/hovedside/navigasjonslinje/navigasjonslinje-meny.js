@@ -1,8 +1,8 @@
 import React from 'react';
 import { injectIntl, intlShape } from 'react-intl';
+import history from '../../../history';
 
 function NavigasjonslinjeMeny({ intl }) {
-    // TODO: Set onClick til å lenke til instillinger-modal
     return (
         <div className="navigasjonslinje-meny">
             <button
@@ -10,6 +10,7 @@ function NavigasjonslinjeMeny({ intl }) {
                 aria-label={intl.formatMessage({
                     id: 'navigasjon.innstillinger',
                 })}
+                onClick={() => history.push('/innstillinger')}
             />
         </div>
     );
