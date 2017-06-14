@@ -27,13 +27,14 @@ export const SLETT = 'aktivitet/slett';
 export const SLETT_OK = 'aktivitet/slett/ok';
 export const SLETT_FAIL = 'aktivitet/slett/fail';
 
-export const SETT_AKTIV_AKTIVITET_ID = 'aktivitet/aktiv/sett';
-export const FJERN_AKTIV_AKTIVITET_ID = 'aktivitet/aktiv/fjern';
+export const SETT_FORRIGE_AKTIVE_AKTIVITET_ID = 'aktivitet/forrigeaktive/sett';
+export const FJERN_FORRIGE_AKTIVE_AKTIVITET_ID =
+    'aktivitet/forrigeaktive/fjern';
 
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
-    aktivAktivitetId: undefined,
+    forrigeAktiveAktivitetId: undefined,
 };
 
 function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
@@ -82,10 +83,10 @@ export default function reducer(state = initalState, action) {
             });
         case SLETT_OK:
             return { ...state, data: state.data.filter(a => a.id !== data.id) };
-        case SETT_AKTIV_AKTIVITET_ID:
-            return { ...state, aktivAktivitetId: action.id };
-        case FJERN_AKTIV_AKTIVITET_ID:
-            return { ...state, aktivAktivitetId: undefined };
+        case SETT_FORRIGE_AKTIVE_AKTIVITET_ID:
+            return { ...state, forrigeAktiveAktivitetId: action.id };
+        case FJERN_FORRIGE_AKTIVE_AKTIVITET_ID:
+            return { ...state, forrigeAktiveAktivitetId: undefined };
         case SLETT:
         case SLETT_FAIL:
         default:
@@ -178,15 +179,15 @@ export function slettAktivitet(aktivitet) {
     };
 }
 
-export function settAktivAktivitetId(id) {
+export function settForrigeAktiveAktivitetId(id) {
     return {
-        type: SETT_AKTIV_AKTIVITET_ID,
+        type: SETT_FORRIGE_AKTIVE_AKTIVITET_ID,
         id,
     };
 }
 
-export function fjernAktivAktivitetId() {
+export function fjernForrigeAktiveAktivitetId() {
     return {
-        type: FJERN_AKTIV_AKTIVITET_ID,
+        type: FJERN_FORRIGE_AKTIVE_AKTIVITET_ID,
     };
 }

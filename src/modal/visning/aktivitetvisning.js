@@ -15,8 +15,8 @@ import AktivitetsDetaljer from './aktivitetsdetaljer';
 import {
     slettAktivitet,
     hentAktivitet,
-    settAktivAktivitetId,
-    fjernAktivAktivitetId,
+    settForrigeAktiveAktivitetId,
+    fjernForrigeAktiveAktivitetId,
 } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
@@ -48,7 +48,7 @@ class Aktivitetvisning extends Component {
             visBekreftSletting: false,
             settAutoFocusSlett: false,
         };
-        this.props.doFjernAktivAktivitetId();
+        this.props.doFjernForrigeAktiveAktivitetId();
     }
 
     componentDidMount() {
@@ -58,7 +58,7 @@ class Aktivitetvisning extends Component {
     }
 
     componentWillUnmount() {
-        this.props.doSettAktivAktivitetId(this.props.params.id);
+        this.props.doSettForrigeAktiveAktivitetId(this.props.params.id);
     }
 
     render() {
@@ -254,8 +254,8 @@ Aktivitetvisning.propTypes = {
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
     aktiviteter: PT.arrayOf(PT.object),
-    doSettAktivAktivitetId: PT.func.isRequired,
-    doFjernAktivAktivitetId: PT.func.isRequired,
+    doSettForrigeAktiveAktivitetId: PT.func.isRequired,
+    doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
 };
 
 Aktivitetvisning.defaultProps = {
@@ -275,8 +275,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     doSlettAktivitet: aktivitet => slettAktivitet(aktivitet),
     doHentAktivitet: aktivitetId => hentAktivitet(aktivitetId),
-    doSettAktivAktivitetId: id => dispatch(settAktivAktivitetId(id)),
-    doFjernAktivAktivitetId: () => dispatch(fjernAktivAktivitetId()),
+    doSettForrigeAktiveAktivitetId: id => dispatch(settForrigeAktiveAktivitetId(id)),
+    doFjernForrigeAktiveAktivitetId: () => dispatch(fjernForrigeAktiveAktivitetId()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);
