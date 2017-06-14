@@ -113,7 +113,6 @@ export function hentAktivitet(aktivitetId) {
 export function flyttAktivitet(aktivitet, status) {
     return dispatch => {
         dispatch({ type: FLYTTER, data: { aktivitet, status } });
-        // TODO kan vi bruke oppdaterAktivitet?
         return Api.oppdaterAktivitetStatus({ ...aktivitet, status })
             .then(response => {
                 dispatch({ type: FLYTT_OK, data: response });
