@@ -48,13 +48,16 @@ class VilkarHistorikk extends Component {
                     chevronClassName="vilkar__historikk-chevron"
                     onClick={this.onClick}
                 >
-                    {this.props.resterendeVilkar.map(vilkar =>
-                        historiskVilkarLink(
-                            vilkar.vilkarstatus,
-                            vilkar.dato,
-                            vilkar.guid
+                    {this.props.resterendeVilkar
+                        .filter(vilkar => vilkar.vilkarstatus !== 'IKKE_BESVART')
+                        .map(vilkar =>
+                            historiskVilkarLink(
+                                vilkar.vilkarstatus,
+                                vilkar.dato,
+                                vilkar.guid
+                            )
                         )
-                    )}
+                    }
                 </Accordion>
             </div>
         );
