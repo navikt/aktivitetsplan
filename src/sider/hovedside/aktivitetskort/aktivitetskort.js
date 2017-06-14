@@ -37,7 +37,10 @@ function collect(connector, monitor) {
 class AktivitetsKort extends Component {
     componentDidUpdate() {
         const { forrigeAktiveAktivitetId, aktivitet } = this.props;
-        if (forrigeAktiveAktivitetId && forrigeAktiveAktivitetId === aktivitet.id) {
+        if (
+            forrigeAktiveAktivitetId &&
+            forrigeAktiveAktivitetId === aktivitet.id
+        ) {
             findDOMNode(this.aktivitetskortSomSkalFaFokusNarLukkes).focus(); // eslint-disable-line react/no-find-dom-node
         }
     }
