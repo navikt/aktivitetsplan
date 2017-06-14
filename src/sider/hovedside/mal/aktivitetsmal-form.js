@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { validForm, rules } from 'react-redux-form-validation';
 import Textarea from '../../../modal/skjema/textarea/textarea';
+import { autobind } from '../../../utils';
 import { STATUS } from '../../../ducks/utils';
 import { oppdaterMal } from '../../../ducks/mal';
 
@@ -14,32 +15,44 @@ function trim(str) {
     return str ? str.trim() : '';
 }
 
-function AktivitetsmalForm({ oppdaterer, handleComplete, handleSubmit }) {
-    function avbryt(e) {
-        e.preventDefault();
-        handleComplete();
+class AktivitetsmalForm extends Component {
+    constructor(props) {
+        super(props);
+        autobind(this);
     }
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <Textarea
-                feltNavn="mal"
-                labelId="aktivitetsmal.tekst.label"
-                maxLength={MALTEKST_MAKSLENGDE}
-            />
-            <Hovedknapp
-                className="aktivitetmal__redigering--knapp"
-                spinner={oppdaterer}
-                disabled={oppdaterer}
-            >
-                <FormattedMessage id="aktivitetsmal.lagre" />
-            </Hovedknapp>
-            <Knapp onClick={avbryt} disabled={oppdaterer}>
-                {/* TODO: Vi må få inn type="button"*/}
-                <FormattedMessage id="aktivitetsmal.avbryt" />
-            </Knapp>
-        </form>
-    );
+    componentDidMount() {
+        this.textarea.focus();
+    }
+    avbryt(e) {
+        e.preventDefault();
+        this.props.handleComplete();
+    }
+    render() {
+        const { oppdaterer, handleSubmit } = this.props;
+        return (
+            <form onSubmit={handleSubmit}>
+                <Textarea
+                    feltNavn="mal"
+                    labelId="aktivitetsmal.tekst.label"
+                    maxLength={MALTEKST_MAKSLENGDE}
+                    textareaRef={textarea => {
+                        this.textarea = textarea;
+                    }}
+                />
+                <Hovedknapp
+                    className="aktivitetmal__redigering--knapp"
+                    spinner={oppdaterer}
+                    disabled={oppdaterer}
+                >
+                    <FormattedMessage id="aktivitetsmal.lagre" />
+                </Hovedknapp>
+                <Knapp onClick={this.avbryt} disabled={oppdaterer}>
+                    {' '}{/* TODO: Vi må få inn type="button"*/}
+                    <FormattedMessage id="aktivitetsmal.avbryt" />
+                </Knapp>
+            </form>
+        );
+    }
 }
 
 const forLangMaltekst = rules.maxLength(

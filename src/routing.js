@@ -2,7 +2,6 @@ import 'babel-polyfill';
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import Hovedside from './sider/hovedside/hovedside';
-import AktivitetsmalModal from './sider/hovedside/mal/aktivitetsmal-modal';
 import VilkarModalMedHistorikk from './modal/vilkar/vilkar-med-historikk';
 import VilkarModalUtenHistorikk from './modal/vilkar/vilkar-uten-historikk';
 import NyAktivitet from './modal/ny-aktivitet';
@@ -14,6 +13,8 @@ import EndreAktivitet from './modal/redigering/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
 import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
 import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
+import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
+import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
 import InnstillingerModal from './modal/innstillinger/innstillinger-modal';
 import Prosesser from './modal/innstillinger/prosesser';
 import AvsluttOppfolging from './modal/innstillinger/avslutt-oppfolginsperiode';
@@ -33,11 +34,8 @@ export const avbrytAktivitetRoute = aktivitetId =>
 export default (
     <Route component={Hovedside}>
         <IndexRoute />
-        <Route
-            modalId="aktivitetsmalModal"
-            path="mal"
-            component={AktivitetsmalModal}
-        />
+        <Route path="mal" component={Aktivitetsmal} />
+        <Route path="mal/endre" component={AktivitetmalEndre} />
         {VIS_INNSTILLINGER &&
             <Route path="innstillinger" component={InnstillingerModal}>
                 <IndexRoute component={Prosesser} />

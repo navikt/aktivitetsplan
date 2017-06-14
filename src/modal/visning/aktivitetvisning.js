@@ -12,7 +12,12 @@ import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
-import { slettAktivitet, hentAktivitet } from '../../ducks/aktiviteter';
+import {
+    slettAktivitet,
+    hentAktivitet,
+    settForrigeAktiveAktivitetId,
+    fjernForrigeAktiveAktivitetId,
+} from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
@@ -43,12 +48,17 @@ class Aktivitetvisning extends Component {
             visBekreftSletting: false,
             settAutoFocusSlett: false,
         };
+        this.props.doFjernForrigeAktiveAktivitetId();
     }
 
     componentDidMount() {
         if (!this.props.params.id.startsWith('arena')) {
             this.props.doHentAktivitet(this.props.params.id);
         }
+    }
+
+    componentWillUnmount() {
+        this.props.doSettForrigeAktiveAktivitetId(this.props.params.id);
     }
 
     render() {
@@ -244,6 +254,8 @@ Aktivitetvisning.propTypes = {
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
     aktiviteter: PT.arrayOf(PT.object),
+    doSettForrigeAktiveAktivitetId: PT.func.isRequired,
+    doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
 };
 
 Aktivitetvisning.defaultProps = {
@@ -260,9 +272,13 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = {
+const mapDispatchToProps = dispatch => ({
     doSlettAktivitet: aktivitet => slettAktivitet(aktivitet),
     doHentAktivitet: aktivitetId => hentAktivitet(aktivitetId),
-};
+    doSettForrigeAktiveAktivitetId: id =>
+        dispatch(settForrigeAktiveAktivitetId(id)),
+    doFjernForrigeAktiveAktivitetId: () =>
+        dispatch(fjernForrigeAktiveAktivitetId()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);
