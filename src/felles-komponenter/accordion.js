@@ -29,18 +29,15 @@ class Accordion extends Component {
         const ChevronLink = (
             <a
                 href="/"
-                className={classNames(
-                    'accordion__link',
-                    { 'accordion__link-apen': this.state.apen }
-                )}
+                className={classNames('accordion__link', {
+                    'accordion__link-apen': this.state.apen,
+                })}
                 onClick={this.apne}
             >
                 <FormattedMessage id={this.props.labelId} />
                 <NavFrontendChevron
                     orientasjon={this.state.apen ? 'opp' : 'ned'}
-                    className={classNames(
-                        'accordion__chevron'
-                    )}
+                    className={classNames('accordion__chevron')}
                 />
             </a>
         );

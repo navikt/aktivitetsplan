@@ -40,10 +40,7 @@ class VilkarHistorikk extends Component {
             : 'vilkar.modal.vis-siste-historiske-vilkar';
         return (
             <div className="vilkar__historikk">
-                <Accordion
-                    labelId={accordionLabelId}
-                    onClick={this.onClick}
-                >
+                <Accordion labelId={accordionLabelId} onClick={this.onClick}>
                     {this.props.resterendeVilkar
                         .filter(
                             vilkar => vilkar.vilkarstatus !== 'IKKE_BESVART'
