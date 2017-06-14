@@ -15,6 +15,13 @@ import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
 import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
 import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
+import InnstillingerModal from './modal/innstillinger/innstillinger-modal';
+import Prosesser from './modal/innstillinger/prosesser';
+import AvsluttOppfolging from './modal/innstillinger/avslutt-oppfolginsperiode';
+import BekreftAvsluttOppfolging
+    from './modal/innstillinger/bekreft-avslutt-oppfolginsperiode';
+import KvitteringModal from './modal/innstillinger/kvittering-modal';
+import { VIS_INNSTILLINGER } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
 export const endreAktivitetRoute = aktivitetId =>
@@ -29,6 +36,22 @@ export default (
         <IndexRoute />
         <Route path="mal" component={Aktivitetsmal} />
         <Route path="mal/endre" component={AktivitetmalEndre} />
+        {VIS_INNSTILLINGER &&
+            <Route path="innstillinger" component={InnstillingerModal}>
+                <IndexRoute component={Prosesser} />
+                <Route path="avslutt" component={AvsluttOppfolging} />
+                <Route
+                    path="avslutt/bekreft"
+                    component={BekreftAvsluttOppfolging}
+                />
+            </Route>}
+        {VIS_INNSTILLINGER &&
+            <Route
+                path="innstillinger/avslutt/kvittering"
+                component={() => (
+                    <KvitteringModal tekstId="innstillinger.modal.avslutt.oppfolging.kvittering" />
+                )}
+            />}
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
         <Route path="vilkarhistorikk" component={VilkarModalMedHistorikk} />
