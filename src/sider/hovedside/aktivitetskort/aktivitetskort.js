@@ -36,8 +36,8 @@ function collect(connector, monitor) {
 
 class AktivitetsKort extends Component {
     componentDidUpdate() {
-        const { aktivAktivitetId, aktivitet } = this.props;
-        if (aktivAktivitetId && aktivAktivitetId === aktivitet.id) {
+        const { forrigeAktiveAktivitetId, aktivitet } = this.props;
+        if (forrigeAktiveAktivitetId && forrigeAktiveAktivitetId === aktivitet.id) {
             findDOMNode(this.aktivitetskortSomSkalFaFokusNarLukkes).focus(); // eslint-disable-line react/no-find-dom-node
         }
     }
@@ -103,11 +103,11 @@ AktivitetsKort.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     isDragging: PT.bool.isRequired,
     connectDragSource: PT.func.isRequired,
-    aktivAktivitetId: PT.string,
+    forrigeAktiveAktivitetId: PT.string,
 };
 
 AktivitetsKort.defaultProps = {
-    aktivAktivitetId: undefined,
+    forrigeAktiveAktivitetId: undefined,
 };
 
 const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
@@ -115,7 +115,7 @@ const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
 );
 
 const mapStateToProps = state => ({
-    aktivAktivitetId: state.data.aktiviteter.aktivAktivitetId,
+    forrigeAktiveAktivitetId: state.data.aktiviteter.forrigeAktiveAktivitetId,
 });
 
 export default connect(mapStateToProps)(dragbartAktivitetskort);
