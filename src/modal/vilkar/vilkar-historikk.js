@@ -42,10 +42,6 @@ class VilkarHistorikk extends Component {
             <div className="vilkar__historikk">
                 <Accordion
                     labelId={accordionLabelId}
-                    linkIBunnen
-                    chevronIBunnen
-                    linkClassName="vilkar__historikk-accordion-link"
-                    chevronClassName="vilkar__historikk-chevron"
                     onClick={this.onClick}
                 >
                     {this.props.resterendeVilkar

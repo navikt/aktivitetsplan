@@ -5,7 +5,6 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 import Collapse from 'react-collapse/src/Collapse';
 import classNames from 'classnames';
 import VisibleIfDiv from './utils/visible-if-div';
-import VisibleIfHOC from '../hocs/visible-if';
 
 class Accordion extends Component {
     constructor(props) {
@@ -27,45 +26,33 @@ class Accordion extends Component {
     };
 
     render() {
-        const ChevronLink = VisibleIfHOC(() => (
+        const ChevronLink = (
             <a
                 href="/"
                 className={classNames(
                     'accordion__link',
-                    this.props.linkClassName,
                     { 'accordion__link-apen': this.state.apen }
                 )}
                 onClick={this.apne}
             >
-                {!this.props.chevronIBunnen &&
-                    <NavFrontendChevron
-                        orientasjon={this.state.apen ? 'opp' : 'ned'}
-                        className={classNames(
-                            'accordion__chevron',
-                            this.props.chevronClassName
-                        )}
-                    />}
                 <FormattedMessage id={this.props.labelId} />
-                {this.props.chevronIBunnen &&
-                    <NavFrontendChevron
-                        orientasjon={this.state.apen ? 'opp' : 'ned'}
-                        className={classNames(
-                            'accordion__chevron',
-                            this.props.chevronClassName
-                        )}
-                    />}
+                <NavFrontendChevron
+                    orientasjon={this.state.apen ? 'opp' : 'ned'}
+                    className={classNames(
+                        'accordion__chevron'
+                    )}
+                />
             </a>
-        ));
+        );
 
         return (
             <div className={this.props.className}>
-                <ChevronLink visible={!this.props.linkIBunnen} />
                 <Collapse isOpened={this.state.apen}>
                     <VisibleIfDiv visible={this.state.apen}>
                         {this.props.children}
                     </VisibleIfDiv>
                 </Collapse>
-                <ChevronLink visible={this.props.linkIBunnen} />
+                {ChevronLink}
             </div>
         );
     }
@@ -76,10 +63,6 @@ Accordion.defaultProps = {
     apen: false,
     children: null,
     className: '',
-    linkIBunnen: false,
-    chevronIBunnen: false,
-    linkClassName: '',
-    chevronClassName: '',
 };
 
 Accordion.propTypes = {
@@ -88,10 +71,6 @@ Accordion.propTypes = {
     apen: PT.bool,
     children: PT.arrayOf(PT.node),
     className: PT.string,
-    linkIBunnen: PT.bool,
-    chevronIBunnen: PT.bool,
-    linkClassName: PT.string,
-    chevronClassName: PT.string,
 };
 
 export default Accordion;
