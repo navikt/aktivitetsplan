@@ -48,13 +48,13 @@ class Aktivitetvisning extends Component {
             visBekreftSletting: false,
             settAutoFocusSlett: false,
         };
-        this.props.doFjernForrigeAktiveAktivitetId();
     }
 
     componentDidMount() {
         if (!this.props.params.id.startsWith('arena')) {
             this.props.doHentAktivitet(this.props.params.id);
         }
+        this.props.doFjernForrigeAktiveAktivitetId();
     }
 
     componentWillUnmount() {
