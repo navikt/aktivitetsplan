@@ -5,7 +5,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import history from '../../history';
 import StartProsess from './start-prosess';
 
-function Prosesser({ kanAvslutte, intl }) {
+function Prosesser({ kanAvslutte, kanStarte, intl }) {
     return (
         <div>
             {kanAvslutte &&
@@ -22,21 +22,40 @@ function Prosesser({ kanAvslutte, intl }) {
                     })}
                     onClick={() => history.push('/innstillinger/avslutt/')}
                 />}
+            {kanStarte &&
+                <StartProsess
+                    className="innstillinger__prosess"
+                    tittel={intl.formatMessage({
+                        id: 'innstillinger.prosess.start.tittel',
+                    })}
+                    tekst={intl.formatMessage({
+                        id: 'innstillinger.prosess.start.tekst',
+                    })}
+                    knappetekst={intl.formatMessage({
+                        id: 'innstillinger.modal.prosess.start.knapp',
+                    })}
+                    onClick={() =>
+                        history.push('/innstillinger/start/bekreft/')}
+                />}
         </div>
     );
 }
 
 Prosesser.defaultProps = {
     kanAvslutte: true,
+    kanStarte: false,
 };
 
 Prosesser.propTypes = {
     kanAvslutte: PT.bool,
+    kanStarte: PT.bool,
     intl: intlShape.isRequired,
 };
-// TODO: må hente avslutningStatus
-// const mapStateToProps = state => ({
-//     kanAvslutte: true // state.data.avslutningStatus.data.kanAvslutte
-// });
 
-export default connect()(injectIntl(Prosesser));
+const mapStateToProps = state => ({
+    // TODO: må hente avslutningStatus
+    // kanAvslutte: true // state.data.avslutningStatus.data.kanAvslutte
+    kanStarte: state.data.oppfolgingStatus.data.kanStarteOppfolging,
+});
+
+export default connect(mapStateToProps)(injectIntl(Prosesser));

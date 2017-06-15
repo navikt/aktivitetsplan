@@ -20,6 +20,8 @@ import Prosesser from './modal/innstillinger/prosesser';
 import AvsluttOppfolging from './modal/innstillinger/avslutt-oppfolginsperiode';
 import BekreftAvsluttOppfolging
     from './modal/innstillinger/bekreft-avslutt-oppfolginsperiode';
+import BekreftStartOppfolging
+    from './modal/innstillinger/bekreft-start-oppfolginsperiode';
 import KvitteringModal from './modal/innstillinger/kvittering-modal';
 import { VIS_INNSTILLINGER } from '~config'; // eslint-disable-line
 
@@ -44,14 +46,26 @@ export default (
                     path="avslutt/bekreft"
                     component={BekreftAvsluttOppfolging}
                 />
+                <Route
+                    path="start/bekreft"
+                    component={BekreftStartOppfolging}
+                />
             </Route>}
         {VIS_INNSTILLINGER &&
-            <Route
-                path="innstillinger/avslutt/kvittering"
-                component={() => (
-                    <KvitteringModal tekstId="innstillinger.modal.avslutt.oppfolging.kvittering" />
-                )}
-            />}
+            <Route>
+                <Route
+                    path="innstillinger/avslutt/kvittering"
+                    component={() => (
+                        <KvitteringModal tekstId="innstillinger.modal.avslutt.oppfolging.kvittering" />
+                    )}
+                />
+                <Route
+                    path="innstillinger/start/kvittering"
+                    component={() => (
+                        <KvitteringModal tekstId="innstillinger.modal.start.oppfolging.kvittering" />
+                    )}
+                />
+            </Route>}
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
         <Route path="vilkarhistorikk" component={VilkarModalMedHistorikk} />
