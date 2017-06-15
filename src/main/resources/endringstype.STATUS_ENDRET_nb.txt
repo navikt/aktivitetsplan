@@ -1,10 +1,10 @@
-flyttet aktiviteten fra { fraStatus, select,
+flyttet aktiviteten fra { fra, select,
 BRUKER_ER_INTERESSERT { foreslått }
 PLANLAGT { planlagt }
 GJENNOMFORT { gjennomføres }
 FULLFORT { fullført }
 AVBRUTT { avbrutt }
-} til { tilStatus, select,
+} til { til, select,
 BRUKER_ER_INTERESSERT { foreslått }
 PLANLAGT { planlagt }
 GJENNOMFORT { gjennomføres }

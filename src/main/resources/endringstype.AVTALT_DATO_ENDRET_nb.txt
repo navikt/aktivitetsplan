@@ -1,0 +1,1 @@
+satt ny frist på aktiviteten fra { fra } til { til }
