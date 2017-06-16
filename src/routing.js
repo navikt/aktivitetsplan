@@ -56,13 +56,19 @@ export default (
                 <Route
                     path="innstillinger/avslutt/kvittering"
                     component={() => (
-                        <KvitteringModal tekstId="innstillinger.modal.avslutt.oppfolging.kvittering" />
+                        <KvitteringModal
+                            alertTekstId="innstillinger.modal.avslutt.oppfolging.kvittering"
+                            overskriftTekstId="innstillinger.modal.avslutt.oppfolging.overskrift"
+                        />
                     )}
                 />
                 <Route
                     path="innstillinger/start/kvittering"
                     component={() => (
-                        <KvitteringModal tekstId="innstillinger.modal.start.oppfolging.kvittering" />
+                        <KvitteringModal
+                            alertTekstId="innstillinger.modal.startoppfolging.kvittering"
+                            overskriftTekstId="innstillinger.modal.startoppfolging.overskrift"
+                        />
                     )}
                 />
             </Route>}

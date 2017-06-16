@@ -26,10 +26,10 @@ function Prosesser({ kanAvslutte, kanStarte, intl }) {
                 <StartProsess
                     className="innstillinger__prosess"
                     tittel={intl.formatMessage({
-                        id: 'innstillinger.prosess.start.tittel',
+                        id: 'innstillinger.prosess.startoppfolging.tittel',
                     })}
                     tekst={intl.formatMessage({
-                        id: 'innstillinger.prosess.start.tekst',
+                        id: 'innstillinger.prosess.startoppfolging.tekst',
                     })}
                     knappetekst={intl.formatMessage({
                         id: 'innstillinger.modal.prosess.start.knapp',

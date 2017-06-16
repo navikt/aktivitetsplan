@@ -15,22 +15,22 @@ function BekreftStart({ lagre, navn }) {
             <section className="innstillinger__avslutt-periode">
                 <div className="blokk-xs">
                     <Systemtittel>
-                        <FormattedMessage id="innstillinger.modal.start.oppfolging.overskrift" />
+                        <FormattedMessage id="innstillinger.modal.startoppfolging.overskrift" />
                     </Systemtittel>
                 </div>
                 <AlertStripeInfoSolid className="blokk-m">
                     <FormattedMessage
-                        id="innstillinger.modal.start.bekreft.alert-melding"
+                        id="innstillinger.modal.startoppfolging.bekreft.alert-melding"
                         values={{ navn }}
                     />
                 </AlertStripeInfoSolid>
             </section>
             <ModalFooter>
                 <Hovedknapp mini onClick={() => lagre()}>
-                    <FormattedMessage id="innstillinger.modal.start.bekreft.knapp.bekreft" />
+                    <FormattedMessage id="innstillinger.modal.startoppfolging.knapp.bekreft" />
                 </Hovedknapp>
                 <Knapp mini onClick={() => history.push('/')}>
-                    <FormattedMessage id="innstillinger.modal.start.oppfolging.knapp.avbryt" />
+                    <FormattedMessage id="innstillinger.modal.startoppfolging.knapp.avbryt" />
                 </Knapp>
             </ModalFooter>
         </div>
