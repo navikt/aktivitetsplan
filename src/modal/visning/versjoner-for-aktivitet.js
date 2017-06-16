@@ -14,12 +14,12 @@ import {
 import visibleIfHOC from '../../hocs/visible-if';
 
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { STATUS } from '../../ducks/utils';
 import {
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
     TRANSAKSJON_TYPE_STATUS_ENDRET,
     TRANSAKSJON_TYPE_AVTALT_DATO_ENDRET,
 } from '../../constant';
+import Accordian from '../../felles-komponenter/accordion';
 
 function VersjonInnslag({ versjon, prevVersjon }) {
     function endringsTekst() {
@@ -86,6 +86,13 @@ VersjonInnslag.defaultProps = {
 };
 
 class VersjonerForAktivitet extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            apen: false,
+        };
+    }
+
     componentWillMount() {
         const {
             doFjernVersjoner,
@@ -100,6 +107,10 @@ class VersjonerForAktivitet extends Component {
     }
 
     render() {
+        const onClick = () => {
+            this.setState({ apen: !this.state.apen });
+        };
+
         const { versjonerData, className } = this.props;
         const versjoner = versjonerData.data;
 
@@ -109,16 +120,33 @@ class VersjonerForAktivitet extends Component {
                 spinnerStorrelse="m"
             >
                 <section className={className}>
-                    {versjoner.length === 0 &&
-                        versjonerData.status === STATUS.OK &&
-                        <FormattedMessage id="livslopsendring.empty" />}
-                    {versjoner.map((versjon, index, array) => (
-                        <VersjonInnslag
-                            key={versjon.endretDato}
-                            versjon={versjon}
-                            prevVersjon={array[index + 1]}
-                        />
-                    ))}
+                    {versjoner
+                        .slice(0, 10)
+                        .map((versjon, index) => (
+                            <VersjonInnslag
+                                key={versjon.endretDato}
+                                versjon={versjon}
+                                prevVersjon={versjoner[index + 1]}
+                            />
+                        ))}
+                    <Accordian
+                        onClick={onClick}
+                        labelId={
+                            this.state.apen
+                                ? 'endringer.skjul'
+                                : 'endringer.vis-mer'
+                        }
+                    >
+                        {versjoner
+                            .slice(10)
+                            .map((versjon, index) => (
+                                <VersjonInnslag
+                                    key={versjon.endretDato}
+                                    versjon={versjon}
+                                    prevVersjon={versjoner[index + 1]}
+                                />
+                            ))}
+                    </Accordian>
                 </section>
             </Innholdslaster>
         );
