@@ -56,7 +56,7 @@
   }
 
   &__innhold {
-    display: flex;
+    display: block;
     height: 100%;
     overflow: hidden;
   }
@@ -78,28 +78,31 @@
   }
 
   &__kolonne {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    display: inline-block;
+    float: left;
     height: 100%;
-    width: 100%;
 
     &--dialog {
-      flex-basis: percentage(@bredde-skjerm-dialog / @full-bredde-skjerm-modal);
+      width: percentage(@bredde-skjerm-dialog / @full-bredde-skjerm-modal);
       padding: 2rem;
       background-color: @gray-background;
-      width: @bredde-skjerm-dialog;
       overflow-y: auto;
-    }
-
-    &--dialoger {
-      flex-basis: percentage(@bredde-skjerm-dialoger / @full-bredde-skjerm-modal);
-      background-color: white;
-      z-index: 1;
 
       @media (max-width: @mobil-bredde) {
         width: 100%;
+      }
+    }
 
+    &--dialoger {
+      width: 100%;
+      background-color: white;
+      z-index: 1;
+
+      &-valgt-dialog {
+        width: percentage(@bredde-skjerm-dialoger / @full-bredde-skjerm-modal);
+      }
+
+      @media (max-width: @mobil-bredde) {
         &-valgt-dialog {
           display: none;
         }

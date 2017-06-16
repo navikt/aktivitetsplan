@@ -1,6 +1,6 @@
 @import '../../../variables';
 
-@knapp-storrelse: 1.2rem;
+@meny-knapp-storrelse: 1.25rem;
 
 .navigasjonslinje {
   .blokk-s();
@@ -32,21 +32,24 @@
 
 .navigasjonslinje-meny {
   margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .navigasjonslinje-meny__innstillinger-knapp {
   .knapp();
-  height: @knapp-storrelse;
-  width: @knapp-storrelse;
+  height: @meny-knapp-storrelse;
+  width: @meny-knapp-storrelse;
   border: 0;
   padding: 0;
-  // TODO: Bytt ut midlertidig svg
   background: data-uri('@{aktivitetsplanPath}/sider/hovedside/navigasjonslinje/tannhjul.svg') no-repeat;
+  background-size: contain;
 
-  &:hover,
+  &:hover {
+    background: data-uri('@{aktivitetsplanPath}/sider/hovedside/navigasjonslinje/tannhjul-hover.svg') no-repeat;
+  }
+
   &:active {
-    // TODO: Bytt ut midlertidig styling
-    background: data-uri('@{aktivitetsplanPath}/sider/hovedside/navigasjonslinje/tannhjul.svg') no-repeat;
-    background-color: cyan;
+    background: data-uri('@{aktivitetsplanPath}/sider/hovedside/navigasjonslinje/tannhjul-active.svg') no-repeat;
   }
 }

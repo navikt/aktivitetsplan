@@ -7,11 +7,17 @@ import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
+import AktivitetIngress from './aktivitetingress';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
-import { slettAktivitet, hentAktivitet } from '../../ducks/aktiviteter';
+import {
+    slettAktivitet,
+    hentAktivitet,
+    settForrigeAktiveAktivitetId,
+    fjernForrigeAktiveAktivitetId,
+} from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
 import ModalFooter from './../modal-footer';
 import ModalContainer from '../modal-container';
@@ -48,6 +54,11 @@ class Aktivitetvisning extends Component {
         if (!this.props.params.id.startsWith('arena')) {
             this.props.doHentAktivitet(this.props.params.id);
         }
+        this.props.doFjernForrigeAktiveAktivitetId();
+    }
+
+    componentWillUnmount() {
+        this.props.doSettForrigeAktiveAktivitetId(this.props.params.id);
     }
 
     render() {
@@ -91,7 +102,7 @@ class Aktivitetvisning extends Component {
                 ));
 
         const tillattEndring =
-            (valgtAktivitet.avtalt !== true || TILLAT_SET_AVTALT) &&
+            (valgtAktivitet.avtalt !== true || !!TILLAT_SET_AVTALT) &&
             (valgtAktivitet.status !== STATUS_FULLFOERT &&
                 valgtAktivitet.status !== STATUS_AVBRUTT);
 
@@ -172,6 +183,7 @@ class Aktivitetvisning extends Component {
                                 <Sidetittel id="modal-aktivitetsvisning-header">
                                     {valgtAktivitet.tittel}
                                 </Sidetittel>
+                                <AktivitetIngress type={valgtAktivitet.type} />
                                 <div className="aktivitetskort__etiketter blokk-s">
                                     <AktivitetEtikett
                                         visible={valgtAktivitet.avtalt}
@@ -242,6 +254,8 @@ Aktivitetvisning.propTypes = {
     params: PT.shape({ id: PT.string }),
     oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
     aktiviteter: PT.arrayOf(PT.object),
+    doSettForrigeAktiveAktivitetId: PT.func.isRequired,
+    doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
 };
 
 Aktivitetvisning.defaultProps = {
@@ -258,9 +272,13 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = {
+const mapDispatchToProps = dispatch => ({
     doSlettAktivitet: aktivitet => slettAktivitet(aktivitet),
     doHentAktivitet: aktivitetId => hentAktivitet(aktivitetId),
-};
+    doSettForrigeAktiveAktivitetId: id =>
+        dispatch(settForrigeAktiveAktivitetId(id)),
+    doFjernForrigeAktiveAktivitetId: () =>
+        dispatch(fjernForrigeAktiveAktivitetId()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);

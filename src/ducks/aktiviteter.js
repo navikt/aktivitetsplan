@@ -27,9 +27,14 @@ export const SLETT = 'aktivitet/slett';
 export const SLETT_OK = 'aktivitet/slett/ok';
 export const SLETT_FAIL = 'aktivitet/slett/fail';
 
+export const SETT_FORRIGE_AKTIVE_AKTIVITET_ID = 'aktivitet/forrigeaktive/sett';
+export const FJERN_FORRIGE_AKTIVE_AKTIVITET_ID =
+    'aktivitet/forrigeaktive/fjern';
+
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
+    forrigeAktiveAktivitetId: undefined,
 };
 
 function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
@@ -78,6 +83,10 @@ export default function reducer(state = initalState, action) {
             });
         case SLETT_OK:
             return { ...state, data: state.data.filter(a => a.id !== data.id) };
+        case SETT_FORRIGE_AKTIVE_AKTIVITET_ID:
+            return { ...state, forrigeAktiveAktivitetId: action.id };
+        case FJERN_FORRIGE_AKTIVE_AKTIVITET_ID:
+            return { ...state, forrigeAktiveAktivitetId: undefined };
         case SLETT:
         case SLETT_FAIL:
         default:
@@ -105,7 +114,6 @@ export function hentAktivitet(aktivitetId) {
 export function flyttAktivitet(aktivitet, status) {
     return dispatch => {
         dispatch({ type: FLYTTER, data: { aktivitet, status } });
-        // TODO kan vi bruke oppdaterAktivitet?
         return Api.oppdaterAktivitetStatus({ ...aktivitet, status })
             .then(response => {
                 dispatch({ type: FLYTT_OK, data: response });
@@ -168,5 +176,18 @@ export function slettAktivitet(aktivitet) {
         Api.slettAktivitet(aktivitet)
             .then(() => dispatch({ type: SLETT_OK, data: aktivitet }))
             .catch(() => dispatch({ type: SLETT_FAIL, data: aktivitet }));
+    };
+}
+
+export function settForrigeAktiveAktivitetId(id) {
+    return {
+        type: SETT_FORRIGE_AKTIVE_AKTIVITET_ID,
+        id,
+    };
+}
+
+export function fjernForrigeAktiveAktivitetId() {
+    return {
+        type: FJERN_FORRIGE_AKTIVE_AKTIVITET_ID,
     };
 }
