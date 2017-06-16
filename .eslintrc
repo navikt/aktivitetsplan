@@ -3,6 +3,7 @@
   "rules": {
     "indent": "off",
     "react/jsx-indent-props": "off",
+    "react/jsx-wrap-multilines": "off",
     "react/jsx-closing-bracket-location": "off",
     "react/jsx-indent": "off",
     "comma-dangle": ["error", {
