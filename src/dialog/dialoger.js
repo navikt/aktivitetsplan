@@ -11,6 +11,7 @@ import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
+import { dialogFilter } from '../moduler/filter/filter-utils';
 
 const Prikk = visibleIfHOC(props => (
     <div className="dialoger__prikk" {...props} />
@@ -127,7 +128,7 @@ Dialoger.defaultProps = {
 
 const mapStateToProps = state => {
     const dialog = state.data.dialog;
-    const dialoger = dialog.data;
+    const dialoger = dialog.data.filter(d => dialogFilter(d, state));
     return {
         dialog,
         dialoger,
