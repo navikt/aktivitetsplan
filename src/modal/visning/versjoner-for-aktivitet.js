@@ -12,7 +12,7 @@ import {
     formaterDatoKortManed,
 } from '../../utils';
 import visibleIfHOC from '../../hocs/visible-if';
-
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
@@ -85,6 +85,8 @@ VersjonInnslag.defaultProps = {
     prevVersjon: undefined,
 };
 
+const MAX_SIZE = 10;
+
 class VersjonerForAktivitet extends Component {
     constructor(props) {
         super(props);
@@ -121,7 +123,7 @@ class VersjonerForAktivitet extends Component {
             >
                 <section className={className}>
                     {versjoner
-                        .slice(0, 10)
+                        .slice(0, MAX_SIZE)
                         .map((versjon, index) => (
                             <VersjonInnslag
                                 key={versjon.endretDato}
@@ -129,24 +131,26 @@ class VersjonerForAktivitet extends Component {
                                 prevVersjon={versjoner[index + 1]}
                             />
                         ))}
-                    <Accordian
-                        onClick={onClick}
-                        labelId={
-                            this.state.apen
-                                ? 'endringer.skjul'
-                                : 'endringer.vis-mer'
-                        }
-                    >
-                        {versjoner
-                            .slice(10)
-                            .map((versjon, index) => (
-                                <VersjonInnslag
-                                    key={versjon.endretDato}
-                                    versjon={versjon}
-                                    prevVersjon={versjoner[index + 1]}
-                                />
-                            ))}
-                    </Accordian>
+                    <VisibleIfDiv visible={versjoner.length > MAX_SIZE}>
+                        <Accordian
+                            onClick={onClick}
+                            labelId={
+                                this.state.apen
+                                    ? 'endringer.skjul'
+                                    : 'endringer.vis-mer'
+                            }
+                        >
+                            {versjoner
+                                .slice(MAX_SIZE)
+                                .map((versjon, index) => (
+                                    <VersjonInnslag
+                                        key={versjon.endretDato}
+                                        versjon={versjon}
+                                        prevVersjon={versjoner[index + 1]}
+                                    />
+                                ))}
+                        </Accordian>
+                    </VisibleIfDiv>
                 </section>
             </Innholdslaster>
         );
