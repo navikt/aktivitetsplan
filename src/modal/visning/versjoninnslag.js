@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../proptypes';
 import { formaterDatoKortManed } from '../../utils';
 import Dato from '../../felles-komponenter/dato';
+import BrukerAvhengigTekst from '../../felles-komponenter/brukeravhengigtekst';
 import {
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
     TRANSAKSJON_TYPE_STATUS_ENDRET,
@@ -53,10 +54,12 @@ function VersjonInnslag({ versjon, prevVersjon }) {
 
     return (
         <p className="versjon-for-aktivitet__innslag">
-            <b><FormattedMessage id={`lagtInnAv.${versjon.lagtInnAv}`} /> </b>
+            <strong>
+                <BrukerAvhengigTekst id={`lagtInnAv.${versjon.lagtInnAv}`} />
+                &nbsp;
+            </strong>
             {endringsTekst()}
-            <br />
-            <Dato>
+            <Dato className="versjons-dato">
                 {versjon.endretDato}
             </Dato>
         </p>
