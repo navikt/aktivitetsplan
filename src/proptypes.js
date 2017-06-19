@@ -63,6 +63,12 @@ export const mal = PT.shape({
     dato: PT.string,
 });
 
+export const oppfolgingsPeriode = PT.shape({
+    id: PT.string,
+    fra: PT.string,
+    til: PT.string,
+});
+
 export const feil = PT.shape({
     is: PT.string.isRequired,
     type: PT.string.isRequired,
