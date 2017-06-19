@@ -54,13 +54,12 @@ function VersjonInnslag({ versjon, prevVersjon }) {
 
     return (
         <p className="versjon-for-aktivitet__innslag">
-            <b>
+            <strong>
                 <BrukerAvhengigTekst id={`lagtInnAv.${versjon.lagtInnAv}`} />
-                {' '}
-            </b>
+                &nbsp;
+            </strong>
             {endringsTekst()}
-            <br />
-            <Dato>
+            <Dato className="versjons-dato">
                 {versjon.endretDato}
             </Dato>
         </p>
