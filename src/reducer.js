@@ -6,7 +6,7 @@ import vilkarReducer from './ducks/vilkar';
 import aktiviteterReducer from './ducks/aktiviteter';
 import arenaAktiviteterReducer from './ducks/arena-aktiviteter';
 import etiketterReducer from './ducks/etiketter';
-import endringsloggReducer from './ducks/endringslogg';
+import versjonReducer from './ducks/aktivitet-versjoner';
 import dialogReducer from './ducks/dialog';
 import malReducer from './ducks/mal';
 import identitetReducer from './ducks/identitet';
@@ -14,6 +14,7 @@ import motpartReducer from './ducks/motpart';
 import endreAktivitetReducer from './ducks/endre-aktivitet';
 import feilReducer from './ducks/feil';
 import historiskeVilkarReducer from './ducks/historiske-vilkar';
+import filterReducer from './moduler/filter/filter-reducer';
 
 export default combineReducers({
     form: formReducer,
@@ -25,11 +26,12 @@ export default combineReducers({
         aktiviteter: aktiviteterReducer,
         arenaAktiviteter: arenaAktiviteterReducer,
         etiketter: etiketterReducer,
-        endringslogg: endringsloggReducer,
+        versjoner: versjonReducer,
         dialog: dialogReducer,
         mal: malReducer,
         motpart: motpartReducer,
         identitet: identitetReducer,
+        filter: filterReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,

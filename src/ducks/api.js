@@ -73,9 +73,9 @@ export function hentArenaAktiviteter() {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/arena`);
 }
 
-export function hentEndringsloggTilAktivitet(aktivitet) {
+export function hentVersjonerTilAktivitet(aktivitet) {
     return fetchToJson(
-        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/endringslogg`
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`
     );
 }
 
