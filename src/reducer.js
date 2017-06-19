@@ -14,6 +14,7 @@ import motpartReducer from './ducks/motpart';
 import endreAktivitetReducer from './ducks/endre-aktivitet';
 import feilReducer from './ducks/feil';
 import historiskeVilkarReducer from './ducks/historiske-vilkar';
+import filterReducer from './moduler/filter/filter-reducer';
 
 export default combineReducers({
     form: formReducer,
@@ -30,6 +31,7 @@ export default combineReducers({
         mal: malReducer,
         motpart: motpartReducer,
         identitet: identitetReducer,
+        filter: filterReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,
