@@ -7,10 +7,11 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import ModalFooter from '../modal-footer';
+import { avsluttOppfolging } from '../../ducks/situasjon';
 import history from '../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
 
-function BekreftAvslutning({ lagreBegrunnelse, begrunnelse, navn }) {
+function BekreftAvslutning({ doAvsluttOppfolging, begrunnelse, navn }) {
     return (
         <div>
             <section className="innstillinger__avslutt-periode">
@@ -27,7 +28,7 @@ function BekreftAvslutning({ lagreBegrunnelse, begrunnelse, navn }) {
                 </AlertStripeInfoSolid>
             </section>
             <ModalFooter>
-                <Hovedknapp mini onClick={() => lagreBegrunnelse(begrunnelse)}>
+                <Hovedknapp mini onClick={() => doAvsluttOppfolging(begrunnelse)}>
                     <FormattedMessage id="innstillinger.modal.avslutt.bekreft.knapp.bekreft" />
                 </Hovedknapp>
                 <Knapp mini onClick={() => history.push('/')}>
@@ -45,7 +46,7 @@ BekreftAvslutning.defaultProps = {
 BekreftAvslutning.propTypes = {
     navn: PT.string,
     begrunnelse: PT.string,
-    lagreBegrunnelse: PT.func.isRequired,
+    doAvsluttOppfolging: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -53,10 +54,10 @@ const mapStateToProps = state => ({
     begrunnelse: formValueSelector(AVSLUTT_FORM_NAME)(state, 'begrunnelse'),
 });
 
-const mapDispatchToProps = () => ({
-    lagreBegrunnelse: () => {
-        // dispatch(avsluttOppfolging(props.begrunnelse)); TODO: må finne ut hvilket endepunkt som skal benyttes
-        history.push('/innstillinger/avslutt/kvittering');
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    doAvsluttOppfolging: () => {
+        dispatch(avsluttOppfolging(ownProps.begrunnelse))
+            .then(history.push('/innstillinger/avslutt/kvittering'));
     },
 });
 
