@@ -15,7 +15,7 @@ BrukerAvhengigTekst.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    erBruker: state.data.identitet.erBruker,
+    erBruker: state.data.identitet.data.erBruker,
 });
 
 export default connect(mapStateToProps, null)(BrukerAvhengigTekst);
