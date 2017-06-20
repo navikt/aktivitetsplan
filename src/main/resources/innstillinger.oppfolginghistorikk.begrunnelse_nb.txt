@@ -1,1 +1,1 @@
-Begunnelse: {begrunnelse}
+Begrunnelse: {begrunnelse}
