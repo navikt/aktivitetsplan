@@ -91,7 +91,7 @@ class VersjonerForAktivitet extends Component {
 }
 
 VersjonerForAktivitet.propTypes = {
-    versjonerData: AppPT.reducer.isRequired,
+    versjonerData: AppPT.reducerArray.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
     doHentVersjonerForAktivitet: PT.func.isRequired,
     doFjernVersjoner: PT.func.isRequired,
