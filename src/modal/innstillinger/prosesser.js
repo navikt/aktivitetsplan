@@ -5,12 +5,12 @@ import AvsluttOppfolgingProsess from './avslutt-oppfolging-prosess';
 import StartOppfolgingProsess from './start-oppfolging-prosess';
 
 function Prosesser({ underOppfolging, kanStarte }) {
-        return (
-            <div>
-                <AvsluttOppfolgingProsess hidden={!underOppfolging} />
-                <StartOppfolgingProsess hidden={!kanStarte} />
-            </div>
-        );
+    return (
+        <div>
+            <AvsluttOppfolgingProsess hidden={!underOppfolging} />
+            <StartOppfolgingProsess hidden={!kanStarte} />
+        </div>
+    );
 }
 
 Prosesser.defaultProps = {

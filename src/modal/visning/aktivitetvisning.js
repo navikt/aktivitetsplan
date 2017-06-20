@@ -62,12 +62,7 @@ class Aktivitetvisning extends Component {
     }
 
     render() {
-        const {
-            params,
-            aktiviteter,
-            doSlettAktivitet,
-            situasjon,
-        } = this.props;
+        const { params, aktiviteter, doSlettAktivitet, situasjon } = this.props;
         const { id } = params;
         const valgtAktivitet = aktiviteter.find(
             aktivitet => aktivitet.id === id

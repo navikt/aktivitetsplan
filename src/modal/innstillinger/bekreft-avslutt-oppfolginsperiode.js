@@ -28,7 +28,10 @@ function BekreftAvslutning({ doAvsluttOppfolging, begrunnelse, navn }) {
                 </AlertStripeInfoSolid>
             </section>
             <ModalFooter>
-                <Hovedknapp mini onClick={() => doAvsluttOppfolging(begrunnelse)}>
+                <Hovedknapp
+                    mini
+                    onClick={() => doAvsluttOppfolging(begrunnelse)}
+                >
                     <FormattedMessage id="innstillinger.modal.avslutt.bekreft.knapp.bekreft" />
                 </Hovedknapp>
                 <Knapp mini onClick={() => history.push('/')}>
@@ -56,8 +59,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     doAvsluttOppfolging: () => {
-        dispatch(avsluttOppfolging(ownProps.begrunnelse))
-            .then(history.push('/innstillinger/avslutt/kvittering'));
+        dispatch(avsluttOppfolging(ownProps.begrunnelse)).then(
+            history.push('/innstillinger/avslutt/kvittering')
+        );
     },
 });
 

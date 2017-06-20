@@ -15,8 +15,7 @@ function StartOppfolgingProsess({ intl }) {
             knappetekst={intl.formatMessage({
                 id: 'innstillinger.modal.prosess.start.knapp',
             })}
-            onClick={() =>
-                history.push('/innstillinger/start/bekreft/')}
+            onClick={() => history.push('/innstillinger/start/bekreft/')}
         >
             <div className="blokk-xs">
                 <Normaltekst>
@@ -27,10 +26,8 @@ function StartOppfolgingProsess({ intl }) {
     );
 }
 
-
 StartOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
 };
-
 
 export default hiddenIfHoc(injectIntl(StartOppfolgingProsess));

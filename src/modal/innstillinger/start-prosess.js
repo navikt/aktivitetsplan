@@ -6,12 +6,21 @@ import { Knapp } from 'nav-frontend-knapper';
 
 const cls = classes => classNames('start-prosess', classes);
 
-function Prosess({ tittel, knappetekst, onClick, laster, className, children }) {
+function Prosess({
+    tittel,
+    knappetekst,
+    onClick,
+    laster,
+    className,
+    children,
+}) {
     return (
         <article className={cls(className)}>
             <Undertittel>{tittel}</Undertittel>
             {children}
-            <Knapp mini spinner={laster} disabled={laster} onClick={onClick}>{knappetekst}</Knapp>
+            <Knapp mini spinner={laster} disabled={laster} onClick={onClick}>
+                {knappetekst}
+            </Knapp>
         </article>
     );
 }

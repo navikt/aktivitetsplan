@@ -10,7 +10,6 @@ import { STATUS } from './../../ducks/utils';
 import history from '../../history';
 import StartProsess from './start-prosess';
 
-
 class AvsluttOppfolgingProsess extends Component {
     constructor(props) {
         super(props);
@@ -21,17 +20,15 @@ class AvsluttOppfolgingProsess extends Component {
     }
 
     gaTilBekreft = url => {
-        this.props.doKanAvslutte().then(
-            response => {
-                this.setState({
-                    kanAvslutte: response.data.avslutningStatus.kanAvslutte,
-                    harSjekket: true,
-                });
-                if (this.state.kanAvslutte) {
-                    history.push(url);
-                }
+        this.props.doKanAvslutte().then(response => {
+            this.setState({
+                kanAvslutte: response.data.avslutningStatus.kanAvslutte,
+                harSjekket: true,
+            });
+            if (this.state.kanAvslutte) {
+                history.push(url);
             }
-        );
+        });
     };
 
     render() {
@@ -52,24 +49,29 @@ class AvsluttOppfolgingProsess extends Component {
                     <Normaltekst>
                         <FormattedMessage id="innstillinger.prosess.avslutt.tekst" />
                     </Normaltekst>
-                    {this.state.harSjekket && !this.state.kanAvslutte &&
-                    <AlertStripeInfoSolid>
-                        <ul>
-                            <li>{avslutningStatus.underOppfolging && <FormattedMessage
-                                id="innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging" />}</li>
-                            <li>{avslutningStatus.harYtelser && <FormattedMessage
-                                id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser" />}</li>
-                            <li>{avslutningStatus.harTiltak && <FormattedMessage
-                                id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak" />}</li>
-                        </ul>
-                    </AlertStripeInfoSolid>
-                    }
+                    {this.state.harSjekket &&
+                        !this.state.kanAvslutte &&
+                        <AlertStripeInfoSolid>
+                            <ul>
+                                <li>
+                                    {avslutningStatus.underOppfolging &&
+                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging" />}
+                                </li>
+                                <li>
+                                    {avslutningStatus.harYtelser &&
+                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser" />}
+                                </li>
+                                <li>
+                                    {avslutningStatus.harTiltak &&
+                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak" />}
+                                </li>
+                            </ul>
+                        </AlertStripeInfoSolid>}
                 </div>
             </StartProsess>
         );
     }
 }
-
 
 AvsluttOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
@@ -89,4 +91,6 @@ const mapDispatchToProps = dispatch => ({
     doKanAvslutte: () => dispatch(kanAvslutte()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(hiddenIfHoc(injectIntl(AvsluttOppfolgingProsess)));
+export default connect(mapStateToProps, mapDispatchToProps)(
+    hiddenIfHoc(injectIntl(AvsluttOppfolgingProsess))
+);

@@ -228,8 +228,7 @@ const mapStateToProps = state => {
         arenaAktiviteterReducer.data
     );
 
-    const oppfolgingsPerioder = situasjonReducer.data
-        .oppfolgingsPerioder || [];
+    const oppfolgingsPerioder = situasjonReducer.data.oppfolgingsPerioder || [];
     let fraGrense = '';
     const historiskePerioder = oppfolgingsPerioder
         .map(p => p.sluttDato)

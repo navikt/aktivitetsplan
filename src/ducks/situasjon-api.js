@@ -50,9 +50,14 @@ export function startOppfolgin1g() {
 }
 
 export function kanAvslutte() {
-    return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/avslutningStatus`);
+    return fetchToJson(
+        `${SITUASJON_PROXY_BASE_URL}/situasjon/avslutningStatus`
+    );
 }
 
 export function avsluttOppfolging(begrunnelse) {
-    return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/avsluttOppfolging`, begrunnelse);
+    return postAsJson(
+        `${SITUASJON_PROXY_BASE_URL}/situasjon/avsluttOppfolging`,
+        begrunnelse
+    );
 }
