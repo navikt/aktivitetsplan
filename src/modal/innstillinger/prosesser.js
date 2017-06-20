@@ -4,6 +4,7 @@ import PT from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import history from '../../history';
 import StartProsess from './start-prosess';
+import OppfolgingsperiodeHistorikk from './oppfolgingsperiode-historikk';
 
 function Prosesser({ kanAvslutte, intl }) {
     return (
@@ -22,6 +23,8 @@ function Prosesser({ kanAvslutte, intl }) {
                     })}
                     onClick={() => history.push('/innstillinger/avslutt/')}
                 />}
+            <hr className="innstillinger__delelinje" />
+            <OppfolgingsperiodeHistorikk />
         </div>
     );
 }
