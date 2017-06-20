@@ -26,7 +26,7 @@
   padding-bottom: 0.5rem;
 
   .hjelpetekst {
-    min-height: 65px;
+    min-height: 4rem;
   }
 }
 
@@ -49,12 +49,56 @@
   }
 }
 
+.hjelpetekst--hoyre {
+  top: -6px;
+  left: 56px;
+  text-align: right;
+  padding-right: 4rem;
+
+  &:after {
+    top: 14px;
+  }
+}
+
 .hjelpetekst__apneknapp {
   margin-right: 0;
   padding-right: 0;
+}
 
-  .hjelpetekst__anchor {
-    width: 24px;
-    height: 24px;
+.aktivitet-last .hjelpetekst__apneknapp,
+.aktivitet-apen .hjelpetekst__apneknapp {
+
+  &:focus {
+    span {
+      outline: none;
+      box-shadow: 0 0 0 3px @orange-focus;
+    }
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.aktivitet-apen .hjelpetekst__apneknapp span {
+  border-radius: 50%;
+  background: data-uri('@{aktivitetsplanPath}/img/help-circle.svg') no-repeat;
+  width: 24px;
+  height: 24px;
+
+  &:hover {
+    background: data-uri('@{aktivitetsplanPath}/img/help-circle_hover.svg') no-repeat;
+  }
+}
+
+.aktivitet-last .hjelpetekst__apneknapp span {
+  background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg') no-repeat center;
+  background-size: 83%;
+  width: 24px;
+  height: 26px;
+
+  &:hover {
+    background: data-uri('@{aktivitetsplanPath}/img/hengelas_hover.svg') no-repeat center;
+    background-size: 83%;
   }
 }

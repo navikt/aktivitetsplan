@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import { HjelpetekstVenstre } from 'nav-frontend-hjelpetekst';
+import { HjelpetekstVenstre, HjelpetekstHoyre } from 'nav-frontend-hjelpetekst';
 import { flyttAktivitet } from '../../../ducks/aktiviteter';
 import AktivitetsKort from '../aktivitetskort/aktivitetskort';
 import {
@@ -17,9 +17,6 @@ import {
 } from '../../../constant';
 import history from '../../../history';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
-import HoverBilde from './hover-bilde';
-import hengelasSvg from '../../../img/hengelas.svg';
-import hengelasHoverSvg from '../../../img/hengelas_hover.svg';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -41,15 +38,84 @@ const mottaAktivitetsKort = {
     },
 };
 
-function HengelaasAnchor() {
+function HengelasAnchor() {
     return (
-        <HoverBilde
-            className="modal-header-bilde"
-            imgSrc={hengelasSvg}
-            imgSrcHover={hengelasHoverSvg}
-            alt="Aktiviteten er låst og kan ikke flyttes."
-        />
+        <FormattedMessage id="minkey.las">
+            {tekst => <span aria-label={tekst} />}
+        </FormattedMessage>
     );
+}
+
+function SporsmalAnchor() {
+    return (
+        <FormattedMessage id="minkey.spm">
+            {tekst => <span aria-label={tekst} />}
+        </FormattedMessage>
+    );
+}
+
+function hjelpetekst(aktivitetStatus) {
+    switch (aktivitetStatus) {
+        case STATUS_BRUKER_ER_INTRESSERT:
+            return (
+                <FormattedMessage id="hjelpetekst.tittel.aktivitet.apen">
+                    {tekst => (
+                        <HjelpetekstHoyre
+                            anchor={SporsmalAnchor}
+                            tittel={tekst}
+                        >
+                            <FormattedMessage id="hjelpetekst.sporsmalikon" />
+                        </HjelpetekstHoyre>
+                    )}
+                </FormattedMessage>
+            );
+        case STATUS_PLANLAGT:
+        case STATUS_GJENNOMFOERT:
+            return (
+                <FormattedMessage id="hjelpetekst.tittel.aktivitet.apen">
+                    {tekst => (
+                        <HjelpetekstVenstre
+                            anchor={SporsmalAnchor}
+                            tittel={tekst}
+                        >
+                            <FormattedMessage id="hjelpetekst.sporsmalikon" />
+                        </HjelpetekstVenstre>
+                    )}
+                </FormattedMessage>
+            );
+
+        case STATUS_FULLFOERT:
+        case STATUS_AVBRUTT:
+            return (
+                <FormattedMessage id="hjelpetekst.tittel.aktivitet.last">
+                    {tekst => (
+                        <HjelpetekstVenstre
+                            anchor={HengelasAnchor}
+                            tittel={tekst}
+                        >
+                            <FormattedMessage id="hjelpetekst.lasikon" />
+                        </HjelpetekstVenstre>
+                    )}
+                </FormattedMessage>
+            );
+        default:
+            return null;
+    }
+}
+
+function hjelpeklasse(aktivitetStatus) {
+    switch (aktivitetStatus) {
+        case STATUS_BRUKER_ER_INTRESSERT:
+        case STATUS_PLANLAGT:
+        case STATUS_GJENNOMFOERT:
+            return 'aktivitet-apen';
+
+        case STATUS_FULLFOERT:
+        case STATUS_AVBRUTT:
+            return 'aktivitet-last';
+        default:
+            return null;
+    }
 }
 
 function collect(theConnect, monitor) {
@@ -93,27 +159,16 @@ function KolonneFunction({
                     drag && 'aktivitetstavle__kolonne--drag'
                 )}
             >
-                <div className="aktivitetstavle__kolonne-header-wrapper">
+                <div
+                    className={`aktivitetstavle__kolonne-header-wrapper ${hjelpeklasse(status)}`}
+                >
                     <Undertittel
                         className="aktivitetstavle__kolonne-header"
                         tag="h1"
                     >
                         <FormattedMessage id={tittelId} />
                     </Undertittel>
-                    {{ [STATUS_FULLFOERT]: true, [STATUS_AVBRUTT]: true }[
-                        status
-                    ] &&
-                        <HjelpetekstVenstre anchor={HengelaasAnchor}>
-                            <FormattedMessage id="laasikon.hjelpetekst" />
-                        </HjelpetekstVenstre>}
-                    {{
-                        [STATUS_BRUKER_ER_INTRESSERT]: true,
-                        [STATUS_PLANLAGT]: true,
-                        [STATUS_GJENNOMFOERT]: true,
-                    }[status] &&
-                        <HjelpetekstVenstre>
-                            <FormattedMessage id="sporsmalikon.hjelpetekst" />
-                        </HjelpetekstVenstre>}
+                    {hjelpetekst(status)}
                 </div>
                 {aktivitetsKort}
             </div>
