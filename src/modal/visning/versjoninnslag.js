@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
 import * as AppPT from '../../proptypes';
 import { formaterDatoKortManed } from '../../utils';
 import Dato from '../../felles-komponenter/dato';
@@ -53,16 +54,16 @@ function VersjonInnslag({ versjon, prevVersjon }) {
     }
 
     return (
-        <p className="versjon-for-aktivitet__innslag">
-            <strong>
+        <div className="versjon-for-aktivitet-innslag">
+            <Element className="versjon-for-aktivitet-innslag__identitet">
                 <BrukerAvhengigTekst id={`lagtInnAv.${versjon.lagtInnAv}`} />
                 &nbsp;
-            </strong>
+            </Element>
             {endringsTekst()}
-            <Dato className="versjons-dato">
+            <Dato className="versjon-for-aktivitet-innslag__dato">
                 {versjon.endretDato}
             </Dato>
-        </p>
+        </div>
     );
 }
 
