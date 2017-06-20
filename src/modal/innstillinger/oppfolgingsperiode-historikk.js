@@ -9,19 +9,21 @@ import Dato from '../../felles-komponenter/dato';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import Accordion from '../../felles-komponenter/accordion';
 
-const MAX_SIZE = 1;
-
 function OppfolgingPeriodeInnslag({ periode }) {
     const { veileder, begrunnelse, sluttDato } = periode;
     return (
         <p className="oppfolgingperiode__innslag">
             <b>
                 <FormattedMessage
-                    id={`${veileder} avsluttet brukers oppfølgingsperiode`}
+                    id="innstillinger.oppfolginghistorikk.beskrivelse"
+                    values={{ veileder }}
                 />
             </b>
             <br />
-            {begrunnelse}
+            <FormattedMessage
+                id="innstillinger.oppfolginghistorikk.begrunnelse"
+                values={{ begrunnelse }}
+            />
             <br />
             <Dato>
                 {sluttDato}
@@ -56,24 +58,24 @@ class OppfolgingsperiodeHistorikk extends Component {
         const oppfolgingsPerioder = oppfolgingStatus.data
             .oppfolgingsPerioder || [];
 
-        const forstePeriode = oppfolgingsPerioder
-            .slice(0, MAX_SIZE)
-            .map(periode => (
-                <OppfolgingPeriodeInnslag
-                    key={periode.sluttDato}
-                    periode={periode}
-                />
-            ));
+        const forstePeriode =
+            oppfolgingsPerioder[0] &&
+            <OppfolgingPeriodeInnslag
+                key={oppfolgingsPerioder[0].sluttDato}
+                periode={oppfolgingsPerioder[0]}
+            />;
 
         const restenAvPeriodene = (
             <Accordion
                 onClick={this.onClick}
                 labelId={
-                    this.state.apen ? 'endringer.skjul' : 'endringer.vis-mer'
+                    this.state.apen
+                        ? 'innstillinger.oppfolginghistorikk.vis-mindre'
+                        : 'innstillinger.oppfolginghistorikk.vis-mer'
                 }
             >
                 {oppfolgingsPerioder
-                    .slice(MAX_SIZE)
+                    .slice(1)
                     .map(periode => (
                         <OppfolgingPeriodeInnslag
                             key={periode.sluttDato}
@@ -90,11 +92,12 @@ class OppfolgingsperiodeHistorikk extends Component {
                 className="spinner"
             >
                 <section className="oppfolgingperiode__historikk">
-                    <h3>Historikk</h3>
-                    {forstePeriode}
-                    <VisibleIfDiv
-                        visible={oppfolgingsPerioder.length > MAX_SIZE}
-                    >
+                    <h3>
+                        <FormattedMessage id="innstillinger.oppfolginghistorikk.tittel" />
+                    </h3>
+                    {forstePeriode ||
+                        <FormattedMessage id="innstillinger.oppfolginghistorikk.ingenhistorikk" />}
+                    <VisibleIfDiv visible={oppfolgingsPerioder.length > 1}>
                         {restenAvPeriodene}
                     </VisibleIfDiv>
                 </section>
