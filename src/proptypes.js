@@ -5,6 +5,8 @@ export const aktivitet = PT.shape({
     fraDato: PT.string.isRequired,
     tilDato: PT.string.isRequired,
     opprettetDato: PT.string,
+    endretDato: PT.string,
+    lagtInnAv: PT.string,
     detaljer: PT.object,
     beskrivelse: PT.string,
     avtalt: PT.bool,
@@ -37,15 +39,14 @@ export const etikett = PT.shape({
     visningsTekst: PT.string,
 });
 
-export const endringslogg = PT.shape({
-    endringsBeskrivelse: PT.string,
-    endretAv: PT.string,
-    endretDato: PT.number,
-});
-
 export const reducer = PT.shape({
     status: PT.string,
     data: PT.object,
+});
+
+export const reducerArray = PT.shape({
+    status: PT.string,
+    data: PT.arrayOf(PT.object),
 });
 
 export const oppfolgingStatus = PT.shape({
@@ -65,6 +66,12 @@ export const mal = PT.shape({
     mal: PT.string,
     endretAv: PT.string,
     dato: PT.string,
+});
+
+export const oppfolgingsPeriode = PT.shape({
+    id: PT.string,
+    fra: PT.string,
+    til: PT.string,
 });
 
 export const feil = PT.shape({

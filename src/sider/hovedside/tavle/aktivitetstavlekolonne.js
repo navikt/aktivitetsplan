@@ -17,6 +17,7 @@ import {
 } from '../../../constant';
 import history from '../../../history';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
+import { aktivitetFilter } from '../../../moduler/filter/filter-utils';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -183,11 +184,15 @@ KolonneFunction.propTypes = {
     doFlyttAktivitet: PT.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-    aktiviteter: state.data.aktiviteter.data.concat(
-        state.data.arenaAktiviteter.data
-    ),
-});
+const mapStateToProps = state => {
+    const stateData = state.data;
+    const aktiviteter = stateData.aktiviteter.data
+        .concat(stateData.arenaAktiviteter.data)
+        .filter(a => aktivitetFilter(a, state));
+    return {
+        aktiviteter,
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     doFlyttAktivitet: (aktivitet, status) =>

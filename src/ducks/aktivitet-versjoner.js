@@ -1,12 +1,13 @@
 import * as Api from './api';
+import { OPPDATER_OK, FLYTT_OK } from './aktiviteter';
 import { doThenDispatch, STATUS } from './utils';
 
 // Actions
-export const OK = 'endringslogg/OK';
-export const FEILET = 'endringslogg/FEILET';
-export const PENDING = 'endringslogg/PENDING';
+export const OK = 'versjoner/OK';
+export const FEILET = 'versjoner/FEILET';
+export const PENDING = 'versjoner/PENDING';
 
-export const FJERN = 'endringslogg/fjern';
+export const FJERN = 'versjoner/fjern';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
@@ -25,6 +26,12 @@ export default function reducer(state = initalState, action) {
             };
         case FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
+        case OPPDATER_OK:
+        case FLYTT_OK:
+            if (state.status === STATUS.NOT_STARTED) {
+                return state;
+            }
+            return { ...state, data: [action.data, ...state.data] };
         case OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case FJERN:
@@ -35,15 +42,15 @@ export default function reducer(state = initalState, action) {
 }
 
 // Action creator
-export function hentEndringsloggForAktivtet(aktivitet) {
-    return doThenDispatch(() => Api.hentEndringsloggTilAktivitet(aktivitet), {
+export function hentVersjonerForAktivtet(aktivitet) {
+    return doThenDispatch(() => Api.hentVersjonerTilAktivitet(aktivitet), {
         OK,
         FEILET,
         PENDING,
     });
 }
 
-export function fjernEndringsLogg() {
+export function fjernVersjoner() {
     return dispatch => {
         dispatch({ type: FJERN });
     };

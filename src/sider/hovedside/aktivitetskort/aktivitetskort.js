@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
+import { connect } from 'react-redux';
+import { findDOMNode } from 'react-dom';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
@@ -32,61 +34,91 @@ function collect(connector, monitor) {
     };
 }
 
-function AktivitetsKort({ aktivitet, isDragging, connectDragSource }) {
-    const arenaAktivitet = [
-        TILTAK_AKTIVITET_TYPE,
-        GRUPPE_AKTIVITET_TYPE,
-        UTDANNING_AKTIVITET_TYPE,
-    ].includes(aktivitet.type);
-    const erFlyttbar =
-        !aktivitet.nesteStatus &&
-        ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) &&
-        !arenaAktivitet;
-    const aktivitetsKort = (
-        <article style={{ opacity: isDragging ? 0.4 : 1 }}>
-            <Lenke
-                href={aktivitetRoute(aktivitet.id)}
-                className={classNames(
-                    'aktivitetskort',
-                    erFlyttbar && 'aktivitetskort--flyttbar'
-                )}
-                brukLenkestyling={false}
-            >
-                <Undertekst tag="p" className="aktivitetskort__type">
-                    <FormattedMessage
-                        id={`aktivitetskort.type.${aktivitet.type}`.toLowerCase()}
-                    />
-                </Undertekst>
-                <Element tag="h1" className="aktivitetskort__tittel">
-                    {aktivitet.tittel}
-                </Element>
-                <Normaltekst className="aktivitetskort__dato">
-                    {[
-                        formaterDato(aktivitet.fraDato),
-                        formaterDato(aktivitet.tilDato),
-                    ]
-                        .filter(d => d)
-                        .join(' - ')}
-                </Normaltekst>
-                <VisibleIfDiv
-                    visible={aktivitet.type === SOKEAVTALE_AKTIVITET_TYPE}
-                >
-                    <FormattedMessage id="aktivitetskort.antall-label" />
-                    &nbsp;
-                    {aktivitet.antall}
-                </VisibleIfDiv>
-                <AktivitetskortTillegg aktivitet={aktivitet} />
-            </Lenke>
-        </article>
-    );
+class AktivitetsKort extends Component {
+    componentDidUpdate() {
+        const { forrigeAktiveAktivitetId, aktivitet } = this.props;
+        if (
+            forrigeAktiveAktivitetId &&
+            forrigeAktiveAktivitetId === aktivitet.id
+        ) {
+            findDOMNode(this.aktivitetskortSomSkalFaFokusNarLukkes).focus(); // eslint-disable-line react/no-find-dom-node
+        }
+    }
 
-    return erFlyttbar ? connectDragSource(aktivitetsKort) : aktivitetsKort;
+    render() {
+        const { aktivitet, isDragging, connectDragSource } = this.props;
+
+        const arenaAktivitet = [
+            TILTAK_AKTIVITET_TYPE,
+            GRUPPE_AKTIVITET_TYPE,
+            UTDANNING_AKTIVITET_TYPE,
+        ].includes(aktivitet.type);
+        const erFlyttbar =
+            !aktivitet.nesteStatus &&
+            ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) &&
+            !arenaAktivitet;
+        const aktivitetsKort = (
+            <article style={{ opacity: isDragging ? 0.4 : 1 }}>
+                <Lenke
+                    href={aktivitetRoute(aktivitet.id)}
+                    className={classNames(
+                        'aktivitetskort',
+                        erFlyttbar && 'aktivitetskort--flyttbar'
+                    )}
+                    brukLenkestyling={false}
+                    focusRef={aktivitetskort => {
+                        this.aktivitetskortSomSkalFaFokusNarLukkes = aktivitetskort;
+                    }}
+                >
+                    <Undertekst tag="p" className="aktivitetskort__type">
+                        <FormattedMessage
+                            id={`aktivitetskort.type.${aktivitet.type}`.toLowerCase()}
+                        />
+                    </Undertekst>
+                    <Element tag="h1" className="aktivitetskort__tittel">
+                        {aktivitet.tittel}
+                    </Element>
+                    <Normaltekst className="aktivitetskort__dato">
+                        {[
+                            formaterDato(aktivitet.fraDato),
+                            formaterDato(aktivitet.tilDato),
+                        ]
+                            .filter(d => d)
+                            .join(' - ')}
+                    </Normaltekst>
+                    <VisibleIfDiv
+                        visible={aktivitet.type === SOKEAVTALE_AKTIVITET_TYPE}
+                    >
+                        <FormattedMessage id="aktivitetskort.antall-label" />
+                        &nbsp;
+                        {aktivitet.antall}
+                    </VisibleIfDiv>
+                    <AktivitetskortTillegg aktivitet={aktivitet} />
+                </Lenke>
+            </article>
+        );
+
+        return erFlyttbar ? connectDragSource(aktivitetsKort) : aktivitetsKort;
+    }
 }
 
 AktivitetsKort.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     isDragging: PT.bool.isRequired,
     connectDragSource: PT.func.isRequired,
+    forrigeAktiveAktivitetId: PT.string,
 };
 
-export default DragSource('AktivitetsKort', dndSpec, collect)(AktivitetsKort);
+AktivitetsKort.defaultProps = {
+    forrigeAktiveAktivitetId: undefined,
+};
+
+const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
+    AktivitetsKort
+);
+
+const mapStateToProps = state => ({
+    forrigeAktiveAktivitetId: state.data.aktiviteter.forrigeAktiveAktivitetId,
+});
+
+export default connect(mapStateToProps)(dragbartAktivitetskort);

@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { ToggleGruppe, ToggleKnapp } from 'nav-frontend-toggle';
 import * as AppPT from '../../proptypes';
 import { autobind } from '../../utils';
-import EndringsloggForAktivitet from './endringslogg-for-aktivitet';
+import VersjonerForAktivitet from './versjoner-for-aktivitet';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import NyHenvendelse from '../../dialog/ny-henvendelse';
 import Henvendelser from '../../dialog/henvendelser';
@@ -95,7 +95,7 @@ class UnderelementerForAktivitet extends Component {
                     </ToggleKnapp>
                 </ToggleGruppe>
 
-                <EndringsloggForAktivitet
+                <VersjonerForAktivitet
                     visible={visHistorikk}
                     aktivitet={aktivitet}
                     className="underelementer-aktivitet__historikkvisning"
@@ -146,7 +146,7 @@ const mapStateToProps = (state, props) => {
     return {
         dialog,
         antallUlesteHenvendelser,
-        endringslogg: stateData.endringslogg.data,
+        versjoner: stateData.versjoner.data,
         underOppfolging: !!stateData.oppfolgingStatus.data.underOppfolging,
     };
 };

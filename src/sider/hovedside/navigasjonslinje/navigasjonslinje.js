@@ -9,6 +9,7 @@ import Feature from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
 import { hentOppfolgingStatus } from '../../../ducks/oppfolging-status';
+import { dialogFilter } from '../../../moduler/filter/filter-utils';
 import visibleIfHOC from '../../../hocs/visible-if';
 
 const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
@@ -77,7 +78,9 @@ Navigasjonslinje.propTypes = {
 const mapStateToProps = state => {
     const dialog = state.data.dialog.data;
     return {
-        antallUlesteDialoger: dialog.filter(d => !d.lest).length,
+        antallUlesteDialoger: dialog
+            .filter(d => !d.lest)
+            .filter(d => dialogFilter(d, state)).length,
         underOppfolging: !!state.data.oppfolgingStatus.data.underOppfolging,
     };
 };
