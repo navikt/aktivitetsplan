@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../../proptypes';
-import { formaterDatoKortManed } from '../../utils';
-import Dato from '../../felles-komponenter/dato';
+import { formaterDatoKortManed, formaterDatoDatoEllerTidSiden } from '../../utils';
 import BrukerAvhengigTekst from '../../felles-komponenter/brukeravhengigtekst';
 import {
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
@@ -53,16 +53,16 @@ function VersjonInnslag({ versjon, prevVersjon }) {
     }
 
     return (
-        <p className="versjon-for-aktivitet__innslag">
-            <strong>
+        <div className="versjon-for-aktivitet-innslag">
+            <Element className="versjon-for-aktivitet-innslag__identitet">
                 <BrukerAvhengigTekst id={`lagtInnAv.${versjon.lagtInnAv}`} />
                 &nbsp;
-            </strong>
+            </Element>
             {endringsTekst()}
-            <Dato className="versjons-dato">
-                {versjon.endretDato}
-            </Dato>
-        </p>
+            <Normaltekst>
+                {formaterDatoDatoEllerTidSiden(versjon.endretDato)}
+            </Normaltekst>
+        </div>
     );
 }
 

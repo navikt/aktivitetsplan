@@ -44,6 +44,11 @@ export const reducer = PT.shape({
     data: PT.object,
 });
 
+export const reducerArray = PT.shape({
+    status: PT.string,
+    data: PT.arrayOf(PT.object),
+});
+
 export const situasjon = PT.shape({
     status: PT.string,
     data: PT.object,
