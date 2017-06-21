@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { Undertittel } from 'nav-frontend-typografi';
 import * as AppPT from '../../proptypes';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import { autobind } from '../../utils';
@@ -63,9 +64,9 @@ class OppfolgingsperiodeHistorikk extends Component {
                 className="spinner"
             >
                 <section className="oppfolgingperiode__historikk">
-                    <h3>
+                    <Undertittel>
                         <FormattedMessage id="innstillinger.oppfolginghistorikk.tittel" />
-                    </h3>
+                    </Undertittel>
                     {forstePeriode ||
                         <FormattedMessage id="innstillinger.oppfolginghistorikk.ingenhistorikk" />}
                     <VisibleIfDiv

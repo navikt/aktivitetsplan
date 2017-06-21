@@ -3,9 +3,9 @@ import { doThenDispatch, STATUS } from './utils';
 import { storeForbokstaver } from '../utils';
 
 // Actions
-export const HENTER_VEILEDER = 'veileder/hent';
-export const HENTET_VEILEDER = 'veileder/hent/ok';
-export const HENTING_AV_VEILEDER_FEILET = 'veileder/hent/fail';
+export const HENTER_VEILEDER_OK = 'veileder/henter/ok';
+export const HENTER_VEILEDER_PENDING = 'veileder/henter/pending';
+export const HENTER_VEILEDER_ERROR = 'veileder/henter/error';
 
 const initalState = {
     data: {},
@@ -25,9 +25,9 @@ function mergeState(state, data) {
 export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
-        case HENTET_VEILEDER:
+        case HENTER_VEILEDER_OK:
             return mergeState(state, data);
-        case HENTING_AV_VEILEDER_FEILET:
+        case HENTER_VEILEDER_ERROR:
             return { ...state, status: STATUS.ERROR };
         default:
             return state;
@@ -40,9 +40,9 @@ export function hentVeileder(veilederId) {
         const cached = getState().data.veiledere.data[veilederId];
         if (!cached) {
             doThenDispatch(() => Api.hentVeileder(veilederId), {
-                OK: HENTET_VEILEDER,
-                FEILET: HENTING_AV_VEILEDER_FEILET,
-                PENDING: HENTER_VEILEDER,
+                OK: HENTER_VEILEDER_OK,
+                PENDING: HENTER_VEILEDER_PENDING,
+                FEILET: HENTER_VEILEDER_ERROR,
             })(dispatch);
         }
     };

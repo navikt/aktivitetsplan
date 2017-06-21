@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Dato from '../../felles-komponenter/dato';
 import { hentVeileder } from './../../ducks/veileder';
 
@@ -15,20 +16,20 @@ class OppfolgingPeriodeInnslag extends Component {
         const veiledere = this.props.veiledere;
         return (
             <p className="oppfolgingperiode__innslag">
-                <b>
+                <Element>
                     <FormattedMessage
                         id="innstillinger.oppfolginghistorikk.beskrivelse"
                         values={{
                             veileder: `${veiledere[veileder] || ''} (${veileder})`,
                         }}
                     />
-                </b>
-                <br />
-                <FormattedMessage
-                    id="innstillinger.oppfolginghistorikk.begrunnelse"
-                    values={{ begrunnelse }}
-                />
-                <br />
+                </Element>
+                <Normaltekst>
+                    <FormattedMessage
+                        id="innstillinger.oppfolginghistorikk.begrunnelse"
+                        values={{ begrunnelse }}
+                    />
+                </Normaltekst>
                 <Dato>
                     {sluttDato}
                 </Dato>
