@@ -3,12 +3,15 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import AvsluttOppfolgingProsess from './avslutt-oppfolging-prosess';
 import StartOppfolgingProsess from './start-oppfolging-prosess';
+import OppfolgingsperiodeHistorikk from './oppfolgingsperiode-historikk';
 
 function Prosesser({ underOppfolging, kanStarte }) {
     return (
         <div>
             <AvsluttOppfolgingProsess hidden={!underOppfolging} />
             <StartOppfolgingProsess hidden={!kanStarte} />
+            <hr className="innstillinger__delelinje" />
+            <OppfolgingsperiodeHistorikk />
         </div>
     );
 }

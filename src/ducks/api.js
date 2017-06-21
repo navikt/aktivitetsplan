@@ -4,11 +4,16 @@ import {
     AKTIVITET_PROXY_BASE_URL,
     SITUASJON_PROXY_BASE_URL,
     PERSON_BASE_URL,
+    VEILEDER_BASE_URL,
 } from '~config'; // eslint-disable-line
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
 export function hentLedetekster() {
     return fetchToJson(`${API_BASE_URL}/tekster`);
+}
+
+export function hentVeileder(veilederId) {
+    return fetchToJson(`${VEILEDER_BASE_URL}/veileder/${veilederId}`);
 }
 
 export function hentPerson(fnr) {
