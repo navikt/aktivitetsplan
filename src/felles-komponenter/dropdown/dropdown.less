@@ -1,0 +1,90 @@
+@import '../../variables';
+
+// TODO Denne fila burde samkjører med nav-frontend-skjema-style sin select-styling
+.chevronline-mixin() {
+  pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
+  content: '';
+  background: @navTekst;
+  height: 2px;
+  width: 10px;
+  border-radius: 10px;
+  right: 0.75rem;
+  top: 1.30rem;
+  position: absolute;
+}
+
+.dropdown {
+  position: relative;
+  margin-bottom: 0.5rem;
+
+  &__btnwrapper {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+
+    &:before {
+      .chevronline-mixin();
+      transform: translateX(3px) rotate(-45deg);
+    }
+
+    &:after {
+      .chevronline-mixin();
+      transform: translateX(-3px) rotate(45deg);
+    }
+  }
+
+  &__btn {
+    text-align: left;
+    width: 100%;
+    padding: 0.45rem 1.5em 0.45rem 0.45rem;
+    background: @hvit;
+    border: 1px solid @ikonGraa;
+    border-radius: @border-radius-small;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px @orangeFocus;
+    }
+  }
+
+  &__innhold {
+    position: absolute;
+    z-index: 110;
+    border: 1px solid @ikonGraa;
+    top: ~'calc(100% - 1px)';
+    background-color: @hvit;
+    border-radius: 0 0 @border-radius-small @border-radius-small;
+    width: 100%;
+  }
+
+  &--apen {
+    margin-bottom: -0.05rem;
+
+    .dropdown__btnwrapper {
+      &:after,
+      &:before {
+        z-index: 200;
+      }
+    }
+
+    .dropdown__btn {
+      position: relative;
+      z-index: 120;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom: 1px solid @hvit;
+      padding-bottom: 1rem;
+    }
+  }
+
+  &--alignright {
+    .dropdown__innhold {
+      right: 0;
+      border-radius: @border-radius-small 0 @border-radius-small @border-radius-small;
+    }
+  }
+
+  .knapperad {
+    padding: 0;
+  }
+}

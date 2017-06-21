@@ -50,4 +50,4 @@ const mapStateToProps = (state, props) => ({
     },
 });
 
-export default connect(mapStateToProps, null)(OppdaterAktivitetStatus);
+export default connect(mapStateToProps)(OppdaterAktivitetStatus);

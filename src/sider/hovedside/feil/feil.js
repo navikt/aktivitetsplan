@@ -11,7 +11,33 @@ import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 
 const VisibleAlertStripeAdvarsel = visibleIfHOC(AlertStripeAdvarsel);
 
+function Detaljer({ feilId, detaljertType, feilMelding, stackTrace }) {
+    return (
+        <div>
+            <div>{feilId}</div>
+            <div>{detaljertType}</div>
+            <div>{feilMelding}</div>
+            <pre>{stackTrace}</pre>
+        </div>
+    );
+}
+
+Detaljer.defaultProps = {
+    feilId: null,
+    detaljertType: null,
+    feilMelding: null,
+    stackTrace: null,
+};
+
+Detaljer.propTypes = {
+    feilId: PT.string,
+    detaljertType: PT.string,
+    feilMelding: PT.string,
+    stackTrace: PT.string,
+};
+
 function Feil({ sisteFeil, sisteFeilSkjult, skjulFeil }) {
+    const detaljer = (sisteFeil && sisteFeil.detaljer) || {};
     return (
         <VisibleAlertStripeAdvarsel
             visible={!!sisteFeil && !sisteFeilSkjult}
@@ -22,10 +48,10 @@ function Feil({ sisteFeil, sisteFeilSkjult, skjulFeil }) {
                 Feil i aktivitetsplan - {sisteFeil && sisteFeil.type}
             </Undertittel>
             <VisibleIfDiv
-                visible={sisteFeil && sisteFeil.detaljer}
+                visible={!!sisteFeil && !!sisteFeil.detaljer}
                 className="feil__detaljer"
             >
-                <pre>{sisteFeil && sisteFeil.detaljer}</pre>
+                <Detaljer feilId={sisteFeil && sisteFeil.id} {...detaljer} />
             </VisibleIfDiv>
         </VisibleAlertStripeAdvarsel>
     );
