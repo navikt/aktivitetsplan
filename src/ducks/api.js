@@ -28,6 +28,10 @@ export function hentOppfolgingStatus() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon`);
 }
 
+export function startOppfolgin1g() {
+    return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/startOppfolging`);
+}
+
 export function godtaVilkar(hash) {
     return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/godta/${hash}`);
 }

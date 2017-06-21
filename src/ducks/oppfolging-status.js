@@ -14,6 +14,10 @@ export const GODTA_OK = 'oppfolgingStatus/godta/OK';
 export const GODTA_FEILET = 'oppfolgingStatus/godta/FEILET';
 export const GODTA_PENDING = 'oppfolgingStatus/godta/PENDING';
 
+export const START_OK = 'oppfolgingStatus/start/OK';
+export const START_FEILET = 'oppfolgingStatus/start/FEILET';
+export const START_PENDING = 'oppfolgingStatus/start/PENDING';
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     brukerHarAvslatt: false,
@@ -24,6 +28,7 @@ const initalState = {
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case PENDING:
+        case START_PENDING:
             return {
                 ...state,
                 status: state.status === STATUS.NOT_STARTED
@@ -31,8 +36,10 @@ export default function reducer(state = initalState, action) {
                     : STATUS.RELOADING,
             };
         case FEILET:
+        case START_FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };
         case OK:
+        case START_OK:
             return { ...state, status: STATUS.OK, data: action.data };
         case GODTA_OK:
             return {
@@ -93,5 +100,12 @@ export function avslaVilkar(hash) {
         OK: AVSLA_OK,
         FEILET: AVSLA_FEILET,
         PENDING: AVSLA_PENDING,
+    });
+}
+export function startOppfolging() {
+    return doThenDispatch(() => Api.startOppfolgin1g(), {
+        OK: START_OK,
+        FEILET: START_FEILET,
+        PENDING: START_PENDING,
     });
 }

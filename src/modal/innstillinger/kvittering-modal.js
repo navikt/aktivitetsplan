@@ -9,7 +9,7 @@ import ModalHeader from '../modal-header';
 import history from '../../history';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
-function KvitteringModal({ motpart, tekstId }) {
+function KvitteringModal({ motpart, alertTekstId, overskriftTekstId }) {
     const { navn } = motpart.data;
     return (
         <Modal
@@ -30,11 +30,11 @@ function KvitteringModal({ motpart, tekstId }) {
                 </Innholdslaster>
                 <div className="innstillinger__innhold blokk-xs">
                     <Systemtittel>
-                        <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.overskrift" />
+                        <FormattedMessage id={overskriftTekstId} />
                     </Systemtittel>
                 </div>
                 <AlertStripeSuksess className="blokk-m">
-                    <FormattedMessage id={tekstId} values={{ navn }} />
+                    <FormattedMessage id={alertTekstId} values={{ navn }} />
                 </AlertStripeSuksess>
             </article>
         </Modal>
@@ -52,7 +52,8 @@ KvitteringModal.propTypes = {
             navn: PT.string,
         }),
     }),
-    tekstId: PT.string.isRequired,
+    alertTekstId: PT.string.isRequired,
+    overskriftTekstId: PT.string.isRequired,
 };
 
 const mapStateToProps = state => ({
