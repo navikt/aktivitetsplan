@@ -15,7 +15,7 @@ class OppfolgingPeriodeInnslag extends Component {
         const { veileder, begrunnelse, sluttDato } = this.props.periode;
         const veiledere = this.props.veiledere;
         return (
-            <p className="oppfolgingperiode__innslag">
+            <div className="oppfolgingperiode__innslag">
                 <Element>
                     <FormattedMessage
                         id="innstillinger.oppfolginghistorikk.beskrivelse"
@@ -33,7 +33,7 @@ class OppfolgingPeriodeInnslag extends Component {
                 <Dato>
                     {sluttDato}
                 </Dato>
-            </p>
+            </div>
         );
     }
 }
