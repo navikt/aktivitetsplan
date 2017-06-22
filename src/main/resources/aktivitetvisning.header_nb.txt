@@ -8,7 +8,7 @@ AVBRUTT { Avbrutt }
 EGEN { Egen }
 STILLING { Stilling }
 TILTAKSAKTIVITET { Tiltak }
-GRUPPEAKTIVITET { Gruppaktivitet }
+GRUPPEAKTIVITET { Gruppeaktivitet }
 UTDANNINGSAKTIVITET { Utdanning }
 SOKEAVTALE { Avtale med NAV }
 }
