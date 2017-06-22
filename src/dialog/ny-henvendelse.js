@@ -13,8 +13,7 @@ import Input from '../modal/skjema/input/input';
 import visibleIf from '../hocs/visible-if';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
-const TEKST_MAKS_LENGDE = 2000;
-const BESKRIVELSE_MAKS_LENGDE = 5000;
+const TEKST_MAKS_LENGDE = 5000;
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeSuksessSolid);
 
@@ -36,7 +35,7 @@ function NyHenvendelseForm({
             <Textarea
                 feltNavn="tekst"
                 placeholder="Skriv her"
-                maxLength={BESKRIVELSE_MAKS_LENGDE}
+                maxLength={TEKST_MAKS_LENGDE}
                 disabled={oppretter}
                 visTellerFra={1000}
             />
