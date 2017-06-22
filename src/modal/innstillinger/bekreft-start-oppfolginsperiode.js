@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { startOppfolging } from '../../ducks/oppfolging-status';
+import { startOppfolging } from '../../ducks/situasjon';
 import ModalFooter from '../modal-footer';
 import history from '../../history';
 

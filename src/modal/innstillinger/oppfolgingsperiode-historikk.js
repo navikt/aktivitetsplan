@@ -23,8 +23,8 @@ class OppfolgingsperiodeHistorikk extends Component {
     }
 
     render() {
-        const { oppfolgingStatus } = this.props;
-        const oppfolgingsPerioder = oppfolgingStatus.data
+        const { situasjon } = this.props;
+        const oppfolgingsPerioder = situasjon.data
             .oppfolgingsPerioder || [];
         const oppfolgingsPerioderSorted = [
             ...oppfolgingsPerioder,
@@ -59,7 +59,7 @@ class OppfolgingsperiodeHistorikk extends Component {
 
         return (
             <Innholdslaster
-                avhengigheter={[oppfolgingStatus]}
+                avhengigheter={[situasjon]}
                 spinnerStorrelse="m"
                 className="spinner"
             >
@@ -81,11 +81,11 @@ class OppfolgingsperiodeHistorikk extends Component {
 }
 
 OppfolgingsperiodeHistorikk.propTypes = {
-    oppfolgingStatus: AppPT.reducer.isRequired,
+    situasjon: AppPT.reducer.isRequired,
 };
 
 const mapStateToProps = state => ({
-    oppfolgingStatus: state.data.oppfolgingStatus,
+    situasjon: state.data.situasjon,
 });
 
 export default connect(mapStateToProps)(OppfolgingsperiodeHistorikk);

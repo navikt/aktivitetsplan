@@ -49,7 +49,7 @@ export const reducerArray = PT.shape({
     data: PT.arrayOf(PT.object),
 });
 
-export const oppfolgingStatus = PT.shape({
+export const situasjon = PT.shape({
     status: PT.string,
     data: PT.object,
 });

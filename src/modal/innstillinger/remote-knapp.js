@@ -29,10 +29,13 @@ SubmitKnapp.defaultProps = {
     mini: false,
 };
 
-const ResetKnapp = ({ className, dispatch, formNavn, children, ...rest }) => (
+const ResetKnapp = ({ className, dispatch, formNavn, children, onClick, ...rest }) => (
     <Knapp
         className={className}
-        onClick={() => dispatch(reset(formNavn))}
+        onClick={() => {
+            dispatch(reset(formNavn));
+            onClick();
+        }}
         {...rest}
     >
         {children}
@@ -45,6 +48,7 @@ ResetKnapp.propTypes = {
     formNavn: PT.string.isRequired,
     children: PT.node.isRequired,
     mini: PT.bool,
+    onClick: PT.func,
 };
 
 ResetKnapp.defaultProps = {
@@ -52,6 +56,7 @@ ResetKnapp.defaultProps = {
     dispatch: undefined,
     formNavn: undefined,
     mini: false,
+    onClick: () => {},
 };
 
 export const RemoteSubmitKnapp = connect()(SubmitKnapp);
