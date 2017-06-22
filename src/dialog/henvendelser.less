@@ -1,7 +1,16 @@
 @import '../variables';
 
 .ny-henvendelse-form {
-  .blokk-m();
+  .blokk-xs();
+
+  .textarea--medMeta,
+  .input--fullbredde {
+    max-width: 34rem;
+  }
+
+  .knapp--hoved {
+    margin-top: 0.5rem;
+  }
 }
 
 .dialog-henveldelser {
@@ -49,9 +58,13 @@
   .blokk-s();
   display: flex;
   flex-direction: column;
-  flex: 0 0 270px;
+  flex: 0 0 27rem;
   box-shadow: 0 2px 4px 0 @navGra20;
   padding: 0.5rem 1rem 1rem;
+}
+
+.snakkeboble-panel {
+  flex: 0 0 27rem;
 }
 
 .hoyrejustert-tekst {

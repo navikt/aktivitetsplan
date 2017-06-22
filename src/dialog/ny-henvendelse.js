@@ -14,6 +14,7 @@ import visibleIf from '../hocs/visible-if';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 2000;
+const BESKRIVELSE_MAKS_LENGDE = 5000;
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeSuksessSolid);
 
@@ -35,9 +36,9 @@ function NyHenvendelseForm({
             <Textarea
                 feltNavn="tekst"
                 placeholder="Skriv her"
-                maxLength={TEKST_MAKS_LENGDE}
+                maxLength={BESKRIVELSE_MAKS_LENGDE}
                 disabled={oppretter}
-                visTellerFra={500}
+                visTellerFra={1000}
             />
             <Hovedknapp type="hoved" spinner={oppretter} disabled={oppretter}>
                 <FormattedMessage id="dialog.lag-ny-dialog" />
