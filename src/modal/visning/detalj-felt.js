@@ -1,12 +1,12 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Element } from 'nav-frontend-typografi';
+import { EtikettLiten } from 'nav-frontend-typografi';
 import visibleIfHOC from '../../hocs/visible-if';
 
 function DetaljFelt({ tittel, children }) {
     return (
         <div className="aktivitetsdetaljer__felt detaljfelt">
-            <Element className="detaljfelt__tittel">{tittel}</Element>
+            <EtikettLiten className="detaljfelt__tittel">{tittel}</EtikettLiten>
             {children}
         </div>
     );
