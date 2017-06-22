@@ -53,18 +53,20 @@ class AvsluttOppfolgingProsess extends Component {
                         !this.state.kanAvslutte &&
                         <AlertStripeInfoSolid>
                             <ul>
+                                {avslutningStatus.underOppfolging &&
                                 <li>
-                                    {avslutningStatus.underOppfolging &&
-                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging" />}
-                                </li>
+                                    <FormattedMessage
+                                        id="innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging" />
+                                </li>}
+                                {avslutningStatus.harYtelser &&
                                 <li>
-                                    {avslutningStatus.harYtelser &&
-                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser" />}
-                                </li>
+                                    <FormattedMessage
+                                        id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser" />
+                                </li>}
+                                {avslutningStatus.harTiltak &&
                                 <li>
-                                    {avslutningStatus.harTiltak &&
-                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak" />}
-                                </li>
+                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak" />
+                                </li>}
                             </ul>
                         </AlertStripeInfoSolid>}
                 </div>

@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import ModalFooter from '../modal-footer';
 import { avsluttOppfolging } from '../../ducks/situasjon';
 import history from '../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
+import { RemoteResetKnapp } from './remote-knapp';
 
 function BekreftAvslutning({ doAvsluttOppfolging, begrunnelse, navn }) {
     return (
@@ -34,9 +35,13 @@ function BekreftAvslutning({ doAvsluttOppfolging, begrunnelse, navn }) {
                 >
                     <FormattedMessage id="innstillinger.modal.avslutt.bekreft.knapp.bekreft" />
                 </Hovedknapp>
-                <Knapp mini onClick={() => history.push('/')}>
+                <RemoteResetKnapp
+                    formNavn={AVSLUTT_FORM_NAME}
+                    mini
+                    onClick={() => history.push('/')}
+                >
                     <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.knapp.avbryt" />
-                </Knapp>
+                </RemoteResetKnapp>
             </ModalFooter>
         </div>
     );
