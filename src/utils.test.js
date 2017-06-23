@@ -1,3 +1,4 @@
+/* eslint no-unused-expressions:0 */
 /* eslint-env mocha, browser */
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
@@ -80,7 +81,7 @@ describe('app utils', () => {
             const throttledFn = Utils.throttle(spy);
             throttledFn();
 
-            expect(spy).to.be.called; // eslint-disable-line  no-unused-expressions
+            expect(spy).to.be.called;
         });
 
         it('Skal kunne deffinere egen threshold', () => {
@@ -88,7 +89,7 @@ describe('app utils', () => {
             const throttledFn = Utils.throttle(spy, 500);
             throttledFn();
 
-            expect(spy).to.be.called; // eslint-disable-line  no-unused-expressions
+            expect(spy).to.be.called;
         });
     });
 
@@ -215,17 +216,53 @@ describe('app utils', () => {
         });
     });
 
-    describe('erGyldigFormattertDato', () => {
-        it('Tolker formatterte datoer riktig', () => {
-            expect(Utils.erGyldigFormattertDato('13.02.2014')).to.equal(true);
-            expect(Utils.erGyldigFormattertDato('2014.02.13')).to.equal(false);
-            expect(Utils.erGyldigFormattertDato('2014-02-13')).to.equal(false);
+    describe('formaterDatoTid', () => {
+        it('Formater datoer riktig', () => {
+            expect(Utils.formaterDatoTid(null)).to.not.exist;
+            expect(Utils.formaterDatoTid(undefined)).to.not.exist;
+            expect(Utils.formaterDatoTid('2014-02-13T14:23:21.123Z')).to.equal(
+                '13.02.2014 15:23'
+            ); // NB zulu-time != paris-time
+        });
+    });
+
+    describe('formaterDato', () => {
+        it('Formater datoer riktig', () => {
+            expect(Utils.formaterDato(null)).to.not.exist;
+            expect(Utils.formaterDato(undefined)).to.not.exist;
+            expect(Utils.formaterDato('2014-02-13T14:23:21.123Z')).to.equal(
+                '13. feb 2014'
+            );
+        });
+    });
+
+    describe('formaterDatoKortManed', () => {
+        it('Formater datoer riktig', () => {
+            expect(Utils.formaterDatoKortManed(null)).to.not.exist;
+            expect(Utils.formaterDatoKortManed(undefined)).to.not.exist;
             expect(
-                Utils.erGyldigFormattertDato('2014-02-13T23:00:00.000Z')
-            ).to.equal(false);
-            expect(Utils.erGyldigFormattertDato('')).to.equal(false);
-            expect(Utils.erGyldigFormattertDato(null)).to.equal(false);
-            expect(Utils.erGyldigFormattertDato(undefined)).to.equal(false);
+                Utils.formaterDatoKortManed('2014-02-13T14:23:21.123Z')
+            ).to.equal('13. feb 2014'); // NB zulu-time != paris-time
+        });
+    });
+
+    describe('formaterDatoKortManedTid', () => {
+        it('Formater datoer riktig', () => {
+            expect(Utils.formaterDatoKortManedTid(null)).to.not.exist;
+            expect(Utils.formaterDatoKortManedTid(undefined)).to.not.exist;
+            expect(
+                Utils.formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')
+            ).to.equal('13. feb 2014 kl 15:23'); // NB zulu-time != paris-time
+        });
+    });
+
+    describe('formaterTid', () => {
+        it('Formater datoer riktig', () => {
+            expect(Utils.formaterTid(null)).to.not.exist;
+            expect(Utils.formaterTid(undefined)).to.not.exist;
+            expect(Utils.formaterTid('2014-02-13T14:23:21.123Z')).to.equal(
+                '15:23'
+            ); // NB zulu-time != paris-time
         });
     });
 
