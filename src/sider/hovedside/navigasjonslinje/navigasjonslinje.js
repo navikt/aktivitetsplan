@@ -8,8 +8,8 @@ import Lenke from '../../../felles-komponenter/utils/lenke';
 import Feature from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
-import { hentOppfolgingStatus } from '../../../ducks/oppfolging-status';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
+import { hentSituasjon } from '../../../ducks/situasjon';
 import visibleIfHOC from '../../../hocs/visible-if';
 
 const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
@@ -36,7 +36,7 @@ NavigasjonsElement.propTypes = {
 class Navigasjonslinje extends Component {
     componentDidMount() {
         this.props.doHentDialog();
-        this.props.doHentOppfolgingStatus();
+        this.props.doHentSituasjon();
     }
 
     render() {
@@ -48,7 +48,7 @@ class Navigasjonslinje extends Component {
                     tekstId="navigasjon.dialog"
                     visible={underOppfolging}
                 >
-                    <TallAlert visible={antallUlesteDialoger > 0}>
+                    <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
                     </TallAlert>
                 </NavigasjonsElement>
@@ -70,7 +70,7 @@ class Navigasjonslinje extends Component {
 
 Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
-    doHentOppfolgingStatus: PT.func.isRequired,
+    doHentSituasjon: PT.func.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
     underOppfolging: PT.bool.isRequired,
 };
@@ -81,13 +81,13 @@ const mapStateToProps = state => {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)
             .filter(d => dialogFilter(d, state)).length,
-        underOppfolging: !!state.data.oppfolgingStatus.data.underOppfolging,
+        underOppfolging: !!state.data.situasjon.data.underOppfolging,
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     doHentDialog: () => dispatch(hentDialog()),
-    doHentOppfolgingStatus: () => dispatch(hentOppfolgingStatus()),
+    doHentSituasjon: () => dispatch(hentSituasjon()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigasjonslinje);

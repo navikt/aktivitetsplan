@@ -25,13 +25,13 @@ class Varslinger extends Component {
         const {
             identitetReducer,
             erBruker,
-            oppfolgingStatusReducer,
+            situasjonReducer,
             underOppfolging,
             vilkarMaBesvares,
         } = this.props;
         return (
             <Innholdslaster
-                avhengigheter={[oppfolgingStatusReducer, identitetReducer]}
+                avhengigheter={[situasjonReducer, identitetReducer]}
             >
                 <HiddenIfDiv hidden={erBruker}>
                     <Varsling
@@ -51,7 +51,7 @@ class Varslinger extends Component {
 Varslinger.propTypes = {
     identitetReducer: AppPT.reducer.isRequired,
     erBruker: PT.bool.isRequired,
-    oppfolgingStatusReducer: AppPT.reducer.isRequired,
+    situasjonReducer: AppPT.reducer.isRequired,
     underOppfolging: PT.bool.isRequired,
     vilkarMaBesvares: PT.bool.isRequired,
     doHentIdentitet: PT.func.isRequired,
@@ -60,13 +60,13 @@ Varslinger.propTypes = {
 const mapStateToProps = state => {
     const stateData = state.data;
     const identitetReducer = stateData.identitet;
-    const oppfolgingStatusReducer = stateData.oppfolgingStatus;
-    const oppfoldingStatus = oppfolgingStatusReducer.data;
+    const situasjonReducer = stateData.situasjon;
+    const oppfoldingStatus = situasjonReducer.data;
     return {
         identitetReducer,
         erBruker: identitetReducer.data.erBruker,
 
-        oppfolgingStatusReducer,
+        situasjonReducer,
         vilkarMaBesvares: oppfoldingStatus.vilkarMaBesvares,
         underOppfolging: oppfoldingStatus.underOppfolging,
     };
