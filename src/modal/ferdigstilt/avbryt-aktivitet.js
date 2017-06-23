@@ -26,7 +26,7 @@ const AvbrytAktivitet = props => {
             }
             lagrer={props.aktiviteter.status !== STATUS.OK}
             onSubmit={beskrivelseForm => {
-                props.doAvsluttOppfolging(
+                props.lagreBegrunnelse(
                     valgtAktivitet,
                     beskrivelseForm.begrunnelse
                 );
@@ -39,7 +39,7 @@ const AvbrytAktivitet = props => {
         <VisAdvarsel
             headerTekst={<FormattedMessage id="advarsel.avbrutt.header" />}
             onSubmit={() => {
-                props.doAvsluttOppfolging(valgtAktivitet, null);
+                props.lagreBegrunnelse(valgtAktivitet, null);
                 history.goBack();
             }}
         />
@@ -58,11 +58,11 @@ AvbrytAktivitet.propTypes = {
         data: PT.arrayOf(AppPT.aktivitet),
     }).isRequired,
     params: PT.shape({ id: PT.string }).isRequired,
-    doAvsluttOppfolging: PT.func.isRequired,
+    lagreBegrunnelse: PT.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
-    doAvsluttOppfolging: (aktivitet, begrunnelse) =>
+    lagreBegrunnelse: (aktivitet, begrunnelse) =>
         dispatch(avbrytAktivitet(aktivitet, begrunnelse)),
 });
 
