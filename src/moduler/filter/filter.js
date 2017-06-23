@@ -216,7 +216,7 @@ function tidligsteHendelsesTidspunktMellom(fra, til, state) {
     const tidspunkter = stateData.aktiviteter.data
         .map(a => a.opprettetDato)
         .concat(stateData.dialog.data.map(d => d.opprettetDato));
-    return tidspunkter.filter(t => t > fra && t < til).sort()[0];
+    return tidspunkter.filter(t => t > fra && t < til).sort()[0] || til;
 }
 
 const mapStateToProps = state => {
