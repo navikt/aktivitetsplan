@@ -62,12 +62,7 @@ class Aktivitetvisning extends Component {
     }
 
     render() {
-        const {
-            params,
-            aktiviteter,
-            doSlettAktivitet,
-            oppfolgingStatus,
-        } = this.props;
+        const { params, aktiviteter, doSlettAktivitet, situasjon } = this.props;
         const { id } = params;
         const valgtAktivitet = aktiviteter.find(
             aktivitet => aktivitet.id === id
@@ -96,8 +91,8 @@ class Aktivitetvisning extends Component {
         }
         const tillatSletting =
             TILLAT_SLETTING &&
-            (!oppfolgingStatus.underOppfolging ||
-                moment(oppfolgingStatus.oppfolgingUtgang).isAfter(
+            (!situasjon.underOppfolging ||
+                moment(situasjon.oppfolgingUtgang).isAfter(
                     valgtAktivitet.opprettetDato
                 ));
 
@@ -252,7 +247,7 @@ Aktivitetvisning.propTypes = {
     doSlettAktivitet: PT.func.isRequired,
     doHentAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }),
-    oppfolgingStatus: AppPT.oppfolgingStatus.isRequired,
+    situasjon: AppPT.situasjon.isRequired,
     aktiviteter: PT.arrayOf(PT.object),
     doSettForrigeAktiveAktivitetId: PT.func.isRequired,
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
@@ -260,14 +255,14 @@ Aktivitetvisning.propTypes = {
 
 Aktivitetvisning.defaultProps = {
     params: undefined,
-    oppfolgingStatus: undefined,
+    situasjon: undefined,
     aktiviteter: undefined,
 };
 
 const mapStateToProps = state => {
     const aktivitetListe = state.data.aktiviteter.data || [];
     return {
-        oppfolgingStatus: state.data.oppfolgingStatus.data,
+        situasjon: state.data.situasjon.data,
         aktiviteter: aktivitetListe.concat(state.data.arenaAktiviteter.data),
     };
 };
