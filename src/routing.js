@@ -59,6 +59,7 @@ export default (
                         <KvitteringModal
                             alertTekstId="innstillinger.modal.avslutt.oppfolging.kvittering"
                             overskriftTekstId="innstillinger.modal.avslutt.oppfolging.overskrift"
+                            alertFeilTekst="innstillinger.modal.avslutt.oppfolging.kvittering.feil"
                         />
                     )}
                 />

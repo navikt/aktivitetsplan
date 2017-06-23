@@ -147,7 +147,7 @@ const mapStateToProps = (state, props) => {
         dialog,
         antallUlesteHenvendelser,
         versjoner: stateData.versjoner.data,
-        underOppfolging: !!stateData.oppfolgingStatus.data.underOppfolging,
+        underOppfolging: !!stateData.situasjon.data.underOppfolging,
     };
 };
 
