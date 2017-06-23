@@ -273,12 +273,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    doSlettAktivitet: aktivitet => slettAktivitet(aktivitet),
-    doHentAktivitet: aktivitetId => hentAktivitet(aktivitetId),
-    doSettForrigeAktiveAktivitetId: id =>
-        dispatch(settForrigeAktiveAktivitetId(id)),
-    doFjernForrigeAktiveAktivitetId: () =>
-        dispatch(fjernForrigeAktiveAktivitetId()),
+    doSlettAktivitet: aktivitet => dispatch(slettAktivitet(aktivitet)),
+    doHentAktivitet: aktivitetId => dispatch(hentAktivitet(aktivitetId)),
+    doSettForrigeAktiveAktivitetId: id => dispatch(settForrigeAktiveAktivitetId(id)),
+    doFjernForrigeAktiveAktivitetId: () => dispatch(fjernForrigeAktiveAktivitetId()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);
