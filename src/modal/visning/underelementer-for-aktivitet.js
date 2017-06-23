@@ -83,7 +83,7 @@ class UnderelementerForAktivitet extends Component {
                         visible={underOppfolging}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
-                        <TallAlert visible={antallUlesteHenvendelser > 0}>
+                        <TallAlert hidden={antallUlesteHenvendelser <= 0}>
                             {antallUlesteHenvendelser}
                         </TallAlert>
                     </VisibleToggleKnapp>

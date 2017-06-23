@@ -6,7 +6,9 @@ import * as AppPT from '../../../proptypes';
 import { AVTALT_MED_NAV } from '../../../constant';
 import visibleIfHOC from '../../../hocs/visible-if';
 import TallAlert from '../../../felles-komponenter/tall-alert';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import {
+    div as HiddenIfDiv,
+} from '../../../felles-komponenter/hidden-if/hidden-if';
 
 function AktivitetskortTillegg({
     aktivitet,
@@ -27,13 +29,14 @@ function AktivitetskortTillegg({
                     id={`etikett.${aktivitet.etikett}`}
                 />
             </div>
-            <VisibleIfDiv visible={antallHendvendelser > 0}>
-                <div className="aktivitetskort__henvendelser">
-                    <TallAlert visible={antallUlesteHenvendelser > 0}>
-                        {antallUlesteHenvendelser}
-                    </TallAlert>
-                </div>
-            </VisibleIfDiv>
+            <HiddenIfDiv
+                hidden={antallHendvendelser <= 0}
+                className="aktivitetskort__henvendelser"
+            >
+                <TallAlert hidden={antallUlesteHenvendelser <= 0}>
+                    {antallUlesteHenvendelser}
+                </TallAlert>
+            </HiddenIfDiv>
         </div>
     );
 }

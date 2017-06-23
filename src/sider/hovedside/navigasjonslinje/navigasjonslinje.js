@@ -48,7 +48,7 @@ class Navigasjonslinje extends Component {
                     tekstId="navigasjon.dialog"
                     visible={underOppfolging}
                 >
-                    <TallAlert visible={antallUlesteDialoger > 0}>
+                    <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
                     </TallAlert>
                 </NavigasjonsElement>
