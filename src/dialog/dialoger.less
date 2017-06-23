@@ -71,21 +71,21 @@
       width: calc(~'100% - 3rem');
     }
 
+    // fjerne lenkepanel sin hover-styling
+    &:hover {
+      cursor: auto;
+
+      .lenkepanel__heading {
+        text-decoration: none;
+      }
+    }
+
     &--valgt {
       border: 0.2rem solid @bla;
       padding: 0.8rem 0.8rem 0.8rem 2.8rem;
 
       .dialoger__prikk {
         left: 0.5rem;
-      }
-
-      // fjerne lenkepanel sin hover-styling
-      &:hover {
-        cursor: auto;
-
-        .lenkepanel__heading {
-          text-decoration: none;
-        }
       }
     }
   }
