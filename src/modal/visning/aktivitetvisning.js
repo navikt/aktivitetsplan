@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { Knapp } from 'nav-frontend-knapper';
+import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
@@ -201,12 +201,12 @@ class Aktivitetvisning extends Component {
                                 <VisibleIfDiv
                                     visible={tillattEndring && !arenaAktivitet}
                                 >
-                                    <Knapp
+                                    <Hovedknapp
                                         onClick={gaTilEndreAktivitet}
                                         className="knapp-liten modal-footer__knapp"
                                     >
                                         <FormattedMessage id="aktivitetvisning.endre-knapp" />
-                                    </Knapp>
+                                    </Hovedknapp>
                                 </VisibleIfDiv>
                             </div>
                             <hr className="aktivitetvisning__delelinje" />

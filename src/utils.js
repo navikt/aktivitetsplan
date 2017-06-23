@@ -184,33 +184,31 @@ moment.updateLocale('nb', {
     ],
 });
 
+function formatter(dato, format) {
+    if (dato) {
+        const datoVerdi = moment(dato);
+        return datoVerdi.isValid() ? datoVerdi.format(format) : undefined;
+    }
+}
+
 export function formaterDato(dato) {
-    const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? datoVerdi.format('Do MMM YYYY') : undefined;
+    return formatter(dato, 'Do MMM YYYY');
 }
 
 export function formaterDatoTid(dato) {
-    const datoVerdi = moment(dato);
-    return datoVerdi.isValid()
-        ? datoVerdi.format('DD.MM.YYYY HH:mm')
-        : undefined;
+    return formatter(dato, 'DD.MM.YYYY HH:mm');
 }
 
 export function formaterDatoKortManed(dato) {
-    const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? datoVerdi.format('Do MMM YYYY') : undefined;
+    return formatter(dato, 'Do MMM YYYY');
 }
 
 export function formaterDatoKortManedTid(dato) {
-    const datoVerdi = moment(dato);
-    return datoVerdi.isValid()
-        ? datoVerdi.format('Do MMM YYYY [kl] HH:mm')
-        : undefined;
+    return formatter(dato, 'Do MMM YYYY [kl] HH:mm');
 }
 
 export function formaterTid(dato) {
-    const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? datoVerdi.format('HH:mm') : undefined;
+    return formatter(dato, 'HH:mm');
 }
 
 export function formaterDatoTidSiden(dato) {

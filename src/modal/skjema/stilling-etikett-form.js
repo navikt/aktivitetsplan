@@ -13,7 +13,7 @@ function StillingEtikettForm(props) {
     return (
         <form>
             <div className="row">
-                <div className="col col-xs-6">
+                <div className="col col-xs-4">
                     <Radio
                         name="etikettstatus"
                         label={<FormattedMessage id="etikett.INGEN_VALGT" />}
@@ -61,7 +61,7 @@ function StillingEtikettForm(props) {
                         }
                     />
                 </div>
-                <div className="col col-xs-6">
+                <div className="col col-xs-4">
                     <Radio
                         name="etikettstatus"
                         label={<FormattedMessage id="etikett.AVSLAG" />}
