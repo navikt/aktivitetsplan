@@ -1,17 +1,17 @@
 import React from 'react';
 import PT from 'prop-types';
-import visibleIfHOC from '../hocs/visible-if';
+import hiddenIfHOC from '../felles-komponenter/hidden-if/hidden-if';
 
-function Dato({ children }) {
+function TallAlert({ children }) {
     return <span className="tall-alert">{children}</span>;
 }
 
-Dato.propTypes = {
+TallAlert.propTypes = {
     children: PT.number,
 };
 
-Dato.defaultProps = {
+TallAlert.defaultProps = {
     children: undefined,
 };
 
-export default visibleIfHOC(Dato);
+export default hiddenIfHOC(TallAlert);
