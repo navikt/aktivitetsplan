@@ -200,7 +200,7 @@ export function formaterDatoTid(dato) {
 }
 
 export function formaterDatoKortManed(dato) {
-    return formatter(dato, 'Do. MMM YYYY');
+    return formatter(dato, 'Do MMM YYYY');
 }
 
 export function formaterDatoKortManedTid(dato) {
