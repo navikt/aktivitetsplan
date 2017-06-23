@@ -4,7 +4,12 @@
 
   &__underseksjon {
     padding: 0 3rem 0 2rem;
-    .blokk-m();
+    .blokk-xs();
+
+    .typo-sidetittel {
+      margin: 1.2rem 0;
+      line-height: 1.1;
+    }
   }
 
   &__etikett {
@@ -22,16 +27,20 @@
     width: 32rem;
   }
 
+  .typo-undertittel {
+    margin: 1.1rem 0 1rem;
+  }
+
   .begrunnelse-boks {
     cursor: pointer;
 
     .tekst--kollapset {
 
-      @media(min-width: 641px) {
+      @media (min-width: 641px) {
         max-width: 30.1rem;
       }
 
-      @media(max-width: 640px) {
+      @media (max-width: 640px) {
         max-width: 27.9rem;
       }
 
@@ -42,8 +51,17 @@
     }
   }
 
+  .aktivitetsbeskrivelse {
+
+    .typo-etikett-liten {
+      margin-bottom: -1rem;
+      color: @navGra60;
+    }
+  }
+
   .aktivitetsdetaljer,
   .aktivitetsbeskrivelse {
+
     .detaljfelt {
       .blokk-s();
       margin-right: 2rem;
@@ -52,7 +70,7 @@
       flex: 0 0 13rem;
 
       &__tittel {
-        .blokk-xxxs();
+        color: @navGra60;
       }
 
       &__lenke {
@@ -74,7 +92,6 @@
   &__delelinje {
     margin-top: 0;
     color: @color-hr;
-    .blokk-m();
   }
 
   &__historikk {

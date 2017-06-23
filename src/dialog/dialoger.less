@@ -26,11 +26,25 @@
     padding-left: @padding-left;
     border-radius: 0;
     text-decoration: none;
-
     border-top: 1px solid @gray-foreground;
 
+    .dialoger__prikk {
+      left: 0.7rem;
+    }
+
     &:focus {
-      background-color: @orange-focus;
+      outline: none;
+      border: 0.2rem solid @orange-focus;
+      padding: 0.8rem 0.8rem 0.8rem 2.8rem;
+      box-shadow: none;
+
+      .dialoger__prikk {
+        left: 0.5rem;
+      }
+    }
+
+    &:hover {
+      text-decoration: none;
     }
 
     &-etiketter {
@@ -58,12 +72,15 @@
     }
 
     &--valgt {
-      background-color: @bla;
-      color: white;
+      border: 0.2rem solid @bla;
+      padding: 0.8rem 0.8rem 0.8rem 2.8rem;
+
+      .dialoger__prikk {
+        left: 0.5rem;
+      }
 
       // fjerne lenkepanel sin hover-styling
       &:hover {
-        color: white;
         cursor: auto;
 
         .lenkepanel__heading {

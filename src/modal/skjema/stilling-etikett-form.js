@@ -1,110 +1,113 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Radio } from 'nav-frontend-skjema';
 import * as statuser from '../../constant';
-import Radio from './input/radio';
 import { oppdaterAktivitetEtikett } from '../../ducks/aktiviteter';
 import { aktivitet as aktivitetPT } from '../../proptypes';
 import { STATUS } from '../../ducks/utils';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
 function StillingEtikettForm(props) {
-    const { aktivitet, oppdaterEtikett, dirty, handleSubmit, disabled } = props;
-    const onChange = values => {
-        oppdaterEtikett(aktivitet, values.etikettstatus);
-    };
+    const { aktivitet, doOppdaterAktivitetEtikett, disabled } = props;
     return (
-        <form onSubmit={handleSubmit(onChange)}>
+        <form>
             <div className="row">
-                <div className="col col-xs-6">
+                <div className="col col-xs-4">
                     <Radio
-                        feltNavn="etikettstatus"
+                        name="etikettstatus"
                         label={<FormattedMessage id="etikett.INGEN_VALGT" />}
                         value={statuser.INGEN_VALGT}
                         id={`id--${statuser.INGEN_VALGT}`}
                         disabled={disabled}
-                        forhandsvalgt={!props.valgtEtikettStatus}
+                        onChange={() =>
+                            doOppdaterAktivitetEtikett(
+                                aktivitet,
+                                statuser.INGEN_VALGT
+                            )}
+                        checked={
+                            aktivitet.etikett === statuser.INGEN_VALGT ||
+                                !aktivitet.etikett
+                        }
                     />
                     <Radio
-                        feltNavn="etikettstatus"
+                        name="etikettstatus"
                         label={<FormattedMessage id="etikett.SOKNAD_SENDT" />}
                         value={statuser.SOKNAD_SENDT}
                         id={`id--${statuser.SOKNAD_SENDT}`}
                         disabled={disabled}
+                        onChange={() =>
+                            doOppdaterAktivitetEtikett(
+                                aktivitet,
+                                statuser.SOKNAD_SENDT
+                            )}
+                        checked={aktivitet.etikett === statuser.SOKNAD_SENDT}
                     />
                     <Radio
-                        feltNavn="etikettstatus"
+                        name="etikettstatus"
                         label={
                             <FormattedMessage id="etikett.INNKALT_TIL_INTERVJU" />
                         }
                         value={statuser.INNKALT_TIL_INTERVJU}
                         id={`id--${statuser.INNKALT_TIL_INTERVJU}`}
                         disabled={disabled}
+                        onChange={() =>
+                            doOppdaterAktivitetEtikett(
+                                aktivitet,
+                                statuser.INNKALT_TIL_INTERVJU
+                            )}
+                        checked={
+                            aktivitet.etikett === statuser.INNKALT_TIL_INTERVJU
+                        }
                     />
                 </div>
-                <div className="col col-xs-6">
+                <div className="col col-xs-4">
                     <Radio
-                        feltNavn="etikettstatus"
+                        name="etikettstatus"
                         label={<FormattedMessage id="etikett.AVSLAG" />}
                         value={statuser.AVSLAG}
                         id={`id--${statuser.AVSLAG}`}
                         disabled={disabled}
+                        onChange={() =>
+                            doOppdaterAktivitetEtikett(
+                                aktivitet,
+                                statuser.AVSLAG
+                            )}
+                        checked={aktivitet.etikett === statuser.AVSLAG}
                     />
                     <Radio
-                        feltNavn="etikettstatus"
+                        name="etikettstatus"
                         label={<FormattedMessage id="etikett.JOBBTILBUD" />}
                         value={statuser.JOBBTILBUD}
                         id={`id--${statuser.JOBBTILBUD}`}
                         disabled={disabled}
+                        onChange={() =>
+                            doOppdaterAktivitetEtikett(
+                                aktivitet,
+                                statuser.JOBBTILBUD
+                            )}
+                        checked={aktivitet.etikett === statuser.JOBBTILBUD}
                     />
                 </div>
             </div>
-            <VisibleIfDiv className="row" visible={dirty}>
-                <Hovedknapp mini>
-                    <FormattedMessage id="etikettstatus.bekreft-knapp" />
-                </Hovedknapp>
-            </VisibleIfDiv>
         </form>
     );
 }
 
-const OppdaterReduxForm = reduxForm({
-    form: 'etikett-status-form',
-    enableReinitialize: true,
-})(StillingEtikettForm);
-
-StillingEtikettForm.defaultProps = {
-    aktiviteterStatus: 'OK',
-    valgtEtikettStatus: null,
-};
-
 StillingEtikettForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
-    valgtEtikettStatus: PT.string,
-    handleSubmit: PT.func.isRequired,
-    dirty: PT.bool.isRequired,
     aktivitet: aktivitetPT.isRequired,
-    oppdaterEtikett: PT.func.isRequired,
+    doOppdaterAktivitetEtikett: PT.func.isRequired,
     disabled: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
     disabled: state.data.aktiviteter.status !== STATUS.OK ||
         props.disableStatusEndring,
-    valgtEtikettStatus: formValueSelector('etikett-status-form')(
-        state,
-        'etikettstatus'
-    ),
-    initialValues: {
-        etikettstatus: props.aktivitet.etikett,
-    },
 });
 
 const mapDispatchToProps = dispatch => ({
-    oppdaterEtikett: (aktivitet, etikett) => {
+    doOppdaterAktivitetEtikett: (aktivitet, etikett) => {
         const nyEtikett = etikett === statuser.INGEN_VALGT ? null : etikett;
         oppdaterAktivitetEtikett({ ...aktivitet, etikett: nyEtikett })(
             dispatch
@@ -112,4 +115,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    StillingEtikettForm
+);

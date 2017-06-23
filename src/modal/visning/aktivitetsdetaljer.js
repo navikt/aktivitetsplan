@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Link } from 'react-router';
 import * as AppPT from '../../proptypes';
@@ -247,9 +247,9 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             innhold={gruppeAktivitetStatus}
         />,
         <section key="moteplan" className="aktivitetsbeskrivelse">
-            <Element className="aktivitetsbeskrivelse__tittel">
+            <EtikettLiten className="aktivitetsbeskrivelse__tittel">
                 <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
-            </Element>
+            </EtikettLiten>
             {moeteplanListe.map(mote => (
                 <Normaltekst key={mote.startDato} className="detaljfelt__tekst">
                     {formaterDatoKortManedTid(mote.startDato)}
@@ -283,9 +283,9 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         const oppfolgingSection =
             avtaleOppfolging &&
             <section key="avtaleOppfolging" className="aktivitetsbeskrivelse">
-                <Element className="aktivitetsbeskrivelse__tittel">
+                <EtikettLiten className="aktivitetsbeskrivelse__tittel">
                     <FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />
-                </Element>
+                </EtikettLiten>
                 <Tekstomrade className="aktivitetsbeskrivelse__tekst">
                     {avtaleOppfolging}
                 </Tekstomrade>
