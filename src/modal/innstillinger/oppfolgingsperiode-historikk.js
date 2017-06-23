@@ -24,8 +24,7 @@ class OppfolgingsperiodeHistorikk extends Component {
 
     render() {
         const { situasjon } = this.props;
-        const oppfolgingsPerioder = situasjon.data
-            .oppfolgingsPerioder || [];
+        const oppfolgingsPerioder = situasjon.data.oppfolgingsPerioder || [];
         const oppfolgingsPerioderSorted = [
             ...oppfolgingsPerioder,
         ].sort((a, b) => b.sluttDato.localeCompare(a.sluttDato));

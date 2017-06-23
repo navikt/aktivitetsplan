@@ -29,7 +29,14 @@ SubmitKnapp.defaultProps = {
     mini: false,
 };
 
-const ResetKnapp = ({ className, dispatch, formNavn, children, onClick, ...rest }) => (
+const ResetKnapp = ({
+    className,
+    dispatch,
+    formNavn,
+    children,
+    onClick,
+    ...rest
+}) => (
     <Knapp
         className={className}
         onClick={() => {
