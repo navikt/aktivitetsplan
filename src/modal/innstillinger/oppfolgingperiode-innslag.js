@@ -54,7 +54,6 @@ OppfolgingPeriodeInnslag.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    oppfolgingStatus: state.data.oppfolgingStatus,
     veiledere: state.data.veiledere.data,
 });
 

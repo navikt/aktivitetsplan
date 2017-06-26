@@ -136,7 +136,7 @@ PeriodeFilter.defaultProps = {
 function Filter({
     aktiviteterReducer,
     arenaAktiviteterReducer,
-    oppfolgingStatusReducer,
+    situasjonReducer,
     harAktivitetTyper,
     aktivitetTyper,
     harAktivitetEtiketter,
@@ -162,7 +162,7 @@ function Filter({
                     avhengigheter={[
                         aktiviteterReducer,
                         arenaAktiviteterReducer,
-                        oppfolgingStatusReducer,
+                        situasjonReducer,
                     ]}
                 >
                     <div className="filter__container">
@@ -198,7 +198,7 @@ Filter.defaultProps = {
 Filter.propTypes = {
     aktiviteterReducer: AppPT.reducer.isRequired,
     arenaAktiviteterReducer: AppPT.reducer.isRequired,
-    oppfolgingStatusReducer: AppPT.reducer.isRequired,
+    situasjonReducer: AppPT.reducer.isRequired,
     harAktivitetTyper: PT.bool.isRequired,
     aktivitetTyper: PT.arrayOf(PT.string).isRequired,
     harAktivitetEtiketter: PT.bool.isRequired,
@@ -216,20 +216,19 @@ function tidligsteHendelsesTidspunktMellom(fra, til, state) {
     const tidspunkter = stateData.aktiviteter.data
         .map(a => a.opprettetDato)
         .concat(stateData.dialog.data.map(d => d.opprettetDato));
-    return tidspunkter.filter(t => t > fra && t < til).sort()[0];
+    return tidspunkter.filter(t => t > fra && t < til).sort()[0] || til;
 }
 
 const mapStateToProps = state => {
     const stateData = state.data;
     const aktiviteterReducer = stateData.aktiviteter;
-    const oppfolgingStatusReducer = stateData.oppfolgingStatus;
+    const situasjonReducer = stateData.situasjon;
     const arenaAktiviteterReducer = stateData.arenaAktiviteter;
     const aktiviteter = aktiviteterReducer.data.concat(
         arenaAktiviteterReducer.data
     );
 
-    const oppfolgingsPerioder = oppfolgingStatusReducer.data
-        .oppfolgingsPerioder || [];
+    const oppfolgingsPerioder = situasjonReducer.data.oppfolgingsPerioder || [];
     let fraGrense = '';
     const historiskePerioder = oppfolgingsPerioder
         .map(p => p.sluttDato)
@@ -254,7 +253,7 @@ const mapStateToProps = state => {
     return {
         aktiviteterReducer,
         arenaAktiviteterReducer,
-        oppfolgingStatusReducer,
+        situasjonReducer,
         historiskePerioder,
         historiskPeriode: stateData.filter.historiskPeriode,
         harHistoriskePerioder: historiskePerioder.length > 0,

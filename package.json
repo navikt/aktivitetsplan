@@ -23,7 +23,9 @@
         "test:watch": "mocha --watch",
         "depcheck": "node ./node_modules/npm-check-updates/bin/npm-check-updates -e 2 -x history,react-motion,react-router,react-collapse,mocha,react-height --packageFile ./package.json",
         "eslint": "eslint src --ext .js --ext .jsx",
+        "eslint-staged": "eslint",
         "lesshint": "lesshint --reporter ./lesshint-reporter src/",
+        "lesshint-staged": "lesshint --reporter ./lesshint-reporter",
         "lint": "npm run eslint && npm run lesshint",
         "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js",
         "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\"",
@@ -37,10 +39,10 @@
     "lint-staged": {
         "*.js": [
             "prettier --write --single-quote --trailing-comma es5 --tab-width 4",
-            "eslint"
+            "eslint-staged"
         ],
         "*.less": [
-            "lesshint"
+            "lesshint-staged"
         ]
     },
     "dependencies": {

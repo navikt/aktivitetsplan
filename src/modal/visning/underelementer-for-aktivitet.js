@@ -83,7 +83,7 @@ class UnderelementerForAktivitet extends Component {
                         visible={underOppfolging}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
-                        <TallAlert visible={antallUlesteHenvendelser > 0}>
+                        <TallAlert hidden={antallUlesteHenvendelser <= 0}>
                             {antallUlesteHenvendelser}
                         </TallAlert>
                     </VisibleToggleKnapp>
@@ -147,7 +147,7 @@ const mapStateToProps = (state, props) => {
         dialog,
         antallUlesteHenvendelser,
         versjoner: stateData.versjoner.data,
-        underOppfolging: !!stateData.oppfolgingStatus.data.underOppfolging,
+        underOppfolging: !!stateData.situasjon.data.underOppfolging,
     };
 };
 

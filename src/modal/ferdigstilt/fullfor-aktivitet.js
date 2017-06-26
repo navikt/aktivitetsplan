@@ -28,7 +28,7 @@ const FullforAktivitet = props => {
             beskrivelseTekst={beskrivelseTekst}
             lagrer={props.aktiviteter.status !== STATUS.OK}
             onSubmit={beskrivelseForm => {
-                props.lagreBegrunnelse(
+                props.doAvsluttOppfolging(
                     valgtAktivitet,
                     beskrivelseForm.begrunnelse
                 );
@@ -41,7 +41,7 @@ const FullforAktivitet = props => {
         <VisAdvarsel
             headerTekst={headerTekst}
             onSubmit={() => {
-                props.lagreBegrunnelse(valgtAktivitet, null);
+                props.doAvsluttOppfolging(valgtAktivitet, null);
                 history.goBack();
             }}
         />
@@ -60,11 +60,11 @@ FullforAktivitet.propTypes = {
         data: PT.arrayOf(AppPT.aktivitet),
     }).isRequired,
     params: PT.shape({ id: PT.string }).isRequired,
-    lagreBegrunnelse: PT.func.isRequired,
+    doAvsluttOppfolging: PT.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
-    lagreBegrunnelse: (aktivitet, begrunnelse) =>
+    doAvsluttOppfolging: (aktivitet, begrunnelse) =>
         dispatch(fullforAktivitet(aktivitet, begrunnelse)),
 });
 
