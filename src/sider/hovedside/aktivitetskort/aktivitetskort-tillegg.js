@@ -6,9 +6,15 @@ import * as AppPT from '../../../proptypes';
 import { AVTALT_MED_NAV } from '../../../constant';
 import visibleIfHOC from '../../../hocs/visible-if';
 import TallAlert from '../../../felles-komponenter/tall-alert';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import {
+    div as HiddenIfDiv,
+} from '../../../felles-komponenter/hidden-if/hidden-if';
 
-function AktivitetskortTillegg({ aktivitet, antallUlesteHenvendelser }) {
+function AktivitetskortTillegg({
+    aktivitet,
+    antallHendvendelser,
+    antallUlesteHenvendelser,
+}) {
     return (
         <div className="aktivitetskort__ikon-blokk">
             <div className="aktivitetskort__etiketter">
@@ -23,28 +29,33 @@ function AktivitetskortTillegg({ aktivitet, antallUlesteHenvendelser }) {
                     id={`etikett.${aktivitet.etikett}`}
                 />
             </div>
-            <VisibleIfDiv
-                visible={antallUlesteHenvendelser > 0}
+            <HiddenIfDiv
+                hidden={antallHendvendelser <= 0}
                 className="aktivitetskort__henvendelser"
             >
-                <TallAlert>{antallUlesteHenvendelser}</TallAlert>
-            </VisibleIfDiv>
+                <TallAlert hidden={antallUlesteHenvendelser <= 0}>
+                    {antallUlesteHenvendelser}
+                </TallAlert>
+            </HiddenIfDiv>
         </div>
     );
 }
 
 AktivitetskortTillegg.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
+    antallHendvendelser: PT.number.isRequired,
     antallUlesteHenvendelser: PT.number.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
     const dialoger = state.data.dialog.data;
     const dialog = dialoger.find(d => d.aktivitetId === props.aktivitet.id);
+    const antallHendvendelser = dialog ? dialog.henvendelser.length : 0;
     const antallUlesteHenvendelser = dialog
         ? dialog.henvendelser.filter(h => !h.lest).length
         : 0;
     return {
+        antallHendvendelser,
         antallUlesteHenvendelser,
     };
 };

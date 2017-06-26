@@ -49,9 +49,28 @@ export const reducerArray = PT.shape({
     data: PT.arrayOf(PT.object),
 });
 
-export const oppfolgingStatus = PT.shape({
+export const avslutningStatus = PT.shape({
+    kanAvslutte: PT.bool,
+    underOppfolging: PT.bool,
+    harYtelser: PT.bool,
+    harTiltak: PT.bool,
+    inaktiveringsDato: PT.string,
+});
+
+export const situasjon = PT.shape({
     status: PT.string,
-    data: PT.object,
+    brukerHarAvslatt: PT.bool,
+    data: PT.shape({
+        fnr: PT.string,
+        reservasjonKRR: PT.bool,
+        manuell: PT.bool,
+        underOppfolging: PT.bool,
+        vilkarMaBesvares: PT.bool,
+        oppfolgingUtgang: PT.string,
+        kanStarteOppfolging: PT.bool,
+        avslutningStatus,
+        oppfolgingsPerioder: PT.arrayOf(PT.object),
+    }),
 });
 
 export const vilkar = PT.shape({
