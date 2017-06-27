@@ -129,10 +129,13 @@ export function kanAvslutte() {
     });
 }
 
-export function avsluttOppfolging(begrunnelse) {
-    return doThenDispatch(() => Api.avsluttOppfolging(begrunnelse), {
-        OK: AVSLUTT_OPPFOLGING_OK,
-        FEILET: AVSLUTT_OPPFOLGING_FEILET,
-        PENDING: AVSLUTT_OPPFOLGING_PENDING,
-    });
+export function avsluttOppfolging(begrunnelse, veilederId) {
+    return doThenDispatch(
+        () => Api.avsluttOppfolging(begrunnelse, veilederId),
+        {
+            OK: AVSLUTT_OPPFOLGING_OK,
+            FEILET: AVSLUTT_OPPFOLGING_FEILET,
+            PENDING: AVSLUTT_OPPFOLGING_PENDING,
+        }
+    );
 }

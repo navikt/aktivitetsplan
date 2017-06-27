@@ -22,7 +22,10 @@ import BekreftAvsluttOppfolging
     from './modal/innstillinger/bekreft-avslutt-oppfolginsperiode';
 import BekreftStartOppfolging
     from './modal/innstillinger/bekreft-start-oppfolginsperiode';
-import KvitteringModal from './modal/innstillinger/kvittering-modal';
+import StartOppfolgingKvittering
+    from './modal/innstillinger/start-oppfolging-kvittering';
+import AvsluttOppfolgingKvittering
+    from './modal/innstillinger/avslutt-oppfolging-kvittering';
 import { VIS_INNSTILLINGER } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -55,22 +58,11 @@ export default (
             <Route>
                 <Route
                     path="innstillinger/avslutt/kvittering"
-                    component={() => (
-                        <KvitteringModal
-                            alertTekstId="innstillinger.modal.avslutt.oppfolging.kvittering"
-                            overskriftTekstId="innstillinger.modal.avslutt.oppfolging.overskrift"
-                            alertFeilTekst="innstillinger.modal.avslutt.oppfolging.kvittering.feil"
-                        />
-                    )}
+                    component={() => <AvsluttOppfolgingKvittering />}
                 />
                 <Route
                     path="innstillinger/start/kvittering"
-                    component={() => (
-                        <KvitteringModal
-                            alertTekstId="innstillinger.modal.startoppfolging.kvittering"
-                            overskriftTekstId="innstillinger.modal.startoppfolging.overskrift"
-                        />
-                    )}
+                    component={() => <StartOppfolgingKvittering />}
                 />
             </Route>}
         <Route path="dialog" component={DialogModal} />

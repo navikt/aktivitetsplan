@@ -55,9 +55,9 @@ export function kanAvslutte() {
     );
 }
 
-export function avsluttOppfolging(begrunnelse) {
+export function avsluttOppfolging(begrunnelse, veilederId) {
     return postAsJson(
         `${SITUASJON_PROXY_BASE_URL}/situasjon/avsluttOppfolging`,
-        begrunnelse
+        { begrunnelse, veilederId }
     );
 }
