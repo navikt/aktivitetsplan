@@ -41,7 +41,7 @@ const mottaAktivitetsKort = {
 
 function HengelasAnchor() {
     return (
-        <FormattedMessage id="minkey.las">
+        <FormattedMessage id="hjelpetekst.lasikon">
             {tekst => <span aria-label={tekst} />}
         </FormattedMessage>
     );
@@ -49,7 +49,7 @@ function HengelasAnchor() {
 
 function SporsmalAnchor() {
     return (
-        <FormattedMessage id="minkey.spm">
+        <FormattedMessage id="hjelpetekst.sporsmalikon">
             {tekst => <span aria-label={tekst} />}
         </FormattedMessage>
     );
