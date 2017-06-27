@@ -4,7 +4,6 @@ import history from '../../history';
 import ModalHeader from '../../modal/modal-header';
 import OppfolgingStatus from './oppfolging-status';
 
-
 function VilkarModal() {
     return (
         <Modal

@@ -10,7 +10,9 @@ function Sidebanner(props) {
         <div className="sidebanner">
             <Bilde
                 src={aktivitetsplanSvg}
-                alt={props.intl.formatMessage({ id: 'sidebanner-illustrasjon.alt-tekst' })}
+                alt={props.intl.formatMessage({
+                    id: 'sidebanner-illustrasjon.alt-tekst',
+                })}
                 className="sidebanner__illustrasjon"
             />
             <Sidetittel className="sidebanner__tittel">
@@ -21,7 +23,7 @@ function Sidebanner(props) {
 }
 
 Sidebanner.propTypes = {
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
 };
 
 export default visibleIf(injectIntl(Sidebanner));

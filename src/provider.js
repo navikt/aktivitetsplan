@@ -15,7 +15,9 @@ function Provider({ children }) {
     return (
         <ReduxProvider store={store}>
             <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
-                {children}
+                <div>
+                    {children}
+                </div>
             </IntlProvider>
         </ReduxProvider>
     );

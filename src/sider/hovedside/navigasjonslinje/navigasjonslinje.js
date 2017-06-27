@@ -9,7 +9,6 @@ import Feature from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
-import { hentSituasjon } from '../../../ducks/situasjon';
 import visibleIfHOC from '../../../hocs/visible-if';
 
 const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
@@ -36,7 +35,6 @@ NavigasjonsElement.propTypes = {
 class Navigasjonslinje extends Component {
     componentDidMount() {
         this.props.doHentDialog();
-        this.props.doHentSituasjon();
     }
 
     render() {
@@ -70,7 +68,6 @@ class Navigasjonslinje extends Component {
 
 Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
-    doHentSituasjon: PT.func.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
     underOppfolging: PT.bool.isRequired,
 };
@@ -87,7 +84,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     doHentDialog: () => dispatch(hentDialog()),
-    doHentSituasjon: () => dispatch(hentSituasjon()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigasjonslinje);

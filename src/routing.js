@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import Hovedside from './sider/hovedside/hovedside';
+import VilkarModal from './moduler/vilkar/vilkar-modal';
 import VilkarModalMedHistorikk from './modal/vilkar/vilkar-med-historikk';
 import VilkarModalUtenHistorikk from './modal/vilkar/vilkar-uten-historikk';
 import NyAktivitet from './modal/ny-aktivitet';
@@ -36,6 +37,7 @@ export const avbrytAktivitetRoute = aktivitetId =>
 export default (
     <Route component={Hovedside}>
         <IndexRoute />
+        <Route path="vilkar" component={VilkarModal} />
         <Route path="mal" component={Aktivitetsmal} />
         <Route path="mal/endre" component={AktivitetmalEndre} />
         {VIS_INNSTILLINGER &&

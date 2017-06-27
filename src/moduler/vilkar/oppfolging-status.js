@@ -1,11 +1,11 @@
 import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import { FormattedHTMLMessage } from 'react-intl';
+import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { hentSituasjon } from '../../ducks/situasjon';
 import { hentIdentitet } from '../../ducks/identitet';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { FormattedHTMLMessage } from 'react-intl';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import Vilkar from './vilkar';
@@ -23,14 +23,17 @@ function AksepterVilkar({ visVilkar, vilkarMaBesvares, brukerHarAvslatt }) {
     );
 }
 
+AksepterVilkar.defaultProps = {
+    vilkarMaBesvares: null,
+};
+
 AksepterVilkar.propTypes = {
     brukerHarAvslatt: PT.bool.isRequired,
     visVilkar: PT.bool.isRequired,
-    vilkarMaBesvares: PT.bool
+    vilkarMaBesvares: PT.bool,
 };
 
 class OppfolgingStatus extends Component {
-
     componentDidMount() {
         if (this.props.situasjon.status === STATUS.NOT_STARTED) {
             this.props.doHentSituasjon();
@@ -38,7 +41,16 @@ class OppfolgingStatus extends Component {
     }
 
     render() {
-        const { children, situasjon, identitet, visVilkar, reservasjonKRR, vilkarMaBesvares, brukerHarAvslatt, erVeileder } = this.props;
+        const {
+            children,
+            situasjon,
+            identitet,
+            visVilkar,
+            reservasjonKRR,
+            vilkarMaBesvares,
+            brukerHarAvslatt,
+            erVeileder,
+        } = this.props;
 
         let komponent;
         if (erVeileder) {
@@ -50,8 +62,13 @@ class OppfolgingStatus extends Component {
                 </AlertStripeInfoSolid>
             );
         } else if (visVilkar || vilkarMaBesvares) {
-            komponent =
-                <AksepterVilkar visVilkar={visVilkar} vilkarMaBesvares={vilkarMaBesvares} brukerHarAvslatt={brukerHarAvslatt} />;
+            komponent = (
+                <AksepterVilkar
+                    visVilkar={visVilkar}
+                    vilkarMaBesvares={vilkarMaBesvares}
+                    brukerHarAvslatt={brukerHarAvslatt}
+                />
+            );
         } else {
             komponent = children;
         }
@@ -65,34 +82,40 @@ class OppfolgingStatus extends Component {
 }
 
 OppfolgingStatus.defaultProps = {
-    visVilkar: false
+    children: null,
+    erVeileder: null,
+    reservasjonKRR: null,
+    vilkarMaBesvares: null,
+    visVilkar: false,
 };
 
 OppfolgingStatus.propTypes = {
     children: PT.node,
+    identitet: AppPT.reducer.isRequired,
+    erVeileder: PT.bool,
     visVilkar: PT.bool,
     situasjon: AppPT.situasjon.isRequired,
     doHentSituasjon: PT.func.isRequired,
     reservasjonKRR: PT.bool,
     vilkarMaBesvares: PT.bool,
-    brukerHarAvslatt: PT.bool.isRequired
+    brukerHarAvslatt: PT.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     const situasjon = state.data.situasjon;
     const identitet = state.data.identitet;
     const situasjonData = situasjon.data;
-    return ({
+    return {
         erVeileder: identitet.data.erVeileder,
         brukerHarAvslatt: situasjonData.brukerHarAvslatt,
         reservasjonKRR: situasjonData.reservasjonKRR,
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
         situasjon,
-        identitet
-    });
+        identitet,
+    };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     doHentSituasjon: () => dispatch(hentSituasjon()),
     doHentIdentitet: () => dispatch(hentIdentitet()),
 });

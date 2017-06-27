@@ -20,17 +20,21 @@ class Vilkar extends Component {
         return (
             <div className="vilkar">
 
-                { visVilkar && <VilkarInnhold vilkar={vilkar} /> }
+                {visVilkar && <VilkarInnhold vilkar={vilkar} />}
 
-                { visVilkar && visGodkjenning && <hr className="vilkar__delelinje" /> }
+                {visVilkar &&
+                    visGodkjenning &&
+                    <hr className="vilkar__delelinje" />}
 
-                { visGodkjenning && (
+                {visGodkjenning &&
                     <Innholdslaster avhengigheter={[vilkarReducer]}>
                         <div className="vilkar__godkjenning">
-                            <GodkjennVilkar visVilkar={visVilkar} hash={vilkar.hash} />
+                            <GodkjennVilkar
+                                visVilkar={visVilkar}
+                                hash={vilkar.hash}
+                            />
                         </div>
-                    </Innholdslaster>
-                )}
+                    </Innholdslaster>}
             </div>
         );
     }
@@ -40,17 +44,17 @@ Vilkar.propTypes = {
     doHentVilkar: PT.func.isRequired,
     vilkar: AppPT.vilkar.isRequired,
     vilkarReducer: AppPT.reducer.isRequired,
-    visGodkjenning: PT.bool,
-    visVilkar: PT.bool.isRequired
+    visGodkjenning: PT.bool.isRequired,
+    visVilkar: PT.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     vilkarReducer: state.data.vilkar,
-    vilkar: state.data.vilkar.data
+    vilkar: state.data.vilkar.data,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    doHentVilkar: () => hentVilkar()(dispatch)
+const mapDispatchToProps = dispatch => ({
+    doHentVilkar: () => hentVilkar()(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Vilkar);

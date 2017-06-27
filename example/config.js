@@ -15,6 +15,8 @@ export const TILLAT_SET_AVTALT = true;
 
 export const VIS_INNSTILLINGER = true;
 
+export const VIS_SIDEBANNER = true;
+
 export const EKSEMPEL_FNR = '10108000398';
 
 export const getDynamicBasePath = () => {
