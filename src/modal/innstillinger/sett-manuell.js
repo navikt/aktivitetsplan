@@ -38,6 +38,7 @@ const pakrevd = rules.minLength(
 
 const SettManuellReduxForm = validForm({
     form: SETT_MANUELL_FORM_NAME,
+    destroyOnUnmount: false,
     validate: {
         begrunnelse: [forLang, pakrevd],
     },
