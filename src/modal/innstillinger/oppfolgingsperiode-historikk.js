@@ -80,7 +80,7 @@ class OppfolgingsperiodeHistorikk extends Component {
 }
 
 OppfolgingsperiodeHistorikk.propTypes = {
-    situasjon: AppPT.reducer.isRequired,
+    situasjon: AppPT.situasjon.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -12,7 +12,12 @@ import history from '../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
 import { RemoteResetKnapp } from './remote-knapp';
 
-function BekreftAvslutning({ doAvsluttOppfolging, begrunnelse, navn }) {
+function BekreftAvslutning({
+    doAvsluttOppfolging,
+    begrunnelse,
+    veilederId,
+    navn,
+}) {
     return (
         <div>
             <section className="innstillinger__avslutt-periode">
@@ -31,7 +36,7 @@ function BekreftAvslutning({ doAvsluttOppfolging, begrunnelse, navn }) {
             <ModalFooter>
                 <Hovedknapp
                     mini
-                    onClick={() => doAvsluttOppfolging(begrunnelse)}
+                    onClick={() => doAvsluttOppfolging(begrunnelse, veilederId)}
                 >
                     <FormattedMessage id="innstillinger.modal.avslutt.bekreft.knapp.bekreft" />
                 </Hovedknapp>
@@ -49,22 +54,25 @@ function BekreftAvslutning({ doAvsluttOppfolging, begrunnelse, navn }) {
 BekreftAvslutning.defaultProps = {
     begrunnelse: undefined,
     navn: undefined,
+    veilederId: undefined,
 };
 
 BekreftAvslutning.propTypes = {
     navn: PT.string,
     begrunnelse: PT.string,
+    veilederId: PT.string,
     doAvsluttOppfolging: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     navn: state.data.motpart.data.navn,
+    veilederId: state.data.identitet.data.id,
     begrunnelse: formValueSelector(AVSLUTT_FORM_NAME)(state, 'begrunnelse'),
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    doAvsluttOppfolging: () => {
-        dispatch(avsluttOppfolging(ownProps.begrunnelse)).then(
+const mapDispatchToProps = dispatch => ({
+    doAvsluttOppfolging: (begrunnelse, veilederId) => {
+        dispatch(avsluttOppfolging(begrunnelse, veilederId)).then(
             history.push('/innstillinger/avslutt/kvittering')
         );
     },
