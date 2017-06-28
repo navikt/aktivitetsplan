@@ -5,16 +5,17 @@ import StartOppfolgingProsess from './start-oppfolging-prosess';
 import SettManuellProsess from './sett-manuell-prosess';
 import OppfolgingsperiodeHistorikk from './oppfolgingsperiode-historikk';
 import * as AppPT from '../../proptypes';
+import InnstillingerModal from './innstillinger-modal';
 
 function Prosesser({ situasjon }) {
     return (
-        <div>
+        <InnstillingerModal>
             <AvsluttOppfolgingProsess hidden={!situasjon.underOppfolging} />
             <StartOppfolgingProsess hidden={!situasjon.kanStarte} />
             <SettManuellProsess hidden={situasjon.manuell} />
             <hr className="innstillinger__delelinje" />
             <OppfolgingsperiodeHistorikk />
-        </div>
+        </InnstillingerModal>
     );
 }
 

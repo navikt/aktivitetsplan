@@ -16,7 +16,6 @@ import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
 import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
 import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
-import InnstillingerModal from './modal/innstillinger/innstillinger-modal';
 import Prosesser from './modal/innstillinger/prosesser';
 import AvsluttOppfolging from './modal/innstillinger/avslutt-oppfolginsperiode';
 import BekreftAvsluttOppfolging
@@ -45,21 +44,21 @@ export default (
         <Route path="mal" component={Aktivitetsmal} />
         <Route path="mal/endre" component={AktivitetmalEndre} />
         {VIS_INNSTILLINGER &&
-            <Route path="innstillinger" component={InnstillingerModal}>
-                <IndexRoute component={Prosesser} />
-                <Route path="manuell" component={SettManuell} />
-                <Route path="avslutt" component={AvsluttOppfolging} />
+            <Route>
+                <Route path="innstillinger" component={Prosesser} />
+                <Route path="innstillinger/manuell" component={SettManuell} />
                 <Route
-                    path="avslutt/bekreft"
+                    path="innstillinger/avslutt"
+                    component={AvsluttOppfolging}
+                />
+                <Route
+                    path="innstillinger/avslutt/bekreft"
                     component={BekreftAvsluttOppfolging}
                 />
                 <Route
-                    path="start/bekreft"
+                    path="innstillinger/start/bekreft"
                     component={BekreftStartOppfolging}
                 />
-            </Route>}
-        {VIS_INNSTILLINGER &&
-            <Route>
                 <Route
                     path="innstillinger/avslutt/kvittering"
                     component={() => <AvsluttOppfolgingKvittering />}

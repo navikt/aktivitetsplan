@@ -30,6 +30,11 @@ export const SETT_MANUELL_OK = 'situasjon/manuell/OK';
 export const SETT_MANUELL_FEILET = 'situasjon/manuell/FEILET';
 export const SETT_MANUELL_PENDING = 'situasjon/manuell/PENDING';
 
+export const LAGRE_BEGRUNNELSE = 'form/lagre-begrunnelse';
+export const SLETT_BEGRUNNELSE = 'form/slett-begrunnelse';
+
+export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     brukerHarAvslatt: false,
@@ -41,12 +46,18 @@ export default function reducer(state = initalState, action) {
     switch (action.type) {
         case OK:
         case KAN_AVSLUTTE_OK:
-        case AVSLUTT_OPPFOLGING_OK:
         case START_OPPFOLGING_OK:
+            return {
+                ...state,
+                status: STATUS.OK,
+                data: action.data,
+            };
+        case AVSLUTT_OPPFOLGING_OK:
         case SETT_MANUELL_OK:
             return {
                 ...state,
                 status: STATUS.OK,
+                begrunnelse: null,
                 data: action.data,
             };
         case GODTA_OK:
@@ -88,6 +99,13 @@ export default function reducer(state = initalState, action) {
                     ? STATUS.PENDING
                     : STATUS.RELOADING,
             };
+        case LAGRE_BEGRUNNELSE:
+            return {
+                ...state,
+                begrunnelse: action.data,
+            };
+        case SLETT_BEGRUNNELSE:
+            return { ...state, begrunnelse: null };
         default:
             return state;
     }
@@ -153,4 +171,11 @@ export function settManuell(begrunnelse, veilederId) {
         FEILET: SETT_MANUELL_FEILET,
         PENDING: SETT_MANUELL_PENDING,
     });
+}
+
+export function lagreBegrunnelse(begrunnelse) {
+    return {
+        type: LAGRE_BEGRUNNELSE,
+        data: begrunnelse,
+    };
 }

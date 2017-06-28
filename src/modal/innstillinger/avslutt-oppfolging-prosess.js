@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import hiddenIfHoc from './../../felles-komponenter/hidden-if/hidden-if';
-import { kanAvslutte } from '../../ducks/situasjon';
+import { kanAvslutte, SLETT_BEGRUNNELSE_ACTION } from '../../ducks/situasjon';
 import { STATUS } from './../../ducks/utils';
 import history from '../../history';
 import StartProsess from './start-prosess';
@@ -33,7 +33,7 @@ class AvsluttOppfolgingProsess extends Component {
     };
 
     render() {
-        const { avslutningStatus, laster, intl } = this.props;
+        const { avslutningStatus, laster, intl, slettBegrunnelse } = this.props;
         return (
             <StartProsess
                 className="innstillinger__prosess"
@@ -44,7 +44,10 @@ class AvsluttOppfolgingProsess extends Component {
                     id: 'innstillinger.modal.prosess.start.knapp',
                 })}
                 laster={laster}
-                onClick={() => this.gaTilBekreft('/innstillinger/avslutt')}
+                onClick={() => {
+                    slettBegrunnelse();
+                    this.gaTilBekreft('/innstillinger/avslutt');
+                }}
             >
                 <div className="blokk-xs">
                     <Normaltekst>
@@ -78,6 +81,7 @@ AvsluttOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
     laster: PT.bool.isRequired,
     doKanAvslutte: PT.func.isRequired,
+    slettBegrunnelse: PT.func.isRequired,
     avslutningStatus: AppPT.avslutningStatus.isRequired,
 };
 
@@ -88,6 +92,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    slettBegrunnelse: () => dispatch(SLETT_BEGRUNNELSE_ACTION),
     doKanAvslutte: () => dispatch(kanAvslutte()),
 });
 
