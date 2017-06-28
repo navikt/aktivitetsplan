@@ -9,6 +9,7 @@ import { kanAvslutte } from '../../ducks/situasjon';
 import { STATUS } from './../../ducks/utils';
 import history from '../../history';
 import StartProsess from './start-prosess';
+import * as AppPT from './../../proptypes';
 
 class AvsluttOppfolgingProsess extends Component {
     constructor(props) {
@@ -77,11 +78,10 @@ AvsluttOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
     laster: PT.bool.isRequired,
     doKanAvslutte: PT.func.isRequired,
-    avslutningStatus: PT.func.isRequired,
+    avslutningStatus: AppPT.avslutningStatus.isRequired,
 };
 
 const mapStateToProps = state => ({
-    underOppfolging: state.data.situasjon.data.underOppfolging,
     avslutningStatus: state.data.situasjon.data.avslutningStatus,
     kanStarte: state.data.situasjon.data.kanStarteOppfolging,
     laster: state.data.situasjon.status === STATUS.RELOADING,
