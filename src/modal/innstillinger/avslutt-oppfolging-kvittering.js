@@ -36,7 +36,7 @@ function AvsluttOppfolgingKvittering({ motpart, situasjon }) {
                         </Systemtittel>
                     </div>
                     {situasjon.data.avslutningStatus &&
-                        situasjon.data.avslutningStatus.kanAvslutte
+                        !situasjon.data.avslutningStatus.kanAvslutte
                         ? <AlertStripeSuksess className="blokk-m">
                               <FormattedMessage
                                   id="innstillinger.modal.avslutt.oppfolging.kvittering"
