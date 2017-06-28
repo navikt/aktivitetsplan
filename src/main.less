@@ -1,6 +1,18 @@
 @import './variables';
 
+html,
+body,
+.appContainer {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
 .aktivitetsplanfs {
+  @import './moduler/vilkar/vilkar';
+  @import './moduler/sidebanner/sidebanner';
   @import './vendors';
   @import './modal/modal';
   @import './utils';
@@ -14,6 +26,19 @@
   color: @navMorkGra;
   font-family: @font-family;
   line-height: @line-height-base;
+  height: 100%;
+
+  .pagewrapper {
+    background-color: @gray-background;
+  }
+
+  .aktivitetsplan {
+    width: 100%;
+  }
+
+  .aktivitetsplan-wrapper {
+    padding: 0 3.5rem;
+  }
 
   .radioknapp + label:before {
     top: 3px;
