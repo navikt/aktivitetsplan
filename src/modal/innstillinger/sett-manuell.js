@@ -20,7 +20,7 @@ const SettManuellForm = () => (
         labelId="innstillinger.modal.manuell.begrunnelse"
         name="begrunnelse-sett-manuell"
         maxLength={MAKS_LENGDE}
-     />
+    />
 );
 
 const forLang = rules.maxLength(
@@ -88,7 +88,10 @@ SettManuell.propTypes = {
 
 const mapStateToProps = state => ({
     veilederId: state.data.identitet.data.id,
-    begrunnelse: formValueSelector(SETT_MANUELL_FORM_NAME)(state, 'begrunnelse'),
+    begrunnelse: formValueSelector(SETT_MANUELL_FORM_NAME)(
+        state,
+        'begrunnelse'
+    ),
     doSettManuell: PT.func.isRequired,
 });
 

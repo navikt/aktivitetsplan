@@ -148,10 +148,9 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
 }
 
 export function settManuell(begrunnelse, veilederId) {
-    return doThenDispatch(
-        () => Api.settManuell(begrunnelse, veilederId), {
-            OK: SETT_MANUELL_OK,
-            FEILET: SETT_MANUELL_FEILET,
-            PENDING: SETT_MANUELL_PENDING,
-        });
+    return doThenDispatch(() => Api.settManuell(begrunnelse, veilederId), {
+        OK: SETT_MANUELL_OK,
+        FEILET: SETT_MANUELL_FEILET,
+        PENDING: SETT_MANUELL_PENDING,
+    });
 }
