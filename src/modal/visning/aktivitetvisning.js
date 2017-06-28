@@ -270,8 +270,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     doSlettAktivitet: aktivitet => dispatch(slettAktivitet(aktivitet)),
     doHentAktivitet: aktivitetId => dispatch(hentAktivitet(aktivitetId)),
-    doSettForrigeAktiveAktivitetId: id => dispatch(settForrigeAktiveAktivitetId(id)),
-    doFjernForrigeAktiveAktivitetId: () => dispatch(fjernForrigeAktiveAktivitetId()),
+    doSettForrigeAktiveAktivitetId: id =>
+        dispatch(settForrigeAktiveAktivitetId(id)),
+    doFjernForrigeAktiveAktivitetId: () =>
+        dispatch(fjernForrigeAktiveAktivitetId()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Aktivitetvisning);

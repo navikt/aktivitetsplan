@@ -87,6 +87,13 @@ export const mal = PT.shape({
     dato: PT.string,
 });
 
+export const motpart = PT.shape({
+    status: PT.string,
+    data: PT.shape({
+        navn: PT.string,
+    }),
+});
+
 export const oppfolgingsPeriode = PT.shape({
     id: PT.string,
     fra: PT.string,
