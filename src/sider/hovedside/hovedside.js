@@ -6,18 +6,21 @@ import Varslinger from '../../moduler/varslinger/varslinger';
 import Verktoylinje from '../../moduler/verktoylinje/verktoylinje';
 import AktivitetsTavle from './tavle/aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
+import OppfolgingStatus from '../../moduler/vilkar/oppfolging-status';
 
 function Hovedside({ children }) {
     return (
         <div className="hovedside">
             <div className="hovedsideinnhold">
-                <Container className="hovedsideinnhold__meny-container blokk-s">
-                    <Feil />
+                <Feil />
+                <OppfolgingStatus>
                     <Varslinger />
-                    <Navigasjonslinje />
-                    <Verktoylinje />
-                </Container>
-                <AktivitetsTavle />
+                    <Container className="hovedsideinnhold__meny-container blokk-s">
+                        <Navigasjonslinje />
+                        <Verktoylinje />
+                    </Container>
+                    <AktivitetsTavle />
+                </OppfolgingStatus>
             </div>
             {children}
         </div>
