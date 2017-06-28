@@ -10,6 +10,7 @@ function Sidebanner(props) {
         <div className="sidebanner">
             <Bilde
                 src={aktivitetsplanSvg}
+
                 alt={props.intl.formatMessage({
                     id: 'sidebanner-illustrasjon.alt-tekst',
                 })}
