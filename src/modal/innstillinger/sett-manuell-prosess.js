@@ -16,7 +16,7 @@ function SettManuellProsess({ intl, laster }) {
                 id: 'innstillinger.prosess.manuell.tittel',
             })}
             knappetekst={intl.formatMessage({
-                id: 'innstillinger.modal.prosess.manuell.knapp',
+                id: 'innstillinger.modal.prosess.start.knapp',
             })}
             laster={laster}
             onClick={() => history.push('/innstillinger/manuell')}

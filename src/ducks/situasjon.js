@@ -26,6 +26,10 @@ export const START_OPPFOLGING_OK = 'situasjon/start/OK';
 export const START_OPPFOLGING_FEILET = 'situasjon/start/FEILET';
 export const START_OPPFOLGING_PENDING = 'situasjon/start/PENDING';
 
+export const SETT_MANUELL_OK = 'situasjon/manuell/OK';
+export const SETT_MANUELL_FEILET = 'situasjon/manuell/FEILET';
+export const SETT_MANUELL_PENDING = 'situasjon/manuell/PENDING';
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     brukerHarAvslatt: false,
@@ -39,6 +43,7 @@ export default function reducer(state = initalState, action) {
         case KAN_AVSLUTTE_OK:
         case AVSLUTT_OPPFOLGING_OK:
         case START_OPPFOLGING_OK:
+        case SETT_MANUELL_OK:
             return {
                 ...state,
                 status: STATUS.OK,
@@ -64,6 +69,7 @@ export default function reducer(state = initalState, action) {
         case KAN_AVSLUTTE_FEILET:
         case AVSLUTT_OPPFOLGING_FEILET:
         case START_OPPFOLGING_FEILET:
+        case SETT_MANUELL_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
@@ -75,6 +81,7 @@ export default function reducer(state = initalState, action) {
         case KAN_AVSLUTTE_PENDING:
         case AVSLUTT_OPPFOLGING_PENDING:
         case START_OPPFOLGING_PENDING:
+        case SETT_MANUELL_PENDING:
             return {
                 ...state,
                 status: state.status === STATUS.NOT_STARTED
@@ -138,4 +145,13 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
             PENDING: AVSLUTT_OPPFOLGING_PENDING,
         }
     );
+}
+
+export function settManuell(begrunnelse, veilederId) {
+    return doThenDispatch(
+        () => Api.settManuell(begrunnelse, veilederId), {
+            OK: SETT_MANUELL_OK,
+            FEILET: SETT_MANUELL_FEILET,
+            PENDING: SETT_MANUELL_PENDING,
+        });
 }

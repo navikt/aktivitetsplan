@@ -26,6 +26,7 @@ import StartOppfolgingKvittering
     from './modal/innstillinger/start-oppfolging-kvittering';
 import AvsluttOppfolgingKvittering
     from './modal/innstillinger/avslutt-oppfolging-kvittering';
+import SettManuell from './modal/innstillinger/sett-manuell';
 import { VIS_INNSTILLINGER } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -44,6 +45,7 @@ export default (
         {VIS_INNSTILLINGER &&
             <Route path="innstillinger" component={InnstillingerModal}>
                 <IndexRoute component={Prosesser} />
+                <Route path="manuell" component={SettManuell} />
                 <Route path="avslutt" component={AvsluttOppfolging} />
                 <Route
                     path="avslutt/bekreft"
