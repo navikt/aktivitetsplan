@@ -25,16 +25,18 @@ function AksepterVilkar({ visVilkar, vilkarMaBesvares, brukerHarAvslatt }) {
 
 AksepterVilkar.defaultProps = {
     vilkarMaBesvares: null,
+    brukerHarAvslatt: null,
 };
 
 AksepterVilkar.propTypes = {
-    brukerHarAvslatt: PT.bool.isRequired,
+    brukerHarAvslatt: PT.bool,
     visVilkar: PT.bool.isRequired,
     vilkarMaBesvares: PT.bool,
 };
 
 class OppfolgingStatus extends Component {
     componentDidMount() {
+        this.props.doHentIdentitet();
         if (this.props.situasjon.status === STATUS.NOT_STARTED) {
             this.props.doHentSituasjon();
         }
@@ -96,6 +98,7 @@ OppfolgingStatus.propTypes = {
     visVilkar: PT.bool,
     situasjon: AppPT.situasjon.isRequired,
     doHentSituasjon: PT.func.isRequired,
+    doHentIdentitet: PT.func.isRequired,
     reservasjonKRR: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool.isRequired,

@@ -13,8 +13,8 @@ function Hovedside({ children }) {
         <div className="hovedside">
             <div className="hovedsideinnhold">
                 <Feil />
-                <Varslinger />
                 <OppfolgingStatus>
+                    <Varslinger />
                     <Container className="hovedsideinnhold__meny-container blokk-s">
                         <Navigasjonslinje />
                         <Verktoylinje />
