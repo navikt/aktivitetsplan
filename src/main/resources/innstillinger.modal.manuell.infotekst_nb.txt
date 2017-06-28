@@ -1,0 +1,1 @@
+Manuell oppfølging slår av dialog-tjenesten og mulighet for å kommunisere digitalt med brukeren.
