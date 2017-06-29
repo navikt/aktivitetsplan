@@ -1,47 +1,20 @@
 import React from 'react';
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { validForm, rules } from 'react-redux-form-validation';
+import { connect } from 'react-redux';
 import { Systemtittel } from 'nav-frontend-typografi';
 import ModalFooter from '../modal-footer';
 import history from '../../history';
 import { RemoteSubmitKnapp, RemoteResetKnapp } from './remote-knapp';
 import BegrunnelseForm from './begrunnelse-form';
+import { lagreBegrunnelse } from '../../ducks/situasjon';
+import InnstillingerModal from '../innstillinger/innstillinger-modal';
 
-const MAKS_LENGDE = 500;
 export const AVSLUTT_FORM_NAME = 'avslutt-oppfolging-form';
 
-const forLang = rules.maxLength(
-    MAKS_LENGDE,
-    <FormattedMessage
-        id="avslutt.oppfolging.feilmelding.for-lang"
-        values={{ MAKS_LENGDE }}
-    />
-);
-
-const pakrevd = rules.minLength(
-    0,
-    <FormattedMessage id="avslutt.oppfolging.feilmelding.for-kort" />
-);
-
-const AvslutningForm = () => (
-    <BegrunnelseForm
-        labelId="innstillinger.modal.avslutt.oppfolging.begrunnelse"
-        name="begrunnelse-avslutt-periode"
-        maxLength={MAKS_LENGDE}
-    />
-);
-
-const AvslutningReduxForm = validForm({
-    form: AVSLUTT_FORM_NAME,
-    destroyOnUnmount: false,
-    validate: {
-        begrunnelse: [forLang, pakrevd],
-    },
-})(AvslutningForm);
-
-function AvsluttOppfolgingperiode() {
+function AvsluttOppfolgingperiode({ doLagreBegrunnelse }) {
     return (
-        <div>
+        <InnstillingerModal>
             <section className="innstillinger__avslutt-periode">
                 <Systemtittel>
                     <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.overskrift" />
@@ -49,9 +22,13 @@ function AvsluttOppfolgingperiode() {
                 <div className="blokk-xxs">
                     <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.beskrivelse" />
                 </div>
-                <AvslutningReduxForm
-                    onSubmit={() =>
-                        history.push('/innstillinger/avslutt/bekreft')}
+                <BegrunnelseForm
+                    labelId="innstillinger.modal.avslutt.oppfolging.begrunnelse"
+                    formNavn={AVSLUTT_FORM_NAME}
+                    onSubmit={form => {
+                        doLagreBegrunnelse(form.begrunnelse);
+                        return history.push('/innstillinger/avslutt/bekreft');
+                    }}
                 />
             </section>
             <ModalFooter>
@@ -66,8 +43,16 @@ function AvsluttOppfolgingperiode() {
                     <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.knapp.avbryt" />
                 </RemoteResetKnapp>
             </ModalFooter>
-        </div>
+        </InnstillingerModal>
     );
 }
 
-export default AvsluttOppfolgingperiode;
+AvsluttOppfolgingperiode.propTypes = {
+    doLagreBegrunnelse: PT.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch => ({
+    doLagreBegrunnelse: begrunnelse => dispatch(lagreBegrunnelse(begrunnelse)),
+});
+
+export default connect(null, mapDispatchToProps)(AvsluttOppfolgingperiode);

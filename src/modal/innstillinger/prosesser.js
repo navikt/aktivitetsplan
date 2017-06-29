@@ -1,34 +1,34 @@
 import React from 'react';
-import PT from 'prop-types';
 import { connect } from 'react-redux';
 import AvsluttOppfolgingProsess from './avslutt-oppfolging-prosess';
 import StartOppfolgingProsess from './start-oppfolging-prosess';
+import SettManuellProsess from './sett-manuell-prosess';
 import OppfolgingsperiodeHistorikk from './oppfolgingsperiode-historikk';
+import * as AppPT from '../../proptypes';
+import InnstillingerModal from './innstillinger-modal';
 
-function Prosesser({ underOppfolging, kanStarte }) {
+function Prosesser({ situasjon }) {
     return (
-        <div>
-            <AvsluttOppfolgingProsess hidden={!underOppfolging} />
-            <StartOppfolgingProsess hidden={!kanStarte} />
+        <InnstillingerModal>
+            <AvsluttOppfolgingProsess hidden={!situasjon.underOppfolging} />
+            <StartOppfolgingProsess hidden={!situasjon.kanStarte} />
+            <SettManuellProsess hidden={situasjon.manuell} />
             <hr className="innstillinger__delelinje" />
             <OppfolgingsperiodeHistorikk />
-        </div>
+        </InnstillingerModal>
     );
 }
 
 Prosesser.defaultProps = {
-    underOppfolging: false,
-    kanStarte: false,
+    situasjon: undefined,
 };
 
 Prosesser.propTypes = {
-    underOppfolging: PT.bool,
-    kanStarte: PT.bool,
+    situasjon: AppPT.situasjon,
 };
 
 const mapStateToProps = state => ({
-    underOppfolging: state.data.situasjon.data.underOppfolging,
-    kanStarte: state.data.situasjon.data.kanStarteOppfolging,
+    situasjon: state.data.situasjon.data,
 });
 
 export default connect(mapStateToProps)(Prosesser);
