@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import { Collapse } from 'react-collapse';
+import Collapse from 'react-collapse';
 import classNames from 'classnames';
 import VisibleIfDiv from './utils/visible-if-div';
 
@@ -56,7 +56,8 @@ class Accordion extends Component {
 }
 
 Accordion.defaultProps = {
-    onClick: () => {},
+    onClick: () => {
+    },
     apen: false,
     children: null,
     className: '',
