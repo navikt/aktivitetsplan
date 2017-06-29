@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import ModalFooter from '../modal-footer';
 import history from '../../history';
 import { RemoteSubmitKnapp, RemoteResetKnapp } from './remote-knapp';
@@ -20,7 +20,9 @@ function AvsluttOppfolgingperiode({ doLagreBegrunnelse }) {
                     <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.overskrift" />
                 </Systemtittel>
                 <div className="blokk-xxs">
-                    <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.beskrivelse" />
+                    <Normaltekst>
+                        <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.beskrivelse" />
+                    </Normaltekst>
                 </div>
                 <BegrunnelseForm
                     labelId="innstillinger.modal.avslutt.oppfolging.begrunnelse"

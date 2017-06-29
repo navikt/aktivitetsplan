@@ -27,14 +27,14 @@ function SettManuell({
     return (
         <InnstillingerModal>
             <section className="innstillinger__sett-manuell">
-                <Systemtittel>
-                    <FormattedMessage id="innstillinger.modal.manuell.overskrift" />
-                </Systemtittel>
                 <div className="blokk-xxs">
-                    <AlertStripeInfoSolid>
-                        <FormattedMessage id="innstillinger.modal.manuell.infotekst" />
-                    </AlertStripeInfoSolid>
+                    <Systemtittel>
+                        <FormattedMessage id="innstillinger.modal.manuell.overskrift" />
+                    </Systemtittel>
                 </div>
+                <AlertStripeInfoSolid className="blokk-xxs">
+                    <FormattedMessage id="innstillinger.modal.manuell.infotekst" />
+                </AlertStripeInfoSolid>
                 <BegrunnelseForm
                     labelId="innstillinger.modal.manuell.begrunnelse"
                     formNavn={SETT_MANUELL_FORM_NAME}
