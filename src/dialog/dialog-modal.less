@@ -72,9 +72,12 @@
 
   &__ny-dialog-knapp {
     border: 0;
-    padding-left: 2rem;
     background: data-uri('@{aktivitetsplanPath}/dialog/dialog-modal-ny-henvendelse.svg') no-repeat;
     background-size: contain;
+
+   &.knappelenke {
+      padding-left: 2rem;
+    }
   }
 
   &__dialoger {
@@ -91,6 +94,12 @@
       padding: 2rem;
       background-color: @gray-background;
       overflow-y: auto;
+
+      &:focus {
+        outline: none;
+        border: 3px solid @fokusOrange;
+        padding: ~'calc(2rem - 3px)';
+      }
 
       @media (max-width: @mobil-bredde) {
         width: 100%;

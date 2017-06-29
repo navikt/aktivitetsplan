@@ -129,6 +129,7 @@ function HoyreKolonne({
         <VisibleDiv
             visible={harNyDialogEllerValgtDialog}
             className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
+            tabIndex="0"
         >
             <VisibleDiv visible={harNyDialog}>
                 <Undertittel>
