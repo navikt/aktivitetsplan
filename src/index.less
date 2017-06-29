@@ -2,5 +2,21 @@
 @coreModulePath: './../../';
 @aktivitetsplanPath: '.';
 
+html,
+body,
+.appContainer {
+  height: 100%;
+}
+
+.appContainer {
+  & > div {
+    height: 100%;
+  }
+}
+
+body {
+  margin: 0;
+  background: @gray-background;
+}
 
 @import './main';

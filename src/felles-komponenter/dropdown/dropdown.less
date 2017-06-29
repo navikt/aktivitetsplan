@@ -21,16 +21,6 @@
     width: 100%;
     position: relative;
     display: inline-block;
-
-    &:before {
-      .chevronline-mixin();
-      transform: translateX(3px) rotate(-45deg);
-    }
-
-    &:after {
-      .chevronline-mixin();
-      transform: translateX(-3px) rotate(45deg);
-    }
   }
 
   &__btn {
@@ -40,6 +30,18 @@
     background: @hvit;
     border: 1px solid @ikonGraa;
     border-radius: @border-radius-small;
+
+    &:before {
+      .chevronline-mixin();
+      transform: translateX(3px) rotate(-45deg);
+      transition: transform 0.3s;
+    }
+
+    &:after {
+      .chevronline-mixin();
+      transform: translateX(-3px) rotate(45deg);
+      transition: transform 0.3s;
+    }
 
     &:focus {
       outline: none;
@@ -74,6 +76,16 @@
       border-bottom-right-radius: 0;
       border-bottom: 1px solid @hvit;
       padding-bottom: 1rem;
+
+      &:before {
+        transform: translateX(3px) rotate(45deg);
+        transition: transform 0.3s;
+      }
+
+      &:after {
+        transform: translateX(-3px) rotate(-45deg);
+        transition: transform 0.3s;
+      }
     }
   }
 

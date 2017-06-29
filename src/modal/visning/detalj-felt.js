@@ -6,7 +6,7 @@ import visibleIfHOC from '../../hocs/visible-if';
 function DetaljFelt({ tittel, children }) {
     return (
         <div className="aktivitetsdetaljer__felt detaljfelt">
-            <EtikettLiten className="detaljfelt__tittel">{tittel}</EtikettLiten>
+            <EtikettLiten className="detaljfelt__tittel" tag="h2">{tittel}</EtikettLiten>
             {children}
         </div>
     );

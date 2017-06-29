@@ -14,7 +14,7 @@ import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { dialogFilter } from '../moduler/filter/filter-utils';
 
 const Prikk = visibleIfHOC(props => (
-    <div className="dialoger__prikk" {...props} />
+    <div className="dialoger__markering" {...props} />
 ));
 const Info = visibleIfHOC(({ slash, className, children }) => (
     <span>
