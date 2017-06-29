@@ -13,7 +13,7 @@ import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { dialogFilter } from '../moduler/filter/filter-utils';
 
-const Prikk = visibleIfHOC(props => (
+const Markering = visibleIfHOC(props => (
     <div className="dialoger__markering" {...props} />
 ));
 const Info = visibleIfHOC(({ slash, className, children }) => (
@@ -49,7 +49,7 @@ function DialogVisning({ dialog, erValgt, aktiviteter }) {
             className={dialogCls(erValgt, !dialog.lest)}
             href={`/dialog/${dialog.id}`}
         >
-            <Prikk visible={!dialog.lest} />
+            <Markering visible={!dialog.lest} />
             <div>
                 <Info><Dato>{dialog.sisteDato}</Dato></Info>
                 <Info visible={harAktivitetType} slash>

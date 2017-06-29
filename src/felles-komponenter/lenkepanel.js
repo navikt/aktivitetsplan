@@ -12,7 +12,7 @@ ReactRouterLink.propTypes = {
 };
 
 function Lenkepanel(props) {
-    return <NavLenkepanel linkCreator={ReactRouterLink} {...props} />;
+    return <NavLenkepanel linkCreator={ReactRouterLink} {...props} tag="div"/>;
 }
 
 export default Lenkepanel;

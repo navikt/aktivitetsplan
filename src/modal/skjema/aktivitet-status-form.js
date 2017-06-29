@@ -115,7 +115,7 @@ function AktivitetStatusForm(props) {
                     />
                 </VisibleIfDiv>
 
-                <Hovedknapp spinner={lasterData} mini autoDisableVedSpinner>
+                <Hovedknapp spinner={lasterData} mini autoDisableVedSpinner className="knapp--mini oppdater-status">
                     <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
                 </Hovedknapp>
             </VisibleIfDiv>
