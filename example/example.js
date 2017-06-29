@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
-import { Route, IndexRoute } from 'react-router';
+import { Route } from 'react-router';
 import { EKSEMPEL_FNR } from './config';
 import { hentPerson, setNAVsomMotpart } from '../src/ducks/motpart';
 import App from '../src/app';

@@ -7,8 +7,9 @@ import hiddenIfHoc from './../../felles-komponenter/hidden-if/hidden-if';
 import { STATUS } from './../../ducks/utils';
 import history from '../../history';
 import StartProsess from './start-prosess';
+import { SLETT_BEGRUNNELSE_ACTION } from '../../ducks/situasjon';
 
-function SettManuellProsess({ intl, laster }) {
+function SettManuellProsess({ intl, laster, slettBegrunnelse }) {
     return (
         <StartProsess
             className="innstillinger__prosess"
@@ -19,7 +20,10 @@ function SettManuellProsess({ intl, laster }) {
                 id: 'innstillinger.modal.prosess.start.knapp',
             })}
             laster={laster}
-            onClick={() => history.push('/innstillinger/manuell')}
+            onClick={() => {
+                slettBegrunnelse();
+                history.push('/innstillinger/manuell');
+            }}
         >
             <div className="blokk-xs">
                 <Normaltekst>
@@ -33,12 +37,17 @@ function SettManuellProsess({ intl, laster }) {
 SettManuellProsess.propTypes = {
     intl: intlShape.isRequired,
     laster: PT.bool.isRequired,
+    slettBegrunnelse: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     laster: state.data.situasjon.status === STATUS.RELOADING,
 });
 
-export default connect(mapStateToProps)(
+const mapDispatchToProps = dispatch => ({
+    slettBegrunnelse: () => dispatch(SLETT_BEGRUNNELSE_ACTION),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
     hiddenIfHoc(injectIntl(SettManuellProsess))
 );

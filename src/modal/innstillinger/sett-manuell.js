@@ -2,51 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { validForm, rules } from 'react-redux-form-validation';
-import { formValueSelector } from 'redux-form';
 import Systemtittel from 'nav-frontend-typografi/src/systemtittel';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { RemoteSubmitKnapp, RemoteResetKnapp } from './remote-knapp';
+import * as AppPt from '../../proptypes';
 import history from '../../history';
 import ModalFooter from '../modal-footer';
 import BegrunnelseForm from './begrunnelse-form';
-import { settManuell } from '../../ducks/situasjon';
+import { settManuell, lagreBegrunnelse } from '../../ducks/situasjon';
+import InnstillingerModal from '../innstillinger/innstillinger-modal';
+import { STATUS } from '../../ducks/utils';
 
-const MAKS_LENGDE = 500;
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 
-const SettManuellForm = () => (
-    <BegrunnelseForm
-        labelId="innstillinger.modal.manuell.begrunnelse"
-        name="begrunnelse-sett-manuell"
-        maxLength={MAKS_LENGDE}
-    />
-);
-
-const forLang = rules.maxLength(
-    MAKS_LENGDE,
-    <FormattedMessage
-        id="manuell.feilmelding.for-lang"
-        values={{ MAKS_LENGDE }}
-    />
-);
-
-const pakrevd = rules.minLength(
-    0,
-    <FormattedMessage id="manuell.feilmelding.for-kort" />
-);
-
-const SettManuellReduxForm = validForm({
-    form: SETT_MANUELL_FORM_NAME,
-    destroyOnUnmount: false,
-    validate: {
-        begrunnelse: [forLang, pakrevd],
-    },
-})(SettManuellForm);
-
-function SettManuell({ doSettManuell, begrunnelse, veilederId }) {
+function SettManuell({
+    doSettManuell,
+    veilederId,
+    doLagreBegrunnelse,
+    situasjonReducer,
+}) {
+    const situasjonLaster =
+        situasjonReducer.status === STATUS.PENDING ||
+        situasjonReducer.status === STATUS.RELOADING;
     return (
-        <div>
+        <InnstillingerModal>
             <section className="innstillinger__sett-manuell">
                 <Systemtittel>
                     <FormattedMessage id="innstillinger.modal.manuell.overskrift" />
@@ -56,12 +35,22 @@ function SettManuell({ doSettManuell, begrunnelse, veilederId }) {
                         <FormattedMessage id="innstillinger.modal.manuell.infotekst" />
                     </AlertStripeInfoSolid>
                 </div>
-                <SettManuellReduxForm
-                    onSubmit={() => doSettManuell(begrunnelse, veilederId)}
+                <BegrunnelseForm
+                    labelId="innstillinger.modal.manuell.begrunnelse"
+                    formNavn={SETT_MANUELL_FORM_NAME}
+                    onSubmit={form => {
+                        doLagreBegrunnelse(form.begrunnelse);
+                        return doSettManuell(form.begrunnelse, veilederId);
+                    }}
                 />
             </section>
             <ModalFooter>
-                <RemoteSubmitKnapp formNavn={SETT_MANUELL_FORM_NAME} mini>
+                <RemoteSubmitKnapp
+                    formNavn={SETT_MANUELL_FORM_NAME}
+                    mini
+                    spinner={situasjonLaster}
+                    disabled={situasjonLaster}
+                >
                     <FormattedMessage id="innstillinger.modal.manuell.bekreft.knapp" />
                 </RemoteSubmitKnapp>
                 <RemoteResetKnapp
@@ -72,36 +61,34 @@ function SettManuell({ doSettManuell, begrunnelse, veilederId }) {
                     <FormattedMessage id="innstillinger.modal.manuell.avbryt.knapp" />
                 </RemoteResetKnapp>
             </ModalFooter>
-        </div>
+        </InnstillingerModal>
     );
 }
 
 SettManuell.defaultProps = {
-    begrunnelse: undefined,
     veilederId: undefined,
+    situasjonReducer: undefined,
 };
 
 SettManuell.propTypes = {
-    begrunnelse: PT.string,
     veilederId: PT.string,
     doSettManuell: PT.func.isRequired,
+    doLagreBegrunnelse: PT.func.isRequired,
+    situasjonReducer: AppPt.situasjon,
 };
 
 const mapStateToProps = state => ({
     veilederId: state.data.identitet.data.id,
-    begrunnelse: formValueSelector(SETT_MANUELL_FORM_NAME)(
-        state,
-        'begrunnelse'
-    ),
-    doSettManuell: PT.func.isRequired,
+    situasjonReducer: state.data.situasjon,
 });
 
 const mapDispatchToProps = dispatch => ({
     doSettManuell: (begrunnelse, veilederId) => {
-        dispatch(settManuell(begrunnelse, veilederId)).then(
-            history.push('/innstillinger/manuell/kvittering')
-        );
+        dispatch(settManuell(begrunnelse, veilederId))
+            .then(() => history.push('/innstillinger/manuell/kvittering'))
+            .catch(() => history.push('/'));
     },
+    doLagreBegrunnelse: begrunnelse => dispatch(lagreBegrunnelse(begrunnelse)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettManuell);

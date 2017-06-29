@@ -46,18 +46,12 @@ export default function reducer(state = initalState, action) {
     switch (action.type) {
         case OK:
         case KAN_AVSLUTTE_OK:
-        case START_OPPFOLGING_OK:
-            return {
-                ...state,
-                status: STATUS.OK,
-                data: action.data,
-            };
         case AVSLUTT_OPPFOLGING_OK:
+        case START_OPPFOLGING_OK:
         case SETT_MANUELL_OK:
             return {
                 ...state,
                 status: STATUS.OK,
-                begrunnelse: null,
                 data: action.data,
             };
         case GODTA_OK:

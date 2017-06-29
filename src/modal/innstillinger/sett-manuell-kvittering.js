@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
-import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import {
+    AlertStripeAdvarsel,
+    AlertStripeSuksess,
+} from 'nav-frontend-alertstriper';
 import Modal from '../modal';
 import ModalHeader from '../modal-header';
 import history from '../../history';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../proptypes';
 
-function SettManuellKvittering({ motpart, begrunnelse }) {
+function SettManuellKvittering({ motpart, situasjonReducer }) {
     const { navn } = motpart.data;
+    const { manuell } = situasjonReducer.data;
+    const { begrunnelse } = situasjonReducer;
     return (
         <Modal
             isOpen
@@ -20,7 +24,7 @@ function SettManuellKvittering({ motpart, begrunnelse }) {
             contentClass="innstillinger"
         >
             <ModalHeader />
-            <Innholdslaster avhengigheter={[motpart]}>
+            <Innholdslaster avhengigheter={[motpart, situasjonReducer]}>
                 <article className="innstillinger__container">
                     <Innholdstittel>
                         <FormattedMessage
@@ -33,13 +37,21 @@ function SettManuellKvittering({ motpart, begrunnelse }) {
                             <FormattedMessage id="innstillinger.modal.manuell.overskrift" />
                         </Systemtittel>
                     </div>
-                    <AlertStripeSuksess className="blokk-m">
-                        <FormattedMessage
-                            // TODO: lage denne
-                            id="innstillinger.modal.manuell.kvittering"
-                            values={{ begrunnelse }}
-                        />
-                    </AlertStripeSuksess>
+                    {manuell &&
+                        <AlertStripeSuksess className="blokk-m">
+                            <FormattedMessage
+                                id="innstillinger.modal.manuell.kvittering.ok"
+                                values={{ begrunnelse }}
+                            >
+                                {text => (
+                                    <span className="whitespace">{text}</span>
+                                )}
+                            </FormattedMessage>
+                        </AlertStripeSuksess>}
+                    {!manuell &&
+                        <AlertStripeAdvarsel className="blokk-m">
+                            <FormattedMessage id="innstillinger.modal.manuell.kvittering.feilet" />
+                        </AlertStripeAdvarsel>}
                 </article>
             </Innholdslaster>
         </Modal>
@@ -52,11 +64,12 @@ SettManuellKvittering.defaultProps = {
 
 SettManuellKvittering.propTypes = {
     motpart: AppPT.motpart,
-    begrunnelse: PT.string.isRequired,
+    situasjonReducer: AppPT.situasjon.isRequired,
 };
 
 const mapStateToProps = state => ({
     motpart: state.data.motpart,
+    situasjonReducer: state.data.situasjon,
 });
 
 export default connect(mapStateToProps)(SettManuellKvittering);
