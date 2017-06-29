@@ -56,8 +56,7 @@ class Accordion extends Component {
 }
 
 Accordion.defaultProps = {
-    onClick: () => {
-    },
+    onClick: () => {},
     apen: false,
     children: null,
     className: '',
