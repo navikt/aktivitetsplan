@@ -72,9 +72,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     doAvsluttOppfolging: (begrunnelse, veilederId) => {
-        dispatch(avsluttOppfolging(begrunnelse, veilederId)).then(() =>
-            history.push('/innstillinger/avslutt/kvittering')
-        );
+        dispatch(avsluttOppfolging(begrunnelse, veilederId))
+            .then(() => history.push('/innstillinger/avslutt/kvittering'))
+            .catch(() => history.push('/'));
     },
 });
 

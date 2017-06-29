@@ -51,9 +51,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     lagre: () => {
-        dispatch(startOppfolging()).then(() =>
-            history.push('/innstillinger/start/kvittering')
-        );
+        dispatch(startOppfolging())
+            .then(() => history.push('/innstillinger/start/kvittering'))
+            .catch(() => history.push('/'));
     },
 });
 
