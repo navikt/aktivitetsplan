@@ -1,0 +1,1 @@
+Dette er en ingress som gir en beskrivelse av hva aktivitetstypen 'behandling' dreier seg om. Teksten må oppdateres i BitBucket når noen har funnet ut hva som skal stå her

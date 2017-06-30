@@ -11,4 +11,6 @@ TILTAKSAKTIVITET { Tiltak }
 GRUPPEAKTIVITET { Gruppeaktivitet }
 UTDANNINGSAKTIVITET { Utdanning }
 SOKEAVTALE { Avtale med NAV }
+IJOBB { Bruker i jobb }
+BEHANDLING { Behandling }
 }
