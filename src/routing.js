@@ -27,8 +27,11 @@ import StartOppfolgingKvittering
 import AvsluttOppfolgingKvittering
     from './modal/innstillinger/avslutt-oppfolging-kvittering';
 import SettManuell from './modal/innstillinger/sett-manuell';
+import SettDigital from './modal/innstillinger/sett-digital';
 import SettManuellKvittering
     from './modal/innstillinger/sett-manuell-kvittering';
+import SettDigitalKvittering
+    from './modal/innstillinger/sett-digital-kvittering';
 import { VIS_INNSTILLINGER } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -52,6 +55,12 @@ export default (
                 <Route
                     path="innstillinger/manuell/kvittering"
                     component={SettManuellKvittering}
+                />
+                <Route path="innstillinger" component={Prosesser} />
+                <Route path="innstillinger/digital" component={SettDigital} />
+                <Route
+                    path="innstillinger/digital/kvittering"
+                    component={SettDigitalKvittering}
                 />
                 <Route
                     path="innstillinger/avslutt"

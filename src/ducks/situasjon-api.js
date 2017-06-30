@@ -68,3 +68,10 @@ export function settManuell(begrunnelse, veilederId) {
         veilederId,
     });
 }
+
+export function settDigital(begrunnelse, veilederId) {
+    return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/settDigital`, {
+        begrunnelse,
+        veilederId,
+    });
+}

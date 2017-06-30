@@ -30,6 +30,10 @@ export const SETT_MANUELL_OK = 'situasjon/manuell/OK';
 export const SETT_MANUELL_FEILET = 'situasjon/manuell/FEILET';
 export const SETT_MANUELL_PENDING = 'situasjon/manuell/PENDING';
 
+export const SETT_DIGITAL_OK = 'situasjon/digital/OK';
+export const SETT_DIGITAL_FEILET = 'situasjon/digital/FEILET';
+export const SETT_DIGITAL_PENDING = 'situasjon/digital/PENDING';
+
 export const LAGRE_BEGRUNNELSE = 'form/lagre-begrunnelse';
 export const SLETT_BEGRUNNELSE = 'form/slett-begrunnelse';
 
@@ -49,6 +53,7 @@ export default function reducer(state = initalState, action) {
         case AVSLUTT_OPPFOLGING_OK:
         case START_OPPFOLGING_OK:
         case SETT_MANUELL_OK:
+        case SETT_DIGITAL_OK:
             return {
                 ...state,
                 status: STATUS.OK,
@@ -75,6 +80,7 @@ export default function reducer(state = initalState, action) {
         case AVSLUTT_OPPFOLGING_FEILET:
         case START_OPPFOLGING_FEILET:
         case SETT_MANUELL_FEILET:
+        case SETT_DIGITAL_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
@@ -87,6 +93,7 @@ export default function reducer(state = initalState, action) {
         case AVSLUTT_OPPFOLGING_PENDING:
         case START_OPPFOLGING_PENDING:
         case SETT_MANUELL_PENDING:
+        case SETT_DIGITAL_PENDING:
             return {
                 ...state,
                 status: state.status === STATUS.NOT_STARTED
@@ -164,6 +171,14 @@ export function settManuell(begrunnelse, veilederId) {
         OK: SETT_MANUELL_OK,
         FEILET: SETT_MANUELL_FEILET,
         PENDING: SETT_MANUELL_PENDING,
+    });
+}
+
+export function settDigital(begrunnelse, veilederId) {
+    return doThenDispatch(() => Api.settDigital(begrunnelse, veilederId), {
+        OK: SETT_DIGITAL_OK,
+        FEILET: SETT_DIGITAL_FEILET,
+        PENDING: SETT_DIGITAL_PENDING,
     });
 }
 
