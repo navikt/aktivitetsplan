@@ -6,13 +6,13 @@ import {
     AlertStripeAdvarsel,
     AlertStripeSuksess,
 } from 'nav-frontend-alertstriper';
-import Modal from '../modal';
-import ModalHeader from '../modal-header';
-import history from '../../history';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import * as AppPT from '../../proptypes';
+import Modal from '../../../modal/modal';
+import ModalHeader from '../../../modal/modal-header';
+import history from '../../../history';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../proptypes';
 
-function SettDigitalKvittering({ motpart, situasjonReducer }) {
+function SettDigitalOppfolgingKvittering({ motpart, situasjonReducer }) {
     const { navn } = motpart.data;
     const { manuell } = situasjonReducer.data;
     const { begrunnelse } = situasjonReducer;
@@ -58,11 +58,11 @@ function SettDigitalKvittering({ motpart, situasjonReducer }) {
     );
 }
 
-SettDigitalKvittering.defaultProps = {
+SettDigitalOppfolgingKvittering.defaultProps = {
     motpart: undefined,
 };
 
-SettDigitalKvittering.propTypes = {
+SettDigitalOppfolgingKvittering.propTypes = {
     motpart: AppPT.motpart,
     situasjonReducer: AppPT.situasjon.isRequired,
 };
@@ -72,4 +72,4 @@ const mapStateToProps = state => ({
     situasjonReducer: state.data.situasjon,
 });
 
-export default connect(mapStateToProps)(SettDigitalKvittering);
+export default connect(mapStateToProps)(SettDigitalOppfolgingKvittering);

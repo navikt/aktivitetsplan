@@ -4,19 +4,22 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Systemtittel from 'nav-frontend-typografi/src/systemtittel';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { RemoteSubmitKnapp, RemoteResetKnapp } from './remote-knapp';
-import * as AppPt from '../../proptypes';
-import history from '../../history';
-import ModalFooter from '../modal-footer';
-import BegrunnelseForm from './begrunnelse-form';
-import { settDigital, lagreBegrunnelse } from '../../ducks/situasjon';
-import InnstillingerModal from '../innstillinger/innstillinger-modal';
-import { STATUS } from '../../ducks/utils';
+import {
+    RemoteSubmitKnapp,
+    RemoteResetKnapp,
+} from '../../../felles-komponenter/remote-knapp/remote-knapp';
+import * as AppPt from '../../../proptypes';
+import history from '../../../history';
+import ModalFooter from '../../../modal/modal-footer';
+import BegrunnelseForm from '../begrunnelse-form';
+import { settDigitalOppfolging, lagreBegrunnelse } from '../../../ducks/situasjon';
+import InnstillingerModal from '../innstillinger-modal';
+import { STATUS } from '../../../ducks/utils';
 
 const SETT_DIGITAL_FORM_NAME = 'sett-digital-form';
 
-function SettDigital({
-    doSettDigital,
+function SettDigitalOppfolging({
+   doSettDigitalOppfolging,
     veilederId,
     doLagreBegrunnelse,
     situasjonReducer,
@@ -26,7 +29,7 @@ function SettDigital({
         situasjonReducer.status === STATUS.RELOADING;
     return (
         <InnstillingerModal>
-            <section className="innstillinger__sett-digital">
+            <section className="innstillinger__prosess">
                 <div className="blokk-xxs">
                     <Systemtittel>
                         <FormattedMessage id="innstillinger.modal.digital.overskrift" />
@@ -40,7 +43,7 @@ function SettDigital({
                     formNavn={SETT_DIGITAL_FORM_NAME}
                     onSubmit={form => {
                         doLagreBegrunnelse(form.begrunnelse);
-                        return doSettDigital(form.begrunnelse, veilederId);
+                        return doSettDigitalOppfolging(form.begrunnelse, veilederId);
                     }}
                 />
             </section>
@@ -65,14 +68,14 @@ function SettDigital({
     );
 }
 
-SettDigital.defaultProps = {
+SettDigitalOppfolging.defaultProps = {
     veilederId: undefined,
     situasjonReducer: undefined,
 };
 
-SettDigital.propTypes = {
+SettDigitalOppfolging.propTypes = {
     veilederId: PT.string,
-    doSettDigital: PT.func.isRequired,
+    doSettDigitalOppfolging: PT.func.isRequired,
     doLagreBegrunnelse: PT.func.isRequired,
     situasjonReducer: AppPt.situasjon,
 };
@@ -83,12 +86,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doSettDigital: (begrunnelse, veilederId) => {
-        dispatch(settDigital(begrunnelse, veilederId))
+    doSettDigitalOppfolging: (begrunnelse, veilederId) => {
+        dispatch(settDigitalOppfolging(begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/digital/kvittering'))
             .catch(() => history.push('/'));
     },
     doLagreBegrunnelse: begrunnelse => dispatch(lagreBegrunnelse(begrunnelse)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettDigital);
+export default connect(mapStateToProps, mapDispatchToProps)(SettDigitalOppfolging);

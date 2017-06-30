@@ -177,8 +177,8 @@ export function settManuellOppfolging(begrunnelse, veilederId) {
     );
 }
 
-export function settDigital(begrunnelse, veilederId) {
-    return doThenDispatch(() => Api.settDigital(begrunnelse, veilederId), {
+export function settDigitalOppfolging(begrunnelse, veilederId) {
+    return doThenDispatch(() => Api.settDigitalOppfolging(begrunnelse, veilederId), {
         OK: SETT_DIGITAL_OK,
         FEILET: SETT_DIGITAL_FEILET,
         PENDING: SETT_DIGITAL_PENDING,

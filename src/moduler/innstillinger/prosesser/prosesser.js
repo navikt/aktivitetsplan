@@ -6,7 +6,7 @@ import StartOppfolgingProsess
     from '../start-oppfolging/start-oppfolging-prosess';
 import SettManuellOppfolgingProsess
     from '../sett-manuell-oppfolging/sett-manuell-oppfolging-prosess';
-import SettDigitalOppfolgingProsess from './sett-digital-prosess';
+import SettDigitalOppfolgingProsess from '../sett-digital-oppfolging/sett-digital-oppfolging-prosess';
 import OppfolgingsperiodeHistorikk
     from '../historikk/oppfolgingsperiode-historikk';
 import * as AppPT from '../../../proptypes';
@@ -18,7 +18,6 @@ function Prosesser({ situasjon }) {
             <AvsluttOppfolgingProsess hidden={!situasjon.underOppfolging} />
             <StartOppfolgingProsess hidden={!situasjon.kanStarte} />
             <SettManuellOppfolgingProsess hidden={situasjon.manuell} />
-            <SettManuellProsess hidden={situasjon.manuell} />
             <SettDigitalOppfolgingProsess hidden={!situasjon.manuell} />
             <hr className="innstillinger__delelinje" />
             <OppfolgingsperiodeHistorikk />

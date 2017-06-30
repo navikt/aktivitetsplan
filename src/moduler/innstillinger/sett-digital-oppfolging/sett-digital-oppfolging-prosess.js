@@ -3,13 +3,13 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import hiddenIfHoc from './../../felles-komponenter/hidden-if/hidden-if';
-import { STATUS } from './../../ducks/utils';
-import history from '../../history';
-import StartProsess from './start-prosess';
-import { SLETT_BEGRUNNELSE_ACTION } from '../../ducks/situasjon';
+import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
+import { STATUS } from '../../../ducks/utils';
+import history from '../../../history';
+import StartProsess from '../prosesser/start-prosess';
+import { SLETT_BEGRUNNELSE_ACTION } from '../../../ducks/situasjon';
 
-function SettDigitalProsess({ intl, laster, slettBegrunnelse }) {
+function SettDigitalOppfolgingProsess({ intl, laster, slettBegrunnelse }) {
     return (
         <StartProsess
             className="innstillinger__prosess"
@@ -34,7 +34,7 @@ function SettDigitalProsess({ intl, laster, slettBegrunnelse }) {
     );
 }
 
-SettDigitalProsess.propTypes = {
+SettDigitalOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
     laster: PT.bool.isRequired,
     slettBegrunnelse: PT.func.isRequired,
@@ -49,5 +49,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    hiddenIfHoc(injectIntl(SettDigitalProsess))
+    hiddenIfHoc(injectIntl(SettDigitalOppfolgingProsess))
 );

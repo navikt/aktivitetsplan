@@ -29,11 +29,11 @@ import AvsluttOppfolgingKvittering
     from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolging-kvittering';
 import SettManuellOppfolging
     from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging';
-import SettDigital from './modal/innstillinger/sett-digital';
+import SettDigital from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
 import SettManuellOppfolgingKvittering
     from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering
-    from './modal/innstillinger/sett-digital-kvittering';
+    from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
 import { VIS_INNSTILLINGER } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
