@@ -5,12 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import ModalFooter from '../modal-footer';
-import { avsluttOppfolging } from '../../ducks/situasjon';
-import history from '../../history';
+import ModalFooter from '../../../modal/modal-footer';
+import { avsluttOppfolging } from '../../../ducks/situasjon';
+import history from '../../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
-import { RemoteResetKnapp } from './remote-knapp';
-import InnstillingerModal from '../innstillinger/innstillinger-modal';
+import {
+    RemoteResetKnapp,
+} from '../../../felles-komponenter/remote-knapp/remote-knapp';
+import InnstillingerModal from '../innstillinger-modal';
 
 function BekreftAvslutning({
     doAvsluttOppfolging,
@@ -20,7 +22,7 @@ function BekreftAvslutning({
 }) {
     return (
         <InnstillingerModal>
-            <section className="innstillinger__avslutt-periode">
+            <section className="innstillinger__prosess">
                 <div className="blokk-xs">
                     <Systemtittel>
                         <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.overskrift" />

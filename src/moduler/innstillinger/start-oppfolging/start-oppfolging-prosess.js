@@ -3,10 +3,10 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import history from '../../history';
-import StartProsess from './start-prosess';
-import hiddenIfHoc from './../../felles-komponenter/hidden-if/hidden-if';
-import { SLETT_BEGRUNNELSE_ACTION } from '../../ducks/situasjon';
+import history from '../../../history';
+import StartProsess from '../prosesser/start-prosess';
+import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
+import { SLETT_BEGRUNNELSE_ACTION } from '../../../ducks/situasjon';
 
 function StartOppfolgingProsess({ intl, slettBegrunnelse }) {
     return (

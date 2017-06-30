@@ -4,19 +4,25 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Systemtittel from 'nav-frontend-typografi/src/systemtittel';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { RemoteSubmitKnapp, RemoteResetKnapp } from './remote-knapp';
-import * as AppPt from '../../proptypes';
-import history from '../../history';
-import ModalFooter from '../modal-footer';
-import BegrunnelseForm from './begrunnelse-form';
-import { settManuell, lagreBegrunnelse } from '../../ducks/situasjon';
-import InnstillingerModal from '../innstillinger/innstillinger-modal';
-import { STATUS } from '../../ducks/utils';
+import {
+    RemoteSubmitKnapp,
+    RemoteResetKnapp,
+} from '../../../felles-komponenter/remote-knapp/remote-knapp';
+import * as AppPt from '../../../proptypes';
+import history from '../../../history';
+import ModalFooter from '../../../modal/modal-footer';
+import BegrunnelseForm from '../begrunnelse-form';
+import {
+    settManuellOppfolging,
+    lagreBegrunnelse,
+} from '../../../ducks/situasjon';
+import InnstillingerModal from '../innstillinger-modal';
+import { STATUS } from '../../../ducks/utils';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 
-function SettManuell({
-    doSettManuell,
+function SettManuellOppfolging({
+    doSettManuellOppfolging,
     veilederId,
     doLagreBegrunnelse,
     situasjonReducer,
@@ -26,7 +32,7 @@ function SettManuell({
         situasjonReducer.status === STATUS.RELOADING;
     return (
         <InnstillingerModal>
-            <section className="innstillinger__sett-manuell">
+            <section className="innstillinger__prosess">
                 <div className="blokk-xxs">
                     <Systemtittel>
                         <FormattedMessage id="innstillinger.modal.manuell.overskrift" />
@@ -40,7 +46,10 @@ function SettManuell({
                     formNavn={SETT_MANUELL_FORM_NAME}
                     onSubmit={form => {
                         doLagreBegrunnelse(form.begrunnelse);
-                        return doSettManuell(form.begrunnelse, veilederId);
+                        return doSettManuellOppfolging(
+                            form.begrunnelse,
+                            veilederId
+                        );
                     }}
                 />
             </section>
@@ -65,14 +74,14 @@ function SettManuell({
     );
 }
 
-SettManuell.defaultProps = {
+SettManuellOppfolging.defaultProps = {
     veilederId: undefined,
     situasjonReducer: undefined,
 };
 
-SettManuell.propTypes = {
+SettManuellOppfolging.propTypes = {
     veilederId: PT.string,
-    doSettManuell: PT.func.isRequired,
+    doSettManuellOppfolging: PT.func.isRequired,
     doLagreBegrunnelse: PT.func.isRequired,
     situasjonReducer: AppPt.situasjon,
 };
@@ -83,12 +92,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doSettManuell: (begrunnelse, veilederId) => {
-        dispatch(settManuell(begrunnelse, veilederId))
+    doSettManuellOppfolging: (begrunnelse, veilederId) => {
+        dispatch(settManuellOppfolging(begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/manuell/kvittering'))
             .catch(() => history.push('/'));
     },
     doLagreBegrunnelse: begrunnelse => dispatch(lagreBegrunnelse(begrunnelse)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettManuell);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    SettManuellOppfolging
+);

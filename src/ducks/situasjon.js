@@ -140,7 +140,7 @@ export function startOppfolging() {
     });
 }
 
-export function kanAvslutte() {
+export function kanAvslutteOppfolging() {
     return doThenDispatch(() => Api.kanAvslutte(), {
         OK: KAN_AVSLUTTE_OK,
         FEILET: KAN_AVSLUTTE_FEILET,
@@ -159,12 +159,15 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
     );
 }
 
-export function settManuell(begrunnelse, veilederId) {
-    return doThenDispatch(() => Api.settManuell(begrunnelse, veilederId), {
-        OK: SETT_MANUELL_OK,
-        FEILET: SETT_MANUELL_FEILET,
-        PENDING: SETT_MANUELL_PENDING,
-    });
+export function settManuellOppfolging(begrunnelse, veilederId) {
+    return doThenDispatch(
+        () => Api.settManuellOppfolging(begrunnelse, veilederId),
+        {
+            OK: SETT_MANUELL_OK,
+            FEILET: SETT_MANUELL_FEILET,
+            PENDING: SETT_MANUELL_PENDING,
+        }
+    );
 }
 
 export function lagreBegrunnelse(begrunnelse) {

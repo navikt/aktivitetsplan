@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { rules, validForm } from 'react-redux-form-validation';
-import Textarea from '../skjema/textarea/textarea';
+import Textarea from '../../modal/skjema/textarea/textarea';
 
 const MAKS_LENGDE = 500;
 

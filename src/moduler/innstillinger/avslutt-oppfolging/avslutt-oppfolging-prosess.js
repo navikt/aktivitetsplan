@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import hiddenIfHoc from './../../felles-komponenter/hidden-if/hidden-if';
-import { kanAvslutte, SLETT_BEGRUNNELSE_ACTION } from '../../ducks/situasjon';
-import { STATUS } from './../../ducks/utils';
-import history from '../../history';
-import StartProsess from './start-prosess';
-import * as AppPT from './../../proptypes';
+import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
+import {
+    kanAvslutteOppfolging,
+    SLETT_BEGRUNNELSE_ACTION,
+} from '../../../ducks/situasjon';
+import { STATUS } from '../../../ducks/utils';
+import history from '../../../history';
+import StartProsess from '../prosesser/start-prosess';
+import * as AppPT from '../../../proptypes';
 
 class AvsluttOppfolgingProsess extends Component {
     constructor(props) {
@@ -21,7 +24,7 @@ class AvsluttOppfolgingProsess extends Component {
     }
 
     gaTilBekreft = url => {
-        this.props.doKanAvslutte().then(response => {
+        this.props.doKanAvslutteOppfolging().then(response => {
             this.setState({
                 kanAvslutte: response.data.avslutningStatus.kanAvslutte,
                 harSjekket: true,
@@ -80,7 +83,7 @@ class AvsluttOppfolgingProsess extends Component {
 AvsluttOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
     laster: PT.bool.isRequired,
-    doKanAvslutte: PT.func.isRequired,
+    doKanAvslutteOppfolging: PT.func.isRequired,
     slettBegrunnelse: PT.func.isRequired,
     avslutningStatus: AppPT.avslutningStatus.isRequired,
 };
@@ -93,7 +96,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     slettBegrunnelse: () => dispatch(SLETT_BEGRUNNELSE_ACTION),
-    doKanAvslutte: () => dispatch(kanAvslutte()),
+    doKanAvslutteOppfolging: () => dispatch(kanAvslutteOppfolging()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

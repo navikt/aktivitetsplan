@@ -16,19 +16,21 @@ import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
 import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
 import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
-import Prosesser from './modal/innstillinger/prosesser';
-import AvsluttOppfolging from './modal/innstillinger/avslutt-oppfolginsperiode';
+import Prosesser from './moduler/innstillinger/prosesser/prosesser';
+import AvsluttOppfolging
+    from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolginsperiode';
 import BekreftAvsluttOppfolging
-    from './modal/innstillinger/bekreft-avslutt-oppfolginsperiode';
+    from './moduler/innstillinger/avslutt-oppfolging/bekreft-avslutt-oppfolginsperiode';
 import BekreftStartOppfolging
-    from './modal/innstillinger/bekreft-start-oppfolginsperiode';
+    from './moduler/innstillinger/start-oppfolging/bekreft-start-oppfolginsperiode';
 import StartOppfolgingKvittering
-    from './modal/innstillinger/start-oppfolging-kvittering';
+    from './moduler/innstillinger/start-oppfolging/start-oppfolging-kvittering';
 import AvsluttOppfolgingKvittering
-    from './modal/innstillinger/avslutt-oppfolging-kvittering';
-import SettManuell from './modal/innstillinger/sett-manuell';
-import SettManuellKvittering
-    from './modal/innstillinger/sett-manuell-kvittering';
+    from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolging-kvittering';
+import SettManuellOppfolging
+    from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging';
+import SettManuellOppfolgingKvittering
+    from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import { VIS_INNSTILLINGER } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -48,10 +50,13 @@ export default (
         {VIS_INNSTILLINGER &&
             <Route>
                 <Route path="innstillinger" component={Prosesser} />
-                <Route path="innstillinger/manuell" component={SettManuell} />
+                <Route
+                    path="innstillinger/manuell"
+                    component={SettManuellOppfolging}
+                />
                 <Route
                     path="innstillinger/manuell/kvittering"
-                    component={SettManuellKvittering}
+                    component={SettManuellOppfolgingKvittering}
                 />
                 <Route
                     path="innstillinger/avslutt"

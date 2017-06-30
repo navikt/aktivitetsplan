@@ -4,15 +4,18 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
-import ModalFooter from '../modal-footer';
-import history from '../../history';
-import { RemoteSubmitKnapp, RemoteResetKnapp } from './remote-knapp';
-import BegrunnelseForm from './begrunnelse-form';
-import { lagreBegrunnelse } from '../../ducks/situasjon';
-import InnstillingerModal from '../innstillinger/innstillinger-modal';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import * as AppPt from '../../proptypes';
-import hiddenIfHOC from '../../felles-komponenter/hidden-if/hidden-if';
+import ModalFooter from '../../../modal/modal-footer';
+import history from '../../../history';
+import {
+    RemoteSubmitKnapp,
+    RemoteResetKnapp,
+} from '../../../felles-komponenter/remote-knapp/remote-knapp';
+import BegrunnelseForm from '../begrunnelse-form';
+import { lagreBegrunnelse } from '../../../ducks/situasjon';
+import InnstillingerModal from '../innstillinger-modal';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import * as AppPt from '../../../proptypes';
+import hiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
 
 export const AVSLUTT_FORM_NAME = 'avslutt-oppfolging-form';
 const HiddenIfNormaltekst = hiddenIfHOC(Normaltekst);
@@ -25,8 +28,8 @@ function AvsluttOppfolgingperiode({
     return (
         <InnstillingerModal>
             <Innholdslaster avhengigheter={[situasjonReducer]}>
-                <div className="innstillinger__avslutt-periode">
-                    <section>
+                <div>
+                    <section className="innstillinger__prosess">
                         <Systemtittel>
                             <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.overskrift" />
                         </Systemtittel>

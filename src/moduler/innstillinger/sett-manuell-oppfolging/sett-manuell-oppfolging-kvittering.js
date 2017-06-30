@@ -6,13 +6,13 @@ import {
     AlertStripeAdvarsel,
     AlertStripeSuksess,
 } from 'nav-frontend-alertstriper';
-import Modal from '../modal';
-import ModalHeader from '../modal-header';
-import history from '../../history';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import * as AppPT from '../../proptypes';
+import Modal from '../../../modal/modal';
+import ModalHeader from '../../../modal/modal-header';
+import history from '../../../history';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../proptypes';
 
-function SettManuellKvittering({ motpart, situasjonReducer }) {
+function SettManuellOppfolgingKvittering({ motpart, situasjonReducer }) {
     const { navn } = motpart.data;
     const { manuell } = situasjonReducer.data;
     const { begrunnelse } = situasjonReducer;
@@ -58,11 +58,11 @@ function SettManuellKvittering({ motpart, situasjonReducer }) {
     );
 }
 
-SettManuellKvittering.defaultProps = {
+SettManuellOppfolgingKvittering.defaultProps = {
     motpart: undefined,
 };
 
-SettManuellKvittering.propTypes = {
+SettManuellOppfolgingKvittering.propTypes = {
     motpart: AppPT.motpart,
     situasjonReducer: AppPT.situasjon.isRequired,
 };
@@ -72,4 +72,4 @@ const mapStateToProps = state => ({
     situasjonReducer: state.data.situasjon,
 });
 
-export default connect(mapStateToProps)(SettManuellKvittering);
+export default connect(mapStateToProps)(SettManuellOppfolgingKvittering);
