@@ -4,11 +4,19 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 import { submit, reset } from 'redux-form';
 
-const SubmitKnapp = ({ className, dispatch, formNavn, children, mini }) => (
+const SubmitKnapp = ({
+    className,
+    dispatch,
+    formNavn,
+    children,
+    mini,
+    ...rest
+}) => (
     <Hovedknapp
         className={className}
         onClick={() => dispatch(submit(formNavn))}
         mini={mini}
+        {...rest}
     >
         {children}
     </Hovedknapp>

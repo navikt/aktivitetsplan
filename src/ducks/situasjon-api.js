@@ -61,3 +61,10 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
         { begrunnelse, veilederId }
     );
 }
+
+export function settManuellOppfolging(begrunnelse, veilederId) {
+    return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/settManuell`, {
+        begrunnelse,
+        veilederId,
+    });
+}

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import * as AppPT from '../../proptypes';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
-import { autobind } from '../../utils';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import Accordion from '../../felles-komponenter/accordion';
+import * as AppPT from '../../../proptypes';
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import { autobind } from '../../../utils';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import Accordion from '../../../felles-komponenter/accordion';
 import OppfolgingPeriodeInnslag from './oppfolgingperiode-innslag';
 
 class OppfolgingsperiodeHistorikk extends Component {
@@ -60,9 +60,9 @@ class OppfolgingsperiodeHistorikk extends Component {
             <Innholdslaster
                 avhengigheter={[situasjon]}
                 spinnerStorrelse="m"
-                className="spinner"
+                className="innstillinger-spinner"
             >
-                <section className="oppfolgingperiode__historikk">
+                <section className="innstillinger__prosess">
                     <Undertittel>
                         <FormattedMessage id="innstillinger.oppfolginghistorikk.tittel" />
                     </Undertittel>

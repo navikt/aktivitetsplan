@@ -6,11 +6,11 @@ import {
     AlertStripeSuksess,
     AlertStripeAdvarsel,
 } from 'nav-frontend-alertstriper';
-import Modal from '../modal';
-import ModalHeader from '../modal-header';
-import history from '../../history';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import * as AppPT from '../../proptypes';
+import Modal from '../../../modal/modal';
+import ModalHeader from '../../../modal/modal-header';
+import history from '../../../history';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../proptypes';
 
 function AvsluttOppfolgingKvittering({ motpart, situasjon }) {
     const { navn } = motpart.data;
