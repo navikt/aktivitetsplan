@@ -6,12 +6,20 @@ import { bindActionCreators } from 'redux';
 import nb from 'react-intl/locale-data/nb';
 import Innholdslaster from './felles-komponenter/utils/innholdslaster';
 import { hentLedetekster } from './ducks/ledetekster-ressurs';
+import { STATUS } from './ducks/utils';
 
 addLocaleData(nb);
 
 class IntlProvider extends Component {
     componentDidMount() {
         this.props.actions.hentLedetekster();
+    }
+
+    componentDidUpdate() {
+        const { ledetekster, actions } = this.props;
+        if (ledetekster.status === STATUS.NOT_STARTED) {
+            actions.hentLedetekster();
+        }
     }
 
     render() {

@@ -17,7 +17,9 @@ import historiskeVilkarReducer from './ducks/historiske-vilkar';
 import filterReducer from './moduler/filter/filter-reducer';
 import veilederReducer from './ducks/veileder';
 
-export default combineReducers({
+export const RESET_STORE = { type: 'store/reset' };
+
+const combinedReducers = combineReducers({
     form: formReducer,
     data: combineReducers({
         ledetekster: ledetekstReducer,
@@ -40,3 +42,10 @@ export default combineReducers({
     }),
     feil: feilReducer,
 });
+
+export default function(state, action) {
+    if (action.type === RESET_STORE.type) {
+        return combinedReducers(undefined, action);
+    }
+    return combinedReducers(state, action);
+}
