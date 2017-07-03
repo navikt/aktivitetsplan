@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
-import {
-    AlertStripeAdvarsel,
-    AlertStripeSuksess,
-} from 'nav-frontend-alertstriper';
 import Modal from '../../../modal/modal';
 import ModalHeader from '../../../modal/modal-header';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
+import {
+    HiddenIfAlertStripeAdvarsel,
+    HiddenIfAlertStripeSuksess,
+} from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
 function SettDigitalOppfolgingKvittering({ motpart, situasjonReducer }) {
     const { navn } = motpart.data;
@@ -37,21 +37,23 @@ function SettDigitalOppfolgingKvittering({ motpart, situasjonReducer }) {
                             <FormattedMessage id="innstillinger.modal.digital.overskrift" />
                         </Systemtittel>
                     </div>
-                    {!manuell &&
-                        <AlertStripeSuksess className="blokk-m">
-                            <FormattedMessage
-                                id="innstillinger.modal.digital.kvittering.ok"
-                                values={{ begrunnelse }}
-                            >
-                                {text => (
-                                    <span className="whitespace">{text}</span>
-                                )}
-                            </FormattedMessage>
-                        </AlertStripeSuksess>}
-                    {manuell &&
-                        <AlertStripeAdvarsel className="blokk-m">
-                            <FormattedMessage id="innstillinger.modal.digital.kvittering.feilet" />
-                        </AlertStripeAdvarsel>}
+                    <HiddenIfAlertStripeSuksess
+                        hidden={manuell}
+                        className="blokk-m"
+                    >
+                        <FormattedMessage
+                            id="innstillinger.modal.digital.kvittering.ok"
+                            values={{ begrunnelse }}
+                        >
+                            {text => <span className="whitespace">{text}</span>}
+                        </FormattedMessage>
+                    </HiddenIfAlertStripeSuksess>
+                    <HiddenIfAlertStripeAdvarsel
+                        hidden={!manuell}
+                        className="blokk-m"
+                    >
+                        <FormattedMessage id="innstillinger.modal.digital.kvittering.feilet" />
+                    </HiddenIfAlertStripeAdvarsel>
                 </article>
             </Innholdslaster>
         </Modal>
