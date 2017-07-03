@@ -18,6 +18,8 @@ import {
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
+    IJOBB_AKTIVITET_TYPE,
+    BEHANDLING_AKTIVITET_TYPE,
 } from '../../constant';
 import DetaljFelt from './detalj-felt';
 import { endreAktivitetRoute } from '../../routing';
@@ -72,6 +74,12 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         oppfolging,
         antall,
         avtaleOppfolging,
+        jobbStatus,
+        ansettelsesforhold,
+        arbeidstid,
+        behandlingSted,
+        effekt,
+        behandlingOppfolging,
     } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManed(valgtAktivitet.fraDato);
@@ -312,6 +320,87 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         ];
     };
 
+    const iJobbFelter = () => [
+        <Informasjonsfelt
+            key="fradato"
+            tittel={fraDatoTekst(aktivitetstype)}
+            innhold={fraDato}
+        />,
+        <Informasjonsfelt
+            key="tildato"
+            tittel={tilDatoTekst(aktivitetstype)}
+            innhold={tilDato}
+        />,
+        <Informasjonsfelt
+            key="jobbstatus"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.jobbStatus-label" />
+            }
+            innhold={
+                <FormattedMessage
+                    id={`aktivitetdetaljer.jobbStatus-${jobbStatus}`}
+                />
+            }
+        />,
+        <Informasjonsfelt
+            key="ansettelsesforhold"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.ansettelsesforhold-label" />
+            }
+            innhold={ansettelsesforhold}
+        />,
+        <Informasjonsfelt
+            key="arbeidstid"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.arbeidstid-label" />
+            }
+            innhold={arbeidstid}
+        />,
+    ];
+
+    const behandlingFelter = () => {
+        const behandlingOppfolgingSection =
+            behandlingOppfolging &&
+            <section
+                key="behandlingOppfolging"
+                className="aktivitetsbeskrivelse"
+            >
+                <EtikettLiten className="aktivitetsbeskrivelse__tittel">
+                    <FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />
+                </EtikettLiten>
+                <Tekstomrade className="aktivitetsbeskrivelse__tekst">
+                    {behandlingOppfolging}
+                </Tekstomrade>
+            </section>;
+        return [
+            <Informasjonsfelt
+                key="fradato"
+                tittel={fraDatoTekst(aktivitetstype)}
+                innhold={fraDato}
+            />,
+            <Informasjonsfelt
+                key="tildato"
+                tittel={tilDatoTekst(aktivitetstype)}
+                innhold={tilDato}
+            />,
+            <Informasjonsfelt
+                key="behandlingsted"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.behandlingsted-label" />
+                }
+                innhold={behandlingSted}
+            />,
+            <Informasjonsfelt
+                key="effekt"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.effekt-label" />
+                }
+                innhold={effekt}
+            />,
+            behandlingOppfolgingSection,
+        ];
+    };
+
     const map = {
         [EGEN_AKTIVITET_TYPE]: egenStillingFelter,
         [STILLING_AKTIVITET_TYPE]: ledigStillingFelter,
@@ -319,6 +408,8 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         [GRUPPE_AKTIVITET_TYPE]: gruppeFelter,
         [UTDANNING_AKTIVITET_TYPE]: utdanningFelter,
         [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFelter,
+        [IJOBB_AKTIVITET_TYPE]: iJobbFelter,
+        [BEHANDLING_AKTIVITET_TYPE]: behandlingFelter,
     };
 
     const cls = clsName => classNames(clsName, 'aktivitetsdetaljer');

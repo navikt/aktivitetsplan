@@ -17,6 +17,7 @@ import {
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
+    BEHANDLING_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
 } from '../../../constant';
@@ -48,6 +49,8 @@ class AktivitetsKort extends Component {
     render() {
         const { aktivitet, isDragging, connectDragSource } = this.props;
 
+        const behandlingAktivitet =
+            BEHANDLING_AKTIVITET_TYPE === aktivitet.type;
         const arenaAktivitet = [
             TILTAK_AKTIVITET_TYPE,
             GRUPPE_AKTIVITET_TYPE,
@@ -76,7 +79,9 @@ class AktivitetsKort extends Component {
                         />
                     </Undertekst>
                     <Element tag="h1" className="aktivitetskort__tittel">
-                        {aktivitet.tittel}
+                        {behandlingAktivitet
+                            ? <FormattedMessage id="aktivitetskort.behandling.tittel" />
+                            : aktivitet.tittel}
                     </Element>
                     <Normaltekst className="aktivitetskort__dato">
                         {[
