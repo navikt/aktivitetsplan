@@ -63,13 +63,20 @@ class Varslinger extends Component {
     }
 }
 
+Varslinger.defaultProps = {
+    erBruker: false,
+    underOppfolging: false,
+    vilkarMaBesvares: false,
+    brukerErManuell: false,
+};
+
 Varslinger.propTypes = {
     identitetReducer: AppPT.reducer.isRequired,
-    erBruker: PT.bool.isRequired,
+    erBruker: PT.bool,
     situasjonReducer: AppPT.reducer.isRequired,
-    underOppfolging: PT.bool.isRequired,
-    vilkarMaBesvares: PT.bool.isRequired,
-    brukerErManuell: PT.bool.isRequired,
+    underOppfolging: PT.bool,
+    vilkarMaBesvares: PT.bool,
+    brukerErManuell: PT.bool,
     doHentIdentitet: PT.func.isRequired,
 };
 
