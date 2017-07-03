@@ -17,11 +17,17 @@
 
   &--vis {
     left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &--full-bredde {
     width: @full-bredde-skjerm-modal;
     min-width: @mobil-bredde;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   @media (max-width: @mobil-bredde) {
@@ -75,13 +81,14 @@
     background: data-uri('@{aktivitetsplanPath}/dialog/dialog-modal-ny-henvendelse.svg') no-repeat;
     background-size: contain;
 
-   &.knappelenke {
+    &.knappelenke {
       padding-left: 2rem;
     }
   }
 
   &__dialoger {
     overflow-y: auto;
+    height: 100%;
   }
 
   &__kolonne {
@@ -119,6 +126,19 @@
         &-valgt-dialog {
           display: none;
         }
+      }
+    }
+  }
+}
+
+@media (min-width: @screen-desktop) {
+  .dialog-modal {
+
+    &__ny-dialog-knapp {
+      background: none;
+
+      &.knappelenke {
+        padding-left: 0;
       }
     }
   }

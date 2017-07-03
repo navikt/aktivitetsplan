@@ -13,6 +13,7 @@ import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import PilKnapp from '../felles-komponenter/utils/pil-knapp';
 import NyHenvendelse from './ny-henvendelse';
 import visibleIfHOC from '../hocs/visible-if';
+import VisibleIfTag from '../felles-komponenter/utils/visible-if-tag';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
@@ -46,7 +47,7 @@ function Header({
                 onClick={tilbake}
             />
             <Innholdslaster avhengigheter={[motpart]} spinnerStorrelse="m">
-                <Undertittel className="dialog-modal__tittel">
+                <Undertittel className="dialog-modal__tittel" tag="h1">
                     <FormattedMessage
                         id="dialog.tittel"
                         values={{ motpart: navnPaMotpart }}
@@ -126,13 +127,13 @@ function HoyreKolonne({
     }
 
     return (
-        <VisibleDiv
+        <VisibleIfTag
+            tagName="section"
             visible={harNyDialogEllerValgtDialog}
             className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
-            tabIndex="0"
         >
             <VisibleDiv visible={harNyDialog}>
-                <Undertittel>
+                <Undertittel tag="h1">
                     <FormattedMessage id="dialog.ny-dialog" />
                 </Undertittel>
                 <NyHenvendelse
@@ -149,7 +150,7 @@ function HoyreKolonne({
                 </Knappelenke>
                 <Dialog dialog={valgtDialog} />
             </VisibleDiv>
-        </VisibleDiv>
+        </VisibleIfTag>
     );
 }
 

@@ -26,15 +26,11 @@
     border-top: 1px solid @gray-foreground;
     min-width: 316px;
 
-    &:focus {
-      outline: none;
-      border: 0.2rem solid @orange-focus;
-      padding: 0.8rem 0.8rem 0.8rem 2.8rem;
-      box-shadow: none;
-    }
-
-    &:hover {
-      text-decoration: none;
+    &.lenkepanel {
+      .lenkepanel__indikator {
+        transition: none;
+        left: 0;
+      }
     }
 
     &-etiketter {
@@ -58,21 +54,33 @@
     }
 
     .lenkepanel__heading {
-      width: calc(~'100% - 3rem');
+      width: calc(~'100% - 4rem');
     }
 
     // fjerne lenkepanel sin hover-styling
     &:hover {
-      cursor: auto;
 
       .lenkepanel__heading {
         text-decoration: none;
       }
     }
 
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: #e9e7e7;
+      box-shadow: none;
+    }
+
     &--valgt {
-      border: 0.2rem solid @bla;
-      padding: 0.8rem 0.8rem 0.8rem 2.8rem;
+      background-color: @navBlaLighten80;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        background-color: @navBlaLighten80;
+        box-shadow: none;
+      }
     }
   }
 }

@@ -12,7 +12,7 @@ function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;
     return (
         <div className={className}>
-            <Undertittel>{overskrift}</Undertittel>
+            <Undertittel tag="h1">{overskrift}</Undertittel>
             <Element>
                 <FormattedMessage id="dialog.deg-og-nav.tittel" />
             </Element>
