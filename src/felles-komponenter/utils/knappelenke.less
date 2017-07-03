@@ -1,11 +1,19 @@
-@import '../../variables';
-
 .knappelenke {
   color: @navBla;
   border: 0;
   text-decoration: none;
+  background-color: transparent;
   cursor: pointer;
-  padding: 0 0 0 2rem;
+  padding-left: 0;
+
+  &:focus {
+    outline: none;
+    background-color: @fokusOrange;
+
+    span {
+      border-bottom-color: @fokusOrange;
+    }
+  }
 
   span {
     display: inline-block;

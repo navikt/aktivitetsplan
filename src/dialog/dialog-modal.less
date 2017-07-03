@@ -1,7 +1,7 @@
 @import '../variables';
 @import './dialoger';
 
-@padding: 1.2rem 1rem 1.4rem @padding-left;
+@padding: 1.2rem 1rem 1.4rem 1.5rem;
 @animationTime: 300ms;
 @bredde-skjerm-dialoger: 20%;
 @bredde-skjerm-dialog: 40%;
@@ -9,27 +9,34 @@
 
 .dialog-modal {
   position: fixed;
-  max-width: 100%;
   height: 75%;
   left: -100%;
   width: @bredde-skjerm-dialoger;
   margin: 0;
   bottom: 0;
-  transition: left @animationTime, width @animationTime;
-  transition-timing-function: ease-out;
 
   &--vis {
     left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &--full-bredde {
     width: @full-bredde-skjerm-modal;
     min-width: @mobil-bredde;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   @media (max-width: @mobil-bredde) {
     min-width: 100%;
     height: 100%;
+  }
+
+  &__tittel {
+    margin-right: 40px;
   }
 
   &__content {
@@ -71,13 +78,17 @@
 
   &__ny-dialog-knapp {
     border: 0;
-    padding-left: 2rem;
     background: data-uri('@{aktivitetsplanPath}/dialog/dialog-modal-ny-henvendelse.svg') no-repeat;
     background-size: contain;
+
+    &.knappelenke {
+      padding-left: 2rem;
+    }
   }
 
   &__dialoger {
     overflow-y: auto;
+    height: 100%;
   }
 
   &__kolonne {
@@ -90,6 +101,12 @@
       padding: 2rem;
       background-color: @gray-background;
       overflow-y: auto;
+
+      &:focus {
+        outline: none;
+        border: 3px solid @fokusOrange;
+        padding: ~'calc(2rem - 3px)';
+      }
 
       @media (max-width: @mobil-bredde) {
         width: 100%;
@@ -109,6 +126,19 @@
         &-valgt-dialog {
           display: none;
         }
+      }
+    }
+  }
+}
+
+@media (min-width: @screen-desktop) {
+  .dialog-modal {
+
+    &__ny-dialog-knapp {
+      background: none;
+
+      &.knappelenke {
+        padding-left: 0;
       }
     }
   }

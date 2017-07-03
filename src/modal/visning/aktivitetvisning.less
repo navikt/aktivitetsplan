@@ -10,6 +10,10 @@
       margin: 1.2rem 0;
       line-height: 1.1;
     }
+
+    .oppdater-status {
+      margin: 1rem 0 0 0.5rem;
+    }
   }
 
   &__etikett {
@@ -52,6 +56,11 @@
   }
 
   .aktivitetsbeskrivelse {
+    .blokk-m();
+
+    &__tekst {
+      white-space: pre-wrap;
+    }
 
     .typo-etikett-liten {
       margin-bottom: -1rem;
@@ -78,14 +87,6 @@
         overflow: hidden;
         white-space: nowrap;
       }
-    }
-  }
-
-  .aktivitetsbeskrivelse {
-    .blokk-m();
-
-    &__tekst {
-      white-space: pre-wrap;
     }
   }
 

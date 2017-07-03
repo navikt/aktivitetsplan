@@ -1,16 +1,13 @@
 @import '../variables';
 
-@padding-left: 3rem;
-
 .dialoger {
-  &__prikk {
+  &__markering {
     position: absolute;
-    top: 43%;
-    left: 0.5rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
     background-color: @bla;
-    border-radius: 50%;
-    height: 1rem;
-    width: 1rem;
+    width: 8px;
   }
 
   &__slash {
@@ -23,28 +20,17 @@
 
   &__dialog {
     margin: 0;
-    padding-left: @padding-left;
+    padding-left: 3rem;
     border-radius: 0;
     text-decoration: none;
     border-top: 1px solid @gray-foreground;
+    min-width: 316px;
 
-    .dialoger__prikk {
-      left: 0.7rem;
-    }
-
-    &:focus {
-      outline: none;
-      border: 0.2rem solid @orange-focus;
-      padding: 0.8rem 0.8rem 0.8rem 2.8rem;
-      box-shadow: none;
-
-      .dialoger__prikk {
-        left: 0.5rem;
+    &.lenkepanel {
+      .lenkepanel__indikator {
+        transition: none;
+        left: 0;
       }
-    }
-
-    &:hover {
-      text-decoration: none;
     }
 
     &-etiketter {
@@ -68,24 +54,32 @@
     }
 
     .lenkepanel__heading {
-      width: calc(~'100% - 3rem');
+      width: calc(~'100% - 4rem');
     }
 
     // fjerne lenkepanel sin hover-styling
     &:hover {
-      cursor: auto;
 
       .lenkepanel__heading {
         text-decoration: none;
       }
     }
 
-    &--valgt {
-      border: 0.2rem solid @bla;
-      padding: 0.8rem 0.8rem 0.8rem 2.8rem;
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: #e9e7e7;
+      box-shadow: none;
+    }
 
-      .dialoger__prikk {
-        left: 0.5rem;
+    &--valgt {
+      background-color: @navBlaLighten80;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        background-color: @navBlaLighten80;
+        box-shadow: none;
       }
     }
   }

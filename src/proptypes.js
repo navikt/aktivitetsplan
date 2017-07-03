@@ -41,7 +41,7 @@ export const etikett = PT.shape({
 
 export const reducer = PT.shape({
     status: PT.string,
-    data: PT.object,
+    data: PT.any,
 });
 
 export const reducerArray = PT.shape({

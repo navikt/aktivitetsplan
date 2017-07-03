@@ -157,36 +157,48 @@ function Filter({
                     harAktivitetTyper
             }
         >
-            <Dropdown name={<FormattedMessage id="filter.tittel" />}>
-                <Innholdslaster
-                    avhengigheter={[
-                        aktiviteterReducer,
-                        arenaAktiviteterReducer,
-                        situasjonReducer,
-                    ]}
-                >
-                    <div className="filter__container">
-                        <TypeFilter
-                            harAktivitetTyper={harAktivitetTyper}
-                            aktivitetTyper={aktivitetTyper}
-                            doToggleAktivitetsType={doToggleAktivitetsType}
-                        />
-                        <EtikettFilter
-                            harAktivitetEtiketter={harAktivitetEtiketter}
-                            aktivitetEtiketter={aktivitetEtiketter}
-                            doToggleAktivitetsEtikett={
-                                doToggleAktivitetsEtikett
-                            }
-                        />
-                        <PeriodeFilter
-                            harHistoriskePerioder={harHistoriskePerioder}
-                            historiskPeriode={historiskPeriode}
-                            historiskePerioder={historiskePerioder}
-                            doVelgHistoriskPeriode={doVelgHistoriskPeriode}
-                        />
-                    </div>
-                </Innholdslaster>
-            </Dropdown>
+            <FormattedMessage id="filter.tittel">
+                {tittel => (
+                    <Dropdown name={tittel}>
+                        <Innholdslaster
+                            avhengigheter={[
+                                aktiviteterReducer,
+                                arenaAktiviteterReducer,
+                                situasjonReducer,
+                            ]}
+                        >
+                            <div className="filter__container">
+                                <TypeFilter
+                                    harAktivitetTyper={harAktivitetTyper}
+                                    aktivitetTyper={aktivitetTyper}
+                                    doToggleAktivitetsType={
+                                        doToggleAktivitetsType
+                                    }
+                                />
+                                <EtikettFilter
+                                    harAktivitetEtiketter={
+                                        harAktivitetEtiketter
+                                    }
+                                    aktivitetEtiketter={aktivitetEtiketter}
+                                    doToggleAktivitetsEtikett={
+                                        doToggleAktivitetsEtikett
+                                    }
+                                />
+                                <PeriodeFilter
+                                    harHistoriskePerioder={
+                                        harHistoriskePerioder
+                                    }
+                                    historiskPeriode={historiskPeriode}
+                                    historiskePerioder={historiskePerioder}
+                                    doVelgHistoriskPeriode={
+                                        doVelgHistoriskPeriode
+                                    }
+                                />
+                            </div>
+                        </Innholdslaster>
+                    </Dropdown>
+                )}
+            </FormattedMessage>
         </VisibleIfDiv>
     );
 }

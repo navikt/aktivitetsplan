@@ -1,15 +1,5 @@
 @import './variables';
 
-html,
-body,
-.appContainer {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-}
-
 .aktivitetsplanfs {
   @import './moduler/vilkar/vilkar';
   @import './moduler/sidebanner/sidebanner';
@@ -19,6 +9,7 @@ body {
   @import './dialog/dialog';
   @import './moduler/filter/filter';
   @import './moduler/verktoylinje/verktoylinje';
+  @import './moduler/varslinger/varslinger';
   @import './felles-komponenter/felles-komponenter';
   @import './sider/hovedside/hovedside';
 
@@ -26,7 +17,6 @@ body {
   color: @navMorkGra;
   font-family: @font-family;
   line-height: @line-height-base;
-  height: 100%;
 
   .pagewrapper {
     background-color: @gray-background;
