@@ -116,7 +116,13 @@ DialogVisning.propTypes = {
     aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
 };
 
-function Dialoger({ dialogState, dialoger, valgtDialog, className, aktiviteter }) {
+function Dialoger({
+    dialogState,
+    dialoger,
+    valgtDialog,
+    className,
+    aktiviteter,
+}) {
     const erTabBar = dialog =>
         dialog === valgtDialog ||
         (valgtDialog == null && dialog.id === dialoger[0].id);
