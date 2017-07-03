@@ -28,7 +28,7 @@ class IntlProvider extends Component {
 
         return (
             <Provider {...props} messages={ledetekster.data[locale] || {}}>
-                <div className="hovedsideinnhold">
+                <div>
                     <Innholdslaster avhengigheter={[ledetekster]}>
                         {children}
                     </Innholdslaster>

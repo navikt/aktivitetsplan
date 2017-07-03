@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { CONTEXT_PATH } from '~config'; // eslint-disable-line
 import { RESET_STORE } from '../reducer';
 import { hentPerson, setNAVsomMotpart } from '../ducks/motpart';
+import history from '../history';
 
 export function fnrFraUrl() {
     const fnrMatch = window.location.pathname.match(`${CONTEXT_PATH}/(\\d*)`);
@@ -14,10 +15,10 @@ class FnrProvider extends Component {
     constructor(props) {
         super(props);
         const { dispatch } = props;
-        document.addEventListener('flate-person-endret', () => {
+        this.listener = () => {
             dispatch(RESET_STORE);
-            dispatch(hentPerson(fnrFraUrl()));
-        });
+            history.replace('/');
+        };
     }
 
     componentDidMount() {
@@ -28,6 +29,11 @@ class FnrProvider extends Component {
         } else {
             dispatch(setNAVsomMotpart());
         }
+        document.addEventListener('flate-person-endret', this.listener);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('flate-person-endret', this.listener);
     }
 
     render() {
