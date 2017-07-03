@@ -6,7 +6,8 @@ import StartOppfolgingProsess
     from '../start-oppfolging/start-oppfolging-prosess';
 import SettManuellOppfolgingProsess
     from '../sett-manuell-oppfolging/sett-manuell-oppfolging-prosess';
-import SettDigitalOppfolgingProsess from '../sett-digital-oppfolging/sett-digital-oppfolging-prosess';
+import SettDigitalOppfolgingProsess
+    from '../sett-digital-oppfolging/sett-digital-oppfolging-prosess';
 import OppfolgingsperiodeHistorikk
     from '../historikk/oppfolgingsperiode-historikk';
 import * as AppPT from '../../../proptypes';

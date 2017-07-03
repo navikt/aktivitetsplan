@@ -29,7 +29,8 @@ import AvsluttOppfolgingKvittering
     from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolging-kvittering';
 import SettManuellOppfolging
     from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging';
-import SettDigital from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
+import SettDigitalOppfolging
+    from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
 import SettManuellOppfolgingKvittering
     from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering
@@ -62,7 +63,10 @@ export default (
                     component={SettManuellOppfolgingKvittering}
                 />
                 <Route path="innstillinger" component={Prosesser} />
-                <Route path="innstillinger/digital" component={SettDigital} />
+                <Route
+                    path="innstillinger/digital"
+                    component={SettDigitalOppfolging}
+                />
                 <Route
                     path="innstillinger/digital/kvittering"
                     component={SettDigitalKvittering}

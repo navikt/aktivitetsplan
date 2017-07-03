@@ -12,18 +12,16 @@ import * as AppPt from '../../../proptypes';
 import history from '../../../history';
 import ModalFooter from '../../../modal/modal-footer';
 import BegrunnelseForm from '../begrunnelse-form';
-import { settDigitalOppfolging, lagreBegrunnelse } from '../../../ducks/situasjon';
+import {
+    settDigitalOppfolging,
+    lagreBegrunnelse,
+} from '../../../ducks/situasjon';
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
 
 const SETT_DIGITAL_FORM_NAME = 'sett-digital-form';
 
-function SettDigitalOppfolging({
-   doSettDigitalOppfolging,
-    veilederId,
-    doLagreBegrunnelse,
-    situasjonReducer,
-}) {
+function SettDigitalOppfolging({ veilederId, situasjonReducer, handleSubmit }) {
     const situasjonLaster =
         situasjonReducer.status === STATUS.PENDING ||
         situasjonReducer.status === STATUS.RELOADING;
@@ -41,10 +39,7 @@ function SettDigitalOppfolging({
                 <BegrunnelseForm
                     labelId="innstillinger.modal.digital.begrunnelse"
                     formNavn={SETT_DIGITAL_FORM_NAME}
-                    onSubmit={form => {
-                        doLagreBegrunnelse(form.begrunnelse);
-                        return doSettDigitalOppfolging(form.begrunnelse, veilederId);
-                    }}
+                    onSubmit={form => handleSubmit(form, veilederId)}
                 />
             </section>
             <ModalFooter>
@@ -75,8 +70,7 @@ SettDigitalOppfolging.defaultProps = {
 
 SettDigitalOppfolging.propTypes = {
     veilederId: PT.string,
-    doSettDigitalOppfolging: PT.func.isRequired,
-    doLagreBegrunnelse: PT.func.isRequired,
+    handleSubmit: PT.func.isRequired,
     situasjonReducer: AppPt.situasjon,
 };
 
@@ -86,12 +80,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doSettDigitalOppfolging: (begrunnelse, veilederId) => {
-        dispatch(settDigitalOppfolging(begrunnelse, veilederId))
+    handleSubmit: (form, veilederId) => {
+        dispatch(lagreBegrunnelse(form.begrunnelse));
+        dispatch(settDigitalOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/digital/kvittering'))
             .catch(() => history.push('/'));
     },
-    doLagreBegrunnelse: begrunnelse => dispatch(lagreBegrunnelse(begrunnelse)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettDigitalOppfolging);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    SettDigitalOppfolging
+);

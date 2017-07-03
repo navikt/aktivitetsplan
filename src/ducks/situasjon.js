@@ -178,11 +178,14 @@ export function settManuellOppfolging(begrunnelse, veilederId) {
 }
 
 export function settDigitalOppfolging(begrunnelse, veilederId) {
-    return doThenDispatch(() => Api.settDigitalOppfolging(begrunnelse, veilederId), {
-        OK: SETT_DIGITAL_OK,
-        FEILET: SETT_DIGITAL_FEILET,
-        PENDING: SETT_DIGITAL_PENDING,
-    });
+    return doThenDispatch(
+        () => Api.settDigitalOppfolging(begrunnelse, veilederId),
+        {
+            OK: SETT_DIGITAL_OK,
+            FEILET: SETT_DIGITAL_FEILET,
+            PENDING: SETT_DIGITAL_PENDING,
+        }
+    );
 }
 
 export function lagreBegrunnelse(begrunnelse) {

@@ -21,12 +21,7 @@ import { STATUS } from '../../../ducks/utils';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 
-function SettManuellOppfolging({
-    doSettManuellOppfolging,
-    veilederId,
-    doLagreBegrunnelse,
-    situasjonReducer,
-}) {
+function SettManuellOppfolging({ veilederId, situasjonReducer, handleSubmit }) {
     const situasjonLaster =
         situasjonReducer.status === STATUS.PENDING ||
         situasjonReducer.status === STATUS.RELOADING;
@@ -44,13 +39,7 @@ function SettManuellOppfolging({
                 <BegrunnelseForm
                     labelId="innstillinger.modal.manuell.begrunnelse"
                     formNavn={SETT_MANUELL_FORM_NAME}
-                    onSubmit={form => {
-                        doLagreBegrunnelse(form.begrunnelse);
-                        return doSettManuellOppfolging(
-                            form.begrunnelse,
-                            veilederId
-                        );
-                    }}
+                    onSubmit={form => handleSubmit(form, veilederId)}
                 />
             </section>
             <ModalFooter>
@@ -81,8 +70,7 @@ SettManuellOppfolging.defaultProps = {
 
 SettManuellOppfolging.propTypes = {
     veilederId: PT.string,
-    doSettManuellOppfolging: PT.func.isRequired,
-    doLagreBegrunnelse: PT.func.isRequired,
+    handleSubmit: PT.func.isRequired,
     situasjonReducer: AppPt.situasjon,
 };
 
@@ -92,12 +80,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doSettManuellOppfolging: (begrunnelse, veilederId) => {
-        dispatch(settManuellOppfolging(begrunnelse, veilederId))
+    handleSubmit: (form, veilederId) => {
+        dispatch(lagreBegrunnelse(form.begrunnelse));
+        dispatch(settManuellOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/manuell/kvittering'))
             .catch(() => history.push('/'));
     },
-    doLagreBegrunnelse: begrunnelse => dispatch(lagreBegrunnelse(begrunnelse)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

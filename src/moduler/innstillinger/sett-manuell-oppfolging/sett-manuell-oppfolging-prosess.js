@@ -20,10 +20,7 @@ function SettManuellOppfolgingProsess({ intl, laster, slettBegrunnelse }) {
                 id: 'innstillinger.modal.prosess.start.knapp',
             })}
             laster={laster}
-            onClick={() => {
-                slettBegrunnelse();
-                history.push('/innstillinger/manuell');
-            }}
+            onClick={() => slettBegrunnelse()}
         >
             <div className="blokk-xs">
                 <Normaltekst>
@@ -45,7 +42,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    slettBegrunnelse: () => dispatch(SLETT_BEGRUNNELSE_ACTION),
+    slettBegrunnelse: () => {
+        dispatch(SLETT_BEGRUNNELSE_ACTION);
+        history.push('/innstillinger/manuell');
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
