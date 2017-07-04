@@ -2,6 +2,7 @@
   "parser": "babel-eslint",
   "rules": {
     "indent": "off",
+    "space-before-function-paren": "off",
     "react/jsx-indent-props": "off",
     "react/jsx-wrap-multilines": "off",
     "react/jsx-closing-bracket-location": "off",

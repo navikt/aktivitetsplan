@@ -1,42 +1,14 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { connect } from 'react-redux';
-import { Route } from 'react-router';
-import { EKSEMPEL_FNR } from './config';
-import { hentPerson, setNAVsomMotpart } from '../src/ducks/motpart';
+import { EKSEMPEL_FNR, CONTEXT_PATH } from './config';
 import App from '../src/app';
-import aktivitetsplanRouting from '../src/routing';
+import { fnrFraUrl } from '../src/bootstrap/fnr-provider';
 
-class Eksempel extends Component {
-    componentDidMount() {
-        this.props.velgMotpart();
-    }
-
-    render() {
-        return <div>{this.props.children}</div>;
-    }
+if (!fnrFraUrl()) {
+    window.history.replaceState(
+        EKSEMPEL_FNR,
+        '',
+        `${CONTEXT_PATH}/${EKSEMPEL_FNR}`
+    );
 }
-
-const mapStateToProps = () => {
-    return {};
-};
-const mapDispatchToProps = dispatch => ({
-    velgMotpart: () => {
-        if (Math.random() < 0.5) {
-            dispatch(hentPerson(EKSEMPEL_FNR));
-        } else {
-            dispatch(setNAVsomMotpart());
-        }
-    },
-});
-const ConnectedEksempel = connect(mapStateToProps, mapDispatchToProps)(
-    Eksempel
-);
-
-const eksempelRouting = (
-    <Route path="/" component={ConnectedEksempel}>
-        {aktivitetsplanRouting}
-    </Route>
-);
-
-render(<App routing={eksempelRouting} />, document.getElementById('app'));
+render(<App />, document.getElementById('app'));

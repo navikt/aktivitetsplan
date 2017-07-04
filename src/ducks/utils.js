@@ -1,7 +1,7 @@
-import { fetchInterceptor } from '~config'; // eslint-disable-line
 import {
     update as resetTimeout,
 } from '../felles-komponenter/timeoutbox/timeoutbox';
+import { getFodselsnummer } from '../bootstrap/fnr-util';
 
 /* eslint-env browser */
 export const STATUS = {
@@ -82,9 +82,14 @@ export const getCookie = name => {
 export function fetchToJson(url, config = {}) {
     resetTimeout();
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
-    return (fetchInterceptor
-        ? fetchInterceptor(fetch, url, configMedCredentials)
-        : fetch(url, configMedCredentials))
+
+    const fodselsnummer = getFodselsnummer();
+    let fetchUrl = url;
+    if (fodselsnummer) {
+        fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fodselsnummer}`;
+    }
+
+    return fetch(fetchUrl, configMedCredentials)
         .then(sjekkStatuskode)
         .then(toJson);
 }

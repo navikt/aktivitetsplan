@@ -1,18 +1,25 @@
 import { createHistory } from 'history';
 import { useRouterHistory } from 'react-router';
-import { CONTEXT_PATH, getDynamicBasePath } from '~config'; // eslint-disable-line
+import { getFodselsnummer } from './bootstrap/fnr-util';
+import { CONTEXT_PATH } from '~config'; // eslint-disable-line
 
 const routerHistory = useRouterHistory(createHistory)({
     basename: CONTEXT_PATH,
 });
 
-const originalPush = routerHistory.push;
-function pushWithDynamicBasePath(url) {
-    return originalPush.call(
-        this,
-        (getDynamicBasePath() || '') + (url.startsWith('/') ? '' : '/') + url
-    );
+function prependBasePath(fn) {
+    return url => {
+        const fodselsnummer = getFodselsnummer();
+        return fn.call(
+            this,
+            (fodselsnummer ? `/${fodselsnummer}` : '') +
+                (url.startsWith('/') ? '' : '/') +
+                url
+        );
+    };
 }
-routerHistory.push = pushWithDynamicBasePath;
+
+routerHistory.push = prependBasePath(routerHistory.push);
+routerHistory.replace = prependBasePath(routerHistory.replace);
 
 export default routerHistory;

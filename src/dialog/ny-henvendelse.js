@@ -39,6 +39,7 @@ function NyHenvendelseForm({
                 maxLength={BESKRIVELSE_MAKS_LENGDE}
                 disabled={oppretter}
                 visTellerFra={1000}
+                autoFocus={harEksisterendeOverskrift}
             />
             <Hovedknapp type="hoved" spinner={oppretter} disabled={oppretter}>
                 <FormattedMessage id="dialog.lag-ny-dialog" />

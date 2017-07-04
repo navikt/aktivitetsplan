@@ -1,6 +1,5 @@
 import 'babel-polyfill';
 import React from 'react';
-import PT from 'prop-types';
 import { Router, applyRouterMiddleware } from 'react-router';
 import { useScroll } from 'react-router-scroll';
 import SideBanner from './moduler/sidebanner/sidebanner';
@@ -9,6 +8,7 @@ import Provider from './provider';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Feature from './felles-komponenter/feature/feature';
 import './index.less';
+import routing from './routing';
 import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
 
 const shouldScroll = (prevRouterProps, nextRouterProps) =>
@@ -17,7 +17,7 @@ const shouldScroll = (prevRouterProps, nextRouterProps) =>
         prevRouterProps.params.temaid &&
         nextRouterProps.params.temaid);
 
-function App({ routing }) {
+function App() {
     return (
         <div className="aktivitetsplanfs">
             <Provider>
@@ -41,9 +41,5 @@ function App({ routing }) {
         </div>
     );
 }
-
-App.propTypes = {
-    routing: PT.node.isRequired,
-};
 
 export default App;

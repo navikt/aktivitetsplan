@@ -35,7 +35,7 @@ import SettManuellOppfolgingKvittering
     from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering
     from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
-import { VIS_INNSTILLINGER } from '~config'; // eslint-disable-line
+import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
 export const endreAktivitetRoute = aktivitetId =>
@@ -45,7 +45,7 @@ export const fullforAktivitetRoute = aktivitetId =>
 export const avbrytAktivitetRoute = aktivitetId =>
     `/aktivitet/avbryt/${aktivitetId}`;
 
-export default (
+const routing = (
     <Route component={Hovedside}>
         <IndexRoute />
         <Route path="vilkar" component={VilkarModal} />
@@ -112,3 +112,16 @@ export default (
         <Route path="*" />
     </Route>
 );
+
+function TomDiv() {
+    return <div />;
+}
+
+export default (FNR_I_URL
+    ? <Route path="/">
+          <IndexRoute component={TomDiv} />
+          <Route path=":fnr">
+              {routing}
+          </Route>
+      </Route>
+    : routing);
