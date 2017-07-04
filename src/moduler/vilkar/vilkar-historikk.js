@@ -24,7 +24,7 @@ class VilkarHistorikk extends Component {
             const formattertDato = formaterDatoKortManed(dato);
             return (
                 <Link
-                    to={`vilkarhistorikk/${guid}`}
+                    to={`vilkar/${guid}`}
                     key={`${guid}`}
                     className="vilkar__link lenke lenke--frittstaende"
                 >

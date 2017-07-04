@@ -1,5 +1,5 @@
-import * as Api from './situasjon-api';
-import { STATUS, doThenDispatch } from './utils';
+import * as Api from '../../ducks/situasjon-api';
+import { STATUS, doThenDispatch } from '../../ducks/utils';
 
 // Actions
 export const HENT_PENDING = 'vilkar/hent/pending';

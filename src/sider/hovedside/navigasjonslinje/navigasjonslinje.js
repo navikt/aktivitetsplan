@@ -54,10 +54,7 @@ class Navigasjonslinje extends Component {
                     sti="/mal"
                     tekstId="aktivitetsmal.mitt-mal"
                 />
-                <NavigasjonsElement
-                    sti="/vilkarhistorikk"
-                    tekstId="navigasjon.vilkar"
-                />
+                <NavigasjonsElement sti="/vilkar" tekstId="navigasjon.vilkar" />
                 <Feature name="navigasjonslinjemeny">
                     <NavigasjonslinjeMeny />
                 </Feature>
