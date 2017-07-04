@@ -15,7 +15,7 @@ function Hovedside({ children }) {
                 <Feil />
                 <OppfolgingStatus>
                     <Varslinger />
-                    <Container className="hovedsideinnhold__meny-container blokk-s">
+                    <Container className="hovedsideinnhold__meny-container">
                         <Navigasjonslinje />
                         <Verktoylinje />
                     </Container>

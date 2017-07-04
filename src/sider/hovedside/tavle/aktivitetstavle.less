@@ -15,7 +15,6 @@
     background-color: @color-kolonne-background;
     padding: 0.5rem;
     transition: padding 0.2s ease-in-out;
-    width: @aktivitetskollonne-bredde;
     min-height: @min-height;
     border-radius: @border-radius-base;
 }
@@ -117,4 +116,10 @@
         width: 21px;
         height: 28px;
     }
+}
+
+@media (min-width: @screen-md-min) {
+  .aktivitetstavle__kolonne {
+    width: @aktivitetskollonne-bredde;
+  }
 }
