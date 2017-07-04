@@ -19,6 +19,7 @@ function Dialog({ dialog, overskrift, className }) {
             <NyHenvendelse
                 formNavn={`ny-henvendelse-dialog-${dialogId}`}
                 dialogId={dialogId}
+                skalHaAutofokus={false}
             />
             <EndreDialog
                 formNavn={`endre-dialog-${dialogId}`}
