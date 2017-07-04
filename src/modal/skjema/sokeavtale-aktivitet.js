@@ -7,7 +7,7 @@ import SokeavtaleAktivitetForm, { formNavn } from './sokeavtale-aktivitet-form';
 import history from './../../history';
 import ModalHeader from '../modal-header';
 import { lagNyAktivitet } from '../../ducks/aktiviteter';
-import { SOKEAVTALE_AKTIVITET_TYPE, STATUS_GJENNOMFOERT } from '../../constant';
+import { SOKEAVTALE_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
 import { LUKK_MODAL } from '../../ducks/modal';
 import { aktivitetRoute } from '../../routing';

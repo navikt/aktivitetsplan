@@ -137,7 +137,7 @@ class SokeAvtaleAktivitetForm extends Component {
                     <Textarea
                         feltNavn="avtaleOppfolging"
                         disabled={avtalt === true}
-                        labelId="sokeavtale-aktivitet-form.label.avtale-oppgolging"
+                        labelId="sokeavtale-aktivitet-form.label.avtale-oppfolging"
                         maxLength={OPPFOLGING_MAKS_LENGDE}
                         visTellerFra={500}
                     />
