@@ -96,9 +96,10 @@ export default function reducer(state = initalState, action) {
         case SETT_DIGITAL_PENDING:
             return {
                 ...state,
-                status: state.status === STATUS.NOT_STARTED
-                    ? STATUS.PENDING
-                    : STATUS.RELOADING,
+                status:
+                    state.status === STATUS.NOT_STARTED
+                        ? STATUS.PENDING
+                        : STATUS.RELOADING,
             };
         case LAGRE_BEGRUNNELSE:
             return {

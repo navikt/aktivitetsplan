@@ -114,7 +114,8 @@ class EgenAktivitetForm extends Component {
                         fraDato={this.props.currentFraDato}
                         tilDato={this.props.currentTilDato}
                         errorMessage={this.props.intl.formatMessage({
-                            id: 'datepicker.feilmelding.egen.fradato-etter-frist',
+                            id:
+                                'datepicker.feilmelding.egen.fradato-etter-frist',
                         })}
                     >
                         <div className="dato-container">

@@ -20,7 +20,7 @@ const pad = nr => {
     return `0${nr}`;
 };
 
-export const Caption = ({ date }) => (
+export const Caption = ({ date }) =>
     <div
         className="DayPicker-Caption"
         role="heading"
@@ -28,8 +28,7 @@ export const Caption = ({ date }) => (
         aria-atomic="true"
     >
         <FormattedDate month="long" year="numeric" value={date} />
-    </div>
-);
+    </div>;
 
 Caption.propTypes = {
     date: PT.instanceOf(Date),
@@ -136,7 +135,9 @@ class DayPickerComponent extends Component {
     erDeaktivertDag(day) {
         const { tidligsteFom, senesteTom } = this.props;
         const tempDay = new Date(
-            `${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())}`
+            `${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(
+                day.getDate()
+            )}`
         );
 
         return (

@@ -3,7 +3,11 @@ import PT from 'prop-types';
 import hiddenIfHOC from '../felles-komponenter/hidden-if/hidden-if';
 
 function TallAlert({ children }) {
-    return <span className="tall-alert">{children}</span>;
+    return (
+        <span className="tall-alert">
+            {children}
+        </span>
+    );
 }
 
 TallAlert.propTypes = {

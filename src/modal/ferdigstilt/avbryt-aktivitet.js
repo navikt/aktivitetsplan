@@ -12,9 +12,9 @@ import history from '../../history';
 
 const AvbrytAktivitet = props => {
     const paramsId = props.params.id;
-    const valgtAktivitet = props.aktiviteter.data.find(
-        aktivitet => aktivitet.id === paramsId
-    ) || {};
+    const valgtAktivitet =
+        props.aktiviteter.data.find(aktivitet => aktivitet.id === paramsId) ||
+        {};
 
     const begrunnelse = (
         <BegrunnelseAktivitet

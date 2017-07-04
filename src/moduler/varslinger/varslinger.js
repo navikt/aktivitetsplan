@@ -11,18 +11,20 @@ import hiddenIf, {
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
 
-const Varsling = hiddenIf(({ tekstId }) => (
+const Varsling = hiddenIf(({ tekstId }) =>
     <AlertStripeInfoSolid>
         <FormattedMessage id={tekstId} />
     </AlertStripeInfoSolid>
-));
+);
 
-const VarslingMedLenke = hiddenIf(({ tekstId, lenkeTekstId, href }) => (
+const VarslingMedLenke = hiddenIf(({ tekstId, lenkeTekstId, href }) =>
     <AlertStripeInfoSolid>
         <FormattedMessage id={tekstId} />
-        <Lenke href={href}><FormattedMessage id={lenkeTekstId} /></Lenke>
+        <Lenke href={href}>
+            <FormattedMessage id={lenkeTekstId} />
+        </Lenke>
     </AlertStripeInfoSolid>
-));
+);
 
 class Varslinger extends Component {
     componentDidMount() {

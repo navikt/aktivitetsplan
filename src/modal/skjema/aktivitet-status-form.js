@@ -17,7 +17,7 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import visibleIf from '../../hocs/visible-if';
 import Textarea from '../skjema/textarea/textarea';
 
-const leggTilHengelas = (tekst, altTekst) => (
+const leggTilHengelas = (tekst, altTekst) =>
     <span>
         {tekst}
         &nbsp;&nbsp;
@@ -26,8 +26,7 @@ const leggTilHengelas = (tekst, altTekst) => (
             src={hengelasSVG}
             alt={altTekst}
         />
-    </span>
-);
+    </span>;
 
 const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
 const MAKS_LENGDE = 255;

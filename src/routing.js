@@ -16,24 +16,15 @@ import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
 import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
 import Prosesser from './moduler/innstillinger/prosesser/prosesser';
-import AvsluttOppfolging
-    from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolginsperiode';
-import BekreftAvsluttOppfolging
-    from './moduler/innstillinger/avslutt-oppfolging/bekreft-avslutt-oppfolginsperiode';
-import BekreftStartOppfolging
-    from './moduler/innstillinger/start-oppfolging/bekreft-start-oppfolginsperiode';
-import StartOppfolgingKvittering
-    from './moduler/innstillinger/start-oppfolging/start-oppfolging-kvittering';
-import AvsluttOppfolgingKvittering
-    from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolging-kvittering';
-import SettManuellOppfolging
-    from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging';
-import SettDigitalOppfolging
-    from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
-import SettManuellOppfolgingKvittering
-    from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
-import SettDigitalKvittering
-    from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
+import AvsluttOppfolging from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolginsperiode';
+import BekreftAvsluttOppfolging from './moduler/innstillinger/avslutt-oppfolging/bekreft-avslutt-oppfolginsperiode';
+import BekreftStartOppfolging from './moduler/innstillinger/start-oppfolging/bekreft-start-oppfolginsperiode';
+import StartOppfolgingKvittering from './moduler/innstillinger/start-oppfolging/start-oppfolging-kvittering';
+import AvsluttOppfolgingKvittering from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolging-kvittering';
+import SettManuellOppfolging from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging';
+import SettDigitalOppfolging from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
+import SettManuellOppfolgingKvittering from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
+import SettDigitalKvittering from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;

@@ -5,7 +5,7 @@ import ModalHeader from '../../modal/modal-header';
 import OppfolgingStatus from '../oppfolging-status/oppfolging-status';
 
 function VilkarModal(Component, options) {
-    return () => (
+    return () =>
         <Modal
             isOpen
             onRequestClose={() => history.push('/')}
@@ -20,8 +20,7 @@ function VilkarModal(Component, options) {
                     <Component />
                 </OppfolgingStatus>
             </ModalHeader>
-        </Modal>
-    );
+        </Modal>;
 }
 
 export default VilkarModal;

@@ -10,8 +10,8 @@ function datoErIPeriode(dato, state) {
     if (historiskPeriode) {
         return dato >= historiskPeriode.fra && dato <= historiskPeriode.til;
     }
-    const oppfolgingsPerioder = stateData.situasjon.data
-        .oppfolgingsPerioder || [];
+    const oppfolgingsPerioder =
+        stateData.situasjon.data.oppfolgingsPerioder || [];
     const forrigeSluttDato = oppfolgingsPerioder
         .map(p => p.sluttDato)
         .sort()

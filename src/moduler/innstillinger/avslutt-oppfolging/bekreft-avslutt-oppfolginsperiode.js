@@ -9,9 +9,7 @@ import ModalFooter from '../../../modal/modal-footer';
 import { avsluttOppfolging } from '../../../ducks/situasjon';
 import history from '../../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
-import {
-    RemoteResetKnapp,
-} from '../../../felles-komponenter/remote-knapp/remote-knapp';
+import { RemoteResetKnapp } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import InnstillingerModal from '../innstillinger-modal';
 
 function BekreftAvslutning({

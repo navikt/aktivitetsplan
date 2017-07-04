@@ -20,7 +20,8 @@ class OppfolgingPeriodeInnslag extends Component {
                     <FormattedMessage
                         id="innstillinger.oppfolginghistorikk.beskrivelse"
                         values={{
-                            veileder: `${veiledere[veileder] || ''} (${veileder})`,
+                            veileder: `${veiledere[veileder] ||
+                                ''} (${veileder})`,
                         }}
                     />
                 </Element>

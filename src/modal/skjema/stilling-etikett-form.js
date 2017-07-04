@@ -27,7 +27,7 @@ function StillingEtikettForm(props) {
                             )}
                         checked={
                             aktivitet.etikett === statuser.INGEN_VALGT ||
-                                !aktivitet.etikett
+                            !aktivitet.etikett
                         }
                     />
                     <Radio
@@ -102,7 +102,8 @@ StillingEtikettForm.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-    disabled: state.data.aktiviteter.status !== STATUS.OK ||
+    disabled:
+        state.data.aktiviteter.status !== STATUS.OK ||
         props.disableStatusEndring,
 });
 

@@ -32,7 +32,7 @@ function TypeFilter({
             <Undertittel>
                 <FormattedMessage id="filter.aktivitet.type.tittel" />
             </Undertittel>
-            {aktivitetTyper.map(aktivitetType => (
+            {aktivitetTyper.map(aktivitetType =>
                 <Checkbox
                     label={
                         <FormattedMessage
@@ -42,7 +42,7 @@ function TypeFilter({
                     onChange={() => doToggleAktivitetsType(aktivitetType)}
                     checked={aktivitetTyper[aktivitetType]}
                 />
-            ))}
+            )}
         </VisibleIfDiv>
     );
 }
@@ -63,7 +63,7 @@ function EtikettFilter({
             <Undertittel>
                 <FormattedMessage id="filter.aktivitet.etikett.tittel" />
             </Undertittel>
-            {aktivitetEtiketter.map(aktivitetEtikett => (
+            {aktivitetEtiketter.map(aktivitetEtikett =>
                 <Checkbox
                     label={
                         <FormattedMessage id={`etikett.${aktivitetEtikett}`} />
@@ -71,7 +71,7 @@ function EtikettFilter({
                     onChange={() => doToggleAktivitetsEtikett(aktivitetEtikett)}
                     checked={aktivitetEtiketter[aktivitetEtikett]}
                 />
-            ))}
+            )}
         </VisibleIfDiv>
     );
 }
@@ -105,9 +105,13 @@ function PeriodeFilter({
                     <Radio
                         label={
                             <div>
-                                <Dato>{t.fra}</Dato>
+                                <Dato>
+                                    {t.fra}
+                                </Dato>
                                 <span> - </span>
-                                <Dato>{t.til}</Dato>
+                                <Dato>
+                                    {t.til}
+                                </Dato>
                             </div>
                         }
                         name={id}
@@ -153,12 +157,12 @@ function Filter({
             className="filter"
             visible={
                 harAktivitetEtiketter ||
-                    harHistoriskePerioder ||
-                    harAktivitetTyper
+                harHistoriskePerioder ||
+                harAktivitetTyper
             }
         >
             <FormattedMessage id="filter.tittel">
-                {tittel => (
+                {tittel =>
                     <Dropdown name={tittel}>
                         <Innholdslaster
                             avhengigheter={[
@@ -196,8 +200,7 @@ function Filter({
                                 />
                             </div>
                         </Innholdslaster>
-                    </Dropdown>
-                )}
+                    </Dropdown>}
             </FormattedMessage>
         </VisibleIfDiv>
     );

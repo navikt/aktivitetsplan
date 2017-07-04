@@ -74,7 +74,9 @@ class OppfolgingStatus extends Component {
 
         return (
             <Innholdslaster avhengigheter={[situasjon, identitet]}>
-                <div className="fullbredde">{komponent}</div>
+                <div className="fullbredde">
+                    {komponent}
+                </div>
             </Innholdslaster>
         );
     }

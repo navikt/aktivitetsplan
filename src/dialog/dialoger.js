@@ -15,15 +15,17 @@ import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { dialogFilter } from '../moduler/filter/filter-utils';
 
-const Markering = visibleIfHOC(props => (
+const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
-));
-const Info = visibleIfHOC(({ slash, className, children }) => (
+);
+const Info = visibleIfHOC(({ slash, className, children }) =>
     <span>
         {slash && <Undertekst className="dialoger__slash" />}
-        <Undertekst className={className} tag="span">{children}</Undertekst>
+        <Undertekst className={className} tag="span">
+            {children}
+        </Undertekst>
     </span>
-));
+);
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 // eslint-disable-next-line react/prefer-stateless-function
@@ -67,7 +69,11 @@ class DialogVisning extends React.Component {
             >
                 <Markering visible={!dialog.lest} />
                 <div>
-                    <Info><Dato>{dialog.sisteDato}</Dato></Info>
+                    <Info>
+                        <Dato>
+                            {dialog.sisteDato}
+                        </Dato>
+                    </Info>
                     <Info visible={harAktivitetType} slash>
                         <FormattedMessage
                             id={`aktivitet.type.${aktivitetType}`.toLowerCase()}
@@ -126,9 +132,8 @@ function Dialoger({
     const erTabBar = dialog =>
         dialog === valgtDialog ||
         (valgtDialog == null && dialog.id === dialoger[0].id);
-    const valgtDialogIndex = valgtDialog != null
-        ? dialoger.indexOf(valgtDialog)
-        : 0;
+    const valgtDialogIndex =
+        valgtDialog != null ? dialoger.indexOf(valgtDialog) : 0;
     const dialogRefs = {};
 
     const byttTilNyDialog = id => {
@@ -166,7 +171,7 @@ function Dialoger({
     return (
         <Innholdslaster avhengigheter={[dialogState]}>
             <div className={className} onKeyDown={dialogPiling}>
-                {dialoger.map(d => (
+                {dialoger.map(d =>
                     <DialogVisning
                         key={d.id}
                         ref={ref => (dialogRefs[d.id] = ref)}
@@ -175,7 +180,7 @@ function Dialoger({
                         erValgt={d === valgtDialog}
                         aktiviteter={aktiviteter}
                     />
-                ))}
+                )}
             </div>
         </Innholdslaster>
     );

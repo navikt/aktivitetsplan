@@ -7,14 +7,13 @@ import { connect } from 'react-redux';
 import { submit } from 'redux-form';
 
 const cls = className => classNames(className, 'knapp-liten');
-const RemoteSubmitKnapp = ({ className, dispatch, formNavn }) => (
+const RemoteSubmitKnapp = ({ className, dispatch, formNavn }) =>
     <Hovedknapp
         className={cls(className)}
         onClick={() => dispatch(submit(formNavn))}
     >
         <FormattedMessage id="modal.skjema.lagre" />
-    </Hovedknapp>
-);
+    </Hovedknapp>;
 
 RemoteSubmitKnapp.propTypes = {
     className: PT.string,

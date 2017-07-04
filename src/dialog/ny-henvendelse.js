@@ -120,9 +120,11 @@ const mapStateToProps = (state, props) => {
         },
         harEksisterendeOverskrift: !!overskrift,
         oppretter: dialogState.status !== STATUS.OK,
-        visBrukerInfo: !!(erBruker &&
+        visBrukerInfo: !!(
+            erBruker &&
             dialogState.sisteHenvendelseData === dialog &&
-            moment(sisteDato).add(5, 's').isAfter(moment())),
+            moment(sisteDato).add(5, 's').isAfter(moment())
+        ),
     };
 };
 

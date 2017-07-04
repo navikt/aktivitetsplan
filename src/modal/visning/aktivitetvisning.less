@@ -1,112 +1,109 @@
 @import '../../variables';
 
 .aktivitetvisning {
+    &__underseksjon {
+        padding: 0 3rem 0 2rem;
+        .blokk-xs();
 
-  &__underseksjon {
-    padding: 0 3rem 0 2rem;
-    .blokk-xs();
+        .typo-sidetittel {
+            margin: 1.2rem 0;
+            line-height: 1.1;
+        }
 
-    .typo-sidetittel {
-      margin: 1.2rem 0;
-      line-height: 1.1;
+        .oppdater-status {
+            margin: 1rem 0 0 0.5rem;
+        }
     }
 
-    .oppdater-status {
-      margin: 1rem 0 0 0.5rem;
-    }
-  }
-
-  &__etikett {
-    .blokk-m();
-  }
-
-  &__alert {
-    .blokk-m();
-  }
-
-  &__detaljer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 32rem;
-  }
-
-  .typo-undertittel {
-    margin: 1.1rem 0 1rem;
-  }
-
-  .begrunnelse-boks {
-    cursor: pointer;
-
-    .tekst--kollapset {
-
-      @media (min-width: 641px) {
-        max-width: 30.1rem;
-      }
-
-      @media (max-width: 640px) {
-        max-width: 27.9rem;
-      }
-
-      display: inline-block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-
-  .aktivitetsbeskrivelse {
-    .blokk-m();
-
-    &__tekst {
-      white-space: pre-wrap;
+    &__etikett {
+        .blokk-m();
     }
 
-    .typo-etikett-liten {
-      margin-bottom: -1rem;
-      color: @navGra60;
+    &__alert {
+        .blokk-m();
     }
-  }
 
-  .aktivitetsdetaljer,
-  .aktivitetsbeskrivelse {
-
-    .detaljfelt {
-      .blokk-s();
-      margin-right: 2rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex: 0 0 13rem;
-
-      &__tittel {
-        color: @navGra60;
-      }
-
-      &__lenke {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-      }
+    &__detaljer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 32rem;
     }
-  }
 
-  &__delelinje {
-    margin-top: 0;
-    color: @color-hr;
-  }
+    .typo-undertittel {
+        margin: 1.1rem 0 1rem;
+    }
 
-  &__historikk {
-    .blokk-m();
-  }
+    .begrunnelse-boks {
+        cursor: pointer;
+
+        .tekst--kollapset {
+            @media (min-width: 641px) {
+                max-width: 30.1rem;
+            }
+
+            @media (max-width: 640px) {
+                max-width: 27.9rem;
+            }
+
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .aktivitetsbeskrivelse {
+        .blokk-m();
+
+        &__tekst {
+            white-space: pre-wrap;
+        }
+
+        .typo-etikett-liten {
+            margin-bottom: -1rem;
+            color: @navGra60;
+        }
+    }
+
+    .aktivitetsdetaljer,
+    .aktivitetsbeskrivelse {
+        .detaljfelt {
+            .blokk-s();
+            margin-right: 2rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 0 0 13rem;
+
+            &__tittel {
+                color: @navGra60;
+            }
+
+            &__lenke {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    &__delelinje {
+        margin-top: 0;
+        color: @color-hr;
+    }
+
+    &__historikk {
+        .blokk-m();
+    }
 }
 
 .aktivitetvisning__historikk .endringslogg-for-aktivitet {
-  &__lenke-knapp {
-    .blokk-m();
-    display: inline-block;
-  }
+    &__lenke-knapp {
+        .blokk-m();
+        display: inline-block;
+    }
 
-  &__innslag {
-    .blokk-s();
-  }
+    &__innslag {
+        .blokk-s();
+    }
 }

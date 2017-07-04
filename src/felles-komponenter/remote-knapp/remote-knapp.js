@@ -11,7 +11,7 @@ const SubmitKnapp = ({
     children,
     mini,
     ...rest
-}) => (
+}) =>
     <Hovedknapp
         className={className}
         onClick={() => dispatch(submit(formNavn))}
@@ -19,8 +19,7 @@ const SubmitKnapp = ({
         {...rest}
     >
         {children}
-    </Hovedknapp>
-);
+    </Hovedknapp>;
 
 SubmitKnapp.propTypes = {
     className: PT.string,
@@ -44,7 +43,7 @@ const ResetKnapp = ({
     children,
     onClick,
     ...rest
-}) => (
+}) =>
     <Knapp
         className={className}
         onClick={() => {
@@ -54,8 +53,7 @@ const ResetKnapp = ({
         {...rest}
     >
         {children}
-    </Knapp>
-);
+    </Knapp>;
 
 ResetKnapp.propTypes = {
     className: PT.string,

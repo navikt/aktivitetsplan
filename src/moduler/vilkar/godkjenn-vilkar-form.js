@@ -17,7 +17,6 @@ function GodkjennVilkarForm({ visVilkar, handleSubmit, reset, doAvslaVilkar }) {
 
     return (
         <form className="godkjenn-vilkar" onSubmit={handleSubmit}>
-
             <div className="godkjenn-vilkar__avkryssning">
                 <Checkbox
                     className="godkjenn-vilkar__avkryssningsboks"
@@ -44,7 +43,6 @@ function GodkjennVilkarForm({ visVilkar, handleSubmit, reset, doAvslaVilkar }) {
                     <FormattedMessage id="vilkar.avsla-vilkar" />
                 </Knappelenke>
             </div>
-
         </form>
     );
 }
