@@ -28,3 +28,4 @@ function hoc(type) {
 
 export const div = hoc('div');
 export const span = hoc('span');
+export const hr = hoc('hr');

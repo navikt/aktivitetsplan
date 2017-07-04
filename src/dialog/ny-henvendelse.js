@@ -23,6 +23,7 @@ function NyHenvendelseForm({
     harEksisterendeOverskrift,
     oppretter,
     visBrukerInfo,
+    skalHaAutofokus,
 }) {
     return (
         <form onSubmit={handleSubmit} className="ny-henvendelse-form">
@@ -34,12 +35,13 @@ function NyHenvendelseForm({
                     autoFocus
                 />}
             <Textarea
+                labelId="dialog.tekst-label"
                 feltNavn="tekst"
                 placeholder="Skriv her"
                 maxLength={BESKRIVELSE_MAKS_LENGDE}
                 disabled={oppretter}
                 visTellerFra={1000}
-                autoFocus={harEksisterendeOverskrift}
+                autoFocus={harEksisterendeOverskrift && skalHaAutofokus}
             />
             <Hovedknapp type="hoved" spinner={oppretter} disabled={oppretter}>
                 <FormattedMessage id="dialog.lag-ny-dialog" />
@@ -54,12 +56,16 @@ function NyHenvendelseForm({
         </form>
     );
 }
+NyHenvendelseForm.defaultProps = {
+    skalHaAutofokus: false,
+};
 
 NyHenvendelseForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     harEksisterendeOverskrift: PT.bool.isRequired,
     oppretter: PT.bool.isRequired,
     visBrukerInfo: PT.bool.isRequired,
+    skalHaAutofokus: PT.bool,
 };
 
 const pakrevdOverskrift = rules.minLength(
