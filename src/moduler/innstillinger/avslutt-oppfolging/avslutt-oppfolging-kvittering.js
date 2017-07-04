@@ -2,18 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
+import Modal from '../../../modal/modal';
+import ModalHeader from '../../../modal/modal-header';
+import history from '../../../history';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../proptypes';
 import {
-    AlertStripeSuksess,
-    AlertStripeAdvarsel,
-} from 'nav-frontend-alertstriper';
-import Modal from '../modal';
-import ModalHeader from '../modal-header';
-import history from '../../history';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import * as AppPT from '../../proptypes';
+    HiddenIfAlertStripeAdvarsel,
+    HiddenIfAlertStripeSuksess,
+} from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
 function AvsluttOppfolgingKvittering({ motpart, situasjon }) {
     const { navn } = motpart.data;
+    const avsluttet =
+        situasjon.data.avslutningStatus &&
+        !situasjon.data.avslutningStatus.kanAvslutte;
     return (
         <Modal
             isOpen
@@ -35,17 +38,21 @@ function AvsluttOppfolgingKvittering({ motpart, situasjon }) {
                             <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.overskrift" />
                         </Systemtittel>
                     </div>
-                    {situasjon.data.avslutningStatus &&
-                        !situasjon.data.avslutningStatus.kanAvslutte
-                        ? <AlertStripeSuksess className="blokk-m">
-                              <FormattedMessage
-                                  id="innstillinger.modal.avslutt.oppfolging.kvittering"
-                                  values={{ navn }}
-                              />
-                          </AlertStripeSuksess>
-                        : <AlertStripeAdvarsel className="blokk-m">
-                              <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.kvittering.feil" />
-                          </AlertStripeAdvarsel>}
+                    <HiddenIfAlertStripeSuksess
+                        hidden={!avsluttet}
+                        className="blokk-m"
+                    >
+                        <FormattedMessage
+                            id="innstillinger.modal.avslutt.oppfolging.kvittering"
+                            values={{ navn }}
+                        />
+                    </HiddenIfAlertStripeSuksess>
+                    <HiddenIfAlertStripeAdvarsel
+                        hidden={avsluttet}
+                        className="blokk-m"
+                    >
+                        <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.kvittering.feil" />
+                    </HiddenIfAlertStripeAdvarsel>
                 </article>
             </Innholdslaster>
         </Modal>

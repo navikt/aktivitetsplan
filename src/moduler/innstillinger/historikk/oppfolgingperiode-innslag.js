@@ -3,8 +3,8 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Dato from '../../felles-komponenter/dato';
-import { hentVeileder } from './../../ducks/veileder';
+import Dato from '../../../felles-komponenter/dato';
+import { hentVeileder } from '../../../ducks/veileder';
 
 class OppfolgingPeriodeInnslag extends Component {
     componentWillMount() {

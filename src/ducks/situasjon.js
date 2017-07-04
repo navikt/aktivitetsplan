@@ -26,6 +26,19 @@ export const START_OPPFOLGING_OK = 'situasjon/start/OK';
 export const START_OPPFOLGING_FEILET = 'situasjon/start/FEILET';
 export const START_OPPFOLGING_PENDING = 'situasjon/start/PENDING';
 
+export const SETT_MANUELL_OK = 'situasjon/manuell/OK';
+export const SETT_MANUELL_FEILET = 'situasjon/manuell/FEILET';
+export const SETT_MANUELL_PENDING = 'situasjon/manuell/PENDING';
+
+export const SETT_DIGITAL_OK = 'situasjon/digital/OK';
+export const SETT_DIGITAL_FEILET = 'situasjon/digital/FEILET';
+export const SETT_DIGITAL_PENDING = 'situasjon/digital/PENDING';
+
+export const LAGRE_BEGRUNNELSE = 'form/lagre-begrunnelse';
+export const SLETT_BEGRUNNELSE = 'form/slett-begrunnelse';
+
+export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     brukerHarAvslatt: false,
@@ -39,6 +52,8 @@ export default function reducer(state = initalState, action) {
         case KAN_AVSLUTTE_OK:
         case AVSLUTT_OPPFOLGING_OK:
         case START_OPPFOLGING_OK:
+        case SETT_MANUELL_OK:
+        case SETT_DIGITAL_OK:
             return {
                 ...state,
                 status: STATUS.OK,
@@ -64,6 +79,8 @@ export default function reducer(state = initalState, action) {
         case KAN_AVSLUTTE_FEILET:
         case AVSLUTT_OPPFOLGING_FEILET:
         case START_OPPFOLGING_FEILET:
+        case SETT_MANUELL_FEILET:
+        case SETT_DIGITAL_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
@@ -75,12 +92,21 @@ export default function reducer(state = initalState, action) {
         case KAN_AVSLUTTE_PENDING:
         case AVSLUTT_OPPFOLGING_PENDING:
         case START_OPPFOLGING_PENDING:
+        case SETT_MANUELL_PENDING:
+        case SETT_DIGITAL_PENDING:
             return {
                 ...state,
                 status: state.status === STATUS.NOT_STARTED
                     ? STATUS.PENDING
                     : STATUS.RELOADING,
             };
+        case LAGRE_BEGRUNNELSE:
+            return {
+                ...state,
+                begrunnelse: action.data,
+            };
+        case SLETT_BEGRUNNELSE:
+            return { ...state, begrunnelse: null };
         default:
             return state;
     }
@@ -121,7 +147,7 @@ export function startOppfolging() {
     });
 }
 
-export function kanAvslutte() {
+export function kanAvslutteOppfolging() {
     return doThenDispatch(() => Api.kanAvslutte(), {
         OK: KAN_AVSLUTTE_OK,
         FEILET: KAN_AVSLUTTE_FEILET,
@@ -138,4 +164,33 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
             PENDING: AVSLUTT_OPPFOLGING_PENDING,
         }
     );
+}
+
+export function settManuellOppfolging(begrunnelse, veilederId) {
+    return doThenDispatch(
+        () => Api.settManuellOppfolging(begrunnelse, veilederId),
+        {
+            OK: SETT_MANUELL_OK,
+            FEILET: SETT_MANUELL_FEILET,
+            PENDING: SETT_MANUELL_PENDING,
+        }
+    );
+}
+
+export function settDigitalOppfolging(begrunnelse, veilederId) {
+    return doThenDispatch(
+        () => Api.settDigitalOppfolging(begrunnelse, veilederId),
+        {
+            OK: SETT_DIGITAL_OK,
+            FEILET: SETT_DIGITAL_FEILET,
+            PENDING: SETT_DIGITAL_PENDING,
+        }
+    );
+}
+
+export function lagreBegrunnelse(begrunnelse) {
+    return {
+        type: LAGRE_BEGRUNNELSE,
+        data: begrunnelse,
+    };
 }

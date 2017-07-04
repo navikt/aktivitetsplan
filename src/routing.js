@@ -15,17 +15,25 @@ import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
 import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
 import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
-import InnstillingerModal from './modal/innstillinger/innstillinger-modal';
-import Prosesser from './modal/innstillinger/prosesser';
-import AvsluttOppfolging from './modal/innstillinger/avslutt-oppfolginsperiode';
+import Prosesser from './moduler/innstillinger/prosesser/prosesser';
+import AvsluttOppfolging
+    from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolginsperiode';
 import BekreftAvsluttOppfolging
-    from './modal/innstillinger/bekreft-avslutt-oppfolginsperiode';
+    from './moduler/innstillinger/avslutt-oppfolging/bekreft-avslutt-oppfolginsperiode';
 import BekreftStartOppfolging
-    from './modal/innstillinger/bekreft-start-oppfolginsperiode';
+    from './moduler/innstillinger/start-oppfolging/bekreft-start-oppfolginsperiode';
 import StartOppfolgingKvittering
-    from './modal/innstillinger/start-oppfolging-kvittering';
+    from './moduler/innstillinger/start-oppfolging/start-oppfolging-kvittering';
 import AvsluttOppfolgingKvittering
-    from './modal/innstillinger/avslutt-oppfolging-kvittering';
+    from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolging-kvittering';
+import SettManuellOppfolging
+    from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging';
+import SettDigitalOppfolging
+    from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
+import SettManuellOppfolgingKvittering
+    from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
+import SettDigitalKvittering
+    from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -44,27 +52,44 @@ const routing = (
         <Route path="mal" component={Aktivitetsmal} />
         <Route path="mal/endre" component={AktivitetmalEndre} />
         {VIS_INNSTILLINGER &&
-            <Route path="innstillinger" component={InnstillingerModal}>
-                <IndexRoute component={Prosesser} />
-                <Route path="avslutt" component={AvsluttOppfolging} />
+            <Route>
+                <Route path="innstillinger" component={Prosesser} />
                 <Route
-                    path="avslutt/bekreft"
+                    path="innstillinger/manuell"
+                    component={SettManuellOppfolging}
+                />
+                <Route
+                    path="innstillinger/manuell/kvittering"
+                    component={SettManuellOppfolgingKvittering}
+                />
+                <Route path="innstillinger" component={Prosesser} />
+                <Route
+                    path="innstillinger/digital"
+                    component={SettDigitalOppfolging}
+                />
+                <Route
+                    path="innstillinger/digital/kvittering"
+                    component={SettDigitalKvittering}
+                />
+                <Route
+                    path="innstillinger/avslutt"
+                    component={AvsluttOppfolging}
+                />
+                <Route
+                    path="innstillinger/avslutt/bekreft"
                     component={BekreftAvsluttOppfolging}
                 />
                 <Route
-                    path="start/bekreft"
-                    component={BekreftStartOppfolging}
-                />
-            </Route>}
-        {VIS_INNSTILLINGER &&
-            <Route>
-                <Route
                     path="innstillinger/avslutt/kvittering"
-                    component={() => <AvsluttOppfolgingKvittering />}
+                    component={AvsluttOppfolgingKvittering}
+                />
+                <Route
+                    path="innstillinger/start/bekreft"
+                    component={BekreftStartOppfolging}
                 />
                 <Route
                     path="innstillinger/start/kvittering"
-                    component={() => <StartOppfolgingKvittering />}
+                    component={StartOppfolgingKvittering}
                 />
             </Route>}
         <Route path="dialog" component={DialogModal} />

@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
-import Modal from '../modal';
-import ModalHeader from '../modal-header';
-import history from '../../history';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import * as AppPT from '../../proptypes';
+import Modal from '../../../modal/modal';
+import ModalHeader from '../../../modal/modal-header';
+import history from '../../../history';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../proptypes';
 
 function StartOppfolgingKvittering({ motpart }) {
     const { navn } = motpart.data;

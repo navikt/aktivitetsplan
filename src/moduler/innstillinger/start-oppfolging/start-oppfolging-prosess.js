@@ -1,11 +1,14 @@
 import React from 'react';
+import PT from 'prop-types';
+import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import history from '../../history';
-import StartProsess from './start-prosess';
-import hiddenIfHoc from './../../felles-komponenter/hidden-if/hidden-if';
+import history from '../../../history';
+import StartProsess from '../prosesser/start-prosess';
+import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
+import { SLETT_BEGRUNNELSE_ACTION } from '../../../ducks/situasjon';
 
-function StartOppfolgingProsess({ intl }) {
+function StartOppfolgingProsess({ intl, slettBegrunnelse }) {
     return (
         <StartProsess
             className="innstillinger__prosess"
@@ -15,7 +18,7 @@ function StartOppfolgingProsess({ intl }) {
             knappetekst={intl.formatMessage({
                 id: 'innstillinger.modal.prosess.start.knapp',
             })}
-            onClick={() => history.push('/innstillinger/start/bekreft/')}
+            onClick={() => slettBegrunnelse()}
         >
             <div className="blokk-xs">
                 <Normaltekst>
@@ -28,6 +31,16 @@ function StartOppfolgingProsess({ intl }) {
 
 StartOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
+    slettBegrunnelse: PT.func.isRequired,
 };
 
-export default hiddenIfHoc(injectIntl(StartOppfolgingProsess));
+const mapDispatchToProps = dispatch => ({
+    slettBegrunnelse: () => {
+        dispatch(SLETT_BEGRUNNELSE_ACTION);
+        history.push('/innstillinger/start/bekreft/');
+    },
+});
+
+export default connect(null, mapDispatchToProps)(
+    hiddenIfHoc(injectIntl(StartOppfolgingProsess))
+);
