@@ -8,30 +8,28 @@ import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
-import Vilkar from './vilkar';
+import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 
 const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
-function AksepterVilkar({ visVilkar, vilkarMaBesvares, brukerHarAvslatt }) {
+function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
     return (
         <div>
             <Alert visible={!visVilkar && brukerHarAvslatt}>
                 <FormattedHTMLMessage id="vilkar.info-avslag-vilkar" />
             </Alert>
-            <Vilkar visVilkar={visVilkar} visGodkjenning={vilkarMaBesvares} />
+            <GodkjennVilkar visVilkar={visVilkar} />
         </div>
     );
 }
 
-AksepterVilkar.defaultProps = {
-    vilkarMaBesvares: null,
+GodkjennVilkarMedVarsling.defaultProps = {
     brukerHarAvslatt: null,
 };
 
-AksepterVilkar.propTypes = {
+GodkjennVilkarMedVarsling.propTypes = {
     brukerHarAvslatt: PT.bool,
     visVilkar: PT.bool.isRequired,
-    vilkarMaBesvares: PT.bool,
 };
 
 class OppfolgingStatus extends Component {
@@ -63,11 +61,10 @@ class OppfolgingStatus extends Component {
                     <FormattedHTMLMessage id="krr.reservasjon" />
                 </AlertStripeInfoSolid>
             );
-        } else if (visVilkar || vilkarMaBesvares) {
+        } else if (vilkarMaBesvares) {
             komponent = (
-                <AksepterVilkar
+                <GodkjennVilkarMedVarsling
                     visVilkar={visVilkar}
-                    vilkarMaBesvares={vilkarMaBesvares}
                     brukerHarAvslatt={brukerHarAvslatt}
                 />
             );
@@ -88,6 +85,7 @@ OppfolgingStatus.defaultProps = {
     erVeileder: null,
     reservasjonKRR: null,
     vilkarMaBesvares: null,
+    brukerHarAvslatt: null,
     visVilkar: false,
 };
 
@@ -101,7 +99,7 @@ OppfolgingStatus.propTypes = {
     doHentIdentitet: PT.func.isRequired,
     reservasjonKRR: PT.bool,
     vilkarMaBesvares: PT.bool,
-    brukerHarAvslatt: PT.bool.isRequired,
+    brukerHarAvslatt: PT.bool,
 };
 
 const mapStateToProps = state => {
@@ -110,7 +108,7 @@ const mapStateToProps = state => {
     const situasjonData = situasjon.data;
     return {
         erVeileder: identitet.data.erVeileder,
-        brukerHarAvslatt: situasjonData.brukerHarAvslatt,
+        brukerHarAvslatt: situasjon.brukerHarAvslatt,
         reservasjonKRR: situasjonData.reservasjonKRR,
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
         situasjon,

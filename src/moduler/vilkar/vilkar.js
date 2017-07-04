@@ -1,60 +1,36 @@
-import React, { Component, PropTypes as PT } from 'react';
-import { connect } from 'react-redux';
-import { hentVilkar } from '../../ducks/vilkar';
-import { STATUS } from '../../ducks/utils';
+import React from 'react';
+import PT from 'prop-types';
 import * as AppPT from '../../proptypes';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import VilkarInnhold from '../../modal/vilkar/vilkar-innhold';
-import GodkjennVilkar from './godkjenn-vilkar';
+import VilkarInnhold from './vilkar-innhold';
+import VilkarHistorikk from './vilkar-historikk';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
-class Vilkar extends Component {
-    componentDidMount() {
-        if (this.props.vilkarReducer.status === STATUS.NOT_STARTED) {
-            this.props.doHentVilkar();
-        }
-    }
+function Vilkar({ vilkarListe, visHistorikk }) {
+    const gjeldendeVilkar = vilkarListe[0];
+    const resterendeVilkar = visHistorikk ? [...vilkarListe].splice(1) : [];
 
-    render() {
-        const { visGodkjenning, visVilkar, vilkar, vilkarReducer } = this.props;
-
-        return (
-            <div className="vilkar">
-
-                {visVilkar && <VilkarInnhold vilkar={vilkar} />}
-
-                {visVilkar &&
-                    visGodkjenning &&
-                    <hr className="vilkar__delelinje" />}
-
-                {visGodkjenning &&
-                    <Innholdslaster avhengigheter={[vilkarReducer]}>
-                        <div className="vilkar__godkjenning">
-                            <GodkjennVilkar
-                                visVilkar={visVilkar}
-                                hash={vilkar.hash}
-                            />
-                        </div>
-                    </Innholdslaster>}
-            </div>
-        );
-    }
+    return (
+        <div className="vilkar">
+            <VilkarInnhold vilkar={gjeldendeVilkar} />
+            <VisibleIfDiv
+                visible={visHistorikk}
+                className="vilkar__historikk-container"
+            >
+                <hr className="vilkar__delelinje" />
+                <VilkarHistorikk resterendeVilkar={resterendeVilkar} />
+            </VisibleIfDiv>
+        </div>
+    );
 }
 
 Vilkar.propTypes = {
-    doHentVilkar: PT.func.isRequired,
-    vilkar: AppPT.vilkar.isRequired,
-    vilkarReducer: AppPT.reducer.isRequired,
-    visGodkjenning: PT.bool.isRequired,
-    visVilkar: PT.bool.isRequired,
+    vilkarListe: PT.arrayOf(AppPT.vilkar),
+    visHistorikk: PT.bool,
 };
 
-const mapStateToProps = state => ({
-    vilkarReducer: state.data.vilkar,
-    vilkar: state.data.vilkar.data,
-});
+Vilkar.defaultProps = {
+    visHistorikk: false,
+    vilkarListe: undefined,
+};
 
-const mapDispatchToProps = dispatch => ({
-    doHentVilkar: () => hentVilkar()(dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Vilkar);
+export default Vilkar;

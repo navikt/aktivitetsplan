@@ -6,7 +6,8 @@ import Varslinger from '../../moduler/varslinger/varslinger';
 import Verktoylinje from '../../moduler/verktoylinje/verktoylinje';
 import AktivitetsTavle from './tavle/aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
-import OppfolgingStatus from '../../moduler/vilkar/oppfolging-status';
+import OppfolgingStatus
+    from '../../moduler/oppfolging-status/oppfolging-status';
 
 function Hovedside({ children }) {
     return (
