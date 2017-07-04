@@ -26,7 +26,7 @@ class VilkarUtenHistorikkStoreConnector extends Component {
     render() {
         return (
             <Innholdslaster avhengigheter={[this.props.historiskeVilkar]}>
-                <Vilkar vilkar={this.finnVilkar()} />
+                <Vilkar vilkarListe={[this.finnVilkar()]} />
             </Innholdslaster>
         );
     }
@@ -52,5 +52,8 @@ const mapDispatchToProps = dispatch => ({
 export default VilkarModal(
     connect(mapStateToProps, mapDispatchToProps)(
         withRouter(VilkarUtenHistorikkStoreConnector)
-    )
+    ),
+    {
+        visTilbakeKnapp: true,
+    }
 );

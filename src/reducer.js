@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'react-redux-form-validation';
 import ledetekstReducer from './ducks/ledetekster-ressurs';
 import situasjonReducer from './ducks/situasjon';
-import vilkarReducer from './ducks/vilkar';
+import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import aktiviteterReducer from './ducks/aktiviteter';
 import arenaAktiviteterReducer from './ducks/arena-aktiviteter';
 import etiketterReducer from './ducks/etiketter';

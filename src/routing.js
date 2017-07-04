@@ -2,9 +2,8 @@ import 'babel-polyfill';
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import Hovedside from './sider/hovedside/hovedside';
-import VilkarModal from './moduler/vilkar/vilkar-modal';
-import VilkarModalMedHistorikk from './modal/vilkar/vilkar-med-historikk';
-import VilkarModalUtenHistorikk from './modal/vilkar/vilkar-uten-historikk';
+import VilkarModalMedHistorikk from './moduler/vilkar/vilkar-med-historikk';
+import VilkarModalUtenHistorikk from './moduler/vilkar/vilkar-uten-historikk';
 import NyAktivitet from './modal/ny-aktivitet';
 import EgenAktivitet from './modal/skjema/egen-aktivitet';
 import StillingAktivitet from './modal/skjema/stilling-aktivitet';
@@ -40,7 +39,8 @@ export const avbrytAktivitetRoute = aktivitetId =>
 const routing = (
     <Route component={Hovedside}>
         <IndexRoute />
-        <Route path="vilkar" component={VilkarModal} />
+        <Route path="vilkar" component={VilkarModalMedHistorikk} />
+        <Route path="vilkar/:key" component={VilkarModalUtenHistorikk} />
         <Route path="mal" component={Aktivitetsmal} />
         <Route path="mal/endre" component={AktivitetmalEndre} />
         {VIS_INNSTILLINGER &&
@@ -69,11 +69,6 @@ const routing = (
             </Route>}
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
-        <Route path="vilkarhistorikk" component={VilkarModalMedHistorikk} />
-        <Route
-            path="vilkarhistorikk/:key"
-            component={VilkarModalUtenHistorikk}
-        />
         <Route path="aktivitet">
             <Route path="ny" component={NyAktivitet} />
             <Route path="ny/egen" component={EgenAktivitet} />

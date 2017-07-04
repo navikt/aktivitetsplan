@@ -6,6 +6,7 @@ import * as AppPT from '../../proptypes';
 import UnsafeHtml from '../../felles-komponenter/utils/unsafe-html';
 import vilkarSvg from './vilkar-illustrasjon.svg';
 import VisibleIfHOC from '../../hocs/visible-if';
+import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { formaterDatoKortManed } from '../../utils';
 
 const VisibleIfElementFormattedMessage = VisibleIfHOC(props => (
@@ -36,4 +37,4 @@ VilkarInnhold.propTypes = {
     vilkar: AppPT.vilkar.isRequired,
 };
 
-export default VilkarInnhold;
+export default hiddenIf(VilkarInnhold);
