@@ -151,7 +151,7 @@ class SokeAvtaleAktivitetForm extends Component {
                 </div>
                 <div className="aktivitetskjema__lagre-knapp">
                     <Hovedknapp>
-                        <FormattedMessage id="egen-aktivitet-form.lagre" />
+                        <FormattedMessage id="aktivitet-form.lagre" />
                     </Hovedknapp>
                 </div>
             </form>
