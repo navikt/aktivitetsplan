@@ -14,11 +14,11 @@ import { aktivitetRoute } from '../../routing';
 import Modal from '../modal';
 
 function BehandlingAktivitet({
-     onLagreNyAktivitet,
-     formIsDirty,
-     lukkModal,
-     intl,
- }) {
+    onLagreNyAktivitet,
+    formIsDirty,
+    lukkModal,
+    intl,
+}) {
     const onLagNyAktivitetSubmit = aktivitet => {
         const nyAktivitet = {
             ...aktivitet,
