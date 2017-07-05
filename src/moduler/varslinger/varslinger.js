@@ -19,7 +19,7 @@ const Varsling = hiddenIf(({ tekstId }) =>
 
 const VarslingMedLenke = hiddenIf(({ tekstId, lenkeTekstId, href }) =>
     <AlertStripeInfoSolid>
-        <FormattedMessage id={tekstId} />
+        <FormattedMessage id={tekstId} />&nbsp;
         <Lenke href={href}>
             <FormattedMessage id={lenkeTekstId} />
         </Lenke>
