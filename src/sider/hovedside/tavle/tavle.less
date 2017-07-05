@@ -4,6 +4,22 @@
 .tavle {
     .tavle__scrollknapp {
         display: none;
+        cursor: pointer;
+
+        &:disabled {
+            cursor: default;
+            background: data-uri(
+                    '@{aktivitetsplanPath}/sider/hovedside/tavle/pil-disabled.svg'
+                )
+                no-repeat;
+
+            &:hover {
+                background: data-uri(
+                        '@{aktivitetsplanPath}/sider/hovedside/tavle/pil-disabled.svg'
+                    )
+                    no-repeat;
+            }
+        }
     }
 
     .kolonner {
@@ -14,14 +30,16 @@
 
 @media (min-width: @screen-sm-min) {
     .tavle {
+        &.aktivitetstavle {
+            width: @screen-sm-min;
+        }
+
         .knapp-forrige {
-            margin-right: 3rem;
-            margin-left: 1rem;
+            margin: 1rem 0.5rem 0 0;
         }
 
         .knapp-neste {
-            margin-left: 3rem;
-            margin-right: 1rem;
+            margin: 1rem 0 0 0.5rem;
             transform: rotate(180deg);
 
             &:hover,
@@ -38,12 +56,16 @@
         display: flex;
         justify-content: space-around;
 
+        &.aktivitetstavle {
+            width: @screen-md-min;
+            margin: 0 auto;
+        }
+
         .kolonner {
             display: flex;
             justify-content: space-between;
             transition: margin 0.2s ease-in-out;
             margin-bottom: 0;
-            overflow: hidden;
         }
 
         .tavle__scrollknapp {
@@ -71,7 +93,7 @@
         }
 
         .tavle-kolonne {
-            min-width: 31.3%;
+            min-width: 31.33333%;
             margin: 1%;
         }
     }
@@ -79,6 +101,10 @@
 
 @media (min-width: @fullDesktop) {
     .tavle {
+        &.aktivitetstavle {
+            width: 100%;
+        }
+
         .tavle__scrollknapp {
             .hidden();
         }

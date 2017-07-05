@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import SprettendeScrollbars from './sprettende-scrollbars';
 import { autobind } from '../../../utils';
 
-const KOLLONEBREDDE = 339;
-
+const KOLONNEBREDDE = 300;
+const KOLONNEMARGIN = 10;
 const tavleClassname = className => classNames('tavle', className);
 
 class Tavle extends Component {
@@ -23,26 +23,26 @@ class Tavle extends Component {
     visForrige() {
         this.state.clickIndex =
             Math.min(this.state.currentIndex, this.state.clickIndex) - 1;
-        const scrollTo = this.state.clickIndex * KOLLONEBREDDE;
+        const scrollTo = this.state.clickIndex * KOLONNEBREDDE;
         this.scrollbars.scrollLeft(scrollTo);
     }
 
     visNeste() {
         const clientWidth = this.scrollbars.getClientWidth();
         const scrollLeft = this.scrollbars.getScrollLeft();
-        const clientWidthWithOffset = clientWidth + 35;
+        const clientWidthWithOffset = clientWidth + KOLONNEMARGIN;
         const nesteIndex = Math.floor(
-            (clientWidthWithOffset + scrollLeft) / KOLLONEBREDDE
+            (clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE
         );
         this.state.clickIndex = Math.max(nesteIndex, this.state.clickIndex) + 1;
         const scrollTo =
-            this.state.clickIndex * KOLLONEBREDDE - clientWidthWithOffset;
+            this.state.clickIndex * KOLONNEBREDDE - clientWidthWithOffset;
         this.scrollbars.scrollLeft(scrollTo);
     }
 
     updateState(values) {
         this.setState({
-            currentIndex: Math.ceil(values.scrollLeft / KOLLONEBREDDE),
+            currentIndex: Math.ceil(values.scrollLeft / KOLONNEBREDDE),
             venstreKnappDisabled: values.left === 0,
             hoyreKnappDisabled: values.left >= 0.99,
         });
@@ -77,6 +77,7 @@ class Tavle extends Component {
             <section className={tavleClassname(className)}>
                 {venstreKnapp}
                 <SprettendeScrollbars
+                    renderTrackHorizontal={() => <div />}
                     className="tavle__scrollarea"
                     autoHeight
                     autoHeightMax={9999}
