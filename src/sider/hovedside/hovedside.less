@@ -4,6 +4,8 @@
 @import './tavle/tavle';
 @import './tavle/aktivitetstavle';
 
+@fullDesktop: 1480px;
+
 .hovedsideinnhold {
     & > div {
         width: 100%;
@@ -11,13 +13,6 @@
 
     .spinner {
         margin: 0 auto;
-    }
-}
-
-/* nav-frontend-overrides */
-.container {
-    @media (min-width: 1200px) {
-        width: 956px;
     }
 }
 
@@ -30,10 +25,20 @@
 }
 
 @media (min-width: @screen-md-min) {
+    .container {
+        width: 890px;
+    }
+
     .hovedsideinnhold {
         display: flex;
         align-items: center;
         flex-direction: column;
         height: 100%;
+    }
+}
+
+@media (min-width: @fullDesktop) {
+    .container {
+        width: 956px;
     }
 }
