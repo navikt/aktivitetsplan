@@ -47,12 +47,12 @@ class OppfolgingsperiodeHistorikk extends Component {
             >
                 {oppfolgingsPerioderSorted
                     .slice(1)
-                    .map(periode => (
+                    .map(periode =>
                         <OppfolgingPeriodeInnslag
                             key={periode.sluttDato}
                             periode={periode}
                         />
-                    ))}
+                    )}
             </Accordion>
         );
 

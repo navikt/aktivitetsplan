@@ -18,9 +18,9 @@ const FullforAktivitet = props => {
         <FormattedMessage id="opprett-begrunnelse.fullfoert.melding" />
     );
     const paramsId = props.params.id;
-    const valgtAktivitet = props.aktiviteter.data.find(
-        aktivitet => aktivitet.id === paramsId
-    ) || {};
+    const valgtAktivitet =
+        props.aktiviteter.data.find(aktivitet => aktivitet.id === paramsId) ||
+        {};
 
     const begrunnelse = (
         <BegrunnelseAktivitet

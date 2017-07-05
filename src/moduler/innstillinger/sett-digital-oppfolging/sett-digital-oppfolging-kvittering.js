@@ -45,7 +45,10 @@ function SettDigitalOppfolgingKvittering({ motpart, situasjonReducer }) {
                             id="innstillinger.modal.digital.kvittering.ok"
                             values={{ begrunnelse }}
                         >
-                            {text => <span className="whitespace">{text}</span>}
+                            {text =>
+                                <span className="whitespace">
+                                    {text}
+                                </span>}
                         </FormattedMessage>
                     </HiddenIfAlertStripeSuksess>
                     <HiddenIfAlertStripeAdvarsel

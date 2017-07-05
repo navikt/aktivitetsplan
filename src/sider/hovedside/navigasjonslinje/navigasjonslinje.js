@@ -11,7 +11,7 @@ import { hentDialog } from '../../../ducks/dialog';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
 import visibleIfHOC from '../../../hocs/visible-if';
 
-const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
+const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) =>
     <Lenke href={sti} className="navigasjonslinje__element">
         <Element>
             <FormattedMessage id={tekstId} />
@@ -20,7 +20,7 @@ const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) => (
             </span>
         </Element>
     </Lenke>
-));
+);
 
 NavigasjonsElement.defaultProps = {
     children: null,

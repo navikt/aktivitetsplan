@@ -21,7 +21,9 @@ export default function componentize(sideEffects) {
             }
         }
 
-        WrappingComponent.displayName = `Componentized(${getDisplayName(InnerComponent)})`;
+        WrappingComponent.displayName = `Componentized(${getDisplayName(
+            InnerComponent
+        )})`;
 
         return WrappingComponent;
     };

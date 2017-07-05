@@ -20,17 +20,21 @@ const tekster = {
     },
     feilmeldingTekst: {
         id: 'innholdslaster.feilmelding.tekst',
-        defaultMessage: 'Det skjedde en feil ved innlastning av data fra baksystemene',
+        defaultMessage:
+            'Det skjedde en feil ved innlastning av data fra baksystemene',
     },
 };
 
 // eslint-disable-next-line react/prop-types
-const Feilmelding = ({ tittel, children }) => (
+const Feilmelding = ({ tittel, children }) =>
     <div>
-        <h1>{tittel}</h1>
-        <p>{children}</p>
-    </div>
-);
+        <h1>
+            {tittel}
+        </h1>
+        <p>
+            {children}
+        </p>
+    </div>;
 
 function Innholdslaster({
     avhengigheter,

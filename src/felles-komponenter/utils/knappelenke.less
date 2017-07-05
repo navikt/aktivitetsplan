@@ -1,22 +1,22 @@
 .knappelenke {
-  color: @navBla;
-  border: 0;
-  text-decoration: none;
-  background-color: transparent;
-  cursor: pointer;
-  padding-left: 0;
+    color: @navBla;
+    border: 0;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding-left: 0;
 
-  &:focus {
-    outline: none;
-    background-color: @fokusOrange;
+    &:focus {
+        outline: none;
+        background-color: @fokusOrange;
+
+        span {
+            border-bottom-color: @fokusOrange;
+        }
+    }
 
     span {
-      border-bottom-color: @fokusOrange;
+        display: inline-block;
+        border-bottom: 1px solid @navGra40;
     }
-  }
-
-  span {
-    display: inline-block;
-    border-bottom: 1px solid @navGra40;
-  }
 }

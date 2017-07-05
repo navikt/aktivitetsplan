@@ -93,9 +93,11 @@ export const erGyldigISODato = isoDato => {
 };
 
 export const erGyldigFormattertDato = formattertDato => {
-    return !!(formattertDato &&
+    return !!(
+        formattertDato &&
         formattertDato.length === 10 &&
-        moment(formattertDato, 'DD.MM.YYYY', true).isValid());
+        moment(formattertDato, 'DD.MM.YYYY', true).isValid()
+    );
 };
 
 export const erGyldigDatoformat = dato => {
@@ -141,12 +143,12 @@ export const toDatePrettyPrint = dato => {
 
     const _dato = toDate(dato);
 
-    const days = _dato.getDate() < 10
-        ? `0${_dato.getDate()}`
-        : `${_dato.getDate()}`;
-    const months = _dato.getMonth() + 1 < 10
-        ? `0${_dato.getMonth() + 1}`
-        : `${_dato.getMonth() + 1}`;
+    const days =
+        _dato.getDate() < 10 ? `0${_dato.getDate()}` : `${_dato.getDate()}`;
+    const months =
+        _dato.getMonth() + 1 < 10
+            ? `0${_dato.getMonth() + 1}`
+            : `${_dato.getMonth() + 1}`;
     const years = _dato.getFullYear();
 
     return `${days}.${months}.${years}`;
@@ -226,8 +228,8 @@ export function formaterDatoDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
         ? erMerEnnEnDagSiden(dato)
-              ? formaterDatoTidSiden(dato)
-              : formaterDatoKortManedTid(dato)
+          ? formaterDatoTidSiden(dato)
+          : formaterDatoKortManedTid(dato)
         : undefined;
 }
 

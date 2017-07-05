@@ -11,13 +11,15 @@ import Dato from '../felles-komponenter/dato';
 import { markerDialogSomLest } from '../ducks/dialog';
 import visibleIfHOC from '../hocs/visible-if';
 
-const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) => (
+const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) =>
     <div className="henvendelser__lest-av-bruker">
         <FormattedMessage id="dialog.lest-av-bruker" />
         <span>&nbsp;</span>
-        <Dato visTidspunkt>{lestAvBrukerTidspunkt}</Dato>
+        <Dato visTidspunkt>
+            {lestAvBrukerTidspunkt}
+        </Dato>
     </div>
-));
+);
 
 function Henvendelse({ henvendelse }) {
     const avsenderVeileder = henvendelse.avsender === 'VEILEDER';
@@ -33,7 +35,9 @@ function Henvendelse({ henvendelse }) {
             ikonClass={ikonCls(avsenderVeileder, false)}
             pilHoyre={avsenderVeileder}
         >
-            <Tekstomrade>{henvendelse.tekst}</Tekstomrade>
+            <Tekstomrade>
+                {henvendelse.tekst}
+            </Tekstomrade>
         </Snakkeboble>
     );
 }
@@ -68,7 +72,7 @@ class Dialog extends Component {
                 h => datoComparator(lestAvBrukerTidspunkt, h.sendt) >= 0
             );
 
-        const henvendelseKomponenter = henvendelserSynkende.map(h => (
+        const henvendelseKomponenter = henvendelserSynkende.map(h =>
             <div>
                 <LestAvBruker
                     visible={h === sisteHenvendelseLestAvBruker}
@@ -76,9 +80,11 @@ class Dialog extends Component {
                 />
                 <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />
             </div>
-        ));
+        );
         return (
-            <div className="dialog-henvendelser">{henvendelseKomponenter}</div>
+            <div className="dialog-henvendelser">
+                {henvendelseKomponenter}
+            </div>
         );
     }
 }

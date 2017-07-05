@@ -1,86 +1,85 @@
 @import '../variables';
 
 .dialoger {
-  &__markering {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    background-color: @bla;
-    width: 8px;
-  }
-
-  &__slash {
-    display: inline;
-
-    &::after {
-      content: ' / ';
-    }
-  }
-
-  &__dialog {
-    margin: 0;
-    padding-left: 3rem;
-    border-radius: 0;
-    text-decoration: none;
-    border-top: 1px solid @gray-foreground;
-    min-width: 316px;
-
-    &.lenkepanel {
-      .lenkepanel__indikator {
-        transition: none;
+    &__markering {
+        position: absolute;
+        top: 0;
         left: 0;
-      }
+        bottom: 0;
+        background-color: @bla;
+        width: 8px;
     }
 
-    &-etiketter {
-      min-height: 1.3rem; // alltid reserver plass slik at dialogene blir like høye
-      margin-top: 0.3rem;
-      font-size: 75%;
+    &__slash {
+        display: inline;
+
+        &::after {
+            content: ' / ';
+        }
     }
 
-    &-tekst {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      display: block;
-    }
-
-    &-henvendelser {
-      position: absolute;
-      top: 50%;
-      line-height: 0;
-      right: 40px;
-    }
-
-    .lenkepanel__heading {
-      width: calc(~'100% - 4rem');
-    }
-
-    // fjerne lenkepanel sin hover-styling
-    &:hover {
-
-      .lenkepanel__heading {
+    &__dialog {
+        margin: 0;
+        padding-left: 3rem;
+        border-radius: 0;
         text-decoration: none;
-      }
-    }
+        border-top: 1px solid @gray-foreground;
+        min-width: 316px;
 
-    &:hover,
-    &:focus {
-      text-decoration: none;
-      background-color: #e9e7e7;
-      box-shadow: none;
-    }
+        &.lenkepanel {
+            .lenkepanel__indikator {
+                transition: none;
+                left: 0;
+            }
+        }
 
-    &--valgt {
-      background-color: @navBlaLighten80;
+        &-etiketter {
+            min-height: 1.3rem; // alltid reserver plass slik at dialogene blir like høye
+            margin-top: 0.3rem;
+            font-size: 75%;
+        }
 
-      &:hover,
-      &:focus {
-        text-decoration: none;
-        background-color: @navBlaLighten80;
-        box-shadow: none;
-      }
+        &-tekst {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
+        }
+
+        &-henvendelser {
+            position: absolute;
+            top: 50%;
+            line-height: 0;
+            right: 40px;
+        }
+
+        .lenkepanel__heading {
+            width: calc(~'100% - 4rem');
+        }
+
+        // fjerne lenkepanel sin hover-styling
+        &:hover {
+            .lenkepanel__heading {
+                text-decoration: none;
+            }
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            background-color: #e9e7e7;
+            box-shadow: none;
+        }
+
+        &--valgt {
+            background-color: @navBlaLighten80;
+
+            &:hover,
+            &:focus {
+                text-decoration: none;
+                background-color: @navBlaLighten80;
+                box-shadow: none;
+            }
+        }
     }
-  }
 }

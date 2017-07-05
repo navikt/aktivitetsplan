@@ -17,7 +17,9 @@ function Prosess({
 }) {
     return (
         <article className={cls(className)}>
-            <Undertittel>{tittel}</Undertittel>
+            <Undertittel>
+                {tittel}
+            </Undertittel>
             {children}
             <Knapp
                 mini

@@ -6,9 +6,7 @@ import * as AppPT from '../../../proptypes';
 import { AVTALT_MED_NAV } from '../../../constant';
 import visibleIfHOC from '../../../hocs/visible-if';
 import TallAlert from '../../../felles-komponenter/tall-alert';
-import {
-    div as HiddenIfDiv,
-} from '../../../felles-komponenter/hidden-if/hidden-if';
+import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 
 function AktivitetskortTillegg({
     aktivitet,

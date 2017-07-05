@@ -3,46 +3,49 @@
 @aktivitetskort-bredde: 288px;
 
 .aktivitetskort {
-  .blokk-xxs();
-  display: block;
-  background-color: @color-background;
-  color: @gray-text;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  width: @aktivitetskort-bredde;
-  border-radius: @border-radius-base;
-  padding: 0.75rem 1rem 1rem 1rem;
+    .blokk-xxs();
+    display: block;
+    background-color: @color-background;
+    color: @gray-text;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    width: @aktivitetskort-bredde;
+    border-radius: @border-radius-base;
+    padding: 0.75rem 1rem 1rem 1rem;
 }
 
 .aktivitetskort__type {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 .aktivitetskort__tittel {
-  .blokk-xxxs() !important; // Overskriver nav-frontend
+    .blokk-xxxs() !important; // Overskriver nav-frontend
 }
 
 .aktivitetskort__ikon-blokk {
-  margin-top: 1rem;
+    margin-top: 1rem;
 }
 
 .aktivitetskort__henvendelser {
-  position: absolute;
-  bottom: 0.75rem;
-  right: 0;
-  padding: 0.5rem 1rem 1rem 1.25rem;
-  background: data-uri('@{aktivitetsplanPath}/sider/hovedside/aktivitetskort/aktivitetskort-henvendelser.svg') no-repeat left bottom;
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0;
+    padding: 0.5rem 1rem 1rem 1.25rem;
+    background: data-uri(
+            '@{aktivitetsplanPath}/sider/hovedside/aktivitetskort/aktivitetskort-henvendelser.svg'
+        )
+        no-repeat left bottom;
 }
 
 .aktivitetskort--flyttbar {
-  cursor: pointer;
+    cursor: pointer;
 
-  &:hover {
-    background-color: @color-background-hover;
-  }
+    &:hover {
+        background-color: @color-background-hover;
+    }
 
-  &:focus {
-    border-color: @orange-focus;
-  }
+    &:focus {
+        border-color: @orange-focus;
+    }
 }

@@ -4,7 +4,11 @@ import { Link } from 'react-router';
 import NavLenkepanel from 'nav-frontend-lenkepanel';
 
 function ReactRouterLink({ href, children, ...props }) {
-    return <Link to={href} {...props}>{children}</Link>;
+    return (
+        <Link to={href} {...props}>
+            {children}
+        </Link>
+    );
 }
 ReactRouterLink.propTypes = {
     href: PT.string.isRequired,

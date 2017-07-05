@@ -41,7 +41,9 @@ class InnerInputComponent extends Component {
                     aria-live="assertive"
                     className="skjemaelement__feilmelding"
                 >
-                    <span>{errorMessage}</span>
+                    <span>
+                        {errorMessage}
+                    </span>
                 </div>
             </div>
         );

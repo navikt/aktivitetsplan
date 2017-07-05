@@ -28,7 +28,6 @@ function OppdaterAktivitetStatus(props) {
                 disableStatusEndring={disableStatusEndring}
                 aktivitet={valgtAktivitet}
             />
-
         </section>
     );
 }

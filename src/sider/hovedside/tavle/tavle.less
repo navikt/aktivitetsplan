@@ -5,94 +5,101 @@
 @planbredde: 1713px;
 
 .tavle {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-
-  .tavle__scrollknapp {
-    .knapp;
-    height: @knapp-storrelse;
-    width: @knapp-storrelse;
-    padding: calc(@knapp-storrelse / 2);
-    border: 0;
-    background-size: contain;
-    background: data-uri('@{aktivitetsplanPath}/sider/hovedside/tavle/pil.svg') no-repeat;
-
-    &:hover,
-    &:active,
-    &:active:hover {
-      border: 0;
-      background: transparent data-uri('@{aktivitetsplanPath}/sider/hovedside/tavle/pil-hover.svg') no-repeat;
-    }
-
-    &:disabled {
-      visibility: hidden;
-    }
-  }
-
-  @media (min-width: @planbredde) {
-    justify-content: center;
-
-    .tavle__scrollknapp {
-      .hidden();
-    }
-
-    .kolonner {
-      justify-content: center;
-    }
-  }
-
-  .knapp-forrige {
-    margin-right: 3rem;
-    margin-left: 1rem;
-  }
-
-  .knapp-neste {
-    margin-left: 3rem;
-    margin-right: 1rem;
-    transform: rotate(180deg);
-
-    &:hover,
-    &:disabled,
-    &:hover:disabled {
-      transform: rotate(180deg);
-    }
-  }
-
-  @media (max-width: @tavle-min-width) {
     display: flex;
-    justify-content: center;
-    margin: 0;
+    justify-content: space-around;
     width: 100%;
 
     .tavle__scrollknapp {
-      .hidden();
+        .knapp;
+        height: @knapp-storrelse;
+        width: @knapp-storrelse;
+        padding: calc(@knapp-storrelse / 2);
+        border: 0;
+        background-size: contain;
+        background: data-uri(
+                '@{aktivitetsplanPath}/sider/hovedside/tavle/pil.svg'
+            )
+            no-repeat;
+
+        &:hover,
+        &:active,
+        &:active:hover {
+            border: 0;
+            background: transparent
+                data-uri(
+                    '@{aktivitetsplanPath}/sider/hovedside/tavle/pil-hover.svg'
+                )
+                no-repeat;
+        }
+
+        &:disabled {
+            visibility: hidden;
+        }
     }
-  }
 
-  .kolonner {
-    display: inline-block;
-    padding-bottom: 2rem;
+    @media (min-width: @planbredde) {
+        justify-content: center;
 
-    // tavle for desktop
-    @media (min-width: @tavle-min-width) {
-      max-width: none;
-      display: flex;
-      transition: margin 0.2s ease-in-out;
-      margin-bottom: 0;
+        .tavle__scrollknapp {
+            .hidden();
+        }
 
-      .tavle-kolonne:not(:last-child) {
-        margin-right: 35px;
-      }
+        .kolonner {
+            justify-content: center;
+        }
     }
 
-    // liste for mobil
+    .knapp-forrige {
+        margin-right: 3rem;
+        margin-left: 1rem;
+    }
+
+    .knapp-neste {
+        margin-left: 3rem;
+        margin-right: 1rem;
+        transform: rotate(180deg);
+
+        &:hover,
+        &:disabled,
+        &:hover:disabled {
+            transform: rotate(180deg);
+        }
+    }
+
     @media (max-width: @tavle-min-width) {
-      justify-content: center;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        width: 100%;
 
-      .tavle-kolonne {
-        margin: 10px;
-      }
+        .tavle__scrollknapp {
+            .hidden();
+        }
     }
-  }
+
+    .kolonner {
+        display: inline-block;
+        padding-bottom: 2rem;
+
+        // tavle for desktop
+        @media (min-width: @tavle-min-width) {
+            max-width: none;
+            display: flex;
+            transition: margin 0.2s ease-in-out;
+            margin-bottom: 0;
+
+            .tavle-kolonne:not(:last-child) {
+                margin-right: 35px;
+            }
+        }
+
+        // liste for mobil
+        @media (max-width: @tavle-min-width) {
+            justify-content: center;
+
+            .tavle-kolonne {
+                margin: 10px;
+            }
+        }
+    }
 }

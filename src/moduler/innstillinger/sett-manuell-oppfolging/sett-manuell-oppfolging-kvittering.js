@@ -45,7 +45,10 @@ function SettManuellOppfolgingKvittering({ motpart, situasjonReducer }) {
                             id="innstillinger.modal.manuell.kvittering.ok"
                             values={{ begrunnelse }}
                         >
-                            {text => <span className="whitespace">{text}</span>}
+                            {text =>
+                                <span className="whitespace">
+                                    {text}
+                                </span>}
                         </FormattedMessage>
                     </HiddenIfAlertStripeSuksess>
                     <HiddenIfAlertStripeAdvarsel

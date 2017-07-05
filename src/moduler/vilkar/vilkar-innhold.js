@@ -9,11 +9,11 @@ import VisibleIfHOC from '../../hocs/visible-if';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { formaterDatoKortManed } from '../../utils';
 
-const VisibleIfElementFormattedMessage = VisibleIfHOC(props => (
+const VisibleIfElementFormattedMessage = VisibleIfHOC(props =>
     <Element className="vilkar__metaData">
         <FormattedMessage {...props} />
     </Element>
-));
+);
 
 function VilkarInnhold({ vilkar }) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
@@ -23,7 +23,9 @@ function VilkarInnhold({ vilkar }) {
             <Innholdstittel className="vilkar__tittel">
                 <FormattedMessage id="vilkar.modal.gjeldende-tittel" />
             </Innholdstittel>
-            <UnsafeHtml className="vilkar__tekst">{vilkar.tekst}</UnsafeHtml>
+            <UnsafeHtml className="vilkar__tekst">
+                {vilkar.tekst}
+            </UnsafeHtml>
             <VisibleIfElementFormattedMessage
                 visible={!!vilkar.vilkarstatus && !!vilkar.dato}
                 id="vilkar.modal.gjeldende-status-dato"
