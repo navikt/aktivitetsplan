@@ -45,7 +45,7 @@ function AktivitetStatusForm(props) {
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
-                <div className="col col-xs-4">
+                <div className="col col-xs-6">
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={
@@ -74,7 +74,7 @@ function AktivitetStatusForm(props) {
                         disabled={props.disableStatusEndring || lasterData}
                     />
                 </div>
-                <div className="col col-xs-4">
+                <div className="col col-xs-6">
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={leggTilHengelas(

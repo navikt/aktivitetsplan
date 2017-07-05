@@ -13,29 +13,29 @@
 @modal-bredde: 640px;
 
 .ReactModal {
-    &__Body--open {
-        overflow: hidden;
-    }
-
-    &__Overlay {
-        overflow-y: auto;
-    }
-
     &__Content {
-        width: @modal-bredde;
-        margin: 4rem auto;
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+
+        .aktivitetskjema {
+            width: 100%;
+
+            &__datofelt-wrapper {
+                flex-direction: column;
+            }
+        }
     }
 }
 
 // Overskriving av nav-frontend
 .modal {
-    max-height: none;
-    overflow: visible;
-    padding: 0;
+    overflow: auto;
 }
 
 .modal__overlay {
     display: block;
+    padding: 0;
 }
 
 &.aktivitet-modal-portal {
@@ -47,7 +47,7 @@
         background: @gray-background;
         outline: none;
         max-width: 45rem;
-        border-radius: 3px;
+        border-radius: 0;
 
         &__overlay {
             position: fixed;
@@ -65,18 +65,39 @@
     z-index: 10000;
 }
 
-@media (max-width: @modal-bredde) {
-    .ReactModal__Content {
-        width: 100%;
-        min-height: 100%;
-        margin: 0;
+@media (min-width: @screen-md-min) {
+    .modal {
+        max-height: none;
+        overflow: visible;
+        padding: 0;
+    }
 
-        .aktivitetskjema {
-            width: 100%;
+    .ReactModal {
+        &__Body--open {
+            overflow: hidden;
+        }
 
-            &__datofelt-wrapper {
-                flex-direction: column;
-            }
+        &__Overlay {
+            overflow-y: auto;
+        }
+
+        &__Content {
+            width: @modal-bredde;
+            margin: 4rem auto;
+            min-height: 100%;
+        }
+    }
+
+    &.aktivitet-modal-portal {
+        z-index: 9999;
+
+        .aktivitet-modal {
+            position: relative;
+            border: 1px solid #c0c0c0;
+            background: @gray-background;
+            outline: none;
+            max-width: 45rem;
+            border-radius: 0;
         }
     }
 }
