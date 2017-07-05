@@ -11,6 +11,7 @@ function Prosess({
     knappetekst,
     onClick,
     laster,
+    disabled,
     className,
     children,
 }) {
@@ -18,7 +19,13 @@ function Prosess({
         <article className={cls(className)}>
             <Undertittel>{tittel}</Undertittel>
             {children}
-            <Knapp mini spinner={laster} disabled={laster} onClick={onClick}>
+            <Knapp
+                mini
+                spinner={laster}
+                autoDisableVedSpinner
+                disabled={disabled}
+                onClick={onClick}
+            >
                 {knappetekst}
             </Knapp>
         </article>
@@ -28,6 +35,7 @@ function Prosess({
 Prosess.defaultProps = {
     laster: false,
     className: '',
+    disabled: false,
 };
 
 Prosess.propTypes = {
@@ -37,6 +45,7 @@ Prosess.propTypes = {
     laster: PT.bool,
     className: PT.string,
     children: PT.node.isRequired,
+    disabled: PT.bool,
 };
 
 export default Prosess;

@@ -37,6 +37,7 @@ class Varslinger extends Component {
             underOppfolging,
             vilkarMaBesvares,
             brukerErManuell,
+            reservertIKRR,
         } = this.props;
         return (
             <Innholdslaster
@@ -50,6 +51,10 @@ class Varslinger extends Component {
                     <Varsling
                         hidden={!vilkarMaBesvares}
                         tekstId="oppfolging.vilkar-ikke-godkjent"
+                    />
+                    <Varsling
+                        hidden={!reservertIKRR}
+                        tekstId="oppfolging.bruker-reservert-i-krr"
                     />
                     <VarslingMedLenke
                         hidden={!brukerErManuell}
@@ -68,6 +73,7 @@ Varslinger.defaultProps = {
     underOppfolging: false,
     vilkarMaBesvares: false,
     brukerErManuell: false,
+    reservertIKRR: false,
 };
 
 Varslinger.propTypes = {
@@ -77,6 +83,7 @@ Varslinger.propTypes = {
     underOppfolging: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerErManuell: PT.bool,
+    reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
 };
 
@@ -93,6 +100,7 @@ const mapStateToProps = state => {
         vilkarMaBesvares: oppfolgingStatus.vilkarMaBesvares,
         underOppfolging: oppfolgingStatus.underOppfolging,
         brukerErManuell: oppfolgingStatus.manuell,
+        reservertIKRR: oppfolgingStatus.reservasjonKRR,
     };
 };
 
