@@ -1,16 +1,25 @@
 .verktoylinje {
-    display: flex;
-    justify-content: space-between;
-
-    @media (max-width: @screen-sm-min) {
-        flex-direction: column;
-        justify-content: center;
-    }
-
     &__verktoy {
         display: flex;
         align-items: stretch;
         flex-direction: column;
         margin-bottom: 1rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .verktoylinje {
+        display: flex;
+        justify-content: space-between;
+
+        &__verktoy {
+            &:last-child {
+                margin-bottom: auto;
+            }
+        }
     }
 }
