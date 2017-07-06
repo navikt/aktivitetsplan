@@ -43,7 +43,9 @@ RedigerLink.propTypes = {
 function Informasjonsfelt({ tittel, innhold }) {
     return (
         <DetaljFelt tittel={tittel} visible={innhold != null}>
-            <Normaltekst className="detaljfelt__tekst">{innhold}</Normaltekst>
+            <Normaltekst className="detaljfelt__tekst">
+                {innhold}
+            </Normaltekst>
         </DetaljFelt>
     );
 }
@@ -122,7 +124,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
     const httpRegex = /^(https?):\/\/.*$/;
 
-    const lenkeKomponent = () => (
+    const lenkeKomponent = () =>
         <DetaljFelt
             key="lenke"
             tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
@@ -137,8 +139,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             >
                 {lenke}
             </Link>
-        </DetaljFelt>
-    );
+        </DetaljFelt>;
 
     const ledigStillingFelter = () => [
         <Informasjonsfelt
@@ -259,19 +260,12 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             <EtikettLiten className="aktivitetsbeskrivelse__tittel">
                 <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
             </EtikettLiten>
-            {moeteplanListe.map(mote => (
+            {moeteplanListe.map(mote =>
                 <Normaltekst key={mote.startDato} className="detaljfelt__tekst">
-                    {formaterDatoKortManedTid(mote.startDato)}
-                    {' '}
-                    -
-                    {' '}
-                    {formaterTid(mote.sluttDato)}
-                    {' '}
-                    på
-                    {' '}
-                    {mote.sted}
+                    {formaterDatoKortManedTid(mote.startDato)} -{' '}
+                    {formaterTid(mote.sluttDato)} på {mote.sted}
                 </Normaltekst>
-            ))}
+            )}
         </section>,
     ];
 

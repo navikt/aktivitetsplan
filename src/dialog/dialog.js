@@ -12,13 +12,16 @@ function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;
     return (
         <div className={className}>
-            <Undertittel tag="h1">{overskrift}</Undertittel>
+            <Undertittel tag="h1">
+                {overskrift}
+            </Undertittel>
             <Element>
                 <FormattedMessage id="dialog.deg-og-nav.tittel" />
             </Element>
             <NyHenvendelse
                 formNavn={`ny-henvendelse-dialog-${dialogId}`}
                 dialogId={dialogId}
+                skalHaAutofokus={false}
             />
             <EndreDialog
                 formNavn={`endre-dialog-${dialogId}`}
@@ -42,9 +45,9 @@ Dialog.defaultProps = {
 
 const mapStateToProps = (state, props) => {
     const dialog = props.dialog;
-    const aktivitet = state.data.aktiviteter.data.find(
-        a => a.id === dialog.aktivitetId
-    ) || {};
+    const aktivitet =
+        state.data.aktiviteter.data.find(a => a.id === dialog.aktivitetId) ||
+        {};
     return {
         overskrift: aktivitet.tittel || dialog.overskrift,
     };

@@ -11,18 +11,20 @@ import hiddenIf, {
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
 
-const Varsling = hiddenIf(({ tekstId }) => (
+const Varsling = hiddenIf(({ tekstId }) =>
     <AlertStripeInfoSolid>
         <FormattedMessage id={tekstId} />
     </AlertStripeInfoSolid>
-));
+);
 
-const VarslingMedLenke = hiddenIf(({ tekstId, lenkeTekstId, href }) => (
+const VarslingMedLenke = hiddenIf(({ tekstId, lenkeTekstId, href }) =>
     <AlertStripeInfoSolid>
-        <FormattedMessage id={tekstId} />
-        <Lenke href={href}><FormattedMessage id={lenkeTekstId} /></Lenke>
+        <FormattedMessage id={tekstId} />&nbsp;
+        <Lenke href={href}>
+            <FormattedMessage id={lenkeTekstId} />
+        </Lenke>
     </AlertStripeInfoSolid>
-));
+);
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -37,6 +39,7 @@ class Varslinger extends Component {
             underOppfolging,
             vilkarMaBesvares,
             brukerErManuell,
+            reservertIKRR,
         } = this.props;
         return (
             <Innholdslaster
@@ -50,6 +53,10 @@ class Varslinger extends Component {
                     <Varsling
                         hidden={!vilkarMaBesvares}
                         tekstId="oppfolging.vilkar-ikke-godkjent"
+                    />
+                    <Varsling
+                        hidden={!reservertIKRR}
+                        tekstId="oppfolging.bruker-reservert-i-krr"
                     />
                     <VarslingMedLenke
                         hidden={!brukerErManuell}
@@ -68,6 +75,7 @@ Varslinger.defaultProps = {
     underOppfolging: false,
     vilkarMaBesvares: false,
     brukerErManuell: false,
+    reservertIKRR: false,
 };
 
 Varslinger.propTypes = {
@@ -77,6 +85,7 @@ Varslinger.propTypes = {
     underOppfolging: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerErManuell: PT.bool,
+    reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
 };
 
@@ -93,6 +102,7 @@ const mapStateToProps = state => {
         vilkarMaBesvares: oppfolgingStatus.vilkarMaBesvares,
         underOppfolging: oppfolgingStatus.underOppfolging,
         brukerErManuell: oppfolgingStatus.manuell,
+        reservertIKRR: oppfolgingStatus.reservasjonKRR,
     };
 };
 

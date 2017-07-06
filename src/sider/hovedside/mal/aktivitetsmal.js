@@ -28,7 +28,8 @@ function malListeVisning(malet) {
                     {{ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv] ||
                         malet.endretAv}
                 </Identitet>
-            </span> {formaterDatoDatoEllerTidSiden(malet.dato)}
+            </span>{' '}
+            {formaterDatoDatoEllerTidSiden(malet.dato)}
             <Tekstomrade className="aktivitetmal__historikk-tekst">
                 {malet.mal}
             </Tekstomrade>

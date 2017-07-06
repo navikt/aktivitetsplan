@@ -18,9 +18,10 @@ export default function reducer(state = initalState, action) {
         case HENT_HISTORISKE_PENDING:
             return {
                 ...state,
-                status: state.status === STATUS.NOT_STARTED
-                    ? STATUS.PENDING
-                    : STATUS.RELOADING,
+                status:
+                    state.status === STATUS.NOT_STARTED
+                        ? STATUS.PENDING
+                        : STATUS.RELOADING,
             };
         case HENT_HISTORISKE_OK:
             return {

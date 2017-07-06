@@ -25,7 +25,9 @@ function ModalHeader({
             className={classNames('modal-header-wrapper', className)}
             {...props}
         >
-            <div>{children}</div>
+            <div>
+                {children}
+            </div>
             {/* header til slutt for å få denne sist i tabrekkefølgen */}
             <header className="modal-header">
                 <VisibleIfSpan

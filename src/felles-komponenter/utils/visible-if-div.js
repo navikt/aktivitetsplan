@@ -3,7 +3,11 @@ import PT from 'prop-types';
 import visibleIfHOC from '../../hocs/visible-if';
 
 function VisibleIfDiv(props) {
-    return <div {...props}>{props.children}</div>;
+    return (
+        <div {...props}>
+            {props.children}
+        </div>
+    );
 }
 
 VisibleIfDiv.propTypes = {

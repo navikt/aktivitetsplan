@@ -8,110 +8,113 @@
 @aktivitetskollonne-bredde: 304px;
 
 .aktivitetstavle {
-  align-self: center;
+    align-self: center;
 }
 
 .aktivitetstavle__kolonne {
-  background-color: @color-kolonne-background;
-  padding: 0.5rem;
-  transition: padding 0.2s ease-in-out;
-  width: @aktivitetskollonne-bredde;
-  min-height: @min-height;
-  border-radius: @border-radius-base;
+    background-color: @color-kolonne-background;
+    padding: 0.5rem;
+    transition: padding 0.2s ease-in-out;
+    width: @aktivitetskollonne-bredde;
+    min-height: @min-height;
+    border-radius: @border-radius-base;
 }
 
 .aktivitetstavle__kolonne-wrapper {
-  height: 100%;
+    height: 100%;
 }
 
 .aktivitetstavle__kolonne-header-wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
 
-  .hjelpetekst {
-    min-height: 4rem;
-  }
+    .hjelpetekst {
+        min-height: 4rem;
+    }
 }
 
 .aktivitetstavle__kolonne-header {
-  text-align: left;
+    text-align: left;
 }
 
 .aktivitetstavle--drag {
-  background-color: @color-background-drag;
-  padding-bottom: @min-height;
+    background-color: @color-background-drag;
+    padding-bottom: @min-height;
 }
 
 .hjelpetekst--venstre {
-  top: -6px;
-  right: 42px;
-  text-align: left;
+    top: -6px;
+    right: 42px;
+    text-align: left;
 
-  &:after {
-    top: 14px;
-  }
+    &:after {
+        top: 14px;
+    }
 }
 
 .hjelpetekst--hoyre {
-  top: -6px;
-  left: 56px;
-  text-align: right;
-  padding-right: 4rem;
+    top: -6px;
+    left: 56px;
+    text-align: right;
+    padding-right: 4rem;
 
-  &:after {
-    top: 14px;
-  }
+    &:after {
+        top: 14px;
+    }
 }
 
 .hjelpetekst__apneknapp {
-  margin-right: 0;
-  padding-right: 0;
+    margin-right: 0;
+    padding-right: 0;
 }
 
 .aktivitet-last .hjelpetekst__apneknapp,
 .aktivitet-apen .hjelpetekst__apneknapp {
-
-  &:focus {
-    span {
-      outline: none;
-      box-shadow: 0 0 0 3px @orange-focus;
+    &:focus {
+        span {
+            outline: none;
+            box-shadow: 0 0 0 3px @orange-focus;
+        }
     }
-  }
 
-  span {
-    display: block;
-  }
+    span {
+        display: block;
+    }
 }
 
 .aktivitet-apen .hjelpetekst__apneknapp span {
-  border-radius: 50%;
-  background: data-uri('@{aktivitetsplanPath}/img/help-circle.svg') no-repeat;
-  width: 24px;
-  height: 24px;
+    border-radius: 50%;
+    background: data-uri('@{aktivitetsplanPath}/img/help-circle.svg') no-repeat;
+    width: 24px;
+    height: 24px;
 
-  &:hover {
-    background: data-uri('@{aktivitetsplanPath}/img/help-circle_hover.svg') no-repeat;
-  }
+    &:hover {
+        background: data-uri('@{aktivitetsplanPath}/img/help-circle_hover.svg')
+            no-repeat;
+    }
 }
 
 .aktivitet-last .hjelpetekst__apneknapp span {
-  background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg') no-repeat center;
-  background-size: 83%;
-  width: 21px;
-  height: 28px;
-
-  &:hover {
-    background: data-uri('@{aktivitetsplanPath}/img/hengelas_hover.svg') no-repeat center;
+    background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg') no-repeat
+        center;
     background-size: 83%;
     width: 21px;
     height: 28px;
-  }
 
-  &:active {
-    background: data-uri('@{aktivitetsplanPath}/img/hengelas_active.svg') no-repeat center;
-    background-size: 83%;
-    width: 21px;
-    height: 28px;
-  }
+    &:hover {
+        background: data-uri('@{aktivitetsplanPath}/img/hengelas_hover.svg')
+            no-repeat center;
+        background-size: 83%;
+        width: 21px;
+        height: 28px;
+    }
+
+    &:active {
+        background: data-uri('@{aktivitetsplanPath}/img/hengelas_active.svg')
+            no-repeat center;
+        background-size: 83%;
+        width: 21px;
+        height: 28px;
+    }
 }

@@ -121,7 +121,8 @@ class StillingAktivitetForm extends Component {
                         fraDato={this.props.currentFraDato}
                         tilDato={this.props.currentTilDato}
                         errorMessage={this.props.intl.formatMessage({
-                            id: 'datepicker.feilmelding.stilling.fradato-etter-frist',
+                            id:
+                                'datepicker.feilmelding.stilling.fradato-etter-frist',
                         })}
                     >
                         <div className="dato-container">

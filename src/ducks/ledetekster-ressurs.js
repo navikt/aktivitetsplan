@@ -17,9 +17,10 @@ export default function reducer(state = initalState, action) {
         case PENDING:
             return {
                 ...state,
-                status: state.status === STATUS.NOT_STARTED
-                    ? STATUS.PENDING
-                    : STATUS.RELOADING,
+                status:
+                    state.status === STATUS.NOT_STARTED
+                        ? STATUS.PENDING
+                        : STATUS.RELOADING,
             };
         case FEILET:
             return { ...state, status: STATUS.ERROR, data: action.data };

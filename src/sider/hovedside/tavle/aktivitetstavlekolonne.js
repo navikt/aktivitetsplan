@@ -60,28 +60,26 @@ function hjelpetekst(aktivitetStatus) {
         case STATUS_BRUKER_ER_INTRESSERT:
             return (
                 <FormattedMessage id="hjelpetekst.tittel.aktivitet.apen">
-                    {tekst => (
+                    {tekst =>
                         <HjelpetekstHoyre
                             anchor={SporsmalAnchor}
                             tittel={tekst}
                         >
                             <FormattedMessage id="hjelpetekst.sporsmalikon" />
-                        </HjelpetekstHoyre>
-                    )}
+                        </HjelpetekstHoyre>}
                 </FormattedMessage>
             );
         case STATUS_PLANLAGT:
         case STATUS_GJENNOMFOERT:
             return (
                 <FormattedMessage id="hjelpetekst.tittel.aktivitet.apen">
-                    {tekst => (
+                    {tekst =>
                         <HjelpetekstVenstre
                             anchor={SporsmalAnchor}
                             tittel={tekst}
                         >
                             <FormattedMessage id="hjelpetekst.sporsmalikon" />
-                        </HjelpetekstVenstre>
-                    )}
+                        </HjelpetekstVenstre>}
                 </FormattedMessage>
             );
 
@@ -89,14 +87,13 @@ function hjelpetekst(aktivitetStatus) {
         case STATUS_AVBRUTT:
             return (
                 <FormattedMessage id="hjelpetekst.tittel.aktivitet.last">
-                    {tekst => (
+                    {tekst =>
                         <HjelpetekstVenstre
                             anchor={HengelasAnchor}
                             tittel={tekst}
                         >
                             <FormattedMessage id="hjelpetekst.lasikon" />
-                        </HjelpetekstVenstre>
-                    )}
+                        </HjelpetekstVenstre>}
                 </FormattedMessage>
             );
         default:
@@ -161,7 +158,9 @@ function KolonneFunction({
                 )}
             >
                 <div
-                    className={`aktivitetstavle__kolonne-header-wrapper ${hjelpeklasse(status)}`}
+                    className={`aktivitetstavle__kolonne-header-wrapper ${hjelpeklasse(
+                        status
+                    )}`}
                 >
                     <Undertittel
                         className="aktivitetstavle__kolonne-header"

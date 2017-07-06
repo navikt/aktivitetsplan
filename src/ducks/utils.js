@@ -1,6 +1,4 @@
-import {
-    update as resetTimeout,
-} from '../felles-komponenter/timeoutbox/timeoutbox';
+import { update as resetTimeout } from '../felles-komponenter/timeoutbox/timeoutbox';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
 
 /* eslint-env browser */
@@ -86,7 +84,9 @@ export function fetchToJson(url, config = {}) {
     const fodselsnummer = getFodselsnummer();
     let fetchUrl = url;
     if (fodselsnummer) {
-        fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fodselsnummer}`;
+        fetchUrl = `${url}${url.indexOf('?') >= 0
+            ? '&'
+            : '?'}fnr=${fodselsnummer}`;
     }
 
     return fetch(fetchUrl, configMedCredentials)

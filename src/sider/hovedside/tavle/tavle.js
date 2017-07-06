@@ -51,11 +51,11 @@ class Tavle extends Component {
     render() {
         const { children, className } = this.props;
 
-        const kolonner = children.map((child, index) => (
+        const kolonner = children.map((child, index) =>
             <section key={child.key || index} className="tavle-kolonne">
                 {child}
             </section>
-        ));
+        );
 
         const venstreKnapp = (
             <button

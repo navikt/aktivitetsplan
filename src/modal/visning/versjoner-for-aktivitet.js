@@ -47,13 +47,13 @@ class VersjonerForAktivitet extends Component {
 
         const versjonerInnslag = versjoner
             .slice(0, MAX_SIZE)
-            .map((versjon, index) => (
+            .map((versjon, index) =>
                 <VersjonInnslag
                     key={versjon.endretDato}
                     versjon={versjon}
                     prevVersjon={versjoner[index + 1]}
                 />
-            ));
+            );
 
         const versjonerInnslagUnderAccordion = (
             <Accordion
@@ -64,13 +64,13 @@ class VersjonerForAktivitet extends Component {
             >
                 {versjoner
                     .slice(MAX_SIZE)
-                    .map((versjon, index) => (
+                    .map((versjon, index) =>
                         <VersjonInnslag
                             key={versjon.endretDato}
                             versjon={versjon}
                             prevVersjon={versjoner[index + 1]}
                         />
-                    ))}
+                    )}
             </Accordion>
         );
 

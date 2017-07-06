@@ -12,10 +12,12 @@ import routing from './routing';
 import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
 
 const shouldScroll = (prevRouterProps, nextRouterProps) =>
-    !(prevRouterProps &&
+    !(
+        prevRouterProps &&
         nextRouterProps &&
         prevRouterProps.params.temaid &&
-        nextRouterProps.params.temaid);
+        nextRouterProps.params.temaid
+    );
 
 function App() {
     return (

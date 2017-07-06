@@ -1,90 +1,54 @@
-import React, { PropTypes as PT } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
-import { validForm } from 'react-redux-form-validation';
-import { Hovedknapp } from 'nav-react-design/dist/knapp';
-import Lenke from '../../felles-komponenter/utils/lenke';
-import Knappelenke from '../../felles-komponenter/utils/knappelenke';
-import Checkbox from '../../modal/skjema/input/checkbox';
-import history from '../../history';
-import { godtaVilkar, avslaVilkar } from '../../ducks/situasjon';
+import { hentVilkar } from './vilkar-reducer';
+import { STATUS } from '../../ducks/utils';
+import * as AppPT from '../../proptypes';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import VilkarInnhold from './vilkar-innhold';
+import GodkjennVilkarForm from './godkjenn-vilkar-form';
+import { hr as HiddenIfHr } from '../../felles-komponenter/hidden-if/hidden-if';
 
-function GodkjennVilkarForm({ visVilkar, handleSubmit, reset, doAvslaVilkar }) {
-    const avsla = () => {
-        doAvslaVilkar();
-        reset();
-    };
+class GodkjennVilkar extends Component {
+    componentDidMount() {
+        if (this.props.vilkarReducer.status === STATUS.NOT_STARTED) {
+            this.props.doHentVilkar();
+        }
+    }
 
-    return (
-        <form className="godkjenn-vilkar" onSubmit={handleSubmit}>
+    render() {
+        const { visVilkar, vilkar, vilkarReducer } = this.props;
 
-            <div className="godkjenn-vilkar__avkryssning">
-                <Checkbox
-                    className="godkjenn-vilkar__avkryssningsboks"
-                    feltNavn="godkjent"
-                    labelId={
-                        visVilkar
-                            ? 'vilkar.ja-jeg-samtykker'
-                            : 'vilkar.ja-ta-i-bruk'
-                    }
-                />
-                <Lenke href="/vilkar" visible={!visVilkar}>
-                    <FormattedMessage id="vilkar.se-vilkar-her" />
-                </Lenke>
+        return (
+            <div className="vilkar">
+                <VilkarInnhold vilkar={vilkar} hidden={!visVilkar} />
+                <HiddenIfHr className="vilkar__delelinje" hidden={!visVilkar} />
+                <Innholdslaster avhengigheter={[vilkarReducer]}>
+                    <div className="vilkar__godkjenning">
+                        <GodkjennVilkarForm
+                            visVilkar={visVilkar}
+                            hash={vilkar.hash}
+                        />
+                    </div>
+                </Innholdslaster>
             </div>
-
-            <div>
-                <Hovedknapp type="submit">
-                    <FormattedMessage id="vilkar.ga-til-aktivitetsplan" />
-                </Hovedknapp>
-            </div>
-
-            <div>
-                <Knappelenke onClick={avsla} visible={!!visVilkar}>
-                    <FormattedMessage id="vilkar.avsla-vilkar" />
-                </Knappelenke>
-            </div>
-
-        </form>
-    );
+        );
+    }
 }
 
-GodkjennVilkarForm.propTypes = {
-    reset: PT.func.isRequired,
+GodkjennVilkar.propTypes = {
+    doHentVilkar: PT.func.isRequired,
+    vilkar: AppPT.vilkar.isRequired,
+    vilkarReducer: AppPT.reducer.isRequired,
     visVilkar: PT.bool.isRequired,
-    handleSubmit: PT.func.isRequired,
-    doAvslaVilkar: PT.func.isRequired,
 };
 
-const pakrevdGodkjenning = value =>
-    value !== true && <FormattedMessage id={'vilkar.ma-krysse-av'} />;
+const mapStateToProps = state => ({
+    vilkarReducer: state.data.vilkar,
+    vilkar: state.data.vilkar.data,
+});
 
-const formNavn = 'godkjenn-vilkar';
-const GodkjennVilkarReduxForm = validForm({
-    form: formNavn,
-    destroyOnUnmount: false,
-    validate: {
-        godkjent: [pakrevdGodkjenning],
-    },
-})(GodkjennVilkarForm);
+const mapDispatchToProps = dispatch => ({
+    doHentVilkar: () => hentVilkar()(dispatch),
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    const doAvslaVilkar = () => {
-        dispatch(avslaVilkar(ownProps.hash));
-        history.push('/');
-    };
-    const doGodtaVilkar = () => {
-        dispatch(godtaVilkar(ownProps.hash));
-        history.push('/');
-    };
-    return {
-        onSubmit: formData => {
-            if (formData.godkjent === true) {
-                doGodtaVilkar();
-            }
-        },
-        doAvslaVilkar,
-    };
-};
-
-export default connect(null, mapDispatchToProps)(GodkjennVilkarReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(GodkjennVilkar);

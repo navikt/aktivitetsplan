@@ -5,5 +5,7 @@
     "maxCharPerLine": { "limit": 120 },
     "qualifyingElement": {
         "allowWithClass": true
-    }
+    },
+    "spaceBetweenParens": false,
+    "universalSelector": false
 }

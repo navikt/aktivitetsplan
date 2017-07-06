@@ -14,7 +14,11 @@ export const cls = (className, props, ...args) =>
     });
 
 function PanelBase({ className, children, ...props }) {
-    return <div className={cls(className, props)} {...props}>{children}</div>;
+    return (
+        <div className={cls(className, props)} {...props}>
+            {children}
+        </div>
+    );
 }
 
 PanelBase.propTypes = {

@@ -4,54 +4,54 @@
 @import './datovelger/day-picker';
 
 .dato-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 // Overskriver nav-frontend
 .input--m {
-  width: 210px;
+    width: 210px;
 }
 
 .aktivitetskjema__lagre-knapp {
-  padding: 1.5rem 3.69rem 1.5rem 2.56rem;
-  border-top: 1px #cccccc solid;
+    padding: 1.5rem 3.69rem 1.5rem 2.56rem;
+    border-top: 1px #cccccc solid;
 }
 
 .feedbacksummary {
-  .blokk-m();
-  padding: 1.5rem;
-  border-radius: @border-radius-base;
-  background-color: @red-error;
-  color: @hvit;
-  list-style-position: inside;
-
-  ul {
-    margin: 0;
-    padding-left: 0;
-  }
-
-  h3 {
-    margin: 0;
-    margin-bottom: 0.5rem;
-  }
-
-  a {
+    .blokk-m();
+    padding: 1.5rem;
+    border-radius: @border-radius-base;
+    background-color: @red-error;
     color: @hvit;
-    border-bottom: 1px solid @hvit;
-    text-decoration: none;
+    list-style-position: inside;
+
+    ul {
+        margin: 0;
+        padding-left: 0;
+    }
+
+    h3 {
+        margin: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    a {
+        color: @hvit;
+        border-bottom: 1px solid @hvit;
+        text-decoration: none;
+
+        &:focus {
+            outline: none;
+            background-color: @fokusOrange;
+            color: @navMorkGra;
+            border-bottom: 1px solid @fokusOrange;
+        }
+    }
 
     &:focus {
-      outline: none;
-      background-color: @fokusOrange;
-      color: @navMorkGra;
-      border-bottom: 1px solid @fokusOrange;
+        outline: none;
+        box-shadow: 0 0 0 3px @fokusOrange;
     }
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px @fokusOrange;
-  }
 }

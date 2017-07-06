@@ -3,19 +3,24 @@
 @knapp-storrelse: 32px;
 
 .pil-knapp {
-  .knapp;
-  height: @knapp-storrelse;
-  width: @knapp-storrelse;
-  padding: 0;
-  border: 0;
-  background: data-uri('@{aktivitetsplanPath}/felles-komponenter/utils/pil.svg');
-  background-size: @knapp-storrelse;
-
-  &:hover,
-  &:active,
-  &:active:hover {
+    .knapp;
+    height: @knapp-storrelse;
+    width: @knapp-storrelse;
+    padding: 0;
     border: 0;
-    background: transparent data-uri('@{aktivitetsplanPath}/felles-komponenter/utils/pil-hover.svg');
+    background: data-uri(
+        '@{aktivitetsplanPath}/felles-komponenter/utils/pil.svg'
+    );
     background-size: @knapp-storrelse;
-  }
+
+    &:hover,
+    &:active,
+    &:active:hover {
+        border: 0;
+        background: transparent
+            data-uri(
+                '@{aktivitetsplanPath}/felles-komponenter/utils/pil-hover.svg'
+            );
+        background-size: @knapp-storrelse;
+    }
 }

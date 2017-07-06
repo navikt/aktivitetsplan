@@ -2,9 +2,8 @@ import 'babel-polyfill';
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import Hovedside from './sider/hovedside/hovedside';
-import VilkarModal from './moduler/vilkar/vilkar-modal';
-import VilkarModalMedHistorikk from './modal/vilkar/vilkar-med-historikk';
-import VilkarModalUtenHistorikk from './modal/vilkar/vilkar-uten-historikk';
+import VilkarModalMedHistorikk from './moduler/vilkar/vilkar-med-historikk';
+import VilkarModalUtenHistorikk from './moduler/vilkar/vilkar-uten-historikk';
 import NyAktivitet from './modal/ny-aktivitet';
 import EgenAktivitet from './modal/skjema/egen-aktivitet';
 import StillingAktivitet from './modal/skjema/stilling-aktivitet';
@@ -17,17 +16,16 @@ import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
 import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
 import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
-import InnstillingerModal from './modal/innstillinger/innstillinger-modal';
-import Prosesser from './modal/innstillinger/prosesser';
-import AvsluttOppfolging from './modal/innstillinger/avslutt-oppfolginsperiode';
-import BekreftAvsluttOppfolging
-    from './modal/innstillinger/bekreft-avslutt-oppfolginsperiode';
-import BekreftStartOppfolging
-    from './modal/innstillinger/bekreft-start-oppfolginsperiode';
-import StartOppfolgingKvittering
-    from './modal/innstillinger/start-oppfolging-kvittering';
-import AvsluttOppfolgingKvittering
-    from './modal/innstillinger/avslutt-oppfolging-kvittering';
+import Prosesser from './moduler/innstillinger/prosesser/prosesser';
+import AvsluttOppfolging from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolginsperiode';
+import BekreftAvsluttOppfolging from './moduler/innstillinger/avslutt-oppfolging/bekreft-avslutt-oppfolginsperiode';
+import BekreftStartOppfolging from './moduler/innstillinger/start-oppfolging/bekreft-start-oppfolginsperiode';
+import StartOppfolgingKvittering from './moduler/innstillinger/start-oppfolging/start-oppfolging-kvittering';
+import AvsluttOppfolgingKvittering from './moduler/innstillinger/avslutt-oppfolging/avslutt-oppfolging-kvittering';
+import SettManuellOppfolging from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging';
+import SettDigitalOppfolging from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
+import SettManuellOppfolgingKvittering from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
+import SettDigitalKvittering from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -41,40 +39,53 @@ export const avbrytAktivitetRoute = aktivitetId =>
 const routing = (
     <Route component={Hovedside}>
         <IndexRoute />
-        <Route path="vilkar" component={VilkarModal} />
+        <Route path="vilkar" component={VilkarModalMedHistorikk} />
+        <Route path="vilkar/:key" component={VilkarModalUtenHistorikk} />
         <Route path="mal" component={Aktivitetsmal} />
         <Route path="mal/endre" component={AktivitetmalEndre} />
         {VIS_INNSTILLINGER &&
-            <Route path="innstillinger" component={InnstillingerModal}>
-                <IndexRoute component={Prosesser} />
-                <Route path="avslutt" component={AvsluttOppfolging} />
+            <Route>
+                <Route path="innstillinger" component={Prosesser} />
                 <Route
-                    path="avslutt/bekreft"
+                    path="innstillinger/manuell"
+                    component={SettManuellOppfolging}
+                />
+                <Route
+                    path="innstillinger/manuell/kvittering"
+                    component={SettManuellOppfolgingKvittering}
+                />
+                <Route path="innstillinger" component={Prosesser} />
+                <Route
+                    path="innstillinger/digital"
+                    component={SettDigitalOppfolging}
+                />
+                <Route
+                    path="innstillinger/digital/kvittering"
+                    component={SettDigitalKvittering}
+                />
+                <Route
+                    path="innstillinger/avslutt"
+                    component={AvsluttOppfolging}
+                />
+                <Route
+                    path="innstillinger/avslutt/bekreft"
                     component={BekreftAvsluttOppfolging}
                 />
                 <Route
-                    path="start/bekreft"
-                    component={BekreftStartOppfolging}
-                />
-            </Route>}
-        {VIS_INNSTILLINGER &&
-            <Route>
-                <Route
                     path="innstillinger/avslutt/kvittering"
-                    component={() => <AvsluttOppfolgingKvittering />}
+                    component={AvsluttOppfolgingKvittering}
+                />
+                <Route
+                    path="innstillinger/start/bekreft"
+                    component={BekreftStartOppfolging}
                 />
                 <Route
                     path="innstillinger/start/kvittering"
-                    component={() => <StartOppfolgingKvittering />}
+                    component={StartOppfolgingKvittering}
                 />
             </Route>}
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
-        <Route path="vilkarhistorikk" component={VilkarModalMedHistorikk} />
-        <Route
-            path="vilkarhistorikk/:key"
-            component={VilkarModalUtenHistorikk}
-        />
         <Route path="aktivitet">
             <Route path="ny" component={NyAktivitet} />
             <Route path="ny/egen" component={EgenAktivitet} />

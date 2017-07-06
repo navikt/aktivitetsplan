@@ -14,10 +14,18 @@ const VisibleAlertStripeAdvarsel = visibleIfHOC(AlertStripeAdvarsel);
 function Detaljer({ feilId, detaljertType, feilMelding, stackTrace }) {
     return (
         <div>
-            <div>{feilId}</div>
-            <div>{detaljertType}</div>
-            <div>{feilMelding}</div>
-            <pre>{stackTrace}</pre>
+            <div>
+                {feilId}
+            </div>
+            <div>
+                {detaljertType}
+            </div>
+            <div>
+                {feilMelding}
+            </div>
+            <pre>
+                {stackTrace}
+            </pre>
         </div>
     );
 }

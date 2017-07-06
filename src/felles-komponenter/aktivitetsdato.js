@@ -7,20 +7,18 @@ import Lenke from './utils/lenke';
 const datoklasse = 'aktivitetvisning-info aktivitetsdato__tekst';
 const erDatoSatt = (fraDato, tilDato) => fraDato === '' || tilDato === '';
 
-const visDato = (fraDato, tilDato) => (
+const visDato = (fraDato, tilDato) =>
     <Normaltekst className={datoklasse}>
         <FormattedMessage
             id="aktivitetsdato.vis-dato"
             values={{ fraDato, tilDato }}
         />
-    </Normaltekst>
-);
+    </Normaltekst>;
 
-const visSettDato = () => (
+const visSettDato = () =>
     <Lenke href="/" className={datoklasse}>
         <FormattedMessage id="aktivitetsdato.vis-sett-dato" />
-    </Lenke>
-);
+    </Lenke>;
 
 function Aktivitetsdato({ fra, til }) {
     return (
