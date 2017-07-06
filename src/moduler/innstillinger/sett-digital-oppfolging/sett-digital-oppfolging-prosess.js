@@ -4,12 +4,16 @@ import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
-import { STATUS } from '../../../ducks/utils';
 import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import { SLETT_BEGRUNNELSE_ACTION } from '../../../ducks/situasjon';
+import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
-function SettDigitalOppfolgingProsess({ intl, laster, slettBegrunnelse }) {
+function SettDigitalOppfolgingProsess({
+    intl,
+    slettBegrunnelse,
+    reservasjonKRR,
+}) {
     return (
         <StartProsess
             className="innstillinger__prosess"
@@ -19,33 +23,40 @@ function SettDigitalOppfolgingProsess({ intl, laster, slettBegrunnelse }) {
             knappetekst={intl.formatMessage({
                 id: 'innstillinger.modal.prosess.start.knapp',
             })}
-            laster={laster}
-            onClick={() => {
-                slettBegrunnelse();
-                history.push('/innstillinger/digital');
-            }}
+            disabled={reservasjonKRR}
+            onClick={() => slettBegrunnelse()}
         >
             <div className="blokk-xs">
                 <Normaltekst>
                     <FormattedMessage id="innstillinger.prosess.digital.tekst" />
                 </Normaltekst>
+                <HiddenIfAlertStripeInfoSolid hidden={!reservasjonKRR}>
+                    <FormattedMessage id="instillinger.proses.manuell.reservasjon-krr" />
+                </HiddenIfAlertStripeInfoSolid>
             </div>
         </StartProsess>
     );
 }
 
+SettDigitalOppfolgingProsess.defaultProps = {
+    reservasjonKRR: false,
+};
+
 SettDigitalOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
-    laster: PT.bool.isRequired,
     slettBegrunnelse: PT.func.isRequired,
+    reservasjonKRR: PT.bool,
 };
 
 const mapStateToProps = state => ({
-    laster: state.data.situasjon.status === STATUS.RELOADING,
+    reservasjonKRR: state.data.situasjon.data.reservasjonKRR,
 });
 
 const mapDispatchToProps = dispatch => ({
-    slettBegrunnelse: () => dispatch(SLETT_BEGRUNNELSE_ACTION),
+    slettBegrunnelse: () => {
+        dispatch(SLETT_BEGRUNNELSE_ACTION);
+        history.push('/innstillinger/digital');
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

@@ -20,7 +20,7 @@ const Varsling = hiddenIf(({ tekstId }) =>
 
 const VarslingMedLenke = hiddenIf(({ tekstId, lenkeTekstId, href }) =>
     <AlertStripeInfoSolid>
-        <FormattedMessage id={tekstId} />
+        <FormattedMessage id={tekstId} />&nbsp;
         <Lenke href={href}>
             <FormattedMessage id={lenkeTekstId} />
         </Lenke>
@@ -40,23 +40,25 @@ class Varslinger extends Component {
             underOppfolging,
             vilkarMaBesvares,
             brukerErManuell,
+            reservertIKRR,
         } = this.props;
         return (
             <Innholdslaster
                 avhengigheter={[situasjonReducer, identitetReducer]}
             >
-                <Container>
-                    <HiddenIfDiv
-                        hidden={erBruker}
-                        className="varsling-container"
-                    >
+                <HiddenIfDiv hidden={erBruker} className="varsling-container">
+                    <Container>
                         <Varsling
-                            hidden={false && underOppfolging}
+                            hidden={underOppfolging}
                             tekstId="oppfolging.ikke-under-oppfolging"
                         />
                         <Varsling
                             hidden={!vilkarMaBesvares}
                             tekstId="oppfolging.vilkar-ikke-godkjent"
+                        />
+                        <Varsling
+                            hidden={!reservertIKRR}
+                            tekstId="oppfolging.bruker-reservert-i-krr"
                         />
                         <VarslingMedLenke
                             hidden={!brukerErManuell}
@@ -64,8 +66,8 @@ class Varslinger extends Component {
                             lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
                             href="/innstillinger"
                         />
-                    </HiddenIfDiv>
-                </Container>
+                    </Container>
+                </HiddenIfDiv>
             </Innholdslaster>
         );
     }
@@ -76,6 +78,7 @@ Varslinger.defaultProps = {
     underOppfolging: false,
     vilkarMaBesvares: false,
     brukerErManuell: false,
+    reservertIKRR: false,
 };
 
 Varslinger.propTypes = {
@@ -85,6 +88,7 @@ Varslinger.propTypes = {
     underOppfolging: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerErManuell: PT.bool,
+    reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
 };
 
@@ -101,6 +105,7 @@ const mapStateToProps = state => {
         vilkarMaBesvares: oppfolgingStatus.vilkarMaBesvares,
         underOppfolging: oppfolgingStatus.underOppfolging,
         brukerErManuell: oppfolgingStatus.manuell,
+        reservertIKRR: oppfolgingStatus.reservasjonKRR,
     };
 };
 
