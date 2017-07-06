@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import { Container } from 'nav-frontend-grid';
 import { hentIdentitet } from '../../ducks/identitet';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../proptypes';
@@ -44,22 +45,27 @@ class Varslinger extends Component {
             <Innholdslaster
                 avhengigheter={[situasjonReducer, identitetReducer]}
             >
-                <HiddenIfDiv hidden={erBruker} className="varsling-container">
-                    <Varsling
-                        hidden={underOppfolging}
-                        tekstId="oppfolging.ikke-under-oppfolging"
-                    />
-                    <Varsling
-                        hidden={!vilkarMaBesvares}
-                        tekstId="oppfolging.vilkar-ikke-godkjent"
-                    />
-                    <VarslingMedLenke
-                        hidden={!brukerErManuell}
-                        tekstId="oppfolging.bruker-er-manuell.tekst"
-                        lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
-                        href="/innstillinger"
-                    />
-                </HiddenIfDiv>
+                <Container>
+                    <HiddenIfDiv
+                        hidden={erBruker}
+                        className="varsling-container"
+                    >
+                        <Varsling
+                            hidden={false && underOppfolging}
+                            tekstId="oppfolging.ikke-under-oppfolging"
+                        />
+                        <Varsling
+                            hidden={!vilkarMaBesvares}
+                            tekstId="oppfolging.vilkar-ikke-godkjent"
+                        />
+                        <VarslingMedLenke
+                            hidden={!brukerErManuell}
+                            tekstId="oppfolging.bruker-er-manuell.tekst"
+                            lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
+                            href="/innstillinger"
+                        />
+                    </HiddenIfDiv>
+                </Container>
             </Innholdslaster>
         );
     }

@@ -26,7 +26,7 @@
     "eslint-staged": "eslint",
     "lesshint": "lesshint --reporter ./lesshint-reporter src/",
     "lesshint-staged": "lesshint --reporter ./lesshint-reporter",
-    "lint": "npm run eslint && npm run lesshint",
+    "lint": "npm run prettier && npm run eslint && npm run lesshint",
     "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
     "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\"",
     "dev:js": "webpack-dev-server --progress --hot --watch --env.dev=true --port 8888",
