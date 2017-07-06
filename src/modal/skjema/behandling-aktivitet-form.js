@@ -12,7 +12,7 @@ import Textarea from './textarea/textarea';
 import Input from './input/input';
 import Datovelger from './datovelger/datovelger';
 import './skjema.less';
-import { STATUS_GJENNOMFOERT, BEHANDLING_AKTIVITET_TYPE } from '../../constant';
+import { STATUS_PLANLAGT, BEHANDLING_AKTIVITET_TYPE } from '../../constant';
 import PeriodeValidering from './datovelger/periode-validering';
 
 const EFFEKT_MAKS_LENGDE = 255;
@@ -37,8 +37,10 @@ const pakrevdBehandlingType = rules.minLength(
 
 const begrensetBehandlingType = rules.maxLength(
     BEHANDLINGS_TYPE_MAKS_LENGDE,
-    <FormattedMessage id="behandling-aktivitet-form.feilmelding.behandling-type-lengde"
-    values={{BEHANDLING_AKTIVITET_TYPE}}/>
+    <FormattedMessage
+        id="behandling-aktivitet-form.feilmelding.behandling-type-lengde"
+        values={{ BEHANDLING_AKTIVITET_TYPE }}
+    />
 );
 
 const pakrevdBehandlingSted = rules.minLength(
@@ -48,8 +50,10 @@ const pakrevdBehandlingSted = rules.minLength(
 
 const begrensetBehandlingSted = rules.maxLength(
     BEHANDLINGS_STED_MAKS_LENGDE,
-    <FormattedMessage id="behandling-aktivitet-form.feilmelding.behandling-sted-lengde"
-    values={{BEHANDLINGS_STED_MAKS_LENGDE}}/>
+    <FormattedMessage
+        id="behandling-aktivitet-form.feilmelding.behandling-sted-lengde"
+        values={{ BEHANDLINGS_STED_MAKS_LENGDE }}
+    />
 );
 
 const begrensetEffektLengde = rules.maxLength(
@@ -225,7 +229,7 @@ const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {
-            status: STATUS_GJENNOMFOERT,
+            status: STATUS_PLANLAGT,
             tittel: props.defaultTittel,
             avtalt: false,
             ...aktivitet,

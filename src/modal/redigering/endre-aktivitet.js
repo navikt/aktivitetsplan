@@ -24,7 +24,7 @@ import {
     EGEN_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
-    BEHANDLING_AKTIVITET_TYPE
+    BEHANDLING_AKTIVITET_TYPE,
 } from '../../constant';
 import ModalContainer from '../modal-container';
 import Versjonskonflikt from './versjonskonflikt';
