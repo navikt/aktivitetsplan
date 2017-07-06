@@ -15,9 +15,11 @@ import './skjema.less';
 import { STATUS_GJENNOMFOERT, BEHANDLING_AKTIVITET_TYPE } from '../../constant';
 import PeriodeValidering from './datovelger/periode-validering';
 
-const EFFEKT_MAKS_LENGDE = 5000;
+const EFFEKT_MAKS_LENGDE = 255;
 const OPPFOLGING_MAKS_LENGDE = 5000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
+const BEHANDLINGS_TYPE_MAKS_LENGDE = 255;
+const BEHANDLINGS_STED_MAKS_LENGDE = 255;
 
 const pakrevdFraDato = rules.minLength(
     0,
@@ -33,9 +35,21 @@ const pakrevdBehandlingType = rules.minLength(
     <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-behandling-type" />
 );
 
+const begrensetBehandlingType = rules.maxLength(
+    BEHANDLINGS_TYPE_MAKS_LENGDE,
+    <FormattedMessage id="behandling-aktivitet-form.feilmelding.behandling-type-lengde"
+    values={{BEHANDLING_AKTIVITET_TYPE}}/>
+);
+
 const pakrevdBehandlingSted = rules.minLength(
     0,
     <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-behandling-sted" />
+);
+
+const begrensetBehandlingSted = rules.maxLength(
+    BEHANDLINGS_STED_MAKS_LENGDE,
+    <FormattedMessage id="behandling-aktivitet-form.feilmelding.behandling-sted-lengde"
+    values={{BEHANDLINGS_STED_MAKS_LENGDE}}/>
 );
 
 const begrensetEffektLengde = rules.maxLength(
@@ -105,9 +119,9 @@ class BehandlingAktivitetForm extends Component {
                     <AktivitetIngress type={BEHANDLING_AKTIVITET_TYPE} />
 
                     <Input
-                        feltNavn="typeBehandling"
+                        feltNavn="behandlingType"
                         disabled={avtalt === true}
-                        labelId="behandling-aktivitet-form.label.type-behandling"
+                        labelId="behandling-aktivitet-form.label.behandling-type"
                         bredde="fullbredde"
                     />
                     <Input
@@ -140,11 +154,17 @@ class BehandlingAktivitetForm extends Component {
                         </div>
                     </PeriodeValidering>
 
-                    <Textarea
+                    <Input
                         feltNavn="effekt"
                         disabled={avtalt === true}
                         labelId="behandling-aktivitet-form.label.effekt"
-                        maxLength={EFFEKT_MAKS_LENGDE}
+                        bredde="fullbredde"
+                    />
+                    <Textarea
+                        feltNavn="behandlingOppfolging"
+                        disabled={avtalt === true}
+                        labelId="behandling-aktivitet-form.label.avtale-oppfolging"
+                        maxLength={OPPFOLGING_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                     <Textarea
@@ -152,13 +172,6 @@ class BehandlingAktivitetForm extends Component {
                         disabled={avtalt === true}
                         labelId="behandling-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
-                        visTellerFra={500}
-                    />
-                    <Textarea
-                        feltNavn="behandlingOppfolging"
-                        disabled={avtalt === true}
-                        labelId="behandling-aktivitet-form.label.avtale-oppfolging"
-                        maxLength={OPPFOLGING_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                 </div>
@@ -196,8 +209,8 @@ const BehandlingAktivitetReduxForm = validForm({
         <FormattedMessage id="sokeavtale-aktivitet-form.feiloppsummering-tittel" />
     ),
     validate: {
-        typeBehandling: [pakrevdBehandlingType],
-        behandlingSted: [pakrevdBehandlingSted],
+        behandlingType: [pakrevdBehandlingType, begrensetBehandlingType],
+        behandlingSted: [pakrevdBehandlingSted, begrensetBehandlingSted],
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
         effekt: [begrensetEffektLengde],

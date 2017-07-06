@@ -77,6 +77,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         jobbStatus,
         ansettelsesforhold,
         arbeidstid,
+        behandlingType,
         behandlingSted,
         effekt,
         behandlingOppfolging,
@@ -374,6 +375,20 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             </section>;
         return [
             <Informasjonsfelt
+                key="behandlingtype"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.behandling-type-label" />
+                }
+                innhold={behandlingType}
+            />,
+            <Informasjonsfelt
+                key="behandlingsted"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.behandling-sted-label" />
+                }
+                innhold={behandlingSted}
+            />,
+            <Informasjonsfelt
                 key="fradato"
                 tittel={fraDatoTekst(aktivitetstype)}
                 innhold={fraDato}
@@ -382,13 +397,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 key="tildato"
                 tittel={tilDatoTekst(aktivitetstype)}
                 innhold={tilDato}
-            />,
-            <Informasjonsfelt
-                key="behandlingsted"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.behandlingsted-label" />
-                }
-                innhold={behandlingSted}
             />,
             <Informasjonsfelt
                 key="effekt"
