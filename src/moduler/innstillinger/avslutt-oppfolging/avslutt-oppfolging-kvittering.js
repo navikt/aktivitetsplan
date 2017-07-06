@@ -71,7 +71,7 @@ AvsluttOppfolgingKvittering.propTypes = {
 
 const mapStateToProps = state => ({
     motpart: state.data.motpart,
-    situasjon: state.data.situasjon,
+    situasjon: state.data.innstillinger,
 });
 
 export default connect(mapStateToProps)(AvsluttOppfolgingKvittering);

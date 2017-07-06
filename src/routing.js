@@ -25,6 +25,7 @@ import SettManuellOppfolging from './moduler/innstillinger/sett-manuell-oppfolgi
 import SettDigitalOppfolging from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
 import SettManuellOppfolgingKvittering from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
+import Feilkvittering from './moduler/innstillinger/feilkvittering';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -81,6 +82,10 @@ const routing = (
                 <Route
                     path="innstillinger/start/kvittering"
                     component={StartOppfolgingKvittering}
+                />
+                <Route
+                    path="innstillinger/feilkvittering"
+                    component={Feilkvittering}
                 />
             </Route>}
         <Route path="dialog" component={DialogModal} />

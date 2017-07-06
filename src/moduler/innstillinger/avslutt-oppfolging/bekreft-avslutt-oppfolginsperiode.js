@@ -6,7 +6,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import ModalFooter from '../../../modal/modal-footer';
-import { avsluttOppfolging } from '../../../ducks/situasjon';
+import { avsluttOppfolging } from '../innstillinger-reducer';
 import history from '../../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
 import { RemoteResetKnapp } from '../../../felles-komponenter/remote-knapp/remote-knapp';
@@ -67,14 +67,14 @@ BekreftAvslutning.propTypes = {
 const mapStateToProps = state => ({
     navn: state.data.motpart.data.navn,
     veilederId: state.data.identitet.data.id,
-    begrunnelse: state.data.situasjon.begrunnelse,
+    begrunnelse: state.data.innstillinger.begrunnelse,
 });
 
 const mapDispatchToProps = dispatch => ({
     doAvsluttOppfolging: (begrunnelse, veilederId) => {
         dispatch(avsluttOppfolging(begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/avslutt/kvittering'))
-            .catch(() => history.push('/'));
+            .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });
 

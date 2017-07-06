@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
-import { SLETT_BEGRUNNELSE_ACTION } from '../../../ducks/situasjon';
+import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
 
 function StartOppfolgingProsess({ intl, slettBegrunnelse }) {
     return (
