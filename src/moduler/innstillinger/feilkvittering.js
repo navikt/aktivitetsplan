@@ -16,9 +16,11 @@ function FeilKvittering() {
         >
             <ModalHeader />
             <article className="innstillinger__container">
-                <Innholdstittel>
-                    <FormattedMessage id="innstillinger.feilkvittering.overskrift" />
-                </Innholdstittel>
+                <div className="blokk-xs">
+                    <Innholdstittel>
+                        <FormattedMessage id="innstillinger.feilkvittering.overskrift" />
+                    </Innholdstittel>
+                </div>
                 <AlertStripeAdvarsel className="blokk-m">
                     <FormattedMessage id="innstillinger.feilkvittering.feilmelding" />
                 </AlertStripeAdvarsel>
