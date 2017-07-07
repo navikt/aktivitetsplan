@@ -7,9 +7,7 @@ import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import { SLETT_BEGRUNNELSE_ACTION } from '../../../ducks/situasjon';
-import {
-    HiddenIfAlertStripeInfoSolid,
-} from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
 function SettDigitalOppfolgingProsess({
     intl,

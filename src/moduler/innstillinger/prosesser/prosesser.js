@@ -4,7 +4,7 @@ import AvsluttOppfolgingProsess from '../avslutt-oppfolging/avslutt-oppfolging-p
 import StartOppfolgingProsess from '../start-oppfolging/start-oppfolging-prosess';
 import SettManuellOppfolgingProsess from '../sett-manuell-oppfolging/sett-manuell-oppfolging-prosess';
 import SettDigitalOppfolgingProsess from '../sett-digital-oppfolging/sett-digital-oppfolging-prosess';
-import OppfolgingsperiodeHistorikk from '../historikk/oppfolgingsperiode-historikk';
+import InnstillingHistorikk from '../historikk/innstilling-historikk';
 import * as AppPT from '../../../proptypes';
 import InnstillingerModal from '../innstillinger-modal';
 
@@ -16,7 +16,7 @@ function Prosesser({ situasjon }) {
             <SettManuellOppfolgingProsess hidden={situasjon.manuell} />
             <SettDigitalOppfolgingProsess hidden={!situasjon.manuell} />
             <hr className="innstillinger__delelinje" />
-            <OppfolgingsperiodeHistorikk />
+            <InnstillingHistorikk />
         </InnstillingerModal>
     );
 }

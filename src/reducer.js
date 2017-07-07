@@ -16,6 +16,7 @@ import feilReducer from './ducks/feil';
 import historiskeVilkarReducer from './ducks/historiske-vilkar';
 import filterReducer from './moduler/filter/filter-reducer';
 import veilederReducer from './ducks/veileder';
+import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -36,6 +37,7 @@ const combinedReducers = combineReducers({
         identitet: identitetReducer,
         filter: filterReducer,
         veiledere: veilederReducer,
+        historikk: historikkReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,

@@ -2,8 +2,8 @@ import PT from 'prop-types';
 
 export const aktivitet = PT.shape({
     tittel: PT.string.isRequired,
-    fraDato: PT.string.isRequired,
-    tilDato: PT.string.isRequired,
+    fraDato: PT.string,
+    tilDato: PT.string,
     opprettetDato: PT.string,
     endretDato: PT.string,
     lagtInnAv: PT.string,
@@ -101,7 +101,24 @@ export const oppfolgingsPeriode = PT.shape({
 });
 
 export const feil = PT.shape({
-    is: PT.string.isRequired,
+    is: PT.string,
     type: PT.string.isRequired,
-    detaljer: PT.string,
+    detaljer: PT.object,
+});
+
+export const manuellHistorikk = PT.shape({
+    begrunnelse: PT.string,
+    dato: PT.string,
+    manuell: PT.bool,
+    opprettetAvBrukerId: PT.string,
+    opprettetAv: PT.string,
+});
+
+export const historikk = PT.arrayOf(manuellHistorikk);
+
+export const veileder = PT.shape({
+    etternavn: PT.string,
+    fornavn: PT.string,
+    ident: PT.string,
+    navn: PT.string,
 });
