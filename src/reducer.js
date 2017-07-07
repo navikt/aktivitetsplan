@@ -39,7 +39,7 @@ const combinedReducers = combineReducers({
         identitet: identitetReducer,
         filter: filterReducer,
         veiledere: veilederReducer,
-        historikk: historikkReducer,
+        innstillingerHistorikk: historikkReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,

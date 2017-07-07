@@ -82,17 +82,13 @@ class InnstillingHistorikk extends Component {
     }
 }
 
-InnstillingHistorikk.defaultProps = {
-    historikk: [],
-};
-
 InnstillingHistorikk.propTypes = {
     historikkReducer: AppPT.reducer.isRequired,
     doHentInnstillingHistorikk: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    historikkReducer: state.data.historikk,
+    historikkReducer: state.data.innstillingerHistorikk,
 });
 
 const mapDispatchToProps = dispatch => ({

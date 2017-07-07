@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import {
     formaterDatoTid,
     formaterDato,
-    formaterDatoDatoEllerTidSidenUtenKlokkeslett,
+    formaterDatoEllerTidSidenUtenKlokkeslett,
 } from '../utils';
 
 export default function Dato({ visTidspunkt, children, ...resten }) {
@@ -27,7 +27,7 @@ Dato.defaultProps = {
 export function DatoEllerTidSiden({ children, ...rest }) {
     return (
         <span {...rest}>
-            {formaterDatoDatoEllerTidSidenUtenKlokkeslett(children)}
+            {formaterDatoEllerTidSidenUtenKlokkeslett(children)}
         </span>
     );
 }

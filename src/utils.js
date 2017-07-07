@@ -224,7 +224,7 @@ function erMerEnntoDagerSiden(dato) {
         ? datoVerdi.isAfter(moment().subtract(2, 'days').startOf('day'), 'd')
         : false;
 }
-export function formaterDatoDatoEllerTidSiden(dato) {
+export function formaterDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
         ? erMerEnntoDagerSiden(dato)
@@ -233,7 +233,7 @@ export function formaterDatoDatoEllerTidSiden(dato) {
         : undefined;
 }
 
-export function formaterDatoDatoEllerTidSidenUtenKlokkeslett(dato) {
+export function formaterDatoEllerTidSidenUtenKlokkeslett(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
         ? erMerEnntoDagerSiden(dato)

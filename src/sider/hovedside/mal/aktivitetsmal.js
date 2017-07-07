@@ -6,7 +6,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { hentMal, hentMalListe, fjernMalListe } from '../../../ducks/mal';
 import * as AppPT from '../../../proptypes';
-import { formaterDatoDatoEllerTidSiden } from '../../../utils';
+import { formaterDatoEllerTidSiden } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Identitet from '../../../felles-komponenter/identitet';
 import Accordion from '../../../felles-komponenter/accordion';
@@ -29,7 +29,7 @@ function malListeVisning(malet) {
                         malet.endretAv}
                 </Identitet>
             </span>{' '}
-            {formaterDatoDatoEllerTidSiden(malet.dato)}
+            {formaterDatoEllerTidSiden(malet.dato)}
             <Tekstomrade className="aktivitetmal__historikk-tekst">
                 {malet.mal}
             </Tekstomrade>

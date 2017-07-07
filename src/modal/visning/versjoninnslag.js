@@ -4,7 +4,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../../proptypes';
 import {
     formaterDatoKortManed,
-    formaterDatoDatoEllerTidSiden,
+    formaterDatoEllerTidSiden,
 } from '../../utils';
 import BrukerAvhengigTekst from '../../felles-komponenter/brukeravhengigtekst';
 import {
@@ -63,7 +63,7 @@ function VersjonInnslag({ versjon, prevVersjon }) {
             </Element>
             {endringsTekst()}
             <Normaltekst>
-                {formaterDatoDatoEllerTidSiden(versjon.endretDato)}
+                {formaterDatoEllerTidSiden(versjon.endretDato)}
             </Normaltekst>
         </div>
     );
