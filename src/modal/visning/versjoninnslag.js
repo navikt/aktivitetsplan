@@ -2,10 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../../proptypes';
-import {
-    formaterDatoKortManed,
-    formaterDatoDatoEllerTidSiden,
-} from '../../utils';
+import { formaterDatoKortManed, formaterDatoEllerTidSiden } from '../../utils';
 import BrukerAvhengigTekst from '../../felles-komponenter/brukeravhengigtekst';
 import {
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
@@ -63,7 +60,7 @@ function VersjonInnslag({ versjon, prevVersjon }) {
             </Element>
             {endringsTekst()}
             <Normaltekst>
-                {formaterDatoDatoEllerTidSiden(versjon.endretDato)}
+                {formaterDatoEllerTidSiden(versjon.endretDato)}
             </Normaltekst>
         </div>
     );

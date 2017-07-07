@@ -101,7 +101,24 @@ export const oppfolgingsPeriode = PT.shape({
 });
 
 export const feil = PT.shape({
-    is: PT.string.isRequired,
+    is: PT.string,
     type: PT.string.isRequired,
-    detaljer: PT.string,
+    detaljer: PT.object,
+});
+
+export const manuellHistorikk = PT.shape({
+    begrunnelse: PT.string,
+    dato: PT.string,
+    manuell: PT.bool,
+    opprettetAvBrukerId: PT.string,
+    opprettetAv: PT.string,
+});
+
+export const historikk = PT.arrayOf(manuellHistorikk);
+
+export const veileder = PT.shape({
+    etternavn: PT.string,
+    fornavn: PT.string,
+    ident: PT.string,
+    navn: PT.string,
 });
