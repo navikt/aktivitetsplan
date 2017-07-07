@@ -18,6 +18,7 @@ import {
 } from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
+import { hentSituasjon } from '../../../ducks/situasjon';
 
 const SETT_DIGITAL_FORM_NAME = 'sett-digital-form';
 
@@ -88,6 +89,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(settDigitalOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/digital/kvittering'))
+            .then(() => dispatch(hentSituasjon()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

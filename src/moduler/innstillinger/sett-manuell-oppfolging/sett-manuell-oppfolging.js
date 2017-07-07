@@ -18,6 +18,7 @@ import {
 } from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
+import { hentSituasjon } from '../../../ducks/situasjon';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 
@@ -88,6 +89,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(settManuellOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/manuell/kvittering'))
+            .then(() => dispatch(hentSituasjon()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });
