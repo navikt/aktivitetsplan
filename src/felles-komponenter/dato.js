@@ -1,8 +1,12 @@
 import React from 'react';
 import PT from 'prop-types';
-import { formaterDatoTid, formaterDato } from '../utils';
+import {
+    formaterDatoTid,
+    formaterDato,
+    formaterDatoEllerTidSidenUtenKlokkeslett,
+} from '../utils';
 
-function Dato({ visTidspunkt, children, ...resten }) {
+export default function Dato({ visTidspunkt, children, ...resten }) {
     return (
         <span {...resten}>
             {visTidspunkt ? formaterDatoTid(children) : formaterDato(children)}
@@ -20,4 +24,18 @@ Dato.defaultProps = {
     visTidspunkt: false,
 };
 
-export default Dato;
+export function DatoEllerTidSiden({ children, ...rest }) {
+    return (
+        <span {...rest}>
+            {formaterDatoEllerTidSidenUtenKlokkeslett(children)}
+        </span>
+    );
+}
+
+DatoEllerTidSiden.propTypes = {
+    children: PT.string,
+};
+
+DatoEllerTidSiden.defaultProps = {
+    children: undefined,
+};

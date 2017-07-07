@@ -218,18 +218,27 @@ export function formaterDatoTidSiden(dato) {
     return datoVerdi.isValid() ? 'for ' + datoVerdi.fromNow() : undefined;
 }
 
-function erMerEnnEnDagSiden(dato) {
+function erMerEnntoDagerSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
-        ? datoVerdi.isAfter(moment().subtract(1, 'days').startOf('day'), 'd')
+        ? datoVerdi.isAfter(moment().subtract(2, 'days').startOf('day'), 'd')
         : false;
 }
-export function formaterDatoDatoEllerTidSiden(dato) {
+export function formaterDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
-        ? erMerEnnEnDagSiden(dato)
+        ? erMerEnntoDagerSiden(dato)
           ? formaterDatoTidSiden(dato)
           : formaterDatoKortManedTid(dato)
+        : undefined;
+}
+
+export function formaterDatoEllerTidSidenUtenKlokkeslett(dato) {
+    const datoVerdi = moment(dato);
+    return datoVerdi.isValid
+        ? erMerEnntoDagerSiden(dato)
+          ? formaterDatoTidSiden(dato)
+          : formaterDatoKortManed(dato)
         : undefined;
 }
 

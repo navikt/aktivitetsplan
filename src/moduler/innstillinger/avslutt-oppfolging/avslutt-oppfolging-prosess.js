@@ -80,12 +80,16 @@ class AvsluttOppfolgingProsess extends Component {
     }
 }
 
+AvsluttOppfolgingProsess.defaultProps = {
+    avslutningStatus: undefined,
+};
+
 AvsluttOppfolgingProsess.propTypes = {
     intl: intlShape.isRequired,
     laster: PT.bool.isRequired,
     doKanAvslutteOppfolging: PT.func.isRequired,
     slettBegrunnelse: PT.func.isRequired,
-    avslutningStatus: AppPT.avslutningStatus.isRequired,
+    avslutningStatus: AppPT.avslutningStatus,
 };
 
 const mapStateToProps = state => ({
