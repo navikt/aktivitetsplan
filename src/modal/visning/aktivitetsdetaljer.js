@@ -353,55 +353,44 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         />,
     ];
 
-    const behandlingFelter = () => {
-        const behandlingOppfolgingSection =
-            behandlingOppfolging &&
-            <section
-                key="behandlingOppfolging"
-                className="aktivitetsbeskrivelse"
-            >
-                <EtikettLiten className="aktivitetsbeskrivelse__tittel">
-                    <FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />
-                </EtikettLiten>
-                <Tekstomrade className="aktivitetsbeskrivelse__tekst">
-                    {behandlingOppfolging}
-                </Tekstomrade>
-            </section>;
-        return [
-            <Informasjonsfelt
-                key="behandlingtype"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.behandling-type-label" />
-                }
-                innhold={behandlingType}
-            />,
-            <Informasjonsfelt
-                key="behandlingsted"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.behandling-sted-label" />
-                }
-                innhold={behandlingSted}
-            />,
-            <Informasjonsfelt
-                key="fradato"
-                tittel={fraDatoTekst(aktivitetstype)}
-                innhold={fraDato}
-            />,
-            <Informasjonsfelt
-                key="tildato"
-                tittel={tilDatoTekst(aktivitetstype)}
-                innhold={tilDato}
-            />,
-            <Informasjonsfelt
-                key="effekt"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.effekt-label" />
-                }
-                innhold={effekt}
-            />,
-            behandlingOppfolgingSection,
-        ];
-    };
+    const behandlingFelter = () => [
+        <Informasjonsfelt
+            key="behandlingtype"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.behandling-type-label" />
+            }
+            innhold={behandlingType}
+        />,
+        <Informasjonsfelt
+            key="behandlingsted"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.behandling-sted-label" />
+            }
+            innhold={behandlingSted}
+        />,
+        <Informasjonsfelt
+            key="fradato"
+            tittel={fraDatoTekst(aktivitetstype)}
+            innhold={fraDato}
+        />,
+        <Informasjonsfelt
+            key="tildato"
+            tittel={tilDatoTekst(aktivitetstype)}
+            innhold={tilDato}
+        />,
+        <Informasjonsfelt
+            key="effekt"
+            tittel={<FormattedMessage id="aktivitetdetaljer.effekt-label" />}
+            innhold={effekt}
+        />,
+        <Informasjonsfelt
+            key="behandlingOppfolging"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />
+            }
+            innhold={behandlingOppfolging}
+        />,
+    ];
 
     const map = {
         [EGEN_AKTIVITET_TYPE]: egenStillingFelter,
