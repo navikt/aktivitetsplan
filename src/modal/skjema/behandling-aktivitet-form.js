@@ -164,18 +164,18 @@ class BehandlingAktivitetForm extends Component {
                         labelId="behandling-aktivitet-form.label.effekt"
                         bredde="fullbredde"
                     />
-                    <Input
-                        feltNavn="behandlingOppfolging"
-                        disabled={avtalt === true}
-                        labelId="behandling-aktivitet-form.label.avtale-oppfolging"
-                        bredde="fullbredde"
-                    />
                     <Textarea
                         feltNavn="beskrivelse"
                         disabled={avtalt === true}
                         labelId="behandling-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
                         visTellerFra={500}
+                    />
+                    <Input
+                        feltNavn="behandlingOppfolging"
+                        disabled={avtalt === true}
+                        labelId="behandling-aktivitet-form.label.avtale-oppfolging"
+                        bredde="fullbredde"
                     />
                 </div>
                 <div className="aktivitetskjema__lagre-knapp">
