@@ -67,8 +67,8 @@ class InnstillingHistorikk extends Component {
                 spinnerStorrelse="m"
                 className="innstillinger-spinner"
             >
-                <section className="innstillinger__prosess">
-                    <Undertittel>
+                <section className="innstillinger__historikk">
+                    <Undertittel className="innstillinger__historikk-tittel">
                         <FormattedMessage id="innstillinger.historikk.tittel" />
                     </Undertittel>
                     {forstePeriode ||

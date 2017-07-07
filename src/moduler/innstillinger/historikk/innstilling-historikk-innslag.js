@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
 import { hentVeileder } from '../../../ducks/veileder';
 import * as AppPT from '../../../proptypes';
@@ -57,22 +57,21 @@ class InnstillingHistorikkInnslag extends Component {
             : 'innstillinger.historikk.innslag.satt-til-digital';
 
         return (
-            <div className="oppfolgingperiode__innslag">
-                <Element>
+            <div className="historikk__innslag">
+                <Element className="innslag__header">
                     <FormattedMessage id={innslagHeaderId} />
                 </Element>
-                <Normaltekst>
+                <Normaltekst className="innslag__begrunnelse">
                     <FormattedMessage
                         id="innstillinger.historikk.innslag.begrunnelse"
                         values={{ begrunnelse }}
                     />
-                    <span className="historikk__metadata">
-                        &nbsp;
-                        <DatoEllerTidSiden>{dato}</DatoEllerTidSiden>
-                        &nbsp;
-                        {this.hentKomponentMedNavn()}
-                    </span>
                 </Normaltekst>
+                <Undertekst>
+                    <DatoEllerTidSiden>{dato}</DatoEllerTidSiden>
+                    &nbsp;
+                    {this.hentKomponentMedNavn()}
+                </Undertekst>
             </div>
         );
     }
