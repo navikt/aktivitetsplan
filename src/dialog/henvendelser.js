@@ -23,11 +23,10 @@ const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) =>
 
 function Henvendelse({ henvendelse }) {
     const avsenderVeileder = henvendelse.avsender === 'VEILEDER';
-    const ikonCls = (fraVeileder, brukerMann) =>
+    const ikonCls = fraVeileder =>
         classNames('ikon', {
             'ikon--veileder': fraVeileder,
-            'ikon--bruker-mann': !fraVeileder && brukerMann,
-            'ikon--bruker-kvinne': !fraVeileder && !brukerMann,
+            'ikon--bruker-noytral': !fraVeileder,
         });
     return (
         <Snakkeboble

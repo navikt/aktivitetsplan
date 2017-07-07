@@ -13,6 +13,11 @@
         .oppdater-status {
             margin: 1rem 0 0 0.5rem;
         }
+
+        .col-xs-6 {
+            float: none;
+            width: 100%;
+        }
     }
 
     &__etikett {
@@ -38,14 +43,6 @@
         cursor: pointer;
 
         .tekst--kollapset {
-            @media (min-width: 641px) {
-                max-width: 30.1rem;
-            }
-
-            @media (max-width: 640px) {
-                max-width: 27.9rem;
-            }
-
             display: inline-block;
             white-space: nowrap;
             overflow: hidden;
@@ -108,16 +105,25 @@
     }
 }
 
-@media (min-width: @screen-md-min) {
+@media (min-width: @screen-sm-min) {
     .aktivitetvisning {
         &__underseksjon {
-            padding: 0 3rem 0 2rem;
-
             .col-xs-6 {
+                float: left;
+                width: 50%;
+
                 &:first-child {
                     width: 40%;
                 }
             }
+        }
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .aktivitetvisning {
+        &__underseksjon {
+            padding: 0 3rem 0 2rem;
         }
 
         .aktivitetsdetaljer,

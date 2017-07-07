@@ -22,6 +22,15 @@
 }
 
 .snakkeboble {
+    .snakkeboble-panel {
+        flex: none;
+        width: ~'calc(100% - 48px)';
+    }
+
+    &__snakkeboble-pil-container {
+        margin-top: 0.7rem;
+    }
+
     &-panel__tekst {
         overflow-wrap: break-word;
         word-wrap: break-word;
@@ -31,19 +40,17 @@
 
     .ikon {
         flex-shrink: 0;
-        width: 45px;
-        height: 45px;
+        width: 36px;
+        height: 36px;
         margin-top: 2px;
         background: no-repeat;
         background-size: cover;
     }
 
-    .ikon--bruker-kvinne {
-        background-image: data-uri('@{aktivitetsplanPath}/dialog/kvinne.svg');
-    }
-
-    .ikon--bruker-mann {
-        background-image: data-uri('@{aktivitetsplanPath}/dialog/mann.svg');
+    .ikon--bruker-noytral {
+        background-image: data-uri(
+            '@{aktivitetsplanPath}/dialog/noytral-bruker.svg'
+        );
     }
 
     .ikon--veileder {
@@ -74,10 +81,6 @@
     padding: 0.5rem 1rem 1rem;
 }
 
-.snakkeboble-panel {
-    flex: 0 0 27rem;
-}
-
 .hoyrejustert-tekst {
     text-align: right;
 }
@@ -87,5 +90,23 @@
         margin: 1rem 0;
         padding: 1rem;
         border-top: 2px solid @navGra20;
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .snakkeboble {
+        &__snakkeboble-pil-container {
+            margin-top: 1rem;
+        }
+
+        .snakkeboble-panel {
+            flex: 0 1 27rem;
+            width: auto;
+        }
+
+        .ikon {
+            width: 45px;
+            height: 45px;
+        }
     }
 }

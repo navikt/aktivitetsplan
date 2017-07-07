@@ -30,7 +30,10 @@
 
 // Overskriving av nav-frontend
 .modal {
+    background-color: @gray-background;
     overflow: auto;
+    border-radius: 0;
+    padding: 0;
 }
 
 .modal__overlay {
@@ -38,16 +41,15 @@
     padding: 0;
 }
 
-&.aktivitet-modal-portal {
+.aktivitet-modal-portal {
     z-index: 9999;
 
     .aktivitet-modal {
         position: relative;
-        border: 1px solid #c0c0c0;
+        border: 1px solid @navGra40;
         background: @gray-background;
         outline: none;
         max-width: 45rem;
-        border-radius: 0;
 
         &__overlay {
             position: fixed;
@@ -60,7 +62,7 @@
     }
 }
 
-&.timeout-modal-portal {
+.timeout-modal-portal {
     .aktivitet-modal-portal;
     z-index: 10000;
 }
@@ -70,6 +72,7 @@
         max-height: none;
         overflow: visible;
         padding: 0;
+        border-radius: 3px;
     }
 
     .ReactModal {
@@ -93,11 +96,10 @@
 
         .aktivitet-modal {
             position: relative;
-            border: 1px solid #c0c0c0;
+            border: 1px solid @navGra40;
             background: @gray-background;
             outline: none;
             max-width: 45rem;
-            border-radius: 0;
         }
     }
 }

@@ -6,19 +6,20 @@
     justify-content: center;
     align-items: baseline;
     padding-top: 1rem;
-}
 
-.sidebanner__illustrasjon {
-    flex: 0 0 3.75rem;
-}
-
-.sidebanner__tittel {
-    margin-bottom: 1rem;
-}
-
-@media (max-width: 48rem) {
-    .sidebanner__illustrasjon {
+    &__illustrasjon {
         display: none;
         margin-bottom: 2.5rem;
+    }
+
+    &__tittel {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .sidebanner__illustrasjon {
+        display: inline;
+        flex: 0 0 3.75rem;
     }
 }
