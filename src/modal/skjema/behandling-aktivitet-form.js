@@ -12,49 +12,73 @@ import Textarea from './textarea/textarea';
 import Input from './input/input';
 import Datovelger from './datovelger/datovelger';
 import './skjema.less';
-import { SOKEAVTALE_AKTIVITET_TYPE, STATUS_PLANLAGT } from '../../constant';
+import { STATUS_PLANLAGT, BEHANDLING_AKTIVITET_TYPE } from '../../constant';
 import PeriodeValidering from './datovelger/periode-validering';
 
+const EFFEKT_MAKS_LENGDE = 255;
 const OPPFOLGING_MAKS_LENGDE = 5000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
+const BEHANDLINGS_TYPE_MAKS_LENGDE = 255;
+const BEHANDLINGS_STED_MAKS_LENGDE = 255;
 
 const pakrevdFraDato = rules.minLength(
     0,
-    <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-fradato" />
+    <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-fradato" />
 );
 const pakrevdTilDato = rules.minLength(
     0,
-    <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-tildato" />
+    <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-tildato" />
 );
 
-// eslint-disable-next-line no-confusing-arrow
-const pakrevdAntall = value =>
-    value && value.toString().length > 0
-        ? undefined
-        : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-antall" />;
+const pakrevdBehandlingType = rules.minLength(
+    0,
+    <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-behandling-type" />
+);
 
-// eslint-disable-next-line no-confusing-arrow
-const numericAntall = value =>
-    value && /^[0-9]+$/.test(value)
-        ? undefined
-        : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.numerisk-antall" />;
+const begrensetBehandlingType = rules.maxLength(
+    BEHANDLINGS_TYPE_MAKS_LENGDE,
+    <FormattedMessage
+        id="behandling-aktivitet-form.feilmelding.behandling-type-lengde"
+        values={{ BEHANDLING_AKTIVITET_TYPE }}
+    />
+);
 
-const begrensetAvtaleOppfolgingLengde = rules.maxLength(
+const pakrevdBehandlingSted = rules.minLength(
+    0,
+    <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-behandling-sted" />
+);
+
+const begrensetBehandlingSted = rules.maxLength(
+    BEHANDLINGS_STED_MAKS_LENGDE,
+    <FormattedMessage
+        id="behandling-aktivitet-form.feilmelding.behandling-sted-lengde"
+        values={{ BEHANDLINGS_STED_MAKS_LENGDE }}
+    />
+);
+
+const begrensetEffektLengde = rules.maxLength(
+    EFFEKT_MAKS_LENGDE,
+    <FormattedMessage
+        id="behandling-aktivitet-form.feilmelding.effekt-lengde"
+        values={{ OPPFOLGING_MAKS_LENGDE }}
+    />
+);
+const begrensetBehandlingOppfolgingLengde = rules.maxLength(
     OPPFOLGING_MAKS_LENGDE,
     <FormattedMessage
-        id="sokeavtale-aktivitet-form.feilmelding.oppfolging-lengde"
+        id="behandling-aktivitet-form.feilmelding.oppfolging-lengde"
         values={{ OPPFOLGING_MAKS_LENGDE }}
     />
 );
 const begrensetBeskrivelseLengde = rules.maxLength(
     BESKRIVELSE_MAKS_LENGDE,
     <FormattedMessage
-        id="sokeavtale-aktivitet-form.feilmelding.beskrivelse-lengde"
+        id="behandling-aktivitet-form.feilmelding.beskrivelse-lengde"
         values={{ BESKRIVELSE_MAKS_LENGDE }}
     />
 );
 
-class SokeAvtaleAktivitetForm extends Component {
+class BehandlingAktivitetForm extends Component {
     componentDidMount() {
         window.onbeforeunload = this.visLukkDialog.bind(this);
     }
@@ -89,19 +113,25 @@ class SokeAvtaleAktivitetForm extends Component {
                     {errorSummary}
                     <div className="aktivitetskjema__header">
                         <Innholdstittel>
-                            <FormattedMessage id="sokeavtale-aktivitet-form.header" />
+                            <FormattedMessage id="behandling-aktivitet-form.header" />
                         </Innholdstittel>
                         <Undertekst>
                             <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
                         </Undertekst>
                     </div>
 
-                    <AktivitetIngress type={SOKEAVTALE_AKTIVITET_TYPE} />
+                    <AktivitetIngress type={BEHANDLING_AKTIVITET_TYPE} />
 
                     <Input
-                        feltNavn="tittel"
-                        disabled
-                        labelId="sokeavtale-aktivitet-form.label.overskrift"
+                        feltNavn="behandlingType"
+                        disabled={avtalt === true}
+                        labelId="behandling-aktivitet-form.label.behandling-type"
+                        bredde="fullbredde"
+                    />
+                    <Input
+                        feltNavn="behandlingSted"
+                        disabled={avtalt === true}
+                        labelId="behandling-aktivitet-form.label.behandling-sted"
                         bredde="fullbredde"
                     />
 
@@ -118,34 +148,34 @@ class SokeAvtaleAktivitetForm extends Component {
                             <Datovelger
                                 feltNavn="fraDato"
                                 disabled={avtalt === true}
-                                labelId="sokeavtale-aktivitet-form.label.fra-dato"
+                                labelId="behandling-aktivitet-form.label.fra-dato"
                                 senesteTom={currentTilDato}
                             />
                             <Datovelger
                                 feltNavn="tilDato"
-                                labelId="sokeavtale-aktivitet-form.label.til-dato"
+                                labelId="behandling-aktivitet-form.label.til-dato"
                                 tidligsteFom={currentFraDato}
                             />
                         </div>
                     </PeriodeValidering>
 
                     <Input
-                        feltNavn="antall"
+                        feltNavn="effekt"
                         disabled={avtalt === true}
-                        labelId="sokeavtale-aktivitet-form.label.antall"
-                        bredde="s"
+                        labelId="behandling-aktivitet-form.label.effekt"
+                        bredde="fullbredde"
                     />
                     <Textarea
-                        feltNavn="avtaleOppfolging"
+                        feltNavn="behandlingOppfolging"
                         disabled={avtalt === true}
-                        labelId="sokeavtale-aktivitet-form.label.avtale-oppfolging"
+                        labelId="behandling-aktivitet-form.label.avtale-oppfolging"
                         maxLength={OPPFOLGING_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                     <Textarea
                         feltNavn="beskrivelse"
                         disabled={avtalt === true}
-                        labelId="sokeavtale-aktivitet-form.label.beskrivelse"
+                        labelId="behandling-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
                         visTellerFra={500}
                     />
@@ -160,7 +190,7 @@ class SokeAvtaleAktivitetForm extends Component {
     }
 }
 
-SokeAvtaleAktivitetForm.propTypes = {
+BehandlingAktivitetForm.propTypes = {
     handleSubmit: PT.func,
     errorSummary: PT.node.isRequired,
     currentFraDato: PT.instanceOf(Date),
@@ -170,7 +200,7 @@ SokeAvtaleAktivitetForm.propTypes = {
     intl: intlShape.isRequired,
 };
 
-SokeAvtaleAktivitetForm.defaultProps = {
+BehandlingAktivitetForm.defaultProps = {
     handleSubmit: undefined,
     currentFraDato: undefined,
     currentTilDato: undefined,
@@ -178,20 +208,22 @@ SokeAvtaleAktivitetForm.defaultProps = {
 };
 
 export const formNavn = 'sokeavtale-aktivitet';
-const SokeavtaleAktivitetReduxForm = validForm({
+const BehandlingAktivitetReduxForm = validForm({
     form: formNavn,
     errorSummaryTitle: (
         <FormattedMessage id="sokeavtale-aktivitet-form.feiloppsummering-tittel" />
     ),
     validate: {
+        behandlingType: [pakrevdBehandlingType, begrensetBehandlingType],
+        behandlingSted: [pakrevdBehandlingSted, begrensetBehandlingSted],
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
-        antall: [pakrevdAntall, numericAntall],
+        effekt: [begrensetEffektLengde],
         beskrivelse: [begrensetBeskrivelseLengde],
-        avtaleOppfolging: [begrensetAvtaleOppfolgingLengde],
+        behandlingOppfolging: [begrensetBehandlingOppfolgingLengde],
         periodeValidering: [],
     },
-})(SokeAvtaleAktivitetForm);
+})(BehandlingAktivitetForm);
 
 const selector = formValueSelector(formNavn);
 const mapStateToProps = (state, props) => {
@@ -213,8 +245,7 @@ const mapStateToProps = (state, props) => {
         avtalt: aktivitet && aktivitet.avtalt,
     };
 };
-const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(SokeavtaleAktivitetReduxForm)
+export default connect(mapStateToProps)(
+    injectIntl(BehandlingAktivitetReduxForm)
 );

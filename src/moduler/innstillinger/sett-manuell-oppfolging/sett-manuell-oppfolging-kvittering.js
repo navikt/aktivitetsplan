@@ -12,10 +12,10 @@ import {
     HiddenIfAlertStripeSuksess,
 } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
-function SettManuellOppfolgingKvittering({ motpart, situasjonReducer }) {
+function SettManuellOppfolgingKvittering({ motpart, innstillingerReducer }) {
     const { navn } = motpart.data;
-    const { manuell } = situasjonReducer.data;
-    const { begrunnelse } = situasjonReducer;
+    const { manuell } = innstillingerReducer.data;
+    const { begrunnelse } = innstillingerReducer;
     return (
         <Modal
             isOpen
@@ -24,7 +24,7 @@ function SettManuellOppfolgingKvittering({ motpart, situasjonReducer }) {
             contentClass="innstillinger"
         >
             <ModalHeader />
-            <Innholdslaster avhengigheter={[motpart, situasjonReducer]}>
+            <Innholdslaster avhengigheter={[motpart, innstillingerReducer]}>
                 <article className="innstillinger__container">
                     <Innholdstittel>
                         <FormattedMessage
@@ -69,12 +69,12 @@ SettManuellOppfolgingKvittering.defaultProps = {
 
 SettManuellOppfolgingKvittering.propTypes = {
     motpart: AppPT.motpart,
-    situasjonReducer: AppPT.situasjon.isRequired,
+    innstillingerReducer: AppPT.situasjon.isRequired,
 };
 
 const mapStateToProps = state => ({
     motpart: state.data.motpart,
-    situasjonReducer: state.data.situasjon,
+    innstillingerReducer: state.data.innstillinger,
 });
 
 export default connect(mapStateToProps)(SettManuellOppfolgingKvittering);

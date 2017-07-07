@@ -46,7 +46,7 @@ const BegrunnelseReduxForm = validForm({
 const mapStateToProps = (state, props) => ({
     form: props.formNavn,
     initialValues: {
-        begrunnelse: state.data.situasjon.begrunnelse,
+        begrunnelse: state.data.innstillinger.begrunnelse,
     },
 });
 

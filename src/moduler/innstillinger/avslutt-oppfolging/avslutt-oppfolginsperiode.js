@@ -11,7 +11,7 @@ import {
     RemoteResetKnapp,
 } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import BegrunnelseForm from '../begrunnelse-form';
-import { lagreBegrunnelse } from '../../../ducks/situasjon';
+import { lagreBegrunnelse } from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPt from '../../../proptypes';
@@ -23,11 +23,11 @@ const HiddenIfNormaltekst = hiddenIfHOC(Normaltekst);
 function AvsluttOppfolgingperiode({
     onSubmit,
     datoErInnenfor28dager,
-    situasjonReducer,
+    innstillingerReducer,
 }) {
     return (
         <InnstillingerModal>
-            <Innholdslaster avhengigheter={[situasjonReducer]}>
+            <Innholdslaster avhengigheter={[innstillingerReducer]}>
                 <div>
                     <section className="innstillinger__prosess">
                         <Systemtittel>
@@ -70,7 +70,7 @@ function AvsluttOppfolgingperiode({
 AvsluttOppfolgingperiode.propTypes = {
     onSubmit: PT.func.isRequired,
     datoErInnenfor28dager: PT.bool.isRequired,
-    situasjonReducer: AppPt.situasjon.isRequired,
+    innstillingerReducer: AppPt.situasjon.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -83,9 +83,9 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
     const for28dagerSiden = moment().subtract(28, 'day').toISOString();
     const datoErInnenfor28dager =
-        state.data.situasjon.data.inaktiveringsDato > for28dagerSiden;
+        state.data.innstillinger.data.inaktiveringsDato > for28dagerSiden;
     return {
-        situasjonReducer: state.data.situasjon,
+        innstillingerReducer: state.data.innstillinger,
         datoErInnenfor28dager,
     };
 };

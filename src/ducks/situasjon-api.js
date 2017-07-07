@@ -45,7 +45,7 @@ export function lagreMal(mal) {
     return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/mal`, mal);
 }
 
-export function startOppfolgin1g() {
+export function startOppfolging() {
     return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/startOppfolging`);
 }
 

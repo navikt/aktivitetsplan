@@ -16,11 +16,15 @@ import EgenAktivitetForm, {
 import SokeavtaleAktivitetForm, {
     formNavn as sokeavtaleFormNavn,
 } from '../skjema/sokeavtale-aktivitet-form';
+import BehandlingAktivitetForm, {
+    formNavn as behandlingFormNavn,
+} from '../skjema/behandling-aktivitet-form';
 import history from '../../history';
 import {
     EGEN_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
+    BEHANDLING_AKTIVITET_TYPE,
 } from '../../constant';
 import ModalContainer from '../modal-container';
 import Versjonskonflikt from './versjonskonflikt';
@@ -68,6 +72,13 @@ function EndreAktivitet({
             case SOKEAVTALE_AKTIVITET_TYPE:
                 return (
                     <SokeavtaleAktivitetForm
+                        aktivitet={aktivitet}
+                        onSubmit={oppdater}
+                    />
+                );
+            case BEHANDLING_AKTIVITET_TYPE:
+                return (
+                    <BehandlingAktivitetForm
                         aktivitet={aktivitet}
                         onSubmit={oppdater}
                     />
@@ -142,6 +153,7 @@ const mapStateToProps = (state, props) => {
         [STILLING_AKTIVITET_TYPE]: stillingFormNavn,
         [EGEN_AKTIVITET_TYPE]: egenFormNavn,
         [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFormNavn,
+        [BEHANDLING_AKTIVITET_TYPE]: behandlingFormNavn,
     }[aktivitet.type];
     return {
         aktivitet,
