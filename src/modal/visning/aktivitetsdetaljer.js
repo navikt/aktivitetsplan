@@ -124,7 +124,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
     const httpRegex = /^(https?):\/\/.*$/;
 
-    const lenkeKomponent = () => (
+    const lenkeKomponent = () =>
         <DetaljFelt
             key="lenke"
             tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
@@ -139,8 +139,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             >
                 {lenke}
             </Link>
-        </DetaljFelt>
-    );
+        </DetaljFelt>;
 
     const ledigStillingFelter = () => [
         <Informasjonsfelt
@@ -261,12 +260,12 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             <EtikettLiten className="aktivitetsbeskrivelse__tittel">
                 <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
             </EtikettLiten>
-            {moeteplanListe.map(mote => (
+            {moeteplanListe.map(mote =>
                 <Normaltekst key={mote.startDato} className="detaljfelt__tekst">
                     {formaterDatoKortManedTid(mote.startDato)} -{' '}
                     {formaterTid(mote.sluttDato)} på {mote.sted}
                 </Normaltekst>
-            ))}
+            )}
         </section>,
     ];
 
@@ -355,45 +354,43 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     ];
 
     const behandlingFelter = () => [
-            <Informasjonsfelt
-                key="behandlingtype"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.behandling-type-label" />
-                }
-                innhold={behandlingType}
-            />,
-            <Informasjonsfelt
-                key="behandlingsted"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.behandling-sted-label" />
-                }
-                innhold={behandlingSted}
-            />,
-            <Informasjonsfelt
-                key="fradato"
-                tittel={fraDatoTekst(aktivitetstype)}
-                innhold={fraDato}
-            />,
-            <Informasjonsfelt
-                key="tildato"
-                tittel={tilDatoTekst(aktivitetstype)}
-                innhold={tilDato}
-            />,
-            <Informasjonsfelt
-                key="effekt"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.effekt-label" />
-                }
-                innhold={effekt}
-            />,
-            <Informasjonsfelt
-                key="behandlingOppfolging"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />
-                }
-                innhold={behandlingOppfolging}
-            />,
-        ];
+        <Informasjonsfelt
+            key="behandlingtype"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.behandling-type-label" />
+            }
+            innhold={behandlingType}
+        />,
+        <Informasjonsfelt
+            key="behandlingsted"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.behandling-sted-label" />
+            }
+            innhold={behandlingSted}
+        />,
+        <Informasjonsfelt
+            key="fradato"
+            tittel={fraDatoTekst(aktivitetstype)}
+            innhold={fraDato}
+        />,
+        <Informasjonsfelt
+            key="tildato"
+            tittel={tilDatoTekst(aktivitetstype)}
+            innhold={tilDato}
+        />,
+        <Informasjonsfelt
+            key="effekt"
+            tittel={<FormattedMessage id="aktivitetdetaljer.effekt-label" />}
+            innhold={effekt}
+        />,
+        <Informasjonsfelt
+            key="behandlingOppfolging"
+            tittel={
+                <FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />
+            }
+            innhold={behandlingOppfolging}
+        />,
+    ];
 
     const map = {
         [EGEN_AKTIVITET_TYPE]: egenStillingFelter,
