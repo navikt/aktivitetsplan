@@ -8,7 +8,7 @@ import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import {
     kanAvslutteOppfolging,
     SLETT_BEGRUNNELSE_ACTION,
-} from '../../../ducks/situasjon';
+} from '../innstillinger-reducer';
 import { STATUS } from '../../../ducks/utils';
 import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
@@ -89,9 +89,9 @@ AvsluttOppfolgingProsess.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    avslutningStatus: state.data.situasjon.data.avslutningStatus,
-    kanStarte: state.data.situasjon.data.kanStarteOppfolging,
-    laster: state.data.situasjon.status === STATUS.RELOADING,
+    avslutningStatus: state.data.innstillinger.data.avslutningStatus,
+    kanStarte: state.data.innstillinger.data.kanStarteOppfolging,
+    laster: state.data.innstillinger.status === STATUS.RELOADING,
 });
 
 const mapDispatchToProps = dispatch => ({

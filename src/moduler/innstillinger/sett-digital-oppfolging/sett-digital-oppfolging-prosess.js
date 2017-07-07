@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
-import { SLETT_BEGRUNNELSE_ACTION } from '../../../ducks/situasjon';
+import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
 import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
 function SettDigitalOppfolgingProsess({
@@ -49,7 +49,7 @@ SettDigitalOppfolgingProsess.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    reservasjonKRR: state.data.situasjon.data.reservasjonKRR,
+    reservasjonKRR: state.data.innstillinger.data.reservasjonKRR,
 });
 
 const mapDispatchToProps = dispatch => ({

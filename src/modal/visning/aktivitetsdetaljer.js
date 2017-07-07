@@ -124,7 +124,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
 
     const httpRegex = /^(https?):\/\/.*$/;
 
-    const lenkeKomponent = () =>
+    const lenkeKomponent = () => (
         <DetaljFelt
             key="lenke"
             tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
@@ -139,7 +139,8 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             >
                 {lenke}
             </Link>
-        </DetaljFelt>;
+        </DetaljFelt>
+    );
 
     const ledigStillingFelter = () => [
         <Informasjonsfelt
@@ -260,12 +261,12 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             <EtikettLiten className="aktivitetsbeskrivelse__tittel">
                 <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
             </EtikettLiten>
-            {moeteplanListe.map(mote =>
+            {moeteplanListe.map(mote => (
                 <Normaltekst key={mote.startDato} className="detaljfelt__tekst">
                     {formaterDatoKortManedTid(mote.startDato)} -{' '}
                     {formaterTid(mote.sluttDato)} på {mote.sted}
                 </Normaltekst>
-            )}
+            ))}
         </section>,
     ];
 
@@ -353,21 +354,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         />,
     ];
 
-    const behandlingFelter = () => {
-        const behandlingOppfolgingSection =
-            behandlingOppfolging &&
-            <section
-                key="behandlingOppfolging"
-                className="aktivitetsbeskrivelse"
-            >
-                <EtikettLiten className="aktivitetsbeskrivelse__tittel">
-                    <FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />
-                </EtikettLiten>
-                <Tekstomrade className="aktivitetsbeskrivelse__tekst">
-                    {behandlingOppfolging}
-                </Tekstomrade>
-            </section>;
-        return [
+    const behandlingFelter = () => [
             <Informasjonsfelt
                 key="behandlingtype"
                 tittel={
@@ -399,9 +386,14 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 }
                 innhold={effekt}
             />,
-            behandlingOppfolgingSection,
+            <Informasjonsfelt
+                key="behandlingOppfolging"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />
+                }
+                innhold={behandlingOppfolging}
+            />,
         ];
-    };
 
     const map = {
         [EGEN_AKTIVITET_TYPE]: egenStillingFelter,
