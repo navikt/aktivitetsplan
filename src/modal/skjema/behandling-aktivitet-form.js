@@ -140,7 +140,8 @@ class BehandlingAktivitetForm extends Component {
                         fraDato={currentFraDato}
                         tilDato={currentTilDato}
                         errorMessage={intl.formatMessage({
-                            id: 'datepicker.feilmelding.egen.fradato-etter-frist',
+                            id:
+                                'datepicker.feilmelding.egen.fradato-etter-frist',
                         })}
                     >
                         <div className="dato-container">
