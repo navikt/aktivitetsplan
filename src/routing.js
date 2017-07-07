@@ -8,6 +8,7 @@ import NyAktivitet from './modal/ny-aktivitet';
 import EgenAktivitet from './modal/skjema/egen-aktivitet';
 import StillingAktivitet from './modal/skjema/stilling-aktivitet';
 import SokeavtaleAktivitet from './modal/skjema/sokeavtale-aktivitet';
+import BehandlingAktivitet from './modal/skjema/behandling-aktivitet';
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
@@ -25,6 +26,7 @@ import SettManuellOppfolging from './moduler/innstillinger/sett-manuell-oppfolgi
 import SettDigitalOppfolging from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging';
 import SettManuellOppfolgingKvittering from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
+import Feilkvittering from './moduler/innstillinger/feilkvittering';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -82,6 +84,10 @@ const routing = (
                     path="innstillinger/start/kvittering"
                     component={StartOppfolgingKvittering}
                 />
+                <Route
+                    path="innstillinger/feilkvittering"
+                    component={Feilkvittering}
+                />
             </Route>}
         <Route path="dialog" component={DialogModal} />
         <Route path="dialog/:id" component={DialogModal} />
@@ -90,6 +96,7 @@ const routing = (
             <Route path="ny/egen" component={EgenAktivitet} />
             <Route path="ny/stilling" component={StillingAktivitet} />
             <Route path="ny/sokeavtale" component={SokeavtaleAktivitet} />
+            <Route path="ny/behandling" component={BehandlingAktivitet} />
             <Route path="vis/:id" component={Aktivitetvisning} />
             <Route path="endre/:id" component={EndreAktivitet} />
             <Route path="avbryt/:id" component={AvbrytAktivitet} />

@@ -17,6 +17,7 @@ import historiskeVilkarReducer from './ducks/historiske-vilkar';
 import filterReducer from './moduler/filter/filter-reducer';
 import veilederReducer from './ducks/veileder';
 import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
+import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -25,6 +26,7 @@ const combinedReducers = combineReducers({
     data: combineReducers({
         ledetekster: ledetekstReducer,
         situasjon: situasjonReducer,
+        innstillinger: innstillingerReducer,
         vilkar: vilkarReducer,
         historiskeVilkar: historiskeVilkarReducer,
         aktiviteter: aktiviteterReducer,

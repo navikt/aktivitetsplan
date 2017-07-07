@@ -15,16 +15,20 @@ import BegrunnelseForm from '../begrunnelse-form';
 import {
     settDigitalOppfolging,
     lagreBegrunnelse,
-} from '../../../ducks/situasjon';
+} from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
 
 const SETT_DIGITAL_FORM_NAME = 'sett-digital-form';
 
-function SettDigitalOppfolging({ veilederId, situasjonReducer, handleSubmit }) {
+function SettDigitalOppfolging({
+    veilederId,
+    innstillingerReducer,
+    handleSubmit,
+}) {
     const situasjonLaster =
-        situasjonReducer.status === STATUS.PENDING ||
-        situasjonReducer.status === STATUS.RELOADING;
+        innstillingerReducer.status === STATUS.PENDING ||
+        innstillingerReducer.status === STATUS.RELOADING;
     return (
         <InnstillingerModal>
             <section className="innstillinger__prosess">
@@ -65,18 +69,18 @@ function SettDigitalOppfolging({ veilederId, situasjonReducer, handleSubmit }) {
 
 SettDigitalOppfolging.defaultProps = {
     veilederId: undefined,
-    situasjonReducer: undefined,
+    innstillingerReducer: undefined,
 };
 
 SettDigitalOppfolging.propTypes = {
     veilederId: PT.string,
     handleSubmit: PT.func.isRequired,
-    situasjonReducer: AppPt.situasjon,
+    innstillingerReducer: AppPt.situasjon,
 };
 
 const mapStateToProps = state => ({
     veilederId: state.data.identitet.data.id,
-    situasjonReducer: state.data.situasjon,
+    innstillingerReducer: state.data.innstillinger,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -84,7 +88,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(settDigitalOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/digital/kvittering'))
-            .catch(() => history.push('/'));
+            .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });
 

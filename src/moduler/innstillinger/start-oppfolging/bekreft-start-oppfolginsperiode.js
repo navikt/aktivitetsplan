@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { startOppfolging } from '../../../ducks/situasjon';
+import { startOppfolging } from '../innstillinger-reducer';
 import ModalFooter from '../../../modal/modal-footer';
 import history from '../../../history';
 
@@ -53,7 +53,7 @@ const mapDispatchToProps = dispatch => ({
     lagre: () => {
         dispatch(startOppfolging())
             .then(() => history.push('/innstillinger/start/kvittering'))
-            .catch(() => history.push('/'));
+            .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });
 
