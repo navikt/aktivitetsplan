@@ -16,7 +16,7 @@ import { STATUS_PLANLAGT, BEHANDLING_AKTIVITET_TYPE } from '../../constant';
 import PeriodeValidering from './datovelger/periode-validering';
 
 const EFFEKT_MAKS_LENGDE = 255;
-const OPPFOLGING_MAKS_LENGDE = 5000;
+const OPPFOLGING_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 const BEHANDLINGS_TYPE_MAKS_LENGDE = 255;
 const BEHANDLINGS_STED_MAKS_LENGDE = 255;
@@ -39,7 +39,7 @@ const begrensetBehandlingType = rules.maxLength(
     BEHANDLINGS_TYPE_MAKS_LENGDE,
     <FormattedMessage
         id="behandling-aktivitet-form.feilmelding.behandling-type-lengde"
-        values={{ BEHANDLING_AKTIVITET_TYPE }}
+        values={{ BEHANDLINGS_TYPE_MAKS_LENGDE }}
     />
 );
 
@@ -60,7 +60,7 @@ const begrensetEffektLengde = rules.maxLength(
     EFFEKT_MAKS_LENGDE,
     <FormattedMessage
         id="behandling-aktivitet-form.feilmelding.effekt-lengde"
-        values={{ OPPFOLGING_MAKS_LENGDE }}
+        values={{ EFFEKT_MAKS_LENGDE }}
     />
 );
 const begrensetBehandlingOppfolgingLengde = rules.maxLength(
@@ -164,12 +164,11 @@ class BehandlingAktivitetForm extends Component {
                         labelId="behandling-aktivitet-form.label.effekt"
                         bredde="fullbredde"
                     />
-                    <Textarea
+                    <Input
                         feltNavn="behandlingOppfolging"
                         disabled={avtalt === true}
                         labelId="behandling-aktivitet-form.label.avtale-oppfolging"
-                        maxLength={OPPFOLGING_MAKS_LENGDE}
-                        visTellerFra={500}
+                        bredde="fullbredde"
                     />
                     <Textarea
                         feltNavn="beskrivelse"
