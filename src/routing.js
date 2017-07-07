@@ -8,6 +8,7 @@ import NyAktivitet from './modal/ny-aktivitet';
 import EgenAktivitet from './modal/skjema/egen-aktivitet';
 import StillingAktivitet from './modal/skjema/stilling-aktivitet';
 import SokeavtaleAktivitet from './modal/skjema/sokeavtale-aktivitet';
+import BehandlingAktivitet from './modal/skjema/behandling-aktivitet';
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './modal/redigering/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
@@ -95,6 +96,7 @@ const routing = (
             <Route path="ny/egen" component={EgenAktivitet} />
             <Route path="ny/stilling" component={StillingAktivitet} />
             <Route path="ny/sokeavtale" component={SokeavtaleAktivitet} />
+            <Route path="ny/behandling" component={BehandlingAktivitet} />
             <Route path="vis/:id" component={Aktivitetvisning} />
             <Route path="endre/:id" component={EndreAktivitet} />
             <Route path="avbryt/:id" component={AvbrytAktivitet} />

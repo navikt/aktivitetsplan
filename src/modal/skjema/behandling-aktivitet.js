@@ -3,17 +3,17 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
-import SokeavtaleAktivitetForm, { formNavn } from './sokeavtale-aktivitet-form';
+import BehandlingAktivitetForm, { formNavn } from './behandling-aktivitet-form';
 import history from './../../history';
 import ModalHeader from '../modal-header';
 import { lagNyAktivitet } from '../../ducks/aktiviteter';
-import { SOKEAVTALE_AKTIVITET_TYPE } from '../../constant';
+import { BEHANDLING_AKTIVITET_TYPE } from '../../constant';
 import ModalContainer from '../modal-container';
 import { LUKK_MODAL } from '../../ducks/modal';
 import { aktivitetRoute } from '../../routing';
 import Modal from '../modal';
 
-function SokeavtaleAktivitet({
+function BehandlingAktivitet({
     onLagreNyAktivitet,
     formIsDirty,
     lukkModal,
@@ -22,7 +22,7 @@ function SokeavtaleAktivitet({
     const onLagNyAktivitetSubmit = aktivitet => {
         const nyAktivitet = {
             ...aktivitet,
-            type: SOKEAVTALE_AKTIVITET_TYPE,
+            type: BEHANDLING_AKTIVITET_TYPE,
         };
 
         onLagreNyAktivitet(nyAktivitet).then(action =>
@@ -33,7 +33,7 @@ function SokeavtaleAktivitet({
     return (
         <Modal
             isOpen
-            key="sokeavtaleAktivitetModal"
+            key="behandlingAktivitetModal"
             onRequestClose={() => {
                 const dialogTekst = intl.formatMessage({
                     id: 'aktkivitet-skjema.lukk-advarsel',
@@ -47,16 +47,16 @@ function SokeavtaleAktivitet({
             }}
             contentLabel="aktivitet-modal"
         >
-            <article aria-labelledby="modal-sokeavtale-aktivitet-header">
+            <article aria-labelledby="modal-behandling-aktivitet-header">
                 <ModalHeader
                     visConfirmDialog={formIsDirty}
                     tilbakeTekstId="ny-aktivitet-modal.tilbake"
                 />
                 <ModalContainer>
-                    <SokeavtaleAktivitetForm
+                    <BehandlingAktivitetForm
                         onSubmit={onLagNyAktivitetSubmit}
                         defaultTittel={intl.formatMessage({
-                            id: 'sokeavtale-aktivitet-form.default-tittel',
+                            id: 'behandling-aktivitet-form.default-tittel',
                         })}
                     />
                 </ModalContainer>
@@ -65,7 +65,7 @@ function SokeavtaleAktivitet({
     );
 }
 
-SokeavtaleAktivitet.propTypes = {
+BehandlingAktivitet.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
     formIsDirty: PT.bool.isRequired,
     intl: intlShape.isRequired,
@@ -82,5 +82,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(SokeavtaleAktivitet)
+    injectIntl(BehandlingAktivitet)
 );
