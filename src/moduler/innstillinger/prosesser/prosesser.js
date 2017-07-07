@@ -31,7 +31,6 @@ class Prosesser extends Component {
                         <SettDigitalOppfolgingProsess
                             hidden={!situasjon.manuell}
                         />
-                        <hr className="innstillinger__delelinje" />
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>
