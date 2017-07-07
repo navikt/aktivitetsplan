@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import { Container } from 'nav-frontend-grid';
 import { hentIdentitet } from '../../ducks/identitet';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../proptypes';
@@ -19,7 +20,7 @@ const Varsling = hiddenIf(({ tekstId }) =>
 
 const VarslingMedLenke = hiddenIf(({ tekstId, lenkeTekstId, href }) =>
     <AlertStripeInfoSolid>
-        <FormattedMessage id={tekstId} />
+        <FormattedMessage id={tekstId} />&nbsp;
         <Lenke href={href}>
             <FormattedMessage id={lenkeTekstId} />
         </Lenke>
@@ -46,24 +47,26 @@ class Varslinger extends Component {
                 avhengigheter={[situasjonReducer, identitetReducer]}
             >
                 <HiddenIfDiv hidden={erBruker} className="varsling-container">
-                    <Varsling
-                        hidden={underOppfolging}
-                        tekstId="oppfolging.ikke-under-oppfolging"
-                    />
-                    <Varsling
-                        hidden={!vilkarMaBesvares}
-                        tekstId="oppfolging.vilkar-ikke-godkjent"
-                    />
-                    <Varsling
-                        hidden={!reservertIKRR}
-                        tekstId="oppfolging.bruker-reservert-i-krr"
-                    />
-                    <VarslingMedLenke
-                        hidden={!brukerErManuell}
-                        tekstId="oppfolging.bruker-er-manuell.tekst"
-                        lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
-                        href="/innstillinger"
-                    />
+                    <Container>
+                        <Varsling
+                            hidden={underOppfolging}
+                            tekstId="oppfolging.ikke-under-oppfolging"
+                        />
+                        <Varsling
+                            hidden={!vilkarMaBesvares}
+                            tekstId="oppfolging.vilkar-ikke-godkjent"
+                        />
+                        <Varsling
+                            hidden={!reservertIKRR}
+                            tekstId="oppfolging.bruker-reservert-i-krr"
+                        />
+                        <VarslingMedLenke
+                            hidden={!brukerErManuell}
+                            tekstId="oppfolging.bruker-er-manuell.tekst"
+                            lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
+                            href="/innstillinger"
+                        />
+                    </Container>
                 </HiddenIfDiv>
             </Innholdslaster>
         );

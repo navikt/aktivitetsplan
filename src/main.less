@@ -1,6 +1,6 @@
 @import './variables';
 
-@fullDesktop: 1480px;
+@full-desktop: 1480px;
 
 .aktivitetsplanfs {
     @import './moduler/vilkar/vilkar';
@@ -38,18 +38,8 @@
     overflow: hidden;
 }
 
-@media (min-width: @screen-md-min) {
-    .container {
-        width: 890px;
-    }
-}
-
-@media (min-width: @fullDesktop) {
+@media (min-width: @full-desktop) {
     .aktivitetsplan-wrapper {
         padding: 0 3.5rem;
-    }
-
-    .container {
-        width: 956px;
     }
 }
