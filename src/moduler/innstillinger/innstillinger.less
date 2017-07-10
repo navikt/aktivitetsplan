@@ -4,40 +4,59 @@
             margin-right: 1rem;
         }
     }
+}
 
-    &-spinner {
-        margin: 0 auto;
+.innstillinger__container {
+    margin-top: 1rem;
+    .blokk-s();
+}
+
+.innstillinger__spinner {
+    margin: 0 auto;
+}
+
+.innstillinger__overskrift {
+    padding: 0 1rem;
+    .blokk-s();
+}
+
+.innstillinger__delelinje {
+    .blokk-m();
+    color: @color-hr;
+}
+
+.innstillinger__prosess {
+    padding: 0 1rem 1rem;
+    .blokk-s();
+
+    .prosess_overskrift {
+        .blokk-xxs();
     }
 
-    &__container {
-        padding: 0 1rem;
-        margin-top: 1rem;
-    }
-
-    &__innhold {
-        padding-top: 1rem;
-    }
-
-    &__delelinje {
-        .blokk-m();
-        color: @color-hr;
-    }
-
-    &__prosess {
-        padding: 0 1rem 1rem;
-        border-bottom: 1px solid #b7b1a9;
-        margin-bottom: 1rem;
-    }
-
-    &__historikk {
-        padding: 0 1rem 1rem;
+    &.prosess {
+        border-bottom: 1px solid @navGra40;
     }
 }
 
-.historikk {
-    &__innslag {
-        padding: 0 1rem 1rem;
+.innstillinger__historikk {
+    padding: 0 1rem 1rem;
+}
+
+.innstillinger__historikk-tittel {
+    .blokk-xxs();
+}
+
+.historikk__innslag {
+    .blokk-s();
+
+    .innslag__header,
+    .innslag__begrunnelse {
+        .blokk-xxxs();
     }
+}
+
+.instillinger__historikk-spinner {
+    margin: 0 auto;
 }
 
 .whitespace {
@@ -45,21 +64,12 @@
 }
 
 @media (min-width: @screen-md-min) {
-    .innstillinger {
-        &__container {
-            padding: 0 2rem;
-        }
+    .innstillinger__overskrift {
+        padding: 0 2rem;
+    }
 
-        &-padding {
-            padding: 0 2rem 1rem;
-        }
-
-        &__prosess {
-            padding: 0 2rem 1rem;
-        }
-
-        &__historikk {
-            padding: 0 2rem 1rem;
-        }
+    .innstillinger__prosess,
+    .innstillinger__historikk {
+        padding: 0 2rem 1rem;
     }
 }

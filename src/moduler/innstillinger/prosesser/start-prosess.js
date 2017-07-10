@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 
-const cls = classes => classNames('start-prosess', classes);
+const cls = classes => classNames('prosess', classes);
 
 function Prosess({
     tittel,
@@ -17,7 +17,7 @@ function Prosess({
 }) {
     return (
         <article className={cls(className)}>
-            <Undertittel>
+            <Undertittel className="prosess_overskrift">
                 {tittel}
             </Undertittel>
             {children}

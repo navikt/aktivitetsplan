@@ -65,7 +65,7 @@ class InnstillingHistorikk extends Component {
             <Innholdslaster
                 avhengigheter={[historikkReducer]}
                 spinnerStorrelse="m"
-                className="innstillinger-spinner"
+                className="instillinger__historikk-spinner"
             >
                 <section className="innstillinger__historikk">
                     <Undertittel className="innstillinger__historikk-tittel">
