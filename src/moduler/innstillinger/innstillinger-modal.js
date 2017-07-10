@@ -22,21 +22,26 @@ function InnstillingerModal({ motpart, children }) {
         >
             <ModalHeader tilbakeTekstId="innstillinger.modal.tilbake" />
             <article className="innstillinger__container">
-                <Innholdslaster avhengigheter={[motpart]}>
-                    <Innholdstittel>
-                        <FormattedMessage
-                            id="innstillinger.modal.overskrift"
-                            values={{ navn }}
-                        />
-                    </Innholdstittel>
+                <Innholdslaster
+                    avhengigheter={[motpart]}
+                    className="innstillinger__spinner"
+                >
+                    <div>
+                        <Innholdstittel className="innstillinger__overskrift">
+                            <FormattedMessage
+                                id="innstillinger.modal.overskrift"
+                                values={{ navn }}
+                            />
+                        </Innholdstittel>
+                        <VisibleIfDiv
+                            visible={!!children}
+                            className="innstillinger__innhold"
+                        >
+                            {children}
+                        </VisibleIfDiv>
+                    </div>
                 </Innholdslaster>
             </article>
-            <VisibleIfDiv
-                visible={!!children}
-                className="innstillinger__innhold"
-            >
-                {children}
-            </VisibleIfDiv>
         </Modal>
     );
 }
