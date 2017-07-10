@@ -26,10 +26,14 @@ class Prosesser extends Component {
                         />
                         <StartOppfolgingProsess hidden={!situasjon.kanStarte} />
                         <SettManuellOppfolgingProsess
-                            hidden={situasjon.manuell}
+                            hidden={
+                                !situasjon.underOppfolging || situasjon.manuell
+                            }
                         />
                         <SettDigitalOppfolgingProsess
-                            hidden={!situasjon.manuell}
+                            hidden={
+                                !situasjon.underOppfolging || !situasjon.manuell
+                            }
                         />
                         <InnstillingHistorikk />
                     </div>

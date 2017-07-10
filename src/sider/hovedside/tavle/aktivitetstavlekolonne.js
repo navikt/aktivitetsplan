@@ -129,6 +129,12 @@ function compareAktivitet(a, b) {
     } else if (!b.avtalt && a.avtalt) {
         return -1;
     }
+    if (a.opprettetDato !== null && b.opprettetDato === null) {
+        return -1;
+    }
+    if (a.opprettetDato === null && b.opprettetDato !== null) {
+        return 1;
+    }
     return b.opprettetDato.localeCompare(a.opprettetDato);
 }
 
