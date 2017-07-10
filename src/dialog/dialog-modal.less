@@ -6,6 +6,8 @@
 @bredde-skjerm-dialoger: 20%;
 @bredde-skjerm-dialog: 40%;
 @full-bredde-skjerm-modal: @bredde-skjerm-dialoger + @bredde-skjerm-dialog;
+@tilbakeknapp-storrelse: 2.25rem;
+@dialogkort-bredde: 333px;
 
 .dialog-modal {
     position: fixed;
@@ -13,154 +15,157 @@
     height: 100%;
     margin: 0;
     bottom: 0;
+}
 
-    &--vis {
-        border-radius: 0;
-    }
+.dialog-modal--vis,
+.dialog-modal--full-bredde {
+    border-radius: 0;
+}
 
-    &--full-bredde {
-        border-radius: 0;
-    }
+.dialog-modal__tittel {
+    margin-right: 2.5rem;
+}
 
-    &__tittel {
-        margin-right: 40px;
-    }
+.dialog-modal__content {
+    height: 100%;
+}
 
-    &__content {
-        height: 100%;
-    }
+.dialog-modal__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: auto;
+}
 
-    &__wrapper {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
+.dialog-modal__header {
+    border-bottom: 1px solid @gray-foreground;
+    padding: @padding;
+    display: flex;
 
-    &__header {
-        border-bottom: 1px solid @gray-foreground;
-        padding: @padding;
-        display: flex;
-    }
-
-    &__tilbake-knapp {
+    .dialog-modal__tilbake-knapp {
         margin-right: 1rem;
-    }
 
-    &__innhold {
-        display: block;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    &__ny-dialog {
-        padding: @padding;
-        border-bottom: 1px solid @gray-foreground;
-    }
-
-    &__ny-dialog-knapp {
-        border: 0;
-        background: data-uri(
-                '@{aktivitetsplanPath}/dialog/dialog-modal-ny-henvendelse.svg'
-            )
-            no-repeat;
-        background-size: contain;
-
-        &.knappelenke {
-            padding-left: 2rem;
-        }
-    }
-
-    &__dialoger {
-        overflow-y: auto;
-        height: ~'calc(100% - 66px)';
-    }
-
-    &__kolonne {
-        display: inline-block;
-        float: left;
-        height: 100%;
-
-        &--dialog {
-            width: 100%;
-            padding: 1rem;
-            background-color: @gray-background;
-            overflow-y: auto;
-
-            &:focus {
-                outline: none;
-                border: 3px solid @fokusOrange;
-                padding: ~'calc(2rem - 3px)';
-            }
-        }
-
-        &--dialoger {
-            width: 100%;
-            background-color: white;
-            z-index: 1;
-
-            &-valgt-dialog {
-                display: none;
-            }
-        }
-    }
-
-    &__tilbake-knapp {
         &.pil-knapp {
-            height: 36px;
-            background-size: 36px;
+            height: @tilbakeknapp-storrelse;
+            min-width: @tilbakeknapp-storrelse;
+            background-size: @tilbakeknapp-storrelse;
+            background-repeat: no-repeat;
+
+            &:hover,
+            &:focus {
+                background-size: @tilbakeknapp-storrelse;
+                background-repeat: no-repeat;
+            }
         }
     }
+}
+
+.dialog-modal__innhold {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+.dialog-modal__ny-dialog {
+    padding: @padding;
+    border-bottom: 1px solid @gray-foreground;
+}
+
+.dialog-modal__ny-dialog-knapp {
+    border: 0;
+    background: data-uri(
+            '@{aktivitetsplanPath}/dialog/dialog-modal-ny-henvendelse.svg'
+        )
+        no-repeat;
+    background-size: contain;
+
+    &.knappelenke {
+        padding-left: 2rem;
+    }
+}
+
+.dialog-modal__dialoger {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    height: ~'calc(100% - 66px)';
+}
+
+.dialog-modal__kolonne {
+    display: inline-block;
+    float: left;
+    overflow: hidden;
+    height: 100%;
+}
+
+.dialog-modal__kolonne--dialog {
+    width: 100%;
+    padding: 1rem;
+    background-color: @gray-background;
+    overflow-y: auto;
+
+    &:focus {
+        outline: none;
+        border: 3px solid @fokusOrange;
+        padding: ~'calc(2rem - 3px)';
+    }
+}
+
+.dialog-modal__kolonne--dialoger {
+    width: 100%;
+    background-color: @hvit;
+    z-index: 1;
+}
+
+.dialog-modal__kolonne--dialoger-valgt-dialog {
+    display: none;
 }
 
 @media (min-width: @screen-md-min) {
     .dialog-modal {
         width: @bredde-skjerm-dialoger;
-        min-width: inherit;
         height: 75%;
         left: -100%;
+    }
 
-        &.ReactModal__Content {
-            min-height: inherit;
+    .dialog-modal,
+    .dialog-modal__dialoger {
+        // Sikrer at "dialoger" bredden aldri blir smalere enn et dialoger-innslag aka dialogkort
+        min-width: @dialogkort-bredde;
+    }
+
+    .dialog-modal.ReactModal__Content {
+        min-height: inherit;
+    }
+
+    .dialog-modal--vis {
+        left: 0;
+        border-top-right-radius: 4px;
+    }
+
+    .dialog-modal--full-bredde {
+        width: @full-bredde-skjerm-modal;
+        min-width: @mobil-bredde;
+        border-top-right-radius: 4px;
+    }
+
+    .dialog-modal__ny-dialog-knapp {
+        background: none;
+
+        &.knappelenke {
+            padding-left: 0;
         }
+    }
 
-        &--vis {
-            left: 0;
-            border-top-right-radius: 4px;
-        }
+    .dialog-modal__kolonne--dialoger-valgt-dialog {
+        display: inline-block;
+        width: 33.33333%;
+    }
 
-        &--full-bredde {
-            width: @full-bredde-skjerm-modal;
-            min-width: @mobil-bredde;
-            border-top-right-radius: 4px;
-        }
+    .dialog-modal__kolonne--dialog {
+        width: percentage(@bredde-skjerm-dialog / @full-bredde-skjerm-modal);
+    }
 
-        &__ny-dialog-knapp {
-            background: none;
-
-            &.knappelenke {
-                padding-left: 0;
-            }
-        }
-
-        &__kolonne {
-            &--dialoger {
-                &-valgt-dialog {
-                    display: inline-block;
-                    width: 33.33333%;
-                }
-            }
-
-            &--dialog {
-                width: percentage(
-                    @bredde-skjerm-dialog / @full-bredde-skjerm-modal
-                );
-            }
-        }
-
-        &__tilbake-knapp {
-            &.pil-knapp {
-                display: none;
-            }
-        }
+    .dialog-modal__tilbake-knapp.pil-knapp {
+        display: none;
     }
 }
