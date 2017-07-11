@@ -8,10 +8,12 @@ import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { startOppfolging } from '../innstillinger-reducer';
 import ModalFooter from '../../../modal/modal-footer';
 import history from '../../../history';
+import InnstillingerModal from '../innstillinger-modal';
+import { hentSituasjon } from '../../../ducks/situasjon';
 
-function BekreftStart({ lagre, navn }) {
+function BekreftStart({ doStartOppfolging, navn }) {
     return (
-        <div>
+        <InnstillingerModal>
             <section className="innstillinger__prosess">
                 <div className="blokk-xs">
                     <Systemtittel>
@@ -26,14 +28,14 @@ function BekreftStart({ lagre, navn }) {
                 </AlertStripeInfoSolid>
             </section>
             <ModalFooter>
-                <Hovedknapp mini onClick={() => lagre()}>
+                <Hovedknapp mini onClick={() => doStartOppfolging()}>
                     <FormattedMessage id="innstillinger.modal.startoppfolging.knapp.bekreft" />
                 </Hovedknapp>
                 <Knapp mini onClick={() => history.push('/')}>
                     <FormattedMessage id="innstillinger.modal.startoppfolging.knapp.avbryt" />
                 </Knapp>
             </ModalFooter>
-        </div>
+        </InnstillingerModal>
     );
 }
 BekreftStart.defaultProps = {
@@ -42,7 +44,7 @@ BekreftStart.defaultProps = {
 
 BekreftStart.propTypes = {
     navn: PT.string,
-    lagre: PT.func.isRequired,
+    doStartOppfolging: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -50,9 +52,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    lagre: () => {
+    doStartOppfolging: () => {
         dispatch(startOppfolging())
             .then(() => history.push('/innstillinger/start/kvittering'))
+            .then(() => dispatch(hentSituasjon()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

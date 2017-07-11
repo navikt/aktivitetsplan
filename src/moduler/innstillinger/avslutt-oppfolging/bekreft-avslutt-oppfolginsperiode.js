@@ -11,6 +11,7 @@ import history from '../../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
 import { RemoteResetKnapp } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import InnstillingerModal from '../innstillinger-modal';
+import { hentSituasjon } from '../../../ducks/situasjon';
 
 function BekreftAvslutning({
     doAvsluttOppfolging,
@@ -74,6 +75,7 @@ const mapDispatchToProps = dispatch => ({
     doAvsluttOppfolging: (begrunnelse, veilederId) => {
         dispatch(avsluttOppfolging(begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/avslutt/kvittering'))
+            .then(() => dispatch(hentSituasjon()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

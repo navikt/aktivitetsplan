@@ -18,7 +18,10 @@ function StartOppfolgingProsess({ intl, slettBegrunnelse }) {
             knappetekst={intl.formatMessage({
                 id: 'innstillinger.modal.prosess.start.knapp',
             })}
-            onClick={() => slettBegrunnelse()}
+            onClick={() => {
+                slettBegrunnelse();
+                history.push('/innstillinger/start/bekreft/');
+            }}
         >
             <div className="blokk-xs">
                 <Normaltekst>
@@ -37,7 +40,6 @@ StartOppfolgingProsess.propTypes = {
 const mapDispatchToProps = dispatch => ({
     slettBegrunnelse: () => {
         dispatch(SLETT_BEGRUNNELSE_ACTION);
-        history.push('/innstillinger/start/bekreft/');
     },
 });
 

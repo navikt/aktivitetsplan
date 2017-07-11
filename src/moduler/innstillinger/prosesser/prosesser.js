@@ -16,23 +16,29 @@ class Prosesser extends Component {
         this.props.doHentSituasjon();
     }
     render() {
-        const { situasjon, innstillingerReducer } = this.props;
+        const { innstillingerReducer } = this.props;
         return (
             <InnstillingerModal>
                 <Innholdslaster avhengigheter={[innstillingerReducer]}>
                     <div>
                         <AvsluttOppfolgingProsess
-                            hidden={!situasjon.underOppfolging}
+                            hidden={!innstillingerReducer.data.underOppfolging}
                         />
-                        <StartOppfolgingProsess hidden={!situasjon.kanStarte} />
+                        <StartOppfolgingProsess
+                            hidden={
+                                !innstillingerReducer.data.kanStarteOppfolging
+                            }
+                        />
                         <SettManuellOppfolgingProsess
                             hidden={
-                                !situasjon.underOppfolging || situasjon.manuell
+                                !innstillingerReducer.data.underOppfolging ||
+                                innstillingerReducer.data.manuell
                             }
                         />
                         <SettDigitalOppfolgingProsess
                             hidden={
-                                !situasjon.underOppfolging || !situasjon.manuell
+                                !innstillingerReducer.data.underOppfolging ||
+                                !innstillingerReducer.data.manuell
                             }
                         />
                         <InnstillingHistorikk />
@@ -43,19 +49,13 @@ class Prosesser extends Component {
     }
 }
 
-Prosesser.defaultProps = {
-    situasjon: undefined,
-};
-
 Prosesser.propTypes = {
-    situasjon: AppPT.situasjon,
     doHentSituasjon: PT.func.isRequired,
     innstillingerReducer: AppPT.reducer.isRequired,
 };
 
 const mapStateToProps = state => ({
     innstillingerReducer: state.data.innstillinger,
-    situasjon: state.data.innstillinger.data,
 });
 
 const mapDispatchToProps = dispatch => ({

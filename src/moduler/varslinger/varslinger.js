@@ -61,7 +61,7 @@ class Varslinger extends Component {
                             tekstId="oppfolging.bruker-reservert-i-krr"
                         />
                         <VarslingMedLenke
-                            hidden={!brukerErManuell}
+                            hidden={reservertIKRR || !brukerErManuell}
                             tekstId="oppfolging.bruker-er-manuell.tekst"
                             lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
                             href="/innstillinger"
