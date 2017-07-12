@@ -3,7 +3,9 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
-import SokeavtaleAktivitetForm, { formNavn } from '../form/aktivitet-sokeavtale-form';
+import SokeavtaleAktivitetForm, {
+    formNavn,
+} from '../form/aktivitet-sokeavtale-form';
 import history from '../../../history';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { lagNyAktivitet } from '../../../ducks/aktiviteter';

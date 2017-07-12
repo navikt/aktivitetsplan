@@ -3,7 +3,9 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { injectIntl, intlShape } from 'react-intl';
-import StillingAktivitetForm, { formNavn } from '../form/aktivitet-stilling-form';
+import StillingAktivitetForm, {
+    formNavn,
+} from '../form/aktivitet-stilling-form';
 import { lagNyAktivitet } from '../../../ducks/aktiviteter';
 import history from '../../../history';
 import { STILLING_AKTIVITET_TYPE } from '../../../constant';
