@@ -66,6 +66,4 @@ const BegrunnelseAktivitetReduxForm = validForm({
     },
 })(BegrunnelseForFerdigAvtaltAktivitet);
 
-const mapDispatchToProps = () => ({});
-
-export default connect(null, mapDispatchToProps)(BegrunnelseAktivitetReduxForm);
+export default connect()(BegrunnelseAktivitetReduxForm);
