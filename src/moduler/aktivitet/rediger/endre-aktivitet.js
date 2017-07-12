@@ -3,35 +3,35 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
-import { oppdaterAktivitet } from '../../ducks/aktiviteter';
-import { SKJUL_VERSJONSKONFLIKT_ACTION } from '../../ducks/endre-aktivitet';
-import * as AppPT from '../../proptypes';
-import ModalHeader from '../../felles-komponenter/modal/modal-header';
+import { oppdaterAktivitet } from '../../../ducks/aktiviteter';
+import { SKJUL_VERSJONSKONFLIKT_ACTION } from '../../../ducks/endre-aktivitet';
+import * as AppPT from '../../../proptypes';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import StillingAktivitetForm, {
     formNavn as stillingFormNavn,
-} from '../../moduler/aktivitet/form/aktivitet-stilling-form';
+} from '../form/aktivitet-stilling-form';
 import EgenAktivitetForm, {
     formNavn as egenFormNavn,
-} from '../../moduler/aktivitet/form/aktivitet-egen-form';
+} from '../form/aktivitet-egen-form';
 import SokeavtaleAktivitetForm, {
     formNavn as sokeavtaleFormNavn,
-} from '../../moduler/aktivitet/form/aktivitet-sokeavtale-form';
+} from '../form/aktivitet-sokeavtale-form';
 import BehandlingAktivitetForm, {
     formNavn as behandlingFormNavn,
-} from '../../moduler/aktivitet/form/aktivitet-behandling-form';
-import history from '../../history';
+} from '../form/aktivitet-behandling-form';
+import history from '../../../history';
 import {
     EGEN_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
     BEHANDLING_AKTIVITET_TYPE,
-} from '../../constant';
-import ModalContainer from '../../felles-komponenter/modal/modal-container';
+} from '../../../constant';
+import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Versjonskonflikt from './versjonskonflikt';
-import Modal from '../../felles-komponenter/modal/modal';
-import { LUKK_MODAL } from '../../ducks/modal';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { aktivitetRoute } from '../../routing';
+import Modal from '../../../felles-komponenter/modal/modal';
+import { LUKK_MODAL } from '../../../ducks/modal';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import { aktivitetRoute } from '../../../routing';
 
 function EndreAktivitet({
     aktivitet,
