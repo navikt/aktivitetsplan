@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedHTMLMessage } from 'react-intl';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
@@ -9,6 +10,7 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
+import SettDigital from '../sett-digital/sett-digital';
 
 const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
@@ -47,6 +49,7 @@ class OppfolgingStatus extends Component {
             identitet,
             visVilkar,
             reservasjonKRR,
+            manuell,
             vilkarMaBesvares,
             brukerHarAvslatt,
             erVeileder,
@@ -55,6 +58,8 @@ class OppfolgingStatus extends Component {
         let komponent;
         if (erVeileder) {
             komponent = children;
+        } else if (manuell ) {
+            komponent = <SettDigital />;
         } else if (reservasjonKRR) {
             komponent = (
                 <AlertStripeInfoSolid className="oppfolgingstatus__krr-varsling">
@@ -86,6 +91,7 @@ OppfolgingStatus.defaultProps = {
     children: null,
     erVeileder: null,
     reservasjonKRR: null,
+    manuell: null,
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
     visVilkar: false,
@@ -100,6 +106,7 @@ OppfolgingStatus.propTypes = {
     doHentSituasjon: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
     reservasjonKRR: PT.bool,
+    manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool,
 };
@@ -112,6 +119,7 @@ const mapStateToProps = state => {
         erVeileder: identitet.data.erVeileder,
         brukerHarAvslatt: situasjon.brukerHarAvslatt,
         reservasjonKRR: situasjonData.reservasjonKRR,
+        manuell: situasjonData.manuell,
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
         situasjon,
         identitet,
