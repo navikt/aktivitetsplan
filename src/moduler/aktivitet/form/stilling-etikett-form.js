@@ -3,10 +3,10 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Radio } from 'nav-frontend-skjema';
-import * as statuser from '../../constant';
-import { oppdaterAktivitetEtikett } from '../../ducks/aktiviteter';
-import { aktivitet as aktivitetPT } from '../../proptypes';
-import { STATUS } from '../../ducks/utils';
+import * as statuser from '../../../constant';
+import { oppdaterAktivitetEtikett } from '../../../ducks/aktiviteter';
+import { aktivitet as aktivitetPT } from '../../../proptypes';
+import { STATUS } from '../../../ducks/utils';
 
 function StillingEtikettForm(props) {
     const { aktivitet, doOppdaterAktivitetEtikett, disabled } = props;

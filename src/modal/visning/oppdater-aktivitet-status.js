@@ -5,7 +5,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import * as statuser from '../../constant';
 import * as AppPT from '../../proptypes';
-import AktivitetStatusForm from '../skjema/aktivitet-status-form';
+import AktivitetStatusForm from '../../moduler/aktivitet/form/aktivitet-status-form';
 
 function OppdaterAktivitetStatus(props) {
     const { aktiviteter, paramsId } = props;
