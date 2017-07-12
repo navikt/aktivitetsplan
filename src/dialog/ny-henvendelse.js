@@ -8,8 +8,8 @@ import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
 import moment from 'moment';
 import { STATUS } from '../ducks/utils';
 import { nyHenvendelse } from '../ducks/dialog';
-import Textarea from '../modal/skjema/textarea/textarea';
-import Input from '../modal/skjema/input/input';
+import Textarea from '../felles-komponenter/skjema/textarea/textarea';
+import Input from '../felles-komponenter/skjema/input/input';
 import visibleIf from '../hocs/visible-if';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;

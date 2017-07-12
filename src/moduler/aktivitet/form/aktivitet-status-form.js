@@ -8,14 +8,14 @@ import { rules, validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import * as statuser from '../../../constant';
-import Radio from '../../../modal/skjema/input/radio';
+import Radio from '../../../felles-komponenter/skjema/input/radio';
 import hengelasSVG from '../../../img/hengelas.svg';
 import { flyttAktivitetMedBegrunnelse } from '../../../ducks/aktiviteter';
 import { aktivitet as aktivitetPT } from '../../../proptypes';
 import { STATUS } from '../../../ducks/utils';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import visibleIf from '../../../hocs/visible-if';
-import Textarea from '../../../modal/skjema/textarea/textarea';
+import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 
 const leggTilHengelas = (tekst, altTekst) =>
     <span>

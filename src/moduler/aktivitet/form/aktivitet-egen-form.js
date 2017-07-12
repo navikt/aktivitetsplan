@@ -7,11 +7,11 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm, rules } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import Textarea from '../../../modal/skjema/textarea/textarea';
-import Input from '../../../modal/skjema/input/input';
-import Datovelger from '../../../modal/skjema/datovelger/datovelger';
+import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
+import Input from '../../../felles-komponenter/skjema/input/input';
+import Datovelger from '../../../felles-komponenter/skjema/datovelger/datovelger';
 import { STATUS_BRUKER_ER_INTRESSERT } from '../../../constant';
-import PeriodeValidering from '../../../modal/skjema/datovelger/periode-validering';
+import PeriodeValidering from '../../../felles-komponenter/skjema/datovelger/periode-validering';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;

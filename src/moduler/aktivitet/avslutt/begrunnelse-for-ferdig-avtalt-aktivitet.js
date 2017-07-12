@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
-import Textarea from '../../../modal/skjema/textarea/textarea';
+import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 
 const MAKS_LENGDE = 255;
 
