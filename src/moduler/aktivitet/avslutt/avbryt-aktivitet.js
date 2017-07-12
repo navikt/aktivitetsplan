@@ -2,13 +2,13 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import * as AppPT from '../../proptypes';
+import * as AppPT from '../../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
 import VisAdvarsel from './vis-advarsel';
-import { avbrytAktivitet } from '../../ducks/aktiviteter';
-import { STATUS } from '../../ducks/utils';
-import StandardModal from '../../felles-komponenter/modal/modal-standard';
-import history from '../../history';
+import { avbrytAktivitet } from '../../../ducks/aktiviteter';
+import { STATUS } from '../../../ducks/utils';
+import StandardModal from '../../../felles-komponenter/modal/modal-standard';
+import history from '../../../history';
 
 const AvbrytAktivitet = props => {
     const paramsId = props.params.id;

@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
 import Hovedknapp from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import ModalHeader from '../../felles-komponenter/modal/modal-header';
-import ModalContainer from '../../felles-komponenter/modal/modal-container';
-import ModalFooter from '../../felles-komponenter/modal/modal-footer';
-import Textarea from '../skjema/textarea/textarea';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
+import Textarea from '../../../modal/skjema/textarea/textarea';
 
 const MAKS_LENGDE = 255;
 

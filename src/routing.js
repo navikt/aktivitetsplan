@@ -12,8 +12,8 @@ import BehandlingAktivitet from './moduler/aktivitet/opprett/ny-aktivitet-behand
 import Aktivitetvisning from './modal/visning/aktivitetvisning';
 import EndreAktivitet from './moduler/aktivitet/rediger/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
-import FullforAktivitet from './modal/ferdigstilt/fullfor-aktivitet';
-import AvbrytAktivitet from './modal/ferdigstilt/avbryt-aktivitet';
+import FullforAktivitet from './moduler/aktivitet/avslutt/fullfor-aktivitet';
+import AvbrytAktivitet from './moduler/aktivitet/avslutt/avbryt-aktivitet';
 import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
 import Prosesser from './moduler/innstillinger/prosesser/prosesser';

@@ -2,12 +2,12 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import * as AppPT from '../../proptypes';
+import * as AppPT from '../../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
-import { fullforAktivitet } from '../../ducks/aktiviteter';
-import { STATUS } from '../../ducks/utils';
-import StandardModal from '../../felles-komponenter/modal/modal-standard';
-import history from '../../history';
+import { fullforAktivitet } from '../../../ducks/aktiviteter';
+import { STATUS } from '../../../ducks/utils';
+import StandardModal from '../../../felles-komponenter/modal/modal-standard';
+import history from '../../../history';
 import VisAdvarsel from './vis-advarsel';
 
 const FullforAktivitet = props => {
