@@ -58,7 +58,7 @@ class OppfolgingStatus extends Component {
         let komponent;
         if (erVeileder) {
             komponent = children;
-        } else if (manuell ) {
+        } else if (manuell) {
             komponent = <SettDigital />;
         } else if (reservasjonKRR) {
             komponent = (
