@@ -14,11 +14,11 @@ import {
     UTDANNING_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
-} from '../../constant';
-import { oppdaterAktivitet } from '../../ducks/aktiviteter';
-import * as AppPT from '../../proptypes';
+} from '../../../constant';
+import { oppdaterAktivitet } from '../../../ducks/aktiviteter';
+import * as AppPT from '../../../proptypes';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
-import { STATUS } from '../../ducks/utils';
+import { STATUS } from '../../../ducks/utils';
 
 class AvtaltContainer extends Component {
     constructor(props) {

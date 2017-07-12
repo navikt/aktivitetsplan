@@ -5,12 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Link } from 'react-router';
-import * as AppPT from '../../proptypes';
+import * as AppPT from '../../../proptypes';
 import {
     formaterDatoKortManed,
     formaterDatoKortManedTid,
     formaterTid,
-} from '../../utils';
+} from '../../../utils';
 import {
     EGEN_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
@@ -20,9 +20,9 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     BEHANDLING_AKTIVITET_TYPE,
-} from '../../constant';
+} from '../../../constant';
 import DetaljFelt from './detalj-felt';
-import { endreAktivitetRoute } from '../../routing';
+import { endreAktivitetRoute } from '../../../routing';
 
 function RedigerLink({ id, felt }) {
     return (

@@ -9,7 +9,7 @@ import EgenAktivitet from './moduler/aktivitet/opprett/ny-aktivitet-egen';
 import StillingAktivitet from './moduler/aktivitet/opprett/ny-aktivitet-stilling';
 import SokeavtaleAktivitet from './moduler/aktivitet/opprett/ny-aktivitet-sokeavtale';
 import BehandlingAktivitet from './moduler/aktivitet/opprett/ny-aktivitet-behandling';
-import Aktivitetvisning from './modal/visning/aktivitetvisning';
+import Aktivitetvisning from './moduler/aktivitet/visning/aktivitetvisning';
 import EndreAktivitet from './moduler/aktivitet/rediger/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
 import FullforAktivitet from './moduler/aktivitet/avslutt/fullfor-aktivitet';
