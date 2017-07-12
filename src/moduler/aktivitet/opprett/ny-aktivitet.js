@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import Bilde from 'nav-react-design/dist/bilde';
-import { hentIdentitet } from '../ducks/identitet';
-import Lenkepanel from '../felles-komponenter/lenkepanel';
-import ModalHeader from './modal-header';
-import leggTilAktivitetSvg from '../img/legg-til-aktivitet-illustrasjon.svg';
-import StandardModal from './modal-standard';
+import { hentIdentitet } from '../../../ducks/identitet';
+import Lenkepanel from '../../../felles-komponenter/lenkepanel';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import leggTilAktivitetSvg from '../../../img/legg-til-aktivitet-illustrasjon.svg';
+import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 
 class NyAktivitet extends Component {
     componentDidMount() {

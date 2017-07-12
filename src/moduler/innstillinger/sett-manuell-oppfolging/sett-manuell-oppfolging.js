@@ -10,7 +10,7 @@ import {
 } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import * as AppPt from '../../../proptypes';
 import history from '../../../history';
-import ModalFooter from '../../../modal/modal-footer';
+import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import BegrunnelseForm from '../begrunnelse-form';
 import {
     settManuellOppfolging,

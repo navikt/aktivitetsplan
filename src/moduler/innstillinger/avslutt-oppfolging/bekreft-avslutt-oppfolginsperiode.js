@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import ModalFooter from '../../../modal/modal-footer';
+import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import { avsluttOppfolging } from '../innstillinger-reducer';
 import history from '../../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';

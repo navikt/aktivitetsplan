@@ -6,7 +6,7 @@ import * as AppPT from '../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
 import { fullforAktivitet } from '../../ducks/aktiviteter';
 import { STATUS } from '../../ducks/utils';
-import StandardModal from '../modal-standard';
+import StandardModal from '../../felles-komponenter/modal/modal-standard';
 import history from '../../history';
 import VisAdvarsel from './vis-advarsel';
 

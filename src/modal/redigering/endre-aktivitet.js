@@ -6,19 +6,19 @@ import { isDirty } from 'redux-form';
 import { oppdaterAktivitet } from '../../ducks/aktiviteter';
 import { SKJUL_VERSJONSKONFLIKT_ACTION } from '../../ducks/endre-aktivitet';
 import * as AppPT from '../../proptypes';
-import ModalHeader from '../modal-header';
+import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import StillingAktivitetForm, {
     formNavn as stillingFormNavn,
-} from '../skjema/stilling-aktivitet-form';
+} from '../../moduler/aktivitet/form/aktivitet-stilling-form';
 import EgenAktivitetForm, {
     formNavn as egenFormNavn,
-} from '../skjema/egen-aktivitet-form';
+} from '../../moduler/aktivitet/form/aktivitet-egen-form';
 import SokeavtaleAktivitetForm, {
     formNavn as sokeavtaleFormNavn,
-} from '../skjema/sokeavtale-aktivitet-form';
+} from '../../moduler/aktivitet/form/aktivitet-sokeavtale-form';
 import BehandlingAktivitetForm, {
     formNavn as behandlingFormNavn,
-} from '../skjema/behandling-aktivitet-form';
+} from '../../moduler/aktivitet/form/aktivitet-behandling-form';
 import history from '../../history';
 import {
     EGEN_AKTIVITET_TYPE,
@@ -26,9 +26,9 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     BEHANDLING_AKTIVITET_TYPE,
 } from '../../constant';
-import ModalContainer from '../modal-container';
+import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import Versjonskonflikt from './versjonskonflikt';
-import Modal from '../modal';
+import Modal from '../../felles-komponenter/modal/modal';
 import { LUKK_MODAL } from '../../ducks/modal';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../../routing';

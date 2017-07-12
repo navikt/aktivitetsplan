@@ -1,25 +1,26 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
-import EgenAktivitetForm, { formNavn } from './egen-aktivitet-form';
-import history from './../../history';
-import ModalHeader from '../modal-header';
-import { lagNyAktivitet } from '../../ducks/aktiviteter';
-import { EGEN_AKTIVITET_TYPE } from '../../constant';
-import ModalContainer from '../modal-container';
-import { LUKK_MODAL } from '../../ducks/modal';
-import { aktivitetRoute } from '../../routing';
-import Modal from '../modal';
+import { injectIntl, intlShape } from 'react-intl';
+import StillingAktivitetForm, { formNavn } from './ny-aktivitet-stilling';
+import { lagNyAktivitet } from '../../../ducks/aktiviteter';
+import history from '../../../history';
+import { STILLING_AKTIVITET_TYPE } from '../../../constant';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+import Modal from '../../../felles-komponenter/modal/modal';
+import { LUKK_MODAL } from '../../../ducks/modal';
+import { aktivitetRoute } from '../../../routing';
 
-function EgenAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
+function StillingAktivitet({
+    onLagreNyAktivitet,
+    formIsDirty,
+    lukkModal,
+    intl,
+}) {
     const onLagNyAktivitetSubmit = aktivitet => {
-        const nyAktivitet = {
-            ...aktivitet,
-            type: EGEN_AKTIVITET_TYPE,
-        };
-
+        const nyAktivitet = { ...aktivitet, type: STILLING_AKTIVITET_TYPE };
         onLagreNyAktivitet(nyAktivitet).then(action =>
             history.push(aktivitetRoute(action.data.id))
         );
@@ -28,12 +29,11 @@ function EgenAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
     return (
         <Modal
             isOpen
-            key="egenAktivitetModal"
+            key="stillingAktivitetModal"
             onRequestClose={() => {
                 const dialogTekst = intl.formatMessage({
                     id: 'aktkivitet-skjema.lukk-advarsel',
                 });
-
                 // eslint-disable-next-line no-alert
                 if (!formIsDirty || confirm(dialogTekst)) {
                     history.push('/');
@@ -42,23 +42,23 @@ function EgenAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
             }}
             contentLabel="aktivitet-modal"
         >
-            <article
-                className="egen-aktivitet"
-                aria-labelledby="modal-egen-aktivitet-header"
+            <section
+                className="stilling-aktivitet"
+                aria-labelledby="modal-stillings-aktivitet-header"
             >
                 <ModalHeader
                     visConfirmDialog={formIsDirty}
                     tilbakeTekstId="ny-aktivitet-modal.tilbake"
                 />
                 <ModalContainer>
-                    <EgenAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
+                    <StillingAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
                 </ModalContainer>
-            </article>
+            </section>
         </Modal>
     );
 }
 
-EgenAktivitet.propTypes = {
+StillingAktivitet.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
     formIsDirty: PT.bool.isRequired,
     intl: intlShape.isRequired,
@@ -66,7 +66,7 @@ EgenAktivitet.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    onLagreNyAktivitet: aktivitet => dispatch(lagNyAktivitet(aktivitet)),
+    onLagreNyAktivitet: aktivitet => lagNyAktivitet(aktivitet)(dispatch),
     lukkModal: () => dispatch({ type: LUKK_MODAL }),
 });
 
@@ -75,5 +75,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(EgenAktivitet)
+    injectIntl(StillingAktivitet)
 );

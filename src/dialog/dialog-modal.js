@@ -7,7 +7,7 @@ import Lukknapp from 'nav-frontend-lukknapp';
 import classNames from 'classnames';
 import Dialog from './dialog';
 import Dialoger from './dialoger';
-import Modal from '../modal/modal';
+import Modal from '../felles-komponenter/modal/modal';
 import history from '../history';
 import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import PilKnapp from '../felles-komponenter/utils/pil-knapp';

@@ -9,7 +9,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
 import AktivitetIngress from './aktivitetingress';
 import UnderelementerForAktivitet from './underelementer-for-aktivitet';
-import ModalHeader from '../modal-header';
+import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import history from '../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
 import {
@@ -19,8 +19,8 @@ import {
     fjernForrigeAktiveAktivitetId,
 } from '../../ducks/aktiviteter';
 import * as AppPT from '../../proptypes';
-import ModalFooter from './../modal-footer';
-import ModalContainer from '../modal-container';
+import ModalFooter from '../../felles-komponenter/modal/modal-footer';
+import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import BekreftSlettVisning from './bekreft-slett-visning';
 import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
@@ -38,7 +38,7 @@ import {
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from './begrunnelse-boks';
 import AktivitetEtikett from '../../felles-komponenter/aktivitet-etikett';
-import StandardModal from '../modal-standard';
+import StandardModal from '../../felles-komponenter/modal/modal-standard';
 import { endreAktivitetRoute } from '../../routing';
 
 class Aktivitetvisning extends Component {

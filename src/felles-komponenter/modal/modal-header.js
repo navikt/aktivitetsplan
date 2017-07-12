@@ -4,9 +4,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
 import Bilde from 'nav-react-design/dist/bilde';
-import Tilbakeknapp from '../felles-komponenter/utils/tilbakeknapp';
-import hengelasSvg from '../img/hengelas.svg';
-import VisibleIfSpan from '../felles-komponenter/utils/visible-if-span';
+import Tilbakeknapp from '../utils/tilbakeknapp';
+import hengelasSvg from '../../img/hengelas.svg';
+import VisibleIfSpan from '../utils/visible-if-span';
 
 function ModalHeader({
     tilbakeTekstId,

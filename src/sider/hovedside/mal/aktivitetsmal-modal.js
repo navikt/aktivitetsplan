@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../../modal/modal';
-import ModalHeader from '../../../modal/modal-header';
-import ModalContainer from '../../../modal/modal-container';
+import Modal from '../../../felles-komponenter/modal/modal';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import history from '../../../history';
 
 function AktivitetsmalModal(Component) {

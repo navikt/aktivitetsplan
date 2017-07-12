@@ -2,8 +2,8 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Modal from './modal';
-import { LUKK_MODAL } from '../ducks/modal';
-import history from './../history';
+import { LUKK_MODAL } from '../../ducks/modal';
+import history from '../../history';
 
 function StandardModal({ lukkModal, name, children }) {
     return (

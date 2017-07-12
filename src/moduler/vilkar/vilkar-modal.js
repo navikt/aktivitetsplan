@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../modal/modal';
+import Modal from '../../felles-komponenter/modal/modal';
 import history from '../../history';
-import ModalHeader from '../../modal/modal-header';
+import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import OppfolgingStatus from '../oppfolging-status/oppfolging-status';
 
 function VilkarModal(Component, options) {

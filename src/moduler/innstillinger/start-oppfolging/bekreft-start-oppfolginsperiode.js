@@ -6,7 +6,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { startOppfolging } from '../innstillinger-reducer';
-import ModalFooter from '../../../modal/modal-footer';
+import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import InnstillingerModal from '../innstillinger-modal';
 import { hentSituasjon } from '../../../ducks/situasjon';
