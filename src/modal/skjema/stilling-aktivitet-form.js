@@ -234,6 +234,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps)(
-    injectIntl(StillingAktivitetReduxForm)
-);
+export default connect(mapStateToProps)(injectIntl(StillingAktivitetReduxForm));

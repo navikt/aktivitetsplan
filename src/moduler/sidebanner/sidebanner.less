@@ -1,4 +1,5 @@
 .sidebanner {
+    .blokk-s();
     width: 100%;
     background-color: @navLysBlaLighten60;
     border-bottom: 3px solid @navLysBlaLighten20;
@@ -18,6 +19,10 @@
 }
 
 @media (min-width: @screen-md-min) {
+    .sidebanner {
+        .blokk-l();
+    }
+
     .sidebanner__illustrasjon {
         display: inline;
         flex: 0 0 3.75rem;

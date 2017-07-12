@@ -223,6 +223,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps)(
-    injectIntl(EgenAktivitetReduxForm)
-);
+export default connect(mapStateToProps)(injectIntl(EgenAktivitetReduxForm));
