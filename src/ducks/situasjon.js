@@ -1,5 +1,6 @@
 import * as Api from './situasjon-api';
 import { STATUS, doThenDispatch } from './utils';
+import { SETT_DIGITAL_OK } from '../moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
 
 // Actions
 export const OK = 'situasjon/OK';
@@ -41,6 +42,12 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 status: STATUS.OK,
                 brukerHarAvslatt: true,
+                data: action.data,
+            };
+        case SETT_DIGITAL_OK:
+            return {
+                ...state,
+                status: STATUS.OK,
                 data: action.data,
             };
         case FEILET:
