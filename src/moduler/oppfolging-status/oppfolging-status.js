@@ -2,7 +2,7 @@ import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { FormattedHTMLMessage } from 'react-intl';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { hentSituasjon } from '../../ducks/situasjon';
+import { hentSituasjon, settPrivatModus } from '../../ducks/situasjon';
 import { hentIdentitet } from '../../ducks/identitet';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
@@ -37,6 +37,16 @@ class OppfolgingStatus extends Component {
         this.props.doHentIdentitet();
         if (this.props.situasjon.status === STATUS.NOT_STARTED) {
             this.props.doHentSituasjon();
+        }
+    }
+
+    componentWillUpdate(nextProps) {
+        if (
+            nextProps.privatModus === false &&
+            nextProps.erVeileder === true &&
+            nextProps.underOppfolging === false
+        ) {
+            this.props.doSettPrivatModus();
         }
     }
 
@@ -85,6 +95,7 @@ class OppfolgingStatus extends Component {
 OppfolgingStatus.defaultProps = {
     children: null,
     erVeileder: null,
+    underOppfolging: null,
     reservasjonKRR: null,
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
@@ -95,6 +106,8 @@ OppfolgingStatus.propTypes = {
     children: PT.node,
     identitet: AppPT.reducer.isRequired,
     erVeileder: PT.bool,
+    underOppfolging: PT.bool, // eslint-disable-line react/no-unused-prop-types
+    privatModus: PT.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
     visVilkar: PT.bool,
     situasjon: AppPT.situasjon.isRequired,
     doHentSituasjon: PT.func.isRequired,
@@ -102,6 +115,7 @@ OppfolgingStatus.propTypes = {
     reservasjonKRR: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool,
+    doSettPrivatModus: PT.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -110,6 +124,8 @@ const mapStateToProps = state => {
     const situasjonData = situasjon.data;
     return {
         erVeileder: identitet.data.erVeileder,
+        underOppfolging: situasjonData.underOppfolging,
+        privatModus: situasjon.privatModus,
         brukerHarAvslatt: situasjon.brukerHarAvslatt,
         reservasjonKRR: situasjonData.reservasjonKRR,
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
@@ -121,6 +137,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     doHentSituasjon: () => dispatch(hentSituasjon()),
     doHentIdentitet: () => dispatch(hentIdentitet()),
+    doSettPrivatModus: () => dispatch(settPrivatModus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OppfolgingStatus);

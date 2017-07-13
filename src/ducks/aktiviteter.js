@@ -1,6 +1,7 @@
 import * as Api from './api';
 import { doThenDispatch, STATUS } from './utils';
 import * as statuskoder from '../constant';
+import { ER_I_PRIVAT_MODUS } from './situasjon';
 
 // Actions
 export const HENTER = 'aktivitet/hent';
@@ -87,6 +88,8 @@ export default function reducer(state = initalState, action) {
             return { ...state, forrigeAktiveAktivitetId: action.id };
         case FJERN_FORRIGE_AKTIVE_AKTIVITET_ID:
             return { ...state, forrigeAktiveAktivitetId: undefined };
+        case ER_I_PRIVAT_MODUS:
+            return { ...state, status: STATUS.OK };
         case SLETT:
         case SLETT_FAIL:
         default:
