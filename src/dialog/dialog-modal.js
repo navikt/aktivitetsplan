@@ -271,6 +271,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DialogModal);
+export default connect(mapStateToProps)(DialogModal);

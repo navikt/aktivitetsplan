@@ -222,8 +222,5 @@ const mapStateToProps = (state, props) => {
         avtalt: aktivitet && aktivitet.avtalt,
     };
 };
-const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(EgenAktivitetReduxForm)
-);
+export default connect(mapStateToProps)(injectIntl(EgenAktivitetReduxForm));

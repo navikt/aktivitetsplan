@@ -1,31 +1,12 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { Container } from 'nav-frontend-grid';
 import { hentIdentitet } from '../../ducks/identitet';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../proptypes';
-import hiddenIf, {
-    div as HiddenIfDiv,
-} from '../../felles-komponenter/hidden-if/hidden-if';
-import Lenke from '../../felles-komponenter/utils/lenke';
-
-const Varsling = hiddenIf(({ tekstId }) =>
-    <AlertStripeInfoSolid>
-        <FormattedMessage id={tekstId} />
-    </AlertStripeInfoSolid>
-);
-
-const VarslingMedLenke = hiddenIf(({ tekstId, lenkeTekstId, href }) =>
-    <AlertStripeInfoSolid>
-        <FormattedMessage id={tekstId} />&nbsp;
-        <Lenke href={href}>
-            <FormattedMessage id={lenkeTekstId} />
-        </Lenke>
-    </AlertStripeInfoSolid>
-);
+import { Varsling, VarslingMedLenke } from './varsel-alertstriper';
+import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -46,25 +27,29 @@ class Varslinger extends Component {
             <Innholdslaster
                 avhengigheter={[situasjonReducer, identitetReducer]}
             >
-                <HiddenIfDiv hidden={erBruker} className="varsling-container">
+                <HiddenIfDiv hidden={erBruker}>
                     <Container>
                         <Varsling
                             hidden={underOppfolging}
                             tekstId="oppfolging.ikke-under-oppfolging"
+                            className="varsling"
                         />
                         <Varsling
                             hidden={!vilkarMaBesvares}
                             tekstId="oppfolging.vilkar-ikke-godkjent"
+                            className="varsling"
                         />
                         <Varsling
                             hidden={!reservertIKRR}
                             tekstId="oppfolging.bruker-reservert-i-krr"
+                            className="varsling"
                         />
                         <VarslingMedLenke
                             hidden={reservertIKRR || !brukerErManuell}
                             tekstId="oppfolging.bruker-er-manuell.tekst"
                             lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
                             href="/innstillinger"
+                            className="varsling"
                         />
                     </Container>
                 </HiddenIfDiv>

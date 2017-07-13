@@ -208,7 +208,4 @@ const mapStateToProps = state => {
         aktiviteter: state.data.aktiviteter.data,
     };
 };
-
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dialoger);
+export default connect(mapStateToProps)(Dialoger);

@@ -152,8 +152,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-    UnderelementerForAktivitet
-);
+export default connect(mapStateToProps)(UnderelementerForAktivitet);
