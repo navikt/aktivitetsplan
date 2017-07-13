@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
     AdvarselVarsling,
@@ -12,30 +12,30 @@ import * as AppPT from '../../proptypes';
 import { settDigital } from './aktiver-digital-oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
 
-function AktiverDigitalOppfolgingVarselPure({
+export function AktiverDigitalOppfolgingVarsel({
     reservertIKRR,
-    aktiverDigitalOppfolgingFeilet,
-    intl,
+    settDigitalFeilet,
 }) {
-    if (reservertIKRR || aktiverDigitalOppfolgingFeilet) {
+    if (!reservertIKRR && !settDigitalFeilet) {
         return (
             <Varsling
                 tekstId="sett-digital.manuell-oppfolging.infotekst"
                 className="sett-digital__varsel"
             />
         );
-    } else if (!reservertIKRR || aktiverDigitalOppfolgingFeilet) {
+    } else if (reservertIKRR && !settDigitalFeilet) {
         return (
-            <VarslingMedLenke
-                tekstId="sett-digital.reservert-i-krr.infotekst"
-                lenkeTekstId="sett-digital.reservert-i-krr.lenketekst"
-                href={intl.formatMessage({
-                    id: 'sett-digital.reservert-i-krr.url-lenke',
-                })}
-                className="sett-digital__varsel"
-            />
+            <FormattedMessage id="sett-digital.reservert-i-krr.url-lenke">
+                {url =>
+                    <VarslingMedLenke
+                        tekstId="sett-digital.reservert-i-krr.infotekst"
+                        lenkeTekstId="sett-digital.reservert-i-krr.lenketekst"
+                        href={url}
+                        className="sett-digital__varsel"
+                    />}
+            </FormattedMessage>
         );
-    } else if (!aktiverDigitalOppfolgingFeilet) {
+    } else if (settDigitalFeilet) {
         return (
             <AdvarselVarsling
                 tekstId="sett-digital.feilmelding"
@@ -45,17 +45,12 @@ function AktiverDigitalOppfolgingVarselPure({
     }
 }
 
-AktiverDigitalOppfolgingVarselPure.propTypes = {
+AktiverDigitalOppfolgingVarsel.propTypes = {
     reservertIKRR: PT.bool.isRequired,
-    aktiverDigitalOppfolgingFeilet: PT.bool.isRequired,
-    intl: intlShape.isRequired,
+    settDigitalFeilet: PT.bool.isRequired,
 };
 
-const AktiverDigitalOppfolgingVarsel = injectIntl(
-    AktiverDigitalOppfolgingVarselPure
-);
-
-function AktiverDigitalOppfolging({
+export function AktiverDigitalOppfolging({
     reservertIKRR,
     doSettDigital,
     aktiverDigitalOppfolgingReducer,
@@ -68,7 +63,7 @@ function AktiverDigitalOppfolging({
         <div className="sett-digital">
             <AktiverDigitalOppfolgingVarsel
                 reservertIKRR={reservertIKRR}
-                aktiverDigitalOppfolgingFeilet={
+                settDigitalFeilet={
                     aktiverDigitalOppfolgingReducer.status === STATUS.ERROR
                 }
             />
@@ -85,10 +80,15 @@ function AktiverDigitalOppfolging({
     );
 }
 
+AktiverDigitalOppfolging.defaultProps = {
+    doSettDigital: undefined,
+    aktiverDigitalOppfolgingReducer: {},
+};
+
 AktiverDigitalOppfolging.propTypes = {
     reservertIKRR: PT.bool.isRequired,
-    doSettDigital: PT.func.isRequired,
-    aktiverDigitalOppfolgingReducer: AppPT.reducer.isRequired,
+    doSettDigital: PT.func,
+    aktiverDigitalOppfolgingReducer: AppPT.reducer,
 };
 
 const mapStateToProps = state => ({
