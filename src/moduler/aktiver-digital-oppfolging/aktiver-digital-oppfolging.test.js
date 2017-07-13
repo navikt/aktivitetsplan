@@ -7,7 +7,7 @@ import {
     mountWithIntl,
 } from '../../../test/intl-enzyme-test-helper';
 import {
-    AktiverDigitalOppfolging,
+    AktiverDigitalOppfolgingPure,
     AktiverDigitalOppfolgingVarsel,
 } from './aktiver-digital-oppfolging';
 import {
@@ -20,7 +20,7 @@ describe('aktiver-digital-oppfolging', () => {
     describe('komponent', () => {
         it('Skal vise et varsel og knapp', () => {
             const wrapper = shallowWithIntl(
-                <AktiverDigitalOppfolging
+                <AktiverDigitalOppfolgingPure
                     reservertIKRR={false}
                     settDigitalFeilet={false}
                 />

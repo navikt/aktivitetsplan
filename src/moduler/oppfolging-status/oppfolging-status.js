@@ -10,11 +10,11 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
-import SettDigital from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
+import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 
-const Alert = visibleIfHOC(AlertStripeInfoSolid);
+export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
-function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
+export function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
     return (
         <div>
             <Alert visible={!visVilkar && brukerHarAvslatt}>
@@ -34,18 +34,18 @@ GodkjennVilkarMedVarsling.propTypes = {
     visVilkar: PT.bool.isRequired,
 };
 
-function oppfolgingStatusKomponent(
+export function oppfolgingStatusKomponent(
     children,
-    visVilkar,
+    erVeileder,
     manuell,
     vilkarMaBesvares,
     brukerHarAvslatt,
-    erVeileder
+    visVilkar
 ) {
     if (erVeileder) {
         return children;
     } else if (manuell) {
-        return <SettDigital />;
+        return <AktiverDigitalOppfolging />;
     } else if (vilkarMaBesvares) {
         return (
             <GodkjennVilkarMedVarsling

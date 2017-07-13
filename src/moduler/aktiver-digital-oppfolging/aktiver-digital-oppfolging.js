@@ -50,7 +50,7 @@ AktiverDigitalOppfolgingVarsel.propTypes = {
     settDigitalFeilet: PT.bool.isRequired,
 };
 
-export function AktiverDigitalOppfolging({
+export function AktiverDigitalOppfolgingPure({
     reservertIKRR,
     doSettDigital,
     aktiverDigitalOppfolgingReducer,
@@ -80,12 +80,12 @@ export function AktiverDigitalOppfolging({
     );
 }
 
-AktiverDigitalOppfolging.defaultProps = {
+AktiverDigitalOppfolgingPure.defaultProps = {
     doSettDigital: undefined,
     aktiverDigitalOppfolgingReducer: {},
 };
 
-AktiverDigitalOppfolging.propTypes = {
+AktiverDigitalOppfolgingPure.propTypes = {
     reservertIKRR: PT.bool.isRequired,
     doSettDigital: PT.func,
     aktiverDigitalOppfolgingReducer: AppPT.reducer,
@@ -101,5 +101,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    AktiverDigitalOppfolging
+    AktiverDigitalOppfolgingPure
 );
