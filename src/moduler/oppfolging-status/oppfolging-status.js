@@ -34,6 +34,29 @@ GodkjennVilkarMedVarsling.propTypes = {
     visVilkar: PT.bool.isRequired,
 };
 
+function oppfolgingStatusKomponent(
+    children,
+    visVilkar,
+    manuell,
+    vilkarMaBesvares,
+    brukerHarAvslatt,
+    erVeileder
+) {
+    if (erVeileder) {
+        return children;
+    } else if (manuell) {
+        return <SettDigital />;
+    } else if (vilkarMaBesvares) {
+        return (
+            <GodkjennVilkarMedVarsling
+                visVilkar={visVilkar}
+                brukerHarAvslatt={brukerHarAvslatt}
+            />
+        );
+    }
+    return children;
+}
+
 class OppfolgingStatus extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
@@ -48,39 +71,23 @@ class OppfolgingStatus extends Component {
             situasjon,
             identitet,
             visVilkar,
-            reservasjonKRR,
             manuell,
             vilkarMaBesvares,
             brukerHarAvslatt,
             erVeileder,
         } = this.props;
 
-        let komponent;
-        if (erVeileder) {
-            komponent = children;
-        } else if (manuell) {
-            komponent = <SettDigital />;
-        } else if (reservasjonKRR) {
-            komponent = (
-                <AlertStripeInfoSolid className="oppfolgingstatus__krr-varsling">
-                    <FormattedHTMLMessage id="krr.reservasjon" />
-                </AlertStripeInfoSolid>
-            );
-        } else if (vilkarMaBesvares) {
-            komponent = (
-                <GodkjennVilkarMedVarsling
-                    visVilkar={visVilkar}
-                    brukerHarAvslatt={brukerHarAvslatt}
-                />
-            );
-        } else {
-            komponent = children;
-        }
-
         return (
             <Innholdslaster avhengigheter={[situasjon, identitet]}>
                 <div className="fullbredde">
-                    {komponent}
+                    {oppfolgingStatusKomponent(
+                        children,
+                        visVilkar,
+                        manuell,
+                        vilkarMaBesvares,
+                        brukerHarAvslatt,
+                        erVeileder
+                    )}
                 </div>
             </Innholdslaster>
         );
@@ -90,7 +97,6 @@ class OppfolgingStatus extends Component {
 OppfolgingStatus.defaultProps = {
     children: null,
     erVeileder: null,
-    reservasjonKRR: null,
     manuell: null,
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
@@ -105,7 +111,6 @@ OppfolgingStatus.propTypes = {
     situasjon: AppPT.situasjon.isRequired,
     doHentSituasjon: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
-    reservasjonKRR: PT.bool,
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool,
@@ -118,7 +123,6 @@ const mapStateToProps = state => {
     return {
         erVeileder: identitet.data.erVeileder,
         brukerHarAvslatt: situasjon.brukerHarAvslatt,
-        reservasjonKRR: situasjonData.reservasjonKRR,
         manuell: situasjonData.manuell,
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
         situasjon,
