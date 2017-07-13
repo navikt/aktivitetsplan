@@ -12,14 +12,27 @@
 }
 
 .navigasjonslinje__element {
-    border-bottom: solid 1px transparent;
     color: @navMorkGra;
+
+    &:hover {
+        color: @bla;
+    }
+}
+
+.navigasjonslinje__lenke {
     text-decoration: none;
+    border-bottom: solid 1px transparent;
     margin-right: 1rem;
 
     &:hover {
         color: @bla;
     }
+}
+
+.navigasjonslinje__lenke--disabled {
+    color: @navGra40;
+    margin-right: 1rem;
+    cursor: default;
 }
 
 .navigasjonslinje__element-content {
