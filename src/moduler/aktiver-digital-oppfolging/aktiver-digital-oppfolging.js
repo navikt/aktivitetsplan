@@ -11,7 +11,6 @@ import {
 import * as AppPT from '../../proptypes';
 import { settDigital } from './aktiver-digital-oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
-import { hentSituasjon } from '../../ducks/situasjon';
 
 function AktiverDigitalOppfolgingVarselPure({
     reservertIKRR,
@@ -98,8 +97,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doSettDigital: () =>
-        dispatch(settDigital()).then(dispatch(hentSituasjon())),
+    doSettDigital: () => dispatch(settDigital()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
