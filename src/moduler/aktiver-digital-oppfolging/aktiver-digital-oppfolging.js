@@ -9,30 +9,25 @@ import {
     VarslingMedLenke,
 } from '../varslinger/varsel-alertstriper';
 import * as AppPT from '../../proptypes';
-import { settDigital } from './sett-digital-reducer';
+import { settDigital } from './aktiver-digital-oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
 import { hentSituasjon } from '../../ducks/situasjon';
 
-function SettDigital({
+function AktiverDigitalOppfolgingVarselPure({
     reservertIKRR,
-    doSettDigital,
-    settDigitalReducer,
+    aktiverDigitalOppfolgingFeilet,
     intl,
 }) {
-    const setterDigital =
-        settDigitalReducer.status === STATUS.PENDING ||
-        settDigitalReducer.status === STATUS.RELOADING;
-    const settDigitalFeilet = settDigitalReducer.status === STATUS.ERROR;
-    return (
-        <div className="sett-digital">
+    if (reservertIKRR || aktiverDigitalOppfolgingFeilet) {
+        return (
             <Varsling
-                hidden={reservertIKRR || settDigitalFeilet}
                 tekstId="sett-digital.manuell-oppfolging.infotekst"
                 className="sett-digital__varsel"
             />
-
+        );
+    } else if (!reservertIKRR || aktiverDigitalOppfolgingFeilet) {
+        return (
             <VarslingMedLenke
-                hidden={!reservertIKRR || settDigitalFeilet}
                 tekstId="sett-digital.reservert-i-krr.infotekst"
                 lenkeTekstId="sett-digital.reservert-i-krr.lenketekst"
                 href={intl.formatMessage({
@@ -40,11 +35,43 @@ function SettDigital({
                 })}
                 className="sett-digital__varsel"
             />
-
+        );
+    } else if (!aktiverDigitalOppfolgingFeilet) {
+        return (
             <AdvarselVarsling
-                hidden={!settDigitalFeilet}
                 tekstId="sett-digital.feilmelding"
                 className="sett-digital__varsel"
+            />
+        );
+    }
+}
+
+AktiverDigitalOppfolgingVarselPure.propTypes = {
+    reservertIKRR: PT.bool.isRequired,
+    aktiverDigitalOppfolgingFeilet: PT.bool.isRequired,
+    intl: intlShape.isRequired,
+};
+
+const AktiverDigitalOppfolgingVarsel = injectIntl(
+    AktiverDigitalOppfolgingVarselPure
+);
+
+function AktiverDigitalOppfolging({
+    reservertIKRR,
+    doSettDigital,
+    aktiverDigitalOppfolgingReducer,
+}) {
+    const setterDigital =
+        aktiverDigitalOppfolgingReducer.status === STATUS.PENDING ||
+        aktiverDigitalOppfolgingReducer.status === STATUS.RELOADING;
+
+    return (
+        <div className="sett-digital">
+            <AktiverDigitalOppfolgingVarsel
+                reservertIKRR={reservertIKRR}
+                aktiverDigitalOppfolgingFeilet={
+                    aktiverDigitalOppfolgingReducer.status === STATUS.ERROR
+                }
             />
 
             <Hovedknapp
@@ -59,16 +86,15 @@ function SettDigital({
     );
 }
 
-SettDigital.propTypes = {
+AktiverDigitalOppfolging.propTypes = {
     reservertIKRR: PT.bool.isRequired,
     doSettDigital: PT.func.isRequired,
-    settDigitalReducer: AppPT.reducer.isRequired,
-    intl: intlShape.isRequired,
+    aktiverDigitalOppfolgingReducer: AppPT.reducer.isRequired,
 };
 
 const mapStateToProps = state => ({
     reservertIKRR: state.data.situasjon.data.reservasjonKRR,
-    settDigitalReducer: state.data.settDigital,
+    aktiverDigitalOppfolgingReducer: state.data.aktiverDigitalOppfolging,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -77,5 +103,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(SettDigital)
+    AktiverDigitalOppfolging
 );

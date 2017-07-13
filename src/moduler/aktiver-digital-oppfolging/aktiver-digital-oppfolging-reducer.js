@@ -1,4 +1,4 @@
-import * as Api from './sett-digital-api';
+import * as Api from './aktiver-digital-oppfolging-api';
 import { STATUS, doThenDispatch } from '../../ducks/utils';
 
 // Actions

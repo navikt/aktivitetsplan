@@ -10,7 +10,7 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
-import SettDigital from '../sett-digital/sett-digital';
+import SettDigital from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 
 const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
