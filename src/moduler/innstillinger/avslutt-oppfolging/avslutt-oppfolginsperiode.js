@@ -4,7 +4,7 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
-import ModalFooter from '../../../modal/modal-footer';
+import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import {
     RemoteSubmitKnapp,

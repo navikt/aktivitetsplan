@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { oppdaterDialog } from '../ducks/dialog';
 import { hentIdentitet } from '../ducks/identitet';
-import Checkbox from '../modal/skjema/input/checkbox';
+import Checkbox from '../felles-komponenter/skjema/input/checkbox';
 import visibleIf from '../hocs/visible-if';
 
 class EndreDialogStatusForm extends Component {

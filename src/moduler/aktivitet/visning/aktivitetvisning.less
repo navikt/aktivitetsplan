@@ -1,0 +1,141 @@
+@import '../../../variables';
+
+.aktivitetvisning {
+    &__underseksjon {
+        padding: 0 1rem;
+        .blokk-xs();
+
+        .typo-sidetittel {
+            margin: 1.2rem 0;
+            line-height: 1.1;
+        }
+
+        .oppdater-status {
+            margin: 1rem 0 0 0.5rem;
+        }
+
+        .col-xs-6 {
+            float: none;
+            width: 100%;
+        }
+    }
+
+    &__etikett {
+        .blokk-m();
+    }
+
+    &__alert {
+        .blokk-m();
+    }
+
+    &__detaljer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .typo-undertittel {
+        margin: 1.1rem 0 1rem;
+    }
+
+    .begrunnelse-boks {
+        cursor: pointer;
+
+        .tekst--kollapset {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .aktivitetsbeskrivelse {
+        .blokk-m();
+
+        &__tekst {
+            white-space: pre-wrap;
+        }
+
+        .typo-etikett-liten {
+            margin-bottom: -1rem;
+            color: @navGra60;
+        }
+    }
+
+    .aktivitetsdetaljer,
+    .aktivitetsbeskrivelse {
+        .detaljfelt {
+            .blokk-s();
+            margin-right: 1rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 0 0 9rem;
+
+            &__tittel {
+                color: @navGra60;
+            }
+
+            &__lenke {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    &__delelinje {
+        margin-top: 0;
+        color: @color-hr;
+    }
+
+    &__historikk {
+        .blokk-m();
+    }
+}
+
+.aktivitetvisning__historikk .endringslogg-for-aktivitet {
+    &__lenke-knapp {
+        .blokk-m();
+        display: inline-block;
+    }
+
+    &__innslag {
+        .blokk-s();
+    }
+}
+
+@media (min-width: @screen-sm-min) {
+    .aktivitetvisning {
+        &__underseksjon {
+            .col-xs-6 {
+                float: left;
+                width: 50%;
+
+                &:first-child {
+                    width: 40%;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .aktivitetvisning {
+        &__underseksjon {
+            padding: 0 3rem 0 2rem;
+        }
+
+        .aktivitetsdetaljer,
+        .aktivitetsbeskrivelse {
+            .detaljfelt {
+                flex: 0 0 13rem;
+                margin-right: 2rem;
+            }
+        }
+
+        &__detaljer {
+            width: 32rem;
+        }
+    }
+}

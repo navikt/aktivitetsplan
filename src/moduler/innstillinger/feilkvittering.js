@@ -2,8 +2,8 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import Modal from '../../modal/modal';
-import ModalHeader from '../../modal/modal-header';
+import Modal from '../../felles-komponenter/modal/modal';
+import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import history from '../../history';
 
 function FeilKvittering() {
