@@ -1,20 +1,21 @@
 /* eslint-env mocha */
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
 import { IntlProvider } from 'react-intl';
+import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
 import Innholdslaster from './innholdslaster';
 
 describe('innholdslaster', () => {
     it('Skal rendre spinner hvis ikke alle avhengigheter har blitt lastet og det ikke er noen feil', () => {
-        const wrapper = mount(
+        const wrapper = shallow(
             <Innholdslaster avhengigheter={[{ status: STATUS.PENDING }]}>
                 Children
             </Innholdslaster>
         );
 
-        expect(wrapper.find('Spinner')).to.exist; // eslint-disable-line no-unused-expressions
+        expect(wrapper).to.have.descendants(Spinner); // eslint-disable-line no-unused-expressions
     });
 
     it('Skal rendre feilmeldign hvis det har oppstått en feil på noen avhengigheter', () => {
