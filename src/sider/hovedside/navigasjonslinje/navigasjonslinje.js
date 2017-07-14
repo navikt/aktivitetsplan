@@ -54,7 +54,11 @@ class Navigasjonslinje extends Component {
     }
 
     render() {
-        const { antallUlesteDialoger, privatModus, underOppfolging } = this.props;
+        const {
+            antallUlesteDialoger,
+            privatModus,
+            underOppfolging,
+        } = this.props;
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement
