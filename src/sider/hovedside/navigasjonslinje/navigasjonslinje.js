@@ -54,13 +54,13 @@ class Navigasjonslinje extends Component {
     }
 
     render() {
-        const { antallUlesteDialoger, privatModus } = this.props;
+        const { antallUlesteDialoger, privatModus, underOppfolging } = this.props;
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement
                     sti="/dialog"
                     tekstId="navigasjon.dialog"
-                    disabled={privatModus}
+                    disabled={privatModus || underOppfolging === false}
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
@@ -88,6 +88,11 @@ Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
     privatModus: PT.bool.isRequired,
+    underOppfolging: PT.bool,
+};
+
+Navigasjonslinje.defaultProps = {
+    underOppfolging: undefined,
 };
 
 const mapStateToProps = state => {
@@ -97,6 +102,7 @@ const mapStateToProps = state => {
             .filter(d => !d.lest)
             .filter(d => dialogFilter(d, state)).length,
         privatModus: state.data.situasjon.privatModus,
+        underOppfolging: state.data.situasjon.data.underOppfolging,
     };
 };
 
