@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedHTMLMessage } from 'react-intl';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
@@ -9,10 +10,11 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
+import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 
-const Alert = visibleIfHOC(AlertStripeInfoSolid);
+export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
-function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
+export function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
     return (
         <div>
             <Alert visible={!visVilkar && brukerHarAvslatt}>
@@ -32,6 +34,29 @@ GodkjennVilkarMedVarsling.propTypes = {
     visVilkar: PT.bool.isRequired,
 };
 
+export function oppfolgingStatusKomponent(
+    children,
+    erVeileder,
+    manuell,
+    vilkarMaBesvares,
+    brukerHarAvslatt,
+    visVilkar
+) {
+    if (erVeileder) {
+        return children;
+    } else if (manuell) {
+        return <AktiverDigitalOppfolging />;
+    } else if (vilkarMaBesvares) {
+        return (
+            <GodkjennVilkarMedVarsling
+                visVilkar={visVilkar}
+                brukerHarAvslatt={brukerHarAvslatt}
+            />
+        );
+    }
+    return children;
+}
+
 class OppfolgingStatus extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
@@ -46,36 +71,23 @@ class OppfolgingStatus extends Component {
             situasjon,
             identitet,
             visVilkar,
-            reservasjonKRR,
+            manuell,
             vilkarMaBesvares,
             brukerHarAvslatt,
             erVeileder,
         } = this.props;
 
-        let komponent;
-        if (erVeileder) {
-            komponent = children;
-        } else if (reservasjonKRR) {
-            komponent = (
-                <AlertStripeInfoSolid className="oppfolgingstatus__krr-varsling">
-                    <FormattedHTMLMessage id="krr.reservasjon" />
-                </AlertStripeInfoSolid>
-            );
-        } else if (vilkarMaBesvares) {
-            komponent = (
-                <GodkjennVilkarMedVarsling
-                    visVilkar={visVilkar}
-                    brukerHarAvslatt={brukerHarAvslatt}
-                />
-            );
-        } else {
-            komponent = children;
-        }
-
         return (
             <Innholdslaster avhengigheter={[situasjon, identitet]}>
                 <div className="fullbredde">
-                    {komponent}
+                    {oppfolgingStatusKomponent(
+                        children,
+                        visVilkar,
+                        manuell,
+                        vilkarMaBesvares,
+                        brukerHarAvslatt,
+                        erVeileder
+                    )}
                 </div>
             </Innholdslaster>
         );
@@ -85,7 +97,7 @@ class OppfolgingStatus extends Component {
 OppfolgingStatus.defaultProps = {
     children: null,
     erVeileder: null,
-    reservasjonKRR: null,
+    manuell: null,
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
     visVilkar: false,
@@ -99,7 +111,7 @@ OppfolgingStatus.propTypes = {
     situasjon: AppPT.situasjon.isRequired,
     doHentSituasjon: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
-    reservasjonKRR: PT.bool,
+    manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool,
 };
@@ -111,7 +123,7 @@ const mapStateToProps = state => {
     return {
         erVeileder: identitet.data.erVeileder,
         brukerHarAvslatt: situasjon.brukerHarAvslatt,
-        reservasjonKRR: situasjonData.reservasjonKRR,
+        manuell: situasjonData.manuell,
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
         situasjon,
         identitet,

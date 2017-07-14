@@ -5,7 +5,10 @@ import { Container } from 'nav-frontend-grid';
 import { hentIdentitet } from '../../ducks/identitet';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../proptypes';
-import { Varsling, VarslingMedLenke } from './varsel-alertstriper';
+import {
+    HiddenIfVarsling,
+    HiddenIfVarslingMedLenke,
+} from './varsel-alertstriper';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 
 class Varslinger extends Component {
@@ -29,22 +32,22 @@ class Varslinger extends Component {
             >
                 <HiddenIfDiv hidden={erBruker}>
                     <Container>
-                        <Varsling
+                        <HiddenIfVarsling
                             hidden={underOppfolging}
                             tekstId="oppfolging.ikke-under-oppfolging"
                             className="varsling"
                         />
-                        <Varsling
+                        <HiddenIfVarsling
                             hidden={!vilkarMaBesvares}
                             tekstId="oppfolging.vilkar-ikke-godkjent"
                             className="varsling"
                         />
-                        <Varsling
+                        <HiddenIfVarsling
                             hidden={!reservertIKRR}
                             tekstId="oppfolging.bruker-reservert-i-krr"
                             className="varsling"
                         />
-                        <VarslingMedLenke
+                        <HiddenIfVarslingMedLenke
                             hidden={reservertIKRR || !brukerErManuell}
                             tekstId="oppfolging.bruker-er-manuell.tekst"
                             lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
