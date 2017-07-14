@@ -18,6 +18,7 @@ import filterReducer from './moduler/filter/filter-reducer';
 import veilederReducer from './ducks/veileder';
 import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
+import aktiverDigitalOppfolgingReducer from './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -40,6 +41,7 @@ const combinedReducers = combineReducers({
         filter: filterReducer,
         veiledere: veilederReducer,
         innstillingerHistorikk: historikkReducer,
+        aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,
