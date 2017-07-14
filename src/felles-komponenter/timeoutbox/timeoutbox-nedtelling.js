@@ -3,9 +3,9 @@ import PT from 'prop-types';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import ModalContainer from '../../modal/modal-container';
-import ModalFooter from '../../modal/modal-footer';
-import ModalHeader from '../../modal/modal-header';
+import ModalContainer from '../modal/modal-container';
+import ModalFooter from '../modal/modal-footer';
+import ModalHeader from '../modal/modal-header';
 
 function TimeoutboxNedtelling({ tidIgjen }) {
     return (

@@ -5,7 +5,7 @@ import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-react-design/dist/knapp';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
-import Checkbox from '../../modal/skjema/input/checkbox';
+import Checkbox from '../../felles-komponenter/skjema/input/checkbox';
 import history from '../../history';
 import { godtaVilkar, avslaVilkar } from '../../ducks/situasjon';
 
