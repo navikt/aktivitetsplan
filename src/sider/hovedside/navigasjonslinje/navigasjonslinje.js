@@ -3,33 +3,49 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
+import classNames from 'classnames';
 import NavigasjonslinjeMeny from './navigasjonslinje-meny';
 import Lenke from '../../../felles-komponenter/utils/lenke';
 import Feature from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
-import visibleIfHOC from '../../../hocs/visible-if';
 
-const NavigasjonsElement = visibleIfHOC(({ sti, tekstId, children }) =>
-    <Lenke href={sti} className="navigasjonslinje__element">
-        <Element>
+const NavigasjonsElement = ({ sti, tekstId, disabled, children }) => {
+    const elementKlasser = classNames({
+        navigasjonslinje__element: !disabled,
+        'navigasjonslinje__lenke--disabled': disabled,
+    });
+    const element = (
+        <Element className={elementKlasser}>
             <FormattedMessage id={tekstId} />
             <span className="navigasjonslinje__element-content">
                 {children}
             </span>
         </Element>
-    </Lenke>
-);
+    );
+
+    if (disabled) {
+        return element;
+    }
+
+    return (
+        <Lenke href={sti} className="navigasjonslinje__lenke">
+            {element}
+        </Lenke>
+    );
+};
 
 NavigasjonsElement.defaultProps = {
     children: null,
+    disabled: false,
 };
 
 NavigasjonsElement.propTypes = {
     sti: PT.string.isRequired,
     tekstId: PT.string.isRequired,
     children: PT.node,
+    disabled: PT.bool,
 };
 
 class Navigasjonslinje extends Component {
@@ -38,13 +54,13 @@ class Navigasjonslinje extends Component {
     }
 
     render() {
-        const { antallUlesteDialoger, underOppfolging } = this.props;
+        const { antallUlesteDialoger, privatModus } = this.props;
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement
                     sti="/dialog"
                     tekstId="navigasjon.dialog"
-                    visible={underOppfolging}
+                    disabled={privatModus}
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
@@ -53,8 +69,13 @@ class Navigasjonslinje extends Component {
                 <NavigasjonsElement
                     sti="/mal"
                     tekstId="aktivitetsmal.mitt-mal"
+                    disabled={privatModus}
                 />
-                <NavigasjonsElement sti="/vilkar" tekstId="navigasjon.vilkar" />
+                <NavigasjonsElement
+                    sti="/vilkar"
+                    tekstId="navigasjon.vilkar"
+                    disabled={privatModus}
+                />
                 <Feature name="navigasjonslinjemeny">
                     <NavigasjonslinjeMeny />
                 </Feature>
@@ -66,7 +87,7 @@ class Navigasjonslinje extends Component {
 Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
-    underOppfolging: PT.bool.isRequired,
+    privatModus: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -75,7 +96,7 @@ const mapStateToProps = state => {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)
             .filter(d => dialogFilter(d, state)).length,
-        underOppfolging: !!state.data.situasjon.data.underOppfolging,
+        privatModus: state.data.situasjon.privatModus,
     };
 };
 

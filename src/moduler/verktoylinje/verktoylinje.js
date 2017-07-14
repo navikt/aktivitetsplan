@@ -5,14 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filter/filter';
 
-function Verktoylinje({ viserHistoriskPeriode }) {
+function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
     return (
         <div className="verktoylinje">
             <div className="verktoylinje__verktoy">
                 <Lenkeknapp
                     type="hoved"
                     href="/aktivitet/ny"
-                    disabled={viserHistoriskPeriode}
+                    disabled={viserHistoriskPeriode || privatModus}
                 >
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenkeknapp>
@@ -26,12 +26,14 @@ function Verktoylinje({ viserHistoriskPeriode }) {
 
 Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
+    privatModus: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
     const historiskPeriode = state.data.filter.historiskPeriode;
     return {
         viserHistoriskPeriode: !!historiskPeriode,
+        privatModus: state.data.situasjon.privatModus,
     };
 };
 
