@@ -51,7 +51,7 @@ class Aktivitetvisning extends Component {
     }
 
     componentDidMount() {
-        if (!this.props.params.id.startsWith('arena')) {
+        if (!isNaN(this.props.params.id)) {
             this.props.doHentAktivitet(this.props.params.id);
         }
         this.props.doFjernForrigeAktiveAktivitetId();

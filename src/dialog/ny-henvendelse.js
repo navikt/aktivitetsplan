@@ -106,12 +106,14 @@ const mapStateToProps = (state, props) => {
     const dialogState = state.data.dialog;
     const dialoger = dialogState.data;
     const aktiviteter = state.data.aktiviteter.data;
+    const arenaAktiviteter = state.data.arenaAktiviteter.data;
 
     const dialog = dialoger.find(d => d.id === dialogId) || {};
     const aktivitet = aktiviteter.find(a => a.id === aktivitetId) || {};
+    const arenaAktivitet = arenaAktiviteter.find(a => a.id === aktivitetId) || {};
     const erBruker = state.data.identitet.data.erBruker;
 
-    const overskrift = aktivitet.tittel || dialog.overskrift;
+    const overskrift = aktivitet.tittel || arenaAktivitet.tittel || dialog.overskrift;
     const sisteDato = dialog.sisteDato;
     return {
         form: props.formNavn,
