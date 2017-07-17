@@ -23,6 +23,7 @@ import {
 } from '../../../constant';
 import DetaljFelt from './detalj-felt';
 import { endreAktivitetRoute } from '../../../routing';
+import AktivitetBeskrivelse from './aktivitetsbeskrivelse';
 
 function RedigerLink({ id, felt }) {
     return (
@@ -42,7 +43,7 @@ RedigerLink.propTypes = {
 
 function Informasjonsfelt({ tittel, innhold }) {
     return (
-        <DetaljFelt tittel={tittel} visible={innhold != null}>
+        <DetaljFelt tittel={tittel} visible={innhold !== null}>
             <Normaltekst className="detaljfelt__tekst">
                 {innhold}
             </Normaltekst>
@@ -83,6 +84,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         behandlingSted,
         effekt,
         behandlingOppfolging,
+        beskrivelse,
     } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManed(valgtAktivitet.fraDato);
@@ -407,6 +409,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     return (
         <section className={cls(className)}>
             {map[aktivitetstype]()}
+            <AktivitetBeskrivelse beskrivelse={beskrivelse} />
         </section>
     );
 }

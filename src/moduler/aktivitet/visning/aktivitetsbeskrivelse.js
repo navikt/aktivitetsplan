@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { EtikettLiten } from 'nav-frontend-typografi';
-import Tekstomrade from 'nav-frontend-tekstomrade';
+import Normaltekst from 'nav-frontend-typografi/src/normaltekst';
 
 function Aktivitetsbeskrivelse({ beskrivelse }) {
     return beskrivelse
@@ -10,9 +10,9 @@ function Aktivitetsbeskrivelse({ beskrivelse }) {
               <EtikettLiten className="aktivitetsbeskrivelse__tittel">
                   <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
               </EtikettLiten>
-              <Tekstomrade className="aktivitetsbeskrivelse__tekst">
+              <Normaltekst className="aktivitetsbeskrivelse__tekst">
                   {beskrivelse}
-              </Tekstomrade>
+              </Normaltekst>
           </section>
         : null;
 }

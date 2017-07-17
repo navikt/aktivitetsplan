@@ -10,7 +10,7 @@ export const aktivitet = PT.shape({
     detaljer: PT.object,
     beskrivelse: PT.string,
     avtalt: PT.bool,
-    tiltaksarrangør: PT.string,
+    tiltaksarrangor: PT.string,
     deltakelsesprosent: PT.number,
     dagerPerUke: PT.number,
 });
