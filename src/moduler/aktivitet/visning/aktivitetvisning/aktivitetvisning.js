@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Sidetittel } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import UnderelementerForAktivitet from '../underelement-for-aktivitet/underelementer-for-aktivitet';
 import ModalHeader from '../../../../felles-komponenter/modal/modal-header';
 import history from '../../../../history';
-import AktivitetsDetaljer from '../aktivitetsdetaljer';
 import {
     slettAktivitet,
     hentAktivitet,
@@ -32,68 +29,11 @@ import {
     STILLING_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
-    AVTALT_MED_NAV,
 } from '../../../../constant';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from '../begrunnelse-boks';
-import AktivitetEtikett from '../../../../felles-komponenter/aktivitet-etikett';
 import StandardModal from '../../../../felles-komponenter/modal/modal-standard';
-import { endreAktivitetRoute } from '../../../../routing';
-
-function AktivitetinformasjonVisning({ valgtAktivitet, arenaAktivitet }) {
-    const { tittel, type, avtalt, etikett } = valgtAktivitet;
-
-    const tillattEndring =
-        (valgtAktivitet.avtalt !== true || !!TILLAT_SET_AVTALT) &&
-        (valgtAktivitet.status !== STATUS_FULLFOERT &&
-            valgtAktivitet.status !== STATUS_AVBRUTT);
-
-    const gaTilEndreAktivitet = () =>
-        history.push(endreAktivitetRoute(valgtAktivitet.id));
-
-    return (
-        <div className="aktivitetvisning__underseksjon">
-            <Sidetittel id="modal-aktivitetsvisning-header">
-                {tittel}
-            </Sidetittel>
-
-            <AktivitetIngress type={type} />
-
-            <div className="aktivitetskort__etiketter blokk-s">
-                <AktivitetEtikett
-                    visible={avtalt}
-                    etikett={AVTALT_MED_NAV}
-                    id={AVTALT_MED_NAV}
-                />
-
-                <AktivitetEtikett
-                    visible={!!etikett}
-                    etikett={etikett}
-                    id={`etikett.${etikett}`}
-                />
-            </div>
-
-            <AktivitetsDetaljer
-                className="aktivitetvisning__detaljer"
-                valgtAktivitet={valgtAktivitet}
-            />
-
-            <VisibleIfDiv visible={tillattEndring && !arenaAktivitet}>
-                <Hovedknapp
-                    onClick={gaTilEndreAktivitet}
-                    className="knapp-liten modal-footer__knapp"
-                >
-                    <FormattedMessage id="aktivitetvisning.endre-knapp" />
-                </Hovedknapp>
-            </VisibleIfDiv>
-        </div>
-    );
-}
-
-AktivitetinformasjonVisning.propTypes = {
-    valgtAktivitet: AppPT.aktivitet.isRequired,
-    arenaAktivitet: PT.bool.isRequired,
-};
+import AktivitetinformasjonVisning from './aktivitetinformasjon-visning';
 
 class Aktivitetvisning extends Component {
     constructor(props) {
