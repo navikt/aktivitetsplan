@@ -9,16 +9,16 @@ import * as AppPT from '../../../proptypes';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import StillingAktivitetForm, {
     formNavn as stillingFormNavn,
-} from '../form/aktivitet-stilling-form';
+} from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 import EgenAktivitetForm, {
     formNavn as egenFormNavn,
-} from '../form/aktivitet-egen-form';
+} from '../aktivitet-forms/egen/aktivitet-egen-form';
 import SokeavtaleAktivitetForm, {
     formNavn as sokeavtaleFormNavn,
-} from '../form/aktivitet-sokeavtale-form';
+} from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
 import BehandlingAktivitetForm, {
     formNavn as behandlingFormNavn,
-} from '../form/aktivitet-behandling-form';
+} from '../aktivitet-forms/behandling/aktivitet-behandling-form';
 import history from '../../../history';
 import {
     EGEN_AKTIVITET_TYPE,

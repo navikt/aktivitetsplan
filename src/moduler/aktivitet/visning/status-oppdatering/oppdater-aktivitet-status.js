@@ -3,9 +3,9 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import * as statuser from '../../../constant';
-import * as AppPT from '../../../proptypes';
-import AktivitetStatusForm from '../form/aktivitet-status-form';
+import * as statuser from '../../../../constant';
+import * as AppPT from '../../../../proptypes';
+import AktivitetStatusForm from './aktivitet-status-form';
 
 function OppdaterAktivitetStatus(props) {
     const { aktiviteter, paramsId } = props;

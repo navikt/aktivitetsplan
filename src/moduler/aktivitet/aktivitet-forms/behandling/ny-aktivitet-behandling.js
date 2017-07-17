@@ -3,21 +3,26 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
-import EgenAktivitetForm, { formNavn } from '../form/aktivitet-egen-form';
-import history from '../../../history';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import { lagNyAktivitet } from '../../../ducks/aktiviteter';
-import { EGEN_AKTIVITET_TYPE } from '../../../constant';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import { LUKK_MODAL } from '../../../ducks/modal';
-import { aktivitetRoute } from '../../../routing';
-import Modal from '../../../felles-komponenter/modal/modal';
+import BehandlingAktivitetForm, { formNavn } from './aktivitet-behandling-form';
+import history from '../../../../history';
+import ModalHeader from '../../../../felles-komponenter/modal/modal-header';
+import { lagNyAktivitet } from '../../../../ducks/aktiviteter';
+import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
+import ModalContainer from '../../../../felles-komponenter/modal/modal-container';
+import { LUKK_MODAL } from '../../../../ducks/modal';
+import { aktivitetRoute } from '../../../../routing';
+import Modal from '../../../../felles-komponenter/modal/modal';
 
-function EgenAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
+function BehandlingAktivitet({
+    onLagreNyAktivitet,
+    formIsDirty,
+    lukkModal,
+    intl,
+}) {
     const onLagNyAktivitetSubmit = aktivitet => {
         const nyAktivitet = {
             ...aktivitet,
-            type: EGEN_AKTIVITET_TYPE,
+            type: BEHANDLING_AKTIVITET_TYPE,
         };
 
         onLagreNyAktivitet(nyAktivitet).then(action =>
@@ -28,7 +33,7 @@ function EgenAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
     return (
         <Modal
             isOpen
-            key="egenAktivitetModal"
+            key="behandlingAktivitetModal"
             onRequestClose={() => {
                 const dialogTekst = intl.formatMessage({
                     id: 'aktkivitet-skjema.lukk-advarsel',
@@ -42,23 +47,25 @@ function EgenAktivitet({ onLagreNyAktivitet, formIsDirty, lukkModal, intl }) {
             }}
             contentLabel="aktivitet-modal"
         >
-            <article
-                className="egen-aktivitet"
-                aria-labelledby="modal-egen-aktivitet-header"
-            >
+            <article aria-labelledby="modal-behandling-aktivitet-header">
                 <ModalHeader
                     visConfirmDialog={formIsDirty}
                     tilbakeTekstId="ny-aktivitet-modal.tilbake"
                 />
                 <ModalContainer>
-                    <EgenAktivitetForm onSubmit={onLagNyAktivitetSubmit} />
+                    <BehandlingAktivitetForm
+                        onSubmit={onLagNyAktivitetSubmit}
+                        defaultTittel={intl.formatMessage({
+                            id: 'behandling-aktivitet-form.default-tittel',
+                        })}
+                    />
                 </ModalContainer>
             </article>
         </Modal>
     );
 }
 
-EgenAktivitet.propTypes = {
+BehandlingAktivitet.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
     formIsDirty: PT.bool.isRequired,
     intl: intlShape.isRequired,
@@ -75,5 +82,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(EgenAktivitet)
+    injectIntl(BehandlingAktivitet)
 );

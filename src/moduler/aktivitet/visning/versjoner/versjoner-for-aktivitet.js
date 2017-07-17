@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import {
     hentVersjonerForAktivtet,
     fjernVersjoner,
-} from '../../../ducks/aktivitet-versjoner';
-import * as AppPT from '../../../proptypes';
-import visibleIfHOC from '../../../hocs/visible-if';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import Accordion from '../../../felles-komponenter/accordion';
-import { autobind } from '../../../utils';
+} from '../../../../ducks/aktivitet-versjoner';
+import * as AppPT from '../../../../proptypes';
+import visibleIfHOC from '../../../../hocs/visible-if';
+import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import Accordion from '../../../../felles-komponenter/accordion';
+import { autobind } from '../../../../utils';
 import VersjonInnslag from './versjoninnslag';
 
 const MAX_SIZE = 10;

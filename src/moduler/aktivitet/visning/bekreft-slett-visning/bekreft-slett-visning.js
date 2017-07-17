@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import Bilde from 'nav-react-design/dist/bilde';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Knapp, Fareknapp } from 'nav-frontend-knapper';
-import stopSvg from './stop.svg';
+import stopSvg from '../../visning/stop.svg';
 
 function BekreftSlettVisning({ slettAction, avbrytAction }) {
     return (

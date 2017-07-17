@@ -6,26 +6,26 @@ import moment from 'moment';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import Aktivitetsbeskrivelse from './aktivitetsbeskrivelse';
-import AktivitetIngress from './aktivitetingress';
-import UnderelementerForAktivitet from './underelementer-for-aktivitet';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import history from '../../../history';
-import AktivitetsDetaljer from './aktivitetsdetaljer';
+import Aktivitetsbeskrivelse from '../aktivitetsbeskrivelse';
+import AktivitetIngress from '../aktivitetingress/aktivitetingress';
+import UnderelementerForAktivitet from '../underelement-for-aktivitet/underelementer-for-aktivitet';
+import ModalHeader from '../../../../felles-komponenter/modal/modal-header';
+import history from '../../../../history';
+import AktivitetsDetaljer from '../aktivitetsdetaljer';
 import {
     slettAktivitet,
     hentAktivitet,
     settForrigeAktiveAktivitetId,
     fjernForrigeAktiveAktivitetId,
-} from '../../../ducks/aktiviteter';
-import * as AppPT from '../../../proptypes';
-import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+} from '../../../../ducks/aktiviteter';
+import * as AppPT from '../../../../proptypes';
+import ModalFooter from '../../../../felles-komponenter/modal/modal-footer';
+import ModalContainer from '../../../../felles-komponenter/modal/modal-container';
 import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
-import BekreftSlettVisning from './bekreft-slett-visning';
-import OppdaterAktivitetStatus from './oppdater-aktivitet-status';
-import OppdaterAktivitetEtikett from './oppdater-aktivitet-etikett';
-import AvtaltContainer from './avtalt-container';
+import BekreftSlettVisning from '../bekreft-slett-visning/bekreft-slett-visning';
+import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
+import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-etikett';
+import AvtaltContainer from '../avtalt-container/avtalt-container';
 import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
@@ -34,12 +34,12 @@ import {
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
     AVTALT_MED_NAV,
-} from '../../../constant';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
-import BegrunnelseBoks from './begrunnelse-boks';
-import AktivitetEtikett from '../../../felles-komponenter/aktivitet-etikett';
-import StandardModal from '../../../felles-komponenter/modal/modal-standard';
-import { endreAktivitetRoute } from '../../../routing';
+} from '../../../../constant';
+import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import BegrunnelseBoks from '../begrunnelse-boks';
+import AktivitetEtikett from '../../../../felles-komponenter/aktivitet-etikett';
+import StandardModal from '../../../../felles-komponenter/modal/modal-standard';
+import { endreAktivitetRoute } from '../../../../routing';
 
 class Aktivitetvisning extends Component {
     constructor(props) {
