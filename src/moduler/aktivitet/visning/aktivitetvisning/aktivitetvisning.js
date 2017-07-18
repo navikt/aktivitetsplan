@@ -148,8 +148,6 @@ class Aktivitetvisning extends Component {
                         arenaAktivitet={arenaAktivitet}
                     />
 
-                    <hr className="aktivitetvisning__delelinje" />
-
                     <AvtaltContainer
                         aktivitet={valgtAktivitet}
                         className="aktivitetvisning__underseksjon"
@@ -160,8 +158,6 @@ class Aktivitetvisning extends Component {
                         arenaAktivitet={arenaAktivitet}
                         paramsId={id}
                     />
-
-                    <hr className="aktivitetvisning__delelinje" />
 
                     <UnderelementerForAktivitet
                         aktivitet={valgtAktivitet}

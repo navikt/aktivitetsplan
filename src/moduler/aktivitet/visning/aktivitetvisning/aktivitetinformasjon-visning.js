@@ -29,40 +29,43 @@ function AktivitetinformasjonVisning({ valgtAktivitet, arenaAktivitet }) {
         history.push(endreAktivitetRoute(valgtAktivitet.id));
 
     return (
-        <div className="aktivitetvisning__underseksjon">
-            <Sidetittel id="modal-aktivitetsvisning-header">
-                {tittel}
-            </Sidetittel>
+        <div>
+            <div className="aktivitetvisning__underseksjon">
+                <Sidetittel id="modal-aktivitetsvisning-header">
+                    {tittel}
+                </Sidetittel>
 
-            <AktivitetIngress type={type} />
+                <AktivitetIngress type={type} />
 
-            <div className="aktivitetskort__etiketter blokk-s">
-                <AktivitetEtikett
-                    visible={avtalt}
-                    etikett={AVTALT_MED_NAV}
-                    id={AVTALT_MED_NAV}
+                <div className="aktivitetskort__etiketter blokk-s">
+                    <AktivitetEtikett
+                        visible={avtalt}
+                        etikett={AVTALT_MED_NAV}
+                        id={AVTALT_MED_NAV}
+                    />
+
+                    <AktivitetEtikett
+                        visible={!!etikett}
+                        etikett={etikett}
+                        id={`etikett.${etikett}`}
+                    />
+                </div>
+
+                <AktivitetsDetaljer
+                    className="aktivitetvisning__detaljer"
+                    valgtAktivitet={valgtAktivitet}
                 />
 
-                <AktivitetEtikett
-                    visible={!!etikett}
-                    etikett={etikett}
-                    id={`etikett.${etikett}`}
-                />
+                <VisibleIfDiv visible={tillattEndring && !arenaAktivitet}>
+                    <Hovedknapp
+                        onClick={gaTilEndreAktivitet}
+                        className="knapp-liten modal-footer__knapp"
+                    >
+                        <FormattedMessage id="aktivitetvisning.endre-knapp" />
+                    </Hovedknapp>
+                </VisibleIfDiv>
             </div>
-
-            <AktivitetsDetaljer
-                className="aktivitetvisning__detaljer"
-                valgtAktivitet={valgtAktivitet}
-            />
-
-            <VisibleIfDiv visible={tillattEndring && !arenaAktivitet}>
-                <Hovedknapp
-                    onClick={gaTilEndreAktivitet}
-                    className="knapp-liten modal-footer__knapp"
-                >
-                    <FormattedMessage id="aktivitetvisning.endre-knapp" />
-                </Hovedknapp>
-            </VisibleIfDiv>
+            <hr className="aktivitetvisning__delelinje" />
         </div>
     );
 }

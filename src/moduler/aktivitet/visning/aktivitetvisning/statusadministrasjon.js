@@ -36,6 +36,8 @@ function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, paramsId }) {
                     className="aktivitetvisning__underseksjon"
                 />
             </VisibleIfDiv>
+
+            <hr className="aktivitetvisning__delelinje" />
         </div>
     );
 
