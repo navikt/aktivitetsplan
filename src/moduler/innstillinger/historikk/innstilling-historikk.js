@@ -38,7 +38,7 @@ class InnstillingHistorikk extends Component {
             historikkListeSorted[0] &&
             <InnstillingHistorikkInnslag
                 key={historikkListeSorted[0].dato}
-                manuellHistorikk={historikkListeSorted[0]}
+                innstillingHistorikk={historikkListeSorted[0]}
             />;
 
         const restenAvPeriodene = (
@@ -55,7 +55,7 @@ class InnstillingHistorikk extends Component {
                     .map(innslag =>
                         <InnstillingHistorikkInnslag
                             key={innslag.dato}
-                            manuellHistorikk={innslag}
+                            innstillingHistorikk={innslag}
                         />
                     )}
             </Accordion>

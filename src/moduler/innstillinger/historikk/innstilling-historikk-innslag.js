@@ -13,10 +13,9 @@ const EKSTERN = 'EKSTERN';
 
 class InnstillingHistorikkInnslag extends Component {
     componentWillMount() {
-        if (this.props.manuellHistorikk.opprettetAv === NAV) {
-            this.props.doHentVeileder(
-                this.props.manuellHistorikk.opprettetAvBrukerId
-            );
+        const innstillingHistorikk = this.props.innstillingHistorikk;
+        if (innstillingHistorikk.opprettetAv === NAV) {
+            this.props.doHentVeileder(innstillingHistorikk.opprettetAvBrukerId);
         }
     }
 
@@ -24,7 +23,7 @@ class InnstillingHistorikkInnslag extends Component {
         const {
             opprettetAv,
             opprettetAvBrukerId,
-        } = this.props.manuellHistorikk;
+        } = this.props.innstillingHistorikk;
         switch (opprettetAv) {
             case NAV:
                 return (
@@ -51,10 +50,9 @@ class InnstillingHistorikkInnslag extends Component {
     }
 
     render() {
-        const { manuell, dato, begrunnelse } = this.props.manuellHistorikk;
-        const innslagHeaderId = manuell
-            ? 'innstillinger.historikk.innslag.satt-til-manuell'
-            : 'innstillinger.historikk.innslag.satt-til-digital';
+        const { type, dato, begrunnelse } = this.props.innstillingHistorikk;
+        const tekstType = type.replace(/_/g, '-').toLowerCase();
+        const innslagHeaderId = `innstillinger.historikk.innslag.${tekstType}`;
 
         return (
             <div className="historikk__innslag">
@@ -62,10 +60,7 @@ class InnstillingHistorikkInnslag extends Component {
                     <FormattedMessage id={innslagHeaderId} />
                 </Element>
                 <Normaltekst className="innslag__begrunnelse">
-                    <FormattedMessage
-                        id="innstillinger.historikk.innslag.begrunnelse"
-                        values={{ begrunnelse }}
-                    />
+                    {begrunnelse}
                 </Normaltekst>
                 <Undertekst>
                     <DatoEllerTidSiden>{dato}</DatoEllerTidSiden>
@@ -83,7 +78,7 @@ InnstillingHistorikkInnslag.defaultProps = {
 };
 
 InnstillingHistorikkInnslag.propTypes = {
-    manuellHistorikk: AppPT.manuellHistorikk.isRequired,
+    innstillingHistorikk: AppPT.innstillingHistorikk.isRequired,
     doHentVeileder: PT.func.isRequired,
     veileder: AppPT.veileder,
 };
