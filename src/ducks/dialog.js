@@ -19,6 +19,9 @@ export const OPPDATER_DIALOG = 'dialog/oppdater';
 export const OPPDATER_DIALOG_OK = 'dialog/oppdater/ok';
 export const OPPDATER_DIALOG_FEILET = 'dialog/oppdater/fail';
 
+export const SORTER_DIALOGER_TYPE = 'dialog/sorter';
+export const SORTER_DIALOGER = { type: SORTER_DIALOGER_TYPE };
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
@@ -32,7 +35,7 @@ function nyStateMedOppdatertDialog(state, dialog) {
     if (dialogIndeks >= 0) {
         nyData[dialogIndeks] = dialog;
     } else {
-        nyData.push(dialog);
+        nyData.unshift(dialog); // prepend
     }
     return { ...state, status: STATUS.OK, data: nyData };
 }
@@ -52,6 +55,8 @@ export default function reducer(state = initalState, action) {
     switch (action.type) {
         case OPPRETTER_HENVENDELSE:
             return { ...state, status: STATUS.RELOADING };
+        case SORTER_DIALOGER_TYPE:
+            return { ...state, data: [...state.data].sort(compareDialoger) };
         case HENTET:
             // Tilsynelatende litt rart å sortere dialogene her, men det støtter opp under krav om at
             // en dialog ikke skal endre plass i lista unntatt ved full innlastning av lista

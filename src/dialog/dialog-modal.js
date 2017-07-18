@@ -17,6 +17,7 @@ import VisibleIfTag from '../felles-komponenter/utils/visible-if-tag';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
+import { SORTER_DIALOGER } from '../ducks/dialog';
 
 const animationTime = 300;
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
@@ -200,6 +201,7 @@ class DialogModal extends Component {
     }
 
     componentDidMount() {
+        this.props.sorterDialoger();
         // eslint-disable-next-line react/no-did-mount-set-state
         this.setState({
             vis: true,
@@ -248,6 +250,7 @@ class DialogModal extends Component {
 
 DialogModal.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
+    sorterDialoger: PT.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
@@ -271,4 +274,10 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps)(DialogModal);
+const mapDispatchToProps = dispatch => ({
+    sorterDialoger: () => {
+        dispatch(SORTER_DIALOGER);
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DialogModal);
