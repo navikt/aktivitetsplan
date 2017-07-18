@@ -114,15 +114,15 @@ const mapStateToProps = (state, props) => {
         arenaAktiviteter.find(a => a.id === aktivitetId) || {};
     const erBruker = state.data.identitet.data.erBruker;
 
-    const overskrift =
+    const harOverskrift =
         aktivitet.tittel || arenaAktivitet.tittel || dialog.overskrift;
     const sisteDato = dialog.sisteDato;
     return {
         form: props.formNavn,
         initialValues: {
-            overskrift,
+            harOverskrift,
         },
-        harEksisterendeOverskrift: !!overskrift,
+        harEksisterendeOverskrift: !!harOverskrift,
         oppretter: dialogState.status !== STATUS.OK,
         visBrukerInfo: !!(
             erBruker &&
