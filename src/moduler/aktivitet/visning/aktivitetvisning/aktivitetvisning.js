@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import UnderelementerForAktivitet from '../underelement-for-aktivitet/underelementer-for-aktivitet';
 import ModalHeader from '../../../../felles-komponenter/modal/modal-header';
 import history from '../../../../history';
@@ -19,21 +18,18 @@ import ModalFooter from '../../../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../../../felles-komponenter/modal/modal-container';
 import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import BekreftSlettVisning from '../bekreft-slett-visning/bekreft-slett-visning';
-import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
-import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-etikett';
 import AvtaltContainer from '../avtalt-container/avtalt-container';
 import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
     TILTAK_AKTIVITET_TYPE,
-    STILLING_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import BegrunnelseBoks from '../begrunnelse-boks';
 import StandardModal from '../../../../felles-komponenter/modal/modal-standard';
 import AktivitetinformasjonVisning from './aktivitetinformasjon-visning';
+import Statusadministrasjon from './statusadministrasjon';
 
 class Aktivitetvisning extends Component {
     constructor(props) {
@@ -83,6 +79,7 @@ class Aktivitetvisning extends Component {
                 </StandardModal>
             );
         }
+
         const tillatSletting =
             TILLAT_SLETTING &&
             (!situasjon.underOppfolging ||
@@ -105,35 +102,6 @@ class Aktivitetvisning extends Component {
         const aktivitetErLaast =
             valgtAktivitet.status === STATUS_FULLFOERT ||
             valgtAktivitet.status === STATUS_AVBRUTT;
-
-        const visAdministreresAvVeileder = (
-            <div className="aktivitetvisning__underseksjon">
-                <AlertStripeInfo className="aktivitetvisning__alert">
-                    <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
-                </AlertStripeInfo>
-            </div>
-        );
-
-        const visOppdaterStatusContainer = (
-            <div>
-                <OppdaterAktivitetStatus
-                    status={valgtAktivitet.status}
-                    paramsId={id}
-                    className="aktivitetvisning__underseksjon"
-                />
-
-                <VisibleIfDiv
-                    visible={valgtAktivitet.type === STILLING_AKTIVITET_TYPE}
-                >
-                    <hr className="aktivitetvisning__delelinje" />
-                    <OppdaterAktivitetEtikett
-                        status={valgtAktivitet.status}
-                        paramsId={id}
-                        className="aktivitetvisning__underseksjon"
-                    />
-                </VisibleIfDiv>
-            </div>
-        );
 
         const aktivitetvisningHeader = (
             <ModalHeader
@@ -169,15 +137,11 @@ class Aktivitetvisning extends Component {
                 {aktivitetvisningHeader}
 
                 <ModalContainer className="aktivitetvisning">
-                    <VisibleIfDiv
-                        visible={visBegrunnelse}
+                    <BegrunnelseBoks
                         className="aktivitetvisning__underseksjon"
-                    >
-                        <BegrunnelseBoks
-                            begrunnelse={valgtAktivitet.avsluttetKommentar}
-                            visible={visBegrunnelse}
-                        />
-                    </VisibleIfDiv>
+                        begrunnelse={valgtAktivitet.avsluttetKommentar}
+                        visible={visBegrunnelse}
+                    />
 
                     <AktivitetinformasjonVisning
                         valgtAktivitet={valgtAktivitet}
@@ -191,9 +155,11 @@ class Aktivitetvisning extends Component {
                         className="aktivitetvisning__underseksjon"
                     />
 
-                    {arenaAktivitet
-                        ? visAdministreresAvVeileder
-                        : visOppdaterStatusContainer}
+                    <Statusadministrasjon
+                        valgtAktivitet={valgtAktivitet}
+                        arenaAktivitet={arenaAktivitet}
+                        paramsId={id}
+                    />
 
                     <hr className="aktivitetvisning__delelinje" />
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Normaltekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import visibleIfHOC from '../../../hocs/visible-if';
 import { autobind } from '../../../utils';
@@ -13,24 +14,30 @@ class BegrunnelseBoks extends Component {
         };
         autobind(this);
     }
+
     settKollapset(e) {
         e.preventDefault();
         this.setState({
             kollapset: !this.state.kollapset,
         });
     }
+
     render() {
-        const classes = classNames({
-            'tekst--kollapset': this.state.kollapset,
-            tekst: !this.state.kollapset,
-        });
+        const { begrunnelse, className } = this.props;
+        const cls = (classes, kollapset) =>
+            classNames(classes, {
+                'tekst--kollapset': kollapset,
+                tekst: !kollapset,
+            });
         /* eslint-disable */
         return (
             <div className="begrunnelse-boks" onClick={this.settKollapset}>
                 <AlertStripeInfo>
-                    <span className={classes}>
-                        {this.props.begrunnelse}
-                    </span>
+                    <Normaltekst
+                        className={cls(className, this.state.kollapset)}
+                    >
+                        {begrunnelse}
+                    </Normaltekst>
                 </AlertStripeInfo>
             </div>
         );
@@ -38,8 +45,13 @@ class BegrunnelseBoks extends Component {
     }
 }
 
+BegrunnelseBoks.defaultProps = {
+    className: '',
+};
+
 BegrunnelseBoks.propTypes = {
     begrunnelse: PT.string.isRequired,
+    className: PT.string,
 };
 
 export default visibleIfHOC(BegrunnelseBoks);
