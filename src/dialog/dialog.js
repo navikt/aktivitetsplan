@@ -10,6 +10,7 @@ import * as AppPT from '../proptypes';
 
 function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;
+    const historisk = dialog.historisk;
     return (
         <div className={className}>
             <Undertittel tag="h1">
@@ -19,11 +20,13 @@ function Dialog({ dialog, overskrift, className }) {
                 <FormattedMessage id="dialog.deg-og-nav.tittel" />
             </Element>
             <NyHenvendelse
+                hidden={historisk}
                 formNavn={`ny-henvendelse-dialog-${dialogId}`}
                 dialogId={dialogId}
                 skalHaAutofokus={false}
             />
             <EndreDialog
+                hidden={historisk}
                 formNavn={`endre-dialog-${dialogId}`}
                 dialog={dialog}
             />
