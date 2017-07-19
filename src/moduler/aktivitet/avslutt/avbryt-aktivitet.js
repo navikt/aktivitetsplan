@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
 import VisAdvarsel from './vis-advarsel';
-import { avbrytAktivitet } from '../../../ducks/aktiviteter';
+import { avbrytAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
 import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 import history from '../../../history';

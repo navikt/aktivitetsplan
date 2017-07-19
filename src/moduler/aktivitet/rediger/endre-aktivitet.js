@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
-import { oppdaterAktivitet } from '../../../ducks/aktiviteter';
+import { oppdaterAktivitet } from '../aktivitet-actions';
 import { SKJUL_VERSJONSKONFLIKT_ACTION } from '../../../ducks/endre-aktivitet';
 import * as AppPT from '../../../proptypes';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';

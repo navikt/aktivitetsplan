@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { injectIntl, intlShape } from 'react-intl';
 import StillingAktivitetForm, { formNavn } from './aktivitet-stilling-form';
-import { lagNyAktivitet } from '../../../../ducks/aktiviteter';
+import { lagNyAktivitet } from '../../aktivitet-actions';
 import history from '../../../../history';
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import ModalHeader from '../../../../felles-komponenter/modal/modal-header';

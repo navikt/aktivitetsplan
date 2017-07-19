@@ -6,7 +6,7 @@ import { isDirty } from 'redux-form';
 import EgenAktivitetForm, { formNavn } from './aktivitet-egen-form';
 import history from '../../../../history';
 import ModalHeader from '../../../../felles-komponenter/modal/modal-header';
-import { lagNyAktivitet } from '../../../../ducks/aktiviteter';
+import { lagNyAktivitet } from '../../aktivitet-actions';
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 import ModalContainer from '../../../../felles-komponenter/modal/modal-container';
 import { LUKK_MODAL } from '../../../../ducks/modal';

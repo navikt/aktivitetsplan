@@ -15,7 +15,7 @@ import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
 } from '../../../../constant';
-import { oppdaterAktivitet } from '../../../../ducks/aktiviteter';
+import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import { STATUS } from '../../../../ducks/utils';
