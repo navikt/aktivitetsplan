@@ -25,16 +25,6 @@ class AktivitetvisningContainer extends Component {
         this.props.doSettForrigeAktiveAktivitetId(this.props.params.id);
     }
 
-    slettingErTillatt(valgtAktivitet) {
-        return (
-            TILLAT_SLETTING &&
-            (!this.situasjon.data.underOppfolging ||
-                moment(this.situasjon.data.oppfolgingUtgang).isAfter(
-                    valgtAktivitet.opprettetDato
-                ))
-        );
-    }
-
     render() {
         const { params, aktiviteter, arenaAktiviteter, situasjon } = this.props;
         const { id } = params;
@@ -44,13 +34,20 @@ class AktivitetvisningContainer extends Component {
             aktivitet => aktivitet.id === id
         );
 
+        const slettingErTillatt =
+            TILLAT_SLETTING &&
+            (!situasjon.data.underOppfolging ||
+                moment(situasjon.data.oppfolgingUtgang).isAfter(
+                    valgtAktivitet.opprettetDato
+                ));
+
         return (
             <Innholdslaster
                 avhengigheter={[aktiviteter, arenaAktiviteter, situasjon]}
             >
                 <Aktivitetvinsing
                     aktivitet={valgtAktivitet}
-                    tillatSletting={this.slettingErTillatt(valgtAktivitet)}
+                    tillatSletting={slettingErTillatt}
                 />
             </Innholdslaster>
         );
