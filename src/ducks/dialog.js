@@ -43,6 +43,8 @@ function nyStateMedOppdatertDialog(state, dialog) {
 function compareDialoger(a, b) {
     if (a.ferdigBehandlet !== b.ferdigBehandlet) {
         return a.ferdigBehandlet ? 1 : -1;
+    } else if (a.venterPaSvar !== b.venterPaSvar) {
+        return a.venterPaSvar ? 1 : -1;
     } else if (a.lest !== b.lest) {
         return a.lest ? 1 : -1;
     }
