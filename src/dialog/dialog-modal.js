@@ -13,6 +13,7 @@ import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import PilKnapp from '../felles-komponenter/utils/pil-knapp';
 import NyHenvendelse from './ny-henvendelse';
 import visibleIfHOC from '../hocs/visible-if';
+import { section as HideableSection } from '../felles-komponenter/hidden-if/hidden-if';
 import VisibleIfTag from '../felles-komponenter/utils/visible-if-tag';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
@@ -77,6 +78,7 @@ function VenstreKolonne({
     valgtDialog,
     harNyDialog,
     harNyDialogEllerValgtDialog,
+    historiskVisning,
 }) {
     const className = classNames(
         'dialog-modal__kolonne',
@@ -88,7 +90,10 @@ function VenstreKolonne({
 
     return (
         <div className={className}>
-            <section className="dialog-modal__ny-dialog">
+            <HideableSection
+                className="dialog-modal__ny-dialog"
+                hidden={historiskVisning}
+            >
                 <Knappelenke
                     onClick={nyDialog}
                     disabled={harNyDialog}
@@ -96,7 +101,7 @@ function VenstreKolonne({
                 >
                     <FormattedMessage id="dialog.modal.ny-dialog" />
                 </Knappelenke>
-            </section>
+            </HideableSection>
             <Dialoger
                 className="dialog-modal__dialoger"
                 valgtDialog={valgtDialog}
@@ -109,6 +114,7 @@ VenstreKolonne.propTypes = {
     valgtDialog: AppPT.dialog,
     harNyDialog: PT.bool.isRequired,
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
+    historiskVisning: PT.bool.isRequired,
 };
 
 VenstreKolonne.defaultProps = {
@@ -256,13 +262,15 @@ DialogModal.propTypes = {
 const mapStateToProps = (state, props) => {
     const { routeParams } = props;
     const { id } = routeParams;
-    const motpart = state.data.motpart;
-    const dialoger = state.data.dialog.data;
+    const stateData = state.data;
+    const motpart = stateData.motpart;
+    const dialoger = stateData.dialog.data;
     const valgtDialog = dialoger.find(d => d.id === id);
     const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
 
     const harNyDialog = id === 'ny';
     const harValgtDialog = !!valgtDialog;
+    const historiskVisning = !!stateData.filter.historiskPeriode;
     return {
         harNyDialog,
         valgtDialog,
@@ -271,6 +279,7 @@ const mapStateToProps = (state, props) => {
         valgtAktivitetId,
         motpart,
         navnPaMotpart: motpart.data.navn,
+        historiskVisning,
     };
 };
 
