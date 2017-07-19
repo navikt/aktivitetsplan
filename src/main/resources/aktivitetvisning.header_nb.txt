@@ -1,7 +1,7 @@
 { status, select,
 PLANLAGT { Planlagt }
 BRUKER_ER_INTERESSERT { Foreslått }
-GJENNOMFORT { Gjennomføres }
+GJENNOMFORES { Gjennomføres }
 FULLFORT { Fullført }
 AVBRUTT { Avbrutt }
 } / { type, select,
