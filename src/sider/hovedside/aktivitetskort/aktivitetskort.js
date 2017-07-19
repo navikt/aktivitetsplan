@@ -48,22 +48,22 @@ class AktivitetsKort extends Component {
 
     render() {
         const { aktivitet, isDragging, connectDragSource } = this.props;
+        const { id, type, status, nesteStatus, tittel, fraDato, tilDato, antallStillingerSokes } = aktivitet;
 
-        const behandlingAktivitet =
-            BEHANDLING_AKTIVITET_TYPE === aktivitet.type;
+        const behandlingAktivitet = BEHANDLING_AKTIVITET_TYPE === type;
         const arenaAktivitet = [
             TILTAK_AKTIVITET_TYPE,
             GRUPPE_AKTIVITET_TYPE,
             UTDANNING_AKTIVITET_TYPE,
-        ].includes(aktivitet.type);
+        ].includes(type);
         const erFlyttbar =
-            !aktivitet.nesteStatus &&
-            ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) &&
+            !nesteStatus &&
+            ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status) &&
             !arenaAktivitet;
         const aktivitetsKort = (
             <article style={{ opacity: isDragging ? 0.4 : 1 }}>
                 <Lenke
-                    href={aktivitetRoute(aktivitet.id)}
+                    href={aktivitetRoute(id)}
                     className={classNames(
                         'aktivitetskort',
                         erFlyttbar && 'aktivitetskort--flyttbar'
@@ -75,28 +75,28 @@ class AktivitetsKort extends Component {
                 >
                     <Undertekst tag="p" className="aktivitetskort__type">
                         <FormattedMessage
-                            id={`aktivitetskort.type.${aktivitet.type}`.toLowerCase()}
+                            id={`aktivitetskort.type.${type}`.toLowerCase()}
                         />
                     </Undertekst>
                     <Element tag="h1" className="aktivitetskort__tittel">
                         {behandlingAktivitet
                             ? <FormattedMessage id="aktivitetskort.behandling.tittel" />
-                            : aktivitet.tittel}
+                            : tittel}
                     </Element>
                     <Normaltekst className="aktivitetskort__dato">
                         {[
-                            formaterDato(aktivitet.fraDato),
-                            formaterDato(aktivitet.tilDato),
+                            formaterDato(fraDato),
+                            formaterDato(tilDato),
                         ]
                             .filter(d => d)
                             .join(' - ')}
                     </Normaltekst>
                     <VisibleIfDiv
-                        visible={aktivitet.type === SOKEAVTALE_AKTIVITET_TYPE}
+                        visible={type === SOKEAVTALE_AKTIVITET_TYPE}
                     >
                         <FormattedMessage id="aktivitetskort.antall-label" />
                         &nbsp;
-                        {aktivitet.antall}
+                        {antallStillingerSokes}
                     </VisibleIfDiv>
                     <AktivitetskortTillegg aktivitet={aktivitet} />
                 </Lenke>
