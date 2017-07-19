@@ -3,8 +3,8 @@ import PT from 'prop-types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-import visibleIfHOC from '../../../hocs/visible-if';
-import { autobind } from '../../../utils';
+import visibleIfHOC from '../../../../hocs/visible-if';
+import { autobind } from '../../../../utils';
 
 class BegrunnelseBoks extends Component {
     constructor(props) {

@@ -5,7 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import history from '../../../../history';
-import AktivitetsDetaljer from '../aktivitetsdetaljer';
+import AktivitetsDetaljer from './aktivitetsdetaljer';
 import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import {
     STATUS_FULLFOERT,

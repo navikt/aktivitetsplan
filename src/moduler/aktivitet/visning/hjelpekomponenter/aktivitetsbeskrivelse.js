@@ -1,8 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { EtikettLiten } from 'nav-frontend-typografi';
-import Normaltekst from 'nav-frontend-typografi/src/normaltekst';
+import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 
 function Aktivitetsbeskrivelse({ beskrivelse }) {
     return beskrivelse
