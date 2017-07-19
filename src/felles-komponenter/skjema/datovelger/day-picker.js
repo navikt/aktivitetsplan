@@ -5,19 +5,11 @@ import { FormattedDate, injectIntl, intlShape } from 'react-intl';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import { erGyldigDato, erGyldigDatoformat } from '../../../utils';
-import { dateGreater, dateLess } from './utils';
 
 const localeUtils = {
     ...MomentLocaleUtils,
     formatWeekdayShort: (i, locale) =>
         MomentLocaleUtils.formatWeekdayLong(i, locale).substring(0, 3),
-};
-
-const pad = nr => {
-    if (nr > 9 || nr.length > 1) {
-        return nr;
-    }
-    return `0${nr}`;
 };
 
 export const Caption = ({ date }) =>
@@ -132,20 +124,6 @@ class DayPickerComponent extends Component {
         return DateUtils.isSameDay(this.getDateFromValue(), day);
     }
 
-    erDeaktivertDag(day) {
-        const { tidligsteFom, senesteTom } = this.props;
-        const tempDay = new Date(
-            `${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(
-                day.getDate()
-            )}`
-        );
-
-        return (
-            (tidligsteFom && dateGreater(tidligsteFom, tempDay)) ||
-            (senesteTom && dateLess(senesteTom, tempDay))
-        );
-    }
-
     render() {
         const { ariaControlledBy, onKeyUp } = this.props;
         return (
@@ -179,14 +157,12 @@ DayPickerComponent.propTypes = {
     ariaControlledBy: PT.string,
     onDayClick: PT.func.isRequired,
     senesteTom: PT.instanceOf(Date),
-    tidligsteFom: PT.instanceOf(Date),
     intl: intlShape.isRequired,
 };
 
 DayPickerComponent.defaultProps = {
     ariaControlledBy: undefined,
     senesteTom: undefined,
-    tidligsteFom: undefined,
 };
 
 export default injectIntl(DayPickerComponent);

@@ -106,15 +106,13 @@ export const feil = PT.shape({
     detaljer: PT.object,
 });
 
-export const manuellHistorikk = PT.shape({
+export const innstillingHistorikk = PT.shape({
     begrunnelse: PT.string,
     dato: PT.string,
-    manuell: PT.bool,
+    type: PT.string.isRequired,
     opprettetAvBrukerId: PT.string,
     opprettetAv: PT.string,
 });
-
-export const historikk = PT.arrayOf(manuellHistorikk);
 
 export const veileder = PT.shape({
     etternavn: PT.string,

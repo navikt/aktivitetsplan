@@ -132,7 +132,7 @@ class SokeAvtaleAktivitetForm extends Component {
                     </PeriodeValidering>
 
                     <Input
-                        feltNavn="antall"
+                        feltNavn="antallStillingerSokes"
                         disabled={avtalt === true}
                         labelId="sokeavtale-aktivitet-form.label.antall"
                         bredde="s"
@@ -188,7 +188,7 @@ const SokeavtaleAktivitetReduxForm = validForm({
     validate: {
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
-        antall: [pakrevdAntall, numericAntall],
+        antallStillingerSokes: [pakrevdAntall, numericAntall],
         beskrivelse: [begrensetBeskrivelseLengde],
         avtaleOppfolging: [begrensetAvtaleOppfolgingLengde],
         periodeValidering: [],

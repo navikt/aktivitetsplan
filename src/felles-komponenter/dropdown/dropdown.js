@@ -26,7 +26,9 @@ function isChildOf(parent, element) {
 function settFokus(element) {
     if (element !== null) {
         const elementer = element.querySelector('button, a, input, select');
-        elementer.focus();
+        if (elementer) {
+            elementer.focus();
+        }
     }
 }
 

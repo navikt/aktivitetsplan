@@ -1,5 +1,6 @@
 import * as Api from './api';
 import { doThenDispatch, STATUS } from './utils';
+import { ER_I_PRIVAT_MODUS } from './situasjon';
 
 // Actions
 export const HENTER = 'arenaAktivitet/hent';
@@ -18,6 +19,8 @@ export default function reducer(state = initalState, action) {
             return { ...state, status: STATUS.OK, data: action.data };
         case HENTING_FEILET:
             return { ...state, status: STATUS.ERROR };
+        case ER_I_PRIVAT_MODUS:
+            return { ...state, status: STATUS.OK };
         default:
             return state;
     }
