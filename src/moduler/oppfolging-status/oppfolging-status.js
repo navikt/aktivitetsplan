@@ -34,14 +34,15 @@ GodkjennVilkarMedVarsling.propTypes = {
     visVilkar: PT.bool.isRequired,
 };
 
-export function oppfolgingStatusKomponent(
-    children,
-    erVeileder,
-    manuell,
-    vilkarMaBesvares,
-    brukerHarAvslatt,
-    visVilkar
-) {
+export function oppfolgingStatusKomponent(props) {
+    const {
+        children,
+        erVeileder,
+        manuell,
+        vilkarMaBesvares,
+        brukerHarAvslatt,
+        visVilkar,
+    } = props;
     if (erVeileder) {
         return children;
     } else if (manuell) {
@@ -56,6 +57,28 @@ export function oppfolgingStatusKomponent(
     }
     return children;
 }
+
+oppfolgingStatusKomponent.defaultProps = {
+    children: null,
+    erVeileder: null,
+    manuell: null,
+    underOppfolging: null,
+    reservasjonKRR: null,
+    vilkarMaBesvares: null,
+    brukerHarAvslatt: null,
+    visVilkar: false,
+};
+
+oppfolgingStatusKomponent.propTypes = {
+    children: PT.node,
+    erVeileder: PT.bool,
+    underOppfolging: PT.bool, // eslint-disable-line react/no-unused-prop-types
+    privatModus: PT.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
+    visVilkar: PT.bool,
+    manuell: PT.bool,
+    vilkarMaBesvares: PT.bool,
+    brukerHarAvslatt: PT.bool,
+};
 
 class OppfolgingStatus extends Component {
     componentDidMount() {
@@ -76,59 +99,24 @@ class OppfolgingStatus extends Component {
     }
 
     render() {
-        const {
-            children,
-            situasjon,
-            identitet,
-            visVilkar,
-            manuell,
-            vilkarMaBesvares,
-            brukerHarAvslatt,
-            erVeileder,
-        } = this.props;
+        const props = this.props;
+        const { situasjon, identitet } = props;
 
         return (
             <Innholdslaster avhengigheter={[situasjon, identitet]}>
                 <div className="fullbredde">
-                    {oppfolgingStatusKomponent(
-                        children,
-                        visVilkar,
-                        manuell,
-                        vilkarMaBesvares,
-                        brukerHarAvslatt,
-                        erVeileder
-                    )}
+                    {oppfolgingStatusKomponent(props)}
                 </div>
             </Innholdslaster>
         );
     }
 }
 
-OppfolgingStatus.defaultProps = {
-    children: null,
-    erVeileder: null,
-    manuell: null,
-    underOppfolging: null,
-    reservasjonKRR: null,
-    vilkarMaBesvares: null,
-    brukerHarAvslatt: null,
-    visVilkar: false,
-};
-
 OppfolgingStatus.propTypes = {
-    children: PT.node,
-    identitet: AppPT.reducer.isRequired,
-    erVeileder: PT.bool,
-    underOppfolging: PT.bool, // eslint-disable-line react/no-unused-prop-types
-    privatModus: PT.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
-    visVilkar: PT.bool,
     situasjon: AppPT.situasjon.isRequired,
+    doSettPrivatModus: PT.func.isRequired,
     doHentSituasjon: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
-    manuell: PT.bool,
-    vilkarMaBesvares: PT.bool,
-    brukerHarAvslatt: PT.bool,
-    doSettPrivatModus: PT.func.isRequired,
 };
 
 const mapStateToProps = state => {

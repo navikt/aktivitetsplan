@@ -48,7 +48,16 @@ class AktivitetsKort extends Component {
 
     render() {
         const { aktivitet, isDragging, connectDragSource } = this.props;
-        const { id, type, status, nesteStatus, tittel, fraDato, tilDato, antallStillingerSokes } = aktivitet;
+        const {
+            id,
+            type,
+            status,
+            nesteStatus,
+            tittel,
+            fraDato,
+            tilDato,
+            antallStillingerSokes,
+        } = aktivitet;
 
         const behandlingAktivitet = BEHANDLING_AKTIVITET_TYPE === type;
         const arenaAktivitet = [
@@ -84,16 +93,11 @@ class AktivitetsKort extends Component {
                             : tittel}
                     </Element>
                     <Normaltekst className="aktivitetskort__dato">
-                        {[
-                            formaterDato(fraDato),
-                            formaterDato(tilDato),
-                        ]
+                        {[formaterDato(fraDato), formaterDato(tilDato)]
                             .filter(d => d)
                             .join(' - ')}
                     </Normaltekst>
-                    <VisibleIfDiv
-                        visible={type === SOKEAVTALE_AKTIVITET_TYPE}
-                    >
+                    <VisibleIfDiv visible={type === SOKEAVTALE_AKTIVITET_TYPE}>
                         <FormattedMessage id="aktivitetskort.antall-label" />
                         &nbsp;
                         {antallStillingerSokes}
