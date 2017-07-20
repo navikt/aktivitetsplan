@@ -75,7 +75,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         gruppeAktivitetStatus,
         moeteplanListe,
         oppfolging,
-        antall,
+        antallStillingerSokes,
         avtaleOppfolging,
         jobbStatus,
         ansettelsesforhold,
@@ -311,7 +311,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 tittel={
                     <FormattedMessage id="aktivitetdetaljer.antall-label" />
                 }
-                innhold={`${antall}`}
+                innhold={`${antallStillingerSokes}`}
             />,
             oppfolgingSection,
         ];
