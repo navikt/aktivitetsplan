@@ -20,7 +20,6 @@ import {
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
-import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 
 function Aktivitetvisning({ aktivitet, tillatSletting }) {
     const arenaAktivitet = [
@@ -70,7 +69,7 @@ function Aktivitetvisning({ aktivitet, tillatSletting }) {
     };
 
     return (
-        <StandardModal name="aktivitetsvisningModal">
+        <div>
             <AktivitetvisningHeader />
 
             <ModalContainer className="aktivitetvisning">
@@ -105,11 +104,16 @@ function Aktivitetvisning({ aktivitet, tillatSletting }) {
             <AktivitetvisningFooter
                 visible={tillatSletting && !arenaAktivitet}
             />
-        </StandardModal>
+        </div>
     );
 }
+
+Aktivitetvisning.defaultProps = {
+    aktivitet: {},
+};
+
 Aktivitetvisning.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet,
     tillatSletting: PT.bool.isRequired,
 };
 

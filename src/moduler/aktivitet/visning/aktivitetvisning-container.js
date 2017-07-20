@@ -6,18 +6,23 @@ import moment from 'moment';
 import { TILLAT_SLETTING } from '~config'; // eslint-disable-line
 import {
     hentAktivitet,
+    hentAktiviteter,
     settForrigeAktiveAktivitetId,
     fjernForrigeAktiveAktivitetId,
 } from '../aktivitet-actions';
+import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
 import Aktivitetvinsing from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
         if (!isNaN(this.props.params.id)) {
             this.props.doHentAktivitet(this.props.params.id);
         }
+        this.props.doHentArenaAktiviteter();
+        this.props.doHentAktiviteter();
         this.props.doFjernForrigeAktiveAktivitetId();
     }
 
@@ -42,24 +47,28 @@ class AktivitetvisningContainer extends Component {
                 ));
 
         return (
-            <Innholdslaster
-                avhengigheter={[aktiviteter, arenaAktiviteter, situasjon]}
-            >
-                <Aktivitetvinsing
-                    aktivitet={valgtAktivitet}
-                    tillatSletting={slettingErTillatt}
-                />
-            </Innholdslaster>
+            <StandardModal name="aktivitetsvisningModal">
+                <Innholdslaster
+                    avhengigheter={[aktiviteter, arenaAktiviteter, situasjon]}
+                >
+                    <Aktivitetvinsing
+                        aktivitet={valgtAktivitet}
+                        tillatSletting={slettingErTillatt}
+                    />
+                </Innholdslaster>
+            </StandardModal>
         );
     }
 }
 
 AktivitetvisningContainer.propTypes = {
-    doHentAktivitet: PT.func.isRequired,
     params: PT.shape({ id: PT.string }).isRequired,
     situasjon: AppPT.situasjon.isRequired,
-    aktiviteter: PT.arrayOf(PT.object),
-    arenaAktiviteter: PT.arrayOf(PT.object),
+    aktiviteter: PT.oneOfType([PT.arrayOf(AppPT.aktivitet), AppPT.aktivitet]),
+    arenaAktiviteter: PT.oneOfType([PT.object, PT.arrayOf(PT.object)]),
+    doHentAktivitet: PT.func.isRequired,
+    doHentAktiviteter: PT.func.isRequired,
+    doHentArenaAktiviteter: PT.func.isRequired,
     doSettForrigeAktiveAktivitetId: PT.func.isRequired,
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
 };
@@ -79,6 +88,8 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
             doHentAktivitet: hentAktivitet,
+            doHentAktiviteter: hentAktiviteter,
+            doHentArenaAktiviteter: hentArenaAktiviteter,
             doSettForrigeAktiveAktivitetId: settForrigeAktiveAktivitetId,
             doFjernForrigeAktiveAktivitetId: fjernForrigeAktiveAktivitetId,
         },

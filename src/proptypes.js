@@ -1,7 +1,7 @@
 import PT from 'prop-types';
 
 export const aktivitet = PT.shape({
-    tittel: PT.string.isRequired,
+    tittel: PT.string,
     fraDato: PT.string,
     tilDato: PT.string,
     opprettetDato: PT.string,
