@@ -27,7 +27,7 @@ import SettDigitalOppfolging from './moduler/innstillinger/sett-digital-oppfolgi
 import SettManuellOppfolgingKvittering from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
 import Feilkvittering from './moduler/innstillinger/feilkvittering';
-import BekreftSlettVisning from './moduler/aktivitet/visning/bekreft-slett-visning/bekreft-slett-visning';
+import BekreftSlettVisningContainer from './moduler/aktivitet/visning/bekreft-slett-visning/bekreft-slett-visning-container';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -99,7 +99,7 @@ const routing = (
             <Route path="ny/sokeavtale" component={SokeavtaleAktivitet} />
             <Route path="ny/behandling" component={BehandlingAktivitet} />
             <Route path="vis/:id" component={AktivitetvisningContainer} />
-            <Route path="slett/:id" component={BekreftSlettVisning} />
+            <Route path="slett/:id" component={BekreftSlettVisningContainer} />
             <Route path="endre/:id" component={EndreAktivitet} />
             <Route path="avbryt/:id" component={AvbrytAktivitet} />
             <Route path="fullfor/:id" component={FullforAktivitet} />

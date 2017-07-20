@@ -4,15 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import Bilde from 'nav-react-design/dist/bilde';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Knapp, Fareknapp } from 'nav-frontend-knapper';
-import StandardModal from '../../../../felles-komponenter/modal/modal-standard';
 import stopSvg from './stop.svg';
 
 function BekreftSlettVisning({ slettAction, avbrytAction }) {
     return (
-        <StandardModal
-            name="aktivitetsvisningModal"
-            className="bekreft-slett-container"
-        >
+        <div className="bekreft-slett-container">
             <header className="modal-header" />
 
             <Bilde
@@ -38,7 +34,7 @@ function BekreftSlettVisning({ slettAction, avbrytAction }) {
                     <FormattedMessage id="aktivitetvisning.bekreft-sletting.avbrytknapp" />
                 </Knapp>
             </div>
-        </StandardModal>
+        </div>
     );
 }
 
