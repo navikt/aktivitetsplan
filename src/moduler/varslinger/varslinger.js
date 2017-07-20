@@ -43,7 +43,7 @@ class Varslinger extends Component {
                             className="varsling"
                         />
                         <HiddenIfVarsling
-                            hidden={!reservertIKRR}
+                            hidden={!reservertIKRR || reservertIKRR}
                             tekstId="oppfolging.bruker-reservert-i-krr"
                             className="varsling"
                         />
