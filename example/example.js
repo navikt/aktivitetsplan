@@ -4,7 +4,7 @@ import { EKSEMPEL_FNR, CONTEXT_PATH } from './config';
 import App from '../src/app';
 import { fnrFraUrl } from '../src/bootstrap/fnr-provider';
 
-if (!fnrFraUrl()) {
+if (!fnrFraUrl() && EKSEMPEL_FNR) {
     window.history.replaceState(
         EKSEMPEL_FNR,
         '',

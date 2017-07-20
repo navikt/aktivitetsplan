@@ -2,9 +2,9 @@ import * as Api from './aktiver-digital-oppfolging-api';
 import { STATUS, doThenDispatch } from '../../ducks/utils';
 
 // Actions
-export const SETT_DIGITAL_PENDING = 'vilkar/hent/pending';
-export const SETT_DIGITAL_OK = 'vilkar/hent/ok';
-export const SETT_DIGITAL_FEILET = 'vilkar/hent/fail';
+export const SETT_DIGITAL_PENDING = 'digital-oppfolging/sett/pending';
+export const SETT_DIGITAL_OK = 'digital-oppfolging/sett/ok';
+export const SETT_DIGITAL_FEILET = 'digital-oppfolging/sett/fail';
 
 const initalState = {
     data: [],
