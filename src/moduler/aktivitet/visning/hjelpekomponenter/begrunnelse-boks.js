@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Normaltekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-import visibleIfHOC from '../../../hocs/visible-if';
-import { autobind } from '../../../utils';
+import visibleIfHOC from '../../../../hocs/visible-if';
+import { autobind } from '../../../../utils';
 
 class BegrunnelseBoks extends Component {
     constructor(props) {
@@ -13,14 +14,17 @@ class BegrunnelseBoks extends Component {
         };
         autobind(this);
     }
+
     settKollapset(e) {
         e.preventDefault();
         this.setState({
             kollapset: !this.state.kollapset,
         });
     }
+
     render() {
-        const classes = classNames({
+        const { begrunnelse, className } = this.props;
+        const classes = classNames(className, {
             'tekst--kollapset': this.state.kollapset,
             tekst: !this.state.kollapset,
         });
@@ -28,9 +32,9 @@ class BegrunnelseBoks extends Component {
         return (
             <div className="begrunnelse-boks" onClick={this.settKollapset}>
                 <AlertStripeInfo>
-                    <span className={classes}>
-                        {this.props.begrunnelse}
-                    </span>
+                    <Normaltekst className={classes}>
+                        {begrunnelse}
+                    </Normaltekst>
                 </AlertStripeInfo>
             </div>
         );
@@ -38,8 +42,13 @@ class BegrunnelseBoks extends Component {
     }
 }
 
+BegrunnelseBoks.defaultProps = {
+    className: '',
+};
+
 BegrunnelseBoks.propTypes = {
     begrunnelse: PT.string.isRequired,
+    className: PT.string,
 };
 
 export default visibleIfHOC(BegrunnelseBoks);

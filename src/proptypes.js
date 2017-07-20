@@ -1,7 +1,7 @@
 import PT from 'prop-types';
 
 export const aktivitet = PT.shape({
-    tittel: PT.string.isRequired,
+    tittel: PT.string,
     fraDato: PT.string,
     tilDato: PT.string,
     opprettetDato: PT.string,
@@ -10,7 +10,7 @@ export const aktivitet = PT.shape({
     detaljer: PT.object,
     beskrivelse: PT.string,
     avtalt: PT.bool,
-    tiltaksarrangør: PT.string,
+    tiltaksarrangor: PT.string,
     deltakelsesprosent: PT.number,
     dagerPerUke: PT.number,
 });

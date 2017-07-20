@@ -11,7 +11,6 @@ import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import '../../skjema.less';
 import {
     SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_PLANLAGT,

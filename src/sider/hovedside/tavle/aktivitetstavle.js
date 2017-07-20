@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Tavle from './tavle';
 import Kolonne from './aktivitetstavlekolonne';
-import { hentAktiviteter } from '../../../ducks/aktiviteter';
+import { hentAktiviteter } from '../../../moduler/aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../../ducks/utils';

@@ -28,6 +28,7 @@ const initalState = {
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case OK:
+        case SETT_DIGITAL_OK:
             return {
                 ...state,
                 status: STATUS.OK,
@@ -45,12 +46,6 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 status: STATUS.OK,
                 brukerHarAvslatt: true,
-                data: action.data,
-            };
-        case SETT_DIGITAL_OK:
-            return {
-                ...state,
-                status: STATUS.OK,
                 data: action.data,
             };
         case FEILET:
@@ -72,7 +67,11 @@ export default function reducer(state = initalState, action) {
                         : STATUS.RELOADING,
             };
         case ER_I_PRIVAT_MODUS:
-            return { ...state, status: STATUS.OK, privatModus: true };
+            return {
+                ...state,
+                status: STATUS.OK,
+                privatModus: true,
+            };
         default:
             return state;
     }

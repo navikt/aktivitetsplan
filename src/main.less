@@ -3,18 +3,20 @@
 @full-desktop: 1480px;
 
 .aktivitetsplanfs {
-    @import './moduler/vilkar/vilkar';
-    @import './moduler/sidebanner/sidebanner';
-    @import './moduler/oppfolging-status/oppfolging-status';
-    @import 'moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging';
     @import './vendors';
     @import 'felles-komponenter/modal/modal';
+    @import './felles-komponenter/felles-komponenter';
     @import './utils';
     @import './dialog/dialog';
+    @import './moduler/aktivitet/aktivitet';
     @import './moduler/filter/filter';
     @import './moduler/verktoylinje/verktoylinje';
     @import './moduler/varslinger/varslinger';
-    @import './felles-komponenter/felles-komponenter';
+    @import './moduler/vilkar/vilkar';
+    @import './moduler/sidebanner/sidebanner';
+    @import './moduler/oppfolging-status/oppfolging-status';
+    @import './moduler/innstillinger/innstillinger';
+    @import './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging';
     @import './sider/hovedside/hovedside';
 
     .typo-normal-mixin();

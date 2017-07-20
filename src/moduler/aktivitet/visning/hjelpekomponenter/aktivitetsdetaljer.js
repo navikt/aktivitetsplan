@@ -5,12 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Link } from 'react-router';
-import * as AppPT from '../../../proptypes';
+import * as AppPT from '../../../../proptypes';
 import {
     formaterDatoKortManed,
     formaterDatoKortManedTid,
     formaterTid,
-} from '../../../utils';
+} from '../../../../utils';
 import {
     EGEN_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
@@ -20,9 +20,10 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     BEHANDLING_AKTIVITET_TYPE,
-} from '../../../constant';
+} from '../../../../constant';
 import DetaljFelt from './detalj-felt';
-import { endreAktivitetRoute } from '../../../routing';
+import { endreAktivitetRoute } from '../../../../routing';
+import AktivitetBeskrivelse from './aktivitetsbeskrivelse';
 
 function RedigerLink({ id, felt }) {
     return (
@@ -42,7 +43,7 @@ RedigerLink.propTypes = {
 
 function Informasjonsfelt({ tittel, innhold }) {
     return (
-        <DetaljFelt tittel={tittel} visible={innhold != null}>
+        <DetaljFelt tittel={tittel} visible={innhold !== null}>
             <Normaltekst className="detaljfelt__tekst">
                 {innhold}
             </Normaltekst>
@@ -74,7 +75,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         gruppeAktivitetStatus,
         moeteplanListe,
         oppfolging,
-        antall,
+        antallStillingerSokes,
         avtaleOppfolging,
         jobbStatus,
         ansettelsesforhold,
@@ -83,6 +84,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         behandlingSted,
         effekt,
         behandlingOppfolging,
+        beskrivelse,
     } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManed(valgtAktivitet.fraDato);
@@ -309,7 +311,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 tittel={
                     <FormattedMessage id="aktivitetdetaljer.antall-label" />
                 }
-                innhold={`${antall}`}
+                innhold={`${antallStillingerSokes}`}
             />,
             oppfolgingSection,
         ];
@@ -407,6 +409,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     return (
         <section className={cls(className)}>
             {map[aktivitetstype]()}
+            <AktivitetBeskrivelse beskrivelse={beskrivelse} />
         </section>
     );
 }

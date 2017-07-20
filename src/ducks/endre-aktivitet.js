@@ -1,5 +1,5 @@
 import { FEILTYPE } from './utils';
-import { OPPDATER_FEILET } from './aktiviteter';
+import { OPPDATER_FEILET } from '../moduler/aktivitet/aktivitet-action-types';
 
 // Actions
 export const SKJUL_VERSJONSKONFLIKT = 'endre-aktivitet/skjulVersjonskonflikt';

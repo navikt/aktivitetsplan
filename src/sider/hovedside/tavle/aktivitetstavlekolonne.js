@@ -6,7 +6,7 @@ import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { HjelpetekstVenstre, HjelpetekstHoyre } from 'nav-frontend-hjelpetekst';
-import { flyttAktivitet } from '../../../ducks/aktiviteter';
+import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import AktivitetsKort from '../aktivitetskort/aktivitetskort';
 import {
     STATUS_PLANLAGT,

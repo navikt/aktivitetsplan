@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Radio } from 'nav-frontend-skjema';
 import * as statuser from '../../../../constant';
-import { oppdaterAktivitetEtikett } from '../../../../ducks/aktiviteter';
+import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
 

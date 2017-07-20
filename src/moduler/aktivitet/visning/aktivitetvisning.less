@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import '../../../variables';
 
 .aktivitetvisning {
     &__underseksjon {
@@ -21,7 +21,7 @@
     }
 
     &__etikett {
-        .blokk-m();
+        .blokk-s();
     }
 
     &__alert {
@@ -41,6 +41,7 @@
 
     .begrunnelse-boks {
         cursor: pointer;
+        margin: 1rem;
 
         .tekst--kollapset {
             display: inline-block;
@@ -51,20 +52,18 @@
     }
 
     .aktivitetsbeskrivelse {
-        .blokk-m();
+        &__tittel {
+            color: @navGra60;
+        }
 
         &__tekst {
             white-space: pre-wrap;
         }
-
-        .typo-etikett-liten {
-            margin-bottom: -1rem;
-            color: @navGra60;
-        }
     }
 
-    .aktivitetsdetaljer,
-    .aktivitetsbeskrivelse {
+    .aktivitetsdetaljer {
+        .blokk-s();
+
         .detaljfelt {
             .blokk-s();
             margin-right: 1rem;

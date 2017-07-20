@@ -10,7 +10,7 @@ import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import * as statuser from '../../../../constant';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import hengelasSVG from '../../../../img/hengelas.svg';
-import { flyttAktivitetMedBegrunnelse } from '../../../../ducks/aktiviteter';
+import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';

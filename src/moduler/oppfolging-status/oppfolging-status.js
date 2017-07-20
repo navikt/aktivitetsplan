@@ -112,8 +112,12 @@ class OppfolgingStatus extends Component {
     }
 }
 
+OppfolgingStatus.defaultProps = {
+    situasjon: undefined,
+};
+
 OppfolgingStatus.propTypes = {
-    situasjon: AppPT.situasjon.isRequired,
+    situasjon: AppPT.situasjon,
     doSettPrivatModus: PT.func.isRequired,
     doHentSituasjon: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,

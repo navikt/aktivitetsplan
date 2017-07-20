@@ -1,5 +1,8 @@
 import * as Api from './api';
-import { OPPDATER_OK, FLYTT_OK } from './aktiviteter';
+import {
+    OPPDATER_OK,
+    FLYTT_OK,
+} from '../moduler/aktivitet/aktivitet-action-types';
 import { doThenDispatch, STATUS } from './utils';
 
 // Actions

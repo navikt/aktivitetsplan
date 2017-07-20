@@ -9,7 +9,7 @@ import EgenAktivitet from './moduler/aktivitet/aktivitet-forms/egen/ny-aktivitet
 import StillingAktivitet from './moduler/aktivitet/aktivitet-forms/stilling/ny-aktivitet-stilling';
 import SokeavtaleAktivitet from './moduler/aktivitet/aktivitet-forms/sokeavtale/ny-aktivitet-sokeavtale';
 import BehandlingAktivitet from './moduler/aktivitet/aktivitet-forms/behandling/ny-aktivitet-behandling';
-import Aktivitetvisning from './moduler/aktivitet/visning/aktivitetvisning/aktivitetvisning';
+import AktivitetvisningContainer from './moduler/aktivitet/visning/aktivitetvisning-container';
 import EndreAktivitet from './moduler/aktivitet/rediger/endre-aktivitet';
 import DialogModal from './dialog/dialog-modal';
 import FullforAktivitet from './moduler/aktivitet/avslutt/fullfor-aktivitet';
@@ -27,6 +27,7 @@ import SettDigitalOppfolging from './moduler/innstillinger/sett-digital-oppfolgi
 import SettManuellOppfolgingKvittering from './moduler/innstillinger/sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering from './moduler/innstillinger/sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
 import Feilkvittering from './moduler/innstillinger/feilkvittering';
+import BekreftSlettVisningContainer from './moduler/aktivitet/visning/bekreft-slett-visning/bekreft-slett-visning-container';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -97,7 +98,8 @@ const routing = (
             <Route path="ny/stilling" component={StillingAktivitet} />
             <Route path="ny/sokeavtale" component={SokeavtaleAktivitet} />
             <Route path="ny/behandling" component={BehandlingAktivitet} />
-            <Route path="vis/:id" component={Aktivitetvisning} />
+            <Route path="vis/:id" component={AktivitetvisningContainer} />
+            <Route path="slett/:id" component={BekreftSlettVisningContainer} />
             <Route path="endre/:id" component={EndreAktivitet} />
             <Route path="avbryt/:id" component={AvbrytAktivitet} />
             <Route path="fullfor/:id" component={FullforAktivitet} />
