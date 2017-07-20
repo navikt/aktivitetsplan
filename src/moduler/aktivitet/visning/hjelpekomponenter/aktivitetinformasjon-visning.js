@@ -37,7 +37,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, arenaAktivitet }) {
 
                 <AktivitetIngress type={type} />
 
-                <div className="aktivitetskort__etiketter blokk-s">
+                <div className="aktivitetvisning__etikett">
                     <AktivitetEtikett
                         visible={avtalt}
                         etikett={AVTALT_MED_NAV}

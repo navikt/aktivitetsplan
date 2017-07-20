@@ -4,7 +4,7 @@
 .chevronline-mixin() {
     pointer-events: none; // gjør at en kan klikke igjennom denne (pilen), slik at select åpner seg
     content: '';
-    background: @navTekst;
+    background: @gray-text;
     height: 2px;
     width: 10px;
     border-radius: 10px;
@@ -28,7 +28,7 @@
         width: 100%;
         padding: 0.45rem 1.5em 0.45rem 0.45rem;
         background: @hvit;
-        border: 1px solid @ikonGraa;
+        border: 1px solid @gray-icon;
         border-radius: @border-radius-small;
 
         &:before {
@@ -52,7 +52,7 @@
     &__innhold {
         position: absolute;
         z-index: 110;
-        border: 1px solid @ikonGraa;
+        border: 1px solid @gray-icon;
         top: ~'calc(100% - 1px)';
         background-color: @hvit;
         border-radius: 0 0 @border-radius-small @border-radius-small;
