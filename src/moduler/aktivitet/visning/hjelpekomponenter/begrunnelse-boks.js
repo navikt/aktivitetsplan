@@ -24,11 +24,10 @@ class BegrunnelseBoks extends Component {
 
     render() {
         const { begrunnelse, className } = this.props;
-        const classes =
-            classNames(className, {
-                'tekst--kollapset': this.state.kollapset,
-                tekst: !this.state.kollapset,
-            });
+        const classes = classNames(className, {
+            'tekst--kollapset': this.state.kollapset,
+            tekst: !this.state.kollapset,
+        });
         /* eslint-disable */
         return (
             <div className="begrunnelse-boks" onClick={this.settKollapset}>
