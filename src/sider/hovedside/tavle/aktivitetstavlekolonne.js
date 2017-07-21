@@ -191,9 +191,9 @@ KolonneFunction.propTypes = {
 
 const mapStateToProps = state => {
     const stateData = state.data;
-    const aktiviteter = stateData.aktiviteter.data
-        .concat(stateData.arenaAktiviteter.data)
-        .filter(a => aktivitetFilter(a, state));
+    const aktiviteter = stateData.aktivitetListe.data.filter(a =>
+        aktivitetFilter(a, state)
+    );
     return {
         aktiviteter,
     };
