@@ -33,7 +33,7 @@ const mapStateToProps = state => {
     const historiskPeriode = state.data.filter.historiskPeriode;
     return {
         viserHistoriskPeriode: !!historiskPeriode,
-        privatModus: state.data.situasjon.privatModus,
+        privatModus: state.data.privatModus.erPrivatModus,
     };
 };
 

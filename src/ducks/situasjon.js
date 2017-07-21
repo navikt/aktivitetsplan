@@ -15,12 +15,9 @@ export const GODTA_OK = 'situasjon/godta/OK';
 export const GODTA_FEILET = 'situasjon/godta/FEILET';
 export const GODTA_PENDING = 'situasjon/godta/PENDING';
 
-export const ER_I_PRIVAT_MODUS = 'situasjon/privatModus';
-
 const initalState = {
     status: STATUS.NOT_STARTED,
     brukerHarAvslatt: false,
-    privatModus: false,
     data: {},
 };
 
@@ -66,12 +63,6 @@ export default function reducer(state = initalState, action) {
                         ? STATUS.PENDING
                         : STATUS.RELOADING,
             };
-        case ER_I_PRIVAT_MODUS:
-            return {
-                ...state,
-                status: STATUS.OK,
-                privatModus: true,
-            };
         default:
             return state;
     }
@@ -102,10 +93,4 @@ export function avslaVilkar(hash) {
         FEILET: AVSLA_FEILET,
         PENDING: AVSLA_PENDING,
     });
-}
-
-export function settPrivatModus() {
-    return {
-        type: ER_I_PRIVAT_MODUS,
-    };
 }

@@ -20,6 +20,24 @@ const DEFAULT_CONFIG = {
     redirect: 'manual', // ikke bli lurt av at backenden plutseling redirecter til login- eller feilside
 };
 
+const statusPrioritet = {
+    ERROR: 5,
+    NOT_STARTED: 4,
+    PENDING: 3,
+    RELOADING: 2,
+    OK: 1,
+};
+
+export function aggregerStatus(...reducereEllerStatuser) {
+    return reducereEllerStatuser.reduce((a, b) => {
+        const venstreStatus = a.status || a;
+        const hoyreStatus = b.status || b;
+        return statusPrioritet[venstreStatus] > statusPrioritet[hoyreStatus]
+            ? venstreStatus
+            : hoyreStatus;
+    });
+}
+
 export function sjekkStatuskode(response) {
     if (response.status >= 200 && response.status < 300 && response.ok) {
         return response;

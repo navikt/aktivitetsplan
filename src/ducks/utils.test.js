@@ -1,9 +1,54 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { sjekkStatuskode, handterFeil, toJson, getCookie } from './utils';
+import {
+    sjekkStatuskode,
+    handterFeil,
+    toJson,
+    getCookie,
+    aggregerStatus,
+    STATUS,
+} from './utils';
+
+const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = STATUS;
 
 describe('utils', () => {
+    describe('aggregerStatus', () => {
+        it('OK', () => {
+            expect(aggregerStatus(OK, OK, OK)).to.equal(OK);
+        });
+        it('RELOADING', () => {
+            expect(aggregerStatus(OK, RELOADING, OK)).to.equal(RELOADING);
+        });
+        it('PENDING', () => {
+            expect(aggregerStatus(OK, PENDING, OK)).to.equal(PENDING);
+            expect(aggregerStatus(RELOADING, PENDING, RELOADING)).to.equal(
+                PENDING
+            );
+        });
+        it('NOT_STARTED', () => {
+            expect(aggregerStatus(OK, NOT_STARTED, OK)).to.equal(NOT_STARTED);
+            expect(aggregerStatus(RELOADING, NOT_STARTED, RELOADING)).to.equal(
+                NOT_STARTED
+            );
+            expect(aggregerStatus(PENDING, NOT_STARTED, PENDING)).to.equal(
+                NOT_STARTED
+            );
+        });
+        it('ERROR', () => {
+            expect(aggregerStatus(OK, ERROR, OK)).to.deep.equal(ERROR);
+            expect(aggregerStatus(RELOADING, ERROR, RELOADING)).to.equal(ERROR);
+            expect(aggregerStatus(PENDING, ERROR, PENDING)).to.equal(ERROR);
+            expect(aggregerStatus(NOT_STARTED, ERROR, NOT_STARTED)).to.equal(
+                ERROR
+            );
+        });
+
+        it('aksepterer reducere', () => {
+            expect(aggregerStatus(OK, { status: ERROR }, OK)).to.equal(ERROR);
+        });
+    });
+
     describe('Sjekk-statuskode', () => {
         it('Skal returnere response når status er ok', () => {
             const response = {
