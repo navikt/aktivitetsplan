@@ -9,12 +9,15 @@ import AktivitetStatusForm from './aktivitet-status-form';
 
 function OppdaterAktivitetStatus(props) {
     const { aktiviteter, paramsId } = props;
-    const disableStatusEndring =
-        props.status === statuser.STATUS_AVBRUTT ||
-        props.status === statuser.STATUS_FULLFOERT;
+
     const valgtAktivitet = aktiviteter.data.find(
         aktivitet => aktivitet.id === paramsId
     );
+
+    const disableStatusEndring =
+        valgtAktivitet.historisk ||
+        props.status === statuser.STATUS_AVBRUTT ||
+        props.status === statuser.STATUS_FULLFOERT;
 
     return (
         <section className={props.className}>

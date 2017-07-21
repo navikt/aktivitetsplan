@@ -48,6 +48,7 @@ class UnderelementerForAktivitet extends Component {
         } = this.props;
         const { vis } = this.state;
         const aktivitetId = aktivitet.id;
+        const historiskAktivitet = aktivitet.historisk;
         const visDialog = vis === DIALOG;
         const cls = classes => classNames('underelementer-aktivitet', classes);
         const visHistorikk = vis === HISTORIKK;
@@ -80,7 +81,9 @@ class UnderelementerForAktivitet extends Component {
                     <VisibleToggleKnapp
                         value={DIALOG}
                         className={dialogknappCls(visDialog)}
-                        visible={underOppfolging}
+                        visible={
+                            underOppfolging && !(historiskAktivitet && !dialog)
+                        }
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
                         <TallAlert hidden={antallUlesteHenvendelser <= 0}>
@@ -108,11 +111,15 @@ class UnderelementerForAktivitet extends Component {
                     <NyHenvendelse
                         formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
-                        hidden={dialog && dialog.historisk}
+                        hidden={
+                            (dialog && dialog.historisk) || historiskAktivitet
+                        }
                         aktivitetId={aktivitetId}
                     />
                     <EndreDialog
-                        hidden={!dialog || dialog.historisk}
+                        hidden={
+                            !dialog || dialog.historisk || historiskAktivitet
+                        }
                         formNavn={`dialog-aktivitet-${aktivitetId}`}
                         dialog={dialog}
                     />

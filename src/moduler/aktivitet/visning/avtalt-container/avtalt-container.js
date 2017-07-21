@@ -36,20 +36,23 @@ class AvtaltContainer extends Component {
             className,
         } = this.props;
 
-        const lasterData = aktivitetData.status !== STATUS.OK;
-        const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === aktivitet.type;
+        const { type, status, historisk, avtalt } = aktivitet;
+
+        const lasterData = status !== STATUS.OK;
+        const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
 
         if (
             !TILLAT_SET_AVTALT ||
-            aktivitet.status === STATUS_FULLFOERT ||
-            aktivitet.status === STATUS_AVBRUTT ||
+            historisk ||
+            status === STATUS_FULLFOERT ||
+            status === STATUS_AVBRUTT ||
             arenaAktivitet
         ) {
             return null;
         }
 
         // Kun vis bekreftet hvis nettopp satt til avtalt.
-        if (this.state.visBekreftAvtalt === false && aktivitet.avtalt) {
+        if (this.state.visBekreftAvtalt === false && avtalt) {
             return null;
         }
 

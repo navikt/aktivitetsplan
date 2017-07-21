@@ -18,12 +18,12 @@ import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
 
 function AktivitetinformasjonVisning({ valgtAktivitet, arenaAktivitet }) {
-    const { tittel, type, avtalt, etikett } = valgtAktivitet;
+    const { tittel, type, avtalt, etikett, status, historisk } = valgtAktivitet;
 
     const tillattEndring =
-        (valgtAktivitet.avtalt !== true || !!TILLAT_SET_AVTALT) &&
-        (valgtAktivitet.status !== STATUS_FULLFOERT &&
-            valgtAktivitet.status !== STATUS_AVBRUTT);
+        !historisk &&
+        (avtalt !== true || !!TILLAT_SET_AVTALT) &&
+        (status !== STATUS_FULLFOERT && status !== STATUS_AVBRUTT);
 
     const gaTilEndreAktivitet = () =>
         history.push(endreAktivitetRoute(valgtAktivitet.id));
