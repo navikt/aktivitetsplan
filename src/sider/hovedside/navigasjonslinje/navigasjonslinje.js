@@ -100,13 +100,14 @@ Navigasjonslinje.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const dialog = state.data.dialog.data;
+    const stateData = state.data;
+    const dialog = stateData.dialog.data;
     return {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)
             .filter(d => dialogFilter(d, state)).length,
-        privatModus: state.data.situasjon.privatModus,
-        underOppfolging: state.data.situasjon.data.underOppfolging,
+        privatModus: stateData.privatModus.erPrivatModus,
+        underOppfolging: stateData.situasjon.data.underOppfolging,
     };
 };
 

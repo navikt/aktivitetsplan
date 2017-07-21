@@ -116,6 +116,7 @@
     "redux-form": "6.7.0",
     "redux-freeze": "0.1.5",
     "redux-thunk": "2.2.0",
+    "reduce-reducers": "0.1.2",
     "sanitize-html": "1.14.1"
   },
   "devDependencies": {

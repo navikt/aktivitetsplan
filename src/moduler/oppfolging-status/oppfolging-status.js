@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedHTMLMessage } from 'react-intl';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { hentSituasjon, settPrivatModus } from '../../ducks/situasjon';
+import { hentSituasjon } from '../../ducks/situasjon';
 import { hentIdentitet } from '../../ducks/identitet';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
@@ -73,7 +73,6 @@ oppfolgingStatusKomponent.propTypes = {
     children: PT.node,
     erVeileder: PT.bool,
     underOppfolging: PT.bool, // eslint-disable-line react/no-unused-prop-types
-    privatModus: PT.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
     visVilkar: PT.bool,
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
@@ -85,16 +84,6 @@ class OppfolgingStatus extends Component {
         this.props.doHentIdentitet();
         if (this.props.situasjon.status === STATUS.NOT_STARTED) {
             this.props.doHentSituasjon();
-        }
-    }
-
-    componentWillUpdate(nextProps) {
-        if (
-            nextProps.privatModus === false &&
-            nextProps.erVeileder === true &&
-            nextProps.underOppfolging === false
-        ) {
-            this.props.doSettPrivatModus();
         }
     }
 
@@ -118,7 +107,6 @@ OppfolgingStatus.defaultProps = {
 
 OppfolgingStatus.propTypes = {
     situasjon: AppPT.situasjon,
-    doSettPrivatModus: PT.func.isRequired,
     doHentSituasjon: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
 };
@@ -130,7 +118,6 @@ const mapStateToProps = state => {
     return {
         erVeileder: identitet.data.erVeileder,
         underOppfolging: situasjonData.underOppfolging,
-        privatModus: situasjon.privatModus,
         brukerHarAvslatt: situasjon.brukerHarAvslatt,
         manuell: situasjonData.manuell,
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
@@ -142,7 +129,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     doHentSituasjon: () => dispatch(hentSituasjon()),
     doHentIdentitet: () => dispatch(hentIdentitet()),
-    doSettPrivatModus: () => dispatch(settPrivatModus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OppfolgingStatus);
