@@ -30,6 +30,14 @@ class AktivitetvisningContainer extends Component {
         this.props.doSettForrigeAktiveAktivitetId(this.props.params.id);
     }
 
+    aktivitetErEtterOppfolgingUtgang(valgtAktivitet) {
+        return valgtAktivitet
+            ? moment(this.props.situasjon.data.oppfolgingUtgang).isAfter(
+                  valgtAktivitet.opprettetDato
+              )
+            : false;
+    }
+
     render() {
         const { params, aktiviteter, arenaAktiviteter, situasjon } = this.props;
         const { id } = params;
@@ -42,9 +50,7 @@ class AktivitetvisningContainer extends Component {
         const slettingErTillatt =
             TILLAT_SLETTING &&
             (!situasjon.data.underOppfolging ||
-                moment(situasjon.data.oppfolgingUtgang).isAfter(
-                    valgtAktivitet.opprettetDato
-                ));
+                this.aktivitetErEtterOppfolgingUtgang(valgtAktivitet));
 
         return (
             <StandardModal name="aktivitetsvisningModal">

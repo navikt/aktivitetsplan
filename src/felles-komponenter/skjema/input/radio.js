@@ -18,6 +18,9 @@ function InnerInputComponent({
         <NavRadio
             {...inputProps}
             checked={input.value === rest.value || forhandsvalgt}
+            // Fikser fokus/markering feil i IE
+            onBlur={() => {}}
+            onFocus={() => {}}
         />
     );
 }
