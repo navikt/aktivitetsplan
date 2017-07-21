@@ -109,7 +109,6 @@ class UnderelementerForAktivitet extends Component {
                         formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
                         aktivitetId={aktivitetId}
-                        skalHaAutofokus
                     />
                     <EndreDialog
                         visible={!!dialog}
