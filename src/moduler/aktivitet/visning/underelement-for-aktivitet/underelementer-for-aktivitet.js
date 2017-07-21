@@ -108,10 +108,11 @@ class UnderelementerForAktivitet extends Component {
                     <NyHenvendelse
                         formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
+                        hidden={dialog && dialog.historisk}
                         aktivitetId={aktivitetId}
                     />
                     <EndreDialog
-                        visible={!!dialog}
+                        hidden={!dialog || dialog.historisk}
                         formNavn={`dialog-aktivitet-${aktivitetId}`}
                         dialog={dialog}
                     />

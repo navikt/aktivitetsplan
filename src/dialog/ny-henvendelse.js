@@ -3,20 +3,18 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
-import { AlertStripeSuksessSolid } from 'nav-frontend-alertstriper';
 import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
 import moment from 'moment';
 import { STATUS } from '../ducks/utils';
 import { nyHenvendelse } from '../ducks/dialog';
 import Textarea from '../felles-komponenter/skjema/textarea/textarea';
 import Input from '../felles-komponenter/skjema/input/input';
-import visibleIf from '../hocs/visible-if';
+import { HiddenIfAlertStripeSuksessSolid } from '../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
-
-const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeSuksessSolid);
 
 function NyHenvendelseForm({
     handleSubmit,
@@ -47,12 +45,12 @@ function NyHenvendelseForm({
                 <FormattedMessage id="dialog.lag-ny-dialog" />
             </Hovedknapp>
 
-            <VisibleAlertStripeSuksessSolid
+            <HiddenIfAlertStripeSuksessSolid
                 style={{ marginTop: '1rem' }}
-                visible={visBrukerInfo}
+                hidden={!visBrukerInfo}
             >
                 <FormattedMessage id="dialog.info-til-bruker" />
-            </VisibleAlertStripeSuksessSolid>
+            </HiddenIfAlertStripeSuksessSolid>
         </form>
     );
 }
@@ -165,4 +163,4 @@ DynamiskNyHenvendelseReduxFormConnected.propTypes = {
     formNavn: PT.string.isRequired,
 };
 
-export default DynamiskNyHenvendelseReduxFormConnected;
+export default hiddenIf(DynamiskNyHenvendelseReduxFormConnected);
