@@ -40,6 +40,7 @@ class AktivitetvisningContainer extends Component {
         );
 
         const slettingErTillatt =
+            valgtAktivitet &&
             TILLAT_SLETTING &&
             (!situasjon.data.underOppfolging ||
                 moment(situasjon.data.oppfolgingUtgang).isAfter(
