@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
+import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import history from '../../history';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
-function InnstillingerModal({ motpart, children }) {
-    const { navn } = motpart.data;
+function InnstillingerModal({ motpart, children, navnPaMotpart }) {
     return (
         <Modal
             isOpen
@@ -26,21 +26,19 @@ function InnstillingerModal({ motpart, children }) {
                     avhengigheter={[motpart]}
                     className="innstillinger__spinner"
                 >
-                    <div>
-                        <Innholdstittel className="innstillinger__overskrift">
-                            <FormattedMessage
-                                id="innstillinger.modal.overskrift"
-                                values={{ navn }}
-                            />
-                        </Innholdstittel>
-                        <VisibleIfDiv
-                            visible={!!children}
-                            className="innstillinger__innhold"
-                        >
-                            {children}
-                        </VisibleIfDiv>
-                    </div>
+                    <Innholdstittel className="innstillinger__overskrift">
+                        <FormattedMessage
+                            id="innstillinger.modal.overskrift"
+                            values={{ navn: navnPaMotpart }}
+                        />
+                    </Innholdstittel>
                 </Innholdslaster>
+                <VisibleIfDiv
+                    visible={!!children}
+                    className="innstillinger__innhold"
+                >
+                    {children}
+                </VisibleIfDiv>
             </article>
         </Modal>
     );
@@ -48,21 +46,21 @@ function InnstillingerModal({ motpart, children }) {
 
 InnstillingerModal.defaultProps = {
     children: undefined,
-    motpart: undefined,
+    navnPaMotpart: undefined,
 };
 
 InnstillingerModal.propTypes = {
-    motpart: PT.shape({
-        status: PT.string,
-        data: PT.shape({
-            navn: PT.string,
-        }),
-    }),
+    navnPaMotpart: PT.string,
+    motpart: AppPT.reducer.isRequired,
     children: PT.node,
 };
 
-const mapStateToProps = state => ({
-    motpart: state.data.motpart,
-});
+const mapStateToProps = state => {
+    const motpart = state.data.motpart;
+    return {
+        motpart,
+        navnPaMotpart: motpart.data.navn,
+    };
+};
 
 export default connect(mapStateToProps)(InnstillingerModal);
