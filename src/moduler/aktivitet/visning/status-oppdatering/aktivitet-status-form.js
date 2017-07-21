@@ -34,13 +34,21 @@ const MAKS_LENGDE = 255;
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);
 
 function AktivitetStatusForm(props) {
-    const { aktivitet, dirty, handleSubmit, aktivitetDataStatus } = props;
+    const {
+        aktivitet,
+        dirty,
+        handleSubmit,
+        aktivitetDataStatus,
+        valgtAktivitetStatus,
+        intl,
+        disableStatusEndring,
+    } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
-    const hengelasAlt = props.intl.formatMessage({ id: 'hengelas-icon-alt' });
+    const hengelasAlt = intl.formatMessage({ id: 'hengelas-icon-alt' });
 
     const visAdvarsel =
-        props.valgtAktivitetStatus === statuser.STATUS_FULLFOERT ||
-        props.valgtAktivitetStatus === statuser.STATUS_AVBRUTT;
+        valgtAktivitetStatus === statuser.STATUS_FULLFOERT ||
+        valgtAktivitetStatus === statuser.STATUS_AVBRUTT;
 
     return (
         <form onSubmit={handleSubmit}>
@@ -53,7 +61,7 @@ function AktivitetStatusForm(props) {
                         }
                         value={statuser.STATUS_BRUKER_ER_INTRESSERT}
                         id={`id--${statuser.STATUS_BRUKER_ER_INTRESSERT}`}
-                        disabled={props.disableStatusEndring || lasterData}
+                        disabled={disableStatusEndring || lasterData}
                     />
                     <Radio
                         feltNavn="aktivitetstatus"
@@ -62,7 +70,7 @@ function AktivitetStatusForm(props) {
                         }
                         value={statuser.STATUS_PLANLAGT}
                         id={`id--${statuser.STATUS_PLANLAGT}`}
-                        disabled={props.disableStatusEndring || lasterData}
+                        disabled={disableStatusEndring || lasterData}
                     />
                     <Radio
                         feltNavn="aktivitetstatus"
@@ -71,7 +79,7 @@ function AktivitetStatusForm(props) {
                         }
                         value={statuser.STATUS_GJENNOMFOERT}
                         id={`id--${statuser.STATUS_GJENNOMFOERT}`}
-                        disabled={props.disableStatusEndring || lasterData}
+                        disabled={disableStatusEndring || lasterData}
                     />
                 </div>
                 <div className="col col-xs-6">
@@ -83,7 +91,7 @@ function AktivitetStatusForm(props) {
                         )}
                         value={statuser.STATUS_FULLFOERT}
                         id={`id--${statuser.STATUS_FULLFOERT}`}
-                        disabled={props.disableStatusEndring || lasterData}
+                        disabled={disableStatusEndring || lasterData}
                     />
                     <Radio
                         feltNavn="aktivitetstatus"
@@ -93,7 +101,7 @@ function AktivitetStatusForm(props) {
                         )}
                         value={statuser.STATUS_AVBRUTT}
                         id={`id--${statuser.STATUS_AVBRUTT}`}
-                        disabled={props.disableStatusEndring || lasterData}
+                        disabled={disableStatusEndring || lasterData}
                     />
                 </div>
             </div>
