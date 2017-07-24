@@ -1,4 +1,4 @@
-/* eslint-env browser*/
+/* eslint-env browser */
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { FormattedDate, injectIntl, intlShape } from 'react-intl';

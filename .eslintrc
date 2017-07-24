@@ -16,6 +16,7 @@
     }],
     "max-len": ["error", 200, 4],
     "no-mixed-operators": "off",
+    "no-return-assign": ["error", "except-parens"],
     "wrap-iife": "off",
     "no-unused-vars": [2, {"varsIgnorePattern": "_", "argsIgnorePattern": "_"}],
     "react/jsx-filename-extension": [0],
