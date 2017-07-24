@@ -11,8 +11,9 @@ import { dateToISODate } from '../../../../utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import { STATUS_PLANLAGT } from '../../../../constant';
+import { STATUS_PLANLAGT, STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
+import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 
 const TITTEL_MAKS_LENGDE = 255;
 const LENKE_MAKS_LENGDE = 2000;
@@ -109,6 +110,8 @@ class StillingAktivitetForm extends Component {
                             <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
                         </Undertekst>
                     </div>
+
+                    <AktivitetIngress type={STILLING_AKTIVITET_TYPE} />
 
                     <Input
                         feltNavn="tittel"

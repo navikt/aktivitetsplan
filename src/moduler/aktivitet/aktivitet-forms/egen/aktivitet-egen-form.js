@@ -10,8 +10,12 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import { STATUS_BRUKER_ER_INTRESSERT } from '../../../../constant';
+import {
+    EGEN_AKTIVITET_TYPE,
+    STATUS_BRUKER_ER_INTRESSERT,
+} from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
+import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -101,6 +105,8 @@ class EgenAktivitetForm extends Component {
                             <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
                         </Undertekst>
                     </div>
+
+                    <AktivitetIngress type={EGEN_AKTIVITET_TYPE} />
 
                     <Input
                         feltNavn="tittel"
