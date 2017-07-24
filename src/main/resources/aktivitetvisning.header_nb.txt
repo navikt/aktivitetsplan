@@ -1,14 +1,16 @@
 { status, select,
 PLANLAGT { Planlagt }
 BRUKER_ER_INTERESSERT { Foreslått }
-GJENNOMFORT { Gjennomføres }
+GJENNOMFORES { Gjennomføres }
 FULLFORT { Fullført }
 AVBRUTT { Avbrutt }
 } / { type, select,
 EGEN { Egen }
 STILLING { Stilling }
 TILTAKSAKTIVITET { Tiltak }
-GRUPPEAKTIVITET { Gruppaktivitet }
+GRUPPEAKTIVITET { Gruppeaktivitet }
 UTDANNINGSAKTIVITET { Utdanning }
 SOKEAVTALE { Avtale med NAV }
+IJOBB { Bruker i jobb }
+BEHANDLING { Behandling }
 }
