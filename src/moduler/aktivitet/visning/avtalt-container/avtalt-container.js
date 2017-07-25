@@ -31,14 +31,15 @@ class AvtaltContainer extends Component {
     render() {
         const {
             aktivitet,
-            aktivitetData,
+            aktivitetReducer,
             doSetAktivitetTilAvtalt,
             className,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
 
-        const lasterData = status !== STATUS.OK;
+        const lasterData = aktivitetReducer.status !== STATUS.OK;
+        const oppdaterer = aktivitetReducer.status === STATUS.RELOADING;
         const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
 
         if (
@@ -75,7 +76,7 @@ class AvtaltContainer extends Component {
                 </div>
                 {this.state.visBekreftAvtalt &&
                     <Knapp
-                        spinner={aktivitetData.oppdaterer}
+                        spinner={oppdaterer}
                         onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
                         disabled={lasterData}
                     >
@@ -106,19 +107,17 @@ class AvtaltContainer extends Component {
 AvtaltContainer.propTypes = {
     doSetAktivitetTilAvtalt: PT.func.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
-    aktivitetData: PT.shape({
-        oppdaterer: PT.bool,
-    }),
+    aktivitetReducer: AppPT.reducer,
     className: PT.string,
 };
 
 AvtaltContainer.defaultProps = {
-    aktivitetData: undefined,
+    aktivitetReducer: undefined,
     className: undefined,
 };
 
 const mapStateToProps = state => ({
-    aktivitetData: state.data.aktiviteter,
+    aktivitetReducer: state.data.aktiviteter,
 });
 
 const mapDispatchToProps = dispatch => ({
