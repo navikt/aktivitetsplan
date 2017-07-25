@@ -1,5 +1,4 @@
 import * as AT from './aktivitet-action-types';
-import { ER_I_PRIVAT_MODUS } from '../../ducks/situasjon';
 import { STATUS } from '../../ducks/utils';
 
 const initalState = {
@@ -57,8 +56,6 @@ export default function reducer(state = initalState, action) {
             return { ...state, forrigeAktiveAktivitetId: action.id };
         case AT.FJERN_FORRIGE_AKTIVE_AKTIVITET_ID:
             return { ...state, forrigeAktiveAktivitetId: undefined };
-        case ER_I_PRIVAT_MODUS:
-            return { ...state, status: STATUS.OK };
         default:
             return state;
     }
