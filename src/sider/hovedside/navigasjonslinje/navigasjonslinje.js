@@ -10,6 +10,7 @@ import Feature from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
+import { erPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
 
 const NavigasjonsElement = ({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -106,7 +107,7 @@ const mapStateToProps = state => {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)
             .filter(d => dialogFilter(d, state)).length,
-        privatModus: stateData.privatModus.erPrivatModus,
+        privatModus: erPrivatModus(state),
         underOppfolging: stateData.situasjon.data.underOppfolging,
     };
 };
