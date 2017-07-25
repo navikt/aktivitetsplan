@@ -18,6 +18,7 @@ import {
 import history from '../../../history';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
 import { aktivitetFilter } from '../../../moduler/filter/filter-utils';
+import { aktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -190,8 +191,7 @@ KolonneFunction.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const stateData = state.data;
-    const aktiviteter = stateData.aktivitetListe.data.filter(a =>
+    const aktiviteter = aktivitetListe(state).filter(a =>
         aktivitetFilter(a, state)
     );
     return {

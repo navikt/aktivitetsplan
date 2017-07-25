@@ -5,7 +5,6 @@ import ledetekstReducer from './ducks/ledetekster-ressurs';
 import situasjonReducer from './ducks/situasjon';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
-import aktivitetListeReducer from './moduler/aktivitet/aktivitetliste-reducer';
 import arenaAktiviteterReducer from './ducks/arena-aktiviteter';
 import etiketterReducer from './ducks/etiketter';
 import versjonReducer from './ducks/aktivitet-versjoner';
@@ -21,11 +20,8 @@ import veilederReducer from './ducks/veileder';
 import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
 import aktiverDigitalOppfolgingReducer from './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
-import privatModusReducer from './ducks/privat-modus';
 
 export const RESET_STORE = { type: 'store/reset' };
-
-const noopReducer = state => state || {};
 
 const combinedReducers = combineReducers({
     form: formReducer,
@@ -48,11 +44,7 @@ const combinedReducers = combineReducers({
             veiledere: veilederReducer,
             innstillingerHistorikk: historikkReducer,
             aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
-            privatModus: noopReducer,
-            aktivitetListe: noopReducer,
-        }),
-        privatModusReducer,
-        aktivitetListeReducer
+        })
     ),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,
