@@ -56,6 +56,7 @@ class AktivitetsKort extends Component {
             tittel,
             fraDato,
             tilDato,
+            historisk,
             antallStillingerSokes,
         } = aktivitet;
 
@@ -67,6 +68,7 @@ class AktivitetsKort extends Component {
         ].includes(type);
         const erFlyttbar =
             !nesteStatus &&
+            !historisk &&
             ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status) &&
             !arenaAktivitet;
         const aktivitetsKort = (

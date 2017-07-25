@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { hentMal, hentMalListe, fjernMalListe } from '../../../ducks/mal';
 import * as AppPT from '../../../proptypes';
@@ -12,6 +11,7 @@ import Identitet from '../../../felles-komponenter/identitet';
 import Accordion from '../../../felles-komponenter/accordion';
 import history from '../../../history';
 import AktivitetsmalModal from './aktivitetsmal-modal';
+import { HiddenIfHovedknapp } from '../../../felles-komponenter/hidden-if/hidden-if-knapper';
 
 function malListeVisning(malet) {
     return (
@@ -53,12 +53,12 @@ class AktivitetsMal extends Component {
     };
 
     render() {
-        const { mal, malListe } = this.props;
+        const { mal, malListe, malReducer, historiskVisning } = this.props;
         const malOpprettet = !!mal.mal;
         const historikkVises = malListe.length !== 0;
 
         return (
-            <Innholdslaster avhengigheter={[this.props.malData]}>
+            <Innholdslaster avhengigheter={[malReducer]}>
                 <section className="aktivitetmal">
                     <div className="aktivitetmal__innhold">
                         {!malOpprettet &&
@@ -68,7 +68,10 @@ class AktivitetsMal extends Component {
                         <Tekstomrade className="aktivitetmal__tekst">
                             {mal.mal}
                         </Tekstomrade>
-                        <Hovedknapp onClick={() => history.push('mal/endre')}>
+                        <HiddenIfHovedknapp
+                            onClick={() => history.push('mal/endre')}
+                            hidden={historiskVisning}
+                        >
                             <FormattedMessage
                                 id={
                                     malOpprettet
@@ -76,7 +79,7 @@ class AktivitetsMal extends Component {
                                         : 'aktivitetsmal.opprett'
                                 }
                             />
-                        </Hovedknapp>
+                        </HiddenIfHovedknapp>
                     </div>
                     <div>
                         <hr className="aktivitetmal__delelinje" />
@@ -105,7 +108,6 @@ class AktivitetsMal extends Component {
 AktivitetsMal.defaultProps = {
     mal: null,
     malListe: null,
-    malData: null,
 };
 
 AktivitetsMal.propTypes = {
@@ -114,16 +116,21 @@ AktivitetsMal.propTypes = {
     doHentMal: PT.func.isRequired,
     doHentMalListe: PT.func.isRequired,
     doFjernMalListe: PT.func.isRequired,
-    malData: PT.shape({
-        status: PT.string.isRequired,
-    }),
+    malReducer: AppPT.reducer.isRequired,
+    historiskVisning: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-    mal: state.data.mal.gjeldende,
-    malListe: state.data.mal.liste,
-    malData: state.data.mal,
-});
+const mapStateToProps = state => {
+    const stateData = state.data;
+    const malReducer = stateData.mal;
+    const historiskVisning = !!stateData.filter.historiskPeriode;
+    return {
+        mal: malReducer.gjeldende,
+        malListe: malReducer.liste,
+        malReducer,
+        historiskVisning,
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     doHentMal: () => hentMal()(dispatch),
