@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'react-redux-form-validation';
+import reduceReducers from 'reduce-reducers';
 import ledetekstReducer from './ducks/ledetekster-ressurs';
 import situasjonReducer from './ducks/situasjon';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
@@ -24,25 +25,27 @@ export const RESET_STORE = { type: 'store/reset' };
 
 const combinedReducers = combineReducers({
     form: formReducer,
-    data: combineReducers({
-        ledetekster: ledetekstReducer,
-        situasjon: situasjonReducer,
-        innstillinger: innstillingerReducer,
-        vilkar: vilkarReducer,
-        historiskeVilkar: historiskeVilkarReducer,
-        aktiviteter: aktiviteterReducer,
-        arenaAktiviteter: arenaAktiviteterReducer,
-        etiketter: etiketterReducer,
-        versjoner: versjonReducer,
-        dialog: dialogReducer,
-        mal: malReducer,
-        motpart: motpartReducer,
-        identitet: identitetReducer,
-        filter: filterReducer,
-        veiledere: veilederReducer,
-        innstillingerHistorikk: historikkReducer,
-        aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
-    }),
+    data: reduceReducers(
+        combineReducers({
+            ledetekster: ledetekstReducer,
+            situasjon: situasjonReducer,
+            innstillinger: innstillingerReducer,
+            vilkar: vilkarReducer,
+            historiskeVilkar: historiskeVilkarReducer,
+            aktiviteter: aktiviteterReducer,
+            arenaAktiviteter: arenaAktiviteterReducer,
+            etiketter: etiketterReducer,
+            versjoner: versjonReducer,
+            dialog: dialogReducer,
+            mal: malReducer,
+            motpart: motpartReducer,
+            identitet: identitetReducer,
+            filter: filterReducer,
+            veiledere: veilederReducer,
+            innstillingerHistorikk: historikkReducer,
+            aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
+        })
+    ),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,
     }),
