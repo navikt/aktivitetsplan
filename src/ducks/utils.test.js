@@ -14,19 +14,19 @@ const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = STATUS;
 
 describe('utils', () => {
     describe('aggregerStatus', () => {
-        it('OK', () => {
+        it('alt OK gir OK', () => {
             expect(aggregerStatus(OK, OK, OK)).to.equal(OK);
         });
-        it('RELOADING', () => {
+        it('RELOADING overstyrer OK', () => {
             expect(aggregerStatus(OK, RELOADING, OK)).to.equal(RELOADING);
         });
-        it('PENDING', () => {
+        it('PENDING overstyrer OK og RELOADING', () => {
             expect(aggregerStatus(OK, PENDING, OK)).to.equal(PENDING);
             expect(aggregerStatus(RELOADING, PENDING, RELOADING)).to.equal(
                 PENDING
             );
         });
-        it('NOT_STARTED', () => {
+        it('NOT_STARTED overstyrer OK, RELOADING og PENDING', () => {
             expect(aggregerStatus(OK, NOT_STARTED, OK)).to.equal(NOT_STARTED);
             expect(aggregerStatus(RELOADING, NOT_STARTED, RELOADING)).to.equal(
                 NOT_STARTED
@@ -35,7 +35,7 @@ describe('utils', () => {
                 NOT_STARTED
             );
         });
-        it('ERROR', () => {
+        it('ERROR overstyrer alle andre statuser', () => {
             expect(aggregerStatus(OK, ERROR, OK)).to.deep.equal(ERROR);
             expect(aggregerStatus(RELOADING, ERROR, RELOADING)).to.equal(ERROR);
             expect(aggregerStatus(PENDING, ERROR, PENDING)).to.equal(ERROR);
@@ -44,13 +44,13 @@ describe('utils', () => {
             );
         });
 
-        it('null/undefined', () => {
+        it('ignorerer null/undefined', () => {
             expect(aggregerStatus(OK, null, OK, undefined)).to.equal(OK);
             expect(aggregerStatus(null, null)).to.equal(null);
             expect(aggregerStatus(undefined, undefined)).to.equal(undefined);
         });
 
-        it('aksepterer reducere', () => {
+        it('aksepterer reducere som argument', () => {
             expect(aggregerStatus(OK, { status: ERROR }, OK)).to.equal(ERROR);
         });
     });
