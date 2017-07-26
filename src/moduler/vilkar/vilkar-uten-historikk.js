@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import * as AppPT from '../../proptypes';
 import VilkarModal from './vilkar-modal';
 import Vilkar from './vilkar';

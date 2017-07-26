@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import NavLenkepanel from 'nav-frontend-lenkepanel';
 
 function ReactRouterLink({ href, children, ...props }) {

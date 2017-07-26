@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import * as AppPT from '../../../../proptypes';
 import {
     formaterDatoKortManed,

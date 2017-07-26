@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import history from '../../history';
@@ -21,7 +21,7 @@ function Tilbakeknapp(props) {
     }
 
     return (
-        <Link href="/" onClick={tilbake} className="tilbakeknapp">
+        <Link to="/" onClick={tilbake} className="tilbakeknapp">
             <div className="tilbakeknapp-innhold">
                 <VenstreChevron />
                 <span className="tilbakeknapp-innhold__tekst">
