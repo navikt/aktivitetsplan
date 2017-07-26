@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { erInternlenke } from '../../utils';
 import visibleIfHOC from '../../hocs/visible-if';
 

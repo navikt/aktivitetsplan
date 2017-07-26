@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
+import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import Dialog from './dialog';
 import Dialoger from './dialoger';
@@ -260,8 +261,8 @@ DialogModal.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-    const { routeParams } = props;
-    const { id } = routeParams;
+    const { match } = props;
+    const { id } = match.params;
     const stateData = state.data;
     const motpart = stateData.motpart;
     const dialoger = stateData.dialog.data;
@@ -289,4 +290,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DialogModal);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(DialogModal)
+);

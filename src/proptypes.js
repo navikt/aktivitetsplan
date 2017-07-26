@@ -120,3 +120,13 @@ export const veileder = PT.shape({
     ident: PT.string,
     navn: PT.string,
 });
+
+export const arbeidsliste = PT.shape({
+    sistEndretAv: PT.shape({
+        veilederId: PT.string,
+    }),
+    endringstidspunkt: PT.string,
+    kommentar: PT.string,
+    frist: PT.string,
+    isOppfolgendeVeileder: PT.bool,
+});

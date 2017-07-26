@@ -10,7 +10,7 @@ import versjonReducer from './ducks/aktivitet-versjoner';
 import dialogReducer from './ducks/dialog';
 import malReducer from './ducks/mal';
 import identitetReducer from './ducks/identitet';
-import motpartReducer from './ducks/motpart';
+import motpartReducer from './moduler/motpart/motpart-duck';
 import endreAktivitetReducer from './ducks/endre-aktivitet';
 import feilReducer from './ducks/feil';
 import historiskeVilkarReducer from './ducks/historiske-vilkar';
@@ -19,6 +19,7 @@ import veilederReducer from './ducks/veileder';
 import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
 import aktiverDigitalOppfolgingReducer from './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
+import arbeidslisteReducer from './moduler/arbeidsliste/arbeidsliste-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -42,6 +43,7 @@ const combinedReducers = combineReducers({
         veiledere: veilederReducer,
         innstillingerHistorikk: historikkReducer,
         aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
+        arbeidsliste: arbeidslisteReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,

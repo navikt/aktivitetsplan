@@ -10,6 +10,8 @@ import Feature from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
+import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-reducer';
+import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 
 const NavigasjonsElement = ({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -51,6 +53,7 @@ NavigasjonsElement.propTypes = {
 class Navigasjonslinje extends Component {
     componentDidMount() {
         this.props.doHentDialog();
+        this.props.doHentArbeidsliste(getFodselsnummer());
     }
 
     render() {
@@ -93,6 +96,7 @@ Navigasjonslinje.propTypes = {
     antallUlesteDialoger: PT.number.isRequired,
     privatModus: PT.bool.isRequired,
     underOppfolging: PT.bool,
+    doHentArbeidsliste: PT.func.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
@@ -112,6 +116,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     doHentDialog: () => dispatch(hentDialog()),
+    doHentArbeidsliste: fnr => dispatch(hentArbeidsliste(fnr)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigasjonslinje);

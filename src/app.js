@@ -1,39 +1,36 @@
 import 'babel-polyfill';
 import React from 'react';
-import { Router, applyRouterMiddleware } from 'react-router';
-import { useScroll } from 'react-router-scroll';
+import { BrowserRouter } from 'react-router-dom';
 import SideBanner from './moduler/sidebanner/sidebanner';
-import history from './history';
 import Provider from './provider';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Feature from './felles-komponenter/feature/feature';
 import './index.less';
-import routing from './routing';
-import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
-
-const shouldScroll = (prevRouterProps, nextRouterProps) =>
-    !(
-        prevRouterProps &&
-        nextRouterProps &&
-        prevRouterProps.params.temaid &&
-        nextRouterProps.params.temaid
-    );
+import Routing from './routing';
+import Hovedside from './sider/hovedside/hovedside';
+import routerHistory from './history';
+import { getFodselsnummer } from './bootstrap/fnr-util';
+import { VIS_SIDEBANNER, CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
 
 function App() {
+    const basename = FNR_I_URL
+        ? `${CONTEXT_PATH}/${getFodselsnummer()}`
+        : CONTEXT_PATH;
+
     return (
         <div className="aktivitetsplanfs">
             <Provider>
                 <SideBanner visible={VIS_SIDEBANNER} />
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
-                        <Router
-                            history={history}
-                            render={applyRouterMiddleware(
-                                useScroll(shouldScroll)
-                            )}
+                        <BrowserRouter
+                            basename={basename}
+                            history={routerHistory}
                         >
-                            {routing}
-                        </Router>
+                            <Hovedside>
+                                {Routing}
+                            </Hovedside>
+                        </BrowserRouter>
                         <Feature name="timeoutbox">
                             <Timeoutbox />
                         </Feature>

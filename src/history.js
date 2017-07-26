@@ -1,9 +1,8 @@
-import { createHistory } from 'history';
-import { useRouterHistory } from 'react-router';
+import { createBrowserHistory } from 'history';
 import { getFodselsnummer } from './bootstrap/fnr-util';
 import { CONTEXT_PATH } from '~config'; // eslint-disable-line
 
-const routerHistory = useRouterHistory(createHistory)({
+const routerHistory = createBrowserHistory({
     basename: CONTEXT_PATH,
 });
 

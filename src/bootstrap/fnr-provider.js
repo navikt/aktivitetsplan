@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { CONTEXT_PATH } from '~config'; // eslint-disable-line
 import { RESET_STORE } from '../reducer';
-import { hentPerson, setNAVsomMotpart } from '../ducks/motpart';
+import { hentPerson, setNAVsomMotpart } from '../moduler/motpart/motpart-duck';
 import history from '../history';
 
 export function fnrFraUrl() {

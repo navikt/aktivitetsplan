@@ -1,6 +1,6 @@
-import * as Api from './api';
-import { doThenDispatch, STATUS } from './utils';
-import { storeForbokstaver } from '../utils';
+import * as Api from '../../ducks/api';
+import { doThenDispatch, STATUS } from '../../ducks/utils';
+import { storeForbokstaver } from '../../utils';
 
 // Actions
 export const HENTER_PERSON = 'person/hent';

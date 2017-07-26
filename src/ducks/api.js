@@ -5,6 +5,7 @@ import {
     SITUASJON_PROXY_BASE_URL,
     PERSON_BASE_URL,
     VEILEDER_BASE_URL,
+    PORTEFOLJE_BASE_URL,
 } from '~config'; // eslint-disable-line
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
@@ -86,5 +87,16 @@ export function slettAktivitet(aktivitet) {
     return fetchToJson(
         `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`,
         { method: 'delete' }
+    );
+}
+
+export function hentArbeidsliste(fnr) {
+    return fetchToJson(`${PORTEFOLJE_BASE_URL}/arbeidsliste/${fnr}`);
+}
+
+export function lagreArbeidsliste(fnr, arbeidsliste) {
+    return putAsJson(
+        `${PORTEFOLJE_BASE_URL}/arbeidsliste/${fnr}`,
+        arbeidsliste
     );
 }
