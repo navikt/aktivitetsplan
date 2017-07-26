@@ -1,6 +1,6 @@
-export const selectArbeidsliste = state => ({
-    arbeidsliste: state.data.arbeidsliste.data,
+export const hentArbeidsliste = state => ({
+    arbeidsliste: state.data.arbeidsliste,
 });
 
 export const isOppfolgendeVeileder = state =>
-    state.data.arbeidsliste.data.isOppfolgendeVeileder === true;
+    hentArbeidsliste(state).data.isOppfolgendeVeileder === true;

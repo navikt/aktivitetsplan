@@ -7,7 +7,7 @@ import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import Datovelger from '../../felles-komponenter/skjema/datovelger/datovelger';
 import { redigerArbeidsliste } from './arbeidsliste-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import { selectArbeidsliste } from './arbeidsliste-selector';
+import { hentArbeidsliste } from './arbeidsliste-selector';
 import { LUKK_MODAL } from '../../ducks/modal';
 
 const KOMMENTAR_MAKS_LENGDE = 255;
@@ -70,12 +70,12 @@ const RedigerArbeidslisteFormValidation = validForm({
 })(RedigerArbeidslisteForm);
 
 const mapStateToProps = state => {
-    const arbeidsliste = selectArbeidsliste(state);
+    const arbeidsliste = hentArbeidsliste(state);
     return {
         veileder: state.data.identitet.data.id,
         initialValues: {
-            kommentar: arbeidsliste.kommentar,
-            frist: arbeidsliste.frist,
+            kommentar: arbeidsliste.data.kommentar,
+            frist: arbeidsliste.data.frist,
         },
     };
 };
