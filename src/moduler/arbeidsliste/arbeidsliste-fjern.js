@@ -7,53 +7,58 @@ import {
     Normaltekst,
     Undertittel,
 } from 'nav-frontend-typografi';
-import * as AppPT from '../../proptypes';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import ArbeidslisteModal from './arbeidsliste-modal';
+import { slettArbeidsliste } from './arbeidsliste-reducer';
+import { LUKK_MODAL } from '../../ducks/modal';
 
-function FjernArbeidsliste({ motpart, navnPaMotpart }) {
+function FjernArbeidsliste({ navn, onClick, lukkModal }) {
     const fnr = getFodselsnummer();
     return (
-        <ArbeidslisteModal>
-            <article className="arbeidsliste__container">
-                <Innholdstittel className="arbeidsliste__overskrift">
-                    <FormattedMessage id="arbeidsliste.modal.rediger.overskrift" />
-                </Innholdstittel>
-                <Normaltekst>
-                    <FormattedMessage id="arbeidsliste.modal.rediger.infotekst" />
-                </Normaltekst>
-                <Innholdslaster
-                    avhengigheter={[motpart]}
-                    className="arbeidsliste__spinner"
+        <article className="arbeidsliste__container">
+            <Innholdstittel className="arbeidsliste__overskrift">
+                <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
+            </Innholdstittel>
+            <Normaltekst>
+                <FormattedMessage id="arbeidsliste.modal.fjern.infotekst" />
+            </Normaltekst>
+            <Undertittel>
+                <FormattedMessage
+                    id="arbeidsliste.modal.personalia"
+                    values={{ navn, fnr }}
+                />
+            </Undertittel>
+            <section className="arbeidsliste__skillelinje">
+                <button
+                    type="submit"
+                    className="knapp knapp--hoved"
+                    onClick={onClick}
                 >
-                    <Undertittel>
-                        <FormattedMessage
-                            id="arbeidsliste.modal.personalia"
-                            values={{ navnPaMotpart, fnr }}
-                        />
-                    </Undertittel>
-                </Innholdslaster>
-            </article>
-        </ArbeidslisteModal>
+                    <FormattedMessage id="modal.knapp.lagre" />
+                </button>
+                <button type="button" className="knapp" onClick={lukkModal}>
+                    <FormattedMessage id="modal.knapp.avbryt" />
+                </button>
+            </section>
+        </article>
     );
 }
 
-FjernArbeidsliste.defaultProps = {
-    navnPaMotpart: undefined,
-};
-
 FjernArbeidsliste.propTypes = {
-    navnPaMotpart: PT.string,
-    motpart: AppPT.reducer.isRequired,
+    navn: PT.string.isRequired,
+    onClick: PT.func.isRequired,
+    lukkModal: PT.func.isRequired,
 };
 
-const mapStateToProps = state => {
-    const motpart = state.data.motpart;
-    return {
-        motpart,
-        navnPaMotpart: motpart.data.navn,
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    onClick: () => {
+        dispatch(slettArbeidsliste(getFodselsnummer())).then(() =>
+            history.push('/')
+        );
+    },
+    lukkModal: () => {
+        dispatch(LUKK_MODAL);
+        return history.push('/');
+    },
+});
 
-export default connect(mapStateToProps)(FjernArbeidsliste);
+export default connect(null, mapDispatchToProps)(FjernArbeidsliste);

@@ -66,8 +66,8 @@ export function leggTilArbeidsliste(fnr, arbeidsliste) {
     });
 }
 
-export function slettArbeidsliste(fnr, arbeidsliste) {
-    return doThenDispatch(() => Api.slettArbeidsliste(fnr, arbeidsliste), {
+export function slettArbeidsliste(fnr) {
+    return doThenDispatch(() => Api.slettArbeidsliste(fnr), {
         OK: SLETT_ARBEIDSLISTE_OK,
         FEILET: SLETT_ARBEIDSLISTE_FEILET,
         PENDING: SLETT_ARBEIDSLISTE_PENDING,

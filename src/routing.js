@@ -120,7 +120,7 @@ const Routing = () =>
             path="/aktivitet/fullfor/:id"
             component={FullforAktivitet}
         />
-        <Route exact path="/arbeidsliste" component={ArbeidslisteContainer} />
+        <Route path="/arbeidsliste" component={ArbeidslisteContainer} />
     </Switch>;
 
 function TomDiv() {

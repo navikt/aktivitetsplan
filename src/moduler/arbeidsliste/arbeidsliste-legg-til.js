@@ -7,17 +7,17 @@ import {
     Undertittel,
 } from 'nav-frontend-typografi';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import RedigerArbeidslisteForm from './arbeidsliste-rediger-form';
+import LeggTilArbeidslisteForm from './arbeidsliste-legg-til-form';
 
-function RedigerArbeidsliste({ navn }) {
+function LeggTilArbeidsliste({ navn }) {
     const fnr = getFodselsnummer();
     return (
         <article className="arbeidsliste__container">
             <Innholdstittel className="arbeidsliste__overskrift">
-                <FormattedMessage id="arbeidsliste.modal.rediger.overskrift" />
+                <FormattedMessage id="arbeidsliste.modal.legg.til.overskrift" />
             </Innholdstittel>
             <Normaltekst>
-                <FormattedMessage id="arbeidsliste.modal.rediger.infotekst" />
+                <FormattedMessage id="arbeidsliste.modal.legg.til.infotekst" />
             </Normaltekst>
             <Undertittel>
                 <FormattedMessage
@@ -25,13 +25,13 @@ function RedigerArbeidsliste({ navn }) {
                     values={{ navn, fnr }}
                 />
             </Undertittel>
-            <RedigerArbeidslisteForm />
+            <LeggTilArbeidslisteForm />
         </article>
     );
 }
 
-RedigerArbeidsliste.propTypes = {
+LeggTilArbeidsliste.propTypes = {
     navn: PT.string.isRequired,
 };
 
-export default RedigerArbeidsliste;
+export default LeggTilArbeidsliste;

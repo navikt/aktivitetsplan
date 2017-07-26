@@ -100,3 +100,16 @@ export function lagreArbeidsliste(fnr, arbeidsliste) {
         arbeidsliste
     );
 }
+
+export function redigerArbeidsliste(fnr, arbeidsliste) {
+    return postAsJson(
+        `${PORTEFOLJE_BASE_URL}/arbeidsliste/${fnr}`,
+        arbeidsliste
+    );
+}
+
+export function slettArbeidsliste(fnr) {
+    return fetchToJson(`${PORTEFOLJE_BASE_URL}/arbeidsliste/${fnr}`, {
+        method: 'delete',
+    });
+}
