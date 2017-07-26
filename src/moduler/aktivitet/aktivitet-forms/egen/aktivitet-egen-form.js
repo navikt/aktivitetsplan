@@ -7,6 +7,7 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm, rules } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { formNavn } from '../aktivitet-form-container';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
@@ -192,7 +193,6 @@ EgenAktivitetForm.defaultProps = {
     avtalt: false,
 };
 
-export const formNavn = 'egen-aktivitet';
 const EgenAktivitetReduxForm = validForm({
     form: formNavn,
     errorSummaryTitle: (
@@ -210,8 +210,8 @@ const EgenAktivitetReduxForm = validForm({
     },
 })(EgenAktivitetForm);
 
-const selector = formValueSelector(formNavn);
 const mapStateToProps = (state, props) => {
+    const selector = formValueSelector(formNavn);
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {

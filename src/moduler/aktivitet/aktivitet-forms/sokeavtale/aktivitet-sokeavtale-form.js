@@ -7,6 +7,7 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm, rules } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { formNavn } from '../aktivitet-form-container';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
@@ -179,7 +180,6 @@ SokeAvtaleAktivitetForm.defaultProps = {
     avtalt: false,
 };
 
-export const formNavn = 'sokeavtale-aktivitet';
 const SokeavtaleAktivitetReduxForm = validForm({
     form: formNavn,
     errorSummaryTitle: (
@@ -195,8 +195,8 @@ const SokeavtaleAktivitetReduxForm = validForm({
     },
 })(SokeAvtaleAktivitetForm);
 
-const selector = formValueSelector(formNavn);
 const mapStateToProps = (state, props) => {
+    const selector = formValueSelector(formNavn);
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {

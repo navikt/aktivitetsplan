@@ -21,7 +21,7 @@
   "scripts": {
     "test": "mocha",
     "test:watch": "mocha --watch",
-    "depcheck": "node ./node_modules/npm-check-updates/bin/npm-check-updates -e 2 -x history,react-motion,react-router,react-collapse,mocha,react-height --packageFile ./package.json",
+    "depcheck": "node ./node_modules/npm-check-updates/bin/npm-check-updates -e 2 -x react-motion,react-router-dom,react-collapse,mocha,react-height --packageFile ./package.json",
     "eslint": "eslint src --ext .js --ext .jsx",
     "eslint-staged": "eslint",
     "lesshint": "lesshint --reporter ./lesshint-reporter src/",
@@ -107,7 +107,6 @@
     "react-motion": "0.4.8",
     "react-redux": "5.0.4",
     "react-redux-form-validation": "0.0.10",
-    "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
     "react-router-redux": "4.0.8",
     "react-scrollbar": "0.5.1",

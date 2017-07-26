@@ -7,6 +7,7 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { validForm, rules } from 'react-redux-form-validation';
+import { formNavn } from '../aktivitet-form-container';
 import { dateToISODate } from '../../../../utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
@@ -197,7 +198,6 @@ StillingAktivitetForm.defaultProps = {
     avtalt: false,
 };
 
-export const formNavn = 'stilling-aktivitet';
 const StillingAktivitetReduxForm = validForm({
     form: formNavn,
     errorSummaryTitle: (

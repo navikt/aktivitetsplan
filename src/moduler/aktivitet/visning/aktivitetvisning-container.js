@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import moment from 'moment';
@@ -18,8 +19,8 @@ import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
-        if (!isNaN(this.props.params.id)) {
-            this.props.doHentAktivitet(this.props.params.id);
+        if (!isNaN(this.props.match.params.id)) {
+            this.props.doHentAktivitet(this.props.match.params.id);
         }
         this.props.doHentArenaAktiviteter();
         this.props.doHentAktiviteter();
@@ -27,7 +28,7 @@ class AktivitetvisningContainer extends Component {
     }
 
     componentWillUnmount() {
-        this.props.doSettForrigeAktiveAktivitetId(this.props.params.id);
+        this.props.doSettForrigeAktiveAktivitetId(this.props.match.params.id);
     }
 
     aktivitetErEtterOppfolgingUtgang(valgtAktivitet) {
@@ -39,8 +40,8 @@ class AktivitetvisningContainer extends Component {
     }
 
     render() {
-        const { params, aktiviteter, arenaAktiviteter, situasjon } = this.props;
-        const { id } = params;
+        const { match, aktiviteter, arenaAktiviteter, situasjon } = this.props;
+        const { id } = match.params;
 
         const alleAktiviter = aktiviteter.data.concat(arenaAktiviteter.data);
         const valgtAktivitet = alleAktiviter.find(
@@ -70,7 +71,7 @@ class AktivitetvisningContainer extends Component {
 }
 
 AktivitetvisningContainer.propTypes = {
-    params: PT.shape({ id: PT.string }).isRequired,
+    match: PT.shape({ params: PT.shape({ id: PT.string }) }).isRequired,
     situasjon: AppPT.situasjon.isRequired,
     aktiviteter: PT.oneOfType([PT.arrayOf(AppPT.aktivitet), AppPT.aktivitet]),
     arenaAktiviteter: PT.oneOfType([PT.object, PT.arrayOf(PT.object)]),
@@ -105,5 +106,5 @@ const mapDispatchToProps = dispatch =>
     );
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    AktivitetvisningContainer
+    withRouter(AktivitetvisningContainer)
 );
