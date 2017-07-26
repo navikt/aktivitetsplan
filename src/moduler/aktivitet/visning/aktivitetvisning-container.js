@@ -48,6 +48,8 @@ class AktivitetvisningContainer extends Component {
         );
 
         const slettingErTillatt =
+            valgtAktivitet &&
+            !valgtAktivitet.historisk &&
             TILLAT_SLETTING &&
             (!situasjon.data.underOppfolging ||
                 this.aktivitetErEtterOppfolgingUtgang(valgtAktivitet));

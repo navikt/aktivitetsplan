@@ -12,6 +12,7 @@ import { hentDialog } from '../../../ducks/dialog';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
 import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-reducer';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
+import { erPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
 
 const NavigasjonsElement = ({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -104,13 +105,14 @@ Navigasjonslinje.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const dialog = state.data.dialog.data;
+    const stateData = state.data;
+    const dialog = stateData.dialog.data;
     return {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)
             .filter(d => dialogFilter(d, state)).length,
-        privatModus: state.data.situasjon.privatModus,
-        underOppfolging: state.data.situasjon.data.underOppfolging,
+        privatModus: erPrivatModus(state),
+        underOppfolging: stateData.situasjon.data.underOppfolging,
     };
 };
 

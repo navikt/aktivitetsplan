@@ -31,25 +31,29 @@ class AvtaltContainer extends Component {
     render() {
         const {
             aktivitet,
-            aktivitetData,
+            aktivitetReducer,
             doSetAktivitetTilAvtalt,
             className,
         } = this.props;
 
-        const lasterData = aktivitetData.status !== STATUS.OK;
-        const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === aktivitet.type;
+        const { type, status, historisk, avtalt } = aktivitet;
+
+        const lasterData = aktivitetReducer.status !== STATUS.OK;
+        const oppdaterer = aktivitetReducer.status === STATUS.RELOADING;
+        const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
 
         if (
             !TILLAT_SET_AVTALT ||
-            aktivitet.status === STATUS_FULLFOERT ||
-            aktivitet.status === STATUS_AVBRUTT ||
+            historisk ||
+            status === STATUS_FULLFOERT ||
+            status === STATUS_AVBRUTT ||
             arenaAktivitet
         ) {
             return null;
         }
 
         // Kun vis bekreftet hvis nettopp satt til avtalt.
-        if (this.state.visBekreftAvtalt === false && aktivitet.avtalt) {
+        if (this.state.visBekreftAvtalt === false && avtalt) {
             return null;
         }
 
@@ -72,7 +76,7 @@ class AvtaltContainer extends Component {
                 </div>
                 {this.state.visBekreftAvtalt &&
                     <Knapp
-                        spinner={aktivitetData.oppdaterer}
+                        spinner={oppdaterer}
                         onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
                         disabled={lasterData}
                     >
@@ -103,19 +107,17 @@ class AvtaltContainer extends Component {
 AvtaltContainer.propTypes = {
     doSetAktivitetTilAvtalt: PT.func.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
-    aktivitetData: PT.shape({
-        oppdaterer: PT.bool,
-    }),
+    aktivitetReducer: AppPT.reducer,
     className: PT.string,
 };
 
 AvtaltContainer.defaultProps = {
-    aktivitetData: undefined,
+    aktivitetReducer: undefined,
     className: undefined,
 };
 
 const mapStateToProps = state => ({
-    aktivitetData: state.data.aktiviteter,
+    aktivitetReducer: state.data.aktiviteter,
 });
 
 const mapDispatchToProps = dispatch => ({
