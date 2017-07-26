@@ -40,11 +40,11 @@ export const avbrytAktivitetRoute = aktivitetId =>
 
 const Routing = () =>
     <Switch>
-        <Route path="/vilkar" component={VilkarModalMedHistorikk}/>
-        <Route path="/vilkar/:key" component={VilkarModalUtenHistorikk}/>
-        <Route path="/mal" component={Aktivitetsmal}/>
-        <Route path="/mal/endre" component={AktivitetmalEndre}/>
-        <Route path="/innstillinger" component={Prosesser}/>
+        <Route path="/vilkar" component={VilkarModalMedHistorikk} />
+        <Route path="/vilkar/:key" component={VilkarModalUtenHistorikk} />
+        <Route path="/mal" component={Aktivitetsmal} />
+        <Route path="/mal/endre" component={AktivitetmalEndre} />
+        <Route path="/innstillinger" component={Prosesser} />
         <Route
             path="/innstillinger/manuell"
             component={SettManuellOppfolging}
@@ -53,7 +53,7 @@ const Routing = () =>
             path="/innstillinger/manuell/kvittering"
             component={SettManuellOppfolgingKvittering}
         />
-        <Route path="/innstillinger" component={Prosesser}/>
+        <Route path="/innstillinger" component={Prosesser} />
         <Route
             path="/innstillinger/digital"
             component={SettDigitalOppfolging}
@@ -62,10 +62,7 @@ const Routing = () =>
             path="/innstillinger/digital/kvittering"
             component={SettDigitalKvittering}
         />
-        <Route
-            path="/innstillinger/avslutt"
-            component={AvsluttOppfolging}
-        />
+        <Route path="/innstillinger/avslutt" component={AvsluttOppfolging} />
         <Route
             path="/innstillinger/avslutt/bekreft"
             component={BekreftAvsluttOppfolging}
@@ -86,31 +83,55 @@ const Routing = () =>
             path="/innstillinger/feilkvittering"
             component={Feilkvittering}
         />
-        <Route exact path="/dialog" component={DialogModal}/>
-        <Route exact path="/dialog/:id" component={DialogModal}/>
+        <Route exact path="/dialog" component={DialogModal} />
+        <Route exact path="/dialog/:id" component={DialogModal} />
 
-        <Route exact path="/aktivitet/ny" component={NyAktivitet}/>
-        <Route exact path="/aktivitet/ny/egen" component={EgenAktivitet}/>
-        <Route exact path="/aktivitet/ny/stilling" component={StillingAktivitet}/>
-        <Route exact path="/aktivitet/ny/sokeavtale" component={SokeavtaleAktivitet}/>
-        <Route exact path="/aktivitet/ny/behandling" component={BehandlingAktivitet}/>
-        <Route exact path="/aktivitet/vis/:id" component={AktivitetvisningContainer}/>
-        <Route exact path="/aktivitet/slett/:id" component={BekreftSlettVisningContainer}/>
-        <Route exact path="/aktivitet/endre/:id" component={EndreAktivitet}/>
-        <Route exact path="/aktivitet/avbryt/:id" component={AvbrytAktivitet}/>
-        <Route exact path="/aktivitet/fullfor/:id" component={FullforAktivitet}/>
-        <Route exact path="/arbeidsliste" component={ArbeidslisteContainer}/>
+        <Route exact path="/aktivitet/ny" component={NyAktivitet} />
+        <Route exact path="/aktivitet/ny/egen" component={EgenAktivitet} />
+        <Route
+            exact
+            path="/aktivitet/ny/stilling"
+            component={StillingAktivitet}
+        />
+        <Route
+            exact
+            path="/aktivitet/ny/sokeavtale"
+            component={SokeavtaleAktivitet}
+        />
+        <Route
+            exact
+            path="/aktivitet/ny/behandling"
+            component={BehandlingAktivitet}
+        />
+        <Route
+            exact
+            path="/aktivitet/vis/:id"
+            component={AktivitetvisningContainer}
+        />
+        <Route
+            exact
+            path="/aktivitet/slett/:id"
+            component={BekreftSlettVisningContainer}
+        />
+        <Route exact path="/aktivitet/endre/:id" component={EndreAktivitet} />
+        <Route exact path="/aktivitet/avbryt/:id" component={AvbrytAktivitet} />
+        <Route
+            exact
+            path="/aktivitet/fullfor/:id"
+            component={FullforAktivitet}
+        />
+        <Route exact path="/arbeidsliste" component={ArbeidslisteContainer} />
     </Switch>;
 
 function TomDiv() {
-    return <div/>;
+    return <div />;
 }
 
 export default (FNR_I_URL
     ? <div>
-        <Route path="/" component={TomDiv}/>
-        <Route path=":fnr">
-            <Routing/>
-        </Route>
-    </div>
-    : <Routing/>);
+          <Route path="/" component={TomDiv} />
+          <Route path=":fnr">
+              <Routing />
+          </Route>
+      </div>
+    : <Routing />);
