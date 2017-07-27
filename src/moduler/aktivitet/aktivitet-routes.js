@@ -28,7 +28,7 @@ function AktivitetRoutes({ match }) {
             />
             <Route
                 exact
-                path={`${basePath}/endre/id`}
+                path={`${basePath}/endre/:id`}
                 component={EndreAktivitet}
             />
             <Route
