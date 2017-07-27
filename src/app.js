@@ -9,6 +9,7 @@ import './index.less';
 import Routing from './routing';
 import routerHistory from './history';
 import Hovedside from './sider/hovedside/hovedside';
+import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
 import { VIS_SIDEBANNER, CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
 
 function App() {
@@ -18,13 +19,12 @@ function App() {
                 <SideBanner visible={VIS_SIDEBANNER} />
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
-                        <Router
-                            onUpdate={() => window.scrollTo(0, 0)}
-                            history={routerHistory}
-                        >
-                            <Hovedside>
-                                <Routing />
-                            </Hovedside>
+                        <Router history={routerHistory}>
+                            <ScrollToTop>
+                                <Hovedside>
+                                    <Routing />
+                                </Hovedside>
+                            </ScrollToTop>
                         </Router>
                         <Feature name="timeoutbox">
                             <Timeoutbox />
