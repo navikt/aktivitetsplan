@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import { expect } from 'chai';
+import { BrowserRouter } from 'react-router-dom';
 import {
     shallowWithIntl,
     mountWithIntl,
@@ -44,10 +45,12 @@ describe('aktiver-digital-oppfolging', () => {
 
         it('Skal vise varsling med lenke når bruker er reservert i KRR', () => {
             const wrapper = mountWithIntl(
-                <AktiverDigitalOppfolgingVarsel
-                    reservertIKRR
-                    settDigitalFeilet={false}
-                />
+                <BrowserRouter>
+                    <AktiverDigitalOppfolgingVarsel
+                        reservertIKRR
+                        settDigitalFeilet={false}
+                    />
+                </BrowserRouter>
             );
 
             expect(wrapper).to.have.descendants(VarslingMedLenke);
