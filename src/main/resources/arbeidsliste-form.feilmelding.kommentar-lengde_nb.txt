@@ -1,0 +1,1 @@
+Kommentaren kan ikke være lenger enn {KOMMENTAR_MAKS_LENGDE}
