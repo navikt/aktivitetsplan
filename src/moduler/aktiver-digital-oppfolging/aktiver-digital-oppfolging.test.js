@@ -2,18 +2,19 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import { expect } from 'chai';
+import { BrowserRouter } from 'react-router-dom';
 import {
-    shallowWithIntl,
-    mountWithIntl,
+shallowWithIntl,
+mountWithIntl,
 } from '../../../test/intl-enzyme-test-helper';
 import {
-    AktiverDigitalOppfolgingPure,
-    AktiverDigitalOppfolgingVarsel,
+AktiverDigitalOppfolgingPure,
+AktiverDigitalOppfolgingVarsel,
 } from './aktiver-digital-oppfolging';
 import {
-    Varsling,
-    VarslingMedLenke,
-    AdvarselVarsling,
+Varsling,
+VarslingMedLenke,
+AdvarselVarsling,
 } from '../varslinger/varsel-alertstriper';
 
 describe('aktiver-digital-oppfolging', () => {
@@ -44,10 +45,12 @@ describe('aktiver-digital-oppfolging', () => {
 
         it('Skal vise varsling med lenke når bruker er reservert i KRR', () => {
             const wrapper = mountWithIntl(
-                <AktiverDigitalOppfolgingVarsel
-                    reservertIKRR
-                    settDigitalFeilet={false}
-                />
+                <BrowserRouter>
+                    <AktiverDigitalOppfolgingVarsel
+                        reservertIKRR
+                        settDigitalFeilet={false}
+                    />
+                </BrowserRouter>
             );
 
             expect(wrapper).to.have.descendants(VarslingMedLenke);
