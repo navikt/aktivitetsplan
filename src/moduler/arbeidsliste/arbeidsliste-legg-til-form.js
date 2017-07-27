@@ -28,7 +28,7 @@ function LeggTilArbeidslisteForm({ handleSubmit, lukkModal }) {
             <section>
                 <div className="arbdeidsliste__form">
                     <Textarea
-                        labelId={`${name}.kommentar`}
+                        labelId="arbeidsliste.kommentar"
                         feltNavn={'kommentar'}
                         maxLength={KOMMENTAR_MAKS_LENGDE}
                         disabled={false}
@@ -44,10 +44,10 @@ function LeggTilArbeidslisteForm({ handleSubmit, lukkModal }) {
                         className="knapp knapp--hoved"
                         onClick={handleSubmit}
                     >
-                        <FormattedMessage id="modal.knapp.lagre" />
+                        <FormattedMessage id="arbeidsliste.knapp.lagre" />
                     </button>
                     <button type="button" className="knapp" onClick={lukkModal}>
-                        <FormattedMessage id="modal.knapp.avbryt" />
+                        <FormattedMessage id="arbeidsliste.knapp.avbryt" />
                     </button>
                 </div>
             </section>

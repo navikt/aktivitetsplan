@@ -12,7 +12,7 @@ import LeggTilArbeidslisteForm from './arbeidsliste-legg-til-form';
 function LeggTilArbeidsliste({ navn }) {
     const fnr = getFodselsnummer();
     return (
-        <article className="arbeidsliste__container">
+        <article>
             <Innholdstittel className="arbeidsliste__overskrift">
                 <FormattedMessage id="arbeidsliste.modal.legg.til.overskrift" />
             </Innholdstittel>

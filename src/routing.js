@@ -88,10 +88,7 @@ const Routing = ({ location }) =>
         <Route exact path="/:fnr/dialog/:id" component={DialogModal} />
 
         <Route exact path="/:fnr/aktivitet/ny" component={NyAktivitet} />
-        <Route
-            path="/:fnr/aktivitet/ny"
-            component={AktivitetFormContainer}
-        />
+        <Route path="/:fnr/aktivitet/ny" component={AktivitetFormContainer} />
 
         <Route
             exact

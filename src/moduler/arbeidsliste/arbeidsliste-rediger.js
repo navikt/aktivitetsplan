@@ -12,7 +12,7 @@ import RedigerArbeidslisteForm from './arbeidsliste-rediger-form';
 function RedigerArbeidsliste({ navn }) {
     const fnr = getFodselsnummer();
     return (
-        <article className="arbeidsliste__container">
+        <article>
             <Innholdstittel className="arbeidsliste__overskrift">
                 <FormattedMessage id="arbeidsliste.modal.rediger.overskrift" />
             </Innholdstittel>

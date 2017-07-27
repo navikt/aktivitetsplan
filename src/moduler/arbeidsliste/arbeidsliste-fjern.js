@@ -14,7 +14,7 @@ import { LUKK_MODAL } from '../../ducks/modal';
 function FjernArbeidsliste({ navn, onClick, lukkModal }) {
     const fnr = getFodselsnummer();
     return (
-        <article className="arbeidsliste__container">
+        <article>
             <Innholdstittel className="arbeidsliste__overskrift">
                 <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
             </Innholdstittel>
@@ -33,10 +33,10 @@ function FjernArbeidsliste({ navn, onClick, lukkModal }) {
                     className="knapp knapp--hoved"
                     onClick={onClick}
                 >
-                    <FormattedMessage id="modal.knapp.lagre" />
+                    <FormattedMessage id="arbeidsliste.knapp.bekreft" />
                 </button>
                 <button type="button" className="knapp" onClick={lukkModal}>
-                    <FormattedMessage id="modal.knapp.avbryt" />
+                    <FormattedMessage id="arbeidsliste.knapp.avbryt" />
                 </button>
             </section>
         </article>
