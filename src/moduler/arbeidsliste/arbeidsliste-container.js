@@ -10,46 +10,47 @@ import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import RedigerArbeidsliste from './arbeidsliste-rediger';
 import FjernArbeidsliste from './arbeidsliste-fjern';
 import LeggTilArbeidsliste from './arbeidsliste-legg-til';
+import { hentArbeidslisteReducer } from './arbeidsliste-selector';
 
-function ArbeidslisteContainer({ navnPaMotpart, match }) {
+function ArbeidslisteContainer({ navnPaMotpart, match, arbeidslisteReducer }) {
     return (
         <StandardModal name="arbeidslisteModal">
             <ModalHeader />
-            <article className="arbeidsliste__container">
-                <Innholdslaster
-                    avhengigheter={[]} // TODO: avhengigheter={[motpart]}
-                    className="arbeidsliste__spinner"
-                >
-                    <Switch>
-                        <Route exact path={`${match.path}/leggtil`}>
-                            <LeggTilArbeidsliste navn="oscar" />
-                        </Route>
-                        <Route exact path={`${match.path}/rediger`}>
-                            <RedigerArbeidsliste navn="steffen" />
-                        </Route>
-                        <Route exact path={`${match.path}/fjern`}>
-                            <FjernArbeidsliste navn={navnPaMotpart} />
-                        </Route>
-                    </Switch>
-                </Innholdslaster>
-            </article>
+            <Innholdslaster
+                avhengigheter={[arbeidslisteReducer]} // TODO: avhengigheter={[motpart]}
+                className="arbeidsliste__spinner"
+            >
+                <Switch>
+                    <Route exact path={`${match.path}/leggtil`}>
+                        <LeggTilArbeidsliste navn={navnPaMotpart} />
+                    </Route>
+                    <Route exact path={`${match.path}/rediger`}>
+                        <RedigerArbeidsliste navn={navnPaMotpart} />
+                    </Route>
+                    <Route exact path={`${match.path}/fjern`}>
+                        <FjernArbeidsliste navn={navnPaMotpart} />
+                    </Route>
+                </Switch>
+            </Innholdslaster>
         </StandardModal>
     );
 }
 
 ArbeidslisteContainer.defaultProps = {
-    navnPaMotpart: undefined,
+    navnPaMotpart: '', // TODO: slett denne
 };
 
 ArbeidslisteContainer.propTypes = {
     navnPaMotpart: PT.string,
     motpart: AppPT.reducer.isRequired,
     match: PT.object.isRequired,
+    arbeidslisteReducer: AppPT.reducer.isRequired,
 };
 
 const mapStateToProps = state => ({
     motpart: hentMotpart(state),
     navnPaMotpart: hentNavnPaMotpart(state),
+    arbeidslisteReducer: hentArbeidslisteReducer(state),
 });
 
 export default connect(mapStateToProps)(withRouter(ArbeidslisteContainer));
