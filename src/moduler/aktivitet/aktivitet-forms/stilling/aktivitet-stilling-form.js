@@ -7,7 +7,7 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { validForm, rules } from 'react-redux-form-validation';
-import { formNavn } from '../aktivitet-form-container';
+import { formNavn } from '../aktivitet-form-utils';
 import { dateToISODate } from '../../../../utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
@@ -216,12 +216,12 @@ const StillingAktivitetReduxForm = validForm({
     },
 })(StillingAktivitetForm);
 
-const selector = formValueSelector(formNavn);
 // eslint-disable-next-line no-confusing-arrow
 const getDateFromField = field =>
     field == null ? null : moment(field).toDate();
 
 const mapStateToProps = (state, props) => {
+    const selector = formValueSelector(formNavn);
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {

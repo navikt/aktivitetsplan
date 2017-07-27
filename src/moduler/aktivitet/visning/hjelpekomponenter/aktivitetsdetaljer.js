@@ -133,9 +133,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             visible={lenke != null}
         >
             <Link
-                href={
-                    lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`
-                }
+                to={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
                 className="detaljfelt__lenke"
                 target="_blank"
             >

@@ -14,8 +14,7 @@ import { aktivitetRoute } from '../../../routing';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-
-export const formNavn = 'ny-aktivitet-form';
+import { formNavn } from './aktivitet-form-utils';
 
 function AktivitetFormContainer({
     onLagreNyAktivitet,

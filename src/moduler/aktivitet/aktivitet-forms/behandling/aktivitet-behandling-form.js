@@ -7,7 +7,7 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm, rules } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { formNavn } from '../aktivitet-form-container';
+import { formNavn } from '../aktivitet-form-utils';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
