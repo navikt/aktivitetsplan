@@ -36,105 +36,91 @@ export const fullforAktivitetRoute = aktivitetId =>
 export const avbrytAktivitetRoute = aktivitetId =>
     `/aktivitet/avbryt/${aktivitetId}`;
 
-const Routing = ({ location }) => {
-    if (FNR_I_URL) {
-        // eslint-disable-next-line
-        location.pathname = `/${location.pathname
-            .split('/')
-            .splice(2)
-            .join('/')}`;
-    }
+const Routing = ({ location }) =>
+    <Switch location={location}>
+        <Route path="/:fnr/vilkar" component={VilkarModalMedHistorikk} />
+        <Route path="/:fnr/vilkar/:key" component={VilkarModalUtenHistorikk} />
+        <Route path="/:fnr/mal" component={Aktivitetsmal} />
+        <Route path="/:fnr/mal/endre" component={AktivitetmalEndre} />
+        <Route path="/:fnr/innstillinger" component={Prosesser} />
+        <Route
+            path="/:fnr/innstillinger/manuell"
+            component={SettManuellOppfolging}
+        />
+        <Route
+            path="/:fnr/innstillinger/manuell/kvittering"
+            component={SettManuellOppfolgingKvittering}
+        />
+        <Route path="/:fnr/innstillinger" component={Prosesser} />
+        <Route
+            path="/:fnr/innstillinger/digital"
+            component={SettDigitalOppfolging}
+        />
+        <Route
+            path="/:fnr/innstillinger/digital/kvittering"
+            component={SettDigitalKvittering}
+        />
+        <Route
+            path="/:fnr/innstillinger/avslutt"
+            component={AvsluttOppfolging}
+        />
+        <Route
+            path="/:fnr/innstillinger/avslutt/bekreft"
+            component={BekreftAvsluttOppfolging}
+        />
+        <Route
+            path="/:fnr/innstillinger/avslutt/kvittering"
+            component={AvsluttOppfolgingKvittering}
+        />
+        <Route
+            path="/:fnr/innstillinger/start/bekreft"
+            component={BekreftStartOppfolging}
+        />
+        <Route
+            path="/:fnr/innstillinger/start/kvittering"
+            component={StartOppfolgingKvittering}
+        />
+        <Route
+            path="/:fnr/innstillinger/feilkvittering"
+            component={Feilkvittering}
+        />
+        <Route exact path="/:fnr/dialog" component={DialogModal} />
+        <Route exact path="/:fnr/dialog/:id" component={DialogModal} />
 
-    return (
-        <Switch location={location}>
-            <Route path="/vilkar" component={VilkarModalMedHistorikk} />
-            <Route path="/vilkar/:key" component={VilkarModalUtenHistorikk} />
-            <Route path="/mal" component={Aktivitetsmal} />
-            <Route path="/mal/endre" component={AktivitetmalEndre} />
-            <Route path="/innstillinger" component={Prosesser} />
-            <Route
-                path="/innstillinger/manuell"
-                component={SettManuellOppfolging}
-            />
-            <Route
-                path="/innstillinger/manuell/kvittering"
-                component={SettManuellOppfolgingKvittering}
-            />
-            <Route path="/innstillinger" component={Prosesser} />
-            <Route
-                path="/innstillinger/digital"
-                component={SettDigitalOppfolging}
-            />
-            <Route
-                path="/innstillinger/digital/kvittering"
-                component={SettDigitalKvittering}
-            />
-            <Route
-                path="/innstillinger/avslutt"
-                component={AvsluttOppfolging}
-            />
-            <Route
-                path="/innstillinger/avslutt/bekreft"
-                component={BekreftAvsluttOppfolging}
-            />
-            <Route
-                path="/innstillinger/avslutt/kvittering"
-                component={AvsluttOppfolgingKvittering}
-            />
-            <Route
-                path="/innstillinger/start/bekreft"
-                component={BekreftStartOppfolging}
-            />
-            <Route
-                path="/innstillinger/start/kvittering"
-                component={StartOppfolgingKvittering}
-            />
-            <Route
-                path="/innstillinger/feilkvittering"
-                component={Feilkvittering}
-            />
-            <Route exact path="/dialog" component={DialogModal} />
-            <Route exact path="/dialog/:id" component={DialogModal} />
+        <Route exact path="/:fnr/aktivitet/ny" component={NyAktivitet} />
+        <Route
+            exact
+            path="/:fnr/aktivitet/ny/*"
+            component={AktivitetFormContainer}
+        />
 
-            <Route exact path="/aktivitet/ny" component={NyAktivitet} />
-            <Route
-                exact
-                path="/aktivitet/ny/*"
-                component={AktivitetFormContainer}
-            />
-
-            <Route
-                exact
-                path="/aktivitet/vis/:id"
-                component={AktivitetvisningContainer}
-            />
-            <Route
-                exact
-                path="/aktivitet/slett/:id"
-                component={BekreftSlettVisningContainer}
-            />
-            <Route
-                exact
-                path="/aktivitet/endre/:id"
-                component={EndreAktivitet}
-            />
-            <Route
-                exact
-                path="/aktivitet/avbryt/:id"
-                component={AvbrytAktivitet}
-            />
-            <Route
-                exact
-                path="/aktivitet/fullfor/:id"
-                component={FullforAktivitet}
-            />
-            <Route
-                path="/arbeidsliste"
-                component={ArbeidslisteContainer}
-            />
-        </Switch>
-    );
-};
+        <Route
+            exact
+            path="/:fnr/aktivitet/vis/:id"
+            component={AktivitetvisningContainer}
+        />
+        <Route
+            exact
+            path="/:fnr/aktivitet/slett/:id"
+            component={BekreftSlettVisningContainer}
+        />
+        <Route
+            exact
+            path="/:fnr/aktivitet/endre/:id"
+            component={EndreAktivitet}
+        />
+        <Route
+            exact
+            path="/:fnr/aktivitet/avbryt/:id"
+            component={AvbrytAktivitet}
+        />
+        <Route
+            exact
+            path="/:fnr/aktivitet/fullfor/:id"
+            component={FullforAktivitet}
+        />
+        <Route path="/:fnr/arbeidsliste" component={ArbeidslisteContainer} />
+    </Switch>;
 
 Routing.propTypes = {
     location: PT.object.isRequired,
