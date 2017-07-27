@@ -9,6 +9,7 @@ import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
+import InnstillingerRoutes from './moduler/innstillinger/instillinger-routes';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -57,8 +58,8 @@ const Routing = ({ location }) =>
             component={AktivitetRoutes}
         />
         <Route
-            path={getPathWithBase('/instillinger')}
-            component={AktivitetRoutes}
+            path={getPathWithBase('/innstillinger')}
+            component={InnstillingerRoutes}
         />
         <Route
             path={getPathWithBase('/arbeidsliste')}
