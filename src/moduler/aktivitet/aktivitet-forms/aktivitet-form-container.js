@@ -62,16 +62,16 @@ function AktivitetFormContainer({
                 />
                 <ModalContainer>
                     <Switch>
-                        <Route path={`/${match.url}/stilling`}>
+                        <Route path={`${match.path}/stilling`}>
                             <StillingAktivitet {...formProps} />
                         </Route>
-                        <Route path={`/${match.url}/sokeavtale`}>
+                        <Route path={`${match.path}/sokeavtale`}>
                             <SokeavtaleAktivitet {...formProps} />
                         </Route>
-                        <Route path={`/${match.url}/behandling`}>
+                        <Route path={`${match.path}/behandling`}>
                             <BehandlingAktivitet {...formProps} />
                         </Route>
-                        <Route path={`/${match.url}/egen`}>
+                        <Route path={`${match.path}/egen`}>
                             <EgenAktivitet {...formProps} />
                         </Route>
                     </Switch>
