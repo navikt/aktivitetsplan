@@ -4,17 +4,17 @@ import React from 'react';
 import { expect } from 'chai';
 import { BrowserRouter } from 'react-router-dom';
 import {
-shallowWithIntl,
-mountWithIntl,
+    shallowWithIntl,
+    mountWithIntl,
 } from '../../../test/intl-enzyme-test-helper';
 import {
-AktiverDigitalOppfolgingPure,
-AktiverDigitalOppfolgingVarsel,
+    AktiverDigitalOppfolgingPure,
+    AktiverDigitalOppfolgingVarsel,
 } from './aktiver-digital-oppfolging';
 import {
-Varsling,
-VarslingMedLenke,
-AdvarselVarsling,
+    Varsling,
+    VarslingMedLenke,
+    AdvarselVarsling,
 } from '../varslinger/varsel-alertstriper';
 
 describe('aktiver-digital-oppfolging', () => {
