@@ -3,21 +3,21 @@ import PT from 'prop-types';
 import EgenAktivitetForm from './aktivitet-egen-form';
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 
-function EgenAktivitet({ lagreNyAktivitet }) {
+function EgenAktivitet({ onLagreNyAktivitet }) {
     const onLagNyAktivitetSubmit = aktivitet => {
         const nyAktivitet = {
             ...aktivitet,
             type: EGEN_AKTIVITET_TYPE,
         };
 
-        lagreNyAktivitet(nyAktivitet);
+        onLagreNyAktivitet(nyAktivitet);
     };
 
     return <EgenAktivitetForm onSubmit={onLagNyAktivitetSubmit} />;
 }
 
 EgenAktivitet.propTypes = {
-    lagreNyAktivitet: PT.func.isRequired,
+    onLagreNyAktivitet: PT.func.isRequired,
 };
 
 export default EgenAktivitet;

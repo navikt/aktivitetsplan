@@ -18,7 +18,10 @@ function App() {
                 <SideBanner visible={VIS_SIDEBANNER} />
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
-                        <Router history={routerHistory}>
+                        <Router
+                            onUpdate={() => window.scrollTo(0, 0)}
+                            history={routerHistory}
+                        >
                             <Hovedside>
                                 <Routing />
                             </Hovedside>
