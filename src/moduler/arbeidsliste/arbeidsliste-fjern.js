@@ -7,6 +7,7 @@ import {
     Normaltekst,
     Undertittel,
 } from 'nav-frontend-typografi';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import history from '../../history';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import { slettArbeidsliste } from './arbeidsliste-reducer';
@@ -33,9 +34,9 @@ function FjernArbeidsliste({ navn, onClick, lukkModal }) {
                 </Undertittel>
             </ModalContainer>
             <ModalFooter>
-                <button
-                    type="submit"
-                    className="knapp knapp--hoved"
+                <Hovedknapp
+                    mini
+                    htmlType="button"
                     onClick={() => {
                         onClick();
                         history.push('/');
@@ -43,17 +44,17 @@ function FjernArbeidsliste({ navn, onClick, lukkModal }) {
                     }}
                 >
                     <FormattedMessage id="arbeidsliste.knapp.bekreft" />
-                </button>
-                <button
-                    type="button"
-                    className="knapp"
+                </Hovedknapp>
+                <Knapp
+                    mini
+                    htmlType="button"
                     onClick={() => {
                         history.push('/');
                         lukkModal();
                     }}
                 >
                     <FormattedMessage id="arbeidsliste.knapp.avbryt" />
-                </button>
+                </Knapp>
             </ModalFooter>
         </section>
     );

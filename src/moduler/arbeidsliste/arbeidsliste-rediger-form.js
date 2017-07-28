@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import history from '../../history';
 import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import Datovelger from '../../felles-komponenter/skjema/datovelger/datovelger';
@@ -18,6 +19,10 @@ const pakrevd = rules.minLength(
     0,
     <FormattedMessage id="arbeidsliste.feilmelding.for-kort" />
 );
+const pakrevdFrist = rules.minLength(
+    0,
+    <FormattedMessage id="arbeidsliste.feilmelding.angi.frist" />
+);
 const begrensetKommentarLengde = rules.maxLength(
     KOMMENTAR_MAKS_LENGDE,
     <FormattedMessage
@@ -26,11 +31,12 @@ const begrensetKommentarLengde = rules.maxLength(
     />
 );
 
-function RedigerArbeidslisteForm({ handleSubmit, lukkModal }) {
+function RedigerArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
     return (
         <form onSubmit={handleSubmit}>
             <section>
                 <ModalContainer className="arbeidsliste__form-container">
+                    {errorSummary}
                     <Textarea
                         labelId="arbeidsliste.kommentar"
                         feltNavn={'kommentar'}
@@ -43,27 +49,19 @@ function RedigerArbeidslisteForm({ handleSubmit, lukkModal }) {
                     />
                 </ModalContainer>
                 <ModalFooter>
-                    <button
-                        type="submit"
-                        className="knapp knapp--hoved"
-                        onClick={() => {
-                            handleSubmit();
-                            history.push('/');
-                            lukkModal();
-                        }}
-                    >
+                    <Hovedknapp mini htmlType="submit">
                         <FormattedMessage id="arbeidsliste.knapp.lagre" />
-                    </button>
-                    <button
-                        type="button"
-                        className="knapp"
-                        onClick={() => {
+                    </Hovedknapp>
+                    <Knapp
+                        mini
+                        onClick={e => {
+                            e.preventDefault();
                             history.push('/');
                             lukkModal();
                         }}
                     >
                         <FormattedMessage id="arbeidsliste.knapp.avbryt" />
-                    </button>
+                    </Knapp>
                 </ModalFooter>
             </section>
         </form>
@@ -74,13 +72,17 @@ RedigerArbeidslisteForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     lukkModal: PT.func.isRequired,
     initialValues: PT.any.isRequired,
+    errorSummary: PT.node.isRequired,
 };
 
 const RedigerArbeidslisteFormValidation = validForm({
     form: 'arbeidsliste-rediger',
+    errorSummaryTitle: (
+        <FormattedMessage id="arbeidsliste.form.feiloppsummering.tittel" />
+    ),
     validate: {
         kommentar: [begrensetKommentarLengde, pakrevd],
-        frist: [],
+        frist: [pakrevdFrist],
     },
 })(RedigerArbeidslisteForm);
 
@@ -104,8 +106,14 @@ const mapDispatchToProps = dispatch => {
         frist: form.frist,
     });
     return {
-        onSubmit: formData =>
-            dispatch(redigerArbeidsliste(fnr, lagArbeidsliste(formData))),
+        onSubmit: formData => {
+            dispatch(
+                redigerArbeidsliste(fnr, lagArbeidsliste(formData))
+            ).then(() => {
+                dispatch({ type: LUKK_MODAL });
+                history.push('/');
+            });
+        },
         lukkModal: () => dispatch({ type: LUKK_MODAL }),
     };
 };
