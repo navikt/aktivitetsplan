@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -8,14 +7,11 @@ import {
     Undertittel,
 } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import history from '../../history';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import { slettArbeidsliste } from './arbeidsliste-reducer';
-import { LUKK_MODAL } from '../../ducks/modal';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 
-function FjernArbeidsliste({ navn, onClick, lukkModal }) {
+function FjernArbeidsliste({ navn, onBekreftSlett, lukkModal }) {
     const fnr = getFodselsnummer();
     return (
         <section>
@@ -38,8 +34,7 @@ function FjernArbeidsliste({ navn, onClick, lukkModal }) {
                     mini
                     htmlType="button"
                     onClick={() => {
-                        onClick();
-                        history.push('/');
+                        onBekreftSlett();
                         lukkModal();
                     }}
                 >
@@ -49,7 +44,6 @@ function FjernArbeidsliste({ navn, onClick, lukkModal }) {
                     mini
                     htmlType="button"
                     onClick={() => {
-                        history.push('/');
                         lukkModal();
                     }}
                 >
@@ -62,13 +56,8 @@ function FjernArbeidsliste({ navn, onClick, lukkModal }) {
 
 FjernArbeidsliste.propTypes = {
     navn: PT.string.isRequired,
-    onClick: PT.func.isRequired,
+    onBekreftSlett: PT.func.isRequired,
     lukkModal: PT.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-    onClick: () => dispatch(slettArbeidsliste(getFodselsnummer())),
-    lukkModal: () => dispatch({ type: LUKK_MODAL }),
-});
-
-export default connect(null, mapDispatchToProps)(FjernArbeidsliste);
+export default FjernArbeidsliste;
