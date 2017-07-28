@@ -10,7 +10,7 @@ function NavigasjonslinjeMeny({ intl, erGjeldendeVeileder }) {
     return (
         <div className="navigasjonslinje-meny">
             <HiddenIfKnappelenke
-                hidden={!erGjeldendeVeileder}
+                hidden={true || !erGjeldendeVeileder}
                 onClick={() => history.push('arbeidsliste/leggtil')}
             >
                 <FormattedMessage id="navigasjon.legg.i.arbeidsliste" />

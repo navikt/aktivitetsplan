@@ -30,6 +30,7 @@ function getPathWithBase(path) {
 const Routing = ({ location }) =>
     <Switch location={location}>
         <Route
+            exact
             path={getPathWithBase('/vilkar')}
             component={VilkarModalMedHistorikk}
         />
@@ -37,7 +38,7 @@ const Routing = ({ location }) =>
             path={getPathWithBase('/vilkar/:key')}
             component={VilkarModalUtenHistorikk}
         />
-        <Route path={getPathWithBase('/mal')} component={Aktivitetsmal} />
+        <Route exact path={getPathWithBase('/mal')} component={Aktivitetsmal} />
         <Route
             path={getPathWithBase('/mal/endre')}
             component={AktivitetmalEndre}

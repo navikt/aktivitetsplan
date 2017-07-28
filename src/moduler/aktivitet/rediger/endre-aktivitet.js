@@ -147,7 +147,8 @@ EndreAktivitet.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-    const id = props.params.id;
+    const routeParams = props.match.params;
+    const id = routeParams.id;
     const aktivitet = state.data.aktiviteter.data.find(a => a.id === id) || {};
     const formNavn = {
         [STILLING_AKTIVITET_TYPE]: stillingFormNavn,
