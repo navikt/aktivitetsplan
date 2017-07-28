@@ -1,6 +1,6 @@
 import * as Api from './situasjon-api';
-import { STATUS, doThenDispatch } from './utils';
-import { SETT_DIGITAL_OK } from '../moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
+import { STATUS, doThenDispatch } from '../../ducks/utils';
+import { SETT_DIGITAL_OK } from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
 
 // Actions
 export const OK = 'situasjon/OK';

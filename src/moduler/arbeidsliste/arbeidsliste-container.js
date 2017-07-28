@@ -80,7 +80,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            onSlettArbeidsliste: slettArbeidsliste(getFodselsnummer()),
+            onSlettArbeidsliste: () => slettArbeidsliste(getFodselsnummer()),
             lukkModal: () => dispatch({ type: LUKK_MODAL }),
         },
         dispatch

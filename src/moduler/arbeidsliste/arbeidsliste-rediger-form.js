@@ -13,6 +13,7 @@ import { hentArbeidslisteReducer } from './arbeidsliste-selector';
 import { LUKK_MODAL } from '../../ducks/modal';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
+import { lagArbeidsliste } from './arbeidsliste-utils';
 
 const KOMMENTAR_MAKS_LENGDE = 255;
 const pakrevd = rules.minLength(
@@ -97,18 +98,12 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, props) => {
     const fnr = getFodselsnummer();
-    const lagArbeidsliste = (form, ownProps) => ({
-        fnr,
-        veilederId: ownProps.veileder,
-        kommentar: form.kommentar,
-        frist: form.frist,
-    });
     return {
         onSubmit: formData => {
             dispatch(
-                redigerArbeidsliste(fnr, lagArbeidsliste(formData))
+                redigerArbeidsliste(fnr, lagArbeidsliste(fnr, formData, props))
             ).then(() => {
                 dispatch({ type: LUKK_MODAL });
                 history.push('/');

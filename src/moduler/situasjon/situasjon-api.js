@@ -5,7 +5,7 @@ import {
     SITUASJON_PROXY_BASE_URL,
     PERSON_BASE_URL,
 } from '~config'; // eslint-disable-line
-import { fetchToJson, postAsJson } from './utils';
+import { fetchToJson, postAsJson } from '../../ducks/utils';
 
 export function hentIdentitet() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/me`);

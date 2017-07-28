@@ -39,7 +39,10 @@ export function aggregerStatus(...reducereEllerStatuser) {
 }
 
 export function sjekkStatuskode(response) {
-    if (response.status >= 200 && response.status < 300 && response.ok) {
+    if (
+        (response.status >= 200 && response.status < 300 && response.ok) ||
+        response.status === 404
+    ) {
         return response;
     }
     const error = new Error(response.statusText || response.type);
@@ -48,7 +51,7 @@ export function sjekkStatuskode(response) {
 }
 
 export function toJson(response) {
-    if (response.status !== 204) {
+    if (response.status !== 204 && response.status !== 404) {
         // No content
         return response.json();
     }

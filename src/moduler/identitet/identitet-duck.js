@@ -1,5 +1,5 @@
-import * as Api from './situasjon-api';
-import { STATUS, doThenDispatch } from './utils';
+import * as Api from '../situasjon/situasjon-api';
+import { STATUS, doThenDispatch } from '../../ducks/utils';
 
 // Actions
 export const OK = 'identitet/OK';

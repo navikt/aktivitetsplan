@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'react-redux-form-validation';
 import ledetekstReducer from './ducks/ledetekster-ressurs';
-import situasjonReducer from './ducks/situasjon';
+import situasjonReducer from './moduler/situasjon/situasjon';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
 import arenaAktiviteterReducer from './ducks/arena-aktiviteter';
@@ -9,7 +9,7 @@ import etiketterReducer from './ducks/etiketter';
 import versjonReducer from './ducks/aktivitet-versjoner';
 import dialogReducer from './ducks/dialog';
 import malReducer from './ducks/mal';
-import identitetReducer from './ducks/identitet';
+import identitetReducer from './moduler/identitet/identitet-duck';
 import motpartReducer from './moduler/motpart/motpart-duck';
 import endreAktivitetReducer from './ducks/endre-aktivitet';
 import feilReducer from './ducks/feil';

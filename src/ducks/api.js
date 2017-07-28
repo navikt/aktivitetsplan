@@ -95,14 +95,14 @@ export function hentArbeidsliste(fnr) {
 }
 
 export function lagreArbeidsliste(fnr, arbeidsliste) {
-    return putAsJson(
+    return postAsJson(
         `${PORTEFOLJE_BASE_URL}/arbeidsliste/${fnr}`,
         arbeidsliste
     );
 }
 
 export function redigerArbeidsliste(fnr, arbeidsliste) {
-    return postAsJson(
+    return putAsJson(
         `${PORTEFOLJE_BASE_URL}/arbeidsliste/${fnr}`,
         arbeidsliste
     );

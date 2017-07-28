@@ -1,4 +1,4 @@
-import * as Api from './situasjon-api';
+import * as Api from '../moduler/situasjon/situasjon-api';
 import { doThenDispatch, STATUS } from './utils';
 
 export const GJELDENDE_OK = 'mal/OK';

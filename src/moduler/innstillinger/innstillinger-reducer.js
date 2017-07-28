@@ -1,4 +1,4 @@
-import * as Api from '../../ducks/situasjon-api';
+import * as Api from '../situasjon/situasjon-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 
 // Actions

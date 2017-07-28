@@ -1,4 +1,4 @@
 export const hentArbeidslisteReducer = state => state.data.arbeidsliste;
 
-export const isOppfolgendeVeileder = state =>
-    hentArbeidslisteReducer(state).data.isOppfolgendeVeileder === true;
+export const erBrukerIArbeidsliste = state =>
+    Object.keys(hentArbeidslisteReducer(state).data).length > 0;

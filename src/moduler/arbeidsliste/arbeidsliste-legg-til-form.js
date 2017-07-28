@@ -12,6 +12,7 @@ import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import { LUKK_MODAL } from '../../ducks/modal';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
+import { lagArbeidsliste } from './arbeidsliste-utils';
 
 const KOMMENTAR_MAKS_LENGDE = 255;
 const pakrevd = rules.minLength(
@@ -90,16 +91,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, props) => {
     const fnr = getFodselsnummer();
-    const lagArbeidsliste = form => ({
-        fnr,
-        veilederId: props.veileder,
-        kommentar: form.kommentar,
-        frist: form.frist,
-    });
     return {
         onSubmit: formData => {
             dispatch(
-                leggTilArbeidsliste(fnr, lagArbeidsliste(formData))
+                leggTilArbeidsliste(fnr, lagArbeidsliste(fnr, formData, props))
             ).then(() => {
                 dispatch({ type: LUKK_MODAL });
                 history.push('/');
