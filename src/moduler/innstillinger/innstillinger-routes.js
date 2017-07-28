@@ -13,7 +13,7 @@ import SettManuellOppfolgingKvittering from './sett-manuell-oppfolging/sett-manu
 import SettDigitalKvittering from './sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
 import Feilkvittering from './feilkvittering';
 
-function InstillingerRoutes({ match }) {
+function InnstillingerRoutes({ match }) {
     return (
         <Switch>
             <Route exact path={`${match.path}/`} component={Prosesser} />
@@ -64,8 +64,8 @@ function InstillingerRoutes({ match }) {
     );
 }
 
-InstillingerRoutes.propTypes = {
+InnstillingerRoutes.propTypes = {
     match: PT.object.isRequired,
 };
 
-export default withRouter(InstillingerRoutes);
+export default withRouter(InnstillingerRoutes);

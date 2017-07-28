@@ -12,7 +12,7 @@ import FjernArbeidsliste from './arbeidsliste-fjern';
 import LeggTilArbeidsliste from './arbeidsliste-legg-til';
 import { hentArbeidslisteReducer } from './arbeidsliste-selector';
 
-function ArbeidslisteContainer({ navnPaMotpart, match, arbeidslisteReducer }) {
+function ArbeidslisteContainer({ navnPaMotpart, path, arbeidslisteReducer }) {
     return (
         <StandardModal name="arbeidslisteModal">
             <ModalHeader />
@@ -21,13 +21,13 @@ function ArbeidslisteContainer({ navnPaMotpart, match, arbeidslisteReducer }) {
                 className="arbeidsliste__spinner"
             >
                 <Switch>
-                    <Route exact path={`${match.path}/leggtil`}>
+                    <Route exact path={`${path}/leggtil`}>
                         <LeggTilArbeidsliste navn={navnPaMotpart} />
                     </Route>
-                    <Route exact path={`${match.path}/rediger`}>
+                    <Route exact path={`${path}/rediger`}>
                         <RedigerArbeidsliste navn={navnPaMotpart} />
                     </Route>
-                    <Route exact path={`${match.path}/fjern`}>
+                    <Route exact path={`${path}/fjern`}>
                         <FjernArbeidsliste navn={navnPaMotpart} />
                     </Route>
                 </Switch>
@@ -43,14 +43,15 @@ ArbeidslisteContainer.defaultProps = {
 ArbeidslisteContainer.propTypes = {
     navnPaMotpart: PT.string,
     motpart: AppPT.reducer.isRequired,
-    match: PT.object.isRequired,
     arbeidslisteReducer: AppPT.reducer.isRequired,
+    path: PT.string.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
     motpart: hentMotpart(state),
+    path: ownProps.match.path,
     navnPaMotpart: hentNavnPaMotpart(state),
     arbeidslisteReducer: hentArbeidslisteReducer(state),
 });
 
-export default connect(mapStateToProps)(withRouter(ArbeidslisteContainer));
+export default withRouter(connect(mapStateToProps)(ArbeidslisteContainer));
