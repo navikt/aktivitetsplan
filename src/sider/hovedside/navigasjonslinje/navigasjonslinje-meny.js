@@ -21,7 +21,7 @@ function NavigasjonslinjeMeny({ intl, brukerErMin, brukerErIArbeidsliste }) {
             onClick={() => history.push('/innstillinger')}
         />;
 
-    const LeggTilKnapp = HiddenIfHOC(() =>
+    const LeggTilLenke = HiddenIfHOC(() =>
         <span>
             <Bilde
                 className="arbeidsliste-flagg"
@@ -30,6 +30,7 @@ function NavigasjonslinjeMeny({ intl, brukerErMin, brukerErIArbeidsliste }) {
             />
             <Knappelenke
                 className="navigasjonslinje__skillestrek"
+                disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/leggtil')}
             >
                 <FormattedMessage id="navigasjon.legg.i.arbeidsliste" />
@@ -37,7 +38,7 @@ function NavigasjonslinjeMeny({ intl, brukerErMin, brukerErIArbeidsliste }) {
         </span>
     );
 
-    const FjernKnapp = HiddenIfHOC(() =>
+    const FjernLenke = HiddenIfHOC(() =>
         <span>
             <span className="navigasjonslinje-meny__fjern">
                 <Bilde
@@ -57,7 +58,7 @@ function NavigasjonslinjeMeny({ intl, brukerErMin, brukerErIArbeidsliste }) {
         </span>
     );
 
-    const RedigerKnapp = HiddenIfHOC(() =>
+    const RedigerLenke = HiddenIfHOC(() =>
         <Knappelenke
             className="navigasjonslinje__skillestrek"
             onClick={() => history.push('arbeidsliste/rediger')}
@@ -68,9 +69,9 @@ function NavigasjonslinjeMeny({ intl, brukerErMin, brukerErIArbeidsliste }) {
 
     return (
         <div className="navigasjonslinje-meny">
-            <LeggTilKnapp hidden={!brukerErMin || brukerErIArbeidsliste} />
-            <FjernKnapp hidden={!brukerErIArbeidsliste} />
-            <RedigerKnapp hidden={!brukerErIArbeidsliste} />
+            <LeggTilLenke hidden={!brukerErMin || brukerErIArbeidsliste} />
+            <FjernLenke hidden={!brukerErIArbeidsliste} />
+            <RedigerLenke hidden={!brukerErIArbeidsliste} />
             <InnstillingerKnapp />
         </div>
     );

@@ -49,6 +49,16 @@
     align-items: center;
 }
 
+.navigasjonslinje-meny button {
+    &:disabled {
+        color: @navBlaLighten40;
+
+        & span:hover {
+            border-bottom: 1px solid transparent;
+        }
+    }
+}
+
 .navigasjonslinje-meny .knappelenke span {
     text-decoration: none;
     border-bottom: 1px solid transparent;
