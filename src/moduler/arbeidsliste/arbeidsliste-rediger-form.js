@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { validForm, rules } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import history from '../../history';
@@ -13,24 +13,14 @@ import { hentArbeidslisteReducer } from './arbeidsliste-selector';
 import { LUKK_MODAL } from '../../ducks/modal';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
-import { lagArbeidsliste } from './arbeidsliste-utils';
-
-const KOMMENTAR_MAKS_LENGDE = 255;
-const pakrevd = rules.minLength(
-    0,
-    <FormattedMessage id="arbeidsliste.feilmelding.for-kort" />
-);
-const pakrevdFrist = rules.minLength(
-    0,
-    <FormattedMessage id="arbeidsliste.feilmelding.angi.frist" />
-);
-const begrensetKommentarLengde = rules.maxLength(
+import {
+    lagArbeidsliste,
     KOMMENTAR_MAKS_LENGDE,
-    <FormattedMessage
-        id="arbeidsliste-form.feilmelding.kommentar-lengde"
-        values={{ KOMMENTAR_MAKS_LENGDE }}
-    />
-);
+    pakrevd,
+    pakrevdFrist,
+    begrensetKommentarLengde,
+    fristErEtterIDag,
+} from './arbeidsliste-utils';
 
 function RedigerArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
     return (
@@ -83,7 +73,7 @@ const RedigerArbeidslisteFormValidation = validForm({
     ),
     validate: {
         kommentar: [begrensetKommentarLengde, pakrevd],
-        frist: [pakrevdFrist],
+        frist: [pakrevdFrist, fristErEtterIDag],
     },
 })(RedigerArbeidslisteForm);
 
