@@ -23,6 +23,7 @@ function ArbeidslisteContainer({
     onSlettArbeidsliste,
     history,
     lukkModal,
+    motpart,
 }) {
     const onLukkModal = () => {
         history.push('/');
@@ -33,7 +34,7 @@ function ArbeidslisteContainer({
         <StandardModal name="arbeidslisteModal">
             <ModalHeader />
             <Innholdslaster
-                avhengigheter={[arbeidslisteReducer]} // TODO: avhengigheter={[motpart]}
+                avhengigheter={[arbeidslisteReducer, motpart]}
                 className="arbeidsliste__spinner"
             >
                 <Switch>
@@ -57,7 +58,7 @@ function ArbeidslisteContainer({
 }
 
 ArbeidslisteContainer.defaultProps = {
-    navnPaMotpart: '', // TODO: slett denne
+    navnPaMotpart: '',
 };
 
 ArbeidslisteContainer.propTypes = {
