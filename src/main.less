@@ -36,6 +36,14 @@
     .radioknapp + label:before {
         top: 3px;
     }
+
+    .lukknapp {
+        &:before,
+        &:after {
+            height: 2px;
+            top: ~'calc(50% - 2px)';
+        }
+    }
 }
 
 .ReactModal__Body--open {
