@@ -3,7 +3,6 @@ import { rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import Moment from 'moment';
 
-// eslint-disable-next-line import/prefer-default-export
 export const lagArbeidsliste = (fnr, form, props) => ({
     fnr,
     veilederId: props.veileder,
