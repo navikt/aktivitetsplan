@@ -4,20 +4,22 @@ import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
 import { connect } from 'react-redux';
 import Hovedknapp from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import { reduxForm } from 'redux-form';
+import { validForm } from 'react-redux-form-validation';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
+import { validerReferatPublisert } from '../../../felles-komponenter/skjema/validering';
 
-function VisAdvarsel(props) {
+function VisAdvarsel({ handleSubmit, headerTekst, errorSummary }) {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <ModalHeader />
             <ModalContainer className="aktivitetvisning__underseksjon">
                 <Innholdstittel>
-                    {props.headerTekst}
+                    {headerTekst}
                 </Innholdstittel>
+                {errorSummary}
                 <AlertStripeInfoSolid>
                     <FormattedMessage id="ferdigstilt.modal.message" />
                 </AlertStripeInfoSolid>
@@ -34,10 +36,14 @@ function VisAdvarsel(props) {
 VisAdvarsel.propTypes = {
     headerTekst: PT.element.isRequired,
     handleSubmit: PT.func.isRequired,
+    errorSummary: PT.node.isRequired,
 };
 
-const BegrunnelseAktivitetReduxForm = reduxForm({
+const BegrunnelseAktivitetReduxForm = validForm({
     form: 'bekreft-advarsel-aktivitet-form',
+    validate: {
+        erReferatPublisert: validerReferatPublisert(),
+    },
 })(VisAdvarsel);
 
 export default connect()(BegrunnelseAktivitetReduxForm);

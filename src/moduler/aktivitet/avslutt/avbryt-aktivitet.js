@@ -18,6 +18,7 @@ const AvbrytAktivitet = props => {
 
     const begrunnelse = (
         <BegrunnelseAktivitet
+            aktivitet={valgtAktivitet}
             headerTekst={
                 <FormattedMessage id="opprett-begrunnelse.avbrutt.header" />
             }

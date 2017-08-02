@@ -1,0 +1,26 @@
+.detaljfelt {
+    .blokk-s();
+    margin-right: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 0 9rem;
+
+    @media (min-width: @screen-md-min) {
+        flex: 0 0 13rem;
+        margin-right: 2rem;
+    }
+
+    &__tittel {
+        color: @navGra60;
+    }
+
+    &__lenke {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    &--fullbredde {
+        flex: initial;
+    }
+}

@@ -21,6 +21,8 @@ export default function reducer(state = initalState, action) {
             return { ...state, data: state.data.filter(a => a.id !== data.id) };
         case AT.OPPDATER_OK:
         case AT.FLYTT_OK:
+        case AT.OPPDATER_REFERAT_OK:
+        case AT.PUBLISER_REFERAT_OK:
             return nyStateMedOppdatertAktivitet(
                 { ...state, status: STATUS.OK },
                 data
@@ -42,6 +44,7 @@ export default function reducer(state = initalState, action) {
             });
         case AT.SLETT:
         case AT.OPPDATER:
+        case AT.OPPRETT:
             return { ...state, status: STATUS.RELOADING };
         case AT.FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, {
@@ -59,4 +62,8 @@ export default function reducer(state = initalState, action) {
         default:
             return state;
     }
+}
+
+export function selectAktivitetReducer(state) {
+    return state.data.aktiviteter;
 }

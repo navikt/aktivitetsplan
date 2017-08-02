@@ -5,6 +5,8 @@ import situasjonReducer from './ducks/situasjon';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
 import arenaAktiviteterReducer from './ducks/arena-aktiviteter';
+import kanalerReducer from './moduler/aktivitet/kanaler-reducer';
+import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
 import etiketterReducer from './ducks/etiketter';
 import versjonReducer from './ducks/aktivitet-versjoner';
 import dialogReducer from './ducks/dialog';
@@ -44,6 +46,8 @@ const combinedReducers = combineReducers({
         innstillingerHistorikk: historikkReducer,
         aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
         arbeidsliste: arbeidslisteReducer,
+        kanaler: kanalerReducer,
+        referat: referatReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,

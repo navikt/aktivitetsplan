@@ -34,17 +34,33 @@ class NyAktivitet extends Component {
                         <Lenkepanel href="/aktivitet/ny/stilling">
                             <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
                         </Lenkepanel>
+                        <Lenkepanel
+                            href="/aktivitet/ny/mote"
+                            hidden={!erVeileder}
+                        >
+                            <FormattedMessage id="ny-aktivitet-modal.mote" />
+                        </Lenkepanel>
                         <Lenkepanel href="/aktivitet/ny/egen">
                             <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
                         </Lenkepanel>
-                        {erVeileder &&
-                            <Lenkepanel href="/aktivitet/ny/sokeavtale">
-                                <FormattedMessage id="ny-aktivitet-modal.sokeavtale-aktivitet" />
-                            </Lenkepanel>}
-                        {erVeileder &&
-                            <Lenkepanel href="/aktivitet/ny/behandling">
-                                <FormattedMessage id="ny-aktivitet-modal.medisinsk-behandling" />
-                            </Lenkepanel>}
+                        <Lenkepanel
+                            href="/aktivitet/ny/sokeavtale"
+                            hidden={!erVeileder}
+                        >
+                            <FormattedMessage id="ny-aktivitet-modal.sokeavtale-aktivitet" />
+                        </Lenkepanel>
+                        <Lenkepanel
+                            href="/aktivitet/ny/behandling"
+                            hidden={!erVeileder}
+                        >
+                            <FormattedMessage id="ny-aktivitet-modal.medisinsk-behandling" />
+                        </Lenkepanel>
+                        <Lenkepanel
+                            href="/aktivitet/ny/samtalereferat"
+                            hidden={!erVeileder}
+                        >
+                            <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
+                        </Lenkepanel>
                     </div>
                 </ModalHeader>
             </StandardModal>

@@ -24,6 +24,7 @@ const FullforAktivitet = props => {
 
     const begrunnelse = (
         <BegrunnelseAktivitet
+            aktivitet={valgtAktivitet}
             headerTekst={headerTekst}
             beskrivelseTekst={beskrivelseTekst}
             lagrer={props.aktiviteter.status !== STATUS.OK}
