@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -7,58 +6,58 @@ import {
     Normaltekst,
     Undertittel,
 } from 'nav-frontend-typografi';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import { slettArbeidsliste } from './arbeidsliste-reducer';
-import { LUKK_MODAL } from '../../ducks/modal';
+import ModalFooter from '../../felles-komponenter/modal/modal-footer';
+import ModalContainer from '../../felles-komponenter/modal/modal-container';
 
-function FjernArbeidsliste({ navn, onClick, lukkModal }) {
+function FjernArbeidsliste({ navn, onBekreftSlett, lukkModal }) {
     const fnr = getFodselsnummer();
     return (
-        <article>
-            <Innholdstittel className="arbeidsliste__overskrift">
-                <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
-            </Innholdstittel>
-            <Normaltekst>
-                <FormattedMessage id="arbeidsliste.modal.fjern.infotekst" />
-            </Normaltekst>
-            <Undertittel>
-                <FormattedMessage
-                    id="arbeidsliste.modal.personalia"
-                    values={{ navn, fnr }}
-                />
-            </Undertittel>
-            <section className="arbeidsliste__skillelinje">
-                <button
-                    type="submit"
-                    className="knapp knapp--hoved"
-                    onClick={onClick}
+        <section>
+            <ModalContainer className="arbeidsliste__container">
+                <Innholdstittel className="arbeidsliste__overskrift">
+                    <FormattedMessage id="arbeidsliste.modal.fjern.overskrift" />
+                </Innholdstittel>
+                <Normaltekst>
+                    <FormattedMessage id="arbeidsliste.modal.fjern.infotekst" />
+                </Normaltekst>
+                <Undertittel>
+                    <FormattedMessage
+                        id="arbeidsliste.modal.personalia"
+                        values={{ navn, fnr }}
+                    />
+                </Undertittel>
+            </ModalContainer>
+            <ModalFooter>
+                <Hovedknapp
+                    mini
+                    htmlType="button"
+                    onClick={() => {
+                        onBekreftSlett();
+                        lukkModal();
+                    }}
                 >
                     <FormattedMessage id="arbeidsliste.knapp.bekreft" />
-                </button>
-                <button type="button" className="knapp" onClick={lukkModal}>
+                </Hovedknapp>
+                <Knapp
+                    mini
+                    htmlType="button"
+                    onClick={() => {
+                        lukkModal();
+                    }}
+                >
                     <FormattedMessage id="arbeidsliste.knapp.avbryt" />
-                </button>
-            </section>
-        </article>
+                </Knapp>
+            </ModalFooter>
+        </section>
     );
 }
 
 FjernArbeidsliste.propTypes = {
     navn: PT.string.isRequired,
-    onClick: PT.func.isRequired,
+    onBekreftSlett: PT.func.isRequired,
     lukkModal: PT.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-    onClick: () => {
-        dispatch(slettArbeidsliste(getFodselsnummer())).then(() =>
-            history.push('/')
-        );
-    },
-    lukkModal: () => {
-        dispatch(LUKK_MODAL);
-        return history.push('/');
-    },
-});
-
-export default connect(null, mapDispatchToProps)(FjernArbeidsliste);
+export default FjernArbeidsliste;

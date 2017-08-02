@@ -9,7 +9,7 @@ import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
-import InnstillingerRoutes from './moduler/innstillinger/instillinger-routes';
+import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -30,6 +30,7 @@ function getPathWithBase(path) {
 const Routing = ({ location }) =>
     <Switch location={location}>
         <Route
+            exact
             path={getPathWithBase('/vilkar')}
             component={VilkarModalMedHistorikk}
         />
@@ -37,7 +38,7 @@ const Routing = ({ location }) =>
             path={getPathWithBase('/vilkar/:key')}
             component={VilkarModalUtenHistorikk}
         />
-        <Route path={getPathWithBase('/mal')} component={Aktivitetsmal} />
+        <Route exact path={getPathWithBase('/mal')} component={Aktivitetsmal} />
         <Route
             path={getPathWithBase('/mal/endre')}
             component={AktivitetmalEndre}
