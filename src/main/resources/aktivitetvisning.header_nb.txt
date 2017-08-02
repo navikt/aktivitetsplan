@@ -13,4 +13,6 @@ UTDANNINGSAKTIVITET { Utdanning }
 SOKEAVTALE { Avtale med NAV }
 IJOBB { Bruker i jobb }
 BEHANDLING { Behandling }
+MOTE { Møte med NAV }
+SAMTALEREFERAT { Samtalereferat }
 }
