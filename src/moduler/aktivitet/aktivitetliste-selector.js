@@ -5,7 +5,7 @@ import {
 } from '../privat-modus/privat-modus-selector';
 import { aktivitetFilter } from '../filter/filter-utils';
 
-export function aktivitetListe(state) {
+export function selectAktivitetListe(state) {
     const stateData = state.data;
     const privatModus = erPrivatModus(state);
 
@@ -15,13 +15,23 @@ export function aktivitetListe(state) {
         .filter(a => aktivitetFilter(a, state));
 }
 
-export function aktivitetListeReducer(state) {
+export function selectAktivitetMedId(state, aktivitetId) {
+    return selectAktivitetListe(state).find(
+        aktivitet => aktivitet.id === aktivitetId
+    );
+}
+
+export function selectAktivitetListeReducer(state) {
     return {
         status: aggregerStatus(
             privatModusReducer(state),
             state.aktiviteter,
             state.arenaAktiviteter
         ),
-        data: aktivitetListe(state),
+        data: selectAktivitetListe(state),
     };
+}
+
+export function selectAktivitetListeStatus(state) {
+    return selectAktivitetListeReducer(state).status;
 }

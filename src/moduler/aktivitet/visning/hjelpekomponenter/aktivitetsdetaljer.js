@@ -461,9 +461,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const samtalereferatFelter = () => [
         <Informasjonsfelt
             key="dato"
-            tittel={
-                <FormattedMessage id="aktivitetdetaljer.samtalereferat.dato" />
-            }
+            tittel={<FormattedMessage id="aktivitetdetaljer.dato" />}
             innhold={fraDato}
         />,
         <Informasjonsfelt

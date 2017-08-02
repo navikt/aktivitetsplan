@@ -9,13 +9,13 @@ import { avbrytAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
 import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 import history from '../../../history';
+import { selectRouteParams } from '../../../routing';
+import {
+    selectAktivitetListeStatus,
+    selectAktivitetMedId,
+} from '../aktivitetliste-selector';
 
-const AvbrytAktivitet = props => {
-    const paramsId = props.params.id;
-    const valgtAktivitet =
-        props.aktiviteter.data.find(aktivitet => aktivitet.id === paramsId) ||
-        {};
-
+const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
     const begrunnelse = (
         <BegrunnelseAktivitet
             aktivitet={valgtAktivitet}
@@ -25,12 +25,9 @@ const AvbrytAktivitet = props => {
             beskrivelseTekst={
                 <FormattedMessage id="opprett-begrunnelse.avbrutt.melding" />
             }
-            lagrer={props.aktiviteter.status !== STATUS.OK}
+            lagrer={lagrer}
             onSubmit={beskrivelseForm => {
-                props.lagreBegrunnelse(
-                    valgtAktivitet,
-                    beskrivelseForm.begrunnelse
-                );
+                lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
                 history.goBack();
             }}
         />
@@ -40,7 +37,7 @@ const AvbrytAktivitet = props => {
         <VisAdvarsel
             headerTekst={<FormattedMessage id="advarsel.avbrutt.header" />}
             onSubmit={() => {
-                props.lagreBegrunnelse(valgtAktivitet, null);
+                lagreBegrunnelse(valgtAktivitet, null);
                 history.goBack();
             }}
         />
@@ -54,11 +51,8 @@ const AvbrytAktivitet = props => {
 };
 
 AvbrytAktivitet.propTypes = {
-    aktiviteter: PT.shape({
-        status: PT.string,
-        data: PT.arrayOf(AppPT.aktivitet),
-    }).isRequired,
-    params: PT.shape({ id: PT.string }).isRequired,
+    valgtAktivitet: AppPT.aktivitet.isRequired,
+    lagrer: PT.bool.isRequired,
     lagreBegrunnelse: PT.func.isRequired,
 };
 
@@ -67,8 +61,13 @@ const mapDispatchToProps = dispatch => ({
         dispatch(avbrytAktivitet(aktivitet, begrunnelse)),
 });
 
-const mapStateToProps = state => ({
-    aktiviteter: state.data.aktiviteter,
-});
+const mapStateToProps = (state, props) => {
+    const aktivitetId = selectRouteParams(props).id;
+    const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
+    return {
+        valgtAktivitet: valgtAktivitet || {},
+        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AvbrytAktivitet);

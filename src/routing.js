@@ -73,3 +73,7 @@ Routing.propTypes = {
 };
 
 export default withRouter(Routing);
+
+export function selectRouteParams(props) {
+    return props.match.params;
+}
