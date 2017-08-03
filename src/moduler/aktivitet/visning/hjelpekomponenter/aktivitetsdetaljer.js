@@ -20,10 +20,17 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     BEHANDLING_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
 } from '../../../../constant';
 import DetaljFelt from './detalj-felt';
 import { endreAktivitetRoute } from '../../../../routing';
 import AktivitetBeskrivelse from './aktivitetsbeskrivelse';
+import {
+    beregnKlokkeslettVarighet,
+    formatterKlokkeslett,
+    formatterVarighet,
+} from '../../aktivitet-util';
 
 function RedigerLink({ id, felt }) {
     return (
@@ -41,9 +48,13 @@ RedigerLink.propTypes = {
     felt: PT.string.isRequired,
 };
 
-function Informasjonsfelt({ tittel, innhold }) {
+function Informasjonsfelt({ tittel, innhold, fullbredde }) {
     return (
-        <DetaljFelt tittel={tittel} visible={innhold !== null}>
+        <DetaljFelt
+            tittel={tittel}
+            visible={innhold !== null}
+            fullbredde={fullbredde}
+        >
             <Normaltekst className="detaljfelt__tekst">
                 {innhold}
             </Normaltekst>
@@ -53,11 +64,13 @@ function Informasjonsfelt({ tittel, innhold }) {
 
 Informasjonsfelt.propTypes = {
     tittel: PT.node.isRequired,
-    innhold: PT.string,
+    innhold: PT.node,
+    fullbredde: PT.bool,
 };
 
 Informasjonsfelt.defaultProps = {
     innhold: undefined,
+    fullbredde: false,
 };
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
@@ -85,6 +98,9 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         effekt,
         behandlingOppfolging,
         beskrivelse,
+        kanal,
+        adresse,
+        forberedelser,
     } = valgtAktivitet;
 
     const fraDato = formaterDatoKortManed(valgtAktivitet.fraDato);
@@ -392,6 +408,72 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         />,
     ];
 
+    const moteFelter = () => {
+        const { klokkeslett, varighet } = beregnKlokkeslettVarighet(
+            valgtAktivitet
+        );
+        return [
+            <Informasjonsfelt
+                key="dato"
+                tittel={<FormattedMessage id="aktivitetdetaljer.dato" />}
+                innhold={fraDato}
+            />,
+            <Informasjonsfelt
+                key="klokkeslett"
+                tittel={<FormattedMessage id="aktivitetdetaljer.klokkeslett" />}
+                innhold={formatterKlokkeslett(klokkeslett)}
+            />,
+            <Informasjonsfelt
+                key="kanal"
+                tittel={<FormattedMessage id="aktivitetdetaljer.kanal" />}
+                innhold={
+                    kanal &&
+                    <FormattedMessage id={`kanal.${kanal}`.toLowerCase()} />
+                }
+            />,
+            <Informasjonsfelt
+                key="varighet"
+                tittel={<FormattedMessage id="aktivitetdetaljer.varighet" />}
+                innhold={formatterVarighet(varighet)}
+            />,
+            <Informasjonsfelt
+                key="adresse"
+                tittel={<FormattedMessage id="aktivitetdetaljer.adresse" />}
+                innhold={adresse}
+            />,
+            <Informasjonsfelt
+                key="bakgrunn"
+                tittel={<FormattedMessage id="aktivitetdetaljer.bakgrunn" />}
+                innhold={beskrivelse}
+                fullbredde
+            />,
+            <Informasjonsfelt
+                key="forberedelser"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.forberedelser" />
+                }
+                innhold={forberedelser}
+                fullbredde
+            />,
+        ];
+    };
+
+    const samtalereferatFelter = () => [
+        <Informasjonsfelt
+            key="dato"
+            tittel={<FormattedMessage id="aktivitetdetaljer.dato" />}
+            innhold={fraDato}
+        />,
+        <Informasjonsfelt
+            key="kanal"
+            tittel={<FormattedMessage id="aktivitetdetaljer.kanal" />}
+            innhold={
+                kanal &&
+                <FormattedMessage id={`kanal.${kanal}`.toLowerCase()} />
+            }
+        />,
+    ];
+
     const map = {
         [EGEN_AKTIVITET_TYPE]: egenStillingFelter,
         [STILLING_AKTIVITET_TYPE]: ledigStillingFelter,
@@ -401,13 +483,21 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFelter,
         [IJOBB_AKTIVITET_TYPE]: iJobbFelter,
         [BEHANDLING_AKTIVITET_TYPE]: behandlingFelter,
+        [MOTE_TYPE]: moteFelter,
+        [SAMTALEREFERAT_TYPE]: samtalereferatFelter,
     };
 
     const cls = clsName => classNames(clsName, 'aktivitetsdetaljer');
     return (
         <section className={cls(className)}>
             {map[aktivitetstype]()}
-            <AktivitetBeskrivelse beskrivelse={beskrivelse} />
+            <AktivitetBeskrivelse
+                beskrivelse={beskrivelse}
+                hidden={
+                    aktivitetstype === MOTE_TYPE ||
+                    aktivitetstype === SAMTALEREFERAT_TYPE
+                }
+            />
         </section>
     );
 }

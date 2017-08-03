@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import Bilde from 'nav-react-design/dist/bilde';
-import { rules, validForm } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import * as statuser from '../../../../constant';
@@ -16,6 +16,11 @@ import { STATUS } from '../../../../ducks/utils';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import visibleIf from '../../../../hocs/visible-if';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
+import {
+    maksLengde,
+    pakrevd,
+} from '../../../../felles-komponenter/skjema/validering';
+import { validerReferatPublisert } from '../../aktivitet-util';
 
 const leggTilHengelas = (tekst, altTekst) =>
     <span>
@@ -42,6 +47,7 @@ function AktivitetStatusForm(props) {
         valgtAktivitetStatus,
         intl,
         disableStatusEndring,
+        errorSummary,
     } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
     const hengelasAlt = intl.formatMessage({ id: 'hengelas-icon-alt' });
@@ -110,6 +116,8 @@ function AktivitetStatusForm(props) {
                     <FormattedMessage id="aktivitetstatus.oppdater-status-advarsel" />
                 </VisibleAlertStripeSuksessSolid>
 
+                {errorSummary}
+
                 <VisibleIfDiv visible={aktivitet.avtalt && visAdvarsel}>
                     <Textarea
                         labelId={
@@ -135,23 +143,24 @@ function AktivitetStatusForm(props) {
     );
 }
 
-const forLang = rules.maxLength(
-    MAKS_LENGDE,
-    <FormattedMessage
-        id="opprett-begrunnelse.melding.feilmelding.for-lang"
-        values={{ MAKS_LENGDE }}
-    />
+const ikkeForLangBegrunnelse = maksLengde(
+    'opprett-begrunnelse.melding.feilmelding.for-lang',
+    MAKS_LENGDE
 );
-
-const pakrevd = rules.minLength(
-    0,
-    <FormattedMessage id="opprett-begrunnelse.melding.feilmelding.for-kort" />
+const harBegrunnelse = pakrevd(
+    'opprett-begrunnelse.melding.feilmelding.for-kort'
 );
+const harBegrunnelseHvisAvtalt = (begrunnelse, props) =>
+    props.aktivitet.avtalt && harBegrunnelse(begrunnelse, props);
 
 const OppdaterReduxForm = validForm({
     form: AKTIVITET_STATUS_FORM_NAME,
+    errorSummaryTitle: (
+        <FormattedMessage id="aktivitetstatus.form.feiloppsummering-tittel" />
+    ),
     validate: {
-        begrunnelse: [forLang, pakrevd],
+        begrunnelse: [ikkeForLangBegrunnelse, harBegrunnelseHvisAvtalt],
+        erReferatPublisert: validerReferatPublisert(),
     },
 })(AktivitetStatusForm);
 
@@ -168,6 +177,7 @@ AktivitetStatusForm.propTypes = {
     aktivitet: aktivitetPT.isRequired,
     aktivitetDataStatus: PT.string,
     intl: intlShape,
+    errorSummary: PT.node.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({

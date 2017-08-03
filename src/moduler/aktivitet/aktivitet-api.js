@@ -46,3 +46,20 @@ export function slettAktivitet(aktivitet) {
         { method: 'delete' }
     );
 }
+
+export function hentKanaler() {
+    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/kanaler`);
+}
+
+export function publiserReferat(aktivitetId) {
+    return putAsJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitetId}/referat/publiser`
+    );
+}
+
+export function oppdaterReferat(aktivitet) {
+    return putAsJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/referat`,
+        aktivitet
+    );
+}

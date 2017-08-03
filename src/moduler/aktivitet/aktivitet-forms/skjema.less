@@ -1,10 +1,23 @@
 @import '../../../variables';
 @import '../../../felles-komponenter/skjema/datovelger/day-picker';
+@import 'mote/mote-aktivitet-form';
 
 .dato-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+
+    & .skjemaelement__feilmelding {
+        .input--m();
+    }
+}
+
+.radio-container {
+    display: flex;
+
+    & div {
+        margin-right: 1rem;
+    }
 }
 
 // Overskriver nav-frontend

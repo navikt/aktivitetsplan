@@ -18,8 +18,10 @@ import {
     UTDANNING_AKTIVITET_TYPE,
 } from '../../../constant';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
+import VarslingBoks from './hjelpekomponenter/varsling-boks';
 import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
+import OppdaterReferatContainer from './status-oppdatering/oppdater-referat-container';
 
 function Aktivitetvisning({ aktivitet, tillatSletting }) {
     const arenaAktivitet = [
@@ -73,6 +75,11 @@ function Aktivitetvisning({ aktivitet, tillatSletting }) {
             <AktivitetvisningHeader />
 
             <ModalContainer className="aktivitetvisning">
+                <VarslingBoks
+                    className="aktivitetvisning__underseksjon"
+                    aktivitet={aktivitet}
+                />
+
                 <BegrunnelseBoks
                     className="aktivitetvisning__underseksjon"
                     begrunnelse={aktivitet.avsluttetKommentar}
@@ -85,6 +92,11 @@ function Aktivitetvisning({ aktivitet, tillatSletting }) {
                 />
 
                 <AvtaltContainer
+                    aktivitet={aktivitet}
+                    className="aktivitetvisning__underseksjon"
+                />
+
+                <OppdaterReferatContainer
                     aktivitet={aktivitet}
                     className="aktivitetvisning__underseksjon"
                 />

@@ -19,12 +19,24 @@ import SokeavtaleAktivitetForm, {
 import BehandlingAktivitetForm, {
     formNavn as behandlingFormNavn,
 } from '../aktivitet-forms/behandling/aktivitet-behandling-form';
+import MoteAktivitetForm, {
+    formNavn as moteFormNavn,
+} from '../aktivitet-forms/mote/mote-aktivitet-form';
+import SamtalereferatForm, {
+    formNavn as samtalereferatFormNavn,
+} from '../aktivitet-forms/samtalereferat/samtalereferat-form';
+import IJobbAktivitetForm, {
+    formNavn as ijobbFormNavn,
+} from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import history from '../../../history';
 import {
     EGEN_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
     BEHANDLING_AKTIVITET_TYPE,
+    SAMTALEREFERAT_TYPE,
+    MOTE_TYPE,
+    IJOBB_AKTIVITET_TYPE,
 } from '../../../constant';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Versjonskonflikt from './versjonskonflikt';
@@ -32,9 +44,12 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import { LUKK_MODAL } from '../../../ducks/modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../../../routing';
+import { selectAktivitetReducer } from '../aktivitet-reducer';
+import { STATUS } from '../../../ducks/utils';
 
 function EndreAktivitet({
     aktivitet,
+    lagrer,
     doOppdaterAktivitet,
     visVersjonskonflikt,
     skjulVersjonskonflikt,
@@ -79,6 +94,29 @@ function EndreAktivitet({
             case BEHANDLING_AKTIVITET_TYPE:
                 return (
                     <BehandlingAktivitetForm
+                        aktivitet={aktivitet}
+                        onSubmit={oppdater}
+                    />
+                );
+            case MOTE_TYPE:
+                return (
+                    <MoteAktivitetForm
+                        aktivitet={aktivitet}
+                        lagrer={lagrer}
+                        onSubmit={oppdater}
+                    />
+                );
+            case SAMTALEREFERAT_TYPE:
+                return (
+                    <SamtalereferatForm
+                        aktivitet={aktivitet}
+                        lagrer={lagrer}
+                        onSubmit={oppdater}
+                    />
+                );
+            case IJOBB_AKTIVITET_TYPE:
+                return (
+                    <IJobbAktivitetForm
                         aktivitet={aktivitet}
                         onSubmit={oppdater}
                     />
@@ -132,6 +170,7 @@ function EndreAktivitet({
 EndreAktivitet.propTypes = {
     doOppdaterAktivitet: PT.func.isRequired,
     visVersjonskonflikt: PT.bool.isRequired,
+    lagrer: PT.bool.isRequired,
     skjulVersjonskonflikt: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
     aktiviteter: PT.shape({
@@ -155,12 +194,16 @@ const mapStateToProps = (state, props) => {
         [EGEN_AKTIVITET_TYPE]: egenFormNavn,
         [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFormNavn,
         [BEHANDLING_AKTIVITET_TYPE]: behandlingFormNavn,
+        [MOTE_TYPE]: moteFormNavn,
+        [SAMTALEREFERAT_TYPE]: samtalereferatFormNavn,
+        [IJOBB_AKTIVITET_TYPE]: ijobbFormNavn,
     }[aktivitet.type];
     return {
         aktivitet,
         aktiviteter: state.data.aktiviteter,
         visVersjonskonflikt: state.view.endreAktivitet.visVersjonskonflikt,
         formIsDirty: isDirty(formNavn)(state),
+        lagrer: selectAktivitetReducer(state).status !== STATUS.OK,
     };
 };
 

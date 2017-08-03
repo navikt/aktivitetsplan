@@ -9,26 +9,28 @@ import { STATUS } from '../../../ducks/utils';
 import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 import history from '../../../history';
 import VisAdvarsel from './vis-advarsel';
+import { selectRouteParams } from '../../../routing';
+import {
+    selectAktivitetListeStatus,
+    selectAktivitetMedId,
+} from '../aktivitetliste-selector';
 
-const FullforAktivitet = props => {
+const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     const headerTekst = (
         <FormattedMessage id="opprett-begrunnelse.fullfoert.header" />
     );
     const beskrivelseTekst = (
         <FormattedMessage id="opprett-begrunnelse.fullfoert.melding" />
     );
-    const paramsId = props.params.id;
-    const valgtAktivitet =
-        props.aktiviteter.data.find(aktivitet => aktivitet.id === paramsId) ||
-        {};
 
     const begrunnelse = (
         <BegrunnelseAktivitet
+            aktivitet={valgtAktivitet}
             headerTekst={headerTekst}
             beskrivelseTekst={beskrivelseTekst}
-            lagrer={props.aktiviteter.status !== STATUS.OK}
+            lagrer={lagrer}
             onSubmit={beskrivelseForm => {
-                props.doAvsluttOppfolging(
+                doAvsluttOppfolging(
                     valgtAktivitet,
                     beskrivelseForm.begrunnelse
                 );
@@ -41,7 +43,7 @@ const FullforAktivitet = props => {
         <VisAdvarsel
             headerTekst={headerTekst}
             onSubmit={() => {
-                props.doAvsluttOppfolging(valgtAktivitet, null);
+                doAvsluttOppfolging(valgtAktivitet, null);
                 history.goBack();
             }}
         />
@@ -55,11 +57,8 @@ const FullforAktivitet = props => {
 };
 
 FullforAktivitet.propTypes = {
-    aktiviteter: PT.shape({
-        status: PT.string,
-        data: PT.arrayOf(AppPT.aktivitet),
-    }).isRequired,
-    params: PT.shape({ id: PT.string }).isRequired,
+    valgtAktivitet: AppPT.aktivitet.isRequired,
+    lagrer: PT.bool.isRequired,
     doAvsluttOppfolging: PT.func.isRequired,
 };
 
@@ -68,8 +67,13 @@ const mapDispatchToProps = dispatch => ({
         dispatch(fullforAktivitet(aktivitet, begrunnelse)),
 });
 
-const mapStateToProps = state => ({
-    aktiviteter: state.data.aktiviteter,
-});
+const mapStateToProps = (state, props) => {
+    const aktivitetId = selectRouteParams(props).id;
+    const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
+    return {
+        valgtAktivitet: valgtAktivitet || {},
+        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(FullforAktivitet);

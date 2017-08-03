@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { EtikettLiten } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import hiddenIf from '../../../../felles-komponenter/hidden-if/hidden-if';
 
 function Aktivitetsbeskrivelse({ beskrivelse }) {
     return beskrivelse
@@ -25,4 +26,4 @@ Aktivitetsbeskrivelse.defaultProps = {
     beskrivelse: undefined,
 };
 
-export default Aktivitetsbeskrivelse;
+export default hiddenIf(Aktivitetsbeskrivelse);

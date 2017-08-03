@@ -17,7 +17,7 @@ import {
 } from '../../../constant';
 import history from '../../../history';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
-import { aktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
+import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -190,7 +190,7 @@ KolonneFunction.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    aktiviteter: aktivitetListe(state),
+    aktiviteter: selectAktivitetListe(state),
 });
 
 const mapDispatchToProps = dispatch => ({

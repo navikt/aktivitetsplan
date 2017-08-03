@@ -2,6 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { Link } from 'react-router-dom';
 import NavLenkepanel from 'nav-frontend-lenkepanel';
+import hiddenIf from './hidden-if/hidden-if';
 
 function ReactRouterLink({ href, children, ...props }) {
     return (
@@ -19,4 +20,4 @@ function Lenkepanel(props) {
     return <NavLenkepanel linkCreator={ReactRouterLink} {...props} />;
 }
 
-export default Lenkepanel;
+export default hiddenIf(Lenkepanel);

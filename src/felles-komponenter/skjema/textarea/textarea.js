@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { CustomField } from 'react-redux-form-validation';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 
 function getTellerTekst(antallTegn, maxLength, visTellerFra) {
@@ -29,12 +29,19 @@ function getTellerTekst(antallTegn, maxLength, visTellerFra) {
 function InnerTextAreaComponent({
     input,
     labelId,
+    placeholderId,
     maxLength,
     errorMessage,
     visTellerFra,
+    intl,
     meta, // eslint-disable-line no-unused-vars
     ...rest
 }) {
+    const placeholder =
+        placeholderId &&
+        intl.formatMessage({
+            id: placeholderId,
+        });
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
     return (
         <NavFrontendTextarea
@@ -42,6 +49,7 @@ function InnerTextAreaComponent({
             label={labelId && <FormattedMessage id={labelId} />}
             maxLength={maxLength}
             feil={feil}
+            placeholder={placeholder}
             tellerTekst={antallTegn =>
                 getTellerTekst(antallTegn, maxLength, visTellerFra)}
             {...input}
@@ -50,12 +58,14 @@ function InnerTextAreaComponent({
     );
 }
 InnerTextAreaComponent.propTypes = {
-    labelId: PT.string.isRequired,
+    labelId: PT.string,
+    placeholderId: PT.string,
     maxLength: PT.number.isRequired,
     errorMessage: PT.arrayOf(PT.oneOfType([PT.string, PT.node])),
     visTellerFra: PT.number,
     meta: PT.object, // eslint-disable-line react/forbid-prop-types
     input: PT.object, // eslint-disable-line react/forbid-prop-types
+    intl: intlShape.isRequired,
 };
 
 InnerTextAreaComponent.defaultProps = {
@@ -63,6 +73,8 @@ InnerTextAreaComponent.defaultProps = {
     meta: undefined,
     input: undefined,
     visTellerFra: undefined,
+    labelId: undefined,
+    placeholderId: undefined,
 };
 
 function Textarea({ feltNavn, ...rest }) {
@@ -84,4 +96,5 @@ Textarea.defaultProps = {
     visTellerFra: 0,
 };
 
-export default Textarea;
+// NB: testet med <FormatedMessage> + lamda, men det fungerte ikke bra i forms
+export default injectIntl(Textarea);

@@ -3,6 +3,7 @@
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonchai from 'sinon-chai';
+import moment from 'moment';
 import * as Utils from './utils';
 
 chai.use(sinonchai);
@@ -322,6 +323,25 @@ describe('app utils', () => {
             );
             expect(Utils.storeForbokstaver(null)).to.equal(null);
             expect(Utils.storeForbokstaver(undefined)).to.equal(undefined);
+        });
+    });
+
+    describe('erGyldigDatoformat', () => {
+        it('12.12.2012 er gyldig', () => {
+            expect(Utils.erGyldigDatoformat('12.12.2012')).to.equal(true);
+        });
+
+        it('1212.2012 er ugyldig', () => {
+            expect(Utils.erGyldigDatoformat('1212.2012')).to.equal(false);
+        });
+
+        it('moment-objecter er ikke gyldige', () => {
+            expect(Utils.erGyldigDatoformat(moment())).to.equal(false);
+        });
+
+        it('null/undefined ikke gyldig', () => {
+            expect(Utils.erGyldigDatoformat(undefined)).to.equal(false);
+            expect(Utils.erGyldigDatoformat(null)).to.equal(false);
         });
     });
 });
