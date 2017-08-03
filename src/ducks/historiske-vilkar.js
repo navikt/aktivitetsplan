@@ -1,4 +1,4 @@
-import * as Api from './situasjon-api';
+import * as Api from '../moduler/situasjon/situasjon-api';
 import { STATUS, doThenDispatch } from './utils';
 import { guid } from '../utils';
 

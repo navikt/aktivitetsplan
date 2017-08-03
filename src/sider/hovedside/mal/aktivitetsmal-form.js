@@ -46,8 +46,11 @@ class AktivitetsmalForm extends Component {
                 >
                     <FormattedMessage id="aktivitetsmal.lagre" />
                 </Hovedknapp>
-                <Knapp onClick={this.avbryt} disabled={oppdaterer}>
-                    {' '}{/* TODO: Vi må få inn type="button" */}
+                <Knapp
+                    onClick={this.avbryt}
+                    disabled={oppdaterer}
+                    htmlType="button"
+                >
                     <FormattedMessage id="aktivitetsmal.avbryt" />
                 </Knapp>
             </form>

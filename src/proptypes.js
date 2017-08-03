@@ -63,6 +63,7 @@ export const situasjon = PT.shape({
     brukerHarAvslatt: PT.bool,
     data: PT.shape({
         fnr: PT.string,
+        veileder: PT.string,
         reservasjonKRR: PT.bool,
         manuell: PT.bool,
         underOppfolging: PT.bool,
@@ -130,4 +131,5 @@ export const arbeidsliste = PT.shape({
     kommentar: PT.string,
     frist: PT.string,
     isOppfolgendeVeileder: PT.bool,
+    harVeilederTilgang: PT.bool,
 });

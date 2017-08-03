@@ -7,7 +7,7 @@ import { hentMal, hentMalListe, fjernMalListe } from '../../../ducks/mal';
 import * as AppPT from '../../../proptypes';
 import { formaterDatoEllerTidSiden } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import Identitet from '../../../felles-komponenter/identitet';
+import Identitet from '../../../moduler/identitet/identitet';
 import Accordion from '../../../felles-komponenter/accordion';
 import history from '../../../history';
 import AktivitetsmalModal from './aktivitetsmal-modal';

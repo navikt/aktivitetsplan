@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { oppdaterDialog } from '../ducks/dialog';
-import { hentIdentitet } from '../ducks/identitet';
+import { hentIdentitet } from '../moduler/identitet/identitet-duck';
 import Checkbox from '../felles-komponenter/skjema/input/checkbox';
 import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
 

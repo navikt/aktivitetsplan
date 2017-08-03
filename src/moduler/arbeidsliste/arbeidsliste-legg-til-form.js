@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { validForm, rules } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import history from '../../history';
@@ -12,23 +12,14 @@ import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import { LUKK_MODAL } from '../../ducks/modal';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
-
-const KOMMENTAR_MAKS_LENGDE = 255;
-const pakrevd = rules.minLength(
-    0,
-    <FormattedMessage id="arbeidsliste.feilmelding.for-kort" />
-);
-const pakrevdFrist = rules.minLength(
-    0,
-    <FormattedMessage id="arbeidsliste.feilmelding.angi.frist" />
-);
-const begrensetKommentarLengde = rules.maxLength(
+import {
+    lagArbeidsliste,
     KOMMENTAR_MAKS_LENGDE,
-    <FormattedMessage
-        id="arbeidsliste-form.feilmelding.kommentar-lengde"
-        values={{ KOMMENTAR_MAKS_LENGDE }}
-    />
-);
+    pakrevd,
+    pakrevdFrist,
+    begrensetKommentarLengde,
+    fristErEtterIDag,
+} from './arbeidsliste-utils';
 
 function LeggTilArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
     return (
@@ -80,7 +71,7 @@ const LeggTilArbeidslisteFormValidation = validForm({
     ),
     validate: {
         kommentar: [begrensetKommentarLengde, pakrevd],
-        frist: [pakrevdFrist],
+        frist: [pakrevdFrist, fristErEtterIDag],
     },
 })(LeggTilArbeidslisteForm);
 
@@ -90,16 +81,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, props) => {
     const fnr = getFodselsnummer();
-    const lagArbeidsliste = form => ({
-        fnr,
-        veilederId: props.veileder,
-        kommentar: form.kommentar,
-        frist: form.frist,
-    });
     return {
         onSubmit: formData => {
             dispatch(
-                leggTilArbeidsliste(fnr, lagArbeidsliste(formData))
+                leggTilArbeidsliste(fnr, lagArbeidsliste(fnr, formData, props))
             ).then(() => {
                 dispatch({ type: LUKK_MODAL });
                 history.push('/');

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import Bilde from 'nav-react-design/dist/bilde';
-import { hentIdentitet } from '../../../ducks/identitet';
+import { hentIdentitet } from '../../identitet/identitet-duck';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import leggTilAktivitetSvg from '../../../img/legg-til-aktivitet-illustrasjon.svg';

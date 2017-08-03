@@ -9,7 +9,7 @@ import { startOppfolging } from '../innstillinger-reducer';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import InnstillingerModal from '../innstillinger-modal';
-import { hentSituasjon } from '../../../ducks/situasjon';
+import { hentSituasjon } from '../../situasjon/situasjon';
 
 function BekreftStart({ doStartOppfolging, navn }) {
     return (

@@ -31,9 +31,10 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case HENT_ARBEIDSLISTE_OK:
         case LAGRE_ARBEIDSLISTE_OK:
-        case SLETT_ARBEIDSLISTE_OK:
         case REDIGER_ARBEIDSLISTE_OK:
             return { ...state, status: STATUS.OK, data: action.data };
+        case SLETT_ARBEIDSLISTE_OK:
+            return { ...state, status: STATUS.OK, data: {} };
         case HENT_ARBEIDSLISTE_FEILET:
         case LAGRE_ARBEIDSLISTE_FEILET:
         case SLETT_ARBEIDSLISTE_FEILET:

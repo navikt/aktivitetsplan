@@ -7,7 +7,7 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import Checkbox from '../../felles-komponenter/skjema/input/checkbox';
 import history from '../../history';
-import { godtaVilkar, avslaVilkar } from '../../ducks/situasjon';
+import { godtaVilkar, avslaVilkar } from '../situasjon/situasjon';
 
 function GodkjennVilkarForm({ visVilkar, handleSubmit, reset, doAvslaVilkar }) {
     const avsla = () => {

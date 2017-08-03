@@ -18,7 +18,7 @@ import {
 } from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
-import { hentSituasjon } from '../../../ducks/situasjon';
+import { hentSituasjon } from '../../situasjon/situasjon';
 
 const SETT_DIGITAL_FORM_NAME = 'sett-digital-form';
 
