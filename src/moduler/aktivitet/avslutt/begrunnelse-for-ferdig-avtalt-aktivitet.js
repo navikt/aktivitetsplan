@@ -69,6 +69,9 @@ const harBegrunnelse = pakrevd(
 
 const BegrunnelseAktivitetReduxForm = validForm({
     form: 'begrunnelse-aktivitet-form',
+    errorSummaryTitle: (
+        <FormattedMessage id="begrunnelse-aktivitet.feiloppsummering-tittel" />
+    ),
     validate: {
         begrunnelse: [ikkeForLangBegrunnelse, harBegrunnelse],
         erReferatPublisert: validerReferatPublisert(),

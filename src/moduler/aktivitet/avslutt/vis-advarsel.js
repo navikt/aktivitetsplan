@@ -41,6 +41,9 @@ VisAdvarsel.propTypes = {
 
 const BegrunnelseAktivitetReduxForm = validForm({
     form: 'bekreft-advarsel-aktivitet-form',
+    errorSummaryTitle: (
+        <FormattedMessage id="ferdigstilt.feiloppsummering-tittel" />
+    ),
     validate: {
         erReferatPublisert: validerReferatPublisert(),
     },

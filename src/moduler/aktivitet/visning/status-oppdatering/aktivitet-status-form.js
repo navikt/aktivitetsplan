@@ -155,6 +155,9 @@ const harBegrunnelseHvisAvtalt = (begrunnelse, props) =>
 
 const OppdaterReduxForm = validForm({
     form: AKTIVITET_STATUS_FORM_NAME,
+    errorSummaryTitle: (
+        <FormattedMessage id="aktivitetstatus.form.feiloppsummering-tittel" />
+    ),
     validate: {
         begrunnelse: [ikkeForLangBegrunnelse, harBegrunnelseHvisAvtalt],
         erReferatPublisert: validerReferatPublisert(),
