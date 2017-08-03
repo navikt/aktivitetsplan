@@ -14,7 +14,10 @@ import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-red
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import { erPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import { hentArbeidslisteReducer } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
+import {
+    hentHarVeilederTilgang,
+    hentArbeidslisteReducer,
+} from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../../proptypes';
 
 const NavigasjonsElement = ({ sti, tekstId, disabled, children }) => {
@@ -66,6 +69,7 @@ class Navigasjonslinje extends Component {
             privatModus,
             underOppfolging,
             arbeidslisteReducer,
+            harVeilederTilgang,
         } = this.props;
         return (
             <nav className="navigasjonslinje">
@@ -93,7 +97,9 @@ class Navigasjonslinje extends Component {
                         avhengigheter={[arbeidslisteReducer]}
                         spinnerStorrelse="xs"
                     >
-                        <NavigasjonslinjeMeny />
+                        <NavigasjonslinjeMeny
+                            harVeilederTilgang={harVeilederTilgang}
+                        />
                     </Innholdslaster>
                 </Feature>
             </nav>
@@ -108,10 +114,12 @@ Navigasjonslinje.propTypes = {
     underOppfolging: PT.bool,
     doHentArbeidsliste: PT.func.isRequired,
     arbeidslisteReducer: AppPT.reducer.isRequired,
+    harVeilederTilgang: PT.bool,
 };
 
 Navigasjonslinje.defaultProps = {
     underOppfolging: undefined,
+    harVeilederTilgang: false,
 };
 
 const mapStateToProps = state => {
@@ -124,6 +132,7 @@ const mapStateToProps = state => {
         privatModus: erPrivatModus(state),
         underOppfolging: stateData.situasjon.data.underOppfolging,
         arbeidslisteReducer: hentArbeidslisteReducer(state),
+        harVeilederTilgang: hentHarVeilederTilgang(state),
     };
 };
 

@@ -4,14 +4,21 @@ import PT from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Bilde } from 'nav-react-design';
 import history from '../../../history';
-import { brukerTilhorerVeileder } from '../../../moduler/situasjon/situasjon-selector';
-import { erBrukerIArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
+import {
+    erBrukerIArbeidsliste,
+    hentBrukerTilhorerVeileder,
+} from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import ArbeidslisteSVG from './arbeidsliste.svg';
 import ArbeidslisteActiveSVG from './arbeidsliste-active.svg';
 import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
 import HiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
 
-function NavigasjonslinjeMeny({ intl, brukerErMin, brukerErIArbeidsliste }) {
+function NavigasjonslinjeMeny({
+    intl,
+    brukerErMin,
+    brukerErIArbeidsliste,
+    harVeilederTilgang,
+}) {
     const InnstillingerKnapp = () =>
         <button
             className="navigasjonslinje-meny__innstillinger-knapp"
@@ -69,9 +76,17 @@ function NavigasjonslinjeMeny({ intl, brukerErMin, brukerErIArbeidsliste }) {
 
     return (
         <div className="navigasjonslinje-meny">
-            <LeggTilLenke hidden={!brukerErMin || brukerErIArbeidsliste} />
-            <FjernLenke hidden={!brukerErIArbeidsliste} />
-            <RedigerLenke hidden={!brukerErIArbeidsliste} />
+            <LeggTilLenke
+                hidden={
+                    !brukerErMin || brukerErIArbeidsliste || !harVeilederTilgang
+                }
+            />
+            <FjernLenke
+                hidden={!brukerErIArbeidsliste || !harVeilederTilgang}
+            />
+            <RedigerLenke
+                hidden={!brukerErIArbeidsliste || !harVeilederTilgang}
+            />
             <InnstillingerKnapp />
         </div>
     );
@@ -81,10 +96,11 @@ NavigasjonslinjeMeny.propTypes = {
     intl: intlShape.isRequired,
     brukerErMin: PT.bool.isRequired,
     brukerErIArbeidsliste: PT.bool.isRequired,
+    harVeilederTilgang: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-    brukerErMin: brukerTilhorerVeileder(state),
+    brukerErMin: hentBrukerTilhorerVeileder(state),
     brukerErIArbeidsliste: erBrukerIArbeidsliste(state),
 });
 

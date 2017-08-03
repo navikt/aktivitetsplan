@@ -131,4 +131,5 @@ export const arbeidsliste = PT.shape({
     kommentar: PT.string,
     frist: PT.string,
     isOppfolgendeVeileder: PT.bool,
+    harVeilederTilgang: PT.bool,
 });
