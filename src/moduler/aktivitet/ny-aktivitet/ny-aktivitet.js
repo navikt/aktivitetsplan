@@ -61,6 +61,9 @@ class NyAktivitet extends Component {
                         >
                             <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
                         </Lenkepanel>
+                        <Lenkepanel href="/aktivitet/ny/ijobb">
+                            <FormattedMessage id="ny-aktivitet-modal.jobb-jeg-er-i" />
+                        </Lenkepanel>
                     </div>
                 </ModalHeader>
             </StandardModal>

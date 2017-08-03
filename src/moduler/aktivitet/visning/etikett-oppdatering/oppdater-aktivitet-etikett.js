@@ -8,13 +8,17 @@ import * as AppPT from '../../../../proptypes';
 import StillingEtikettForm from './stilling-etikett-form';
 
 function OppdaterAktivitetStatus(props) {
-    const { aktiviteter, paramsId } = props;
-    const disableStatusEndring =
-        props.status === statuser.STATUS_AVBRUTT ||
-        props.status === statuser.STATUS_FULLFOERT;
+    const { aktiviteter, paramsId, status } = props;
+
     const valgtAktivitet = aktiviteter.data.find(
         aktivitet => aktivitet.id === paramsId
     );
+
+    const disableStatusEndring =
+        valgtAktivitet.historisk ||
+        status === statuser.STATUS_AVBRUTT ||
+        status === statuser.STATUS_FULLFOERT;
+
     const erStillingsAktivitet =
         valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;
 

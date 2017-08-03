@@ -25,6 +25,9 @@ import MoteAktivitetForm, {
 import SamtalereferatForm, {
     formNavn as samtalereferatFormNavn,
 } from '../aktivitet-forms/samtalereferat/samtalereferat-form';
+import IJobbAktivitetForm, {
+    formNavn as ijobbFormNavn,
+} from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import history from '../../../history';
 import {
     EGEN_AKTIVITET_TYPE,
@@ -33,6 +36,7 @@ import {
     BEHANDLING_AKTIVITET_TYPE,
     SAMTALEREFERAT_TYPE,
     MOTE_TYPE,
+    IJOBB_AKTIVITET_TYPE,
 } from '../../../constant';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Versjonskonflikt from './versjonskonflikt';
@@ -107,6 +111,13 @@ function EndreAktivitet({
                     <SamtalereferatForm
                         aktivitet={aktivitet}
                         lagrer={lagrer}
+                        onSubmit={oppdater}
+                    />
+                );
+            case IJOBB_AKTIVITET_TYPE:
+                return (
+                    <IJobbAktivitetForm
+                        aktivitet={aktivitet}
                         onSubmit={oppdater}
                     />
                 );
@@ -185,6 +196,7 @@ const mapStateToProps = (state, props) => {
         [BEHANDLING_AKTIVITET_TYPE]: behandlingFormNavn,
         [MOTE_TYPE]: moteFormNavn,
         [SAMTALEREFERAT_TYPE]: samtalereferatFormNavn,
+        [IJOBB_AKTIVITET_TYPE]: ijobbFormNavn,
     }[aktivitet.type];
     return {
         aktivitet,
