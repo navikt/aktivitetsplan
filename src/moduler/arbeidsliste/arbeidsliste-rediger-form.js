@@ -9,7 +9,7 @@ import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import Datovelger from '../../felles-komponenter/skjema/datovelger/datovelger';
 import { redigerArbeidsliste } from './arbeidsliste-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import { hentArbeidslisteReducer } from './arbeidsliste-selector';
+import { selectArbeidslisteReducer } from './arbeidsliste-selector';
 import { LUKK_MODAL } from '../../ducks/modal';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
@@ -78,7 +78,7 @@ const RedigerArbeidslisteFormValidation = validForm({
 })(RedigerArbeidslisteForm);
 
 const mapStateToProps = state => {
-    const arbeidsliste = hentArbeidslisteReducer(state);
+    const arbeidsliste = selectArbeidslisteReducer(state);
     return {
         veileder: state.data.identitet.data.id,
         initialValues: {

@@ -1,13 +1,13 @@
 import { aggregerStatus } from '../../ducks/utils';
 import {
-    privatModusReducer,
-    erPrivatModus,
+    selectPrivatModusReducer,
+    selectErPrivatModus,
 } from '../privat-modus/privat-modus-selector';
 import { aktivitetFilter } from '../filter/filter-utils';
 
 export function aktivitetListe(state) {
     const stateData = state.data;
-    const privatModus = erPrivatModus(state);
+    const privatModus = selectErPrivatModus(state);
 
     return stateData.aktiviteter.data
         .concat(stateData.arenaAktiviteter.data)
@@ -18,7 +18,7 @@ export function aktivitetListe(state) {
 export function aktivitetListeReducer(state) {
     return {
         status: aggregerStatus(
-            privatModusReducer(state),
+            selectPrivatModusReducer(state),
             state.aktiviteter,
             state.arenaAktiviteter
         ),

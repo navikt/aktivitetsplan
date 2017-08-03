@@ -15,9 +15,9 @@ function OppdaterAktivitetStatus(props) {
     );
 
     const disableStatusEndring =
-        valgtAktivitet.historisk
-        || status === statuser.STATUS_AVBRUTT
-        || status === statuser.STATUS_FULLFOERT;
+        valgtAktivitet.historisk ||
+        status === statuser.STATUS_AVBRUTT ||
+        status === statuser.STATUS_FULLFOERT;
 
     const erStillingsAktivitet =
         valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;

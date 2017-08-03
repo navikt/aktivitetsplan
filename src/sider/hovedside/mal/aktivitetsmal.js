@@ -13,6 +13,8 @@ import history from '../../../history';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import { HiddenIfHovedknapp } from '../../../felles-komponenter/hidden-if/hidden-if-knapper';
 
+const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
+
 function malListeVisning(malet) {
     return (
         <article key={malet.dato} className="aktivitetmal__historikk">
@@ -25,8 +27,7 @@ function malListeVisning(malet) {
                     }
                 />
                 <Identitet>
-                    {{ BRUKER: 'bruker', VEILEDER: 'NAV' }[malet.endretAv] ||
-                        malet.endretAv}
+                    {identitetMap[malet.endretAv] || malet.endretAv}
                 </Identitet>
             </span>{' '}
             {formaterDatoEllerTidSiden(malet.dato)}

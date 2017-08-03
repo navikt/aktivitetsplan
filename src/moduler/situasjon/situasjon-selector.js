@@ -1,2 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
-export const hentSituasjonReducer = state => state.data.situasjon;
+export const selectSituasjonReducer = state => state.data.situasjon;
+export const selectReservasjonKRR = state =>
+    selectSituasjonReducer(state).data.reservasjonKRR;

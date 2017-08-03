@@ -12,11 +12,11 @@ import { hentDialog } from '../../../ducks/dialog';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
 import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-reducer';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
-import { erPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
+import { selectErPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import {
-    hentHarVeilederTilgang,
-    hentArbeidslisteReducer,
+    selectHarVeilederTilgang,
+    selectArbeidslisteReducer,
 } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../../proptypes';
 
@@ -129,10 +129,10 @@ const mapStateToProps = state => {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)
             .filter(d => dialogFilter(d, state)).length,
-        privatModus: erPrivatModus(state),
+        privatModus: selectErPrivatModus(state),
         underOppfolging: stateData.situasjon.data.underOppfolging,
-        arbeidslisteReducer: hentArbeidslisteReducer(state),
-        harVeilederTilgang: hentHarVeilederTilgang(state),
+        arbeidslisteReducer: selectArbeidslisteReducer(state),
+        harVeilederTilgang: selectHarVeilederTilgang(state),
     };
 };
 
