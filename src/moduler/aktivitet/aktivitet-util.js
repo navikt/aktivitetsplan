@@ -1,5 +1,8 @@
 import moment from 'moment';
+import React from 'react';
 import 'moment-duration-format';
+import { FormattedMessage } from 'react-intl';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
 
 export function beregnKlokkeslettVarighet(aktivitet) {
     const fraDato = aktivitet.fraDato;
@@ -42,4 +45,19 @@ export function formatterVarighet(varighet) {
 
 export function formatterKlokkeslett(klokkeslett) {
     return formatterVarighet(klokkeslett);
+}
+
+export function validerReferatPublisert() {
+    return (ignorerDenne, props) => {
+        const aktivitet = props.aktivitet || {};
+        const { type, erReferatPublisert } = aktivitet;
+        const manglerReferat =
+            !type ||
+            ((type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) &&
+                !erReferatPublisert);
+        return (
+            manglerReferat &&
+            <FormattedMessage id="referat.validering.ikke-publisert" />
+        );
+    };
 }

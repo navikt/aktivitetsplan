@@ -1,7 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
 import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
-import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
 import Hovedknapp from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
@@ -12,8 +11,8 @@ import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 import {
     maksLengde,
     pakrevd,
-    validerReferatPublisert,
 } from '../../../felles-komponenter/skjema/validering';
+import { validerReferatPublisert } from '../aktivitet-util';
 
 const MAKS_LENGDE = 255;
 
@@ -78,4 +77,4 @@ const BegrunnelseAktivitetReduxForm = validForm({
     },
 })(BegrunnelseForFerdigAvtaltAktivitet);
 
-export default connect()(BegrunnelseAktivitetReduxForm);
+export default BegrunnelseAktivitetReduxForm;

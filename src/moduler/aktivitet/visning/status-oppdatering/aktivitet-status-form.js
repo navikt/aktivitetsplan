@@ -19,8 +19,8 @@ import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import {
     maksLengde,
     pakrevd,
-    validerReferatPublisert,
 } from '../../../../felles-komponenter/skjema/validering';
+import { validerReferatPublisert } from '../../aktivitet-util';
 
 const leggTilHengelas = (tekst, altTekst) =>
     <span>

@@ -21,7 +21,7 @@ import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import VarslingBoks from './hjelpekomponenter/varsling-boks';
 import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
-import OppdaterReferat from './status-oppdatering/oppdater-referat';
+import OppdaterReferatContainer from './status-oppdatering/oppdater-referat-container';
 
 function Aktivitetvisning({ aktivitet, tillatSletting }) {
     const arenaAktivitet = [
@@ -96,7 +96,7 @@ function Aktivitetvisning({ aktivitet, tillatSletting }) {
                     className="aktivitetvisning__underseksjon"
                 />
 
-                <OppdaterReferat
+                <OppdaterReferatContainer
                     aktivitet={aktivitet}
                     className="aktivitetvisning__underseksjon"
                 />

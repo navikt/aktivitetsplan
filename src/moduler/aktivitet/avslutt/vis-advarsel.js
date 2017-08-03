@@ -1,7 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
 import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
-import { connect } from 'react-redux';
 import Hovedknapp from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
@@ -9,7 +8,7 @@ import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
-import { validerReferatPublisert } from '../../../felles-komponenter/skjema/validering';
+import { validerReferatPublisert } from '../aktivitet-util';
 
 function VisAdvarsel({ handleSubmit, headerTekst, errorSummary }) {
     return (
@@ -49,4 +48,4 @@ const BegrunnelseAktivitetReduxForm = validForm({
     },
 })(VisAdvarsel);
 
-export default connect()(BegrunnelseAktivitetReduxForm);
+export default BegrunnelseAktivitetReduxForm;
