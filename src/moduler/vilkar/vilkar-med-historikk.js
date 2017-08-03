@@ -4,24 +4,29 @@ import { connect } from 'react-redux';
 import * as AppPT from '../../proptypes';
 import Vilkar from './vilkar';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { hentHistoriskeVilkar } from '../../ducks/historiske-vilkar';
+import {
+    hentHistoriskeVilkar,
+    selectHistoriskeVilkar,
+    selectHistoriskeVilkarReducer,
+} from './historiske-vilkar';
 import VilkarModal from './vilkar-modal';
 import { STATUS } from '../../ducks/utils';
 
 class VilkarMedHistorikkStoreConnector extends Component {
     componentDidMount() {
-        if (this.props.historiskeVilkar.status === STATUS.NOT_STARTED) {
-            this.props.doHentHistoriskeVilkar();
+        const { historiskeVilkarReducer, doHentHistoriskeVilkar } = this.props;
+        if (historiskeVilkarReducer.status === STATUS.NOT_STARTED) {
+            doHentHistoriskeVilkar();
         }
     }
 
     render() {
-        const { historiskeVilkar } = this.props;
+        const { historiskeVilkar, historiskeVilkarReducer } = this.props;
         return (
-            <Innholdslaster avhengigheter={[historiskeVilkar]}>
+            <Innholdslaster avhengigheter={[historiskeVilkarReducer]}>
                 <Vilkar
-                    vilkarListe={historiskeVilkar.data}
-                    visHistorikk={historiskeVilkar.data.length > 1}
+                    vilkarListe={historiskeVilkar}
+                    visHistorikk={historiskeVilkar.length > 1}
                 />
             </Innholdslaster>
         );
@@ -30,14 +35,13 @@ class VilkarMedHistorikkStoreConnector extends Component {
 
 VilkarMedHistorikkStoreConnector.propTypes = {
     doHentHistoriskeVilkar: PT.func.isRequired,
-    historiskeVilkar: PT.shape({
-        status: PT.string,
-        data: PT.arrayOf(AppPT.vilkar),
-    }).isRequired,
+    historiskeVilkarReducer: AppPT.reducer.isRequired,
+    historiskeVilkar: PT.arrayOf(AppPT.vilkar).isRequired,
 };
 
 const mapStateToProps = state => ({
-    historiskeVilkar: state.data.historiskeVilkar,
+    historiskeVilkarReducer: selectHistoriskeVilkarReducer(state),
+    historiskeVilkar: selectHistoriskeVilkar(state),
 });
 
 const mapDispatchToProps = dispatch => ({

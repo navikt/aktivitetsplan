@@ -1,6 +1,7 @@
-import * as Api from '../moduler/situasjon/situasjon-api';
-import { STATUS, doThenDispatch } from './utils';
-import { guid } from '../utils';
+import * as Api from '../situasjon/situasjon-api';
+import { STATUS, doThenDispatch } from '../../ducks/utils';
+import { guid } from '../../utils';
+import { datoErIPeriode } from '../filter/filter-utils';
 
 // Actions
 export const HENT_HISTORISKE_PENDING = 'vilkar/hent-historiske/pending';
@@ -43,4 +44,24 @@ export function hentHistoriskeVilkar() {
         FEILET: HENT_HISTORISKE_FEILET,
         PENDING: HENT_HISTORISKE_PENDING,
     });
+}
+
+export function selectHistoriskeVilkarReducer(state) {
+    return state.data.historiskeVilkar;
+}
+
+export function selectAlleHistoriskeVilkar(state) {
+    return selectHistoriskeVilkarReducer(state).data;
+}
+
+export function selectHistoriskeVilkar(state) {
+    return selectAlleHistoriskeVilkar(state).filter(historiskVilkar =>
+        datoErIPeriode(historiskVilkar.dato, state)
+    );
+}
+
+export function selectHistoriskVilkarMedGuid(state, key) {
+    return selectAlleHistoriskeVilkar(state).find(
+        historiskVilkar => historiskVilkar.guid === key
+    );
 }

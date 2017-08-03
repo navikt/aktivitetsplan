@@ -45,3 +45,7 @@ export function hentIdentitet() {
         }
     };
 }
+
+export function selectErBruker(state) {
+    return state.data.identitet.data.erBruker;
+}

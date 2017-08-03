@@ -94,3 +94,7 @@ export function avslaVilkar(hash) {
         PENDING: AVSLA_PENDING,
     });
 }
+
+export function selectErUnderOppfolging(state) {
+    return state.data.situasjon.data.underOppfolging;
+}
