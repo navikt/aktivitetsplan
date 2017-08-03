@@ -7,7 +7,6 @@ import {
     Varsling,
     VarslingMedLenke,
 } from '../varslinger/varsel-alertstriper';
-import * as AppPT from '../../proptypes';
 import { settDigital } from './aktiver-digital-oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
 import { hentSituasjon } from '../situasjon/situasjon';
@@ -73,17 +72,10 @@ export class AktiverDigitalOppfolgingPure extends Component {
             reservertIKRR,
             doSettDigital,
             doHentSituasjon,
-            aktiverDigitalOppfolgingReducer,
-            situasjonReducer,
+            setterDigital,
+            lasterSituasjon,
+            settDigitalFeilet,
         } = this.props;
-
-        const setterDigital =
-            aktiverDigitalOppfolgingReducer.status === STATUS.PENDING ||
-            aktiverDigitalOppfolgingReducer.status === STATUS.RELOADING;
-
-        const lasterSituasjon =
-            situasjonReducer.status === STATUS.PENDING ||
-            situasjonReducer.status === STATUS.RELOADING;
 
         const ReservasjonDifiKnapp = () =>
             <HiddenIfHovedknapp
@@ -114,9 +106,7 @@ export class AktiverDigitalOppfolgingPure extends Component {
             <div className="sett-digital">
                 <AktiverDigitalOppfolgingVarsel
                     reservertIKRR={reservertIKRR}
-                    settDigitalFeilet={
-                        aktiverDigitalOppfolgingReducer.status === STATUS.ERROR
-                    }
+                    settDigitalFeilet={settDigitalFeilet}
                     harTrykketRefresh={this.state.harTrykketRefresh}
                 />
                 <ReservasjonDifiKnapp />
@@ -128,17 +118,37 @@ export class AktiverDigitalOppfolgingPure extends Component {
 
 AktiverDigitalOppfolgingPure.propTypes = {
     reservertIKRR: PT.bool.isRequired,
+    lasterSituasjon: PT.bool.isRequired,
+    setterDigital: PT.bool.isRequired,
+    settDigitalFeilet: PT.bool.isRequired,
     doSettDigital: PT.func.isRequired,
     doHentSituasjon: PT.func.isRequired,
-    aktiverDigitalOppfolgingReducer: AppPT.reducer.isRequired,
-    situasjonReducer: AppPT.reducer.isRequired,
 };
 
-const mapStateToProps = state => ({
-    reservertIKRR: selectReservasjonKRR(state),
-    situasjonReducer: selectSituasjonReducer(state),
-    aktiverDigitalOppfolgingReducer: state.data.aktiverDigitalOppfolging,
-});
+const mapStateToProps = state => {
+    const aktiverDigitalOppfolgingReducer = state.data.aktiverDigitalOppfolging;
+    const situasjonReducer = selectSituasjonReducer(state);
+
+    const aktiverDigitalOppfolgingStatus =
+        aktiverDigitalOppfolgingReducer.status;
+    const settDigitalFeilet = aktiverDigitalOppfolgingStatus === STATUS.ERROR;
+
+    const setterDigital =
+        aktiverDigitalOppfolgingStatus === STATUS.PENDING ||
+        aktiverDigitalOppfolgingStatus === STATUS.RELOADING;
+
+    const situasjonStatus = situasjonReducer.status;
+    const lasterSituasjon =
+        situasjonStatus === STATUS.PENDING ||
+        situasjonStatus === STATUS.RELOADING;
+
+    return {
+        reservertIKRR: selectReservasjonKRR(state),
+        settDigitalFeilet,
+        setterDigital,
+        lasterSituasjon,
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     doSettDigital: () => dispatch(settDigital()),
