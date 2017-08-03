@@ -10,6 +10,7 @@ import StillingAktivitet from './stilling/ny-aktivitet-stilling';
 import SokeavtaleAktivitet from './sokeavtale/ny-aktivitet-sokeavtale';
 import BehandlingAktivitet from './behandling/ny-aktivitet-behandling';
 import EgenAktivitet from './egen/ny-aktivitet-egen';
+import IJobbAktivitet from './ijobb/ny-aktivitet-ijobb';
 import { aktivitetRoute } from '../../../routing';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
@@ -72,6 +73,9 @@ function AktivitetFormContainer({
                         </Route>
                         <Route path={`${match.path}/egen`}>
                             <EgenAktivitet {...formProps} />
+                        </Route>
+                        <Route path={`${match.path}/ijobb`}>
+                            <IJobbAktivitet {...formProps} />
                         </Route>
                     </Switch>
                 </ModalContainer>

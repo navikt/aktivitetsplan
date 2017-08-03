@@ -45,6 +45,9 @@ class NyAktivitet extends Component {
                             <Lenkepanel href="/aktivitet/ny/behandling">
                                 <FormattedMessage id="ny-aktivitet-modal.medisinsk-behandling" />
                             </Lenkepanel>}
+                        <Lenkepanel href="/aktivitet/ny/ijobb">
+                            <FormattedMessage id="ny-aktivitet-modal.jobb-jeg-er-i" />
+                        </Lenkepanel>
                     </div>
                 </ModalHeader>
             </StandardModal>

@@ -19,12 +19,16 @@ import SokeavtaleAktivitetForm, {
 import BehandlingAktivitetForm, {
     formNavn as behandlingFormNavn,
 } from '../aktivitet-forms/behandling/aktivitet-behandling-form';
+import IJobbAktivitetForm, {
+    formNavn as ijobbFormNavn,
+} from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import history from '../../../history';
 import {
     EGEN_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
     BEHANDLING_AKTIVITET_TYPE,
+    IJOBB_AKTIVITET_TYPE,
 } from '../../../constant';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Versjonskonflikt from './versjonskonflikt';
@@ -79,6 +83,13 @@ function EndreAktivitet({
             case BEHANDLING_AKTIVITET_TYPE:
                 return (
                     <BehandlingAktivitetForm
+                        aktivitet={aktivitet}
+                        onSubmit={oppdater}
+                    />
+                );
+            case IJOBB_AKTIVITET_TYPE:
+                return (
+                    <IJobbAktivitetForm
                         aktivitet={aktivitet}
                         onSubmit={oppdater}
                     />
@@ -155,6 +166,7 @@ const mapStateToProps = (state, props) => {
         [EGEN_AKTIVITET_TYPE]: egenFormNavn,
         [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFormNavn,
         [BEHANDLING_AKTIVITET_TYPE]: behandlingFormNavn,
+        [IJOBB_AKTIVITET_TYPE]: ijobbFormNavn,
     }[aktivitet.type];
     return {
         aktivitet,
