@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
-import { selectErVeileder } from '../../../../felles-komponenter/identitet/identitet-selector';
+import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import OppdaterReferat from './oppdater-referat';
 import {
