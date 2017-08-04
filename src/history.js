@@ -8,12 +8,21 @@ const routerHistory = createBrowserHistory({
 
 function prependBasePath(fn) {
     return url => {
+        let path = '';
+        let search = '';
+
+        if (!(typeof url === 'string')) {
+            path = url.pathname;
+            search = url.search;
+        } else {
+            path = url;
+        }
         const fodselsnummer = getFodselsnummer();
         return fn.call(
             this,
             (fodselsnummer ? `/${fodselsnummer}` : '') +
-                (url.startsWith('/') ? '' : '/') +
-                url
+            (path.startsWith('/') ? '' : '/') +
+            path + search
         );
     };
 }
