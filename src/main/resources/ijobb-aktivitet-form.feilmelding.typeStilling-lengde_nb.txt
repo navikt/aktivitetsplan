@@ -1,0 +1,1 @@
+Type stilling kan ikke være lenger en {TITTEL_MAKS_LENGDE} tegn
