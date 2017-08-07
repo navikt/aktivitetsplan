@@ -5,28 +5,28 @@ import { withRouter } from 'react-router-dom';
 import * as AppPT from '../../proptypes';
 import VilkarModal from './vilkar-modal';
 import Vilkar from './vilkar';
-import { hentHistoriskeVilkar } from '../../ducks/historiske-vilkar';
+import { hentHistoriskeVilkar } from './historiske-vilkar';
+import {
+    selectHistoriskeVilkarStatus,
+    selectHistoriskVilkarMedGuid,
+} from './historiske-vilkar-selector';
 import { STATUS } from '../../ducks/utils';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { selectRouteParams } from '../../routing';
 
 class VilkarUtenHistorikkStoreConnector extends Component {
     componentDidMount() {
-        if (this.props.historiskeVilkar.status === STATUS.NOT_STARTED) {
-            this.props.doHentHistoriskeVilkar();
+        const { historiskeVilkarStatus, doHentHistoriskeVilkar } = this.props;
+        if (historiskeVilkarStatus === STATUS.NOT_STARTED) {
+            doHentHistoriskeVilkar();
         }
     }
 
-    finnVilkar() {
-        const key = this.props.params.key;
-        return this.props.historiskeVilkar.data.find(
-            vilkar => vilkar.guid === key
-        );
-    }
-
     render() {
+        const { historiskeVilkarStatus, vilkar } = this.props;
         return (
-            <Innholdslaster avhengigheter={[this.props.historiskeVilkar]}>
-                <Vilkar vilkarListe={[this.finnVilkar()]} />
+            <Innholdslaster avhengigheter={[historiskeVilkarStatus]}>
+                <Vilkar vilkarListe={[vilkar]} />
             </Innholdslaster>
         );
     }
@@ -34,15 +34,13 @@ class VilkarUtenHistorikkStoreConnector extends Component {
 
 VilkarUtenHistorikkStoreConnector.propTypes = {
     doHentHistoriskeVilkar: PT.func.isRequired,
-    historiskeVilkar: PT.shape({
-        status: PT.string,
-        data: PT.arrayOf(AppPT.vilkar),
-    }).isRequired,
-    params: PT.shape({ key: PT.string }).isRequired,
+    historiskeVilkarStatus: PT.string.isRequired,
+    vilkar: AppPT.vilkar.isRequired,
 };
 
-const mapStateToProps = state => ({
-    historiskeVilkar: state.data.historiskeVilkar,
+const mapStateToProps = (state, props) => ({
+    historiskeVilkarStatus: selectHistoriskeVilkarStatus(state),
+    vilkar: selectHistoriskVilkarMedGuid(state, selectRouteParams(props).key),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -50,8 +48,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default VilkarModal(
-    connect(mapStateToProps, mapDispatchToProps)(
-        withRouter(VilkarUtenHistorikkStoreConnector)
+    withRouter(
+        connect(mapStateToProps, mapDispatchToProps)(
+            VilkarUtenHistorikkStoreConnector
+        )
     ),
     {
         visTilbakeKnapp: true,

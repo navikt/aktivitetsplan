@@ -40,10 +40,13 @@ export const etikett = PT.shape({
     visningsTekst: PT.string,
 });
 
-export const reducer = PT.shape({
+export const slice = PT.shape({
     status: PT.string,
     data: PT.any,
 });
+
+// deprecated - slice er riktig terminologi
+export const reducer = slice;
 
 export const reducerArray = PT.shape({
     status: PT.string,

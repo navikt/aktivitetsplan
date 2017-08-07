@@ -7,7 +7,7 @@ import { validForm, rules } from 'react-redux-form-validation';
 import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 import { autobind } from '../../../utils';
 import { STATUS } from '../../../ducks/utils';
-import { oppdaterMal } from '../../../ducks/mal';
+import { oppdaterMal } from '../../../moduler/mal/mal-reducer';
 
 const MALTEKST_MAKSLENGDE = 500;
 
