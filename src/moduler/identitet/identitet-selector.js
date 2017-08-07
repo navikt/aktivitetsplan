@@ -5,3 +5,7 @@ export function selectIdentitetReducer(state) {
 export function selectErVeileder(state) {
     return selectIdentitetReducer(state).data.erVeileder;
 }
+
+export function selectErBruker(state) {
+    return selectIdentitetReducer(state).data.erBruker;
+}

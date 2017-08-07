@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { hentMal } from '../../../ducks/mal';
+import { hentMal } from '../../../moduler/mal/mal-reducer';
 import * as AppPT from '../../../proptypes';
 import AktivitetsmalForm from './aktivitetsmal-form';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
