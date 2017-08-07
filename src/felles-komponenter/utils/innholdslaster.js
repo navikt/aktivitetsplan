@@ -6,7 +6,9 @@ import { STATUS } from '../../ducks/utils';
 
 const array = value => (Array.isArray(value) ? value : [value]);
 const harStatus = (...status) => element =>
-    array(status).includes(element.status);
+    array(status).includes(
+        typeof element === 'string' ? element : element.status
+    );
 const noenHarFeil = avhengigheter =>
     avhengigheter && avhengigheter.some(harStatus(STATUS.ERROR));
 const alleLastet = avhengigheter =>
@@ -68,7 +70,7 @@ Innholdslaster.defaultProps = {
 };
 
 Innholdslaster.propTypes = {
-    avhengigheter: PT.arrayOf(PT.object).isRequired,
+    avhengigheter: PT.arrayOf(PT.oneOfType([PT.object, PT.string])).isRequired,
     children: PT.oneOfType([PT.node, PT.func]).isRequired,
     className: PT.string,
     spinnerStorrelse: PT.string,
