@@ -19,13 +19,19 @@ function NavigasjonslinjeMeny({
     brukerErIArbeidsliste,
     harVeilederTilgang,
 }) {
+    const urlParams = location.search;
+
     const InnstillingerKnapp = () =>
         <button
             className="navigasjonslinje-meny__innstillinger-knapp"
             aria-label={intl.formatMessage({
                 id: 'navigasjon.innstillinger',
             })}
-            onClick={() => history.push('/innstillinger')}
+            onClick={() =>
+                history.push({
+                    pathname: '/innstillinger',
+                    urlParams,
+                })}
         />;
 
     const LeggTilLenke = HiddenIfHOC(() =>

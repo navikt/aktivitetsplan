@@ -9,12 +9,15 @@ const routerHistory = createBrowserHistory({
 function prependBasePath(fn) {
     return url => {
         const fodselsnummer = getFodselsnummer();
-        return fn.call(
-            this,
-            (fodselsnummer ? `/${fodselsnummer}` : '') +
-                (url.startsWith('/') ? '' : '/') +
-                url
-        );
+        const path = url.pathname ? url.pathname : url;
+        const urlParams = url.urlParams ? url.urlParams : null;
+        return fn.call(this, {
+            pathname:
+                (fodselsnummer ? `/${fodselsnummer}` : '') +
+                (path.startsWith('/') ? '' : '/') +
+                path,
+            search: urlParams,
+        });
     };
 }
 
