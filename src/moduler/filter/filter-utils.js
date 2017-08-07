@@ -2,7 +2,7 @@ function erAktivtFilter(filterData) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
 
-function datoErIPeriode(dato, state) {
+export function datoErIPeriode(dato, state) {
     const stateData = state.data;
     const filter = stateData.filter;
 

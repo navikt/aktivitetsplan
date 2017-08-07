@@ -1,5 +1,5 @@
-import * as Api from '../moduler/situasjon/situasjon-api';
-import { doThenDispatch, STATUS } from './utils';
+import * as Api from '../situasjon/situasjon-api';
+import { doThenDispatch, STATUS } from '../../ducks/utils';
 
 export const GJELDENDE_OK = 'mal/OK';
 export const GJELDENDE_FEILET = 'mal/FEILET';

@@ -1,4 +1,5 @@
 import PT from 'prop-types';
+import { STATUS } from './ducks/utils';
 
 export const aktivitet = PT.shape({
     tittel: PT.string,
@@ -40,15 +41,21 @@ export const etikett = PT.shape({
     visningsTekst: PT.string,
 });
 
-export const reducer = PT.shape({
+export const slice = PT.shape({
     status: PT.string,
     data: PT.any,
 });
 
+// deprecated - slice er riktig terminologi
+export const reducer = slice;
+
+// deprecated - se over
 export const reducerArray = PT.shape({
     status: PT.string,
     data: PT.arrayOf(PT.object),
 });
+
+export const status = PT.oneOf(Object.keys(STATUS));
 
 export const avslutningStatus = PT.shape({
     kanAvslutte: PT.bool,
