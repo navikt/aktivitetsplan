@@ -27,10 +27,11 @@ function NavigasjonslinjeMeny({
             aria-label={intl.formatMessage({
                 id: 'navigasjon.innstillinger',
             })}
-            onClick={() => history.push({
-                pathname: '/innstillinger',
-                search: urlParams
-            })}
+            onClick={() =>
+                history.push({
+                    pathname: '/innstillinger',
+                    urlParams,
+                })}
         />;
 
     const LeggTilLenke = HiddenIfHOC(() =>

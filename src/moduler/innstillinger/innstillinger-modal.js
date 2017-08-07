@@ -16,10 +16,11 @@ function InnstillingerModal({ motpart, children, navnPaMotpart }) {
     return (
         <Modal
             isOpen
-            onRequestClose={() =>  history.push({
-                pathname: '/',
-                search: urlParams
-            })}
+            onRequestClose={() =>
+                history.push({
+                    pathname: '/',
+                    urlParams,
+                })}
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
