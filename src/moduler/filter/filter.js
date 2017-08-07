@@ -27,6 +27,7 @@ import {
     selectAktivitetTyperFilter,
     selectHistoriskPeriode,
 } from './filter-selector';
+import { selectAlleHistoriskeVilkar } from '../vilkar/historiske-vilkar-selector';
 
 function TypeFilter({
     harAktivitetTyper,
@@ -236,9 +237,12 @@ Filter.propTypes = {
 
 function tidligsteHendelsesTidspunktMellom(fra, til, state) {
     const stateData = state.data;
-    const tidspunkter = stateData.aktiviteter.data
-        .map(a => a.opprettetDato)
-        .concat(stateData.dialog.data.map(d => d.opprettetDato));
+    const aktivitetDatoer = stateData.aktiviteter.data.map(
+        a => a.opprettetDato
+    );
+    const dialogDatoer = stateData.dialog.data.map(d => d.opprettetDato);
+    const vilkarDatoer = selectAlleHistoriskeVilkar(state).map(v => v.dato);
+    const tidspunkter = [].concat(aktivitetDatoer, dialogDatoer, vilkarDatoer);
     return tidspunkter.filter(t => t > fra && t < til).sort()[0] || til;
 }
 
