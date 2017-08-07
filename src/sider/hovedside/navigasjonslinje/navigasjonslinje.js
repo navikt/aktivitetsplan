@@ -19,6 +19,9 @@ import {
     selectArbeidslisteReducer,
 } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../../proptypes';
+import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
+import { selectErBruker } from '../../../moduler/identitet/identitet-duck';
+import { selectViserInneverendePeriode } from '../../../moduler/filter/filter-reducer';
 
 const NavigasjonsElement = ({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -66,17 +69,16 @@ class Navigasjonslinje extends Component {
     render() {
         const {
             antallUlesteDialoger,
-            privatModus,
-            underOppfolging,
             arbeidslisteReducer,
             harVeilederTilgang,
+            disabled,
         } = this.props;
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement
                     sti="/dialog"
                     tekstId="navigasjon.dialog"
-                    disabled={privatModus || underOppfolging === false}
+                    disabled={disabled}
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
@@ -85,12 +87,12 @@ class Navigasjonslinje extends Component {
                 <NavigasjonsElement
                     sti="/mal"
                     tekstId="aktivitetsmal.mitt-mal"
-                    disabled={privatModus}
+                    disabled={disabled}
                 />
                 <NavigasjonsElement
                     sti="/vilkar"
                     tekstId="navigasjon.vilkar"
-                    disabled={privatModus}
+                    disabled={disabled}
                 />
                 <Feature name="navigasjonslinjemeny">
                     <Innholdslaster
@@ -110,21 +112,20 @@ class Navigasjonslinje extends Component {
 Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
-    privatModus: PT.bool.isRequired,
-    underOppfolging: PT.bool,
     doHentArbeidsliste: PT.func.isRequired,
     arbeidslisteReducer: AppPT.reducer.isRequired,
     harVeilederTilgang: PT.bool,
+    disabled: PT.bool.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
-    underOppfolging: undefined,
     harVeilederTilgang: false,
 };
 
 const mapStateToProps = state => {
     const stateData = state.data;
     const dialog = stateData.dialog.data;
+    const underOppfolging = selectErUnderOppfolging(state);
     return {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)
@@ -133,6 +134,10 @@ const mapStateToProps = state => {
         underOppfolging: stateData.situasjon.data.underOppfolging,
         arbeidslisteReducer: selectArbeidslisteReducer(state),
         harVeilederTilgang: selectHarVeilederTilgang(state),
+        disabled:
+            !selectErBruker(state) &&
+            underOppfolging === false &&
+            selectViserInneverendePeriode(state),
     };
 };
 

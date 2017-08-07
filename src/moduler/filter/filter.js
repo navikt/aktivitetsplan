@@ -15,6 +15,7 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Dato from '../../felles-komponenter/dato';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
+import { selectAlleHistoriskeVilkar } from '../vilkar/historiske-vilkar-selector';
 
 function pluckUnique(collection, propertyName) {
     return Object.keys(groupBy(collection, propertyName)).filter(
@@ -228,9 +229,12 @@ Filter.propTypes = {
 
 function tidligsteHendelsesTidspunktMellom(fra, til, state) {
     const stateData = state.data;
-    const tidspunkter = stateData.aktiviteter.data
-        .map(a => a.opprettetDato)
-        .concat(stateData.dialog.data.map(d => d.opprettetDato));
+    const aktivitetDatoer = stateData.aktiviteter.data.map(
+        a => a.opprettetDato
+    );
+    const dialogDatoer = stateData.dialog.data.map(d => d.opprettetDato);
+    const vilkarDatoer = selectAlleHistoriskeVilkar(state).map(v => v.dato);
+    const tidspunkter = [].concat(aktivitetDatoer, dialogDatoer, vilkarDatoer);
     return tidspunkter.filter(t => t > fra && t < til).sort()[0] || til;
 }
 

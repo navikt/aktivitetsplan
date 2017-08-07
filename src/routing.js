@@ -75,5 +75,7 @@ Routing.propTypes = {
 export default withRouter(Routing);
 
 export function selectRouteParams(props) {
-    return props.match.params;
+    const match = props && props.match;
+    const params = match && match.params;
+    return params || {};
 }
