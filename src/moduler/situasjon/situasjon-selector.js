@@ -5,3 +5,9 @@ export const selectReservasjonKRR = state =>
 export function selectOppfolgingsPerioder(state) {
     return selectSituasjonReducer(state).data.oppfolgingsPerioder;
 }
+
+export function selectErUnderOppfolging(state) {
+    return state.data.situasjon.data.underOppfolging;
+}
+
+export default {};

@@ -50,3 +50,11 @@ export function velgHistoriskPeriode(historiskPeriode) {
         data: historiskPeriode,
     };
 }
+
+export function selectViserInneverendePeriode(state) {
+    return !state.data.filter.historiskPeriode;
+}
+
+export function selectViserHistoriskPeriode(state) {
+    return !selectViserInneverendePeriode(state);
+}
