@@ -6,16 +6,19 @@ const routerHistory = createBrowserHistory({
     basename: CONTEXT_PATH,
 });
 
+function nyURLHarQueryString(url) {
+    return url.indexOf("?") !== -1;
+}
+
 function prependBasePath(fn) {
     return url => {
         const fodselsnummer = getFodselsnummer();
-        const path = url.pathname ? url.pathname : url;
-        const urlParams = url.urlParams ? url.urlParams : null;
+        const urlParams = nyURLHarQueryString(url)? '' : location.search;
         return fn.call(this, {
             pathname:
                 (fodselsnummer ? `/${fodselsnummer}` : '') +
-                (path.startsWith('/') ? '' : '/') +
-                path,
+                (url.startsWith('/') ? '' : '/') +
+                url,
             search: urlParams,
         });
     };
