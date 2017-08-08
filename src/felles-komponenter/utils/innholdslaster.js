@@ -1,8 +1,8 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
+import HiddenIfHOC from '../../felles-komponenter/hidden-if/hidden-if';
 
 const array = value => (Array.isArray(value) ? value : [value]);
 const harStatus = (...status) => element =>
@@ -15,28 +15,7 @@ const alleLastet = avhengigheter =>
     avhengigheter &&
     avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
 
-const tekster = {
-    feilmeldingTittel: {
-        id: 'innholdslaster.feilmelding.tittel',
-        defaultMessage: 'Oops, det skjedde noe feil...',
-    },
-    feilmeldingTekst: {
-        id: 'innholdslaster.feilmelding.tekst',
-        defaultMessage:
-            'Det skjedde en feil ved innlastning av data fra baksystemene',
-    },
-};
-
-// eslint-disable-next-line react/prop-types
-const Feilmelding = ({ tittel, children }) =>
-    <div>
-        <h1>
-            {tittel}
-        </h1>
-        <p>
-            {children}
-        </p>
-    </div>;
+const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
 function Innholdslaster({
     avhengigheter,
@@ -51,22 +30,18 @@ function Innholdslaster({
         return children;
     }
 
-    if (noenHarFeil(avhengigheter)) {
-        return (
-            <Feilmelding
-                className={className}
-                tittel={<FormattedMessage {...tekster.feilmeldingTittel} />}
-            >
-                <FormattedMessage {...tekster.feilmeldingTekst} />
-            </Feilmelding>
-        );
-    }
-
-    return <Spinner className={className} storrelse={spinnerStorrelse} />;
+    return (
+        <HiddenIfSpinner
+            hidden={noenHarFeil(avhengigheter)}
+            className={className}
+            storrelse={spinnerStorrelse}
+        />
+    );
 }
 
 Innholdslaster.defaultProps = {
     spinnerStorrelse: 'xl',
+    className: '',
 };
 
 Innholdslaster.propTypes = {

@@ -6,9 +6,8 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 import Bilde from 'nav-react-design/dist/bilde';
 import { hentIdentitet } from '../../identitet/identitet-duck';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import leggTilAktivitetSvg from '../../../img/legg-til-aktivitet-illustrasjon.svg';
-import StandardModal from '../../../felles-komponenter/modal/modal-standard';
+import Modal from '../../../felles-komponenter/modal/modal';
 
 class NyAktivitet extends Component {
     componentDidMount() {
@@ -18,55 +17,53 @@ class NyAktivitet extends Component {
     render() {
         const { erVeileder } = this.props;
         return (
-            <StandardModal name="nyAktivitetModal">
-                <ModalHeader className="ny-aktivitet-modal side-innhold">
-                    <div className="ny-aktivitet-modal__header">
-                        <Bilde
-                            className="ny-aktivitet-modal__bilde"
-                            src={leggTilAktivitetSvg}
-                            alt="Dekorativ illustrajon"
-                        />
-                        <Innholdstittel className="ny-aktivitet-tittel">
-                            <FormattedMessage id="ny-aktivitet-modal.tittel" />
-                        </Innholdstittel>
-                    </div>
-                    <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
-                        <Lenkepanel href="/aktivitet/ny/stilling">
-                            <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
-                        </Lenkepanel>
-                        <Lenkepanel
-                            href="/aktivitet/ny/mote"
-                            hidden={!erVeileder}
-                        >
-                            <FormattedMessage id="ny-aktivitet-modal.mote" />
-                        </Lenkepanel>
-                        <Lenkepanel href="/aktivitet/ny/egen">
-                            <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
-                        </Lenkepanel>
-                        <Lenkepanel
-                            href="/aktivitet/ny/sokeavtale"
-                            hidden={!erVeileder}
-                        >
-                            <FormattedMessage id="ny-aktivitet-modal.sokeavtale-aktivitet" />
-                        </Lenkepanel>
-                        <Lenkepanel
-                            href="/aktivitet/ny/behandling"
-                            hidden={!erVeileder}
-                        >
-                            <FormattedMessage id="ny-aktivitet-modal.medisinsk-behandling" />
-                        </Lenkepanel>
-                        <Lenkepanel
-                            href="/aktivitet/ny/samtalereferat"
-                            hidden={!erVeileder}
-                        >
-                            <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
-                        </Lenkepanel>
-                        <Lenkepanel href="/aktivitet/ny/ijobb">
-                            <FormattedMessage id="ny-aktivitet-modal.jobb-jeg-er-i" />
-                        </Lenkepanel>
-                    </div>
-                </ModalHeader>
-            </StandardModal>
+            <Modal
+                contentLabel="ny-aktivitet-modal"
+                contentClass="ny-aktivitet-visning"
+            >
+                <div className="ny-aktivitet-modal__header">
+                    <Bilde
+                        className="ny-aktivitet-modal__bilde"
+                        src={leggTilAktivitetSvg}
+                        alt="Dekorativ illustrajon"
+                    />
+                    <Innholdstittel className="ny-aktivitet-tittel">
+                        <FormattedMessage id="ny-aktivitet-modal.tittel" />
+                    </Innholdstittel>
+                </div>
+                <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
+                    <Lenkepanel href="/aktivitet/ny/stilling">
+                        <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
+                    </Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/mote" hidden={!erVeileder}>
+                        <FormattedMessage id="ny-aktivitet-modal.mote" />
+                    </Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/egen">
+                        <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
+                    </Lenkepanel>
+                    <Lenkepanel
+                        href="/aktivitet/ny/sokeavtale"
+                        hidden={!erVeileder}
+                    >
+                        <FormattedMessage id="ny-aktivitet-modal.sokeavtale-aktivitet" />
+                    </Lenkepanel>
+                    <Lenkepanel
+                        href="/aktivitet/ny/behandling"
+                        hidden={!erVeileder}
+                    >
+                        <FormattedMessage id="ny-aktivitet-modal.medisinsk-behandling" />
+                    </Lenkepanel>
+                    <Lenkepanel
+                        href="/aktivitet/ny/samtalereferat"
+                        hidden={!erVeileder}
+                    >
+                        <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
+                    </Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/ijobb">
+                        <FormattedMessage id="ny-aktivitet-modal.jobb-jeg-er-i" />
+                    </Lenkepanel>
+                </div>
+            </Modal>
         );
     }
 }

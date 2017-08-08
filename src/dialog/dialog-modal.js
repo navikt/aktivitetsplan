@@ -179,7 +179,6 @@ HoyreKolonne.defaultProps = {
 function DialogModalContent(props) {
     return (
         <div className="dialog-modal__wrapper">
-            <Header {...props} />
             <div className="dialog-modal__innhold">
                 <VenstreKolonne {...props} />
                 <HoyreKolonne {...props} />
@@ -226,7 +225,9 @@ class DialogModal extends Component {
 
     render() {
         const state = this.state || {};
-        const { harNyDialogEllerValgtDialog } = this.props;
+        const props = this.props;
+
+        const { harNyDialogEllerValgtDialog } = props;
         const className = classNames('dialog-modal', {
             'dialog-modal--vis': state.vis,
             'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -242,12 +243,12 @@ class DialogModal extends Component {
                     className={className}
                     closeButton={false}
                     onRequestClose={lukkModal}
-                    isOpen
                     contentClass="aktivitetsplanfs dialog-modal__content"
+                    header={<Header navigerTil={this.navigerTil} {...props} />}
                 >
                     <DialogModalContent
                         navigerTil={this.navigerTil}
-                        {...this.props}
+                        {...props}
                     />
                 </Modal>
             </div>

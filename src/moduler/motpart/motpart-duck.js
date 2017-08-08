@@ -12,8 +12,10 @@ export const OPPDATER_MOTPART = 'motpart/oppdater';
 const initalState = {
     data: {},
     status: STATUS.NOT_STARTED,
+    feil: {},
 };
 
+const feildata = { id: 0, feilmelding: 'kunne ikke hente person' };
 // Reducer
 export default function reducer(state = initalState, action) {
     const data = action.data;
@@ -28,7 +30,7 @@ export default function reducer(state = initalState, action) {
                 },
             };
         case HENTING_AV_PERSON_FEILET:
-            return { ...state, status: STATUS.ERROR };
+            return { ...state, status: STATUS.ERROR, feil: feildata };
         default:
             return state;
     }

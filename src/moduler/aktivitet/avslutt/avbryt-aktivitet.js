@@ -7,13 +7,14 @@ import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
 import VisAdvarsel from './vis-advarsel';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
-import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 import history from '../../../history';
 import { selectRouteParams } from '../../../routing';
 import {
     selectAktivitetListeStatus,
     selectAktivitetMedId,
 } from '../aktivitetliste-selector';
+import Modal from '../../../felles-komponenter/modal/modal';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 
 const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
     const begrunnelse = (
@@ -44,9 +45,12 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
     );
 
     return (
-        <StandardModal name="BegrunnelseModal">
+        <Modal
+            header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
+            contentLabel="avbryt-aktivitet"
+        >
             {valgtAktivitet.avtalt ? begrunnelse : advarsel}
-        </StandardModal>
+        </Modal>
     );
 };
 

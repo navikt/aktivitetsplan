@@ -14,8 +14,32 @@ import {
 import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
 import Aktivitetvinsing from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import StandardModal from '../../../felles-komponenter/modal/modal-standard';
+import Modal from '../../../felles-komponenter/modal/modal';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+
+function aktivitetvisningHeader(valgtAktivitet) {
+    if (!valgtAktivitet) {
+        return null;
+    }
+
+    const aktivitetErLaast =
+        valgtAktivitet.status === STATUS_FULLFOERT ||
+        valgtAktivitet.status === STATUS_AVBRUTT;
+
+    return (
+        <ModalHeader
+            normalTekstId="aktivitetvisning.header"
+            normalTekstValues={{
+                status: valgtAktivitet.status,
+                type: valgtAktivitet.type,
+            }}
+            className="side-innhold"
+            aria-labelledby="modal-aktivitetsvisning-header"
+            aktivitetErLaast={aktivitetErLaast}
+        />
+    );
+}
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
@@ -56,16 +80,17 @@ class AktivitetvisningContainer extends Component {
                 this.aktivitetErEtterOppfolgingUtgang(valgtAktivitet));
 
         return (
-            <StandardModal name="aktivitetsvisningModal">
-                <Innholdslaster
-                    avhengigheter={[aktiviteter, arenaAktiviteter, situasjon]}
-                >
-                    <Aktivitetvinsing
-                        aktivitet={valgtAktivitet}
-                        tillatSletting={slettingErTillatt}
-                    />
-                </Innholdslaster>
-            </StandardModal>
+            <Modal
+                contentLabel="aktivitetsvisning-modal"
+                contentClass="aktivitetsvisning"
+                avhengigheter={[aktiviteter, arenaAktiviteter]}
+                header={aktivitetvisningHeader(valgtAktivitet)}
+            >
+                <Aktivitetvinsing
+                    aktivitet={valgtAktivitet}
+                    tillatSletting={slettingErTillatt}
+                />
+            </Modal>
         );
     }
 }

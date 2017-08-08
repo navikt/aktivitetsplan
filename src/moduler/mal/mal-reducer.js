@@ -29,6 +29,14 @@ export default function reducer(state = initalState, action) {
             return { ...state, status: STATUS.ERROR, gjeldende: action.data };
         case GJELDENDE_OK:
             return { ...state, status: STATUS.OK, gjeldende: action.data };
+        case GJELDENDE_PENDING:
+            return {
+                ...state,
+                status:
+                    state.status === STATUS.NOT_STARTED
+                        ? STATUS.PENDING
+                        : STATUS.RELOADING,
+            };
         case LISTE_FEILET:
             return { ...state, status: STATUS.ERROR, liste: action.data };
         case LISTE_OK:

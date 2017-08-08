@@ -6,7 +6,6 @@ import * as AppPT from '../../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
-import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 import history from '../../../history';
 import VisAdvarsel from './vis-advarsel';
 import { selectRouteParams } from '../../../routing';
@@ -14,6 +13,8 @@ import {
     selectAktivitetListeStatus,
     selectAktivitetMedId,
 } from '../aktivitetliste-selector';
+import Modal from '../../../felles-komponenter/modal/modal';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 
 const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     const headerTekst = (
@@ -50,9 +51,12 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     );
 
     return (
-        <StandardModal name="FullfortModal">
+        <Modal
+            header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
+            contentLabel="fullfor-aktivitet"
+        >
             {valgtAktivitet.avtalt ? begrunnelse : advarsel}
-        </StandardModal>
+        </Modal>
     );
 };
 

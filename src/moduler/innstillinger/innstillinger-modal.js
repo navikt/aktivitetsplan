@@ -15,7 +15,9 @@ function InnstillingerModal({ motpart, children, navnPaMotpart }) {
 
     return (
         <Modal
-            isOpen
+            header={
+                <ModalHeader tilbakeTekstId="innstillinger.modal.tilbake" />
+            }
             onRequestClose={() =>
                 history.push({
                     pathname: '/',
@@ -24,7 +26,6 @@ function InnstillingerModal({ motpart, children, navnPaMotpart }) {
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
-            <ModalHeader tilbakeTekstId="innstillinger.modal.tilbake" />
             <article className="innstillinger__container">
                 <Innholdslaster
                     avhengigheter={[motpart]}

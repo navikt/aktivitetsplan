@@ -9,8 +9,6 @@ import {
     selectMotpartReducer,
     selectNavnPaMotpart,
 } from '../motpart/motpart-selector';
-import StandardModal from '../../felles-komponenter/modal/modal-standard';
-import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import RedigerArbeidsliste from './arbeidsliste-rediger';
 import FjernArbeidsliste from './arbeidsliste-fjern';
@@ -18,6 +16,7 @@ import LeggTilArbeidsliste from './arbeidsliste-legg-til';
 import { selectArbeidslisteReducer } from './arbeidsliste-selector';
 import { slettArbeidsliste } from './arbeidsliste-reducer';
 import { LUKK_MODAL } from '../../ducks/modal';
+import Modal from '../../felles-komponenter/modal/modal';
 
 function ArbeidslisteContainer({
     navnPaMotpart,
@@ -34,8 +33,7 @@ function ArbeidslisteContainer({
     };
 
     return (
-        <StandardModal name="arbeidslisteModal">
-            <ModalHeader />
+        <Modal contentLabel="arbeidsliste-modal" contentClass="arbeidsliste">
             <Innholdslaster
                 avhengigheter={[arbeidslisteReducer, motpart]}
                 className="arbeidsliste__spinner"
@@ -56,7 +54,7 @@ function ArbeidslisteContainer({
                     </Route>
                 </Switch>
             </Innholdslaster>
-        </StandardModal>
+        </Modal>
     );
 }
 
