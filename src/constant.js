@@ -35,3 +35,5 @@ export const TRANSAKSJON_TYPE_OPPRETTET = 'OPPRETTET';
 
 export const JOBB_STATUS_HELTID = 'HELTID';
 export const JOBB_STATUS_DELTID = 'DELTID';
+
+export const TELEFON_KANAL = 'TELEFON';

@@ -14,12 +14,14 @@ import {
     SAMTALEREFERAT_TYPE,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_PLANLAGT,
+    TELEFON_KANAL,
 } from '../../../../constant';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
+import { dateToISODate } from '../../../../utils';
 
 const TITTEL_MAKS_LENGDE = 255;
 const REFERAT_MAKS_LENGDE = 5000;
@@ -33,6 +35,11 @@ const pakrevdFraDato = pakrevd('samtalereferat-form.feilmelding.pakrevd-dato');
 const begrensetReferatLengde = maksLengde(
     'samtalereferat-form.feilmelding.referat-lengde',
     REFERAT_MAKS_LENGDE
+);
+const pakrevdKanal = pakrevd('samtalereferat-form.feilmelding.pakrevd-kanal');
+
+const pakrevdReferat = pakrevd(
+    'samtalereferat-form.feilmelding.pakrevd-referat'
 );
 
 function MoteAktivitetForm({ handleSubmit, errorSummary, lagrer }) {
@@ -95,7 +102,8 @@ const MoteAktivitetReduxForm = validForm({
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
-        referat: [begrensetReferatLengde],
+        kanal: [pakrevdKanal],
+        referat: [pakrevdReferat, begrensetReferatLengde],
     },
 })(MoteAktivitetForm);
 
@@ -104,8 +112,9 @@ const mapStateToProps = (state, props) => {
     return {
         initialValues: {
             status: STATUS_PLANLAGT,
-            erReferatPublisert: true,
+            fraDato: dateToISODate(new Date()),
             avtalt: true,
+            kanal: TELEFON_KANAL,
             ...aktivitet,
         },
     };

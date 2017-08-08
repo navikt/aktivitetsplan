@@ -7,6 +7,7 @@ import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
 function getTellerTekst(antallTegn, maxLength, visTellerFra) {
     const tegnIgjen = maxLength - antallTegn;
     const tegnForMange = antallTegn - maxLength;
+    const tellerFra = visTellerFra || maxLength / 10;
 
     if (tegnForMange > 0) {
         return (
@@ -15,7 +16,7 @@ function getTellerTekst(antallTegn, maxLength, visTellerFra) {
                 values={{ antall: `${tegnForMange}` }}
             />
         );
-    } else if (visTellerFra === 0 || visTellerFra >= tegnIgjen) {
+    } else if (tegnIgjen <= tellerFra) {
         return (
             <FormattedMessage
                 id="tekstfelt.antalltegn.flere-igjen"

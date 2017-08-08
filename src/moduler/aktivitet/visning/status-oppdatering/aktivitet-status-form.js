@@ -7,7 +7,6 @@ import Bilde from 'nav-react-design/dist/bilde';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import * as statuser from '../../../../constant';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import hengelasSVG from '../../../../img/hengelas.svg';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
@@ -21,6 +20,14 @@ import {
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import { validerReferatPublisert } from '../../aktivitet-util';
+import {
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_PLANLAGT,
+    STATUS_GJENNOMFOERT,
+    INGEN_VALGT,
+} from '../../../../constant';
 
 const leggTilHengelas = (tekst, altTekst) =>
     <span>
@@ -38,6 +45,10 @@ const MAKS_LENGDE = 255;
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);
 
+function statusKreverBegrunnelse(status) {
+    return status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
+}
+
 function AktivitetStatusForm(props) {
     const {
         aktivitet,
@@ -51,10 +62,7 @@ function AktivitetStatusForm(props) {
     } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
     const hengelasAlt = intl.formatMessage({ id: 'hengelas-icon-alt' });
-
-    const visAdvarsel =
-        valgtAktivitetStatus === statuser.STATUS_FULLFOERT ||
-        valgtAktivitetStatus === statuser.STATUS_AVBRUTT;
+    const visAdvarsel = statusKreverBegrunnelse(valgtAktivitetStatus);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -65,8 +73,8 @@ function AktivitetStatusForm(props) {
                         label={
                             <FormattedMessage id="aktivitetstavle.brukerErInteressert" />
                         }
-                        value={statuser.STATUS_BRUKER_ER_INTRESSERT}
-                        id={`id--${statuser.STATUS_BRUKER_ER_INTRESSERT}`}
+                        value={STATUS_BRUKER_ER_INTRESSERT}
+                        id={`id--${STATUS_BRUKER_ER_INTRESSERT}`}
                         disabled={disableStatusEndring || lasterData}
                     />
                     <Radio
@@ -74,8 +82,8 @@ function AktivitetStatusForm(props) {
                         label={
                             <FormattedMessage id="aktivitetstavle.planlagt" />
                         }
-                        value={statuser.STATUS_PLANLAGT}
-                        id={`id--${statuser.STATUS_PLANLAGT}`}
+                        value={STATUS_PLANLAGT}
+                        id={`id--${STATUS_PLANLAGT}`}
                         disabled={disableStatusEndring || lasterData}
                     />
                     <Radio
@@ -83,8 +91,8 @@ function AktivitetStatusForm(props) {
                         label={
                             <FormattedMessage id="aktivitetstavle.gjennomfoert" />
                         }
-                        value={statuser.STATUS_GJENNOMFOERT}
-                        id={`id--${statuser.STATUS_GJENNOMFOERT}`}
+                        value={STATUS_GJENNOMFOERT}
+                        id={`id--${STATUS_GJENNOMFOERT}`}
                         disabled={disableStatusEndring || lasterData}
                     />
                 </div>
@@ -95,8 +103,8 @@ function AktivitetStatusForm(props) {
                             <FormattedMessage id="aktivitetstavle.fullfoert" />,
                             hengelasAlt
                         )}
-                        value={statuser.STATUS_FULLFOERT}
-                        id={`id--${statuser.STATUS_FULLFOERT}`}
+                        value={STATUS_FULLFOERT}
+                        id={`id--${STATUS_FULLFOERT}`}
                         disabled={disableStatusEndring || lasterData}
                     />
                     <Radio
@@ -105,8 +113,8 @@ function AktivitetStatusForm(props) {
                             <FormattedMessage id="aktivitetstavle.avbrutt" />,
                             hengelasAlt
                         )}
-                        value={statuser.STATUS_AVBRUTT}
-                        id={`id--${statuser.STATUS_AVBRUTT}`}
+                        value={STATUS_AVBRUTT}
+                        id={`id--${STATUS_AVBRUTT}`}
                         disabled={disableStatusEndring || lasterData}
                     />
                 </div>
@@ -150,8 +158,10 @@ const ikkeForLangBegrunnelse = maksLengde(
 const harBegrunnelse = pakrevd(
     'opprett-begrunnelse.melding.feilmelding.for-kort'
 );
-const harBegrunnelseHvisAvtalt = (begrunnelse, props) =>
-    props.aktivitet.avtalt && harBegrunnelse(begrunnelse, props);
+const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
+    props.aktivitet.avtalt &&
+    statusKreverBegrunnelse(props.values.aktivitetstatus) &&
+    harBegrunnelse(begrunnelse, props);
 
 const OppdaterReduxForm = validForm({
     form: AKTIVITET_STATUS_FORM_NAME,
@@ -159,13 +169,16 @@ const OppdaterReduxForm = validForm({
         <FormattedMessage id="aktivitetstatus.form.feiloppsummering-tittel" />
     ),
     validate: {
-        begrunnelse: [ikkeForLangBegrunnelse, harBegrunnelseHvisAvtalt],
+        begrunnelse: [
+            ikkeForLangBegrunnelse,
+            harBegrunnelseHvisAvtaltOgPakrevdForStatus,
+        ],
         erReferatPublisert: validerReferatPublisert(),
     },
 })(AktivitetStatusForm);
 
 AktivitetStatusForm.defaultProps = {
-    valgtAktivitetStatus: statuser.INGEN_VALGT,
+    valgtAktivitetStatus: INGEN_VALGT,
     aktivitetDataStatus: STATUS.NOT_STARTED,
 };
 
