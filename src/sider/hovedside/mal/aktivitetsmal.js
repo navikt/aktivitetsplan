@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import {
     hentMal,
     hentMalListe,
@@ -15,6 +16,9 @@ import Identitet from '../../../moduler/identitet/identitet';
 import Accordion from '../../../felles-komponenter/accordion';
 import history from '../../../history';
 import AktivitetsmalModal from './aktivitetsmal-modal';
+import hiddenIf, {
+    div as HiddenIfDiv,
+} from '../../../felles-komponenter/hidden-if/hidden-if';
 import { HiddenIfHovedknapp } from '../../../felles-komponenter/hidden-if/hidden-if-knapper';
 import {
     selectGjeldendeMal,
@@ -24,6 +28,21 @@ import {
 import { selectViserHistoriskPeriode } from '../../../moduler/filter/filter-selector';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
+
+const ManglendeMalInformasjon = hiddenIf(({ historiskVisning }) => {
+    if (historiskVisning) {
+        return (
+            <AlertStripeInfoSolid>
+                <FormattedMessage id="aktivitetsmal.mangler-historisk-mal" />
+            </AlertStripeInfoSolid>
+        );
+    }
+    return (
+        <p>
+            <FormattedMessage id="aktivitetsmal.opprett-mal-tekst" />
+        </p>
+    );
+});
 
 function malListeVisning(malet) {
     return (
@@ -72,15 +91,16 @@ class AktivitetsMal extends Component {
         const malet = mal && mal.mal;
         const malOpprettet = !!malet;
         const historikkVises = this.state.visHistoriskeMal;
+        const historiskeMal = malListe.slice(1, malListe.length);
 
         return (
             <Innholdslaster avhengigheter={[malStatus]}>
                 <section className="aktivitetmal">
                     <div className="aktivitetmal__innhold">
-                        {!malOpprettet &&
-                            <p>
-                                <FormattedMessage id="aktivitetsmal.opprett-mal-tekst" />
-                            </p>}
+                        <ManglendeMalInformasjon
+                            hidden={malOpprettet}
+                            historiskVisning={historiskVisning}
+                        />
                         <Tekstomrade className="aktivitetmal__tekst">
                             {malet}
                         </Tekstomrade>
@@ -97,7 +117,7 @@ class AktivitetsMal extends Component {
                             />
                         </HiddenIfHovedknapp>
                     </div>
-                    <div>
+                    <HiddenIfDiv hidden={historiskeMal.length === 0}>
                         <hr className="aktivitetmal__delelinje" />
                         <div className="aktivitetmal__innhold">
                             <Accordion
@@ -109,12 +129,10 @@ class AktivitetsMal extends Component {
                                 apen={historikkVises}
                                 onClick={this.toggleHistoriskeMal}
                             >
-                                {malListe
-                                    .slice(1, malListe.length)
-                                    .map(m => malListeVisning(m))}
+                                {historiskeMal.map(m => malListeVisning(m))}
                             </Accordion>
                         </div>
-                    </div>
+                    </HiddenIfDiv>
                 </section>
             </Innholdslaster>
         );
