@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import ModalHeader from './modal-header';
 import history from '../../history';
 import Innholdslaster from '../utils/innholdslaster';
+import Feilmelding from '../../moduler/feilmelding/feilmelding';
 
 function Modal({
     header,
@@ -27,6 +28,7 @@ function Modal({
             <Innholdslaster avhengigheter={avhengigheter}>
                 <div>
                     {header}
+                    <Feilmelding />
                     {children}
                 </div>
             </Innholdslaster>
