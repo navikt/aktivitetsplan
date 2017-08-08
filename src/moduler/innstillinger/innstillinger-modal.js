@@ -11,11 +11,10 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
 function InnstillingerModal({ motpart, children, navnPaMotpart }) {
-
     return (
         <Modal
             isOpen
-            onRequestClose={() => history.push( '/')}
+            onRequestClose={() => history.push('/')}
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >

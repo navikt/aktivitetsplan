@@ -7,13 +7,13 @@ const routerHistory = createBrowserHistory({
 });
 
 function nyURLHarQueryString(url) {
-    return url.indexOf("?") !== -1;
+    return url.indexOf('?') !== -1;
 }
 
 function prependBasePath(fn) {
     return url => {
         const fodselsnummer = getFodselsnummer();
-        const urlParams = nyURLHarQueryString(url)? '' : location.search;
+        const urlParams = nyURLHarQueryString(url) ? '' : location.search;
         return fn.call(this, {
             pathname:
                 (fodselsnummer ? `/${fodselsnummer}` : '') +
