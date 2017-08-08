@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
+import * as AppPT from '../../proptypes';
 
 const array = value => (Array.isArray(value) ? value : [value]);
 const harStatus = (...status) => element =>
@@ -70,7 +71,7 @@ Innholdslaster.defaultProps = {
 };
 
 Innholdslaster.propTypes = {
-    avhengigheter: PT.arrayOf(PT.oneOfType([PT.object, PT.string])).isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     children: PT.oneOfType([PT.node, PT.func]).isRequired,
     className: PT.string,
     spinnerStorrelse: PT.string,

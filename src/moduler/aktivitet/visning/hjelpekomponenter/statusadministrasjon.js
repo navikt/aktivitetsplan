@@ -9,8 +9,8 @@ import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 
-function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, paramsId }) {
-    const { status, type } = valgtAktivitet;
+function Statusadministrasjon({ valgtAktivitet, arenaAktivitet }) {
+    const { status, type, id } = valgtAktivitet;
 
     const visAdministreresAvVeileder = (
         <div className="aktivitetvisning__underseksjon">
@@ -24,7 +24,7 @@ function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, paramsId }) {
         <div>
             <OppdaterAktivitetStatus
                 status={status}
-                paramsId={paramsId}
+                aktivitetId={id}
                 className="aktivitetvisning__underseksjon"
             />
 
@@ -32,7 +32,7 @@ function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, paramsId }) {
                 <hr className="aktivitetvisning__delelinje" />
                 <OppdaterAktivitetEtikett
                     status={status}
-                    paramsId={paramsId}
+                    paramsId={id}
                     className="aktivitetvisning__underseksjon"
                 />
             </VisibleIfDiv>

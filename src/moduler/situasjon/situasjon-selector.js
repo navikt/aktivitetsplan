@@ -7,7 +7,15 @@ export function selectOppfolgingsPerioder(state) {
 }
 
 export function selectErUnderOppfolging(state) {
-    return state.data.situasjon.data.underOppfolging;
+    return selectSituasjonReducer(state).data.underOppfolging;
+}
+
+export function selectOppfolgingUtgang(state) {
+    return selectSituasjonReducer(state).data.oppfolgingUtgang;
+}
+
+export function selectSituasjonStatus(state) {
+    return selectSituasjonReducer(state).status;
 }
 
 export default {};

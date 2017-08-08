@@ -16,53 +16,53 @@ import Aktivitetvinsing from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import StandardModal from '../../../felles-komponenter/modal/modal-standard';
+import {
+    selectAktivitetListeStatus,
+    selectAktivitetMedId,
+    selectKanEndreAktivitetDetaljer,
+} from '../aktivitetliste-selector';
+import {
+    selectErUnderOppfolging,
+    selectOppfolgingUtgang,
+    selectSituasjonStatus,
+} from '../../situasjon/situasjon-selector';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
-        if (!isNaN(this.props.match.params.id)) {
-            this.props.doHentAktivitet(this.props.match.params.id);
+        const {
+            valgtAktivitet,
+            doHentAktivitet,
+            doHentArenaAktiviteter,
+            doHentAktiviteter,
+            doFjernForrigeAktiveAktivitetId,
+        } = this.props;
+        if (valgtAktivitet) {
+            doHentAktivitet(valgtAktivitet.id);
         }
-        this.props.doHentArenaAktiviteter();
-        this.props.doHentAktiviteter();
-        this.props.doFjernForrigeAktiveAktivitetId();
+        doHentArenaAktiviteter();
+        doHentAktiviteter();
+        doFjernForrigeAktiveAktivitetId();
     }
 
     componentWillUnmount() {
-        this.props.doSettForrigeAktiveAktivitetId(this.props.match.params.id);
-    }
-
-    aktivitetErEtterOppfolgingUtgang(valgtAktivitet) {
-        return valgtAktivitet
-            ? moment(this.props.situasjon.data.oppfolgingUtgang).isAfter(
-                  valgtAktivitet.opprettetDato
-              )
-            : false;
+        const { valgtAktivitet, doSettForrigeAktiveAktivitetId } = this.props;
+        doSettForrigeAktiveAktivitetId(valgtAktivitet.id);
     }
 
     render() {
-        const { match, aktiviteter, arenaAktiviteter, situasjon } = this.props;
-        const { id } = match.params;
-
-        const alleAktiviter = aktiviteter.data.concat(arenaAktiviteter.data);
-        const valgtAktivitet = alleAktiviter.find(
-            aktivitet => aktivitet.id === id
-        );
-
-        const slettingErTillatt =
-            valgtAktivitet &&
-            !valgtAktivitet.historisk &&
-            TILLAT_SLETTING &&
-            (!situasjon.data.underOppfolging ||
-                this.aktivitetErEtterOppfolgingUtgang(valgtAktivitet));
-
+        const {
+            avhengigheter,
+            valgtAktivitet,
+            slettingErTillatt,
+            tillatEndring,
+        } = this.props;
         return (
             <StandardModal name="aktivitetsvisningModal">
-                <Innholdslaster
-                    avhengigheter={[aktiviteter, arenaAktiviteter, situasjon]}
-                >
+                <Innholdslaster avhengigheter={avhengigheter}>
                     <Aktivitetvinsing
                         aktivitet={valgtAktivitet}
                         tillatSletting={slettingErTillatt}
+                        tillatEndring={tillatEndring}
                     />
                 </Innholdslaster>
             </StandardModal>
@@ -71,10 +71,10 @@ class AktivitetvisningContainer extends Component {
 }
 
 AktivitetvisningContainer.propTypes = {
-    match: PT.shape({ params: PT.shape({ id: PT.string }) }).isRequired,
-    situasjon: AppPT.situasjon.isRequired,
-    aktiviteter: PT.oneOfType([PT.arrayOf(AppPT.aktivitet), AppPT.aktivitet]),
-    arenaAktiviteter: PT.oneOfType([PT.object, PT.arrayOf(PT.object)]),
+    valgtAktivitet: AppPT.aktivitet.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    tillatEndring: PT.bool.isRequired,
+    slettingErTillatt: PT.bool.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
@@ -87,11 +87,34 @@ AktivitetvisningContainer.defaultProps = {
     arenaAktiviteter: [],
 };
 
-const mapStateToProps = state => ({
-    situasjon: state.data.situasjon,
-    aktiviteter: state.data.aktiviteter,
-    arenaAktiviteter: state.data.arenaAktiviteter,
-});
+const mapStateToProps = (state, props) => {
+    const { match } = props;
+    const { id } = match.params;
+
+    const valgtAktivitet = selectAktivitetMedId(state, id);
+
+    const aktivitetErEtterOppfolgingUtgang = valgtAktivitet
+        ? moment(selectOppfolgingUtgang(state)).isAfter(
+              valgtAktivitet.opprettetDato
+          )
+        : false;
+
+    const slettingErTillatt =
+        valgtAktivitet &&
+        !valgtAktivitet.historisk &&
+        TILLAT_SLETTING &&
+        (!selectErUnderOppfolging(state) || aktivitetErEtterOppfolgingUtgang);
+
+    return {
+        avhengigheter: [
+            selectSituasjonStatus(state),
+            selectAktivitetListeStatus(state),
+        ],
+        valgtAktivitet,
+        tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
+        slettingErTillatt,
+    };
+};
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
@@ -105,6 +128,6 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    withRouter(AktivitetvisningContainer)
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(AktivitetvisningContainer)
 );

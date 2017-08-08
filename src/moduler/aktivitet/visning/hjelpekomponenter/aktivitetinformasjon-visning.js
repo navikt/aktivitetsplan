@@ -17,13 +17,12 @@ import AktivitetEtikett from '../../../../felles-komponenter/aktivitet-etikett';
 import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
 
-function AktivitetinformasjonVisning({ valgtAktivitet, arenaAktivitet }) {
-    const { tittel, type, avtalt, etikett, status, historisk } = valgtAktivitet;
-
-    const tillattEndring =
-        !historisk &&
-        (avtalt !== true || !!TILLAT_SET_AVTALT) &&
-        (status !== STATUS_FULLFOERT && status !== STATUS_AVBRUTT);
+function AktivitetinformasjonVisning({
+    valgtAktivitet,
+    arenaAktivitet,
+    tillatEndring,
+}) {
+    const { tittel, type, avtalt, etikett } = valgtAktivitet;
 
     const gaTilEndreAktivitet = () =>
         history.push(endreAktivitetRoute(valgtAktivitet.id));
@@ -56,7 +55,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, arenaAktivitet }) {
                     valgtAktivitet={valgtAktivitet}
                 />
 
-                <VisibleIfDiv visible={tillattEndring && !arenaAktivitet}>
+                <VisibleIfDiv visible={tillatEndring && !arenaAktivitet}>
                     <Hovedknapp
                         onClick={gaTilEndreAktivitet}
                         className="knapp-liten modal-footer__knapp"
@@ -73,6 +72,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, arenaAktivitet }) {
 AktivitetinformasjonVisning.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     arenaAktivitet: PT.bool.isRequired,
+    tillatEndring: PT.bool.isRequired,
 };
 
 export default AktivitetinformasjonVisning;
