@@ -67,4 +67,22 @@ describe('innholdslaster', () => {
 
         expect(wrapper.find('Feilmelding')).to.exist; // eslint-disable-line no-unused-expressions
     });
+
+    it('Takler både slices og statuser', () => {
+        const wrapper = mount(
+            <IntlProvider>
+                <Innholdslaster
+                    avhengigheter={[
+                        { status: STATUS.OK },
+                        STATUS.ERROR,
+                        { status: STATUS.OK },
+                    ]}
+                >
+                    Children
+                </Innholdslaster>
+            </IntlProvider>
+        );
+
+        expect(wrapper.find('Feilmelding')).to.exist; // eslint-disable-line no-unused-expressions
+    });
 });

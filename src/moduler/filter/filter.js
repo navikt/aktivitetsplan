@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Checkbox, Radio } from 'nav-frontend-skjema';
-import { groupBy, identity } from 'lodash';
 import {
     toggleAktivitetsType,
     toggleAktivitetsEtikett,
@@ -15,12 +14,20 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Dato from '../../felles-komponenter/dato';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
-
-function pluckUnique(collection, propertyName) {
-    return Object.keys(groupBy(collection, propertyName)).filter(
-        key => key !== 'null'
-    );
-}
+import {
+    selectAktivitetListeReducer,
+    selectAlleAktiviter,
+} from '../aktivitet/aktivitetliste-selector';
+import {
+    selectOppfolgingsPerioder,
+    selectSituasjonReducer,
+} from '../situasjon/situasjon-selector';
+import {
+    selectAktivitetEtiketterFilter,
+    selectAktivitetTyperFilter,
+    selectHistoriskPeriode,
+} from './filter-selector';
+import { selectAlleHistoriskeVilkar } from '../vilkar/historiske-vilkar-selector';
 
 function TypeFilter({
     harAktivitetTyper,
@@ -32,8 +39,9 @@ function TypeFilter({
             <Undertittel>
                 <FormattedMessage id="filter.aktivitet.type.tittel" />
             </Undertittel>
-            {aktivitetTyper.map(aktivitetType =>
+            {Object.keys(aktivitetTyper).map(aktivitetType =>
                 <Checkbox
+                    key={aktivitetType}
                     label={
                         <FormattedMessage
                             id={`aktivitet.type.${aktivitetType}`.toLowerCase()}
@@ -49,7 +57,7 @@ function TypeFilter({
 
 TypeFilter.propTypes = {
     harAktivitetTyper: PT.bool.isRequired,
-    aktivitetTyper: PT.arrayOf(PT.string).isRequired,
+    aktivitetTyper: PT.object.isRequired,
     doToggleAktivitetsType: PT.func.isRequired,
 };
 
@@ -63,8 +71,9 @@ function EtikettFilter({
             <Undertittel>
                 <FormattedMessage id="filter.aktivitet.etikett.tittel" />
             </Undertittel>
-            {aktivitetEtiketter.map(aktivitetEtikett =>
+            {Object.keys(aktivitetEtiketter).map(aktivitetEtikett =>
                 <Checkbox
+                    key={aktivitetEtikett}
                     label={
                         <FormattedMessage id={`etikett.${aktivitetEtikett}`} />
                     }
@@ -78,8 +87,26 @@ function EtikettFilter({
 
 EtikettFilter.propTypes = {
     harAktivitetEtiketter: PT.bool.isRequired,
-    aktivitetEtiketter: PT.arrayOf(PT.string).isRequired,
+    aktivitetEtiketter: PT.object.isRequired,
     doToggleAktivitetsEtikett: PT.func.isRequired,
+};
+
+function PeriodeLabel({ historiskPeriode }) {
+    return (
+        <div>
+            <Dato>
+                {historiskPeriode.fra}
+            </Dato>
+            <span> - </span>
+            <Dato>
+                {historiskPeriode.til}
+            </Dato>
+        </div>
+    );
+}
+
+PeriodeLabel.propTypes = {
+    historiskPeriode: AppPT.oppfolgingsPeriode.isRequired,
 };
 
 function PeriodeFilter({
@@ -102,24 +129,16 @@ function PeriodeFilter({
             {historiskePerioder.map(t => {
                 const id = t.id;
                 return (
-                    <Radio
-                        label={
-                            <div>
-                                <Dato>
-                                    {t.fra}
-                                </Dato>
-                                <span> - </span>
-                                <Dato>
-                                    {t.til}
-                                </Dato>
-                            </div>
-                        }
-                        name={id}
-                        onChange={() => doVelgHistoriskPeriode(t)}
-                        checked={
-                            !!historiskPeriode && historiskPeriode.id === id
-                        }
-                    />
+                    <div key={id}>
+                        <Radio
+                            label={<PeriodeLabel historiskPeriode={t} />}
+                            name={id}
+                            onChange={() => doVelgHistoriskPeriode(t)}
+                            checked={
+                                !!historiskPeriode && historiskPeriode.id === id
+                            }
+                        />
+                    </div>
                 );
             })}
         </VisibleIfDiv>
@@ -138,9 +157,7 @@ PeriodeFilter.defaultProps = {
 };
 
 function Filter({
-    aktiviteterReducer,
-    arenaAktiviteterReducer,
-    situasjonReducer,
+    avhengigheter,
     harAktivitetTyper,
     aktivitetTyper,
     harAktivitetEtiketter,
@@ -164,13 +181,7 @@ function Filter({
             <FormattedMessage id="filter.tittel">
                 {tittel =>
                     <Dropdown name={tittel}>
-                        <Innholdslaster
-                            avhengigheter={[
-                                aktiviteterReducer,
-                                arenaAktiviteterReducer,
-                                situasjonReducer,
-                            ]}
-                        >
+                        <Innholdslaster avhengigheter={avhengigheter}>
                             <div className="filter__container">
                                 <TypeFilter
                                     harAktivitetTyper={harAktivitetTyper}
@@ -211,13 +222,11 @@ Filter.defaultProps = {
 };
 
 Filter.propTypes = {
-    aktiviteterReducer: AppPT.reducer.isRequired,
-    arenaAktiviteterReducer: AppPT.reducer.isRequired,
-    situasjonReducer: AppPT.reducer.isRequired,
+    avhengigheter: PT.arrayOf(AppPT.reducer).isRequired,
     harAktivitetTyper: PT.bool.isRequired,
-    aktivitetTyper: PT.arrayOf(PT.string).isRequired,
+    aktivitetTyper: PT.object.isRequired,
     harAktivitetEtiketter: PT.bool.isRequired,
-    aktivitetEtiketter: PT.arrayOf(PT.string).isRequired,
+    aktivitetEtiketter: PT.object.isRequired,
     harHistoriskePerioder: PT.bool.isRequired,
     historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
     historiskPeriode: AppPT.oppfolgingsPeriode,
@@ -228,24 +237,20 @@ Filter.propTypes = {
 
 function tidligsteHendelsesTidspunktMellom(fra, til, state) {
     const stateData = state.data;
-    const tidspunkter = stateData.aktiviteter.data
-        .map(a => a.opprettetDato)
-        .concat(stateData.dialog.data.map(d => d.opprettetDato));
+    const aktivitetDatoer = stateData.aktiviteter.data.map(
+        a => a.opprettetDato
+    );
+    const dialogDatoer = stateData.dialog.data.map(d => d.opprettetDato);
+    const vilkarDatoer = selectAlleHistoriskeVilkar(state).map(v => v.dato);
+    const tidspunkter = [].concat(aktivitetDatoer, dialogDatoer, vilkarDatoer);
     return tidspunkter.filter(t => t > fra && t < til).sort()[0] || til;
 }
 
 const mapStateToProps = state => {
-    const stateData = state.data;
-    const aktiviteterReducer = stateData.aktiviteter;
-    const situasjonReducer = stateData.situasjon;
-    const arenaAktiviteterReducer = stateData.arenaAktiviteter;
-    const aktiviteter = aktiviteterReducer.data.concat(
-        arenaAktiviteterReducer.data
-    );
+    const aktiviteter = selectAlleAktiviter(state);
 
-    const oppfolgingsPerioder = situasjonReducer.data.oppfolgingsPerioder || [];
     let fraGrense = '';
-    const historiskePerioder = oppfolgingsPerioder
+    const historiskePerioder = selectOppfolgingsPerioder(state)
         .map(p => p.sluttDato)
         .sort()
         .map(sluttDato => {
@@ -263,19 +268,34 @@ const mapStateToProps = state => {
         })
         .reverse();
 
-    const aktivitetTyper = pluckUnique(aktiviteter, 'type');
-    const aktivitetEtiketter = pluckUnique(aktiviteter, 'etikett', identity);
+    const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
+    const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
+        const type = aktivitet.type;
+        typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
+        return typer;
+    }, {});
+
+    const aktivitetEtiketterFilter = selectAktivitetEtiketterFilter(state);
+    const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
+        const etikett = aktivitet.etikett;
+        if (etikett) {
+            etiketter[etikett] = aktivitetEtiketterFilter[etikett]; // eslint-disable-line no-param-reassign
+        }
+        return etiketter;
+    }, {});
+
     return {
-        aktiviteterReducer,
-        arenaAktiviteterReducer,
-        situasjonReducer,
+        avhengigheter: [
+            selectAktivitetListeReducer(state),
+            selectSituasjonReducer(state),
+        ],
         historiskePerioder,
-        historiskPeriode: stateData.filter.historiskPeriode,
+        historiskPeriode: selectHistoriskPeriode(state),
         harHistoriskePerioder: historiskePerioder.length > 0,
         aktivitetTyper,
-        harAktivitetTyper: aktivitetTyper.length > 1,
+        harAktivitetTyper: Object.keys(aktivitetTyper).length > 1,
         aktivitetEtiketter,
-        harAktivitetEtiketter: aktivitetEtiketter.length > 1,
+        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length > 1,
     };
 };
 

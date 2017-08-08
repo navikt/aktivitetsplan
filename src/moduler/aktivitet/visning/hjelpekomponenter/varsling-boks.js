@@ -5,16 +5,16 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import {
-    selectErVeileder,
-    selectIdentitetReducer,
-} from '../../../../felles-komponenter/identitet/identitet-selector';
-import {
     selectDialogForAktivitetId,
     selectDialogReducer,
 } from '../../../dialog/dialog-selector';
 import * as AppPT from '../../../../proptypes';
 import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
 import { MOTE_TYPE } from '../../../../constant';
+import {
+    selectErVeileder,
+    selectIdentitetReducer,
+} from '../../../identitet/identitet-selector';
 
 function VarslingBoks({
     identitetReducer,

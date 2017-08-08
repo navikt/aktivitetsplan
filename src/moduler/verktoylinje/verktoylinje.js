@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filter/filter';
-import { erPrivatModus } from '../privat-modus/privat-modus-selector';
+import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
 
 function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
     return (
@@ -34,7 +34,7 @@ const mapStateToProps = state => {
     const historiskPeriode = state.data.filter.historiskPeriode;
     return {
         viserHistoriskPeriode: !!historiskPeriode,
-        privatModus: erPrivatModus(state),
+        privatModus: selectErPrivatModus(state),
     };
 };
 

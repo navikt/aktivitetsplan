@@ -1,6 +1,6 @@
 import { aggregerStatus } from '../../ducks/utils';
 
-export function erPrivatModus(state) {
+export function selectErPrivatModus(state) {
     const stateData = state.data;
     const situasjonReducer = stateData.situasjon;
     const identitetReducer = stateData.identitet;
@@ -11,7 +11,7 @@ export function erPrivatModus(state) {
     );
 }
 
-export function privatModusReducer(state) {
+export function selectPrivatModusReducer(state) {
     const stateData = state.data;
     const situasjonReducer = stateData.situasjon;
     const identitetReducer = stateData.identitet;
@@ -19,7 +19,7 @@ export function privatModusReducer(state) {
     return {
         status: aggregerStatus(situasjonReducer, identitetReducer),
         data: {
-            erPrivatModus: erPrivatModus(state),
+            erPrivatModus: selectErPrivatModus(state),
         },
     };
 }

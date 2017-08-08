@@ -5,14 +5,17 @@ import PT from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { hentMotpart, hentNavnPaMotpart } from '../motpart/motpart-selectors';
+import {
+    selectMotpartReducer,
+    selectNavnPaMotpart,
+} from '../motpart/motpart-selector';
 import StandardModal from '../../felles-komponenter/modal/modal-standard';
 import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import RedigerArbeidsliste from './arbeidsliste-rediger';
 import FjernArbeidsliste from './arbeidsliste-fjern';
 import LeggTilArbeidsliste from './arbeidsliste-legg-til';
-import { hentArbeidslisteReducer } from './arbeidsliste-selector';
+import { selectArbeidslisteReducer } from './arbeidsliste-selector';
 import { slettArbeidsliste } from './arbeidsliste-reducer';
 import { LUKK_MODAL } from '../../ducks/modal';
 
@@ -72,10 +75,10 @@ ArbeidslisteContainer.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    motpart: hentMotpart(state),
+    motpart: selectMotpartReducer(state),
     path: ownProps.match.path,
-    navnPaMotpart: hentNavnPaMotpart(state),
-    arbeidslisteReducer: hentArbeidslisteReducer(state),
+    navnPaMotpart: selectNavnPaMotpart(state),
+    arbeidslisteReducer: selectArbeidslisteReducer(state),
 });
 
 const mapDispatchToProps = dispatch =>

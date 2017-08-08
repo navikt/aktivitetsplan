@@ -1,6 +1,6 @@
-import * as Api from '../moduler/situasjon/situasjon-api';
-import { STATUS, doThenDispatch } from './utils';
-import { guid } from '../utils';
+import * as Api from '../situasjon/situasjon-api';
+import { STATUS, doThenDispatch } from '../../ducks/utils';
+import { guid } from '../../utils';
 
 // Actions
 export const HENT_HISTORISKE_PENDING = 'vilkar/hent-historiske/pending';

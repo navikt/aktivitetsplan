@@ -5,8 +5,8 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Bilde } from 'nav-react-design';
 import history from '../../../history';
 import {
-    erBrukerIArbeidsliste,
-    hentBrukerTilhorerVeileder,
+    selectErBrukerIArbeidsliste,
+    selectIsOppfolgendeVeileder,
 } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import ArbeidslisteSVG from './arbeidsliste.svg';
 import ArbeidslisteActiveSVG from './arbeidsliste-active.svg';
@@ -106,8 +106,8 @@ NavigasjonslinjeMeny.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    brukerErMin: hentBrukerTilhorerVeileder(state),
-    brukerErIArbeidsliste: erBrukerIArbeidsliste(state),
+    brukerErMin: selectIsOppfolgendeVeileder(state),
+    brukerErIArbeidsliste: selectErBrukerIArbeidsliste(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(NavigasjonslinjeMeny));
