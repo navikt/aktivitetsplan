@@ -1,18 +1,18 @@
 import React from 'react';
 import PT from 'prop-types';
 import { Container } from 'nav-frontend-grid';
-import Feil from './feil/feil';
 import Varslinger from '../../moduler/varslinger/varslinger';
 import Verktoylinje from '../../moduler/verktoylinje/verktoylinje';
 import AktivitetsTavle from './tavle/aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 import OppfolgingStatus from '../../moduler/oppfolging-status/oppfolging-status';
+import Feilmelding from '../../moduler/feilmelding/feilmelding';
 
 function Hovedside({ children }) {
     return (
         <div className="hovedside">
             <div className="hovedsideinnhold">
-                <Feil />
+                <Feilmelding className="container" />
                 <OppfolgingStatus>
                     <Varslinger />
                     <Container>

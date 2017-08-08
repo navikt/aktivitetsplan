@@ -1,4 +1,3 @@
-import { FEILTYPE } from './utils';
 import { OPPDATER_FEILET } from '../moduler/aktivitet/aktivitet-action-types';
 
 // Actions
@@ -9,13 +8,15 @@ const initalState = {
     visVersjonskonflikt: false,
 };
 
+const VERSJONSKONFLIKT = 'VERSJONSKONFLIKT';
+
 export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
         case OPPDATER_FEILET:
             return {
                 ...state,
-                visVersjonskonflikt: data.type === FEILTYPE.VERSJONSKONFLIKT,
+                visVersjonskonflikt: data.type === VERSJONSKONFLIKT,
             };
         case SKJUL_VERSJONSKONFLIKT:
             return { ...state, visVersjonskonflikt: false };

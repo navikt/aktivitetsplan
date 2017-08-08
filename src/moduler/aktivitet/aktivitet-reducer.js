@@ -54,7 +54,7 @@ export default function reducer(state = initalState, action) {
         case AT.HENTING_FEILET:
         case AT.HENT_AKTIVITET_FEILET:
         case AT.OPPDATER_FEILET:
-            return { ...state, status: STATUS.ERROR };
+            return { ...state, status: STATUS.ERROR, feil: data };
         case AT.SETT_FORRIGE_AKTIVE_AKTIVITET_ID:
             return { ...state, forrigeAktiveAktivitetId: action.id };
         case AT.FJERN_FORRIGE_AKTIVE_AKTIVITET_ID:

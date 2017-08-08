@@ -10,11 +10,6 @@ export const STATUS = {
     ERROR: 'ERROR',
 };
 
-export const FEILTYPE = {
-    VERSJONSKONFLIKT: 'VERSJONSKONFLIKT',
-    UKJENT: 'UKJENT',
-};
-
 const DEFAULT_CONFIG = {
     credentials: 'same-origin',
     redirect: 'manual', // ikke bli lurt av at backenden plutseling redirecter til login- eller feilside
