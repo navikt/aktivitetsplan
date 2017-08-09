@@ -11,7 +11,7 @@ export function selectErPrivatModus(state) {
     );
 }
 
-export function selectPrivatModusReducer(state) {
+export function selectPrivatModusSlice(state) {
     const stateData = state.data;
     const situasjonReducer = stateData.situasjon;
     const identitetReducer = stateData.identitet;
@@ -22,4 +22,8 @@ export function selectPrivatModusReducer(state) {
             erPrivatModus: selectErPrivatModus(state),
         },
     };
+}
+
+export function selectPrivatModusStatus(state) {
+    return selectPrivatModusSlice(state).status;
 }
