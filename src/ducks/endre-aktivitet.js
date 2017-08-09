@@ -17,6 +17,7 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 visVersjonskonflikt: data.type === VERSJONSKONFLIKT,
+                feil: data,
             };
         case SKJUL_VERSJONSKONFLIKT:
             return { ...state, visVersjonskonflikt: false };

@@ -24,15 +24,18 @@ class AvsluttOppfolgingProsess extends Component {
     }
 
     gaTilBekreft = url => {
-        this.props.doKanAvslutteOppfolging().then(response => {
-            this.setState({
-                kanAvslutte: response.data.avslutningStatus.kanAvslutte,
-                harSjekket: true,
-            });
-            if (this.state.kanAvslutte) {
-                history.push(url);
-            }
-        });
+        this.props
+            .doKanAvslutteOppfolging()
+            .then(response => {
+                this.setState({
+                    kanAvslutte: response.data.avslutningStatus.kanAvslutte,
+                    harSjekket: true,
+                });
+                if (this.state.kanAvslutte) {
+                    history.push(url);
+                }
+            })
+            .catch(history.push('innstillinger/avslutt/kvittering'));
     };
 
     render() {

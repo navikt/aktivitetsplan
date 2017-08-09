@@ -47,9 +47,10 @@ export default function reducer(state = initalState, action) {
         case AT.OPPRETT:
             return { ...state, status: STATUS.RELOADING };
         case AT.FLYTT_FAIL:
-            return nyStateMedOppdatertAktivitet(state, data.aktivitet, {
-                error: data.error,
-            });
+            return nyStateMedOppdatertAktivitet(
+                { ...state, status: STATUS.ERROR, feil: data },
+                data.aktivitet
+            );
         case AT.SLETT_FAIL:
         case AT.HENTING_FEILET:
         case AT.HENT_AKTIVITET_FEILET:

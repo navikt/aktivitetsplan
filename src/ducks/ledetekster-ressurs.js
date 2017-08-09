@@ -23,7 +23,7 @@ export default function reducer(state = initalState, action) {
                         : STATUS.RELOADING,
             };
         case FEILET:
-            return { ...state, status: STATUS.ERROR, data: action.data };
+            return { ...state, status: STATUS.ERROR, feil: action.data };
         case OK: {
             return { ...state, status: STATUS.OK, data: action.data };
         }

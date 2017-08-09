@@ -58,7 +58,7 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.ERROR,
-                data: action.data,
+                feil: action.data,
             };
         case HENT_SITUASJON_PENDING:
         case KAN_AVSLUTTE_PENDING:
