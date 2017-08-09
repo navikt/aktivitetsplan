@@ -12,7 +12,7 @@ import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { formaterDatoKortManed } from '../../utils';
 import {
     selectErPrivatModus,
-    selectPrivatModusReducer,
+    selectPrivatModusStatus,
 } from '../privat-modus/privat-modus-selector';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
@@ -63,10 +63,10 @@ VisibleIfElementFormattedMessage.propTypes = {
 
 const mapStateToProps = state => {
     const privatModus = selectErPrivatModus(state);
-    const privatModusReducer = selectPrivatModusReducer(state);
+    const privatModusStatus = selectPrivatModusStatus(state);
     return {
         privatModus,
-        privatModusReducer,
+        privatModusStatus,
     };
 };
 

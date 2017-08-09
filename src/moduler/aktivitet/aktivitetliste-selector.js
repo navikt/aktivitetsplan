@@ -1,6 +1,6 @@
 import { aggregerStatus } from '../../ducks/utils';
 import {
-    selectPrivatModusReducer,
+    selectPrivatModusSlice,
     selectErPrivatModus,
 } from '../privat-modus/privat-modus-selector';
 import { aktivitetFilter } from '../filter/filter-utils';
@@ -26,7 +26,7 @@ export function selectAktivitetMedId(state, aktivitetId) {
 export function selectAktivitetListeReducer(state) {
     return {
         status: aggregerStatus(
-            selectPrivatModusReducer(state),
+            selectPrivatModusSlice(state),
             state.aktiviteter,
             state.arenaAktiviteter
         ),
