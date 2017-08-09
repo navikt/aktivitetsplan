@@ -12,7 +12,6 @@ import {
     maksLengde,
     pakrevd,
 } from '../../../felles-komponenter/skjema/validering';
-import { validerReferatPublisert } from '../aktivitet-util';
 
 const MAKS_LENGDE = 255;
 
@@ -25,7 +24,7 @@ function BegrunnelseForFerdigAvtaltAktivitet({
 }) {
     return (
         <form onSubmit={handleSubmit}>
-            <ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />
+            <ModalHeader />
             <div className="aktivitetvisning__underseksjon">
                 <ModalContainer>
                     <Innholdstittel>
@@ -73,7 +72,6 @@ const BegrunnelseAktivitetReduxForm = validForm({
     ),
     validate: {
         begrunnelse: [ikkeForLangBegrunnelse, harBegrunnelse],
-        erReferatPublisert: validerReferatPublisert(),
     },
 })(BegrunnelseForFerdigAvtaltAktivitet);
 

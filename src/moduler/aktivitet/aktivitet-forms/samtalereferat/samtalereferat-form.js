@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import { validForm } from 'react-redux-form-validation';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet-form-utils';
 import VelgKanal from '../velg-kanal';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
@@ -42,7 +42,19 @@ const pakrevdReferat = pakrevd(
     'samtalereferat-form.feilmelding.pakrevd-referat'
 );
 
-function MoteAktivitetForm({ handleSubmit, errorSummary, lagrer }) {
+function MoteAktivitetForm({
+    handleSubmit,
+    errorSummary,
+    lagrer,
+    dispatch,
+    change,
+}) {
+    function lagreOgDel(e) {
+        e.preventDefault();
+        dispatch(change('erReferatPublisert', true));
+        setTimeout(() => handleSubmit(e));
+    }
+
     return (
         <form onSubmit={handleSubmit}>
             <div className="skjema-innlogget aktivitetskjema">
@@ -80,9 +92,17 @@ function MoteAktivitetForm({ handleSubmit, errorSummary, lagrer }) {
                 />
             </div>
             <div className="aktivitetskjema__lagre-knapp">
-                <Hovedknapp spinner={lagrer} disabled={lagrer}>
-                    <FormattedMessage id="aktivitet-form.lagre" />
+                <Hovedknapp
+                    spinner={lagrer}
+                    disabled={lagrer}
+                    onClick={lagreOgDel}
+                    className="samtalereferat-form__lagre-og-publiser"
+                >
+                    <FormattedMessage id="aktivitet-form.lagre-og-publiser" />
                 </Hovedknapp>
+                <Knapp spinner={lagrer} disabled={lagrer}>
+                    <FormattedMessage id="aktivitet-form.lagre" />
+                </Knapp>
             </div>
         </form>
     );
@@ -90,6 +110,8 @@ function MoteAktivitetForm({ handleSubmit, errorSummary, lagrer }) {
 
 MoteAktivitetForm.propTypes = {
     handleSubmit: PT.func.isRequired,
+    dispatch: PT.func.isRequired,
+    change: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
     lagrer: PT.bool.isRequired,
 };

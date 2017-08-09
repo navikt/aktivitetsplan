@@ -13,13 +13,17 @@ import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import { HiddenIfAlertStripeInfo } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import visibleIf from '../../../../hocs/visible-if';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
-import { validerReferatPublisert } from '../../aktivitet-util';
+import {
+    manglerPubliseringAvSamtaleReferat,
+    validerReferatPublisert,
+} from '../../aktivitet-util';
 import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
@@ -28,6 +32,7 @@ import {
     STATUS_GJENNOMFOERT,
     INGEN_VALGT,
 } from '../../../../constant';
+import { selectAktivitetListeStatus } from '../../aktivitetliste-selector';
 
 const leggTilHengelas = (tekst, altTekst) =>
     <span>
@@ -59,6 +64,7 @@ function AktivitetStatusForm(props) {
         intl,
         disableStatusEndring,
         errorSummary,
+        manglerReferatPublisering,
     } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
     const hengelasAlt = intl.formatMessage({ id: 'hengelas-icon-alt' });
@@ -105,7 +111,11 @@ function AktivitetStatusForm(props) {
                         )}
                         value={STATUS_FULLFOERT}
                         id={`id--${STATUS_FULLFOERT}`}
-                        disabled={disableStatusEndring || lasterData}
+                        disabled={
+                            disableStatusEndring ||
+                            lasterData ||
+                            manglerReferatPublisering
+                        }
                     />
                     <Radio
                         feltNavn="aktivitetstatus"
@@ -115,8 +125,18 @@ function AktivitetStatusForm(props) {
                         )}
                         value={STATUS_AVBRUTT}
                         id={`id--${STATUS_AVBRUTT}`}
-                        disabled={disableStatusEndring || lasterData}
+                        disabled={
+                            disableStatusEndring ||
+                            lasterData ||
+                            manglerReferatPublisering
+                        }
                     />
+
+                    <HiddenIfAlertStripeInfo
+                        hidden={!manglerReferatPublisering}
+                    >
+                        <FormattedMessage id="aktivitetstatus.mangler-publisering-av-samtalereferat" />
+                    </HiddenIfAlertStripeInfo>
                 </div>
             </div>
             <VisibleIfDiv className="row" visible={dirty}>
@@ -184,6 +204,7 @@ AktivitetStatusForm.defaultProps = {
 
 AktivitetStatusForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
+    manglerReferatPublisering: PT.bool.isRequired,
     handleSubmit: PT.func,
     dirty: PT.bool,
     valgtAktivitetStatus: PT.string,
@@ -193,17 +214,24 @@ AktivitetStatusForm.propTypes = {
     errorSummary: PT.node.isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-    aktivitetDataStatus: state.data.aktiviteter.status,
-    valgtAktivitetStatus: formValueSelector(AKTIVITET_STATUS_FORM_NAME)(
-        state,
-        'aktivitetstatus'
-    ),
-    initialValues: {
-        begrunnelse: props.aktivitet.avsluttetKommentar,
-        aktivitetstatus: props.aktivitet.status,
-    },
-});
+const mapStateToProps = (state, props) => {
+    const aktivitet = props.aktivitet;
+    const { status, avsluttetKommentar } = aktivitet;
+    return {
+        aktivitetDataStatus: selectAktivitetListeStatus(state),
+        valgtAktivitetStatus: formValueSelector(AKTIVITET_STATUS_FORM_NAME)(
+            state,
+            'aktivitetstatus'
+        ),
+        manglerReferatPublisering: manglerPubliseringAvSamtaleReferat(
+            aktivitet
+        ),
+        initialValues: {
+            begrunnelse: avsluttetKommentar,
+            aktivitetstatus: status,
+        },
+    };
+};
 
 const mapDispatchToProps = () => ({
     onSubmit: (values, dispatch, props) => {

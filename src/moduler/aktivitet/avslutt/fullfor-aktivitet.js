@@ -14,6 +14,7 @@ import {
     selectAktivitetListeStatus,
     selectAktivitetMedId,
 } from '../aktivitetliste-selector';
+import PubliserReferat from './publiser-referat';
 
 const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     const headerTekst = (
@@ -51,7 +52,9 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
 
     return (
         <StandardModal name="FullfortModal">
-            {valgtAktivitet.avtalt ? begrunnelse : advarsel}
+            <PubliserReferat aktivitet={valgtAktivitet}>
+                {valgtAktivitet.avtalt ? begrunnelse : advarsel}
+            </PubliserReferat>
         </StandardModal>
     );
 };

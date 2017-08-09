@@ -100,6 +100,7 @@ function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
                 <OppdaterReferatContainer
                     aktivitet={aktivitet}
                     className="aktivitetvisning__underseksjon"
+                    delelinje
                 />
 
                 <Statusadministrasjon

@@ -53,8 +53,7 @@ export function selectKanEndreAktivitetStatus(state, aktivitet) {
     const { historisk, status, type } = aktivitet;
     return (
         !historisk &&
-        (selectErVeileder(state) ||
-            (type !== MOTE_TYPE && type !== SAMTALEREFERAT_TYPE)) &&
+        (selectErVeileder(state) || type !== MOTE_TYPE) &&
         status !== STATUS_AVBRUTT &&
         status !== STATUS_FULLFOERT
     );
@@ -64,9 +63,10 @@ export function selectKanEndreAktivitetDetaljer(state, aktivitet) {
     if (!aktivitet) {
         return false;
     }
-    const { avtalt } = aktivitet;
+    const { avtalt, type } = aktivitet;
     return (
         selectKanEndreAktivitetStatus(state, aktivitet) &&
+        type !== SAMTALEREFERAT_TYPE &&
         (avtalt !== true || !!TILLAT_SET_AVTALT)
     );
 }
