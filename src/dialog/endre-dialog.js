@@ -1,84 +1,78 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
-import { oppdaterDialog } from '../ducks/dialog';
+import { FormattedMessage } from 'react-intl';
+import { Checkbox } from 'nav-frontend-skjema';
 import { hentIdentitet } from '../moduler/identitet/identitet-duck';
-import Checkbox from '../felles-komponenter/skjema/input/checkbox';
+import { oppdaterFerdigbehandlet, oppdaterVenterPaSvar } from '../ducks/dialog';
 import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
+import { selectErVeileder } from '../moduler/identitet/identitet-selector';
 
-class EndreDialogStatusForm extends Component {
+class EndreDialogStatus extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
     }
 
     render() {
-        const { kanEndreDialog, handleSubmit } = this.props;
+        const {
+            kanEndreDialog,
+            venterPaSvar,
+            ferdigBehandlet,
+            toggleFerdigbehandlet,
+            toggleVentePaSvar,
+        } = this.props;
         if (!kanEndreDialog) {
             return <div />;
         }
         return (
-            <form onSubmit={handleSubmit}>
+            <div>
                 <Checkbox
                     className="endre-dialog__sjekkboks"
-                    feltNavn="ferdigBehandlet"
-                    labelId="dialog.ferdigbehandlet"
-                    submitOnChange
+                    label={<FormattedMessage id="dialog.ferdigbehandlet" />}
+                    onChange={toggleFerdigbehandlet}
+                    checked={ferdigBehandlet}
                 />
                 <Checkbox
+                    label={<FormattedMessage id="dialog.venter-pa-svar" />}
                     className="endre-dialog__sjekkboks"
-                    feltNavn="venterPaSvar"
-                    labelId="dialog.venter-pa-svar"
-                    submitOnChange
+                    onChange={toggleVentePaSvar}
+                    checked={venterPaSvar}
                 />
-            </form>
+            </div>
         );
     }
 }
 
-EndreDialogStatusForm.propTypes = {
-    handleSubmit: PT.func.isRequired,
+EndreDialogStatus.propTypes = {
     doHentIdentitet: PT.func.isRequired,
+    toggleFerdigbehandlet: PT.func.isRequired,
+    toggleVentePaSvar: PT.func.isRequired,
     kanEndreDialog: PT.bool.isRequired,
+    venterPaSvar: PT.bool.isRequired,
+    ferdigBehandlet: PT.bool.isRequired,
 };
 
-const EndreDialogStatusReduxForm = reduxForm()(EndreDialogStatusForm);
+const mapStateToProps = state => ({
+    kanEndreDialog: selectErVeileder(state),
+});
 
-const mapStateToProps = (state, props) => {
+const mapDispatchToProps = (dispatch, props) => {
     const dialog = props.dialog;
+    const dialogId = dialog.id;
+    const ferdigBehandlet = dialog.ferdigBehandlet;
+    const venterPaSvar = dialog.venterPaSvar;
     return {
-        kanEndreDialog: state.data.identitet.data.erVeileder,
-        form: props.formNavn,
-        initialValues: {
-            id: dialog.id,
-            venterPaSvar: dialog.venterPaSvar,
-            ferdigBehandlet: dialog.ferdigBehandlet,
-        },
+        doHentIdentitet: () => dispatch(hentIdentitet()),
+        toggleFerdigbehandlet: () =>
+            dispatch(oppdaterFerdigbehandlet(dialogId, !ferdigBehandlet)),
+        toggleVentePaSvar: () =>
+            dispatch(oppdaterVenterPaSvar(dialogId, !venterPaSvar)),
+
+        venterPaSvar,
+        ferdigBehandlet,
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doHentIdentitet: () => dispatch(hentIdentitet()),
-    onSubmit: formData => {
-        dispatch(oppdaterDialog(formData));
-    },
-});
-
-const EndreDialogStatusReduxFormConnected = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(EndreDialogStatusReduxForm);
-
-function DynamiskEndreDialogStatusReduxFormConnected(props) {
-    // TODO setter key=formNavn for å tvinge unmount/mount hvis denne endrer seg.
-    // Dette burde kanskje kommet ut av boksen fra 'react-redux-form-validation' ?
-    return (
-        <EndreDialogStatusReduxFormConnected key={props.formNavn} {...props} />
-    );
-}
-
-DynamiskEndreDialogStatusReduxFormConnected.propTypes = {
-    formNavn: PT.string.isRequired,
-};
-
-export default hiddenIf(DynamiskEndreDialogStatusReduxFormConnected);
+export default hiddenIf(
+    connect(mapStateToProps, mapDispatchToProps)(EndreDialogStatus)
+);

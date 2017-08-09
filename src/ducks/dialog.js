@@ -105,10 +105,24 @@ export function markerDialogSomLest(dialogId) {
     });
 }
 
-export function oppdaterDialog(dialog) {
-    return doThenDispatch(() => Api.oppdaterDialog(dialog), {
-        OK: OPPDATER_DIALOG_OK,
-        FEILET: OPPDATER_DIALOG_FEILET,
-        PENDING: OPPDATER_DIALOG,
-    });
+export function oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet) {
+    return doThenDispatch(
+        () => Api.oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet),
+        {
+            OK: OPPDATER_DIALOG_OK,
+            FEILET: OPPDATER_DIALOG_FEILET,
+            PENDING: OPPDATER_DIALOG,
+        }
+    );
+}
+
+export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
+    return doThenDispatch(
+        () => Api.oppdaterVenterPaSvar(dialogId, venterPaSvar),
+        {
+            OK: OPPDATER_DIALOG_OK,
+            FEILET: OPPDATER_DIALOG_FEILET,
+            PENDING: OPPDATER_DIALOG,
+        }
+    );
 }
