@@ -47,17 +47,17 @@ export function formatterKlokkeslett(klokkeslett) {
     return formatterVarighet(klokkeslett);
 }
 
+export function manglerPubliseringAvSamtaleReferat(aktivitet) {
+    const { type, erReferatPublisert } = aktivitet;
+    return (
+        !type ||
+        ((type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) &&
+            !erReferatPublisert)
+    );
+}
+
 export function validerReferatPublisert() {
-    return (ignorerDenne, props) => {
-        const aktivitet = props.aktivitet || {};
-        const { type, erReferatPublisert } = aktivitet;
-        const manglerReferat =
-            !type ||
-            ((type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) &&
-                !erReferatPublisert);
-        return (
-            manglerReferat &&
-            <FormattedMessage id="referat.validering.ikke-publisert" />
-        );
-    };
+    return (ignorerDenne, props) =>
+        manglerPubliseringAvSamtaleReferat(props.aktivitet || {}) &&
+        <FormattedMessage id="referat.validering.ikke-publisert" />;
 }

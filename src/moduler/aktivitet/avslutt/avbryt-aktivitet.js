@@ -14,6 +14,7 @@ import {
     selectAktivitetListeStatus,
     selectAktivitetMedId,
 } from '../aktivitetliste-selector';
+import PubliserReferat from './publiser-referat';
 
 const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
     const begrunnelse = (
@@ -45,7 +46,9 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
 
     return (
         <StandardModal name="BegrunnelseModal">
-            {valgtAktivitet.avtalt ? begrunnelse : advarsel}
+            <PubliserReferat aktivitet={valgtAktivitet}>
+                {valgtAktivitet.avtalt ? begrunnelse : advarsel}
+            </PubliserReferat>
         </StandardModal>
     );
 };
