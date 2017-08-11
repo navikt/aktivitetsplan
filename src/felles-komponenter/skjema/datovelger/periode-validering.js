@@ -39,6 +39,7 @@ class InnerInputComponent extends Component {
                 <div
                     role="alert"
                     aria-live="assertive"
+                    aria-relevant="all"
                     className="skjemaelement__feilmelding"
                 >
                     <span>
