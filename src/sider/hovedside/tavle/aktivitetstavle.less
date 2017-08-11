@@ -82,39 +82,54 @@
     }
 }
 
-.aktivitet-apen .hjelpetekst__apneknapp span {
-    border-radius: 50%;
-    background: data-uri('@{aktivitetsplanPath}/img/help-circle.svg') no-repeat;
-    width: 24px;
-    height: 24px;
+.aktivitet-apen .hjelpetekst__apneknapp {
+    span {
+        border-radius: 50%;
+        background: data-uri('@{aktivitetsplanPath}/img/help-circle.svg')
+            no-repeat;
+        width: 24px;
+        height: 24px;
+    }
 
     &:hover {
-        background: data-uri('@{aktivitetsplanPath}/img/help-circle_hover.svg')
-            no-repeat;
+        span {
+            background: data-uri(
+                    '@{aktivitetsplanPath}/img/help-circle_hover.svg'
+                )
+                no-repeat;
+        }
     }
 }
 
-.aktivitet-last .hjelpetekst__apneknapp span {
-    background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg') no-repeat
-        center;
-    background-size: 83%;
-    width: 21px;
-    height: 28px;
+.aktivitet-last .hjelpetekst__apneknapp {
+    span {
+        background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg') no-repeat
+            center;
+        background-size: 83%;
+        width: 23px;
+        height: 26px;
+    }
 
     &:hover {
-        background: data-uri('@{aktivitetsplanPath}/img/hengelas_hover.svg')
-            no-repeat center;
-        background-size: 83%;
-        width: 21px;
-        height: 28px;
+        span {
+            background: data-uri('@{aktivitetsplanPath}/img/hengelas_hover.svg')
+                no-repeat center;
+            background-size: 83%;
+            width: 23px;
+            height: 26px;
+        }
     }
 
     &:active {
-        background: data-uri('@{aktivitetsplanPath}/img/hengelas_active.svg')
-            no-repeat center;
-        background-size: 83%;
-        width: 21px;
-        height: 28px;
+        span {
+            background: data-uri(
+                    '@{aktivitetsplanPath}/img/hengelas_active.svg'
+                )
+                no-repeat center;
+            background-size: 83%;
+            width: 23px;
+            height: 26px;
+        }
     }
 }
 
