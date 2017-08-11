@@ -1,1 +1,3 @@
-Hjelpetekst for spørsmålsikon (default ikon)
+Foreslått aktivitet: Legg inn jobbaktiviteter du har lyst til å gjøre eller som veilederen din foreslår. Når du har  bestemt deg for at dette vil du gjøre, kan du flytte aktiviteten til Planlagt.		
+Planlagt aktivitet: Her legger du en aktivitet som du har tenkt å gjennomføre. Når du faktisk starter aktiviteten, flytter du den til Gjennomføres.				
+Gjennomføres aktivitet: Her legger du en aktivitet som du gjennomfører nå. Hvis aktiviteten er ferdig, men du venter på et svar, kan den ligge her til svaret kommer. Da flytter du den til Fullført.				
