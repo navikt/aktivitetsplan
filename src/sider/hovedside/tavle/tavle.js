@@ -74,7 +74,7 @@ class Tavle extends Component {
         );
 
         return (
-            <section className={tavleClassname(className)}>
+            <section className={tavleClassname(className)} tabIndex="0">
                 {venstreKnapp}
                 <SprettendeScrollbars
                     renderTrackHorizontal={() => <div />}

@@ -10,6 +10,11 @@
     text-decoration: none;
     border-radius: @border-radius-base;
     padding: 0.75rem 1rem 1rem;
+
+    &:focus {
+        outline: 0;
+        box-shadow: 0 0 0 3px @orange-focus;
+    }
 }
 
 .aktivitetskort__type {
@@ -41,9 +46,5 @@
 
     &:hover {
         background-color: @color-background-hover;
-    }
-
-    &:focus {
-        border-color: @orange-focus;
     }
 }
