@@ -41,7 +41,7 @@ export const NavBar = ({
     return (
         <div role="toolbar">
             <button
-                tabIndex="-1"
+                tabIndex="0"
                 aria-label={intl.formatMessage({
                     id: 'datepicker.forrige-maaned',
                 })}
@@ -54,7 +54,7 @@ export const NavBar = ({
                 }}
             />
             <button
-                tabIndex="-1"
+                tabIndex="0"
                 aria-label={intl.formatMessage({
                     id: 'datepicker.neste-maaned',
                 })}
