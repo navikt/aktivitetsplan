@@ -1,1 +1,1 @@
-Dette er en ingress som gir en beskrivelse av hva aktivitetstypen 'i jobb' dreier seg om. Teksten må oppdateres i BitBucket når noen har funnet ut hva som skal stå her
+Når vi kjenner din jobbstatus kan vi følge deg opp bedre. Husk å føre opp de timene du har jobbet på meldekortet.
