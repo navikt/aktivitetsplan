@@ -2,6 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
 import { CustomField } from 'react-redux-form-validation';
+import { touch } from 'redux-form';
 
 function InnerInputComponent({
     input,
@@ -14,12 +15,17 @@ function InnerInputComponent({
         ...input,
         ...rest,
     };
+    const gjeldendeFeltVerdi = input.value;
+    const radioButtonVerdi = rest.value;
     return (
         <NavRadio
             {...inputProps}
-            checked={input.value === rest.value || forhandsvalgt}
+            checked={gjeldendeFeltVerdi === radioButtonVerdi || forhandsvalgt}
             // Fikser fokus/markering feil i IE
-            onBlur={() => {}}
+            onBlur={() => {
+                // slik at dette feltet valideres
+                meta.dispatch(touch(meta.form, input.name));
+            }}
             onFocus={() => {}}
         />
     );
