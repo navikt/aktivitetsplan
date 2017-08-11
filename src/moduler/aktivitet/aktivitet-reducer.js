@@ -37,7 +37,7 @@ export default function reducer(state = initalState, action) {
                     .concat(data),
             };
         case AT.OPPRETTET:
-            return { ...state, data: [...state.data, data] };
+            return { ...state, status: STATUS.OK, data: [...state.data, data] };
         case AT.FLYTTER:
             return nyStateMedOppdatertAktivitet(state, data.aktivitet, {
                 nesteStatus: data.status,
@@ -55,6 +55,7 @@ export default function reducer(state = initalState, action) {
         case AT.HENTING_FEILET:
         case AT.HENT_AKTIVITET_FEILET:
         case AT.OPPDATER_FEILET:
+        case AT.OPPRETT_FEILET:
             return { ...state, status: STATUS.ERROR, feil: data };
         case AT.SETT_FORRIGE_AKTIVE_AKTIVITET_ID:
             return { ...state, forrigeAktiveAktivitetId: action.id };

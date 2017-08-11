@@ -46,8 +46,6 @@ class AktivitetvisningContainer extends Component {
         if (!isNaN(this.props.match.params.id)) {
             this.props.doHentAktivitet(this.props.match.params.id);
         }
-        this.props.doHentArenaAktiviteter();
-        this.props.doHentAktiviteter();
         this.props.doFjernForrigeAktiveAktivitetId();
     }
 
@@ -84,6 +82,7 @@ class AktivitetvisningContainer extends Component {
                 contentLabel="aktivitetsvisning-modal"
                 contentClass="aktivitetsvisning"
                 avhengigheter={[aktiviteter, arenaAktiviteter]}
+                minstEnAvhengighet
                 header={aktivitetvisningHeader(valgtAktivitet)}
             >
                 <Aktivitetvinsing

@@ -13,6 +13,7 @@ function Modal({
     avhengigheter,
     onRequestClose,
     className,
+    minstEnAvhengighet,
     ...props
 }) {
     return (
@@ -25,7 +26,7 @@ function Modal({
             shouldCloseOnOverlayClick={false}
             onRequestClose={onRequestClose}
         >
-            <Innholdslaster avhengigheter={avhengigheter}>
+            <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
                 <div>
                     {header}
                     <Feilmelding />
@@ -41,6 +42,7 @@ Modal.defaultProps = {
     className: '',
     header: <ModalHeader />,
     avhengigheter: [],
+    minstEnAvhengighet: false,
 };
 
 Modal.propTypes = {
@@ -49,6 +51,7 @@ Modal.propTypes = {
     header: PT.node,
     children: PT.node.isRequired,
     avhengigheter: PT.array,
+    minstEnAvhengighet: PT.bool,
 };
 
 export default Modal;

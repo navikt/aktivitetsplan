@@ -11,6 +11,8 @@ const harStatus = (...status) => element =>
     );
 const noenHarFeil = avhengigheter =>
     avhengigheter && avhengigheter.some(harStatus(STATUS.ERROR));
+const minstEnErOK = avhengigheter =>
+    avhengigheter && avhengigheter.some(harStatus(STATUS.OK));
 const alleLastet = avhengigheter =>
     avhengigheter &&
     avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
@@ -22,8 +24,9 @@ function Innholdslaster({
     spinnerStorrelse,
     className,
     children,
+    minstEn,
 }) {
-    if (alleLastet(avhengigheter)) {
+    if (alleLastet(avhengigheter) || (minstEn && minstEnErOK(avhengigheter))) {
         if (typeof children === 'function') {
             return children(avhengigheter);
         }
@@ -42,6 +45,7 @@ function Innholdslaster({
 Innholdslaster.defaultProps = {
     spinnerStorrelse: 'xl',
     className: '',
+    minstEn: false,
 };
 
 Innholdslaster.propTypes = {
@@ -49,6 +53,7 @@ Innholdslaster.propTypes = {
     children: PT.oneOfType([PT.node, PT.func]).isRequired,
     className: PT.string,
     spinnerStorrelse: PT.string,
+    minstEn: PT.bool,
 };
 
 export default Innholdslaster;
