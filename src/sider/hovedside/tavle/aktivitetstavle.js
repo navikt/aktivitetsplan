@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Tavle from './tavle';
 import Kolonne from './aktivitetstavlekolonne';
-import * as AppPT from '../../../proptypes'
+import * as AppPT from '../../../proptypes';
 import { hentAktiviteter } from '../../../moduler/aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -27,7 +27,13 @@ class AktivitetsTavle extends Component {
 
     render() {
         return (
-            <Innholdslaster minstEn avhengigheter={[this.props.aktivitet, this.props.anreaAktivitet]}>
+            <Innholdslaster
+                minstEn
+                avhengigheter={[
+                    this.props.aktivitet,
+                    this.props.anreaAktivitet,
+                ]}
+            >
                 <Tavle
                     defaultStartKolonne={1}
                     antallKolonner={3}

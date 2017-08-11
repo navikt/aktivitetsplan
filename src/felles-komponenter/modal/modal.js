@@ -26,7 +26,10 @@ function Modal({
             shouldCloseOnOverlayClick={false}
             onRequestClose={onRequestClose}
         >
-            <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
+            <Innholdslaster
+                minstEn={minstEnAvhengighet}
+                avhengigheter={avhengigheter}
+            >
                 <div>
                     {header}
                     <Feilmelding />
