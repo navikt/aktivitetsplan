@@ -85,4 +85,18 @@ describe('innholdslaster', () => {
 
         expect(wrapper.find('Feilmelding')).to.exist; // eslint-disable-line no-unused-expressions
     });
+
+    it('Takler null og undefined', () => {
+        const wrapper = mount(
+            <IntlProvider>
+                <Innholdslaster
+                    avhengigheter={[null, undefined, { status: STATUS.OK }]}
+                >
+                    Children
+                </Innholdslaster>
+            </IntlProvider>
+        );
+
+        expect(wrapper).to.have.descendants(Spinner); // eslint-disable-line no-unused-expressions
+    });
 });

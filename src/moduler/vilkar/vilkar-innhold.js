@@ -22,13 +22,13 @@ const VisibleIfElementFormattedMessage = VisibleIfHOC(props =>
     </Element>
 );
 
-function VilkarInnhold({ vilkar, privatModus, privatModusReducer }) {
+function VilkarInnhold({ vilkar, privatModus, privatModusStatus }) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
     const tittelTekst = privatModus
         ? 'vilkar.modal.gjeldende.privat-tittel'
         : 'vilkar.modal.gjeldende.samarbeid-tittel';
     return (
-        <Innholdslaster avhengigheter={[privatModusReducer]}>
+        <Innholdslaster avhengigheter={[privatModusStatus]}>
             <div className="vilkar__innhold">
                 <Bilde src={vilkarSvg} alt="Dekorativ illustrajon" />
                 <Innholdstittel className="vilkar__tittel">
@@ -53,7 +53,7 @@ function VilkarInnhold({ vilkar, privatModus, privatModusReducer }) {
 VilkarInnhold.propTypes = {
     vilkar: AppPT.vilkar.isRequired,
     privatModus: PT.bool.isRequired,
-    privatModusReducer: AppPT.reducer.isRequired,
+    privatModusStatus: AppPT.status.isRequired,
 };
 
 VisibleIfElementFormattedMessage.propTypes = {
