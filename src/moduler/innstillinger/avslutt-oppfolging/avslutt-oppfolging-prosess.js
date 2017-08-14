@@ -35,7 +35,6 @@ class AvsluttOppfolgingProsess extends Component {
                     history.push(url);
                 }
             })
-            .catch(history.push('innstillinger/avslutt/kvittering'));
     };
 
     render() {

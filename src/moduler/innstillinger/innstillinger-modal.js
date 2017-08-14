@@ -16,7 +16,6 @@ function InnstillingerModal({ motpart, children, navnPaMotpart }) {
             header={
                 <ModalHeader tilbakeTekstId="innstillinger.modal.tilbake" />
             }
-            onRequestClose={() => history.push('/')}
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
