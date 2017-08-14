@@ -7,6 +7,7 @@ import * as AppPT from '../../proptypes';
 
 const array = value => (Array.isArray(value) ? value : [value]);
 const harStatus = (...status) => element =>
+    element &&
     array(status).includes(
         typeof element === 'string' ? element : element.status
     );
