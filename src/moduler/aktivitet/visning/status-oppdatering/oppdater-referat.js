@@ -11,6 +11,7 @@ import hiddenIf, {
     div as HiddenIfDiv,
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import OppdaterReferatForm from './oppdater-referat-form';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 
 const HiddenIfTekstomrade = hiddenIf(Tekstomrade);
 
@@ -26,6 +27,7 @@ function OppdaterReferat({
     startOppdaterReferat,
     stoppOppdaterReferat,
 }) {
+    const aktivitetStatus = aktivitet.status;
     return (
         <div className={classNames('oppdater-referat', className)}>
             <Undertittel>
@@ -37,7 +39,13 @@ function OppdaterReferat({
             >
                 {referat}
             </HiddenIfTekstomrade>
-            <HiddenIfDiv hidden={!erVeileder}>
+            <HiddenIfDiv
+                hidden={
+                    !erVeileder ||
+                    aktivitetStatus === STATUS_FULLFOERT ||
+                    aktivitetStatus === STATUS_AVBRUTT
+                }
+            >
                 <HiddenIfDiv hidden={visOppdaterReferatForm}>
                     <Hovedknapp
                         onClick={dispatchPubliserReferat}

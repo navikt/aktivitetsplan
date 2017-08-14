@@ -1,9 +1,17 @@
 import { aggregerStatus } from '../../ducks/utils';
 import {
-    selectPrivatModusReducer,
+    selectPrivatModusSlice,
     selectErPrivatModus,
 } from '../privat-modus/privat-modus-selector';
 import { aktivitetFilter } from '../filter/filter-utils';
+import { selectErVeileder } from '../identitet/identitet-selector';
+import {
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+} from '../../constant';
+import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 
 export function selectAlleAktiviter(state) {
     const stateData = state.data;
@@ -26,7 +34,7 @@ export function selectAktivitetMedId(state, aktivitetId) {
 export function selectAktivitetListeReducer(state) {
     return {
         status: aggregerStatus(
-            selectPrivatModusReducer(state),
+            selectPrivatModusSlice(state),
             state.aktiviteter,
             state.arenaAktiviteter
         ),
@@ -36,4 +44,29 @@ export function selectAktivitetListeReducer(state) {
 
 export function selectAktivitetListeStatus(state) {
     return selectAktivitetListeReducer(state).status;
+}
+
+export function selectKanEndreAktivitetStatus(state, aktivitet) {
+    if (!aktivitet) {
+        return false;
+    }
+    const { historisk, status, type } = aktivitet;
+    return (
+        !historisk &&
+        (selectErVeileder(state) || type !== MOTE_TYPE) &&
+        status !== STATUS_AVBRUTT &&
+        status !== STATUS_FULLFOERT
+    );
+}
+
+export function selectKanEndreAktivitetDetaljer(state, aktivitet) {
+    if (!aktivitet) {
+        return false;
+    }
+    const { avtalt, type } = aktivitet;
+    return (
+        selectKanEndreAktivitetStatus(state, aktivitet) &&
+        type !== SAMTALEREFERAT_TYPE &&
+        (avtalt !== true || !!TILLAT_SET_AVTALT)
+    );
 }

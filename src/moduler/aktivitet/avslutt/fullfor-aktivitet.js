@@ -13,6 +13,7 @@ import {
     selectAktivitetListeStatus,
     selectAktivitetMedId,
 } from '../aktivitetliste-selector';
+import PubliserReferat from './publiser-referat';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 
@@ -55,7 +56,9 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
             header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
             contentLabel="fullfor-aktivitet"
         >
-            {valgtAktivitet.avtalt ? begrunnelse : advarsel}
+            <PubliserReferat aktivitet={valgtAktivitet}>
+                {valgtAktivitet.avtalt ? begrunnelse : advarsel}
+            </PubliserReferat>
         </Modal>
     );
 };

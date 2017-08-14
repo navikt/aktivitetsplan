@@ -18,7 +18,7 @@ import {
 } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
 
-const OPPFOLGING_MAKS_LENGDE = 5000;
+const OPPFOLGING_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 
 const pakrevdFraDato = rules.minLength(

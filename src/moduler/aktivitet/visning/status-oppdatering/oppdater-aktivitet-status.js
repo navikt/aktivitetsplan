@@ -3,24 +3,20 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import * as statuser from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import AktivitetStatusForm from './aktivitet-status-form';
+import {
+    selectAktivitetMedId,
+    selectKanEndreAktivitetStatus,
+} from '../../aktivitetliste-selector';
 
-function OppdaterAktivitetStatus(props) {
-    const { aktiviteter, paramsId } = props;
-
-    const valgtAktivitet = aktiviteter.data.find(
-        aktivitet => aktivitet.id === paramsId
-    );
-
-    const disableStatusEndring =
-        valgtAktivitet.historisk ||
-        props.status === statuser.STATUS_AVBRUTT ||
-        props.status === statuser.STATUS_FULLFOERT;
-
+function OppdaterAktivitetStatus({
+    className,
+    valgtAktivitet,
+    disableStatusEndring,
+}) {
     return (
-        <section className={props.className}>
+        <section className={className}>
             <Undertittel>
                 <FormattedMessage id="oppdater-aktivitet-status.header" />
             </Undertittel>
@@ -33,20 +29,23 @@ function OppdaterAktivitetStatus(props) {
 }
 
 OppdaterAktivitetStatus.propTypes = {
-    status: PT.string.isRequired,
-    paramsId: PT.string.isRequired,
     className: PT.string.isRequired,
-    aktiviteter: PT.shape({
-        status: PT.string,
-        data: PT.arrayOf(AppPT.aktivitet),
-    }).isRequired,
+    valgtAktivitet: AppPT.aktivitet.isRequired,
+    disableStatusEndring: PT.bool.isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-    aktiviteter: state.data.aktiviteter,
-    initialValues: {
-        aktivitetstatus: props.status,
-    },
-});
+const mapStateToProps = (state, props) => {
+    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
+    return {
+        valgtAktivitet,
+        disableStatusEndring: !selectKanEndreAktivitetStatus(
+            state,
+            valgtAktivitet
+        ),
+        initialValues: {
+            aktivitetstatus: props.status,
+        },
+    };
+};
 
 export default connect(mapStateToProps, null)(OppdaterAktivitetStatus);

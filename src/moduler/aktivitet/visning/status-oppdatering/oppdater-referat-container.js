@@ -5,7 +5,10 @@ import moment from 'moment';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
-import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
+import {
+    section as HiddenIfSection,
+    hr as HiddenIfHr,
+} from '../../../../felles-komponenter/hidden-if/hidden-if';
 import OppdaterReferat from './oppdater-referat';
 import {
     publiserReferat,
@@ -35,7 +38,13 @@ class OppdaterReferatContainer extends Component {
 
     render() {
         const props = this.props;
-        const { kanHaReferat, visReferat, harReferat, erVeileder } = props;
+        const {
+            kanHaReferat,
+            visReferat,
+            harReferat,
+            erVeileder,
+            delelinje,
+        } = props;
 
         const state = this.state || {};
         const visOppdaterReferatForm =
@@ -49,7 +58,10 @@ class OppdaterReferatContainer extends Component {
                     startOppdaterReferat={this.startOppdaterReferat}
                     stoppOppdaterReferat={this.stoppOppdaterReferat}
                 />
-                <hr className="aktivitetvisning__delelinje" />
+                <HiddenIfHr
+                    hidden={!delelinje}
+                    className="aktivitetvisning__delelinje"
+                />
             </HiddenIfSection>
         );
     }
@@ -57,11 +69,13 @@ class OppdaterReferatContainer extends Component {
 
 OppdaterReferatContainer.defaultProps = {
     className: undefined,
+    delelinje: false,
 };
 
 OppdaterReferatContainer.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     erReferatPublisert: PT.bool.isRequired,
+    delelinje: PT.bool,
     erVeileder: PT.bool.isRequired,
     publiserer: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,

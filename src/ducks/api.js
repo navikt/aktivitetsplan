@@ -33,8 +33,16 @@ export function markerDialogSomLest(dialogId) {
     return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/les`);
 }
 
-export function oppdaterDialog(dialog) {
-    return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialog.id}`, dialog);
+export function oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet) {
+    return putAsJson(
+        `${DIALOG_BASE_URL}/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}`
+    );
+}
+
+export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
+    return putAsJson(
+        `${DIALOG_BASE_URL}/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}`
+    );
 }
 
 export function hentArenaAktiviteter() {

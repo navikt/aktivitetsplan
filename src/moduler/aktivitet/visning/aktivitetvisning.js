@@ -22,7 +22,7 @@ import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjo
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
 import OppdaterReferatContainer from './status-oppdatering/oppdater-referat-container';
 
-function Aktivitetvisning({ aktivitet, tillatSletting }) {
+function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
     const arenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
         GRUPPE_AKTIVITET_TYPE,
@@ -70,6 +70,7 @@ function Aktivitetvisning({ aktivitet, tillatSletting }) {
                 <AktivitetinformasjonVisning
                     valgtAktivitet={aktivitet}
                     arenaAktivitet={arenaAktivitet}
+                    tillatEndring={tillatEndring}
                 />
 
                 <AvtaltContainer
@@ -80,12 +81,12 @@ function Aktivitetvisning({ aktivitet, tillatSletting }) {
                 <OppdaterReferatContainer
                     aktivitet={aktivitet}
                     className="aktivitetvisning__underseksjon"
+                    delelinje
                 />
 
                 <Statusadministrasjon
                     valgtAktivitet={aktivitet}
                     arenaAktivitet={arenaAktivitet}
-                    paramsId={aktivitet.id}
                 />
 
                 <UnderelementerForAktivitet
@@ -108,6 +109,7 @@ Aktivitetvisning.defaultProps = {
 Aktivitetvisning.propTypes = {
     aktivitet: AppPT.aktivitet,
     tillatSletting: PT.bool.isRequired,
+    tillatEndring: PT.bool.isRequired,
 };
 
 export default Aktivitetvisning;

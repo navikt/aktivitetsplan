@@ -11,7 +11,6 @@ import {
     maksLengde,
     pakrevd,
 } from '../../../felles-komponenter/skjema/validering';
-import { validerReferatPublisert } from '../aktivitet-util';
 
 const MAKS_LENGDE = 255;
 
@@ -71,7 +70,6 @@ const BegrunnelseAktivitetReduxForm = validForm({
     ),
     validate: {
         begrunnelse: [ikkeForLangBegrunnelse, harBegrunnelse],
-        erReferatPublisert: validerReferatPublisert(),
     },
 })(BegrunnelseForFerdigAvtaltAktivitet);
 

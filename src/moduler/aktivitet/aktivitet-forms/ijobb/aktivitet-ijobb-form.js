@@ -19,6 +19,7 @@ import {
 } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
+import RadioGruppe from '../../../../felles-komponenter/skjema/input/radio-gruppe';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 
 const TITTEL_MAKS_LENGDE = 255;
@@ -137,7 +138,10 @@ class IJobbAktivitetForm extends Component {
                         </div>
                     </PeriodeValidering>
 
-                    <div className="radio-container">
+                    <RadioGruppe
+                        feltNavn="jobbStatus"
+                        labelId="ijobb-aktivitet-form.label.jobbStatus"
+                    >
                         <Radio
                             feltNavn="jobbStatus"
                             label={
@@ -156,7 +160,7 @@ class IJobbAktivitetForm extends Component {
                             id={`id--${JOBB_STATUS_DELTID}`}
                             disabled={this.props.avtalt === true}
                         />
-                    </div>
+                    </RadioGruppe>
 
                     <Input
                         feltNavn="ansettelsesforhold"

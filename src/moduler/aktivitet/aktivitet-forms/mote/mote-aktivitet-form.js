@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -25,8 +25,9 @@ import {
 } from '../../aktivitet-util';
 
 const TITTEL_MAKS_LENGDE = 255;
-const BESKRIVELSE_MAKS_LENGDE = 2000;
-const FORBEREDELSER_MAKS_LENGDE = 2000;
+const ADRESSE_MAKS_LENGDE = 255;
+const BESKRIVELSE_MAKS_LENGDE = 5000;
+const FORBEREDELSER_MAKS_LENGDE = 500;
 
 const pakrevdTittel = pakrevd('mote-aktivitet-form.feilmelding.pakrevd-tittel');
 const begrensetTittelLengde = maksLengde(
@@ -40,9 +41,20 @@ const pakrevdVarighet = pakrevd(
 const pakrevdKlokkeslett = pakrevd(
     'mote-aktivitet-form.feilmelding.pakrevd-klokkeslett'
 );
+const pakrevdKanal = pakrevd('mote-aktivitet-form.feilmelding.pakrevd-kanal');
+const pakrevdAdresse = pakrevd(
+    'mote-aktivitet-form.feilmelding.pakrevd-adresse'
+);
+const begrensetAdresseLengde = maksLengde(
+    'mote-aktivitet-form.feilmelding.adresse-lengde',
+    ADRESSE_MAKS_LENGDE
+);
 const begrensetBeskrivelseLengde = maksLengde(
     'mote-aktivitet-form.feilmelding.beskrivelse-lengde',
     BESKRIVELSE_MAKS_LENGDE
+);
+const pakrevForberedelse = pakrevd(
+    'mote-aktivitet-form.feilmelding.pakrevd-forberedelser'
 );
 const begrensetForberedelserLengde = maksLengde(
     'mote-aktivitet-form.feilmelding.forberedelser-lengde',
@@ -123,6 +135,7 @@ function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit, lagrer }) {
                     feltNavn="adresse"
                     labelId="mote-aktivitet-form.label.adresse"
                     bredde="fullbredde"
+                    maxLength={ADRESSE_MAKS_LENGDE}
                 />
                 <Textarea
                     feltNavn="beskrivelse"
@@ -166,9 +179,11 @@ const MoteAktivitetReduxForm = validForm({
         tittel: [pakrevdTittel, begrensetTittelLengde],
         dato: [pakrevdFraDato],
         varighet: [pakrevdVarighet],
+        kanal: [pakrevdKanal],
         klokkeslett: [pakrevdKlokkeslett],
+        adresse: [pakrevdAdresse, begrensetAdresseLengde],
         beskrivelse: [begrensetBeskrivelseLengde],
-        forberedelser: [begrensetForberedelserLengde],
+        forberedelser: [pakrevForberedelse, begrensetForberedelserLengde],
     },
 })(MoteAktivitetForm);
 
@@ -177,6 +192,9 @@ const mapStateToProps = (state, props) => {
     return {
         initialValues: {
             status: STATUS_PLANLAGT,
+            beskrivelse: props.intl.formatMessage({
+                id: 'mote-aktivitet-form.standardtekst.beskrivelse',
+            }),
             ...aktivitet,
             ...beregnKlokkeslettVarighet(aktivitet),
         },
@@ -190,4 +208,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps)(MoteAktivitetReduxForm);
+export default injectIntl(connect(mapStateToProps)(MoteAktivitetReduxForm));

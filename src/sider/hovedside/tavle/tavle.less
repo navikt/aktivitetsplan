@@ -6,6 +6,11 @@
         display: none;
         cursor: pointer;
 
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 3px @orange-focus;
+        }
+
         &:disabled {
             cursor: default;
             background: data-uri(
