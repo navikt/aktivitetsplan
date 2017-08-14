@@ -10,9 +10,9 @@ const setType = etikettnavn => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
         case statuskoder.DIALOG_FERDIGBEHANDLET:
+        case statuskoder.JOBBTILBUD:
             return 'ok';
         case statuskoder.INNKALT_TIL_INTERVJU:
-        case statuskoder.JOBBTILBUD:
             return 'info';
         case statuskoder.AVSLAG:
         case statuskoder.DIALOG_MA_BESVARES:
