@@ -7,4 +7,4 @@ export const selectIsOppfolgendeVeileder = state =>
     selectArbeidslisteReducer(state).data.isOppfolgendeVeileder || false;
 
 export const selectErBrukerIArbeidsliste = state =>
-    selectArbeidslisteReducer(state).data.endringstidspunkt !== null;
+    !!selectArbeidslisteReducer(state).data.endringstidspunkt;

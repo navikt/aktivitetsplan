@@ -28,18 +28,19 @@ const initialState = {
 
 //  Reducer
 export default function reducer(state = initialState, action) {
+    const data = action.data;
     switch (action.type) {
         case HENT_ARBEIDSLISTE_OK:
         case LAGRE_ARBEIDSLISTE_OK:
         case REDIGER_ARBEIDSLISTE_OK:
-            return { ...state, status: STATUS.OK, data: action.data };
+            return { ...state, status: STATUS.OK, data };
         case SLETT_ARBEIDSLISTE_OK:
-            return { ...state, status: STATUS.OK, data: {} };
+            return { ...state, status: STATUS.OK, data };
         case HENT_ARBEIDSLISTE_FEILET:
         case LAGRE_ARBEIDSLISTE_FEILET:
         case SLETT_ARBEIDSLISTE_FEILET:
         case REDIGER_ARBEIDSLISTE_FEILET:
-            return { ...state, status: STATUS.ERROR, data: action.data };
+            return { ...state, status: STATUS.ERROR, data };
         case HENT_ARBEIDSLISTE_PENDING:
         case LAGRE_ARBEIDSLISTE_PENDING:
         case SLETT_ARBEIDSLISTE_PENDING:
