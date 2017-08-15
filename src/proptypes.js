@@ -108,6 +108,7 @@ export const motpart = PT.shape({
 export const oppfolgingsPeriode = PT.shape({
     id: PT.string,
     fra: PT.string,
+    vistFra: PT.string,
     til: PT.string,
 });
 

@@ -6,6 +6,10 @@ export function selectOppfolgingsPerioder(state) {
     return selectSituasjonReducer(state).data.oppfolgingsPerioder;
 }
 
+export function selectHistoriskeOppfolgingsPerioder(state) {
+    return selectOppfolgingsPerioder(state).filter(p => p.sluttDato !== null);
+}
+
 export function selectErUnderOppfolging(state) {
     return selectSituasjonReducer(state).data.underOppfolging;
 }
