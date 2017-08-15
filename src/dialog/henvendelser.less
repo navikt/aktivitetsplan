@@ -18,18 +18,18 @@
     }
 }
 
-.dialog-henveldelser {
+.dialog-henvendelser {
     display: flex;
+
+    .snakkeboble--hoyre .snakkeboble-panel {
+        text-align: left;
+    }
 }
 
 .snakkeboble {
     .snakkeboble-panel {
         flex: none;
         width: ~'calc(100% - 48px)';
-    }
-
-    &__snakkeboble-pil-container {
-        margin-top: 0.7rem;
     }
 
     &-panel__tekst {
@@ -66,10 +66,6 @@
             color: @white;
             font-style: normal;
         }
-    }
-
-    p {
-        margin: 0;
     }
 }
 
