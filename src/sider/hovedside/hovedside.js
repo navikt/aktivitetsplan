@@ -12,7 +12,9 @@ function Hovedside({ children }) {
     return (
         <div className="hovedside">
             <div className="hovedsideinnhold">
-                <Feil />
+                <div className="feil-container">
+                    <Feil />
+                </div>
                 <OppfolgingStatus>
                     <Varslinger />
                     <Container>
