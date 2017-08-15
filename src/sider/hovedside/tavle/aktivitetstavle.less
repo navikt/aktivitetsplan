@@ -90,8 +90,7 @@
 .aktivitet-apen .hjelpetekst__apneknapp {
     span {
         border-radius: 50%;
-        background: data-uri('@{aktivitetsplanPath}/img/help-circle.svg')
-            no-repeat;
+        background: data-uri('@{aktivitetsplanPath}/img/help-circle.svg') no-repeat;
         width: 24px;
         height: 24px;
     }
@@ -99,41 +98,38 @@
     &:hover {
         span {
             background: data-uri(
-                    '@{aktivitetsplanPath}/img/help-circle_hover.svg'
-                )
-                no-repeat;
+                '@{aktivitetsplanPath}/img/help-circle_hover.svg'
+            ) no-repeat;
         }
     }
 }
 
-.aktivitet-last .hjelpetekst__apneknapp {
-    span {
-        background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg') no-repeat
-            center;
-        background-size: 83%;
-        width: 23px;
-        height: 26px;
-    }
+.aktivitet-last {
+    padding-bottom: 0.25rem;
 
-    &:hover {
+    .hjelpetekst__apneknapp {
         span {
-            background: data-uri('@{aktivitetsplanPath}/img/hengelas_hover.svg')
-                no-repeat center;
-            background-size: 83%;
-            width: 23px;
+            background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg') no-repeat center;
+            width: 20px;
             height: 26px;
         }
-    }
 
-    &:active {
-        span {
-            background: data-uri(
+        &:hover {
+            span {
+                background: data-uri('@{aktivitetsplanPath}/img/hengelas_hover.svg') no-repeat center;
+                width: 20px;
+                height: 26px;
+            }
+        }
+
+        &:active {
+            span {
+                background: data-uri(
                     '@{aktivitetsplanPath}/img/hengelas_active.svg'
-                )
-                no-repeat center;
-            background-size: 83%;
-            width: 23px;
-            height: 26px;
+                ) no-repeat center;
+                width: 20px;
+                height: 26px;
+            }
         }
     }
 }
