@@ -10,6 +10,7 @@ import * as AppPT from '../proptypes';
 import Dato from '../felles-komponenter/dato';
 import { markerDialogSomLest } from '../ducks/dialog';
 import visibleIfHOC from '../hocs/visible-if';
+import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
 
 const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) =>
     <div className="henvendelser__lest-av-bruker">
@@ -107,6 +108,4 @@ const mapDispatchToProps = (dispatch, props) => {
     };
 };
 
-export default visibleIfHOC(
-    connect(mapStateToProps, mapDispatchToProps)(Dialog)
-);
+export default hiddenIf(connect(mapStateToProps, mapDispatchToProps)(Dialog));

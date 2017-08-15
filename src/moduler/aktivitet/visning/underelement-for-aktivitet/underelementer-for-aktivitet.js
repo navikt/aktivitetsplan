@@ -12,12 +12,13 @@ import NyHenvendelse from '../../../../dialog/ny-henvendelse';
 import Henvendelser from '../../../../dialog/henvendelser';
 import EndreDialog from '../../../../dialog/endre-dialog';
 import VisibleDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import visibleIfHoc from '../../../../hocs/visible-if';
+import hiddenIfHoc from '../../../../felles-komponenter/hidden-if/hidden-if';
+import { selectErUnderOppfolging } from '../../../situasjon/situasjon-selector';
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
 
-const VisibleToggleKnapp = visibleIfHoc(ToggleKnapp);
+const HiddenIfToggleKnapp = hiddenIfHoc(ToggleKnapp);
 
 class UnderelementerForAktivitet extends Component {
     constructor() {
@@ -44,13 +45,15 @@ class UnderelementerForAktivitet extends Component {
             antallUlesteHenvendelser,
             dialog,
             className,
-            underOppfolging,
+            kanSeDialog,
+            kanOppretteNyHenvendelse,
+            kanEndreDialog,
         } = this.props;
         const { vis } = this.state;
         const aktivitetId = aktivitet.id;
-        const historiskAktivitet = aktivitet.historisk;
-        const visDialog = vis === DIALOG;
         const cls = classes => classNames('underelementer-aktivitet', classes);
+
+        const visDialog = vis === DIALOG;
         const visHistorikk = vis === HISTORIKK;
 
         const dialogknappCls = dialogAktiv =>
@@ -78,18 +81,16 @@ class UnderelementerForAktivitet extends Component {
                     onChange={toggleVis}
                     className="underelementer-aktivitet__toggle"
                 >
-                    <VisibleToggleKnapp
+                    <HiddenIfToggleKnapp
                         value={DIALOG}
                         className={dialogknappCls(visDialog)}
-                        visible={
-                            underOppfolging && !(historiskAktivitet && !dialog)
-                        }
+                        hidden={!kanSeDialog}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
                         <TallAlert hidden={antallUlesteHenvendelser <= 0}>
                             {antallUlesteHenvendelser}
                         </TallAlert>
-                    </VisibleToggleKnapp>
+                    </HiddenIfToggleKnapp>
                     <ToggleKnapp
                         value={HISTORIKK}
                         className={historikknappCls(visHistorikk)}
@@ -111,19 +112,15 @@ class UnderelementerForAktivitet extends Component {
                     <NyHenvendelse
                         formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
-                        hidden={
-                            (dialog && dialog.historisk) || historiskAktivitet
-                        }
+                        hidden={!kanOppretteNyHenvendelse}
                         aktivitetId={aktivitetId}
                     />
                     <EndreDialog
-                        hidden={
-                            !dialog || dialog.historisk || historiskAktivitet
-                        }
+                        hidden={!kanEndreDialog}
                         formNavn={`dialog-aktivitet-${aktivitetId}`}
                         dialog={dialog}
                     />
-                    <Henvendelser visible={!!dialog} dialog={dialog} />
+                    <Henvendelser hidden={!dialog} dialog={dialog} />
                 </VisibleDiv>
             </section>
         );
@@ -134,7 +131,9 @@ UnderelementerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     dialog: AppPT.dialog,
     antallUlesteHenvendelser: PT.number.isRequired,
-    underOppfolging: PT.bool.isRequired,
+    kanSeDialog: PT.bool.isRequired,
+    kanOppretteNyHenvendelse: PT.bool.isRequired,
+    kanEndreDialog: PT.bool.isRequired,
     className: PT.string,
 };
 
@@ -148,14 +147,25 @@ const mapStateToProps = (state, props) => {
     const stateData = state.data;
     const dialoger = stateData.dialog.data;
     const dialog = dialoger.find(d => d.aktivitetId === aktivitet.id);
-    const antallUlesteHenvendelser = dialog
+    const harDialog = !!dialog;
+    const antallUlesteHenvendelser = harDialog
         ? dialog.henvendelser.filter(h => !h.lest).length
         : 0;
+
+    const historiskAktivitet = aktivitet.historisk;
+    const historiskDialog = harDialog && dialog.historisk;
+    const underOppfolging = selectErUnderOppfolging(state);
+
+    const kanSeDialog = underOppfolging || (historiskAktivitet && harDialog);
+    const kanOppretteNyHenvendelse =
+        kanSeDialog && !(historiskDialog || historiskAktivitet);
+    const kanEndreDialog = kanOppretteNyHenvendelse && harDialog;
     return {
         dialog,
         antallUlesteHenvendelser,
-        versjoner: stateData.versjoner.data,
-        underOppfolging: !!stateData.situasjon.data.underOppfolging,
+        kanSeDialog,
+        kanOppretteNyHenvendelse,
+        kanEndreDialog,
     };
 };
 
