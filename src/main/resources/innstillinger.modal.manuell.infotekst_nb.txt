@@ -1,1 +1,1 @@
-Manuell oppfølging slår av dialog-tjenesten og mulighet for å kommunisere digitalt med brukeren.
+Når du setter bruker til manuell oppfølging har du ikke lenger mulighet til å kommunisere digitalt med brukeren i aktivitetsplanen.
