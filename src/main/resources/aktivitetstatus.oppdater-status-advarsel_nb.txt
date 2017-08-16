@@ -1,1 +1,1 @@
-Disse aktivitetene er låst og kan ikke flyttes når de er satt til denne statusen.
+Aktiviteten blir låst og kan ikke oppdateres når du satter den til "Fullført" eller "Avbrutt". 
