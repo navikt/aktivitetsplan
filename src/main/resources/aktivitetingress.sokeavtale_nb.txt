@@ -1,1 +1,1 @@
-Dette er en ingress som gir en beskrivelse av hva aktivitetstypen 'avtale om stillingssøk' dreier seg om. Teksten må oppdateres i BitBucket når noen har funnet ut hva som skal stå her
+Her finner du det antallet jobber NAV forventer at du søker per uke når du er registrert som arbeidssøker. Registrer hver stilling du søker på som en egen aktivitet, bruk "Stilling jeg vil søke".  
