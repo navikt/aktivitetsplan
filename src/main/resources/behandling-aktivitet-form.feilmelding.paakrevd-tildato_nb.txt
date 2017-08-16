@@ -1,1 +1,1 @@
-Du må fylle ut tildatoen
+Du må fylle ut tildatoen. Hvis ikke du vet når behandlingen avsluttes, kan du legge inn en foreløpig antatt dato.
