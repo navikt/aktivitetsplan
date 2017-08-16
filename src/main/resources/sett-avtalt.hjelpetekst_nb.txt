@@ -1,1 +1,1 @@
-Aktiviteter som oppfyller brukers aktivitets- og medvirkningsplikt, er merket som "forpliktende aktivitet" 
+Aktiviteter som oppfyller brukers aktivitets- og medvirkningsplikt skal settes som "Avtalt med NAV" 
