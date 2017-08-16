@@ -5,13 +5,13 @@ GJENNOMFORES { Gjennomføres }
 FULLFORT { Fullført }
 AVBRUTT { Avbrutt }
 } / { type, select,
-EGEN { Egen }
+EGEN { Jobbrettet aktivitet }
 STILLING { Stilling }
 TILTAKSAKTIVITET { Tiltak }
 GRUPPEAKTIVITET { Gruppeaktivitet }
 UTDANNINGSAKTIVITET { Utdanning }
 SOKEAVTALE { Avtale med NAV }
-IJOBB { Bruker i jobb }
+IJOBB { Jobb }
 BEHANDLING { Behandling }
 MOTE { Møte med NAV }
 SAMTALEREFERAT { Samtalereferat }
