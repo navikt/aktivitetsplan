@@ -1,1 +1,1 @@
-Har bruker en inaktiv status i arena. Hvis JA start prosess.
+Før du starter prosessen, må du sjekke at bruker har en inaktviv status i Arena. 
