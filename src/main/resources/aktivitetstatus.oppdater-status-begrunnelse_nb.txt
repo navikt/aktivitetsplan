@@ -1,1 +1,1 @@
-Avtalte aktiviteter med NAV trenger en beskrivelse for å kunne flytte dem til fullført eller avbrutt:
+Du må legge inn en kommentar til at du har fullført denne aktiviteten. 
