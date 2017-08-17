@@ -47,7 +47,7 @@ function ModalHeader({
                         visConfirmDialog={visConfirmDialog}
                     />}
                 {normalTekstId &&
-                    <Normaltekst>
+                    <Normaltekst tag="h1">
                         <FormattedMessage
                             id={normalTekstId}
                             values={normalTekstValues}

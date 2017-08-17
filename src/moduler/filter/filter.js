@@ -19,7 +19,7 @@ import {
     selectAlleAktiviter,
 } from '../aktivitet/aktivitetliste-selector';
 import {
-    selectOppfolgingsPerioder,
+    selectHistoriskeOppfolgingsPerioder,
     selectSituasjonReducer,
 } from '../situasjon/situasjon-selector';
 import {
@@ -95,7 +95,7 @@ function PeriodeLabel({ historiskPeriode }) {
     return (
         <div>
             <Dato>
-                {historiskPeriode.fra}
+                {historiskPeriode.vistFra}
             </Dato>
             <span> - </span>
             <Dato>
@@ -250,19 +250,19 @@ const mapStateToProps = state => {
     const aktiviteter = selectAlleAktiviter(state);
 
     let fraGrense = '';
-    const historiskePerioder = selectOppfolgingsPerioder(state)
-        .map(p => p.sluttDato)
-        .sort()
-        .map(sluttDato => {
+    const historiskePerioder = selectHistoriskeOppfolgingsPerioder(state)
+        .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
+        .map(periode => {
             const fra = tidligsteHendelsesTidspunktMellom(
                 fraGrense,
-                sluttDato,
+                periode.sluttDato,
                 state
             );
-            fraGrense = sluttDato;
+            fraGrense = periode.sluttDato;
             return {
-                id: sluttDato,
-                til: sluttDato,
+                id: periode.sluttDato,
+                til: periode.sluttDato,
+                vistFra: periode.startDato,
                 fra,
             };
         })
