@@ -131,15 +131,14 @@ function AktivitetStatusForm(props) {
                             manglerReferatPublisering
                         }
                     />
-
-                    <HiddenIfAlertStripeInfo
-                        hidden={!manglerReferatPublisering}
-                    >
-                        <FormattedMessage id="aktivitetstatus.mangler-publisering-av-samtalereferat" />
-                    </HiddenIfAlertStripeInfo>
                 </div>
             </div>
-            <VisibleIfDiv className="row" visible={dirty}>
+
+            <HiddenIfAlertStripeInfo hidden={!manglerReferatPublisering}>
+                <FormattedMessage id="aktivitetstatus.mangler-publisering-av-samtalereferat" />
+            </HiddenIfAlertStripeInfo>
+
+            <VisibleIfDiv className="status-alert" visible={dirty}>
                 <VisibleAlertStripeSuksessSolid visible={visAdvarsel}>
                     <FormattedMessage id="aktivitetstatus.oppdater-status-advarsel" />
                 </VisibleAlertStripeSuksessSolid>
