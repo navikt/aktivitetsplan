@@ -23,8 +23,8 @@ class BegrunnelseBoks extends Component {
     }
 
     render() {
-        const { begrunnelse, className } = this.props;
-        const classes = classNames(className, {
+        const { begrunnelse } = this.props;
+        const classes = classNames({
             'tekst--kollapset': this.state.kollapset,
             tekst: !this.state.kollapset,
         });
