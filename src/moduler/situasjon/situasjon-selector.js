@@ -7,7 +7,7 @@ export function selectOppfolgingsPerioder(state) {
 }
 
 export function selectHistoriskeOppfolgingsPerioder(state) {
-    return selectOppfolgingsPerioder(state).filter(p => p.sluttDato !== null);
+    return selectOppfolgingsPerioder(state).filter(p => p.sluttDato);
 }
 
 export function selectErUnderOppfolging(state) {
