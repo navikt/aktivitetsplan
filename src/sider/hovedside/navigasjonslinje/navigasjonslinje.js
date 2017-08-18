@@ -76,15 +76,14 @@ class Navigasjonslinje extends Component {
             arbeidslisteReducer,
             harVeilederTilgang,
             disabled,
-            kanSeDialog,
+            kanHaDialog,
         } = this.props;
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement
                     sti="/dialog"
                     tekstId="navigasjon.dialog"
-                    disabled={disabled}
-                    hidden={!kanSeDialog}
+                    disabled={disabled || !kanHaDialog}
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
@@ -120,7 +119,7 @@ Navigasjonslinje.propTypes = {
     antallUlesteDialoger: PT.number.isRequired,
     doHentArbeidsliste: PT.func.isRequired,
     arbeidslisteReducer: AppPT.reducer.isRequired,
-    kanSeDialog: PT.bool.isRequired,
+    kanHaDialog: PT.bool.isRequired,
     harVeilederTilgang: PT.bool,
     disabled: PT.bool.isRequired,
 };
@@ -141,7 +140,7 @@ const mapStateToProps = state => {
         underOppfolging: stateData.situasjon.data.underOppfolging,
         arbeidslisteReducer: selectArbeidslisteReducer(state),
         harVeilederTilgang: selectHarVeilederTilgang(state),
-        kanSeDialog: underOppfolging || selectViserHistoriskPeriode(state),
+        kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
         disabled:
             !selectErBruker(state) &&
             underOppfolging === false &&

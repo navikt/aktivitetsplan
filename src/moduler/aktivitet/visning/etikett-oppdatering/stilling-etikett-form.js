@@ -61,7 +61,7 @@ function StillingEtikettForm(props) {
                     />
                 </div>
             </div>
-            <VisibleIfDiv className="row" visible={dirty}>
+            <VisibleIfDiv visible={dirty}>
                 <Hovedknapp
                     spinner={lasterData}
                     mini

@@ -46,7 +46,6 @@
     }
 
     .typo-normal {
-
         ul {
             margin: 0;
             list-style: none;
@@ -57,13 +56,39 @@
             margin-top: 1rem;
         }
     }
+
+    .alertstripe__ikon {
+        margin-right: 1rem;
+    }
+
+    .row + .alertstripe {
+        margin-top: 0.5rem;
+    }
+
+    .status-alert {
+        margin: 1rem 0;
+
+        .alertstripe {
+            margin: 1rem 0;
+        }
+    }
 }
 
 .ReactModal__Body--open {
     overflow: hidden;
+
+    .aktivitetsplanfs:not([class*='modal-portal']) {
+        display: none;
+    }
 }
 
 @media (min-width: @screen-md-min) {
+    .ReactModal__Body--open {
+        .aktivitetsplanfs:not([class*='modal-portal']) {
+            display: block;
+        }
+    }
+
     .container,
     .hovedsideinnhold div.feil-container {
         width: 890px;
