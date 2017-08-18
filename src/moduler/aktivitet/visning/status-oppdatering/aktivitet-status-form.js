@@ -20,9 +20,7 @@ import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
-import {
-    manglerPubliseringAvSamtaleReferat,
-} from '../../aktivitet-util';
+import { manglerPubliseringAvSamtaleReferat } from '../../aktivitet-util';
 import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
@@ -183,10 +181,15 @@ const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
 
 function kanOppdatereStatus() {
     return (ignored, props) => {
-        const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(props.valgtAktivitetStatus);
-        return (ferdigStatus && manglerPubliseringAvSamtaleReferat(props.aktivitet || {})) &&
-            <FormattedMessage id="referat.validering.ikke-publisert" />;
-    }
+        const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(
+            props.valgtAktivitetStatus
+        );
+        return (
+            ferdigStatus &&
+            manglerPubliseringAvSamtaleReferat(props.aktivitet || {}) &&
+            <FormattedMessage id="referat.validering.ikke-publisert" />
+        );
+    };
 }
 
 const OppdaterReduxForm = validForm({

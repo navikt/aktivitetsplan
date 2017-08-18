@@ -1,8 +1,6 @@
 import moment from 'moment';
-import React from 'react';
 import 'moment-duration-format';
-import { FormattedMessage } from 'react-intl';
-import {MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT} from '../../constant';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
 
 export function beregnKlokkeslettVarighet(aktivitet) {
     const fraDato = aktivitet.fraDato;
