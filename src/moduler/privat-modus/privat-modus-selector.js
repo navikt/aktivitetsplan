@@ -11,6 +11,13 @@ export function selectErPrivatModus(state) {
     );
 }
 
+export function selectErUnderOppfolging(state) {
+    const stateData = state.data;
+    const situasjonReducer = stateData.situasjon;
+
+    return situasjonReducer.data.underOppfolging === false;
+}
+
 export function selectPrivatModusSlice(state) {
     const stateData = state.data;
     const situasjonReducer = stateData.situasjon;
