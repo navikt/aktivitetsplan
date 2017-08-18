@@ -16,7 +16,6 @@ import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 
 function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, erBruker }) {
-    // debugger;
     const { status, type, id } = valgtAktivitet;
 
     const visAdministreresAvVeileder = (

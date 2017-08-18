@@ -109,12 +109,29 @@ class AktivitetsKort extends Component {
     }
 }
 
+function sjekkErFlyttbar(aktivitet, erBruker) {
+    const { type, status, nesteStatus, historisk } = aktivitet;
+    const erArenaAktivitet = [
+        TILTAK_AKTIVITET_TYPE,
+        GRUPPE_AKTIVITET_TYPE,
+        UTDANNING_AKTIVITET_TYPE,
+    ].includes(type);
+    const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
+    const brukerKanOppdater =
+        [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
+    return (
+        !nesteStatus &&
+        !historisk &&
+        !erFerdig &&
+        !erArenaAktivitet &&
+        !brukerKanOppdater
+    );
+}
+
 AktivitetsKort.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-
     isDragging: PT.bool.isRequired,
     connectDragSource: PT.func.isRequired,
-
     forrigeAktiveAktivitetId: PT.string,
     erFlyttbar: PT.bool.isRequired,
     erBehandlingAktivitet: PT.bool.isRequired,
@@ -129,29 +146,15 @@ const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
 );
 
 const mapStateToProps = (state, props) => {
-    const { type, status, nesteStatus, historisk } = props.aktivitet;
-
-    const erBruker = selectErBruker(state);
-
+    const { type } = props.aktivitet;
     const behandlingAktivitet = BEHANDLING_AKTIVITET_TYPE === type;
-    const arenaAktivitet = [
-        TILTAK_AKTIVITET_TYPE,
-        GRUPPE_AKTIVITET_TYPE,
-        UTDANNING_AKTIVITET_TYPE,
-    ].includes(type);
-
-    const erFlyttbar =
-        !nesteStatus &&
-        !historisk &&
-        ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status) &&
-        !arenaAktivitet &&
-        !([SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker);
-
     return {
         forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
         erBehandlingAktivitet: behandlingAktivitet,
-        erFlyttbar,
+        erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)),
     };
 };
+
+
 
 export default connect(mapStateToProps)(dragbartAktivitetskort);
