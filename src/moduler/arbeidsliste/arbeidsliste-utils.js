@@ -28,10 +28,8 @@ export const begrensetKommentarLengde = rules.maxLength(
 );
 
 export function fristErEtterIDag(value) {
-    return !value || Moment(value).isAfter(
-        Moment().subtract(1, 'day').startOf('day'),
-        'd'
-    )
+    return !value ||
+    Moment(value).isAfter(Moment().subtract(1, 'day').startOf('day'), 'd')
         ? undefined
         : <FormattedMessage id="arbeidsliste-form.feilmeleding.frist.etter" />;
 }
