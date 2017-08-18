@@ -6,7 +6,6 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalHeader from '../../felles-komponenter/modal/modal-header';
-import history from '../../history';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 

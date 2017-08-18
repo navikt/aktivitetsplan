@@ -39,7 +39,10 @@ const rangering = {
 
 function finnHoyesteAlvorlighetsgrad(feilmeldinger) {
     return Math.min(
-        ...feilmeldinger.map(feilmelding => rangering[feilmelding.type])
+        ...feilmeldinger.map(feilmelding => {
+            const type = feilmelding.type || 'UKJENT';
+            return rangering[type];
+        })
     );
 }
 

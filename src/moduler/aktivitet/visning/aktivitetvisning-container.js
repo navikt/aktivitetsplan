@@ -57,9 +57,12 @@ class AktivitetvisningContainer extends Component {
             valgtAktivitet,
             doHentAktivitet,
             doFjernForrigeAktiveAktivitetId,
+            match,
         } = this.props;
         if (valgtAktivitet) {
             doHentAktivitet(valgtAktivitet.id);
+        } else {
+            doHentAktivitet(match.params.id);
         }
         doFjernForrigeAktiveAktivitetId();
     }
@@ -80,7 +83,7 @@ class AktivitetvisningContainer extends Component {
             <Modal
                 contentLabel="aktivitetsvisning-modal"
                 contentClass="aktivitetsvisning"
-                avhengigheter={[avhengigheter]}
+                avhengigheter={avhengigheter}
                 minstEnAvhengighet
                 header={aktivitetvisningHeader(valgtAktivitet)}
             >
@@ -99,6 +102,7 @@ AktivitetvisningContainer.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     tillatEndring: PT.bool.isRequired,
     slettingErTillatt: PT.bool.isRequired,
+    match: PT.object.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,

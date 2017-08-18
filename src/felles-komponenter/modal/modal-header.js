@@ -14,7 +14,6 @@ function ModalHeader({
     tilbakeTekstValues,
     normalTekstValues,
     className,
-    children,
     visConfirmDialog,
     aktivitetErLaast,
     intl,
@@ -27,9 +26,6 @@ function ModalHeader({
         >
             {/* header til slutt for å få denne sist i tabrekkefølgen */}
             <header className="modal-header">
-                <div>
-                    {children}
-                </div>
                 <VisibleIfSpan
                     className="modal-header-skillestrek"
                     visible={aktivitetErLaast}
@@ -65,7 +61,6 @@ ModalHeader.propTypes = {
     normalTekstValues: PT.object, // eslint-disable-line react/forbid-prop-types
     visConfirmDialog: PT.bool,
     className: PT.string,
-    children: PT.node,
     aktivitetErLaast: PT.bool,
     intl: intlShape.isRequired,
 };
@@ -77,7 +72,6 @@ ModalHeader.defaultProps = {
     normalTekstValues: undefined,
     visConfirmDialog: false,
     className: undefined,
-    children: undefined,
     aktivitetErLaast: false,
 };
 

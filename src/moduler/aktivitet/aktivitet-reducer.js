@@ -28,9 +28,10 @@ export default function reducer(state = initalState, action) {
                 data
             );
         case AT.HENTET:
-            return { status: STATUS.OK, data: data.aktiviteter };
+            return { ...state, status: STATUS.OK, data: data.aktiviteter };
         case AT.HENT_AKTIVITET_OK:
             return {
+                ...state,
                 status: STATUS.OK,
                 data: state.data
                     .filter(aktivitet => aktivitet.id !== data.id)

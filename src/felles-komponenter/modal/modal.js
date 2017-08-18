@@ -26,15 +26,13 @@ function Modal({
             shouldCloseOnOverlayClick={false}
             onRequestClose={onRequestClose}
         >
+            {header}
+            <Feilmelding />
             <Innholdslaster
                 minstEn={minstEnAvhengighet}
                 avhengigheter={avhengigheter}
             >
-                <div>
-                    {header}
-                    <Feilmelding />
-                    {children}
-                </div>
+                {children}
             </Innholdslaster>
         </NavFrontendModal>
     );
