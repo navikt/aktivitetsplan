@@ -13,7 +13,7 @@ export default function reducer(state = initalState, action) {
         case AT.HENT_KANALER:
             return { ...state, status: STATUS.PENDING };
         case AT.HENT_KANALER_FEILET:
-            return { ...state, status: STATUS.ERROR };
+            return { ...state, status: STATUS.ERROR, feil: data };
         case AT.HENT_KANALER_OK:
             return { ...state, status: STATUS.OK, data };
         default:

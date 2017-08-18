@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import UnderelementerForAktivitet from './underelement-for-aktivitet/underelementer-for-aktivitet';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
@@ -36,22 +35,6 @@ function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
         (aktivitet.status === STATUS_FULLFOERT ||
             aktivitet.status === STATUS_AVBRUTT);
 
-    const aktivitetErLaast =
-        aktivitet.status === STATUS_FULLFOERT ||
-        aktivitet.status === STATUS_AVBRUTT;
-
-    const AktivitetvisningHeader = () =>
-        <ModalHeader
-            normalTekstId="aktivitetvisning.header"
-            normalTekstValues={{
-                status: aktivitet.status,
-                type: aktivitet.type,
-            }}
-            className="side-innhold"
-            aria-labelledby="modal-aktivitetsvisning-header"
-            aktivitetErLaast={aktivitetErLaast}
-        />;
-
     const AktivitetvisningFooter = ({ visible }) =>
         <ModalFooter visible={visible}>
             <Knapp
@@ -72,8 +55,6 @@ function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
 
     return (
         <div>
-            <AktivitetvisningHeader />
-
             <ModalContainer className="aktivitetvisning">
                 <VarslingBoks
                     className="aktivitetvisning__underseksjon"

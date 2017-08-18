@@ -5,12 +5,10 @@ import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import ModalContainer from '../modal/modal-container';
 import ModalFooter from '../modal/modal-footer';
-import ModalHeader from '../modal/modal-header';
 
 function TimeoutboxNedtelling({ tidIgjen }) {
     return (
         <div>
-            <ModalHeader />
             <ModalContainer>
                 <div className="varselmodal">
                     <Innholdstittel className="blokk-s" tag="h1">

@@ -45,10 +45,6 @@ export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
     );
 }
 
-export function hentAktivitet(aktivitetId) {
-    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitetId}`);
-}
-
 export function hentArenaAktiviteter() {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/arena`);
 }
@@ -59,43 +55,8 @@ export function hentVersjonerTilAktivitet(aktivitet) {
     );
 }
 
-export function hentAktiviteter() {
-    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet`);
-}
-
-export function lagNyAktivitet(aktivitet) {
-    return postAsJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/ny`, aktivitet);
-}
-export function oppdaterAktivitet(aktivitet) {
-    return putAsJson(
-        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`,
-        aktivitet
-    );
-}
-
-export function oppdaterAktivitetStatus(aktivitet) {
-    return putAsJson(
-        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/status`,
-        aktivitet
-    );
-}
-
-export function oppdaterAktivitetEtikett(aktivitet) {
-    return putAsJson(
-        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/etikett`,
-        aktivitet
-    );
-}
-
 export function hentEtiketter() {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/etiketter`);
-}
-
-export function slettAktivitet(aktivitet) {
-    return fetchToJson(
-        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`,
-        { method: 'delete' }
-    );
 }
 
 export function hentArbeidsliste(fnr) {

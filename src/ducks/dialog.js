@@ -67,6 +67,11 @@ export default function reducer(state = initalState, action) {
                 status: STATUS.OK,
                 data: data.sort(compareDialoger),
             };
+        case HENTING_FEILET:
+        case OPPRETT_HENVENDELSE_FEILET:
+        case DIALOG_LEST_FEILET:
+        case OPPDATER_DIALOG_FEILET:
+            return { ...state, status: STATUS.ERROR, feil: data };
         case OPPRETTET_HENVENDELSE:
             return {
                 ...nyStateMedOppdatertDialog(state, data),

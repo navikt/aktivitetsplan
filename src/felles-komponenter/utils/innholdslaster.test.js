@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { IntlProvider } from 'react-intl';
 import Spinner from 'nav-frontend-spinner';
@@ -9,7 +9,7 @@ import Innholdslaster from './innholdslaster';
 
 describe('innholdslaster', () => {
     it('Skal rendre spinner hvis ikke alle avhengigheter har blitt lastet og det ikke er noen feil', () => {
-        const wrapper = shallow(
+        const wrapper = mount(
             <Innholdslaster avhengigheter={[{ status: STATUS.PENDING }]}>
                 Children
             </Innholdslaster>
@@ -18,7 +18,7 @@ describe('innholdslaster', () => {
         expect(wrapper).to.have.descendants(Spinner); // eslint-disable-line no-unused-expressions
     });
 
-    it('Skal rendre feilmeldign hvis det har oppstått en feil på noen avhengigheter', () => {
+    it('Skal ikke rendre children hvis det har oppstått en feil på noen avhengigheter', () => {
         const wrapper = mount(
             <IntlProvider>
                 <Innholdslaster avhengigheter={[{ status: STATUS.ERROR }]}>
@@ -27,7 +27,7 @@ describe('innholdslaster', () => {
             </IntlProvider>
         );
 
-        expect(wrapper.find('Feilmelding')).to.exist; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('Children')).to.not.exist; // eslint-disable-line no-unused-expressions
     });
 
     it('Skal rendre children hvis alle avhengigheter har blitt lastet', () => {
@@ -51,7 +51,7 @@ describe('innholdslaster', () => {
         expect(wrapper.find('div').hasClass('div-fra-func')).to.be.true; // eslint-disable-line no-unused-expressions
     });
 
-    it('Skal rendre feilmelding om noen av avhengighetene er ok, men andre har feilet', () => {
+    it('Skal ikke rendre children om noen av avhengighetene er ok, men andre har feilet', () => {
         const wrapper = mount(
             <IntlProvider>
                 <Innholdslaster
@@ -65,7 +65,7 @@ describe('innholdslaster', () => {
             </IntlProvider>
         );
 
-        expect(wrapper.find('Feilmelding')).to.exist; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('Children')).to.not.exist; // eslint-disable-line no-unused-expressions
     });
 
     it('Takler både slices og statuser', () => {
@@ -83,7 +83,7 @@ describe('innholdslaster', () => {
             </IntlProvider>
         );
 
-        expect(wrapper.find('Feilmelding')).to.exist; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('Children')).to.not.exist; // eslint-disable-line no-unused-expressions
     });
 
     it('Takler null og undefined', () => {

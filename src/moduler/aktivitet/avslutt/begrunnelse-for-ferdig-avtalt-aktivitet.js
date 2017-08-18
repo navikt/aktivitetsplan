@@ -4,7 +4,6 @@ import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
 import { validForm } from 'react-redux-form-validation';
 import Hovedknapp from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
@@ -24,7 +23,6 @@ function BegrunnelseForFerdigAvtaltAktivitet({
 }) {
     return (
         <form onSubmit={handleSubmit}>
-            <ModalHeader />
             <div className="aktivitetvisning__underseksjon">
                 <ModalContainer>
                     <Innholdstittel>

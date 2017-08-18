@@ -1,4 +1,3 @@
-import { FEILTYPE } from './utils';
 import { SKJUL_VERSJONSKONFLIKT } from './endre-aktivitet';
 
 // Actions
@@ -10,6 +9,8 @@ const initalState = {
     sisteFeilSkjult: false,
 };
 
+const VERSJONSKONFLIKT = 'VERSJONSKONFLIKT';
+
 export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
@@ -17,7 +18,7 @@ export default function reducer(state = initalState, action) {
         case SKJUL_VERSJONSKONFLIKT:
             return { ...state, sisteFeilSkjult: true };
         default:
-            if (data && FEILTYPE[data.type]) {
+            if (data && data.type === VERSJONSKONFLIKT) {
                 return { ...state, sisteFeil: data, sisteFeilSkjult: false };
             }
             return state;

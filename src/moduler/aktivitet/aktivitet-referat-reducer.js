@@ -14,7 +14,7 @@ export default function reducer(state = initalState, action) {
             return { ...state, status: STATUS.PENDING };
         case AT.OPPDATER_REFERAT_FEILET:
         case AT.PUBLISER_REFERAT_FEILET:
-            return { ...state, status: STATUS.ERROR };
+            return { ...state, status: STATUS.ERROR, feil: action.data };
         case AT.OPPDATER_REFERAT_OK:
         case AT.PUBLISER_REFERAT_OK:
             return { ...state, status: STATUS.OK };

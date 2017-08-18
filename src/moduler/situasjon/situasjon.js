@@ -51,7 +51,7 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.ERROR,
-                data: action.data,
+                feil: action.data,
             };
         case PENDING:
         case GODTA_PENDING:

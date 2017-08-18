@@ -28,7 +28,7 @@ export default function reducer(state = initalState, action) {
         case HENTER_VEILEDER_OK:
             return mergeState(state, data);
         case HENTER_VEILEDER_ERROR:
-            return { ...state, status: STATUS.ERROR };
+            return { ...state, status: STATUS.ERROR, feil: data };
         default:
             return state;
     }

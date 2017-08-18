@@ -10,14 +10,8 @@ export const STATUS = {
     ERROR: 'ERROR',
 };
 
-export const FEILTYPE = {
-    VERSJONSKONFLIKT: 'VERSJONSKONFLIKT',
-    UKJENT: 'UKJENT',
-};
-
 const DEFAULT_CONFIG = {
     credentials: 'same-origin',
-    redirect: 'manual', // ikke bli lurt av at backenden plutseling redirecter til login- eller feilside
 };
 
 const statusPrioritet = {
@@ -39,7 +33,12 @@ export function aggregerStatus(...reducereEllerStatuser) {
 }
 
 export function sjekkStatuskode(response) {
-    if (response.status >= 200 && response.status < 300 && response.ok) {
+    if (
+        response.status >= 200 &&
+        response.status < 300 &&
+        response.ok &&
+        !response.redirected
+    ) {
         return response;
     }
     const error = new Error(response.statusText || response.type);
