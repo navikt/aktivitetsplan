@@ -1,18 +1,23 @@
+import { selectHistoriskeOppfolgingsPerioder } from '../situasjon/situasjon-selector';
+import {
+    selectAktivitetEtiketterFilter,
+    selectAktivitetTyperFilter,
+    selectHistoriskPeriode,
+} from './filter-selector';
+
 function erAktivtFilter(filterData) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
 
 export function datoErIPeriode(dato, state) {
-    const stateData = state.data;
-    const filter = stateData.filter;
-
-    const historiskPeriode = filter.historiskPeriode;
+    const historiskPeriode = selectHistoriskPeriode(state);
     if (historiskPeriode) {
         return dato >= historiskPeriode.fra && dato <= historiskPeriode.til;
     }
-    const oppfolgingsPerioder =
-        stateData.situasjon.data.oppfolgingsPerioder || [];
-    const forrigeSluttDato = oppfolgingsPerioder
+    const historiskeOppfolgingsPerioder =
+        selectHistoriskeOppfolgingsPerioder(state) || [];
+
+    const forrigeSluttDato = historiskeOppfolgingsPerioder
         .map(p => p.sluttDato)
         .sort()
         .reverse()[0];
@@ -20,22 +25,16 @@ export function datoErIPeriode(dato, state) {
 }
 
 export function aktivitetFilter(aktivitet, state) {
-    const stateData = state.data;
-    const filter = stateData.filter;
-
-    const filterAktiviteter = filter.aktivitetTyper;
+    const aktivitetTypeFilter = selectAktivitetTyperFilter(state);
     if (
-        erAktivtFilter(filterAktiviteter) &&
-        !filterAktiviteter[aktivitet.type]
+        erAktivtFilter(aktivitetTypeFilter) &&
+        !aktivitetTypeFilter[aktivitet.type]
     ) {
         return false;
     }
 
-    const filterEtiketter = filter.aktivitetEtiketter;
-    if (
-        erAktivtFilter(filterEtiketter) &&
-        !filterEtiketter[aktivitet.etikett]
-    ) {
+    const etikettFilter = selectAktivitetEtiketterFilter(state);
+    if (erAktivtFilter(etikettFilter) && !etikettFilter[aktivitet.etikett]) {
         return false;
     }
 
