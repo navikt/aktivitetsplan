@@ -28,7 +28,7 @@ export const begrensetKommentarLengde = rules.maxLength(
 );
 
 export function fristErEtterIDag(value) {
-    return Moment(value).isAfter(
+    return !value || Moment(value).isAfter(
         Moment().subtract(1, 'day').startOf('day'),
         'd'
     )
