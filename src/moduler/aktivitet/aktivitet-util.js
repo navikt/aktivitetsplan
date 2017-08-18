@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import 'moment-duration-format';
 import { FormattedMessage } from 'react-intl';
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
+import {MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT} from '../../constant';
 
 export function beregnKlokkeslettVarighet(aktivitet) {
     const fraDato = aktivitet.fraDato;
@@ -54,10 +54,4 @@ export function manglerPubliseringAvSamtaleReferat(aktivitet) {
         ((type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) &&
             !erReferatPublisert)
     );
-}
-
-export function validerReferatPublisert() {
-    return (ignorerDenne, props) =>
-        manglerPubliseringAvSamtaleReferat(props.aktivitet || {}) &&
-        <FormattedMessage id="referat.validering.ikke-publisert" />;
 }
