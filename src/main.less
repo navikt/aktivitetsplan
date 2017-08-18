@@ -45,15 +45,55 @@
             top: ~'calc(50% - 2px)';
         }
     }
+
+    .typo-normal {
+        ul {
+            margin: 0;
+            list-style: none;
+            padding: 0;
+        }
+
+        & + .alertstripe {
+            margin-top: 1rem;
+        }
+    }
+
+    .alertstripe__ikon {
+        margin-right: 1rem;
+    }
+
+    .row + .alertstripe {
+        margin-top: 0.5rem;
+    }
+
+    .status-alert {
+        margin: 1rem 0;
+
+        .alertstripe {
+            margin: 1rem 0;
+        }
+    }
 }
 
 .ReactModal__Body--open {
     overflow: hidden;
+
+    .aktivitetsplanfs:not([class*='modal-portal']) {
+        display: none;
+    }
 }
 
 @media (min-width: @screen-md-min) {
-    .container {
+    .ReactModal__Body--open {
+        .aktivitetsplanfs:not([class*='modal-portal']) {
+            display: block;
+        }
+    }
+
+    .container,
+    .hovedsideinnhold div.feil-container {
         width: 890px;
+        margin: 0 auto;
     }
 }
 
@@ -62,7 +102,9 @@
         padding: 0 3.5rem;
     }
 
-    .container {
+    .container,
+    .hovedsideinnhold div.feil-container {
         width: 956px;
+        margin: 0 auto;
     }
 }

@@ -106,34 +106,37 @@
     }
 }
 
-.aktivitet-last .hjelpetekst__apneknapp {
-    span {
-        background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg') no-repeat
-            center;
-        background-size: 83%;
-        width: 23px;
-        height: 26px;
-    }
+.aktivitet-last {
+    padding-bottom: 0.25rem;
 
-    &:hover {
+    .hjelpetekst__apneknapp {
         span {
-            background: data-uri('@{aktivitetsplanPath}/img/hengelas_hover.svg')
+            background: data-uri('@{aktivitetsplanPath}/img/hengelas.svg')
                 no-repeat center;
-            background-size: 83%;
-            width: 23px;
+            width: 20px;
             height: 26px;
         }
-    }
 
-    &:active {
-        span {
-            background: data-uri(
-                    '@{aktivitetsplanPath}/img/hengelas_active.svg'
-                )
-                no-repeat center;
-            background-size: 83%;
-            width: 23px;
-            height: 26px;
+        &:hover {
+            span {
+                background: data-uri(
+                        '@{aktivitetsplanPath}/img/hengelas_hover.svg'
+                    )
+                    no-repeat center;
+                width: 20px;
+                height: 26px;
+            }
+        }
+
+        &:active {
+            span {
+                background: data-uri(
+                        '@{aktivitetsplanPath}/img/hengelas_active.svg'
+                    )
+                    no-repeat center;
+                width: 20px;
+                height: 26px;
+            }
         }
     }
 }

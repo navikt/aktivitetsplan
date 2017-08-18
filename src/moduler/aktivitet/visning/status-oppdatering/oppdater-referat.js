@@ -28,6 +28,7 @@ function OppdaterReferat({
     stoppOppdaterReferat,
 }) {
     const aktivitetStatus = aktivitet.status;
+    const erHistorisk = aktivitet.historisk;
     return (
         <div className={classNames('oppdater-referat', className)}>
             <Undertittel>
@@ -46,7 +47,7 @@ function OppdaterReferat({
                     aktivitetStatus === STATUS_AVBRUTT
                 }
             >
-                <HiddenIfDiv hidden={visOppdaterReferatForm}>
+                <HiddenIfDiv hidden={visOppdaterReferatForm || erHistorisk}>
                     <Hovedknapp
                         onClick={dispatchPubliserReferat}
                         spinner={publiserer}

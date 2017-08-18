@@ -40,11 +40,10 @@ function RedigerArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
                     />
                 </ModalContainer>
                 <ModalFooter>
-                    <Hovedknapp mini htmlType="submit">
+                    <Hovedknapp htmlType="submit">
                         <FormattedMessage id="arbeidsliste.knapp.lagre" />
                     </Hovedknapp>
                     <Knapp
-                        mini
                         onClick={e => {
                             e.preventDefault();
                             history.push('/');

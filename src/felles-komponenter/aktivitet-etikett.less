@@ -1,7 +1,8 @@
 .etikett {
+    display: inline-block;
     font-size: 80%;
     font-weight: normal;
-    padding: 0.25rem 0.5rem;
+    padding: 0.1rem 0.3rem;
     margin-right: 0.5rem;
     border-radius: @border-radius-base;
     white-space: nowrap;
@@ -21,5 +22,9 @@
     &--avtalt {
         background-color: @navDypBla;
         color: @white;
+    }
+
+    & + .etikett {
+        margin-top: 2px;
     }
 }

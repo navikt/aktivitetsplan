@@ -20,7 +20,11 @@ import {
     BEHANDLING_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
+    SAMTALEREFERAT_TYPE,
+    MOTE_TYPE,
 } from '../../../constant';
+import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -47,30 +51,22 @@ class AktivitetsKort extends Component {
     }
 
     render() {
-        const { aktivitet, isDragging, connectDragSource } = this.props;
+        const {
+            aktivitet,
+            isDragging,
+            connectDragSource,
+            erFlyttbar,
+            erBehandlingAktivitet,
+        } = this.props;
         const {
             id,
             type,
-            status,
-            nesteStatus,
             tittel,
             fraDato,
             tilDato,
-            historisk,
             antallStillingerSokes,
         } = aktivitet;
 
-        const behandlingAktivitet = BEHANDLING_AKTIVITET_TYPE === type;
-        const arenaAktivitet = [
-            TILTAK_AKTIVITET_TYPE,
-            GRUPPE_AKTIVITET_TYPE,
-            UTDANNING_AKTIVITET_TYPE,
-        ].includes(type);
-        const erFlyttbar =
-            !nesteStatus &&
-            !historisk &&
-            ![STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status) &&
-            !arenaAktivitet;
         const aktivitetsKort = (
             <article style={{ opacity: isDragging ? 0.4 : 1 }}>
                 <Lenke
@@ -90,7 +86,7 @@ class AktivitetsKort extends Component {
                         />
                     </Undertekst>
                     <Element tag="h1" className="aktivitetskort__tittel">
-                        {behandlingAktivitet
+                        {erBehandlingAktivitet
                             ? <FormattedMessage id="aktivitetskort.behandling.tittel" />
                             : tittel}
                     </Element>
@@ -113,11 +109,32 @@ class AktivitetsKort extends Component {
     }
 }
 
+function sjekkErFlyttbar(aktivitet, erBruker) {
+    const { type, status, nesteStatus, historisk } = aktivitet;
+    const erArenaAktivitet = [
+        TILTAK_AKTIVITET_TYPE,
+        GRUPPE_AKTIVITET_TYPE,
+        UTDANNING_AKTIVITET_TYPE,
+    ].includes(type);
+    const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
+    const brukerKanOppdater =
+        [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
+    return (
+        !nesteStatus &&
+        !historisk &&
+        !erFerdig &&
+        !erArenaAktivitet &&
+        !brukerKanOppdater
+    );
+}
+
 AktivitetsKort.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     isDragging: PT.bool.isRequired,
     connectDragSource: PT.func.isRequired,
     forrigeAktiveAktivitetId: PT.string,
+    erFlyttbar: PT.bool.isRequired,
+    erBehandlingAktivitet: PT.bool.isRequired,
 };
 
 AktivitetsKort.defaultProps = {
@@ -128,8 +145,14 @@ const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
     AktivitetsKort
 );
 
-const mapStateToProps = state => ({
-    forrigeAktiveAktivitetId: state.data.aktiviteter.forrigeAktiveAktivitetId,
-});
+const mapStateToProps = (state, props) => {
+    const { type } = props.aktivitet;
+    const behandlingAktivitet = BEHANDLING_AKTIVITET_TYPE === type;
+    return {
+        forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
+        erBehandlingAktivitet: behandlingAktivitet,
+        erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)),
+    };
+};
 
 export default connect(mapStateToProps)(dragbartAktivitetskort);

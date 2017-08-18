@@ -17,7 +17,10 @@ export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 export function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
     return (
         <div>
-            <Alert visible={!visVilkar && brukerHarAvslatt}>
+            <Alert
+                className="feil-container"
+                visible={!visVilkar && brukerHarAvslatt}
+            >
                 <FormattedHTMLMessage id="vilkar.info-avslag-vilkar" />
             </Alert>
             <GodkjennVilkar visVilkar={visVilkar} />

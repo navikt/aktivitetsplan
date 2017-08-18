@@ -48,16 +48,17 @@ RedigerLink.propTypes = {
     felt: PT.string.isRequired,
 };
 
-function Informasjonsfelt({ tittel, innhold, fullbredde }) {
+function Informasjonsfelt({ tittel, innhold, fullbredde, formattertTekst }) {
+    const Container = formattertTekst ? Tekstomrade : Normaltekst;
     return (
         <DetaljFelt
             tittel={tittel}
             visible={innhold !== null}
             fullbredde={fullbredde}
         >
-            <Normaltekst className="detaljfelt__tekst">
+            <Container className="detaljfelt__tekst">
                 {innhold}
-            </Normaltekst>
+            </Container>
         </DetaljFelt>
     );
 }
@@ -66,11 +67,13 @@ Informasjonsfelt.propTypes = {
     tittel: PT.node.isRequired,
     innhold: PT.node,
     fullbredde: PT.bool,
+    formattertTekst: PT.bool,
 };
 
 Informasjonsfelt.defaultProps = {
     innhold: undefined,
     fullbredde: false,
+    formattertTekst: false,
 };
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
@@ -445,6 +448,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 key="bakgrunn"
                 tittel={<FormattedMessage id="aktivitetdetaljer.bakgrunn" />}
                 innhold={beskrivelse}
+                formattertTekst
                 fullbredde
             />,
             <Informasjonsfelt
@@ -453,6 +457,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                     <FormattedMessage id="aktivitetdetaljer.forberedelser" />
                 }
                 innhold={forberedelser}
+                formattertTekst
                 fullbredde
             />,
         ];

@@ -21,9 +21,13 @@ import {
 import * as AppPT from '../../../proptypes';
 import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
-import { selectViserInneverendePeriode } from '../../../moduler/filter/filter-selector';
+import {
+    selectViserHistoriskPeriode,
+    selectViserInneverendePeriode,
+} from '../../../moduler/filter/filter-selector';
+import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 
-const NavigasjonsElement = ({ sti, tekstId, disabled, children }) => {
+const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
         navigasjonslinje__element: !disabled,
         'navigasjonslinje__lenke--disabled': disabled,
@@ -46,7 +50,7 @@ const NavigasjonsElement = ({ sti, tekstId, disabled, children }) => {
             {element}
         </Lenke>
     );
-};
+});
 
 NavigasjonsElement.defaultProps = {
     children: null,
@@ -72,13 +76,14 @@ class Navigasjonslinje extends Component {
             arbeidslisteReducer,
             harVeilederTilgang,
             disabled,
+            kanHaDialog,
         } = this.props;
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement
                     sti="/dialog"
                     tekstId="navigasjon.dialog"
-                    disabled={disabled}
+                    disabled={disabled || !kanHaDialog}
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
@@ -114,6 +119,7 @@ Navigasjonslinje.propTypes = {
     antallUlesteDialoger: PT.number.isRequired,
     doHentArbeidsliste: PT.func.isRequired,
     arbeidslisteReducer: AppPT.reducer.isRequired,
+    kanHaDialog: PT.bool.isRequired,
     harVeilederTilgang: PT.bool,
     disabled: PT.bool.isRequired,
 };
@@ -134,6 +140,7 @@ const mapStateToProps = state => {
         underOppfolging: stateData.situasjon.data.underOppfolging,
         arbeidslisteReducer: selectArbeidslisteReducer(state),
         harVeilederTilgang: selectHarVeilederTilgang(state),
+        kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
         disabled:
             !selectErBruker(state) &&
             underOppfolging === false &&

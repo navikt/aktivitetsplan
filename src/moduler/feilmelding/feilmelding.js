@@ -9,7 +9,9 @@ import Feil from '../../sider/hovedside/feil/feil';
 function Feilmelding({ feilmeldinger, className }) {
     return (
         <div className={classNames(className, 'feilmelding')}>
-            <Feil />
+            <div className="feil-container">
+                <Feil />
+            </div>
             {mapTyperTilAlertstripe(feilmeldinger)}
         </div>
     );
