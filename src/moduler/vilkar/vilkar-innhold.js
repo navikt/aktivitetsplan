@@ -11,7 +11,7 @@ import VisibleIfHOC from '../../hocs/visible-if';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { formaterDatoKortManed } from '../../utils';
 import {
-    selectErPrivatModus,
+    selectErUnderOppfolging,
     selectPrivatModusStatus,
 } from '../privat-modus/privat-modus-selector';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
@@ -22,9 +22,9 @@ const VisibleIfElementFormattedMessage = VisibleIfHOC(props =>
     </Element>
 );
 
-function VilkarInnhold({ vilkar, privatModus, privatModusStatus }) {
+function VilkarInnhold({ vilkar, underOppfolging, privatModusStatus }) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
-    const tittelTekst = privatModus
+    const tittelTekst = underOppfolging
         ? 'vilkar.modal.gjeldende.privat-tittel'
         : 'vilkar.modal.gjeldende.samarbeid-tittel';
     return (
@@ -52,20 +52,20 @@ function VilkarInnhold({ vilkar, privatModus, privatModusStatus }) {
 
 VilkarInnhold.propTypes = {
     vilkar: AppPT.vilkar.isRequired,
-    privatModus: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
     privatModusStatus: AppPT.status.isRequired,
 };
 
 VisibleIfElementFormattedMessage.propTypes = {
-    privatModus: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
     privatModusReducer: AppPT.reducer.isRequired,
 };
 
 const mapStateToProps = state => {
-    const privatModus = selectErPrivatModus(state);
+    const underOppfolging = selectErUnderOppfolging(state);
     const privatModusStatus = selectPrivatModusStatus(state);
     return {
-        privatModus,
+        underOppfolging,
         privatModusStatus,
     };
 };

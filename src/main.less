@@ -46,7 +46,6 @@
     }
 
     .typo-normal {
-
         ul {
             margin: 0;
             list-style: none;
@@ -77,9 +76,19 @@
 
 .ReactModal__Body--open {
     overflow: hidden;
+
+    .aktivitetsplanfs:not([class*='modal-portal']) {
+        display: none;
+    }
 }
 
 @media (min-width: @screen-md-min) {
+    .ReactModal__Body--open {
+        .aktivitetsplanfs:not([class*='modal-portal']) {
+            display: block;
+        }
+    }
+
     .container,
     .hovedsideinnhold div.feil-container {
         width: 890px;

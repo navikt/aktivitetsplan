@@ -16,8 +16,35 @@ export const update = () => {
 };
 
 class Timeoutbox extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            skalViseModal: false,
+            tidIgjen: null,
+            tidIgjenMoment: null,
+        };
+    }
+
     componentWillMount() {
-        this.rerender = setInterval(() => this.forceUpdate(), 250);
+        this.rerender = setInterval(() => {
+            const tidSidenForrigeKall =
+                Moment.now() - window.timeout.lastRequest;
+            const tidIgjen = TIMEOUT_TID.asMilliseconds() - tidSidenForrigeKall;
+            const tidIgjenMoment = Moment(tidIgjen);
+            const skalViseModal =
+                tidIgjen <= DISPLAY_TID.asMilliseconds() &&
+                !window.timeout.hidden;
+
+            this.setState({
+                skalViseModal,
+                tidIgjen,
+                tidIgjenMoment,
+            });
+        }, 500);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.skalViseModal;
     }
 
     componentWillUnmount() {
@@ -25,16 +52,9 @@ class Timeoutbox extends Component {
     }
 
     render() {
-        const tidSidenForrigeKall = Moment.now() - window.timeout.lastRequest;
-        const tidIgjen = TIMEOUT_TID.asMilliseconds() - tidSidenForrigeKall;
-        const tidIgjenMoment = Moment(tidIgjen);
-
-        const skalViseModal =
-            tidIgjen <= DISPLAY_TID.asMilliseconds() && !window.timeout.hidden;
-
         return (
             <NavFrontendModal
-                isOpen={skalViseModal}
+                isOpen={this.state.skalViseModal}
                 shouldCloseOnOverlayClick={false}
                 overlayClassName="aktivitet-modal__overlay"
                 portalClassName="aktivitetsplanfs timeout-modal-portal"
@@ -45,8 +65,10 @@ class Timeoutbox extends Component {
                     id: 'timeoutbox.aria.label',
                 })}
             >
-                {tidIgjen > 0
-                    ? <TimeoutboxNedtelling tidIgjen={tidIgjenMoment} />
+                {this.state.tidIgjen > 0
+                    ? <TimeoutboxNedtelling
+                          tidIgjen={this.state.tidIgjenMoment}
+                      />
                     : <TimeoutboxLoggetUt />}
             </NavFrontendModal>
         );
