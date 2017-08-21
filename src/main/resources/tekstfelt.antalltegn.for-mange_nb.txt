@@ -1,1 +1,1 @@
-Du har {antall} for mye
+Du har {antall} tegn for mye

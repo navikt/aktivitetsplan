@@ -1,1 +1,1 @@
-For lang forberedelse
+Forberedelse kan ikke være lenger enn {FORBEREDELSER_MAKS_LENGDE} tegn
