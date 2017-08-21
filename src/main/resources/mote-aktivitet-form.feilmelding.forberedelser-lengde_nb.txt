@@ -1,1 +1,1 @@
-Forberedelse kan ikke være lenger enn {FORBEREDELSER_MAKS_LENGDE} tegn
+Forberedelse kan ikke være lenger enn {MAKS_LENGDE} tegn
