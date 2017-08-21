@@ -1,1 +1,1 @@
-Bakgrunn / hensikt med møte kan ikke være lenger enn {MAKS_LENGDE} tegn
+Hensikt med møte kan ikke være lenger enn {MAKS_LENGDE} tegn
