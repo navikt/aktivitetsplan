@@ -3,11 +3,12 @@ import { rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import Moment from 'moment';
 
-export const lagArbeidsliste = (fnr, form, props) => ({
+export const lagArbeidsliste = (fnr, form, props, redigering) => ({
     fnr,
     veilederId: props.veileder,
     kommentar: form.kommentar,
     frist: form.frist,
+    redigering,
 });
 
 export const KOMMENTAR_MAKS_LENGDE = 255;
