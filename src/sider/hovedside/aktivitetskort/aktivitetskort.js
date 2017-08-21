@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
-import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
+import { Undertekst, Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import Lenke from '../../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import { aktivitetRoute } from '../../../routing';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
-import AktiviteskortPeriodeVisning from "./aktivitetskort-periode";
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
@@ -58,15 +58,7 @@ class AktivitetsKort extends Component {
             erFlyttbar,
             erBehandlingAktivitet,
         } = this.props;
-        const {
-            id,
-            type,
-            tittel,
-            fraDato,
-            tilDato,
-            antallStillingerSokes,
-        } = aktivitet;
-
+        const { id, type, tittel, antallStillingerSokes } = aktivitet;
 
         const aktivitetsKort = (
             <article style={{ opacity: isDragging ? 0.4 : 1 }}>
@@ -91,7 +83,7 @@ class AktivitetsKort extends Component {
                             ? <FormattedMessage id="aktivitetskort.behandling.tittel" />
                             : tittel}
                     </Element>
-                    <AktiviteskortPeriodeVisning aktivitet={aktivitet}/>
+                    <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
                     <VisibleIfDiv visible={type === SOKEAVTALE_AKTIVITET_TYPE}>
                         <FormattedMessage id="aktivitetskort.antall-label" />
                         &nbsp;
