@@ -88,7 +88,7 @@ const mapStateToProps = (state, props) => {
     const aktivitetType = aktivitet.type;
     const kanHaReferat =
         (aktivitetType === MOTE_TYPE &&
-        moment(aktivitet.fraDato).toISOString() < moment().toISOString()) ||
+            moment(aktivitet.fraDato).toISOString() < moment().toISOString()) ||
         aktivitetType === SAMTALEREFERAT_TYPE;
 
     const referat = aktivitet.referat;
