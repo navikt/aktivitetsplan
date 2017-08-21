@@ -91,7 +91,10 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onSubmit: formData => {
             dispatch(
-                redigerArbeidsliste(fnr, lagArbeidsliste(fnr, formData, props, true))
+                redigerArbeidsliste(
+                    fnr,
+                    lagArbeidsliste(fnr, formData, props, true)
+                )
             ).then(() => {
                 dispatch({ type: LUKK_MODAL });
                 history.push('/');
