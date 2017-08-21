@@ -8,14 +8,14 @@ import Innholdslaster from '../utils/innholdslaster';
 import Feilmelding from '../../moduler/feilmelding/feilmelding';
 
 function Modal({
-    header,
-    children,
-    avhengigheter,
-    onRequestClose,
-    className,
-    minstEnAvhengighet,
-    ...props
-}) {
+                   header,
+                   children,
+                   avhengigheter,
+                   onRequestClose,
+                   className,
+                   minstEnAvhengighet,
+                   ...props
+               }) {
     return (
         <NavFrontendModal
             {...props}
