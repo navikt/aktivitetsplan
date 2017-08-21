@@ -6,6 +6,7 @@ import { Bilde } from 'nav-react-design';
 import history from '../../../history';
 import {
     selectErBrukerIArbeidsliste,
+    selectHarVeilederTilgang,
     selectIsOppfolgendeVeileder,
 } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import ArbeidslisteSVG from './arbeidsliste.svg';
@@ -16,8 +17,9 @@ import HiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
 function NavigasjonslinjeMeny({
     intl,
     brukerErMin,
-    brukerErIArbeidsliste,
-    harVeilederTilgang,
+    kanLeggeTil,
+    kanFjerne,
+    kanRedigere,
 }) {
     const InnstillingerKnapp = () =>
         <button
@@ -76,17 +78,9 @@ function NavigasjonslinjeMeny({
 
     return (
         <div className="navigasjonslinje-meny">
-            <LeggTilLenke
-                hidden={
-                    !brukerErMin || brukerErIArbeidsliste || !harVeilederTilgang
-                }
-            />
-            <FjernLenke
-                hidden={!brukerErIArbeidsliste || !harVeilederTilgang}
-            />
-            <RedigerLenke
-                hidden={!brukerErIArbeidsliste || !harVeilederTilgang}
-            />
+            <LeggTilLenke hidden={!kanLeggeTil} />
+            <FjernLenke hidden={!kanFjerne} />
+            <RedigerLenke hidden={!kanRedigere} />
             <InnstillingerKnapp />
         </div>
     );
@@ -95,13 +89,27 @@ function NavigasjonslinjeMeny({
 NavigasjonslinjeMeny.propTypes = {
     intl: intlShape.isRequired,
     brukerErMin: PT.bool.isRequired,
-    brukerErIArbeidsliste: PT.bool.isRequired,
-    harVeilederTilgang: PT.bool.isRequired,
+    kanRedigere: PT.bool.isRequired,
+    kanLeggeTil: PT.bool.isRequired,
+    kanFjerne: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-    brukerErMin: selectIsOppfolgendeVeileder(state),
-    brukerErIArbeidsliste: selectErBrukerIArbeidsliste(state),
-});
+const mapStateToProps = state => {
+    const brukerErIArbeidsliste = selectErBrukerIArbeidsliste(state);
+    const brukerErMin = selectIsOppfolgendeVeileder(state);
+    const harVeilederTilgang = selectHarVeilederTilgang(state);
+
+    const kanLeggeTil =
+        !brukerErIArbeidsliste && harVeilederTilgang && brukerErMin;
+    const kanFjerne =
+        brukerErIArbeidsliste && harVeilederTilgang && brukerErMin;
+    const kanRedigere = brukerErIArbeidsliste && harVeilederTilgang;
+    return {
+        brukerErMin,
+        kanLeggeTil,
+        kanFjerne,
+        kanRedigere,
+    };
+};
 
 export default connect(mapStateToProps)(injectIntl(NavigasjonslinjeMeny));
