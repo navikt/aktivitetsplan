@@ -9,9 +9,9 @@ import { FormattedMessage } from 'react-intl';
 import Lenke from '../../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
-import { formaterDato } from '../../../utils';
 import { aktivitetRoute } from '../../../routing';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import AktiviteskortPeriodeVisning from "./aktivitetskort-periode";
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
@@ -67,6 +67,7 @@ class AktivitetsKort extends Component {
             antallStillingerSokes,
         } = aktivitet;
 
+
         const aktivitetsKort = (
             <article style={{ opacity: isDragging ? 0.4 : 1 }}>
                 <Lenke
@@ -90,11 +91,7 @@ class AktivitetsKort extends Component {
                             ? <FormattedMessage id="aktivitetskort.behandling.tittel" />
                             : tittel}
                     </Element>
-                    <Normaltekst className="aktivitetskort__dato">
-                        {[formaterDato(fraDato), formaterDato(tilDato)]
-                            .filter(d => d)
-                            .join(' - ')}
-                    </Normaltekst>
+                    <AktiviteskortPeriodeVisning aktivitet={aktivitet}/>
                     <VisibleIfDiv visible={type === SOKEAVTALE_AKTIVITET_TYPE}>
                         <FormattedMessage id="aktivitetskort.antall-label" />
                         &nbsp;
