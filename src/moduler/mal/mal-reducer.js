@@ -23,22 +23,27 @@ const initalState = {
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
-        case OPPDATER_PENDING:
-            return { ...state, status: STATUS.RELOADING };
         case GJELDENDE_FEILET:
-            return { ...state, status: STATUS.ERROR, gjeldende: action.data };
-        case GJELDENDE_OK:
-            return { ...state, status: STATUS.OK, gjeldende: action.data };
         case LISTE_FEILET:
-            return { ...state, status: STATUS.ERROR, liste: action.data };
+        case OPPDATER_FEILET:
+            return { ...state, status: STATUS.ERROR, feil: action.data };
+        case GJELDENDE_PENDING:
+        case OPPDATER_PENDING:
+        case LISTE_PENDING:
+            return {
+                ...state,
+                status:
+                    state.status === STATUS.NOT_STARTED
+                        ? STATUS.PENDING
+                        : STATUS.RELOADING,
+            };
+        case GJELDENDE_OK:
+        case OPPDATER_OK:
+            return { ...state, status: STATUS.OK, gjeldende: action.data };
         case LISTE_OK:
             return { ...state, status: STATUS.OK, liste: action.data };
         case LISTE_FJERN:
             return { ...state, status: STATUS.OK, liste: [] };
-        case OPPDATER_FEILET:
-            return { ...state, status: STATUS.ERROR, gjeldende: action.data };
-        case OPPDATER_OK:
-            return { ...state, status: STATUS.OK, gjeldende: action.data };
         default:
             return state;
     }

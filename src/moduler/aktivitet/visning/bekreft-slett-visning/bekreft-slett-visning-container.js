@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { slettAktivitet } from '../../aktivitet-actions';
 import BekreftSlettVisning from './bekreft-slett-visning';
-import StandardModal from '../../../../felles-komponenter/modal/modal-standard';
 import history from '../../../../history';
 import * as AppPT from '../../../../proptypes';
+import Modal from '../../../../felles-komponenter/modal/modal';
 
 function BekreftSlettVisningContainer({
     doSlettAktivitet,
@@ -19,7 +19,7 @@ function BekreftSlettVisningContainer({
     );
 
     return (
-        <StandardModal name="aktivitetsvisningModal">
+        <Modal contentLabel="aktivitetsvisningModal">
             <BekreftSlettVisning
                 slettAction={() => {
                     doSlettAktivitet(valgtAktivitet);
@@ -28,7 +28,7 @@ function BekreftSlettVisningContainer({
                 avbrytAction={() =>
                     history.push(`aktivitet/vis/${valgtAktivitet.id}`)}
             />
-        </StandardModal>
+        </Modal>
     );
 }
 

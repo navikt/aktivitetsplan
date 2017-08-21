@@ -29,7 +29,7 @@ export default function reducer(state = initalState, action) {
                         : STATUS.RELOADING,
             };
         case FEILET:
-            return { ...state, status: STATUS.ERROR, data: action.data };
+            return { ...state, status: STATUS.ERROR, feil: action.data };
         case OPPDATER_OK:
         case FLYTT_OK:
             if (state.status === STATUS.NOT_STARTED) {

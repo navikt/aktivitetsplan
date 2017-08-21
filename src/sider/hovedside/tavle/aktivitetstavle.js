@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Tavle from './tavle';
 import Kolonne from './aktivitetstavlekolonne';
+import * as AppPT from '../../../proptypes';
 import { hentAktiviteter } from '../../../moduler/aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -26,7 +27,13 @@ class AktivitetsTavle extends Component {
 
     render() {
         return (
-            <Innholdslaster avhengigheter={[this.props.aktivitet]}>
+            <Innholdslaster
+                minstEn
+                avhengigheter={[
+                    this.props.aktivitet,
+                    this.props.anreaAktivitet,
+                ]}
+            >
                 <Tavle
                     defaultStartKolonne={1}
                     antallKolonner={3}
@@ -61,14 +68,14 @@ class AktivitetsTavle extends Component {
 AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
-    aktivitet: PT.shape({
-        status: PT.string.isRequired,
-    }),
+    aktivitet: AppPT.reducer,
+    anreaAktivitet: AppPT.reducer,
     reducersNotStarted: PT.bool.isRequired,
 };
 
 AktivitetsTavle.defaultProps = {
     aktivitet: undefined,
+    anreaAktivitet: undefined,
 };
 
 const mapStateToProps = state => {
@@ -80,6 +87,7 @@ const mapStateToProps = state => {
         statusArenaAktiviteter === STATUS.NOT_STARTED;
     return {
         aktivitet: state.data.aktiviteter,
+        anreaAktivitet: state.data.arenaAktiviteter,
         reducersNotStarted,
     };
 };

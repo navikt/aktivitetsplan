@@ -7,7 +7,6 @@ import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
 import VisAdvarsel from './vis-advarsel';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
-import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 import history from '../../../history';
 import { selectRouteParams } from '../../../routing';
 import {
@@ -15,6 +14,8 @@ import {
     selectAktivitetMedId,
 } from '../aktivitetliste-selector';
 import PubliserReferat from './publiser-referat';
+import Modal from '../../../felles-komponenter/modal/modal';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 
 const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
     const begrunnelse = (
@@ -45,11 +46,14 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
     );
 
     return (
-        <StandardModal name="BegrunnelseModal">
+        <Modal
+            header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
+            contentLabel="avbryt-aktivitet"
+        >
             <PubliserReferat aktivitet={valgtAktivitet}>
                 {valgtAktivitet.avtalt ? begrunnelse : advarsel}
             </PubliserReferat>
-        </StandardModal>
+        </Modal>
     );
 };
 

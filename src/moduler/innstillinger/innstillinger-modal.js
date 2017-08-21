@@ -6,19 +6,18 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalHeader from '../../felles-komponenter/modal/modal-header';
-import history from '../../history';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
 function InnstillingerModal({ motpart, children, navnPaMotpart }) {
     return (
         <Modal
-            isOpen
-            onRequestClose={() => history.push('/')}
+            header={
+                <ModalHeader tilbakeTekstId="innstillinger.modal.tilbake" />
+            }
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
-            <ModalHeader tilbakeTekstId="innstillinger.modal.tilbake" />
             <article className="innstillinger__container">
                 <Innholdslaster
                     avhengigheter={[motpart]}

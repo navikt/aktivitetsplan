@@ -17,7 +17,7 @@ export default function reducer(state = initalState, action) {
         case HENTET:
             return { ...state, status: STATUS.OK, data: action.data };
         case HENTING_FEILET:
-            return { ...state, status: STATUS.ERROR };
+            return { ...state, status: STATUS.ERROR, feil: action.data };
         default:
             return state;
     }

@@ -78,16 +78,17 @@ class AktivitetFormContainer extends Component {
 
         return (
             <Modal
-                isOpen
+                header={
+                    <ModalHeader
+                        visConfirmDialog={formIsDirty}
+                        tilbakeTekstId="ny-aktivitet-modal.tilbake"
+                    />
+                }
                 key="behandlingAktivitetModal"
                 onRequestClose={onRequestClose}
                 contentLabel="aktivitet-modal"
             >
                 <article aria-labelledby="modal-behandling-aktivitet-header">
-                    <ModalHeader
-                        visConfirmDialog={formIsDirty}
-                        tilbakeTekstId="ny-aktivitet-modal.tilbake"
-                    />
                     <ModalContainer>
                         <Switch>
                             <Route path={`${match.path}/mote`}>

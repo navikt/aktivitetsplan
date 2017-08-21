@@ -5,14 +5,12 @@ import Hovedknapp from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { reduxForm } from 'redux-form';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 
 function VisAdvarsel({ handleSubmit, headerTekst }) {
     return (
         <form onSubmit={handleSubmit}>
-            <ModalHeader />
             <ModalContainer className="aktivitetvisning__underseksjon">
                 <Innholdstittel>
                     {headerTekst}

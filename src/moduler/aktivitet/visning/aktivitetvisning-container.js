@@ -14,8 +14,6 @@ import {
 import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
 import Aktivitetvinsing from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import StandardModal from '../../../felles-komponenter/modal/modal-standard';
 import {
     selectAktivitetListeStatus,
     selectAktivitetMedId,
@@ -26,21 +24,46 @@ import {
     selectOppfolgingUtgang,
     selectSituasjonStatus,
 } from '../../situasjon/situasjon-selector';
+import Modal from '../../../felles-komponenter/modal/modal';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+
+function aktivitetvisningHeader(valgtAktivitet) {
+    if (!valgtAktivitet) {
+        return null;
+    }
+
+    const aktivitetErLaast =
+        valgtAktivitet.status === STATUS_FULLFOERT ||
+        valgtAktivitet.status === STATUS_AVBRUTT;
+
+    return (
+        <ModalHeader
+            normalTekstId="aktivitetvisning.header"
+            normalTekstValues={{
+                status: valgtAktivitet.status,
+                type: valgtAktivitet.type,
+            }}
+            className="side-innhold"
+            aria-labelledby="modal-aktivitetsvisning-header"
+            aktivitetErLaast={aktivitetErLaast}
+        />
+    );
+}
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
         const {
             valgtAktivitet,
             doHentAktivitet,
-            doHentArenaAktiviteter,
-            doHentAktiviteter,
             doFjernForrigeAktiveAktivitetId,
+            match,
         } = this.props;
         if (valgtAktivitet) {
             doHentAktivitet(valgtAktivitet.id);
+        } else {
+            doHentAktivitet(match.params.id);
         }
-        doHentArenaAktiviteter();
-        doHentAktiviteter();
         doFjernForrigeAktiveAktivitetId();
     }
 
@@ -57,15 +80,19 @@ class AktivitetvisningContainer extends Component {
             tillatEndring,
         } = this.props;
         return (
-            <StandardModal name="aktivitetsvisningModal">
-                <Innholdslaster avhengigheter={avhengigheter}>
-                    <Aktivitetvinsing
-                        aktivitet={valgtAktivitet}
-                        tillatSletting={slettingErTillatt}
-                        tillatEndring={tillatEndring}
-                    />
-                </Innholdslaster>
-            </StandardModal>
+            <Modal
+                contentLabel="aktivitetsvisning-modal"
+                contentClass="aktivitetsvisning"
+                avhengigheter={avhengigheter}
+                minstEnAvhengighet
+                header={aktivitetvisningHeader(valgtAktivitet)}
+            >
+                <Aktivitetvinsing
+                    aktivitet={valgtAktivitet}
+                    tillatSletting={slettingErTillatt}
+                    tillatEndring={tillatEndring}
+                />
+            </Modal>
         );
     }
 }
@@ -75,6 +102,7 @@ AktivitetvisningContainer.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     tillatEndring: PT.bool.isRequired,
     slettingErTillatt: PT.bool.isRequired,
+    match: PT.object.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,

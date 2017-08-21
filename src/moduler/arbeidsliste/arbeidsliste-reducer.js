@@ -40,7 +40,7 @@ export default function reducer(state = initialState, action) {
         case LAGRE_ARBEIDSLISTE_FEILET:
         case SLETT_ARBEIDSLISTE_FEILET:
         case REDIGER_ARBEIDSLISTE_FEILET:
-            return { ...state, status: STATUS.ERROR, data };
+            return { ...state, status: STATUS.ERROR, feil: data };
         case HENT_ARBEIDSLISTE_PENDING:
         case LAGRE_ARBEIDSLISTE_PENDING:
         case SLETT_ARBEIDSLISTE_PENDING:
