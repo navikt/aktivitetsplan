@@ -36,7 +36,7 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
                     valgtAktivitet,
                     beskrivelseForm.begrunnelse
                 );
-                history.goBack();
+                history.replace('/');
             }}
         />
     );
@@ -46,16 +46,13 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
             headerTekst={headerTekst}
             onSubmit={() => {
                 doAvsluttOppfolging(valgtAktivitet, null);
-                history.goBack();
+                history.replace('/');
             }}
         />
     );
 
     return (
-        <Modal
-            header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
-            contentLabel="fullfor-aktivitet"
-        >
+        <Modal header={<ModalHeader />} contentLabel="fullfor-aktivitet">
             <PubliserReferat aktivitet={valgtAktivitet}>
                 {valgtAktivitet.avtalt ? begrunnelse : advarsel}
             </PubliserReferat>
