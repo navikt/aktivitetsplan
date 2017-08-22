@@ -1,8 +1,11 @@
 import PT from 'prop-types';
 
+export function harFeature(name) {
+    return window.features && window.features[name] === true;
+}
+
 export default function Feature({ name, children }) {
-    const enabled = window.features && window.features[name] === true;
-    return enabled ? children : null;
+    return harFeature(name) ? children : null;
 }
 
 Feature.propTypes = {
