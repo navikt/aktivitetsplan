@@ -52,10 +52,7 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     );
 
     return (
-        <Modal
-            header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
-            contentLabel="fullfor-aktivitet"
-        >
+        <Modal header={<ModalHeader />} contentLabel="fullfor-aktivitet">
             <PubliserReferat aktivitet={valgtAktivitet}>
                 {valgtAktivitet.avtalt ? begrunnelse : advarsel}
             </PubliserReferat>
