@@ -118,16 +118,16 @@ Varslinger.propTypes = {
 };
 
 const mapStateToProps = state => ({
-        identitetReducer: selectIdentitetReducer(state),
-        erBruker: selectErBruker(state),
-        situasjonReducer: selectSituasjonReducer(state),
-        vilkarMaBesvares: selectVilkarMaBesvares(state),
-        underOppfolging: selectErUnderOppfolging(state),
-        brukerErManuell: selectErBrukerManuell(state),
-        reservertIKRR: selectReservasjonKRR(state),
-        brukerErEskalert: selectErBrukerEskalert(state),
-        tilhorendeDialogId: selectTilHorendeDialogId(state),
-    });
+    identitetReducer: selectIdentitetReducer(state),
+    erBruker: selectErBruker(state),
+    situasjonReducer: selectSituasjonReducer(state),
+    vilkarMaBesvares: selectVilkarMaBesvares(state),
+    underOppfolging: selectErUnderOppfolging(state),
+    brukerErManuell: selectErBrukerManuell(state),
+    reservertIKRR: selectReservasjonKRR(state),
+    brukerErEskalert: selectErBrukerEskalert(state),
+    tilhorendeDialogId: selectTilHorendeDialogId(state),
+});
 
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),

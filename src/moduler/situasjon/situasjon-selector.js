@@ -30,16 +30,12 @@ export function selectErBrukerEskalert(state) {
     return selectSituasjonReducer(state).data.gjeldendeEskaleringsStatus;
 }
 
-
 export function selectTilHorendeDialogId(state) {
     if (selectErBrukerEskalert(state)) {
         return selectErBrukerEskalert(state).tilhorendeDialogId;
     }
     return null;
 }
-
-
-
 
 export function selectSituasjonStatus(state) {
     return selectSituasjonReducer(state).status;
