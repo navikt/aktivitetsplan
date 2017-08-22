@@ -36,7 +36,7 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
                     valgtAktivitet,
                     beskrivelseForm.begrunnelse
                 );
-                history.replace('/');
+                history.goBack();
             }}
         />
     );
@@ -46,7 +46,7 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
             headerTekst={headerTekst}
             onSubmit={() => {
                 doAvsluttOppfolging(valgtAktivitet, null);
-                history.replace('/');
+                history.goBack();
             }}
         />
     );
