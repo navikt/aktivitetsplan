@@ -9,7 +9,10 @@ import Feil from '../../sider/hovedside/feil/feil';
 
 function Feilmelding({ feilmeldinger, className }) {
     return (
-        <VisibleIfDiv visible={feilmeldinger.length > 0} className={classNames(className, 'feilmelding')}>
+        <VisibleIfDiv
+            visible={feilmeldinger.length > 0}
+            className={classNames(className, 'feilmelding')}
+        >
             <div className="feil-container">
                 <Feil />
             </div>

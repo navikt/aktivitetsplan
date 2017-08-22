@@ -15,7 +15,10 @@ function AktivitetskortTillegg({
     antallUlesteHenvendelser,
 }) {
     return (
-        <VisibleIfDiv visible={aktivitet.avtalt || !!aktivitet.etikett} className="aktivitetskort__ikon-blokk">
+        <VisibleIfDiv
+            visible={aktivitet.avtalt || !!aktivitet.etikett}
+            className="aktivitetskort__ikon-blokk"
+        >
             <div className="aktivitetskort__etiketter">
                 <AktivitetEtikett
                     visible={aktivitet.avtalt}
