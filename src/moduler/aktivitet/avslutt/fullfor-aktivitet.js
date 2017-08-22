@@ -35,7 +35,8 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
                 doAvsluttOppfolging(
                     valgtAktivitet,
                     beskrivelseForm.begrunnelse
-                ).then(history.goBack());
+                );
+                history.replace('/');
             }}
         />
     );
@@ -44,9 +45,8 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
         <VisAdvarsel
             headerTekst={headerTekst}
             onSubmit={() => {
-                doAvsluttOppfolging(valgtAktivitet, null).then(
-                    history.goBack()
-                );
+                doAvsluttOppfolging(valgtAktivitet, null);
+                history.replace('/');
             }}
         />
     );
