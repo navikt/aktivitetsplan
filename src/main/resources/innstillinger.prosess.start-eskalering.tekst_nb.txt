@@ -1,0 +1,1 @@
+Send §8 varsel til bruker som er i ferd med å miste rett til oppfølging.
