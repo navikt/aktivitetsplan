@@ -41,7 +41,7 @@ class AktivitetsTavle extends Component {
                 >
                     <Kolonne
                         status={STATUS_BRUKER_ER_INTRESSERT}
-                        tittelId="aktivitetstavle.brukerErInteressert"
+                        tittelId="aktivitetstavle.brukererinteressert"
                     />
                     <Kolonne
                         status={STATUS_PLANLAGT}
@@ -49,11 +49,11 @@ class AktivitetsTavle extends Component {
                     />
                     <Kolonne
                         status={STATUS_GJENNOMFOERT}
-                        tittelId="aktivitetstavle.gjennomfoert"
+                        tittelId="aktivitetstavle.gjennomfores"
                     />
                     <Kolonne
                         status={STATUS_FULLFOERT}
-                        tittelId="aktivitetstavle.fullfoert"
+                        tittelId="aktivitetstavle.fullfort"
                     />
                     <Kolonne
                         status={STATUS_AVBRUTT}

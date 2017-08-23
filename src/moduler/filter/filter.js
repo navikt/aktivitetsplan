@@ -2,17 +2,15 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
-import { Checkbox, Radio } from 'nav-frontend-skjema';
 import {
     toggleAktivitetsType,
     toggleAktivitetsEtikett,
+    toggleAktivitetsStatus,
     velgHistoriskPeriode,
 } from './filter-reducer';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
-import Dato from '../../felles-komponenter/dato';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
 import {
     selectAktivitetListeReducer,
@@ -26,135 +24,13 @@ import {
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
     selectHistoriskPeriode,
+    selectAktivitetStatusFilter,
 } from './filter-selector';
 import { selectAlleHistoriskeVilkar } from '../vilkar/historiske-vilkar-selector';
-
-function TypeFilter({
-    harAktivitetTyper,
-    aktivitetTyper,
-    doToggleAktivitetsType,
-}) {
-    return (
-        <VisibleIfDiv visible={harAktivitetTyper}>
-            <Undertittel>
-                <FormattedMessage id="filter.aktivitet.type.tittel" />
-            </Undertittel>
-            {Object.keys(aktivitetTyper).map(aktivitetType =>
-                <Checkbox
-                    key={aktivitetType}
-                    label={
-                        <FormattedMessage
-                            id={`aktivitet.type.${aktivitetType}`.toLowerCase()}
-                        />
-                    }
-                    onChange={() => doToggleAktivitetsType(aktivitetType)}
-                    checked={aktivitetTyper[aktivitetType]}
-                />
-            )}
-        </VisibleIfDiv>
-    );
-}
-
-TypeFilter.propTypes = {
-    harAktivitetTyper: PT.bool.isRequired,
-    aktivitetTyper: PT.object.isRequired,
-    doToggleAktivitetsType: PT.func.isRequired,
-};
-
-function EtikettFilter({
-    harAktivitetEtiketter,
-    aktivitetEtiketter,
-    doToggleAktivitetsEtikett,
-}) {
-    return (
-        <VisibleIfDiv visible={harAktivitetEtiketter}>
-            <Undertittel>
-                <FormattedMessage id="filter.aktivitet.etikett.tittel" />
-            </Undertittel>
-            {Object.keys(aktivitetEtiketter).map(aktivitetEtikett =>
-                <Checkbox
-                    key={aktivitetEtikett}
-                    label={
-                        <FormattedMessage id={`etikett.${aktivitetEtikett}`} />
-                    }
-                    onChange={() => doToggleAktivitetsEtikett(aktivitetEtikett)}
-                    checked={aktivitetEtiketter[aktivitetEtikett]}
-                />
-            )}
-        </VisibleIfDiv>
-    );
-}
-
-EtikettFilter.propTypes = {
-    harAktivitetEtiketter: PT.bool.isRequired,
-    aktivitetEtiketter: PT.object.isRequired,
-    doToggleAktivitetsEtikett: PT.func.isRequired,
-};
-
-function PeriodeLabel({ historiskPeriode }) {
-    return (
-        <div>
-            <Dato>
-                {historiskPeriode.vistFra}
-            </Dato>
-            <span> - </span>
-            <Dato>
-                {historiskPeriode.til}
-            </Dato>
-        </div>
-    );
-}
-
-PeriodeLabel.propTypes = {
-    historiskPeriode: AppPT.oppfolgingsPeriode.isRequired,
-};
-
-function PeriodeFilter({
-    harHistoriskePerioder,
-    historiskPeriode,
-    historiskePerioder,
-    doVelgHistoriskPeriode,
-}) {
-    return (
-        <VisibleIfDiv visible={harHistoriskePerioder}>
-            <Undertittel>
-                <FormattedMessage id="filter.periode.tittel" />
-            </Undertittel>
-            <Radio
-                label={<FormattedMessage id="filter.periode.inneverende" />}
-                name="inneverende"
-                onChange={() => doVelgHistoriskPeriode(null)}
-                checked={!historiskPeriode}
-            />
-            {historiskePerioder.map(t => {
-                const id = t.id;
-                return (
-                    <div key={id}>
-                        <Radio
-                            label={<PeriodeLabel historiskPeriode={t} />}
-                            name={id}
-                            onChange={() => doVelgHistoriskPeriode(t)}
-                            checked={
-                                !!historiskPeriode && historiskPeriode.id === id
-                            }
-                        />
-                    </div>
-                );
-            })}
-        </VisibleIfDiv>
-    );
-}
-
-PeriodeFilter.propTypes = {
-    harHistoriskePerioder: PT.bool.isRequired,
-    historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
-    historiskPeriode: AppPT.oppfolgingsPeriode,
-    doVelgHistoriskPeriode: PT.func.isRequired,
-};
-
-PeriodeFilter.defaultProps = {
-    historiskPeriode: null,
-};
+import PeriodeFilter from './periode-filter';
+import TypeFilter from './type-filter';
+import EtikettFilter from './etikett-filter';
+import StatusFilter from './status-filter';
 
 function Filter({
     avhengigheter,
@@ -165,9 +41,12 @@ function Filter({
     harHistoriskePerioder,
     historiskePerioder,
     historiskPeriode,
+    aktivitetStatus,
+    harAktivitetStatus,
     doToggleAktivitetsType,
     doToggleAktivitetsEtikett,
     doVelgHistoriskPeriode,
+    doToggleAktivitetsStatus,
 }) {
     return (
         <VisibleIfDiv
@@ -175,7 +54,8 @@ function Filter({
             visible={
                 harAktivitetEtiketter ||
                 harHistoriskePerioder ||
-                harAktivitetTyper
+                harAktivitetTyper ||
+                harAktivitetStatus
             }
         >
             <FormattedMessage id="filter.tittel">
@@ -188,6 +68,13 @@ function Filter({
                                     aktivitetTyper={aktivitetTyper}
                                     doToggleAktivitetsType={
                                         doToggleAktivitetsType
+                                    }
+                                />
+                                <StatusFilter
+                                    aktivitetStatus={aktivitetStatus}
+                                    harAktivitetStatus={harAktivitetStatus}
+                                    doToggleAktivitetsStatus={
+                                        doToggleAktivitetsStatus
                                     }
                                 />
                                 <EtikettFilter
@@ -230,9 +117,12 @@ Filter.propTypes = {
     harHistoriskePerioder: PT.bool.isRequired,
     historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
     historiskPeriode: AppPT.oppfolgingsPeriode,
+    aktivitetStatus: PT.object.isRequired,
+    harAktivitetStatus: PT.bool.isRequired,
     doToggleAktivitetsType: PT.func.isRequired,
     doToggleAktivitetsEtikett: PT.func.isRequired,
     doVelgHistoriskPeriode: PT.func.isRequired,
+    doToggleAktivitetsStatus: PT.func.isRequired,
 };
 
 function tidligsteHendelsesTidspunktMellom(fra, til, state) {
@@ -267,7 +157,6 @@ const mapStateToProps = state => {
             };
         })
         .reverse();
-
     const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
     const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
         const type = aktivitet.type;
@@ -284,6 +173,14 @@ const mapStateToProps = state => {
         return etiketter;
     }, {});
 
+    const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
+
+    const aktivitetStatus = aktiviteter.reduce((statusliste, aktivitet) => {
+        const status = aktivitet.status;
+        statusliste[status] = aktivitetStatusFilter[status]; // eslint-disable-line no-param-reassign
+        return statusliste;
+    }, {});
+
     return {
         avhengigheter: [
             selectAktivitetListeReducer(state),
@@ -296,6 +193,8 @@ const mapStateToProps = state => {
         harAktivitetTyper: Object.keys(aktivitetTyper).length > 1,
         aktivitetEtiketter,
         harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length > 1,
+        aktivitetStatus,
+        harAktivitetStatus: Object.keys(aktivitetStatus).length > 1,
     };
 };
 
@@ -306,6 +205,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(toggleAktivitetsEtikett(aktivitetsType)),
     doVelgHistoriskPeriode: aktivitetsType =>
         dispatch(velgHistoriskPeriode(aktivitetsType)),
+    doToggleAktivitetsStatus: aktivitetsStatus =>
+        dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

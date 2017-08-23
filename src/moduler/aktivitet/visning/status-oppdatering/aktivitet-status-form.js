@@ -74,7 +74,7 @@ function AktivitetStatusForm(props) {
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={
-                            <FormattedMessage id="aktivitetstavle.brukerErInteressert" />
+                            <FormattedMessage id="aktivitetstavle.brukererinteressert" />
                         }
                         value={STATUS_BRUKER_ER_INTRESSERT}
                         id={`id--${STATUS_BRUKER_ER_INTRESSERT}`}
@@ -92,7 +92,7 @@ function AktivitetStatusForm(props) {
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={
-                            <FormattedMessage id="aktivitetstavle.gjennomfoert" />
+                            <FormattedMessage id="aktivitetstavle.gjennomfores" />
                         }
                         value={STATUS_GJENNOMFOERT}
                         id={`id--${STATUS_GJENNOMFOERT}`}
@@ -103,7 +103,7 @@ function AktivitetStatusForm(props) {
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={leggTilHengelas(
-                            <FormattedMessage id="aktivitetstavle.fullfoert" />,
+                            <FormattedMessage id="aktivitetstavle.fullfort" />,
                             hengelasAlt
                         )}
                         value={STATUS_FULLFOERT}
