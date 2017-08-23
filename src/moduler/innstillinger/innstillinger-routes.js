@@ -11,6 +11,9 @@ import SettManuellOppfolging from './sett-manuell-oppfolging/sett-manuell-oppfol
 import SettDigitalOppfolging from './sett-digital-oppfolging/sett-digital-oppfolging';
 import SettManuellOppfolgingKvittering from './sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering from './sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
+import StartEskalering from './start-eskalering/start-eskalering';
+import StartEskaleringKvittering from './start-eskalering/start-eskalering-kvittering';
+import StoppEskaleringKvittering from './stopp-eskalering/stopp-eskalering-kvittering';
 import Feilkvittering from './feilkvittering';
 
 function InnstillingerRoutes({ match }) {
@@ -55,6 +58,18 @@ function InnstillingerRoutes({ match }) {
             <Route
                 path={`${match.path}/start/kvittering`}
                 component={StartOppfolgingKvittering}
+            />
+            <Route
+                path={`${match.path}/startEskalering`}
+                component={StartEskalering}
+            />
+            <Route
+                path={`${match.path}/startEskalering/kvittering`}
+                component={StartEskaleringKvittering}
+            />
+            <Route
+                path={`${match.path}/stoppEskalering/kvittering`}
+                component={StoppEskaleringKvittering}
             />
             <Route
                 path={`${match.path}/feilkvittering`}

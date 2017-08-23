@@ -5,7 +5,7 @@ import {
     SITUASJON_PROXY_BASE_URL,
     PERSON_BASE_URL,
 } from '~config'; // eslint-disable-line
-import { fetchToJson, postAsJson } from '../../ducks/utils';
+import { fetchToJson, postAsJson, putAsJson } from '../../ducks/utils';
 
 export function hentIdentitet() {
     return fetchToJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/me`);
@@ -47,6 +47,16 @@ export function lagreMal(mal) {
 
 export function startOppfolging() {
     return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/startOppfolging`);
+}
+
+export function startEskalering(tilhorendeDialogId) {
+    return putAsJson(
+        `${SITUASJON_PROXY_BASE_URL}/situasjon/startEskalering/${tilhorendeDialogId}`
+    );
+}
+
+export function stoppEskalering() {
+    return putAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/stoppEskalering/`);
 }
 
 export function kanAvslutte() {

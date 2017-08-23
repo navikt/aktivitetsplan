@@ -5,6 +5,8 @@ import AvsluttOppfolgingProsess from '../avslutt-oppfolging/avslutt-oppfolging-p
 import StartOppfolgingProsess from '../start-oppfolging/start-oppfolging-prosess';
 import SettManuellOppfolgingProsess from '../sett-manuell-oppfolging/sett-manuell-oppfolging-prosess';
 import SettDigitalOppfolgingProsess from '../sett-digital-oppfolging/sett-digital-oppfolging-prosess';
+import StartEskaleringProsess from '../start-eskalering/start-eskalering-prosess';
+import StoppEskaleringProsess from '../stopp-eskalering/stopp-eskalering-prosess';
 import InnstillingHistorikk from '../historikk/innstilling-historikk';
 import * as AppPT from '../../../proptypes';
 import InnstillingerModal from '../innstillinger-modal';
@@ -39,6 +41,18 @@ class Prosesser extends Component {
                             hidden={
                                 !innstillingerReducer.data.underOppfolging ||
                                 !innstillingerReducer.data.manuell
+                            }
+                        />
+                        <StartEskaleringProsess
+                            hidden={
+                                !!innstillingerReducer.data
+                                    .gjeldendeEskaleringsvarsel
+                            }
+                        />
+                        <StoppEskaleringProsess
+                            hidden={
+                                !innstillingerReducer.data
+                                    .gjeldendeEskaleringsvarsel
                             }
                         />
                         <InnstillingHistorikk />
