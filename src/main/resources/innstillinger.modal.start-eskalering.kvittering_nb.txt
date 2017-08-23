@@ -1,0 +1,1 @@
+Varselen er sendt til bruker {dato} på sms/epost og som en melding som de kan svare på i Aktivitetsplan/dialog
