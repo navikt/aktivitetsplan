@@ -7,7 +7,6 @@ import Dato from '../../felles-komponenter/dato';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../proptypes';
 
-
 function PeriodeLabel({ historiskPeriode }) {
     return (
         <div>
