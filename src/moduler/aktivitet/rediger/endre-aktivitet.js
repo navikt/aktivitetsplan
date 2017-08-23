@@ -128,8 +128,13 @@ function EndreAktivitet({
 
     return (
         <Modal
-            isOpen
             key="endreAktivitetModal"
+            header={
+                <ModalHeader
+                    tilbakeTekstId="endre-aktivitet.tilbake"
+                    visConfirmDialog={formIsDirty}
+                />
+            }
             onRequestClose={() => {
                 const dialogTekst = intl.formatMessage({
                     id: 'aktkivitet-skjema.lukk-advarsel',
@@ -146,10 +151,6 @@ function EndreAktivitet({
                 className="egen-aktivitet"
                 aria-labelledby="modal-egen-aktivitet-header"
             >
-                <ModalHeader
-                    tilbakeTekstId="endre-aktivitet.tilbake"
-                    visConfirmDialog={formIsDirty}
-                />
                 <Innholdslaster avhengigheter={[aktiviteter]}>
                     <ModalContainer>
                         <Versjonskonflikt

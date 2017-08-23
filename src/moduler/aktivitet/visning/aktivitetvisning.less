@@ -1,9 +1,14 @@
 @import '../../../variables';
 
 .aktivitetvisning {
+    & > .feilmelding {
+        margin-top: 1rem;
+        padding: 0 2rem;
+    }
+
     &__underseksjon {
         padding: 0 1rem;
-        .blokk-xs();
+        margin: 1rem 0;
 
         .typo-sidetittel {
             margin: 1.2rem 0;
@@ -112,7 +117,7 @@
 @media (min-width: @screen-md-min) {
     .aktivitetvisning {
         &__underseksjon {
-            padding: 0 3rem 0 2rem;
+            padding: 0 2rem;
         }
 
         &__detaljer {

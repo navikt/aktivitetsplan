@@ -10,10 +10,15 @@
     text-decoration: none;
     border-radius: @border-radius-base;
     padding: 0.75rem 1rem 1rem;
+    cursor: pointer;
 
     &:focus {
         outline: 0;
         box-shadow: 0 0 0 3px @orange-focus;
+    }
+
+    &:hover {
+        background-color: @color-background-hover;
     }
 }
 
@@ -42,9 +47,5 @@
 }
 
 .aktivitetskort--flyttbar {
-    cursor: pointer;
-
-    &:hover {
-        background-color: @color-background-hover;
-    }
+    cursor: move;
 }

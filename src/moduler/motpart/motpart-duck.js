@@ -19,16 +19,17 @@ export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
         case OPPDATER_MOTPART:
-            return { status: STATUS.OK, data };
+            return { ...state, status: STATUS.OK, data };
         case HENTET_PERSON:
             return {
+                ...state,
                 status: STATUS.OK,
                 data: {
                     navn: storeForbokstaver(data.sammensattNavn),
                 },
             };
         case HENTING_AV_PERSON_FEILET:
-            return { ...state, status: STATUS.ERROR };
+            return { ...state, status: STATUS.ERROR, feil: data };
         default:
             return state;
     }

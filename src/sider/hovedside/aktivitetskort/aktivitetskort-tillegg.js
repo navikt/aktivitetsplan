@@ -2,6 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import AktivitetEtikett from '../../../felles-komponenter/aktivitet-etikett';
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../proptypes';
 import { AVTALT_MED_NAV } from '../../../constant';
 import visibleIfHOC from '../../../hocs/visible-if';
@@ -14,7 +15,10 @@ function AktivitetskortTillegg({
     antallUlesteHenvendelser,
 }) {
     return (
-        <div className="aktivitetskort__ikon-blokk">
+        <VisibleIfDiv
+            visible={aktivitet.avtalt || !!aktivitet.etikett}
+            className="aktivitetskort__ikon-blokk"
+        >
             <div className="aktivitetskort__etiketter">
                 <AktivitetEtikett
                     visible={aktivitet.avtalt}
@@ -35,7 +39,7 @@ function AktivitetskortTillegg({
                     {antallUlesteHenvendelser}
                 </TallAlert>
             </HiddenIfDiv>
-        </div>
+        </VisibleIfDiv>
     );
 }
 
