@@ -24,6 +24,10 @@
         border-radius: 0;
         text-decoration: none;
 
+        &:first-child {
+            margin-top: 0;
+        }
+
         &.lenkepanel {
             .lenkepanel__indikator {
                 transition: none;
@@ -60,6 +64,16 @@
 
         // fjerne lenkepanel sin hover-styling
         &:hover {
+            background-color: @navBla;
+
+            .typo-normal,
+            .typo-element,
+            .typo-undertekst,
+            .lenkepanel__indikator,
+            .dialoger__dialog-henvendelser {
+                color: @white;
+            }
+
             .lenkepanel__heading {
                 text-decoration: none;
             }
@@ -72,6 +86,10 @@
 
         &--valgt {
             background-color: @gray-background;
+
+            &:first-child {
+                margin-top: 3px;
+            }
         }
     }
 }
