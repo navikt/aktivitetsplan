@@ -42,6 +42,7 @@
 }
 
 .dialog-modal__header {
+    background-color: @white;
     border-bottom: 1px solid @gray-foreground;
     padding: @padding;
 
@@ -70,8 +71,9 @@
 }
 
 .dialog-modal__ny-dialog {
-    padding: @padding;
-    border-bottom: 1px solid @gray-foreground;
+    padding: 1.2rem 1rem 1.2rem 1.5rem;
+    width: ~'calc(100% - 3px)';
+    background-color: @white;
 }
 
 .dialog-modal__ny-dialog-knapp {
@@ -88,9 +90,10 @@
 }
 
 .dialog-modal__dialoger {
+    background-color: @gray-background;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    height: ~'calc(100% - 66px)';
+    height: 62.7vh;
 }
 
 .dialog-modal__kolonne {
@@ -115,7 +118,7 @@
 
 .dialog-modal__kolonne--dialoger {
     width: 100%;
-    background-color: @hvit;
+    background-color: @gray-background;
     z-index: 1;
 }
 
@@ -126,7 +129,7 @@
 @media (min-width: @screen-md-min) {
     .dialog-modal {
         width: @bredde-skjerm-dialoger;
-        height: 75%;
+        height: 75vh;
         left: -100%;
     }
 
@@ -149,14 +152,6 @@
         width: @full-bredde-skjerm-modal;
         min-width: @mobil-bredde;
         border-top-right-radius: 4px;
-    }
-
-    .dialog-modal__ny-dialog-knapp {
-        background: none;
-
-        &.knappelenke {
-            padding-left: 0;
-        }
     }
 
     .dialog-modal__kolonne--dialoger-valgt-dialog {

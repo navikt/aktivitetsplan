@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
+import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
 import history from '../history';
 import { DIALOG_FERDIGBEHANDLET, DIALOG_MA_BESVARES } from '../constant';
 import visibleIfHOC from '../hocs/visible-if';
@@ -60,11 +61,16 @@ class DialogVisning extends React.Component {
             }
         };
 
+        function Test({ children }) {
+            return <div style={{display:"inline-block"}} >{children}</div>
+        }
+
         return (
             <Lenkepanel
                 tabIndex={erTabBar ? '0' : '-1'}
                 onFocus={handleOnFocus}
                 className={dialogCls(erValgt, !dialog.lest)}
+                customComponent={Test}
                 href={`/dialog/${dialog.id}`}
             >
                 <Markering visible={!dialog.lest} />
@@ -95,7 +101,7 @@ class DialogVisning extends React.Component {
                 <Normaltekst className="dialoger__dialog-tekst">
                     {dialog.sisteTekst}
                 </Normaltekst>
-                <div className="dialoger__dialog-etiketter">
+                <VisibleIfDiv visible={venterPaSvar && ferdigBehandlet} className="dialoger__dialog-etiketter">
                     <Etikett
                         visible={venterPaSvar}
                         id="dialog.venter-pa-svar"
@@ -106,7 +112,7 @@ class DialogVisning extends React.Component {
                         id="dialog.ferdigbehandlet"
                         etikett={DIALOG_FERDIGBEHANDLET}
                     />
-                </div>
+                </VisibleIfDiv>
                 <div className="dialoger__dialog-henvendelser">
                     {henvendelser.length}
                 </div>
