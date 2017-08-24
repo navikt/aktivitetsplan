@@ -1,1 +1,1 @@
-For langt samtalereferat
+Samtalereferat kan ikke være lenger enn {MAKS_LENGDE} tegn
