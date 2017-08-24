@@ -62,7 +62,11 @@ class DialogVisning extends React.Component {
         };
 
         function Test({ children }) {
-            return <div style={{display:"inline-block"}} >{children}</div>
+            return (
+                <div style={{ display: 'inline-block' }}>
+                    {children}
+                </div>
+            );
         }
 
         return (
@@ -101,7 +105,10 @@ class DialogVisning extends React.Component {
                 <Normaltekst className="dialoger__dialog-tekst">
                     {dialog.sisteTekst}
                 </Normaltekst>
-                <VisibleIfDiv visible={venterPaSvar && ferdigBehandlet} className="dialoger__dialog-etiketter">
+                <VisibleIfDiv
+                    visible={venterPaSvar && ferdigBehandlet}
+                    className="dialoger__dialog-etiketter"
+                >
                     <Etikett
                         visible={venterPaSvar}
                         id="dialog.venter-pa-svar"
