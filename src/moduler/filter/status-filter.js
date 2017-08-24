@@ -13,17 +13,14 @@ function StatusFilter({
     return (
         <VisibleIfDiv visible={harAktivitetStatus}>
             <Undertittel>
-                <FormattedMessage id="filter.aktivitet.status.tittel" />
+                <FormattedMessage id="aktivitet.status" />
             </Undertittel>
             {Object.keys(aktivitetStatus).map(status =>
                 <Checkbox
                     key={status}
                     label={
                         <FormattedMessage
-                            id={`aktivitetstavle.${status
-                                .split('_')
-                                .join('')
-                                .toLowerCase()}`}
+                            id={`aktivitet.status.${status}`.toLowerCase()}
                         />
                     }
                     onChange={() => doToggleAktivitetsStatus(status)}

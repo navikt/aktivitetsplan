@@ -17,10 +17,10 @@ function TypeFilter({
             </Undertittel>
             {Object.keys(aktivitetTyper).map(aktivitetType =>
                 <Checkbox
-                    key={aktivitetType}
-                    label={
+                        key={aktivitetType}
+                        label={
                         <FormattedMessage
-                            id={`aktivitet.type.${aktivitetType}`.toLowerCase()}
+                        id={`aktivitet.type.${aktivitetType}`.toLowerCase()}
                         />
                     }
                     onChange={() => doToggleAktivitetsType(aktivitetType)}
