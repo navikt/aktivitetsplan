@@ -19,17 +19,21 @@
     }
 
     &__dialog {
-        margin: 0;
-        padding-left: 3rem;
+        margin: 3px 3px 4px;
+        padding: 0.7rem 1rem 1rem 2rem;
         border-radius: 0;
         text-decoration: none;
-        border-top: 1px solid @gray-foreground;
-        min-width: 316px;
+
+        &:first-child {
+            margin-top: 0;
+        }
 
         &.lenkepanel {
             .lenkepanel__indikator {
                 transition: none;
                 left: 0;
+                margin-top: 8px;
+                width: 16px;
             }
         }
 
@@ -50,7 +54,8 @@
             position: absolute;
             top: 50%;
             line-height: 0;
-            right: 40px;
+            right: 35px;
+            font-size: 1rem;
         }
 
         .lenkepanel__heading {
@@ -59,6 +64,16 @@
 
         // fjerne lenkepanel sin hover-styling
         &:hover {
+            background-color: @navBla;
+
+            .typo-normal,
+            .typo-element,
+            .typo-undertekst,
+            .lenkepanel__indikator,
+            .dialoger__dialog-henvendelser {
+                color: @white;
+            }
+
             .lenkepanel__heading {
                 text-decoration: none;
             }
@@ -67,18 +82,13 @@
         &:hover,
         &:focus {
             text-decoration: none;
-            background-color: #e9e7e7;
-            box-shadow: none;
         }
 
         &--valgt {
-            background-color: @navBlaLighten80;
+            background-color: @gray-background;
 
-            &:hover,
-            &:focus {
-                text-decoration: none;
-                background-color: @navBlaLighten80;
-                box-shadow: none;
+            &:first-child {
+                margin-top: 3px;
             }
         }
     }
