@@ -18,7 +18,6 @@ import {
     KOMMENTAR_MAKS_LENGDE,
     pakrevd,
     begrensetKommentarLengde,
-    fristErEtterIDag,
 } from './arbeidsliste-utils';
 
 function RedigerArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
@@ -71,7 +70,6 @@ const RedigerArbeidslisteFormValidation = validForm({
     ),
     validate: {
         kommentar: [begrensetKommentarLengde, pakrevd],
-        frist: [fristErEtterIDag],
     },
 })(RedigerArbeidslisteForm);
 
@@ -91,10 +89,7 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onSubmit: formData => {
             dispatch(
-                redigerArbeidsliste(
-                    fnr,
-                    lagArbeidsliste(fnr, formData, props, true)
-                )
+                redigerArbeidsliste(fnr, lagArbeidsliste(fnr, formData, props))
             ).then(() => {
                 dispatch({ type: LUKK_MODAL });
                 history.push('/');
