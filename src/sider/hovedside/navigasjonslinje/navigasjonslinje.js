@@ -6,7 +6,9 @@ import { Element } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import NavigasjonslinjeMeny from './navigasjonslinje-meny';
 import Lenke from '../../../felles-komponenter/utils/lenke';
-import Feature from '../../../felles-komponenter/feature/feature';
+import Feature, {
+    harFeature,
+} from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
 import { dialogFilter } from '../../../moduler/filter/filter-utils';
@@ -64,10 +66,15 @@ NavigasjonsElement.propTypes = {
     disabled: PT.bool,
 };
 
+const navigasjonslinjemenyFeature = 'navigasjonslinjemeny';
+
 class Navigasjonslinje extends Component {
     componentDidMount() {
-        this.props.doHentDialog();
-        this.props.doHentArbeidsliste(getFodselsnummer());
+        const { doHentDialog, doHentArbeidsliste } = this.props;
+        doHentDialog();
+        if (harFeature(navigasjonslinjemenyFeature)) {
+            doHentArbeidsliste(getFodselsnummer());
+        }
     }
 
     render() {
@@ -99,7 +106,7 @@ class Navigasjonslinje extends Component {
                     tekstId="navigasjon.vilkar"
                     disabled={disabled}
                 />
-                <Feature name="navigasjonslinjemeny">
+                <Feature name={navigasjonslinjemenyFeature}>
                     <Innholdslaster
                         avhengigheter={[arbeidslisteReducer]}
                         spinnerStorrelse="xs"
