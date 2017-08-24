@@ -17,9 +17,7 @@ import {
     lagArbeidsliste,
     KOMMENTAR_MAKS_LENGDE,
     pakrevd,
-    pakrevdFrist,
     begrensetKommentarLengde,
-    fristErEtterIDag,
 } from './arbeidsliste-utils';
 
 function RedigerArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
@@ -72,7 +70,6 @@ const RedigerArbeidslisteFormValidation = validForm({
     ),
     validate: {
         kommentar: [begrensetKommentarLengde, pakrevd],
-        frist: [pakrevdFrist, fristErEtterIDag],
     },
 })(RedigerArbeidslisteForm);
 
