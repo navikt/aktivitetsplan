@@ -10,7 +10,7 @@ import {
     HiddenIfVarslingMedLenke,
 } from './varsel-alertstriper';
 import {
-    selectErBrukerEskalert,
+    selectGjeldendeEskaleringsVarsel,
     selectVilkarMaBesvares,
     selectErUnderOppfolging,
     selectErBrukerManuell,
@@ -125,8 +125,9 @@ const mapStateToProps = state => ({
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),
     reservertIKRR: selectReservasjonKRR(state),
-    brukerErEskalert: selectErBrukerEskalert(state),
+    brukerErEskalert: selectGjeldendeEskaleringsVarsel(state),
     tilhorendeDialogId: selectTilHorendeDialogId(state),
+
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -26,13 +26,13 @@ export function selectVilkarMaBesvares(state) {
     return selectSituasjonReducer(state).data.vilkarMaBesvares;
 }
 
-export function selectErBrukerEskalert(state) {
-    return selectSituasjonReducer(state).data.gjeldendeEskaleringsStatus;
+export function selectGjeldendeEskaleringsVarsel(state) {
+    return selectSituasjonReducer(state).data.gjeldendeEskaleringsvarsel;
 }
 
 export function selectTilHorendeDialogId(state) {
-    if (selectErBrukerEskalert(state)) {
-        return selectErBrukerEskalert(state).tilhorendeDialogId;
+    if (selectGjeldendeEskaleringsVarsel(state)) {
+        return selectGjeldendeEskaleringsVarsel(state).tilhorendeDialogId;
     }
     return null;
 }
