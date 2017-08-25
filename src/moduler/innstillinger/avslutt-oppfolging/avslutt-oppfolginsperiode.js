@@ -16,6 +16,9 @@ import InnstillingerModal from '../innstillinger-modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPt from '../../../proptypes';
 import hiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
+import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import {selectDialogStatus, selectHarUbehandledeDialoger} from "../../dialog/dialog-selector";
+import {selectInaktiveringsDato, selectInnstillingerStatus} from "../innstillinger-selector";
 
 export const AVSLUTT_FORM_NAME = 'avslutt-oppfolging-form';
 const HiddenIfNormaltekst = hiddenIfHOC(Normaltekst);
@@ -23,11 +26,12 @@ const HiddenIfNormaltekst = hiddenIfHOC(Normaltekst);
 function AvsluttOppfolgingperiode({
     onSubmit,
     datoErInnenfor28dager,
-    innstillingerReducer,
+    avhengigheter,
+    harUbehandledeDialoger,
 }) {
     return (
         <InnstillingerModal>
-            <Innholdslaster avhengigheter={[innstillingerReducer]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <div>
                     <section className="innstillinger__prosess">
                         <Systemtittel>
@@ -43,6 +47,12 @@ function AvsluttOppfolgingperiode({
                                 <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.beskrivelse" />
                             </HiddenIfNormaltekst>
                         </div>
+                        <HiddenIfAlertStripeInfoSolid
+                            hidden={!harUbehandledeDialoger}
+                            className="blokk-xxs"
+                        >
+                            <FormattedMessage id="innstillinger.modal.avslutt.ubehandlede-dialoger.alert-melding" />
+                        </HiddenIfAlertStripeInfoSolid>
                         <BegrunnelseForm
                             labelId="innstillinger.modal.avslutt.oppfolging.begrunnelse"
                             formNavn={AVSLUTT_FORM_NAME}
@@ -70,7 +80,8 @@ function AvsluttOppfolgingperiode({
 AvsluttOppfolgingperiode.propTypes = {
     onSubmit: PT.func.isRequired,
     datoErInnenfor28dager: PT.bool.isRequired,
-    innstillingerReducer: AppPt.situasjon.isRequired,
+    harUbehandledeDialoger: PT.bool.isRequired,
+    avhengigheter: PT.arrayOf(AppPt.status).isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -81,12 +92,17 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
+    const innstillingerStatus = selectInnstillingerStatus(state);
+    const dialogStatus = selectDialogStatus(state);
+    const inaktiveringsDato = selectInaktiveringsDato(state);
+
     const for28dagerSiden = moment().subtract(28, 'day').toISOString();
-    const datoErInnenfor28dager =
-        state.data.innstillinger.data.inaktiveringsDato > for28dagerSiden;
+    const datoErInnenfor28dager = inaktiveringsDato > for28dagerSiden;
+
     return {
-        innstillingerReducer: state.data.innstillinger,
         datoErInnenfor28dager,
+        harUbehandledeDialoger: selectHarUbehandledeDialoger(state),
+        avhengigheter: [innstillingerStatus, dialogStatus]
     };
 };
 
