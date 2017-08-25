@@ -30,7 +30,7 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
             lagrer={lagrer}
             onSubmit={beskrivelseForm => {
                 lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
-                history.goBack();
+                history.replace('/');
             }}
         />
     );
@@ -40,7 +40,7 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
             headerTekst={<FormattedMessage id="advarsel.avbrutt.header" />}
             onSubmit={() => {
                 lagreBegrunnelse(valgtAktivitet, null);
-                history.goBack();
+                history.replace('/');
             }}
         />
     );
