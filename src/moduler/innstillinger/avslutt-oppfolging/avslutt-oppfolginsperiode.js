@@ -17,8 +17,14 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPt from '../../../proptypes';
 import hiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
 import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
-import {selectDialogStatus, selectHarUbehandledeDialoger} from "../../dialog/dialog-selector";
-import {selectInaktiveringsDato, selectInnstillingerStatus} from "../innstillinger-selector";
+import {
+    selectDialogStatus,
+    selectHarUbehandledeDialoger,
+} from '../../dialog/dialog-selector';
+import {
+    selectInaktiveringsDato,
+    selectInnstillingerStatus,
+} from '../innstillinger-selector';
 
 export const AVSLUTT_FORM_NAME = 'avslutt-oppfolging-form';
 const HiddenIfNormaltekst = hiddenIfHOC(Normaltekst);
@@ -102,7 +108,7 @@ const mapStateToProps = state => {
     return {
         datoErInnenfor28dager,
         harUbehandledeDialoger: selectHarUbehandledeDialoger(state),
-        avhengigheter: [innstillingerStatus, dialogStatus]
+        avhengigheter: [innstillingerStatus, dialogStatus],
     };
 };
 

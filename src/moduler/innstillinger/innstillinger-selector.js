@@ -1,4 +1,3 @@
-
 function selectInnstillingerSlice(state) {
     return state.data.innstillinger;
 }
@@ -8,5 +7,5 @@ export function selectInnstillingerStatus(state) {
 }
 
 export function selectInaktiveringsDato(state) {
-    return selectInnstillingerSlice(state).data.inaktiveringsDato
+    return selectInnstillingerSlice(state).data.inaktiveringsDato;
 }

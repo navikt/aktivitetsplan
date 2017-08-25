@@ -13,5 +13,10 @@ export function selectDialogForAktivitetId(state, aktivitetId) {
 
 export function selectHarUbehandledeDialoger(state) {
     const data = selectDialogReducer(state).data;
-    return data.filter(dialog => dialog.historisk === false && dialog.ferdigBehandlet === false).length > 0;
+    return (
+        data.filter(
+            dialog =>
+                dialog.historisk === false && dialog.ferdigBehandlet === false
+        ).length > 0
+    );
 }
