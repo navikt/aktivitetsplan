@@ -20,12 +20,12 @@ function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
                 </Lenkeknapp>
             </div>
             <div className="verktoylinje">
-            <div className="verktoylinje__verktoy">
-                <PeriodeFilter />
-            </div>
-            <div className="verktoylinje__verktoy">
-                <Filter />
-            </div>
+                <div className="verktoylinje__verktoy">
+                    <PeriodeFilter />
+                </div>
+                <div className="verktoylinje__verktoy">
+                    <Filter />
+                </div>
             </div>
         </div>
     );

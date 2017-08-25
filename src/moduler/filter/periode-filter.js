@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import Dato from '../../felles-komponenter/dato';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../proptypes';
-import {selectHistoriskPeriode} from "./filter-selector";
-import {selectHistoriskeOppfolgingsPerioder} from "../situasjon/situasjon-selector";
+import { selectHistoriskPeriode } from './filter-selector';
+import { selectHistoriskeOppfolgingsPerioder } from '../situasjon/situasjon-selector';
 import { selectAlleHistoriskeVilkar } from '../vilkar/historiske-vilkar-selector';
-import {velgHistoriskPeriode} from "./filter-reducer";
-import Dropdown from "../../felles-komponenter/dropdown/dropdown";
+import { velgHistoriskPeriode } from './filter-reducer';
+import Dropdown from '../../felles-komponenter/dropdown/dropdown';
 
 function PeriodeLabel({ historiskPeriode }) {
     return (
@@ -38,39 +38,45 @@ function PeriodeFilter({
     doVelgHistoriskPeriode,
 }) {
     return (
-        <VisibleIfDiv visible={harHistoriskePerioder}
-        className="filter">
+        <VisibleIfDiv visible={harHistoriskePerioder} className="filter">
             <FormattedMessage id="periode-filter.tittel">
-             {tittel =>
-                 <Dropdown name={tittel}>
-                     <div className="filter__container">
-
-            <Undertittel>
-                <FormattedMessage id="filter.periode.tittel" />
-            </Undertittel>
-            <Radio
-                label={<FormattedMessage id="filter.periode.inneverende" />}
-                name="inneverende"
-                onChange={() => doVelgHistoriskPeriode(null)}
-                checked={!historiskPeriode}
-            />
-            {historiskePerioder.map(t => {
-                const id = t.id;
-                return (
-                    <div key={id}>
-                        <Radio
-                            label={<PeriodeLabel historiskPeriode={t} />}
-                            name={id}
-                            onChange={() => doVelgHistoriskPeriode(t)}
-                            checked={
-                                !!historiskPeriode && historiskPeriode.id === id
-                            }
-                        />
-                    </div>
-                );
-            })}</div>
-                 </Dropdown>
-            }
+                {tittel =>
+                    <Dropdown name={tittel}>
+                        <div className="filter__container">
+                            <Undertittel>
+                                <FormattedMessage id="filter.periode.tittel" />
+                            </Undertittel>
+                            <Radio
+                                label={
+                                    <FormattedMessage id="filter.periode.inneverende" />
+                                }
+                                name="inneverende"
+                                onChange={() => doVelgHistoriskPeriode(null)}
+                                checked={!historiskPeriode}
+                            />
+                            {historiskePerioder.map(t => {
+                                const id = t.id;
+                                return (
+                                    <div key={id}>
+                                        <Radio
+                                            label={
+                                                <PeriodeLabel
+                                                    historiskPeriode={t}
+                                                />
+                                            }
+                                            name={id}
+                                            onChange={() =>
+                                                doVelgHistoriskPeriode(t)}
+                                            checked={
+                                                !!historiskPeriode &&
+                                                historiskPeriode.id === id
+                                            }
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </Dropdown>}
             </FormattedMessage>
         </VisibleIfDiv>
     );
@@ -98,8 +104,6 @@ function tidligsteHendelsesTidspunktMellom(fra, til, state) {
     return tidspunkter.filter(t => t > fra && t < til).sort()[0] || til;
 }
 
-
-
 const mapStateToProps = state => {
     let fraGrense = '';
     const historiskePerioder = selectHistoriskeOppfolgingsPerioder(state)
@@ -124,7 +128,6 @@ const mapStateToProps = state => {
         historiskPeriode: selectHistoriskPeriode(state),
         harHistoriskePerioder: historiskePerioder.length > 0,
     };
-
 };
 
 const mapDispatchToProps = dispatch => ({

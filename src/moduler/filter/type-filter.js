@@ -5,9 +5,9 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
-import {toggleAktivitetsType} from "./filter-reducer";
-import {selectAktivitetTyperFilter} from "./filter-selector";
-import {selectAlleAktiviter} from "../aktivitet/aktivitetliste-selector";
+import { toggleAktivitetsType } from './filter-reducer';
+import { selectAktivitetTyperFilter } from './filter-selector';
+import { selectAlleAktiviter } from '../aktivitet/aktivitetliste-selector';
 
 function TypeFilter({
     harAktivitetTyper,
@@ -21,10 +21,10 @@ function TypeFilter({
             </Undertittel>
             {Object.keys(aktivitetTyper).map(aktivitetType =>
                 <Checkbox
-                        key={aktivitetType}
-                        label={
+                    key={aktivitetType}
+                    label={
                         <FormattedMessage
-                        id={`aktivitet.type.${aktivitetType}`.toLowerCase()}
+                            id={`aktivitet.type.${aktivitetType}`.toLowerCase()}
                         />
                     }
                     onChange={() => doToggleAktivitetsType(aktivitetType)}
@@ -50,10 +50,10 @@ const mapStateToProps = state => {
         return typer;
     }, {});
 
-    return{
+    return {
         aktivitetTyper,
         harAktivitetTyper: Object.keys(aktivitetTyper).length > 1,
-    }
+    };
 };
 
 const mapDispatchToProps = dispatch => ({

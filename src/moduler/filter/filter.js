@@ -7,59 +7,48 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
 import {
-    selectAktivitetListeReducer, selectAlleAktiviter,
+    selectAktivitetListeReducer,
+    selectAlleAktiviter,
 } from '../aktivitet/aktivitetliste-selector';
 import TypeFilter from './type-filter';
 import EtikettFilter from './etikett-filter';
 import StatusFilter from './status-filter';
 
-
-function Filter({
-                    avhengigheter,
-                    harAktivitet,
-}) {
+function Filter({ avhengigheter, harAktivitet }) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
-        <VisibleIfDiv
-            className="filter"
-            visible={harAktivitet }
-        >
-            <FormattedMessage id="filter.tittel">
-                {tittel =>
-                    <Dropdown name={tittel}>
+            <VisibleIfDiv className="filter" visible={harAktivitet}>
+                <FormattedMessage id="filter.tittel">
+                    {tittel =>
+                        <Dropdown name={tittel}>
                             <div className="filter__container">
-                                <TypeFilter/>
-                                <StatusFilter/>
-                                <EtikettFilter/>
+                                <TypeFilter />
+                                <StatusFilter />
+                                <EtikettFilter />
                             </div>
-                    </Dropdown>}
-            </FormattedMessage>
-        </VisibleIfDiv>
+                        </Dropdown>}
+                </FormattedMessage>
+            </VisibleIfDiv>
         </Innholdslaster>
     );
 }
-
 
 Filter.propTypes = {
     avhengigheter: PT.arrayOf(AppPT.reducer).isRequired,
     harAktivitet: PT.bool,
 };
 
-Filter.defaultProps={
-    harAktivitet : true,
-}
-
+Filter.defaultProps = {
+    harAktivitet: true,
+};
 
 const mapStateToProps = state => {
     const aktiviteter = selectAlleAktiviter(state);
-    const harAktivitet = aktiviteter.length >0 ;
+    const harAktivitet = aktiviteter.length > 0;
     return {
-        avhengigheter: [
-            selectAktivitetListeReducer(state),
-        ],
-        harAktivitet ,
+        avhengigheter: [selectAktivitetListeReducer(state)],
+        harAktivitet,
     };
-
-}
+};
 
 export default connect(mapStateToProps)(Filter);
