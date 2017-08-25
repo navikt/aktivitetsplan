@@ -38,12 +38,12 @@ class Varslinger extends Component {
                             className="varsling"
                         />
                         <HiddenIfVarsling
-                            hidden={!vilkarMaBesvares}
+                            hidden={reservertIKRR || !vilkarMaBesvares || brukerErManuell}
                             tekstId="oppfolging.vilkar-ikke-godkjent"
                             className="varsling"
                         />
                         <HiddenIfVarsling
-                            hidden={!reservertIKRR || reservertIKRR}
+                            hidden={!reservertIKRR}
                             tekstId="oppfolging.bruker-reservert-i-krr"
                             className="varsling"
                         />
