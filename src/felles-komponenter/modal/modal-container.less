@@ -1,4 +1,4 @@
-@modal-innhold-padding: 1rem;
+@modal-innhold-padding: 1rem 2rem;
 
 .modal-container {
     .varselmodal {
@@ -16,6 +16,10 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
+
+            .typo-innholdstittel {
+                margin: 0.5rem 0 1.2rem;
+            }
         }
 
         &__datofelt-wrapper {
@@ -27,12 +31,5 @@
         .datovelger {
             font-size: 1rem;
         }
-    }
-}
-
-.modal-header-wrapper {
-    .spinner {
-        display: block;
-        margin: 0 auto;
     }
 }

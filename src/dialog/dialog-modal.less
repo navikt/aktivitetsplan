@@ -1,8 +1,6 @@
 @import '../variables';
 @import './dialoger';
 
-@padding: 1.2rem 1rem 1.4rem 1.5rem;
-@animationTime: 300ms;
 @bredde-skjerm-dialoger: 20%;
 @bredde-skjerm-dialog: 40%;
 @full-bredde-skjerm-modal: @bredde-skjerm-dialoger + @bredde-skjerm-dialog;
@@ -21,7 +19,6 @@
     bottom: 0;
 }
 
-.dialog-modal--vis,
 .dialog-modal--full-bredde {
     border-radius: 0;
 }
@@ -42,8 +39,10 @@
 }
 
 .dialog-modal__header {
+    display: flex;
+    background-color: @white;
     border-bottom: 1px solid @gray-foreground;
-    padding: @padding;
+    padding: 1rem;
 
     .dialog-modal__tilbake-knapp {
         margin-right: 1rem;
@@ -70,8 +69,10 @@
 }
 
 .dialog-modal__ny-dialog {
-    padding: @padding;
-    border-bottom: 1px solid @gray-foreground;
+    padding: 1.2rem 1rem 1.2rem 1.5rem;
+    width: ~'calc(100% - 3px)';
+    background-color: @gray-background;
+    border-bottom: 1px solid @navGra40;
 }
 
 .dialog-modal__ny-dialog-knapp {
@@ -80,7 +81,7 @@
             '@{aktivitetsplanPath}/dialog/dialog-modal-ny-henvendelse.svg'
         )
         no-repeat;
-    background-size: contain;
+    background-size: 24px 24px;
 
     &.knappelenke {
         padding-left: 2rem;
@@ -88,16 +89,14 @@
 }
 
 .dialog-modal__dialoger {
+    background-color: @gray-background;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    height: ~'calc(100% - 66px)';
+    height: 79.7vh;
 }
 
 .dialog-modal__kolonne {
-    display: inline-block;
-    float: left;
-    overflow: hidden;
-    height: 100%;
+    height: 90vh;
 }
 
 .dialog-modal__kolonne--dialog {
@@ -115,7 +114,7 @@
 
 .dialog-modal__kolonne--dialoger {
     width: 100%;
-    background-color: @hvit;
+    background-color: @gray-background;
     z-index: 1;
 }
 
@@ -126,37 +125,28 @@
 @media (min-width: @screen-md-min) {
     .dialog-modal {
         width: @bredde-skjerm-dialoger;
-        height: 75%;
-        left: -100%;
+        height: 75vh;
     }
 
     .dialog-modal,
     .dialog-modal__dialoger {
         // Sikrer at "dialoger" bredden aldri blir smalere enn et dialoger-innslag aka dialogkort
         min-width: @dialogkort-bredde;
+        height: 63vh;
+    }
+
+    .dialog-modal__kolonne {
+        height: 69vh;
     }
 
     .dialog-modal.ReactModal__Content {
         min-height: inherit;
     }
 
-    .dialog-modal--vis {
-        left: 0;
-        border-top-right-radius: 4px;
-    }
-
     .dialog-modal--full-bredde {
         width: @full-bredde-skjerm-modal;
         min-width: @mobil-bredde;
         border-top-right-radius: 4px;
-    }
-
-    .dialog-modal__ny-dialog-knapp {
-        background: none;
-
-        &.knappelenke {
-            padding-left: 0;
-        }
     }
 
     .dialog-modal__kolonne--dialoger-valgt-dialog {
@@ -166,6 +156,7 @@
 
     .dialog-modal__kolonne--dialog {
         width: percentage(@bredde-skjerm-dialog / @full-bredde-skjerm-modal);
+        padding: 1rem 1rem 1rem 2rem;
     }
 
     .dialog-modal__tilbake-knapp.pil-knapp {

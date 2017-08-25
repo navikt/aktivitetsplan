@@ -53,41 +53,40 @@ class Varslinger extends Component {
         );
 
         const visVarslingerForVeileder = (
-            <Container>
-                <HiddenIfVarsling
-                    hidden={underOppfolging}
-                    tekstId="oppfolging.ikke-under-oppfolging"
-                    className="varsling"
-                />
-                <HiddenIfVarsling
-                    hidden={!vilkarMaBesvares}
-                    tekstId="oppfolging.vilkar-ikke-godkjent"
-                    className="varsling"
-                />
-                <HiddenIfVarsling
-                    hidden={!brukerErEskalert}
-                    tekstId="oppfolgning.veileder.bruker-er-eskalert"
-                    className="varsling"
-                />
-                <HiddenIfVarsling
-                    hidden={!reservertIKRR || reservertIKRR}
-                    tekstId="oppfolging.bruker-reservert-i-krr"
-                    className="varsling"
-                />
-                <HiddenIfVarslingMedLenke
-                    hidden={reservertIKRR || !brukerErManuell}
-                    tekstId="oppfolging.bruker-er-manuell.tekst"
-                    lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
-                    href="/innstillinger"
-                    className="varsling"
-                />
-            </Container>
+                <Container>
+                    <HiddenIfVarsling
+                        hidden={underOppfolging}
+                        tekstId="oppfolging.ikke-under-oppfolging"
+                        className="varsling"
+                    />
+                    <HiddenIfVarsling
+                        hidden={reservertIKRR || !vilkarMaBesvares || brukerErManuell}
+                        tekstId="oppfolging.vilkar-ikke-godkjent"
+                        className="varsling"
+                    />
+                    <HiddenIfVarsling
+                        hidden={!reservertIKRR}
+                        tekstId="oppfolging.bruker-reservert-i-krr"
+                        className="varsling"
+                    />
+                    <HiddenIfVarsling
+                        hidden={!brukerErEskalert}
+                        tekstId="oppfolgning.veileder.bruker-er-eskalert"
+                        className="varsling"
+                    />
+                    <HiddenIfVarslingMedLenke
+                        hidden={reservertIKRR || !brukerErManuell}
+                        tekstId="oppfolging.bruker-er-manuell.tekst"
+                        lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
+                        href="/innstillinger"
+                        className="varsling"
+                    />
+                </Container>
         );
 
         return (
             <Innholdslaster
-                avhengigheter={[situasjonReducer, identitetReducer]}
-            >
+                avhengigheter={[situasjonReducer, identitetReducer]}>
                 {erBruker ? visVarslingerForBruker : visVarslingerForVeileder}
             </Innholdslaster>
         );
