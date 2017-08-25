@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filter/filter';
+import PeriodeFilter from '../filter/periode-filter';
 import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
 
 function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
@@ -18,8 +19,13 @@ function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenkeknapp>
             </div>
-            <div className="verktoylinje__verktoy">
-                <Filter />
+            <div className="verktoylinje">
+                <div className="verktoylinje__verktoy">
+                    <PeriodeFilter />
+                </div>
+                <div className="verktoylinje__verktoy">
+                    <Filter />
+                </div>
             </div>
         </div>
     );
