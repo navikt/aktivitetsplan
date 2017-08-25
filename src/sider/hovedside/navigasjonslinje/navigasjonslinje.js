@@ -11,7 +11,7 @@ import Feature, {
 } from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
-import { dialogFilter } from '../../../moduler/filter/filter-utils';
+import { dialogFilter } from '../../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-reducer';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import { selectErPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
@@ -26,7 +26,7 @@ import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
     selectViserHistoriskPeriode,
     selectViserInneverendePeriode,
-} from '../../../moduler/filter/filter-selector';
+} from '../../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {

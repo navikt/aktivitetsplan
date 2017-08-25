@@ -1,14 +1,13 @@
 import React from 'react';
 import PT from 'prop-types';
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
-import {toggleAktivitetsEtikett} from "./filter-reducer";
-import {selectAktivitetEtiketterFilter} from "./filter-selector";
-import {selectAlleAktiviter} from "../aktivitet/aktivitetliste-selector";
-
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import { toggleAktivitetsEtikett } from './filter-reducer';
+import { selectAktivitetEtiketterFilter } from './filter-selector';
+import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
 
 function EtikettFilter({
     harAktivitetEtiketter,
@@ -57,11 +56,9 @@ const mapStateToProps = state => {
     };
 };
 
-
 const mapDispatchToProps = dispatch => ({
     doToggleAktivitetsEtikett: aktivitetsType =>
         dispatch(toggleAktivitetsEtikett(aktivitetsType)),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(EtikettFilter);

@@ -25,7 +25,7 @@ import {
     selectMalListe,
     selectMalStatus,
 } from '../../../moduler/mal/mal-selector';
-import { selectViserHistoriskPeriode } from '../../../moduler/filter/filter-selector';
+import { selectViserHistoriskPeriode } from '../../../moduler/filtrering/filter/filter-selector';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 

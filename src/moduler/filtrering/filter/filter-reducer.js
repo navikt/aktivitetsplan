@@ -3,6 +3,7 @@ export const TOGGLE_AKTIVITET_TYPE = 'filter/toggleAktivitetType';
 export const TOGGLE_AKTIVITET_ETIKETT = 'filter/toggleAktivitetEtikett';
 export const VELG_HISTORISK_PERIODE = 'filter/velg';
 export const TOGGLE_AKTIVITET_STATUS = 'filter/toggleAktivitetStatus';
+export const CLOSE_AKTIVITET_STATUS = 'filter/closeAktivitetStatus';
 
 const initalState = {
     aktivitetTyper: {},
@@ -28,6 +29,11 @@ export default function reducer(state = initalState, action) {
         case TOGGLE_AKTIVITET_STATUS: {
             const aktivitetStatus = { ...state.aktivitetStatus };
             aktivitetStatus[data] = !aktivitetStatus[data];
+            return { ...state, aktivitetStatus };
+        }
+        case CLOSE_AKTIVITET_STATUS: {
+            const aktivitetStatus = { ...state.aktivitetStatus };
+            aktivitetStatus[data] = false;
             return { ...state, aktivitetStatus };
         }
         case VELG_HISTORISK_PERIODE:
