@@ -1,9 +1,13 @@
 import React from 'react';
 import PT from 'prop-types';
+import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import {toggleAktivitetsType} from "./filter-reducer";
+import {selectAktivitetTyperFilter} from "./filter-selector";
+import {selectAlleAktiviter} from "../aktivitet/aktivitetliste-selector";
 
 function TypeFilter({
     harAktivitetTyper,
@@ -37,4 +41,24 @@ TypeFilter.propTypes = {
     doToggleAktivitetsType: PT.func.isRequired,
 };
 
-export default TypeFilter;
+const mapStateToProps = state => {
+    const aktiviteter = selectAlleAktiviter(state);
+    const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
+    const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
+        const type = aktivitet.type;
+        typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
+        return typer;
+    }, {});
+
+    return{
+        aktivitetTyper,
+        harAktivitetTyper: Object.keys(aktivitetTyper).length > 1,
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    doToggleAktivitetsType: aktivitetsType =>
+        dispatch(toggleAktivitetsType(aktivitetsType)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TypeFilter);

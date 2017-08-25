@@ -1,9 +1,14 @@
 import React from 'react';
 import PT from 'prop-types';
+import {connect} from "react-redux";
 import { Checkbox } from 'nav-frontend-skjema';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import {toggleAktivitetsEtikett} from "./filter-reducer";
+import {selectAktivitetEtiketterFilter} from "./filter-selector";
+import {selectAlleAktiviter} from "../aktivitet/aktivitetliste-selector";
+
 
 function EtikettFilter({
     harAktivitetEtiketter,
@@ -35,4 +40,28 @@ EtikettFilter.propTypes = {
     doToggleAktivitetsEtikett: PT.func.isRequired,
 };
 
-export default EtikettFilter;
+const mapStateToProps = state => {
+    const aktiviteter = selectAlleAktiviter(state);
+    const aktivitetEtiketterFilter = selectAktivitetEtiketterFilter(state);
+    const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
+        const etikett = aktivitet.etikett;
+        if (etikett) {
+            etiketter[etikett] = aktivitetEtiketterFilter[etikett]; // eslint-disable-line no-param-reassign
+        }
+        return etiketter;
+    }, {});
+
+    return {
+        aktivitetEtiketter,
+        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length > 1,
+    };
+};
+
+
+const mapDispatchToProps = dispatch => ({
+    doToggleAktivitetsEtikett: aktivitetsType =>
+        dispatch(toggleAktivitetsEtikett(aktivitetsType)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(EtikettFilter);
