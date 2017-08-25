@@ -1,7 +1,6 @@
 @import '../variables';
 @import './dialoger';
 
-@padding: 1.2rem 1rem 1.4rem 1.5rem;
 @bredde-skjerm-dialoger: 20%;
 @bredde-skjerm-dialog: 40%;
 @full-bredde-skjerm-modal: @bredde-skjerm-dialoger + @bredde-skjerm-dialog;
@@ -40,9 +39,10 @@
 }
 
 .dialog-modal__header {
+    display: flex;
     background-color: @white;
     border-bottom: 1px solid @gray-foreground;
-    padding: @padding;
+    padding: 1rem;
 
     .dialog-modal__tilbake-knapp {
         margin-right: 1rem;
@@ -92,16 +92,16 @@
     background-color: @gray-background;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    height: 63vh;
+    height: 79.7vh;
 }
 
 .dialog-modal__kolonne {
-    height: 69vh;
+    height: 90vh;
 }
 
 .dialog-modal__kolonne--dialog {
     width: 100%;
-    padding: 1rem 1rem 1rem 2rem;
+    padding: 1rem;
     background-color: @gray-background;
     overflow-y: auto;
 
@@ -132,6 +132,11 @@
     .dialog-modal__dialoger {
         // Sikrer at "dialoger" bredden aldri blir smalere enn et dialoger-innslag aka dialogkort
         min-width: @dialogkort-bredde;
+        height: 63vh;
+    }
+
+    .dialog-modal__kolonne {
+        height: 69vh;
     }
 
     .dialog-modal.ReactModal__Content {
@@ -151,6 +156,7 @@
 
     .dialog-modal__kolonne--dialog {
         width: percentage(@bredde-skjerm-dialog / @full-bredde-skjerm-modal);
+        padding: 1rem 1rem 1rem 2rem;
     }
 
     .dialog-modal__tilbake-knapp.pil-knapp {
