@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Undertekst } from 'nav-frontend-typografi';
 import history from '../../history';
 import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import Datovelger from '../../felles-komponenter/skjema/datovelger/datovelger';
 import { redigerArbeidsliste } from './arbeidsliste-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import { selectArbeidslisteReducer } from './arbeidsliste-selector';
+import {
+    selectArbeidslisteReducer,
+    selectSistEndretAv,
+    selectEndretDato,
+} from './arbeidsliste-selector';
 import { LUKK_MODAL } from '../../ducks/modal';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
@@ -19,8 +24,15 @@ import {
     pakrevd,
     begrensetKommentarLengde,
 } from './arbeidsliste-utils';
+import { formaterDato } from '../../utils';
 
-function RedigerArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
+function RedigerArbeidslisteForm({
+    handleSubmit,
+    lukkModal,
+    errorSummary,
+    sistEndretAv,
+    endretDato,
+}) {
     return (
         <form onSubmit={handleSubmit}>
             <section>
@@ -32,6 +44,17 @@ function RedigerArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
                         maxLength={KOMMENTAR_MAKS_LENGDE}
                         disabled={false}
                     />
+
+                    <Undertekst className="arbeidsliste__sist-endret-info">
+                        <FormattedMessage
+                            id="arbeidsliste.endringsinfo.footer"
+                            values={{
+                                dato: formaterDato(endretDato),
+                                veileder: sistEndretAv,
+                            }}
+                        />
+                    </Undertekst>
+
                     <Datovelger
                         feltNavn="frist"
                         labelId="arbeidsavtale.form.frist"
@@ -61,6 +84,8 @@ RedigerArbeidslisteForm.propTypes = {
     lukkModal: PT.func.isRequired,
     initialValues: PT.any.isRequired,
     errorSummary: PT.node.isRequired,
+    sistEndretAv: PT.string.isRequired,
+    endretDato: PT.string.isRequired,
 };
 
 const RedigerArbeidslisteFormValidation = validForm({
@@ -75,7 +100,10 @@ const RedigerArbeidslisteFormValidation = validForm({
 
 const mapStateToProps = state => {
     const arbeidsliste = selectArbeidslisteReducer(state);
+
     return {
+        sistEndretAv: selectSistEndretAv(state),
+        endretDato: selectEndretDato(state),
         veileder: state.data.identitet.data.id,
         initialValues: {
             kommentar: arbeidsliste.data.kommentar,
