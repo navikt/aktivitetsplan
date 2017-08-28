@@ -13,6 +13,7 @@ import {
 import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';
+import AvtaltMedNavFilter from './filter/avtalt-filter';
 
 function Filter({ avhengigheter, harAktivitet }) {
     return (
@@ -25,6 +26,7 @@ function Filter({ avhengigheter, harAktivitet }) {
                                 <TypeFilter />
                                 <StatusFilter />
                                 <EtikettFilter />
+                                <AvtaltMedNavFilter />
                             </div>
                         </Dropdown>}
                 </FormattedMessage>
