@@ -9,13 +9,24 @@ import {
     HiddenIfVarsling,
     HiddenIfVarslingMedLenke,
 } from './varsel-alertstriper';
-import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
+import {
+    selectGjeldendeEskaleringsVarsel,
+    selectVilkarMaBesvares,
+    selectErUnderOppfolging,
+    selectErBrukerManuell,
+    selectReservasjonKRR,
+    selectSituasjonReducer,
+    selectTilHorendeDialogId,
+} from '../situasjon/situasjon-selector';
+import {
+    selectErBruker,
+    selectIdentitetReducer,
+} from '../identitet/identitet-selector';
 
 class Varslinger extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
     }
-
     render() {
         const {
             identitetReducer,
@@ -25,37 +36,61 @@ class Varslinger extends Component {
             vilkarMaBesvares,
             brukerErManuell,
             reservertIKRR,
+            brukerErEskalert,
+            tilhorendeDialogId,
         } = this.props;
+
+        const visVarslingerForBruker = (
+            <Container>
+                <HiddenIfVarslingMedLenke
+                    hidden={!brukerErEskalert}
+                    tekstId="oppfolgning.bruker.bruker-er-eskalert  "
+                    lenkeTekstId="oppfolgning.bruker.bruker-er-eskalert.lenke-tekst"
+                    href={`/dialog/${tilhorendeDialogId}`}
+                    className="varsling"
+                />
+            </Container>
+        );
+
+        const visVarslingerForVeileder = (
+            <Container>
+                <HiddenIfVarsling
+                    hidden={underOppfolging}
+                    tekstId="oppfolging.ikke-under-oppfolging"
+                    className="varsling"
+                />
+                <HiddenIfVarsling
+                    hidden={
+                        reservertIKRR || !vilkarMaBesvares || brukerErManuell
+                    }
+                    tekstId="oppfolging.vilkar-ikke-godkjent"
+                    className="varsling"
+                />
+                <HiddenIfVarsling
+                    hidden={!reservertIKRR}
+                    tekstId="oppfolging.bruker-reservert-i-krr"
+                    className="varsling"
+                />
+                <HiddenIfVarsling
+                    hidden={!brukerErEskalert}
+                    tekstId="oppfolgning.veileder.bruker-er-eskalert"
+                    className="varsling"
+                />
+                <HiddenIfVarslingMedLenke
+                    hidden={reservertIKRR || !brukerErManuell}
+                    tekstId="oppfolging.bruker-er-manuell.tekst"
+                    lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
+                    href="/innstillinger"
+                    className="varsling"
+                />
+            </Container>
+        );
+
         return (
             <Innholdslaster
                 avhengigheter={[situasjonReducer, identitetReducer]}
             >
-                <HiddenIfDiv hidden={erBruker}>
-                    <Container>
-                        <HiddenIfVarsling
-                            hidden={underOppfolging}
-                            tekstId="oppfolging.ikke-under-oppfolging"
-                            className="varsling"
-                        />
-                        <HiddenIfVarsling
-                            hidden={reservertIKRR || !vilkarMaBesvares || brukerErManuell}
-                            tekstId="oppfolging.vilkar-ikke-godkjent"
-                            className="varsling"
-                        />
-                        <HiddenIfVarsling
-                            hidden={!reservertIKRR}
-                            tekstId="oppfolging.bruker-reservert-i-krr"
-                            className="varsling"
-                        />
-                        <HiddenIfVarslingMedLenke
-                            hidden={reservertIKRR || !brukerErManuell}
-                            tekstId="oppfolging.bruker-er-manuell.tekst"
-                            lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
-                            href="/innstillinger"
-                            className="varsling"
-                        />
-                    </Container>
-                </HiddenIfDiv>
+                {erBruker ? visVarslingerForBruker : visVarslingerForVeileder}
             </Innholdslaster>
         );
     }
@@ -67,6 +102,8 @@ Varslinger.defaultProps = {
     vilkarMaBesvares: false,
     brukerErManuell: false,
     reservertIKRR: false,
+    brukerErEskalert: false,
+    tilhorendeDialogId: undefined,
 };
 
 Varslinger.propTypes = {
@@ -78,24 +115,21 @@ Varslinger.propTypes = {
     brukerErManuell: PT.bool,
     reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
+    brukerErEskalert: PT.bool,
+    tilhorendeDialogId: PT.number,
 };
 
-const mapStateToProps = state => {
-    const stateData = state.data;
-    const identitetReducer = stateData.identitet;
-    const situasjonReducer = stateData.situasjon;
-    const oppfolgingStatus = situasjonReducer.data;
-    return {
-        identitetReducer,
-        erBruker: identitetReducer.data.erBruker,
-
-        situasjonReducer,
-        vilkarMaBesvares: oppfolgingStatus.vilkarMaBesvares,
-        underOppfolging: oppfolgingStatus.underOppfolging,
-        brukerErManuell: oppfolgingStatus.manuell,
-        reservertIKRR: oppfolgingStatus.reservasjonKRR,
-    };
-};
+const mapStateToProps = state => ({
+    identitetReducer: selectIdentitetReducer(state),
+    erBruker: selectErBruker(state),
+    situasjonReducer: selectSituasjonReducer(state),
+    vilkarMaBesvares: selectVilkarMaBesvares(state),
+    underOppfolging: selectErUnderOppfolging(state),
+    brukerErManuell: selectErBrukerManuell(state),
+    reservertIKRR: selectReservasjonKRR(state),
+    brukerErEskalert: selectGjeldendeEskaleringsVarsel(state),
+    tilhorendeDialogId: selectTilHorendeDialogId(state),
+});
 
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),

@@ -14,6 +14,10 @@ export function selectAktivitetEtiketterFilter(state) {
     return selectFilterReducer(state).aktivitetEtiketter;
 }
 
+export function selectAktivitetStatusFilter(state) {
+    return selectFilterReducer(state).aktivitetStatus;
+}
+
 export function selectViserInneverendePeriode(state) {
     return !state.data.filter.historiskPeriode;
 }
