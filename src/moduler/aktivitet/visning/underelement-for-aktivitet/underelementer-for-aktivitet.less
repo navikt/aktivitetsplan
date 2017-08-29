@@ -14,6 +14,10 @@
     flex-direction: column;
     align-items: center;
 
+    .velgVisning {
+        margin-bottom: 1rem;
+    }
+
     .tall-alert {
         margin-left: 0.2rem;
     }
@@ -24,36 +28,61 @@
     }
 
     &__dialog-knapp {
-        padding-left: 2.5rem;
+        border: 1px solid @navMorkGra;
+        border-right: 0;
+        padding: 0.2rem 1.2rem 0.3rem 2.5rem;
         .underelement-knapp('dialog-regular.svg');
 
         &:hover {
+            color: @navBla;
             .underelement-knapp('dialog-hover.svg');
         }
 
         &--aktiv {
+            color: @white;
             .underelement-knapp('dialog-aktiv.svg');
+            background-color: @navDypBla;
+            border-right: 1px solid @navMorkGra;
 
             &:hover {
+                color: @white;
                 .underelement-knapp('dialog-aktiv.svg');
+                background-color: @navDypBla;
             }
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 3px @orange-focus;
+            border-right: 1px solid @navMorkGra;
         }
     }
 
     &__historikk-knapp {
-        padding-left: 2.5rem;
+        border: 1px solid @navMorkGra;
+        padding: 0.2rem 1.2rem 0.3rem 2.5rem;
         .underelement-knapp('historikk-regular.svg');
 
         &:hover {
+            color: @navBla;
             .underelement-knapp('historikk-hover.svg');
         }
 
         &--aktiv {
+            color: @white;
             .underelement-knapp('historikk-aktiv.svg');
+            background-color: @navDypBla;
 
             &:hover {
+                color: @white;
                 .underelement-knapp('historikk-aktiv.svg');
+                background-color: @navDypBla;
             }
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 3px @orange-focus;
         }
     }
 
@@ -70,4 +99,11 @@
             .hide-text();
         }
     }
+}
+
+.underelementer-aktivitet__dialog-knapp:focus
+    + .underelementer-aktivitet__historikk-knapp {
+    border-left: 0;
+    padding-left: ~'calc(2.5rem - 6px)';
+    margin-left: 3px;
 }
