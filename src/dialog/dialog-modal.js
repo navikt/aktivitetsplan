@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Undertittel, Element } from 'nav-frontend-typografi';
 import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import Dialog from './dialog';
@@ -43,12 +43,12 @@ function Header({ harNyDialogEllerValgtDialog, motpart, navnPaMotpart }) {
                 onClick={tilbake}
             />
             <Innholdslaster avhengigheter={[motpart]} spinnerStorrelse="m">
-                <Undertittel className="dialog-modal__tittel" tag="h1">
+                <Element className="dialog-modal__tittel" tag="h1">
                     <FormattedMessage
                         id="dialog.tittel"
                         values={{ motpart: navnPaMotpart }}
                     />
-                </Undertittel>
+                </Element>
             </Innholdslaster>
         </div>
     );
@@ -129,7 +129,7 @@ function HoyreKolonne({
             className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
         >
             <VisibleDiv visible={harNyDialog}>
-                <Undertittel tag="h1">
+                <Undertittel tag="h1" className="endre-dialog__tittel">
                     <FormattedMessage id="dialog.ny-dialog" />
                 </Undertittel>
                 <NyHenvendelse
@@ -141,6 +141,7 @@ function HoyreKolonne({
                 <Knappelenke
                     visible={!!valgtAktivitetId}
                     onClick={apneAktivitet}
+                    className="endre-dialog__til-aktiviteten"
                 >
                     <FormattedMessage id="dialog.modal.til-aktiviteten" />
                 </Knappelenke>
