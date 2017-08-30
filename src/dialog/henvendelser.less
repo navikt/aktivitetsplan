@@ -1,7 +1,7 @@
 @import '../variables';
 
 .ny-henvendelse-form {
-    .blokk-xs();
+    padding-bottom: 1rem;
 
     .textarea--medMeta,
     .input--fullbredde {
@@ -10,7 +10,6 @@
 
     .textarea--medMeta__teller {
         max-width: 34rem;
-        margin-top: 0;
     }
 
     .knapp--hoved {
@@ -19,6 +18,9 @@
 }
 
 .dialog-henvendelser {
+    border-top: 1px solid @navGra40;
+    padding-top: 1rem;
+
     .snakkeboble--hoyre .snakkeboble-panel {
         text-align: left;
     }
@@ -82,9 +84,40 @@
 
 .henvendelser {
     &__lest-av-bruker {
-        margin: 1rem 0;
-        padding: 1rem;
-        border-top: 2px solid @navGra20;
+        padding: 1rem 0;
+
+        &--tittel {
+            position: relative;
+            text-align: center;
+
+            &:before {
+                content: '';
+                position: absolute;
+                display: block;
+                top: 55%;
+                height: 1px;
+                width: 78%;
+                background-color: @navGra40;
+                left: 50%;
+                z-index: 1;
+                transform: translateX(-50%);
+            }
+
+            span {
+                display: inline-block;
+                position: relative;
+                background: @gray-background;
+                z-index: 2;
+
+                &:first-child {
+                    padding-left: 1.5rem;
+                }
+
+                &:last-child {
+                    padding-right: 1.5rem;
+                }
+            }
+        }
     }
 }
 
@@ -95,8 +128,7 @@
         }
 
         .snakkeboble-panel {
-            flex: 0 1 27rem;
-            width: auto;
+            flex: 0 1 24rem;
         }
 
         .ikon {

@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import { ToggleGruppe, ToggleKnapp } from 'nav-frontend-toggle';
 import * as AppPT from '../../../../proptypes';
 import { autobind } from '../../../../utils';
 import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
@@ -11,14 +10,16 @@ import TallAlert from '../../../../felles-komponenter/tall-alert';
 import NyHenvendelse from '../../../../dialog/ny-henvendelse';
 import Henvendelser from '../../../../dialog/henvendelser';
 import EndreDialog from '../../../../dialog/endre-dialog';
-import VisibleDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import hiddenIfHoc from '../../../../felles-komponenter/hidden-if/hidden-if';
+import {
+    div as HiddenIfDiv,
+    span as HiddenIfSpan,
+    button as HiddenIfButton,
+} from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { selectErUnderOppfolging } from '../../../situasjon/situasjon-selector';
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
-
-const HiddenIfToggleKnapp = hiddenIfHoc(ToggleKnapp);
+const INGEN = '';
 
 class UnderelementerForAktivitet extends Component {
     constructor() {
@@ -28,15 +29,27 @@ class UnderelementerForAktivitet extends Component {
     }
 
     toggleDialog() {
-        this.setState({
-            vis: DIALOG,
-        });
+        if (this.state.vis === DIALOG) {
+            this.setState({
+                vis: INGEN,
+            });
+        } else {
+            this.setState({
+                vis: DIALOG,
+            });
+        }
     }
 
     toggleHistorikk() {
-        this.setState({
-            vis: HISTORIKK,
-        });
+        if (this.state.vis === HISTORIKK) {
+            this.setState({
+                vis: INGEN,
+            });
+        } else {
+            this.setState({
+                vis: HISTORIKK,
+            });
+        }
     }
 
     render() {
@@ -49,6 +62,7 @@ class UnderelementerForAktivitet extends Component {
             kanOppretteNyHenvendelse,
             kanEndreDialog,
         } = this.props;
+
         const { vis } = this.state;
         const aktivitetId = aktivitet.id;
         const cls = classes => classNames('underelementer-aktivitet', classes);
@@ -66,38 +80,32 @@ class UnderelementerForAktivitet extends Component {
                 'underelementer-aktivitet__historikk-knapp--aktiv': historikkAktiv,
             });
 
-        const toggleVis = e => {
-            if (e.target.value === HISTORIKK) {
-                this.toggleHistorikk();
-            } else if (e.target.value === DIALOG) {
-                this.toggleDialog();
-            }
-        };
-
         return (
             <section className={cls(className)}>
-                <ToggleGruppe
-                    name="dialog-historikk-toggle"
-                    onChange={toggleVis}
-                    className="underelementer-aktivitet__toggle"
-                >
-                    <HiddenIfToggleKnapp
+                <div className="velgVisning">
+                    <HiddenIfButton
+                        hidden={!kanSeDialog}
                         value={DIALOG}
                         className={dialogknappCls(visDialog)}
-                        hidden={!kanSeDialog}
+                        onClick={this.toggleDialog}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
+                    </HiddenIfButton>
+
+                    <button
+                        value={HISTORIKK}
+                        className={historikknappCls(visHistorikk)}
+                        onClick={this.toggleHistorikk}
+                    >
+                        <FormattedMessage id="aktivitetvisning.historikk-knapp" />
+                    </button>
+
+                    <HiddenIfSpan hidden={!kanSeDialog}>
                         <TallAlert hidden={antallUlesteHenvendelser <= 0}>
                             {antallUlesteHenvendelser}
                         </TallAlert>
-                    </HiddenIfToggleKnapp>
-                    <ToggleKnapp
-                        value={HISTORIKK}
-                        className={historikknappCls(visHistorikk)}
-                    >
-                        <FormattedMessage id="aktivitetvisning.historikk-knapp" />
-                    </ToggleKnapp>
-                </ToggleGruppe>
+                    </HiddenIfSpan>
+                </div>
 
                 <VersjonerForAktivitet
                     visible={visHistorikk}
@@ -105,8 +113,8 @@ class UnderelementerForAktivitet extends Component {
                     className="underelementer-aktivitet__historikkvisning"
                 />
 
-                <VisibleDiv
-                    visible={visDialog}
+                <HiddenIfDiv
+                    hidden={!visDialog}
                     className="underelementer-aktivitet__dialogvisning"
                 >
                     <NyHenvendelse
@@ -121,7 +129,7 @@ class UnderelementerForAktivitet extends Component {
                         dialog={dialog}
                     />
                     <Henvendelser hidden={!dialog} dialog={dialog} />
-                </VisibleDiv>
+                </HiddenIfDiv>
             </section>
         );
     }

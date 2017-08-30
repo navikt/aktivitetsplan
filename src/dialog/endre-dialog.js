@@ -25,7 +25,7 @@ class EndreDialogStatus extends Component {
             return <div />;
         }
         return (
-            <div>
+            <div className="endre-dialog__sjekkbokser">
                 <Checkbox
                     className="endre-dialog__sjekkboks"
                     label={<FormattedMessage id="dialog.ferdigbehandlet" />}
