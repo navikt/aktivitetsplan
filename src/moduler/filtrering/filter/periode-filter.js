@@ -53,7 +53,7 @@ function PeriodeFilter({
         >
             <FormattedMessage id="periode-filter.tittel">
                 {tittel =>
-                    <Dropdown name={tittel}>
+                    <Dropdown name="periode-filter" knappeTekst={tittel}>
                         <div className="filter">
                             <Undertittel>
                                 <FormattedMessage id="filter.periode.tittel" />

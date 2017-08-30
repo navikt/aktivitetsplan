@@ -27,7 +27,8 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                 <FormattedMessage id="filter.tittel">
                     {tittel =>
                         <Dropdown
-                            name={tittel}
+                            name="filter"
+                            knappeTekst={tittel}
                             className="dropdown--alignright"
                         >
                             <div className="filter__container">

@@ -12,7 +12,6 @@
     background: @navGra20 none;
     padding: 0.5rem;
     justify-content: space-between;
-    font-weight: normal; // TODO få designerne til å bruke fonter som faktisk finnes.
     margin-right: 1rem;
     margin-bottom: 1rem;
 
@@ -21,7 +20,7 @@
     }
 
     &:active {
-        background-color: #005b82;
+        background-color: @navDypBla;
         color: @white;
     }
 
@@ -42,7 +41,7 @@
 .filtrering-label-slett {
     margin: 1.25rem 0.5rem 2rem 0.1875rem;
     cursor: pointer;
-    background-color: rgb(183, 177, 169);
+    background-color: @navGra40;
     border: 0;
     padding: 5px;
 }
@@ -54,5 +53,5 @@
 }
 
 .filtreringlabel:active svg path {
-    fill: #ffffff;
+    fill: @white;
 }
