@@ -40,7 +40,7 @@ function nyStateMedOppdatertDialog(state, dialog) {
     return { ...state, status: STATUS.OK, data: nyData };
 }
 
-function compareDialoger(a, b) {
+export function compareDialoger(a, b) {
     if (a.ferdigBehandlet !== b.ferdigBehandlet) {
         return a.ferdigBehandlet ? 1 : -1;
     } else if (a.venterPaSvar !== b.venterPaSvar) {
