@@ -2,6 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import classNames from 'classnames';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
@@ -14,13 +15,21 @@ import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';
 
-function Filter({ avhengigheter, harAktivitet }) {
+const filterClassNames = classes => classNames(classes, 'filter');
+
+function Filter({ avhengigheter, harAktivitet, className }) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
-            <VisibleIfDiv className="filter" visible={harAktivitet}>
+            <VisibleIfDiv
+                className={filterClassNames(className)}
+                visible={harAktivitet}
+            >
                 <FormattedMessage id="filter.tittel">
                     {tittel =>
-                        <Dropdown name={tittel}>
+                        <Dropdown
+                            name={tittel}
+                            className="dropdown--alignright"
+                        >
                             <div className="filter__container">
                                 <TypeFilter />
                                 <StatusFilter />
@@ -36,15 +45,17 @@ function Filter({ avhengigheter, harAktivitet }) {
 Filter.propTypes = {
     avhengigheter: PT.arrayOf(AppPT.reducer).isRequired,
     harAktivitet: PT.bool,
+    className: PT.string,
 };
 
 Filter.defaultProps = {
     harAktivitet: true,
+    className: '',
 };
 
 const mapStateToProps = state => {
     const aktiviteter = selectAlleAktiviter(state);
-    const harAktivitet = aktiviteter.length > 0;
+    const harAktivitet = aktiviteter.length > 1;
     return {
         avhengigheter: [selectAktivitetListeReducer(state)],
         harAktivitet,

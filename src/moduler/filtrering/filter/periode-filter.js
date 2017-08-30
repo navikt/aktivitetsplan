@@ -4,6 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Radio } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import Dato from '../../../felles-komponenter/dato';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../proptypes';
@@ -35,18 +36,25 @@ PeriodeLabel.propTypes = {
     historiskPeriode: AppPT.oppfolgingsPeriode,
 };
 
+const periodeFilterCls = classes =>
+    classNames(classes, 'filter', 'periode-filter');
+
 function PeriodeFilter({
     harHistoriskePerioder,
     historiskPeriode,
     historiskePerioder,
     doVelgHistoriskPeriode,
+    className,
 }) {
     return (
-        <VisibleIfDiv visible={harHistoriskePerioder} className="filter">
+        <VisibleIfDiv
+            className={periodeFilterCls(className)}
+            visible={harHistoriskePerioder}
+        >
             <FormattedMessage id="periode-filter.tittel">
                 {tittel =>
                     <Dropdown name={tittel}>
-                        <div className="filter__container">
+                        <div className="filter">
                             <Undertittel>
                                 <FormattedMessage id="filter.periode.tittel" />
                             </Undertittel>
@@ -91,10 +99,12 @@ PeriodeFilter.propTypes = {
     historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
     historiskPeriode: AppPT.oppfolgingsPeriode,
     doVelgHistoriskPeriode: PT.func.isRequired,
+    className: PT.string,
 };
 
 PeriodeFilter.defaultProps = {
     historiskPeriode: null,
+    className: '',
 };
 
 function tidligsteHendelsesTidspunktMellom(fra, til, state) {
