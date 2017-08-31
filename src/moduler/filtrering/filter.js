@@ -14,6 +14,7 @@ import {
 import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';
+import AvtaltMedNavFilter from './filter/avtalt-filter';
 
 const filterClassNames = classes => classNames(classes, 'filter');
 
@@ -35,6 +36,7 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                                 <TypeFilter />
                                 <StatusFilter />
                                 <EtikettFilter />
+                                <AvtaltMedNavFilter />
                             </div>
                         </Dropdown>}
                 </FormattedMessage>
