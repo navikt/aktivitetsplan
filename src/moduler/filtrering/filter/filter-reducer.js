@@ -3,7 +3,7 @@ export const TOGGLE_AKTIVITET_TYPE = 'filter/toggleAktivitetType';
 export const TOGGLE_AKTIVITET_ETIKETT = 'filter/toggleAktivitetEtikett';
 export const VELG_HISTORISK_PERIODE = 'filter/velg';
 export const TOGGLE_AKTIVITET_STATUS = 'filter/toggleAktivitetStatus';
-export const TOGGLE_AKTIVITET_AVTALT = 'filter/closeAktivitetStatus';
+export const TOGGLE_AKTIVITET_AVTALT = 'filter/toggleAktivitetAvtaltMedNav';
 
 const initalState = {
     aktivitetTyper: {},
