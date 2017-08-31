@@ -92,6 +92,12 @@ class UnderelementerForAktivitet extends Component {
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
                     </HiddenIfButton>
 
+                    <HiddenIfSpan hidden={!kanSeDialog}>
+                        <TallAlert hidden={antallUlesteHenvendelser <= 0}>
+                            {antallUlesteHenvendelser}
+                        </TallAlert>
+                    </HiddenIfSpan>
+
                     <button
                         value={HISTORIKK}
                         className={historikknappCls(visHistorikk)}
@@ -99,12 +105,6 @@ class UnderelementerForAktivitet extends Component {
                     >
                         <FormattedMessage id="aktivitetvisning.historikk-knapp" />
                     </button>
-
-                    <HiddenIfSpan hidden={!kanSeDialog}>
-                        <TallAlert hidden={antallUlesteHenvendelser <= 0}>
-                            {antallUlesteHenvendelser}
-                        </TallAlert>
-                    </HiddenIfSpan>
                 </div>
 
                 <VersjonerForAktivitet
