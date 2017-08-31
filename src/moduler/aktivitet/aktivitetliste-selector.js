@@ -13,9 +13,14 @@ import {
 } from '../../constant';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 
+export function selectAktiviter(state) {
+    const stateData = state.data;
+    return stateData.aktiviteter.data;
+}
+
 export function selectAlleAktiviter(state) {
     const stateData = state.data;
-    return stateData.aktiviteter.data.concat(stateData.arenaAktiviteter.data);
+    selectAktiviter(state).concat(stateData.arenaAktiviteter.data);
 }
 
 export function selectAktivitetListe(state) {
