@@ -16,10 +16,13 @@
 
     .velgVisning {
         margin-bottom: 1rem;
+        position: relative;
     }
 
     .tall-alert {
-        margin-left: 0.2rem;
+        position: absolute;
+        left: 90px;
+        top: 2px;
     }
 
     &__toggle {
@@ -30,7 +33,7 @@
     &__dialog-knapp {
         border: 1px solid @navMorkGra;
         border-right: 0;
-        padding: 0.2rem 1.2rem 0.3rem 2.5rem;
+        padding: 0.2rem 1.7rem 0.3rem 2.5rem;
         .underelement-knapp('dialog-regular.svg');
 
         &:hover {
@@ -60,7 +63,7 @@
 
     &__historikk-knapp {
         border: 1px solid @navMorkGra;
-        padding: 0.2rem 1.2rem 0.3rem 2.5rem;
+        padding: 0.2rem 1.5rem 0.3rem 2.5rem;
         .underelement-knapp('historikk-regular.svg');
 
         &:hover {
