@@ -14,7 +14,7 @@ import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
-import { dialogFilter } from '../moduler/filter/filter-utils';
+import { dialogFilter } from '../moduler/filtrering/filter/filter-utils';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
@@ -106,7 +106,7 @@ class DialogVisning extends React.Component {
                     {dialog.sisteTekst}
                 </Normaltekst>
                 <VisibleIfDiv
-                    visible={venterPaSvar && ferdigBehandlet}
+                    visible={venterPaSvar || ferdigBehandlet}
                     className="dialoger__dialog-etiketter"
                 >
                     <Etikett

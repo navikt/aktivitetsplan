@@ -1,4 +1,4 @@
-import { selectHistoriskeOppfolgingsPerioder } from '../situasjon/situasjon-selector';
+import { selectHistoriskeOppfolgingsPerioder } from '../../situasjon/situasjon-selector';
 import {
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,

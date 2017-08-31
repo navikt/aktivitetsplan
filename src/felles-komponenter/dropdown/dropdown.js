@@ -76,7 +76,7 @@ class Dropdown extends Component {
     }
 
     render() {
-        const { name, className, children } = this.props;
+        const { name, className, children, knappeTekst } = this.props;
         const { apen } = this.state;
 
         const augmentedChild = Children.map(children, child =>
@@ -87,7 +87,7 @@ class Dropdown extends Component {
         const innhold = !apen
             ? null
             : <div
-                  className="dropdown__innhold"
+                  className={`${name}-dropdown__innhold dropdown__innhold`}
                   id={`${name}-dropdown__innhold`}
                   ref={settFokus}
               >
@@ -107,7 +107,7 @@ class Dropdown extends Component {
                         aria-expanded={apen}
                         aria-controls={`${name}-dropdown__innhold`}
                     >
-                        {name}
+                        {knappeTekst}
                     </button>
                 </div>
                 {innhold}
@@ -119,6 +119,7 @@ class Dropdown extends Component {
 Dropdown.propTypes = {
     apen: PT.bool,
     name: PT.string.isRequired,
+    knappeTekst: PT.string.isRequired,
     children: PT.oneOfType([PT.node, PT.arrayOf(PT.node)]).isRequired,
     className: PT.string,
     onLukk: PT.func,

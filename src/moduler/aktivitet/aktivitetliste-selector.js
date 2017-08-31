@@ -3,7 +3,7 @@ import {
     selectPrivatModusSlice,
     selectErPrivatModus,
 } from '../privat-modus/privat-modus-selector';
-import { aktivitetFilter } from '../filter/filter-utils';
+import { aktivitetFilter } from '../filtrering/filter/filter-utils';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import {
     MOTE_TYPE,

@@ -1,5 +1,5 @@
-import { datoErIPeriode } from '../filter/filter-utils';
-import { selectViserInneverendePeriode } from '../filter/filter-selector';
+import { datoErIPeriode } from '../filtrering/filter/filter-utils';
+import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 
 function slice(state) {
     return state.data.mal;
