@@ -95,7 +95,9 @@ const mapStateToProps = (state, props) => {
     const harReferat = !!referat;
 
     const erVeileder = selectErVeileder(state);
-    const visReferat = erVeileder || erReferatPublisert;
+    const visReferat =
+        (erVeileder || erReferatPublisert) &&
+        (harReferat || !aktivitet.historisk);
 
     return {
         publiserer: selectReferatReducer(state).status === STATUS.PENDING,

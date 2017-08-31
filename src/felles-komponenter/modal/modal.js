@@ -27,7 +27,7 @@ function Modal({
             onRequestClose={onRequestClose}
         >
             {header}
-            <Feilmelding />
+            <Feilmelding className="feilmelding--systemfeil" />
             <Innholdslaster
                 minstEn={minstEnAvhengighet}
                 avhengigheter={avhengigheter}

@@ -1,4 +1,5 @@
 .verktoylinje {
+
     &__verktoy {
         display: flex;
         align-items: stretch;
@@ -7,12 +8,16 @@
 
         &:last-child {
             margin-bottom: 0;
-            padding-left: 0.5rem;
         }
+    }
+
+    &__verktoy-container {
+        display: flex;
     }
 }
 
 @media (min-width: @screen-md-min) {
+
     .verktoylinje {
         display: flex;
         justify-content: space-between;

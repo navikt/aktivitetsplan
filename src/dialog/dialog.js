@@ -1,8 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { Element, Undertittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import NyHenvendelse from './ny-henvendelse';
 import EndreDialog from './endre-dialog';
 import Henvendelser from './henvendelser';
@@ -13,22 +12,19 @@ function Dialog({ dialog, overskrift, className }) {
     const historisk = dialog.historisk;
     return (
         <div className={className}>
-            <Undertittel tag="h1">
+            <Undertittel tag="h1" className="endre-dialog__tittel">
                 {overskrift}
             </Undertittel>
-            <Element>
-                <FormattedMessage id="dialog.deg-og-nav.tittel" />
-            </Element>
+            <EndreDialog
+                hidden={historisk}
+                formNavn={`endre-dialog-${dialogId}`}
+                dialog={dialog}
+            />
             <NyHenvendelse
                 hidden={historisk}
                 formNavn={`ny-henvendelse-dialog-${dialogId}`}
                 dialogId={dialogId}
                 skalHaAutofokus={false}
-            />
-            <EndreDialog
-                hidden={historisk}
-                formNavn={`endre-dialog-${dialogId}`}
-                dialog={dialog}
             />
             <Henvendelser dialog={dialog} />
         </div>

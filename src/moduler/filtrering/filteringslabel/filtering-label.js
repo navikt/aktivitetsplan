@@ -5,7 +5,7 @@ import FilterIkon from './filter-ikon';
 function FiltreringLabel({ label, slettFilter }) {
     return (
         <button
-            aria-label="Slett filter"
+            aria-label="slett-filter"
             className="filtreringlabel typo-undertekst"
             onClick={slettFilter}
         >

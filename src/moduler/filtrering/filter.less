@@ -1,13 +1,46 @@
 @import 'filteringslabel/filtrering-label';
 
 .filter {
-    min-width: 300px;
+    margin-left: 1rem;
+
+    &__innhold {
+        width: 400px;
+    }
 
     &__container {
-        padding: 1rem;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        padding: 1rem 1rem 1rem 0;
     }
 
-    h2 {
+    &__overskrift {
         margin: 1rem 0;
     }
+
+    &__tittel {
+        margin-bottom: 0.5rem;
+    }
+
+}
+
+
+.filter-dropdown__innhold {
+    width: auto;
+}
+
+
+@media (max-width: @screen-md-min) {
+    .filter-dropdown__innhold,
+    .filter {
+        width: 100%;
+
+        &__container {
+            display: block;
+            margin-top: 1rem;
+            margin-left: 1rem;
+        }
+
+    }
+
 }

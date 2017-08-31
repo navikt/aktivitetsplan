@@ -19,13 +19,9 @@ function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenkeknapp>
             </div>
-            <div className="verktoylinje">
-                <div className="verktoylinje__verktoy">
-                    <PeriodeFilter />
-                </div>
-                <div className="verktoylinje__verktoy">
-                    <Filter />
-                </div>
+            <div className="verktoylinje__verktoy-container">
+                <PeriodeFilter className="verktoylinje__verktoy" />
+                <Filter className="verktoylinje__verktoy" />
             </div>
         </div>
     );

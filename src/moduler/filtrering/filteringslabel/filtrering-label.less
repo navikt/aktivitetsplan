@@ -12,22 +12,21 @@
     background: @navGra20 none;
     padding: 0.5rem;
     justify-content: space-between;
-    font-weight: normal; // TODO få designerne til å bruke fonter som faktisk finnes.
     margin-right: 1rem;
     margin-bottom: 1rem;
 
     &:hover {
-        box-shadow: inset 0 -0.125em 0 @navMorkGra;
+        box-shadow: inset 0 -0.125rem 0 @navMorkGra;
     }
 
     &:active {
-        background-color: #005b82;
+        background-color: @navDypBla;
         color: @white;
     }
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 0px 3px @orangeFocus;
+        box-shadow: 0 0 0 0.1875rem @orangeFocus;
     }
 }
 
@@ -40,9 +39,9 @@
 }
 
 .filtrering-label-slett {
-    margin: 20px 8px 32px 3px;
+    margin: 1.25rem 0.5rem 2rem 0.1875rem;
     cursor: pointer;
-    background-color: rgb(183, 177, 169);
+    background-color: @navGra40;
     border: 0;
     padding: 5px;
 }
@@ -54,5 +53,5 @@
 }
 
 .filtreringlabel:active svg path {
-    fill: #ffffff;
+    fill: @white;
 }

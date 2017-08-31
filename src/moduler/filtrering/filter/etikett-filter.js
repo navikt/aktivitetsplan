@@ -1,13 +1,10 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
-import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
 import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
+import FilterVisningsKomponent from './filter-visnings-komponent';
 
 function EtikettFilter({
     harAktivitetEtiketter,
@@ -15,21 +12,13 @@ function EtikettFilter({
     doToggleAktivitetsEtikett,
 }) {
     return (
-        <VisibleIfDiv visible={harAktivitetEtiketter}>
-            <Undertittel>
-                <FormattedMessage id="filter.aktivitet.etikett.tittel" />
-            </Undertittel>
-            {Object.keys(aktivitetEtiketter).map(aktivitetEtikett =>
-                <Checkbox
-                    key={aktivitetEtikett}
-                    label={
-                        <FormattedMessage id={`etikett.${aktivitetEtikett}`} />
-                    }
-                    onChange={() => doToggleAktivitetsEtikett(aktivitetEtikett)}
-                    checked={aktivitetEtiketter[aktivitetEtikett]}
-                />
-            )}
-        </VisibleIfDiv>
+        <FilterVisningsKomponent
+            harAktiviteter={harAktivitetEtiketter}
+            filter={aktivitetEtiketter}
+            filterTittel={'filter.aktivitet.etikett.tittel'}
+            filterTekst={'aktivitet.etikett.'}
+            doToggleFunction={doToggleAktivitetsEtikett}
+        />
     );
 }
 
@@ -52,7 +41,7 @@ const mapStateToProps = state => {
 
     return {
         aktivitetEtiketter,
-        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length > 1,
+        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length >= 1,
     };
 };
 

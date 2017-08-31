@@ -18,6 +18,25 @@ export function selectOppfolgingUtgang(state) {
     return selectSituasjonReducer(state).data.oppfolgingUtgang;
 }
 
+export function selectErBrukerManuell(state) {
+    return selectSituasjonReducer(state).data.manuell;
+}
+
+export function selectVilkarMaBesvares(state) {
+    return selectSituasjonReducer(state).data.vilkarMaBesvares;
+}
+
+export function selectGjeldendeEskaleringsVarsel(state) {
+    return selectSituasjonReducer(state).data.gjeldendeEskaleringsvarsel;
+}
+
+export function selectTilHorendeDialogId(state) {
+    if (selectGjeldendeEskaleringsVarsel(state)) {
+        return selectGjeldendeEskaleringsVarsel(state).tilhorendeDialogId;
+    }
+    return null;
+}
+
 export function selectSituasjonStatus(state) {
     return selectSituasjonReducer(state).status;
 }

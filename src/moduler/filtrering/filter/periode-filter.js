@@ -4,6 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Radio } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import Dato from '../../../felles-komponenter/dato';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../proptypes';
@@ -35,50 +36,61 @@ PeriodeLabel.propTypes = {
     historiskPeriode: AppPT.oppfolgingsPeriode,
 };
 
+const periodeFilterCls = classes => classNames(classes);
+
 function PeriodeFilter({
     harHistoriskePerioder,
     historiskPeriode,
     historiskePerioder,
     doVelgHistoriskPeriode,
+    className,
 }) {
     return (
-        <VisibleIfDiv visible={harHistoriskePerioder} className="filter">
+        <VisibleIfDiv
+            className={periodeFilterCls(className)}
+            visible={harHistoriskePerioder}
+        >
             <FormattedMessage id="periode-filter.tittel">
                 {tittel =>
-                    <Dropdown name={tittel}>
+                    <Dropdown name="periode-filter" knappeTekst={tittel}>
                         <div className="filter__container">
-                            <Undertittel>
-                                <FormattedMessage id="filter.periode.tittel" />
-                            </Undertittel>
-                            <Radio
-                                label={
-                                    <FormattedMessage id="filter.periode.inneverende" />
-                                }
-                                name="inneverende"
-                                onChange={() => doVelgHistoriskPeriode(null)}
-                                checked={!historiskPeriode}
-                            />
-                            {historiskePerioder.map(t => {
-                                const id = t.id;
-                                return (
-                                    <div key={id}>
-                                        <Radio
-                                            label={
-                                                <PeriodeLabel
-                                                    historiskPeriode={t}
-                                                />
-                                            }
-                                            name={id}
-                                            onChange={() =>
-                                                doVelgHistoriskPeriode(t)}
-                                            checked={
-                                                !!historiskPeriode &&
-                                                historiskPeriode.id === id
-                                            }
-                                        />
-                                    </div>
-                                );
-                            })}
+                            <div className="filter">
+                                <Undertittel className="filter__tittel">
+                                    <FormattedMessage id="filter.periode.tittel" />
+                                </Undertittel>
+                                <Radio
+                                    className="filter__radio--periode"
+                                    label={
+                                        <FormattedMessage id="filter.periode.inneverende" />
+                                    }
+                                    name="inneverende"
+                                    onChange={() =>
+                                        doVelgHistoriskPeriode(null)}
+                                    checked={!historiskPeriode}
+                                />
+                                {historiskePerioder.map(t => {
+                                    const id = t.id;
+                                    return (
+                                        <div key={id}>
+                                            <Radio
+                                                className="filter__radio--periode"
+                                                label={
+                                                    <PeriodeLabel
+                                                        historiskPeriode={t}
+                                                    />
+                                                }
+                                                name={id}
+                                                onChange={() =>
+                                                    doVelgHistoriskPeriode(t)}
+                                                checked={
+                                                    !!historiskPeriode &&
+                                                    historiskPeriode.id === id
+                                                }
+                                            />
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </Dropdown>}
             </FormattedMessage>
@@ -91,10 +103,12 @@ PeriodeFilter.propTypes = {
     historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
     historiskPeriode: AppPT.oppfolgingsPeriode,
     doVelgHistoriskPeriode: PT.func.isRequired,
+    className: PT.string,
 };
 
 PeriodeFilter.defaultProps = {
     historiskPeriode: null,
+    className: '',
 };
 
 function tidligsteHendelsesTidspunktMellom(fra, til, state) {
