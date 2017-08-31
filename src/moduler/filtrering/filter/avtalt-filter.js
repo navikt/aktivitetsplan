@@ -17,7 +17,7 @@ function AvtaltmedNavFilter({
     return (
         <VisibleIfDiv visible={harAvtaltAktivitet}>
             <Undertittel>
-                <FormattedMessage id="filter.aktivitet.etikett.tittel" />
+                <FormattedMessage id="filter.aktivitet.avtalt.tittel" />
             </Undertittel>
             <Checkbox
                 key={'avtaltMedNav'}
@@ -48,7 +48,7 @@ AvtaltmedNavFilter.propTypes = {
 const mapStateToProps = state => {
     const aktiviteter = selectAlleAktiviter(state);
     const harAvtaltAktivitet =
-        aktiviteter.filter(aktivitet => aktivitet.avtalt).length > 0;
+        aktiviteter.filter(aktivitet => aktivitet.avtalt).length > 1;
     const avtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
     const avtaltAktivitet = {
         avtaltMedNav: avtaltMedNavFilter.avtaltMedNav,
