@@ -4,6 +4,7 @@ import {
     selectAktivitetTyperFilter,
     selectHistoriskPeriode,
     selectAktivitetStatusFilter,
+    selectAktivitetAvtaltMedNavFilter,
 } from './filter-selector';
 
 function erAktivtFilter(filterData) {
@@ -43,6 +44,16 @@ export function aktivitetFilter(aktivitet, state) {
     if (
         erAktivtFilter(aktivitetStatusFilter) &&
         !aktivitetStatusFilter[aktivitet.status]
+    ) {
+        return false;
+    }
+
+    const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(
+        state
+    );
+    if (
+        (aktivitetAvtaltMedNavFilter.avtaltMedNav && !aktivitet.avtalt) ||
+        (aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav && aktivitet.avtalt)
     ) {
         return false;
     }

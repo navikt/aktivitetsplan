@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
-import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
+import { selectAktiviter } from '../../aktivitet/aktivitetliste-selector';
 import FilterVisningsKomponent from './filter-visnings-komponent';
 
 function EtikettFilter({
@@ -29,7 +29,7 @@ EtikettFilter.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAlleAktiviter(state);
+    const aktiviteter = selectAktiviter(state);
     const aktivitetEtiketterFilter = selectAktivitetEtiketterFilter(state);
     const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
         const etikett = aktivitet.etikett;
