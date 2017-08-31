@@ -60,7 +60,6 @@ function FilterGruppe({
         <div className="filtrering-label-container">
             {Object.keys(filterValue).filter(f => filterValue[f]).map(f => {
                 const filterValues = setFilterValues(filterKey, f);
-                console.log(filterValues);
                 return (
                     <FiltreringLabel
                         key={f}
