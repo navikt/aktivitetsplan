@@ -51,6 +51,14 @@ export function aktivitetFilter(aktivitet, state) {
     const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(
         state
     );
+
+    if (
+        aktivitetAvtaltMedNavFilter.avtaltMedNav &&
+        aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav
+    ) {
+        return true;
+    }
+
     if (
         (aktivitetAvtaltMedNavFilter.avtaltMedNav && !aktivitet.avtalt) ||
         (aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav && aktivitet.avtalt)

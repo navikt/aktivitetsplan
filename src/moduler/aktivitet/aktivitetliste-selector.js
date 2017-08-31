@@ -20,7 +20,7 @@ export function selectAktiviter(state) {
 
 export function selectAlleAktiviter(state) {
     const stateData = state.data;
-    selectAktiviter(state).concat(stateData.arenaAktiviteter.data);
+    return selectAktiviter(state).concat(stateData.arenaAktiviteter.data);
 }
 
 export function selectAktivitetListe(state) {
