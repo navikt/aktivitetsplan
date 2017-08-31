@@ -16,7 +16,7 @@ function EtikettFilter({
             harAktiviteter={harAktivitetEtiketter}
             filter={aktivitetEtiketter}
             filterTittel={'filter.aktivitet.etikett.tittel'}
-            filterTekst={'etikett.'}
+            filterTekst={'aktivitet.etikett.'}
             doToggleFunction={doToggleAktivitetsEtikett}
         />
     );

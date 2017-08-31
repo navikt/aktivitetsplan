@@ -21,7 +21,7 @@ function FilterVisningsKomponent({
             visible={harAktiviteter}
             className={filterClassNames(className)}
         >
-            <Undertittel>
+            <Undertittel className="filter__tittel">
                 <FormattedMessage id={filterTittel} />
             </Undertittel>
             {Object.keys(filter).map(nokkel =>

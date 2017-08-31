@@ -36,8 +36,7 @@ PeriodeLabel.propTypes = {
     historiskPeriode: AppPT.oppfolgingsPeriode,
 };
 
-const periodeFilterCls = classes =>
-    classNames(classes, 'filter', 'periode-filter');
+const periodeFilterCls = classes => classNames(classes);
 
 function PeriodeFilter({
     harHistoriskePerioder,
@@ -54,39 +53,44 @@ function PeriodeFilter({
             <FormattedMessage id="periode-filter.tittel">
                 {tittel =>
                     <Dropdown name="periode-filter" knappeTekst={tittel}>
-                        <div className="filter">
-                            <Undertittel>
-                                <FormattedMessage id="filter.periode.tittel" />
-                            </Undertittel>
-                            <Radio
-                                label={
-                                    <FormattedMessage id="filter.periode.inneverende" />
-                                }
-                                name="inneverende"
-                                onChange={() => doVelgHistoriskPeriode(null)}
-                                checked={!historiskPeriode}
-                            />
-                            {historiskePerioder.map(t => {
-                                const id = t.id;
-                                return (
-                                    <div key={id}>
-                                        <Radio
-                                            label={
-                                                <PeriodeLabel
-                                                    historiskPeriode={t}
-                                                />
-                                            }
-                                            name={id}
-                                            onChange={() =>
-                                                doVelgHistoriskPeriode(t)}
-                                            checked={
-                                                !!historiskPeriode &&
-                                                historiskPeriode.id === id
-                                            }
-                                        />
-                                    </div>
-                                );
-                            })}
+                        <div className="filter__container">
+                            <div className="filter">
+                                <Undertittel className="filter__tittel">
+                                    <FormattedMessage id="filter.periode.tittel" />
+                                </Undertittel>
+                                <Radio
+                                    className="filter__radio--periode"
+                                    label={
+                                        <FormattedMessage id="filter.periode.inneverende" />
+                                    }
+                                    name="inneverende"
+                                    onChange={() =>
+                                        doVelgHistoriskPeriode(null)}
+                                    checked={!historiskPeriode}
+                                />
+                                {historiskePerioder.map(t => {
+                                    const id = t.id;
+                                    return (
+                                        <div key={id}>
+                                            <Radio
+                                                className="filter__radio--periode"
+                                                label={
+                                                    <PeriodeLabel
+                                                        historiskPeriode={t}
+                                                    />
+                                                }
+                                                name={id}
+                                                onChange={() =>
+                                                    doVelgHistoriskPeriode(t)}
+                                                checked={
+                                                    !!historiskPeriode &&
+                                                    historiskPeriode.id === id
+                                                }
+                                            />
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </Dropdown>}
             </FormattedMessage>

@@ -1,7 +1,6 @@
 @import 'filteringslabel/filtrering-label';
 
 .filter {
-    min-width: 18.75rem;
     margin-left: 1rem;
 
     &__innhold {
@@ -10,22 +9,24 @@
 
     &__container {
         display: flex;
-        margin-top: 1rem;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        padding: 1rem 1rem 1rem 0;
     }
 
     &__overskrift {
         margin: 1rem 0;
     }
 
+    &__tittel {
+        margin-bottom: 0.5rem;
+    }
+
 }
 
-.periode-filter {
-    margin-right: 1rem;
-}
 
 .filter-dropdown__innhold {
-    display: flex;
-    width: calc(~'200% + 1rem');
+    width: auto;
 }
 
 

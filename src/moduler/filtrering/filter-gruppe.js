@@ -20,21 +20,21 @@ function FilterGruppe({
     doToggleAktivitetsType,
     doVelgHistoriskPeriode,
 }) {
-    const setFilterValues = filterType => {
+    const setFilterValues = (filterType, filterVarde) => {
         switch (filterType) {
             case 'aktivitetTyper':
                 return {
-                    tekstPath: 'aktivitet.type.',
+                    tekstPath: `aktivitet.type.${filterVarde}`,
                     func: doToggleAktivitetsType,
                 };
             case 'aktivitetEtiketter':
                 return {
-                    tekstPath: 'etikett.',
+                    tekstPath: `aktivitet.etikett.${filterVarde}`,
                     func: doToggleAktivitetsEtikett,
                 };
             case 'aktivitetStatus':
                 return {
-                    tekstPath: 'aktivitet.status.',
+                    tekstPath: `aktivitet.status.${filterVarde}`,
                     func: doToggleAktivitetsStatus,
                 };
             default:
@@ -59,13 +59,14 @@ function FilterGruppe({
     return (
         <div className="filtrering-label-container">
             {Object.keys(filterValue).filter(f => filterValue[f]).map(f => {
-                const filterValues = setFilterValues(filterKey);
+                const filterValues = setFilterValues(filterKey, f);
+                console.log(filterValues);
                 return (
                     <FiltreringLabel
                         key={f}
                         label={
                             <FormattedMessage
-                                id={(filterValues.tekstPath + f).toLowerCase()}
+                                id={filterValues.tekstPath.toLowerCase()}
                             />
                         }
                         slettFilter={() => filterValues.func(f)}
