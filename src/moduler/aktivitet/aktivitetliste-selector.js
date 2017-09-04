@@ -26,7 +26,7 @@ export function selectAlleAktiviter(state) {
 export function selectAktivitetListe(state) {
     const privatModus = selectErPrivatModus(state);
     return selectAlleAktiviter(state)
-        .filter(a => !privatModus || a.historisk)
+        .filter(a => !privatModus || a.historisk || a.arenaAktivitet)
         .filter(a => aktivitetFilter(a, state));
 }
 
