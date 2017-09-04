@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Bilde } from 'nav-react-design';
 import history from '../../../history';
 import {
@@ -15,21 +15,11 @@ import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
 import HiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
 
 function NavigasjonslinjeMeny({
-    intl,
     brukerErMin,
     kanLeggeTil,
     kanFjerne,
     kanRedigere,
 }) {
-    const InnstillingerKnapp = () =>
-        <button
-            className="navigasjonslinje-meny__innstillinger-knapp"
-            aria-label={intl.formatMessage({
-                id: 'navigasjon.innstillinger',
-            })}
-            onClick={() => history.push('/innstillinger')}
-        />;
-
     const LeggTilLenke = HiddenIfHOC(() =>
         <span>
             <Bilde
@@ -81,13 +71,11 @@ function NavigasjonslinjeMeny({
             <LeggTilLenke hidden={!kanLeggeTil} />
             <FjernLenke hidden={!kanFjerne} />
             <RedigerLenke hidden={!kanRedigere} />
-            <InnstillingerKnapp />
         </div>
     );
 }
 
 NavigasjonslinjeMeny.propTypes = {
-    intl: intlShape.isRequired,
     brukerErMin: PT.bool.isRequired,
     kanRedigere: PT.bool.isRequired,
     kanLeggeTil: PT.bool.isRequired,
@@ -112,4 +100,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(injectIntl(NavigasjonslinjeMeny));
+export default connect(mapStateToProps)(NavigasjonslinjeMeny);

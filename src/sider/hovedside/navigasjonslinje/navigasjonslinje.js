@@ -28,6 +28,7 @@ import {
     selectViserInneverendePeriode,
 } from '../../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
+import history from '../../../history';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -68,6 +69,16 @@ NavigasjonsElement.propTypes = {
 
 const navigasjonslinjemenyFeature = 'navigasjonslinjemeny';
 
+const InnstillingerKnapp = () =>
+    <FormattedMessage id="navigasjon.innstillinger">
+        {label =>
+            <button
+                className="navigasjonslinje-meny__innstillinger-knapp"
+                aria-label={label}
+                onClick={() => history.push('/innstillinger')}
+            />}
+    </FormattedMessage>;
+
 class Navigasjonslinje extends Component {
     componentDidMount() {
         const { doHentDialog, doHentArbeidsliste } = this.props;
@@ -107,14 +118,18 @@ class Navigasjonslinje extends Component {
                     disabled={disabled}
                 />
                 <Feature name={navigasjonslinjemenyFeature}>
-                    <Innholdslaster
-                        avhengigheter={[arbeidslisteReducer]}
-                        spinnerStorrelse="xs"
-                    >
-                        <NavigasjonslinjeMeny
-                            harVeilederTilgang={harVeilederTilgang}
-                        />
-                    </Innholdslaster>
+                    <div className="navigasjonslinje__verktoy">
+                        <Innholdslaster
+                            avhengigheter={[arbeidslisteReducer]}
+                            spinnerStorrelse="xs"
+                            className="navigasjonslinje__spinner"
+                        >
+                            <NavigasjonslinjeMeny
+                                harVeilederTilgang={harVeilederTilgang}
+                            />
+                        </Innholdslaster>
+                        <InnstillingerKnapp />
+                    </div>
                 </Feature>
             </nav>
         );
