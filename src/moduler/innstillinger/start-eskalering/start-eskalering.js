@@ -20,6 +20,9 @@ import { STATUS } from '../../../ducks/utils';
 
 export const START_ESKALERING_FORM_NAME = 'start-eskalering-form';
 
+const nyEskaleringhenvendelse = (tekst, overskrift) =>
+    nyHenvendelse({ tekst, overskrift });
+
 function StartEskalering({ handleSubmit, innstillingerReducer }) {
     return (
         <InnstillingerModal>
@@ -77,16 +80,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     handleSubmit: form => {
         dispatch(
-            nyHenvendelse({
-                tekst: form.begrunnelse,
-                overskrift: 'string',
-            })
+            nyEskaleringhenvendelse(form.begrunnelse, 'Eskalering!!')
         ).then(henvendelse =>
             dispatch(startEskalering(henvendelse.data.id))
+                .then(() => dispatch(hentSituasjon()))
                 .then(() =>
                     history.push('/innstillinger/startEskalering/kvittering')
                 )
-                .then(() => dispatch(hentSituasjon()))
                 .catch(() => history.push('/innstillinger/feilkvittering'))
         );
     },

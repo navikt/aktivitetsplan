@@ -60,6 +60,7 @@ function InnstillingerRoutes({ match }) {
                 component={StartOppfolgingKvittering}
             />
             <Route
+                exact
                 path={`${match.path}/startEskalering`}
                 component={StartEskalering}
             />

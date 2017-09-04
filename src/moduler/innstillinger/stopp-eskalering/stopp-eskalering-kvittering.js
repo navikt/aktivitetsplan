@@ -8,7 +8,7 @@ import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
 
-function StartEskaleringKvittering({ motpart }) {
+function StoppEskaleringKvittering({ motpart }) {
     const { navn } = motpart.data;
     return (
         <Modal
@@ -41,11 +41,11 @@ function StartEskaleringKvittering({ motpart }) {
     );
 }
 
-StartEskaleringKvittering.defaultProps = {
+StoppEskaleringKvittering.defaultProps = {
     motpart: undefined,
 };
 
-StartEskaleringKvittering.propTypes = {
+StoppEskaleringKvittering.propTypes = {
     motpart: AppPT.motpart,
 };
 
@@ -53,4 +53,4 @@ const mapStateToProps = state => ({
     motpart: state.data.motpart,
 });
 
-export default connect(mapStateToProps)(StartEskaleringKvittering);
+export default connect(mapStateToProps)(StoppEskaleringKvittering);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
@@ -7,16 +8,24 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
+import {
+    selectGjeldendeEskaleringsVarsel,
+    selectSituasjonStatus,
+} from '../../situasjon/situasjon-selector';
+import {
+    selectMotpartStatus,
+    selectNavnPaMotpart,
+} from '../../motpart/motpart-selector';
+import { formaterDatoKortManed } from '../../../utils';
 
-function StartEskaleringKvittering({ motpart }) {
-    const { navn } = motpart.data;
+function StartEskaleringKvittering({ navn, dato, avhengigheter }) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
-            <Innholdslaster avhengigheter={[motpart]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <article className="innstillinger__container">
                     <Innholdstittel>
                         <FormattedMessage
@@ -32,7 +41,7 @@ function StartEskaleringKvittering({ motpart }) {
                     <AlertStripeSuksess className="blokk-m">
                         <FormattedMessage
                             id="innstillinger.modal.start-eskalering.kvittering"
-                            values={{ navn }}
+                            values={{ dato: formaterDatoKortManed(dato) }}
                         />
                     </AlertStripeSuksess>
                 </article>
@@ -41,16 +50,16 @@ function StartEskaleringKvittering({ motpart }) {
     );
 }
 
-StartEskaleringKvittering.defaultProps = {
-    motpart: undefined,
-};
-
 StartEskaleringKvittering.propTypes = {
-    motpart: AppPT.motpart,
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    navn: PT.string.isRequired,
+    dato: PT.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-    motpart: state.data.motpart,
+    avhengigheter: [selectMotpartStatus(state), selectSituasjonStatus(state)],
+    navn: selectNavnPaMotpart(state),
+    dato: selectGjeldendeEskaleringsVarsel(state).opprettetDato,
 });
 
 export default connect(mapStateToProps)(StartEskaleringKvittering);
