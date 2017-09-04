@@ -100,12 +100,12 @@ function hjelpetekst(aktivitetStatus) {
             return (
                 <FormattedMessage id="hjelpetekst.tittel.aktivitet.fullfoert">
                     {tekst =>
-                        <HjelpetekstHoyre
+                        <HjelpetekstVenstre
                             anchor={SporsmalAnchor}
                             tittel={tekst}
                         >
                             <FormattedMessage id="hjelpetekst.aktivitet.fullfoert" />
-                        </HjelpetekstHoyre>}
+                        </HjelpetekstVenstre>}
                 </FormattedMessage>
             );
 
