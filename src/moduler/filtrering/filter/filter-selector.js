@@ -18,6 +18,10 @@ export function selectAktivitetStatusFilter(state) {
     return selectFilterReducer(state).aktivitetStatus;
 }
 
+export function selectAktivitetAvtaltMedNavFilter(state) {
+    return selectFilterReducer(state).aktivitetAvtaltMedNav;
+}
+
 export function selectViserInneverendePeriode(state) {
     return !state.data.filter.historiskPeriode;
 }

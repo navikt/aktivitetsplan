@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
+    toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
     toggleAktivitetsStatus,
     toggleAktivitetsType,
@@ -19,23 +20,29 @@ function FilterGruppe({
     doToggleAktivitetsStatus,
     doToggleAktivitetsType,
     doVelgHistoriskPeriode,
+    doToggleAktivitetAvtaltMedNav,
 }) {
-    const setFilterValues = (filterType, filterVarde) => {
+    const setFilterValues = (filterType, filterVerdi) => {
         switch (filterType) {
             case 'aktivitetTyper':
                 return {
-                    tekstPath: `aktivitet.type.${filterVarde}`,
+                    tekstPath: `aktivitet.type.${filterVerdi}`,
                     func: doToggleAktivitetsType,
                 };
             case 'aktivitetEtiketter':
                 return {
-                    tekstPath: `aktivitet.etikett.${filterVarde}`,
+                    tekstPath: `aktivitet.etikett.${filterVerdi}`,
                     func: doToggleAktivitetsEtikett,
                 };
             case 'aktivitetStatus':
                 return {
-                    tekstPath: `aktivitet.status.${filterVarde}`,
+                    tekstPath: `aktivitet.status.${filterVerdi}`,
                     func: doToggleAktivitetsStatus,
+                };
+            case 'aktivitetAvtaltMedNav':
+                return {
+                    tekstPath: `aktivitet.${filterVerdi}`,
+                    func: doToggleAktivitetAvtaltMedNav,
                 };
             default:
                 return filterType;
@@ -88,6 +95,7 @@ FilterGruppe.propTypes = {
     doToggleAktivitetsStatus: PT.func.isRequired,
     doToggleAktivitetsType: PT.func.isRequired,
     doVelgHistoriskPeriode: PT.func.isRequired,
+    doToggleAktivitetAvtaltMedNav: PT.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -99,6 +107,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(toggleAktivitetsType(aktivitetsType)),
     doVelgHistoriskPeriode: historiskPeriode =>
         dispatch(velgHistoriskPeriode(historiskPeriode)),
+    doToggleAktivitetAvtaltMedNav: aktivitetsStatus =>
+        dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus)),
 });
 
 export default connect(null, mapDispatchToProps)(FilterGruppe);
