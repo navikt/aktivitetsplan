@@ -16,7 +16,7 @@ import motpartReducer from './moduler/motpart/motpart-duck';
 import endreAktivitetReducer from './ducks/endre-aktivitet';
 import feilReducer from './ducks/feil';
 import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
-import filterReducer from './moduler/filter/filter-reducer';
+import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import veilederReducer from './ducks/veileder';
 import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';

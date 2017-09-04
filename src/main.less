@@ -9,7 +9,7 @@
     @import './utils';
     @import './dialog/dialog';
     @import './moduler/aktivitet/aktivitet';
-    @import './moduler/filter/filter';
+    @import 'moduler/filtrering/filter';
     @import './moduler/verktoylinje/verktoylinje';
     @import './moduler/varslinger/varslinger';
     @import './moduler/vilkar/vilkar';
@@ -78,14 +78,14 @@
 .ReactModal__Body--open {
     overflow: hidden;
 
-    .aktivitetsplanfs:not([class*='modal-portal']) {
+    .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']):not([class*='dialog-modal']) {
         display: none;
     }
 }
 
 @media (min-width: @screen-md-min) {
     .ReactModal__Body--open {
-        .aktivitetsplanfs:not([class*='modal-portal']) {
+        .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']):not([class*='dialog-modal']) {
             display: block;
         }
     }

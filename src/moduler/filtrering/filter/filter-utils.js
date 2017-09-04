@@ -1,8 +1,9 @@
-import { selectHistoriskeOppfolgingsPerioder } from '../situasjon/situasjon-selector';
+import { selectHistoriskeOppfolgingsPerioder } from '../../situasjon/situasjon-selector';
 import {
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
     selectHistoriskPeriode,
+    selectAktivitetStatusFilter,
 } from './filter-selector';
 
 function erAktivtFilter(filterData) {
@@ -35,6 +36,14 @@ export function aktivitetFilter(aktivitet, state) {
 
     const etikettFilter = selectAktivitetEtiketterFilter(state);
     if (erAktivtFilter(etikettFilter) && !etikettFilter[aktivitet.etikett]) {
+        return false;
+    }
+
+    const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
+    if (
+        erAktivtFilter(aktivitetStatusFilter) &&
+        !aktivitetStatusFilter[aktivitet.status]
+    ) {
         return false;
     }
 

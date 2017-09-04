@@ -2,10 +2,13 @@
 export const TOGGLE_AKTIVITET_TYPE = 'filter/toggleAktivitetType';
 export const TOGGLE_AKTIVITET_ETIKETT = 'filter/toggleAktivitetEtikett';
 export const VELG_HISTORISK_PERIODE = 'filter/velg';
+export const TOGGLE_AKTIVITET_STATUS = 'filter/toggleAktivitetStatus';
+export const CLOSE_AKTIVITET_STATUS = 'filter/closeAktivitetStatus';
 
 const initalState = {
     aktivitetTyper: {},
     aktivitetEtiketter: {},
+    aktivitetStatus: {},
     historiskPeriode: null,
 };
 
@@ -22,6 +25,16 @@ export default function reducer(state = initalState, action) {
             const aktivitetEtiketter = { ...state.aktivitetEtiketter };
             aktivitetEtiketter[data] = !aktivitetEtiketter[data];
             return { ...state, aktivitetEtiketter };
+        }
+        case TOGGLE_AKTIVITET_STATUS: {
+            const aktivitetStatus = { ...state.aktivitetStatus };
+            aktivitetStatus[data] = !aktivitetStatus[data];
+            return { ...state, aktivitetStatus };
+        }
+        case CLOSE_AKTIVITET_STATUS: {
+            const aktivitetStatus = { ...state.aktivitetStatus };
+            aktivitetStatus[data] = false;
+            return { ...state, aktivitetStatus };
         }
         case VELG_HISTORISK_PERIODE:
             return { ...state, historiskPeriode: data };
@@ -48,5 +61,12 @@ export function velgHistoriskPeriode(historiskPeriode) {
     return {
         type: VELG_HISTORISK_PERIODE,
         data: historiskPeriode,
+    };
+}
+
+export function toggleAktivitetsStatus(aktivitetStatus) {
+    return {
+        type: TOGGLE_AKTIVITET_STATUS,
+        data: aktivitetStatus,
     };
 }

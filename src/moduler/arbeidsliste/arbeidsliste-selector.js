@@ -6,5 +6,10 @@ export const selectHarVeilederTilgang = state =>
 export const selectIsOppfolgendeVeileder = state =>
     selectArbeidslisteReducer(state).data.isOppfolgendeVeileder || false;
 
-export const selectErBrukerIArbeidsliste = state =>
-    !!selectArbeidslisteReducer(state).data.endringstidspunkt;
+export const selectEndretDato = state =>
+    selectArbeidslisteReducer(state).data.endringstidspunkt;
+
+export const selectSistEndretAv = state =>
+    selectArbeidslisteReducer(state).data.sistEndretAv.veilederId;
+
+export const selectErBrukerIArbeidsliste = state => !!selectEndretDato(state);

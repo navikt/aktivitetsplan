@@ -6,10 +6,12 @@ import { Element } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import NavigasjonslinjeMeny from './navigasjonslinje-meny';
 import Lenke from '../../../felles-komponenter/utils/lenke';
-import Feature from '../../../felles-komponenter/feature/feature';
+import Feature, {
+    harFeature,
+} from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
-import { dialogFilter } from '../../../moduler/filter/filter-utils';
+import { dialogFilter } from '../../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-reducer';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import { selectErPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
@@ -24,8 +26,9 @@ import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
     selectViserHistoriskPeriode,
     selectViserInneverendePeriode,
-} from '../../../moduler/filter/filter-selector';
+} from '../../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
+import history from '../../../history';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -64,10 +67,25 @@ NavigasjonsElement.propTypes = {
     disabled: PT.bool,
 };
 
+const navigasjonslinjemenyFeature = 'navigasjonslinjemeny';
+
+const InnstillingerKnapp = () =>
+    <FormattedMessage id="navigasjon.innstillinger">
+        {label =>
+            <button
+                className="navigasjonslinje-meny__innstillinger-knapp"
+                aria-label={label}
+                onClick={() => history.push('/innstillinger')}
+            />}
+    </FormattedMessage>;
+
 class Navigasjonslinje extends Component {
     componentDidMount() {
-        this.props.doHentDialog();
-        this.props.doHentArbeidsliste(getFodselsnummer());
+        const { doHentDialog, doHentArbeidsliste } = this.props;
+        doHentDialog();
+        if (harFeature(navigasjonslinjemenyFeature)) {
+            doHentArbeidsliste(getFodselsnummer());
+        }
     }
 
     render() {
@@ -99,15 +117,19 @@ class Navigasjonslinje extends Component {
                     tekstId="navigasjon.vilkar"
                     disabled={disabled}
                 />
-                <Feature name="navigasjonslinjemeny">
-                    <Innholdslaster
-                        avhengigheter={[arbeidslisteReducer]}
-                        spinnerStorrelse="xs"
-                    >
-                        <NavigasjonslinjeMeny
-                            harVeilederTilgang={harVeilederTilgang}
-                        />
-                    </Innholdslaster>
+                <Feature name={navigasjonslinjemenyFeature}>
+                    <div className="navigasjonslinje__verktoy">
+                        <Innholdslaster
+                            avhengigheter={[arbeidslisteReducer]}
+                            spinnerStorrelse="xs"
+                            className="navigasjonslinje__spinner"
+                        >
+                            <NavigasjonslinjeMeny
+                                harVeilederTilgang={harVeilederTilgang}
+                            />
+                        </Innholdslaster>
+                        <InnstillingerKnapp />
+                    </div>
                 </Feature>
             </nav>
         );

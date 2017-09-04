@@ -1,17 +1,13 @@
 @import '../variables';
 @import './dialoger';
 
-@padding: 1.2rem 1rem 1.4rem 1.5rem;
-@animationTime: 300ms;
-@bredde-skjerm-dialoger: 20%;
-@bredde-skjerm-dialog: 40%;
-@full-bredde-skjerm-modal: @bredde-skjerm-dialoger + @bredde-skjerm-dialog;
-@tilbakeknapp-storrelse: 2.25rem;
 @dialogkort-bredde: 333px;
+@tilbakeknapp-storrelse: 2.25rem;
 
 // overstyring av default modal
 .aktivitet-modal.dialog-modal {
     position: fixed;
+    max-width: none;
 }
 
 .dialog-modal {
@@ -21,13 +17,15 @@
     bottom: 0;
 }
 
-.dialog-modal--vis,
 .dialog-modal--full-bredde {
     border-radius: 0;
 }
 
 .dialog-modal__tittel {
-    margin-right: 2.5rem;
+    margin-right: 3.5rem;
+    line-height: 1.2rem;
+    display: flex;
+    align-self: center;
 }
 
 .dialog-modal__content {
@@ -42,8 +40,11 @@
 }
 
 .dialog-modal__header {
+    display: flex;
+    background-color: @white;
     border-bottom: 1px solid @gray-foreground;
-    padding: @padding;
+    padding: 1rem;
+    height: 62px;
 
     .dialog-modal__tilbake-knapp {
         margin-right: 1rem;
@@ -70,8 +71,11 @@
 }
 
 .dialog-modal__ny-dialog {
-    padding: @padding;
-    border-bottom: 1px solid @gray-foreground;
+    display: flex;
+    align-self: center;
+    padding: 1rem 1rem 1rem 1.5rem;
+    height: 62px;
+    background-color: @white;
 }
 
 .dialog-modal__ny-dialog-knapp {
@@ -79,8 +83,8 @@
     background: data-uri(
             '@{aktivitetsplanPath}/dialog/dialog-modal-ny-henvendelse.svg'
         )
-        no-repeat;
-    background-size: contain;
+        center left no-repeat;
+    background-size: 24px 24px;
 
     &.knappelenke {
         padding-left: 2rem;
@@ -88,16 +92,10 @@
 }
 
 .dialog-modal__dialoger {
+    background-color: @white;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    height: ~'calc(100% - 66px)';
-}
-
-.dialog-modal__kolonne {
-    display: inline-block;
-    float: left;
-    overflow: hidden;
-    height: 100%;
+    border-top: 4px solid @gray-background;
 }
 
 .dialog-modal__kolonne--dialog {
@@ -105,6 +103,7 @@
     padding: 1rem;
     background-color: @gray-background;
     overflow-y: auto;
+    height: 654px;
 
     &:focus {
         outline: none;
@@ -115,7 +114,7 @@
 
 .dialog-modal__kolonne--dialoger {
     width: 100%;
-    background-color: @hvit;
+    background-color: @white;
     z-index: 1;
 }
 
@@ -123,49 +122,37 @@
     display: none;
 }
 
-@media (min-width: @screen-md-min) {
+@media (min-width: @screen-md-min) and (min-height: @screen-sm) {
     .dialog-modal {
-        width: @bredde-skjerm-dialoger;
-        height: 75%;
-        left: -100%;
+        width: @dialogkort-bredde;
+        min-width: @dialogkort-bredde;
     }
+}
 
-    .dialog-modal,
+@media (min-height: @screen-sm) {
     .dialog-modal__dialoger {
         // Sikrer at "dialoger" bredden aldri blir smalere enn et dialoger-innslag aka dialogkort
         min-width: @dialogkort-bredde;
+        height: 592px;
     }
 
     .dialog-modal.ReactModal__Content {
-        min-height: inherit;
-    }
-
-    .dialog-modal--vis {
-        left: 0;
-        border-top-right-radius: 4px;
+        height: 716px;
     }
 
     .dialog-modal--full-bredde {
-        width: @full-bredde-skjerm-modal;
-        min-width: @mobil-bredde;
+        width: @mobil-bredde;
         border-top-right-radius: 4px;
-    }
-
-    .dialog-modal__ny-dialog-knapp {
-        background: none;
-
-        &.knappelenke {
-            padding-left: 0;
-        }
     }
 
     .dialog-modal__kolonne--dialoger-valgt-dialog {
         display: inline-block;
-        width: 33.33333%;
+        width: @dialogkort-bredde;
+        min-width: @dialogkort-bredde;
     }
 
     .dialog-modal__kolonne--dialog {
-        width: percentage(@bredde-skjerm-dialog / @full-bredde-skjerm-modal);
+        padding: 1rem 1rem 1rem 2rem;
     }
 
     .dialog-modal__tilbake-knapp.pil-knapp {

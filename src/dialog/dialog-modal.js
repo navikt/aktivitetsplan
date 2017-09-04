@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Undertittel } from 'nav-frontend-typografi';
-import Lukknapp from 'nav-frontend-lukknapp';
+import { Undertittel, Element } from 'nav-frontend-typografi';
 import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import Dialog from './dialog';
@@ -21,7 +20,6 @@ import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
 import { SORTER_DIALOGER } from '../ducks/dialog';
 
-const animationTime = 300;
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
 function nyDialog() {
@@ -36,12 +34,7 @@ function dialogOpprettet(dialog) {
     history.push(`/dialog/${dialog.id}`);
 }
 
-function Header({
-    navigerTil,
-    harNyDialogEllerValgtDialog,
-    motpart,
-    navnPaMotpart,
-}) {
+function Header({ harNyDialogEllerValgtDialog, motpart, navnPaMotpart }) {
     return (
         <div className="dialog-modal__header">
             <PilKnapp
@@ -50,16 +43,13 @@ function Header({
                 onClick={tilbake}
             />
             <Innholdslaster avhengigheter={[motpart]} spinnerStorrelse="m">
-                <Undertittel className="dialog-modal__tittel" tag="h1">
+                <Element className="dialog-modal__tittel" tag="h1">
                     <FormattedMessage
                         id="dialog.tittel"
                         values={{ motpart: navnPaMotpart }}
                     />
-                </Undertittel>
+                </Element>
             </Innholdslaster>
-            <Lukknapp overstHjorne onClick={() => navigerTil('/')}>
-                <FormattedMessage id="dialog.modal.lukk-dialog" />
-            </Lukknapp>
         </div>
     );
 }
@@ -69,7 +59,6 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-    navigerTil: PT.func.isRequired,
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
     motpart: AppPT.reducer.isRequired,
     navnPaMotpart: PT.string,
@@ -123,7 +112,6 @@ VenstreKolonne.defaultProps = {
 };
 
 function HoyreKolonne({
-    navigerTil,
     valgtDialog,
     harValgtDialog,
     harNyDialog,
@@ -131,7 +119,7 @@ function HoyreKolonne({
     valgtAktivitetId,
 }) {
     function apneAktivitet() {
-        navigerTil(aktivitetRoute(valgtAktivitetId));
+        history.push(aktivitetRoute(valgtAktivitetId));
     }
 
     return (
@@ -141,7 +129,7 @@ function HoyreKolonne({
             className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
         >
             <VisibleDiv visible={harNyDialog}>
-                <Undertittel tag="h1">
+                <Undertittel tag="h1" className="endre-dialog__tittel">
                     <FormattedMessage id="dialog.ny-dialog" />
                 </Undertittel>
                 <NyHenvendelse
@@ -153,6 +141,7 @@ function HoyreKolonne({
                 <Knappelenke
                     visible={!!valgtAktivitetId}
                     onClick={apneAktivitet}
+                    className="endre-dialog__til-aktiviteten"
                 >
                     <FormattedMessage id="dialog.modal.til-aktiviteten" />
                 </Knappelenke>
@@ -165,7 +154,6 @@ function HoyreKolonne({
 HoyreKolonne.propTypes = {
     valgtDialog: AppPT.dialog,
     valgtAktivitetId: PT.string,
-    navigerTil: PT.func.isRequired,
     harNyDialog: PT.bool.isRequired,
     harValgtDialog: PT.bool.isRequired,
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
@@ -190,7 +178,6 @@ function DialogModalContent(props) {
 DialogModalContent.propTypes = {
     valgtDialog: AppPT.dialog,
     valgtAktivitetId: PT.string,
-    navigerTil: PT.func.isRequired,
     harNyDialog: PT.bool.isRequired,
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
 };
@@ -201,57 +188,26 @@ DialogModalContent.defaultProps = {
 };
 
 class DialogModal extends Component {
-    constructor() {
-        super();
-        this.navigerTil = this.navigerTil.bind(this);
-    }
-
     componentDidMount() {
         this.props.sorterDialoger();
-        // eslint-disable-next-line react/no-did-mount-set-state
-        this.setState({
-            vis: true,
-        });
-    }
-
-    navigerTil(sti) {
-        this.setState({
-            vis: false,
-        });
-        setTimeout(() => {
-            history.push(sti);
-        }, animationTime);
     }
 
     render() {
-        const state = this.state || {};
         const props = this.props;
 
         const { harNyDialogEllerValgtDialog } = props;
         const className = classNames('dialog-modal', {
-            'dialog-modal--vis': state.vis,
             'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
         });
 
-        function lukkModal() {
-            this.navigerTil('/');
-        }
-
         return (
-            <div>
-                <Modal
-                    className={className}
-                    closeButton={false}
-                    onRequestClose={lukkModal}
-                    contentClass="aktivitetsplanfs dialog-modal__content"
-                    header={<Header navigerTil={this.navigerTil} {...props} />}
-                >
-                    <DialogModalContent
-                        navigerTil={this.navigerTil}
-                        {...props}
-                    />
-                </Modal>
-            </div>
+            <Modal
+                className={className}
+                contentClass="aktivitetsplanfs dialog-modal__content"
+                header={<Header {...props} />}
+            >
+                <DialogModalContent {...props} />
+            </Modal>
         );
     }
 }

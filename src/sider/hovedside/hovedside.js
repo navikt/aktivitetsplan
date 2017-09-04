@@ -7,6 +7,7 @@ import AktivitetsTavle from './tavle/aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 import OppfolgingStatus from '../../moduler/oppfolging-status/oppfolging-status';
 import Feilmelding from '../../moduler/feilmelding/feilmelding';
+import VisaValgtFilter from '../../moduler/filtrering/filter-vis-label';
 
 function Hovedside({ children }) {
     return (
@@ -18,6 +19,7 @@ function Hovedside({ children }) {
                     <Container>
                         <Navigasjonslinje />
                         <Verktoylinje />
+                        <VisaValgtFilter />
                     </Container>
                     <AktivitetsTavle />
                 </OppfolgingStatus>

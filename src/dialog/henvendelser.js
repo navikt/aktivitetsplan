@@ -13,13 +13,15 @@ import visibleIfHOC from '../hocs/visible-if';
 import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
 
 const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) =>
-    <div className="henvendelser__lest-av-bruker">
-        <FormattedMessage id="dialog.lest-av-bruker" />
-        <span>&nbsp;</span>
-        <Dato visTidspunkt>
-            {lestAvBrukerTidspunkt}
-        </Dato>
-    </div>
+    <section className="henvendelser__lest-av-bruker">
+        <h1 className="typo-undertekst henvendelser__lest-av-bruker--tittel">
+            <FormattedMessage id="dialog.lest-av-bruker" />
+            <span>&nbsp;</span>
+            <Dato visTidspunkt>
+                {lestAvBrukerTidspunkt}
+            </Dato>
+        </h1>
+    </section>
 );
 
 function Henvendelse({ henvendelse }) {
