@@ -10,9 +10,9 @@ import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../proptypes';
 import { selectHistoriskPeriode } from './filter-selector';
 import { selectHistoriskeOppfolgingsPerioder } from '../../situasjon/situasjon-selector';
-import { selectAlleHistoriskeVilkar } from '../../vilkar/historiske-vilkar-selector';
 import { velgHistoriskPeriode } from './filter-reducer';
 import Dropdown from '../../../felles-komponenter/dropdown/dropdown';
+import { dateToISODate } from '../../../utils';
 
 export function PeriodeLabel({ historiskPeriode }) {
     return (
@@ -111,31 +111,17 @@ PeriodeFilter.defaultProps = {
     className: '',
 };
 
-function tidligsteHendelsesTidspunktMellom(fra, til, state) {
-    const stateData = state.data;
-    const aktivitetDatoer = stateData.aktiviteter.data.map(
-        a => a.opprettetDato
-    );
-    const dialogDatoer = stateData.dialog.data.map(d => d.opprettetDato);
-    const vilkarDatoer = selectAlleHistoriskeVilkar(state).map(v => v.dato);
-    const tidspunkter = [].concat(aktivitetDatoer, dialogDatoer, vilkarDatoer);
-    return tidspunkter.filter(t => t > fra && t < til).sort()[0] || til;
-}
-
 const mapStateToProps = state => {
-    let fraGrense = '';
+    let nesteFra = dateToISODate(new Date(0));
     const historiskePerioder = selectHistoriskeOppfolgingsPerioder(state)
         .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
         .map(periode => {
-            const fra = tidligsteHendelsesTidspunktMellom(
-                fraGrense,
-                periode.sluttDato,
-                state
-            );
-            fraGrense = periode.sluttDato;
+            const sluttDato = periode.sluttDato;
+            const fra = nesteFra;
+            nesteFra = sluttDato;
             return {
-                id: periode.sluttDato,
-                til: periode.sluttDato,
+                id: sluttDato,
+                til: sluttDato,
                 vistFra: periode.startDato,
                 fra,
             };
