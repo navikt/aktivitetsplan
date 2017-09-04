@@ -23,7 +23,7 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                data: action.data.map(a => mapArenaType(a)),
+                data: action.data.map(mapArenaType),
             };
         case HENTING_FEILET:
             return { ...state, status: STATUS.ERROR, feil: action.data };
