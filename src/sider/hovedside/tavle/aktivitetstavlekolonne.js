@@ -59,43 +59,69 @@ function hjelpetekst(aktivitetStatus) {
     switch (aktivitetStatus) {
         case STATUS_BRUKER_ER_INTRESSERT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.apen">
+                <FormattedMessage id="hjelpetekst.tittel.aktivitet.er.interessert">
                     {tekst =>
                         <HjelpetekstHoyre
                             anchor={SporsmalAnchor}
                             tittel={tekst}
                         >
-                            <FormattedMessage id="hjelpetekst.sporsmalikon" />
+                            <FormattedMessage id="hjelpetekst.aktivitet.er.interessert" />
                         </HjelpetekstHoyre>}
                 </FormattedMessage>
             );
+
         case STATUS_PLANLAGT:
+            return (
+                <FormattedMessage id="hjelpetekst.tittel.aktivitet.planlagt">
+                    {tekst =>
+                        <HjelpetekstHoyre
+                            anchor={SporsmalAnchor}
+                            tittel={tekst}
+                        >
+                            <FormattedMessage id="hjelpetekst.aktivitet.planlagt" />
+                        </HjelpetekstHoyre>}
+                </FormattedMessage>
+            );
+
         case STATUS_GJENNOMFOERT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.apen">
+                <FormattedMessage id="hjelpetekst.tittel.aktivitet.gjennomfoert">
                     {tekst =>
                         <HjelpetekstVenstre
                             anchor={SporsmalAnchor}
                             tittel={tekst}
                         >
-                            <FormattedMessage id="hjelpetekst.sporsmalikon" />
+                            <FormattedMessage id="hjelpetekst.aktivitet.gjennomfoert" />
                         </HjelpetekstVenstre>}
                 </FormattedMessage>
             );
 
         case STATUS_FULLFOERT:
+            return (
+                <FormattedMessage id="hjelpetekst.tittel.aktivitet.fullfoert">
+                    {tekst =>
+                        <HjelpetekstHoyre
+                            anchor={SporsmalAnchor}
+                            tittel={tekst}
+                        >
+                            <FormattedMessage id="hjelpetekst.aktivitet.fullfoert" />
+                        </HjelpetekstHoyre>}
+                </FormattedMessage>
+            );
+
         case STATUS_AVBRUTT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.last">
+                <FormattedMessage id="hjelpetekst.tittel.aktivitet.avbrutt">
                     {tekst =>
                         <HjelpetekstVenstre
                             anchor={HengelasAnchor}
                             tittel={tekst}
                         >
-                            <FormattedMessage id="hjelpetekst.lasikon" />
+                            <FormattedMessage id="hjelpetekst.aktivitet.avbrutt" />
                         </HjelpetekstVenstre>}
                 </FormattedMessage>
             );
+
         default:
             return null;
     }
@@ -111,6 +137,7 @@ function hjelpeklasse(aktivitetStatus) {
         case STATUS_FULLFOERT:
         case STATUS_AVBRUTT:
             return 'aktivitet-last';
+
         default:
             return null;
     }
