@@ -21,7 +21,10 @@ import {
     selectArbeidslisteReducer,
 } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../../proptypes';
-import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
+import {
+    selectErUnderOppfolging,
+    selectVilkarMaBesvares,
+} from '../../../moduler/situasjon/situasjon-selector';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
     selectViserHistoriskPeriode,
@@ -93,6 +96,7 @@ class Navigasjonslinje extends Component {
             antallUlesteDialoger,
             arbeidslisteReducer,
             harVeilederTilgang,
+            vilkarMaBesvares,
             disabled,
             kanHaDialog,
         } = this.props;
@@ -115,7 +119,7 @@ class Navigasjonslinje extends Component {
                 <NavigasjonsElement
                     sti="/vilkar"
                     tekstId="navigasjon.vilkar"
-                    disabled={disabled}
+                    disabled={disabled || vilkarMaBesvares}
                 />
                 <Feature name={navigasjonslinjemenyFeature}>
                     <div className="navigasjonslinje__verktoy">
@@ -144,10 +148,12 @@ Navigasjonslinje.propTypes = {
     kanHaDialog: PT.bool.isRequired,
     harVeilederTilgang: PT.bool,
     disabled: PT.bool.isRequired,
+    vilkarMaBesvares: PT.bool.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
     harVeilederTilgang: false,
+    vilkarMaBesvares: true,
 };
 
 const mapStateToProps = state => {
@@ -162,6 +168,7 @@ const mapStateToProps = state => {
         underOppfolging: stateData.situasjon.data.underOppfolging,
         arbeidslisteReducer: selectArbeidslisteReducer(state),
         harVeilederTilgang: selectHarVeilederTilgang(state),
+        vilkarMaBesvares: selectVilkarMaBesvares(state),
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
         disabled:
             !selectErBruker(state) &&
