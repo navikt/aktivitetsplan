@@ -130,7 +130,9 @@ class Navigasjonslinje extends Component {
                             className="navigasjonslinje__spinner"
                         >
                             <NavigasjonslinjeMeny
-                                harVeilederTilgangTilArbeidsliste={harVeilederTilgangTilArbeidsliste}
+                                harVeilederTilgangTilArbeidsliste={
+                                    harVeilederTilgangTilArbeidsliste
+                                }
                             />
                         </Innholdslaster>
                         <InnstillingerKnapp />
@@ -156,7 +158,7 @@ Navigasjonslinje.propTypes = {
 Navigasjonslinje.defaultProps = {
     harVeilederTilgangTilArbeidsliste: false,
     vilkarMaBesvares: true,
-    erBruker: true
+    erBruker: true,
 };
 
 const mapStateToProps = state => {
@@ -175,9 +177,9 @@ const mapStateToProps = state => {
         erBruker: selectErBruker(state),
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
         disabled:
-        !selectErBruker(state) &&
-        underOppfolging === false &&
-        selectViserInneverendePeriode(state),
+            !selectErBruker(state) &&
+            underOppfolging === false &&
+            selectViserInneverendePeriode(state),
     };
 };
 
