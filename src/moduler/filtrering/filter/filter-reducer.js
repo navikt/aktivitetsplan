@@ -32,7 +32,6 @@ export default function reducer(state = initalState, action) {
             aktivitetStatus[data] = !aktivitetStatus[data];
             return { ...state, aktivitetStatus };
         }
-
         case TOGGLE_AKTIVITET_AVTALT: {
             const aktivitetAvtaltMedNav = { ...state.aktivitetAvtaltMedNav };
             aktivitetAvtaltMedNav[data] = !aktivitetAvtaltMedNav[data];

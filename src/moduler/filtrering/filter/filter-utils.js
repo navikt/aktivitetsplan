@@ -52,18 +52,18 @@ export function aktivitetFilter(aktivitet, state) {
         state
     );
 
-    if (
-        aktivitetAvtaltMedNavFilter.avtaltMedNav &&
-        aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav
-    ) {
-        return true;
-    }
+    const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.avtaltMedNav;
+    const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav;
+    const avtalt = aktivitet.avtalt;
+    const aktivtAvtaltFilter = avtaltMedNavFilter ^ ikkeAvtaltMedNavFilter;
 
-    if (
-        (aktivitetAvtaltMedNavFilter.avtaltMedNav && !aktivitet.avtalt) ||
-        (aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav && aktivitet.avtalt)
-    ) {
-        return false;
+    if (aktivtAvtaltFilter) {
+        if (
+            (avtaltMedNavFilter && !avtalt) ||
+            (ikkeAvtaltMedNavFilter && avtalt)
+        ) {
+            return false;
+        }
     }
 
     return datoErIPeriode(aktivitet.opprettetDato, state);
