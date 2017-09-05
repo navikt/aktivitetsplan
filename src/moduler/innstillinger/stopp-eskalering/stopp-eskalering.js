@@ -41,12 +41,16 @@ function StoppEskalering({
                         <div className="blokk-xxs">
                             <FormattedMessage id="innstillinger.modal.stopp-eskalering.beskrivelse" />
                         </div>
-                        <BegrunnelseForm
-                            labelId="innstillinger.modal.stopp-eskalering.begrunnelse"
-                            formNavn={STOPP_ESKALERING_FORM_NAME}
-                            onSubmit={form =>
-                                handleSubmit(form, tilhorendeDialogId)}
-                        />
+                        <FormattedMessage id="innstillinger.modal.stopp-eskalering.automatisk-tekst">
+                            {defaultBegrunnelse =>
+                                <BegrunnelseForm
+                                    labelId="innstillinger.modal.stopp-eskalering.begrunnelse"
+                                    defaultBegrunnelse={defaultBegrunnelse}
+                                    formNavn={STOPP_ESKALERING_FORM_NAME}
+                                    onSubmit={form =>
+                                        handleSubmit(form, tilhorendeDialogId)}
+                                />}
+                        </FormattedMessage>
                     </section>
                     <ModalFooter>
                         <RemoteSubmitKnapp

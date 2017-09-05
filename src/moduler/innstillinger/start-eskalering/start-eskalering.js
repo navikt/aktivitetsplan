@@ -34,12 +34,18 @@ function StartEskalering({ handleSubmit, innstillingerStatus }) {
                         </div>
                         <FormattedMessage id="dialog.eskalering.overskrift">
                             {overskrift =>
-                                <BegrunnelseForm
-                                    labelId="innstillinger.modal.start-eskalering.begrunnelse"
-                                    formNavn={START_ESKALERING_FORM_NAME}
-                                    onSubmit={form =>
-                                        handleSubmit(form, overskrift)}
-                                />}
+                                <FormattedMessage id="innstillinger.modal.start-eskalering.automatisk-tekst">
+                                    {defaultTekst =>
+                                        <BegrunnelseForm
+                                            labelId="innstillinger.modal.start-eskalering.begrunnelse"
+                                            formNavn={
+                                                START_ESKALERING_FORM_NAME
+                                            }
+                                            defaultBegrunnelse={defaultTekst}
+                                            onSubmit={form =>
+                                                handleSubmit(form, overskrift)}
+                                        />}
+                                </FormattedMessage>}
                         </FormattedMessage>
                     </section>
                     <ModalFooter>
