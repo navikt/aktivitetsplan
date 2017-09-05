@@ -29,6 +29,7 @@ const Info = visibleIfHOC(({ slash, className, children }) =>
 );
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+
 // eslint-disable-next-line react/prefer-stateless-function
 class DialogVisning extends React.Component {
     render() {
@@ -122,6 +123,7 @@ class DialogVisning extends React.Component {
                 </VisibleIfDiv>
                 <div className="dialoger__dialog-henvendelser">
                     {henvendelser.length}
+                    {henvendelser.length}
                 </div>
             </Lenkepanel>
         );
@@ -185,14 +187,16 @@ function Dialoger({
         <Innholdslaster avhengigheter={[dialogState]}>
             <div className={className} onKeyDown={dialogPiling}>
                 {dialoger.map(d =>
-                    <DialogVisning
-                        key={d.id}
-                        ref={ref => (dialogRefs[d.id] = ref)}
-                        dialog={d}
-                        erTabBar={erTabBar(d)}
-                        erValgt={d === valgtDialog}
-                        aktiviteter={aktiviteter}
-                    />
+                    <section className="dialoger__dialog--section">
+                        <DialogVisning
+                            key={d.id}
+                            ref={ref => (dialogRefs[d.id] = ref)}
+                            dialog={d}
+                            erTabBar={erTabBar(d)}
+                            erValgt={d === valgtDialog}
+                            aktiviteter={aktiviteter}
+                        />
+                    </section>
                 )}
             </div>
         </Innholdslaster>

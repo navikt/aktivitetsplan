@@ -18,7 +18,12 @@
     }
 
     &:hover {
-        background-color: @color-background-hover;
+        box-shadow: 1px 1px 3px 0 @navGra60;
+
+        .aktivitetskort__tittel {
+            color: @navBla;
+            border-bottom: 1.5px solid @navBla;
+        }
     }
 }
 
@@ -27,6 +32,8 @@
 }
 
 .aktivitetskort__tittel {
+    display: inline-block;
+    border-bottom: 1.5px solid @white;
     .blokk-xxxs();
 }
 
@@ -48,5 +55,7 @@
 
 .aktivitetskort--flyttbar {
     cursor: move;
+    cursor: -webkit-grab; // lesshint duplicateProperty: false
+    cursor: -moz-grab; // lesshint duplicateProperty: false
     cursor: grab; // lesshint duplicateProperty: false
 }
