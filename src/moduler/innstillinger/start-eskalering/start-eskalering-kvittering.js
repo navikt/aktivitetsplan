@@ -56,10 +56,16 @@ StartEskaleringKvittering.propTypes = {
     dato: PT.string.isRequired,
 };
 
-const mapStateToProps = state => ({
-    avhengigheter: [selectMotpartStatus(state), selectSituasjonStatus(state)],
-    navn: selectNavnPaMotpart(state),
-    dato: selectGjeldendeEskaleringsVarsel(state).opprettetDato,
-});
+const mapStateToProps = state => {
+    const eskaleringsVarsel = selectGjeldendeEskaleringsVarsel(state);
+    return {
+        avhengigheter: [
+            selectMotpartStatus(state),
+            selectSituasjonStatus(state),
+        ],
+        navn: selectNavnPaMotpart(state),
+        dato: eskaleringsVarsel && eskaleringsVarsel.opprettetDato,
+    };
+};
 
 export default connect(mapStateToProps)(StartEskaleringKvittering);

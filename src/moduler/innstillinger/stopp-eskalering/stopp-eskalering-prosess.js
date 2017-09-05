@@ -6,16 +6,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
-import { stoppEskalering } from '../innstillinger-reducer';
-import { hentSituasjon } from '../../situasjon/situasjon';
-import { STATUS } from '../../../ducks/utils';
-import * as AppPT from '../../../proptypes';
+import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
 
-function StoppEskaleringProsess({
-    intl,
-    handleStoppEskalering,
-    innstillingerReducer,
-}) {
+function StoppEskaleringProsess({ intl, slettBegrunnelse }) {
     return (
         <StartProsess
             className="innstillinger__prosess"
@@ -25,11 +18,10 @@ function StoppEskaleringProsess({
             knappetekst={intl.formatMessage({
                 id: 'innstillinger.modal.prosess.start.knapp',
             })}
-            onClick={() => handleStoppEskalering()}
-            laster={
-                innstillingerReducer.status === STATUS.PENDING ||
-                innstillingerReducer.status === STATUS.RELOADING
-            }
+            onClick={() => {
+                slettBegrunnelse();
+                history.push('/innstillinger/stoppEskalering/');
+            }}
         >
             <div className="blokk-xs">
                 <Normaltekst>
@@ -42,25 +34,15 @@ function StoppEskaleringProsess({
 
 StoppEskaleringProsess.propTypes = {
     intl: intlShape.isRequired,
-    handleStoppEskalering: PT.func.isRequired,
-    innstillingerReducer: AppPT.reducer.isRequired,
+    slettBegrunnelse: PT.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-    innstillingerReducer: state.data.innstillinger,
-});
-
 const mapDispatchToProps = dispatch => ({
-    handleStoppEskalering: () => {
-        dispatch(stoppEskalering())
-            .then(() =>
-                history.push('/innstillinger/stoppEskalering/kvittering')
-            )
-            .then(() => dispatch(hentSituasjon()))
-            .catch(() => history.push('/innstillinger/feilkvittering'));
+    slettBegrunnelse: () => {
+        dispatch(SLETT_BEGRUNNELSE_ACTION);
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(null, mapDispatchToProps)(
     hiddenIfHoc(injectIntl(StoppEskaleringProsess))
 );

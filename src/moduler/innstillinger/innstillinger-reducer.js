@@ -1,5 +1,6 @@
 import * as Api from '../situasjon/situasjon-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
+import { nyHenvendelse } from '../../ducks/dialog';
 
 // Actions
 export const HENT_SITUASJON_OK = 'innstillinger/hent-situasjon/OK';
@@ -157,20 +158,38 @@ export function settDigitalOppfolging(begrunnelse, veilederId) {
     );
 }
 
-export function startEskalering(tilhorendeDialogId) {
-    return doThenDispatch(() => Api.startEskalering(tilhorendeDialogId), {
+function startEskaleringMedDialog(dialogId, begrunnelse) {
+    return doThenDispatch(() => Api.startEskalering(dialogId, begrunnelse), {
         OK: START_ESKALERING_OK,
         FEILET: START_ESKALERING_FEILET,
         PENDING: START_ESKALERING_PENDING,
     });
 }
+export function startEskalering(eskaleringData) {
+    const begrunnelse = eskaleringData.begrunnelse;
+    return dispatch =>
+        dispatch(
+            nyHenvendelse({ ...eskaleringData, tekst: begrunnelse })
+        ).then(henvendelse =>
+            dispatch(startEskaleringMedDialog(henvendelse.data.id, begrunnelse))
+        );
+}
 
-export function stoppEskalering() {
-    return doThenDispatch(() => Api.stoppEskalering(), {
+function stoppEskaleringMedBegrunnelse(begrunnelse) {
+    return doThenDispatch(() => Api.stoppEskalering(begrunnelse), {
         OK: STOPP_ESKALERING_OK,
         FEILET: STOPP_ESKALERING_FEILET,
         PENDING: STOPP_ESKALERING_PENDING,
     });
+}
+export function stoppEskalering(stoppEskaleringData) {
+    const begrunnelse = stoppEskaleringData.begrunnelse;
+    return dispatch =>
+        dispatch(
+            nyHenvendelse({ ...stoppEskaleringData, tekst: begrunnelse })
+        ).then(
+            dispatch(stoppEskaleringMedBegrunnelse(begrunnelse))
+        );
 }
 
 export function lagreBegrunnelse(begrunnelse) {

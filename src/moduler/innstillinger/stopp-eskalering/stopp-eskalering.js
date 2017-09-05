@@ -12,39 +12,36 @@ import {
 import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import { startEskalering } from '../innstillinger-reducer';
+import { stoppEskalering } from '../innstillinger-reducer';
 import { hentSituasjon } from '../../situasjon/situasjon';
 import { STATUS } from '../../../ducks/utils';
+import { selectGjeldendeEskaleringsVarsel, selectSituasjonStatus } from '../../situasjon/situasjon-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
 
-export const START_ESKALERING_FORM_NAME = 'start-eskalering-form';
+export const STOPP_ESKALERING_FORM_NAME = 'stopp-eskalering-form';
 
-function StartEskalering({ handleSubmit, innstillingerStatus }) {
+function StoppEskalering({ avhengigheter, handleSubmit, innstillingerStatus, tilhorendeDialogId }) {
     return (
         <InnstillingerModal>
-            <Innholdslaster avhengigheter={[innstillingerStatus]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <div>
                     <section className="innstillinger__prosess">
                         <Systemtittel>
-                            <FormattedMessage id="innstillinger.modal.start-eskalering.overskrift" />
+                            <FormattedMessage id="innstillinger.modal.stopp-eskalering.overskrift" />
                         </Systemtittel>
                         <div className="blokk-xxs">
-                            <FormattedMessage id="innstillinger.modal.start-eskalering.beskrivelse" />
+                            <FormattedMessage id="innstillinger.modal.stopp-eskalering.beskrivelse" />
                         </div>
-                        <FormattedMessage id="dialog.eskalering.overskrift">
-                            {overskrift =>
-                                <BegrunnelseForm
-                                    labelId="innstillinger.modal.start-eskalering.begrunnelse"
-                                    formNavn={START_ESKALERING_FORM_NAME}
-                                    onSubmit={form =>
-                                        handleSubmit(form, overskrift)}
-                                />}
-                        </FormattedMessage>
+                        <BegrunnelseForm
+                            labelId="innstillinger.modal.stopp-eskalering.begrunnelse"
+                            formNavn={STOPP_ESKALERING_FORM_NAME}
+                            onSubmit={form => handleSubmit(form, tilhorendeDialogId)}
+                        />
                     </section>
                     <ModalFooter>
                         <RemoteSubmitKnapp
-                            formNavn={START_ESKALERING_FORM_NAME}
+                            formNavn={STOPP_ESKALERING_FORM_NAME}
                             mini
                             spinner={
                                 innstillingerStatus === STATUS.PENDING ||
@@ -52,14 +49,14 @@ function StartEskalering({ handleSubmit, innstillingerStatus }) {
                             }
                             autoDisableVedSpinner
                         >
-                            <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.bekreft" />
+                            <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                         </RemoteSubmitKnapp>
                         <RemoteResetKnapp
-                            formNavn={START_ESKALERING_FORM_NAME}
+                            formNavn={STOPP_ESKALERING_FORM_NAME}
                             mini
                             onClick={() => history.push('/')}
                         >
-                            <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.avbryt" />
+                            <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.avbryt" />
                         </RemoteResetKnapp>
                     </ModalFooter>
                 </div>
@@ -68,29 +65,37 @@ function StartEskalering({ handleSubmit, innstillingerStatus }) {
     );
 }
 
-StartEskalering.propTypes = {
+StoppEskalering.propTypes = {
+    avhengigheter: AppPT.avhengigheter.isRequired,
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
+    tilhorendeDialogId: PT.string.isRequired,
 };
 
-const mapStateToProps = state => ({
-    innstillingerStatus: selectInnstillingerStatus(state),
-});
+const mapStateToProps = state => {
+    const innstillingerStatus = selectInnstillingerStatus(state);
+    const situasjonStatus = selectSituasjonStatus(state);
+    return {
+        avhengigheter: [situasjonStatus, innstillingerStatus],
+        innstillingerStatus,
+        tilhorendeDialogId: selectGjeldendeEskaleringsVarsel(state).tilhorendeDialogId,
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
-    handleSubmit: (form, overskrift) => {
+    handleSubmit: (form, dialogId) => {
         dispatch(
-            startEskalering({
+            stoppEskalering({
                 begrunnelse: form.begrunnelse,
-                overskrift,
+                dialogId,
             })
         )
             .then(() => dispatch(hentSituasjon()))
             .then(() =>
-                history.push('/innstillinger/startEskalering/kvittering')
+                history.push('/innstillinger/stoppEskalering/kvittering')
             )
-            .catch(history.push('/innstillinger/feilkvittering'));
+            .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StartEskalering);
+export default connect(mapStateToProps, mapDispatchToProps)(StoppEskalering);
