@@ -187,9 +187,7 @@ export function stoppEskalering(stoppEskaleringData) {
     return dispatch =>
         dispatch(
             nyHenvendelse({ ...stoppEskaleringData, tekst: begrunnelse })
-        ).then(
-            dispatch(stoppEskaleringMedBegrunnelse(begrunnelse))
-        );
+        ).then(dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)));
 }
 
 export function lagreBegrunnelse(begrunnelse) {

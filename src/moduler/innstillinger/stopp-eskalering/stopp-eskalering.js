@@ -15,13 +15,21 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { stoppEskalering } from '../innstillinger-reducer';
 import { hentSituasjon } from '../../situasjon/situasjon';
 import { STATUS } from '../../../ducks/utils';
-import { selectGjeldendeEskaleringsVarsel, selectSituasjonStatus } from '../../situasjon/situasjon-selector';
+import {
+    selectGjeldendeEskaleringsVarsel,
+    selectSituasjonStatus,
+} from '../../situasjon/situasjon-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
 
 export const STOPP_ESKALERING_FORM_NAME = 'stopp-eskalering-form';
 
-function StoppEskalering({ avhengigheter, handleSubmit, innstillingerStatus, tilhorendeDialogId }) {
+function StoppEskalering({
+    avhengigheter,
+    handleSubmit,
+    innstillingerStatus,
+    tilhorendeDialogId,
+}) {
     return (
         <InnstillingerModal>
             <Innholdslaster avhengigheter={avhengigheter}>
@@ -36,7 +44,8 @@ function StoppEskalering({ avhengigheter, handleSubmit, innstillingerStatus, til
                         <BegrunnelseForm
                             labelId="innstillinger.modal.stopp-eskalering.begrunnelse"
                             formNavn={STOPP_ESKALERING_FORM_NAME}
-                            onSubmit={form => handleSubmit(form, tilhorendeDialogId)}
+                            onSubmit={form =>
+                                handleSubmit(form, tilhorendeDialogId)}
                         />
                     </section>
                     <ModalFooter>
@@ -65,20 +74,25 @@ function StoppEskalering({ avhengigheter, handleSubmit, innstillingerStatus, til
     );
 }
 
+StoppEskalering.defaultProps = {
+    tilhorendeDialogId: null,
+};
+
 StoppEskalering.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
-    tilhorendeDialogId: PT.string.isRequired,
+    tilhorendeDialogId: PT.number,
 };
 
 const mapStateToProps = state => {
     const innstillingerStatus = selectInnstillingerStatus(state);
     const situasjonStatus = selectSituasjonStatus(state);
+    const gjeldendeEskaleringsVarsel = selectGjeldendeEskaleringsVarsel(state);
     return {
         avhengigheter: [situasjonStatus, innstillingerStatus],
         innstillingerStatus,
-        tilhorendeDialogId: selectGjeldendeEskaleringsVarsel(state).tilhorendeDialogId,
+        tilhorendeDialogId: gjeldendeEskaleringsVarsel && gjeldendeEskaleringsVarsel.tilhorendeDialogId,
     };
 };
 

@@ -89,7 +89,7 @@ const mapDispatchToProps = dispatch => ({
             .then(() =>
                 history.push('/innstillinger/startEskalering/kvittering')
             )
-            .catch(history.push('/innstillinger/feilkvittering'));
+            .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });
 
