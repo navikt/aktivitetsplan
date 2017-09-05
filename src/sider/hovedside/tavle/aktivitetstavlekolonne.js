@@ -39,87 +39,41 @@ const mottaAktivitetsKort = {
     },
 };
 
-function HengelasAnchor() {
-    return (
-        <FormattedMessage id="hjelpetekst.lasikon">
-            {tekst => <span aria-label={tekst} />}
-        </FormattedMessage>
-    );
-}
-
-function SporsmalAnchor() {
-    return (
-        <FormattedMessage id="hjelpetekst.sporsmalikon">
-            {tekst => <span aria-label={tekst} />}
-        </FormattedMessage>
-    );
-}
-
 function hjelpetekst(aktivitetStatus) {
     switch (aktivitetStatus) {
         case STATUS_BRUKER_ER_INTRESSERT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.er.interessert">
-                    {tekst =>
-                        <HjelpetekstHoyre
-                            anchor={SporsmalAnchor}
-                            tittel={tekst}
-                        >
-                            <FormattedMessage id="hjelpetekst.aktivitet.er.interessert" />
-                        </HjelpetekstHoyre>}
-                </FormattedMessage>
+                <HjelpetekstHoyre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.er.interessert" />
+                </HjelpetekstHoyre>
             );
 
         case STATUS_PLANLAGT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.planlagt">
-                    {tekst =>
-                        <HjelpetekstHoyre
-                            anchor={SporsmalAnchor}
-                            tittel={tekst}
-                        >
-                            <FormattedMessage id="hjelpetekst.aktivitet.planlagt" />
-                        </HjelpetekstHoyre>}
-                </FormattedMessage>
+                <HjelpetekstHoyre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.planlagt" />
+                </HjelpetekstHoyre>
             );
 
         case STATUS_GJENNOMFOERT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.gjennomfoert">
-                    {tekst =>
-                        <HjelpetekstVenstre
-                            anchor={SporsmalAnchor}
-                            tittel={tekst}
-                        >
-                            <FormattedMessage id="hjelpetekst.aktivitet.gjennomfoert" />
-                        </HjelpetekstVenstre>}
-                </FormattedMessage>
+                <HjelpetekstVenstre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.gjennomfoert" />
+                </HjelpetekstVenstre>
             );
 
         case STATUS_FULLFOERT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.fullfoert">
-                    {tekst =>
-                        <HjelpetekstVenstre
-                            anchor={SporsmalAnchor}
-                            tittel={tekst}
-                        >
-                            <FormattedMessage id="hjelpetekst.aktivitet.fullfoert" />
-                        </HjelpetekstVenstre>}
-                </FormattedMessage>
+                <HjelpetekstVenstre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.fullfoert" />
+                </HjelpetekstVenstre>
             );
 
         case STATUS_AVBRUTT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.avbrutt">
-                    {tekst =>
-                        <HjelpetekstVenstre
-                            anchor={HengelasAnchor}
-                            tittel={tekst}
-                        >
-                            <FormattedMessage id="hjelpetekst.aktivitet.avbrutt" />
-                        </HjelpetekstVenstre>}
-                </FormattedMessage>
+                <HjelpetekstVenstre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.avbrutt" />
+                </HjelpetekstVenstre>
             );
 
         default:
