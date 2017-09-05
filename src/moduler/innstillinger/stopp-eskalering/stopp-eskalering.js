@@ -92,7 +92,9 @@ const mapStateToProps = state => {
     return {
         avhengigheter: [situasjonStatus, innstillingerStatus],
         innstillingerStatus,
-        tilhorendeDialogId: gjeldendeEskaleringsVarsel && gjeldendeEskaleringsVarsel.tilhorendeDialogId,
+        tilhorendeDialogId:
+            gjeldendeEskaleringsVarsel &&
+            gjeldendeEskaleringsVarsel.tilhorendeDialogId,
     };
 };
 
