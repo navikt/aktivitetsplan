@@ -11,11 +11,20 @@ const initalState = {
     status: STATUS.NOT_STARTED,
 };
 
+const mapArenaType = arenaAktivitet => ({
+    ...arenaAktivitet,
+    arenaAktivitet: true,
+});
+
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case HENTET:
-            return { ...state, status: STATUS.OK, data: action.data };
+            return {
+                ...state,
+                status: STATUS.OK,
+                data: action.data.map(mapArenaType),
+            };
         case HENTING_FEILET:
             return { ...state, status: STATUS.ERROR, feil: action.data };
         default:

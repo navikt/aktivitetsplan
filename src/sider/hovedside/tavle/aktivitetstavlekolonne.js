@@ -39,63 +39,43 @@ const mottaAktivitetsKort = {
     },
 };
 
-function HengelasAnchor() {
-    return (
-        <FormattedMessage id="hjelpetekst.lasikon">
-            {tekst => <span aria-label={tekst} />}
-        </FormattedMessage>
-    );
-}
-
-function SporsmalAnchor() {
-    return (
-        <FormattedMessage id="hjelpetekst.sporsmalikon">
-            {tekst => <span aria-label={tekst} />}
-        </FormattedMessage>
-    );
-}
-
 function hjelpetekst(aktivitetStatus) {
     switch (aktivitetStatus) {
         case STATUS_BRUKER_ER_INTRESSERT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.apen">
-                    {tekst =>
-                        <HjelpetekstHoyre
-                            anchor={SporsmalAnchor}
-                            tittel={tekst}
-                        >
-                            <FormattedMessage id="hjelpetekst.sporsmalikon" />
-                        </HjelpetekstHoyre>}
-                </FormattedMessage>
+                <HjelpetekstHoyre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.er.interessert" />
+                </HjelpetekstHoyre>
             );
+
         case STATUS_PLANLAGT:
+            return (
+                <HjelpetekstHoyre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.planlagt" />
+                </HjelpetekstHoyre>
+            );
+
         case STATUS_GJENNOMFOERT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.apen">
-                    {tekst =>
-                        <HjelpetekstVenstre
-                            anchor={SporsmalAnchor}
-                            tittel={tekst}
-                        >
-                            <FormattedMessage id="hjelpetekst.sporsmalikon" />
-                        </HjelpetekstVenstre>}
-                </FormattedMessage>
+                <HjelpetekstVenstre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.gjennomfoert" />
+                </HjelpetekstVenstre>
             );
 
         case STATUS_FULLFOERT:
+            return (
+                <HjelpetekstVenstre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.fullfoert" />
+                </HjelpetekstVenstre>
+            );
+
         case STATUS_AVBRUTT:
             return (
-                <FormattedMessage id="hjelpetekst.tittel.aktivitet.last">
-                    {tekst =>
-                        <HjelpetekstVenstre
-                            anchor={HengelasAnchor}
-                            tittel={tekst}
-                        >
-                            <FormattedMessage id="hjelpetekst.lasikon" />
-                        </HjelpetekstVenstre>}
-                </FormattedMessage>
+                <HjelpetekstVenstre tittel="">
+                    <FormattedMessage id="hjelpetekst.aktivitet.avbrutt" />
+                </HjelpetekstVenstre>
             );
+
         default:
             return null;
     }
@@ -111,6 +91,7 @@ function hjelpeklasse(aktivitetStatus) {
         case STATUS_FULLFOERT:
         case STATUS_AVBRUTT:
             return 'aktivitet-last';
+
         default:
             return null;
     }
