@@ -1,5 +1,6 @@
 import * as Api from '../situasjon/situasjon-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
+import { nyHenvendelse } from '../../ducks/dialog';
 
 // Actions
 export const HENT_SITUASJON_OK = 'innstillinger/hent-situasjon/OK';
@@ -26,6 +27,14 @@ export const SETT_DIGITAL_OK = 'innstillinger/digital/OK';
 export const SETT_DIGITAL_FEILET = 'innstillinger/digital/FEILET';
 export const SETT_DIGITAL_PENDING = 'innstillinger/digital/PENDING';
 
+export const START_ESKALERING_OK = 'instillinger/start-eskalering/OK';
+export const START_ESKALERING_FEILET = 'instillinger/start-eskalering/FEILET';
+export const START_ESKALERING_PENDING = 'instillinger/start-eskalering/PENDING';
+
+export const STOPP_ESKALERING_OK = 'instillinger/stopp-eskalering/OK';
+export const STOPP_ESKALERING_FEILET = 'instillinger/stopp-eskalering/FEILET';
+export const STOPP_ESKALERING_PENDING = 'instillinger/stopp-eskalering/PENDING';
+
 export const LAGRE_BEGRUNNELSE = 'form/lagre-begrunnelse';
 export const SLETT_BEGRUNNELSE = 'form/slett-begrunnelse';
 export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
@@ -44,6 +53,8 @@ export default function reducer(state = initalState, action) {
         case START_OPPFOLGING_OK:
         case SETT_MANUELL_OK:
         case SETT_DIGITAL_OK:
+        case START_ESKALERING_OK:
+        case STOPP_ESKALERING_OK:
             return {
                 ...state,
                 status: STATUS.OK,
@@ -55,6 +66,8 @@ export default function reducer(state = initalState, action) {
         case START_OPPFOLGING_FEILET:
         case SETT_MANUELL_FEILET:
         case SETT_DIGITAL_FEILET:
+        case START_ESKALERING_FEILET:
+        case STOPP_ESKALERING_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
@@ -66,6 +79,8 @@ export default function reducer(state = initalState, action) {
         case START_OPPFOLGING_PENDING:
         case SETT_MANUELL_PENDING:
         case SETT_DIGITAL_PENDING:
+        case START_ESKALERING_PENDING:
+        case STOPP_ESKALERING_PENDING:
             return {
                 ...state,
                 status:
@@ -141,6 +156,38 @@ export function settDigitalOppfolging(begrunnelse, veilederId) {
             PENDING: SETT_DIGITAL_PENDING,
         }
     );
+}
+
+function startEskaleringMedDialog(dialogId, begrunnelse) {
+    return doThenDispatch(() => Api.startEskalering(dialogId, begrunnelse), {
+        OK: START_ESKALERING_OK,
+        FEILET: START_ESKALERING_FEILET,
+        PENDING: START_ESKALERING_PENDING,
+    });
+}
+export function startEskalering(eskaleringData) {
+    const begrunnelse = eskaleringData.begrunnelse;
+    return dispatch =>
+        dispatch(
+            nyHenvendelse({ ...eskaleringData, tekst: begrunnelse })
+        ).then(henvendelse =>
+            dispatch(startEskaleringMedDialog(henvendelse.data.id, begrunnelse))
+        );
+}
+
+function stoppEskaleringMedBegrunnelse(begrunnelse) {
+    return doThenDispatch(() => Api.stoppEskalering(begrunnelse), {
+        OK: STOPP_ESKALERING_OK,
+        FEILET: STOPP_ESKALERING_FEILET,
+        PENDING: STOPP_ESKALERING_PENDING,
+    });
+}
+export function stoppEskalering(stoppEskaleringData) {
+    const begrunnelse = stoppEskaleringData.begrunnelse;
+    return dispatch =>
+        dispatch(
+            nyHenvendelse({ ...stoppEskaleringData, tekst: begrunnelse })
+        ).then(dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)));
 }
 
 export function lagreBegrunnelse(begrunnelse) {

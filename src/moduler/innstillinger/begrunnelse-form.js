@@ -46,12 +46,19 @@ const BegrunnelseReduxForm = validForm({
 const mapStateToProps = (state, props) => ({
     form: props.formNavn,
     initialValues: {
-        begrunnelse: state.data.innstillinger.begrunnelse,
+        begrunnelse: props.defaultBegrunnelse
+            ? props.defaultBegrunnelse
+            : state.data.innstillinger.begrunnelse,
     },
 });
 
+BegrunnelseReduxForm.defaultProps = {
+    defaultBegrunnelse: null,
+};
+
 BegrunnelseReduxForm.propTypes = {
     formNavn: PT.string.isRequired,
+    defaultBegrunnelse: PT.string,
 };
 
 export default connect(mapStateToProps)(BegrunnelseReduxForm);
