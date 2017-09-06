@@ -134,7 +134,7 @@ export const innstillingHistorikk = PT.shape({
     type: PT.string.isRequired,
     opprettetAvBrukerId: PT.string,
     opprettetAv: PT.string,
-    dialogId: PT.string,
+    dialogId: PT.number,
 });
 
 export const veileder = PT.shape({

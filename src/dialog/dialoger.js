@@ -123,7 +123,6 @@ class DialogVisning extends React.Component {
                 </VisibleIfDiv>
                 <div className="dialoger__dialog-henvendelser">
                     {henvendelser.length}
-                    {henvendelser.length}
                 </div>
             </Lenkepanel>
         );
