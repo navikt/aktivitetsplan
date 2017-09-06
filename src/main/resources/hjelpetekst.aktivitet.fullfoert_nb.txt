@@ -1,0 +1,1 @@
+Flytt aktiviteter hit som du er ferdig med. Aktiviteter du flytter hit blir låst og kan ikke redigeres.

@@ -1,18 +1,18 @@
 { status, select,
-PLANLAGT { Planlagt }
-BRUKER_ER_INTERESSERT { Foreslått }
-GJENNOMFORES { Gjennomføres }
+PLANLAGT { Planlegger }
+BRUKER_ER_INTERESSERT { Forslag }
+GJENNOMFORES { Gjennomfører }
 FULLFORT { Fullført }
 AVBRUTT { Avbrutt }
 } / { type, select,
-EGEN { Jobbrettet aktivitet }
+EGEN { Jobbrettet egenaktivitet }
 STILLING { Stilling }
-TILTAKSAKTIVITET { Tiltak }
+TILTAKSAKTIVITET { Tiltak gjennom NAV}
 GRUPPEAKTIVITET { Gruppeaktivitet }
 UTDANNINGSAKTIVITET { Utdanning }
-SOKEAVTALE { Avtale med NAV }
-IJOBB { Jobb }
-BEHANDLING { Behandling }
+SOKEAVTALE { Avtale om jobbsøking }
+IJOBB { Jobb jeg har nå }
+BEHANDLING { Medisinsk behandling }
 MOTE { Møte med NAV }
-SAMTALEREFERAT { Samtalereferat }
+SAMTALEREFERAT { Samtale }
 }

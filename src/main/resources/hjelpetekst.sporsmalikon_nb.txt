@@ -1,6 +1,0 @@
-Legg inn aktiviteter du har lyst til eller vurderer å gjøre. Når du har bestemt deg for at dette vil du gjøre, flytter du aktiviteten til Planlegger.		
-Flytt aktiviteter hit som du planlegger å gjennomføre. Når du faktisk starter aktiviteten, flytter du den til Gjennomfører.				
-Flytt aktiviteter hit som du gjennomfører nå. Når aktiviteten er ferdig, flytter du den til Fullført. Hvis du avbryter aktiviteten, flytter du den til Avbrutt. Har du søkt på en stilling og venter på et svar, kan du la aktiviteten ligge under Gjennomfører til du har fått svaret. Da flytter du den til Fullført.	 
-Flytt aktiviteter hit som du er ferdig med. Aktiviteter du flytter hit blir låst og kan ikke redigeres.
-Flytt aktiviteter hit som du av forskjellige grunner har avbrutt, eller ikke har fått startet på som planlagt. Aktiviteter du flytter hit blir låst og kan ikke redigeres.  
-		
