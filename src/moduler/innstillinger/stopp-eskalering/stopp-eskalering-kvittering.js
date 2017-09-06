@@ -1,4 +1,5 @@
 import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
@@ -7,16 +8,19 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
+import {
+    selectMotpartStatus,
+    selectNavnPaMotpart,
+} from '../../motpart/motpart-selector';
 
-function StoppEskaleringKvittering({ motpart }) {
-    const { navn } = motpart.data;
+function StoppEskaleringKvittering({ navn, avhengigheter }) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
-            <Innholdslaster avhengigheter={[motpart]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <article className="innstillinger__container">
                     <Innholdstittel>
                         <FormattedMessage
@@ -41,16 +45,14 @@ function StoppEskaleringKvittering({ motpart }) {
     );
 }
 
-StoppEskaleringKvittering.defaultProps = {
-    motpart: undefined,
-};
-
 StoppEskaleringKvittering.propTypes = {
-    motpart: AppPT.motpart,
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    navn: PT.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-    motpart: state.data.motpart,
+    avhengigheter: [selectMotpartStatus(state)],
+    navn: selectNavnPaMotpart(state),
 });
 
 export default connect(mapStateToProps)(StoppEskaleringKvittering);
