@@ -175,7 +175,11 @@ export function startEskalering(eskaleringData) {
                     startEskaleringMedDialog(henvendelse.data.id, begrunnelse)
                 )
             )
-            .then(() => dispatch(hentSituasjon()));
+            .then(() => dispatch(hentSituasjon()))
+            .then(() =>
+                history.push('/innstillinger/startEskalering/kvittering')
+            )
+            .catch(() => history.push('/innstillinger/feilkvittering'));
 }
 
 function stoppEskaleringMedBegrunnelse(begrunnelse) {
@@ -190,7 +194,11 @@ export function stoppEskalering(stoppEskaleringData) {
     return dispatch =>
         dispatch(nyHenvendelse({ ...stoppEskaleringData, tekst: begrunnelse }))
             .then(dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
-            .then(() => dispatch(hentSituasjon()));
+            .then(() => dispatch(hentSituasjon()))
+            .then(() =>
+                history.push('/innstillinger/stoppEskalering/kvittering')
+            )
+            .catch(() => history.push('/innstillinger/feilkvittering'));
 }
 
 export function lagreBegrunnelse(begrunnelse) {

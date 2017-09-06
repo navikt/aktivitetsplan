@@ -83,18 +83,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleSubmit: (form, overskrift) => {
+    handleSubmit: (form, overskrift) =>
         dispatch(
             startEskalering({
                 begrunnelse: form.begrunnelse,
                 overskrift,
             })
-        )
-            .then(() =>
-                history.push('/innstillinger/startEskalering/kvittering')
-            )
-            .catch(() => history.push('/innstillinger/feilkvittering'));
-    },
+        ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartEskalering);
