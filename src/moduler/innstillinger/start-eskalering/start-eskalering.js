@@ -13,7 +13,6 @@ import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { startEskalering } from '../innstillinger-reducer';
-import { hentSituasjon } from '../../situasjon/situasjon';
 import { STATUS } from '../../../ducks/utils';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
@@ -91,7 +90,6 @@ const mapDispatchToProps = dispatch => ({
                 overskrift,
             })
         )
-            .then(() => dispatch(hentSituasjon()))
             .then(() =>
                 history.push('/innstillinger/startEskalering/kvittering')
             )

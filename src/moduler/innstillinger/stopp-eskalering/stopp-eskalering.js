@@ -13,7 +13,6 @@ import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { stoppEskalering } from '../innstillinger-reducer';
-import { hentSituasjon } from '../../situasjon/situasjon';
 import { STATUS } from '../../../ducks/utils';
 import {
     selectGjeldendeEskaleringsVarsel,
@@ -110,7 +109,6 @@ const mapDispatchToProps = dispatch => ({
                 dialogId,
             })
         )
-            .then(() => dispatch(hentSituasjon()))
             .then(() =>
                 history.push('/innstillinger/stoppEskalering/kvittering')
             )
