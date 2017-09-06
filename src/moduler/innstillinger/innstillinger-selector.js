@@ -6,10 +6,22 @@ export function selectInnstillingerStatus(state) {
     return selectInnstillingerSlice(state).status;
 }
 
+export function selectInnstillingerData(state) {
+    return selectInnstillingerSlice(state).data;
+}
+
 export function selectInaktiveringsDato(state) {
-    return selectInnstillingerSlice(state).data.inaktiveringsDato;
+    return selectInnstillingerData(state).inaktiveringsDato;
 }
 
 export function selectInnstillingerBegrunnelse(state) {
-    return selectInnstillingerSlice(state).data.begrunnelse;
+    return selectInnstillingerData(state).begrunnelse;
+}
+
+export function selectErManuell(state) {
+    return selectInnstillingerData(state).manuell;
+}
+
+export function selectKanStarteOppfolging(state) {
+    return selectInnstillingerData(state).kanStarteOppfolging;
 }
