@@ -1,1 +1,1 @@
-Skriv en kommentar om hvordan det har gått med aktiviteten. Når du flytter aktiviteten til Fullført, kan du ikke lenger redigere innholdet.
+Skriv en kort kommentar om hvordan det har gått, eller noe NAV bør kjenne til. Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.
