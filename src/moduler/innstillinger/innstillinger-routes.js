@@ -18,70 +18,68 @@ import StoppEskaleringKvittering from './stopp-eskalering/stopp-eskalering-kvitt
 import Feilkvittering from './feilkvittering';
 
 function InnstillingerRoutes({ match }) {
+    const path = match.path;
     return (
         <Switch>
-            <Route exact path={`${match.path}/`} component={Prosesser} />
+            <Route exact path={`${path}/`} component={Prosesser} />
             <Route
                 exact
-                path={`${match.path}/manuell`}
+                path={`${path}/manuell`}
                 component={SettManuellOppfolging}
             />
             <Route
-                path={`${match.path}/manuell/kvittering`}
+                path={`${path}/manuell/kvittering`}
                 component={SettManuellOppfolgingKvittering}
             />
             <Route
                 exact
-                path={`${match.path}/digital`}
+                path={`${path}/digital`}
                 component={SettDigitalOppfolging}
             />
             <Route
-                path={`${match.path}/digital/kvittering`}
+                path={`${path}/digital/kvittering`}
                 component={SettDigitalKvittering}
             />
             <Route
                 exact
-                path={`${match.path}/avslutt`}
+                path={`${path}/avslutt`}
                 component={AvsluttOppfolging}
             />
             <Route
-                path={`${match.path}/avslutt/bekreft`}
+                path={`${path}/avslutt/bekreft`}
                 component={BekreftAvsluttOppfolging}
             />
             <Route
-                path={`${match.path}/avslutt/kvittering`}
+                path={`${path}/avslutt/kvittering`}
                 component={AvsluttOppfolgingKvittering}
             />
             <Route
-                path={`${match.path}/start/bekreft`}
+                path={`${path}/start/bekreft`}
                 component={BekreftStartOppfolging}
             />
             <Route
-                path={`${match.path}/start/kvittering`}
+                path={`${path}/start/kvittering`}
                 component={StartOppfolgingKvittering}
             />
             <Route
                 exact
-                path={`${match.path}/startEskalering`}
+                path={`${path}/startEskalering`}
                 component={StartEskalering}
             />
             <Route
                 exact
-                path={`${match.path}/stoppEskalering`}
+                path={`${path}/stoppEskalering`}
                 component={StoppEskalering}
             />
             <Route
-                path={`${match.path}/startEskalering/kvittering`}
+                path={`${path}/startEskalering/kvittering`}
                 component={StartEskaleringKvittering}
             />
             <Route
-                path={`${match.path}/stoppEskalering/kvittering`}
+                path={`${path}/stoppEskalering/kvittering`}
                 component={StoppEskaleringKvittering}
             />
-            <Route
-                path={`${match.path}/feilkvittering`}
-                component={Feilkvittering}
-            />
+            <Route path={`${path}/feilkvittering`} component={Feilkvittering} />
         </Switch>
     );
 }
