@@ -10,13 +10,13 @@ import {
     HiddenIfVarslingMedLenke,
 } from './varsel-alertstriper';
 import {
-    selectGjeldendeEskaleringsVarsel,
     selectVilkarMaBesvares,
     selectErUnderOppfolging,
     selectErBrukerManuell,
     selectReservasjonKRR,
     selectSituasjonReducer,
     selectTilHorendeDialogId,
+    selectErEskalert,
 } from '../situasjon/situasjon-selector';
 import {
     selectErBruker,
@@ -129,7 +129,7 @@ const mapStateToProps = state => ({
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),
     reservertIKRR: selectReservasjonKRR(state),
-    brukerErEskalert: !!selectGjeldendeEskaleringsVarsel(state),
+    brukerErEskalert: selectErEskalert(state),
     tilhorendeDialogId: selectTilHorendeDialogId(state),
 });
 
