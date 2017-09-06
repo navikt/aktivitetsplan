@@ -23,6 +23,18 @@ class Prosesser extends Component {
             <InnstillingerModal>
                 <Innholdslaster avhengigheter={[innstillingerReducer]}>
                     <div>
+                        <StartEskaleringProsess
+                            hidden={
+                                !!innstillingerReducer.data
+                                    .gjeldendeEskaleringsvarsel
+                            }
+                        />
+                        <StoppEskaleringProsess
+                            hidden={
+                                !innstillingerReducer.data
+                                    .gjeldendeEskaleringsvarsel
+                            }
+                        />
                         <AvsluttOppfolgingProsess
                             hidden={!innstillingerReducer.data.underOppfolging}
                         />
@@ -41,18 +53,6 @@ class Prosesser extends Component {
                             hidden={
                                 !innstillingerReducer.data.underOppfolging ||
                                 !innstillingerReducer.data.manuell
-                            }
-                        />
-                        <StartEskaleringProsess
-                            hidden={
-                                !!innstillingerReducer.data
-                                    .gjeldendeEskaleringsvarsel
-                            }
-                        />
-                        <StoppEskaleringProsess
-                            hidden={
-                                !innstillingerReducer.data
-                                    .gjeldendeEskaleringsvarsel
                             }
                         />
                         <InnstillingHistorikk />
