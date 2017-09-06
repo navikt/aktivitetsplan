@@ -2,7 +2,6 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import AktivitetEtikett from '../../../felles-komponenter/aktivitet-etikett';
-import * as AppPT from '../../../proptypes';
 import { AVTALT_MED_NAV } from '../../../constant';
 import visibleIfHOC from '../../../hocs/visible-if';
 import TallAlert from '../../../felles-komponenter/tall-alert';
@@ -56,7 +55,7 @@ AktivitetskortTillegg.propTypes = {
     erAvtalt: PT.bool.isRequired,
     harDialog: PT.bool.isRequired,
     harEtikett: PT.bool.isRequired,
-    etikett: AppPT.etikett,
+    etikett: PT.string,
 };
 
 const mapStateToProps = (state, props) => {
