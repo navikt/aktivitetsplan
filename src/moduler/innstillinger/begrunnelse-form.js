@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { rules, validForm } from 'react-redux-form-validation';
 import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
+import { selectInnstillingerBegrunnelse } from './innstillinger-selector';
 
 const MAKS_LENGDE = 500;
 
@@ -46,9 +47,8 @@ const BegrunnelseReduxForm = validForm({
 const mapStateToProps = (state, props) => ({
     form: props.formNavn,
     initialValues: {
-        begrunnelse: props.defaultBegrunnelse
-            ? props.defaultBegrunnelse
-            : state.data.innstillinger.begrunnelse,
+        begrunnelse:
+            props.defaultBegrunnelse || selectInnstillingerBegrunnelse(state),
     },
 });
 

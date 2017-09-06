@@ -9,3 +9,7 @@ export function selectInnstillingerStatus(state) {
 export function selectInaktiveringsDato(state) {
     return selectInnstillingerSlice(state).data.inaktiveringsDato;
 }
+
+export function selectInnstillingerBegrunnelse(state) {
+    return selectInnstillingerSlice(state).data.begrunnelse;
+}
