@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import { sammenlignDialogerForVeileder } from '../moduler/dialog/dialog-selector';
+import { sammenlignDialogerForVeileder } from './dialog-utils';
 
 function knuth(array) {
     let currentIndex = array.length;

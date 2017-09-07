@@ -6,35 +6,35 @@ import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import {
     selectDialoger,
-    selectDialogIderSortert,
     selectDialogStatus,
 } from '../moduler/dialog/dialog-selector';
 import DialogVisning from './dialog-visning';
 import { selectAlleAktiviter } from '../moduler/aktivitet/aktivitetliste-selector';
+import { selectErBruker } from '../moduler/identitet/identitet-selector';
+import {
+    sammenlignDialogerForBruker,
+    sammenlignDialogerForVeileder,
+} from './dialog-utils';
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 class Dialoger extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dialogIderSortert: [],
-        };
-    }
-
     componentWillMount() {
-        this.setState({
-            dialogIderSortert: this.props.dialogIderSortert,
-        });
+        this.dialogIderSortert = [...this.props.dialoger]
+            .sort(
+                this.props.erBruker
+                    ? sammenlignDialogerForBruker
+                    : sammenlignDialogerForVeileder
+            )
+            .map(dialog => dialog.id);
     }
 
     render() {
         const { dialoger, valgtDialog, className, aktiviteter } = this.props;
-        const dialogIderSortert = this.state.dialogIderSortert;
         const dialogerSortert = [...dialoger].sort(
             (a, b) =>
-                dialogIderSortert.indexOf(a.id) -
-                dialogIderSortert.indexOf(b.id)
+                this.dialogIderSortert.indexOf(a.id) -
+                this.dialogIderSortert.indexOf(b.id)
         );
 
         const erTabBar = dialog =>
@@ -99,9 +99,9 @@ Dialoger.propTypes = {
     className: PT.string,
     avhengigheter: AppPT.avhengigheter.isRequired,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
-    dialogIderSortert: PT.arrayOf(PT.number).isRequired,
     aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
     valgtDialog: AppPT.dialog,
+    erBruker: PT.bool.isRequired,
 };
 
 Dialoger.defaultProps = {
@@ -124,7 +124,7 @@ DialogerMedInnholdslaster.propTypes = {
 const mapStateToProps = state => ({
     avhengigheter: [selectDialogStatus(state)],
     dialoger: selectDialoger(state),
-    dialogIderSortert: selectDialogIderSortert(state),
     aktiviteter: selectAlleAktiviter(state),
+    erBruker: selectErBruker(state),
 });
 export default connect(mapStateToProps)(DialogerMedInnholdslaster);
