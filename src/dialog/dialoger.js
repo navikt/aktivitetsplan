@@ -15,17 +15,25 @@ import {
     sammenlignDialogerForBruker,
     sammenlignDialogerForVeileder,
 } from './dialog-utils';
+import { selectGjeldendeEskaleringsVarsel } from '../moduler/situasjon/situasjon-selector';
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 class Dialoger extends React.Component {
     componentWillMount() {
         this.dialogIderSortert = [...this.props.dialoger]
-            .sort(
-                this.props.erBruker
-                    ? sammenlignDialogerForBruker
-                    : sammenlignDialogerForVeileder
-            )
+            .sort((a, b) => {
+                const tilhorendeDialogId = this.props.gjeldendeEskaleringsvarsel
+                    .tilhorendeDialogId;
+                if (tilhorendeDialogId === parseInt(a.id, 10)) {
+                    return -1;
+                } else if (tilhorendeDialogId === parseInt(b.id, 10)) {
+                    return 1;
+                }
+                return this.props.erBruker
+                    ? sammenlignDialogerForBruker(a, b)
+                    : sammenlignDialogerForVeileder(a, b);
+            })
             .map(dialog => dialog.id);
     }
 
@@ -95,6 +103,10 @@ class Dialoger extends React.Component {
     }
 }
 
+Dialoger.defaultProps = {
+    gjeldendeEskaleringsvarsel: undefined,
+};
+
 Dialoger.propTypes = {
     className: PT.string,
     avhengigheter: AppPT.avhengigheter.isRequired,
@@ -102,6 +114,7 @@ Dialoger.propTypes = {
     aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
     valgtDialog: AppPT.dialog,
     erBruker: PT.bool.isRequired,
+    gjeldendeEskaleringsvarsel: AppPT.eskaleringsvarsel,
 };
 
 Dialoger.defaultProps = {
@@ -126,5 +139,6 @@ const mapStateToProps = state => ({
     dialoger: selectDialoger(state),
     aktiviteter: selectAlleAktiviter(state),
     erBruker: selectErBruker(state),
+    gjeldendeEskaleringsvarsel: selectGjeldendeEskaleringsVarsel(state),
 });
 export default connect(mapStateToProps)(DialogerMedInnholdslaster);
