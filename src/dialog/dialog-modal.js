@@ -18,7 +18,9 @@ import VisibleIfTag from '../felles-komponenter/utils/visible-if-tag';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
-import { SORTER_DIALOGER } from '../ducks/dialog';
+import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
+import { selectDialogData } from '../moduler/dialog/dialog-selector';
+import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
@@ -187,11 +189,8 @@ DialogModalContent.defaultProps = {
     valgtAktivitetId: undefined,
 };
 
+// eslint-disable-next-line react/prefer-stateless-function
 class DialogModal extends Component {
-    componentDidMount() {
-        this.props.sorterDialoger();
-    }
-
     render() {
         const props = this.props;
 
@@ -214,21 +213,19 @@ class DialogModal extends Component {
 
 DialogModal.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
-    sorterDialoger: PT.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
     const { match } = props;
     const { id } = match.params;
-    const stateData = state.data;
-    const motpart = stateData.motpart;
-    const dialoger = stateData.dialog.data;
+    const motpart = selectMotpartReducer(state);
+    const dialoger = selectDialogData(state);
     const valgtDialog = dialoger.find(d => d.id === id);
     const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
 
     const harNyDialog = id === 'ny';
     const harValgtDialog = !!valgtDialog;
-    const historiskVisning = !!stateData.filter.historiskPeriode;
+    const historiskVisning = selectViserHistoriskPeriode(state);
     return {
         harNyDialog,
         valgtDialog,
@@ -241,12 +238,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    sorterDialoger: () => {
-        dispatch(SORTER_DIALOGER);
-    },
-});
-
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(DialogModal)
-);
+export default withRouter(connect(mapStateToProps)(DialogModal));
