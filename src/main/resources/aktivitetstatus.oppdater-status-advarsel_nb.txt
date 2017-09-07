@@ -1,1 +1,1 @@
-Aktiviteten kan ikke lenger oppdateres når du setter den til "Fullført" eller "Avbrutt". 
+Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre innholdet. 
