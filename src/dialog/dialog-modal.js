@@ -19,6 +19,7 @@ import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
 import { SORTER_DIALOGER } from '../ducks/dialog';
+import { selectDialogMedId } from '../moduler/dialog/dialog-selector';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
@@ -222,8 +223,7 @@ const mapStateToProps = (state, props) => {
     const { id } = match.params;
     const stateData = state.data;
     const motpart = stateData.motpart;
-    const dialoger = stateData.dialog.data;
-    const valgtDialog = dialoger.find(d => d.id === id);
+    const valgtDialog = selectDialogMedId(state, id);
     const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
 
     const harNyDialog = id === 'ny';
