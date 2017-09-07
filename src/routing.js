@@ -9,7 +9,6 @@ import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
-import AktivitetsplanPrint from './moduler/aktivitet/utskrift/aktivitetsplanprint';
 import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
@@ -66,10 +65,6 @@ const Routing = ({ location }) =>
         <Route
             path={getPathWithBase('/arbeidsliste')}
             component={ArbeidslisteContainer}
-        />
-        <Route
-            path={getPathWithBase('/aktivitetsplan/utskrift')}
-            component={AktivitetsplanPrint}
         />
     </Switch>;
 

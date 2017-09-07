@@ -82,16 +82,6 @@ const InnstillingerKnapp = () =>
             />}
     </FormattedMessage>;
 
-const PrintLenke = () =>
-    <FormattedMessage id="utskrift.ikon.alt.tekst">
-        {tekst =>
-            <button
-                aria-label={tekst}
-                className="navigasjonslinje__verktoy--print-knapp navigasjonslinje__skillestrek--venstre"
-                onClick={() => history.push('aktivitetsplan/utskrift')}
-            />}
-    </FormattedMessage>;
-
 class Navigasjonslinje extends Component {
     componentDidMount() {
         const { doHentDialog, doHentArbeidsliste } = this.props;
@@ -148,7 +138,6 @@ class Navigasjonslinje extends Component {
                         <InnstillingerKnapp />
                     </div>
                 </Feature>
-                <PrintLenke />
             </nav>
         );
     }
