@@ -49,6 +49,20 @@ export function startOppfolging() {
     return postAsJson(`${SITUASJON_PROXY_BASE_URL}/situasjon/startOppfolging`);
 }
 
+export function startEskalering(dialogId, begrunnelse) {
+    return postAsJson(
+        `${SITUASJON_PROXY_BASE_URL}/situasjon/startEskalering/`,
+        { dialogId, begrunnelse }
+    );
+}
+
+export function stoppEskalering(begrunnelse) {
+    return postAsJson(
+        `${SITUASJON_PROXY_BASE_URL}/situasjon/stoppEskalering/`,
+        { begrunnelse }
+    );
+}
+
 export function kanAvslutte() {
     return fetchToJson(
         `${SITUASJON_PROXY_BASE_URL}/situasjon/avslutningStatus`

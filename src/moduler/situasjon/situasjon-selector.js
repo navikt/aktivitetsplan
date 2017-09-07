@@ -30,6 +30,10 @@ export function selectGjeldendeEskaleringsVarsel(state) {
     return selectSituasjonReducer(state).data.gjeldendeEskaleringsvarsel;
 }
 
+export function selectErEskalert(state) {
+    return !!selectGjeldendeEskaleringsVarsel(state);
+}
+
 export function selectTilHorendeDialogId(state) {
     if (selectGjeldendeEskaleringsVarsel(state)) {
         return selectGjeldendeEskaleringsVarsel(state).tilhorendeDialogId;

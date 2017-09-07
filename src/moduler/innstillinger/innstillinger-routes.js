@@ -11,55 +11,75 @@ import SettManuellOppfolging from './sett-manuell-oppfolging/sett-manuell-oppfol
 import SettDigitalOppfolging from './sett-digital-oppfolging/sett-digital-oppfolging';
 import SettManuellOppfolgingKvittering from './sett-manuell-oppfolging/sett-manuell-oppfolging-kvittering';
 import SettDigitalKvittering from './sett-digital-oppfolging/sett-digital-oppfolging-kvittering';
+import StartEskalering from './start-eskalering/start-eskalering';
+import StoppEskalering from './stopp-eskalering/stopp-eskalering';
+import StartEskaleringKvittering from './start-eskalering/start-eskalering-kvittering';
+import StoppEskaleringKvittering from './stopp-eskalering/stopp-eskalering-kvittering';
 import Feilkvittering from './feilkvittering';
 
 function InnstillingerRoutes({ match }) {
+    const path = match.path;
     return (
         <Switch>
-            <Route exact path={`${match.path}/`} component={Prosesser} />
+            <Route exact path={`${path}/`} component={Prosesser} />
             <Route
                 exact
-                path={`${match.path}/manuell`}
+                path={`${path}/manuell`}
                 component={SettManuellOppfolging}
             />
             <Route
-                path={`${match.path}/manuell/kvittering`}
+                path={`${path}/manuell/kvittering`}
                 component={SettManuellOppfolgingKvittering}
             />
             <Route
                 exact
-                path={`${match.path}/digital`}
+                path={`${path}/digital`}
                 component={SettDigitalOppfolging}
             />
             <Route
-                path={`${match.path}/digital/kvittering`}
+                path={`${path}/digital/kvittering`}
                 component={SettDigitalKvittering}
             />
             <Route
                 exact
-                path={`${match.path}/avslutt`}
+                path={`${path}/avslutt`}
                 component={AvsluttOppfolging}
             />
             <Route
-                path={`${match.path}/avslutt/bekreft`}
+                path={`${path}/avslutt/bekreft`}
                 component={BekreftAvsluttOppfolging}
             />
             <Route
-                path={`${match.path}/avslutt/kvittering`}
+                path={`${path}/avslutt/kvittering`}
                 component={AvsluttOppfolgingKvittering}
             />
             <Route
-                path={`${match.path}/start/bekreft`}
+                path={`${path}/start/bekreft`}
                 component={BekreftStartOppfolging}
             />
             <Route
-                path={`${match.path}/start/kvittering`}
+                path={`${path}/start/kvittering`}
                 component={StartOppfolgingKvittering}
             />
             <Route
-                path={`${match.path}/feilkvittering`}
-                component={Feilkvittering}
+                exact
+                path={`${path}/startEskalering`}
+                component={StartEskalering}
             />
+            <Route
+                exact
+                path={`${path}/stoppEskalering`}
+                component={StoppEskalering}
+            />
+            <Route
+                path={`${path}/startEskalering/kvittering`}
+                component={StartEskaleringKvittering}
+            />
+            <Route
+                path={`${path}/stoppEskalering/kvittering`}
+                component={StoppEskaleringKvittering}
+            />
+            <Route path={`${path}/feilkvittering`} component={Feilkvittering} />
         </Switch>
     );
 }

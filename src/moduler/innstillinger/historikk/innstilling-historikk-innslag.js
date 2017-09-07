@@ -67,7 +67,7 @@ class InnstillingHistorikkInnslag extends Component {
         const begrunnelseVisning = () => {
             if ([ESKALERING_STARTET, ESKALERING_STOPPET].includes(type)) {
                 const begrunnelseTekst =
-                    begrunnelse.length > ESKALERING_MAX_LENGTH
+                    !!begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
                         ? `${begrunnelse.substring(
                               0,
                               ESKALERING_MAX_LENGTH
@@ -97,9 +97,7 @@ class InnstillingHistorikkInnslag extends Component {
                 <Element className="innslag__header">
                     <FormattedMessage id={innslagHeaderId} />
                 </Element>
-                <Normaltekst className="innslag__begrunnelse">
-                    {begrunnelseVisning()}
-                </Normaltekst>
+                {begrunnelseVisning()}
                 <Undertekst>
                     <DatoEllerTidSiden>{dato}</DatoEllerTidSiden>
                     &nbsp;
