@@ -1,1 +1,1 @@
-Før du starter prosessen, må du sjekke at bruker har en inaktviv status i Arena. 
+Før du avslutter, må du sjekke at bruker er inaktiv i Arena. 
