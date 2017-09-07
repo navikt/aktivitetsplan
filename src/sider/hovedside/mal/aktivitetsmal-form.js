@@ -8,6 +8,8 @@ import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 import { autobind } from '../../../utils';
 import { STATUS } from '../../../ducks/utils';
 import { oppdaterMal } from '../../../moduler/mal/mal-reducer';
+import { selectMalStatus } from '../../../moduler/mal/mal-selector';
+import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
 
 const MALTEKST_MAKSLENGDE = 500;
 
@@ -28,12 +30,15 @@ class AktivitetsmalForm extends Component {
         this.props.handleComplete();
     }
     render() {
-        const { oppdaterer, handleSubmit } = this.props;
+        const { oppdaterer, handleSubmit, underOppfolging } = this.props;
+        const label = `aktivitetsmal.tekst.label${underOppfolging
+            ? ''
+            : '-privat'}`;
         return (
             <form onSubmit={handleSubmit}>
                 <Textarea
                     feltNavn="mal"
-                    labelId="aktivitetsmal.tekst.label"
+                    labelId={label}
                     maxLength={MALTEKST_MAKSLENGDE}
                     textareaRef={textarea => {
                         this.textarea = textarea;
@@ -70,6 +75,7 @@ AktivitetsmalForm.propTypes = {
     oppdaterer: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     handleComplete: PT.func.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
 const AktivitetsmalReduxForm = validForm({
@@ -79,13 +85,11 @@ const AktivitetsmalReduxForm = validForm({
     },
 })(AktivitetsmalForm);
 
-const mapStateToProps = (state, props) => {
-    const malReducer = state.data.mal;
-    return {
-        initialValues: { mal: props.mal.mal },
-        oppdaterer: malReducer.status === STATUS.RELOADING,
-    };
-};
+const mapStateToProps = (state, props) => ({
+    initialValues: { mal: props.mal.mal },
+    oppdaterer: selectMalStatus(state) === STATUS.RELOADING,
+    underOppfolging: selectErUnderOppfolging(state),
+});
 
 const mapDispatchToProps = () => ({
     onSubmit: (newMal, dispatch, props) => {
