@@ -1,1 +1,1 @@
-Skriv en begrunnelse for hvorfor du avbrøt aktiviteten. Når du flytter aktiviteten til Avbrutt, kan du ikke lenger redigere innholdet.
+Skriv en begrunnelse for hvorfor du avbrøt aktiviteten. Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.
