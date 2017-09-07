@@ -17,7 +17,7 @@ class EndreDialogStatus extends Component {
         const {
             kanEndreDialog,
             venterPaSvar,
-            ferdigBehandlet,
+            ikkeFerdigBehandlet,
             toggleFerdigbehandlet,
             toggleVentePaSvar,
         } = this.props;
@@ -30,7 +30,7 @@ class EndreDialogStatus extends Component {
                     className="endre-dialog__sjekkboks"
                     label={<FormattedMessage id="dialog.ferdigbehandlet" />}
                     onChange={toggleFerdigbehandlet}
-                    checked={ferdigBehandlet}
+                    checked={ikkeFerdigBehandlet}
                 />
                 <Checkbox
                     label={<FormattedMessage id="dialog.venter-pa-svar" />}
@@ -49,7 +49,7 @@ EndreDialogStatus.propTypes = {
     toggleVentePaSvar: PT.func.isRequired,
     kanEndreDialog: PT.bool.isRequired,
     venterPaSvar: PT.bool.isRequired,
-    ferdigBehandlet: PT.bool.isRequired,
+    ikkeFerdigBehandlet: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -59,17 +59,17 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, props) => {
     const dialog = props.dialog;
     const dialogId = dialog.id;
-    const ferdigBehandlet = dialog.ferdigBehandlet;
+    const ikkeFerdigBehandlet = !dialog.ferdigBehandlet;
     const venterPaSvar = dialog.venterPaSvar;
     return {
         doHentIdentitet: () => dispatch(hentIdentitet()),
         toggleFerdigbehandlet: () =>
-            dispatch(oppdaterFerdigbehandlet(dialogId, !ferdigBehandlet)),
+            dispatch(oppdaterFerdigbehandlet(dialogId, !ikkeFerdigBehandlet)),
         toggleVentePaSvar: () =>
             dispatch(oppdaterVenterPaSvar(dialogId, !venterPaSvar)),
 
         venterPaSvar,
-        ferdigBehandlet,
+        ikkeFerdigBehandlet,
     };
 };
 
