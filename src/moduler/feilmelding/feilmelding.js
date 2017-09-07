@@ -15,12 +15,25 @@ import { parseFeil, finnHoyesteAlvorlighetsgrad } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 
+const typer = {
+    [AlertStripeAdvarsel]: 1,
+    [AlertStripeInfoSolid]: 2,
+    [AlertStripeInfo]: 3,
+};
+
+const stripeTyper = {
+    UKJENT: AlertStripeAdvarsel,
+    FINNES_IKKE: AlertStripeAdvarsel,
+    INGEN_TILGANG: AlertStripeInfoSolid,
+    UGYLDIG_REQUEST: AlertStripeInfo,
+};
+
 function FeilStripe({ alertStripe, tekstIds, erVeileder, intl }) {
     const vistekster = window.location.search.indexOf('vistekster') !== -1;
     const Stripe = alertStripe;
     const aktor = erVeileder ? 'veileder' : 'bruker';
     const feilKeys = parseFeil(
-        `feilmelding.type1/${aktor}/${tekstIds}`
+        `feilmelding.type${typer[alertStripe]}/${aktor}/${tekstIds}`
             .replace('/fail', '')
             .replace('/FEILET', '')
             .split('/')
@@ -59,13 +72,6 @@ FeilStripe.propTypes = {
     tekstIds: PT.string,
     erVeileder: PT.bool,
     intl: intlShape.isRequired,
-};
-
-const stripeTyper = {
-    UKJENT: AlertStripeAdvarsel,
-    FINNES_IKKE: AlertStripeAdvarsel,
-    INGEN_TILGANG: AlertStripeInfoSolid,
-    UGYLDIG_REQUEST: AlertStripeInfo,
 };
 
 class Feilmelding extends Component {
