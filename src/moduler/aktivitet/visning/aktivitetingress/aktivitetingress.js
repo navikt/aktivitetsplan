@@ -18,7 +18,6 @@ function AktivitetIngress({ type }) {
 
 AktivitetIngress.propTypes = {
     type: PT.string.isRequired,
-    underOppfolging: PT.bool.isRequired,
 };
 
 export default AktivitetIngress;
