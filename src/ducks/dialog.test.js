@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import { compareDialoger } from './dialog';
+import { sammenlignDialogerForVeileder } from '../moduler/dialog/dialog-selector';
 
 function knuth(array) {
     let currentIndex = array.length;
@@ -57,7 +57,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -94,7 +96,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -131,7 +135,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -168,7 +174,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -205,7 +213,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -439,7 +449,9 @@ describe('dialog sortering på innsiden', () => {
 
         for (let i = 0; i <= 100; i += 1) {
             expect(
-                knuth(dialoger).sort(compareDialoger).every(erIdStorreEnForrige)
+                knuth(dialoger)
+                    .sort(sammenlignDialogerForVeileder)
+                    .every(erIdStorreEnForrige)
             ).to.equal(true);
         }
     });
