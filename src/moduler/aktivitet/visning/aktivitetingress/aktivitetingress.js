@@ -1,30 +1,17 @@
 import React from 'react';
 import PT from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { selectErUnderOppfolging } from '../../../situasjon/situasjon-selector';
-import {
-    EGEN_AKTIVITET_TYPE,
-    IJOBB_AKTIVITET_TYPE,
-} from '../../../../constant';
+import Text from '../../../../text';
 
-function AktivitetIngress({ type, underOppfolging }) {
-    let tekstId = `aktivitetingress.${type}`.toLowerCase();
-    if (
-        [EGEN_AKTIVITET_TYPE, IJOBB_AKTIVITET_TYPE].includes(type) &&
-        !underOppfolging
-    ) {
-        tekstId += '-privat';
-    }
+function AktivitetIngress({ type }) {
     return (
         <section className="aktivitetingress">
-            <FormattedMessage id={tekstId}>
+            <Text id={`aktivitetingress.${type}`.toLowerCase()}>
                 {ingress =>
                     <Tekstomrade className="aktivitetingress__tekst">
                         {ingress}
                     </Tekstomrade>}
-            </FormattedMessage>
+            </Text>
         </section>
     );
 }
@@ -34,8 +21,4 @@ AktivitetIngress.propTypes = {
     underOppfolging: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-    underOppfolging: selectErUnderOppfolging(state),
-});
-
-export default connect(mapStateToProps)(AktivitetIngress);
+export default AktivitetIngress;

@@ -9,7 +9,6 @@ import { autobind } from '../../../utils';
 import { STATUS } from '../../../ducks/utils';
 import { oppdaterMal } from '../../../moduler/mal/mal-reducer';
 import { selectMalStatus } from '../../../moduler/mal/mal-selector';
-import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
 
 const MALTEKST_MAKSLENGDE = 500;
 
@@ -30,15 +29,12 @@ class AktivitetsmalForm extends Component {
         this.props.handleComplete();
     }
     render() {
-        const { oppdaterer, handleSubmit, underOppfolging } = this.props;
-        const label = `aktivitetsmal.tekst.label${underOppfolging
-            ? ''
-            : '-privat'}`;
+        const { oppdaterer, handleSubmit } = this.props;
         return (
             <form onSubmit={handleSubmit}>
                 <Textarea
                     feltNavn="mal"
-                    labelId={label}
+                    labelId="aktivitetsmal.tekst.label"
                     maxLength={MALTEKST_MAKSLENGDE}
                     textareaRef={textarea => {
                         this.textarea = textarea;
@@ -75,7 +71,6 @@ AktivitetsmalForm.propTypes = {
     oppdaterer: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     handleComplete: PT.func.isRequired,
-    underOppfolging: PT.bool.isRequired,
 };
 
 const AktivitetsmalReduxForm = validForm({
@@ -88,7 +83,6 @@ const AktivitetsmalReduxForm = validForm({
 const mapStateToProps = (state, props) => ({
     initialValues: { mal: props.mal.mal },
     oppdaterer: selectMalStatus(state) === STATUS.RELOADING,
-    underOppfolging: selectErUnderOppfolging(state),
 });
 
 const mapDispatchToProps = () => ({
