@@ -114,7 +114,7 @@ describe('utils', () => {
             handterFeil(dispatch, action)({ response });
             setTimeout(() => {
                 expect(dispatch).to.be.calledWith({
-                    data: { type: 'FEILTYPE' },
+                    data: { melding: { type: 'FEILTYPE' }, type: action },
                     type: action,
                 });
                 done();
@@ -125,7 +125,7 @@ describe('utils', () => {
             const error = new Error('message');
             handterFeil(dispatch, action)(error);
             expect(dispatch).to.be.calledWith({
-                data: error.toString(),
+                data: { melding: error.toString(), type: action },
                 type: action,
             });
         });
