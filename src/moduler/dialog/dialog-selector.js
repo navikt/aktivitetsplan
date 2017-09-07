@@ -16,7 +16,8 @@ export function selectHarUbehandledeDialoger(state) {
     return (
         data.filter(
             dialog =>
-                dialog.historisk === false && dialog.ferdigBehandlet === false
+                dialog.historisk === false &&
+                (dialog.ferdigBehandlet === false || dialog.venterPaSvar)
         ).length > 0
     );
 }

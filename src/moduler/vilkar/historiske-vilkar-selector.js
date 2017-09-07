@@ -1,4 +1,4 @@
-import { datoErIPeriode } from '../filter/filter-utils';
+import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 
 function slice(state) {
     return state.data.historiskeVilkar;

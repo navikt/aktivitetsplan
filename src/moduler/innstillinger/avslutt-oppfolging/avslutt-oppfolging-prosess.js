@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import {
     kanAvslutteOppfolging,
@@ -36,16 +36,12 @@ class AvsluttOppfolgingProsess extends Component {
     };
 
     render() {
-        const { avslutningStatus, laster, intl, slettBegrunnelse } = this.props;
+        const { avslutningStatus, laster, slettBegrunnelse } = this.props;
         return (
             <StartProsess
                 className="innstillinger__prosess"
-                tittel={intl.formatMessage({
-                    id: 'innstillinger.prosess.avslutt.tittel',
-                })}
-                knappetekst={intl.formatMessage({
-                    id: 'innstillinger.modal.prosess.start.knapp',
-                })}
+                tittelId="innstillinger.prosess.avslutt.tittel"
+                knappetekstId="innstillinger.modal.prosess.start.knapp"
                 laster={laster}
                 onClick={() => {
                     slettBegrunnelse();
@@ -85,7 +81,6 @@ AvsluttOppfolgingProsess.defaultProps = {
 };
 
 AvsluttOppfolgingProsess.propTypes = {
-    intl: intlShape.isRequired,
     laster: PT.bool.isRequired,
     doKanAvslutteOppfolging: PT.func.isRequired,
     slettBegrunnelse: PT.func.isRequired,
@@ -104,5 +99,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    hiddenIfHoc(injectIntl(AvsluttOppfolgingProsess))
+    hiddenIfHoc(AvsluttOppfolgingProsess)
 );

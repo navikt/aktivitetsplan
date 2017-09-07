@@ -14,7 +14,7 @@ import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
-import { dialogFilter } from '../moduler/filter/filter-utils';
+import { dialogFilter } from '../moduler/filtrering/filter/filter-utils';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
@@ -29,6 +29,7 @@ const Info = visibleIfHOC(({ slash, className, children }) =>
 );
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+
 // eslint-disable-next-line react/prefer-stateless-function
 class DialogVisning extends React.Component {
     render() {
@@ -106,7 +107,7 @@ class DialogVisning extends React.Component {
                     {dialog.sisteTekst}
                 </Normaltekst>
                 <VisibleIfDiv
-                    visible={venterPaSvar && ferdigBehandlet}
+                    visible={venterPaSvar || ferdigBehandlet}
                     className="dialoger__dialog-etiketter"
                 >
                     <Etikett
@@ -185,14 +186,16 @@ function Dialoger({
         <Innholdslaster avhengigheter={[dialogState]}>
             <div className={className} onKeyDown={dialogPiling}>
                 {dialoger.map(d =>
-                    <DialogVisning
-                        key={d.id}
-                        ref={ref => (dialogRefs[d.id] = ref)}
-                        dialog={d}
-                        erTabBar={erTabBar(d)}
-                        erValgt={d === valgtDialog}
-                        aktiviteter={aktiviteter}
-                    />
+                    <section className="dialoger__dialog--section">
+                        <DialogVisning
+                            key={d.id}
+                            ref={ref => (dialogRefs[d.id] = ref)}
+                            dialog={d}
+                            erTabBar={erTabBar(d)}
+                            erValgt={d === valgtDialog}
+                            aktiviteter={aktiviteter}
+                        />
+                    </section>
                 )}
             </div>
         </Innholdslaster>

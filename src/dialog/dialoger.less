@@ -19,10 +19,17 @@
     }
 
     &__dialog {
-        margin: 3px 3px 4px;
-        padding: 0.7rem 1rem 1rem 2rem;
+        padding: 0.4rem 1rem 1rem 2rem;
+        margin-bottom: 0;
+        margin-right: 2px;
         border-radius: 0;
         text-decoration: none;
+        align-items: flex-start;
+
+        &--section {
+            background-color: @gray-background;
+            padding-bottom: 4px;
+        }
 
         &:first-child {
             margin-top: 0;
@@ -31,9 +38,7 @@
         &.lenkepanel {
             .lenkepanel__indikator {
                 transition: none;
-                left: 0;
-                margin-top: 8px;
-                width: 16px;
+                margin-top: 12px;
             }
         }
 
@@ -41,6 +46,11 @@
             min-height: 1.3rem; // alltid reserver plass slik at dialogene blir like høye
             margin-top: 0.3rem;
             font-size: 75%;
+        }
+
+        .typo-element {
+            display: inline-block;
+            border-bottom: 1.5px solid @white;
         }
 
         &-tekst {
@@ -52,31 +62,41 @@
 
         &-henvendelser {
             position: absolute;
-            top: 50%;
+            top: 1.2rem;
             line-height: 0;
             right: 35px;
             font-size: 1rem;
         }
 
         .lenkepanel__heading {
-            width: calc(~'100% - 4rem');
+            width: calc(~'100% - 2.5rem');
         }
 
         // fjerne lenkepanel sin hover-styling
         &:hover {
-            background-color: @navBla;
+            color: @navMorkGra;
+            //padding: ~'calc(0.4rem + 2px)' ~'calc(1rem + 2px)' ~'calc(1rem + 2px)' ~'calc(2rem + 2px)';
+            box-shadow: 1px 1px 3px 0 @navGra60;
 
-            .typo-normal,
-            .typo-element,
-            .typo-undertekst,
-            .lenkepanel__indikator,
-            .dialoger__dialog-henvendelser {
-                color: @white;
+            .typo-element {
+                color: @navBla;
+                border-bottom: 1.5px solid @navBla;
             }
 
             .lenkepanel__heading {
                 text-decoration: none;
             }
+
+            .dialoger__dialog-henvendelser,
+            .lenkepanel__indikator {
+                color: @navBla;
+            }
+        }
+
+        &:focus {
+            box-shadow: none;
+            border: 3px solid @orange-focus;
+            border-bottom-width: 4px;
         }
 
         &:hover,
@@ -86,10 +106,16 @@
 
         &--valgt {
             background-color: @gray-background;
+            border: 3px solid @gray-background;
+            border-bottom-width: 4px;
 
-            &:first-child {
-                margin-top: 3px;
+            .typo-element {
+                border-bottom: 1.5px solid @gray-background;
             }
         }
     }
+}
+
+.lukknapp--overstHjorne {
+    margin-right: 0.1rem;
 }

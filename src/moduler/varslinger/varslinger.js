@@ -10,13 +10,13 @@ import {
     HiddenIfVarslingMedLenke,
 } from './varsel-alertstriper';
 import {
-    selectGjeldendeEskaleringsVarsel,
     selectVilkarMaBesvares,
     selectErUnderOppfolging,
     selectErBrukerManuell,
     selectReservasjonKRR,
     selectSituasjonReducer,
     selectTilHorendeDialogId,
+    selectErEskalert,
 } from '../situasjon/situasjon-selector';
 import {
     selectErBruker,
@@ -71,9 +71,11 @@ class Varslinger extends Component {
                     tekstId="oppfolging.bruker-reservert-i-krr"
                     className="varsling"
                 />
-                <HiddenIfVarsling
+                <HiddenIfVarslingMedLenke
                     hidden={!brukerErEskalert}
                     tekstId="oppfolgning.veileder.bruker-er-eskalert"
+                    lenkeTekstId="oppfolgning.veileder.bruker-er-eskalert.lenke-tekst"
+                    href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
                 />
                 <HiddenIfVarslingMedLenke
@@ -127,7 +129,7 @@ const mapStateToProps = state => ({
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),
     reservertIKRR: selectReservasjonKRR(state),
-    brukerErEskalert: selectGjeldendeEskaleringsVarsel(state),
+    brukerErEskalert: selectErEskalert(state),
     tilhorendeDialogId: selectTilHorendeDialogId(state),
 });
 

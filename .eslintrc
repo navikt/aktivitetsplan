@@ -41,7 +41,8 @@
     "jsx-a11y/role-supports-aria-props": 2,
     "jsx-a11y/tabindex-no-positive": 2,
     "jsx-a11y/no-noninteractive-tabindex" : "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "no-bitwise": [ "error", {"allow" : ["^"]} ]
   },
   "extends": "airbnb",
   "plugins": [

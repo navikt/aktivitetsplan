@@ -2,27 +2,19 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
 import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
-function SettDigitalOppfolgingProsess({
-    intl,
-    slettBegrunnelse,
-    reservasjonKRR,
-}) {
+function SettDigitalOppfolgingProsess({ slettBegrunnelse, reservasjonKRR }) {
     return (
         <StartProsess
             className="innstillinger__prosess"
-            tittel={intl.formatMessage({
-                id: 'innstillinger.prosess.digital.tittel',
-            })}
-            knappetekst={intl.formatMessage({
-                id: 'innstillinger.modal.prosess.start.knapp',
-            })}
+            tittelId="innstillinger.prosess.digital.tittel"
+            knappetekstId="innstillinger.modal.prosess.start.knapp"
             disabled={reservasjonKRR}
             onClick={() => slettBegrunnelse()}
         >
@@ -43,7 +35,6 @@ SettDigitalOppfolgingProsess.defaultProps = {
 };
 
 SettDigitalOppfolgingProsess.propTypes = {
-    intl: intlShape.isRequired,
     slettBegrunnelse: PT.func.isRequired,
     reservasjonKRR: PT.bool,
 };
@@ -60,5 +51,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    hiddenIfHoc(injectIntl(SettDigitalOppfolgingProsess))
+    hiddenIfHoc(SettDigitalOppfolgingProsess)
 );

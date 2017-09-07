@@ -11,7 +11,7 @@ import Feature, {
 } from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../../ducks/dialog';
-import { dialogFilter } from '../../../moduler/filter/filter-utils';
+import { dialogFilter } from '../../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-reducer';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import { selectErPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
@@ -21,13 +21,17 @@ import {
     selectArbeidslisteReducer,
 } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../../proptypes';
-import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
+import {
+    selectErUnderOppfolging,
+    selectVilkarMaBesvares,
+} from '../../../moduler/situasjon/situasjon-selector';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
     selectViserHistoriskPeriode,
     selectViserInneverendePeriode,
-} from '../../../moduler/filter/filter-selector';
+} from '../../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
+import history from '../../../history';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -68,6 +72,16 @@ NavigasjonsElement.propTypes = {
 
 const navigasjonslinjemenyFeature = 'navigasjonslinjemeny';
 
+const InnstillingerKnapp = () =>
+    <FormattedMessage id="navigasjon.innstillinger">
+        {label =>
+            <button
+                className="navigasjonslinje-meny__innstillinger-knapp"
+                aria-label={label}
+                onClick={() => history.push('/innstillinger')}
+            />}
+    </FormattedMessage>;
+
 class Navigasjonslinje extends Component {
     componentDidMount() {
         const { doHentDialog, doHentArbeidsliste } = this.props;
@@ -81,7 +95,9 @@ class Navigasjonslinje extends Component {
         const {
             antallUlesteDialoger,
             arbeidslisteReducer,
-            harVeilederTilgang,
+            harVeilederTilgangTilArbeidsliste,
+            vilkarMaBesvares,
+            erBruker,
             disabled,
             kanHaDialog,
         } = this.props;
@@ -104,17 +120,23 @@ class Navigasjonslinje extends Component {
                 <NavigasjonsElement
                     sti="/vilkar"
                     tekstId="navigasjon.vilkar"
-                    disabled={disabled}
+                    disabled={disabled || (!erBruker && vilkarMaBesvares)}
                 />
                 <Feature name={navigasjonslinjemenyFeature}>
-                    <Innholdslaster
-                        avhengigheter={[arbeidslisteReducer]}
-                        spinnerStorrelse="xs"
-                    >
-                        <NavigasjonslinjeMeny
-                            harVeilederTilgang={harVeilederTilgang}
-                        />
-                    </Innholdslaster>
+                    <div className="navigasjonslinje__verktoy">
+                        <Innholdslaster
+                            avhengigheter={[arbeidslisteReducer]}
+                            spinnerStorrelse="xs"
+                            className="navigasjonslinje__spinner"
+                        >
+                            <NavigasjonslinjeMeny
+                                harVeilederTilgangTilArbeidsliste={
+                                    harVeilederTilgangTilArbeidsliste
+                                }
+                            />
+                        </Innholdslaster>
+                        <InnstillingerKnapp />
+                    </div>
                 </Feature>
             </nav>
         );
@@ -127,12 +149,16 @@ Navigasjonslinje.propTypes = {
     doHentArbeidsliste: PT.func.isRequired,
     arbeidslisteReducer: AppPT.reducer.isRequired,
     kanHaDialog: PT.bool.isRequired,
-    harVeilederTilgang: PT.bool,
+    harVeilederTilgangTilArbeidsliste: PT.bool,
     disabled: PT.bool.isRequired,
+    vilkarMaBesvares: PT.bool.isRequired,
+    erBruker: PT.bool.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
-    harVeilederTilgang: false,
+    harVeilederTilgangTilArbeidsliste: false,
+    vilkarMaBesvares: true,
+    erBruker: true,
 };
 
 const mapStateToProps = state => {
@@ -146,7 +172,9 @@ const mapStateToProps = state => {
         privatModus: selectErPrivatModus(state),
         underOppfolging: stateData.situasjon.data.underOppfolging,
         arbeidslisteReducer: selectArbeidslisteReducer(state),
-        harVeilederTilgang: selectHarVeilederTilgang(state),
+        harVeilederTilgangTilArbeidsliste: selectHarVeilederTilgang(state),
+        vilkarMaBesvares: selectVilkarMaBesvares(state),
+        erBruker: selectErBruker(state),
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
         disabled:
             !selectErBruker(state) &&

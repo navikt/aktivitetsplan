@@ -1,9 +1,10 @@
-import { selectHistoriskeOppfolgingsPerioder } from '../situasjon/situasjon-selector';
+import { selectHistoriskeOppfolgingsPerioder } from '../../situasjon/situasjon-selector';
 import {
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
     selectHistoriskPeriode,
     selectAktivitetStatusFilter,
+    selectAktivitetAvtaltMedNavFilter,
 } from './filter-selector';
 
 function erAktivtFilter(filterData) {
@@ -45,6 +46,24 @@ export function aktivitetFilter(aktivitet, state) {
         !aktivitetStatusFilter[aktivitet.status]
     ) {
         return false;
+    }
+
+    const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(
+        state
+    );
+
+    const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.avtaltMedNav;
+    const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav;
+    const avtalt = aktivitet.avtalt;
+    const aktivtAvtaltFilter = avtaltMedNavFilter ^ ikkeAvtaltMedNavFilter;
+
+    if (aktivtAvtaltFilter) {
+        if (
+            (avtaltMedNavFilter && !avtalt) ||
+            (ikkeAvtaltMedNavFilter && avtalt)
+        ) {
+            return false;
+        }
     }
 
     return datoErIPeriode(aktivitet.opprettetDato, state);

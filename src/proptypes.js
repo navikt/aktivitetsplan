@@ -30,7 +30,7 @@ export const dialog = PT.shape({
     overskrift: PT.string.isRequired,
     aktivitetId: PT.string,
     lest: PT.bool,
-    sisteDato: PT.number,
+    sisteDato: PT.string,
     sisteTekst: PT.string,
     henvendelser: PT.arrayOf(henvendelse).isRequired,
 });
@@ -67,6 +67,15 @@ export const avslutningStatus = PT.shape({
     inaktiveringsDato: PT.string,
 });
 
+export const eskaleringsvarsel = PT.shape({
+    varselId: PT.number,
+    aktorId: PT.string,
+    opprettetAv: PT.string,
+    opprettetDato: PT.string,
+    avsluttetDato: PT.string,
+    tilhorendeDialogId: PT.number,
+});
+
 export const situasjon = PT.shape({
     status: PT.string,
     brukerHarAvslatt: PT.bool,
@@ -78,6 +87,7 @@ export const situasjon = PT.shape({
         underOppfolging: PT.bool,
         vilkarMaBesvares: PT.bool,
         oppfolgingUtgang: PT.string,
+        gjeldendeEkskaleringsvarsel: eskaleringsvarsel,
         kanStarteOppfolging: PT.bool,
         avslutningStatus,
         oppfolgingsPerioder: PT.arrayOf(PT.object),
@@ -124,6 +134,7 @@ export const innstillingHistorikk = PT.shape({
     type: PT.string.isRequired,
     opprettetAvBrukerId: PT.string,
     opprettetAv: PT.string,
+    dialogId: PT.number,
 });
 
 export const veileder = PT.shape({

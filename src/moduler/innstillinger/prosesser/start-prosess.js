@@ -3,12 +3,13 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
+import { FormattedMessage } from 'react-intl';
 
 const cls = classes => classNames('prosess', classes);
 
 function Prosess({
-    tittel,
-    knappetekst,
+    tittelId,
+    knappetekstId,
     onClick,
     laster,
     disabled,
@@ -18,7 +19,7 @@ function Prosess({
     return (
         <article className={cls(className)}>
             <Undertittel className="prosess_overskrift">
-                {tittel}
+                <FormattedMessage id={tittelId} />
             </Undertittel>
             {children}
             <Knapp
@@ -28,7 +29,7 @@ function Prosess({
                 disabled={disabled}
                 onClick={onClick}
             >
-                {knappetekst}
+                <FormattedMessage id={knappetekstId} />
             </Knapp>
         </article>
     );
@@ -41,8 +42,8 @@ Prosess.defaultProps = {
 };
 
 Prosess.propTypes = {
-    tittel: PT.string.isRequired,
-    knappetekst: PT.string.isRequired,
+    tittelId: PT.string.isRequired,
+    knappetekstId: PT.string.isRequired,
     onClick: PT.func.isRequired,
     laster: PT.bool,
     className: PT.string,

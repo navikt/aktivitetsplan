@@ -1,0 +1,46 @@
+@import 'filteringslabel/filtrering-label';
+
+.filter {
+    margin-left: 1rem;
+
+    &__innhold {
+        width: 400px;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        padding: 1rem 1.5rem 0.8rem 0.5rem;
+    }
+
+    &__overskrift {
+        margin: 1rem 0;
+    }
+
+    &__tittel {
+        margin-bottom: 0.5rem;
+        font-size: 1.125rem;
+    }
+}
+
+.filter-dropdown__innhold {
+    width: auto;
+
+    .skjemaelement__label {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: @screen-md-min) {
+    .filter-dropdown__innhold,
+    .filter {
+        width: 100%;
+
+        &__container {
+            display: block;
+            margin-top: 1rem;
+            margin-left: 1rem;
+        }
+    }
+}

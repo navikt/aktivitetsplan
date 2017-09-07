@@ -30,3 +30,4 @@ export const div = hoc('div');
 export const span = hoc('span');
 export const hr = hoc('hr');
 export const section = hoc('section');
+export const button = hoc('button');

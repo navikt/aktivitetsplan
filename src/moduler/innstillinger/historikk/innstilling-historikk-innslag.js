@@ -6,10 +6,15 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
 import { hentVeileder } from '../../../ducks/veileder';
 import * as AppPT from '../../../proptypes';
+import Lenke from '../../../felles-komponenter/utils/lenke';
 
 const NAV = 'NAV';
 const SYSTEM = 'SYSTEM';
 const EKSTERN = 'EKSTERN';
+
+const ESKALERING_STOPPET = 'ESKALERING_STOPPET';
+const ESKALERING_STARTET = 'ESKALERING_STARTET';
+const ESKALERING_MAX_LENGTH = 120;
 
 class InnstillingHistorikkInnslag extends Component {
     componentWillMount() {
@@ -50,18 +55,49 @@ class InnstillingHistorikkInnslag extends Component {
     }
 
     render() {
-        const { type, dato, begrunnelse } = this.props.innstillingHistorikk;
+        const {
+            type,
+            dato,
+            begrunnelse,
+            dialogId,
+        } = this.props.innstillingHistorikk;
         const tekstType = type.replace(/_/g, '-').toLowerCase();
         const innslagHeaderId = `innstillinger.historikk.innslag.${tekstType}`;
+
+        const begrunnelseVisning = () => {
+            if ([ESKALERING_STARTET, ESKALERING_STOPPET].includes(type)) {
+                const begrunnelseTekst =
+                    !!begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
+                        ? `${begrunnelse.substring(
+                              0,
+                              ESKALERING_MAX_LENGTH
+                          )}... `
+                        : `${begrunnelse} `;
+                return (
+                    <Normaltekst className="innslag__begrunnelse">
+                        {begrunnelseTekst}
+                        <Lenke href={`/dialog/${dialogId}`}>
+                            <FormattedMessage
+                                id={'innstillinger.historikk.innslag.les_mer'}
+                            />
+                        </Lenke>
+                    </Normaltekst>
+                );
+            }
+
+            return (
+                <Normaltekst className="innslag__begrunnelse">
+                    {begrunnelse}
+                </Normaltekst>
+            );
+        };
 
         return (
             <div className="historikk__innslag">
                 <Element className="innslag__header">
                     <FormattedMessage id={innslagHeaderId} />
                 </Element>
-                <Normaltekst className="innslag__begrunnelse">
-                    {begrunnelse}
-                </Normaltekst>
+                {begrunnelseVisning()}
                 <Undertekst>
                     <DatoEllerTidSiden>{dato}</DatoEllerTidSiden>
                     &nbsp;

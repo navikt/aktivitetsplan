@@ -3,7 +3,7 @@ import {
     selectPrivatModusSlice,
     selectErPrivatModus,
 } from '../privat-modus/privat-modus-selector';
-import { aktivitetFilter } from '../filter/filter-utils';
+import { aktivitetFilter } from '../filtrering/filter/filter-utils';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import {
     MOTE_TYPE,
@@ -13,15 +13,20 @@ import {
 } from '../../constant';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 
+export function selectAktiviter(state) {
+    const stateData = state.data;
+    return stateData.aktiviteter.data;
+}
+
 export function selectAlleAktiviter(state) {
     const stateData = state.data;
-    return stateData.aktiviteter.data.concat(stateData.arenaAktiviteter.data);
+    return selectAktiviter(state).concat(stateData.arenaAktiviteter.data);
 }
 
 export function selectAktivitetListe(state) {
     const privatModus = selectErPrivatModus(state);
     return selectAlleAktiviter(state)
-        .filter(a => !privatModus || a.historisk)
+        .filter(a => !privatModus || a.historisk || a.arenaAktivitet)
         .filter(a => aktivitetFilter(a, state));
 }
 
