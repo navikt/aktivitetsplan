@@ -18,7 +18,8 @@ import { selectGjeldendeEskaleringsVarsel } from '../moduler/situasjon/situasjon
 class Dialoger extends React.Component {
     componentWillMount() {
         const dialogSammenligner = dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
-            this.props.gjeldendeEskaleringsvarsel.tilhorendeDialogId,
+            this.props.gjeldendeEskaleringsvarsel &&
+                this.props.gjeldendeEskaleringsvarsel.tilhorendeDialogId,
             this.props.erBruker
         );
         this.dialogIderSortert = [...this.props.dialoger]
