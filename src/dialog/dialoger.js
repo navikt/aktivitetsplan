@@ -112,7 +112,9 @@ class DialogVisning extends React.Component {
                     {dialog.sisteTekst}
                 </Normaltekst>
                 <VisibleIfDiv
-                    visible={venterPaSvar || ferdigBehandlet}
+                    visible={
+                        venterPaSvar || ferdigBehandlet || eskaleringsDialog
+                    }
                     className="dialoger__dialog-etiketter"
                 >
                     <Etikett
