@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -189,26 +189,20 @@ DialogModalContent.defaultProps = {
     valgtAktivitetId: undefined,
 };
 
-// eslint-disable-next-line react/prefer-stateless-function
-class DialogModal extends Component {
-    render() {
-        const props = this.props;
+function DialogModal({ harNyDialogEllerValgtDialog, ...rest }) {
+    const className = classNames('dialog-modal', {
+        'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
+    });
 
-        const { harNyDialogEllerValgtDialog } = props;
-        const className = classNames('dialog-modal', {
-            'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
-        });
-
-        return (
-            <Modal
-                className={className}
-                contentClass="aktivitetsplanfs dialog-modal__content"
-                header={<Header {...props} />}
-            >
-                <DialogModalContent {...props} />
-            </Modal>
-        );
-    }
+    return (
+        <Modal
+            className={className}
+            contentClass="aktivitetsplanfs dialog-modal__content"
+            header={<Header {...rest} />}
+        >
+            <DialogModalContent {...rest} />
+        </Modal>
+    );
 }
 
 DialogModal.propTypes = {
