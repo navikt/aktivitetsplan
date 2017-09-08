@@ -127,7 +127,7 @@ class DialogVisning extends React.Component {
                     />
                     <Etikett
                         visible={eskaleringsDialog}
-                        id="dialog.eskalerings-melding"
+                        id="dialog.eskalert-melding"
                         etikett={DIALOG_ESKALERING}
                     />
                 </VisibleIfDiv>
