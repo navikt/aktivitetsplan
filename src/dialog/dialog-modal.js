@@ -205,8 +205,22 @@ function DialogModal({ harNyDialogEllerValgtDialog, ...rest }) {
     );
 }
 
+DialogModal.defaultProps = {
+    valgtAktivitetId: null,
+    navnPaMotpart: null,
+    valgtDialog: null,
+    harNyDialog: null,
+};
+
 DialogModal.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
+    harNyDialog: PT.bool,
+    valgtDialog: AppPT.dialog.isRequired,
+    harValgtDialog: PT.bool.isRequired,
+    valgtAktivitetId: PT.number,
+    motpart: AppPT.motpart.isRequired,
+    navnPaMotpart: PT.string,
+    historiskVisning: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => {

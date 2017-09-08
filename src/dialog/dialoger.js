@@ -95,15 +95,17 @@ class Dialoger extends React.Component {
 
 Dialoger.defaultProps = {
     gjeldendeEskaleringsvarsel: undefined,
+    erBruker: undefined,
+    avhengigheter: undefined,
 };
 
 Dialoger.propTypes = {
     className: PT.string,
-    avhengigheter: AppPT.avhengigheter.isRequired,
+    avhengigheter: AppPT.avhengigheter,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
     valgtDialog: AppPT.dialog,
-    erBruker: PT.bool.isRequired,
+    erBruker: PT.bool,
     gjeldendeEskaleringsvarsel: AppPT.eskaleringsvarsel,
 };
 
