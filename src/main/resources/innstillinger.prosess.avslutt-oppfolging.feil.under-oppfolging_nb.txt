@@ -1,1 +1,1 @@
-Bruker er under oppfølging i arena
+Brukeren har en aktiv status i Arena.

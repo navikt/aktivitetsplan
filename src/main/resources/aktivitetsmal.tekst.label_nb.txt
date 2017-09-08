@@ -1,1 +1,4 @@
-Målet du legger inn her vil bare være synlig for deg og NAV.
+{underOppfolging, select,
+true { Målet du legger inn her vil bare være synlig for deg og NAV. }
+false { Legg inn dine mål og delmål som jobbsøker }
+}

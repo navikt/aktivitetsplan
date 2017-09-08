@@ -1,1 +1,1 @@
-Innstillinger for {navn}
+Oppfølging av {navn}

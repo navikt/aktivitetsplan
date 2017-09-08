@@ -1,2 +1,2 @@
-Manuell oppfølging er aktivert.
+Endring til manuell oppfølging er gjennomført.
 Begrunnelse: {begrunnelse}
