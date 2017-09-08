@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { CustomField } from 'react-redux-form-validation';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
+import Text from '../../../text';
 
 function getTellerTekst(antallTegn, maxLength, visTellerFra) {
     const tegnIgjen = maxLength - antallTegn;
@@ -47,7 +48,7 @@ function InnerTextAreaComponent({
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"
-            label={labelId && <FormattedMessage id={labelId} />}
+            label={labelId && <Text id={labelId} />}
             maxLength={maxLength}
             feil={feil}
             placeholder={placeholder}
