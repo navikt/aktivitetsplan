@@ -1,6 +1,5 @@
 import * as Api from './api';
 import { doThenDispatch, STATUS } from './utils';
-import { datoComparator } from '../utils';
 
 // Actions
 export const HENTER = 'dialog/hent';
@@ -18,9 +17,6 @@ export const DIALOG_LEST_FEILET = 'dialog/lest/fail';
 export const OPPDATER_DIALOG = 'dialog/oppdater';
 export const OPPDATER_DIALOG_OK = 'dialog/oppdater/ok';
 export const OPPDATER_DIALOG_FEILET = 'dialog/oppdater/fail';
-
-export const SORTER_DIALOGER_TYPE = 'dialog/sorter';
-export const SORTER_DIALOGER = { type: SORTER_DIALOGER_TYPE };
 
 const initalState = {
     status: STATUS.NOT_STARTED,
@@ -40,32 +36,17 @@ function nyStateMedOppdatertDialog(state, dialog) {
     return { ...state, status: STATUS.OK, data: nyData };
 }
 
-export function compareDialoger(a, b) {
-    if (a.ferdigBehandlet !== b.ferdigBehandlet) {
-        return a.ferdigBehandlet ? 1 : -1;
-    } else if (a.venterPaSvar !== b.venterPaSvar) {
-        return a.venterPaSvar ? 1 : -1;
-    } else if (a.lest !== b.lest) {
-        return a.lest ? 1 : -1;
-    }
-    return datoComparator(b.sisteDato, a.sisteDato);
-}
-
 // Reducer
 export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
         case OPPRETTER_HENVENDELSE:
             return { ...state, status: STATUS.RELOADING };
-        case SORTER_DIALOGER_TYPE:
-            return { ...state, data: [...state.data].sort(compareDialoger) };
         case HENTET:
-            // Tilsynelatende litt rart å sortere dialogene her, men det støtter opp under krav om at
-            // en dialog ikke skal endre plass i lista unntatt ved full innlastning av lista
             return {
                 ...state,
                 status: STATUS.OK,
-                data: data.sort(compareDialoger),
+                data,
             };
         case HENTING_FEILET:
         case OPPRETT_HENVENDELSE_FEILET:
