@@ -2,6 +2,7 @@ import * as Api from '../situasjon/situasjon-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 import { nyHenvendelse } from '../../ducks/dialog';
 import { hentSituasjon } from '../situasjon/situasjon';
+import history from '../../history';
 
 // Actions
 export const HENT_SITUASJON_OK = 'innstillinger/hent-situasjon/OK';
@@ -169,7 +170,13 @@ function startEskaleringMedDialog(dialogId, begrunnelse) {
 export function startEskalering(eskaleringData) {
     const begrunnelse = eskaleringData.begrunnelse;
     return dispatch =>
-        dispatch(nyHenvendelse({ ...eskaleringData, tekst: begrunnelse }))
+        dispatch(
+            nyHenvendelse({
+                ...eskaleringData,
+                tekst: begrunnelse,
+                egenskaper: ['ESKALERINGSVARSEL'],
+            })
+        )
             .then(henvendelse =>
                 dispatch(
                     startEskaleringMedDialog(henvendelse.data.id, begrunnelse)
@@ -192,7 +199,13 @@ function stoppEskaleringMedBegrunnelse(begrunnelse) {
 export function stoppEskalering(stoppEskaleringData) {
     const begrunnelse = stoppEskaleringData.begrunnelse;
     return dispatch =>
-        dispatch(nyHenvendelse({ ...stoppEskaleringData, tekst: begrunnelse }))
+        dispatch(
+            nyHenvendelse({
+                ...stoppEskaleringData,
+                tekst: begrunnelse,
+                egenskaper: ['ESKALERINGSVARSEL'],
+            })
+        )
             .then(dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
             .then(() => dispatch(hentSituasjon()))
             .then(() =>

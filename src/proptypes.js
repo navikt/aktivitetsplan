@@ -33,6 +33,7 @@ export const dialog = PT.shape({
     sisteDato: PT.string,
     sisteTekst: PT.string,
     henvendelser: PT.arrayOf(henvendelse).isRequired,
+    egenskaper: PT.arrayOf(PT.string),
 });
 
 export const etikett = PT.shape({
