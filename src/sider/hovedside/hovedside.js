@@ -23,8 +23,8 @@ function Hovedside({ children }) {
                         <VisaValgtFilter />
                     </Container>
                     <AktivitetsTavle />
+                    <FooterInfo />
                 </OppfolgingStatus>
-                <FooterInfo />
             </div>
             {children}
         </div>
