@@ -8,13 +8,17 @@ import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
 import history from '../history';
-import { DIALOG_FERDIGBEHANDLET, DIALOG_MA_BESVARES } from '../constant';
+import {
+    DIALOG_ESKALERING,
+    DIALOG_FERDIGBEHANDLET,
+    DIALOG_MA_BESVARES,
+} from '../constant';
 import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Etikett from '../felles-komponenter/aktivitet-etikett';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
-import { dialogFilter } from '../moduler/filtrering/filter/filter-utils';
+import { selectAktuellaDialoger } from '../moduler/dialog/dialog-selector';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
@@ -37,7 +41,8 @@ class DialogVisning extends React.Component {
 
         const venterPaSvar = dialog.venterPaSvar;
         const ferdigBehandlet = dialog.ferdigBehandlet;
-
+        const eskaleringsDialog =
+            dialog.egenskaper.indexOf('ESKALERINGSVARSEL') > -1;
         const dialogCls = (valgt, ulest) =>
             classNames('dialoger__dialog', {
                 'dialoger__dialog--valgt': valgt,
@@ -119,6 +124,11 @@ class DialogVisning extends React.Component {
                         visible={ferdigBehandlet}
                         id="dialog.ferdigbehandlet"
                         etikett={DIALOG_FERDIGBEHANDLET}
+                    />
+                    <Etikett
+                        visible={eskaleringsDialog}
+                        id="dialog.eskalerings-melding"
+                        etikett={DIALOG_ESKALERING}
                     />
                 </VisibleIfDiv>
                 <div className="dialoger__dialog-henvendelser">
@@ -217,7 +227,7 @@ Dialoger.defaultProps = {
 
 const mapStateToProps = state => {
     const dialogState = state.data.dialog;
-    const dialoger = dialogState.data.filter(d => dialogFilter(d, state));
+    const dialoger = selectAktuellaDialoger(state);
     return {
         dialogState,
         dialoger,

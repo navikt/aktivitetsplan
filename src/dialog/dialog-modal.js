@@ -19,6 +19,7 @@ import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
 import { SORTER_DIALOGER } from '../ducks/dialog';
+import DialogFilter from './filter-dialoger';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
@@ -92,6 +93,7 @@ function VenstreKolonne({
                     <FormattedMessage id="dialog.modal.ny-dialog" />
                 </Knappelenke>
             </HideableSection>
+            <DialogFilter />
             <Dialoger
                 className="dialog-modal__dialoger"
                 valgtDialog={valgtDialog}

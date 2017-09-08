@@ -20,12 +20,15 @@ export const OPPDATER_DIALOG_OK = 'dialog/oppdater/ok';
 export const OPPDATER_DIALOG_FEILET = 'dialog/oppdater/fail';
 
 export const SORTER_DIALOGER_TYPE = 'dialog/sorter';
+export const ESKALERINGS_FILTER_TYPE = 'dialog/eskaleringsfilter';
 export const SORTER_DIALOGER = { type: SORTER_DIALOGER_TYPE };
+export const ESKALERINGS_FILTER = { type: ESKALERINGS_FILTER_TYPE };
 
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
     sisteHenvendelseData: null,
+    esklaringsFilter: false,
 };
 
 function nyStateMedOppdatertDialog(state, dialog) {
@@ -66,6 +69,11 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 status: STATUS.OK,
                 data: data.sort(compareDialoger),
+            };
+        case ESKALERINGS_FILTER_TYPE:
+            return {
+                ...state,
+                esklaringsFilter: !state.esklaringsFilter,
             };
         case HENTING_FEILET:
         case OPPRETT_HENVENDELSE_FEILET:
