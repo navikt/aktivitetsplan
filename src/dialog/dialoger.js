@@ -11,29 +11,18 @@ import {
 import DialogVisning from './dialog-visning';
 import { selectAlleAktiviter } from '../moduler/aktivitet/aktivitetliste-selector';
 import { selectErBruker } from '../moduler/identitet/identitet-selector';
-import {
-    sammenlignDialogerForBruker,
-    sammenlignDialogerForVeileder,
-} from './dialog-utils';
+import { dialogSammenlingnerMedTilhorendeDialogIdOgErBruker } from './dialog-utils';
 import { selectGjeldendeEskaleringsVarsel } from '../moduler/situasjon/situasjon-selector';
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-
 class Dialoger extends React.Component {
     componentWillMount() {
+        const dialogSammenligner = dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
+            this.props.gjeldendeEskaleringsvarsel.tilhorendeDialogId,
+            this.props.erBruker
+        );
         this.dialogIderSortert = [...this.props.dialoger]
-            .sort((a, b) => {
-                const tilhorendeDialogId = this.props.gjeldendeEskaleringsvarsel
-                    .tilhorendeDialogId;
-                if (tilhorendeDialogId === parseInt(a.id, 10)) {
-                    return -1;
-                } else if (tilhorendeDialogId === parseInt(b.id, 10)) {
-                    return 1;
-                }
-                return this.props.erBruker
-                    ? sammenlignDialogerForBruker(a, b)
-                    : sammenlignDialogerForVeileder(a, b);
-            })
+            .sort(dialogSammenligner)
             .map(dialog => dialog.id);
     }
 

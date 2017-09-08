@@ -21,3 +21,21 @@ export function sammenlignDialogerForVeileder(a, b) {
     }
     return datoComparator(b.sisteDato, a.sisteDato);
 }
+
+export function dialogSammenligner(a, b, tilhorendeDialogId, erBruker) {
+    if (tilhorendeDialogId === parseInt(a.id, 10)) {
+        return -1;
+    } else if (tilhorendeDialogId === parseInt(b.id, 10)) {
+        return 1;
+    }
+    return erBruker
+        ? sammenlignDialogerForBruker(a, b)
+        : sammenlignDialogerForVeileder(a, b);
+}
+
+export function dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
+    tilhorendeDialogId,
+    erBruker
+) {
+    return (a, b) => dialogSammenligner(a, b, tilhorendeDialogId, erBruker);
+}
