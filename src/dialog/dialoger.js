@@ -70,6 +70,7 @@ class DialogVisning extends React.Component {
             );
         }
 
+        const ikkeFerdigbehandlet = !ferdigBehandlet;
         return (
             <Lenkepanel
                 tabIndex={erTabBar ? '0' : '-1'}
@@ -107,7 +108,7 @@ class DialogVisning extends React.Component {
                     {dialog.sisteTekst}
                 </Normaltekst>
                 <VisibleIfDiv
-                    visible={venterPaSvar || !ferdigBehandlet}
+                    visible={venterPaSvar || ikkeFerdigbehandlet}
                     className="dialoger__dialog-etiketter"
                 >
                     <Etikett
@@ -116,8 +117,8 @@ class DialogVisning extends React.Component {
                         etikett={DIALOG_MA_BESVARES}
                     />
                     <Etikett
-                        visible={!ferdigBehandlet}
-                        id="dialog.ferdigbehandlet"
+                        visible={ikkeFerdigbehandlet}
+                        id="dialog.ikke-ferdigbehandlet"
                         etikett={DIALOG_IKKE_FERDIGBEHANDLET}
                     />
                 </VisibleIfDiv>
