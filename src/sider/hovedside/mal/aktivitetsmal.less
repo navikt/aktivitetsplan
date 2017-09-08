@@ -56,12 +56,20 @@
             white-space: pre-wrap;
         }
     }
+
+    & .skjemaelement__label {
+        .blokk-s();
+    }
+
+    & .skjemaelement.textarea--container {
+        .blokk-m();
+    }
 }
 
 @media (min-width: @screen-md-min) {
     .aktivitetmal {
         &__innhold {
-            padding: 1rem 2rem;
+            padding: 1rem 2rem 2rem 2rem;
         }
     }
 }
