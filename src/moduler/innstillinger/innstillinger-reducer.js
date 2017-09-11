@@ -184,7 +184,7 @@ export function startEskalering(eskaleringData) {
         )
             .then(henvendelse => {
                 const dialogId = henvendelse.data.id;
-                dispatch(oppdaterVenterPaSvar(dialogId), true);
+                dispatch(oppdaterVenterPaSvar(dialogId, true));
                 dispatch(oppdaterFerdigbehandlet(dialogId, true));
                 dispatch(startEskaleringMedDialog(dialogId, begrunnelse));
             })
