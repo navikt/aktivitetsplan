@@ -29,37 +29,53 @@ const ADRESSE_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 const FORBEREDELSER_MAKS_LENGDE = 500;
 
-const pakrevdTittel = pakrevd('mote-aktivitet-form.feilmelding.pakrevd-tittel');
+function erAvtaltFunc(verdi, props) {
+    return !!props.avtalt;
+}
+
+const pakrevdTittel = pakrevd(
+    'mote-aktivitet-form.feilmelding.pakrevd-tittel'
+).hvisIkke(erAvtaltFunc);
+
 const begrensetTittelLengde = maksLengde(
     'mote-aktivitet-form.feilmelding.tittel-lengde',
     TITTEL_MAKS_LENGDE
-);
+).hvisIkke(erAvtaltFunc);
+
 const pakrevdFraDato = pakrevd('mote-aktivitet-form.feilmelding.pakrevd-dato');
+
 const pakrevdVarighet = pakrevd(
     'mote-aktivitet-form.feilmelding.pakrevd-varighet'
 );
 const pakrevdKlokkeslett = pakrevd(
     'mote-aktivitet-form.feilmelding.pakrevd-klokkeslett'
 );
-const pakrevdKanal = pakrevd('mote-aktivitet-form.feilmelding.pakrevd-kanal');
+const pakrevdKanal = pakrevd(
+    'mote-aktivitet-form.feilmelding.pakrevd-kanal'
+).hvisIkke(erAvtaltFunc);
+
 const pakrevdAdresse = pakrevd(
     'mote-aktivitet-form.feilmelding.pakrevd-adresse'
 );
+
 const begrensetAdresseLengde = maksLengde(
     'mote-aktivitet-form.feilmelding.adresse-lengde',
     ADRESSE_MAKS_LENGDE
-);
+).hvisIkke(erAvtaltFunc);
+
 const begrensetBeskrivelseLengde = maksLengde(
     'mote-aktivitet-form.feilmelding.beskrivelse-lengde',
     BESKRIVELSE_MAKS_LENGDE
-);
+).hvisIkke(erAvtaltFunc);
+
 const pakrevForberedelse = pakrevd(
     'mote-aktivitet-form.feilmelding.pakrevd-forberedelser'
-);
+).hvisIkke(erAvtaltFunc);
+
 const begrensetForberedelserLengde = maksLengde(
     'mote-aktivitet-form.feilmelding.forberedelser-lengde',
     FORBEREDELSER_MAKS_LENGDE
-);
+).hvisIkke(erAvtaltFunc);
 
 const tidspunkter = Array.from(new Array(53)).map((noValue, index) => {
     const minutter = index * 15 + 7 * 60;
