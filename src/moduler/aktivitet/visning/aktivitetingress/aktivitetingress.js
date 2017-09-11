@@ -1,17 +1,17 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import Text from '../../../../text';
 
 function AktivitetIngress({ type }) {
     return (
         <section className="aktivitetingress">
-            <FormattedMessage id={`aktivitetingress.${type}`.toLowerCase()}>
+            <Text id={`aktivitetingress.${type}`.toLowerCase()}>
                 {ingress =>
                     <Tekstomrade className="aktivitetingress__tekst">
                         {ingress}
                     </Tekstomrade>}
-            </FormattedMessage>
+            </Text>
         </section>
     );
 }

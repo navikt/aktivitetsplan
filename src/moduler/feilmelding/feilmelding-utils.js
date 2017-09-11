@@ -1,35 +1,3 @@
-import React from 'react';
-import {
-    AlertStripeAdvarsel,
-    AlertStripeInfo,
-    AlertStripeInfoSolid,
-} from 'nav-frontend-alertstriper';
-import { FormattedMessage } from 'react-intl';
-
-const DEFCON_1 = (
-    <AlertStripeAdvarsel>
-        <FormattedMessage id="feilmelding.server-error.tekst" />
-    </AlertStripeAdvarsel>
-);
-
-const DEFCON_2 = (
-    <AlertStripeInfoSolid>
-        <FormattedMessage id="feilmelding.forbidden.tekst" />
-    </AlertStripeInfoSolid>
-);
-
-const DEFCON_3 = (
-    <AlertStripeInfo>
-        <FormattedMessage id="feilmelding.bad-request.tekst" />
-    </AlertStripeInfo>
-);
-
-const feiltyper = {
-    1: DEFCON_1,
-    2: DEFCON_2,
-    3: DEFCON_3,
-};
-
 const rangering = {
     UKJENT: 1,
     FINNES_IKKE: 1,
@@ -37,15 +5,32 @@ const rangering = {
     UGYLDIG_REQUEST: 3,
 };
 
-function finnHoyesteAlvorlighetsgrad(feilmeldinger) {
-    return Math.min(
-        ...feilmeldinger.map(feilmelding => {
-            const type = feilmelding.type || 'UKJENT';
-            return rangering[type];
-        })
-    );
-}
+const splitFeil = feilId => {
+    const stack = `${feilId}`.split('-');
+    stack.pop();
+    return stack.join('-');
+};
 
-// eslint-disable-next-line import/prefer-default-export
-export const mapTyperTilAlertstripe = feilmeldinger =>
-    feiltyper[finnHoyesteAlvorlighetsgrad(feilmeldinger)];
+export const parseFeil = feilId => {
+    const result = [];
+    let subId = feilId;
+    while (subId) {
+        result.push(subId);
+        subId = splitFeil(subId);
+    }
+    return result;
+};
+
+export const finnHoyesteAlvorlighetsgrad = feilmeldinger =>
+    feilmeldinger.reduce(
+        (alvorligste, feilmelding) => {
+            const type =
+                (feilmelding.melding.data && feilmelding.melding.data.type) ||
+                'UKJENT';
+            if (rangering[type] < rangering[alvorligste.melding.type]) {
+                alvorligste = feilmelding; // eslint-disable-line no-param-reassign
+            }
+            return alvorligste;
+        },
+        { melding: { type: 'UGYLDIG_REQUEST' } }
+    );

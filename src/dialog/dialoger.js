@@ -8,7 +8,7 @@ import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
 import history from '../history';
-import { DIALOG_FERDIGBEHANDLET, DIALOG_MA_BESVARES } from '../constant';
+import { DIALOG_IKKE_FERDIGBEHANDLET, DIALOG_MA_BESVARES } from '../constant';
 import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
@@ -70,6 +70,7 @@ class DialogVisning extends React.Component {
             );
         }
 
+        const ikkeFerdigbehandlet = !ferdigBehandlet;
         return (
             <Lenkepanel
                 tabIndex={erTabBar ? '0' : '-1'}
@@ -107,7 +108,7 @@ class DialogVisning extends React.Component {
                     {dialog.sisteTekst}
                 </Normaltekst>
                 <VisibleIfDiv
-                    visible={venterPaSvar || ferdigBehandlet}
+                    visible={venterPaSvar || ikkeFerdigbehandlet}
                     className="dialoger__dialog-etiketter"
                 >
                     <Etikett
@@ -116,9 +117,9 @@ class DialogVisning extends React.Component {
                         etikett={DIALOG_MA_BESVARES}
                     />
                     <Etikett
-                        visible={ferdigBehandlet}
-                        id="dialog.ferdigbehandlet"
-                        etikett={DIALOG_FERDIGBEHANDLET}
+                        visible={ikkeFerdigbehandlet}
+                        id="dialog.ikke-ferdigbehandlet"
+                        etikett={DIALOG_IKKE_FERDIGBEHANDLET}
                     />
                 </VisibleIfDiv>
                 <div className="dialoger__dialog-henvendelser">

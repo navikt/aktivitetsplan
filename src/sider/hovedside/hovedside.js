@@ -8,6 +8,7 @@ import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 import OppfolgingStatus from '../../moduler/oppfolging-status/oppfolging-status';
 import Feilmelding from '../../moduler/feilmelding/feilmelding';
 import VisaValgtFilter from '../../moduler/filtrering/filter-vis-label';
+import FooterInfo from './footer-info';
 
 function Hovedside({ children }) {
     return (
@@ -22,6 +23,7 @@ function Hovedside({ children }) {
                         <VisaValgtFilter />
                     </Container>
                     <AktivitetsTavle />
+                    <FooterInfo />
                 </OppfolgingStatus>
             </div>
             {children}
