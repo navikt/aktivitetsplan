@@ -122,6 +122,11 @@ class Navigasjonslinje extends Component {
                     tekstId="navigasjon.vilkar"
                     disabled={disabled || (!erBruker && vilkarMaBesvares)}
                 />
+                <NavigasjonsElement
+                    sti="/informasjon"
+                    tekstId="navigasjon.informasjon"
+                    disabled={disabled}
+                />
                 <Feature name={navigasjonslinjemenyFeature}>
                     <div className="navigasjonslinje__verktoy">
                         <Innholdslaster
