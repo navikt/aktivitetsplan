@@ -5,20 +5,20 @@ import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import { ESKALERINGS_FILTER } from '../ducks/dialog';
 import {
-    selectEskaleringsDialoger,
     selectEskaleringsFilter,
+    selectHarEskaleringer,
 } from '../moduler/dialog/dialog-selector';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
 
 function DialogFilter({
     erFilterAktivt,
-    doToggleAktivitetsEtikett,
+    doToggleEskaleringsFilter,
     harEskaleringer,
 }) {
     return (
         <VisibleIfDiv visible={harEskaleringer}>
             <EskaleringsFilter
-                toggleEskaleringsFilter={() => doToggleAktivitetsEtikett()}
+                toggleEskaleringsFilter={doToggleEskaleringsFilter}
                 erFilterAktivt={erFilterAktivt}
             />
         </VisibleIfDiv>
@@ -28,34 +28,32 @@ function DialogFilter({
 DialogFilter.propTypes = {
     erFilterAktivt: PT.bool.isRequired,
     harEskaleringer: PT.bool.isRequired,
-    doToggleAktivitetsEtikett: PT.func.isRequired,
+    doToggleEskaleringsFilter: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     erFilterAktivt: selectEskaleringsFilter(state),
-    harEskaleringer: selectEskaleringsDialoger(state).length > 0,
+    harEskaleringer: selectHarEskaleringer(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-    doToggleAktivitetsEtikett: () => dispatch(ESKALERINGS_FILTER),
+    doToggleEskaleringsFilter: () => dispatch(ESKALERINGS_FILTER),
 });
 
-function EskaleringsFilter({ toggleEskaleringsFilter, erFilterAktivt }) {
+function EskaleringsFilter({ doToggleEskaleringsFilter, erFilterAktivt }) {
     return (
-        <div>
-            <Checkbox
-                key={'dialog-filter'}
-                label={<FormattedMessage id={'dialog.eskalerings-filter'} />}
-                onChange={toggleEskaleringsFilter}
-                checked={erFilterAktivt}
-            />
-        </div>
+        <Checkbox
+            key={'dialog-filter'}
+            label={<FormattedMessage id={'dialog.eskalerings-filter'} />}
+            onChange={doToggleEskaleringsFilter}
+            checked={erFilterAktivt}
+        />
     );
 }
 
 EskaleringsFilter.propTypes = {
     erFilterAktivt: PT.bool.isRequired,
-    toggleEskaleringsFilter: PT.func.isRequired,
+    doToggleEskaleringsFilter: PT.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogFilter);
