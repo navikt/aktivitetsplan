@@ -20,14 +20,6 @@ export function selectDialoger(state) {
     return selectDialogData(state).filter(d => dialogFilter(d, state));
 }
 
-export function selectDialogData(state) {
-    return selectDialogReducer(state).data;
-}
-
-export function selectDialoger(state) {
-    return selectDialogData(state).filter(d => dialogFilter(d, state));
-}
-
 export function selectDialogMedId(state, dialogId) {
     return selectDialoger(state).find(d => d.id === dialogId);
 }

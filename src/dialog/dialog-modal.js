@@ -21,7 +21,6 @@ import { aktivitetRoute } from '../routing';
 import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
 import { selectDialogData } from '../moduler/dialog/dialog-selector';
 import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
-import { selectDialogMedId } from '../moduler/dialog/dialog-selector';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
