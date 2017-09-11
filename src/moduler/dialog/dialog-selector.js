@@ -1,30 +1,41 @@
 import { dialogFilter } from '../filtrering/filter/filter-utils';
 
+function selectDialogSlice(state) {
+    return state.data.dialog;
+}
+
 export function selectDialogReducer(state) {
     return state.data.dialog;
 }
 
 export function selectDialogStatus(state) {
-    return selectDialogReducer(state).status;
+    return selectDialogSlice(state).status;
+}
+
+export function selectDialogData(state) {
+    return selectDialogSlice(state).data;
 }
 
 export function selectEskaleringsFilter(state) {
-    return selectDialogReducer(state).esklaringsFilter;
+    return selectDialogSlice(state).esklaringsFilter;
 }
 
 export function selectEskaleringsDialoger(state) {
-    return selectDialogReducer(state).data.filter(
+    return selectDialogSlice(state).data.filter(
         dialog => dialog.egenskaper.indexOf('ESKALERINGSVARSEL') > -1
     );
 }
 
-export function selectDialoger(state) {
+export function selectDialogData(state) {
     if (selectEskaleringsFilter(state)) {
         return selectEskaleringsDialoger(state);
     }
-    return selectDialogReducer(state).data;
+    return selectDialogSlice(state).data;
 }
 
+export function selectDialoger(state) {
+    return selectDialogData(state).filter(d => dialogFilter(d, state));
+}
 export function selectAktuellaDialoger(state) {
     return selectDialoger(state).filter(d => dialogFilter(d, state));
 }

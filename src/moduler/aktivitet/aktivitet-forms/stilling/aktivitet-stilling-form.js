@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { validForm, rules } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import { formNavn } from '../aktivitet-form-utils';
 import { dateToISODate } from '../../../../utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
@@ -15,6 +15,14 @@ import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovel
 import { STATUS_PLANLAGT, STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
+import {
+    maksLengde,
+    pakrevd,
+} from '../../../../felles-komponenter/skjema/validering';
+
+function erAvtalt(verdi, props) {
+    return !!props.avtalt;
+}
 
 const TITTEL_MAKS_LENGDE = 255;
 const LENKE_MAKS_LENGDE = 2000;
@@ -23,60 +31,46 @@ const ARBEIDSSTED_MAKS_LENGDE = 255;
 const ARBEIDSGIVER_MAKS_LENGDE = 255;
 const KONTAKTPERSON_MAKS_LENGDE = 255;
 
-const pakrevdTittel = rules.minLength(
-    0,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tittel" />
+const pakrevdTittel = pakrevd(
+    'stilling-aktivitet-form.feilmelding.paakrevd-tittel'
+).hvisIkke(erAvtalt);
+
+const begrensetTittelLengde = maksLengde(
+    'stilling-aktivitet-form.feilmelding.tittel-lengde',
+    TITTEL_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+const pakrevdFraDato = pakrevd(
+    'stilling-aktivitet-form.feilmelding.paakrevd-fradato'
+).hvisIkke(erAvtalt);
+
+const pakrevdTilDato = pakrevd(
+    'stilling-aktivitet-form.feilmelding.paakrevd-tildato'
 );
-const begrensetTittelLengde = rules.maxLength(
-    TITTEL_MAKS_LENGDE,
-    <FormattedMessage
-        id="stilling-aktivitet-form.feilmelding.tittel-lengde"
-        values={{ TITTEL_MAKS_LENGDE }}
-    />
-);
-const pakrevdFraDato = rules.minLength(
-    0,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-fradato" />
-);
-const pakrevdTilDato = rules.minLength(
-    0,
-    <FormattedMessage id="stilling-aktivitet-form.feilmelding.paakrevd-tildato" />
-);
-const begrensetLenkeLengde = rules.maxLength(
-    LENKE_MAKS_LENGDE,
-    <FormattedMessage
-        id="stilling-aktivitet-form.feilmelding.lenke-lengde"
-        values={{ LENKE_MAKS_LENGDE }}
-    />
-);
-const begrensetBeskrivelseLengde = rules.maxLength(
-    BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage
-        id="stilling-aktivitet-form.feilmelding.beskrivelse-lengde"
-        values={{ BESKRIVELSE_MAKS_LENGDE }}
-    />
-);
-const begrensetArbeidsstedLengde = rules.maxLength(
-    ARBEIDSSTED_MAKS_LENGDE,
-    <FormattedMessage
-        id="stilling-aktivitet-form.feilmelding.arbeidssted-lengde"
-        values={{ ARBEIDSSTED_MAKS_LENGDE }}
-    />
-);
-const begrensetArbeidsgiverLengde = rules.maxLength(
-    ARBEIDSGIVER_MAKS_LENGDE,
-    <FormattedMessage
-        id="stilling-aktivitet-form.feilmelding.arbeidsgiver-lengde"
-        values={{ ARBEIDSGIVER_MAKS_LENGDE }}
-    />
-);
-const begrensetKontaktpersonLengde = rules.maxLength(
-    KONTAKTPERSON_MAKS_LENGDE,
-    <FormattedMessage
-        id="stilling-aktivitet-form.feilmelding.kontaktperson-lengde"
-        values={{ KONTAKTPERSON_MAKS_LENGDE }}
-    />
-);
+
+const begrensetLenkeLengde = maksLengde(
+    'stilling-aktivitet-form.feilmelding.lenke-lengde',
+    LENKE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetBeskrivelseLengde = maksLengde(
+    'stilling-aktivitet-form.feilmelding.beskrivelse-lengde',
+    BESKRIVELSE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetArbeidsstedLengde = maksLengde(
+    'stilling-aktivitet-form.feilmelding.arbeidssted-lengde',
+    ARBEIDSSTED_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetArbeidsgiverLengde = maksLengde(
+    'stilling-aktivitet-form.feilmelding.arbeidsgiver-lengde',
+    ARBEIDSGIVER_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetKontaktpersonLengde = maksLengde(
+    'stilling-aktivitet-form.feilmelding.kontaktperson-lengde',
+    KONTAKTPERSON_MAKS_LENGDE
+).hvisIkke(erAvtalt);
 
 class StillingAktivitetForm extends Component {
     componentDidMount() {

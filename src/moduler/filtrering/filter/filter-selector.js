@@ -23,7 +23,7 @@ export function selectAktivitetAvtaltMedNavFilter(state) {
 }
 
 export function selectViserInneverendePeriode(state) {
-    return !state.data.filter.historiskPeriode;
+    return !selectHistoriskPeriode(state);
 }
 
 export function selectViserHistoriskPeriode(state) {

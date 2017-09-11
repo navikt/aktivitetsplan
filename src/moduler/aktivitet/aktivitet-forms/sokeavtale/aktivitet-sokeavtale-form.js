@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { validForm, rules } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet-form-utils';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
@@ -17,45 +17,47 @@ import {
     STATUS_PLANLAGT,
 } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
+import {
+    maksLengde,
+    pakrevd,
+} from '../../../../felles-komponenter/skjema/validering';
+
+function erAvtalt(verdi, props) {
+    return !!props.avtalt;
+}
 
 const OPPFOLGING_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 
-const pakrevdFraDato = rules.minLength(
-    0,
-    <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-fradato" />
-);
-const pakrevdTilDato = rules.minLength(
-    0,
-    <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-tildato" />
+const pakrevdFraDato = pakrevd(
+    'sokeavtale-aktivitet-form.feilmelding.paakrevd-fradato'
+).hvisIkke(erAvtalt);
+
+const pakrevdTilDato = pakrevd(
+    'sokeavtale-aktivitet-form.feilmelding.paakrevd-tildato'
 );
 
 // eslint-disable-next-line no-confusing-arrow
-const pakrevdAntall = value =>
-    value && value.toString().length > 0
+const pakrevdAntall = (value, props) =>
+    (value && value.toString().length > 0) || erAvtalt(value, props)
         ? undefined
         : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-antall" />;
 
 // eslint-disable-next-line no-confusing-arrow
-const numericAntall = value =>
-    value && /^[0-9]+$/.test(value)
+const numericAntall = (value, props) =>
+    (value && /^[0-9]+$/.test(value)) || erAvtalt(value, props)
         ? undefined
         : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.numerisk-antall" />;
 
-const begrensetAvtaleOppfolgingLengde = rules.maxLength(
-    OPPFOLGING_MAKS_LENGDE,
-    <FormattedMessage
-        id="sokeavtale-aktivitet-form.feilmelding.oppfolging-lengde"
-        values={{ OPPFOLGING_MAKS_LENGDE }}
-    />
-);
-const begrensetBeskrivelseLengde = rules.maxLength(
-    BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage
-        id="sokeavtale-aktivitet-form.feilmelding.beskrivelse-lengde"
-        values={{ BESKRIVELSE_MAKS_LENGDE }}
-    />
-);
+const begrensetAvtaleOppfolgingLengde = maksLengde(
+    'sokeavtale-aktivitet-form.feilmelding.oppfolging-lengde',
+    OPPFOLGING_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetBeskrivelseLengde = maksLengde(
+    'sokeavtale-aktivitet-form.feilmelding.beskrivelse-lengde',
+    BESKRIVELSE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
 
 class SokeAvtaleAktivitetForm extends Component {
     componentDidMount() {

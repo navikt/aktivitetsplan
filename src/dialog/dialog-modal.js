@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -18,7 +18,9 @@ import VisibleIfTag from '../felles-komponenter/utils/visible-if-tag';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
-import { SORTER_DIALOGER } from '../ducks/dialog';
+import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
+import { selectDialogData } from '../moduler/dialog/dialog-selector';
+import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
 import DialogFilter from './filter-dialoger';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
@@ -189,48 +191,51 @@ DialogModalContent.defaultProps = {
     valgtAktivitetId: undefined,
 };
 
-class DialogModal extends Component {
-    componentDidMount() {
-        this.props.sorterDialoger();
-    }
+function DialogModal({ harNyDialogEllerValgtDialog, ...rest }) {
+    const className = classNames('dialog-modal', {
+        'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
+    });
 
-    render() {
-        const props = this.props;
-
-        const { harNyDialogEllerValgtDialog } = props;
-        const className = classNames('dialog-modal', {
-            'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
-        });
-
-        return (
-            <Modal
-                className={className}
-                contentClass="aktivitetsplanfs dialog-modal__content"
-                header={<Header {...props} />}
-            >
-                <DialogModalContent {...props} />
-            </Modal>
-        );
-    }
+    return (
+        <Modal
+            className={className}
+            contentClass="aktivitetsplanfs dialog-modal__content"
+            header={<Header {...rest} />}
+        >
+            <DialogModalContent {...rest} />
+        </Modal>
+    );
 }
+
+DialogModal.defaultProps = {
+    valgtAktivitetId: null,
+    navnPaMotpart: null,
+    valgtDialog: null,
+    harNyDialog: null,
+};
 
 DialogModal.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
-    sorterDialoger: PT.func.isRequired,
+    harNyDialog: PT.bool,
+    valgtDialog: AppPT.dialog.isRequired,
+    harValgtDialog: PT.bool.isRequired,
+    valgtAktivitetId: PT.number,
+    motpart: AppPT.motpart.isRequired,
+    navnPaMotpart: PT.string,
+    historiskVisning: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
     const { match } = props;
     const { id } = match.params;
-    const stateData = state.data;
-    const motpart = stateData.motpart;
-    const dialoger = stateData.dialog.data;
+    const motpart = selectMotpartReducer(state);
+    const dialoger = selectDialogData(state);
     const valgtDialog = dialoger.find(d => d.id === id);
     const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
 
     const harNyDialog = id === 'ny';
     const harValgtDialog = !!valgtDialog;
-    const historiskVisning = !!stateData.filter.historiskPeriode;
+    const historiskVisning = selectViserHistoriskPeriode(state);
     return {
         harNyDialog,
         valgtDialog,
@@ -243,12 +248,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    sorterDialoger: () => {
-        dispatch(SORTER_DIALOGER);
-    },
-});
-
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(DialogModal)
-);
+export default withRouter(connect(mapStateToProps)(DialogModal));
