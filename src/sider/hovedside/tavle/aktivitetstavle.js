@@ -31,7 +31,7 @@ class AktivitetsTavle extends Component {
                 minstEn
                 avhengigheter={[
                     this.props.aktivitet,
-                    this.props.anreaAktivitet,
+                    this.props.arenaAktivitet,
                 ]}
             >
                 <Tavle
@@ -69,13 +69,13 @@ AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
     aktivitet: AppPT.reducer,
-    anreaAktivitet: AppPT.reducer,
+    arenaAktivitet: AppPT.reducer,
     reducersNotStarted: PT.bool.isRequired,
 };
 
 AktivitetsTavle.defaultProps = {
     aktivitet: undefined,
-    anreaAktivitet: undefined,
+    arenaAktivitet: undefined,
 };
 
 const mapStateToProps = state => {
@@ -87,7 +87,7 @@ const mapStateToProps = state => {
         statusArenaAktiviteter === STATUS.NOT_STARTED;
     return {
         aktivitet: state.data.aktiviteter,
-        anreaAktivitet: state.data.arenaAktiviteter,
+        arenaAktivitet: state.data.arenaAktiviteter,
         reducersNotStarted,
     };
 };

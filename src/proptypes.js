@@ -17,6 +17,8 @@ export const aktivitet = PT.shape({
     dagerPerUke: PT.number,
 });
 
+export const aktiviteter = PT.arrayOf(aktivitet);
+
 export const henvendelse = PT.shape({
     dialogId: PT.string.isRequired,
     tekst: PT.string.isRequired,

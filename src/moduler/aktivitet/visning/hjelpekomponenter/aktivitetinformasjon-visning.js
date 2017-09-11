@@ -17,12 +17,8 @@ import AktivitetEtikett from '../../../../felles-komponenter/aktivitet-etikett';
 import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
 
-function AktivitetinformasjonVisning({
-    valgtAktivitet,
-    arenaAktivitet,
-    tillatEndring,
-}) {
-    const { tittel, type, avtalt, etikett } = valgtAktivitet;
+function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring }) {
+    const { tittel, type, avtalt, etikett, arenaAktivitet } = valgtAktivitet;
 
     const gaTilEndreAktivitet = () =>
         history.push(endreAktivitetRoute(valgtAktivitet.id));
@@ -71,7 +67,6 @@ function AktivitetinformasjonVisning({
 
 AktivitetinformasjonVisning.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
-    arenaAktivitet: PT.bool.isRequired,
     tillatEndring: PT.bool.isRequired,
 };
 
