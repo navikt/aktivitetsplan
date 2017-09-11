@@ -21,6 +21,7 @@ import { aktivitetRoute } from '../routing';
 import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
 import { selectDialogData } from '../moduler/dialog/dialog-selector';
 import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
+import DialogFilter from './filter-dialoger';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
@@ -94,6 +95,7 @@ function VenstreKolonne({
                     <FormattedMessage id="dialog.modal.ny-dialog" />
                 </Knappelenke>
             </HideableSection>
+            <DialogFilter />
             <Dialoger
                 className="dialog-modal__dialoger"
                 valgtDialog={valgtDialog}

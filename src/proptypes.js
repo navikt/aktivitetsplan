@@ -36,6 +36,7 @@ export const dialog = PT.shape({
     venterPaSvar: PT.bool,
     ferdigBehandlet: PT.bool,
     henvendelser: PT.arrayOf(henvendelse).isRequired,
+    egenskaper: PT.arrayOf(PT.string),
 });
 
 export const etikett = PT.shape({

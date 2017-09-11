@@ -1,4 +1,6 @@
 import { dialogFilter } from '../filtrering/filter/filter-utils';
+import { DIALOG_ESKALERING } from '../../constant';
+import { erEskaleringsDialog } from '../../dialog/dialog-utils';
 
 function selectDialogSlice(state) {
     return state.data.dialog;
@@ -12,7 +14,18 @@ export function selectDialogStatus(state) {
     return selectDialogSlice(state).status;
 }
 
+export function selectEskaleringsFilter(state) {
+    return selectDialogSlice(state).esklaringsFilter;
+}
+
+export function selectEskaleringsDialoger(state) {
+    return selectDialogSlice(state).data.filter(erEskaleringsDialog);
+}
+
 export function selectDialogData(state) {
+    if (selectEskaleringsFilter(state)) {
+        return selectEskaleringsDialoger(state);
+    }
     return selectDialogSlice(state).data;
 }
 
@@ -37,4 +50,8 @@ export function selectHarUbehandledeDialoger(state) {
                 (dialog.ferdigBehandlet === false || dialog.venterPaSvar)
         ).length > 0
     );
+}
+
+export function selectHarEskaleringer(state) {
+    return selectEskaleringsDialoger(state).length > 0;
 }

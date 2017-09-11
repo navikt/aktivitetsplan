@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import {
-    selectDialoger,
+    selectDialogData,
     selectDialogStatus,
 } from '../moduler/dialog/dialog-selector';
 import DialogVisning from './dialog-visning';
@@ -128,7 +128,7 @@ DialogerMedInnholdslaster.propTypes = {
 
 const mapStateToProps = state => ({
     avhengigheter: [selectDialogStatus(state)],
-    dialoger: selectDialoger(state),
+    dialoger: selectDialogData(state),
     aktiviteter: selectAlleAktiviter(state),
     erBruker: selectErBruker(state),
     gjeldendeEskaleringsvarsel: selectGjeldendeEskaleringsVarsel(state),
