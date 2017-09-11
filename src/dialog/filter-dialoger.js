@@ -10,6 +10,22 @@ import {
 } from '../moduler/dialog/dialog-selector';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
 
+function EskaleringsFilter({ doToggleEskaleringsFilter, erFilterAktivt }) {
+    return (
+        <Checkbox
+            key={'dialog-filter'}
+            label={<FormattedMessage id={'dialog.eskalerings-filter'} />}
+            onChange={doToggleEskaleringsFilter}
+            checked={erFilterAktivt}
+        />
+    );
+}
+
+EskaleringsFilter.propTypes = {
+    erFilterAktivt: PT.bool.isRequired,
+    doToggleEskaleringsFilter: PT.func.isRequired,
+};
+
 function DialogFilter({
     erFilterAktivt,
     doToggleEskaleringsFilter,
@@ -18,7 +34,7 @@ function DialogFilter({
     return (
         <VisibleIfDiv visible={harEskaleringer}>
             <EskaleringsFilter
-                toggleEskaleringsFilter={doToggleEskaleringsFilter}
+                doToggleEskaleringsFilter={doToggleEskaleringsFilter}
                 erFilterAktivt={erFilterAktivt}
             />
         </VisibleIfDiv>
@@ -39,21 +55,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     doToggleEskaleringsFilter: () => dispatch(ESKALERINGS_FILTER),
 });
-
-function EskaleringsFilter({ doToggleEskaleringsFilter, erFilterAktivt }) {
-    return (
-        <Checkbox
-            key={'dialog-filter'}
-            label={<FormattedMessage id={'dialog.eskalerings-filter'} />}
-            onChange={doToggleEskaleringsFilter}
-            checked={erFilterAktivt}
-        />
-    );
-}
-
-EskaleringsFilter.propTypes = {
-    erFilterAktivt: PT.bool.isRequired,
-    doToggleEskaleringsFilter: PT.func.isRequired,
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogFilter);

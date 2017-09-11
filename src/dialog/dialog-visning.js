@@ -15,7 +15,7 @@ import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
 import Etikett from '../felles-komponenter/aktivitet-etikett';
-import { erEskaleringsDialog } from '../moduler/dialog/dialog-selector';
+import { erEskaleringsDialog } from './dialog-utils';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
