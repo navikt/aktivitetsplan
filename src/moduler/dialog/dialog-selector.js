@@ -1,11 +1,23 @@
 import { dialogFilter } from '../filtrering/filter/filter-utils';
 
+function selectDialogSlice(state) {
+    return state.data.dialog;
+}
+
 export function selectDialogReducer(state) {
     return state.data.dialog;
 }
 
 export function selectDialogStatus(state) {
-    return selectDialogReducer(state).status;
+    return selectDialogSlice(state).status;
+}
+
+export function selectDialogData(state) {
+    return selectDialogSlice(state).data;
+}
+
+export function selectDialoger(state) {
+    return selectDialogData(state).filter(d => dialogFilter(d, state));
 }
 
 export function selectDialogData(state) {

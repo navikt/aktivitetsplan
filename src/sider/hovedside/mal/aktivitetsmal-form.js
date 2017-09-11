@@ -8,6 +8,7 @@ import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 import { autobind } from '../../../utils';
 import { STATUS } from '../../../ducks/utils';
 import { oppdaterMal } from '../../../moduler/mal/mal-reducer';
+import { selectMalStatus } from '../../../moduler/mal/mal-selector';
 
 const MALTEKST_MAKSLENGDE = 500;
 
@@ -79,13 +80,10 @@ const AktivitetsmalReduxForm = validForm({
     },
 })(AktivitetsmalForm);
 
-const mapStateToProps = (state, props) => {
-    const malReducer = state.data.mal;
-    return {
-        initialValues: { mal: props.mal.mal },
-        oppdaterer: malReducer.status === STATUS.RELOADING,
-    };
-};
+const mapStateToProps = (state, props) => ({
+    initialValues: { mal: props.mal.mal },
+    oppdaterer: selectMalStatus(state) === STATUS.RELOADING,
+});
 
 const mapDispatchToProps = () => ({
     onSubmit: (newMal, dispatch, props) => {

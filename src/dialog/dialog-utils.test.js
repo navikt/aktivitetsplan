@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import { compareDialoger } from './dialog';
+import { sammenlignDialogerForVeileder } from './dialog-utils';
 
 function knuth(array) {
     let currentIndex = array.length;
@@ -57,7 +57,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -94,7 +96,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -131,7 +135,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -168,44 +174,9 @@ describe('dialog sortering på innsiden', () => {
         ];
 
         expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
-        ).to.equal(true);
-    });
-
-    it('Skal sortere leste ubehandlede over uleste behandlede', () => {
-        const dialoger = [
-            {
-                id: '1',
-                sisteDato: '2017-07-16T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '2',
-                sisteDato: '2017-07-19T14:09:59.334+02:00',
-                lest: false,
-                venterPaSvar: false,
-                ferdigBehandlet: true,
-            },
-            {
-                id: '4',
-                sisteDato: '2017-07-18T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: true,
-            },
-            {
-                id: '3',
-                sisteDato: '2017-07-17T14:09:59.334+02:00',
-                lest: false,
-                venterPaSvar: false,
-                ferdigBehandlet: true,
-            },
-        ];
-
-        expect(
-            dialoger.sort(compareDialoger).every(erIdStorreEnForrige)
+            dialoger
+                .sort(sammenlignDialogerForVeileder)
+                .every(erIdStorreEnForrige)
         ).to.equal(true);
     });
 
@@ -241,170 +212,170 @@ describe('dialog sortering på innsiden', () => {
             },
             {
                 id: '05',
-                sisteDato: '2017-08-18T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '06',
-                sisteDato: '2017-08-10T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '07',
-                sisteDato: '2017-07-18T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '08',
-                sisteDato: '2017-07-10T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '09',
                 sisteDato: '2017-08-17T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
                 ferdigBehandlet: false,
             },
             {
-                id: '10',
+                id: '06',
                 sisteDato: '2017-08-09T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
                 ferdigBehandlet: false,
             },
             {
-                id: '11',
+                id: '07',
                 sisteDato: '2017-07-17T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
                 ferdigBehandlet: false,
             },
             {
-                id: '12',
+                id: '08',
                 sisteDato: '2017-07-09T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
                 ferdigBehandlet: false,
             },
             {
-                id: '13',
-                sisteDato: '2017-08-16T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: true,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '14',
-                sisteDato: '2017-08-08T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: true,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '15',
-                sisteDato: '2017-07-16T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: true,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '16',
-                sisteDato: '2017-07-08T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: true,
-                ferdigBehandlet: false,
-            },
-            {
-                id: '17',
+                id: '09',
                 sisteDato: '2017-08-15T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
                 ferdigBehandlet: true,
             },
             {
-                id: '18',
+                id: '10',
                 sisteDato: '2017-08-07T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
                 ferdigBehandlet: true,
             },
             {
-                id: '19',
+                id: '11',
                 sisteDato: '2017-07-15T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
                 ferdigBehandlet: true,
             },
             {
-                id: '20',
+                id: '12',
                 sisteDato: '2017-07-07T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
                 ferdigBehandlet: true,
             },
             {
-                id: '21',
-                sisteDato: '2017-08-14T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: true,
-            },
-            {
-                id: '22',
-                sisteDato: '2017-08-06T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: true,
-            },
-            {
-                id: '23',
-                sisteDato: '2017-07-14T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: true,
-            },
-            {
-                id: '24',
-                sisteDato: '2017-07-06T14:09:59.334+02:00',
-                lest: true,
-                venterPaSvar: false,
-                ferdigBehandlet: true,
-            },
-            {
-                id: '25',
+                id: '13',
                 sisteDato: '2017-08-13T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
                 ferdigBehandlet: true,
             },
             {
-                id: '26',
+                id: '14',
                 sisteDato: '2017-08-05T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
                 ferdigBehandlet: true,
             },
             {
-                id: '27',
+                id: '15',
                 sisteDato: '2017-07-13T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
                 ferdigBehandlet: true,
             },
             {
-                id: '28',
+                id: '16',
                 sisteDato: '2017-07-05T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
+                ferdigBehandlet: true,
+            },
+            {
+                id: '17',
+                sisteDato: '2017-08-18T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: false,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '18',
+                sisteDato: '2017-08-10T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: false,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '19',
+                sisteDato: '2017-07-18T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: false,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '20',
+                sisteDato: '2017-07-10T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: false,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '21',
+                sisteDato: '2017-08-16T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: true,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '22',
+                sisteDato: '2017-08-08T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: true,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '23',
+                sisteDato: '2017-07-16T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: true,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '24',
+                sisteDato: '2017-07-08T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: true,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '25',
+                sisteDato: '2017-08-14T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: false,
+                ferdigBehandlet: true,
+            },
+            {
+                id: '26',
+                sisteDato: '2017-08-06T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: false,
+                ferdigBehandlet: true,
+            },
+            {
+                id: '27',
+                sisteDato: '2017-07-14T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: false,
+                ferdigBehandlet: true,
+            },
+            {
+                id: '28',
+                sisteDato: '2017-07-06T14:09:59.334+02:00',
+                lest: true,
+                venterPaSvar: false,
                 ferdigBehandlet: true,
             },
             {
@@ -439,7 +410,9 @@ describe('dialog sortering på innsiden', () => {
 
         for (let i = 0; i <= 100; i += 1) {
             expect(
-                knuth(dialoger).sort(compareDialoger).every(erIdStorreEnForrige)
+                knuth(dialoger)
+                    .sort(sammenlignDialogerForVeileder)
+                    .every(erIdStorreEnForrige)
             ).to.equal(true);
         }
     });
