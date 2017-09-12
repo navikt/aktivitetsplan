@@ -9,7 +9,7 @@ import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
-import AktivitetsplanPrint from './moduler/aktivitet/utskrift/aktivitetsplanprint';
+import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 

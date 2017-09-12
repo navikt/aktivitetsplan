@@ -1,0 +1,111 @@
+import React from 'react';
+import PT from 'prop-types';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import { validForm } from 'react-redux-form-validation';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { formNavn } from '../aktivitet/aktivitet-forms/aktivitet-form-utils';
+import * as AppPT from '../../proptypes';
+import {
+    maksLengde,
+    pakrevd,
+} from '../../felles-komponenter/skjema/validering';
+import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
+import Input from '../../felles-komponenter/skjema/input/input';
+import { hentPrintMelding } from './utskrift-selector';
+import { lagrePrintMelding } from './utskrift-duck';
+import selectBruker from '../bruker/bruker-selector';
+
+const OVERSKRIFT_MAKS_LENGDE = 255;
+const BESKRIVELSE_MAKS_LENGDE = 2000;
+
+const pakrevdOverskrift = pakrevd(
+    'print-melding-form.feilmelding.pakrevd-overskrift'
+);
+const begrensetOverskriftLengde = maksLengde(
+    'print-melding-form.feilmelding.overskrift-lengde',
+    OVERSKRIFT_MAKS_LENGDE
+);
+const begrensetBeskrivelseLengde = maksLengde(
+    'print-melding-form.feilmelding.beskrivelse-lengde',
+    BESKRIVELSE_MAKS_LENGDE
+);
+
+function PrintMeldingForm({ errorSummary, handleSubmit, lagrer, bruker }) {
+    return (
+        <form onSubmit={handleSubmit} className="printmelding__form">
+            <div className="printmelding__skjema">
+                {errorSummary}
+
+                <div className="printmelding__tittel">
+                    <Innholdstittel>
+                        <FormattedMessage
+                            id="print-melding-form.header"
+                            values={{ bruker }}
+                        />
+                    </Innholdstittel>
+                    <Undertekst>
+                        <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
+                    </Undertekst>
+                </div>
+
+                <Input
+                    feltNavn="overskrift"
+                    labelId="print-melding-form.label.overskrift"
+                    bredde="fullbredde"
+                />
+
+                <Textarea
+                    feltNavn="beskrivelse"
+                    labelId="print-melding-form.label.beskrivelse"
+                    maxLength={BESKRIVELSE_MAKS_LENGDE}
+                />
+            </div>
+            <div className="printmelding__knapperad">
+                <Hovedknapp spinner={lagrer} disabled={lagrer}>
+                    <FormattedMessage id="print-melding-form.lagre" />
+                </Hovedknapp>
+            </div>
+        </form>
+    );
+}
+
+PrintMeldingForm.propTypes = {
+    handleSubmit: PT.func.isRequired,
+    errorSummary: PT.node.isRequired,
+    lagrer: PT.bool.isRequired,
+    bruker: AppPT.motpart.isRequired,
+};
+
+PrintMeldingForm.defaultProps = {};
+
+const PrintMeldingReduxForm = validForm({
+    form: formNavn,
+    errorSummaryTitle: (
+        <FormattedMessage id="print-melding-form.feiloppsummering-tittel" />
+    ),
+    validate: {
+        overskrift: [pakrevdOverskrift, begrensetOverskriftLengde],
+        beskrivelse: [begrensetBeskrivelseLengde],
+    },
+})(PrintMeldingForm);
+
+const mapStateToProps = state => {
+    const printMelding = hentPrintMelding(state);
+    const bruker = selectBruker(state);
+    return {
+        initialValues: printMelding,
+        bruker,
+    };
+};
+
+const mapDispatchToProps = dispatch => ({
+    onSubmit: data => {
+        dispatch(lagrePrintMelding(data));
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+    PrintMeldingReduxForm
+);
