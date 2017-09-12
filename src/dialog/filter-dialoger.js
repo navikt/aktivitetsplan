@@ -9,7 +9,7 @@ import {
     selectHarEskaleringer,
 } from '../moduler/dialog/dialog-selector';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
-import {selectErBruker} from "../moduler/identitet/identitet-selector";
+import { selectErBruker } from '../moduler/identitet/identitet-selector';
 
 function EskaleringsFilter({ doToggleEskaleringsFilter, erFilterAktivt }) {
     return (
@@ -31,7 +31,7 @@ function DialogFilter({
     erFilterAktivt,
     doToggleEskaleringsFilter,
     harEskaleringer,
-    erBruker
+    erBruker,
 }) {
     return (
         <VisibleIfDiv visible={harEskaleringer && erBruker}>
