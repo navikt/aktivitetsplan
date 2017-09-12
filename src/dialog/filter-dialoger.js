@@ -9,6 +9,7 @@ import {
     selectHarEskaleringer,
 } from '../moduler/dialog/dialog-selector';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
+import {selectErBruker} from "../moduler/identitet/identitet-selector";
 
 function EskaleringsFilter({ doToggleEskaleringsFilter, erFilterAktivt }) {
     return (
@@ -30,9 +31,10 @@ function DialogFilter({
     erFilterAktivt,
     doToggleEskaleringsFilter,
     harEskaleringer,
+    erBruker
 }) {
     return (
-        <VisibleIfDiv visible={harEskaleringer}>
+        <VisibleIfDiv visible={harEskaleringer && erBruker}>
             <EskaleringsFilter
                 doToggleEskaleringsFilter={doToggleEskaleringsFilter}
                 erFilterAktivt={erFilterAktivt}
@@ -45,11 +47,13 @@ DialogFilter.propTypes = {
     erFilterAktivt: PT.bool.isRequired,
     harEskaleringer: PT.bool.isRequired,
     doToggleEskaleringsFilter: PT.func.isRequired,
+    erBruker: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     erFilterAktivt: selectEskaleringsFilter(state),
     harEskaleringer: selectHarEskaleringer(state),
+    erBruker: selectErBruker(state),
 });
 
 const mapDispatchToProps = dispatch => ({
