@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { validForm, rules } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet-form-utils';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
@@ -17,6 +17,10 @@ import {
     BEHANDLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
+import {
+    pakrevd,
+    maksLengde,
+} from '../../../../felles-komponenter/skjema/validering';
 
 const EFFEKT_MAKS_LENGDE = 255;
 const OPPFOLGING_MAKS_LENGDE = 255;
@@ -24,62 +28,48 @@ const BESKRIVELSE_MAKS_LENGDE = 5000;
 const BEHANDLINGS_TYPE_MAKS_LENGDE = 255;
 const BEHANDLINGS_STED_MAKS_LENGDE = 255;
 
-const pakrevdFraDato = rules.minLength(
-    0,
-    <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-fradato" />
-);
-const pakrevdTilDato = rules.minLength(
-    0,
-    <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-tildato" />
+function erAvtalt(verdi, props) {
+    return !!props.avtalt;
+}
+
+const pakrevdFraDato = pakrevd(
+    'behandling-aktivitet-form.feilmelding.paakrevd-fradato'
+).hvisIkke(erAvtalt);
+
+const pakrevdTilDato = pakrevd(
+    'behandling-aktivitet-form.feilmelding.paakrevd-tildato'
 );
 
-const pakrevdBehandlingType = rules.minLength(
-    0,
-    <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-behandling-type" />
-);
+const pakrevdBehandlingType = pakrevd(
+    'behandling-aktivitet-form.feilmelding.paakrevd-behandling-type'
+).hvisIkke(erAvtalt);
 
-const begrensetBehandlingType = rules.maxLength(
-    BEHANDLINGS_TYPE_MAKS_LENGDE,
-    <FormattedMessage
-        id="behandling-aktivitet-form.feilmelding.behandling-type-lengde"
-        values={{ BEHANDLINGS_TYPE_MAKS_LENGDE }}
-    />
-);
+const begrensetBehandlingType = maksLengde(
+    'behandling-aktivitet-form.feilmelding.behandling-type-lengde',
+    BEHANDLINGS_TYPE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
 
-const pakrevdBehandlingSted = rules.minLength(
-    0,
-    <FormattedMessage id="behandling-aktivitet-form.feilmelding.paakrevd-behandling-sted" />
-);
+const pakrevdBehandlingSted = pakrevd(
+    'behandling-aktivitet-form.feilmelding.paakrevd-behandling-sted'
+).hvisIkke(erAvtalt);
 
-const begrensetBehandlingSted = rules.maxLength(
-    BEHANDLINGS_STED_MAKS_LENGDE,
-    <FormattedMessage
-        id="behandling-aktivitet-form.feilmelding.behandling-sted-lengde"
-        values={{ BEHANDLINGS_STED_MAKS_LENGDE }}
-    />
-);
+const begrensetBehandlingSted = maksLengde(
+    'behandling-aktivitet-form.feilmelding.behandling-sted-lengde',
+    BEHANDLINGS_STED_MAKS_LENGDE
+).hvisIkke(erAvtalt);
 
-const begrensetEffektLengde = rules.maxLength(
-    EFFEKT_MAKS_LENGDE,
-    <FormattedMessage
-        id="behandling-aktivitet-form.feilmelding.effekt-lengde"
-        values={{ EFFEKT_MAKS_LENGDE }}
-    />
-);
-const begrensetBehandlingOppfolgingLengde = rules.maxLength(
-    OPPFOLGING_MAKS_LENGDE,
-    <FormattedMessage
-        id="behandling-aktivitet-form.feilmelding.oppfolging-lengde"
-        values={{ OPPFOLGING_MAKS_LENGDE }}
-    />
-);
-const begrensetBeskrivelseLengde = rules.maxLength(
-    BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage
-        id="behandling-aktivitet-form.feilmelding.beskrivelse-lengde"
-        values={{ BESKRIVELSE_MAKS_LENGDE }}
-    />
-);
+const begrensetEffektLengde = maksLengde(
+    'behandling-aktivitet-form.feilmelding.effekt-lengde',
+    EFFEKT_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+const begrensetBehandlingOppfolgingLengde = maksLengde(
+    'behandling-aktivitet-form.feilmelding.oppfolging-lengde',
+    OPPFOLGING_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+const begrensetBeskrivelseLengde = maksLengde(
+    'behandling-aktivitet-form.feilmelding.beskrivelse-lengde',
+    BESKRIVELSE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
 
 class BehandlingAktivitetForm extends Component {
     componentDidMount() {

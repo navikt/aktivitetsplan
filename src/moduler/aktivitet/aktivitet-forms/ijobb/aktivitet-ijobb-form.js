@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { validForm, rules } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import { formNavn } from '../aktivitet-form-utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
@@ -21,56 +21,55 @@ import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import RadioGruppe from '../../../../felles-komponenter/skjema/input/radio-gruppe';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
+import {
+    pakrevd,
+    maksLengde,
+} from '../../../../felles-komponenter/skjema/validering';
 
 const TITTEL_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 const ANSETTELSESFORHOLD_MAKS_LENGDE = 255;
 const ARBEIDSTID_MAKS_LENGDE = 255;
 
-const pakrevdTittel = rules.minLength(
-    0,
-    <FormattedMessage id="ijobb-aktivitet-form.feilmelding.paakrevd-tittel" />
+function erAvtalt(verdi, props) {
+    return !!props.avtalt;
+}
+
+const pakrevdTittel = pakrevd(
+    'ijobb-aktivitet-form.feilmelding.paakrevd-tittel'
+).hvisIkke(erAvtalt);
+
+const begrensetTittelLengde = maksLengde(
+    'ijobb-aktivitet-form.feilmelding.typeStilling-lengde',
+    TITTEL_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const pakrevdFraDato = pakrevd(
+    'ijobb-aktivitet-form.feilmelding.paakrevd-fradato'
+).hvisIkke(erAvtalt);
+
+const pakrevdTilDato = pakrevd(
+    'ijobb-aktivitet-form.feilmelding.paakrevd-tildato'
 );
-const begrensetTittelLengde = rules.maxLength(
-    TITTEL_MAKS_LENGDE,
-    <FormattedMessage
-        id="ijobb-aktivitet-form.feilmelding.typeStilling-lengde"
-        values={{ TITTEL_MAKS_LENGDE }}
-    />
-);
-const pakrevdFraDato = rules.minLength(
-    0,
-    <FormattedMessage id="ijobb-aktivitet-form.feilmelding.paakrevd-fradato" />
-);
-const pakrevdTilDato = rules.minLength(
-    0,
-    <FormattedMessage id="ijobb-aktivitet-form.feilmelding.paakrevd-tildato" />
-);
-const pakrevdJobbStatus = rules.minLength(
-    0,
-    <FormattedMessage id="ijobb-aktivitet-form.feilmelding.paakrevd-jobbStatus" />
-);
-const begrensetAnsettelsesforholdLengde = rules.maxLength(
-    ANSETTELSESFORHOLD_MAKS_LENGDE,
-    <FormattedMessage
-        id="ijobb-aktivitet-form.feilmelding.ansettelsesforhold-lengde"
-        values={{ ANSETTELSESFORHOLD_MAKS_LENGDE }}
-    />
-);
-const begrensetArbeidstidLengde = rules.maxLength(
-    ARBEIDSTID_MAKS_LENGDE,
-    <FormattedMessage
-        id="ijobb-aktivitet-form.feilmelding.arbeidstid-lengde"
-        values={{ ARBEIDSTID_MAKS_LENGDE }}
-    />
-);
-const begrensetBeskrivelseLengde = rules.maxLength(
-    BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage
-        id="ijobb-aktivitet-form.feilmelding.beskrivelse-lengde"
-        values={{ BESKRIVELSE_MAKS_LENGDE }}
-    />
-);
+
+const pakrevdJobbStatus = pakrevd(
+    'ijobb-aktivitet-form.feilmelding.paakrevd-jobbStatus'
+).hvisIkke(erAvtalt);
+
+const begrensetAnsettelsesforholdLengde = maksLengde(
+    'ijobb-aktivitet-form.feilmelding.ansettelsesforhold-lengde',
+    ANSETTELSESFORHOLD_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetArbeidstidLengde = maksLengde(
+    'ijobb-aktivitet-form.feilmelding.arbeidstid-lengde',
+    ARBEIDSTID_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetBeskrivelseLengde = maksLengde(
+    'ijobb-aktivitet-form.feilmelding.beskrivelse-lengde',
+    BESKRIVELSE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
 
 class IJobbAktivitetForm extends Component {
     componentDidMount() {

@@ -28,9 +28,11 @@ class EndreDialogStatus extends Component {
             <div className="endre-dialog__sjekkbokser">
                 <Checkbox
                     className="endre-dialog__sjekkboks"
-                    label={<FormattedMessage id="dialog.ferdigbehandlet" />}
+                    label={
+                        <FormattedMessage id="dialog.ikke-ferdigbehandlet" />
+                    }
                     onChange={toggleFerdigbehandlet}
-                    checked={ferdigBehandlet}
+                    checked={!ferdigBehandlet}
                 />
                 <Checkbox
                     label={<FormattedMessage id="dialog.venter-pa-svar" />}

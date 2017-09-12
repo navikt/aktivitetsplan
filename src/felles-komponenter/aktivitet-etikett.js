@@ -15,7 +15,9 @@ const setType = etikettnavn => {
         case statuskoder.INNKALT_TIL_INTERVJU:
             return 'info';
         case statuskoder.AVSLAG:
+        case statuskoder.DIALOG_ESKALERING:
         case statuskoder.DIALOG_MA_BESVARES:
+        case statuskoder.DIALOG_IKKE_FERDIGBEHANDLET:
             return 'varsling';
         case statuskoder.AVTALT_MED_NAV:
             return 'avtalt';

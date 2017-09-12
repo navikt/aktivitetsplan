@@ -16,6 +16,7 @@ import {
     button as HiddenIfButton,
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { selectErUnderOppfolging } from '../../../situasjon/situasjon-selector';
+import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
@@ -117,16 +118,16 @@ class UnderelementerForAktivitet extends Component {
                     hidden={!visDialog}
                     className="underelementer-aktivitet__dialogvisning"
                 >
+                    <EndreDialog
+                        hidden={!kanEndreDialog}
+                        formNavn={`dialog-aktivitet-${aktivitetId}`}
+                        dialog={dialog}
+                    />
                     <NyHenvendelse
                         formNavn={`ny-henvendelse-aktivitet-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
                         hidden={!kanOppretteNyHenvendelse}
                         aktivitetId={aktivitetId}
-                    />
-                    <EndreDialog
-                        hidden={!kanEndreDialog}
-                        formNavn={`dialog-aktivitet-${aktivitetId}`}
-                        dialog={dialog}
                     />
                     <Henvendelser hidden={!dialog} dialog={dialog} />
                 </HiddenIfDiv>
@@ -152,9 +153,7 @@ UnderelementerForAktivitet.defaultProps = {
 
 const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet;
-    const stateData = state.data;
-    const dialoger = stateData.dialog.data;
-    const dialog = dialoger.find(d => d.aktivitetId === aktivitet.id);
+    const dialog = selectDialogForAktivitetId(state, aktivitet.id);
     const harDialog = !!dialog;
     const antallUlesteHenvendelser = harDialog
         ? dialog.henvendelser.filter(h => !h.lest).length

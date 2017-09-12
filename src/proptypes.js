@@ -32,7 +32,11 @@ export const dialog = PT.shape({
     lest: PT.bool,
     sisteDato: PT.string,
     sisteTekst: PT.string,
+    erLestAvBruker: PT.bool,
+    venterPaSvar: PT.bool,
+    ferdigBehandlet: PT.bool,
     henvendelser: PT.arrayOf(henvendelse).isRequired,
+    egenskaper: PT.arrayOf(PT.string),
 });
 
 export const etikett = PT.shape({
