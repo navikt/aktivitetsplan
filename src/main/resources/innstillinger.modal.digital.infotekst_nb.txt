@@ -1,1 +1,1 @@
-Digital oppfølging slås på i dialog-tjenesten og gir mulighet for å kommunisere digitalt med brukeren.
+Når du endrer til digital oppfølging, kan du ha dialog med brukeren i aktivitetsplanen.
