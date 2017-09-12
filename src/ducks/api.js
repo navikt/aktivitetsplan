@@ -6,6 +6,7 @@ import {
     PERSON_BASE_URL,
     VEILEDER_BASE_URL,
     PORTEFOLJE_BASE_URL,
+    OPPGAVE_BASE_URL,
 } from '~config'; // eslint-disable-line
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
@@ -81,4 +82,8 @@ export function slettArbeidsliste(fnr) {
     return fetchToJson(`${PORTEFOLJE_BASE_URL}/arbeidsliste/${fnr}`, {
         method: 'delete',
     });
+}
+
+export function hentBehandlendeEnheter(fnr) {
+    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter/${fnr}`);
 }

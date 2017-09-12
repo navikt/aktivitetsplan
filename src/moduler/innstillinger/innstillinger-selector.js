@@ -25,3 +25,7 @@ export function selectErManuell(state) {
 export function selectKanStarteOppfolging(state) {
     return selectInnstillingerData(state).kanStarteOppfolging;
 }
+
+export function selectBehandlendeEnheter(state) {
+    return selectInnstillingerSlice(state).behandlendeEnheter;
+}

@@ -7,6 +7,7 @@ import SettManuellOppfolgingProsess from '../sett-manuell-oppfolging/sett-manuel
 import SettDigitalOppfolgingProsess from '../sett-digital-oppfolging/sett-digital-oppfolging-prosess';
 import StartEskaleringProsess from '../start-eskalering/start-eskalering-prosess';
 import StoppEskaleringProsess from '../stopp-eskalering/stopp-eskalering-prosess';
+import OpprettOppgaveProsess from '../opprett-oppgave/opprett-oppgave-prosess';
 import InnstillingHistorikk from '../historikk/innstilling-historikk';
 import * as AppPT from '../../../proptypes';
 import InnstillingerModal from '../innstillinger-modal';
@@ -49,6 +50,7 @@ class Prosesser extends Component {
                         <SettDigitalOppfolgingProsess
                             hidden={!erUnderOppfolging || !erManuell}
                         />
+                        <OpprettOppgaveProsess />
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>
