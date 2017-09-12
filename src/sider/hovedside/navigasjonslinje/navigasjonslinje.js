@@ -32,6 +32,7 @@ import {
 } from '../../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 import history from '../../../history';
+import { selectDialoger } from '../../../moduler/dialog/dialog-selector';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -174,7 +175,7 @@ Navigasjonslinje.defaultProps = {
 
 const mapStateToProps = state => {
     const stateData = state.data;
-    const dialog = stateData.dialog.data;
+    const dialog = selectDialoger(state);
     const underOppfolging = selectErUnderOppfolging(state);
     return {
         antallUlesteDialoger: dialog
