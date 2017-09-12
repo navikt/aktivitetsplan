@@ -6,10 +6,6 @@ function selectDialogSlice(state) {
     return state.data.dialog;
 }
 
-export function selectDialogReducer(state) {
-    return state.data.dialog;
-}
-
 export function selectDialogStatus(state) {
     return selectDialogSlice(state).status;
 }
@@ -18,19 +14,13 @@ export function selectEskaleringsFilter(state) {
     return selectDialogSlice(state).esklaringsFilter;
 }
 
-export function selectEskaleringsDialoger(state) {
-    return selectDialogSlice(state).data.filter(erEskaleringsDialog);
-}
-
-export function selectDialogData(state) {
-    if (selectEskaleringsFilter(state)) {
-        return selectEskaleringsDialoger(state);
-    }
-    return selectDialogSlice(state).data;
-}
-
 export function selectDialoger(state) {
-    return selectDialogData(state).filter(d => dialogFilter(d, state));
+    const ikkeFjernDeSomIkkeErEskaleringer = !selectEskaleringsFilter(state);
+    return selectDialogSlice(state).data
+        .filter(d => dialogFilter(d, state))
+        .filter(
+            d => erEskaleringsDialog(d) || ikkeFjernDeSomIkkeErEskaleringer
+        );
 }
 
 export function selectDialogMedId(state, dialogId) {
@@ -53,5 +43,5 @@ export function selectHarUbehandledeDialoger(state) {
 }
 
 export function selectHarEskaleringer(state) {
-    return selectEskaleringsDialoger(state).length > 0;
+    return selectDialoger(state).filter(erEskaleringsDialog).length > 0;
 }
