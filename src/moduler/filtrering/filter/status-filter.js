@@ -6,16 +6,23 @@ import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetsStatus } from './filter-reducer';
 import FilterVisning from './filter-visnings-komponent';
 
+const filtreringsRekkefolge = {
+    BRUKER_ER_INTERESSERT: 0,
+    PLANLAGT: 1,
+    GJENNOMFORES: 2,
+    FULLFORT: 3,
+    AVBRUTT: 4,
+};
 function StatusFilter({
     harAktivitetStatus,
-    aktivitetStatus,
+    sortedAktivitetStatus,
     doToggleAktivitetsStatus,
     className,
 }) {
     return (
         <FilterVisning
             harAktiviteter={harAktivitetStatus}
-            filter={aktivitetStatus}
+            filter={sortedAktivitetStatus}
             filterTittel={'aktivitet.status'}
             filterTekst={'aktivitet.status.'}
             doToggleFunction={doToggleAktivitetsStatus}
@@ -30,7 +37,7 @@ StatusFilter.defaultProps = {
 
 StatusFilter.propTypes = {
     harAktivitetStatus: PT.bool.isRequired,
-    aktivitetStatus: PT.object.isRequired,
+    sortedAktivitetStatus: PT.object.isRequired,
     doToggleAktivitetsStatus: PT.func.isRequired,
     className: PT.string,
 };
@@ -43,9 +50,18 @@ const mapStateToProps = state => {
         statusliste[status] = aktivitetStatusFilter[status]; // eslint-disable-line no-param-reassign
         return statusliste;
     }, {});
+    const sortedAktivitetStatus = Object.keys(aktivitetStatus)
+        .sort((a, b) => filtreringsRekkefolge[a] - filtreringsRekkefolge[b])
+        .reduce(
+            (sortertStatusFilter, item, index) => ({
+                ...sortertStatusFilter,
+                [item]: aktivitetStatus[index],
+            }),
+            {}
+        );
     return {
-        aktivitetStatus,
-        harAktivitetStatus: Object.keys(aktivitetStatus).length > 1,
+        sortedAktivitetStatus,
+        harAktivitetStatus: Object.keys(sortedAktivitetStatus).length > 1,
     };
 };
 
