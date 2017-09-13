@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { selectAktivitetAvtaltMedNavFilter } from './filter-selector';
 import FilterVisningsKomponent from './filter-visnings-komponent';
-import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
+import { selectAlleAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetAvtaltMedNav } from './filter-reducer';
 
 function AvtaltmedNavFilter({
@@ -29,7 +29,7 @@ AvtaltmedNavFilter.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAlleAktiviter(state);
+    const aktiviteter = selectAlleAktiviterForAktuellePerioden(state);
     const harAvtaltAktivitet =
         aktiviteter.filter(aktivitet => aktivitet.avtalt).length > 1;
     const avtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
