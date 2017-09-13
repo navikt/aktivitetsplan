@@ -49,7 +49,7 @@ export default function reducer(state = initalState, action) {
         case LISTE_FJERN:
             return { ...state, status: STATUS.OK, liste: [] };
         case SLETT_MAL_OK:
-            return { ...state, status: STATUS.OK, gjeldende: null };
+            return { ...state, status: STATUS.OK, gjeldende: {} };
         default:
             return state;
     }

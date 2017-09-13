@@ -27,7 +27,7 @@ function BekreftSlettVisningContainer({
                 }}
                 avbrytAction={() =>
                     history.push(`aktivitet/vis/${valgtAktivitet.id}`)}
-                tittel="aktivitetvisning.bekreft-sletting.tittel"
+                tittelId="aktivitetvisning.bekreft-sletting.tittel"
             />
         </Modal>
     );

@@ -18,7 +18,7 @@ class AktivitetmalSlett extends Component {
                     history.push('/mal');
                 }}
                 avbrytAction={() => history.push('/mal')}
-                tittel="aktivitetsmal.bekreft-sletting.tittel"
+                tittelId="aktivitetsmal.bekreft-sletting.tittel"
             />
         );
     }
