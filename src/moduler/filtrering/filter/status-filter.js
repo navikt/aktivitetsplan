@@ -5,14 +5,27 @@ import { selectAktivitetStatusFilter } from './filter-selector';
 import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetsStatus } from './filter-reducer';
 import FilterVisning from './filter-visnings-komponent';
+import {
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_PLANLAGT,
+    STATUS_GJENNOMFOERT,
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+} from '../../../constant';
 
-const filtreringsRekkefolge = {
-    BRUKER_ER_INTERESSERT: 0,
-    PLANLAGT: 1,
-    GJENNOMFORES: 2,
-    FULLFORT: 3,
-    AVBRUTT: 4,
-};
+const filtreringsRekkefolge = [
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_PLANLAGT,
+    STATUS_GJENNOMFOERT,
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+].reduce(
+    (filteringsRekkeFolgeObjekt, vardi, index) => ({
+        ...filteringsRekkeFolgeObjekt,
+        [vardi]: index,
+    }),
+    {}
+);
 function StatusFilter({
     harAktivitetStatus,
     sortedAktivitetStatus,
