@@ -1,1 +1,1 @@
-Avslutt visningen av at bruker har fått varsel
+Avslutt visning av varsel til brukeren
