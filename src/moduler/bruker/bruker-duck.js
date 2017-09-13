@@ -29,7 +29,7 @@ export default function reducer(state = initalState, action) {
 }
 
 export function hentBruker(fnr) {
-    return doThenDispatch(() => Api.hentBruker(fnr), {
+    return doThenDispatch(() => Api.hentPerson(fnr), {
         OK: HENTET_BRUKER,
         FEILET: HENTING_AV_BRUKER_FEILET,
         PENDING: HENTER_BRUKER,

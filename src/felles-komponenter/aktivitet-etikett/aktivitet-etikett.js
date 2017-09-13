@@ -2,8 +2,8 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import visibleIfHOC from '../hocs/visible-if';
-import * as statuskoder from '../constant';
+import visibleIfHOC from '../../hocs/visible-if';
+import * as statuskoder from '../../constant';
 
 const cls = type => classNames('etikett', `etikett--${type}`);
 const setType = etikettnavn => {

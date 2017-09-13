@@ -160,3 +160,8 @@ export const arbeidsliste = PT.shape({
     isOppfolgendeVeileder: PT.bool,
     harVeilederTilgang: PT.bool,
 });
+
+export const printMelding = PT.shape({
+    overskrift: PT.string.isRequired,
+    beskrivelse: PT.string.isRequired,
+});

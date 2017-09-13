@@ -19,14 +19,14 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../constant';
-import selectBruker from '../bruker/bruker-selector';
+import { selectBruker } from '../bruker/bruker-selector';
 import {
     hentPrintMelding,
     skalVisePrintMeldingForm,
 } from './utskrift-selector';
 import { redigerPrintMelding } from './utskrift-duck';
 
-function Print({ grupper, bruker }) {
+function Print({ grupper, bruker, printMelding }) {
     return (
         <div className="print-modal-body">
             <Bilde className="nav-logo-print" src={logoPng} alt="Logo NAV" />
@@ -39,6 +39,18 @@ function Print({ grupper, bruker }) {
                 </div>
             </div>
             <h1 className="typo-systemtittel">Aktivitetsplan</h1>
+            <section className="visprintmelding">
+                <h1>
+                    {printMelding.overskrift}
+                </h1>
+                <p>
+                    {printMelding.beskrivelse}
+                </p>
+            </section>
+            <section className="vismittmal">
+                <h2>Mitt Mål</h2>
+                <div>......</div>
+            </section>
             {grupper}
         </div>
     );
@@ -47,10 +59,12 @@ function Print({ grupper, bruker }) {
 Print.propTypes = {
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
+    printMelding: AppPT.printMelding,
 };
 
 Print.defaultProps = {
     grupper: undefined,
+    printMelding: null,
 };
 
 function AktivitetsplanPrintModal({
@@ -119,13 +133,14 @@ AktivitetsplanPrintModal.propTypes = {
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
     visPrintMeldingForm: PT.bool.isRequired,
-    fortsettRedigerPrintMelding: PT.bool.isRequired,
+    fortsettRedigerPrintMelding: PT.func.isRequired,
     aktiviteter: AppPT.aktiviteter.isRequired,
-    sorterteStatusGrupper: AppPT.aktiviteter.isRequired,
+    sorterteStatusGrupper: AppPT.aktiviteter,
 };
 
 AktivitetsplanPrintModal.defaultProps = {
     grupper: undefined,
+    sorterteStatusGrupper: undefined,
 };
 
 const statusRekkefolge = [

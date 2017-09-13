@@ -23,10 +23,6 @@ export function hentPerson(fnr) {
     return fetchToJson(`${PERSON_BASE_URL}/person/${fnr}`);
 }
 
-export function hentBruker(fnr) {
-    return fetchToJson(`${BRUKER_BASE_URL}/bruker/${fnr}`);
-}
-
 export function hentDialog() {
     return fetchToJson(`${DIALOG_BASE_URL}/dialog`);
 }

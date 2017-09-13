@@ -7,6 +7,7 @@ import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet/aktivitet-forms/aktivitet-form-utils';
 import * as AppPT from '../../proptypes';
+import { storeForbokstaver } from '../../utils';
 import {
     maksLengde,
     pakrevd,
@@ -15,7 +16,7 @@ import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../felles-komponenter/skjema/input/input';
 import { hentPrintMelding } from './utskrift-selector';
 import { lagrePrintMelding } from './utskrift-duck';
-import selectBruker from '../bruker/bruker-selector';
+import { selectBruker } from '../bruker/bruker-selector';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 2000;
@@ -42,7 +43,9 @@ function PrintMeldingForm({ errorSummary, handleSubmit, lagrer, bruker }) {
                     <Innholdstittel>
                         <FormattedMessage
                             id="print-melding-form.header"
-                            values={{ bruker }}
+                            values={{
+                                FORNAVN: storeForbokstaver(bruker.fornavn),
+                            }}
                         />
                     </Innholdstittel>
                     <Undertekst>
@@ -74,11 +77,13 @@ function PrintMeldingForm({ errorSummary, handleSubmit, lagrer, bruker }) {
 PrintMeldingForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
-    lagrer: PT.bool.isRequired,
+    lagrer: PT.bool,
     bruker: AppPT.motpart.isRequired,
 };
 
-PrintMeldingForm.defaultProps = {};
+PrintMeldingForm.defaultProps = {
+    lagrer: false,
+};
 
 const PrintMeldingReduxForm = validForm({
     form: formNavn,
