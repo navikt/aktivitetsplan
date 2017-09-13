@@ -72,17 +72,29 @@ function parseError(errorData) {
     }
 }
 
-export function handterFeil(dispatch, action) {
+export function handterFeil(dispatch, FEILET_TYPE) {
     return error => {
         const response = error.response;
         if (response) {
             response.text().then(data => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
-                dispatch({ type: action, data: parseError(data) });
+                dispatch({
+                    type: FEILET_TYPE,
+                    data: {
+                        type: FEILET_TYPE,
+                        melding: parseError(data),
+                    },
+                });
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
-            dispatch({ type: action, data: error.toString() });
+            dispatch({
+                type: FEILET_TYPE,
+                data: {
+                    type: FEILET_TYPE,
+                    melding: error.toString(),
+                },
+            });
         }
         return Promise.reject(error);
     };

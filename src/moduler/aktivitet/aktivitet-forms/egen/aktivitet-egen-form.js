@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { validForm, rules } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet-form-utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
@@ -17,6 +17,10 @@ import {
 } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
+import {
+    pakrevd,
+    maksLengde,
+} from '../../../../felles-komponenter/skjema/validering';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -24,54 +28,46 @@ const LENKE_MAKS_LENGDE = 2000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 const OPPFOLGING_MAKS_LENGDE = 255;
 
-const pakrevdTittel = rules.minLength(
-    0,
-    <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tittel" />
-);
-const begrensetTittelLengde = rules.maxLength(
-    TITTEL_MAKS_LENGDE,
-    <FormattedMessage
-        id="egen-aktivitet-form.feilmelding.tittel-lengde"
-        values={{ TITTEL_MAKS_LENGDE }}
-    />
-);
-const pakrevdFraDato = rules.minLength(
-    0,
-    <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-fradato" />
-);
-const pakrevdTilDato = rules.minLength(
-    0,
-    <FormattedMessage id="egen-aktivitet-form.feilmelding.paakrevd-tildato" />
-);
-const begrensetHensiktLengde = rules.maxLength(
-    HENSIKT_MAKS_LENGDE,
-    <FormattedMessage
-        id="egen-aktivitet-form.feilmelding.hensikt-lengde"
-        values={{ HENSIKT_MAKS_LENGDE }}
-    />
-);
-const begrensetLenkeLengde = rules.maxLength(
-    LENKE_MAKS_LENGDE,
-    <FormattedMessage
-        id="egen-aktivitet-form.feilmelding.lenke-lengde"
-        values={{ LENKE_MAKS_LENGDE }}
-    />
-);
-const begrensetBeskrivelseLengde = rules.maxLength(
-    BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage
-        id="egen-aktivitet-form.feilmelding.beskrivelse-lengde"
-        values={{ BESKRIVELSE_MAKS_LENGDE }}
-    />
+function erAvtalt(verdi, props) {
+    return !!props.avtalt;
+}
+
+const pakrevdTittel = pakrevd(
+    'egen-aktivitet-form.feilmelding.paakrevd-tittel'
+).hvisIkke(erAvtalt);
+
+const begrensetTittelLengde = maksLengde(
+    'egen-aktivitet-form.feilmelding.tittel-lengde',
+    TITTEL_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const pakrevdFraDato = pakrevd(
+    'egen-aktivitet-form.feilmelding.paakrevd-fradato'
+).hvisIkke(erAvtalt);
+
+const pakrevdTilDato = pakrevd(
+    'egen-aktivitet-form.feilmelding.paakrevd-tildato'
 );
 
-const begrensetoppfolginLengde = rules.maxLength(
-    BESKRIVELSE_MAKS_LENGDE,
-    <FormattedMessage
-        id="egen-aktivitet-form.feilmelding.oppfolging-lengde"
-        values={{ OPPFOLGING_MAKS_LENGDE }}
-    />
-);
+const begrensetHensiktLengde = maksLengde(
+    'egen-aktivitet-form.feilmelding.hensikt-lengde',
+    HENSIKT_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetLenkeLengde = maksLengde(
+    'egen-aktivitet-form.feilmelding.lenke-lengde',
+    LENKE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetBeskrivelseLengde = maksLengde(
+    'egen-aktivitet-form.feilmelding.beskrivelse-lengde',
+    BESKRIVELSE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
+
+const begrensetoppfolginLengde = maksLengde(
+    'egen-aktivitet-form.feilmelding.oppfolging-lengde',
+    BESKRIVELSE_MAKS_LENGDE
+).hvisIkke(erAvtalt);
 
 class EgenAktivitetForm extends Component {
     componentDidMount() {

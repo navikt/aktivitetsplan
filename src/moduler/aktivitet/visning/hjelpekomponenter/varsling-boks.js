@@ -6,25 +6,20 @@ import { FormattedMessage } from 'react-intl';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import {
     selectDialogForAktivitetId,
-    selectDialogReducer,
+    selectDialogStatus,
 } from '../../../dialog/dialog-selector';
 import * as AppPT from '../../../../proptypes';
 import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
 import { MOTE_TYPE } from '../../../../constant';
 import {
     selectErVeileder,
-    selectIdentitetReducer,
+    selectIdentitetStatus,
 } from '../../../identitet/identitet-selector';
 
-function VarslingBoks({
-    identitetReducer,
-    dialogReducer,
-    visVarselOmManglendeDialog,
-    ...rest
-}) {
+function VarslingBoks({ avhengigheter, visVarselOmManglendeDialog, ...rest }) {
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
-            <Innholdslaster avhengigheter={[identitetReducer, dialogReducer]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <HiddenIfDiv {...rest} hidden={!visVarselOmManglendeDialog}>
                     <AlertStripeAdvarsel className="varsling-boks">
                         <FormattedMessage id="mote.varsling.ingen-dialog" />
@@ -36,16 +31,17 @@ function VarslingBoks({
 }
 
 VarslingBoks.propTypes = {
-    identitetReducer: AppPT.reducer.isRequired,
-    dialogReducer: AppPT.reducer.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     visVarselOmManglendeDialog: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet;
     return {
-        identitetReducer: selectIdentitetReducer(state),
-        dialogReducer: selectDialogReducer(state),
+        avhengigheter: [
+            selectIdentitetStatus(state),
+            selectDialogStatus(state),
+        ],
         visVarselOmManglendeDialog:
             aktivitet.type === MOTE_TYPE &&
             selectErVeileder(state) &&
