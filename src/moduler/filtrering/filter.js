@@ -17,6 +17,11 @@ import StatusFilter from './filter/status-filter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
 
 const filterClassNames = classes => classNames(classes, 'filter');
+const aktivitetEquals = (a, b) =>
+    a.status === b.status &&
+    a.type === b.type &&
+    a.etikett === b.etikett &&
+    a.avtalt === b.avtalt;
 
 function Filter({ avhengigheter, harAktivitet, className }) {
     return (
@@ -58,7 +63,9 @@ Filter.defaultProps = {
 
 const mapStateToProps = state => {
     const aktiviteter = selectAlleAktiviter(state);
-    const harAktivitet = aktiviteter.length > 1;
+    const harAktivitet =
+        aktiviteter.length > 1 &&
+        !aktivitetEquals(aktiviteter[0], aktiviteter[1]);
     return {
         avhengigheter: [selectAktivitetListeReducer(state)],
         harAktivitet,
