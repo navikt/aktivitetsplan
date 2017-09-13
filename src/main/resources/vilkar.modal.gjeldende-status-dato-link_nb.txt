@@ -1,4 +1,4 @@
-Vilkår { status, select,
+Vilkårene ble { status, select,
 AVSLATT {avslått}
 GODKJENT {godkjent}
 IKKE_BESVART {ikke besvart}
