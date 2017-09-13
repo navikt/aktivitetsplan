@@ -3,11 +3,10 @@ import PT from 'prop-types';
 import AktivitetEtikett from './aktivitet-etikett';
 import { AVTALT_MED_NAV } from '../../constant';
 import * as AppPT from '../../proptypes';
-import HiddenIfDiv from '../../felles-komponenter/hidden-if/hidden-if';
 
 function AktivitetEtikettGruppe({ avtalt, etikett, className }) {
     return (
-        <HiddenIfDiv hidden={!avtalt && !etikett} className={className}>
+        <div className={className}>
             <AktivitetEtikett
                 hidden={!avtalt}
                 etikett={AVTALT_MED_NAV}
@@ -19,7 +18,7 @@ function AktivitetEtikettGruppe({ avtalt, etikett, className }) {
                 etikett={etikett}
                 id={`etikett.${etikett}`}
             />
-        </HiddenIfDiv>
+        </div>
     );
 }
 
