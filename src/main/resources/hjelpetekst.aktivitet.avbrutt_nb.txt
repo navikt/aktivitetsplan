@@ -1,1 +1,1 @@
-Aktiviteter som legges her blir låst og kan ikke redigeres.
+Flytt aktiviteter hit som du avbryter eller ikke begynner på likevel. Aktiviteter du flytter hit blir låst og kan ikke redigeres.
