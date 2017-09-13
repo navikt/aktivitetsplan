@@ -1,1 +1,1 @@
-Send §8 varsel til bruker som ikke lenger er i ferd med å miste rett til oppfølging.
+BRukeren har respondert på varselet og gjennomført aktiviteten, oppgaven eller møtet. 
