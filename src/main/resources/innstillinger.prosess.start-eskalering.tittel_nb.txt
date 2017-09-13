@@ -1,1 +1,1 @@
-Eskaler bruker og send varsel
+Send varsel til brukeren
