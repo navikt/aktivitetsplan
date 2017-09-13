@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import visibleIfHOC from '../../hocs/visible-if';
+import hiddenIfHOC from '../../felles-komponenter/hidden-if/hidden-if';
 import * as statuskoder from '../../constant';
 
 const cls = type => classNames('etikett', `etikett--${type}`);
@@ -39,4 +39,4 @@ AktivitetEtikett.propTypes = {
     id: PT.string.isRequired,
 };
 
-export default visibleIfHOC(AktivitetEtikett);
+export default hiddenIfHOC(AktivitetEtikett);

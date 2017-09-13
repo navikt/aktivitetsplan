@@ -27,7 +27,6 @@ function PrintHeader({
                         tekstId={tilbakeTekstId}
                         tekstValues={tilbakeTekstValues}
                         visConfirmDialog={visConfirmDialog}
-                        h
                     />}
                 {children}
                 {normalTekstId &&

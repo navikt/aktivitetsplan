@@ -1,12 +1,9 @@
-import { STATUS } from '../../ducks/utils';
-
 // Actions
 export const LAGRER_PRINTMELDING = 'utskrift/lagre-printmelding';
 export const REDIGER_PRINTMELDING = 'utskrift/rediger-printmelding';
 
 const initalState = {
     data: {},
-    status: STATUS.OK,
 };
 
 // Reducer

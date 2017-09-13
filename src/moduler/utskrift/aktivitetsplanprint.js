@@ -59,15 +59,15 @@ function Print({ grupper, bruker, printMelding }) {
 Print.propTypes = {
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
-    printMelding: AppPT.printMelding,
+    printMelding: AppPT.printMelding.isRequired,
 };
 
 Print.defaultProps = {
-    grupper: undefined,
-    printMelding: null,
+    grupper: [],
 };
 
 function AktivitetsplanPrintModal({
+    printMelding,
     sorterteStatusGrupper,
     visPrintMeldingForm,
     fortsettRedigerPrintMelding,
@@ -118,7 +118,11 @@ function AktivitetsplanPrintModal({
             className="aktivitetsplanprint"
             header={header}
         >
-            <Print grupper={grupper} bruker={bruker} />
+            <Print
+                grupper={grupper}
+                bruker={bruker}
+                printMelding={printMelding}
+            />
         </Modal>
     );
 
@@ -130,6 +134,7 @@ function AktivitetsplanPrintModal({
 }
 
 AktivitetsplanPrintModal.propTypes = {
+    printMelding: AppPT.printMelding,
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
     visPrintMeldingForm: PT.bool.isRequired,
@@ -139,6 +144,7 @@ AktivitetsplanPrintModal.propTypes = {
 };
 
 AktivitetsplanPrintModal.defaultProps = {
+    printMelding: undefined,
     grupper: undefined,
     sorterteStatusGrupper: undefined,
 };

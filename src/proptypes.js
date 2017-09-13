@@ -163,5 +163,5 @@ export const arbeidsliste = PT.shape({
 
 export const printMelding = PT.shape({
     overskrift: PT.string.isRequired,
-    beskrivelse: PT.string.isRequired,
+    beskrivelse: PT.string,
 });
