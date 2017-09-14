@@ -1,1 +1,1 @@
-Avslutt eskalering og send en melding til bruker.
+Send en melding til brukeren.
