@@ -19,7 +19,7 @@ import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
 import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
-import { selectDialogData } from '../moduler/dialog/dialog-selector';
+import { selectDialogMedId } from '../moduler/dialog/dialog-selector';
 import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
 import DialogFilter from './filter-dialoger';
 
@@ -229,8 +229,7 @@ const mapStateToProps = (state, props) => {
     const { match } = props;
     const { id } = match.params;
     const motpart = selectMotpartReducer(state);
-    const dialoger = selectDialogData(state);
-    const valgtDialog = dialoger.find(d => d.id === id);
+    const valgtDialog = selectDialogMedId(state, id);
     const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
 
     const harNyDialog = id === 'ny';
