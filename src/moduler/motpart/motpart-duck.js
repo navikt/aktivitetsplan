@@ -25,7 +25,11 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 status: STATUS.OK,
                 data: {
-                    navn: storeForbokstaver(data.sammensattNavn),
+                    navn: storeForbokstaver(
+                        data.fornavn,
+                        data.mellomnavn,
+                        data.etternavn
+                    ),
                 },
             };
         case HENTING_AV_PERSON_FEILET:
