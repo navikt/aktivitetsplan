@@ -1,1 +1,1 @@
-Flytt aktiviteter hit som du er ferdig med. Aktiviteter du flytter hit blir låst og kan ikke redigeres.
+Flytt aktiviteter hit som du er ferdig med. Aktiviteter du flytter hit blir låst og kan ikke redigeres. Hvis du angrer, oppretter du en ny tilsvarende aktivitet. 
