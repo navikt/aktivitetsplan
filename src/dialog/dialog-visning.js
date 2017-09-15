@@ -84,7 +84,7 @@ class DialogVisning extends React.Component {
                 href={`/dialog/${dialog.id}`}
             >
                 <Markering visible={!dialog.lest} />
-                <div>
+                <div className="dialoger__dialog--smuler">
                     <Info>
                         <Dato>
                             {dialog.sisteDato}

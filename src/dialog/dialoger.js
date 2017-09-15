@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import {
-    selectDialogData,
+    selectDialoger,
     selectDialogStatus,
 } from '../moduler/dialog/dialog-selector';
 import DialogVisning from './dialog-visning';
@@ -37,9 +37,9 @@ class Dialoger extends React.Component {
 
         const erTabBar = dialog =>
             dialog === valgtDialog ||
-            (valgtDialog === null && dialog.id === dialoger[0].id);
+            (valgtDialog === null && dialog.id === dialogerSortert[0].id);
         const valgtDialogIndex =
-            valgtDialog !== null ? dialoger.indexOf(valgtDialog) : 0;
+            valgtDialog !== null ? dialogerSortert.indexOf(valgtDialog) : 0;
         const dialogRefs = {};
 
         const byttTilNyDialog = id => {
@@ -48,12 +48,12 @@ class Dialoger extends React.Component {
         };
 
         const fokusForrigeDialog = () => {
-            const nydialogId = dialoger[valgtDialogIndex - 1].id;
+            const nydialogId = dialogerSortert[valgtDialogIndex - 1].id;
             byttTilNyDialog(nydialogId);
         };
 
         const fokusNesteDialog = () => {
-            const nydialogId = dialoger[valgtDialogIndex + 1].id;
+            const nydialogId = dialogerSortert[valgtDialogIndex + 1].id;
             byttTilNyDialog(nydialogId);
         };
 
@@ -128,7 +128,7 @@ DialogerMedInnholdslaster.propTypes = {
 
 const mapStateToProps = state => ({
     avhengigheter: [selectDialogStatus(state)],
-    dialoger: selectDialogData(state),
+    dialoger: selectDialoger(state),
     aktiviteter: selectAlleAktiviter(state),
     erBruker: selectErBruker(state),
     gjeldendeEskaleringsvarsel: selectGjeldendeEskaleringsVarsel(state),

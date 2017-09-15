@@ -99,13 +99,14 @@ class UnderelementerForAktivitet extends Component {
                         </TallAlert>
                     </HiddenIfSpan>
 
-                    <button
+                    <HiddenIfButton
+                        hidden={aktivitet.arenaAktivitet}
                         value={HISTORIKK}
                         className={historikknappCls(visHistorikk)}
                         onClick={this.toggleHistorikk}
                     >
                         <FormattedMessage id="aktivitetvisning.historikk-knapp" />
-                    </button>
+                    </HiddenIfButton>
                 </div>
 
                 <VersjonerForAktivitet

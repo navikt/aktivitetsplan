@@ -1,7 +1,7 @@
 @import '../variables';
 @import './dialoger';
 
-@dialogkort-bredde: 333px;
+@dialogkort-bredde: 400px;
 @tilbakeknapp-storrelse: 2.25rem;
 
 // overstyring av default modal
@@ -113,7 +113,7 @@
 }
 
 .dialog-modal__kolonne--dialoger {
-    width: 100%;
+    width: @dialogkort-bredde;
     background-color: @white;
     z-index: 1;
 }
