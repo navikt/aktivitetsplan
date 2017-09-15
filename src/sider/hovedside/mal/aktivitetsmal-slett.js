@@ -15,7 +15,7 @@ class AktivitetmalSlett extends Component {
         const { doSlettMal, malData } = this.props;
         const bekrefSlettingAvMalListe =
             malData.length > 1
-                ? 'aktivitetsmal.bekreft-slettning.undertittel'
+                ? 'aktivitetsmal.bekreft-sletting.undertittel'
                 : null;
         return (
             <BekreftSlettVisning
