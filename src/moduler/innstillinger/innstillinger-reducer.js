@@ -186,7 +186,9 @@ export function startEskalering(eskaleringData) {
                 const dialogId = henvendelse.data.id;
                 dispatch(oppdaterVenterPaSvar(dialogId, true));
                 dispatch(oppdaterFerdigbehandlet(dialogId, true));
-                dispatch(startEskaleringMedDialog(dialogId, begrunnelse));
+                return dispatch(
+                    startEskaleringMedDialog(dialogId, begrunnelse)
+                );
             })
             .then(() => dispatch(hentSituasjon()))
             .then(() =>
@@ -213,7 +215,7 @@ export function stoppEskalering(stoppEskaleringData) {
                 egenskaper: ['ESKALERINGSVARSEL'],
             })
         )
-            .then(dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
+            .then(() => dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
             .then(() => dispatch(hentSituasjon()))
             .then(() =>
                 history.push('/innstillinger/stoppEskalering/kvittering')
