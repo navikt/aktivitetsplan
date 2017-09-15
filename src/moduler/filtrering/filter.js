@@ -15,6 +15,7 @@ import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
+import { aktivitetEquals } from '../aktivitet/aktivitet-util';
 
 const filterClassNames = classes => classNames(classes, 'filter');
 
@@ -58,7 +59,9 @@ Filter.defaultProps = {
 
 const mapStateToProps = state => {
     const aktiviteter = selectAlleAktiviter(state);
-    const harAktivitet = aktiviteter.length > 1;
+    const harAktivitet =
+        aktiviteter.length > 1 &&
+        !aktivitetEquals(aktiviteter[0], aktiviteter[1]);
     return {
         avhengigheter: [selectAktivitetListeReducer(state)],
         harAktivitet,
