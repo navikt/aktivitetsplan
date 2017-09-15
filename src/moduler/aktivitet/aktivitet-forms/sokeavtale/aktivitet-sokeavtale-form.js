@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm } from 'react-redux-form-validation';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import LagreAktivitet from '../lagre-aktivitet';
 import { formNavn } from '../aktivitet-form-utils';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
@@ -88,6 +88,7 @@ class SokeAvtaleAktivitetForm extends Component {
             intl,
             avtalt,
         } = this.props;
+        const erAktivitetAvtalt = avtalt === true;
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
@@ -122,7 +123,7 @@ class SokeAvtaleAktivitetForm extends Component {
                         <div className="dato-container">
                             <Datovelger
                                 feltNavn="fraDato"
-                                disabled={avtalt === true}
+                                disabled={erAktivitetAvtalt}
                                 labelId="sokeavtale-aktivitet-form.label.fra-dato"
                                 senesteTom={currentTilDato}
                             />
@@ -136,30 +137,26 @@ class SokeAvtaleAktivitetForm extends Component {
 
                     <Input
                         feltNavn="antallStillingerSokes"
-                        disabled={avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="sokeavtale-aktivitet-form.label.antall"
                         bredde="s"
                     />
                     <Textarea
                         feltNavn="avtaleOppfolging"
-                        disabled={avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="sokeavtale-aktivitet-form.label.avtale-oppfolging"
                         maxLength={OPPFOLGING_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                     <Textarea
                         feltNavn="beskrivelse"
-                        disabled={avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="sokeavtale-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                 </div>
-                <div className="aktivitetskjema__lagre-knapp">
-                    <Hovedknapp>
-                        <FormattedMessage id="aktivitet-form.lagre" />
-                    </Hovedknapp>
-                </div>
+                <LagreAktivitet />
             </form>
         );
     }
