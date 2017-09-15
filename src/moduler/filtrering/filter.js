@@ -15,13 +15,9 @@ import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
+import { aktivitetEquals } from '../aktivitet/aktivitet-util';
 
 const filterClassNames = classes => classNames(classes, 'filter');
-const aktivitetEquals = (a, b) =>
-    a.status === b.status &&
-    a.type === b.type &&
-    a.etikett === b.etikett &&
-    a.avtalt === b.avtalt;
 
 function Filter({ avhengigheter, harAktivitet, className }) {
     return (
