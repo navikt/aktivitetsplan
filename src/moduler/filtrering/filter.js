@@ -58,10 +58,10 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                             className="dropdown--alignright"
                         >
                             <div className="filter__container">
-                                <TypeFilter />
-                                <StatusFilter />
-                                <EtikettFilter />
                                 <AvtaltMedNavFilter />
+                                <EtikettFilter />
+                                <StatusFilter />
+                                <TypeFilter />
                             </div>
                         </Dropdown>}
                 </FormattedMessage>
