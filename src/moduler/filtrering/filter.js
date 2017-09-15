@@ -8,7 +8,7 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
 import {
-    selectAktivitetListeReducer,
+    selectAktivitetListeStatus,
     selectAlleAktiviter,
 } from '../aktivitet/aktivitetliste-selector';
 import TypeFilter from './filter/type-filter';
@@ -39,8 +39,6 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
         (acc, key) => muligeFilterKombinasjoner[key].size > 1 || acc,
         false
     );
-
-    // return reduce;
 }
 
 function Filter({ avhengigheter, harAktivitet, className }) {
@@ -71,7 +69,7 @@ function Filter({ avhengigheter, harAktivitet, className }) {
 }
 
 Filter.propTypes = {
-    avhengigheter: PT.arrayOf(AppPT.reducer).isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     harAktivitet: PT.bool,
     className: PT.string,
 };
@@ -87,7 +85,7 @@ const mapStateToProps = state => {
         aktiviteter.length > 1 &&
         sjekkAttFinnesFilteringsAlternativ(aktiviteter);
     return {
-        avhengigheter: [selectAktivitetListeReducer(state)],
+        avhengigheter: [selectAktivitetListeStatus(state)],
         harAktivitet,
     };
 };
