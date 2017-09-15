@@ -8,8 +8,8 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
 import {
+    selectAktiviterForAktuellePerioden,
     selectAktivitetListeReducer,
-    selectAlleAktiviter,
 } from '../aktivitet/aktivitetliste-selector';
 import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
@@ -57,7 +57,7 @@ Filter.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAlleAktiviter(state);
+    const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const harAktivitet = aktiviteter.length > 1;
     return {
         avhengigheter: [selectAktivitetListeReducer(state)],

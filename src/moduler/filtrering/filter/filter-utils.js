@@ -66,7 +66,7 @@ export function aktivitetFilter(aktivitet, state) {
         }
     }
 
-    return datoErIPeriode(aktivitet.opprettetDato, state);
+    return true;
 }
 
 export function dialogFilter(dialog, state) {

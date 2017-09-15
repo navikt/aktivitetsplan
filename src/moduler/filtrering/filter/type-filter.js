@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleAktivitetsType } from './filter-reducer';
 import { selectAktivitetTyperFilter } from './filter-selector';
-import { selectAlleAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import FilterVisningsKomponent from './filter-visnings-komponent';
 
 function TypeFilter({
@@ -29,7 +29,7 @@ TypeFilter.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAlleAktiviterForAktuellePerioden(state);
+    const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
     const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
         const type = aktivitet.type;

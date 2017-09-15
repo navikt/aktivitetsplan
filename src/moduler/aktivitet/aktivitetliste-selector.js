@@ -27,12 +27,6 @@ export function selectAlleAktiviter(state) {
 }
 
 export function selectAktiviterForAktuellePerioden(state) {
-    return selectAktiviter(state).filter(a =>
-        datoErIPeriode(a.opprettetDato, state)
-    );
-}
-
-export function selectAlleAktiviterForAktuellePerioden(state) {
     return selectAlleAktiviter(state).filter(a =>
         datoErIPeriode(a.opprettetDato, state)
     );
@@ -40,7 +34,7 @@ export function selectAlleAktiviterForAktuellePerioden(state) {
 
 export function selectAktivitetListe(state) {
     const privatModus = selectErPrivatModus(state);
-    return selectAlleAktiviter(state)
+    return selectAktiviterForAktuellePerioden(state)
         .filter(a => !privatModus || a.historisk || a.arenaAktivitet)
         .filter(a => aktivitetFilter(a, state));
 }
