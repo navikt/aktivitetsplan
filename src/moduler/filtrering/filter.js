@@ -18,6 +18,31 @@ import AvtaltMedNavFilter from './filter/avtalt-filter';
 
 const filterClassNames = classes => classNames(classes, 'filter');
 
+function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
+    const muligeFilterKombinasjoner = aktivitetsListe.reduce(
+        (res, aktivitet) => {
+            res.status.add(aktivitet.status);
+            res.type.add(aktivitet.type);
+            res.etikket.add(aktivitet.etikett);
+            res.avtalt.add(aktivitet.avtalt);
+            return res;
+        },
+        {
+            status: new Set(),
+            type: new Set(),
+            etikket: new Set(),
+            avtalt: new Set(),
+        }
+    );
+
+    return Object.keys(muligeFilterKombinasjoner).reduce(
+        (acc, key) => muligeFilterKombinasjoner[key].size > 1 || acc,
+        false
+    );
+
+    // return reduce;
+}
+
 function Filter({ avhengigheter, harAktivitet, className }) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
@@ -58,7 +83,9 @@ Filter.defaultProps = {
 
 const mapStateToProps = state => {
     const aktiviteter = selectAlleAktiviter(state);
-    const harAktivitet = aktiviteter.length > 1;
+    const harAktivitet =
+        aktiviteter.length > 1 &&
+        sjekkAttFinnesFilteringsAlternativ(aktiviteter);
     return {
         avhengigheter: [selectAktivitetListeReducer(state)],
         harAktivitet,
