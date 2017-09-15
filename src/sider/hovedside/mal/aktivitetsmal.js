@@ -19,13 +19,18 @@ import AktivitetsmalModal from './aktivitetsmal-modal';
 import hiddenIf, {
     div as HiddenIfDiv,
 } from '../../../felles-komponenter/hidden-if/hidden-if';
-import { HiddenIfHovedknapp } from '../../../felles-komponenter/hidden-if/hidden-if-knapper';
+import {
+    HiddenIfHovedknapp,
+    HiddenIfKnapp,
+} from '../../../felles-komponenter/hidden-if/hidden-if-knapper';
 import {
     selectGjeldendeMal,
     selectMalListe,
     selectMalStatus,
 } from '../../../moduler/mal/mal-selector';
 import { selectViserHistoriskPeriode } from '../../../moduler/filtrering/filter/filter-selector';
+import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
+import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 
@@ -87,9 +92,15 @@ class AktivitetsMal extends Component {
     };
 
     render() {
-        const { mal, malListe, malStatus, historiskVisning } = this.props;
+        const {
+            mal,
+            malListe,
+            malStatus,
+            historiskVisning,
+            kanSletteMal,
+        } = this.props;
         const malet = mal && mal.mal;
-        const malOpprettet = !!malet;
+        const harMal = !!malet;
         const historikkVises = this.state.visHistoriskeMal;
         const historiskeMal = malListe.slice(1, malListe.length);
 
@@ -98,19 +109,26 @@ class AktivitetsMal extends Component {
                 <section className="aktivitetmal">
                     <div className="aktivitetmal__innhold">
                         <ManglendeMalInformasjon
-                            hidden={malOpprettet}
+                            hidden={harMal}
                             historiskVisning={historiskVisning}
                         />
                         <Tekstomrade className="aktivitetmal__tekst">
                             {malet}
                         </Tekstomrade>
+                        <HiddenIfKnapp
+                            onClick={() => history.push('mal/slett/')}
+                            className="aktivitetmal__slett-knapp"
+                            hidden={!harMal || !kanSletteMal}
+                        >
+                            <FormattedMessage id="aktivitetvisning.slett-knapp" />
+                        </HiddenIfKnapp>
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
                             hidden={historiskVisning}
                         >
                             <FormattedMessage
                                 id={
-                                    malOpprettet
+                                    harMal
                                         ? 'aktivitetsmal.rediger'
                                         : 'aktivitetsmal.opprett'
                                 }
@@ -152,6 +170,7 @@ AktivitetsMal.propTypes = {
     doFjernMalListe: PT.func.isRequired,
     malStatus: AppPT.status.isRequired,
     historiskVisning: PT.bool.isRequired,
+    kanSletteMal: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -159,6 +178,7 @@ const mapStateToProps = state => ({
     malListe: selectMalListe(state),
     malStatus: selectMalStatus(state),
     historiskVisning: selectViserHistoriskPeriode(state),
+    kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
 });
 
 const mapDispatchToProps = dispatch => ({

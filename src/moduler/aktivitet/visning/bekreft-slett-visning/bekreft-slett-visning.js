@@ -6,7 +6,15 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { Knapp, Fareknapp } from 'nav-frontend-knapper';
 import stopSvg from './stop.svg';
 
-function BekreftSlettVisning({ slettAction, avbrytAction }) {
+function BekreftSlettVisning({
+    slettAction,
+    avbrytAction,
+    tittelId,
+    undertekstId,
+}) {
+    const underTekst = undertekstId
+        ? <FormattedMessage id={undertekstId} />
+        : null;
     return (
         <div className="bekreft-slett-container">
             <header className="modal-header" />
@@ -20,8 +28,9 @@ function BekreftSlettVisning({ slettAction, avbrytAction }) {
                 tag="h1"
                 className="bekreft-slett-container__stop-tekst"
             >
-                <FormattedMessage id="aktivitetvisning.bekreft-sletting.tittel" />
+                <FormattedMessage id={tittelId} />
             </Systemtittel>
+            {underTekst}
             <div className="bekreft-slett-container__button-row">
                 <Fareknapp
                     onClick={slettAction}
@@ -41,6 +50,8 @@ function BekreftSlettVisning({ slettAction, avbrytAction }) {
 BekreftSlettVisning.propTypes = {
     slettAction: PT.func.isRequired,
     avbrytAction: PT.func.isRequired,
+    tittelId: PT.string.isRequired,
+    undertekstId: PT.string.isRequired,
 };
 
 export default BekreftSlettVisning;
