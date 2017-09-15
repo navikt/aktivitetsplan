@@ -4,6 +4,7 @@ import PT from 'prop-types';
 function FeilmeldingDetaljer({
     feilId,
     action,
+    httpStatus,
     detaljertType,
     feilMelding,
     stackTrace,
@@ -15,6 +16,9 @@ function FeilmeldingDetaljer({
             </div>
             <div>
                 {action}
+            </div>
+            <div>
+                {httpStatus}
             </div>
             <div>
                 {detaljertType}
@@ -32,6 +36,7 @@ function FeilmeldingDetaljer({
 FeilmeldingDetaljer.defaultProps = {
     feilId: null,
     action: null,
+    httpStatus: null,
     detaljertType: null,
     feilMelding: null,
     stackTrace: null,
@@ -40,6 +45,7 @@ FeilmeldingDetaljer.defaultProps = {
 FeilmeldingDetaljer.propTypes = {
     feilId: PT.string,
     action: PT.string,
+    httpStatus: PT.number,
     detaljertType: PT.string,
     feilMelding: PT.string,
     stackTrace: PT.string,

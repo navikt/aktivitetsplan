@@ -127,9 +127,13 @@ export const oppfolgingsPeriode = PT.shape({
 });
 
 export const feil = PT.shape({
-    is: PT.string,
-    type: PT.string.isRequired,
-    detaljer: PT.object,
+    type: PT.string,
+    httpStatus: PT.number,
+    melding: PT.shape({
+        id: PT.string,
+        type: PT.string.isRequired,
+        detaljer: PT.object,
+    }),
 });
 
 export const innstillingHistorikk = PT.shape({
