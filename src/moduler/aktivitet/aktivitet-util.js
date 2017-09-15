@@ -2,6 +2,15 @@ import moment from 'moment';
 import 'moment-duration-format';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
 
+export function aktivitetEquals(a, b) {
+    return (
+        a.status === b.status &&
+        a.type === b.type &&
+        a.etikett === b.etikett &&
+        a.avtalt === b.avtalt
+    );
+}
+
 export function beregnKlokkeslettVarighet(aktivitet) {
     const fraDato = aktivitet.fraDato;
     const tilDato = aktivitet.tilDato;
