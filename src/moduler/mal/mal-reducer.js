@@ -14,6 +14,10 @@ export const OPPDATER_OK = 'oppdaterMal/OK';
 export const OPPDATER_FEILET = 'oppdaterMal/FEILET';
 export const OPPDATER_PENDING = 'oppdaterMal/PENDING';
 
+export const SLETT_MAL_OK = 'slettMal/OK';
+export const SLETT_MAL_FEILET = 'slettMal/FEILET';
+export const SLETT_MAL_PENDING = 'slettMal/PENDING';
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     gjeldende: {},
@@ -44,6 +48,8 @@ export default function reducer(state = initalState, action) {
             return { ...state, status: STATUS.OK, liste: action.data };
         case LISTE_FJERN:
             return { ...state, status: STATUS.OK, liste: [] };
+        case SLETT_MAL_OK:
+            return { ...state, status: STATUS.OK, gjeldende: {} };
         default:
             return state;
     }
@@ -78,4 +84,18 @@ export function oppdaterMal(mal) {
         FEILET: OPPDATER_FEILET,
         PENDING: OPPDATER_PENDING,
     });
+}
+
+export function slettMal() {
+    return dispatch => {
+        const slettMalAction = doThenDispatch(() => Api.slettMal(), {
+            OK: SLETT_MAL_OK,
+            FEILET: SLETT_MAL_FEILET,
+            PENDING: SLETT_MAL_PENDING,
+        });
+        return dispatch(slettMalAction).then(data => {
+            dispatch(hentMalListe());
+            return data;
+        });
+    };
 }
