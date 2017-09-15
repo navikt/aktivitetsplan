@@ -6,7 +6,6 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm } from 'react-redux-form-validation';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet-form-utils';
 import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
@@ -21,6 +20,7 @@ import {
     pakrevd,
     maksLengde,
 } from '../../../../felles-komponenter/skjema/validering';
+import LagreAktivitet from '../lagre-aktivitet';
 
 const EFFEKT_MAKS_LENGDE = 255;
 const OPPFOLGING_MAKS_LENGDE = 255;
@@ -100,6 +100,7 @@ class BehandlingAktivitetForm extends Component {
             intl,
             avtalt,
         } = this.props;
+        const erAktivitetAvtalt = avtalt === true;
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
@@ -117,13 +118,13 @@ class BehandlingAktivitetForm extends Component {
 
                     <Input
                         feltNavn="behandlingType"
-                        disabled={avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="behandling-aktivitet-form.label.behandling-type"
                         bredde="fullbredde"
                     />
                     <Input
                         feltNavn="behandlingSted"
-                        disabled={avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="behandling-aktivitet-form.label.behandling-sted"
                         bredde="fullbredde"
                     />
@@ -140,7 +141,7 @@ class BehandlingAktivitetForm extends Component {
                         <div className="dato-container">
                             <Datovelger
                                 feltNavn="fraDato"
-                                disabled={avtalt === true}
+                                disabled={erAktivitetAvtalt}
                                 labelId="behandling-aktivitet-form.label.fra-dato"
                                 senesteTom={currentTilDato}
                             />
@@ -154,29 +155,25 @@ class BehandlingAktivitetForm extends Component {
 
                     <Input
                         feltNavn="effekt"
-                        disabled={avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="behandling-aktivitet-form.label.effekt"
                         bredde="fullbredde"
                     />
                     <Textarea
                         feltNavn="beskrivelse"
-                        disabled={avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="behandling-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                     <Input
                         feltNavn="behandlingOppfolging"
-                        disabled={avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="behandling-aktivitet-form.label.avtale-oppfolging"
                         bredde="fullbredde"
                     />
                 </div>
-                <div className="aktivitetskjema__lagre-knapp">
-                    <Hovedknapp>
-                        <FormattedMessage id="aktivitet-form.lagre" />
-                    </Hovedknapp>
-                </div>
+                <LagreAktivitet />
             </form>
         );
     }

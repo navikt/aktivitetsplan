@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { validForm } from 'react-redux-form-validation';
 import { formNavn } from '../aktivitet-form-utils';
+import LagreAktivitet from '../lagre-aktivitet';
 import { dateToISODate } from '../../../../utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
@@ -93,10 +93,20 @@ class StillingAktivitetForm extends Component {
     }
 
     render() {
+        const props = this.props;
+        const {
+            intl,
+            currentFraDato,
+            currentTilDato,
+            handleSubmit,
+            errorSummary,
+            avtalt,
+        } = props;
+        const erAktivitetAvtalt = avtalt === true;
         return (
-            <form onSubmit={this.props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className="skjema-innlogget aktivitetskjema">
-                    {this.props.errorSummary}
+                    {errorSummary}
                     <div className="aktivitetskjema__header">
                         <Innholdstittel>
                             <FormattedMessage id="stilling-aktivitet-form.header" />
@@ -110,15 +120,15 @@ class StillingAktivitetForm extends Component {
 
                     <Input
                         feltNavn="tittel"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="stilling-aktivitet-form.label.overskrift"
                     />
 
                     <PeriodeValidering
                         feltNavn="periodeValidering"
-                        fraDato={this.props.currentFraDato}
-                        tilDato={this.props.currentTilDato}
-                        errorMessage={this.props.intl.formatMessage({
+                        fraDato={currentFraDato}
+                        tilDato={currentTilDato}
+                        errorMessage={intl.formatMessage({
                             id:
                                 'datepicker.feilmelding.stilling.fradato-etter-frist',
                         })}
@@ -126,51 +136,47 @@ class StillingAktivitetForm extends Component {
                         <div className="dato-container">
                             <Datovelger
                                 feltNavn="fraDato"
-                                disabled={this.props.avtalt === true}
+                                disabled={erAktivitetAvtalt}
                                 labelId="stilling-aktivitet-form.label.fra-dato"
-                                senesteTom={this.props.currentTilDato}
+                                senesteTom={currentTilDato}
                             />
                             <Datovelger
                                 feltNavn="tilDato"
                                 labelId="stilling-aktivitet-form.label.til-dato"
-                                tidligsteFom={this.props.currentFraDato}
+                                tidligsteFom={currentFraDato}
                             />
                         </div>
                     </PeriodeValidering>
 
                     <Input
                         feltNavn="lenke"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="stilling-aktivitet-form.label.lenke"
                     />
                     <Textarea
                         feltNavn="beskrivelse"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="stilling-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                     <Input
                         feltNavn="arbeidssted"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="stilling-aktivitet-form.label.arbeidssted"
                     />
                     <Input
                         feltNavn="arbeidsgiver"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="stilling-aktivitet-form.label.arbeidsgiver"
                     />
                     <Input
                         feltNavn="kontaktperson"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="stilling-aktivitet-form.label.kontaktperson"
                     />
                 </div>
-                <div className="aktivitetskjema__lagre-knapp">
-                    <Hovedknapp>
-                        <FormattedMessage id="aktivitet-form.lagre" />
-                    </Hovedknapp>
-                </div>
+                <LagreAktivitet />
             </form>
         );
     }

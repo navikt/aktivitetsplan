@@ -6,7 +6,6 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm } from 'react-redux-form-validation';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet-form-utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
@@ -21,6 +20,7 @@ import {
     pakrevd,
     maksLengde,
 } from '../../../../felles-komponenter/skjema/validering';
+import LagreAktivitet from '../lagre-aktivitet';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -66,7 +66,7 @@ const begrensetBeskrivelseLengde = maksLengde(
 
 const begrensetoppfolginLengde = maksLengde(
     'egen-aktivitet-form.feilmelding.oppfolging-lengde',
-    BESKRIVELSE_MAKS_LENGDE
+    OPPFOLGING_MAKS_LENGDE
 ).hvisIkke(erAvtalt);
 
 class EgenAktivitetForm extends Component {
@@ -90,10 +90,20 @@ class EgenAktivitetForm extends Component {
     }
 
     render() {
+        const props = this.props;
+        const {
+            intl,
+            currentFraDato,
+            currentTilDato,
+            handleSubmit,
+            errorSummary,
+            avtalt,
+        } = props;
+        const erAktivitetAvtalt = avtalt === true;
         return (
-            <form onSubmit={this.props.handleSubmit} noValidate="noValidate">
+            <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
-                    {this.props.errorSummary}
+                    {errorSummary}
                     <div className="aktivitetskjema__header">
                         <Innholdstittel>
                             <FormattedMessage id="egen-aktivitet-form.header" />
@@ -107,16 +117,16 @@ class EgenAktivitetForm extends Component {
 
                     <Input
                         feltNavn="tittel"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="egen-aktivitet-form.label.overskrift"
                         bredde="fullbredde"
                     />
 
                     <PeriodeValidering
                         feltNavn="periodeValidering"
-                        fraDato={this.props.currentFraDato}
-                        tilDato={this.props.currentTilDato}
-                        errorMessage={this.props.intl.formatMessage({
+                        fraDato={currentFraDato}
+                        tilDato={currentTilDato}
+                        errorMessage={intl.formatMessage({
                             id:
                                 'datepicker.feilmelding.egen.fradato-etter-frist',
                         })}
@@ -124,49 +134,45 @@ class EgenAktivitetForm extends Component {
                         <div className="dato-container">
                             <Datovelger
                                 feltNavn="fraDato"
-                                disabled={this.props.avtalt === true}
+                                disabled={erAktivitetAvtalt}
                                 labelId="egen-aktivitet-form.label.fra-dato"
-                                senesteTom={this.props.currentTilDato}
+                                senesteTom={currentTilDato}
                             />
                             <Datovelger
                                 feltNavn="tilDato"
                                 labelId="egen-aktivitet-form.label.til-dato"
-                                tidligsteFom={this.props.currentFraDato}
+                                tidligsteFom={currentFraDato}
                             />
                         </div>
                     </PeriodeValidering>
 
                     <Input
                         feltNavn="lenke"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="egen-aktivitet-form.label.lenke"
                         bredde="fullbredde"
                     />
                     <Input
                         feltNavn="hensikt"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="egen-aktivitet-form.label.hensikt"
                         bredde="fullbredde"
                     />
                     <Textarea
                         feltNavn="beskrivelse"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="egen-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                     <Input
                         feltNavn="oppfolging"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="egen-aktivitet-form.label.oppfolging"
                         bredde="fullbredde"
                     />
                 </div>
-                <div className="aktivitetskjema__lagre-knapp">
-                    <Hovedknapp>
-                        <FormattedMessage id="aktivitet-form.lagre" />
-                    </Hovedknapp>
-                </div>
+                <LagreAktivitet />
             </form>
         );
     }
