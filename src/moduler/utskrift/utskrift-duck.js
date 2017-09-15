@@ -14,12 +14,12 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 data,
-                redigerer: false,
+                printMeldingFerdig: true,
             };
         case REDIGER_PRINTMELDING:
             return {
                 ...state,
-                redigerer: true,
+                printMeldingFerdig: false,
             };
         default:
             return state;

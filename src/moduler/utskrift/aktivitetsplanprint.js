@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -25,32 +25,74 @@ import {
     skalVisePrintMeldingForm,
 } from './utskrift-selector';
 import { redigerPrintMelding } from './utskrift-duck';
+import { selectGjeldendeMal, selectMalStatus } from '../mal/mal-selector';
+import {
+    section as HiddenIfSection,
+    div as HiddenIfDiv,
+} from '../../felles-komponenter/hidden-if/hidden-if';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { hentMal, hentMalListe } from '../mal/mal-reducer';
+import { selectSituasjonStatus } from '../situasjon/situasjon-selector';
+import { selectErVeileder } from '../identitet/identitet-selector';
 
-function Print({ grupper, bruker, printMelding }) {
+function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
     return (
         <div className="print-modal-body">
             <Bilde className="nav-logo-print" src={logoPng} alt="Logo NAV" />
             <div className="adresse-dato">
                 <div className="adresse">
                     {storeForbokstaver(bruker.sammensattNavn)}
+                    <HiddenIfDiv hidden={!erVeileder}>
+                        {storeForbokstaver(
+                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
+                                .gatenavn
+                        )}&nbsp;
+                        {
+                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
+                                .husnummer
+                        }
+                        {
+                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
+                                .husbokstav
+                        },<br />
+                        {
+                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
+                                .postnummer
+                        }&nbsp;
+                        {storeForbokstaver(
+                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
+                                .poststed
+                        )}
+                        <br />
+                        {bruker.fodselsnummer}
+                    </HiddenIfDiv>
                 </div>
                 <div className="dato">
+                    <HiddenIfDiv hidden={!erVeileder}>
+                        {bruker.behandlendeEnhet.navn}
+                    </HiddenIfDiv>
                     Dato: {formaterDato(Date.now())}
                 </div>
             </div>
-            <h1 className="typo-systemtittel">Aktivitetsplan</h1>
-            <section className="visprintmelding">
-                <h1>
+            <h1 className="typo-systemtittel utskrift-overskrift">
+                Aktivitetsplan
+            </h1>
+            <HiddenIfSection hidden={!printMelding} className="visprintmelding">
+                <h1 className="typo-undertittel">
                     {printMelding.overskrift}
                 </h1>
                 <p>
                     {printMelding.beskrivelse}
                 </p>
-            </section>
-            <section className="vismittmal">
-                <h2>Mitt Mål</h2>
-                <div>......</div>
-            </section>
+            </HiddenIfSection>
+            <HiddenIfSection hidden={!mittMal} className="vismittmal">
+                <h1 className="typo-undertittel">
+                    <FormattedMessage id="aktivitetsmal.mitt-mal" />
+                </h1>
+                <p>
+                    {mittMal && mittMal.mal}
+                </p>
+            </HiddenIfSection>
             {grupper}
         </div>
     );
@@ -60,80 +102,98 @@ Print.propTypes = {
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
     printMelding: AppPT.printMelding.isRequired,
+    mittMal: AppPT.mal,
+    erVeileder: PT.bool,
 };
 
 Print.defaultProps = {
     grupper: [],
+    mittMal: null,
+    erVeileder: false,
 };
 
-function AktivitetsplanPrintModal({
-    printMelding,
-    sorterteStatusGrupper,
-    visPrintMeldingForm,
-    fortsettRedigerPrintMelding,
-    bruker,
-}) {
-    const grupper = sorterteStatusGrupper.map(gruppe =>
-        <StatusGruppe gruppe={gruppe} key={gruppe.status} />
-    );
+class AktivitetsplanPrintModal extends Component {
+    componentDidMount() {
+        this.props.doHentMal();
+        this.props.doHentMalListe();
+    }
 
-    const meldingForm = (
-        <Modal
-            contentLabel="aktivitetsplanPrint"
-            className="aktivitetsplanprint"
-            header={<PrintHeader />}
-        >
-            <PrintMelding />
-        </Modal>
-    );
+    render() {
+        const {
+            avhengigheter,
+            printMelding,
+            sorterteStatusGrupper,
+            visPrintMeldingForm,
+            fortsettRedigerPrintMelding,
+            bruker,
+            mittMal,
+            erVeileder,
+        } = this.props;
+        const grupper = sorterteStatusGrupper.map(gruppe =>
+            <StatusGruppe gruppe={gruppe} key={gruppe.status} />
+        );
 
-    const header = (
-        <PrintHeader>
-            <a
-                className="tilbakeknapp"
-                onClick={fortsettRedigerPrintMelding}
-                role="link"
-                tabIndex="0"
-            >
-                <div className="tilbakeknapp-innhold">
-                    <i className="nav-frontend-chevron chevronboks chevron--venstre" />
-                    <span className="tilbakeknapp-innhold__tekst">
-                        <FormattedMessage id="print.modal.tilbake" />
-                    </span>
-                </div>
-            </a>
-            <Hovedknapp
-                mini
-                className="print-knapp"
-                onClick={() => window.print()}
-            >
-                Skriv ut
-            </Hovedknapp>
-        </PrintHeader>
-    );
+        const header = (
+            <Innholdslaster avhengigheter={avhengigheter}>
+                <PrintHeader>
+                    <HiddenIfDiv
+                        hidden={visPrintMeldingForm}
+                        className="print-header"
+                    >
+                        <a
+                            className="tilbakeknapp"
+                            onClick={fortsettRedigerPrintMelding}
+                            role="link"
+                            tabIndex="0"
+                        >
+                            <div className="tilbakeknapp-innhold">
+                                <i className="nav-frontend-chevron chevronboks chevron--venstre" />
+                                <FormattedMessage
+                                    id="print.modal.tilbake"
+                                    className="tilbakeknapp-innhold__tekst"
+                                />
+                            </div>
+                        </a>
+                        <Hovedknapp
+                            mini
+                            className="print-knapp"
+                            onClick={() => window.print()}
+                        >
+                            Skriv ut
+                        </Hovedknapp>
+                    </HiddenIfDiv>
+                </PrintHeader>
+            </Innholdslaster>
+        );
 
-    const printVisning = (
-        <Modal
-            contentLabel="aktivitetsplanPrint"
-            className="aktivitetsplanprint"
-            header={header}
-        >
-            <Print
-                grupper={grupper}
-                bruker={bruker}
-                printMelding={printMelding}
-            />
-        </Modal>
-    );
+        const innhold = visPrintMeldingForm
+            ? <PrintMelding />
+            : <Print
+                  grupper={grupper}
+                  bruker={bruker}
+                  printMelding={printMelding}
+                  mittMal={mittMal}
+                  erVeileder={erVeileder}
+              />;
 
-    return (
-        <section>
-            {visPrintMeldingForm ? meldingForm : printVisning}
-        </section>
-    );
+        return (
+            <section>
+                <Modal
+                    contentLabel="aktivitetsplanPrint"
+                    className="aktivitetsplanprint"
+                    header={header}
+                >
+                    <Innholdslaster avhengigheter={avhengigheter}>
+                        {innhold}
+                    </Innholdslaster>
+                </Modal>
+            </section>
+        );
+    }
 }
 
 AktivitetsplanPrintModal.propTypes = {
+    avhengigheter: PT.arrayOf(),
     printMelding: AppPT.printMelding,
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
@@ -141,12 +201,18 @@ AktivitetsplanPrintModal.propTypes = {
     fortsettRedigerPrintMelding: PT.func.isRequired,
     aktiviteter: AppPT.aktiviteter.isRequired,
     sorterteStatusGrupper: AppPT.aktiviteter,
+    doHentMal: AppPT.mal.isRequired,
+    doHentMalListe: PT.arrayOf(AppPT.mal).isRequired,
+    mittMal: AppPT.mal,
+    erVeileder: PT.bool.isRequired,
 };
 
 AktivitetsplanPrintModal.defaultProps = {
+    avhengigheter: [],
     printMelding: undefined,
     grupper: undefined,
     sorterteStatusGrupper: undefined,
+    mittMal: null,
 };
 
 const statusRekkefolge = [
@@ -182,19 +248,26 @@ const mapStateToProps = state => {
 
     const bruker = selectBruker(state);
     const printMelding = hentPrintMelding(state);
+    const mittMal = selectGjeldendeMal(state);
+    const erVeileder = selectErVeileder(state);
 
     return {
+        avhengigheter: [selectMalStatus(state), selectSituasjonStatus(state)],
         aktiviteter,
         sorterteStatusGrupper,
         visPrintMeldingForm: skalVisePrintMeldingForm(state),
         bruker,
         printMelding,
+        mittMal,
+        erVeileder,
     };
 };
 
 function mapDispatchToProps(dispatch) {
     return {
         fortsettRedigerPrintMelding: () => dispatch(redigerPrintMelding()),
+        doHentMal: () => dispatch(hentMal()),
+        doHentMalListe: () => dispatch(hentMalListe()),
     };
 }
 
