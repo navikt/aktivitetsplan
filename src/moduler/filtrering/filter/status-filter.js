@@ -19,13 +19,8 @@ const filtreringsRekkefolge = [
     STATUS_GJENNOMFOERT,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
-].reduce(
-    (filteringsRekkeFolgeObjekt, vardi, index) => ({
-        ...filteringsRekkeFolgeObjekt,
-        [vardi]: index,
-    }),
-    {}
-);
+];
+
 function StatusFilter({
     harAktivitetStatus,
     sortedAktivitetStatus,
@@ -64,11 +59,15 @@ const mapStateToProps = state => {
         return statusliste;
     }, {});
     const sortedAktivitetStatus = Object.keys(aktivitetStatus)
-        .sort((a, b) => filtreringsRekkefolge[a] - filtreringsRekkefolge[b])
+        .sort(
+            (a, b) =>
+                filtreringsRekkefolge.indexOf(a) -
+                filtreringsRekkefolge.indexOf(b)
+        )
         .reduce(
-            (sortertStatusFilter, item, index) => ({
+            (sortertStatusFilter, item) => ({
                 ...sortertStatusFilter,
-                [item]: aktivitetStatus[index],
+                [item]: aktivitetStatus[item],
             }),
             {}
         );
