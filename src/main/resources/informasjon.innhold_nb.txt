@@ -1,1 +1,2 @@
-<div><b>Dette er en html test</b></div>
+<div data-qbrick-mcid="C1F23FB93342C49E"> </div><script type="text/javascript"
+src="https://publisher.qbrick.com/Qbrick.Publisher.js"></script>
