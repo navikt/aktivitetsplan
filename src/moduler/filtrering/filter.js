@@ -9,7 +9,7 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
 import {
     selectAktivitetListeStatus,
-    selectAlleAktiviter,
+    selectAktiviterForAktuellePerioden,
 } from '../aktivitet/aktivitetliste-selector';
 import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
@@ -21,17 +21,20 @@ const filterClassNames = classes => classNames(classes, 'filter');
 function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
     const muligeFilterKombinasjoner = aktivitetsListe.reduce(
         (res, aktivitet) => {
-            res.status.add(aktivitet.status);
-            res.type.add(aktivitet.type);
-            res.etikket.add(aktivitet.etikett);
-            res.avtalt.add(aktivitet.avtalt);
+            const { status, type, etikett, avtalt } = aktivitet;
+            res.muligeStatus.add(status);
+            res.muligeTyper.add(type);
+            if (etikett) {
+                res.muligeEtiketter.add(etikett);
+            }
+            res.muligeAvtalt.add(avtalt);
             return res;
         },
         {
-            status: new Set(),
-            type: new Set(),
-            etikket: new Set(),
-            avtalt: new Set(),
+            muligeStatus: new Set(),
+            muligeTyper: new Set(),
+            muligeEtiketter: new Set(),
+            muligeAvtalt: new Set(),
         }
     );
 
@@ -80,7 +83,7 @@ Filter.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAlleAktiviter(state);
+    const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const harAktivitet =
         aktiviteter.length > 1 &&
         sjekkAttFinnesFilteringsAlternativ(aktiviteter);
