@@ -56,17 +56,10 @@ export function aktivitetFilter(aktivitet, state) {
     const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav;
     const avtalt = aktivitet.avtalt;
     const aktivtAvtaltFilter = avtaltMedNavFilter ^ ikkeAvtaltMedNavFilter;
+    const muligeAvtaltFiltereringer =
+        (avtaltMedNavFilter && !avtalt) || (ikkeAvtaltMedNavFilter && avtalt);
 
-    if (aktivtAvtaltFilter) {
-        if (
-            (avtaltMedNavFilter && !avtalt) ||
-            (ikkeAvtaltMedNavFilter && avtalt)
-        ) {
-            return false;
-        }
-    }
-
-    return true;
+    return !(aktivtAvtaltFilter && muligeAvtaltFiltereringer);
 }
 
 export function dialogFilter(dialog, state) {
