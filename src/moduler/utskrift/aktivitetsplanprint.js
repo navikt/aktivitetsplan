@@ -24,7 +24,8 @@ import {
 import { selectBruker } from '../bruker/bruker-selector';
 import {
     hentPrintMelding,
-    skalVisePrintMeldingForm,
+    selectKanHaPrintMeldingForm,
+    selectSkalVisePrintMeldingForm,
 } from './utskrift-selector';
 import { redigerPrintMelding } from './utskrift-duck';
 import { selectGjeldendeMal, selectMalStatus } from '../mal/mal-selector';
@@ -133,6 +134,7 @@ class AktivitetsplanPrintModal extends Component {
             printMelding,
             sorterteStatusGrupper,
             visPrintMeldingForm,
+            kanHaPrintMelding,
             fortsettRedigerPrintMelding,
             bruker,
             mittMal,
@@ -146,25 +148,21 @@ class AktivitetsplanPrintModal extends Component {
                         hidden={visPrintMeldingForm}
                         className="print-header"
                     >
-                        <HiddenIfDiv
-                            hidden={!visPrintMeldingForm}
-                            className="tilbakeknapp-wrapper"
+                        <Knappelenke
+                            className="tilbakeknapp"
+                            onClick={fortsettRedigerPrintMelding}
+                            role="link"
+                            tabIndex="0"
+                            hidden={!kanHaPrintMelding}
                         >
-                            <Knappelenke
-                                className="tilbakeknapp"
-                                onClick={fortsettRedigerPrintMelding}
-                                role="link"
-                                tabIndex="0"
-                            >
-                                <div className="tilbakeknapp-innhold">
-                                    <i className="nav-frontend-chevron chevronboks chevron--venstre" />
-                                    <FormattedMessage
-                                        id="print.modal.tilbake"
-                                        className="tilbakeknapp-innhold__tekst"
-                                    />
-                                </div>
-                            </Knappelenke>
-                        </HiddenIfDiv>
+                            <div className="tilbakeknapp-innhold">
+                                <i className="nav-frontend-chevron chevronboks chevron--venstre" />
+                                <FormattedMessage
+                                    id="print.modal.tilbake"
+                                    className="tilbakeknapp-innhold__tekst"
+                                />
+                            </div>
+                        </Knappelenke>
                         <Hovedknapp
                             mini
                             className="print-knapp"
@@ -209,6 +207,7 @@ AktivitetsplanPrintModal.propTypes = {
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
     visPrintMeldingForm: PT.bool.isRequired,
+    kanHaPrintMelding: PT.bool.isRequired,
     fortsettRedigerPrintMelding: PT.func.isRequired,
     aktiviteter: AppPT.aktiviteter.isRequired,
     sorterteStatusGrupper: PT.arrayOf(StatusGruppePT),
@@ -266,7 +265,8 @@ const mapStateToProps = state => {
         avhengigheter: [selectMalStatus(state), selectSituasjonStatus(state)],
         aktiviteter,
         sorterteStatusGrupper,
-        visPrintMeldingForm: skalVisePrintMeldingForm(state),
+        visPrintMeldingForm: selectSkalVisePrintMeldingForm(state),
+        kanHaPrintMelding: selectKanHaPrintMeldingForm(state),
         bruker,
         printMelding,
         mittMal,

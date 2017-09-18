@@ -72,7 +72,7 @@ const Routing = ({ location }) =>
             component={ArbeidslisteContainer}
         />
         <Route
-            path={getPathWithBase('/aktivitetsplan/utskrift')}
+            path={getPathWithBase('/utskrift')}
             component={AktivitetsplanPrint}
         />
     </Switch>;

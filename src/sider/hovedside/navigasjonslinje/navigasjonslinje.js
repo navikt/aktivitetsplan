@@ -88,8 +88,8 @@ const PrintLenke = () =>
         {tekst =>
             <button
                 aria-label={tekst}
-                className="navigasjonslinje__verktoy--print-knapp navigasjonslinje__skillestrek--venstre"
-                onClick={() => history.push('aktivitetsplan/utskrift')}
+                className="navigasjonslinje__verktoy--print-knapp navigasjonslinje__skillestrek--hoyre"
+                onClick={() => history.push('/utskrift')}
             />}
     </FormattedMessage>;
 
@@ -146,10 +146,10 @@ class Navigasjonslinje extends Component {
                                 }
                             />
                         </Innholdslaster>
+                        <PrintLenke />
                         <InnstillingerKnapp />
                     </div>
                 </Feature>
-                <PrintLenke />
             </nav>
         );
     }

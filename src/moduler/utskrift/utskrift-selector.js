@@ -4,10 +4,15 @@ import { selectErBrukerManuell } from '../situasjon/situasjon-selector';
 const selectUtskriftSlice = state => state.view.utskrift;
 export const hentPrintMelding = state => selectUtskriftSlice(state).data;
 
-export function skalVisePrintMeldingForm(state) {
-    const utskriftSlice = selectUtskriftSlice(state);
+export function selectKanHaPrintMeldingForm(state) {
     const erVeileder = selectErVeileder(state);
     const erBrukerManuell = selectErBrukerManuell(state);
+    return erVeileder && erBrukerManuell;
+}
 
-    return erVeileder && erBrukerManuell && !utskriftSlice.printMeldingFerdig;
+export function selectSkalVisePrintMeldingForm(state) {
+    const utskriftSlice = selectUtskriftSlice(state);
+    return (
+        selectKanHaPrintMeldingForm(state) && !utskriftSlice.printMeldingFerdig
+    );
 }
