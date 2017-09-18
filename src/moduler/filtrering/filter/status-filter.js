@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { selectAktivitetStatusFilter } from './filter-selector';
-import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetsStatus } from './filter-reducer';
 import FilterVisning from './filter-visnings-komponent';
 import {
@@ -51,7 +51,7 @@ StatusFilter.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAlleAktiviter(state);
+    const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
     const aktivitetStatus = aktiviteter.reduce((statusliste, aktivitet) => {
         const status = aktivitet.status;
