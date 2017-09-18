@@ -4,11 +4,10 @@ import {
     AKTIVITET_PROXY_BASE_URL,
     SITUASJON_PROXY_BASE_URL,
     PERSON_BASE_URL,
-    BRUKER_BASE_URL,
     VEILEDER_BASE_URL,
     PORTEFOLJE_BASE_URL,
-    PRINTMELDING_BASE_URL,
 } from '~config'; // eslint-disable-line
+
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
 export function hentLedetekster() {

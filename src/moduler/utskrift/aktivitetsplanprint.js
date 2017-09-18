@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Bilde } from 'nav-react-design';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { storeForbokstaver, formaterDato } from '../../utils';
+import { Undertittel, Systemtittel } from 'nav-frontend-typografi';
+import { formaterDato } from '../../utils';
+import StoreForbokstaver from '../../felles-komponenter/utils/store-forbokstaver';
 import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
 import PrintHeader from '../../felles-komponenter/modal/print-header';
@@ -36,35 +38,29 @@ import { selectSituasjonStatus } from '../situasjon/situasjon-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 
 function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
+    const gateadresse = bruker.bostedsadresse.strukturertAdresse.Gateadresse;
     return (
         <div className="print-modal-body">
             <Bilde className="nav-logo-print" src={logoPng} alt="Logo NAV" />
             <div className="adresse-dato">
                 <div className="adresse">
-                    {storeForbokstaver(bruker.sammensattNavn)}
+                    <StoreForbokstaver streng={bruker.sammensattNavn} />
                     <HiddenIfDiv hidden={!erVeileder}>
-                        {storeForbokstaver(
-                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
-                                .gatenavn
-                        )}&nbsp;
-                        {
-                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
-                                .husnummer
-                        }
-                        {
-                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
-                                .husbokstav
-                        },<br />
-                        {
-                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
-                                .postnummer
-                        }&nbsp;
-                        {storeForbokstaver(
-                            bruker.bostedsadresse.strukturertAdresse.Gateadresse
-                                .poststed
-                        )}
-                        <br />
-                        {bruker.fodselsnummer}
+                        <div>
+                            <StoreForbokstaver streng={gateadresse.gatenavn} />
+                            <span>
+                                {gateadresse.husnummer + gateadresse.husbokstav}
+                            </span>
+                        </div>
+                        <div>
+                            <span>
+                                {gateadresse.postnummer}
+                            </span>
+                            <StoreForbokstaver streng={gateadresse.poststed} />
+                        </div>
+                        <div>
+                            {bruker.fodselsnummer}
+                        </div>
                     </HiddenIfDiv>
                 </div>
                 <div className="dato">
@@ -74,21 +70,21 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                     Dato: {formaterDato(Date.now())}
                 </div>
             </div>
-            <h1 className="typo-systemtittel utskrift-overskrift">
+            <Systemtittel tag="h1" className="utskrift-overskrift">
                 Aktivitetsplan
-            </h1>
+            </Systemtittel>
             <HiddenIfSection hidden={!printMelding} className="visprintmelding">
-                <h1 className="typo-undertittel">
+                <Undertittel tag="h1">
                     {printMelding.overskrift}
-                </h1>
+                </Undertittel>
                 <p>
                     {printMelding.beskrivelse}
                 </p>
             </HiddenIfSection>
             <HiddenIfSection hidden={!mittMal} className="vismittmal">
-                <h1 className="typo-undertittel">
+                <Undertittel tag="h1">
                     <FormattedMessage id="aktivitetsmal.mitt-mal" />
-                </h1>
+                </Undertittel>
                 <p>
                     {mittMal && mittMal.mal}
                 </p>

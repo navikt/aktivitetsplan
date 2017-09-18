@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import Tilbakeknapp from '../utils/tilbakeknapp';
 
@@ -61,4 +61,4 @@ PrintHeader.defaultProps = {
     children: null,
 };
 
-export default injectIntl(PrintHeader);
+export default PrintHeader;

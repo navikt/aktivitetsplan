@@ -4,7 +4,8 @@ import AktivitetEtikett from './aktivitet-etikett';
 import { AVTALT_MED_NAV } from '../../constant';
 import * as AppPT from '../../proptypes';
 
-function AktivitetEtikettGruppe({ avtalt, etikett, className }) {
+function AktivitetEtikettGruppe({ aktivitet, className }) {
+    const { avtalt, etikett } = aktivitet;
     return (
         <div className={className}>
             <AktivitetEtikett
@@ -23,6 +24,7 @@ function AktivitetEtikettGruppe({ avtalt, etikett, className }) {
 }
 
 AktivitetEtikettGruppe.propTypes = {
+    aktivitet: PT.object.isRequired,
     avtalt: PT.bool.isRequired,
     etikett: AppPT.etikett,
     className: PT.string,
