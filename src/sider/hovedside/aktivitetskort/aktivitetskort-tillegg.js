@@ -6,11 +6,12 @@ import TallAlert from '../../../felles-komponenter/tall-alert';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../../moduler/dialog/dialog-selector';
 import AktivitetEtikettGruppe from '../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
+import * as AppPT from '../../../proptypes';
 
 function AktivitetskortTillegg({
     antallHendvendelser,
     antallUlesteHenvendelser,
-    etikett,
+    aktivitet,
     erAvtalt,
     harEtikett,
     harDialog,
@@ -21,8 +22,7 @@ function AktivitetskortTillegg({
             className="aktivitetskort__ikon-blokk"
         >
             <AktivitetEtikettGruppe
-                avtalt={erAvtalt}
-                etikett={etikett}
+                aktivitet={aktivitet}
                 className="aktivitetskort__etiketter"
             />
 
@@ -43,6 +43,7 @@ AktivitetskortTillegg.defaultProps = {
 };
 
 AktivitetskortTillegg.propTypes = {
+    aktivitet: AppPT.aktivitet.isRequired,
     antallHendvendelser: PT.number.isRequired,
     antallUlesteHenvendelser: PT.number.isRequired,
     erAvtalt: PT.bool.isRequired,
@@ -65,7 +66,7 @@ const mapStateToProps = (state, props) => {
         erAvtalt: aktivitet.avtalt,
         harDialog: antallHendvendelser > 0,
         harEtikett: !!etikett,
-        etikett,
+        aktivitet,
     };
 };
 

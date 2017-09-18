@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import Tilbakeknapp from '../utils/tilbakeknapp';
+import Tilbakeknapp from '../../felles-komponenter/utils/tilbakeknapp';
 
 function PrintHeader({
     tilbakeTekstId,

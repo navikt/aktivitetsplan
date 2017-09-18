@@ -13,7 +13,7 @@ import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
 
 function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring }) {
-    const { tittel, type, avtalt, etikett, arenaAktivitet } = valgtAktivitet;
+    const { tittel, type, arenaAktivitet } = valgtAktivitet;
 
     const gaTilEndreAktivitet = () =>
         history.push(endreAktivitetRoute(valgtAktivitet.id));
@@ -28,8 +28,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring }) {
                 <AktivitetIngress type={type} />
 
                 <AktivitetEtikettGruppe
-                    avtalt={avtalt}
-                    etikett={etikett}
+                    aktivitet={valgtAktivitet}
                     className="aktivitetvisning__etikett"
                 />
 

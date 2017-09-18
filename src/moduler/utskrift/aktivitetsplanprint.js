@@ -9,7 +9,7 @@ import { formaterDato } from '../../utils';
 import StoreForbokstaver from '../../felles-komponenter/utils/store-forbokstaver';
 import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
-import PrintHeader from '../../felles-komponenter/modal/print-header';
+import PrintHeader from './print-header';
 import { selectAktivitetListe } from '../aktivitet/aktivitetliste-selector';
 import logoPng from './logo.png';
 import StatusGruppe from './statusgruppe';
@@ -36,30 +36,43 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { hentMal, hentMalListe } from '../mal/mal-reducer';
 import { selectSituasjonStatus } from '../situasjon/situasjon-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
+import Knappelenke from '../../felles-komponenter/utils/knappelenke';
+
+const StatusGruppePT = PT.shape({
+    status: PT.string.isRequired,
+    aktiviteter: AppPT.aktiviteter,
+});
 
 function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
-    const gateadresse = bruker.bostedsadresse.strukturertAdresse.Gateadresse;
+    const { fodselsnummer, fornavn, bostedsadresse } = bruker;
+    const gateadresse = bostedsadresse.strukturertAdresse.Gateadresse;
+    const {
+        gatenavn,
+        poststed,
+        husbokstav,
+        husnummer,
+        postnummer,
+    } = gateadresse;
+    const { overskrift, beskrivelse } = printMelding;
+
+    const statusGrupper = grupper.map(gruppe =>
+        <StatusGruppe gruppe={gruppe} key={gruppe.status} />
+    );
+
     return (
         <div className="print-modal-body">
             <Bilde className="nav-logo-print" src={logoPng} alt="Logo NAV" />
             <div className="adresse-dato">
                 <div className="adresse">
-                    <StoreForbokstaver streng={bruker.sammensattNavn} />
+                    <StoreForbokstaver>
+                        {fornavn}
+                    </StoreForbokstaver>
                     <HiddenIfDiv hidden={!erVeileder}>
+                        <StoreForbokstaver tag="div">{`${gatenavn} ${husnummer} ${husbokstav ||
+                            ''}`}</StoreForbokstaver>
+                        <StoreForbokstaver tag="div">{`${postnummer} ${poststed}`}</StoreForbokstaver>
                         <div>
-                            <StoreForbokstaver streng={gateadresse.gatenavn} />
-                            <span>
-                                {gateadresse.husnummer + gateadresse.husbokstav}
-                            </span>
-                        </div>
-                        <div>
-                            <span>
-                                {gateadresse.postnummer}
-                            </span>
-                            <StoreForbokstaver streng={gateadresse.poststed} />
-                        </div>
-                        <div>
-                            {bruker.fodselsnummer}
+                            {fodselsnummer}
                         </div>
                     </HiddenIfDiv>
                 </div>
@@ -71,14 +84,14 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                 </div>
             </div>
             <Systemtittel tag="h1" className="utskrift-overskrift">
-                Aktivitetsplan
+                <FormattedMessage id="hovedside.tittel" />
             </Systemtittel>
             <HiddenIfSection hidden={!printMelding} className="visprintmelding">
                 <Undertittel tag="h1">
-                    {printMelding.overskrift}
+                    {overskrift}
                 </Undertittel>
                 <p>
-                    {printMelding.beskrivelse}
+                    {beskrivelse}
                 </p>
             </HiddenIfSection>
             <HiddenIfSection hidden={!mittMal} className="vismittmal">
@@ -89,13 +102,13 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                     {mittMal && mittMal.mal}
                 </p>
             </HiddenIfSection>
-            {grupper}
+            {statusGrupper}
         </div>
     );
 }
 
 Print.propTypes = {
-    grupper: PT.arrayOf(StatusGruppe),
+    grupper: PT.arrayOf(StatusGruppePT),
     bruker: AppPT.motpart.isRequired,
     printMelding: AppPT.printMelding.isRequired,
     mittMal: AppPT.mal,
@@ -125,9 +138,6 @@ class AktivitetsplanPrintModal extends Component {
             mittMal,
             erVeileder,
         } = this.props;
-        const grupper = sorterteStatusGrupper.map(gruppe =>
-            <StatusGruppe gruppe={gruppe} key={gruppe.status} />
-        );
 
         const header = (
             <Innholdslaster avhengigheter={avhengigheter}>
@@ -136,20 +146,25 @@ class AktivitetsplanPrintModal extends Component {
                         hidden={visPrintMeldingForm}
                         className="print-header"
                     >
-                        <a
-                            className="tilbakeknapp"
-                            onClick={fortsettRedigerPrintMelding}
-                            role="link"
-                            tabIndex="0"
+                        <HiddenIfDiv
+                            hidden={!visPrintMeldingForm}
+                            className="tilbakeknapp-wrapper"
                         >
-                            <div className="tilbakeknapp-innhold">
-                                <i className="nav-frontend-chevron chevronboks chevron--venstre" />
-                                <FormattedMessage
-                                    id="print.modal.tilbake"
-                                    className="tilbakeknapp-innhold__tekst"
-                                />
-                            </div>
-                        </a>
+                            <Knappelenke
+                                className="tilbakeknapp"
+                                onClick={fortsettRedigerPrintMelding}
+                                role="link"
+                                tabIndex="0"
+                            >
+                                <div className="tilbakeknapp-innhold">
+                                    <i className="nav-frontend-chevron chevronboks chevron--venstre" />
+                                    <FormattedMessage
+                                        id="print.modal.tilbake"
+                                        className="tilbakeknapp-innhold__tekst"
+                                    />
+                                </div>
+                            </Knappelenke>
+                        </HiddenIfDiv>
                         <Hovedknapp
                             mini
                             className="print-knapp"
@@ -165,7 +180,7 @@ class AktivitetsplanPrintModal extends Component {
         const innhold = visPrintMeldingForm
             ? <PrintMelding />
             : <Print
-                  grupper={grupper}
+                  grupper={sorterteStatusGrupper}
                   bruker={bruker}
                   printMelding={printMelding}
                   mittMal={mittMal}
@@ -189,16 +204,16 @@ class AktivitetsplanPrintModal extends Component {
 }
 
 AktivitetsplanPrintModal.propTypes = {
-    avhengigheter: PT.arrayOf(),
+    avhengigheter: PT.array,
     printMelding: AppPT.printMelding,
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
     visPrintMeldingForm: PT.bool.isRequired,
     fortsettRedigerPrintMelding: PT.func.isRequired,
     aktiviteter: AppPT.aktiviteter.isRequired,
-    sorterteStatusGrupper: AppPT.aktiviteter,
-    doHentMal: AppPT.mal.isRequired,
-    doHentMalListe: PT.arrayOf(AppPT.mal).isRequired,
+    sorterteStatusGrupper: PT.arrayOf(StatusGruppePT),
+    doHentMal: PT.func.isRequired,
+    doHentMalListe: PT.func.isRequired,
     mittMal: AppPT.mal,
     erVeileder: PT.bool.isRequired,
 };

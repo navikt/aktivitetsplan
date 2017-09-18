@@ -4,16 +4,15 @@
     .print-header {
         width: 100%;
         position: relative;
-        text-align: center;
 
-        .tilbakeknapp {
-            position: absolute;
-            left: 0;
-            top: 4px;
+        .tilbakeknapp-wrapper {
+            & + .print-knapp {
+                margin-left: 185px;
+            }
         }
 
-        .print-knapp {
-            margin: 0 auto;
+        .tilbakeknapp-wrapper {
+            display: inline-block;
         }
     }
 
@@ -65,7 +64,8 @@
             padding: 2rem 3rem;
             border-top: 1px solid @navGra40;
 
-            .typo-undertittel {
+            .typo-undertittel,
+            .typo-element {
                 margin-bottom: 1rem;
             }
         }
@@ -75,10 +75,6 @@
 
             & + .aktivitetsdetaljer {
                 margin-top: 20px;
-            }
-
-            h2 {
-                margin: 0;
             }
 
             .detaljfelt {

@@ -1,48 +1,61 @@
 import React from 'react';
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Undertittel, Element } from 'nav-frontend-typografi';
 import Aktivitetsdetaljer from '../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import * as AppPT from '../../proptypes';
 import AktivitetEtikettGruppe from '../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 
-function StatusGruppe({ gruppe }) {
-    const alleAktiviteter = gruppe.aktiviteter.map(aktivitet => {
-        const etikett = aktivitet.etikett;
-        return (
+function AktivitetPrint({ aktivitet }) {
+    const { id, type, tittel } = aktivitet;
+    return (
+        <div key={id}>
+            <Element tag="h2">
+                {tittel}
+            </Element>
             <div>
-                <h3>
-                    {aktivitet.tittel}
-                </h3>
-                <div>
-                    {aktivitet.type}
-                </div>
-
-                <AktivitetEtikettGruppe
-                    avtalt={aktivitet.avtalt}
-                    etikett={etikett}
-                    className="aktivitetvisning__etikett"
-                />
-
-                <Aktivitetsdetaljer
-                    valgtAktivitet={aktivitet}
-                    key={aktivitet.id}
-                />
+                {type}
             </div>
-        );
-    });
+
+            <AktivitetEtikettGruppe
+                aktivitet={aktivitet}
+                className="aktivitetvisning__etikett"
+            />
+
+            <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
+        </div>
+    );
+}
+
+AktivitetPrint.propTypes = {
+    aktivitet: AppPT.aktivitet.isRequired,
+};
+
+function StatusGruppe({ gruppe }) {
+    const { status, aktiviteter } = gruppe;
     return (
         <section className="statusgruppe">
-            <h1 className="typo-undertittel">
+            <Undertittel tag="h1">
                 <FormattedMessage
-                    id={`aktivitetstavle.print.${gruppe.status.toLowerCase()}`}
+                    id={`aktivitetstavle.print.${status.toLowerCase()}`}
                 />
-            </h1>
-            {alleAktiviteter}
+            </Undertittel>
+            {aktiviteter.map(aktivitet =>
+                <AktivitetPrint aktivitet={aktivitet} />
+            )}
         </section>
     );
 }
 
 StatusGruppe.propTypes = {
-    gruppe: AppPT.aktiviteter.isRequired,
+    gruppe: PT.shape({
+        status: PT.string.isRequired,
+        aktiviteter: AppPT.aktiviteter.isRequired,
+    }),
+};
+
+StatusGruppe.defaultProps = {
+    gruppe: null,
 };
 
 export default StatusGruppe;

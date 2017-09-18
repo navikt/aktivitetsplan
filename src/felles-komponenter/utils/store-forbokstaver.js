@@ -2,16 +2,17 @@ import React from 'react';
 import PT from 'prop-types';
 import { storeForbokstaver } from '../../utils';
 
-function StoreForbokstaver(streng) {
-    return (
-        <span>
-            {storeForbokstaver(streng)}
-        </span>
-    );
+function StoreForbokstaver({ tag, children, ...props }) {
+    return React.createElement(tag, props, storeForbokstaver(children));
 }
 
 StoreForbokstaver.propTypes = {
-    streng: PT.string.isRequired,
+    tag: PT.string,
+    children: PT.string.isRequired,
+};
+
+StoreForbokstaver.defaultProps = {
+    tag: 'span',
 };
 
 export default StoreForbokstaver;

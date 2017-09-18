@@ -25,13 +25,14 @@ function AktivitetEtikettGruppe({ aktivitet, className }) {
 
 AktivitetEtikettGruppe.propTypes = {
     aktivitet: PT.object.isRequired,
-    avtalt: PT.bool.isRequired,
+    avtalt: PT.bool,
     etikett: AppPT.etikett,
     className: PT.string,
 };
 
 AktivitetEtikettGruppe.defaultProps = {
     etikett: null,
+    avtalt: false,
     className: '',
 };
 
