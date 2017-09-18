@@ -21,7 +21,6 @@ class AktivitetmalSlett extends Component {
             <BekreftSlettVisning
                 slettAction={() => {
                     doSlettMal();
-                    history.push('/mal');
                 }}
                 avbrytAction={() => history.push('/mal')}
                 tittelId="aktivitetsmal.bekreft-sletting.tittel"
@@ -41,7 +40,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doSlettMal: () => dispatch(slettMal()),
+    doSlettMal: () => dispatch(slettMal()).then(() => history.push('/mal')),
 });
 
 export default AktivitetsmalModal(
