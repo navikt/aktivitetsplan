@@ -17,8 +17,6 @@ function BekreftSlettVisning({
         : null;
     return (
         <div className="bekreft-slett-container">
-            <header className="modal-header" />
-
             <Bilde
                 className="bekreft-slett-container__stop-svg"
                 src={stopSvg}
