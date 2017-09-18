@@ -129,6 +129,19 @@
 }
 
 @media print {
+    * {
+        line-height: 1 !important; // lesshint importantRule: false
+    }
+
+    body,
+    .aktivitetsplanfs {
+        font-size: 16pt;
+    }
+
+    .etikett {
+        padding-left: 0;
+    }
+
     .ReactModal {
         &__Overlay {
             position: relative;
