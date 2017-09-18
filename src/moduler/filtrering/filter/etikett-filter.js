@@ -29,10 +29,7 @@ EtikettFilter.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAktiviterForAktuellePerioden(state).filter(
-        a => !a.arenaAktivitet
-    ); // av en eller annen grunn skal man ikke filtrere på arena-filter
-
+    const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetEtiketterFilter = selectAktivitetEtiketterFilter(state);
     const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
         const etikett = aktivitet.etikett;

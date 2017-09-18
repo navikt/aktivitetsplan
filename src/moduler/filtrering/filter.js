@@ -21,17 +21,20 @@ const filterClassNames = classes => classNames(classes, 'filter');
 function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
     const muligeFilterKombinasjoner = aktivitetsListe.reduce(
         (res, aktivitet) => {
-            res.status.add(aktivitet.status);
-            res.type.add(aktivitet.type);
-            res.etikket.add(aktivitet.etikett);
-            res.avtalt.add(aktivitet.avtalt);
+            const { status, type, etikett, avtalt } = aktivitet;
+            res.muligeStatus.add(status);
+            res.muligeTyper.add(type);
+            if (etikett) {
+                res.muligeEtiketter.add(etikett);
+            }
+            res.muligeAvtalt.add(avtalt);
             return res;
         },
         {
-            status: new Set(),
-            type: new Set(),
-            etikket: new Set(),
-            avtalt: new Set(),
+            muligeStatus: new Set(),
+            muligeTyper: new Set(),
+            muligeEtiketter: new Set(),
+            muligeAvtalt: new Set(),
         }
     );
 
