@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm } from 'react-redux-form-validation';
@@ -59,33 +59,15 @@ const begrensetBeskrivelseLengde = maksLengde(
     BESKRIVELSE_MAKS_LENGDE
 ).hvisIkke(erAvtalt);
 
+// TODO fiks i separat quickfix
+// eslint-disable-next-line react/prefer-stateless-function
 class SokeAvtaleAktivitetForm extends Component {
-    componentDidMount() {
-        window.onbeforeunload = this.visLukkDialog.bind(this);
-    }
-
-    componentWillUnmount() {
-        window.onbeforeunload = null;
-    }
-
-    // eslint-disable-next-line consistent-return
-    visLukkDialog(e) {
-        if (this.props.isDirty) {
-            const melding = this.props.intl.formatMessage({
-                id: 'aktkivitet-skjema.lukk-advarsel',
-            });
-            e.returnValue = melding;
-            return melding;
-        }
-    }
-
     render() {
         const {
             handleSubmit,
             errorSummary,
             currentFraDato,
             currentTilDato,
-            intl,
             avtalt,
         } = this.props;
         const erAktivitetAvtalt = avtalt === true;
@@ -115,10 +97,7 @@ class SokeAvtaleAktivitetForm extends Component {
                         feltNavn="periodeValidering"
                         fraDato={currentFraDato}
                         tilDato={currentTilDato}
-                        errorMessage={intl.formatMessage({
-                            id:
-                                'datepicker.feilmelding.egen.fradato-etter-frist',
-                        })}
+                        errorMessageId="datepicker.feilmelding.egen.fradato-etter-frist"
                     >
                         <div className="dato-container">
                             <Datovelger
@@ -169,7 +148,6 @@ SokeAvtaleAktivitetForm.propTypes = {
     currentTilDato: PT.instanceOf(Date),
     avtalt: PT.bool,
     isDirty: PT.bool.isRequired,
-    intl: intlShape.isRequired,
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
@@ -215,6 +193,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps)(
-    injectIntl(SokeavtaleAktivitetReduxForm)
-);
+export default connect(mapStateToProps)(SokeavtaleAktivitetReduxForm);
