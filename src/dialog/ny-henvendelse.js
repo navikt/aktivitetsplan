@@ -51,10 +51,6 @@ function NyHenvendelseForm({
                 />
             </VisibleIfDiv>
 
-            <VisibleIfDiv visible={erBruker}>
-                <FormattedMessage id="dialog.ingress" />
-                <hr />
-            </VisibleIfDiv>
             {harEksisterendeOverskrift ||
                 <Input
                     feltNavn="overskrift"

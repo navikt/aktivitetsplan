@@ -39,8 +39,12 @@ class Prosesser extends Component {
             <InnstillingerModal>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <div>
-                        <StartEskaleringProsess hidden={erEskalert} />
-                        <StoppEskaleringProsess hidden={!erEskalert} />
+                        <StartEskaleringProsess
+                            hidden={erEskalert || !erUnderOppfolging}
+                        />
+                        <StoppEskaleringProsess
+                            hidden={!erEskalert || !erUnderOppfolging}
+                        />
                         <AvsluttOppfolgingProsess hidden={!erUnderOppfolging} />
                         <StartOppfolgingProsess hidden={!kanStarteOppfolging} />
                         <SettManuellOppfolgingProsess
