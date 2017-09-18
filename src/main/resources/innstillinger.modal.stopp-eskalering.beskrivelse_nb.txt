@@ -1,1 +1,1 @@
-Send en melding til brukeren.
+Se eksempel på tekst til brukeren under
