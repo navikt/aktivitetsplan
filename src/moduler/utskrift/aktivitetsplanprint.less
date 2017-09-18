@@ -1,0 +1,163 @@
+.aktivitetsplanprint {
+    display: block;
+
+    .print-header {
+        width: 100%;
+        position: relative;
+
+        .tilbakeknapp[hidden='true'] {
+            & + .print-knapp {
+                margin-left: 185px;
+            }
+        }
+    }
+
+    .modal-header-wrapper {
+        background-color: @gray-background;
+    }
+
+    .utskrift-overskrift {
+        margin: 0 3rem;
+    }
+
+    .print-modal-body {
+        background-color: @white;
+        padding: 2rem 0 3rem;
+
+        .adresse-dato {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 3rem 3rem;
+        }
+
+        .visprintmelding,
+        .vismittmal {
+            margin: 0 3rem;
+
+            &:empty {
+                display: none;
+            }
+        }
+
+        .visprintmelding + .statusgruppe,
+        .visprintmelding + .vismittmal {
+            margin-top: 2rem;
+        }
+
+        .vismittmal {
+            margin-bottom: 2rem;
+        }
+
+        .typo-systemtittel {
+            margin-bottom: 2rem;
+        }
+
+        .nav-logo-print {
+            margin: 0 3rem;
+        }
+
+        .statusgruppe {
+            padding: 2rem 3rem;
+            border-top: 1px solid @navGra40;
+
+            .typo-undertittel,
+            .typo-element {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .aktivitetsdetaljer {
+            margin-top: 0;
+
+            & + .aktivitetsdetaljer {
+                margin-top: 20px;
+            }
+
+            .detaljfelt {
+                display: inline-block;
+                width: ~'calc(50% - 2rem)';
+                margin-bottom: 0;
+                padding-bottom: 1rem;
+
+                &--fullbredde {
+                    width: 100%;
+                    margin-right: 0;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                &__lenke {
+                    text-decoration: none;
+                    color: @navMorkGra;
+                    cursor: default;
+                }
+            }
+        }
+    }
+
+    .nav-logo-print {
+        width: 80px;
+        margin-bottom: 1.5rem;
+    }
+
+    .feilmelding--systemfeil {
+        background-color: @white;
+        margin: 0;
+        padding: 1rem;
+    }
+
+    .printmelding__form {
+        background-color: @white;
+        padding-top: 1.5rem;
+    }
+
+    .printmelding__skjema {
+        margin: 0 3rem 1rem;
+    }
+
+    .printmelding__tittel {
+        margin-bottom: 1rem;
+    }
+
+    .printmelding__knapperad {
+        padding: 1.2rem 3rem 1.5rem;
+        border-top: 1px solid @navGra40;
+        margin-top: 2rem;
+    }
+}
+
+@media print {
+    * {
+        line-height: 1 !important; // lesshint importantRule: false
+    }
+
+    body,
+    .aktivitetsplanfs {
+        font-size: 16pt;
+    }
+
+    .etikett {
+        padding-left: 0;
+    }
+
+    .ReactModal {
+        &__Overlay {
+            position: relative;
+        }
+    }
+
+    .aktivitetsplanprint {
+        overflow: visible;
+    }
+
+    .modal-header,
+    .lukknapp {
+        display: none;
+    }
+
+    .statusgruppe {
+        page-break-inside: avoid;
+    }
+}

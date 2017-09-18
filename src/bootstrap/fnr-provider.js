@@ -5,6 +5,7 @@ import { CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
 import { RESET_STORE } from '../reducer';
 import { hentPerson, setNAVsomMotpart } from '../moduler/motpart/motpart-duck';
 import history from '../history';
+import { hentBruker } from '../moduler/bruker/bruker-duck';
 
 export function fnrFraUrl() {
     const fnrMatch = window.location.pathname.match(`${CONTEXT_PATH}/(\\d*)`);
@@ -28,6 +29,7 @@ class FnrProvider extends Component {
             const fnr = fnrFraUrl();
             if (fnr) {
                 dispatch(hentPerson(fnr));
+                dispatch(hentBruker(fnr));
             }
         } else {
             // e.g. på utsiden

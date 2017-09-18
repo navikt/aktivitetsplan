@@ -17,6 +17,8 @@ export const aktivitet = PT.shape({
     dagerPerUke: PT.number,
 });
 
+export const aktiviteter = PT.arrayOf(aktivitet);
+
 export const henvendelse = PT.shape({
     dialogId: PT.string.isRequired,
     tekst: PT.string.isRequired,
@@ -157,4 +159,9 @@ export const arbeidsliste = PT.shape({
     frist: PT.string,
     isOppfolgendeVeileder: PT.bool,
     harVeilederTilgang: PT.bool,
+});
+
+export const printMelding = PT.shape({
+    overskrift: PT.string,
+    beskrivelse: PT.string,
 });
