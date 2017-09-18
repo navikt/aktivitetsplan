@@ -10,7 +10,7 @@ export const lagArbeidsliste = (fnr, form, props) => ({
     frist: form.frist,
 });
 
-export const KOMMENTAR_MAKS_LENGDE = 255;
+export const KOMMENTAR_MAKS_LENGDE = 250;
 export const pakrevd = rules.minLength(
     0,
     <FormattedMessage id="arbeidsliste.feilmelding.for-kort" />
@@ -20,7 +20,7 @@ export const begrensetKommentarLengde = rules.maxLength(
     KOMMENTAR_MAKS_LENGDE,
     <FormattedMessage
         id="arbeidsliste-form.feilmelding.kommentar-lengde"
-        values={{ KOMMENTAR_MAKS_LENGDE }}
+        values={{ MAKS_LENGDE: KOMMENTAR_MAKS_LENGDE }}
     />
 );
 
