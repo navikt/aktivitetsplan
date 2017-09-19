@@ -44,7 +44,7 @@ function StatusGruppe({ gruppe }) {
                 />
             </Undertittel>
             {aktiviteter.map(aktivitet =>
-                <AktivitetPrint aktivitet={aktivitet} />
+                <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} />
             )}
         </section>
     );

@@ -133,8 +133,8 @@ class Navigasjonslinje extends Component {
                     tekstId="navigasjon.vilkar"
                     disabled={disabled || (!erBruker && vilkarMaBesvares)}
                 />
-                <Feature name={navigasjonslinjemenyFeature}>
-                    <div className="navigasjonslinje__verktoy">
+                <div className="navigasjonslinje__verktoy">
+                    <Feature name={navigasjonslinjemenyFeature}>
                         <Innholdslaster
                             avhengigheter={[arbeidslisteReducer]}
                             spinnerStorrelse="xs"
@@ -146,10 +146,14 @@ class Navigasjonslinje extends Component {
                                 }
                             />
                         </Innholdslaster>
-                        <PrintLenke />
+                    </Feature>
+
+                    <PrintLenke />
+
+                    <Feature name={navigasjonslinjemenyFeature}>
                         <InnstillingerKnapp />
-                    </div>
-                </Feature>
+                    </Feature>
+                </div>
             </nav>
         );
     }

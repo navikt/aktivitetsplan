@@ -44,7 +44,7 @@ const StatusGruppePT = PT.shape({
 });
 
 function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
-    const { fodselsnummer, fornavn, bostedsadresse } = bruker;
+    const { fodselsnummer, fornavn, etternavn, bostedsadresse } = bruker;
     const gateadresse = bostedsadresse.strukturertAdresse.Gateadresse;
     const {
         gatenavn,
@@ -69,11 +69,12 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
             <div className="printmodal-body__adresse-dato">
                 <div className="printmodal-body__adresse">
                     <StoreForbokstaver>
-                        {fornavn}
+                        {`${fornavn} ${etternavn}`}
                     </StoreForbokstaver>
                     <HiddenIfDiv hidden={!erVeileder}>
-                        <StoreForbokstaver tag="div">{`${gatenavn} ${husnummer} ${husbokstav ||
-                            ''}`}</StoreForbokstaver>
+                        <StoreForbokstaver tag="div">
+                            {`${gatenavn} ${husnummer} ${husbokstav || ''}`}
+                        </StoreForbokstaver>
                         <StoreForbokstaver tag="div">{`${postnummer} ${poststed}`}</StoreForbokstaver>
                         <div>
                             {fodselsnummer}
