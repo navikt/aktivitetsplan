@@ -1,10 +1,4 @@
-import {
-    API_BASE_URL,
-    DIALOG_BASE_URL,
-    AKTIVITET_PROXY_BASE_URL,
-    SITUASJON_PROXY_BASE_URL,
-    PERSON_BASE_URL,
-} from '~config'; // eslint-disable-line
+import { SITUASJON_PROXY_BASE_URL } from '../../environment';
 import { fetchToJson, postAsJson } from '../../ducks/utils';
 
 export function hentIdentitet() {
