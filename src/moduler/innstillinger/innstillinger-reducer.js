@@ -47,10 +47,26 @@ export const HENT_BEHANDLENDE_ENHETER_FEILET =
     'instillinger/hent-behandlende-enheter/FEILET';
 export const HENT_BEHANDLENDE_ENHETER_PENDING =
     'instillinger/hent-behandlende-enheter/PENDING';
+export const HENT_BEHANDLENDE_ENHETER_RESET =
+    'instillinger/hent-behandlende-enheter/RESET';
+
+export const HENT_VEILEDERE_OK = 'instillinger/hent-veiledere/OK';
+export const HENT_VEILEDERE_FEILET = 'instillinger/hent-veiledere/FEILET';
+export const HENT_VEILEDERE_PENDING = 'instillinger/hent-veiledere/PENDING';
+
+export const OPPRETT_OPPGAVE_OK = 'instillinger/opprett-oppgave/OK';
+export const OPPRETT_OPPGAVE_FEILET = 'instillinger/opprett-oppgave/FEILET';
+export const OPPRETT_OPPGAVE_PENDING = 'instillinger/opprett-oppgave/PENDING';
 
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
+    behandlendeEnheter: {
+        status: STATUS.NOT_STARTED,
+    },
+    veiledere: {
+        status: STATUS.NOT_STARTED,
+    },
 };
 
 // Reducer
@@ -60,7 +76,18 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                behandlendeEnheter: action.data,
+                behandlendeEnheter: {
+                    enheter: action.data,
+                    status: STATUS.OK,
+                },
+            };
+        case HENT_VEILEDERE_OK:
+            return {
+                ...state,
+                veiledere: {
+                    ...action.data,
+                    status: STATUS.OK,
+                },
             };
         case HENT_SITUASJON_OK:
         case KAN_AVSLUTTE_OK:
@@ -75,6 +102,22 @@ export default function reducer(state = initalState, action) {
                 status: STATUS.OK,
                 data: action.data,
             };
+        case HENT_BEHANDLENDE_ENHETER_FEILET:
+            return {
+                ...state,
+                behandlendeEnheter: {
+                    enheter: action.data,
+                    status: STATUS.ERROR,
+                },
+            };
+        case HENT_VEILEDERE_FEILET:
+            return {
+                ...state,
+                veiledere: {
+                    ...action.data,
+                    status: STATUS.ERROR,
+                },
+            };
         case HENT_SITUASJON_FEILET:
         case KAN_AVSLUTTE_FEILET:
         case AVSLUTT_OPPFOLGING_FEILET:
@@ -83,7 +126,6 @@ export default function reducer(state = initalState, action) {
         case SETT_DIGITAL_FEILET:
         case START_ESKALERING_FEILET:
         case STOPP_ESKALERING_FEILET:
-        case HENT_BEHANDLENDE_ENHETER_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
@@ -93,6 +135,13 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.PENDING,
+            };
+        case HENT_VEILEDERE_PENDING:
+            return {
+                ...state,
+                veiledere: {
+                    status: STATUS.PENDING,
+                },
             };
         case HENT_SITUASJON_PENDING:
         case KAN_AVSLUTTE_PENDING:
@@ -116,6 +165,13 @@ export default function reducer(state = initalState, action) {
             };
         case SLETT_BEGRUNNELSE:
             return { ...state, begrunnelse: null };
+        case HENT_BEHANDLENDE_ENHETER_RESET:
+            return {
+                ...state,
+                behandlendeEnheter: {
+                    status: STATUS.NOT_STARTED,
+                },
+            };
         default:
             return state;
     }
@@ -231,10 +287,24 @@ export function lagreBegrunnelse(begrunnelse) {
     };
 }
 
-export function hentBehandlendeEnheter(fnr) {
-    return doThenDispatch(() => Api.hentBehandlendeEnheter(fnr), {
+export function hentBehandlendeEnheter(tema, fnr) {
+    return doThenDispatch(() => Api.hentBehandlendeEnheter(tema, fnr), {
         OK: HENT_BEHANDLENDE_ENHETER_OK,
         FEILET: HENT_BEHANDLENDE_ENHETER_FEILET,
         PENDING: HENT_BEHANDLENDE_ENHETER_PENDING,
     });
+}
+
+export function hentVeiledereForEnhet(enhetid) {
+    return doThenDispatch(() => Api.hentVeieldereForEnhet(enhetid), {
+        OK: HENT_VEILEDERE_OK,
+        FEILET: HENT_VEILEDERE_FEILET,
+        PENDING: HENT_VEILEDERE_PENDING,
+    });
+}
+
+export function resetEnheter() {
+    return {
+        type: HENT_BEHANDLENDE_ENHETER_RESET,
+    };
 }

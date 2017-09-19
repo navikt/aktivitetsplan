@@ -84,6 +84,10 @@ function InnstillingerRoutes({ match }) {
                 path={`${path}/oppgave/opprett`}
                 component={OpprettOppgave}
             />
+            <Route
+                path={`${path}/oppgave/opprett/kvittering`}
+                component={OpprettOppgave}
+            />
             <Route path={`${path}/feilkvittering`} component={Feilkvittering} />
         </Switch>
     );

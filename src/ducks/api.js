@@ -84,6 +84,34 @@ export function slettArbeidsliste(fnr) {
     });
 }
 
-export function hentBehandlendeEnheter(fnr) {
-    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter/${fnr}`);
+export function hentBehandlendeEnheter(tema, fnr) {
+    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter/?fnr=${fnr}&tema=${tema}`);
+}
+
+export function hentVeieldereForEnhet(enhetid) {
+    return fetchToJson(`${VEILEDER_BASE_URL}/enhet/${enhetid}/veiledere`);
+}
+
+export function opprettOppgaveForBruker({
+    fnr,
+    tema,
+    type,
+    prioritet,
+    fraDato,
+    tilDato,
+    enhet,
+    veileder,
+    beskrivelse,
+}) {
+    return postAsJson(`${OPPGAVE_BASE_URL}/oppgave`, {
+        fnr,
+        fagomradeKode: tema,
+        oppgavetypeKode: type,
+        prioritetKode: prioritet,
+        beskrivelse,
+        aktivFra: fraDato,
+        aktivTil: tilDato,
+        ansvarligEnhetId: enhet,
+        ansvarligId: veileder,
+    });
 }

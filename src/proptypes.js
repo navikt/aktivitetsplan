@@ -157,3 +157,19 @@ export const arbeidsliste = PT.shape({
     isOppfolgendeVeileder: PT.bool,
     harVeilederTilgang: PT.bool,
 });
+
+const enhet = PT.shape({
+    enhetId: PT.string,
+    navn: PT.string,
+});
+
+export const behandlendeEnheter = PT.shape({
+    enheter: PT.arrayOf(enhet),
+    status: PT.string,
+});
+
+export const veiledere = PT.shape({
+    veilederListe: PT.arrayOf(veileder),
+    enhet,
+    status: PT.string,
+});
