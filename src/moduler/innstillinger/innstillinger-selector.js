@@ -10,8 +10,13 @@ export function selectInnstillingerData(state) {
     return selectInnstillingerSlice(state).data;
 }
 
+export function selectAvslutningStatus(state) {
+    return selectInnstillingerData(state).avslutningStatus;
+}
+
 export function selectInaktiveringsDato(state) {
-    return selectInnstillingerData(state).inaktiveringsDato;
+    const avslutningStatus = selectAvslutningStatus(state);
+    return avslutningStatus && avslutningStatus.inaktiveringsDato;
 }
 
 export function selectInnstillingerBegrunnelse(state) {

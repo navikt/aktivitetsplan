@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import {
@@ -13,6 +12,12 @@ import { STATUS } from '../../../ducks/utils';
 import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import * as AppPT from '../../../proptypes';
+import {
+    selectAvslutningStatus,
+    selectInnstillingerStatus,
+    selectKanStarteOppfolging,
+} from '../innstillinger-selector';
+import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
 class AvsluttOppfolgingProsess extends Component {
     constructor(props) {
@@ -37,6 +42,9 @@ class AvsluttOppfolgingProsess extends Component {
 
     render() {
         const { avslutningStatus, laster, slettBegrunnelse } = this.props;
+        const { underOppfolging, harYtelser, harTiltak } =
+            avslutningStatus || {};
+        const { harSjekket, kanAvslutte } = this.state;
         return (
             <StartProsess
                 className="innstillinger__prosess"
@@ -52,24 +60,24 @@ class AvsluttOppfolgingProsess extends Component {
                     <Normaltekst>
                         <FormattedMessage id="innstillinger.prosess.avslutt.tekst" />
                     </Normaltekst>
-                    {this.state.harSjekket &&
-                        !this.state.kanAvslutte &&
-                        <AlertStripeInfoSolid>
-                            <ul>
-                                {avslutningStatus.underOppfolging &&
-                                    <li>
-                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging" />
-                                    </li>}
-                                {avslutningStatus.harYtelser &&
-                                    <li>
-                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser" />
-                                    </li>}
-                                {avslutningStatus.harTiltak &&
-                                    <li>
-                                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak" />
-                                    </li>}
-                            </ul>
-                        </AlertStripeInfoSolid>}
+                    <HiddenIfAlertStripeInfoSolid
+                        hidden={!harSjekket || kanAvslutte}
+                    >
+                        <ul>
+                            {underOppfolging &&
+                                <li>
+                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging" />
+                                </li>}
+                            {harYtelser &&
+                                <li>
+                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser" />
+                                </li>}
+                            {harTiltak &&
+                                <li>
+                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak" />
+                                </li>}
+                        </ul>
+                    </HiddenIfAlertStripeInfoSolid>
                 </div>
             </StartProsess>
         );
@@ -88,9 +96,9 @@ AvsluttOppfolgingProsess.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    avslutningStatus: state.data.innstillinger.data.avslutningStatus,
-    kanStarte: state.data.innstillinger.data.kanStarteOppfolging,
-    laster: state.data.innstillinger.status === STATUS.RELOADING,
+    avslutningStatus: selectAvslutningStatus(state),
+    kanStarte: selectKanStarteOppfolging(state),
+    laster: selectInnstillingerStatus(state) === STATUS.RELOADING,
 });
 
 const mapDispatchToProps = dispatch => ({
