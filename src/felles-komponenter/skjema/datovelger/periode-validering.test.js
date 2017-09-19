@@ -2,16 +2,22 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import PeriodeValidering from './periode-validering';
+import { PeriodeValideringPure } from './periode-validering';
 
 const errorMessage = 'test:periodevalidering:error';
+
+const testIntl = {
+    formatMessage: props => props.id,
+};
+
 function lagPeriodeValidering(fradato, tildato) {
     return shallow(
-        <PeriodeValidering
+        <PeriodeValideringPure
             feltNavn="test"
-            errorMessage={errorMessage}
+            errorMessageId={errorMessage}
             fraDato={fradato}
             tilDato={tildato}
+            intl={testIntl}
         />
     );
 }

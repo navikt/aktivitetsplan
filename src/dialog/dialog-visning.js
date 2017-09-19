@@ -6,11 +6,16 @@ import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import * as AppPT from '../proptypes';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
 import history from '../history';
-import { DIALOG_IKKE_FERDIGBEHANDLET, DIALOG_MA_BESVARES } from '../constant';
+import {
+    DIALOG_ESKALERING,
+    DIALOG_IKKE_FERDIGBEHANDLET,
+    DIALOG_MA_BESVARES,
+} from '../constant';
 import visibleIfHOC from '../hocs/visible-if';
 import Dato from '../felles-komponenter/dato';
 import Lenkepanel from '../felles-komponenter/lenkepanel';
-import Etikett from '../felles-komponenter/aktivitet-etikett';
+import Etikett from '../felles-komponenter/aktivitet-etikett/aktivitet-etikett';
+import { erEskaleringsDialog } from './dialog-utils';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
@@ -52,6 +57,8 @@ class DialogVisning extends React.Component {
             a => a.avsender === 'VEILEDER'
         );
 
+        const erEskalering = erEskaleringsDialog(dialog);
+
         const handleOnFocus = () => {
             if (!erValgt) {
                 history.push(`/dialog/${dialog.id}`);
@@ -77,7 +84,7 @@ class DialogVisning extends React.Component {
                 href={`/dialog/${dialog.id}`}
             >
                 <Markering visible={!dialog.lest} />
-                <div>
+                <div className="dialoger__dialog--smuler">
                     <Info>
                         <Dato>
                             {dialog.sisteDato}
@@ -105,7 +112,9 @@ class DialogVisning extends React.Component {
                     {dialog.sisteTekst}
                 </Normaltekst>
                 <VisibleIfDiv
-                    visible={venterPaSvar || ikkeFerdigbehandlet}
+                    visible={
+                        venterPaSvar || ikkeFerdigbehandlet || erEskalering
+                    }
                     className="dialoger__dialog-etiketter"
                 >
                     <Etikett
@@ -117,6 +126,11 @@ class DialogVisning extends React.Component {
                         visible={ikkeFerdigbehandlet}
                         id="dialog.ikke-ferdigbehandlet"
                         etikett={DIALOG_IKKE_FERDIGBEHANDLET}
+                    />
+                    <Etikett
+                        visible={erEskalering}
+                        id="dialog.eskalert-melding"
+                        etikett={DIALOG_ESKALERING}
                     />
                 </VisibleIfDiv>
                 <div className="dialoger__dialog-henvendelser">

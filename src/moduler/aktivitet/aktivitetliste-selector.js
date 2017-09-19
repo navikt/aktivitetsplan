@@ -3,7 +3,10 @@ import {
     selectPrivatModusSlice,
     selectErPrivatModus,
 } from '../privat-modus/privat-modus-selector';
-import { aktivitetFilter } from '../filtrering/filter/filter-utils';
+import {
+    aktivitetFilter,
+    datoErIPeriode,
+} from '../filtrering/filter/filter-utils';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import {
     MOTE_TYPE,
@@ -23,9 +26,15 @@ export function selectAlleAktiviter(state) {
     return selectAktiviter(state).concat(stateData.arenaAktiviteter.data);
 }
 
+export function selectAktiviterForAktuellePerioden(state) {
+    return selectAlleAktiviter(state).filter(a =>
+        datoErIPeriode(a.opprettetDato, state)
+    );
+}
+
 export function selectAktivitetListe(state) {
     const privatModus = selectErPrivatModus(state);
-    return selectAlleAktiviter(state)
+    return selectAktiviterForAktuellePerioden(state)
         .filter(a => !privatModus || a.historisk || a.arenaAktivitet)
         .filter(a => aktivitetFilter(a, state));
 }

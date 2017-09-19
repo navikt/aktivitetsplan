@@ -1,7 +1,12 @@
 import * as Api from '../situasjon/situasjon-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
-import { nyHenvendelse } from '../../ducks/dialog';
+import {
+    nyHenvendelse,
+    oppdaterFerdigbehandlet,
+    oppdaterVenterPaSvar,
+} from '../../ducks/dialog';
 import { hentSituasjon } from '../situasjon/situasjon';
+import history from '../../history';
 
 // Actions
 export const HENT_SITUASJON_OK = 'innstillinger/hent-situasjon/OK';
@@ -166,15 +171,25 @@ function startEskaleringMedDialog(dialogId, begrunnelse) {
         PENDING: START_ESKALERING_PENDING,
     });
 }
+
 export function startEskalering(eskaleringData) {
     const begrunnelse = eskaleringData.begrunnelse;
     return dispatch =>
-        dispatch(nyHenvendelse({ ...eskaleringData, tekst: begrunnelse }))
-            .then(henvendelse =>
-                dispatch(
-                    startEskaleringMedDialog(henvendelse.data.id, begrunnelse)
-                )
-            )
+        dispatch(
+            nyHenvendelse({
+                ...eskaleringData,
+                tekst: begrunnelse,
+                egenskaper: ['ESKALERINGSVARSEL'],
+            })
+        )
+            .then(henvendelse => {
+                const dialogId = henvendelse.data.id;
+                dispatch(oppdaterVenterPaSvar(dialogId, true));
+                dispatch(oppdaterFerdigbehandlet(dialogId, true));
+                return dispatch(
+                    startEskaleringMedDialog(dialogId, begrunnelse)
+                );
+            })
             .then(() => dispatch(hentSituasjon()))
             .then(() =>
                 history.push('/innstillinger/startEskalering/kvittering')
@@ -189,11 +204,18 @@ function stoppEskaleringMedBegrunnelse(begrunnelse) {
         PENDING: STOPP_ESKALERING_PENDING,
     });
 }
+
 export function stoppEskalering(stoppEskaleringData) {
     const begrunnelse = stoppEskaleringData.begrunnelse;
     return dispatch =>
-        dispatch(nyHenvendelse({ ...stoppEskaleringData, tekst: begrunnelse }))
-            .then(dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
+        dispatch(
+            nyHenvendelse({
+                ...stoppEskaleringData,
+                tekst: begrunnelse,
+                egenskaper: ['ESKALERINGSVARSEL'],
+            })
+        )
+            .then(() => dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
             .then(() => dispatch(hentSituasjon()))
             .then(() =>
                 history.push('/innstillinger/stoppEskalering/kvittering')

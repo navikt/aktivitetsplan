@@ -44,7 +44,7 @@ class Varslinger extends Component {
             <Container>
                 <HiddenIfVarslingMedLenke
                     hidden={!brukerErEskalert}
-                    tekstId="oppfolgning.bruker.bruker-er-eskalert  "
+                    tekstId="oppfolgning.bruker.bruker-er-eskalert"
                     lenkeTekstId="oppfolgning.bruker.bruker-er-eskalert.lenke-tekst"
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"

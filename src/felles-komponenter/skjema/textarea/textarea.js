@@ -44,7 +44,10 @@ function InnerTextAreaComponent({
         intl.formatMessage({
             id: placeholderId,
         });
-    const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
+    let feil = errorMessage ? { feilmelding: errorMessage } : undefined;
+    if (feil === undefined && !meta.pristine && meta.active && !meta.valid) {
+        feil = { feilmelding: meta.error };
+    }
     return (
         <NavFrontendTextarea
             textareaClass="skjemaelement__input input--fullbredde"

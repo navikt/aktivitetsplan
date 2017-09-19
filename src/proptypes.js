@@ -17,6 +17,8 @@ export const aktivitet = PT.shape({
     dagerPerUke: PT.number,
 });
 
+export const aktiviteter = PT.arrayOf(aktivitet);
+
 export const henvendelse = PT.shape({
     dialogId: PT.string.isRequired,
     tekst: PT.string.isRequired,
@@ -36,6 +38,7 @@ export const dialog = PT.shape({
     venterPaSvar: PT.bool,
     ferdigBehandlet: PT.bool,
     henvendelser: PT.arrayOf(henvendelse).isRequired,
+    egenskaper: PT.arrayOf(PT.string),
 });
 
 export const etikett = PT.shape({
@@ -126,9 +129,13 @@ export const oppfolgingsPeriode = PT.shape({
 });
 
 export const feil = PT.shape({
-    is: PT.string,
-    type: PT.string.isRequired,
-    detaljer: PT.object,
+    type: PT.string,
+    httpStatus: PT.number,
+    melding: PT.shape({
+        id: PT.string,
+        type: PT.string.isRequired,
+        detaljer: PT.object,
+    }),
 });
 
 export const innstillingHistorikk = PT.shape({
@@ -156,4 +163,9 @@ export const arbeidsliste = PT.shape({
     frist: PT.string,
     isOppfolgendeVeileder: PT.bool,
     harVeilederTilgang: PT.bool,
+});
+
+export const printMelding = PT.shape({
+    overskrift: PT.string,
+    beskrivelse: PT.string,
 });

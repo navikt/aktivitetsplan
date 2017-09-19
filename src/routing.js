@@ -7,8 +7,10 @@ import VilkarModalUtenHistorikk from './moduler/vilkar/vilkar-uten-historikk';
 import DialogModal from './dialog/dialog-modal';
 import AktivitetmalEndre from './sider/hovedside/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './sider/hovedside/mal/aktivitetsmal';
+import AktivitetmalSlett from './sider/hovedside/mal/aktivitetsmal-slett';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
+import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
 import InformasjonRoutes from './moduler/informasjon/informasjon-routes';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
@@ -44,7 +46,10 @@ const Routing = ({ location }) =>
             path={getPathWithBase('/mal/endre')}
             component={AktivitetmalEndre}
         />
-
+        <Route
+            path={getPathWithBase('/mal/slett')}
+            component={AktivitetmalSlett}
+        />
         <Route
             exact
             path={getPathWithBase('/dialog')}
@@ -66,6 +71,10 @@ const Routing = ({ location }) =>
         <Route
             path={getPathWithBase('/arbeidsliste')}
             component={ArbeidslisteContainer}
+        />
+        <Route
+            path={getPathWithBase('/utskrift')}
+            component={AktivitetsplanPrint}
         />
         <Route
             path={getPathWithBase('/informasjon')}

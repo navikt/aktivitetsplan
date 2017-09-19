@@ -1,17 +1,17 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import AktivitetEtikett from '../../../felles-komponenter/aktivitet-etikett';
-import { AVTALT_MED_NAV } from '../../../constant';
 import visibleIfHOC from '../../../hocs/visible-if';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../../moduler/dialog/dialog-selector';
+import AktivitetEtikettGruppe from '../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
+import * as AppPT from '../../../proptypes';
 
 function AktivitetskortTillegg({
     antallHendvendelser,
     antallUlesteHenvendelser,
-    etikett,
+    aktivitet,
     erAvtalt,
     harEtikett,
     harDialog,
@@ -21,18 +21,11 @@ function AktivitetskortTillegg({
             hidden={!(erAvtalt || harEtikett || harDialog)}
             className="aktivitetskort__ikon-blokk"
         >
-            <div className="aktivitetskort__etiketter">
-                <AktivitetEtikett
-                    visible={erAvtalt}
-                    etikett={AVTALT_MED_NAV}
-                    id={AVTALT_MED_NAV}
-                />
-                <AktivitetEtikett
-                    visible={harEtikett}
-                    etikett={etikett}
-                    id={`etikett.${etikett}`}
-                />
-            </div>
+            <AktivitetEtikettGruppe
+                aktivitet={aktivitet}
+                className="aktivitetskort__etiketter"
+            />
+
             <HiddenIfDiv
                 hidden={antallHendvendelser <= 0}
                 className="aktivitetskort__henvendelser"
@@ -50,6 +43,7 @@ AktivitetskortTillegg.defaultProps = {
 };
 
 AktivitetskortTillegg.propTypes = {
+    aktivitet: AppPT.aktivitet.isRequired,
     antallHendvendelser: PT.number.isRequired,
     antallUlesteHenvendelser: PT.number.isRequired,
     erAvtalt: PT.bool.isRequired,
@@ -72,7 +66,7 @@ const mapStateToProps = (state, props) => {
         erAvtalt: aktivitet.avtalt,
         harDialog: antallHendvendelser > 0,
         harEtikett: !!etikett,
-        etikett,
+        aktivitet,
     };
 };
 

@@ -14,6 +14,7 @@ import FeilmeldingDetaljer from './feilmelding-detaljer';
 import { parseFeil, finnHoyesteAlvorlighetsgrad } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
+import * as AppPT from '../../proptypes';
 
 const typer = {
     [AlertStripeAdvarsel]: 1,
@@ -28,16 +29,21 @@ const stripeTyper = {
     UGYLDIG_REQUEST: AlertStripeInfo,
 };
 
-function FeilStripe({ alertStripe, tekstIds, erVeileder, intl }) {
+function FeilStripe({ alertStripe, feil, erVeileder, intl }) {
     const vistekster = window.location.search.indexOf('vistekster') !== -1;
     const Stripe = alertStripe;
     const aktor = erVeileder ? 'veileder' : 'bruker';
+    const typeNr = typer[alertStripe];
+    const feilType = feil.type;
+    const melding = feil.melding;
+    const feilKategori = melding && melding.type;
     const feilKeys = parseFeil(
-        `feilmelding.type${typer[alertStripe]}/${aktor}/${tekstIds}`
+        `feilmelding.type${typeNr}/${feilKategori}/${aktor}/${feilType}`
             .replace('/fail', '')
             .replace('/FEILET', '')
             .split('/')
             .join('-')
+            .toLowerCase()
     );
     const mostSpesificKey = feilKeys.find(
         key => intl.formatMessage({ id: key }) !== key
@@ -69,7 +75,7 @@ FeilStripe.defaultProps = {
 
 FeilStripe.propTypes = {
     alertStripe: PT.func,
-    tekstIds: PT.string,
+    feil: AppPT.feil.isRequired,
     erVeileder: PT.bool,
     intl: intlShape.isRequired,
 };
@@ -106,7 +112,7 @@ class Feilmelding extends Component {
                                 'UKJENT'
                         ]
                     }
-                    tekstIds={alvorligsteFeil.type}
+                    feil={alvorligsteFeil}
                     erVeileder={erVeileder}
                     intl={intl}
                 />
@@ -130,6 +136,7 @@ class Feilmelding extends Component {
                                 key={id}
                                 feilId={id}
                                 action={action}
+                                httpStatus={feilen.httpStatus}
                                 {...rest}
                             />
                         );

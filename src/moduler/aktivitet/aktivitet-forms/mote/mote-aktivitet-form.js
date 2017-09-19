@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import { validForm } from 'react-redux-form-validation';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet-form-utils';
 import {
     maksLengde,
@@ -23,6 +22,7 @@ import {
     formatterKlokkeslett,
     formatterVarighet,
 } from '../../aktivitet-util';
+import LagreAktivitet from '../lagre-aktivitet';
 
 const TITTEL_MAKS_LENGDE = 255;
 const ADRESSE_MAKS_LENGDE = 255;
@@ -95,7 +95,7 @@ const varigheter = Array.from(new Array(24)).map((noValue, index) => {
     );
 });
 
-function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit, lagrer }) {
+function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit }) {
     return (
         <form onSubmit={handleSubmit}>
             <div className="skjema-innlogget aktivitetskjema">
@@ -166,11 +166,7 @@ function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit, lagrer }) {
                     maxLength={FORBEREDELSER_MAKS_LENGDE}
                 />
             </div>
-            <div className="aktivitetskjema__lagre-knapp">
-                <Hovedknapp spinner={lagrer} disabled={lagrer}>
-                    <FormattedMessage id="aktivitet-form.lagre" />
-                </Hovedknapp>
-            </div>
+            <LagreAktivitet />
         </form>
     );
 }

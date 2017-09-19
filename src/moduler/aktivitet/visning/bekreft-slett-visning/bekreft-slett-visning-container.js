@@ -7,17 +7,9 @@ import BekreftSlettVisning from './bekreft-slett-visning';
 import history from '../../../../history';
 import * as AppPT from '../../../../proptypes';
 import Modal from '../../../../felles-komponenter/modal/modal';
+import { selectAktivitetMedId } from '../../aktivitetliste-selector';
 
-function BekreftSlettVisningContainer({
-    doSlettAktivitet,
-    aktiviteter,
-    params,
-}) {
-    const { id } = params;
-    const valgtAktivitet = aktiviteter.data.find(
-        aktivitet => aktivitet.id === id
-    );
-
+function BekreftSlettVisningContainer({ doSlettAktivitet, valgtAktivitet }) {
     return (
         <Modal contentLabel="aktivitetsvisningModal">
             <BekreftSlettVisning
@@ -27,6 +19,7 @@ function BekreftSlettVisningContainer({
                 }}
                 avbrytAction={() =>
                     history.push(`aktivitet/vis/${valgtAktivitet.id}`)}
+                tittelId="aktivitetvisning.bekreft-sletting.tittel"
             />
         </Modal>
     );
@@ -34,18 +27,20 @@ function BekreftSlettVisningContainer({
 
 BekreftSlettVisningContainer.defaultProps = {
     doSlettAktivitet: undefined,
-    aktiviteter: undefined,
+    valgtAktivitet: undefined,
 };
 
 BekreftSlettVisningContainer.propTypes = {
     doSlettAktivitet: PT.func,
-    aktiviteter: AppPT.reducer,
-    params: PT.shape({ id: PT.string }).isRequired,
+    valgtAktivitet: AppPT.aktivitet,
 };
 
-const mapStateToProps = state => ({
-    aktiviteter: state.data.aktiviteter,
-});
+const mapStateToProps = (state, props) => {
+    const aktivitetId = props.match.params.id;
+    return {
+        valgtAktivitet: selectAktivitetMedId(state, aktivitetId),
+    };
+};
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators(

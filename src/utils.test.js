@@ -321,8 +321,17 @@ describe('app utils', () => {
             expect(Utils.storeForbokstaver('pelle parafin')).to.equal(
                 'Pelle Parafin'
             );
-            expect(Utils.storeForbokstaver(null)).to.equal(null);
-            expect(Utils.storeForbokstaver(undefined)).to.equal(undefined);
+            expect(
+                Utils.storeForbokstaver('FORNAVN', 'MELLOMNAVN', 'ETTERNAVN')
+            ).to.equal('Fornavn Mellomnavn Etternavn');
+            expect(
+                Utils.storeForbokstaver('FORNAVN', undefined, 'ETTERNAVN')
+            ).to.equal('Fornavn Etternavn');
+            expect(Utils.storeForbokstaver('', null, 'ETTERNAVN')).to.equal(
+                'Etternavn'
+            );
+            expect(Utils.storeForbokstaver(null)).to.equal('');
+            expect(Utils.storeForbokstaver(undefined)).to.equal('');
         });
     });
 

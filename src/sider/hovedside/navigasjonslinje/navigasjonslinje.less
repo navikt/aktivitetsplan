@@ -91,9 +91,33 @@
     margin-right: 0.5rem;
 }
 
+.navigasjonslinje__verktoy--print-knapp {
+    border: 0;
+    background: data-uri('@{aktivitetsplanPath}/moduler/utskrift/printer.svg')
+        no-repeat center left;
+
+    &:hover {
+        background-image: data-uri(
+            '@{aktivitetsplanPath}/moduler/utskrift/printer-hover.svg'
+        );
+    }
+
+    &:active {
+        background-image: data-uri(
+            '@{aktivitetsplanPath}/moduler/utskrift/printer-active.svg'
+        );
+    }
+}
+
 .navigasjonslinje__skillestrek {
     border-right: solid 1px @navGra40;
     padding-right: 0.875rem;
+    margin-right: 0.875rem;
+}
+
+.navigasjonslinje__skillestrek--hoyre {
+    border-right: 1px solid @navGra40;
+    padding-right: 1.875rem;
     margin-right: 0.875rem;
 }
 
@@ -103,6 +127,7 @@
     width: @meny-knapp-storrelse;
     border: 0;
     padding: 0;
+    margin-top: 2px;
     background: data-uri(
             '@{aktivitetsplanPath}/sider/hovedside/navigasjonslinje/tannhjul.svg'
         )

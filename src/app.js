@@ -10,7 +10,7 @@ import Routing from './routing';
 import routerHistory from './history';
 import Hovedside from './sider/hovedside/hovedside';
 import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
-import { VIS_SIDEBANNER, CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
+import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
 
 function App() {
     return (
