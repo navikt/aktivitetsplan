@@ -1,1 +1,0 @@
-<iframe id="iframe_player" src="https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E" width="578" height="325" frameborder="0" scrolling="no">You need a browser that can handle Iframes to be able to view this page.</iframe>
