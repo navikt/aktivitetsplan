@@ -1,37 +1,39 @@
 .aktivitetsplanprint {
     display: block;
 
-    .print-header {
+    .printmodal-header {
         width: 100%;
         position: relative;
+    }
 
-        .tilbakeknapp[hidden='true'] {
-            & + .print-knapp {
-                margin-left: 185px;
-            }
-        }
+    .printmodal-header__tilbakeknapp + .printmodal-header__printknapp {
+        margin-left: 182px;
+    }
+
+    .printmodal-header__tilbakeknapp[hidden] + .printmodal-header__printknapp {
+        margin-left: 0;
     }
 
     .modal-header-wrapper {
         background-color: @gray-background;
     }
 
-    .utskrift-overskrift {
+    .printmodal-body__utskrift-overskrift {
         margin: 0 3rem;
     }
 
-    .print-modal-body {
+    .printmodal-body {
         background-color: @white;
         padding: 2rem 0 3rem;
 
-        .adresse-dato {
+        .printmodal-body__adresse-dato {
             display: flex;
             justify-content: space-between;
             margin: 2rem 3rem 3rem;
         }
 
-        .visprintmelding,
-        .vismittmal {
+        .printmodal-body__visprintmelding,
+        .printmodal-body__vismittmal {
             margin: 0 3rem;
 
             &:empty {
@@ -39,31 +41,32 @@
             }
         }
 
-        .visprintmelding + .statusgruppe,
-        .visprintmelding + .vismittmal {
+        .printmodal-body__visprintmelding + .statusgruppe,
+        .printmodal-body__visprintmelding + .printmodal-body__vismittmal {
             margin-top: 2rem;
         }
 
-        .vismittmal {
+        .printmodal-body__vismittmal {
             margin-bottom: 2rem;
         }
 
-        .typo-systemtittel {
-            margin-bottom: 2rem;
-        }
-
-        .nav-logo-print {
+        .printmodal-body__nav-logo-print {
             margin: 0 3rem;
         }
 
-        .statusgruppe {
+        .printmodal-body__statusgruppe {
             padding: 2rem 3rem;
             border-top: 1px solid @navGra40;
 
-            .typo-undertittel,
-            .typo-element {
+            .printmodal-body__visprintmelding-overskrift,
+            .printmodal-body__vismittmal-overskrift,
+            .printmodal-body__statusgruppe-overskrift {
                 margin-bottom: 1rem;
             }
+        }
+
+        .printmodal-body__aktivitetvisning-etikett {
+            margin-bottom: 1rem;
         }
 
         .aktivitetsdetaljer {
@@ -97,7 +100,7 @@
         }
     }
 
-    .nav-logo-print {
+    .printmodal-body__nav-logo-print {
         width: 80px;
         margin-bottom: 1.5rem;
     }

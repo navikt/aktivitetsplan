@@ -9,7 +9,6 @@ import { formaterDato } from '../../utils';
 import StoreForbokstaver from '../../felles-komponenter/utils/store-forbokstaver';
 import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
-import PrintHeader from './print-header';
 import { selectAktivitetListe } from '../aktivitet/aktivitetliste-selector';
 import logoPng from './logo.png';
 import StatusGruppe from './statusgruppe';
@@ -61,10 +60,14 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
     );
 
     return (
-        <div className="print-modal-body">
-            <Bilde className="nav-logo-print" src={logoPng} alt="Logo NAV" />
-            <div className="adresse-dato">
-                <div className="adresse">
+        <div className="printmodal-body">
+            <Bilde
+                className="printmodal-body__nav-logo-print"
+                src={logoPng}
+                alt="Logo NAV"
+            />
+            <div className="printmodal-body__adresse-dato">
+                <div className="printmodal-body__adresse">
                     <StoreForbokstaver>
                         {fornavn}
                     </StoreForbokstaver>
@@ -77,26 +80,41 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                         </div>
                     </HiddenIfDiv>
                 </div>
-                <div className="dato">
+                <div className="printmodal-body__dato">
                     <HiddenIfDiv hidden={!erVeileder}>
                         {bruker.behandlendeEnhet.navn}
                     </HiddenIfDiv>
                     Dato: {formaterDato(Date.now())}
                 </div>
             </div>
-            <Systemtittel tag="h1" className="utskrift-overskrift">
+            <Systemtittel
+                tag="h1"
+                className="printmodal-body__utskrift-overskrift"
+            >
                 <FormattedMessage id="hovedside.tittel" />
             </Systemtittel>
-            <HiddenIfSection hidden={!printMelding} className="visprintmelding">
-                <Undertittel tag="h1">
+            <HiddenIfSection
+                hidden={!printMelding}
+                className="printmodal-body__visprintmelding"
+            >
+                <Undertittel
+                    tag="h1"
+                    className="printmodal-body__visprintmelding-overskrift"
+                >
                     {overskrift}
                 </Undertittel>
                 <p>
                     {beskrivelse}
                 </p>
             </HiddenIfSection>
-            <HiddenIfSection hidden={!mittMal} className="vismittmal">
-                <Undertittel tag="h1">
+            <HiddenIfSection
+                hidden={!mittMal}
+                className="printmodal-body__vismittmal"
+            >
+                <Undertittel
+                    tag="h1"
+                    className="printmodal-body__vismittmal-overskrift"
+                >
                     <FormattedMessage id="aktivitetsmal.mitt-mal" />
                 </Undertittel>
                 <p>
@@ -143,13 +161,13 @@ class AktivitetsplanPrintModal extends Component {
 
         const header = (
             <Innholdslaster avhengigheter={avhengigheter}>
-                <PrintHeader>
+                <header className="modal-header">
                     <HiddenIfDiv
                         hidden={visPrintMeldingForm}
-                        className="print-header"
+                        className="printmodal-header"
                     >
                         <Knappelenke
-                            className="tilbakeknapp"
+                            className="tilbakeknapp printmodal-header__tilbakeknapp"
                             onClick={fortsettRedigerPrintMelding}
                             role="link"
                             tabIndex="0"
@@ -165,13 +183,13 @@ class AktivitetsplanPrintModal extends Component {
                         </Knappelenke>
                         <Hovedknapp
                             mini
-                            className="print-knapp"
+                            className="printmodal-header__printknapp"
                             onClick={() => window.print()}
                         >
                             Skriv ut
                         </Hovedknapp>
                     </HiddenIfDiv>
-                </PrintHeader>
+                </header>
             </Innholdslaster>
         );
 

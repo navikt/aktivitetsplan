@@ -10,7 +10,10 @@ function AktivitetPrint({ aktivitet }) {
     const { id, type, tittel } = aktivitet;
     return (
         <div key={id}>
-            <Element tag="h2">
+            <Element
+                tag="h2"
+                className="printmodal-body__statusgruppe-overskrift"
+            >
                 {tittel}
             </Element>
             <div>
@@ -19,7 +22,7 @@ function AktivitetPrint({ aktivitet }) {
 
             <AktivitetEtikettGruppe
                 aktivitet={aktivitet}
-                className="aktivitetvisning__etikett"
+                className="printmodal-body__aktivitetvisning-etikett"
             />
 
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
@@ -34,7 +37,7 @@ AktivitetPrint.propTypes = {
 function StatusGruppe({ gruppe }) {
     const { status, aktiviteter } = gruppe;
     return (
-        <section className="statusgruppe">
+        <section className="printmodal-body__statusgruppe">
             <Undertittel tag="h1">
                 <FormattedMessage
                     id={`aktivitetstavle.print.${status.toLowerCase()}`}
