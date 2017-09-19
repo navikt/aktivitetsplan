@@ -1,1 +1,4 @@
-Du må legge inn en kommentar til at du har fullført eller avbrutt aktiviteten. 
+{valgtAktivitetStatus, select,
+FULLFORT{Skriv en kort kommentar om hvordan det har gått med aktiviteten, eller noe NAV bør kjenne til.}
+AVBRUTT{Skriv en begrunnelse for hvorfor du avbrøt aktiviteten.}
+ }
