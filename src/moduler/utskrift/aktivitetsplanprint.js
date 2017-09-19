@@ -68,10 +68,10 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
             />
             <div className="printmodal-body__adresse-dato">
                 <div className="printmodal-body__adresse">
-                    <StoreForbokstaver>
-                        {`${fornavn} ${etternavn}`}
-                    </StoreForbokstaver>
                     <HiddenIfDiv hidden={!erVeileder}>
+                        <StoreForbokstaver>
+                            {`${fornavn} ${etternavn}`}
+                        </StoreForbokstaver>
                         <StoreForbokstaver tag="div">
                             {`${gatenavn} ${husnummer} ${husbokstav || ''}`}
                         </StoreForbokstaver>
@@ -109,7 +109,7 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                 </p>
             </HiddenIfSection>
             <HiddenIfSection
-                hidden={!mittMal}
+                hidden={!mittMal.mal}
                 className="printmodal-body__vismittmal"
             >
                 <Undertittel
