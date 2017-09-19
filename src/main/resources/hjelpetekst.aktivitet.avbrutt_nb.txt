@@ -1,1 +1,1 @@
-Flytt aktiviteter hit som du avbryter eller ikke begynner på likevel. Aktiviteter du flytter hit blir låst og kan ikke redigeres.
+Flytt aktiviteter hit som du avbryter eller ikke begynner på likevel. Aktiviteter du flytter hit blir låst og kan ikke redigeres. Hvis du angrer etter å flyttet en aktivitet til Avbrutt, kan du opprette en tilsvarende ny aktivitet.
