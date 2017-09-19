@@ -1,1 +1,1 @@
-Beskrivelsen kan ikke være lenger enn {BESKRIVELSE_MAKS_LENGDE} tegn
+Beskrivelsen kan ikke være lenger enn {MAKS_LENGDE} tegn
