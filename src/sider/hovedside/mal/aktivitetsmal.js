@@ -103,7 +103,6 @@ class AktivitetsMal extends Component {
         const harMal = !!malet;
         const historikkVises = this.state.visHistoriskeMal;
         const historiskeMal = malListe.slice(1, malListe.length);
-
         return (
             <Innholdslaster avhengigheter={[malStatus]}>
                 <section className="aktivitetmal">
@@ -115,13 +114,6 @@ class AktivitetsMal extends Component {
                         <Tekstomrade className="aktivitetmal__tekst">
                             {malet}
                         </Tekstomrade>
-                        <HiddenIfKnapp
-                            onClick={() => history.push('mal/slett/')}
-                            className="aktivitetmal__slett-knapp"
-                            hidden={!harMal || !kanSletteMal}
-                        >
-                            <FormattedMessage id="aktivitetvisning.slett-knapp" />
-                        </HiddenIfKnapp>
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
                             hidden={historiskVisning}
@@ -134,6 +126,13 @@ class AktivitetsMal extends Component {
                                 }
                             />
                         </HiddenIfHovedknapp>
+                        <HiddenIfKnapp
+                            onClick={() => history.push('mal/slett/')}
+                            className="aktivitetmal__slett-knapp"
+                            hidden={!harMal || !kanSletteMal}
+                        >
+                            <FormattedMessage id="aktivitetvisning.slett-knapp" />
+                        </HiddenIfKnapp>
                     </div>
                     <HiddenIfDiv hidden={historiskeMal.length === 0}>
                         <hr className="aktivitetmal__delelinje" />

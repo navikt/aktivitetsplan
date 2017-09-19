@@ -109,12 +109,17 @@ describe('utils', () => {
         it('Sjekk at funksjonen dispatcher parset feil', done => {
             const dispatch = sinon.spy();
             const response = {
+                status: 1234,
                 text: () => Promise.resolve('{"type":"FEILTYPE"}'),
             };
             handterFeil(dispatch, action)({ response });
             setTimeout(() => {
                 expect(dispatch).to.be.calledWith({
-                    data: { melding: { type: 'FEILTYPE' }, type: action },
+                    data: {
+                        melding: { type: 'FEILTYPE' },
+                        type: action,
+                        httpStatus: 1234,
+                    },
                     type: action,
                 });
                 done();

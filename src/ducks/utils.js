@@ -82,6 +82,7 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                     type: FEILET_TYPE,
                     data: {
                         type: FEILET_TYPE,
+                        httpStatus: response.status,
                         melding: parseError(data),
                     },
                 });

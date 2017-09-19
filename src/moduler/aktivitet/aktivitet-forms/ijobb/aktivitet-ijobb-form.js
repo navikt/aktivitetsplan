@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { validForm } from 'react-redux-form-validation';
+import LagreAktivitet from '../lagre-aktivitet';
 import { formNavn } from '../aktivitet-form-utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
@@ -71,31 +71,23 @@ const begrensetBeskrivelseLengde = maksLengde(
     BESKRIVELSE_MAKS_LENGDE
 ).hvisIkke(erAvtalt);
 
+// TODO fiks i separat quickfix
+// eslint-disable-next-line react/prefer-stateless-function
 class IJobbAktivitetForm extends Component {
-    componentDidMount() {
-        window.onbeforeunload = this.visLukkDialog.bind(this);
-    }
-
-    componentWillUnmount() {
-        window.onbeforeunload = null;
-    }
-
-    // eslint-disable-next-line consistent-return
-    visLukkDialog(e) {
-        if (this.props.isDirty) {
-            const melding = this.props.intl.formatMessage({
-                id: 'aktkivitet-skjema.lukk-advarsel',
-            });
-            e.returnValue = melding;
-            return melding;
-        }
-    }
-
     render() {
+        const props = this.props;
+        const {
+            avtalt,
+            currentFraDato,
+            currentTilDato,
+            handleSubmit,
+            errorSummary,
+        } = props;
+        const erAktivitetAvtalt = avtalt === true;
         return (
-            <form onSubmit={this.props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className="skjema-innlogget aktivitetskjema">
-                    {this.props.errorSummary}
+                    {errorSummary}
                     <div className="aktivitetskjema__header">
                         <Innholdstittel>
                             <FormattedMessage id="ijobb-aktivitet-form.header" />
@@ -109,30 +101,27 @@ class IJobbAktivitetForm extends Component {
 
                     <Input
                         feltNavn="tittel"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="ijobb-aktivitet-form.label.overskrift"
                     />
 
                     <PeriodeValidering
                         feltNavn="periodeValidering"
-                        fraDato={this.props.currentFraDato}
-                        tilDato={this.props.currentTilDato}
-                        errorMessage={this.props.intl.formatMessage({
-                            id:
-                                'datepicker.feilmelding.stilling.fradato-etter-frist',
-                        })}
+                        fraDato={currentFraDato}
+                        tilDato={currentTilDato}
+                        errorMessageId="datepicker.feilmelding.stilling.fradato-etter-frist"
                     >
                         <div className="dato-container">
                             <Datovelger
                                 feltNavn="fraDato"
-                                disabled={this.props.avtalt === true}
+                                disabled={erAktivitetAvtalt}
                                 labelId="ijobb-aktivitet-form.label.fra-dato"
-                                senesteTom={this.props.currentTilDato}
+                                senesteTom={currentTilDato}
                             />
                             <Datovelger
                                 feltNavn="tilDato"
                                 labelId="ijobb-aktivitet-form.label.til-dato"
-                                tidligsteFom={this.props.currentFraDato}
+                                tidligsteFom={currentFraDato}
                             />
                         </div>
                     </PeriodeValidering>
@@ -148,7 +137,7 @@ class IJobbAktivitetForm extends Component {
                             }
                             value={JOBB_STATUS_HELTID}
                             id={`id--${JOBB_STATUS_HELTID}`}
-                            disabled={this.props.avtalt === true}
+                            disabled={erAktivitetAvtalt}
                         />
                         <Radio
                             feltNavn="jobbStatus"
@@ -157,33 +146,29 @@ class IJobbAktivitetForm extends Component {
                             }
                             value={JOBB_STATUS_DELTID}
                             id={`id--${JOBB_STATUS_DELTID}`}
-                            disabled={this.props.avtalt === true}
+                            disabled={erAktivitetAvtalt}
                         />
                     </RadioGruppe>
 
                     <Input
                         feltNavn="ansettelsesforhold"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="ijobb-aktivitet-form.label.ansettelsesforhold"
                     />
                     <Input
                         feltNavn="arbeidstid"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="ijobb-aktivitet-form.label.arbeidstid"
                     />
                     <Textarea
                         feltNavn="beskrivelse"
-                        disabled={this.props.avtalt === true}
+                        disabled={erAktivitetAvtalt}
                         labelId="ijobb-aktivitet-form.label.beskrivelse"
                         maxLength={BESKRIVELSE_MAKS_LENGDE}
                         visTellerFra={500}
                     />
                 </div>
-                <div className="aktivitetskjema__lagre-knapp">
-                    <Hovedknapp>
-                        <FormattedMessage id="aktivitet-form.lagre" />
-                    </Hovedknapp>
-                </div>
+                <LagreAktivitet />
             </form>
         );
     }
@@ -195,7 +180,6 @@ IJobbAktivitetForm.propTypes = {
     currentFraDato: PT.instanceOf(Date),
     currentTilDato: PT.instanceOf(Date),
     isDirty: PT.bool.isRequired,
-    intl: intlShape.isRequired,
     avtalt: PT.bool,
 };
 
@@ -241,4 +225,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default connect(mapStateToProps)(injectIntl(StillingAktivitetReduxForm));
+export default connect(mapStateToProps)(StillingAktivitetReduxForm);
