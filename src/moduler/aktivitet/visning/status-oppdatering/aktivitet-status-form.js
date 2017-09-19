@@ -145,7 +145,10 @@ function AktivitetStatusForm(props) {
                 <VisibleIfDiv visible={aktivitet.avtalt && visAdvarsel}>
                     <Textarea
                         labelId={
-                            <FormattedMessage id="aktivitetstatus.oppdater-status-begrunnelse" />
+                            <FormattedMessage
+                                id="aktivitetstatus.oppdater-status-begrunnelse"
+                                values={{ valgtAktivitetStatus }}
+                            />
                         }
                         feltNavn="begrunnelse"
                         name="begrunnelse-aktivitet"
