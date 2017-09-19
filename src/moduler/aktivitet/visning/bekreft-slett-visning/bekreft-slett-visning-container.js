@@ -32,15 +32,13 @@ BekreftSlettVisningContainer.defaultProps = {
 
 BekreftSlettVisningContainer.propTypes = {
     doSlettAktivitet: PT.func,
+    aktivitetId: PT.string.isRequired,
     valgtAktivitet: AppPT.aktivitet,
 };
 
-const mapStateToProps = (state, props) => {
-    const aktivitetId = props.match.params.id;
-    return {
-        valgtAktivitet: selectAktivitetMedId(state, aktivitetId),
-    };
-};
+const mapStateToProps = (state, props) => ({
+    valgtAktivitet: selectAktivitetMedId(state, props.aktivitetId),
+});
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators(

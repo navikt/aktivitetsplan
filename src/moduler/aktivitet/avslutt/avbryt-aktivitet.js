@@ -8,7 +8,6 @@ import VisAdvarsel from './vis-advarsel';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
 import history from '../../../history';
-import { selectRouteParams } from '../../../routing';
 import {
     selectAktivitetListeStatus,
     selectAktivitetMedId,
@@ -58,6 +57,7 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
 };
 
 AvbrytAktivitet.propTypes = {
+    aktivitetId: PT.string.isRequired,
     valgtAktivitet: AppPT.aktivitet.isRequired,
     lagrer: PT.bool.isRequired,
     lagreBegrunnelse: PT.func.isRequired,
@@ -69,8 +69,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state, props) => {
-    const aktivitetId = selectRouteParams(props).id;
-    const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
+    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
     return {
         valgtAktivitet: valgtAktivitet || {},
         lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,

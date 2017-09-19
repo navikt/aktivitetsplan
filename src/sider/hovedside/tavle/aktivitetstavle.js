@@ -16,6 +16,8 @@ import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
 } from '../../../constant';
+import { selectAktivitetStatus } from '../../../moduler/aktivitet/aktivitet-selector';
+import { selectArenaAktivitetStatus } from '../../../moduler/aktivitet/arena-aktivitet-selector';
 
 class AktivitetsTavle extends Component {
     componentDidMount() {
@@ -27,13 +29,7 @@ class AktivitetsTavle extends Component {
 
     render() {
         return (
-            <Innholdslaster
-                minstEn
-                avhengigheter={[
-                    this.props.aktivitet,
-                    this.props.arenaAktivitet,
-                ]}
-            >
+            <Innholdslaster minstEn avhengigheter={this.props.avhengigheter}>
                 <Tavle
                     defaultStartKolonne={1}
                     antallKolonner={3}
@@ -68,26 +64,20 @@ class AktivitetsTavle extends Component {
 AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
-    aktivitet: AppPT.reducer,
-    arenaAktivitet: AppPT.reducer,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
 };
 
-AktivitetsTavle.defaultProps = {
-    aktivitet: undefined,
-    arenaAktivitet: undefined,
-};
-
 const mapStateToProps = state => {
-    const statusAktiviteter = state.data.aktiviteter.status;
-    const statusArenaAktiviteter = state.data.arenaAktiviteter.status;
+    const statusAktiviteter = selectAktivitetStatus(state);
+    const statusArenaAktiviteter = selectArenaAktivitetStatus(state);
 
     const reducersNotStarted =
         statusAktiviteter === STATUS.NOT_STARTED &&
         statusArenaAktiviteter === STATUS.NOT_STARTED;
+
     return {
-        aktivitet: state.data.aktiviteter,
-        arenaAktivitet: state.data.arenaAktiviteter,
+        avhengigheter: [statusAktiviteter, statusArenaAktiviteter],
         reducersNotStarted,
     };
 };

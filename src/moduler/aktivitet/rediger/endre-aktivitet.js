@@ -46,84 +46,103 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../../../routing';
 import { selectAktivitetReducer } from '../aktivitet-reducer';
 import { STATUS } from '../../../ducks/utils';
+import {
+    selectAktivitetListeStatus,
+    selectAktivitetMedId,
+} from '../aktivitetliste-selector';
 
-function EndreAktivitet({
-    aktivitet,
+function EndreAktivitetForm({
+    valgtAktivitet,
     lagrer,
     doOppdaterAktivitet,
+    visAktivitet,
+}) {
+    function oppdater(aktivitetData) {
+        const oppdatertAktivitet = { ...valgtAktivitet, ...aktivitetData };
+        doOppdaterAktivitet(oppdatertAktivitet).then(visAktivitet);
+    }
+
+    switch (valgtAktivitet.type) {
+        case STILLING_AKTIVITET_TYPE:
+            return (
+                <StillingAktivitetForm
+                    aktivitet={valgtAktivitet}
+                    onSubmit={oppdater}
+                />
+            );
+        case EGEN_AKTIVITET_TYPE:
+            return (
+                <EgenAktivitetForm
+                    aktivitet={valgtAktivitet}
+                    onSubmit={oppdater}
+                />
+            );
+        case SOKEAVTALE_AKTIVITET_TYPE:
+            return (
+                <SokeavtaleAktivitetForm
+                    aktivitet={valgtAktivitet}
+                    onSubmit={oppdater}
+                />
+            );
+        case BEHANDLING_AKTIVITET_TYPE:
+            return (
+                <BehandlingAktivitetForm
+                    aktivitet={valgtAktivitet}
+                    onSubmit={oppdater}
+                />
+            );
+        case MOTE_TYPE:
+            return (
+                <MoteAktivitetForm
+                    aktivitet={valgtAktivitet}
+                    lagrer={lagrer}
+                    onSubmit={oppdater}
+                />
+            );
+        case SAMTALEREFERAT_TYPE:
+            return (
+                <SamtalereferatForm
+                    aktivitet={valgtAktivitet}
+                    lagrer={lagrer}
+                    onSubmit={oppdater}
+                />
+            );
+        case IJOBB_AKTIVITET_TYPE:
+            return (
+                <IJobbAktivitetForm
+                    aktivitet={valgtAktivitet}
+                    onSubmit={oppdater}
+                />
+            );
+        default:
+            return null;
+    }
+}
+
+EndreAktivitetForm.propTypes = {
+    valgtAktivitet: AppPT.aktivitet,
+    doOppdaterAktivitet: PT.func.isRequired,
+    visAktivitet: PT.func.isRequired,
+    lagrer: PT.bool.isRequired,
+};
+
+EndreAktivitetForm.defaultProps = {
+    valgtAktivitet: undefined,
+};
+
+function EndreAktivitet({
+    valgtAktivitet,
     visVersjonskonflikt,
     skjulVersjonskonflikt,
     intl,
     lukkModal,
     formIsDirty,
-    aktiviteter,
+    avhengigheter,
+    ...rest
 }) {
     function visAktivitet() {
-        history.push(aktivitetRoute(aktivitet.id));
+        history.push(aktivitetRoute(valgtAktivitet.id));
         skjulVersjonskonflikt();
-    }
-
-    function renderForm() {
-        function oppdater(aktivitetData) {
-            const oppdatertAktivitet = { ...aktivitet, ...aktivitetData };
-            doOppdaterAktivitet(oppdatertAktivitet).then(visAktivitet);
-        }
-
-        switch (aktivitet.type) {
-            case STILLING_AKTIVITET_TYPE:
-                return (
-                    <StillingAktivitetForm
-                        aktivitet={aktivitet}
-                        onSubmit={oppdater}
-                    />
-                );
-            case EGEN_AKTIVITET_TYPE:
-                return (
-                    <EgenAktivitetForm
-                        aktivitet={aktivitet}
-                        onSubmit={oppdater}
-                    />
-                );
-            case SOKEAVTALE_AKTIVITET_TYPE:
-                return (
-                    <SokeavtaleAktivitetForm
-                        aktivitet={aktivitet}
-                        onSubmit={oppdater}
-                    />
-                );
-            case BEHANDLING_AKTIVITET_TYPE:
-                return (
-                    <BehandlingAktivitetForm
-                        aktivitet={aktivitet}
-                        onSubmit={oppdater}
-                    />
-                );
-            case MOTE_TYPE:
-                return (
-                    <MoteAktivitetForm
-                        aktivitet={aktivitet}
-                        lagrer={lagrer}
-                        onSubmit={oppdater}
-                    />
-                );
-            case SAMTALEREFERAT_TYPE:
-                return (
-                    <SamtalereferatForm
-                        aktivitet={aktivitet}
-                        lagrer={lagrer}
-                        onSubmit={oppdater}
-                    />
-                );
-            case IJOBB_AKTIVITET_TYPE:
-                return (
-                    <IJobbAktivitetForm
-                        aktivitet={aktivitet}
-                        onSubmit={oppdater}
-                    />
-                );
-            default:
-                return null;
-        }
     }
 
     return (
@@ -151,7 +170,7 @@ function EndreAktivitet({
                 className="egen-aktivitet"
                 aria-labelledby="modal-egen-aktivitet-header"
             >
-                <Innholdslaster avhengigheter={[aktiviteter]}>
+                <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>
                         <Versjonskonflikt
                             visible={visVersjonskonflikt}
@@ -159,7 +178,11 @@ function EndreAktivitet({
                             slett={visAktivitet}
                         />
                         <div className={visVersjonskonflikt && 'hidden'}>
-                            {renderForm()}
+                            <EndreAktivitetForm
+                                valgtAktivitet={valgtAktivitet}
+                                visAktivitet={visAktivitet}
+                                {...rest}
+                            />
                         </div>
                     </ModalContainer>
                 </Innholdslaster>
@@ -168,40 +191,39 @@ function EndreAktivitet({
     );
 }
 
+EndreAktivitet.defaultProps = {
+    valgtAktivitet: undefined,
+};
+
 EndreAktivitet.propTypes = {
     doOppdaterAktivitet: PT.func.isRequired,
     visVersjonskonflikt: PT.bool.isRequired,
     lagrer: PT.bool.isRequired,
     skjulVersjonskonflikt: PT.func.isRequired,
-    aktivitet: AppPT.aktivitet,
-    aktiviteter: PT.shape({
-        status: PT.string.isRequired,
-    }).isRequired,
+    valgtAktivitet: AppPT.aktivitet,
+    aktivitetId: PT.string.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     formIsDirty: PT.bool.isRequired,
     intl: intlShape.isRequired,
     lukkModal: PT.func.isRequired,
 };
 
-EndreAktivitet.defaultProps = {
-    aktivitet: {},
-};
-
 const mapStateToProps = (state, props) => {
-    const routeParams = props.match.params;
-    const id = routeParams.id;
-    const aktivitet = state.data.aktiviteter.data.find(a => a.id === id) || {};
-    const formNavn = {
-        [STILLING_AKTIVITET_TYPE]: stillingFormNavn,
-        [EGEN_AKTIVITET_TYPE]: egenFormNavn,
-        [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFormNavn,
-        [BEHANDLING_AKTIVITET_TYPE]: behandlingFormNavn,
-        [MOTE_TYPE]: moteFormNavn,
-        [SAMTALEREFERAT_TYPE]: samtalereferatFormNavn,
-        [IJOBB_AKTIVITET_TYPE]: ijobbFormNavn,
-    }[aktivitet.type];
+    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
+    const formNavn =
+        valgtAktivitet &&
+        {
+            [STILLING_AKTIVITET_TYPE]: stillingFormNavn,
+            [EGEN_AKTIVITET_TYPE]: egenFormNavn,
+            [SOKEAVTALE_AKTIVITET_TYPE]: sokeavtaleFormNavn,
+            [BEHANDLING_AKTIVITET_TYPE]: behandlingFormNavn,
+            [MOTE_TYPE]: moteFormNavn,
+            [SAMTALEREFERAT_TYPE]: samtalereferatFormNavn,
+            [IJOBB_AKTIVITET_TYPE]: ijobbFormNavn,
+        }[valgtAktivitet.type];
     return {
-        aktivitet,
-        aktiviteter: state.data.aktiviteter,
+        valgtAktivitet,
+        avhengigheter: [selectAktivitetListeStatus(state)],
         visVersjonskonflikt: state.view.endreAktivitet.visVersjonskonflikt,
         formIsDirty: isDirty(formNavn)(state),
         lagrer: selectAktivitetReducer(state).status !== STATUS.OK,
