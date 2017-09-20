@@ -7,6 +7,7 @@ import SettManuellOppfolgingProsess from '../sett-manuell-oppfolging/sett-manuel
 import SettDigitalOppfolgingProsess from '../sett-digital-oppfolging/sett-digital-oppfolging-prosess';
 import StartEskaleringProsess from '../start-eskalering/start-eskalering-prosess';
 import StoppEskaleringProsess from '../stopp-eskalering/stopp-eskalering-prosess';
+import OpprettOppgaveProsess from '../opprett-oppgave/opprett-oppgave-prosess';
 import InnstillingHistorikk from '../historikk/innstilling-historikk';
 import * as AppPT from '../../../proptypes';
 import InnstillingerModal from '../innstillinger-modal';
@@ -34,6 +35,7 @@ class Prosesser extends Component {
             erUnderOppfolging,
             erManuell,
             kanStarteOppfolging,
+            motpart,
         } = this.props;
         return (
             <InnstillingerModal>
@@ -53,6 +55,7 @@ class Prosesser extends Component {
                         <SettDigitalOppfolgingProsess
                             hidden={!erUnderOppfolging || !erManuell}
                         />
+                        <OpprettOppgaveProsess motpart={motpart} />
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>
@@ -74,6 +77,7 @@ Prosesser.propTypes = {
     erUnderOppfolging: PT.bool,
     erManuell: PT.bool,
     kanStarteOppfolging: PT.bool,
+    motpart: AppPT.motpart.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -82,6 +86,7 @@ const mapStateToProps = state => ({
     erUnderOppfolging: selectErUnderOppfolging(state),
     erManuell: selectErManuell(state),
     kanStarteOppfolging: selectKanStarteOppfolging(state),
+    motpart: state.data.motpart,
 });
 
 const mapDispatchToProps = dispatch => ({
