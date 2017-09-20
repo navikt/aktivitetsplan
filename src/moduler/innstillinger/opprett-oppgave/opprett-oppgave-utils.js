@@ -1,6 +1,6 @@
 import React from 'react';
 import queryString from 'query-string';
-import {maksLengde, pakrevd} from '../../../felles-komponenter/skjema/validering';
+import { maksLengde, pakrevd } from '../../../felles-komponenter/skjema/validering';
 
 export const BESKRIVELSE_MAKS_LENGDE = 500;
 

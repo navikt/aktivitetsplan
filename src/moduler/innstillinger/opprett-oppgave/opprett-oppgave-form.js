@@ -90,7 +90,7 @@ const OpprettOppgaveReduxForm = validForm({
         <FormattedMessage id="mote-aktivitet-form.feiloppsummering-tittel" />
     ),
     validate: {
-        beskrivelse: [beskrivelsePakrevd,begrensetBeskrivelseLengde],
+        beskrivelse: [beskrivelsePakrevd, begrensetBeskrivelseLengde],
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
         periodeValidering: [],
