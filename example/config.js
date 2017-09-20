@@ -5,6 +5,7 @@ export const SITUASJON_PROXY_BASE_URL = '/veilarbsituasjon/api';
 export const PERSON_BASE_URL = '/veilarbperson/api';
 export const VEILEDER_BASE_URL = '/veilarbveileder/tjenester';
 export const PORTEFOLJE_BASE_URL = '/veilarbportefolje/api';
+export const OPPGAVE_BASE_URL = '/veilarboppgave/api';
 
 export const CONTEXT_PATH = '/aktivitetsplanfelles';
 

@@ -1,4 +1,5 @@
-import * as Api from '../situasjon/situasjon-api';
+import * as SituasjonApi from '../situasjon/situasjon-api';
+import * as Api from '../../ducks/api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 import {
     nyHenvendelse,
@@ -45,14 +46,54 @@ export const LAGRE_BEGRUNNELSE = 'form/lagre-begrunnelse';
 export const SLETT_BEGRUNNELSE = 'form/slett-begrunnelse';
 export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
 
+export const HENT_BEHANDLENDE_ENHETER_OK =
+    'instillinger/hent-behandlende-enheter/OK';
+export const HENT_BEHANDLENDE_ENHETER_FEILET =
+    'instillinger/hent-behandlende-enheter/FEILET';
+export const HENT_BEHANDLENDE_ENHETER_PENDING =
+    'instillinger/hent-behandlende-enheter/PENDING';
+export const HENT_BEHANDLENDE_ENHETER_RESET =
+    'instillinger/hent-behandlende-enheter/RESET';
+
+export const HENT_VEILEDERE_OK = 'instillinger/hent-veiledere/OK';
+export const HENT_VEILEDERE_FEILET = 'instillinger/hent-veiledere/FEILET';
+export const HENT_VEILEDERE_PENDING = 'instillinger/hent-veiledere/PENDING';
+
+export const OPPRETT_OPPGAVE_OK = 'instillinger/opprett-oppgave/OK';
+export const OPPRETT_OPPGAVE_FEILET = 'instillinger/opprett-oppgave/FEILET';
+export const OPPRETT_OPPGAVE_PENDING = 'instillinger/opprett-oppgave/PENDING';
+
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
+    behandlendeEnheter: {
+        status: STATUS.NOT_STARTED,
+    },
+    veiledere: {
+        status: STATUS.NOT_STARTED,
+    },
 };
 
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
+        case HENT_BEHANDLENDE_ENHETER_OK:
+            return {
+                ...state,
+                status: STATUS.OK,
+                behandlendeEnheter: {
+                    enheter: action.data,
+                    status: STATUS.OK,
+                },
+            };
+        case HENT_VEILEDERE_OK:
+            return {
+                ...state,
+                veiledere: {
+                    ...action.data,
+                    status: STATUS.OK,
+                },
+            };
         case HENT_SITUASJON_OK:
         case KAN_AVSLUTTE_OK:
         case AVSLUTT_OPPFOLGING_OK:
@@ -66,6 +107,22 @@ export default function reducer(state = initalState, action) {
                 status: STATUS.OK,
                 data: action.data,
             };
+        case HENT_BEHANDLENDE_ENHETER_FEILET:
+            return {
+                ...state,
+                behandlendeEnheter: {
+                    enheter: action.data,
+                    status: STATUS.ERROR,
+                },
+            };
+        case HENT_VEILEDERE_FEILET:
+            return {
+                ...state,
+                veiledere: {
+                    ...action.data,
+                    status: STATUS.ERROR,
+                },
+            };
         case HENT_SITUASJON_FEILET:
         case KAN_AVSLUTTE_FEILET:
         case AVSLUTT_OPPFOLGING_FEILET:
@@ -78,6 +135,18 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 status: STATUS.ERROR,
                 feil: action.data,
+            };
+        case HENT_BEHANDLENDE_ENHETER_PENDING:
+            return {
+                ...state,
+                status: STATUS.PENDING,
+            };
+        case HENT_VEILEDERE_PENDING:
+            return {
+                ...state,
+                veiledere: {
+                    status: STATUS.PENDING,
+                },
             };
         case HENT_SITUASJON_PENDING:
         case KAN_AVSLUTTE_PENDING:
@@ -101,6 +170,13 @@ export default function reducer(state = initalState, action) {
             };
         case SLETT_BEGRUNNELSE:
             return { ...state, begrunnelse: null };
+        case HENT_BEHANDLENDE_ENHETER_RESET:
+            return {
+                ...state,
+                behandlendeEnheter: {
+                    status: STATUS.NOT_STARTED,
+                },
+            };
         default:
             return state;
     }
@@ -108,7 +184,7 @@ export default function reducer(state = initalState, action) {
 
 // Action creator
 export function hentSituasjonData() {
-    return doThenDispatch(() => Api.hentSituasjon(), {
+    return doThenDispatch(() => SituasjonApi.hentSituasjon(), {
         OK: HENT_SITUASJON_OK,
         FEILET: HENT_SITUASJON_FEILET,
         PENDING: HENT_SITUASJON_PENDING,
@@ -116,7 +192,7 @@ export function hentSituasjonData() {
 }
 
 export function startOppfolging() {
-    return doThenDispatch(() => Api.startOppfolging(), {
+    return doThenDispatch(() => SituasjonApi.startOppfolging(), {
         OK: START_OPPFOLGING_OK,
         FEILET: START_OPPFOLGING_FEILET,
         PENDING: START_OPPFOLGING_PENDING,
@@ -124,7 +200,7 @@ export function startOppfolging() {
 }
 
 export function kanAvslutteOppfolging() {
-    return doThenDispatch(() => Api.kanAvslutte(), {
+    return doThenDispatch(() => SituasjonApi.kanAvslutte(), {
         OK: KAN_AVSLUTTE_OK,
         FEILET: KAN_AVSLUTTE_FEILET,
         PENDING: KAN_AVSLUTTE_PENDING,
@@ -133,7 +209,7 @@ export function kanAvslutteOppfolging() {
 
 export function avsluttOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(
-        () => Api.avsluttOppfolging(begrunnelse, veilederId),
+        () => SituasjonApi.avsluttOppfolging(begrunnelse, veilederId),
         {
             OK: AVSLUTT_OPPFOLGING_OK,
             FEILET: AVSLUTT_OPPFOLGING_FEILET,
@@ -144,7 +220,7 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
 
 export function settManuellOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(
-        () => Api.settManuellOppfolging(begrunnelse, veilederId),
+        () => SituasjonApi.settManuellOppfolging(begrunnelse, veilederId),
         {
             OK: SETT_MANUELL_OK,
             FEILET: SETT_MANUELL_FEILET,
@@ -155,7 +231,7 @@ export function settManuellOppfolging(begrunnelse, veilederId) {
 
 export function settDigitalOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(
-        () => Api.settDigitalOppfolging(begrunnelse, veilederId),
+        () => SituasjonApi.settDigitalOppfolging(begrunnelse, veilederId),
         {
             OK: SETT_DIGITAL_OK,
             FEILET: SETT_DIGITAL_FEILET,
@@ -165,11 +241,14 @@ export function settDigitalOppfolging(begrunnelse, veilederId) {
 }
 
 function startEskaleringMedDialog(dialogId, begrunnelse) {
-    return doThenDispatch(() => Api.startEskalering(dialogId, begrunnelse), {
-        OK: START_ESKALERING_OK,
-        FEILET: START_ESKALERING_FEILET,
-        PENDING: START_ESKALERING_PENDING,
-    });
+    return doThenDispatch(
+        () => SituasjonApi.startEskalering(dialogId, begrunnelse),
+        {
+            OK: START_ESKALERING_OK,
+            FEILET: START_ESKALERING_FEILET,
+            PENDING: START_ESKALERING_PENDING,
+        }
+    );
 }
 
 export function startEskalering(eskaleringData) {
@@ -198,7 +277,7 @@ export function startEskalering(eskaleringData) {
 }
 
 function stoppEskaleringMedBegrunnelse(begrunnelse) {
-    return doThenDispatch(() => Api.stoppEskalering(begrunnelse), {
+    return doThenDispatch(() => SituasjonApi.stoppEskalering(begrunnelse), {
         OK: STOPP_ESKALERING_OK,
         FEILET: STOPP_ESKALERING_FEILET,
         PENDING: STOPP_ESKALERING_PENDING,
@@ -227,5 +306,27 @@ export function lagreBegrunnelse(begrunnelse) {
     return {
         type: LAGRE_BEGRUNNELSE,
         data: begrunnelse,
+    };
+}
+
+export function hentBehandlendeEnheter(tema, fnr) {
+    return doThenDispatch(() => Api.hentBehandlendeEnheter(tema, fnr), {
+        OK: HENT_BEHANDLENDE_ENHETER_OK,
+        FEILET: HENT_BEHANDLENDE_ENHETER_FEILET,
+        PENDING: HENT_BEHANDLENDE_ENHETER_PENDING,
+    });
+}
+
+export function hentVeiledereForEnhet(enhetid) {
+    return doThenDispatch(() => Api.hentVeieldereForEnhet(enhetid), {
+        OK: HENT_VEILEDERE_OK,
+        FEILET: HENT_VEILEDERE_FEILET,
+        PENDING: HENT_VEILEDERE_PENDING,
+    });
+}
+
+export function resetEnheter() {
+    return {
+        type: HENT_BEHANDLENDE_ENHETER_RESET,
     };
 }

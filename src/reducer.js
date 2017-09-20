@@ -22,6 +22,7 @@ import historikkReducer from './moduler/innstillinger/historikk/historikk-reduce
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
 import aktiverDigitalOppfolgingReducer from './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
 import arbeidslisteReducer from './moduler/arbeidsliste/arbeidsliste-reducer';
+import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
 import brukerReducer from './moduler/bruker/bruker-duck';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
 
@@ -50,6 +51,7 @@ const combinedReducers = combineReducers({
         arbeidsliste: arbeidslisteReducer,
         kanaler: kanalerReducer,
         referat: referatReducer,
+        opprettOppgave: oppgaveReducer,
         bruker: brukerReducer,
     }),
     view: combineReducers({
