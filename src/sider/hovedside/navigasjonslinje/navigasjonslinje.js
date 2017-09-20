@@ -73,23 +73,23 @@ NavigasjonsElement.propTypes = {
 
 const navigasjonslinjemenyFeature = 'navigasjonslinjemeny';
 
-const InnstillingerKnapp = () =>
-    <FormattedMessage id="navigasjon.innstillinger">
-        {label =>
-            <button
-                className="navigasjonslinje-meny__innstillinger-knapp"
-                aria-label={label}
-                onClick={() => history.push('/innstillinger')}
-            />}
-    </FormattedMessage>;
-
 const PrintLenke = () =>
     <FormattedMessage id="utskrift.ikon.alt.tekst">
         {tekst =>
             <button
                 aria-label={tekst}
-                className="navigasjonslinje__verktoy--print-knapp navigasjonslinje__skillestrek--hoyre"
+                className="navigasjonslinje__button navigasjonslinje__button--print"
                 onClick={() => history.push('/utskrift')}
+            />}
+    </FormattedMessage>;
+
+const InnstillingerKnapp = () =>
+    <FormattedMessage id="navigasjon.innstillinger">
+        {label =>
+            <button
+                className="navigasjonslinje__button navigasjonslinje-meny__innstillinger-knapp"
+                aria-label={label}
+                onClick={() => history.push('/innstillinger')}
             />}
     </FormattedMessage>;
 
@@ -132,6 +132,11 @@ class Navigasjonslinje extends Component {
                     sti="/vilkar"
                     tekstId="navigasjon.vilkar"
                     disabled={disabled || (!erBruker && vilkarMaBesvares)}
+                />
+                <NavigasjonsElement
+                    sti="/informasjon"
+                    tekstId="navigasjon.informasjon"
+                    disabled={disabled}
                 />
                 <div className="navigasjonslinje__verktoy">
                     <Feature name={navigasjonslinjemenyFeature}>

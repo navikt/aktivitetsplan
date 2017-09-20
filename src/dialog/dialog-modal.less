@@ -75,6 +75,7 @@
     align-self: center;
     padding: 1rem 1rem 1rem 1.5rem;
     height: 62px;
+    width: 400px;
     background-color: @white;
 }
 
@@ -99,7 +100,6 @@
 }
 
 .dialog-modal__kolonne--dialog {
-    width: 100%;
     padding: 1rem;
     background-color: @gray-background;
     overflow-y: auto;
@@ -113,7 +113,7 @@
 }
 
 .dialog-modal__kolonne--dialoger {
-    width: @dialogkort-bredde;
+    width: 100%;
     background-color: @white;
     z-index: 1;
 }
@@ -122,7 +122,13 @@
     display: none;
 }
 
-@media (min-width: @screen-md-min) and (min-height: @screen-sm) {
+@media (min-width: @screen-md) {
+    .dialog-modal__kolonne--dialoger {
+        width: @dialogkort-bredde;
+    }
+}
+
+@media (min-width: @screen-md-min) {
     .dialog-modal {
         width: @dialogkort-bredde;
         min-width: @dialogkort-bredde;
