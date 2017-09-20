@@ -27,6 +27,11 @@ export default function reducer(state = initialState, action) {
     }
 }
 
+// Selectors
+export function selectOpprettOppgave(state) {
+    return state.data.opprettOppgave;
+}
+
 export function opprettOppgaveForBruker(oppgave) {
     return doThenDispatch(() => Api.opprettOppgaveForBruker(oppgave), {
         OK: OPPRETT_OPPGAVE_OK,

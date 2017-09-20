@@ -15,7 +15,7 @@ import { STATUS } from '../../../ducks/utils';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import OpprettOppgaveForm from './opprett-oppgave-form';
 import * as AppPT from '../../../proptypes';
-import { resetEnheter } from '../innstillinger-reducer';
+import { resetEnheter } from './hent-behandlende-enheter-reducer';
 
 export const OPPRETT_OPPGAVE_FORM = 'opprett-oppgave-form';
 

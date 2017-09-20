@@ -26,6 +26,7 @@ import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppg
 import brukerReducer from './moduler/bruker/bruker-duck';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
 import behandlendeEnheterReducer from './moduler/innstillinger/opprett-oppgave/hent-behandlende-enheter-reducer';
+import oppgaveVeiledereReducer from './moduler/innstillinger/opprett-oppgave/hent-veieldere-for-oppgave-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -55,6 +56,7 @@ const combinedReducers = combineReducers({
         opprettOppgave: oppgaveReducer,
         bruker: brukerReducer,
         behandlendeEnheter: behandlendeEnheterReducer,
+        oppgaveVeiledere: oppgaveVeiledereReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,

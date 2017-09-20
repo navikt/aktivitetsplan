@@ -24,13 +24,13 @@ import PeriodeValidering from '../../../felles-komponenter/skjema/datovelger/per
 import Datovelger from '../../../felles-komponenter/skjema/datovelger/datovelger';
 import { pakrevd } from '../../../felles-komponenter/skjema/validering';
 import { STATUS } from '../../../ducks/utils';
-import { hentVeiledereForEnhet } from '../innstillinger-reducer';
 import { getEnhetFromUrl, getFodselsnummer } from '../../../bootstrap/fnr-util';
 import Select from '../../../felles-komponenter/skjema/input/select';
-import { opprettOppgaveForBruker } from './opprett-oppgave-reducer';
+import { opprettOppgaveForBruker, selectOpprettOppgave } from './opprett-oppgave-reducer';
 import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import { hentBehandlendeEnheter, resetEnheter, selectBehandlendeEnheter } from './hent-behandlende-enheter-reducer';
+import { hentVeiledereForEnhet, selectOppgaveVeiledere } from './hent-veieldere-for-oppgave-reducer';
 
 const pakrevdFraDato = pakrevd(
     'opprett-oppgave-form.feilmelding.paakrevd-fradato'
@@ -83,9 +83,10 @@ function OpprettOppgaveForm({
             ? behandlendeEnheter.data
             : [];
 
-    const veilederliste = veiledere.veilederListe
-        ? veiledere.veilederListe
+    const veilederliste = Array.isArray(veiledere.data)
+        ? veiledere.data
         : [];
+
     const innloggetEnhet = getEnhetFromUrl();
 
     return (
@@ -241,7 +242,7 @@ const mapStateToProps = (state, props) => {
             beskrivelse: null,
             veileder: null,
         },
-        veiledere: state.data.innstillinger.veiledere,
+        veiledere: selectOppgaveVeiledere(state),
         currentFraDato: selector(state, 'fraDato')
             ? moment(selector(state, 'fraDato')).toDate()
             : undefined,
@@ -250,7 +251,7 @@ const mapStateToProps = (state, props) => {
             : undefined,
         valgtEnhet: selector(state, 'enhet'),
         tema: selector(state, 'tema'),
-        opprettOppgave: state.data.opprettOppgave,
+        opprettOppgave: selectOpprettOppgave(state),
         behandlendeEnheter: selectBehandlendeEnheter(state),
     };
 };

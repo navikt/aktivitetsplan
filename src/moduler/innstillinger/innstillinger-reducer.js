@@ -1,5 +1,4 @@
 import * as SituasjonApi from '../situasjon/situasjon-api';
-import * as Api from '../../ducks/api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 import {
     nyHenvendelse,
@@ -46,32 +45,14 @@ export const LAGRE_BEGRUNNELSE = 'form/lagre-begrunnelse';
 export const SLETT_BEGRUNNELSE = 'form/slett-begrunnelse';
 export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
 
-export const HENT_VEILEDERE_OK = 'instillinger/hent-veiledere/OK';
-export const HENT_VEILEDERE_FEILET = 'instillinger/hent-veiledere/FEILET';
-export const HENT_VEILEDERE_PENDING = 'instillinger/hent-veiledere/PENDING';
-
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
-    behandlendeEnheter: {
-        status: STATUS.NOT_STARTED,
-    },
-    veiledere: {
-        status: STATUS.NOT_STARTED,
-    },
 };
 
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
-        case HENT_VEILEDERE_OK:
-            return {
-                ...state,
-                veiledere: {
-                    ...action.data,
-                    status: STATUS.OK,
-                },
-            };
         case HENT_SITUASJON_OK:
         case KAN_AVSLUTTE_OK:
         case AVSLUTT_OPPFOLGING_OK:
@@ -85,14 +66,6 @@ export default function reducer(state = initalState, action) {
                 status: STATUS.OK,
                 data: action.data,
             };
-        case HENT_VEILEDERE_FEILET:
-            return {
-                ...state,
-                veiledere: {
-                    ...action.data,
-                    status: STATUS.ERROR,
-                },
-            };
         case HENT_SITUASJON_FEILET:
         case KAN_AVSLUTTE_FEILET:
         case AVSLUTT_OPPFOLGING_FEILET:
@@ -105,13 +78,6 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 status: STATUS.ERROR,
                 feil: action.data,
-            };
-        case HENT_VEILEDERE_PENDING:
-            return {
-                ...state,
-                veiledere: {
-                    status: STATUS.PENDING,
-                },
             };
         case HENT_SITUASJON_PENDING:
         case KAN_AVSLUTTE_PENDING:
@@ -265,12 +231,4 @@ export function lagreBegrunnelse(begrunnelse) {
         type: LAGRE_BEGRUNNELSE,
         data: begrunnelse,
     };
-}
-
-export function hentVeiledereForEnhet(enhetid) {
-    return doThenDispatch(() => Api.hentVeieldereForEnhet(enhetid), {
-        OK: HENT_VEILEDERE_OK,
-        FEILET: HENT_VEILEDERE_FEILET,
-        PENDING: HENT_VEILEDERE_PENDING,
-    });
 }
