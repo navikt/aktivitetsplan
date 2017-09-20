@@ -10,18 +10,18 @@ export const begrensetBeskrivelseLengde = maksLengde(
 export const OPPFOLGING = 'OPPFOLGING';
 
 export const temaValg = {
-    OPPFOLGING: 'Oppfolging',
-    DAGPENGER: 'Dagpenger',
-    ARBEIDSAVKLARING: 'Arbeidsavklaring',
-    INDIVIDSTONAD: 'Individstønad (Tiltakspenger)',
-    ENSLIG_FORSORGER: 'Enslig forsørger',
-    TILLEGGSTONAD: 'Tillegsstønad',
+    OPPFOLGING: 'opprett-oppgave.form.tema.oppfolging',
+    DAGPENGER: 'opprett-oppgave.form.tema.dagpenger',
+    ARBEIDSAVKLARING: 'opprett-oppgave.form.tema.arbeidsavklaring',
+    INDIVIDSTONAD: 'opprett-oppgave.form.tema.individstonad',
+    ENSLIG_FORSORGER: 'opprett-oppgave.form.tema.ensligforsorger',
+    TILLEGGSTONAD: 'opprett-oppgave.form.tema.tilleggstonad',
 };
 
 export const prioritet = {
-    LAV: 'Lav',
-    NORMAL: 'Normal',
-    HOY: 'Høy',
+    LAV: 'opprett-oppgave.form.prioritet.lav',
+    NORMAL: 'opprett-oppgave.form.prioritet.normal',
+    HOY: 'opprett-oppgave.form.prioritet.hoy',
 };
 
 export const defaultPrioritet = 'NORMAL';
@@ -29,11 +29,9 @@ export const defaultPrioritet = 'NORMAL';
 export const VURDER_KONSEKVENS_FOR_YTELSE = 'VURDER_KONSEKVENS_FOR_YTELSE';
 
 export const oppgavetyper = {
-    VURDER_KONSEKVENS_FOR_YTELSE: 'Vurder konsekvens for ytelse',
-    VURDER_HENVENDELSE: 'Vurder henvendelse',
+    VURDER_KONSEKVENS_FOR_YTELSE: 'opprett-oppgave.form.type.vurder.konsekvens.for.ytelse',
+    VURDER_HENVENDELSE: 'opprett-oppgave.form.type.vurder.henvendelse',
 };
-
-export const IKKE_VALGT = 'IKKE_VALGT';
 
 export function enhetlisteToKeyValueMap(enhetliste) {
     return enhetliste.reduce(

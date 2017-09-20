@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
 import { formValueSelector } from 'redux-form';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment';
 import { OPPRETT_OPPGAVE_FORM } from './opprett-oppgave';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -55,10 +55,16 @@ const HiddenIf = ({ hidden, children }) => {
     return children;
 };
 
-function optionsFromObject(keyValueMap) {
+function optionsFromObjectWithIntl(keyValueMap, intl) {
     return Object.entries(keyValueMap).map(([key, value]) =>
         <option value={key} key={key}>
-            {value}
+            {intl ?
+                intl.formatMessage({
+                    id: value,
+                })
+                :
+                value
+            }
         </option>
     );
 }
@@ -75,6 +81,7 @@ function OpprettOppgaveForm({
     veiledere,
     valgtEnhet,
     tema,
+    intl,
 }) {
     const enhetliste =
         behandlendeEnheter.enheter && Array.isArray(behandlendeEnheter.enheter)
@@ -99,7 +106,7 @@ function OpprettOppgaveForm({
                             hentEnheter(v.target.value, getFodselsnummer());
                         }}
                     >
-                        {optionsFromObject(temaValg)}
+                        {optionsFromObjectWithIntl(temaValg, intl)}
                     </Select>
                     <HiddenIf
                         hidden={
@@ -115,9 +122,7 @@ function OpprettOppgaveForm({
                                     bredde="fullbredde"
                                     noBlankOption
                                 >
-                                    {optionsFromObject(
-                                        filtrerBasertPaaTema(oppgavetyper, tema)
-                                    )}
+                                    {optionsFromObjectWithIntl(filtrerBasertPaaTema(oppgavetyper, tema), intl)}
                                 </Select>
 
                                 <Select
@@ -126,7 +131,7 @@ function OpprettOppgaveForm({
                                     bredde="fullbredde"
                                     noBlankOption
                                 >
-                                    {optionsFromObject(prioritet)}
+                                    {optionsFromObjectWithIntl(prioritet, intl)}
                                 </Select>
                                 <PeriodeValidering
                                     feltNavn="periodeValidering"
@@ -156,9 +161,7 @@ function OpprettOppgaveForm({
                                         onChange={v =>
                                             hentVeiledere(v.target.value)}
                                     >
-                                        {optionsFromObject(
-                                            enhetlisteToKeyValueMap(enhetliste)
-                                        )}
+                                        {optionsFromObjectWithIntl(enhetlisteToKeyValueMap(enhetliste))}
                                     </Select>
                                     <HiddenIf
                                         hidden={
@@ -174,11 +177,7 @@ function OpprettOppgaveForm({
                                                 bredde="m"
                                                 labelId="innstillinger.modal.opprett-oppgave.veileder.tittel"
                                             >
-                                                {optionsFromObject(
-                                                    veilederlisteToKeyValueMap(
-                                                        veilederliste
-                                                    )
-                                                )}
+                                                {optionsFromObjectWithIntl(veilederlisteToKeyValueMap(veilederliste))}
                                             </Select>
                                         </Innholdslaster>
                                     </HiddenIf>
@@ -209,6 +208,7 @@ OpprettOppgaveForm.propTypes = {
     veiledere: AppPT.veiledere.isRequired,
     valgtEnhet: PT.string,
     tema: PT.string,
+    intl: intlShape.isRequired,
 };
 
 OpprettOppgaveForm.defaultProps = {
