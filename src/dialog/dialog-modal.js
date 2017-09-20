@@ -68,11 +68,11 @@ Header.propTypes = {
 };
 
 function VenstreKolonne({
-    valgtDialog,
-    harNyDialog,
-    harNyDialogEllerValgtDialog,
-    historiskVisning,
-}) {
+                            valgtDialog,
+                            harNyDialog,
+                            harNyDialogEllerValgtDialog,
+                            historiskVisning,
+                        }) {
     const className = classNames(
         'dialog-modal__kolonne',
         'dialog-modal__kolonne--dialoger',
@@ -116,12 +116,12 @@ VenstreKolonne.defaultProps = {
 };
 
 function HoyreKolonne({
-    valgtDialog,
-    harValgtDialog,
-    harNyDialog,
-    harNyDialogEllerValgtDialog,
-    valgtAktivitetId,
-}) {
+                          valgtDialog,
+                          harValgtDialog,
+                          harNyDialog,
+                          harNyDialogEllerValgtDialog,
+                          valgtAktivitetId,
+                      }) {
     function apneAktivitet() {
         history.push(aktivitetRoute(valgtAktivitetId));
     }
@@ -191,18 +191,18 @@ DialogModalContent.defaultProps = {
     valgtAktivitetId: undefined,
 };
 
-function DialogModal({ harNyDialogEllerValgtDialog, ...rest }) {
+function DialogModal(props) {
     const className = classNames('dialog-modal', {
-        'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
+        'dialog-modal--full-bredde': props.harNyDialogEllerValgtDialog,
     });
 
     return (
         <Modal
             className={className}
             contentClass="aktivitetsplanfs dialog-modal__content"
-            header={<Header {...rest} />}
+            header={<Header {...props} />}
         >
-            <DialogModalContent {...rest} />
+            <DialogModalContent {...props} />
         </Modal>
     );
 }
