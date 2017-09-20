@@ -1,3 +1,4 @@
+import React from 'react';
 import { maksLengde } from '../../../felles-komponenter/skjema/validering';
 
 export const BESKRIVELSE_MAKS_LENGDE = 500;
@@ -77,4 +78,18 @@ export function toLocalDateTime(date) {
     return `${dateObject.getUTCFullYear()}-${pad(dateObject.getUTCMonth() + 1)}-${pad(
         dateObject.getUTCDate()
     )}`;
+}
+
+export function optionsFromObjectWithIntl(keyValueMap, intl) {
+    return Object.entries(keyValueMap).map(([key, value]) =>
+        <option value={key} key={key}>
+            {intl ?
+                intl.formatMessage({
+                    id: value,
+                })
+                :
+                value
+            }
+        </option>
+    );
 }
