@@ -1,4 +1,4 @@
-import * as Api from '../situasjon/situasjon-api';
+import * as SituasjonApi from '../situasjon/situasjon-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 import {
     nyHenvendelse,
@@ -108,7 +108,7 @@ export default function reducer(state = initalState, action) {
 
 // Action creator
 export function hentSituasjonData() {
-    return doThenDispatch(() => Api.hentSituasjon(), {
+    return doThenDispatch(() => SituasjonApi.hentSituasjon(), {
         OK: HENT_SITUASJON_OK,
         FEILET: HENT_SITUASJON_FEILET,
         PENDING: HENT_SITUASJON_PENDING,
@@ -116,7 +116,7 @@ export function hentSituasjonData() {
 }
 
 export function startOppfolging() {
-    return doThenDispatch(() => Api.startOppfolging(), {
+    return doThenDispatch(() => SituasjonApi.startOppfolging(), {
         OK: START_OPPFOLGING_OK,
         FEILET: START_OPPFOLGING_FEILET,
         PENDING: START_OPPFOLGING_PENDING,
@@ -124,7 +124,7 @@ export function startOppfolging() {
 }
 
 export function kanAvslutteOppfolging() {
-    return doThenDispatch(() => Api.kanAvslutte(), {
+    return doThenDispatch(() => SituasjonApi.kanAvslutte(), {
         OK: KAN_AVSLUTTE_OK,
         FEILET: KAN_AVSLUTTE_FEILET,
         PENDING: KAN_AVSLUTTE_PENDING,
@@ -133,7 +133,7 @@ export function kanAvslutteOppfolging() {
 
 export function avsluttOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(
-        () => Api.avsluttOppfolging(begrunnelse, veilederId),
+        () => SituasjonApi.avsluttOppfolging(begrunnelse, veilederId),
         {
             OK: AVSLUTT_OPPFOLGING_OK,
             FEILET: AVSLUTT_OPPFOLGING_FEILET,
@@ -144,7 +144,7 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
 
 export function settManuellOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(
-        () => Api.settManuellOppfolging(begrunnelse, veilederId),
+        () => SituasjonApi.settManuellOppfolging(begrunnelse, veilederId),
         {
             OK: SETT_MANUELL_OK,
             FEILET: SETT_MANUELL_FEILET,
@@ -155,7 +155,7 @@ export function settManuellOppfolging(begrunnelse, veilederId) {
 
 export function settDigitalOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(
-        () => Api.settDigitalOppfolging(begrunnelse, veilederId),
+        () => SituasjonApi.settDigitalOppfolging(begrunnelse, veilederId),
         {
             OK: SETT_DIGITAL_OK,
             FEILET: SETT_DIGITAL_FEILET,
@@ -165,11 +165,14 @@ export function settDigitalOppfolging(begrunnelse, veilederId) {
 }
 
 function startEskaleringMedDialog(dialogId, begrunnelse) {
-    return doThenDispatch(() => Api.startEskalering(dialogId, begrunnelse), {
-        OK: START_ESKALERING_OK,
-        FEILET: START_ESKALERING_FEILET,
-        PENDING: START_ESKALERING_PENDING,
-    });
+    return doThenDispatch(
+        () => SituasjonApi.startEskalering(dialogId, begrunnelse),
+        {
+            OK: START_ESKALERING_OK,
+            FEILET: START_ESKALERING_FEILET,
+            PENDING: START_ESKALERING_PENDING,
+        }
+    );
 }
 
 export function startEskalering(eskaleringData) {
@@ -198,7 +201,7 @@ export function startEskalering(eskaleringData) {
 }
 
 function stoppEskaleringMedBegrunnelse(begrunnelse) {
-    return doThenDispatch(() => Api.stoppEskalering(begrunnelse), {
+    return doThenDispatch(() => SituasjonApi.stoppEskalering(begrunnelse), {
         OK: STOPP_ESKALERING_OK,
         FEILET: STOPP_ESKALERING_FEILET,
         PENDING: STOPP_ESKALERING_PENDING,

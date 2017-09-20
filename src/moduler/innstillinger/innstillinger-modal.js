@@ -9,7 +9,12 @@ import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
-function InnstillingerModal({ motpart, children, navnPaMotpart }) {
+function InnstillingerModal({
+    motpart,
+    children,
+    navnPaMotpart,
+    onRequestClose,
+}) {
     return (
         <Modal
             header={
@@ -17,6 +22,7 @@ function InnstillingerModal({ motpart, children, navnPaMotpart }) {
             }
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
+            onRequestClose={onRequestClose}
         >
             <article className="innstillinger__container">
                 <Innholdslaster
@@ -44,12 +50,14 @@ function InnstillingerModal({ motpart, children, navnPaMotpart }) {
 InnstillingerModal.defaultProps = {
     children: undefined,
     navnPaMotpart: undefined,
+    onRequestClose: undefined,
 };
 
 InnstillingerModal.propTypes = {
     navnPaMotpart: PT.string,
     motpart: AppPT.reducer.isRequired,
     children: PT.node,
+    onRequestClose: PT.func,
 };
 
 const mapStateToProps = state => {

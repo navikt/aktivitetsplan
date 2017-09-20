@@ -250,3 +250,14 @@ export function formaterDatoEllerTidSidenUtenKlokkeslett(dato) {
 export function datoComparator(a, b) {
     return a && b ? moment(a).diff(b) : (a ? 1 : 0) - (b ? 1 : 0);
 }
+
+function pad(number) {
+    return number < 10 ? `0${number}` : number;
+}
+
+export function toISOLocalDate(date) {
+    const dateObject = typeof date === 'string' ? new Date(date) : date;
+    return `${dateObject.getUTCFullYear()}-${pad(dateObject.getUTCMonth() + 1)}-${pad(
+        dateObject.getUTCDate()
+    )}`;
+}
