@@ -63,13 +63,6 @@ function optionsFromObject(keyValueMap) {
     );
 }
 
-function finnInitiellEnhet(behandlendeEnheter) {
-    if (!behandlendeEnheter || !behandlendeEnheter.enheter) {
-        return undefined;
-    }
-    return '0104';
-}
-
 function OpprettOppgaveForm({
     onSubmit,
     behandlendeEnheter,
@@ -249,7 +242,6 @@ const mapStateToProps = (state, props) => {
             tilDato: new Date(),
             prioritet: defaultPrioritet,
             type: Object.keys(oppgavetyper)[0],
-            enhet: finnInitiellEnhet(props.behandlendeEnheter),
             beskrivelse: null,
             veileder: null,
         },
