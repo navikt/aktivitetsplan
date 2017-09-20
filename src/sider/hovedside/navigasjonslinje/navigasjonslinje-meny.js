@@ -28,7 +28,7 @@ function NavigasjonslinjeMeny({
                 alt="arbeidsliste.icon.alt.tekst"
             />
             <Knappelenke
-                className="navigasjonslinje__skillestrek"
+                className="navigasjonslinje__button"
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/leggtil')}
             >
@@ -48,7 +48,7 @@ function NavigasjonslinjeMeny({
                 <FormattedMessage id="navigasjon.i.arbeidsliste" />
             </span>
             <Knappelenke
-                className="navigasjonslinje__skillestrek"
+                className="navigasjonslinje__button"
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/fjern')}
             >
@@ -59,7 +59,7 @@ function NavigasjonslinjeMeny({
 
     const RedigerLenke = HiddenIfHOC(() =>
         <Knappelenke
-            className="navigasjonslinje__skillestrek"
+            className="navigasjonslinje__button"
             onClick={() => history.push('arbeidsliste/rediger')}
         >
             <FormattedMessage id="navigasjon.vis.kommentarer" />
