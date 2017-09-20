@@ -70,17 +70,6 @@ export function filtrerBasertPaTema(typer, tema) {
     }
 }
 
-function pad(number) {
-    return number < 10 ? `0${number}` : number;
-}
-
-export function toLocalDateTime(date) {
-    const dateObject = typeof date === 'string' ? new Date(date) : date;
-    return `${dateObject.getUTCFullYear()}-${pad(dateObject.getUTCMonth() + 1)}-${pad(
-        dateObject.getUTCDate()
-    )}`;
-}
-
 export function optionsFromObjectWithIntl(keyValueMap, intl) {
     return Object.entries(keyValueMap).map(([key, value]) =>
         <option value={key} key={key}>

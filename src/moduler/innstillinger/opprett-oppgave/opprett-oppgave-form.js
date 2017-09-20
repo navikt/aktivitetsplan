@@ -14,7 +14,6 @@ import {
     oppgavetyper,
     optionsFromObjectWithIntl,
     temaValg,
-    toLocalDateTime,
 } from './opprett-oppgave-utils';
 import { pakrevd } from '../../../felles-komponenter/skjema/validering';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
@@ -24,6 +23,7 @@ import history from '../../../history';
 import { hentBehandlendeEnheter, resetEnheter, selectBehandlendeEnheter } from './hent-behandlende-enheter-reducer';
 import { hentVeiledereForEnhet, selectOppgaveVeiledere } from './hent-veieldere-for-oppgave-reducer';
 import { OpprettOppgaveInnerForm } from './opprett-oppgave-inner-form';
+import { toISOLocalDate } from '../../../utils';
 
 const pakrevdFraDato = pakrevd(
     'opprett-oppgave-form.feilmelding.paakrevd-fradato'
@@ -130,8 +130,8 @@ const mapDispatchToProps = dispatch => ({
             opprettOppgaveForBruker({
                 ...props,
                 fnr: getFodselsnummer(),
-                fraDato: toLocalDateTime(props.fraDato),
-                tilDato: toLocalDateTime(props.tilDato),
+                fraDato: toISOLocalDate(props.fraDato),
+                tilDato: toISOLocalDate(props.tilDato),
                 veileder: erValgtEnhetLikInnloggetEnhet(props.enhet) ? props.veileder : null,
             })
         )
