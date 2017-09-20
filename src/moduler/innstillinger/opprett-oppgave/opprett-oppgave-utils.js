@@ -75,7 +75,8 @@ function pad(number) {
 }
 
 export function toLocalDateTime(date) {
-    return `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(
-        date.getUTCDate()
+    const dateObject = typeof date === 'string' ? new Date(date) : date;
+    return `${dateObject.getUTCFullYear()}-${pad(dateObject.getUTCMonth() + 1)}-${pad(
+        dateObject.getUTCDate()
     )}`;
 }
