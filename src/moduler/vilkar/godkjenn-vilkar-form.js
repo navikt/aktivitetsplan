@@ -2,7 +2,7 @@ import React, { PropTypes as PT } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
-import { Hovedknapp } from 'nav-react-design/dist/knapp';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import Checkbox from '../../felles-komponenter/skjema/input/checkbox';
@@ -18,6 +18,9 @@ function GodkjennVilkarForm({ visVilkar, handleSubmit, reset, doAvslaVilkar }) {
     return (
         <form className="godkjenn-vilkar" onSubmit={handleSubmit}>
             <div className="godkjenn-vilkar__avkryssning">
+                <Lenke href="/vilkar" visible={!visVilkar}>
+                    <FormattedMessage id="vilkar.se-vilkar-her" />
+                </Lenke>
                 <Checkbox
                     className="godkjenn-vilkar__avkryssningsboks"
                     feltNavn="godkjent"
@@ -27,9 +30,6 @@ function GodkjennVilkarForm({ visVilkar, handleSubmit, reset, doAvslaVilkar }) {
                             : 'vilkar.ja-ta-i-bruk'
                     }
                 />
-                <Lenke href="/vilkar" visible={!visVilkar}>
-                    <FormattedMessage id="vilkar.se-vilkar-her" />
-                </Lenke>
             </div>
 
             <div>

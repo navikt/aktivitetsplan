@@ -1,9 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import Bilde from 'nav-react-design/dist/bilde';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Knapp, Fareknapp } from 'nav-frontend-knapper';
+import Bilde from '../../../../felles-komponenter/bilde/bilde';
 import stopSvg from './stop.svg';
 
 function BekreftSlettVisning({

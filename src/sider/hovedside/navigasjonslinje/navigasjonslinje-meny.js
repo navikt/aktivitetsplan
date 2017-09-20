@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Bilde } from 'nav-react-design';
+import Bilde from '../../../felles-komponenter/bilde/bilde';
 import history from '../../../history';
 import {
     selectErBrukerIArbeidsliste,

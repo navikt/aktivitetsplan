@@ -1,8 +1,8 @@
 import React from 'react';
-import { Bilde } from 'nav-react-design';
-import { Sidetittel } from 'nav-react-design/dist/typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import aktivitetsplanSvg from './aktivitetsplan.svg';
+import Bilde from '../../felles-komponenter/bilde/bilde';
 import visibleIf from '../../hocs/visible-if';
 
 function Sidebanner(props) {

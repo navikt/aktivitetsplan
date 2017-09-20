@@ -1,9 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import Bilde from 'nav-react-design/dist/bilde';
 import { Element, Innholdstittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
+import Bilde from '../../felles-komponenter/bilde/bilde';
 import * as AppPT from '../../proptypes';
 import UnsafeHtml from '../../felles-komponenter/utils/unsafe-html';
 import vilkarSvg from './vilkar-illustrasjon.svg';

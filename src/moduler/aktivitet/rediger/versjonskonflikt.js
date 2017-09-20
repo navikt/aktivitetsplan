@@ -1,9 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Bilde } from 'nav-react-design';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import Bilde from '../../../felles-komponenter/bilde/bilde';
 import visibleIfHOC from '../../../hocs/visible-if';
 import versjonskonfliktSvg from './versjonskonflikt.svg';
 
