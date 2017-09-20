@@ -84,7 +84,7 @@ function OpprettOppgaveForm({
     valgtEnhet,
     tema,
 }) {
-    const enhetliste = behandlendeEnheter.enheter
+    const enhetliste = behandlendeEnheter.enheter && Array.isArray(behandlendeEnheter.enheter)
         ? behandlendeEnheter.enheter
         : [];
     const veilederliste = veiledere.veilederListe
@@ -110,7 +110,8 @@ function OpprettOppgaveForm({
                     </Select>
                     <HiddenIf
                         hidden={
-                            behandlendeEnheter.status === STATUS.NOT_STARTED
+                            behandlendeEnheter.status === STATUS.NOT_STARTED ||
+                            !tema
                         }
                     >
                         <Innholdslaster avhengigheter={[behandlendeEnheter]}>
@@ -289,7 +290,10 @@ const mapDispatchToProps = dispatch => ({
                 history.push('innstillinger/feilkvittering');
             });
     },
-    hentEnheter: (tema, fnr) => dispatch(hentBehandlendeEnheter(tema, fnr)),
+    hentEnheter: (tema, fnr) => dispatch(hentBehandlendeEnheter(tema, fnr))
+        .catch(() => {
+            history.push('innstillinger/feilkvittering');
+        }),
     hentVeiledere: enhetId => dispatch(hentVeiledereForEnhet(enhetId)),
 });
 
