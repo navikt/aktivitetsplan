@@ -23,6 +23,8 @@ import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer'
 import aktiverDigitalOppfolgingReducer from './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
 import arbeidslisteReducer from './moduler/arbeidsliste/arbeidsliste-reducer';
 import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
+import brukerReducer from './moduler/bruker/bruker-duck';
+import utskriftReducer from './moduler/utskrift/utskrift-duck';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -50,9 +52,11 @@ const combinedReducers = combineReducers({
         kanaler: kanalerReducer,
         referat: referatReducer,
         opprettOppgave: oppgaveReducer,
+        bruker: brukerReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,
+        utskrift: utskriftReducer,
     }),
     feil: feilReducer,
 });

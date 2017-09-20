@@ -78,7 +78,8 @@ export function proxy(func, { before, after } = {}) {
     };
 }
 
-export function storeForbokstaver(tekst) {
+export function storeForbokstaver() {
+    const tekst = Array.prototype.filter.call(arguments, s => s).join(' ');
     return (
         tekst &&
         tekst.replace(

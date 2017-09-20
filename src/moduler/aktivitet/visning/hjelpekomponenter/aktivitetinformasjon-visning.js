@@ -7,22 +7,13 @@ import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import history from '../../../../history';
 import AktivitetsDetaljer from './aktivitetsdetaljer';
 import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
-import {
-    STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
-    AVTALT_MED_NAV,
-} from '../../../../constant';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import AktivitetEtikett from '../../../../felles-komponenter/aktivitet-etikett';
+import AktivitetEtikettGruppe from '../../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
 
-function AktivitetinformasjonVisning({
-    valgtAktivitet,
-    arenaAktivitet,
-    tillatEndring,
-}) {
-    const { tittel, type, avtalt, etikett } = valgtAktivitet;
+function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring }) {
+    const { tittel, type, arenaAktivitet } = valgtAktivitet;
 
     const gaTilEndreAktivitet = () =>
         history.push(endreAktivitetRoute(valgtAktivitet.id));
@@ -36,19 +27,10 @@ function AktivitetinformasjonVisning({
 
                 <AktivitetIngress type={type} />
 
-                <div className="aktivitetvisning__etikett">
-                    <AktivitetEtikett
-                        visible={avtalt}
-                        etikett={AVTALT_MED_NAV}
-                        id={AVTALT_MED_NAV}
-                    />
-
-                    <AktivitetEtikett
-                        visible={!!etikett}
-                        etikett={etikett}
-                        id={`etikett.${etikett}`}
-                    />
-                </div>
+                <AktivitetEtikettGruppe
+                    aktivitet={valgtAktivitet}
+                    className="aktivitetvisning__etikett"
+                />
 
                 <AktivitetsDetaljer
                     className="aktivitetvisning__detaljer"
@@ -71,7 +53,6 @@ function AktivitetinformasjonVisning({
 
 AktivitetinformasjonVisning.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
-    arenaAktivitet: PT.bool.isRequired,
     tillatEndring: PT.bool.isRequired,
 };
 

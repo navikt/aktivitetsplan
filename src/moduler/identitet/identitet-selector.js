@@ -1,5 +1,13 @@
+function selectIdentitetSlice(state) {
+    return state.data.identitet;
+}
+
 export function selectIdentitetReducer(state) {
     return state.data.identitet;
+}
+
+export function selectIdentitetStatus(state) {
+    return selectIdentitetSlice(state).status;
 }
 
 export function selectErVeileder(state) {

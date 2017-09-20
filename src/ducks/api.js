@@ -8,6 +8,7 @@ import {
     PORTEFOLJE_BASE_URL,
     OPPGAVE_BASE_URL,
 } from '~config'; // eslint-disable-line
+
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
 export function hentLedetekster() {

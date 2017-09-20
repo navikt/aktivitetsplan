@@ -32,6 +32,7 @@ import {
 } from '../../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 import history from '../../../history';
+import { selectDialoger } from '../../../moduler/dialog/dialog-selector';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -82,6 +83,16 @@ const InnstillingerKnapp = () =>
             />}
     </FormattedMessage>;
 
+const PrintLenke = () =>
+    <FormattedMessage id="utskrift.ikon.alt.tekst">
+        {tekst =>
+            <button
+                aria-label={tekst}
+                className="navigasjonslinje__verktoy--print-knapp navigasjonslinje__skillestrek--hoyre"
+                onClick={() => history.push('/utskrift')}
+            />}
+    </FormattedMessage>;
+
 class Navigasjonslinje extends Component {
     componentDidMount() {
         const { doHentDialog, doHentArbeidsliste } = this.props;
@@ -122,8 +133,8 @@ class Navigasjonslinje extends Component {
                     tekstId="navigasjon.vilkar"
                     disabled={disabled || (!erBruker && vilkarMaBesvares)}
                 />
-                <Feature name={navigasjonslinjemenyFeature}>
-                    <div className="navigasjonslinje__verktoy">
+                <div className="navigasjonslinje__verktoy">
+                    <Feature name={navigasjonslinjemenyFeature}>
                         <Innholdslaster
                             avhengigheter={[arbeidslisteReducer]}
                             spinnerStorrelse="xs"
@@ -135,9 +146,14 @@ class Navigasjonslinje extends Component {
                                 }
                             />
                         </Innholdslaster>
+                    </Feature>
+
+                    <PrintLenke />
+
+                    <Feature name={navigasjonslinjemenyFeature}>
                         <InnstillingerKnapp />
-                    </div>
-                </Feature>
+                    </Feature>
+                </div>
             </nav>
         );
     }
@@ -163,7 +179,7 @@ Navigasjonslinje.defaultProps = {
 
 const mapStateToProps = state => {
     const stateData = state.data;
-    const dialog = stateData.dialog.data;
+    const dialog = selectDialoger(state);
     const underOppfolging = selectErUnderOppfolging(state);
     return {
         antallUlesteDialoger: dialog

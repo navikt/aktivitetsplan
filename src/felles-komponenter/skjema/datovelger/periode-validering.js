@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { injectIntl, intlShape } from 'react-intl';
 
 function isValidDate(dato) {
     return dato && moment(dato).isValid();
@@ -72,7 +73,22 @@ InnerInputComponent.defaultProps = {
 };
 
 function PeriodeValidering(props) {
-    const valid = validerPeriode(props.fraDato, props.tilDato);
+    const {
+        fraDato,
+        tilDato,
+        feltNavn,
+        errorMessageId,
+        children,
+        intl,
+    } = props;
+
+    const valid = validerPeriode(fraDato, tilDato);
+
+    function errorMessage() {
+        return intl.formatMessage({
+            id: errorMessageId,
+        });
+    }
 
     return (
         <div
@@ -83,21 +99,21 @@ function PeriodeValidering(props) {
         >
             <div
                 className={classNames({ skjema__feilomrade: !valid })}
-                id={props.feltNavn}
+                id={feltNavn}
                 tabIndex={valid ? undefined : -1}
             >
-                {props.children}
+                {children}
 
                 <CustomField
-                    name={props.feltNavn}
+                    name={feltNavn}
                     customComponent={
                         <ConnectedInputComponent
-                            feltNavn={props.feltNavn}
-                            fraDato={props.fraDato}
-                            tilDato={props.tilDato}
+                            feltNavn={feltNavn}
+                            fraDato={fraDato}
+                            tilDato={tilDato}
                         />
                     }
-                    validate={() => (valid ? undefined : props.errorMessage)} // eslint-disable-line no-confusing-arrow
+                    validate={() => (valid ? undefined : errorMessage())} // eslint-disable-line no-confusing-arrow
                 />
             </div>
         </div>
@@ -108,7 +124,8 @@ PeriodeValidering.propTypes = {
     feltNavn: PT.string.isRequired,
     fraDato: PT.object, // eslint-disable-line react/forbid-prop-types
     tilDato: PT.object, // eslint-disable-line react/forbid-prop-types
-    errorMessage: PT.string.isRequired,
+    errorMessageId: PT.string.isRequired,
+    intl: intlShape.isRequired,
     children: PT.node,
 };
 
@@ -118,4 +135,6 @@ PeriodeValidering.defaultProps = {
     children: undefined,
 };
 
-export default PeriodeValidering;
+export const PeriodeValideringPure = PeriodeValidering;
+
+export default injectIntl(PeriodeValideringPure);

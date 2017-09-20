@@ -2,20 +2,35 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { selectAktivitetStatusFilter } from './filter-selector';
-import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetsStatus } from './filter-reducer';
 import FilterVisning from './filter-visnings-komponent';
+import {
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_PLANLAGT,
+    STATUS_GJENNOMFOERT,
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+} from '../../../constant';
+
+const filtreringsRekkefolge = [
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_PLANLAGT,
+    STATUS_GJENNOMFOERT,
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+];
 
 function StatusFilter({
     harAktivitetStatus,
-    aktivitetStatus,
+    sortedAktivitetStatus,
     doToggleAktivitetsStatus,
     className,
 }) {
     return (
         <FilterVisning
             harAktiviteter={harAktivitetStatus}
-            filter={aktivitetStatus}
+            filter={sortedAktivitetStatus}
             filterTittel={'aktivitet.status'}
             filterTekst={'aktivitet.status.'}
             doToggleFunction={doToggleAktivitetsStatus}
@@ -30,22 +45,35 @@ StatusFilter.defaultProps = {
 
 StatusFilter.propTypes = {
     harAktivitetStatus: PT.bool.isRequired,
-    aktivitetStatus: PT.object.isRequired,
+    sortedAktivitetStatus: PT.object.isRequired,
     doToggleAktivitetsStatus: PT.func.isRequired,
     className: PT.string,
 };
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAlleAktiviter(state);
+    const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
     const aktivitetStatus = aktiviteter.reduce((statusliste, aktivitet) => {
         const status = aktivitet.status;
         statusliste[status] = aktivitetStatusFilter[status]; // eslint-disable-line no-param-reassign
         return statusliste;
     }, {});
+    const sortedAktivitetStatus = Object.keys(aktivitetStatus)
+        .sort(
+            (a, b) =>
+                filtreringsRekkefolge.indexOf(a) -
+                filtreringsRekkefolge.indexOf(b)
+        )
+        .reduce(
+            (sortertStatusFilter, item) => ({
+                ...sortertStatusFilter,
+                [item]: aktivitetStatus[item],
+            }),
+            {}
+        );
     return {
-        aktivitetStatus,
-        harAktivitetStatus: Object.keys(aktivitetStatus).length > 1,
+        sortedAktivitetStatus,
+        harAktivitetStatus: Object.keys(sortedAktivitetStatus).length > 1,
     };
 };
 

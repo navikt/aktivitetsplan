@@ -48,8 +48,12 @@ VelgKanal.propTypes = {
     kanalerReducer: AppPT.reducer.isRequired,
     kanaler: PT.arrayOf(PT.string).isRequired,
     labelId: PT.string.isRequired,
-    disabled: PT.bool.isRequired,
+    disabled: PT.bool,
     doHentKanaler: PT.func.isRequired,
+};
+
+VelgKanal.defaultProps = {
+    disabled: false,
 };
 
 const mapStateToProps = state => ({

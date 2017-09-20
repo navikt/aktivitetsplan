@@ -38,7 +38,10 @@ export default function reducer(state = initalState, action) {
             return { ...state, aktivitetAvtaltMedNav };
         }
         case VELG_HISTORISK_PERIODE:
-            return { ...state, historiskPeriode: data };
+            return {
+                ...initalState,
+                historiskPeriode: data,
+            };
         default:
             return state;
     }
