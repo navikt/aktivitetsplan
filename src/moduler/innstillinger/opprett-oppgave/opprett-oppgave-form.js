@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
 import { formValueSelector } from 'redux-form';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import moment from 'moment';
 import { OPPRETT_OPPGAVE_FORM } from './opprett-oppgave';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -76,7 +76,6 @@ function OpprettOppgaveForm({
     currentFraDato,
     currentTilDato,
     opprettOppgave,
-    intl,
     hentEnheter,
     hentVeiledere,
     errorSummary,
@@ -84,9 +83,10 @@ function OpprettOppgaveForm({
     valgtEnhet,
     tema,
 }) {
-    const enhetliste = behandlendeEnheter.enheter && Array.isArray(behandlendeEnheter.enheter)
-        ? behandlendeEnheter.enheter
-        : [];
+    const enhetliste =
+        behandlendeEnheter.enheter && Array.isArray(behandlendeEnheter.enheter)
+            ? behandlendeEnheter.enheter
+            : [];
     const veilederliste = veiledere.veilederListe
         ? veiledere.veilederListe
         : [];
@@ -139,10 +139,7 @@ function OpprettOppgaveForm({
                                     feltNavn="periodeValidering"
                                     fraDato={currentFraDato}
                                     tilDato={currentTilDato}
-                                    errorMessage={intl.formatMessage({
-                                        id:
-                                            'datepicker.feilmelding.egen.fradato-etter-frist',
-                                    })}
+                                    errorMessageId="datepicker.feilmelding.egen.fradato-etter-frist"
                                 >
                                     <div className="dato-container">
                                         <Datovelger
@@ -216,7 +213,6 @@ OpprettOppgaveForm.propTypes = {
     hentEnheter: PT.func.isRequired,
     hentVeiledere: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
-    intl: intlShape.isRequired,
     veiledere: AppPT.veiledere.isRequired,
     valgtEnhet: PT.string,
     tema: PT.string,
@@ -290,8 +286,8 @@ const mapDispatchToProps = dispatch => ({
                 history.push('innstillinger/feilkvittering');
             });
     },
-    hentEnheter: (tema, fnr) => dispatch(hentBehandlendeEnheter(tema, fnr))
-        .catch(() => {
+    hentEnheter: (tema, fnr) =>
+        dispatch(hentBehandlendeEnheter(tema, fnr)).catch(() => {
             history.push('innstillinger/feilkvittering');
         }),
     hentVeiledere: enhetId => dispatch(hentVeiledereForEnhet(enhetId)),
