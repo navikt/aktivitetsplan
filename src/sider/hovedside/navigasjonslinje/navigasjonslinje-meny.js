@@ -45,7 +45,6 @@ function NavigasjonslinjeMeny({
                     src={ArbeidslisteActiveSVG}
                     alt="arbeidsliste.icon.alt.tekst"
                 />
-                <FormattedMessage id="navigasjon.i.arbeidsliste" />
             </span>
             <Knappelenke
                 className="navigasjonslinje__button"
