@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Systemtittel } from 'nav-frontend-typografi';
+import { formValueSelector } from 'redux-form';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import {
@@ -18,7 +19,7 @@ import { resetEnheter } from '../innstillinger-reducer';
 
 export const OPPRETT_OPPGAVE_FORM = 'opprett-oppgave-form';
 
-function OpprettOppgave({ innstillingerStatus, slettEnheter }) {
+function OpprettOppgave({ innstillingerStatus, slettEnheter, valgtTema }) {
     const onRequestClose = () => {
         slettEnheter();
         history.push('/');
@@ -42,6 +43,7 @@ function OpprettOppgave({ innstillingerStatus, slettEnheter }) {
                             innstillingerStatus === STATUS.RELOADING
                         }
                         autoDisableVedSpinner
+                        disabled={!valgtTema}
                     >
                         <FormattedMessage id="innstillinger.modal.opprett-oppgave.knapp.bekreft" />
                     </RemoteSubmitKnapp>
@@ -64,11 +66,20 @@ function OpprettOppgave({ innstillingerStatus, slettEnheter }) {
 OpprettOppgave.propTypes = {
     innstillingerStatus: AppPT.status.isRequired,
     slettEnheter: PT.func.isRequired,
+    valgtTema: PT.string,
 };
 
-const mapStateToProps = state => ({
-    innstillingerStatus: selectInnstillingerStatus(state),
-});
+OpprettOppgave.defaultProps = {
+    valgtTema: undefined,
+};
+
+const mapStateToProps = state => {
+    const selector = formValueSelector(OPPRETT_OPPGAVE_FORM);
+    return {
+        innstillingerStatus: selectInnstillingerStatus(state),
+        valgtTema: selector(state, 'tema'),
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     slettEnheter: () => dispatch(resetEnheter()),
