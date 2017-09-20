@@ -1,0 +1,144 @@
+import React from 'react';
+import PT from 'prop-types';
+import { intlShape } from 'react-intl';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import Select from '../../../felles-komponenter/skjema/input/select';
+import {
+    BESKRIVELSE_MAKS_LENGDE, enhetlisteToKeyValueMap, filtrerBasertPaaTema, oppgavetyper, optionsFromObjectWithIntl,
+    prioritet,
+    veilederlisteToKeyValueMap,
+} from './opprett-oppgave-utils';
+import PeriodeValidering from '../../../felles-komponenter/skjema/datovelger/periode-validering';
+import Datovelger from '../../../felles-komponenter/skjema/datovelger/datovelger';
+import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
+import { STATUS } from '../../../ducks/utils';
+import { getEnhetFromUrl } from '../../../bootstrap/fnr-util';
+import * as AppPT from '../../../proptypes';
+
+const HiddenIf = ({ hidden, children }) => {
+    if (hidden) {
+        return null;
+    }
+    return children;
+};
+
+export function OpprettOppgaveInnerForm({
+                                            behandlendeEnheter, tema, intl, currentFraDato,
+                                            currentTilDato, hentVeiledere, valgtEnhet,
+                                            veiledere,
+                                        }) {
+    const enhetliste = Array.isArray(behandlendeEnheter.data)
+        ? behandlendeEnheter.data
+        : [];
+
+    const veilederliste = Array.isArray(veiledere.data)
+        ? veiledere.data
+        : [];
+
+    const innloggetEnhet = getEnhetFromUrl();
+
+    return (
+        <HiddenIf
+            hidden={
+                behandlendeEnheter.status === STATUS.NOT_STARTED ||
+                !tema
+            }
+        >
+        <Innholdslaster avhengigheter={[behandlendeEnheter]}>
+            <div>
+                <Select
+                    feltNavn="type"
+                    labelId="innstillinger.modal.opprett-oppgave.type.tittel"
+                    bredde="fullbredde"
+                    noBlankOption
+                >
+                    {optionsFromObjectWithIntl(filtrerBasertPaaTema(oppgavetyper, tema), intl)}
+                </Select>
+
+                <Select
+                    feltNavn="prioritet"
+                    labelId="innstillinger.modal.opprett-oppgave.prioritet.tittel"
+                    bredde="fullbredde"
+                    noBlankOption
+                >
+                    {optionsFromObjectWithIntl(prioritet, intl)}
+                </Select>
+                <PeriodeValidering
+                    feltNavn="periodeValidering"
+                    fraDato={currentFraDato}
+                    tilDato={currentTilDato}
+                    errorMessageId="datepicker.feilmelding.egen.fradato-etter-frist"
+                >
+                    <div className="dato-container">
+                        <Datovelger
+                            feltNavn="fraDato"
+                            labelId="opprett-oppgave-form.label.fra-dato"
+                            senesteTom={currentTilDato}
+                        />
+                        <Datovelger
+                            feltNavn="tilDato"
+                            labelId="opprett-oppgave-form.label.til-dato"
+                            tidligsteFom={currentFraDato}
+                        />
+                    </div>
+                </PeriodeValidering>
+                <div className="enhet-veileder-container">
+                    <Select
+                        blankOptionParameters={{ hidden: true }}
+                        feltNavn="enhet"
+                        labelId="innstillinger.modal.opprett-oppgave.enhet.tittel"
+                        bredde="m"
+                        onChange={v =>
+                            hentVeiledere(v.target.value)}
+                    >
+                        {optionsFromObjectWithIntl(enhetlisteToKeyValueMap(enhetliste))}
+                    </Select>
+                    <HiddenIf
+                        hidden={
+                            innloggetEnhet !== valgtEnhet ||
+                            !innloggetEnhet
+                        }
+                    >
+                        <Innholdslaster
+                            avhengigheter={[veiledere]}
+                        >
+                            <Select
+                                feltNavn="veileder"
+                                bredde="m"
+                                labelId="innstillinger.modal.opprett-oppgave.veileder.tittel"
+                            >
+                                {optionsFromObjectWithIntl(veilederlisteToKeyValueMap(veilederliste))}
+                            </Select>
+                        </Innholdslaster>
+                    </HiddenIf>
+                </div>
+                <Textarea
+                    labelId="innstillinger.modal.opprett-oppgave.label.beskrivelse"
+                    feltNavn="beskrivelse"
+                    maxLength={BESKRIVELSE_MAKS_LENGDE}
+                />
+            </div>
+        </Innholdslaster>
+    </HiddenIf>);
+}
+
+
+OpprettOppgaveInnerForm.propTypes = {
+    behandlendeEnheter: AppPT.behandlendeEnheter.isRequired,
+    currentFraDato: PT.instanceOf(Date),
+    currentTilDato: PT.instanceOf(Date),
+    hentVeiledere: PT.func.isRequired,
+    veiledere: AppPT.veiledere.isRequired,
+    valgtEnhet: PT.string,
+    tema: PT.string,
+    intl: intlShape.isRequired,
+};
+
+OpprettOppgaveInnerForm.defaultProps = {
+    valgtEnhet: undefined,
+    tema: undefined,
+    currentFraDato: undefined,
+    currentTilDato: undefined,
+};
+
+export default OpprettOppgaveInnerForm;
