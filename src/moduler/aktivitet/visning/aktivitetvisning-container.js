@@ -15,7 +15,6 @@ import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
 import Aktivitetvinsing from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import {
-    selectAktivitetListeStatus,
     selectAktivitetMedId,
     selectKanEndreAktivitetDetaljer,
 } from '../aktivitetliste-selector';
@@ -27,6 +26,7 @@ import {
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+import { STATUS } from '../../../ducks/utils';
 
 function aktivitetvisningHeader(valgtAktivitet) {
     if (!valgtAktivitet) {
@@ -57,12 +57,9 @@ class AktivitetvisningContainer extends Component {
             valgtAktivitet,
             doHentAktivitet,
             doFjernForrigeAktiveAktivitetId,
-            match,
         } = this.props;
         if (valgtAktivitet) {
             doHentAktivitet(valgtAktivitet.id);
-        } else {
-            doHentAktivitet(match.params.id);
         }
         doFjernForrigeAktiveAktivitetId();
     }
@@ -84,7 +81,6 @@ class AktivitetvisningContainer extends Component {
                 contentLabel="aktivitetsvisning-modal"
                 contentClass="aktivitetsvisning"
                 avhengigheter={avhengigheter}
-                minstEnAvhengighet
                 header={aktivitetvisningHeader(valgtAktivitet)}
             >
                 <Aktivitetvinsing
@@ -98,11 +94,11 @@ class AktivitetvisningContainer extends Component {
 }
 
 AktivitetvisningContainer.propTypes = {
-    valgtAktivitet: AppPT.aktivitet.isRequired,
+    aktivitetId: PT.string.isRequired,
+    valgtAktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
     tillatEndring: PT.bool.isRequired,
     slettingErTillatt: PT.bool.isRequired,
-    match: PT.object.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
@@ -111,15 +107,11 @@ AktivitetvisningContainer.propTypes = {
 };
 
 AktivitetvisningContainer.defaultProps = {
-    aktiviteter: [],
-    arenaAktiviteter: [],
+    valgtAktivitet: undefined,
 };
 
 const mapStateToProps = (state, props) => {
-    const { match } = props;
-    const { id } = match.params;
-
-    const valgtAktivitet = selectAktivitetMedId(state, id);
+    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
 
     const aktivitetErEtterOppfolgingUtgang = valgtAktivitet
         ? moment(selectOppfolgingUtgang(state)).isAfter(
@@ -136,7 +128,10 @@ const mapStateToProps = (state, props) => {
     return {
         avhengigheter: [
             selectSituasjonStatus(state),
-            selectAktivitetListeStatus(state),
+            // merk at vi egentlig avhenger av både vanlige aktiviteter og arena-aktiviteter
+            // MEN: vi ønsker å rendre med en gang vi har riktig aktivitet tilgjengelig, slik
+            // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena
+            valgtAktivitet ? STATUS.OK : STATUS.PENDING,
         ],
         valgtAktivitet,
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),

@@ -7,6 +7,7 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VilkarInnhold from './vilkar-innhold';
 import GodkjennVilkarForm from './godkjenn-vilkar-form';
 import { hr as HiddenIfHr } from '../../felles-komponenter/hidden-if/hidden-if';
+import { HiddenIfVarslingMedLenke } from '../varslinger/varsel-alertstriper';
 
 class GodkjennVilkar extends Component {
     componentDidMount() {
@@ -20,6 +21,13 @@ class GodkjennVilkar extends Component {
 
         return (
             <div className="vilkar">
+                <HiddenIfVarslingMedLenke
+                    hidden={visVilkar}
+                    className="onboarding__info fullbredde"
+                    tekstId="informasjon-mer"
+                    lenkeTekstId="informasjon-mer-lenke"
+                    href="/informasjon"
+                />
                 <VilkarInnhold vilkar={vilkar} hidden={!visVilkar} />
                 <HiddenIfHr className="vilkar__delelinje" hidden={!visVilkar} />
                 <Innholdslaster avhengigheter={[vilkarReducer]}>

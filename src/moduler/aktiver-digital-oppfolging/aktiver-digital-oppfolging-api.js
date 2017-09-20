@@ -1,4 +1,4 @@
-import { SITUASJON_PROXY_BASE_URL } from '~config'; // eslint-disable-line
+import { SITUASJON_PROXY_BASE_URL } from '../../environment';
 import { postAsJson } from '../../ducks/utils';
 
 // eslint-disable-next-line import/prefer-default-export
