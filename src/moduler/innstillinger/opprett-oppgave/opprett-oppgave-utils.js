@@ -1,12 +1,16 @@
 import React from 'react';
 import queryString from 'query-string';
-import { maksLengde } from '../../../felles-komponenter/skjema/validering';
+import {maksLengde, pakrevd} from '../../../felles-komponenter/skjema/validering';
 
 export const BESKRIVELSE_MAKS_LENGDE = 500;
 
 export const begrensetBeskrivelseLengde = maksLengde(
-    'instillinger.feilmelding.opprett-oppgave.beskrivelse.for.lang',
+    'feilmelding.opprett-oppgave.beskrivelse.for.lang',
     BESKRIVELSE_MAKS_LENGDE
+);
+
+export const beskrivelsePakrevd = pakrevd(
+    'feilmelding.opprett-oppgave.beskrivelse.pakrevd'
 );
 
 export const OPPFOLGING = 'OPPFOLGING';

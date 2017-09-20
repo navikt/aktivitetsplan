@@ -9,6 +9,7 @@ import { OPPRETT_OPPGAVE_FORM } from './opprett-oppgave';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import {
     begrensetBeskrivelseLengde,
+    beskrivelsePakrevd,
     defaultPrioritet,
     erValgtEnhetLikInnloggetEnhet,
     oppgavetyper,
@@ -89,7 +90,7 @@ const OpprettOppgaveReduxForm = validForm({
         <FormattedMessage id="mote-aktivitet-form.feiloppsummering-tittel" />
     ),
     validate: {
-        beskrivelse: [begrensetBeskrivelseLengde],
+        beskrivelse: [beskrivelsePakrevd,begrensetBeskrivelseLengde],
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
         periodeValidering: [],
