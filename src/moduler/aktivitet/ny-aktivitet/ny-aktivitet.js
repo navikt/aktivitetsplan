@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
-import Bilde from 'nav-react-design/dist/bilde';
+import Bilde from '../../../felles-komponenter/bilde/bilde';
 import { hentIdentitet } from '../../identitet/identitet-duck';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import leggTilAktivitetSvg from '../../../img/legg-til-aktivitet-illustrasjon.svg';

@@ -68,11 +68,11 @@ Header.propTypes = {
 };
 
 function VenstreKolonne({
-                            valgtDialog,
-                            harNyDialog,
-                            harNyDialogEllerValgtDialog,
-                            historiskVisning,
-                        }) {
+    valgtDialog,
+    harNyDialog,
+    harNyDialogEllerValgtDialog,
+    historiskVisning,
+}) {
     const className = classNames(
         'dialog-modal__kolonne',
         'dialog-modal__kolonne--dialoger',
@@ -116,12 +116,12 @@ VenstreKolonne.defaultProps = {
 };
 
 function HoyreKolonne({
-                          valgtDialog,
-                          harValgtDialog,
-                          harNyDialog,
-                          harNyDialogEllerValgtDialog,
-                          valgtAktivitetId,
-                      }) {
+    valgtDialog,
+    harValgtDialog,
+    harNyDialog,
+    harNyDialogEllerValgtDialog,
+    valgtAktivitetId,
+}) {
     function apneAktivitet() {
         history.push(aktivitetRoute(valgtAktivitetId));
     }
