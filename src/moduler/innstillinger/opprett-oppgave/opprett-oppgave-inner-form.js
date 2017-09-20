@@ -5,7 +5,7 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Select from '../../../felles-komponenter/skjema/input/select';
 import {
     BESKRIVELSE_MAKS_LENGDE,
-    enhetlisteToKeyValueMap,
+    enhetlisteToKeyValueMap, erValgtEnhetLikInnloggetEnhet,
     filtrerBasertPaTema,
     oppgavetyper,
     optionsFromObjectWithIntl,
@@ -16,7 +16,6 @@ import PeriodeValidering from '../../../felles-komponenter/skjema/datovelger/per
 import Datovelger from '../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 import { STATUS } from '../../../ducks/utils';
-import { getEnhetFromUrl } from '../../../bootstrap/fnr-util';
 import * as AppPT from '../../../proptypes';
 
 const HiddenIf = ({ hidden, children }) => {
@@ -38,8 +37,6 @@ export function OpprettOppgaveInnerForm({
     const veilederliste = Array.isArray(veiledere.data)
         ? veiledere.data
         : [];
-
-    const innloggetEnhet = getEnhetFromUrl();
 
     return (
         <HiddenIf
@@ -98,10 +95,7 @@ export function OpprettOppgaveInnerForm({
                         {optionsFromObjectWithIntl(enhetlisteToKeyValueMap(enhetliste))}
                     </Select>
                     <HiddenIf
-                        hidden={
-                            innloggetEnhet !== valgtEnhet ||
-                            !innloggetEnhet
-                        }
+                        hidden={!erValgtEnhetLikInnloggetEnhet(valgtEnhet)}
                     >
                         <Innholdslaster
                             avhengigheter={[veiledere]}

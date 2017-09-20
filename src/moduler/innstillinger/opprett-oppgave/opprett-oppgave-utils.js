@@ -1,4 +1,5 @@
 import React from 'react';
+import queryString from 'query-string';
 import { maksLengde } from '../../../felles-komponenter/skjema/validering';
 
 export const BESKRIVELSE_MAKS_LENGDE = 500;
@@ -92,4 +93,11 @@ export function optionsFromObjectWithIntl(keyValueMap, intl) {
             }
         </option>
     );
+}
+
+export const getEnhetFromUrl = () => queryString.parse(location.search).enhet;
+
+export function erValgtEnhetLikInnloggetEnhet(valgtEnhet) {
+    const innloggetEnhet = getEnhetFromUrl();
+    return innloggetEnhet === valgtEnhet && !!innloggetEnhet;
 }

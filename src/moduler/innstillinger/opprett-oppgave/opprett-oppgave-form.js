@@ -10,6 +10,7 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import {
     begrensetBeskrivelseLengde,
     defaultPrioritet,
+    erValgtEnhetLikInnloggetEnhet,
     oppgavetyper,
     optionsFromObjectWithIntl,
     temaValg,
@@ -131,6 +132,7 @@ const mapDispatchToProps = dispatch => ({
                 fnr: getFodselsnummer(),
                 fraDato: toLocalDateTime(props.fraDato),
                 tilDato: toLocalDateTime(props.tilDato),
+                veileder: erValgtEnhetLikInnloggetEnhet(props.enhet) ? props.veileder : null,
             })
         )
             .then(() => {

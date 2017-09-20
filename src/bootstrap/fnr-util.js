@@ -1,5 +1,4 @@
 import { CONTEXT_PATH } from '~config'; // eslint-disable-line
-import queryString from 'query-string';
 
 // eslint-disable-next-line import/prefer-default-export
 export const getFodselsnummer = () => {
@@ -7,4 +6,3 @@ export const getFodselsnummer = () => {
     return fnrMatch && fnrMatch[1];
 };
 
-export const getEnhetFromUrl = () => queryString.parse(location.search).enhet;
