@@ -46,22 +46,9 @@ export const LAGRE_BEGRUNNELSE = 'form/lagre-begrunnelse';
 export const SLETT_BEGRUNNELSE = 'form/slett-begrunnelse';
 export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
 
-export const HENT_BEHANDLENDE_ENHETER_OK =
-    'instillinger/hent-behandlende-enheter/OK';
-export const HENT_BEHANDLENDE_ENHETER_FEILET =
-    'instillinger/hent-behandlende-enheter/FEILET';
-export const HENT_BEHANDLENDE_ENHETER_PENDING =
-    'instillinger/hent-behandlende-enheter/PENDING';
-export const HENT_BEHANDLENDE_ENHETER_RESET =
-    'instillinger/hent-behandlende-enheter/RESET';
-
 export const HENT_VEILEDERE_OK = 'instillinger/hent-veiledere/OK';
 export const HENT_VEILEDERE_FEILET = 'instillinger/hent-veiledere/FEILET';
 export const HENT_VEILEDERE_PENDING = 'instillinger/hent-veiledere/PENDING';
-
-export const OPPRETT_OPPGAVE_OK = 'instillinger/opprett-oppgave/OK';
-export const OPPRETT_OPPGAVE_FEILET = 'instillinger/opprett-oppgave/FEILET';
-export const OPPRETT_OPPGAVE_PENDING = 'instillinger/opprett-oppgave/PENDING';
 
 const initalState = {
     data: [],
@@ -77,15 +64,6 @@ const initalState = {
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
-        case HENT_BEHANDLENDE_ENHETER_OK:
-            return {
-                ...state,
-                status: STATUS.OK,
-                behandlendeEnheter: {
-                    enheter: action.data,
-                    status: STATUS.OK,
-                },
-            };
         case HENT_VEILEDERE_OK:
             return {
                 ...state,
@@ -107,14 +85,6 @@ export default function reducer(state = initalState, action) {
                 status: STATUS.OK,
                 data: action.data,
             };
-        case HENT_BEHANDLENDE_ENHETER_FEILET:
-            return {
-                ...state,
-                behandlendeEnheter: {
-                    enheter: action.data,
-                    status: STATUS.ERROR,
-                },
-            };
         case HENT_VEILEDERE_FEILET:
             return {
                 ...state,
@@ -135,11 +105,6 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 status: STATUS.ERROR,
                 feil: action.data,
-            };
-        case HENT_BEHANDLENDE_ENHETER_PENDING:
-            return {
-                ...state,
-                status: STATUS.PENDING,
             };
         case HENT_VEILEDERE_PENDING:
             return {
@@ -170,13 +135,6 @@ export default function reducer(state = initalState, action) {
             };
         case SLETT_BEGRUNNELSE:
             return { ...state, begrunnelse: null };
-        case HENT_BEHANDLENDE_ENHETER_RESET:
-            return {
-                ...state,
-                behandlendeEnheter: {
-                    status: STATUS.NOT_STARTED,
-                },
-            };
         default:
             return state;
     }
@@ -309,24 +267,10 @@ export function lagreBegrunnelse(begrunnelse) {
     };
 }
 
-export function hentBehandlendeEnheter(tema, fnr) {
-    return doThenDispatch(() => Api.hentBehandlendeEnheter(tema, fnr), {
-        OK: HENT_BEHANDLENDE_ENHETER_OK,
-        FEILET: HENT_BEHANDLENDE_ENHETER_FEILET,
-        PENDING: HENT_BEHANDLENDE_ENHETER_PENDING,
-    });
-}
-
 export function hentVeiledereForEnhet(enhetid) {
     return doThenDispatch(() => Api.hentVeieldereForEnhet(enhetid), {
         OK: HENT_VEILEDERE_OK,
         FEILET: HENT_VEILEDERE_FEILET,
         PENDING: HENT_VEILEDERE_PENDING,
     });
-}
-
-export function resetEnheter() {
-    return {
-        type: HENT_BEHANDLENDE_ENHETER_RESET,
-    };
 }

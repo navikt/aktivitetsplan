@@ -24,17 +24,13 @@ import PeriodeValidering from '../../../felles-komponenter/skjema/datovelger/per
 import Datovelger from '../../../felles-komponenter/skjema/datovelger/datovelger';
 import { pakrevd } from '../../../felles-komponenter/skjema/validering';
 import { STATUS } from '../../../ducks/utils';
-import {
-    hentBehandlendeEnheter,
-    hentVeiledereForEnhet,
-    resetEnheter,
-} from '../innstillinger-reducer';
+import { hentVeiledereForEnhet } from '../innstillinger-reducer';
 import { getEnhetFromUrl, getFodselsnummer } from '../../../bootstrap/fnr-util';
 import Select from '../../../felles-komponenter/skjema/input/select';
 import { opprettOppgaveForBruker } from './opprett-oppgave-reducer';
 import history from '../../../history';
 import * as AppPT from '../../../proptypes';
-import { selectBehandlendeEnheter } from '../innstillinger-selector';
+import { hentBehandlendeEnheter, resetEnheter, selectBehandlendeEnheter } from './hent-behandlende-enheter-reducer';
 
 const pakrevdFraDato = pakrevd(
     'opprett-oppgave-form.feilmelding.paakrevd-fradato'
@@ -83,10 +79,10 @@ function OpprettOppgaveForm({
     tema,
     intl,
 }) {
-    const enhetliste =
-        behandlendeEnheter.enheter && Array.isArray(behandlendeEnheter.enheter)
-            ? behandlendeEnheter.enheter
+    const enhetliste = Array.isArray(behandlendeEnheter.data)
+            ? behandlendeEnheter.data
             : [];
+
     const veilederliste = veiledere.veilederListe
         ? veiledere.veilederListe
         : [];

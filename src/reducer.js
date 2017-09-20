@@ -25,6 +25,7 @@ import arbeidslisteReducer from './moduler/arbeidsliste/arbeidsliste-reducer';
 import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
 import brukerReducer from './moduler/bruker/bruker-duck';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
+import behandlendeEnheterReducer from './moduler/innstillinger/opprett-oppgave/hent-behandlende-enheter-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -53,6 +54,7 @@ const combinedReducers = combineReducers({
         referat: referatReducer,
         opprettOppgave: oppgaveReducer,
         bruker: brukerReducer,
+        behandlendeEnheter: behandlendeEnheterReducer,
     }),
     view: combineReducers({
         endreAktivitet: endreAktivitetReducer,
