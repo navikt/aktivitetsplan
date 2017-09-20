@@ -22,6 +22,7 @@ import {
     selectInnstillingerStatus,
     selectKanStarteOppfolging,
 } from '../innstillinger-selector';
+import { selectMotpartReducer } from '../../motpart/motpart-selector';
 
 class Prosesser extends Component {
     componentDidMount() {
@@ -86,7 +87,7 @@ const mapStateToProps = state => ({
     erUnderOppfolging: selectErUnderOppfolging(state),
     erManuell: selectErManuell(state),
     kanStarteOppfolging: selectKanStarteOppfolging(state),
-    motpart: state.data.motpart,
+    motpart: selectMotpartReducer(state),
 });
 
 const mapDispatchToProps = dispatch => ({
