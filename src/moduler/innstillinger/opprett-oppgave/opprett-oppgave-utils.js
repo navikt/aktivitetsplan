@@ -53,16 +53,16 @@ export function veilederlisteToKeyValueMap(veilederliste) {
         {}
     );
 }
-export function deleteKeyFromObject(object, deleteKey) {
+export function slettFeltFraObjekt(object, deleteKey) {
     return Object.entries(object)
         .filter(([key, _]) => key !== deleteKey)
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 }
 
-export function filtrerBasertPaaTema(typer, tema) {
+export function filtrerBasertPaTema(typer, tema) {
     switch (tema) {
         case OPPFOLGING: {
-            return deleteKeyFromObject(typer, VURDER_KONSEKVENS_FOR_YTELSE);
+            return slettFeltFraObjekt(typer, VURDER_KONSEKVENS_FOR_YTELSE);
         }
         default:
             return oppgavetyper;

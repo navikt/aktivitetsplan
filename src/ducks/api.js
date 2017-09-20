@@ -93,26 +93,6 @@ export function hentVeieldereForEnhet(enhetid) {
     return fetchToJson(`${VEILEDER_BASE_URL}/enhet/${enhetid}/veiledere`);
 }
 
-export function opprettOppgaveForBruker({
-    fnr,
-    tema,
-    type,
-    prioritet,
-    fraDato,
-    tilDato,
-    enhet,
-    veileder,
-    beskrivelse,
-}) {
-    return postAsJson(`${OPPGAVE_BASE_URL}/oppgave`, {
-        fnr,
-        fagomradeKode: tema,
-        oppgavetypeKode: type,
-        prioritetKode: prioritet,
-        beskrivelse,
-        aktivFra: fraDato,
-        aktivTil: tilDato,
-        ansvarligEnhetId: enhet,
-        ansvarligId: veileder,
-    });
+export function opprettOppgaveForBruker(body) {
+    return postAsJson(`${OPPGAVE_BASE_URL}/oppgave`, body);
 }

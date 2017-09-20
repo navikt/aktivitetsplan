@@ -4,7 +4,11 @@ import { intlShape } from 'react-intl';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Select from '../../../felles-komponenter/skjema/input/select';
 import {
-    BESKRIVELSE_MAKS_LENGDE, enhetlisteToKeyValueMap, filtrerBasertPaaTema, oppgavetyper, optionsFromObjectWithIntl,
+    BESKRIVELSE_MAKS_LENGDE,
+    enhetlisteToKeyValueMap,
+    filtrerBasertPaTema,
+    oppgavetyper,
+    optionsFromObjectWithIntl,
     prioritet,
     veilederlisteToKeyValueMap,
 } from './opprett-oppgave-utils';
@@ -52,7 +56,7 @@ export function OpprettOppgaveInnerForm({
                     bredde="fullbredde"
                     noBlankOption
                 >
-                    {optionsFromObjectWithIntl(filtrerBasertPaaTema(oppgavetyper, tema), intl)}
+                    {optionsFromObjectWithIntl(filtrerBasertPaTema(oppgavetyper, tema), intl)}
                 </Select>
 
                 <Select
