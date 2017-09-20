@@ -3,6 +3,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { BrowserRouter } from 'react-router-dom';
+import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import {
     shallowWithIntl,
     mountWithIntl,
@@ -11,11 +12,7 @@ import {
     AktiverDigitalOppfolgingPure,
     AktiverDigitalOppfolgingVarsel,
 } from './aktiver-digital-oppfolging';
-import {
-    Varsling,
-    VarslingMedLenke,
-    AdvarselVarsling,
-} from '../varslinger/varsel-alertstriper';
+import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 
 describe('aktiver-digital-oppfolging', () => {
     describe('komponent', () => {
@@ -40,7 +37,7 @@ describe('aktiver-digital-oppfolging', () => {
                 />
             );
 
-            expect(wrapper).to.have.descendants(Varsling);
+            expect(wrapper).to.have.descendants(AlertStripeInfoSolid);
         });
 
         it('Skal vise varsling med lenke når bruker er reservert i KRR', () => {
@@ -53,7 +50,7 @@ describe('aktiver-digital-oppfolging', () => {
                 </BrowserRouter>
             );
 
-            expect(wrapper).to.have.descendants(VarslingMedLenke);
+            expect(wrapper).to.have.descendants(AlertStripeInfoSolid);
         });
 
         it('Skal vise advarsel hvis sett digital feiler', () => {

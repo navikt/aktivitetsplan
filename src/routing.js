@@ -12,6 +12,7 @@ import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
+import InformasjonRoutes from './moduler/informasjon/informasjon-routes';
 import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
@@ -74,6 +75,10 @@ const Routing = ({ location }) =>
         <Route
             path={getPathWithBase('/utskrift')}
             component={AktivitetsplanPrint}
+        />
+        <Route
+            path={getPathWithBase('/informasjon')}
+            component={InformasjonRoutes}
         />
     </Switch>;
 
