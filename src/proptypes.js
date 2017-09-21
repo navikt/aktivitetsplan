@@ -121,6 +121,14 @@ export const motpart = PT.shape({
     }),
 });
 
+export const bruker = PT.shape({
+    fodselsnummer: PT.string,
+    fornavn: PT.string,
+    mellomnavn: PT.string,
+    etternavn: PT.string,
+    sammensattNavn: PT.string,
+});
+
 export const oppfolgingsPeriode = PT.shape({
     id: PT.string,
     fra: PT.string,

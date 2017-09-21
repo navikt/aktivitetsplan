@@ -9,7 +9,10 @@ import { formaterDato } from '../../utils';
 import StoreForbokstaver from '../../felles-komponenter/utils/store-forbokstaver';
 import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
-import { selectAktivitetListe } from '../aktivitet/aktivitetliste-selector';
+import {
+    selectAktivitetListe,
+    selectAktivitetListeStatus,
+} from '../aktivitet/aktivitetliste-selector';
 import logoPng from './logo.png';
 import StatusGruppe from './statusgruppe';
 import PrintMelding from './printmelding';
@@ -43,9 +46,14 @@ const StatusGruppePT = PT.shape({
     aktiviteter: AppPT.aktiviteter,
 });
 
-function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
-    const { fodselsnummer, fornavn, etternavn, bostedsadresse } = bruker;
-    const gateadresse = bostedsadresse.strukturertAdresse.Gateadresse;
+function Adresse({ bruker }) {
+    const { bostedsadresse } = bruker;
+    const strukturertAdresse =
+        bostedsadresse && bostedsadresse.strukturertAdresse;
+    const gateadresse = strukturertAdresse && strukturertAdresse.Gateadresse;
+    if (!gateadresse) {
+        return <div />;
+    }
     const {
         gatenavn,
         poststed,
@@ -53,6 +61,22 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
         husnummer,
         postnummer,
     } = gateadresse;
+    return (
+        <div>
+            <StoreForbokstaver tag="div">
+                {`${gatenavn} ${husnummer} ${husbokstav || ''}`}
+            </StoreForbokstaver>
+            <StoreForbokstaver tag="div">{`${postnummer} ${poststed}`}</StoreForbokstaver>
+        </div>
+    );
+}
+
+Adresse.propTypes = {
+    bruker: AppPT.bruker.isRequired,
+};
+
+function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
+    const { fodselsnummer, fornavn, etternavn } = bruker;
     const { overskrift, beskrivelse } = printMelding;
 
     const statusGrupper = grupper.map(gruppe =>
@@ -72,10 +96,7 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                         <StoreForbokstaver>
                             {`${fornavn} ${etternavn}`}
                         </StoreForbokstaver>
-                        <StoreForbokstaver tag="div">
-                            {`${gatenavn} ${husnummer} ${husbokstav || ''}`}
-                        </StoreForbokstaver>
-                        <StoreForbokstaver tag="div">{`${postnummer} ${poststed}`}</StoreForbokstaver>
+                        <Adresse bruker={bruker} />
                         <div>
                             {fodselsnummer}
                         </div>
@@ -129,7 +150,7 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
 
 Print.propTypes = {
     grupper: PT.arrayOf(StatusGruppePT),
-    bruker: AppPT.motpart.isRequired,
+    bruker: AppPT.bruker.isRequired,
     printMelding: AppPT.printMelding.isRequired,
     mittMal: AppPT.mal,
     erVeileder: PT.bool,
@@ -281,7 +302,11 @@ const mapStateToProps = state => {
     const erVeileder = selectErVeileder(state);
 
     return {
-        avhengigheter: [selectMalStatus(state), selectSituasjonStatus(state)],
+        avhengigheter: [
+            selectMalStatus(state),
+            selectSituasjonStatus(state),
+            selectAktivitetListeStatus(state),
+        ],
         aktiviteter,
         sorterteStatusGrupper,
         visPrintMeldingForm: selectSkalVisePrintMeldingForm(state),

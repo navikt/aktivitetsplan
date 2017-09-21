@@ -6,15 +6,35 @@
         <script>
             window.features = {
                 timeoutbox: true,
-                navigasjonslinjemeny: true
             };
 
-            window.aktivitetsplan = {
-                veilarbdialog_url: '/veilarbdialog/api',
-                veilarbaktivitet_url: '/veilarbaktivitet/api',
-                veilarbsituasjon_url: '/veilarbsituasjon/api',
+
+            // switch denne for å få innside/utside
+            if (true) {
+                // innside
+                window.aktivitetsplan = {
+                    veilarbdialog_url: '/veilarbdialog/api',
+                    veilarbaktivitet_url: '/veilarbaktivitet/api',
+                    veilarbsituasjon_url: '/veilarbsituasjon/api',
+                };
+
+                Object.assign(window.features, {
+                    navigasjonslinjemeny: true
+                });
+
+            } else {
+                // utside
+                window.aktivitetsplan = {
+                    veilarbdialog_url: '/veilarbdialogproxy/api',
+                    veilarbaktivitet_url: '/veilarbaktivitetproxy/api',
+                    veilarbsituasjon_url: '/veilarbsituasjonproxy/api',
+                };
+            }
+
+            Object.assign(window.aktivitetsplan, {
                 onboarding_video_url: 'https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E',
-            };
+            });
+
 
         </script>
         <link type="text/css" rel="stylesheet" href="/aktivitetsplanfelles/example-dev.css">

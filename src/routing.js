@@ -13,7 +13,7 @@ import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
 import InformasjonRoutes from './moduler/informasjon/informasjon-routes';
-import { VIS_INNSTILLINGER, FNR_I_URL } from '~config'; // eslint-disable-line
+import { FNR_I_URL } from '~config'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
 export const endreAktivitetRoute = aktivitetId =>

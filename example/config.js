@@ -10,10 +10,12 @@ export const TILLAT_SLETTING = true;
 
 export const TILLAT_SET_AVTALT = true;
 
-export const VIS_INNSTILLINGER = true;
-
 export const VIS_SIDEBANNER = true;
 
+// innside
 export const FNR_I_URL = true;
-
 export const EKSEMPEL_FNR = '10108000398';
+
+// utside
+// export const FNR_I_URL = false;
+// export const EKSEMPEL_FNR = '';
