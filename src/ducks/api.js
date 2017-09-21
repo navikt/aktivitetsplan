@@ -3,12 +3,15 @@ import {
     PERSON_BASE_URL,
     VEILEDER_BASE_URL,
     PORTEFOLJE_BASE_URL,
-    OPPGAVE_BASE_URL,
 } from '~config'; // eslint-disable-line
 
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
-import { DIALOG_BASE_URL, AKTIVITET_PROXY_BASE_URL } from '../environment';
+import {
+    DIALOG_BASE_URL,
+    AKTIVITET_PROXY_BASE_URL,
+    OPPGAVE_BASE_URL,
+} from '../environment';
 
 export function hentLedetekster() {
     return fetchToJson(`${API_BASE_URL}/tekster`);
@@ -84,8 +87,8 @@ export function slettArbeidsliste(fnr) {
     });
 }
 
-export function hentBehandlendeEnheter(tema, fnr) {
-    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter/?fnr=${fnr}&tema=${tema}`);
+export function hentBehandlendeEnheter(tema) {
+    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter/?&tema=${tema}`);
 }
 
 export function hentVeieldereForEnhet(enhetid) {

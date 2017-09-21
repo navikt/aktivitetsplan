@@ -24,6 +24,7 @@ window.aktivitetsplan = {
     veilarbdialog_url: '/veilarbdialog/api',
     veilarbaktivitet_url: '/veilarbaktivitet/api',
     veilarbsituasjon_url: '/veilarbsituasjon/api',
+    veilarboppgave_url: '/veilarboppgave/api',
     onboarding_video_url:
         'https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E',
 };

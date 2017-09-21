@@ -1,10 +1,10 @@
 /* eslint-env browser */
 import React, { Component } from 'react';
 import PT from 'prop-types';
+import moment from 'moment';
 import { FormattedDate, injectIntl, intlShape } from 'react-intl';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
-import { erGyldigDato, erGyldigDatoformat } from '../../../utils';
 
 const localeUtils = {
     ...MomentLocaleUtils,
@@ -100,27 +100,15 @@ class DayPickerComponent extends Component {
     }
 
     getDateFromValue() {
-        const { input } = this.props;
-        const v = input.value;
-        if (!erGyldigDatoformat(v) || !erGyldigDato(v)) {
-            return undefined;
-        }
-        const d = input.value.split('.');
-        return new Date(`${d[2]}-${d[1]}-${d[0]}`);
+        const dato = moment(this.props.input.value);
+        return dato.isValid() ? dato.toDate() : new Date();
     }
 
     getInitialMonth() {
-        const s = this.getDateFromValue();
-        if (s) {
-            return s;
-        }
-        return this.props.senesteTom || new Date();
+        return this.getDateFromValue() || this.props.senesteTom || new Date();
     }
 
     selectedDays(day) {
-        if (!this.getDateFromValue()) {
-            return false;
-        }
         return DateUtils.isSameDay(this.getDateFromValue(), day);
     }
 

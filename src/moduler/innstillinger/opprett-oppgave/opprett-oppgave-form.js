@@ -67,7 +67,7 @@ function OpprettOppgaveForm({
                         labelId="innstillinger.modal.opprett-oppgave.tema.tittel"
                         bredde="fullbredde"
                         onChange={v => {
-                            hentEnheter(v.target.value, getFodselsnummer());
+                            hentEnheter(v.target.value);
                         }}
                     >
                         {optionsFromObjectWithIntl(temaValg, intl)}
@@ -154,8 +154,8 @@ const mapDispatchToProps = dispatch => ({
                 history.push('innstillinger/feilkvittering');
             });
     },
-    hentEnheter: (tema, fnr) =>
-        dispatch(hentBehandlendeEnheter(tema, fnr)).catch(() => {
+    hentEnheter: tema =>
+        dispatch(hentBehandlendeEnheter(tema)).catch(() => {
             history.push('innstillinger/feilkvittering');
         }),
     hentVeiledere: enhetId => dispatch(hentVeiledereForEnhet(enhetId)),

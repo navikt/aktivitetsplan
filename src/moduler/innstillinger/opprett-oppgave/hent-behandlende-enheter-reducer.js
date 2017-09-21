@@ -39,8 +39,8 @@ export default function reducer(state = initalState, action) {
 }
 
 //  Action creator
-export function hentBehandlendeEnheter(tema, fnr) {
-    return doThenDispatch(() => Api.hentBehandlendeEnheter(tema, fnr), {
+export function hentBehandlendeEnheter(tema) {
+    return doThenDispatch(() => Api.hentBehandlendeEnheter(tema), {
         OK: HENT_BEHANDLENDE_ENHETER_OK,
         FEILET: HENT_BEHANDLENDE_ENHETER_FEILET,
         PENDING: HENT_BEHANDLENDE_ENHETER_PENDING,

@@ -109,7 +109,7 @@ class IJobbAktivitetForm extends Component {
                         feltNavn="periodeValidering"
                         fraDato={currentFraDato}
                         tilDato={currentTilDato}
-                        errorMessageId="datepicker.feilmelding.stilling.fradato-etter-frist"
+                        errorMessageId="datepicker.feilmelding.ijobb.fradato-etter-frist"
                     >
                         <div className="dato-container">
                             <Datovelger
