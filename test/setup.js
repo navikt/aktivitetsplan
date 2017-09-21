@@ -27,6 +27,7 @@ window.aktivitetsplan = {
     veilarboppgave_url: '/veilarboppgave/api',
     onboarding_video_url:
         'https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E',
+    sone: 'FSS',
 };
 
 propagateToGlobal(window);
