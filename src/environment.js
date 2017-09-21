@@ -18,5 +18,8 @@ export const SITUASJON_PROXY_BASE_URL = getEnviromentVariable(
 export const ONBOARDING_VIDEO_URL = getEnviromentVariable(
     'onboarding_video_url'
 );
+export const OPPGAVE_BASE_URL = getEnviromentVariable(
+    'veilarboppgave_url'
+);
 
 export default {};
