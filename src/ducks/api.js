@@ -83,8 +83,8 @@ export function slettArbeidsliste(fnr) {
     });
 }
 
-export function hentBehandlendeEnheter(tema, fnr) {
-    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter/?fnr=${fnr}&tema=${tema}`);
+export function hentBehandlendeEnheter(tema) {
+    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter/?&tema=${tema}`);
 }
 
 export function hentVeieldereForEnhet(enhetid) {
