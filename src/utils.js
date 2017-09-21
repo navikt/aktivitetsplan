@@ -101,33 +101,6 @@ export const erGyldigFormattertDato = formattertDato => {
     );
 };
 
-export const erGyldigDatoformat = dato => {
-    if (!dato) {
-        return false;
-    }
-    const datoString = '' + dato;
-    const utenPunktum = datoString.replace(/\./g, '');
-    let medPrefix = `${parseInt(utenPunktum, 10)}`;
-    if (datoString.startsWith('0')) {
-        medPrefix = `0${medPrefix}`;
-    }
-    if (datoString.trim().length !== 10) {
-        return false;
-    }
-    if (medPrefix.length !== 8) {
-        return false;
-    }
-    return true;
-};
-
-export const erGyldigDato = dato => {
-    const re = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
-    if (!re.test(dato)) {
-        return false;
-    }
-    return erGyldigDatoformat(dato);
-};
-
 const erLocalDate = dato => {
     return dato.year && dato.monthValue && dato.dayOfMonth;
 };
@@ -257,7 +230,7 @@ function pad(number) {
 
 export function toISOLocalDate(date) {
     const dateObject = typeof date === 'string' ? new Date(date) : date;
-    return `${dateObject.getUTCFullYear()}-${pad(dateObject.getUTCMonth() + 1)}-${pad(
-        dateObject.getUTCDate()
-    )}`;
+    return `${dateObject.getUTCFullYear()}-${pad(
+        dateObject.getUTCMonth() + 1
+    )}-${pad(dateObject.getUTCDate())}`;
 }

@@ -19,10 +19,20 @@ import {
 import { pakrevd } from '../../../felles-komponenter/skjema/validering';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import Select from '../../../felles-komponenter/skjema/input/select';
-import { opprettOppgaveForBruker, selectOpprettOppgave } from './opprett-oppgave-reducer';
+import {
+    opprettOppgaveForBruker,
+    selectOpprettOppgave,
+} from './opprett-oppgave-reducer';
 import history from '../../../history';
-import { hentBehandlendeEnheter, resetEnheter, selectBehandlendeEnheter } from './hent-behandlende-enheter-reducer';
-import { hentVeiledereForEnhet, selectOppgaveVeiledere } from './hent-veieldere-for-oppgave-reducer';
+import {
+    hentBehandlendeEnheter,
+    resetEnheter,
+    selectBehandlendeEnheter,
+} from './hent-behandlende-enheter-reducer';
+import {
+    hentVeiledereForEnhet,
+    selectOppgaveVeiledere,
+} from './hent-veieldere-for-oppgave-reducer';
 import { OpprettOppgaveInnerForm } from './opprett-oppgave-inner-form';
 import { toISOLocalDate } from '../../../utils';
 
@@ -62,10 +72,7 @@ function OpprettOppgaveForm({
                     >
                         {optionsFromObjectWithIntl(temaValg, intl)}
                     </Select>
-                        <OpprettOppgaveInnerForm
-                            intl={intl}
-                            {...rest}
-                        />
+                    <OpprettOppgaveInnerForm intl={intl} {...rest} />
                 </div>
             </Innholdslaster>
         </form>
@@ -133,7 +140,9 @@ const mapDispatchToProps = dispatch => ({
                 fnr: getFodselsnummer(),
                 fraDato: toISOLocalDate(props.fraDato),
                 tilDato: toISOLocalDate(props.tilDato),
-                veileder: erValgtEnhetLikInnloggetEnhet(props.enhet) ? props.veileder : null,
+                veileder: erValgtEnhetLikInnloggetEnhet(props.enhet)
+                    ? props.veileder
+                    : null,
             })
         )
             .then(() => {

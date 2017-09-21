@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -79,6 +79,7 @@ PrintMeldingForm.propTypes = {
     errorSummary: PT.node.isRequired,
     lagrer: PT.bool,
     bruker: AppPT.motpart.isRequired,
+    intl: intlShape.isRequired,
 };
 
 PrintMeldingForm.defaultProps = {
@@ -96,11 +97,16 @@ const PrintMeldingReduxForm = validForm({
     },
 })(PrintMeldingForm);
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
     const printMelding = hentPrintMelding(state);
     const bruker = selectBruker(state);
     return {
-        initialValues: printMelding,
+        initialValues: {
+            beskrivelse: props.intl.formatMessage({
+                id: 'print-melding-form.beskrivelse-standardtekst',
+            }),
+            ...printMelding,
+        },
         bruker,
     };
 };
@@ -111,6 +117,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    PrintMeldingReduxForm
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(PrintMeldingReduxForm)
 );
