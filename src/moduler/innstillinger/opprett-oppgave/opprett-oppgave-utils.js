@@ -1,6 +1,9 @@
 import React from 'react';
 import queryString from 'query-string';
-import { maksLengde, pakrevd } from '../../../felles-komponenter/skjema/validering';
+import {
+    maksLengde,
+    pakrevd,
+} from '../../../felles-komponenter/skjema/validering';
 
 export const BESKRIVELSE_MAKS_LENGDE = 500;
 
@@ -35,7 +38,8 @@ export const defaultPrioritet = 'NORMAL';
 export const VURDER_KONSEKVENS_FOR_YTELSE = 'VURDER_KONSEKVENS_FOR_YTELSE';
 
 export const oppgavetyper = {
-    VURDER_KONSEKVENS_FOR_YTELSE: 'opprett-oppgave.form.type.vurder.konsekvens.for.ytelse',
+    VURDER_KONSEKVENS_FOR_YTELSE:
+        'opprett-oppgave.form.type.vurder.konsekvens.for.ytelse',
     VURDER_HENVENDELSE: 'opprett-oppgave.form.type.vurder.henvendelse',
 };
 
@@ -77,13 +81,11 @@ export function filtrerBasertPaTema(typer, tema) {
 export function optionsFromObjectWithIntl(keyValueMap, intl) {
     return Object.entries(keyValueMap).map(([key, value]) =>
         <option value={key} key={key}>
-            {intl ?
-                intl.formatMessage({
-                    id: value,
-                })
-                :
-                value
-            }
+            {intl
+                ? intl.formatMessage({
+                      id: value,
+                  })
+                : value}
         </option>
     );
 }

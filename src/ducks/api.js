@@ -7,7 +7,11 @@ import {
 
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
-import { DIALOG_BASE_URL, AKTIVITET_PROXY_BASE_URL, OPPGAVE_BASE_URL } from '../environment';
+import {
+    DIALOG_BASE_URL,
+    AKTIVITET_PROXY_BASE_URL,
+    OPPGAVE_BASE_URL,
+} from '../environment';
 
 export function hentLedetekster() {
     return fetchToJson(`${API_BASE_URL}/tekster`);

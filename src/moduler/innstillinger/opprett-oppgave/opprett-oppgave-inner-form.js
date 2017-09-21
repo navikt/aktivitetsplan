@@ -5,7 +5,8 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Select from '../../../felles-komponenter/skjema/input/select';
 import {
     BESKRIVELSE_MAKS_LENGDE,
-    enhetlisteToKeyValueMap, erValgtEnhetLikInnloggetEnhet,
+    enhetlisteToKeyValueMap,
+    erValgtEnhetLikInnloggetEnhet,
     filtrerBasertPaTema,
     oppgavetyper,
     optionsFromObjectWithIntl,
@@ -26,100 +27,106 @@ const HiddenIf = ({ hidden, children }) => {
 };
 
 export function OpprettOppgaveInnerForm({
-                                            behandlendeEnheter, tema, intl, currentFraDato,
-                                            currentTilDato, hentVeiledere, valgtEnhet,
-                                            veiledere,
-                                        }) {
+    behandlendeEnheter,
+    tema,
+    intl,
+    currentFraDato,
+    currentTilDato,
+    hentVeiledere,
+    valgtEnhet,
+    veiledere,
+}) {
     const enhetliste = Array.isArray(behandlendeEnheter.data)
         ? behandlendeEnheter.data
         : [];
 
-    const veilederliste = Array.isArray(veiledere.data)
-        ? veiledere.data
-        : [];
+    const veilederliste = Array.isArray(veiledere.data) ? veiledere.data : [];
 
     return (
         <HiddenIf
-            hidden={
-                behandlendeEnheter.status === STATUS.NOT_STARTED ||
-                !tema
-            }
+            hidden={behandlendeEnheter.status === STATUS.NOT_STARTED || !tema}
         >
-        <Innholdslaster avhengigheter={[behandlendeEnheter]}>
-            <div>
-                <Select
-                    feltNavn="type"
-                    labelId="innstillinger.modal.opprett-oppgave.type.tittel"
-                    bredde="fullbredde"
-                    noBlankOption
-                >
-                    {optionsFromObjectWithIntl(filtrerBasertPaTema(oppgavetyper, tema), intl)}
-                </Select>
-
-                <Select
-                    feltNavn="prioritet"
-                    labelId="innstillinger.modal.opprett-oppgave.prioritet.tittel"
-                    bredde="fullbredde"
-                    noBlankOption
-                >
-                    {optionsFromObjectWithIntl(prioritet, intl)}
-                </Select>
-                <PeriodeValidering
-                    feltNavn="periodeValidering"
-                    fraDato={currentFraDato}
-                    tilDato={currentTilDato}
-                    errorMessageId="datepicker.feilmelding.egen.fradato-etter-frist"
-                >
-                    <div className="dato-container">
-                        <Datovelger
-                            feltNavn="fraDato"
-                            labelId="opprett-oppgave-form.label.fra-dato"
-                            senesteTom={currentTilDato}
-                        />
-                        <Datovelger
-                            feltNavn="tilDato"
-                            labelId="opprett-oppgave-form.label.til-dato"
-                            tidligsteFom={currentFraDato}
-                        />
-                    </div>
-                </PeriodeValidering>
-                <div className="enhet-veileder-container">
+            <Innholdslaster avhengigheter={[behandlendeEnheter]}>
+                <div>
                     <Select
-                        blankOptionParameters={{ hidden: true }}
-                        feltNavn="enhet"
-                        labelId="innstillinger.modal.opprett-oppgave.enhet.tittel"
-                        bredde="m"
-                        onChange={v =>
-                            hentVeiledere(v.target.value)}
+                        feltNavn="type"
+                        labelId="innstillinger.modal.opprett-oppgave.type.tittel"
+                        bredde="fullbredde"
+                        noBlankOption
                     >
-                        {optionsFromObjectWithIntl(enhetlisteToKeyValueMap(enhetliste))}
+                        {optionsFromObjectWithIntl(
+                            filtrerBasertPaTema(oppgavetyper, tema),
+                            intl
+                        )}
                     </Select>
-                    <HiddenIf
-                        hidden={!erValgtEnhetLikInnloggetEnhet(valgtEnhet)}
-                    >
-                        <Innholdslaster
-                            avhengigheter={[veiledere]}
-                        >
-                            <Select
-                                feltNavn="veileder"
-                                bredde="m"
-                                labelId="innstillinger.modal.opprett-oppgave.veileder.tittel"
-                            >
-                                {optionsFromObjectWithIntl(veilederlisteToKeyValueMap(veilederliste))}
-                            </Select>
-                        </Innholdslaster>
-                    </HiddenIf>
-                </div>
-                <Textarea
-                    labelId="innstillinger.modal.opprett-oppgave.label.beskrivelse"
-                    feltNavn="beskrivelse"
-                    maxLength={BESKRIVELSE_MAKS_LENGDE}
-                />
-            </div>
-        </Innholdslaster>
-    </HiddenIf>);
-}
 
+                    <Select
+                        feltNavn="prioritet"
+                        labelId="innstillinger.modal.opprett-oppgave.prioritet.tittel"
+                        bredde="fullbredde"
+                        noBlankOption
+                    >
+                        {optionsFromObjectWithIntl(prioritet, intl)}
+                    </Select>
+                    <PeriodeValidering
+                        feltNavn="periodeValidering"
+                        fraDato={currentFraDato}
+                        tilDato={currentTilDato}
+                        errorMessageId="datepicker.feilmelding.egen.fradato-etter-frist"
+                    >
+                        <div className="dato-container">
+                            <Datovelger
+                                feltNavn="fraDato"
+                                labelId="opprett-oppgave-form.label.fra-dato"
+                                senesteTom={currentTilDato}
+                            />
+                            <Datovelger
+                                feltNavn="tilDato"
+                                labelId="opprett-oppgave-form.label.til-dato"
+                                tidligsteFom={currentFraDato}
+                            />
+                        </div>
+                    </PeriodeValidering>
+                    <div className="enhet-veileder-container">
+                        <Select
+                            blankOptionParameters={{ hidden: true }}
+                            feltNavn="enhet"
+                            labelId="innstillinger.modal.opprett-oppgave.enhet.tittel"
+                            bredde="m"
+                            onChange={v => hentVeiledere(v.target.value)}
+                        >
+                            {optionsFromObjectWithIntl(
+                                enhetlisteToKeyValueMap(enhetliste)
+                            )}
+                        </Select>
+                        <HiddenIf
+                            hidden={!erValgtEnhetLikInnloggetEnhet(valgtEnhet)}
+                        >
+                            <Innholdslaster avhengigheter={[veiledere]}>
+                                <Select
+                                    feltNavn="veileder"
+                                    bredde="m"
+                                    labelId="innstillinger.modal.opprett-oppgave.veileder.tittel"
+                                >
+                                    {optionsFromObjectWithIntl(
+                                        veilederlisteToKeyValueMap(
+                                            veilederliste
+                                        )
+                                    )}
+                                </Select>
+                            </Innholdslaster>
+                        </HiddenIf>
+                    </div>
+                    <Textarea
+                        labelId="innstillinger.modal.opprett-oppgave.label.beskrivelse"
+                        feltNavn="beskrivelse"
+                        maxLength={BESKRIVELSE_MAKS_LENGDE}
+                    />
+                </div>
+            </Innholdslaster>
+        </HiddenIf>
+    );
+}
 
 OpprettOppgaveInnerForm.propTypes = {
     behandlendeEnheter: AppPT.behandlendeEnheter.isRequired,

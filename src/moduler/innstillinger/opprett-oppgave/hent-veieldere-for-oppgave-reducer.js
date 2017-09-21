@@ -45,4 +45,3 @@ export function hentVeiledereForEnhet(enhetid) {
         PENDING: HENT_VEILEDERE_PENDING,
     });
 }
-
