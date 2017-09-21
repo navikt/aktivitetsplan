@@ -97,16 +97,18 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                             {`${fornavn} ${etternavn}`}
                         </StoreForbokstaver>
                         <Adresse bruker={bruker} />
-                        <div>
-                            {fodselsnummer}
-                        </div>
                     </HiddenIfDiv>
                 </div>
                 <div className="printmodal-body__dato">
                     <HiddenIfDiv hidden={!erVeileder}>
                         {bruker.behandlendeEnhet.navn}
                     </HiddenIfDiv>
-                    Dato: {formaterDato(Date.now())}
+                    <FormattedMessage id="print.modal.utskrift.dato" />
+                    {` ${formaterDato(Date.now())}`}
+                    <div>
+                        <FormattedMessage id="print.modal.utskrift.fnr" />
+                        {` ${fodselsnummer}`}
+                    </div>
                 </div>
             </div>
             <Systemtittel
@@ -246,23 +248,26 @@ AktivitetsplanPrintModal.propTypes = {
     printMelding: AppPT.printMelding,
     grupper: PT.arrayOf(StatusGruppe),
     bruker: AppPT.motpart.isRequired,
-    visPrintMeldingForm: PT.bool.isRequired,
-    kanHaPrintMelding: PT.bool.isRequired,
+    visPrintMeldingForm: PT.bool,
+    kanHaPrintMelding: PT.bool,
     fortsettRedigerPrintMelding: PT.func.isRequired,
     aktiviteter: AppPT.aktiviteter.isRequired,
     sorterteStatusGrupper: PT.arrayOf(StatusGruppePT),
     doHentMal: PT.func.isRequired,
     doHentMalListe: PT.func.isRequired,
     mittMal: AppPT.mal,
-    erVeileder: PT.bool.isRequired,
+    erVeileder: PT.bool,
 };
 
 AktivitetsplanPrintModal.defaultProps = {
     avhengigheter: [],
     printMelding: undefined,
     grupper: undefined,
+    visPrintMeldingForm: undefined,
+    kanHaPrintMelding: undefined,
     sorterteStatusGrupper: undefined,
     mittMal: null,
+    erVeileder: undefined,
 };
 
 const statusRekkefolge = [

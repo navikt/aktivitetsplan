@@ -5,4 +5,3 @@ export const getFodselsnummer = () => {
     const fnrMatch = window.location.pathname.match(`${CONTEXT_PATH}/(\\d*)`);
     return fnrMatch && fnrMatch[1];
 };
-

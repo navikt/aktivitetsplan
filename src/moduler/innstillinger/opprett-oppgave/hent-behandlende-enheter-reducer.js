@@ -2,10 +2,11 @@
 import { doThenDispatch, STATUS } from '../../../ducks/utils';
 import * as Api from '../../../ducks/api';
 
-
 export const HENT_BEHANDLENDE_ENHETER_OK = '/hent-behandlende-enheter/OK';
-export const HENT_BEHANDLENDE_ENHETER_FEILET = '/hent-behandlende-enheter/FEILET';
-export const HENT_BEHANDLENDE_ENHETER_PENDING = '/hent-behandlende-enheter/PENDING';
+export const HENT_BEHANDLENDE_ENHETER_FEILET =
+    '/hent-behandlende-enheter/FEILET';
+export const HENT_BEHANDLENDE_ENHETER_PENDING =
+    '/hent-behandlende-enheter/PENDING';
 export const HENT_BEHANDLENDE_ENHETER_RESET = 'hent-behandlende-enheter/RESET';
 
 const initalState = {

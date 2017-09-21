@@ -257,7 +257,7 @@ function pad(number) {
 
 export function toISOLocalDate(date) {
     const dateObject = typeof date === 'string' ? new Date(date) : date;
-    return `${dateObject.getUTCFullYear()}-${pad(dateObject.getUTCMonth() + 1)}-${pad(
-        dateObject.getUTCDate()
-    )}`;
+    return `${dateObject.getUTCFullYear()}-${pad(
+        dateObject.getUTCMonth() + 1
+    )}-${pad(dateObject.getUTCDate())}`;
 }

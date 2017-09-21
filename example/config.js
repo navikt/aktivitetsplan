@@ -17,5 +17,7 @@ export const FNR_I_URL = true;
 export const EKSEMPEL_FNR = '10108000398';
 
 // utside
-// export const FNR_I_URL = false;
-// export const EKSEMPEL_FNR = '';
+/*
+export const FNR_I_URL = false;
+export const EKSEMPEL_FNR = '';
+*/

@@ -7,7 +7,7 @@
     }
 
     .printmodal-header__tilbakeknapp + .printmodal-header__printknapp {
-        margin-left: 182px;
+        margin-left: ~'calc(50% - 120px)';
     }
 
     .printmodal-header__tilbakeknapp[hidden] + .printmodal-header__printknapp {
@@ -19,7 +19,7 @@
     }
 
     .printmodal-body__utskrift-overskrift {
-        margin: 0 3rem;
+        margin: 0 3rem 1rem;
     }
 
     .printmodal-body {
@@ -65,8 +65,14 @@
             }
         }
 
+        .etikett {
+            background: none;
+            color: @navMorkGra;
+            border: 1pt solid @navGra40;
+        }
+
         .printmodal-body__aktivitetvisning-etikett {
-            margin-bottom: 1rem;
+            margin: 0.25rem 0 1rem;
         }
 
         .aktivitetsdetaljer {
@@ -139,10 +145,6 @@
     body,
     .aktivitetsplanfs {
         font-size: 16pt;
-    }
-
-    .etikett {
-        padding-left: 0;
     }
 
     .ReactModal {

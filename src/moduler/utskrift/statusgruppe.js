@@ -6,6 +6,26 @@ import Aktivitetsdetaljer from '../aktivitet/visning/hjelpekomponenter/aktivitet
 import * as AppPT from '../../proptypes';
 import AktivitetEtikettGruppe from '../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 
+function AktivitetReferat({ aktivitet }) {
+    const { referat, erReferatPublisert } = aktivitet;
+    const harReferat = !!referat;
+    const visReferat =
+        erReferatPublisert && (harReferat || !aktivitet.historisk);
+
+    if (visReferat) {
+        return (
+            <div>
+                {referat}
+            </div>
+        );
+    }
+    return <div />;
+}
+
+AktivitetReferat.propTypes = {
+    aktivitet: AppPT.aktivitet.isRequired,
+};
+
 function AktivitetPrint({ aktivitet }) {
     const { id, type, tittel } = aktivitet;
     return (
@@ -26,6 +46,7 @@ function AktivitetPrint({ aktivitet }) {
             />
 
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
+            <AktivitetReferat aktivitet={aktivitet} />
         </div>
     );
 }
@@ -38,7 +59,10 @@ function StatusGruppe({ gruppe }) {
     const { status, aktiviteter } = gruppe;
     return (
         <section className="printmodal-body__statusgruppe">
-            <Undertittel tag="h1">
+            <Undertittel
+                tag="h1"
+                className="printmodal-body__statusgruppe-overskrift"
+            >
                 <FormattedMessage
                     id={`aktivitetstavle.print.${status.toLowerCase()}`}
                 />
