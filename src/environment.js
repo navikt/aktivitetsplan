@@ -23,8 +23,7 @@ export const ONBOARDING_VIDEO_URL = getEnviromentVariable(
     'onboarding_video_url'
 );
 
-export const OPPGAVE_BASE_URL = sone === FSS ? getEnviromentVariable(
-    'veilarboppgave_url'
-) : null;
+export const OPPGAVE_BASE_URL =
+    sone === FSS ? getEnviromentVariable('veilarboppgave_url') : null;
 
 export default {};
