@@ -21,7 +21,7 @@ function VarslingBoks({ avhengigheter, visVarselOmManglendeDialog, ...rest }) {
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
             <Innholdslaster avhengigheter={avhengigheter}>
                 <HiddenIfDiv {...rest} hidden={!visVarselOmManglendeDialog}>
-                    <AlertStripeAdvarsel className="varsling-boks">
+                    <AlertStripeAdvarsel className="varsling-boks" role="alert">
                         <FormattedMessage id="mote.varsling.ingen-dialog" />
                     </AlertStripeAdvarsel>
                 </HiddenIfDiv>
