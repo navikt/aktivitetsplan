@@ -10,7 +10,7 @@ import versjonskonfliktSvg from './versjonskonflikt.svg';
 function Versjonskonflikt({ tilbake, slett }) {
     return (
         <article className="versjonskonflikt">
-            <Bilde src={versjonskonfliktSvg} alt="Dekorativ illustrajon" />
+            <Bilde src={versjonskonfliktSvg} alt="" />
             <Undertittel>
                 <FormattedMessage id="versjonskonflikt.overskrift" />
             </Undertittel>

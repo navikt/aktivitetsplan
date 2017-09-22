@@ -30,7 +30,7 @@ function VilkarInnhold({ vilkar, underOppfolging, privatModusStatus }) {
     return (
         <Innholdslaster avhengigheter={[privatModusStatus]}>
             <div className="vilkar__innhold">
-                <Bilde src={vilkarSvg} alt="Dekorativ illustrajon" />
+                <Bilde src={vilkarSvg} alt="" />
                 <Innholdstittel className="vilkar__tittel">
                     <FormattedMessage id={tittelTekst} />
                 </Innholdstittel>
