@@ -33,7 +33,6 @@ import {
 } from '../../aktivitet-util';
 import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 
-
 function RedigerLink({ id, felt }) {
     return (
         <Link to={endreAktivitetRoute(id)}>

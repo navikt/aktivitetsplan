@@ -2,13 +2,11 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import Bilde from '../../../../felles-komponenter/bilde/bilde';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import hengelasSVG from '../../../../img/hengelas.svg';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
@@ -31,17 +29,6 @@ import {
 } from '../../../../constant';
 import { selectAktivitetListeStatus } from '../../aktivitetliste-selector';
 
-const leggTilHengelas = (tekst, altTekst) =>
-    <span>
-        {tekst}
-        &nbsp;&nbsp;
-        <Bilde
-            style={{ position: 'absolute' }}
-            src={hengelasSVG}
-            alt={altTekst}
-        />
-    </span>;
-
 const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
 const MAKS_LENGDE = 255;
 
@@ -58,13 +45,11 @@ function AktivitetStatusForm(props) {
         handleSubmit,
         aktivitetDataStatus,
         valgtAktivitetStatus,
-        intl,
         disableStatusEndring,
         errorSummary,
         manglerReferatPublisering,
     } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
-    const hengelasAlt = intl.formatMessage({ id: 'hengelas-icon-alt' });
     const visAdvarsel = statusKreverBegrunnelse(valgtAktivitetStatus);
 
     return (
@@ -102,10 +87,9 @@ function AktivitetStatusForm(props) {
                 <div className="col col-xs-6">
                     <Radio
                         feltNavn="aktivitetstatus"
-                        label={leggTilHengelas(
-                            <FormattedMessage id="aktivitetstavle.fullfoert" />,
-                            hengelasAlt
-                        )}
+                        label={
+                            <FormattedMessage id="aktivitetstavle.fullfoert" />
+                        }
                         value={STATUS_FULLFOERT}
                         id={`id--${STATUS_FULLFOERT}`}
                         disabled={
@@ -116,10 +100,9 @@ function AktivitetStatusForm(props) {
                     />
                     <Radio
                         feltNavn="aktivitetstatus"
-                        label={leggTilHengelas(
-                            <FormattedMessage id="aktivitetstavle.avbrutt" />,
-                            hengelasAlt
-                        )}
+                        label={
+                            <FormattedMessage id="aktivitetstavle.avbrutt" />
+                        }
                         value={STATUS_AVBRUTT}
                         id={`id--${STATUS_AVBRUTT}`}
                         disabled={
@@ -136,7 +119,10 @@ function AktivitetStatusForm(props) {
             </HiddenIfAlertStripeInfo>
 
             <VisibleIfDiv className="status-alert" visible={dirty}>
-                <VisibleAlertStripeSuksessSolid visible={visAdvarsel}>
+                <VisibleAlertStripeSuksessSolid
+                    visible={visAdvarsel}
+                    role="alert"
+                >
                     <FormattedMessage id="aktivitetstatus.oppdater-status-advarsel" />
                 </VisibleAlertStripeSuksessSolid>
 
@@ -217,12 +203,11 @@ AktivitetStatusForm.defaultProps = {
 AktivitetStatusForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
     manglerReferatPublisering: PT.bool.isRequired,
-    handleSubmit: PT.func,
-    dirty: PT.bool,
+    handleSubmit: PT.func.isRequired,
+    dirty: PT.bool.isRequired,
     valgtAktivitetStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
     aktivitetDataStatus: PT.string,
-    intl: intlShape,
     errorSummary: PT.node.isRequired,
 };
 
@@ -257,6 +242,4 @@ const mapDispatchToProps = () => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(OppdaterReduxForm)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);
