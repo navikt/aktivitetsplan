@@ -31,6 +31,8 @@ import {
     formatterKlokkeslett,
     formatterVarighet,
 } from '../../aktivitet-util';
+import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
+
 
 function RedigerLink({ id, felt }) {
     return (
@@ -75,6 +77,8 @@ Informasjonsfelt.defaultProps = {
     fullbredde: false,
     formattertTekst: false,
 };
+
+const HiddenIfInformasjonsfelt = HiddenIfHOC(Informasjonsfelt);
 
 function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const {
@@ -323,12 +327,13 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 tittel={tilDatoTekst(aktivitetstype)}
                 innhold={tilDato}
             />,
-            <Informasjonsfelt
+            <HiddenIfInformasjonsfelt
                 key="antallStillinger"
                 tittel={
                     <FormattedMessage id="aktivitetdetaljer.antall-label" />
                 }
                 innhold={`${antallStillingerSokes}`}
+                hidden={antallStillingerSokes < 1}
             />,
             oppfolgingSection,
         ];
