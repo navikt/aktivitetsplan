@@ -90,7 +90,7 @@ export function OpprettOppgaveInnerForm({
                     <div className="enhet-veileder-container">
                         <Select
                             blankOptionParameters={{ hidden: true }}
-                            feltNavn="enhet"
+                            feltNavn="enhetId"
                             labelId="innstillinger.modal.opprett-oppgave.enhet.tittel"
                             bredde="m"
                             onChange={v => hentVeiledere(v.target.value)}
@@ -104,7 +104,7 @@ export function OpprettOppgaveInnerForm({
                         >
                             <Innholdslaster avhengigheter={[veiledere]}>
                                 <Select
-                                    feltNavn="veileder"
+                                    feltNavn="veilederId"
                                     bredde="m"
                                     labelId="innstillinger.modal.opprett-oppgave.veileder.tittel"
                                 >

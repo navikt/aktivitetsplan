@@ -12,6 +12,7 @@ import {
     beskrivelsePakrevd,
     defaultPrioritet,
     erValgtEnhetLikInnloggetEnhet,
+    getEnhetFromUrl,
     oppgavetyper,
     optionsFromObjectWithIntl,
     temaValg,
@@ -102,7 +103,7 @@ const OpprettOppgaveReduxForm = validForm({
         tilDato: [pakrevdTilDato],
         periodeValidering: [],
         type: [pakrevdType],
-        enhet: [pakrevdEnhet],
+        enhetId: [pakrevdEnhet],
     },
 })(OpprettOppgaveForm);
 
@@ -116,7 +117,7 @@ const mapStateToProps = (state, props) => {
             prioritet: defaultPrioritet,
             type: Object.keys(oppgavetyper)[0],
             beskrivelse: null,
-            veileder: null,
+            veilederId: null,
         },
         veiledere: selectOppgaveVeiledere(state),
         currentFraDato: selector(state, 'fraDato')
@@ -125,7 +126,7 @@ const mapStateToProps = (state, props) => {
         currentTilDato: selector(state, 'tilDato')
             ? moment(selector(state, 'tilDato')).toDate()
             : undefined,
-        valgtEnhet: selector(state, 'enhet'),
+        valgtEnhet: selector(state, 'enhetId'),
         tema: selector(state, 'tema'),
         opprettOppgave: selectOpprettOppgave(state),
         behandlendeEnheter: selectBehandlendeEnheter(state),
@@ -138,10 +139,11 @@ const mapDispatchToProps = dispatch => ({
             opprettOppgaveForBruker({
                 ...props,
                 fnr: getFodselsnummer(),
+                avsenderenhetId: getEnhetFromUrl(),
                 fraDato: toISOLocalDate(props.fraDato),
                 tilDato: toISOLocalDate(props.tilDato),
-                veileder: erValgtEnhetLikInnloggetEnhet(props.enhet)
-                    ? props.veileder
+                veilederId: erValgtEnhetLikInnloggetEnhet(props.enhetId)
+                    ? props.veilederId
                     : null,
             })
         )

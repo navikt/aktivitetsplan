@@ -83,6 +83,8 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
         <StatusGruppe gruppe={gruppe} key={gruppe.status} />
     );
 
+    const behandlendeEnhet = bruker.behandlendeEnhet;
+    const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
     return (
         <div className="printmodal-body">
             <Bilde
@@ -101,14 +103,14 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                 </div>
                 <div className="printmodal-body__dato">
                     <HiddenIfDiv hidden={!erVeileder}>
-                        {bruker.behandlendeEnhet.navn}
+                        {enhetsNavn}
                     </HiddenIfDiv>
                     <FormattedMessage id="print.modal.utskrift.dato" />
                     {` ${formaterDato(Date.now())}`}
-                    <div>
+                    <HiddenIfDiv hidden={!fodselsnummer}>
                         <FormattedMessage id="print.modal.utskrift.fnr" />
                         {` ${fodselsnummer}`}
-                    </div>
+                    </HiddenIfDiv>
                 </div>
             </div>
             <Systemtittel

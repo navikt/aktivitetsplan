@@ -25,7 +25,7 @@ class NyAktivitet extends Component {
                     <Bilde
                         className="ny-aktivitet-modal__bilde"
                         src={leggTilAktivitetSvg}
-                        alt="Dekorativ illustrajon"
+                        alt=""
                     />
                     <Innholdstittel className="ny-aktivitet-tittel">
                         <FormattedMessage id="ny-aktivitet-modal.tittel" />
