@@ -107,10 +107,9 @@ class Navigasjonslinje extends Component {
             antallUlesteDialoger,
             arbeidslisteReducer,
             harVeilederTilgangTilArbeidsliste,
-            vilkarMaBesvares,
-            erBruker,
             disabled,
             kanHaDialog,
+            ikkeTilgangTilVilkar,
         } = this.props;
         return (
             <nav className="navigasjonslinje">
@@ -131,7 +130,7 @@ class Navigasjonslinje extends Component {
                 <NavigasjonsElement
                     sti="/vilkar"
                     tekstId="navigasjon.vilkar"
-                    disabled={disabled || (!erBruker && vilkarMaBesvares)}
+                    disabled={disabled || ikkeTilgangTilVilkar}
                 />
                 <NavigasjonsElement
                     sti="/informasjon"
@@ -172,8 +171,7 @@ Navigasjonslinje.propTypes = {
     kanHaDialog: PT.bool.isRequired,
     harVeilederTilgangTilArbeidsliste: PT.bool,
     disabled: PT.bool.isRequired,
-    vilkarMaBesvares: PT.bool.isRequired,
-    erBruker: PT.bool.isRequired,
+    ikkeTilgangTilVilkar: PT.bool.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
@@ -186,6 +184,10 @@ const mapStateToProps = state => {
     const stateData = state.data;
     const dialog = selectDialoger(state);
     const underOppfolging = selectErUnderOppfolging(state);
+    const erIkkeBruker = !selectErBruker(state);
+
+    // det gir ikke mening å vise vilkår til ikke-brukere (typisk veiledere) hvis bruker ikke har besvart vilkår for inneværende periode
+    const ikkeTilgangTilVilkar = (erIkkeBruker && selectVilkarMaBesvares(state) && selectViserInneverendePeriode(state));
     return {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)
@@ -194,11 +196,10 @@ const mapStateToProps = state => {
         underOppfolging: stateData.situasjon.data.underOppfolging,
         arbeidslisteReducer: selectArbeidslisteReducer(state),
         harVeilederTilgangTilArbeidsliste: selectHarVeilederTilgang(state),
-        vilkarMaBesvares: selectVilkarMaBesvares(state),
-        erBruker: selectErBruker(state),
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
+        ikkeTilgangTilVilkar,
         disabled:
-            !selectErBruker(state) &&
+            erIkkeBruker &&
             underOppfolging === false &&
             selectViserInneverendePeriode(state),
     };
