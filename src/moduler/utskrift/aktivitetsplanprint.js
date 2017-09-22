@@ -107,10 +107,10 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                     </HiddenIfDiv>
                     <FormattedMessage id="print.modal.utskrift.dato" />
                     {` ${formaterDato(Date.now())}`}
-                    <div>
+                    <HiddenIfDiv hidden={!fodselsnummer}>
                         <FormattedMessage id="print.modal.utskrift.fnr" />
                         {` ${fodselsnummer}`}
-                    </div>
+                    </HiddenIfDiv>
                 </div>
             </div>
             <Systemtittel
