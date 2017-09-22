@@ -38,9 +38,9 @@ export const defaultPrioritet = 'NORM';
 export const VURDER_KONSEKVENS_FOR_YTELSE = 'VURDER_KONSEKVENS_FOR_YTELSE';
 
 export const oppgavetyper = {
+    VURDER_HENVENDELSE: 'opprett-oppgave.form.type.vurder.henvendelse',
     VURDER_KONSEKVENS_FOR_YTELSE:
         'opprett-oppgave.form.type.vurder.konsekvens.for.ytelse',
-    VURDER_HENVENDELSE: 'opprett-oppgave.form.type.vurder.henvendelse',
 };
 
 export function enhetlisteToKeyValueMap(enhetliste) {
