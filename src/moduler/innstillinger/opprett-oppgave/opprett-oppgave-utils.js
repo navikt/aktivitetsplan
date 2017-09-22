@@ -33,7 +33,7 @@ export const prioritet = {
     HOY: 'opprett-oppgave.form.prioritet.hoy',
 };
 
-export const defaultPrioritet = 'NORMAL';
+export const defaultPrioritet = 'NORM';
 
 export const VURDER_KONSEKVENS_FOR_YTELSE = 'VURDER_KONSEKVENS_FOR_YTELSE';
 
