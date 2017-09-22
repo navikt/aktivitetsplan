@@ -5,7 +5,7 @@ import {
     pakrevd,
 } from '../../../felles-komponenter/skjema/validering';
 
-export const BESKRIVELSE_MAKS_LENGDE = 500;
+export const BESKRIVELSE_MAKS_LENGDE = 250;
 
 export const begrensetBeskrivelseLengde = maksLengde(
     'feilmelding.opprett-oppgave.beskrivelse.for.lang',
@@ -29,7 +29,7 @@ export const temaValg = {
 
 export const prioritet = {
     LAV: 'opprett-oppgave.form.prioritet.lav',
-    NORMAL: 'opprett-oppgave.form.prioritet.normal',
+    NORM: 'opprett-oppgave.form.prioritet.normal',
     HOY: 'opprett-oppgave.form.prioritet.hoy',
 };
 
