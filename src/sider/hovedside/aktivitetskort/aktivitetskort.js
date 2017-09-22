@@ -84,7 +84,12 @@ class AktivitetsKort extends Component {
                             : tittel}
                     </Element>
                     <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
-                    <VisibleIfDiv visible={type === SOKEAVTALE_AKTIVITET_TYPE}>
+                    <VisibleIfDiv
+                        visible={
+                            type === SOKEAVTALE_AKTIVITET_TYPE &&
+                            antallStillingerSokes > 0
+                        }
+                    >
                         <FormattedMessage id="aktivitetskort.antall-label" />
                         &nbsp;
                         {antallStillingerSokes}
