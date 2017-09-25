@@ -199,7 +199,8 @@ function DialogModal(props) {
     const className = classNames('dialog-modal', {
         'dialog-modal--full-bredde': props.harNyDialogEllerValgtDialog,
         'dialog-modal--filter-hoyde': props.visEskaleringsFilter,
-        'dialog-modal--historisk-visning': props.anpassaStorrelseHistoriskVisning,
+        'dialog-modal--historisk-visning':
+            props.anpassaStorrelseHistoriskVisning,
     });
 
     return (
@@ -252,8 +253,10 @@ const mapStateToProps = (state, props) => {
         motpart,
         navnPaMotpart: motpart.data.navn,
         historiskVisning,
-        visEskaleringsFilter: selectVisEskaleringsFilter(state) && !historiskVisning,
-        anpassaStorrelseHistoriskVisning : historiskVisning && selectAnpassaDialogModalHistoriskVisning(state),
+        visEskaleringsFilter:
+            selectVisEskaleringsFilter(state) && !historiskVisning,
+        anpassaStorrelseHistoriskVisning:
+            historiskVisning && selectAnpassaDialogModalHistoriskVisning(state),
     };
 };
 
