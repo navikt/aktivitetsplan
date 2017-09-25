@@ -1,12 +1,12 @@
 import { aggregerStatus } from '../../ducks/utils';
-import {selectErBruker, selectErVeileder} from "../identitet/identitet-selector";
-import {selectErUnderOppfolging} from "../situasjon/situasjon-selector";
+import {
+    selectErBruker,
+    selectErVeileder,
+} from '../identitet/identitet-selector';
+import { selectErUnderOppfolging } from '../situasjon/situasjon-selector';
 
 export function selectErPrivatModus(state) {
-    return (
-        !selectErUnderOppfolging(state) &&
-        selectErVeileder(state)
-    );
+    return !selectErUnderOppfolging(state) && selectErVeileder(state);
 }
 
 export function selectPrivatModusSlice(state) {
@@ -26,6 +26,6 @@ export function selectPrivatModusStatus(state) {
     return selectPrivatModusSlice(state).status;
 }
 
-export function selectErPrivatBruker(state){
-    return !selectErUnderOppfolging(state) && selectErBruker(state)
+export function selectErPrivatBruker(state) {
+    return !selectErUnderOppfolging(state) && selectErBruker(state);
 }

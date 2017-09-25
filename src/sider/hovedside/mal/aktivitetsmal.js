@@ -29,7 +29,7 @@ import {
     selectMalStatus,
 } from '../../../moduler/mal/mal-selector';
 import { selectViserHistoriskPeriode } from '../../../moduler/filtrering/filter/filter-selector';
-import {selectErPrivatBruker} from "../../../moduler/privat-modus/privat-modus-selector";
+import { selectErPrivatBruker } from '../../../moduler/privat-modus/privat-modus-selector';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 

@@ -11,9 +11,9 @@ import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
-import {selectErPrivatBruker} from "../privat-modus/privat-modus-selector";
-import {selectErUnderOppfolging} from "../situasjon/situasjon-selector";
-import {selectErVeileder} from "../identitet/identitet-selector";
+import { selectErPrivatBruker } from '../privat-modus/privat-modus-selector';
+import { selectErUnderOppfolging } from '../situasjon/situasjon-selector';
+import { selectErVeileder } from '../identitet/identitet-selector';
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
@@ -129,7 +129,7 @@ const mapStateToProps = state => {
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
         situasjon,
         identitet,
-        erPrivatBruker : selectErPrivatBruker(state),
+        erPrivatBruker: selectErPrivatBruker(state),
     };
 };
 
