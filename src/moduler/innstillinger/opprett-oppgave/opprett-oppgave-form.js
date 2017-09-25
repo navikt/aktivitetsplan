@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, change } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment';
 import { OPPRETT_OPPGAVE_FORM } from './opprett-oppgave';
@@ -48,6 +48,22 @@ const pakrevdTilDato = pakrevd(
 const pakrevdType = pakrevd('opprett-oppgave-form.feilmelding.paakrevd-type');
 
 const pakrevdEnhet = pakrevd('opprett-oppgave-form.feilmelding.paakrevd-enhet');
+
+function dispatchVelgEnhetDersomBareEn(dispatch, data) {
+    if (data.length === 1) {
+        const enhetId = data[0].enhetId;
+        return dispatch(change(OPPRETT_OPPGAVE_FORM, 'enhetId', enhetId));
+    }
+    return undefined;
+}
+
+function hentVeiledereDersomSammeEnhet(dispatch, props) {
+    const enhetId = props.payload;
+    if (enhetId && erValgtEnhetLikInnloggetEnhet(enhetId)) {
+        return dispatch(hentVeiledereForEnhet(enhetId));
+    }
+    return undefined;
+}
 
 function OpprettOppgaveForm({
     onSubmit,
@@ -157,9 +173,12 @@ const mapDispatchToProps = dispatch => ({
             });
     },
     hentEnheter: tema =>
-        dispatch(hentBehandlendeEnheter(tema)).catch(() => {
+        dispatch(hentBehandlendeEnheter(tema))
+            .then(({ data }) => dispatchVelgEnhetDersomBareEn(dispatch, data))
+            .then(({ ...props }) => hentVeiledereDersomSammeEnhet(dispatch, props))
+            .catch(() => {
             history.push('innstillinger/feilkvittering');
-        }),
+    }),
     hentVeiledere: enhetId => dispatch(hentVeiledereForEnhet(enhetId)),
 });
 
