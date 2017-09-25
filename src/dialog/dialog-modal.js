@@ -19,7 +19,7 @@ import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
 import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
-import { selectDialogMedId } from '../moduler/dialog/dialog-selector';
+import {selectDialogMedId, selectVisEskaleringsFilter} from '../moduler/dialog/dialog-selector';
 import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
 import DialogFilter from './filter-dialoger';
 
@@ -95,7 +95,7 @@ function VenstreKolonne({
                     <FormattedMessage id="dialog.modal.ny-dialog" />
                 </Knappelenke>
             </HideableSection>
-            <DialogFilter />
+            <DialogFilter/>
             <Dialoger
                 className="dialog-modal__dialoger"
                 valgtDialog={valgtDialog}
@@ -194,6 +194,7 @@ DialogModalContent.defaultProps = {
 function DialogModal(props) {
     const className = classNames('dialog-modal', {
         'dialog-modal--full-bredde': props.harNyDialogEllerValgtDialog,
+        'dialog-modal--filter-hoyde': props.visEskaleringsFilter,
     });
 
     return (
@@ -223,6 +224,7 @@ DialogModal.propTypes = {
     motpart: AppPT.motpart.isRequired,
     navnPaMotpart: PT.string,
     historiskVisning: PT.bool.isRequired,
+    visEskaleringsFilter: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
@@ -244,6 +246,7 @@ const mapStateToProps = (state, props) => {
         motpart,
         navnPaMotpart: motpart.data.navn,
         historiskVisning,
+        visEskaleringsFilter: selectVisEskaleringsFilter(state)
     };
 };
 
