@@ -29,8 +29,7 @@ import {
     selectMalStatus,
 } from '../../../moduler/mal/mal-selector';
 import { selectViserHistoriskPeriode } from '../../../moduler/filtrering/filter/filter-selector';
-import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
-import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import {selectErPrivatBruker} from "../../../moduler/privat-modus/privat-modus-selector";
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 
@@ -177,7 +176,7 @@ const mapStateToProps = state => ({
     malListe: selectMalListe(state),
     malStatus: selectMalStatus(state),
     historiskVisning: selectViserHistoriskPeriode(state),
-    kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
+    kanSletteMal: selectErPrivatBruker(state),
 });
 
 const mapDispatchToProps = dispatch => ({

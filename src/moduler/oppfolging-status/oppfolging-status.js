@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { hentSituasjon } from '../situasjon/situasjon';
 import { hentIdentitet } from '../identitet/identitet-duck';
@@ -11,6 +11,9 @@ import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
+import {selectErPrivatBruker} from "../privat-modus/privat-modus-selector";
+import {selectErUnderOppfolging} from "../situasjon/situasjon-selector";
+import {selectErVeileder} from "../identitet/identitet-selector";
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
@@ -21,7 +24,7 @@ export function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
                 className="feil-container"
                 visible={!visVilkar && brukerHarAvslatt}
             >
-                <FormattedHTMLMessage id="vilkar.info-avslag-vilkar" />
+                <FormattedMessage id="vilkar.info-avslag-vilkar" />
             </Alert>
             <GodkjennVilkar visVilkar={visVilkar} />
         </div>
@@ -119,13 +122,14 @@ const mapStateToProps = state => {
     const identitet = state.data.identitet;
     const situasjonData = situasjon.data;
     return {
-        erVeileder: identitet.data.erVeileder,
-        underOppfolging: situasjonData.underOppfolging,
+        erVeileder: selectErVeileder(state),
+        underOppfolging: selectErUnderOppfolging(state),
         brukerHarAvslatt: situasjon.brukerHarAvslatt,
         manuell: situasjonData.manuell,
         vilkarMaBesvares: situasjonData.vilkarMaBesvares,
         situasjon,
         identitet,
+        erPrivatBruker : selectErPrivatBruker(state),
     };
 };
 
