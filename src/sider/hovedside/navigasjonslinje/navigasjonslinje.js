@@ -187,7 +187,10 @@ const mapStateToProps = state => {
     const erIkkeBruker = !selectErBruker(state);
 
     // det gir ikke mening å vise vilkår til ikke-brukere (typisk veiledere) hvis bruker ikke har besvart vilkår for inneværende periode
-    const ikkeTilgangTilVilkar = (erIkkeBruker && selectVilkarMaBesvares(state) && selectViserInneverendePeriode(state));
+    const ikkeTilgangTilVilkar =
+        erIkkeBruker &&
+        selectVilkarMaBesvares(state) &&
+        selectViserInneverendePeriode(state);
     return {
         antallUlesteDialoger: dialog
             .filter(d => !d.lest)

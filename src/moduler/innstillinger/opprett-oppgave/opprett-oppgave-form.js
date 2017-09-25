@@ -175,10 +175,12 @@ const mapDispatchToProps = dispatch => ({
     hentEnheter: tema =>
         dispatch(hentBehandlendeEnheter(tema))
             .then(({ data }) => dispatchVelgEnhetDersomBareEn(dispatch, data))
-            .then(({ ...props }) => hentVeiledereDersomSammeEnhet(dispatch, props))
+            .then(({ ...props }) =>
+                hentVeiledereDersomSammeEnhet(dispatch, props)
+            )
             .catch(() => {
-            history.push('innstillinger/feilkvittering');
-    }),
+                history.push('innstillinger/feilkvittering');
+            }),
     hentVeiledere: enhetId => dispatch(hentVeiledereForEnhet(enhetId)),
 });
 

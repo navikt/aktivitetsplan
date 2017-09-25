@@ -40,6 +40,7 @@ function StartEskalering({ handleSubmit, innstillingerStatus }) {
                                             formNavn={
                                                 START_ESKALERING_FORM_NAME
                                             }
+                                            maksBeskrivelseLengde={5000}
                                             defaultBegrunnelse={defaultTekst}
                                             onSubmit={form =>
                                                 handleSubmit(form, overskrift)}

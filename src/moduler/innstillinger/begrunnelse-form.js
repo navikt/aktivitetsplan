@@ -1,46 +1,50 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { rules, validForm } from 'react-redux-form-validation';
+import { validForm } from 'react-redux-form-validation';
 import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import { selectInnstillingerBegrunnelse } from './innstillinger-selector';
+import {
+    maksLengde,
+    pakrevd,
+} from '../../felles-komponenter/skjema/validering';
 
 const MAKS_LENGDE = 500;
 
-const forLang = rules.maxLength(
-    MAKS_LENGDE,
-    <FormattedMessage
-        id="avslutt.oppfolging.feilmelding.for-lang"
-        values={{ MAKS_LENGDE }}
-    />
-);
+function forLangBegrunnelse(props, ...rest) {
+    return maksLengde(
+        'avslutt.oppfolging.feilmelding.for-lang',
+        props.maksLengde || MAKS_LENGDE
+    ).apply(this, rest);
+}
 
-const pakrevd = rules.minLength(
-    0,
-    <FormattedMessage id="avslutt.oppfolging.feilmelding.for-kort" />
-);
+const pakrevdBegrunnelse = pakrevd('avslutt.oppfolging.feilmelding.for-kort');
 
-function BegrunnelseForm({ handleSubmit, labelId }) {
+function BegrunnelseForm({ handleSubmit, labelId, maksBeskrivelseLengde }) {
     return (
         <form onSubmit={handleSubmit}>
             <Textarea
                 feltNavn="begrunnelse"
                 labelId={labelId}
-                maxLength={MAKS_LENGDE}
+                maxLength={maksBeskrivelseLengde || MAKS_LENGDE}
             />
         </form>
     );
 }
 
+BegrunnelseForm.defaultProps = {
+    maksBeskrivelseLengde: undefined,
+};
+
 BegrunnelseForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     labelId: PT.string.isRequired,
+    maksBeskrivelseLengde: PT.number,
 };
 
 const BegrunnelseReduxForm = validForm({
     validate: {
-        begrunnelse: [forLang, pakrevd],
+        begrunnelse: [forLangBegrunnelse, pakrevdBegrunnelse],
     },
 })(BegrunnelseForm);
 
