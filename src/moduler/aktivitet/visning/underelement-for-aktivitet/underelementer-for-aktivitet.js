@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import * as AppPT from '../../../../proptypes';
 import { autobind } from '../../../../utils';
 import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
-import TallAlert from '../../../../felles-komponenter/tall-alert';
 import NyHenvendelse from '../../../../dialog/ny-henvendelse';
 import Henvendelser from '../../../../dialog/henvendelser';
 import EndreDialog from '../../../../dialog/endre-dialog';
@@ -91,13 +90,15 @@ class UnderelementerForAktivitet extends Component {
                         onClick={this.toggleDialog}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
-                    </HiddenIfButton>
-
-                    <HiddenIfSpan hidden={!kanSeDialog}>
-                        <TallAlert hidden={antallUlesteHenvendelser <= 0}>
+                        <HiddenIfSpan
+                            hidden={
+                                !kanSeDialog || antallUlesteHenvendelser <= 0
+                            }
+                            className="tall-alert"
+                        >
                             {antallUlesteHenvendelser}
-                        </TallAlert>
-                    </HiddenIfSpan>
+                        </HiddenIfSpan>
+                    </HiddenIfButton>
 
                     <HiddenIfButton
                         hidden={aktivitet.arenaAktivitet}
