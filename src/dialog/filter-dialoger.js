@@ -5,7 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import { ESKALERINGS_FILTER } from '../ducks/dialog';
 import {
-    selectEskaleringsFilter, selectVisEskaleringsFilter,
+    selectEskaleringsFilter,
+    selectVisEskaleringsFilter,
 } from '../moduler/dialog/dialog-selector';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
 
@@ -28,10 +29,13 @@ EskaleringsFilter.propTypes = {
 function DialogFilter({
     erFilterAktivt,
     doToggleEskaleringsFilter,
-    visEskaleringsFilter
+    visEskaleringsFilter,
 }) {
     return (
-        <VisibleIfDiv visible={visEskaleringsFilter} className ="dialog-modal__eskalerings-filter" >
+        <VisibleIfDiv
+            visible={visEskaleringsFilter}
+            className="dialog-modal__eskalerings-filter"
+        >
             <EskaleringsFilter
                 doToggleEskaleringsFilter={doToggleEskaleringsFilter}
                 erFilterAktivt={erFilterAktivt}
@@ -48,7 +52,7 @@ DialogFilter.propTypes = {
 
 const mapStateToProps = state => ({
     erFilterAktivt: selectEskaleringsFilter(state),
-    visEskaleringsFilter : selectVisEskaleringsFilter(state),
+    visEskaleringsFilter: selectVisEskaleringsFilter(state),
 });
 
 const mapDispatchToProps = dispatch => ({

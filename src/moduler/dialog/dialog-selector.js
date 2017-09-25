@@ -1,6 +1,6 @@
 import { dialogFilter } from '../filtrering/filter/filter-utils';
 import { erEskaleringsDialog } from '../../dialog/dialog-utils';
-import {selectErBruker} from "../identitet/identitet-selector";
+import { selectErBruker } from '../identitet/identitet-selector';
 
 function selectDialogSlice(state) {
     return state.data.dialog;
@@ -46,6 +46,6 @@ export function selectHarEskaleringer(state) {
     return selectDialoger(state).filter(erEskaleringsDialog).length > 0;
 }
 
-export function selectVisEskaleringsFilter(state){
+export function selectVisEskaleringsFilter(state) {
     return selectHarEskaleringer(state) && selectErBruker(state);
 }

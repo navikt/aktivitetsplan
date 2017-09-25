@@ -19,7 +19,10 @@ import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
 import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
-import {selectDialogMedId, selectVisEskaleringsFilter} from '../moduler/dialog/dialog-selector';
+import {
+    selectDialogMedId,
+    selectVisEskaleringsFilter,
+} from '../moduler/dialog/dialog-selector';
 import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
 import DialogFilter from './filter-dialoger';
 
@@ -95,7 +98,7 @@ function VenstreKolonne({
                     <FormattedMessage id="dialog.modal.ny-dialog" />
                 </Knappelenke>
             </HideableSection>
-            <DialogFilter/>
+            <DialogFilter />
             <Dialoger
                 className="dialog-modal__dialoger"
                 valgtDialog={valgtDialog}
@@ -246,7 +249,7 @@ const mapStateToProps = (state, props) => {
         motpart,
         navnPaMotpart: motpart.data.navn,
         historiskVisning,
-        visEskaleringsFilter: selectVisEskaleringsFilter(state)
+        visEskaleringsFilter: selectVisEskaleringsFilter(state),
     };
 };
 
