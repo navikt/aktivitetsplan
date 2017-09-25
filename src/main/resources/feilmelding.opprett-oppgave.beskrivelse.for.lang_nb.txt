@@ -1,0 +1,1 @@
+Beskrivelse kan ikke være lengre enn {MAKS_LENGDE} tegn.

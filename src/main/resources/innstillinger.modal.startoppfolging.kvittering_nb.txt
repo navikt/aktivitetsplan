@@ -1,1 +1,1 @@
-{navn} sin oppfølgingsperiode er nå startet
+Oppfølgingsperioden til {navn} er nå startet

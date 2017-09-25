@@ -1,1 +1,1 @@
-Opprett oppgave
+Opprett en ny oppgave for {navn}.

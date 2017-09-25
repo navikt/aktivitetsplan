@@ -1,1 +1,1 @@
-Er du sikker på at du vil starte {navn} sin oppfølgingsperiode
+Er du sikker på at du vil starte en oppfølgingsperiode for {navn}? 
