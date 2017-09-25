@@ -18,7 +18,8 @@ export function sammenlignDialogerForVeileder(a, b) {
     } else if (a.ferdigBehandlet !== b.ferdigBehandlet) {
         return a.ferdigBehandlet ? 1 : -1;
     } else if (a.venterPaSvar !== b.venterPaSvar) {
-        return a.venterPaSvar ? 1 : -1;
+        // F17HL4-68
+        return a.venterPaSvar ? -1 : 1;
     }
     return datoComparator(b.sisteDato, a.sisteDato);
 }
