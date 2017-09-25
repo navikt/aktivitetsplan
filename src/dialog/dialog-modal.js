@@ -20,6 +20,7 @@ import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
 import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
 import {
+    selectAnpassaDialogModalHistoriskVisning,
     selectDialogMedId,
     selectVisEskaleringsFilter,
 } from '../moduler/dialog/dialog-selector';
@@ -198,6 +199,7 @@ function DialogModal(props) {
     const className = classNames('dialog-modal', {
         'dialog-modal--full-bredde': props.harNyDialogEllerValgtDialog,
         'dialog-modal--filter-hoyde': props.visEskaleringsFilter,
+        'dialog-modal--historisk-visning': props.anpassaStorrelseHistoriskVisning,
     });
 
     return (
@@ -228,6 +230,7 @@ DialogModal.propTypes = {
     navnPaMotpart: PT.string,
     historiskVisning: PT.bool.isRequired,
     visEskaleringsFilter: PT.bool.isRequired,
+    anpassaStorrelseHistoriskVisning: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
@@ -249,7 +252,8 @@ const mapStateToProps = (state, props) => {
         motpart,
         navnPaMotpart: motpart.data.navn,
         historiskVisning,
-        visEskaleringsFilter: selectVisEskaleringsFilter(state),
+        visEskaleringsFilter: selectVisEskaleringsFilter(state) && !historiskVisning,
+        anpassaStorrelseHistoriskVisning : historiskVisning && selectAnpassaDialogModalHistoriskVisning(state),
     };
 };
 
