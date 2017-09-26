@@ -18,6 +18,7 @@ import {
 import history from '../../../history';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
+import { compareAktivitet } from '../../../moduler/aktivitet/aktivitet-util';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -104,21 +105,6 @@ function collect(theConnect, monitor) {
     };
 }
 
-function compareAktivitet(a, b) {
-    if (b.avtalt && !a.avtalt) {
-        return 1;
-    } else if (!b.avtalt && a.avtalt) {
-        return -1;
-    }
-    if (a.opprettetDato !== null && b.opprettetDato === null) {
-        return -1;
-    }
-    if (a.opprettetDato === null && b.opprettetDato !== null) {
-        return 1;
-    }
-    return b.opprettetDato.localeCompare(a.opprettetDato);
-}
-
 function KolonneFunction({
     aktiviteter,
     status,
@@ -133,7 +119,7 @@ function KolonneFunction({
             }
             return a.status === status;
         })
-        .sort((a, b) => compareAktivitet(a, b))
+        .sort(compareAktivitet)
         .map(a => <AktivitetsKort key={a.id} aktivitet={a} />);
 
     return connectDropTarget(

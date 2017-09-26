@@ -14,7 +14,7 @@ const MAKS_LENGDE = 500;
 function forLangBegrunnelse(props, ...rest) {
     return maksLengde(
         'avslutt.oppfolging.feilmelding.for-lang',
-        props && props.maksBeskrivelseLengde || MAKS_LENGDE
+        (props && props.maksBeskrivelseLengde) || MAKS_LENGDE
     ).apply(this, rest);
 }
 
