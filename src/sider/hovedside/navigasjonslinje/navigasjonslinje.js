@@ -171,8 +171,7 @@ Navigasjonslinje.defaultProps = {
 const mapStateToProps = state => {
     const antallUlesteDialoger = selectDialoger(state)
         .filter(d => !d.lest)
-        .filter(d => dialogFilter(d, state))
-        .length;
+        .filter(d => dialogFilter(d, state)).length;
     const underOppfolging = selectErUnderOppfolging(state);
     const erIkkeBruker = !selectErBruker(state);
 
