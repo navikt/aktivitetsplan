@@ -147,7 +147,6 @@ const mapStateToProps = state => ({
     situasjonStatus: selectSituasjonStatus(state),
     identitetStatus: selectIdentitetStatus(state),
     erPrivatBruker: selectErPrivatBruker(state),
-
 });
 
 const mapDispatchToProps = dispatch => ({
