@@ -22,13 +22,18 @@ function NavigasjonslinjeMeny({
 }) {
     const LeggTilLenke = HiddenIfHOC(() =>
         <span>
-            <Bilde
-                className="arbeidsliste-flagg"
-                src={ArbeidslisteSVG}
-                alt="arbeidsliste.icon.alt.tekst"
-            />
+            <FormattedMessage
+                id="arbeidsliste.flaggikon"
+                values={{ fyldt: false }}
+            >
+                {altTekst =>
+                    <Bilde
+                        className="navigasjonslinje-meny__arbeidsliste-flagg"
+                        src={ArbeidslisteSVG}
+                        alt={altTekst}
+                    />}
+            </FormattedMessage>
             <Knappelenke
-                className="navigasjonslinje__button"
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/leggtil')}
             >
@@ -38,16 +43,19 @@ function NavigasjonslinjeMeny({
     );
 
     const FjernLenke = HiddenIfHOC(() =>
-        <span>
-            <span className="navigasjonslinje-meny__fjern">
-                <Bilde
-                    className="arbeidsliste-flagg"
-                    src={ArbeidslisteActiveSVG}
-                    alt="arbeidsliste.icon.alt.tekst"
-                />
-            </span>
+        <span className="navigasjonslinje-meny__fjern-lenke">
+            <FormattedMessage
+                id="arbeidsliste.flaggikon"
+                values={{ fyldt: true }}
+            >
+                {altTekst =>
+                    <Bilde
+                        className="navigasjonslinje-meny__arbeidsliste-flagg"
+                        src={ArbeidslisteActiveSVG}
+                        alt={altTekst}
+                    />}
+            </FormattedMessage>
             <Knappelenke
-                className="navigasjonslinje__button"
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/fjern')}
             >
@@ -57,10 +65,7 @@ function NavigasjonslinjeMeny({
     );
 
     const RedigerLenke = HiddenIfHOC(() =>
-        <Knappelenke
-            className="navigasjonslinje__button"
-            onClick={() => history.push('arbeidsliste/rediger')}
-        >
+        <Knappelenke onClick={() => history.push('arbeidsliste/rediger')}>
             <FormattedMessage id="navigasjon.vis.kommentarer" />
         </Knappelenke>
     );
@@ -70,6 +75,7 @@ function NavigasjonslinjeMeny({
             <LeggTilLenke hidden={!kanLeggeTil} />
             <FjernLenke hidden={!kanFjerne} />
             <RedigerLenke hidden={!kanRedigere} />
+            <i className="navigasjonslinje-meny__skillelinje" />
         </div>
     );
 }
