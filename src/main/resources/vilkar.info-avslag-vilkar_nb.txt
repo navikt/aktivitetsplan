@@ -1,4 +1,1 @@
-{status, select,
-PRIVAT_BRUKER {Tekst før privat bruker }
-default {Hvis du svarer nei til å ta i bruk aktivitetsplanen, fyller du ikke vilkårene for å få oppfølging og utbetalinger fra NAV. Det kan bety at du får et redusert tilbud om tjenester fra oss. Det kan også føre til at utbetalingene dine blir stoppet. Hvis du ønsker, kan du <a href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt%20oss/skriv%20til%20oss" _target="blank">sende en beskjed</a> til NAV.}
-}
+ Hvis du svarer nei til å ta i bruk aktivitetsplanen, fyller du ikke vilkårene for å få oppfølging og utbetalinger fra NAV. Det kan bety at du får et redusert tilbud om tjenester fra oss. Det kan også føre til at utbetalingene dine blir stoppet. Hvis du ønsker, kan du <a href="https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt%20oss/skriv%20til%20oss" _target="blank">sende en beskjed</a> til NAV.
