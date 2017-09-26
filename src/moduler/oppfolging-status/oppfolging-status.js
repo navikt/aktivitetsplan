@@ -11,17 +11,39 @@ import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
+import { selectErPrivatBruker } from '../privat-modus/privat-modus-selector';
+import {
+    selectBrukerHarAvslatt,
+    selectErBrukerManuell,
+    selectErUnderOppfolging,
+    selectSituasjonStatus,
+    selectVilkarMaBesvares,
+} from '../situasjon/situasjon-selector';
+import {
+    selectErVeileder,
+    selectIdentitetStatus,
+} from '../identitet/identitet-selector';
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
-export function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
+export function GodkjennVilkarMedVarsling({
+    visVilkar,
+    brukerHarAvslatt,
+    erPrivatBruker,
+}) {
+    const visTekstForPrivatBruker = erPrivatBruker
+        ? 'PRIVAT_BRUKER'
+        : 'DEFAULT';
     return (
         <div>
             <Alert
                 className="feil-container"
                 visible={!visVilkar && brukerHarAvslatt}
             >
-                <FormattedHTMLMessage id="vilkar.info-avslag-vilkar" />
+                <FormattedHTMLMessage
+                    id="vilkar.info-avslag-vilkar"
+                    values={{ status: visTekstForPrivatBruker }}
+                />
             </Alert>
             <GodkjennVilkar visVilkar={visVilkar} />
         </div>
@@ -35,6 +57,7 @@ GodkjennVilkarMedVarsling.defaultProps = {
 GodkjennVilkarMedVarsling.propTypes = {
     brukerHarAvslatt: PT.bool,
     visVilkar: PT.bool.isRequired,
+    erPrivatBruker: PT.bool.isRequired,
 };
 
 export function oppfolgingStatusKomponent(props) {
@@ -44,6 +67,7 @@ export function oppfolgingStatusKomponent(props) {
         manuell,
         vilkarMaBesvares,
         brukerHarAvslatt,
+        erPrivatBruker,
         visVilkar,
     } = props;
     if (erVeileder) {
@@ -55,6 +79,7 @@ export function oppfolgingStatusKomponent(props) {
             <GodkjennVilkarMedVarsling
                 visVilkar={visVilkar}
                 brukerHarAvslatt={brukerHarAvslatt}
+                erPrivatBruker={erPrivatBruker}
             />
         );
     }
@@ -70,6 +95,7 @@ oppfolgingStatusKomponent.defaultProps = {
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
     visVilkar: false,
+    erPrivatBruker: false,
 };
 
 oppfolgingStatusKomponent.propTypes = {
@@ -80,22 +106,24 @@ oppfolgingStatusKomponent.propTypes = {
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool,
+    erPrivatBruker: PT.bool,
 };
 
 class OppfolgingStatus extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
-        if (this.props.situasjon.status === STATUS.NOT_STARTED) {
+        if (this.props.situasjonStatus === STATUS.NOT_STARTED) {
             this.props.doHentSituasjon();
         }
     }
 
     render() {
         const props = this.props;
-        const { situasjon, identitet } = props;
 
         return (
-            <Innholdslaster avhengigheter={[situasjon, identitet]}>
+            <Innholdslaster
+                avhengigheter={[props.situasjonStatus, props.identitetStatus]}
+            >
                 <div className="fullbredde">
                     {oppfolgingStatusKomponent(props)}
                 </div>
@@ -103,31 +131,23 @@ class OppfolgingStatus extends Component {
         );
     }
 }
-
-OppfolgingStatus.defaultProps = {
-    situasjon: undefined,
-};
-
 OppfolgingStatus.propTypes = {
-    situasjon: AppPT.situasjon,
+    situasjonStatus: AppPT.status.isRequired,
+    identitetStatus: AppPT.status.isRequired,
     doHentSituasjon: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
 };
 
-const mapStateToProps = state => {
-    const situasjon = state.data.situasjon;
-    const identitet = state.data.identitet;
-    const situasjonData = situasjon.data;
-    return {
-        erVeileder: identitet.data.erVeileder,
-        underOppfolging: situasjonData.underOppfolging,
-        brukerHarAvslatt: situasjon.brukerHarAvslatt,
-        manuell: situasjonData.manuell,
-        vilkarMaBesvares: situasjonData.vilkarMaBesvares,
-        situasjon,
-        identitet,
-    };
-};
+const mapStateToProps = state => ({
+    erVeileder: selectErVeileder(state),
+    underOppfolging: selectErUnderOppfolging(state),
+    brukerHarAvslatt: selectBrukerHarAvslatt(state),
+    manuell: selectErBrukerManuell(state),
+    vilkarMaBesvares: selectVilkarMaBesvares(state),
+    situasjonStatus: selectSituasjonStatus(state),
+    identitetStatus: selectIdentitetStatus(state),
+    erPrivatBruker: selectErPrivatBruker(state),
+});
 
 const mapDispatchToProps = dispatch => ({
     doHentSituasjon: () => dispatch(hentSituasjon()),

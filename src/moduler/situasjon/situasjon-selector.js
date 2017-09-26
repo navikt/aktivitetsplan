@@ -45,4 +45,8 @@ export function selectSituasjonStatus(state) {
     return selectSituasjonReducer(state).status;
 }
 
+export function selectBrukerHarAvslatt(state) {
+    return selectSituasjonReducer(state).brukerHarAvslatt;
+}
+
 export default {};
