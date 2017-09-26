@@ -171,7 +171,7 @@ const mapDispatchToProps = () => ({
             if (props.erNyDialog) {
                 const dialogId = data.id;
                 const ferdigbehandlet = !dialogData.ikkeFerdigbehandlet;
-                const venterPaSvar = dialogData.venterPaSvar;
+                const venterPaSvar = !!dialogData.venterPaSvar;
 
                 dispatch(oppdaterFerdigbehandlet(dialogId, ferdigbehandlet));
                 dispatch(oppdaterVenterPaSvar(dialogId, venterPaSvar));
