@@ -1,8 +1,4 @@
-function selectIdentitetSlice(state) {
-    return state.data.identitet;
-}
-
-export function selectIdentitetReducer(state) {
+export function selectIdentitetSlice(state) {
     return state.data.identitet;
 }
 
