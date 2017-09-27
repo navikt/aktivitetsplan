@@ -49,24 +49,25 @@ const ManglendeMalInformasjon = hiddenIf(({ historiskVisning }) => {
     );
 });
 
-function malListeVisning(malet) {
+function malListeVisning(gjeldendeMal) {
     return (
-        <article key={malet.dato} className="aktivitetmal__historikk">
+        <article key={gjeldendeMal.dato} className="aktivitetmal__historikk">
             <span className="aktivitetmal__historikk-skrevetav">
                 <FormattedMessage
                     id={
-                        malet.mal
+                        gjeldendeMal.mal
                             ? 'aktivitetsmal.skrevet-av'
                             : 'aktivitetsmal.slettet-av'
                     }
                 />
                 <Identitet>
-                    {identitetMap[malet.endretAv] || malet.endretAv}
+                    {identitetMap[gjeldendeMal.endretAv] ||
+                        gjeldendeMal.endretAv}
                 </Identitet>
             </span>{' '}
-            {formaterDatoEllerTidSiden(malet.dato)}
+            {formaterDatoEllerTidSiden(gjeldendeMal.dato)}
             <Tekstomrade className="aktivitetmal__historikk-tekst">
-                {malet.mal}
+                {gjeldendeMal.mal}
             </Tekstomrade>
         </article>
     );
@@ -93,18 +94,18 @@ class AktivitetsMal extends Component {
 
     render() {
         const {
+            avhengigheter,
             mal,
-            malListe,
-            malStatus,
+            historiskeMal,
             historiskVisning,
             kanSletteMal,
         } = this.props;
-        const malet = mal && mal.mal;
-        const harMal = !!malet;
+
+        const harMal = !!mal;
         const historikkVises = this.state.visHistoriskeMal;
-        const historiskeMal = malListe.slice(1, malListe.length);
+
         return (
-            <Innholdslaster avhengigheter={[malStatus]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <section className="aktivitetmal">
                     <div className="aktivitetmal__innhold">
                         <ManglendeMalInformasjon
@@ -112,7 +113,7 @@ class AktivitetsMal extends Component {
                             historiskVisning={historiskVisning}
                         />
                         <Tekstomrade className="aktivitetmal__tekst">
-                            {malet}
+                            {mal}
                         </Tekstomrade>
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
@@ -136,7 +137,7 @@ class AktivitetsMal extends Component {
                     </div>
                     <HiddenIfDiv hidden={historiskeMal.length === 0}>
                         <hr className="aktivitetmal__delelinje" />
-                        <div className="aktivitetmal__innhold">
+                        <div className="aktivitetmal__footer">
                             <Accordion
                                 labelId={
                                     historikkVises
@@ -158,27 +159,30 @@ class AktivitetsMal extends Component {
 
 AktivitetsMal.defaultProps = {
     mal: null,
-    malListe: null,
 };
 
 AktivitetsMal.propTypes = {
-    mal: AppPT.mal,
-    malListe: PT.arrayOf(AppPT.mal),
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    mal: PT.string.isRequired,
+    historiskeMal: AppPT.malListe.isRequired,
+    historiskVisning: PT.bool.isRequired,
+    kanSletteMal: PT.bool.isRequired,
     doHentMal: PT.func.isRequired,
     doHentMalListe: PT.func.isRequired,
     doFjernMalListe: PT.func.isRequired,
-    malStatus: AppPT.status.isRequired,
-    historiskVisning: PT.bool.isRequired,
-    kanSletteMal: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-    mal: selectGjeldendeMal(state),
-    malListe: selectMalListe(state),
-    malStatus: selectMalStatus(state),
-    historiskVisning: selectViserHistoriskPeriode(state),
-    kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
-});
+const mapStateToProps = state => {
+    const gjeldendeMal = selectGjeldendeMal(state);
+    const malListe = selectMalListe(state);
+    return {
+        avhengigheter: [selectMalStatus(state)],
+        mal: gjeldendeMal && gjeldendeMal.mal,
+        historiskeMal: malListe.slice(1, malListe.length),
+        historiskVisning: selectViserHistoriskPeriode(state),
+        kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     doHentMal: () => dispatch(hentMal()),
