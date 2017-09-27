@@ -137,33 +137,29 @@
     }
 }
 
-.arbeidsliste-flagg {
-    margin-right: 0.5rem;
+.navigasjonslinje-meny__knapp--print {
+    display: none;
 }
 
-.navigasjonslinje__button--print {
-    display: none;
-
-    & + .navigasjonslinje__button {
-        border-left: 0;
-    }
+.navigasjonslinje-meny__skillelinje {
+    content: '';
+    position: relative;
+    display: block;
+    width: 1px;
+    height: 1.5rem;
+    top: -1px;
+    background-color: @navGra60;
+    margin-left: 0.5rem;
 }
 
 @media (min-width: @screen-md-min) {
-    .navigasjonslinje__button--print {
+    .navigasjonslinje-meny__knapp--print {
         display: inline-block;
-        width: 22px;
-        height: 20px;
-        margin-top: 2px;
-        border: 0;
         background: data-uri(
                 '@{aktivitetsplanPath}/moduler/utskrift/printer.svg'
             )
             no-repeat center right;
-
-        & + .navigasjonslinje__button {
-            border-left: 1px solid @navGra40;
-        }
+        background-size: contain;
 
         &:hover {
             background-image: data-uri(

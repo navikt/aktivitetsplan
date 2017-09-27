@@ -29,8 +29,7 @@ import {
     selectMalStatus,
 } from '../../../moduler/mal/mal-selector';
 import { selectViserHistoriskPeriode } from '../../../moduler/filtrering/filter/filter-selector';
-import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
-import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import { selectErPrivatBruker } from '../../../moduler/privat-modus/privat-modus-selector';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 
@@ -172,17 +171,13 @@ AktivitetsMal.propTypes = {
     doFjernMalListe: PT.func.isRequired,
 };
 
-const mapStateToProps = state => {
-    const gjeldendeMal = selectGjeldendeMal(state);
-    const malListe = selectMalListe(state);
-    return {
-        avhengigheter: [selectMalStatus(state)],
-        mal: gjeldendeMal && gjeldendeMal.mal,
-        historiskeMal: malListe.slice(1, malListe.length),
-        historiskVisning: selectViserHistoriskPeriode(state),
-        kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
-    };
-};
+const mapStateToProps = state => ({
+    mal: selectGjeldendeMal(state),
+    malListe: selectMalListe(state),
+    malStatus: selectMalStatus(state),
+    historiskVisning: selectViserHistoriskPeriode(state),
+    kanSletteMal: selectErPrivatBruker(state),
+});
 
 const mapDispatchToProps = dispatch => ({
     doHentMal: () => dispatch(hentMal()),

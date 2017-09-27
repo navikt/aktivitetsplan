@@ -10,17 +10,20 @@ import vilkarSvg from './vilkar-illustrasjon.svg';
 import VisibleIfHOC from '../../hocs/visible-if';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { formaterDatoKortManed } from '../../utils';
-import {
-    selectErUnderOppfolging,
-    selectPrivatModusStatus,
-} from '../privat-modus/privat-modus-selector';
+import { selectPrivatModusStatus } from '../privat-modus/privat-modus-selector';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { selectErUnderOppfolging } from '../situasjon/situasjon-selector';
 
 const VisibleIfElementFormattedMessage = VisibleIfHOC(props =>
     <Element className="vilkar__metaData">
         <FormattedMessage {...props} />
     </Element>
 );
+
+VisibleIfElementFormattedMessage.propTypes = {
+    underOppfolging: PT.bool.isRequired,
+    privatModusReducer: AppPT.status.isRequired,
+};
 
 function VilkarInnhold({ vilkar, underOppfolging, privatModusStatus }) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
@@ -54,11 +57,6 @@ VilkarInnhold.propTypes = {
     vilkar: AppPT.vilkar.isRequired,
     underOppfolging: PT.bool.isRequired,
     privatModusStatus: AppPT.status.isRequired,
-};
-
-VisibleIfElementFormattedMessage.propTypes = {
-    underOppfolging: PT.bool.isRequired,
-    privatModusReducer: AppPT.reducer.isRequired,
 };
 
 const mapStateToProps = state => {

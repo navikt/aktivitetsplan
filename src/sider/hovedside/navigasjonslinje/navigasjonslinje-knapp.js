@@ -1,6 +1,5 @@
 import React from 'react';
 import PT from 'prop-types';
-import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import history from '../../../history';
 
@@ -9,10 +8,7 @@ function NavigasjonslinjeKnapp({ ariaLabel, lenke, className }) {
         <FormattedMessage id={ariaLabel}>
             {label =>
                 <button
-                    className={classNames(
-                        'navigasjonslinje__button',
-                        className
-                    )}
+                    className={className}
                     aria-label={label}
                     onClick={() => history.push(lenke)}
                 />}
