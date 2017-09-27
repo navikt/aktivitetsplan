@@ -56,4 +56,8 @@ export function selectKanAvslutte(state) {
     return selectAvslutningStatus(state).kanAvslutte;
 }
 
+export function selectBrukerHarAvslatt(state) {
+    return selectSituasjonReducer(state).brukerHarAvslatt;
+}
+
 export default {};
