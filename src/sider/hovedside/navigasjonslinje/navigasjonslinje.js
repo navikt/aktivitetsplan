@@ -68,6 +68,7 @@ NavigasjonsElement.propTypes = {
     sti: PT.string.isRequired,
     tekstId: PT.string.isRequired,
     children: PT.node,
+
     disabled: PT.bool,
 };
 
@@ -181,11 +182,9 @@ Navigasjonslinje.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const stateData = state.data;
     const dialog = selectDialoger(state);
     const underOppfolging = selectErUnderOppfolging(state);
     const erIkkeBruker = !selectErBruker(state);
-
     // det gir ikke mening å vise vilkår til ikke-brukere (typisk veiledere) hvis bruker ikke har besvart vilkår for inneværende periode
     const ikkeTilgangTilVilkar =
         erIkkeBruker &&
@@ -196,7 +195,7 @@ const mapStateToProps = state => {
             .filter(d => !d.lest)
             .filter(d => dialogFilter(d, state)).length,
         privatModus: selectErPrivatModus(state),
-        underOppfolging: stateData.situasjon.data.underOppfolging,
+        underOppfolging,
         arbeidslisteReducer: selectArbeidslisteReducer(state),
         harVeilederTilgangTilArbeidsliste: selectHarVeilederTilgang(state),
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),

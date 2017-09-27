@@ -14,9 +14,9 @@ import {
     selectErUnderOppfolging,
     selectErBrukerManuell,
     selectReservasjonKRR,
-    selectSituasjonReducer,
     selectTilHorendeDialogId,
     selectErEskalert,
+    selectSituasjonSlice,
 } from '../situasjon/situasjon-selector';
 import {
     selectErBruker,
@@ -124,7 +124,7 @@ Varslinger.propTypes = {
 const mapStateToProps = state => ({
     identitetReducer: selectIdentitetReducer(state),
     erBruker: selectErBruker(state),
-    situasjonReducer: selectSituasjonReducer(state),
+    situasjonReducer: selectSituasjonSlice(state),
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),

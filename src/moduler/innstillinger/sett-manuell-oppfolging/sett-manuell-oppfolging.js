@@ -18,18 +18,20 @@ import {
 } from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
-import { hentSituasjon } from '../../situasjon/situasjon';
+import { selectIdentitetId } from '../../identitet/identitet-selector';
+import { selectInnstillingerStatus } from '../innstillinger-selector';
+import { hentSituasjon } from '../../situasjon/situasjon-api';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 
 function SettManuellOppfolging({
     veilederId,
-    innstillingerReducer,
+    innstillingerStatus,
     handleSubmit,
 }) {
     const situasjonLaster =
-        innstillingerReducer.status === STATUS.PENDING ||
-        innstillingerReducer.status === STATUS.RELOADING;
+        innstillingerStatus === STATUS.PENDING ||
+        innstillingerStatus === STATUS.RELOADING;
     return (
         <InnstillingerModal>
             <section className="innstillinger__prosess">
@@ -70,18 +72,17 @@ function SettManuellOppfolging({
 
 SettManuellOppfolging.defaultProps = {
     veilederId: undefined,
-    innstillingerReducer: undefined,
 };
 
 SettManuellOppfolging.propTypes = {
     veilederId: PT.string,
     handleSubmit: PT.func.isRequired,
-    innstillingerReducer: AppPt.situasjon,
+    innstillingerStatus: AppPt.status.isRequired,
 };
 
 const mapStateToProps = state => ({
-    veilederId: state.data.identitet.data.id,
-    innstillingerReducer: state.data.innstillinger,
+    veilederId: selectIdentitetId(state),
+    innstillingerStatus: selectInnstillingerStatus(state),
 });
 
 const mapDispatchToProps = dispatch => ({

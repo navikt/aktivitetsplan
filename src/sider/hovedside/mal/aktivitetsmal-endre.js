@@ -7,6 +7,10 @@ import AktivitetsmalForm from './aktivitetsmal-form';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import history from '../../../history';
+import {
+    selectGjeldendeMal,
+    selectMalSlice,
+} from '../../../moduler/mal/mal-selector';
 
 class AktivitetmalEndre extends Component {
     componentDidMount() {
@@ -37,14 +41,12 @@ AktivitetmalEndre.defaultProps = {
 AktivitetmalEndre.propTypes = {
     mal: AppPT.mal,
     doHentMal: PT.func.isRequired,
-    malData: PT.shape({
-        status: PT.string.isRequired,
-    }),
+    malData: AppPT.avhengigheter.isRequired,
 };
 
 const mapStateToProps = state => ({
-    mal: state.data.mal.gjeldende,
-    malData: state.data.mal,
+    mal: selectGjeldendeMal(state),
+    malData: selectMalSlice(state),
 });
 
 const mapDispatchToProps = dispatch => ({

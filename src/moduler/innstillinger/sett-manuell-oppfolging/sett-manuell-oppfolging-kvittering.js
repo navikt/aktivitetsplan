@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
+import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -10,18 +11,29 @@ import {
     HiddenIfAlertStripeAdvarsel,
     HiddenIfAlertStripeSuksess,
 } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import {
+    selectMotpartStatus,
+    selectNavnPaMotpart,
+} from '../../motpart/motpart-selector';
+import {
+    selectErManuell,
+    selectInnstillingerBegrunnelse,
+    selectInnstillingerStatus,
+} from '../innstillinger-selector';
 
-function SettManuellOppfolgingKvittering({ motpart, innstillingerReducer }) {
-    const { navn } = motpart.data;
-    const { manuell } = innstillingerReducer.data;
-    const { begrunnelse } = innstillingerReducer;
+function SettManuellOppfolgingKvittering({
+    avhengigheter,
+    begrunnelse,
+    manuell,
+    navn,
+}) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
-            <Innholdslaster avhengigheter={[motpart, innstillingerReducer]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <article className="innstillinger__container">
                     <Innholdstittel>
                         <FormattedMessage
@@ -60,18 +72,21 @@ function SettManuellOppfolgingKvittering({ motpart, innstillingerReducer }) {
     );
 }
 
-SettManuellOppfolgingKvittering.defaultProps = {
-    motpart: undefined,
-};
-
 SettManuellOppfolgingKvittering.propTypes = {
-    motpart: AppPT.motpart,
-    innstillingerReducer: AppPT.situasjon.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    navn: PT.string.isRequired,
+    manuell: PT.bool.isRequired,
+    begrunnelse: PT.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-    motpart: state.data.motpart,
-    innstillingerReducer: state.data.innstillinger,
+    avhengigheter: [
+        selectInnstillingerStatus(state),
+        selectMotpartStatus(state),
+    ],
+    navn: selectNavnPaMotpart(state),
+    manuell: selectErManuell(state),
+    begrunnelse: selectInnstillingerBegrunnelse(state),
 });
 
 export default connect(mapStateToProps)(SettManuellOppfolgingKvittering);

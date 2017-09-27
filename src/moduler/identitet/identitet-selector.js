@@ -11,9 +11,13 @@ export function selectIdentitetStatus(state) {
 }
 
 export function selectErVeileder(state) {
-    return selectIdentitetReducer(state).data.erVeileder;
+    return selectIdentitetSlice(state).data.erVeileder;
 }
 
 export function selectErBruker(state) {
-    return selectIdentitetReducer(state).data.erBruker;
+    return selectIdentitetSlice(state).data.erBruker;
+}
+
+export function selectIdentitetId(state) {
+    return selectIdentitetSlice(state).data.id;
 }
