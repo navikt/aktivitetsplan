@@ -20,19 +20,23 @@ function NavigasjonslinjeMeny({
     kanFjerne,
     kanRedigere,
 }) {
+    const Arbeidslisteikon = ({ fyldt }) =>
+        <FormattedMessage id="arbeidsliste.flaggikon" values={{ fyldt }}>
+            {altTekst =>
+                <Bilde
+                    className="navigasjonslinje-meny__arbeidsliste-flagg"
+                    src={fyldt ? ArbeidslisteActiveSVG : ArbeidslisteSVG}
+                    alt={altTekst}
+                />}
+        </FormattedMessage>;
+
+    Arbeidslisteikon.propTypes = {
+        fyldt: PT.bool.isRequired,
+    };
+
     const LeggTilLenke = HiddenIfHOC(() =>
         <span>
-            <FormattedMessage
-                id="arbeidsliste.flaggikon"
-                values={{ fyldt: false }}
-            >
-                {altTekst =>
-                    <Bilde
-                        className="navigasjonslinje-meny__arbeidsliste-flagg"
-                        src={ArbeidslisteSVG}
-                        alt={altTekst}
-                    />}
-            </FormattedMessage>
+            <Arbeidslisteikon fyldt={false} />
             <Knappelenke
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/leggtil')}
@@ -44,17 +48,7 @@ function NavigasjonslinjeMeny({
 
     const FjernLenke = HiddenIfHOC(() =>
         <span className="navigasjonslinje-meny__fjern-lenke">
-            <FormattedMessage
-                id="arbeidsliste.flaggikon"
-                values={{ fyldt: true }}
-            >
-                {altTekst =>
-                    <Bilde
-                        className="navigasjonslinje-meny__arbeidsliste-flagg"
-                        src={ArbeidslisteActiveSVG}
-                        alt={altTekst}
-                    />}
-            </FormattedMessage>
+            <Arbeidslisteikon fyldt />
             <Knappelenke
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/fjern')}
