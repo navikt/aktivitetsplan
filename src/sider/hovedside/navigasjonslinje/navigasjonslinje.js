@@ -31,8 +31,8 @@ import {
     selectViserInneverendePeriode,
 } from '../../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
-import history from '../../../history';
 import { selectDialoger } from '../../../moduler/dialog/dialog-selector';
+import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -73,26 +73,6 @@ NavigasjonsElement.propTypes = {
 };
 
 const navigasjonslinjemenyFeature = 'navigasjonslinjemeny';
-
-const PrintLenke = () =>
-    <FormattedMessage id="utskrift.ikon.alt.tekst">
-        {tekst =>
-            <button
-                aria-label={tekst}
-                className="navigasjonslinje__button navigasjonslinje__button--print"
-                onClick={() => history.push('/utskrift')}
-            />}
-    </FormattedMessage>;
-
-const InnstillingerKnapp = () =>
-    <FormattedMessage id="navigasjon.innstillinger">
-        {label =>
-            <button
-                className="navigasjonslinje__button navigasjonslinje-meny__innstillinger-knapp"
-                aria-label={label}
-                onClick={() => history.push('/innstillinger')}
-            />}
-    </FormattedMessage>;
 
 class Navigasjonslinje extends Component {
     componentDidMount() {
@@ -153,10 +133,18 @@ class Navigasjonslinje extends Component {
                         </Innholdslaster>
                     </Feature>
 
-                    <PrintLenke />
+                    <NavigasjonslinjeKnapp
+                        ariaLabel="utskrift.ikon.alt.tekst"
+                        lenke="/utskrift"
+                        className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
+                    />
 
                     <Feature name={navigasjonslinjemenyFeature}>
-                        <InnstillingerKnapp />
+                        <NavigasjonslinjeKnapp
+                            ariaLabel="navigasjon.innstillinger"
+                            lenke="/innstillinger"
+                            className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
+                        />
                     </Feature>
                 </div>
             </nav>
@@ -182,18 +170,20 @@ Navigasjonslinje.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const dialog = selectDialoger(state);
+    const antallUlesteDialoger = selectDialoger(state)
+        .filter(d => !d.lest)
+        .filter(d => dialogFilter(d, state)).length;
     const underOppfolging = selectErUnderOppfolging(state);
     const erIkkeBruker = !selectErBruker(state);
-    // det gir ikke mening å vise vilkår til ikke-brukere (typisk veiledere) hvis bruker ikke har besvart vilkår for inneværende periode
+
+    // det gir ikke mening å vise vilkår til ikke-brukere (typisk veiledere)
+    // hvis bruker ikke har besvart vilkår for inneværende periode
     const ikkeTilgangTilVilkar =
         erIkkeBruker &&
         selectVilkarMaBesvares(state) &&
         selectViserInneverendePeriode(state);
     return {
-        antallUlesteDialoger: dialog
-            .filter(d => !d.lest)
-            .filter(d => dialogFilter(d, state)).length,
+        antallUlesteDialoger,
         privatModus: selectErPrivatModus(state),
         underOppfolging,
         arbeidslisteReducer: selectArbeidslisteReducer(state),
@@ -202,7 +192,7 @@ const mapStateToProps = state => {
         ikkeTilgangTilVilkar,
         disabled:
             erIkkeBruker &&
-            underOppfolging === false &&
+            !underOppfolging &&
             selectViserInneverendePeriode(state),
     };
 };

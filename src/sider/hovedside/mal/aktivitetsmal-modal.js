@@ -8,12 +8,7 @@ function AktivitetsmalModal(Component) {
         return (
             <div>
                 <Modal
-                    header={
-                        <ModalHeader
-                            normalTekstId="aktivitetsmal.mitt-mal"
-                            className="aktivitetmal__modal"
-                        />
-                    }
+                    header={<ModalHeader className="aktivitetmal__modal" />}
                     contentLabel="aktivitetsmal-modal"
                 >
                     <ModalContainer>
