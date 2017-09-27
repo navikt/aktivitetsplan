@@ -12,7 +12,9 @@ import {
 import ArbeidslisteSVG from './arbeidsliste.svg';
 import ArbeidslisteActiveSVG from './arbeidsliste-active.svg';
 import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
-import HiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
+import HiddenIfHOC, {
+    div as HiddenIfDiv,
+} from '../../../felles-komponenter/hidden-if/hidden-if';
 
 function NavigasjonslinjeMeny({
     brukerErMin,
@@ -65,12 +67,15 @@ function NavigasjonslinjeMeny({
     );
 
     return (
-        <div className="navigasjonslinje-meny">
+        <HiddenIfDiv
+            hidden={!kanRedigere && !kanFjerne && !kanRedigere}
+            className="navigasjonslinje-meny"
+        >
             <LeggTilLenke hidden={!kanLeggeTil} />
             <FjernLenke hidden={!kanFjerne} />
             <RedigerLenke hidden={!kanRedigere} />
             <i className="navigasjonslinje-meny__skillelinje" />
-        </div>
+        </HiddenIfDiv>
     );
 }
 

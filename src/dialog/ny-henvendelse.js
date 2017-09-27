@@ -168,7 +168,7 @@ const mapDispatchToProps = () => ({
         const onComplete = props.onComplete;
         nyHenvendelsePromise.then(action => {
             const data = action.data;
-            if (props.erNyDialog) {
+            if (props.erNyDialog && !props.erBruker) {
                 const dialogId = data.id;
                 const ferdigbehandlet = !dialogData.ikkeFerdigbehandlet;
                 const venterPaSvar = !!dialogData.venterPaSvar;

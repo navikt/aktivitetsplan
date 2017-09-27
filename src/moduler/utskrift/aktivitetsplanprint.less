@@ -18,7 +18,7 @@
         background-color: @gray-background;
     }
 
-    .printmodal-body__utskrift-overskrift {
+    .printmodal-body__utskrift--overskrift {
         margin: 0 3rem 1rem;
     }
 
@@ -58,10 +58,18 @@
             padding: 2rem 3rem;
             border-top: 1px solid @navGra40;
 
-            .printmodal-body__visprintmelding-overskrift,
-            .printmodal-body__vismittmal-overskrift,
-            .printmodal-body__statusgruppe-overskrift {
+            .printmodal-body__visprintmelding--overskrift,
+            .printmodal-body__vismittmal--overskrift,
+            .printmodal-body__statusgruppe--overskrift {
                 margin-bottom: 1rem;
+            }
+        }
+
+        .printmodal-body__statusgruppe--type {
+            margin: 0.25rem 0 1rem;
+
+            & + .printmodal-body__aktivitetvisning--etikett {
+                margin-top: -0.5rem;
             }
         }
 
@@ -71,7 +79,7 @@
             border: 1pt solid @navGra40;
         }
 
-        .printmodal-body__aktivitetvisning-etikett {
+        .printmodal-body__aktivitetvisning--etikett {
             margin: 0.25rem 0 1rem;
         }
 
@@ -103,6 +111,10 @@
                     cursor: default;
                 }
             }
+        }
+
+        .printmodal-body__aktivitetreferat {
+            margin-bottom: 1.5rem;
         }
     }
 

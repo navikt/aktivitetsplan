@@ -138,21 +138,7 @@
 }
 
 .navigasjonslinje-meny__knapp--print {
-    background: data-uri('@{aktivitetsplanPath}/moduler/utskrift/printer.svg')
-        no-repeat center right;
-    background-size: contain;
-
-    &:hover {
-        background-image: data-uri(
-            '@{aktivitetsplanPath}/moduler/utskrift/printer-hover.svg'
-        );
-    }
-
-    &:active {
-        background-image: data-uri(
-            '@{aktivitetsplanPath}/moduler/utskrift/printer-active.svg'
-        );
-    }
+    display: none;
 }
 
 .navigasjonslinje-meny__skillelinje {
@@ -164,4 +150,27 @@
     top: -1px;
     background-color: @navGra60;
     margin-left: 0.5rem;
+}
+
+@media (min-width: @screen-md-min) {
+    .navigasjonslinje-meny__knapp--print {
+        display: inline-block;
+        background: data-uri(
+                '@{aktivitetsplanPath}/moduler/utskrift/printer.svg'
+            )
+            no-repeat center right;
+        background-size: contain;
+
+        &:hover {
+            background-image: data-uri(
+                '@{aktivitetsplanPath}/moduler/utskrift/printer-hover.svg'
+            );
+        }
+
+        &:active {
+            background-image: data-uri(
+                '@{aktivitetsplanPath}/moduler/utskrift/printer-active.svg'
+            );
+        }
+    }
 }
