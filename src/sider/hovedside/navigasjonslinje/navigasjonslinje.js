@@ -68,6 +68,7 @@ NavigasjonsElement.propTypes = {
     sti: PT.string.isRequired,
     tekstId: PT.string.isRequired,
     children: PT.node,
+
     disabled: PT.bool,
 };
 

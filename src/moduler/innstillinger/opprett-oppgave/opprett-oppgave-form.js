@@ -7,6 +7,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment';
 import { OPPRETT_OPPGAVE_FORM } from './opprett-oppgave';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../proptypes';
 import {
     begrensetBeskrivelseLengde,
     beskrivelsePakrevd,
@@ -75,7 +76,7 @@ function OpprettOppgaveForm({
 }) {
     return (
         <form onSubmit={onSubmit}>
-            <Innholdslaster avhengigheter={[opprettOppgave]}>
+            <Innholdslaster avhengigheter={opprettOppgave}>
                 <div className="opprett-oppgave-skjema">
                     {errorSummary}
                     <Select
@@ -98,7 +99,7 @@ function OpprettOppgaveForm({
 
 OpprettOppgaveForm.propTypes = {
     onSubmit: PT.func.isRequired,
-    opprettOppgave: PT.shape({ status: PT.string }).isRequired,
+    opprettOppgave: AppPT.avhengigheter.isRequired,
     hentEnheter: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
     intl: intlShape.isRequired,
@@ -144,7 +145,7 @@ const mapStateToProps = (state, props) => {
             : undefined,
         valgtEnhet: selector(state, 'enhetId'),
         tema: selector(state, 'tema'),
-        opprettOppgave: selectOpprettOppgave(state),
+        opprettOppgave: [selectOpprettOppgave(state)],
         behandlendeEnheter: selectBehandlendeEnheter(state),
     };
 };

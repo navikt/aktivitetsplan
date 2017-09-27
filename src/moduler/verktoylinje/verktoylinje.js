@@ -6,6 +6,7 @@ import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 
 function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
     return (
@@ -32,12 +33,9 @@ Verktoylinje.propTypes = {
     privatModus: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => {
-    const historiskPeriode = state.data.filter.historiskPeriode;
-    return {
-        viserHistoriskPeriode: !!historiskPeriode,
-        privatModus: selectErPrivatModus(state),
-    };
-};
+const mapStateToProps = state => ({
+    viserHistoriskPeriode: selectViserHistoriskPeriode(state),
+    privatModus: selectErPrivatModus(state),
+});
 
 export default connect(mapStateToProps)(Verktoylinje);

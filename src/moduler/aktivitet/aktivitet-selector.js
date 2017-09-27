@@ -1,5 +1,9 @@
-function selectAktiviteter(state) {
+export function selectAktiviteter(state) {
     return state.data.aktiviteter;
+}
+
+export function selectAktiviteterData(state) {
+    return selectAktiviteter(state).data;
 }
 
 export function selectAktivitetStatus(state) {

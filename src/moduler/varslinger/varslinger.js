@@ -14,13 +14,13 @@ import {
     selectErUnderOppfolging,
     selectErBrukerManuell,
     selectReservasjonKRR,
-    selectSituasjonReducer,
     selectTilHorendeDialogId,
     selectErEskalert,
+    selectSituasjonSlice,
 } from '../situasjon/situasjon-selector';
 import {
     selectErBruker,
-    selectIdentitetReducer,
+    selectIdentitetSlice,
 } from '../identitet/identitet-selector';
 
 class Varslinger extends Component {
@@ -122,9 +122,9 @@ Varslinger.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    identitetReducer: selectIdentitetReducer(state),
+    identitetReducer: selectIdentitetSlice(state),
     erBruker: selectErBruker(state),
-    situasjonReducer: selectSituasjonReducer(state),
+    situasjonReducer: selectSituasjonSlice(state),
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),
