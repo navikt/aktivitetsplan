@@ -20,7 +20,7 @@ import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
-import { hentSituasjon } from '../../situasjon/situasjon-api';
+import { hentSituasjon } from '../../situasjon/situasjon';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 

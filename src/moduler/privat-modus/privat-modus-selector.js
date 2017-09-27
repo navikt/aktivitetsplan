@@ -10,7 +10,7 @@ import {
 } from '../situasjon/situasjon-selector';
 
 export function selectErPrivatModus(state) {
-    return selectErUnderOppfolging(state) && selectErVeileder(state);
+    return !selectErUnderOppfolging(state) && selectErVeileder(state);
 }
 
 export function selectPrivatModusSlice(state) {

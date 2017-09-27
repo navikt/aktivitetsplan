@@ -14,10 +14,10 @@ import {
 import {
     selectErManuell,
     selectInnstillingerBegrunnelse,
-    selectInnstillingerStatus,
+    selectInnstillingerSlice,
 } from '../innstillinger-selector';
 import {
-    selectMotpartStatus,
+    selectMotpartSlice,
     selectNavnPaMotpart,
 } from '../../motpart/motpart-selector';
 
@@ -80,10 +80,7 @@ SettDigitalOppfolgingKvittering.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    avhengigheter: [
-        selectInnstillingerStatus(state),
-        selectMotpartStatus(state),
-    ],
+    avhengigheter: [selectInnstillingerSlice(state), selectMotpartSlice(state)],
     navn: selectNavnPaMotpart(state),
     manuell: selectErManuell(state),
     begrunnelse: selectInnstillingerBegrunnelse(state),

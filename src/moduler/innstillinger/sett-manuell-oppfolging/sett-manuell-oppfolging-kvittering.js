@@ -12,13 +12,13 @@ import {
     HiddenIfAlertStripeSuksess,
 } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import {
-    selectMotpartStatus,
+    selectMotpartSlice,
     selectNavnPaMotpart,
 } from '../../motpart/motpart-selector';
 import {
     selectErManuell,
     selectInnstillingerBegrunnelse,
-    selectInnstillingerStatus,
+    selectInnstillingerSlice,
 } from '../innstillinger-selector';
 
 function SettManuellOppfolgingKvittering({
@@ -80,10 +80,7 @@ SettManuellOppfolgingKvittering.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    avhengigheter: [
-        selectInnstillingerStatus(state),
-        selectMotpartStatus(state),
-    ],
+    avhengigheter: [selectInnstillingerSlice(state), selectMotpartSlice(state)],
     navn: selectNavnPaMotpart(state),
     manuell: selectErManuell(state),
     begrunnelse: selectInnstillingerBegrunnelse(state),
