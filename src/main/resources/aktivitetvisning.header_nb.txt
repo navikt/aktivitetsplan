@@ -10,9 +10,9 @@ STILLING { Stilling }
 TILTAKSAKTIVITET { Tiltak gjennom NAV}
 GRUPPEAKTIVITET { Gruppeaktivitet }
 UTDANNINGSAKTIVITET { Utdanning }
-SOKEAVTALE { Avtale om jobbsøking }
+SOKEAVTALE { Jobbsøking }
 IJOBB { Jobb jeg har nå }
-BEHANDLING { Medisinsk behandling }
+BEHANDLING { Behandling }
 MOTE { Møte med NAV }
 SAMTALEREFERAT { Samtale }
 }
