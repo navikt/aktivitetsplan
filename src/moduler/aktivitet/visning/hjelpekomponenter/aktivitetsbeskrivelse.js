@@ -8,7 +8,7 @@ import hiddenIf from '../../../../felles-komponenter/hidden-if/hidden-if';
 function Aktivitetsbeskrivelse({ beskrivelse }) {
     return beskrivelse
         ? <section className="aktivitetsbeskrivelse">
-              <EtikettLiten className="aktivitetsbeskrivelse__tittel">
+              <EtikettLiten className="aktivitetsbeskrivelse__tittel" tag="h1">
                   <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
               </EtikettLiten>
               <Tekstomrade className="aktivitetsbeskrivelse__tekst">
