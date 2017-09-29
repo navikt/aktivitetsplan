@@ -15,6 +15,7 @@ import { parseFeil, finnHoyesteAlvorlighetsgrad } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import * as AppPT from '../../proptypes';
+import Text from '../../text';
 
 const typer = {
     [AlertStripeAdvarsel]: 1,
@@ -47,14 +48,18 @@ function FeilStripe({ alertStripe, feil, erVeileder, intl }) {
             .toLowerCase()
     );
     const mostSpesificKey = feilKeys.find(
-        key => intl.formatMessage({ id: key }) !== key
+        key => intl.formatMessage({ id: key, defaultMessage: key }) !== key
     );
+
     return (
         <Stripe>
             <div>
                 {vistekster &&
                     feilKeys.map(tekstId => {
-                        let tekst = intl.formatMessage({ id: tekstId });
+                        let tekst = intl.formatMessage({
+                            id: tekstId,
+                            defaultMessage: tekstId,
+                        });
                         if (tekst === tekstId) tekst = `[${tekst}]`;
                         return (
                             <div key={tekstId}>
@@ -62,7 +67,7 @@ function FeilStripe({ alertStripe, feil, erVeileder, intl }) {
                             </div>
                         );
                     })}
-                {!vistekster && intl.formatMessage({ id: mostSpesificKey })}
+                <Text id={mostSpesificKey} hidden={vistekster} />
             </div>
         </Stripe>
     );
@@ -122,7 +127,7 @@ class Feilmelding extends Component {
                 </Knappelenke>
                 <VisibleIfDiv
                     visible={this.state.apen}
-                    className="feil__detaljer"
+                    className="feilmelding__detaljer"
                 >
                     {feilmeldinger.map(feilen => {
                         const id =
