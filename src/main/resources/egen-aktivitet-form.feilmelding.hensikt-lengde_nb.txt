@@ -1,1 +1,1 @@
-Hensiktteksten kan ikke være lenger en {HENSIKT_MAKS_LENGDE} tegn
+Hensiktteksten kan ikke være lenger en {MAKS_LENGDE} tegn
