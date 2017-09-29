@@ -13,8 +13,6 @@ import dialogReducer from './ducks/dialog';
 import malReducer from './moduler/mal/mal-reducer';
 import identitetReducer from './moduler/identitet/identitet-duck';
 import motpartReducer from './moduler/motpart/motpart-duck';
-import endreAktivitetReducer from './ducks/endre-aktivitet';
-import feilReducer from './ducks/feil';
 import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import veilederReducer from './ducks/veileder';
@@ -59,10 +57,8 @@ const combinedReducers = combineReducers({
         oppgaveVeiledere: oppgaveVeiledereReducer,
     }),
     view: combineReducers({
-        endreAktivitet: endreAktivitetReducer,
         utskrift: utskriftReducer,
     }),
-    feil: feilReducer,
 });
 
 export default function(state, action) {

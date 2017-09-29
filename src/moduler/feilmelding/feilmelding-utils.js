@@ -1,6 +1,7 @@
 const rangering = {
     UKJENT: 1,
     FINNES_IKKE: 1,
+    VERSJONSKONFLIKT: 1,
     INGEN_TILGANG: 2,
     UGYLDIG_REQUEST: 3,
 };

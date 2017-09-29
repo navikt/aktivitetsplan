@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
 import { oppdaterAktivitet } from '../aktivitet-actions';
-import { SKJUL_VERSJONSKONFLIKT_ACTION } from '../../../ducks/endre-aktivitet';
 import * as AppPT from '../../../proptypes';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import StillingAktivitetForm, {
@@ -39,17 +38,13 @@ import {
     IJOBB_AKTIVITET_TYPE,
 } from '../../../constant';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import Versjonskonflikt from './versjonskonflikt';
 import Modal from '../../../felles-komponenter/modal/modal';
 import { LUKK_MODAL } from '../../../ducks/modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../../../routing';
 import { selectAktivitetReducer } from '../aktivitet-reducer';
 import { STATUS } from '../../../ducks/utils';
-import {
-    selectAktivitetListeStatus,
-    selectAktivitetMedId,
-} from '../aktivitetliste-selector';
+import { selectAktivitetMedId } from '../aktivitetliste-selector';
 
 function EndreAktivitetForm({
     valgtAktivitet,
@@ -132,8 +127,6 @@ EndreAktivitetForm.defaultProps = {
 
 function EndreAktivitet({
     valgtAktivitet,
-    visVersjonskonflikt,
-    skjulVersjonskonflikt,
     intl,
     lukkModal,
     formIsDirty,
@@ -142,7 +135,6 @@ function EndreAktivitet({
 }) {
     function visAktivitet() {
         history.push(aktivitetRoute(valgtAktivitet.id));
-        skjulVersjonskonflikt();
     }
 
     return (
@@ -172,18 +164,11 @@ function EndreAktivitet({
             >
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>
-                        <Versjonskonflikt
-                            visible={visVersjonskonflikt}
-                            tilbake={skjulVersjonskonflikt}
-                            slett={visAktivitet}
+                        <EndreAktivitetForm
+                            valgtAktivitet={valgtAktivitet}
+                            visAktivitet={visAktivitet}
+                            {...rest}
                         />
-                        <div className={visVersjonskonflikt && 'hidden'}>
-                            <EndreAktivitetForm
-                                valgtAktivitet={valgtAktivitet}
-                                visAktivitet={visAktivitet}
-                                {...rest}
-                            />
-                        </div>
                     </ModalContainer>
                 </Innholdslaster>
             </article>
@@ -197,9 +182,7 @@ EndreAktivitet.defaultProps = {
 
 EndreAktivitet.propTypes = {
     doOppdaterAktivitet: PT.func.isRequired,
-    visVersjonskonflikt: PT.bool.isRequired,
     lagrer: PT.bool.isRequired,
-    skjulVersjonskonflikt: PT.func.isRequired,
     valgtAktivitet: AppPT.aktivitet,
     aktivitetId: PT.string.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
@@ -223,8 +206,7 @@ const mapStateToProps = (state, props) => {
         }[valgtAktivitet.type];
     return {
         valgtAktivitet,
-        avhengigheter: [selectAktivitetListeStatus(state)],
-        visVersjonskonflikt: state.view.endreAktivitet.visVersjonskonflikt,
+        avhengigheter: [valgtAktivitet ? STATUS.OK : STATUS.PENDING],
         formIsDirty: isDirty(formNavn)(state),
         lagrer: selectAktivitetReducer(state).status !== STATUS.OK,
     };
@@ -233,7 +215,6 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = dispatch => ({
     doOppdaterAktivitet: aktivitet => oppdaterAktivitet(aktivitet)(dispatch),
     lukkModal: () => dispatch({ type: LUKK_MODAL }),
-    skjulVersjonskonflikt: () => dispatch(SKJUL_VERSJONSKONFLIKT_ACTION),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

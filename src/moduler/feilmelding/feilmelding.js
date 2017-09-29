@@ -27,6 +27,7 @@ const stripeTyper = {
     FINNES_IKKE: AlertStripeAdvarsel,
     INGEN_TILGANG: AlertStripeInfoSolid,
     UGYLDIG_REQUEST: AlertStripeInfo,
+    VERSJONSKONFLIKT: AlertStripeInfo,
 };
 
 function FeilStripe({ alertStripe, feil, erVeileder, intl }) {
