@@ -82,7 +82,7 @@ class Varslinger extends Component {
                     hidden={reservertIKRR || !brukerErManuell}
                     tekstId="oppfolging.bruker-er-manuell.tekst"
                     lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
-                    href="/innstillinger"
+                    href="/innstillinger/digital"
                     className="varsling"
                 />
             </Container>

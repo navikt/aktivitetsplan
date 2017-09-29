@@ -44,7 +44,6 @@ function aktivitetvisningHeader(valgtAktivitet) {
                 status: valgtAktivitet.status,
                 type: valgtAktivitet.type,
             }}
-            className="side-innhold"
             aria-labelledby="modal-aktivitetsvisning-header"
             aktivitetErLaast={aktivitetErLaast}
         />
