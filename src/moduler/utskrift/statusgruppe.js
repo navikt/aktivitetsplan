@@ -31,17 +31,18 @@ function AktivitetPrint({ aktivitet }) {
     const { id, type, tittel } = aktivitet;
     return (
         <div key={id}>
+            <p className="printmodal-body__statusgruppe--type">
+                <FormattedMessage
+                    id={`aktivitetskort.type.${type}`.toLowerCase()}
+                />
+            </p>
+
             <Element
                 tag="h2"
                 className="printmodal-body__statusgruppe--overskrift"
             >
                 {tittel}
             </Element>
-            <p className="printmodal-body__statusgruppe--type">
-                <FormattedMessage
-                    id={`aktivitetskort.type.${type}`.toLowerCase()}
-                />
-            </p>
 
             <AktivitetEtikettGruppe
                 aktivitet={aktivitet}
