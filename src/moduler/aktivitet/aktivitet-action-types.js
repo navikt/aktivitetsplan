@@ -2,9 +2,9 @@ export const HENTER = 'aktivitet/hent';
 export const HENTET = 'aktivitet/hent/ok';
 export const HENTING_FEILET = 'aktivitet/hent/fail';
 
-export const HENT_AKTIVITET = 'aktivitet/hent-aktivitet';
-export const HENT_AKTIVITET_OK = 'aktivitet/hent-aktivitet/ok';
-export const HENT_AKTIVITET_FEILET = 'aktivitet/hent-aktivitet/fail';
+export const HENT_AKTIVITET = 'aktivitet/hent_aktivitet';
+export const HENT_AKTIVITET_OK = 'aktivitet/hent_aktivitet/ok';
+export const HENT_AKTIVITET_FEILET = 'aktivitet/hent_aktivitet/fail';
 
 export const HENT_KANALER = 'kanal/hent';
 export const HENT_KANALER_OK = 'kanal/hent/ok';

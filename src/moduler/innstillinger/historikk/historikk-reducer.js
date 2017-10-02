@@ -2,9 +2,9 @@ import * as Api from './historikk-api';
 import { STATUS, doThenDispatch } from '../../../ducks/utils';
 
 // Actions
-export const HENT_HISTORIKK_OK = 'historikk/hent-historikk/OK';
-export const HENT_HISTORIKK_FEILET = 'historikk/hent-historikk/FEILET';
-export const HENT_HISTORIKK_PENDING = 'historikk/hent-historikk/PENDING';
+export const HENT_HISTORIKK_OK = 'historikk/hent_historikk/OK';
+export const HENT_HISTORIKK_FEILET = 'historikk/hent_historikk/FEILET';
+export const HENT_HISTORIKK_PENDING = 'historikk/hent_historikk/PENDING';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
