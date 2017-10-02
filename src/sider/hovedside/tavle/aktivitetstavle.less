@@ -2,9 +2,9 @@
 @import '../aktivitetskort/aktivitetskort';
 
 @color-kolonne-background: @navGra20;
-@color-background-drag: @navGra60;
+@color-background-drag: @navGra40;
 
-@min-height: 6rem;
+@min-height: 2rem;
 
 .aktivitetstavle {
     align-self: center;
@@ -18,7 +18,7 @@
 .aktivitetstavle__kolonne {
     background-color: @color-kolonne-background;
     padding: 0.5rem 0.5rem 0.1rem;
-    transition: padding 0.2s ease-in-out;
+    transition: padding 0.05s ease-in-out;
     min-height: @min-height;
     border-radius: @border-radius-base;
     margin: 0.5rem 8px;
@@ -42,7 +42,7 @@
     text-align: left;
 }
 
-.aktivitetstavle--drag {
+.aktivitetstavle__kolonne--drag {
     background-color: @color-background-drag;
     padding-bottom: @min-height;
 }
