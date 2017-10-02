@@ -28,8 +28,8 @@ VisibleIfElementFormattedMessage.propTypes = {
 function VilkarInnhold({ vilkar, underOppfolging, privatModusStatus }) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
     const tittelTekst = underOppfolging
-        ? 'vilkar.modal.gjeldende.privat-tittel'
-        : 'vilkar.modal.gjeldende.samarbeid-tittel';
+        ? 'vilkar.modal.gjeldende.samarbeid-tittel'
+        : 'vilkar.modal.gjeldende.privat-tittel';
     return (
         <Innholdslaster avhengigheter={[privatModusStatus]}>
             <div className="vilkar__innhold">
