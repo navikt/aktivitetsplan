@@ -68,7 +68,7 @@ function hentVeiledereDersomSammeEnhet(dispatch, props) {
 
 function OpprettOppgaveForm({
     onSubmit,
-    opprettOppgave,
+    avhengigheter,
     hentEnheter,
     errorSummary,
     intl,
@@ -76,7 +76,7 @@ function OpprettOppgaveForm({
 }) {
     return (
         <form onSubmit={onSubmit}>
-            <Innholdslaster avhengigheter={opprettOppgave}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <div className="opprett-oppgave-skjema">
                     {errorSummary}
                     <Select
@@ -99,7 +99,7 @@ function OpprettOppgaveForm({
 
 OpprettOppgaveForm.propTypes = {
     onSubmit: PT.func.isRequired,
-    opprettOppgave: AppPT.avhengigheter.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     hentEnheter: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
     intl: intlShape.isRequired,
@@ -145,7 +145,7 @@ const mapStateToProps = (state, props) => {
             : undefined,
         valgtEnhet: selector(state, 'enhetId'),
         tema: selector(state, 'tema'),
-        opprettOppgave: [selectOpprettOppgave(state)],
+        avhengigheter: [selectOpprettOppgave(state)],
         behandlendeEnheter: selectBehandlendeEnheter(state),
     };
 };

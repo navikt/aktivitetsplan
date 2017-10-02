@@ -1,17 +1,17 @@
-export function selectAktiviteter(state) {
+function selectAktiviteterSlice(state) {
     return state.data.aktiviteter;
 }
 
 export function selectAktiviteterData(state) {
-    return selectAktiviteter(state).data;
+    return selectAktiviteterSlice(state).data;
 }
 
 export function selectAktivitetStatus(state) {
-    return selectAktiviteter(state).status;
+    return selectAktiviteterSlice(state).status;
 }
 
 export function selectForrigeAktiveAktivitetId(state) {
-    return selectAktiviteter(state).forrigeAktiveAktivitetId;
+    return selectAktiviteterSlice(state).forrigeAktiveAktivitetId;
 }
 
 export default {};

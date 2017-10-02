@@ -18,10 +18,10 @@ class AktivitetmalEndre extends Component {
     }
 
     render() {
-        const { mal } = this.props;
+        const { mal,avhengigheter} = this.props;
 
         return (
-            <Innholdslaster avhengigheter={[this.props.malData]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <section className="aktivitetmal aktivitetmal__innhold">
                     <AktivitetsmalForm
                         mal={mal}
@@ -35,18 +35,17 @@ class AktivitetmalEndre extends Component {
 
 AktivitetmalEndre.defaultProps = {
     mal: null,
-    malData: null,
 };
 
 AktivitetmalEndre.propTypes = {
     mal: AppPT.mal,
     doHentMal: PT.func.isRequired,
-    malData: AppPT.avhengigheter.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
 };
 
 const mapStateToProps = state => ({
     mal: selectGjeldendeMal(state),
-    malData: selectMalSlice(state),
+    avhengigheter: [selectMalSlice(state)],
 });
 
 const mapDispatchToProps = dispatch => ({

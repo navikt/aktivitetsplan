@@ -1,13 +1,13 @@
-export function selectArenaAktiviteter(state) {
+export function selectArenaAktiviteterSlice(state) {
     return state.data.arenaAktiviteter;
 }
 
 export function selectArenaAktiviteterData(state) {
-    return selectArenaAktiviteter(state).data;
+    return selectArenaAktiviteterSlice(state).data;
 }
 
 export function selectArenaAktivitetStatus(state) {
-    return selectArenaAktiviteter(state).status;
+    return selectArenaAktiviteterSlice(state).status;
 }
 
 export default {};
