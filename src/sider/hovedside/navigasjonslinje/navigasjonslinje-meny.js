@@ -68,7 +68,7 @@ function NavigasjonslinjeMeny({
 
     return (
         <HiddenIfDiv
-            hidden={!kanRedigere && !kanFjerne && !kanRedigere}
+            hidden={!kanLeggeTil && !kanFjerne && !kanRedigere}
             className="navigasjonslinje-meny"
         >
             <LeggTilLenke hidden={!kanLeggeTil} />
