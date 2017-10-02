@@ -98,6 +98,7 @@ class Navigasjonslinje extends Component {
                     sti="/dialog"
                     tekstId="navigasjon.dialog"
                     disabled={disabled || !kanHaDialog}
+                    aria-live="polite"
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}

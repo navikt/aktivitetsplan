@@ -279,7 +279,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             innhold={gruppeAktivitetStatus}
         />,
         <section key="moteplan" className="aktivitetsbeskrivelse">
-            <EtikettLiten className="aktivitetsbeskrivelse__tittel">
+            <EtikettLiten className="aktivitetsbeskrivelse__tittel" tag="h1">
                 <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
             </EtikettLiten>
             {moeteplanListe.map(mote =>
@@ -308,7 +308,10 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         const oppfolgingSection =
             avtaleOppfolging &&
             <section key="avtaleOppfolging" className="aktivitetsbeskrivelse">
-                <EtikettLiten className="aktivitetsbeskrivelse__tittel">
+                <EtikettLiten
+                    className="aktivitetsbeskrivelse__tittel"
+                    tag="h1"
+                >
                     <FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />
                 </EtikettLiten>
                 <Tekstomrade className="aktivitetsbeskrivelse__tekst">
