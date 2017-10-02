@@ -88,9 +88,7 @@ class Varslinger extends Component {
         );
 
         return (
-            <Innholdslaster
-                avhengigheter={avhengigheter}
-            >
+            <Innholdslaster avhengigheter={avhengigheter}>
                 {erBruker ? visVarslingerForBruker : visVarslingerForVeileder}
             </Innholdslaster>
         );
@@ -121,7 +119,7 @@ Varslinger.propTypes = {
 
 const mapStateToProps = state => ({
     erBruker: selectErBruker(state),
-    avhengigheter: [selectSituasjonStatus(state),selectIdentitetStatus(state)],
+    avhengigheter: [selectSituasjonStatus(state), selectIdentitetStatus(state)],
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),

@@ -18,7 +18,7 @@ class AktivitetmalEndre extends Component {
     }
 
     render() {
-        const { mal,avhengigheter} = this.props;
+        const { mal, avhengigheter } = this.props;
 
         return (
             <Innholdslaster avhengigheter={avhengigheter}>
