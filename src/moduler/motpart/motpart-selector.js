@@ -1,6 +1,15 @@
-const selectMotpartSlice = state => state.data.motpart;
+export function selectMotpartSlice(state) {
+    return state.data.motpart;
+}
 
-export const selectMotpartReducer = state => state.data.motpart;
-export const selectMotpartStatus = state => selectMotpartSlice(state).status;
-export const selectMotpartData = state => selectMotpartSlice(state).data;
-export const selectNavnPaMotpart = state => selectMotpartSlice(state).data.navn;
+export function selectMotpartStatus(state) {
+    return selectMotpartSlice(state).status;
+}
+
+export function selectMotpartData(state) {
+    return selectMotpartSlice(state).data;
+}
+
+export function selectNavnPaMotpart(state) {
+    return selectMotpartSlice(state).data.navn;
+}

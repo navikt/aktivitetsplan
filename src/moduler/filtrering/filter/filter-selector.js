@@ -1,25 +1,25 @@
-export function selectFilterReducer(state) {
+export function selectFilterSlice(state) {
     return state.data.filter;
 }
 
 export function selectHistoriskPeriode(state) {
-    return selectFilterReducer(state).historiskPeriode;
+    return selectFilterSlice(state).historiskPeriode;
 }
 
 export function selectAktivitetTyperFilter(state) {
-    return selectFilterReducer(state).aktivitetTyper;
+    return selectFilterSlice(state).aktivitetTyper;
 }
 
 export function selectAktivitetEtiketterFilter(state) {
-    return selectFilterReducer(state).aktivitetEtiketter;
+    return selectFilterSlice(state).aktivitetEtiketter;
 }
 
 export function selectAktivitetStatusFilter(state) {
-    return selectFilterReducer(state).aktivitetStatus;
+    return selectFilterSlice(state).aktivitetStatus;
 }
 
 export function selectAktivitetAvtaltMedNavFilter(state) {
-    return selectFilterReducer(state).aktivitetAvtaltMedNav;
+    return selectFilterSlice(state).aktivitetAvtaltMedNav;
 }
 
 export function selectViserInneverendePeriode(state) {
