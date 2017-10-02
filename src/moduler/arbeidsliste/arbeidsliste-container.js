@@ -6,7 +6,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
-    selectMotpartReducer,
+    selectMotpartSlice,
     selectNavnPaMotpart,
 } from '../motpart/motpart-selector';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
@@ -73,7 +73,7 @@ ArbeidslisteContainer.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    motpart: selectMotpartReducer(state),
+    motpart: selectMotpartSlice(state),
     path: ownProps.match.path,
     navnPaMotpart: selectNavnPaMotpart(state),
     arbeidslisteReducer: selectArbeidslisteReducer(state),

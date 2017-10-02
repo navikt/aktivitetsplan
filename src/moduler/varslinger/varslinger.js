@@ -14,13 +14,13 @@ import {
     selectErUnderOppfolging,
     selectErBrukerManuell,
     selectReservasjonKRR,
-    selectSituasjonReducer,
     selectTilHorendeDialogId,
     selectErEskalert,
+    selectSituasjonStatus,
 } from '../situasjon/situasjon-selector';
 import {
     selectErBruker,
-    selectIdentitetReducer,
+    selectIdentitetStatus,
 } from '../identitet/identitet-selector';
 
 class Varslinger extends Component {
@@ -29,9 +29,8 @@ class Varslinger extends Component {
     }
     render() {
         const {
-            identitetReducer,
             erBruker,
-            situasjonReducer,
+            avhengigheter,
             underOppfolging,
             vilkarMaBesvares,
             brukerErManuell,
@@ -89,9 +88,7 @@ class Varslinger extends Component {
         );
 
         return (
-            <Innholdslaster
-                avhengigheter={[situasjonReducer, identitetReducer]}
-            >
+            <Innholdslaster avhengigheter={avhengigheter}>
                 {erBruker ? visVarslingerForBruker : visVarslingerForVeileder}
             </Innholdslaster>
         );
@@ -109,9 +106,8 @@ Varslinger.defaultProps = {
 };
 
 Varslinger.propTypes = {
-    identitetReducer: AppPT.reducer.isRequired,
     erBruker: PT.bool,
-    situasjonReducer: AppPT.reducer.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     underOppfolging: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerErManuell: PT.bool,
@@ -122,9 +118,8 @@ Varslinger.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    identitetReducer: selectIdentitetReducer(state),
     erBruker: selectErBruker(state),
-    situasjonReducer: selectSituasjonReducer(state),
+    avhengigheter: [selectSituasjonStatus(state), selectIdentitetStatus(state)],
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),

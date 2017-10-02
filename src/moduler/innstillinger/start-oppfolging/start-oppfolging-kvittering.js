@@ -3,20 +3,22 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
+import { selectPrivatModusStatus } from '../../privat-modus/privat-modus-selector';
+import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
 
-function StartOppfolgingKvittering({ motpart }) {
-    const { navn } = motpart.data;
+function StartOppfolgingKvittering({ avhengigheter, navn }) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
-            <Innholdslaster avhengigheter={[motpart]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <article className="innstillinger__container">
                     <Innholdstittel>
                         <FormattedMessage
@@ -42,15 +44,17 @@ function StartOppfolgingKvittering({ motpart }) {
 }
 
 StartOppfolgingKvittering.defaultProps = {
-    motpart: undefined,
+    navn: undefined,
 };
 
 StartOppfolgingKvittering.propTypes = {
-    motpart: AppPT.motpart,
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    navn: PT.string,
 };
 
 const mapStateToProps = state => ({
-    motpart: state.data.motpart,
+    avhengigheter: selectPrivatModusStatus(state),
+    navn: selectNavnPaMotpart(state),
 });
 
 export default connect(mapStateToProps)(StartOppfolgingKvittering);

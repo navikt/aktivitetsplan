@@ -6,6 +6,7 @@ import NyHenvendelse from './ny-henvendelse';
 import EndreDialog from './endre-dialog';
 import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
+import { selectAktivitetMedId } from '../moduler/aktivitet/aktivitetliste-selector';
 
 function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;
@@ -44,9 +45,7 @@ Dialog.defaultProps = {
 
 const mapStateToProps = (state, props) => {
     const dialog = props.dialog;
-    const aktivitet =
-        state.data.aktiviteter.data.find(a => a.id === dialog.aktivitetId) ||
-        {};
+    const aktivitet = selectAktivitetMedId(state, dialog.aktivitetId) || {};
     return {
         overskrift: aktivitet.tittel || dialog.overskrift,
     };

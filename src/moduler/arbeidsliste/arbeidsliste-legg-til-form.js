@@ -19,6 +19,7 @@ import {
     begrensetKommentarLengde,
     fristErEtterIDag,
 } from './arbeidsliste-utils';
+import { selectIdentitetId } from '../identitet/identitet-selector';
 
 function LeggTilArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
     return (
@@ -74,7 +75,7 @@ const LeggTilArbeidslisteFormValidation = validForm({
 })(LeggTilArbeidslisteForm);
 
 const mapStateToProps = state => ({
-    veileder: state.data.identitet.data.id,
+    veileder: selectIdentitetId(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => {

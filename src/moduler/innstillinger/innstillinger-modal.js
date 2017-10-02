@@ -8,9 +8,13 @@ import Modal from '../../felles-komponenter/modal/modal';
 import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import {
+    selectMotpartSlice,
+    selectNavnPaMotpart,
+} from '../motpart/motpart-selector';
 
 function InnstillingerModal({
-    motpart,
+    avhengigheter,
     children,
     navnPaMotpart,
     onRequestClose,
@@ -26,7 +30,7 @@ function InnstillingerModal({
         >
             <article className="innstillinger__container">
                 <Innholdslaster
-                    avhengigheter={[motpart]}
+                    avhengigheter={avhengigheter}
                     className="innstillinger__spinner"
                 >
                     <Innholdstittel className="innstillinger__overskrift">
@@ -55,17 +59,14 @@ InnstillingerModal.defaultProps = {
 
 InnstillingerModal.propTypes = {
     navnPaMotpart: PT.string,
-    motpart: AppPT.reducer.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     children: PT.node,
     onRequestClose: PT.func,
 };
 
-const mapStateToProps = state => {
-    const motpart = state.data.motpart;
-    return {
-        motpart,
-        navnPaMotpart: motpart.data.navn,
-    };
-};
+const mapStateToProps = state => ({
+    avhengigheter: [selectMotpartSlice(state)],
+    navnPaMotpart: selectNavnPaMotpart(state),
+});
 
 export default connect(mapStateToProps)(InnstillingerModal);
