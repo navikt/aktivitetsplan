@@ -11,13 +11,13 @@ import {
     oppgavetyper,
     optionsFromObjectWithIntl,
     prioritet,
-    veilederlisteToKeyValueMap,
 } from './opprett-oppgave-utils';
 import PeriodeValidering from '../../../felles-komponenter/skjema/datovelger/periode-validering';
 import Datovelger from '../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 import { STATUS } from '../../../ducks/utils';
 import * as AppPT from '../../../proptypes';
+import VelgVeileder from './velg-veileder';
 
 const HiddenIf = ({ hidden, children }) => {
     if (hidden) {
@@ -87,7 +87,7 @@ export function OpprettOppgaveInnerForm({
                             />
                         </div>
                     </PeriodeValidering>
-                    <div className="enhet-veileder-container">
+                    <div className="enhet-veileder-container blokk-m">
                         <Select
                             blankOptionParameters={{ hidden: true }}
                             feltNavn="enhetId"
@@ -103,17 +103,7 @@ export function OpprettOppgaveInnerForm({
                             hidden={!erValgtEnhetLikInnloggetEnhet(valgtEnhet)}
                         >
                             <Innholdslaster avhengigheter={[veiledere]}>
-                                <Select
-                                    feltNavn="veilederId"
-                                    bredde="m"
-                                    labelId="innstillinger.modal.opprett-oppgave.veileder.tittel"
-                                >
-                                    {optionsFromObjectWithIntl(
-                                        veilederlisteToKeyValueMap(
-                                            veilederliste
-                                        )
-                                    )}
-                                </Select>
+                                <VelgVeileder veilederliste={veilederliste} />
                             </Innholdslaster>
                         </HiddenIf>
                     </div>
