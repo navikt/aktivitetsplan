@@ -28,6 +28,7 @@ function erAvtalt(verdi, props) {
 
 const OPPFOLGING_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
+const MAKS_SOKNADER = 100000;
 
 const pakrevdFraDato = pakrevd(
     'sokeavtale-aktivitet-form.feilmelding.paakrevd-fradato'
@@ -48,6 +49,12 @@ const numericAntall = (value, props) =>
     (value && /^[0-9]+$/.test(value)) || erAvtalt(value, props)
         ? undefined
         : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.numerisk-antall" />;
+
+// eslint-disable-next-line no-confusing-arrow
+const begrensetAntallSoknader = (value, props) =>
+    (value && value < MAKS_SOKNADER) || erAvtalt(value, props)
+        ? undefined
+        : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.soknad-antall" />;
 
 const begrensetAvtaleOppfolgingLengde = maksLengde(
     'sokeavtale-aktivitet-form.feilmelding.oppfolging-lengde',
@@ -165,7 +172,7 @@ const SokeavtaleAktivitetReduxForm = validForm({
     validate: {
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
-        antallStillingerSokes: [pakrevdAntall, numericAntall],
+        antallStillingerSokes: [pakrevdAntall, numericAntall,begrensetAntallSoknader],
         beskrivelse: [begrensetBeskrivelseLengde],
         avtaleOppfolging: [begrensetAvtaleOppfolgingLengde],
         periodeValidering: [],
