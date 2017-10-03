@@ -63,7 +63,9 @@ class Tavle extends Component {
                 className="tavle__scrollknapp knapp-forrige"
                 onClick={this.visForrige}
                 disabled={this.state.venstreKnappDisabled}
-                aria-label={intl.formatMessage({ id: 'aktivitetstavle.scrollknapp.forrige.label' })}
+                aria-label={intl.formatMessage({
+                    id: 'aktivitetstavle.scrollknapp.forrige.label',
+                })}
             />
         );
 
@@ -72,7 +74,9 @@ class Tavle extends Component {
                 className="tavle__scrollknapp knapp-neste"
                 onClick={this.visNeste}
                 disabled={this.state.hoyreKnappDisabled}
-                aria-label={intl.formatMessage({ id: 'aktivitetstavle.scrollknapp.neste.label' })}
+                aria-label={intl.formatMessage({
+                    id: 'aktivitetstavle.scrollknapp.neste.label',
+                })}
             />
         );
 

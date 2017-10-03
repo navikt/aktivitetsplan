@@ -11,6 +11,8 @@ function FooterInfo() {
                 kind="info-sirkel-fylt"
                 height="1.5rem"
                 width="1.5rem"
+                title="Informasjons-ikon"
+                aria-label="Informasjons-ikon"
             />
             <UndertekstBold>
                 <Text id="info.aktivitetsplan.lanseringsdato" />

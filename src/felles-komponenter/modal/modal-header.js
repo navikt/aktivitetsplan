@@ -25,7 +25,17 @@ function ModalHeader({
             {...props}
         >
             {/* header til slutt for å få denne sist i tabrekkefølgen */}
+
             <header className="modal-header">
+                {/*
+                aria-alert={
+                    aktivitetErLaast
+                        ? intl.formatMessage({
+                              id: 'aktivitetsmodal.kan.ikke.redigeres',
+                          })
+                        : ''
+                }
+*/}
                 <VisibleIfSpan
                     className="modal-header-skillestrek"
                     visible={aktivitetErLaast}

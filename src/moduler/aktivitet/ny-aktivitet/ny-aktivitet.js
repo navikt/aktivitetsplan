@@ -84,4 +84,6 @@ const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(NyAktivitet));
+export default connect(mapStateToProps, mapDispatchToProps)(
+    injectIntl(NyAktivitet)
+);
