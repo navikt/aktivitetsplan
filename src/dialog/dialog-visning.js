@@ -80,6 +80,7 @@ class DialogVisning extends React.Component {
                 className={dialogCls(erValgt, !dialog.lest)}
                 customComponent={Test}
                 href={`/dialog/${dialog.id}`}
+                aria-expanded={erValgt}
             >
                 <Markering visible={!dialog.lest} />
                 <div className="dialoger__dialog--smuler">
