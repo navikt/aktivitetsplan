@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import { AktivitetsplanHjelpetekst } from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
+import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import AktivitetsKort from '../aktivitetskort/aktivitetskort';
 import {
