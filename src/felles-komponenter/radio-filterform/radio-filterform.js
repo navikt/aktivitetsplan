@@ -1,6 +1,8 @@
 import React, { PropTypes as PT, Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Radio } from 'nav-frontend-skjema';
+import { Knapp } from 'nav-frontend-knapper';
+import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
 
 class RadioFilterForm extends Component {
     constructor(props) {
@@ -38,23 +40,24 @@ class RadioFilterForm extends Component {
                     )}
                 </div>
                 <div className="knapperad blokk-xxs">
-                    <button
-                        className=" knapp knapp--hoved knapp--mini radio-velg--knapp"
+                    <Hovedknapp
+                        mini
+                        className="radio-velg--knapp"
                         onClick={event =>
                             onSubmit({ event, value: selected, ...rest })}
                         disabled={!selected}
                     >
                         <FormattedMessage id="components.filterform.button.velg" />
-                    </button>
-                    <button
-                        className="knapp knapp--mini knapp--standard"
+                    </Hovedknapp>
+                    <Knapp
+                        mini
                         onClick={event => {
                             this.changeSelected(undefined);
                             onSubmit({ event, value: null, ...rest });
                         }}
                     >
                         <FormattedMessage id="components.filterform.button.nullstill" />
-                    </button>
+                    </Knapp>
                 </div>
             </div>
         );
