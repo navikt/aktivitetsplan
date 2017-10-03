@@ -64,6 +64,7 @@ class AktivitetsKort extends Component {
             <article>
                 <Lenke
                     href={aktivitetRoute(id)}
+                    draggable={erFlyttbar}
                     className={classNames('aktivitetskort', {
                         'aktivitetskort--flyttbar': erFlyttbar,
                         'aktivitetskort--drag': isDragging,
