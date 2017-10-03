@@ -24,7 +24,7 @@ function ModalHeader({
             className={classNames('modal-header-wrapper', className)}
             {...props}
         >
-            {/* header til slutt for å få denne sist i tabrekkefølgen */}
+            {/* header til slutt for å få denne sist i tabrekkggiefølgen */}
 
             <header className="modal-header">
                 {/*
