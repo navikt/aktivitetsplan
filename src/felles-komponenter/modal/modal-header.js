@@ -24,18 +24,16 @@ function ModalHeader({
             className={classNames('modal-header-wrapper', className)}
             {...props}
         >
-            {/* header til slutt for å få denne sist i tabrekkggiefølgen */}
+            {/* header til slutt for å få denne sist i tabrekkefølgen */}
 
             <header className="modal-header">
-                {/*
-                aria-alert={
-                    aktivitetErLaast
+                <span aria-live="assertive" className="kun-for-skjermleser">
+                    {aktivitetErLaast
                         ? intl.formatMessage({
                               id: 'aktivitetsmodal.kan.ikke.redigeres',
                           })
-                        : ''
-                }
-*/}
+                        : ''}
+                </span>
                 <VisibleIfSpan
                     className="modal-header-skillestrek"
                     visible={aktivitetErLaast}
