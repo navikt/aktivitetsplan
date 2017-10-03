@@ -172,7 +172,11 @@ const SokeavtaleAktivitetReduxForm = validForm({
     validate: {
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
-        antallStillingerSokes: [pakrevdAntall, numericAntall,begrensetAntallSoknader],
+        antallStillingerSokes: [
+            pakrevdAntall,
+            numericAntall,
+            begrensetAntallSoknader,
+        ],
         beskrivelse: [begrensetBeskrivelseLengde],
         avtaleOppfolging: [begrensetAvtaleOppfolgingLengde],
         periodeValidering: [],
