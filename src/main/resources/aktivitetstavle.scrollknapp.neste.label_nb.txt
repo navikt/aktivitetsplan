@@ -1,1 +1,1 @@
-Flytt visning til høyre
+Flytt visning en kolonne til høyre
