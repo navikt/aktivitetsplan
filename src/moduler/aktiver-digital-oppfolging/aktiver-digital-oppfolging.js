@@ -45,7 +45,7 @@ export function AktiverDigitalOppfolgingVarsel({
             <FormattedMessage id="sett-digital.reservert-i-krr.url-lenke">
                 {url =>
                     <AlertStripeInfoSolid className="sett-digital__varsel">
-                        <div>
+                        <div className="blokk-s">
                             <FormattedMessage id={resertvertTekst} />&nbsp;
                             <Lenke href={url}>
                                 <FormattedMessage id="sett-digital.reservert-i-krr.lenketekst" />
