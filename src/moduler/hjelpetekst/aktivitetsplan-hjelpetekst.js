@@ -39,7 +39,7 @@ function AktivitetsplanHjelpetekst({ tittelId, hjelpetekstId, retning, intl }) {
 AktivitetsplanHjelpetekst.propTypes = {
     tittelId: PT.string.isRequired,
     hjelpetekstId: PT.string.isRequired,
-    retning: PT.string.isRequired,
+    retning: PT.oneOf(Object.keys(map)).isRequired,
     intl: intlShape.isRequired,
 };
 

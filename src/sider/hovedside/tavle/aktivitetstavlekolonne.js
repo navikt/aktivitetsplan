@@ -47,7 +47,7 @@ function hjelpetekst(aktivitetStatus) {
                 <AktivitetsplanHjelpetekst
                     tittelId="aktivitetstavle.brukerErInteressert.info"
                     hjelpetekstId="hjelpetekst.aktivitet.er.interessert"
-                    retning="hoyre"
+                    retning="nedover"
                 />
             );
 
