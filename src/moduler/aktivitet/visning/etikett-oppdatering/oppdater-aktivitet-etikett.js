@@ -6,13 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import * as statuser from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import StillingEtikettForm from './stilling-etikett-form';
+import { selectAktivitetMedId } from '../../aktivitetliste-selector';
 
 function OppdaterAktivitetStatus(props) {
-    const { aktiviteter, paramsId, status } = props;
-
-    const valgtAktivitet = aktiviteter.data.find(
-        aktivitet => aktivitet.id === paramsId
-    );
+    const { valgtAktivitet, status } = props;
 
     const disableStatusEndring =
         valgtAktivitet.historisk ||
@@ -40,14 +37,11 @@ OppdaterAktivitetStatus.propTypes = {
     status: PT.string.isRequired,
     paramsId: PT.string.isRequired,
     className: PT.string.isRequired,
-    aktiviteter: PT.shape({
-        status: PT.string,
-        data: PT.arrayOf(AppPT.aktivitet),
-    }).isRequired,
+    valgtAktivitet: AppPT.aktivitet.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
-    aktiviteter: state.data.aktiviteter,
+    valgtAktivitet: selectAktivitetMedId(state, props.paramsId),
     initialValues: {
         aktivitetstatus: props.status,
     },

@@ -9,13 +9,13 @@ import { hentSituasjon } from '../situasjon/situasjon';
 import history from '../../history';
 
 // Actions
-export const HENT_SITUASJON_OK = 'innstillinger/hent-situasjon/OK';
-export const HENT_SITUASJON_FEILET = 'innstillinger/hent-situasjon/FEILET';
-export const HENT_SITUASJON_PENDING = 'innstillinger/hent-situasjon/PENDING';
+export const HENT_SITUASJON_OK = 'innstillinger/hent_situasjon/OK';
+export const HENT_SITUASJON_FEILET = 'innstillinger/hent_situasjon/FEILET';
+export const HENT_SITUASJON_PENDING = 'innstillinger/hent_situasjon/PENDING';
 
-export const KAN_AVSLUTTE_OK = 'innstillinger/kan-avslutte/OK';
-export const KAN_AVSLUTTE_FEILET = 'innstillinger/kan-avslutte/FEILET';
-export const KAN_AVSLUTTE_PENDING = 'innstillinger/kan-avslutte/PENDING';
+export const KAN_AVSLUTTE_OK = 'innstillinger/kan_avslutte/OK';
+export const KAN_AVSLUTTE_FEILET = 'innstillinger/kan_avslutte/FEILET';
+export const KAN_AVSLUTTE_PENDING = 'innstillinger/kan_avslutte/PENDING';
 
 export const AVSLUTT_OPPFOLGING_OK = 'innstillinger/avslutt/OK';
 export const AVSLUTT_OPPFOLGING_FEILET = 'innstillinger/avslutt/FEILET';
@@ -33,16 +33,16 @@ export const SETT_DIGITAL_OK = 'innstillinger/digital/OK';
 export const SETT_DIGITAL_FEILET = 'innstillinger/digital/FEILET';
 export const SETT_DIGITAL_PENDING = 'innstillinger/digital/PENDING';
 
-export const START_ESKALERING_OK = 'instillinger/start-eskalering/OK';
-export const START_ESKALERING_FEILET = 'instillinger/start-eskalering/FEILET';
-export const START_ESKALERING_PENDING = 'instillinger/start-eskalering/PENDING';
+export const START_ESKALERING_OK = 'instillinger/start_eskalering/OK';
+export const START_ESKALERING_FEILET = 'instillinger/start_eskalering/FEILET';
+export const START_ESKALERING_PENDING = 'instillinger/start_eskalering/PENDING';
 
-export const STOPP_ESKALERING_OK = 'instillinger/stopp-eskalering/OK';
-export const STOPP_ESKALERING_FEILET = 'instillinger/stopp-eskalering/FEILET';
-export const STOPP_ESKALERING_PENDING = 'instillinger/stopp-eskalering/PENDING';
+export const STOPP_ESKALERING_OK = 'instillinger/stopp_eskalering/OK';
+export const STOPP_ESKALERING_FEILET = 'instillinger/stopp_eskalering/FEILET';
+export const STOPP_ESKALERING_PENDING = 'instillinger/stopp_eskalering/PENDING';
 
-export const LAGRE_BEGRUNNELSE = 'form/lagre-begrunnelse';
-export const SLETT_BEGRUNNELSE = 'form/slett-begrunnelse';
+export const LAGRE_BEGRUNNELSE = 'form/lagre_begrunnelse';
+export const SLETT_BEGRUNNELSE = 'form/slett_begrunnelse';
 export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
 
 const initalState = {

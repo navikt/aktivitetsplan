@@ -12,6 +12,9 @@ import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
 import { RemoteResetKnapp } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import InnstillingerModal from '../innstillinger-modal';
 import { hentSituasjon } from '../../situasjon/situasjon';
+import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
+import { selectIdentitetId } from '../../identitet/identitet-selector';
+import { selectInnstillingerBegrunnelse } from '../innstillinger-selector';
 
 function BekreftAvslutning({
     doAvsluttOppfolging,
@@ -66,9 +69,9 @@ BekreftAvslutning.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    navn: state.data.motpart.data.navn,
-    veilederId: state.data.identitet.data.id,
-    begrunnelse: state.data.innstillinger.begrunnelse,
+    navn: selectNavnPaMotpart(state),
+    veilederId: selectIdentitetId(state),
+    begrunnelse: selectInnstillingerBegrunnelse(state),
 });
 
 const mapDispatchToProps = dispatch => ({

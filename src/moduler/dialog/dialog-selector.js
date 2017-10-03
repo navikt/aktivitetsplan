@@ -13,6 +13,10 @@ export function selectDialogStatus(state) {
     return selectDialogSlice(state).status;
 }
 
+export function selectSisteHenvendelseData(state) {
+    return selectDialogSlice(state).sisteHenvendelseData;
+}
+
 export function selectEskaleringsFilter(state) {
     return selectDialogSlice(state).esklaringsFilter;
 }

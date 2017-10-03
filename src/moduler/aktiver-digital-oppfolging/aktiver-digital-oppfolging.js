@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import PT from 'prop-types';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import { settDigital } from './aktiver-digital-oppfolging-reducer';
@@ -9,10 +9,11 @@ import { STATUS } from '../../ducks/utils';
 import { hentSituasjon } from '../situasjon/situasjon';
 import {
     selectReservasjonKRR,
-    selectSituasjonReducer,
+    selectSituasjonStatus,
 } from '../situasjon/situasjon-selector';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Lenke from '../../felles-komponenter/utils/lenke';
+import { selectAktiverDigitalOppfolgingStatus } from './aktiver-digital-oppfolgning-selector';
 
 export function AktiverDigitalOppfolgingVarsel({
     reservertIKRR,
@@ -137,18 +138,16 @@ AktiverDigitalOppfolgingPure.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const aktiverDigitalOppfolgingReducer = state.data.aktiverDigitalOppfolging;
-    const situasjonReducer = selectSituasjonReducer(state);
-
-    const aktiverDigitalOppfolgingStatus =
-        aktiverDigitalOppfolgingReducer.status;
+    const aktiverDigitalOppfolgingStatus = selectAktiverDigitalOppfolgingStatus(
+        state
+    );
     const settDigitalFeilet = aktiverDigitalOppfolgingStatus === STATUS.ERROR;
 
     const setterDigital =
         aktiverDigitalOppfolgingStatus === STATUS.PENDING ||
         aktiverDigitalOppfolgingStatus === STATUS.RELOADING;
 
-    const situasjonStatus = situasjonReducer.status;
+    const situasjonStatus = selectSituasjonStatus(state);
     const lasterSituasjon =
         situasjonStatus === STATUS.PENDING ||
         situasjonStatus === STATUS.RELOADING;

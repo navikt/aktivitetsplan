@@ -61,13 +61,13 @@ class AktivitetsKort extends Component {
         const { id, type, tittel, antallStillingerSokes } = aktivitet;
 
         const aktivitetsKort = (
-            <article style={{ opacity: isDragging ? 0.4 : 1 }}>
+            <article>
                 <Lenke
                     href={aktivitetRoute(id)}
-                    className={classNames(
-                        'aktivitetskort',
-                        erFlyttbar && 'aktivitetskort--flyttbar'
-                    )}
+                    className={classNames('aktivitetskort', {
+                        'aktivitetskort--flyttbar': erFlyttbar,
+                        'aktivitetskort--drag': isDragging,
+                    })}
                     brukLenkestyling={false}
                     focusRef={aktivitetskort => {
                         this.aktivitetskortSomSkalFaFokusNarLukkes = aktivitetskort;
@@ -78,7 +78,12 @@ class AktivitetsKort extends Component {
                             id={`aktivitetskort.type.${type}`.toLowerCase()}
                         />
                     </Undertekst>
-                    <Element tag="h1" className="aktivitetskort__tittel">
+                    <Element
+                        tag="h1"
+                        className={classNames('aktivitetskort__tittel', {
+                            'aktivitetskort__tittel--drag': isDragging,
+                        })}
+                    >
                         {erBehandlingAktivitet
                             ? <FormattedMessage id="aktivitetskort.behandling.tittel" />
                             : tittel}

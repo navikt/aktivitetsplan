@@ -10,6 +10,7 @@ import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import InnstillingerModal from '../innstillinger-modal';
 import { hentSituasjon } from '../../situasjon/situasjon';
+import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
 
 function BekreftStart({ doStartOppfolging, navn }) {
     return (
@@ -48,7 +49,7 @@ BekreftStart.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    navn: state.data.motpart.data.navn,
+    navn: selectNavnPaMotpart(state),
 });
 
 const mapDispatchToProps = dispatch => ({

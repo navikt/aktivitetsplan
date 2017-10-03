@@ -1,5 +1,11 @@
-import { selectAktivitetStatus } from './aktivitet-selector';
-import { selectArenaAktivitetStatus } from './arena-aktivitet-selector';
+import {
+    selectAktiviteterData,
+    selectAktivitetStatus,
+} from './aktivitet-selector';
+import {
+    selectArenaAktiviteterData,
+    selectArenaAktivitetStatus,
+} from './arena-aktivitet-selector';
 import { aggregerStatus } from '../../ducks/utils';
 import {
     selectPrivatModusSlice,
@@ -18,14 +24,10 @@ import {
 } from '../../constant';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 
-export function selectAktiviter(state) {
-    const stateData = state.data;
-    return stateData.aktiviteter.data;
-}
-
 export function selectAlleAktiviter(state) {
-    const stateData = state.data;
-    return selectAktiviter(state).concat(stateData.arenaAktiviteter.data);
+    return selectAktiviteterData(state).concat(
+        selectArenaAktiviteterData(state)
+    );
 }
 
 export function selectAktiviterForAktuellePerioden(state) {

@@ -18,7 +18,12 @@ import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
 import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
 import Checkbox from '../felles-komponenter/skjema/input/checkbox';
 import { selectErBruker } from '../moduler/identitet/identitet-selector';
-import { selectDialogMedId } from '../moduler/dialog/dialog-selector';
+import {
+    selectDialogMedId,
+    selectDialogStatus,
+    selectSisteHenvendelseData,
+} from '../moduler/dialog/dialog-selector';
+import { selectAktivitetMedId } from '../moduler/aktivitet/aktivitetliste-selector';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
@@ -128,16 +133,10 @@ const NyHenvendelseReduxForm = validForm({
 const mapStateToProps = (state, props) => {
     const aktivitetId = props.aktivitetId;
     const dialogId = props.dialogId;
-    const dialogState = state.data.dialog;
-    const aktiviteter = state.data.aktiviteter.data;
-    const arenaAktiviteter = state.data.arenaAktiviteter.data;
     const dialog = selectDialogMedId(state, dialogId) || {};
     const erNyDialog = Object.keys(dialog).length === 0;
-    const aktivitet = aktiviteter.find(a => a.id === aktivitetId) || {};
-    const arenaAktivitet =
-        arenaAktiviteter.find(a => a.id === aktivitetId) || {};
-    const overskrift =
-        aktivitet.tittel || arenaAktivitet.tittel || dialog.overskrift;
+    const aktivitet = selectAktivitetMedId(state, aktivitetId) || {};
+    const overskrift = aktivitet.tittel || dialog.overskrift;
     const sisteDato = dialog.sisteDato;
     const erBruker = selectErBruker(state);
     return {
@@ -147,11 +146,11 @@ const mapStateToProps = (state, props) => {
         },
         harEksisterendeOverskrift: !!overskrift,
         erNyDialog,
-        oppretter: dialogState.status !== STATUS.OK,
+        oppretter: selectDialogStatus(state) !== STATUS.OK,
         erBruker,
         visBrukerInfo: !!(
             erBruker &&
-            dialogState.sisteHenvendelseData === dialog &&
+            selectSisteHenvendelseData(state) === dialog &&
             moment(sisteDato).add(5, 's').isAfter(moment())
         ),
     };

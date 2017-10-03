@@ -9,6 +9,7 @@ import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { STATUS } from '../../../../ducks/utils';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import { selectAktivitetStatus } from '../../aktivitet-selector';
 
 const STILLING_ETIKETT_FORM_NAME = 'stilling-etikett-form';
 
@@ -91,19 +92,21 @@ StillingEtikettForm.propTypes = {
     handleSubmit: PT.func.isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-    aktivitetDataStatus: state.data.aktiviteter.status,
-    disabled:
-        state.data.aktiviteter.status !== STATUS.OK ||
-        props.disableStatusEndring,
-    valgtEtikettStatus: formValueSelector(STILLING_ETIKETT_FORM_NAME)(
-        state,
-        'etikettstatus'
-    ),
-    initialValues: {
-        etikettstatus: props.aktivitet.etikett || konstanter.INGEN_VALGT,
-    },
-});
+const mapStateToProps = (state, props) => {
+    const aktivitetDataStatus = selectAktivitetStatus(state);
+    return {
+        aktivitetDataStatus,
+        disabled:
+            aktivitetDataStatus !== STATUS.OK || props.disableStatusEndring,
+        valgtEtikettStatus: formValueSelector(STILLING_ETIKETT_FORM_NAME)(
+            state,
+            'etikettstatus'
+        ),
+        initialValues: {
+            etikettstatus: props.aktivitet.etikett || konstanter.INGEN_VALGT,
+        },
+    };
+};
 
 const mapDispatchToProps = () => ({
     onSubmit: (values, dispatch, props) => {

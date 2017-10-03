@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import { selectFilterReducer } from './filter/filter-selector';
+import { selectFilterSlice } from './filter/filter-selector';
 import FilterGruppe from './filter-gruppe';
 
 function VisaValgtFilter({ filterSlice }) {
@@ -23,7 +23,7 @@ VisaValgtFilter.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    filterSlice: selectFilterReducer(state),
+    filterSlice: selectFilterSlice(state),
 });
 
 export default connect(mapStateToProps)(VisaValgtFilter);
