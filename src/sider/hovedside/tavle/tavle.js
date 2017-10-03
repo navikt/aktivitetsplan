@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import SprettendeScrollbars from './sprettende-scrollbars';
 import { autobind } from '../../../utils';
@@ -62,6 +63,9 @@ class Tavle extends Component {
                 className="tavle__scrollknapp knapp-forrige"
                 onClick={this.visForrige}
                 disabled={this.state.venstreKnappDisabled}
+                aria-label={
+                    <FormattedMessage id="aktivitetstavle.scrollknapp.forrige.label" />
+                }
             />
         );
 
@@ -70,6 +74,9 @@ class Tavle extends Component {
                 className="tavle__scrollknapp knapp-neste"
                 onClick={this.visNeste}
                 disabled={this.state.hoyreKnappDisabled}
+                aria-label={
+                    <FormattedMessage id="aktivitetstavle.scrollknapp.neste.label" />
+                }
             />
         );
 

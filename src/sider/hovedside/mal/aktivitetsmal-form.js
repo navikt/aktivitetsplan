@@ -21,9 +21,6 @@ class AktivitetsmalForm extends Component {
         super(props);
         autobind(this);
     }
-    componentDidMount() {
-        this.textarea.focus();
-    }
     avbryt(e) {
         e.preventDefault();
         this.props.handleComplete();
