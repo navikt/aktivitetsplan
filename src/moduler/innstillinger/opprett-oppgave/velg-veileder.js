@@ -77,8 +77,6 @@ VelgVeileder.propTypes = {
     endreVeilederIform: PT.func.isRequired,
 };
 
-VelgVeileder.defaultProps = {};
-
 function mapDispatchToProps(dispatch) {
     return {
         endreVeilederIform: veileder =>
