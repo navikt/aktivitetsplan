@@ -11,11 +11,11 @@ import {
 
 const MAKS_LENGDE = 500;
 
-function forLangBegrunnelse(props, ...rest) {
+function forLangBegrunnelse(verdi, props) {
     return maksLengde(
         'avslutt.oppfolging.feilmelding.for-lang',
         (props && props.maksBeskrivelseLengde) || MAKS_LENGDE
-    ).apply(this, rest);
+    ).apply(this, arguments); // eslint-disable-line prefer-rest-params
 }
 
 const pakrevdBegrunnelse = pakrevd('avslutt.oppfolging.feilmelding.for-kort');

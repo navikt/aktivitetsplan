@@ -19,17 +19,19 @@ import {
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
 import { hentSituasjon } from '../../situasjon/situasjon';
+import { selectIdentitetId } from '../../identitet/identitet-selector';
+import { selectInnstillingerStatus } from '../innstillinger-selector';
 
 const SETT_DIGITAL_FORM_NAME = 'sett-digital-form';
 
 function SettDigitalOppfolging({
     veilederId,
-    innstillingerReducer,
+    innstillingerStatus,
     handleSubmit,
 }) {
     const situasjonLaster =
-        innstillingerReducer.status === STATUS.PENDING ||
-        innstillingerReducer.status === STATUS.RELOADING;
+        innstillingerStatus === STATUS.PENDING ||
+        innstillingerStatus === STATUS.RELOADING;
     return (
         <InnstillingerModal>
             <section className="innstillinger__prosess">
@@ -70,18 +72,18 @@ function SettDigitalOppfolging({
 
 SettDigitalOppfolging.defaultProps = {
     veilederId: undefined,
-    innstillingerReducer: undefined,
+    innstillingerStatus: undefined,
 };
 
 SettDigitalOppfolging.propTypes = {
     veilederId: PT.string,
     handleSubmit: PT.func.isRequired,
-    innstillingerReducer: AppPt.situasjon,
+    innstillingerStatus: AppPt.status,
 };
 
 const mapStateToProps = state => ({
-    veilederId: state.data.identitet.data.id,
-    innstillingerReducer: state.data.innstillinger,
+    veilederId: selectIdentitetId(state),
+    innstillingerStatus: selectInnstillingerStatus(state),
 });
 
 const mapDispatchToProps = dispatch => ({

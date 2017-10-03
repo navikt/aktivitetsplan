@@ -8,6 +8,7 @@ import { hentIdentitet } from '../../identitet/identitet-duck';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import leggTilAktivitetSvg from '../../../img/legg-til-aktivitet-illustrasjon.svg';
 import Modal from '../../../felles-komponenter/modal/modal';
+import { selectErVeileder } from '../../identitet/identitet-selector';
 
 class NyAktivitet extends Component {
     componentDidMount() {
@@ -77,7 +78,7 @@ NyAktivitet.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    erVeileder: state.data.identitet.data.erVeileder,
+    erVeileder: selectErVeileder(state),
 });
 
 const mapDispatchToProps = dispatch => ({

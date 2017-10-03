@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, untouch } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -20,16 +20,17 @@ import {
 } from '../../../../felles-komponenter/skjema/validering';
 import { manglerPubliseringAvSamtaleReferat } from '../../aktivitet-util';
 import {
-    STATUS_FULLFOERT,
+    INGEN_VALGT,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_PLANLAGT,
+    STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
-    INGEN_VALGT,
+    STATUS_PLANLAGT,
 } from '../../../../constant';
 import { selectAktivitetListeStatus } from '../../aktivitetliste-selector';
 
 const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
+const BEGRUNNELSE_FELT_NAME = 'begrunnelse';
 const MAKS_LENGDE = 255;
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);
@@ -136,7 +137,7 @@ function AktivitetStatusForm(props) {
                                 values={{ valgtAktivitetStatus }}
                             />
                         }
-                        feltNavn="begrunnelse"
+                        feltNavn={BEGRUNNELSE_FELT_NAME}
                         name="begrunnelse-aktivitet"
                         maxLength={MAKS_LENGDE}
                         disabled={lasterData}
@@ -238,6 +239,8 @@ const mapDispatchToProps = () => ({
                 values.aktivitetstatus,
                 values.begrunnelse
             )
+        ).then(
+            dispatch(untouch(AKTIVITET_STATUS_FORM_NAME, BEGRUNNELSE_FELT_NAME))
         );
     },
 });

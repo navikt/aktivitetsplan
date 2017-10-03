@@ -25,6 +25,7 @@ import {
     begrensetKommentarLengde,
 } from './arbeidsliste-utils';
 import { formaterDato } from '../../utils';
+import { selectIdentitetId } from '../identitet/identitet-selector';
 
 function RedigerArbeidslisteForm({
     handleSubmit,
@@ -100,11 +101,10 @@ const RedigerArbeidslisteFormValidation = validForm({
 
 const mapStateToProps = state => {
     const arbeidsliste = selectArbeidslisteReducer(state);
-
     return {
         sistEndretAv: selectSistEndretAv(state),
         endretDato: selectEndretDato(state),
-        veileder: state.data.identitet.data.id,
+        veileder: selectIdentitetId(state),
         initialValues: {
             kommentar: arbeidsliste.data.kommentar,
             frist: arbeidsliste.data.frist,

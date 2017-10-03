@@ -114,6 +114,8 @@ export const mal = PT.shape({
     dato: PT.string,
 });
 
+export const malListe = PT.arrayOf(mal);
+
 export const motpart = PT.shape({
     status: PT.string,
     data: PT.shape({

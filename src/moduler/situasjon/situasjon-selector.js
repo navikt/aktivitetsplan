@@ -1,9 +1,12 @@
-export const selectSituasjonReducer = state => state.data.situasjon;
+export const selectSituasjonSlice = state => state.data.situasjon;
+
+const selectSituasjonData = state => selectSituasjonSlice(state).data;
+
 export const selectReservasjonKRR = state =>
-    selectSituasjonReducer(state).data.reservasjonKRR;
+    selectSituasjonData(state).reservasjonKRR;
 
 export function selectOppfolgingsPerioder(state) {
-    return selectSituasjonReducer(state).data.oppfolgingsPerioder;
+    return selectSituasjonData(state).oppfolgingsPerioder;
 }
 
 export function selectHistoriskeOppfolgingsPerioder(state) {
@@ -11,23 +14,23 @@ export function selectHistoriskeOppfolgingsPerioder(state) {
 }
 
 export function selectErUnderOppfolging(state) {
-    return selectSituasjonReducer(state).data.underOppfolging;
+    return selectSituasjonData(state).underOppfolging;
 }
 
 export function selectOppfolgingUtgang(state) {
-    return selectSituasjonReducer(state).data.oppfolgingUtgang;
+    return selectSituasjonData(state).oppfolgingUtgang;
 }
 
 export function selectErBrukerManuell(state) {
-    return selectSituasjonReducer(state).data.manuell;
+    return selectSituasjonData(state).manuell;
 }
 
 export function selectVilkarMaBesvares(state) {
-    return selectSituasjonReducer(state).data.vilkarMaBesvares;
+    return selectSituasjonData(state).vilkarMaBesvares;
 }
 
 export function selectGjeldendeEskaleringsVarsel(state) {
-    return selectSituasjonReducer(state).data.gjeldendeEskaleringsvarsel;
+    return selectSituasjonData(state).gjeldendeEskaleringsvarsel;
 }
 
 export function selectErEskalert(state) {
@@ -42,11 +45,19 @@ export function selectTilHorendeDialogId(state) {
 }
 
 export function selectSituasjonStatus(state) {
-    return selectSituasjonReducer(state).status;
+    return selectSituasjonSlice(state).status;
+}
+
+export function selectAvslutningStatus(state) {
+    return selectSituasjonSlice(state).avslutningStatus;
+}
+
+export function selectKanAvslutte(state) {
+    return selectAvslutningStatus(state).kanAvslutte;
 }
 
 export function selectBrukerHarAvslatt(state) {
-    return selectSituasjonReducer(state).brukerHarAvslatt;
+    return selectSituasjonSlice(state).brukerHarAvslatt;
 }
 
 export default {};

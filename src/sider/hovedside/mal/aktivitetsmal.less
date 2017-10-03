@@ -3,6 +3,10 @@
 .aktivitetmal {
     text-align: left;
 
+    &__header {
+        padding: 1rem 1rem 0.5rem;
+    }
+
     &__modal .modal-header {
         margin: 0 !important; // lesshint importantRule: false
     }
@@ -30,11 +34,15 @@
     }
 
     &__innhold {
-        padding: 1rem;
+        padding: 0 1rem 1rem;
 
         p:not(.textarea--medMeta__teller) {
             margin-top: 0;
         }
+    }
+
+    &__footer {
+        padding: 1rem;
     }
 
     &__redigering--knapp {
@@ -72,8 +80,16 @@
 
 @media (min-width: @screen-md-min) {
     .aktivitetmal {
+        &__header {
+            padding: 1rem 2rem 0.5rem;
+        }
+
         &__innhold {
-            padding: 1rem 2rem 2rem 2rem;
+            padding: 0 2rem 1rem;
+        }
+
+        &__footer {
+            padding: 1rem 2rem;
         }
     }
 }

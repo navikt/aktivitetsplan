@@ -2,6 +2,8 @@ import * as Api from './api';
 import {
     OPPDATER_OK,
     FLYTT_OK,
+    OPPDATER_REFERAT_OK,
+    PUBLISER_REFERAT_OK,
 } from '../moduler/aktivitet/aktivitet-action-types';
 import { doThenDispatch, STATUS } from './utils';
 
@@ -31,6 +33,8 @@ export default function reducer(state = initalState, action) {
         case FEILET:
             return { ...state, status: STATUS.ERROR, feil: action.data };
         case OPPDATER_OK:
+        case OPPDATER_REFERAT_OK:
+        case PUBLISER_REFERAT_OK:
         case FLYTT_OK:
             if (state.status === STATUS.NOT_STARTED) {
                 return state;

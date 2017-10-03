@@ -9,8 +9,6 @@ import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import {
-    TILTAK_AKTIVITET_TYPE,
-    GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
@@ -19,6 +17,7 @@ import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import { STATUS } from '../../../../ducks/utils';
+import { selectAktivitetStatus } from '../../aktivitet-selector';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -31,15 +30,15 @@ class AvtaltContainer extends Component {
     render() {
         const {
             aktivitet,
-            aktivitetReducer,
+            aktivitetStatus,
             doSetAktivitetTilAvtalt,
             className,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
 
-        const lasterData = aktivitetReducer.status !== STATUS.OK;
-        const oppdaterer = aktivitetReducer.status === STATUS.RELOADING;
+        const lasterData = aktivitetStatus !== STATUS.OK;
+        const oppdaterer = aktivitetStatus === STATUS.RELOADING;
         const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
 
         if (
@@ -107,17 +106,17 @@ class AvtaltContainer extends Component {
 AvtaltContainer.propTypes = {
     doSetAktivitetTilAvtalt: PT.func.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
-    aktivitetReducer: AppPT.reducer,
+    aktivitetStatus: AppPT.status,
     className: PT.string,
 };
 
 AvtaltContainer.defaultProps = {
-    aktivitetReducer: undefined,
+    aktivitetStatus: undefined,
     className: undefined,
 };
 
 const mapStateToProps = state => ({
-    aktivitetReducer: state.data.aktiviteter,
+    aktivitetStatus: selectAktivitetStatus(state),
 });
 
 const mapDispatchToProps = dispatch => ({

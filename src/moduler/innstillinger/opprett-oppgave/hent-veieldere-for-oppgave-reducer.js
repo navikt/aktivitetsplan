@@ -2,9 +2,9 @@
 import { doThenDispatch, STATUS } from '../../../ducks/utils';
 import * as Api from '../../../ducks/api';
 
-export const HENT_VEILEDERE_OK = '/hent-veiledere/OK';
-export const HENT_VEILEDERE_FEILET = '/hent-veiledere/FEILET';
-export const HENT_VEILEDERE_PENDING = '/hent-veiledere/PENDING';
+export const HENT_VEILEDERE_OK = '/hent_veiledere/OK';
+export const HENT_VEILEDERE_FEILET = '/hent_veiledere/FEILET';
+export const HENT_VEILEDERE_PENDING = '/hent_veiledere/PENDING';
 
 const initalState = {
     data: [],
