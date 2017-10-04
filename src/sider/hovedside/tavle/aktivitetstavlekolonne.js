@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import { HjelpetekstVenstre, HjelpetekstHoyre } from 'nav-frontend-hjelpetekst';
+import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import AktivitetsKort from '../aktivitetskort/aktivitetskort';
 import {
@@ -18,6 +18,7 @@ import {
 import history from '../../../history';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
+import { compareAktivitet } from '../../../moduler/aktivitet/aktivitet-util';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -43,37 +44,47 @@ function hjelpetekst(aktivitetStatus) {
     switch (aktivitetStatus) {
         case STATUS_BRUKER_ER_INTRESSERT:
             return (
-                <HjelpetekstHoyre tittel="">
-                    <FormattedMessage id="hjelpetekst.aktivitet.er.interessert" />
-                </HjelpetekstHoyre>
+                <AktivitetsplanHjelpetekst
+                    tittelId="aktivitetstavle.brukerErInteressert.info"
+                    hjelpetekstId="hjelpetekst.aktivitet.er.interessert"
+                    retning="hoyre"
+                />
             );
 
         case STATUS_PLANLAGT:
             return (
-                <HjelpetekstHoyre tittel="">
-                    <FormattedMessage id="hjelpetekst.aktivitet.planlagt" />
-                </HjelpetekstHoyre>
+                <AktivitetsplanHjelpetekst
+                    tittelId="aktivitetstavle.planlagt.info"
+                    hjelpetekstId="hjelpetekst.aktivitet.planlagt"
+                    retning="hoyre"
+                />
             );
 
         case STATUS_GJENNOMFOERT:
             return (
-                <HjelpetekstVenstre tittel="">
-                    <FormattedMessage id="hjelpetekst.aktivitet.gjennomfoert" />
-                </HjelpetekstVenstre>
+                <AktivitetsplanHjelpetekst
+                    tittelId="aktivitetstavle.gjennomfoert.info"
+                    hjelpetekstId="hjelpetekst.aktivitet.gjennomfoert"
+                    retning="hoyre"
+                />
             );
 
         case STATUS_FULLFOERT:
             return (
-                <HjelpetekstVenstre tittel="">
-                    <FormattedMessage id="hjelpetekst.aktivitet.fullfoert" />
-                </HjelpetekstVenstre>
+                <AktivitetsplanHjelpetekst
+                    tittelId="aktivitetstavle.fullfoert.info"
+                    hjelpetekstId="hjelpetekst.aktivitet.fullfoert"
+                    retning="venstre"
+                />
             );
 
         case STATUS_AVBRUTT:
             return (
-                <HjelpetekstVenstre tittel="">
-                    <FormattedMessage id="hjelpetekst.aktivitet.avbrutt" />
-                </HjelpetekstVenstre>
+                <AktivitetsplanHjelpetekst
+                    tittelId="aktivitetstavle.avbrutt.info"
+                    hjelpetekstId="hjelpetekst.aktivitet.avbrutt"
+                    retning="venstre"
+                />
             );
 
         default:
@@ -104,21 +115,6 @@ function collect(theConnect, monitor) {
     };
 }
 
-function compareAktivitet(a, b) {
-    if (b.avtalt && !a.avtalt) {
-        return 1;
-    } else if (!b.avtalt && a.avtalt) {
-        return -1;
-    }
-    if (a.opprettetDato !== null && b.opprettetDato === null) {
-        return -1;
-    }
-    if (a.opprettetDato === null && b.opprettetDato !== null) {
-        return 1;
-    }
-    return b.opprettetDato.localeCompare(a.opprettetDato);
-}
-
 function KolonneFunction({
     aktiviteter,
     status,
@@ -133,7 +129,7 @@ function KolonneFunction({
             }
             return a.status === status;
         })
-        .sort((a, b) => compareAktivitet(a, b))
+        .sort(compareAktivitet)
         .map(a => <AktivitetsKort key={a.id} aktivitet={a} />);
 
     return connectDropTarget(

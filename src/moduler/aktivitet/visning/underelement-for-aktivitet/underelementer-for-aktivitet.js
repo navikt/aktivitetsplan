@@ -88,6 +88,7 @@ class UnderelementerForAktivitet extends Component {
                         value={DIALOG}
                         className={dialogknappCls(visDialog)}
                         onClick={this.toggleDialog}
+                        aria-pressed={visDialog}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
                         <HiddenIfSpan
@@ -105,6 +106,7 @@ class UnderelementerForAktivitet extends Component {
                         value={HISTORIKK}
                         className={historikknappCls(visHistorikk)}
                         onClick={this.toggleHistorikk}
+                        aria-pressed={visHistorikk}
                     >
                         <FormattedMessage id="aktivitetvisning.historikk-knapp" />
                     </HiddenIfButton>

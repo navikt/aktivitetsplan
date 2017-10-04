@@ -5,6 +5,7 @@ import { Undertittel, Element } from 'nav-frontend-typografi';
 import Aktivitetsdetaljer from '../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import * as AppPT from '../../proptypes';
 import AktivitetEtikettGruppe from '../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
+import { compareAktivitet } from '../aktivitet/aktivitet-util';
 
 function AktivitetReferat({ aktivitet }) {
     const { referat, erReferatPublisert } = aktivitet;
@@ -14,7 +15,7 @@ function AktivitetReferat({ aktivitet }) {
 
     if (visReferat) {
         return (
-            <div>
+            <div className="printmodal-body__aktivitetreferat">
                 {referat}
             </div>
         );
@@ -30,19 +31,22 @@ function AktivitetPrint({ aktivitet }) {
     const { id, type, tittel } = aktivitet;
     return (
         <div key={id}>
+            <p className="printmodal-body__statusgruppe--type">
+                <FormattedMessage
+                    id={`aktivitetskort.type.${type}`.toLowerCase()}
+                />
+            </p>
+
             <Element
                 tag="h2"
-                className="printmodal-body__statusgruppe-overskrift"
+                className="printmodal-body__statusgruppe--overskrift"
             >
                 {tittel}
             </Element>
-            <div>
-                {type}
-            </div>
 
             <AktivitetEtikettGruppe
                 aktivitet={aktivitet}
-                className="printmodal-body__aktivitetvisning-etikett"
+                className="printmodal-body__aktivitetvisning--etikett"
             />
 
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
@@ -61,15 +65,17 @@ function StatusGruppe({ gruppe }) {
         <section className="printmodal-body__statusgruppe">
             <Undertittel
                 tag="h1"
-                className="printmodal-body__statusgruppe-overskrift"
+                className="printmodal-body__statusgruppe--overskrift"
             >
                 <FormattedMessage
                     id={`aktivitetstavle.print.${status.toLowerCase()}`}
                 />
             </Undertittel>
-            {aktiviteter.map(aktivitet =>
-                <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} />
-            )}
+            {aktiviteter
+                .sort(compareAktivitet)
+                .map(aktivitet =>
+                    <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} />
+                )}
         </section>
     );
 }

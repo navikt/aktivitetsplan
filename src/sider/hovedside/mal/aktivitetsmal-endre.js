@@ -7,6 +7,10 @@ import AktivitetsmalForm from './aktivitetsmal-form';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import history from '../../../history';
+import {
+    selectGjeldendeMal,
+    selectMalSlice,
+} from '../../../moduler/mal/mal-selector';
 
 class AktivitetmalEndre extends Component {
     componentDidMount() {
@@ -14,10 +18,10 @@ class AktivitetmalEndre extends Component {
     }
 
     render() {
-        const { mal } = this.props;
+        const { mal, avhengigheter } = this.props;
 
         return (
-            <Innholdslaster avhengigheter={[this.props.malData]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <section className="aktivitetmal aktivitetmal__innhold">
                     <AktivitetsmalForm
                         mal={mal}
@@ -31,20 +35,17 @@ class AktivitetmalEndre extends Component {
 
 AktivitetmalEndre.defaultProps = {
     mal: null,
-    malData: null,
 };
 
 AktivitetmalEndre.propTypes = {
     mal: AppPT.mal,
     doHentMal: PT.func.isRequired,
-    malData: PT.shape({
-        status: PT.string.isRequired,
-    }),
+    avhengigheter: AppPT.avhengigheter.isRequired,
 };
 
 const mapStateToProps = state => ({
-    mal: state.data.mal.gjeldende,
-    malData: state.data.mal,
+    mal: selectGjeldendeMal(state),
+    avhengigheter: [selectMalSlice(state)],
 });
 
 const mapDispatchToProps = dispatch => ({

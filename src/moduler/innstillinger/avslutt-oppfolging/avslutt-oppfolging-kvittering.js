@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
+import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -10,19 +11,23 @@ import {
     HiddenIfAlertStripeAdvarsel,
     HiddenIfAlertStripeSuksess,
 } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import {
+    selectAvslutningStatus,
+    selectKanAvslutte,
+} from '../../situasjon/situasjon-selector';
+import {
+    selectMotpartStatus,
+    selectNavnPaMotpart,
+} from '../../motpart/motpart-selector';
 
-function AvsluttOppfolgingKvittering({ motpart, situasjon }) {
-    const { navn } = motpart.data;
-    const avsluttet =
-        situasjon.data.avslutningStatus &&
-        !situasjon.data.avslutningStatus.kanAvslutte;
+function AvsluttOppfolgingKvittering({ avhengigheter, navn, avsluttet }) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
-            <Innholdslaster avhengigheter={[motpart]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <article className="innstillinger__container">
                     <Innholdstittel>
                         <FormattedMessage
@@ -56,19 +61,16 @@ function AvsluttOppfolgingKvittering({ motpart, situasjon }) {
     );
 }
 
-AvsluttOppfolgingKvittering.defaultProps = {
-    motpart: undefined,
-    situasjon: undefined,
-};
-
 AvsluttOppfolgingKvittering.propTypes = {
-    motpart: AppPT.motpart,
-    situasjon: AppPT.situasjon,
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    avsluttet: PT.bool.isRequired,
+    navn: PT.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-    motpart: state.data.motpart,
-    situasjon: state.data.innstillinger,
+    avhengigheter: [selectMotpartStatus(state)],
+    navn: selectNavnPaMotpart(state),
+    avsluttet: selectAvslutningStatus(state) && !selectKanAvslutte(state),
 });
 
 export default connect(mapStateToProps)(AvsluttOppfolgingKvittering);

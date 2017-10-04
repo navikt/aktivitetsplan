@@ -23,12 +23,20 @@
         .aktivitetskort__tittel {
             color: @navBla;
             text-decoration: underline;
+
+            &--drag {
+                border-bottom-color: @navLysGra;
+            }
         }
     }
 }
 
 .aktivitetskort__type {
     text-transform: uppercase;
+}
+
+.aktivitetskort--drag {
+    background-color: @navLysGra;
 }
 
 .aktivitetskort__tittel {

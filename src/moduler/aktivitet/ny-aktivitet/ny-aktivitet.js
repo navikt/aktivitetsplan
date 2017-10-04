@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import Bilde from '../../../felles-komponenter/bilde/bilde';
 import { hentIdentitet } from '../../identitet/identitet-duck';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import leggTilAktivitetSvg from '../../../img/legg-til-aktivitet-illustrasjon.svg';
 import Modal from '../../../felles-komponenter/modal/modal';
+import { selectErVeileder } from '../../identitet/identitet-selector';
 
 class NyAktivitet extends Component {
     componentDidMount() {
@@ -15,7 +16,7 @@ class NyAktivitet extends Component {
     }
 
     render() {
-        const { erVeileder } = this.props;
+        const { erVeileder, intl } = this.props;
         return (
             <Modal
                 contentLabel="ny-aktivitet-modal"
@@ -25,7 +26,9 @@ class NyAktivitet extends Component {
                     <Bilde
                         className="ny-aktivitet-modal__bilde"
                         src={leggTilAktivitetSvg}
-                        alt=""
+                        alt={intl.formatMessage({
+                            id: 'ny-aktivitet-modal.bilde.alt-tekst',
+                        })}
                     />
                     <Innholdstittel className="ny-aktivitet-tittel">
                         <FormattedMessage id="ny-aktivitet-modal.tittel" />
@@ -71,14 +74,17 @@ class NyAktivitet extends Component {
 NyAktivitet.propTypes = {
     doHentIdentitet: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
+    intl: intlShape.isRequired,
 };
 
 const mapStateToProps = state => ({
-    erVeileder: state.data.identitet.data.erVeileder,
+    erVeileder: selectErVeileder(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    injectIntl(NyAktivitet)
+);

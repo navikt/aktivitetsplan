@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
@@ -14,6 +14,9 @@ function InformasjonModal() {
             contentClass="informasjon-visnign"
         >
             <ModalContainer className="informasjon-modal-container">
+                <Innholdstittel>
+                    <FormattedMessage id="informasjon.tittel" />
+                </Innholdstittel>
                 <Normaltekst>
                     <FormattedMessage id="informasjon.hjelpetekst" />
                 </Normaltekst>

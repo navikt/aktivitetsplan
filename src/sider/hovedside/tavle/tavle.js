@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
+import { injectIntl, intlShape } from 'react-intl';
 import SprettendeScrollbars from './sprettende-scrollbars';
 import { autobind } from '../../../utils';
 
@@ -49,7 +50,7 @@ class Tavle extends Component {
     }
 
     render() {
-        const { children, className } = this.props;
+        const { children, className, intl } = this.props;
 
         const kolonner = children.map((child, index) =>
             <section key={child.key || index} className="tavle-kolonne">
@@ -62,6 +63,9 @@ class Tavle extends Component {
                 className="tavle__scrollknapp knapp-forrige"
                 onClick={this.visForrige}
                 disabled={this.state.venstreKnappDisabled}
+                aria-label={intl.formatMessage({
+                    id: 'aktivitetstavle.scrollknapp.forrige.label',
+                })}
             />
         );
 
@@ -70,6 +74,9 @@ class Tavle extends Component {
                 className="tavle__scrollknapp knapp-neste"
                 onClick={this.visNeste}
                 disabled={this.state.hoyreKnappDisabled}
+                aria-label={intl.formatMessage({
+                    id: 'aktivitetstavle.scrollknapp.neste.label',
+                })}
             />
         );
 
@@ -99,10 +106,11 @@ class Tavle extends Component {
 Tavle.propTypes = {
     className: PT.string,
     children: PT.arrayOf(PT.element).isRequired,
+    intl: intlShape.isRequired,
 };
 
 Tavle.defaultProps = {
     className: '',
 };
 
-export default Tavle;
+export default injectIntl(Tavle);

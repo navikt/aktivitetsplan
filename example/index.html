@@ -4,10 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script>
-            window.features = {
+            // NB må fungere i IE!
+
+            var features = window.features = {
                 timeoutbox: true,
             };
-
 
             // switch denne for å få innside/utside
             if (true) {
@@ -20,9 +21,7 @@
                     sone: 'FSS',
                 };
 
-                Object.assign(window.features, {
-                    navigasjonslinjemeny: true
-                });
+                features.navigasjonslinjemeny = true;
 
             } else {
                 // utside
@@ -34,10 +33,9 @@
                 };
             }
 
-            Object.assign(window.aktivitetsplan, {
-                onboarding_video_url: 'https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E',
-            });
+            var aktivitetsplan = window.aktivitetsplan;
 
+            aktivitetsplan.onboarding_video_url = 'https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E';
 
         </script>
         <link type="text/css" rel="stylesheet" href="/aktivitetsplanfelles/example-dev.css">

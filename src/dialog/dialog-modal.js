@@ -18,7 +18,7 @@ import VisibleIfTag from '../felles-komponenter/utils/visible-if-tag';
 import * as AppPT from '../proptypes';
 import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../routing';
-import { selectMotpartReducer } from '../moduler/motpart/motpart-selector';
+import { selectMotpartSlice } from '../moduler/motpart/motpart-selector';
 import {
     selectAnpassaDialogModalHistoriskVisning,
     selectDialogMedId,
@@ -237,7 +237,7 @@ DialogModal.propTypes = {
 const mapStateToProps = (state, props) => {
     const { match } = props;
     const { id } = match.params;
-    const motpart = selectMotpartReducer(state);
+    const motpart = selectMotpartSlice(state);
     const valgtDialog = selectDialogMedId(state, id);
     const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
 

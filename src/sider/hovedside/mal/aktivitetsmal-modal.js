@@ -1,4 +1,6 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
@@ -8,15 +10,13 @@ function AktivitetsmalModal(Component) {
         return (
             <div>
                 <Modal
-                    header={
-                        <ModalHeader
-                            normalTekstId="aktivitetsmal.mitt-mal"
-                            className="aktivitetmal__modal"
-                        />
-                    }
+                    header={<ModalHeader className="aktivitetmal__modal" />}
                     contentLabel="aktivitetsmal-modal"
                 >
                     <ModalContainer>
+                        <Innholdstittel className="aktivitetmal__header">
+                            <FormattedMessage id="aktivitetsmal.mitt-mal.header" />
+                        </Innholdstittel>
                         <Component />
                     </ModalContainer>
                 </Modal>

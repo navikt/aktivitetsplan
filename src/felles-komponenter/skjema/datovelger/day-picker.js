@@ -101,15 +101,15 @@ class DayPickerComponent extends Component {
 
     getDateFromValue() {
         const dato = moment(this.props.input.value);
-        return dato.isValid() ? dato.toDate() : new Date();
+        return dato.isValid() ? dato.toDate() : null;
     }
 
     getInitialMonth() {
-        return this.getDateFromValue() || this.props.senesteTom || new Date();
+        return this.getDateFromValue() || this.props.tidligsteFom || new Date();
     }
 
     selectedDays(day) {
-        return DateUtils.isSameDay(this.getDateFromValue(), day);
+        return DateUtils.isSameDay(this.getDateFromValue() || new Date(), day);
     }
 
     render() {
@@ -144,13 +144,13 @@ DayPickerComponent.propTypes = {
     lukk: PT.func.isRequired,
     ariaControlledBy: PT.string,
     onDayClick: PT.func.isRequired,
-    senesteTom: PT.instanceOf(Date),
+    tidligsteFom: PT.instanceOf(Date),
     intl: intlShape.isRequired,
 };
 
 DayPickerComponent.defaultProps = {
     ariaControlledBy: undefined,
-    senesteTom: undefined,
+    tidligsteFom: undefined,
 };
 
 export default injectIntl(DayPickerComponent);

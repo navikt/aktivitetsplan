@@ -11,6 +11,21 @@ export function aktivitetEquals(a, b) {
     );
 }
 
+export function compareAktivitet(a, b) {
+    if (b.avtalt && !a.avtalt) {
+        return 1;
+    } else if (!b.avtalt && a.avtalt) {
+        return -1;
+    }
+    if (a.opprettetDato !== null && b.opprettetDato === null) {
+        return -1;
+    }
+    if (a.opprettetDato === null && b.opprettetDato !== null) {
+        return 1;
+    }
+    return b.opprettetDato.localeCompare(a.opprettetDato);
+}
+
 export function beregnKlokkeslettVarighet(aktivitet) {
     const fraDato = aktivitet.fraDato;
     const tilDato = aktivitet.tilDato;

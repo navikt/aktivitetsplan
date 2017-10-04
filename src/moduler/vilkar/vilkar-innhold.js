@@ -10,11 +10,9 @@ import vilkarSvg from './vilkar-illustrasjon.svg';
 import VisibleIfHOC from '../../hocs/visible-if';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { formaterDatoKortManed } from '../../utils';
-import {
-    selectErUnderOppfolging,
-    selectPrivatModusStatus,
-} from '../privat-modus/privat-modus-selector';
+import { selectPrivatModusStatus } from '../privat-modus/privat-modus-selector';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { selectErUnderOppfolging } from '../situasjon/situasjon-selector';
 
 const VisibleIfElementFormattedMessage = VisibleIfHOC(props =>
     <Element className="vilkar__metaData">
@@ -22,13 +20,19 @@ const VisibleIfElementFormattedMessage = VisibleIfHOC(props =>
     </Element>
 );
 
-function VilkarInnhold({ vilkar, underOppfolging, privatModusStatus }) {
+VisibleIfElementFormattedMessage.propTypes = {
+    visible: PT.bool.isRequired,
+    id: PT.string.isRequired,
+    values: PT.object.isRequired,
+};
+
+function VilkarInnhold({ vilkar, underOppfolging, avhengigheter }) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
     const tittelTekst = underOppfolging
-        ? 'vilkar.modal.gjeldende.privat-tittel'
-        : 'vilkar.modal.gjeldende.samarbeid-tittel';
+        ? 'vilkar.modal.gjeldende.samarbeid-tittel'
+        : 'vilkar.modal.gjeldende.privat-tittel';
     return (
-        <Innholdslaster avhengigheter={[privatModusStatus]}>
+        <Innholdslaster avhengigheter={avhengigheter}>
             <div className="vilkar__innhold">
                 <Bilde src={vilkarSvg} alt="" />
                 <Innholdstittel className="vilkar__tittel">
@@ -53,21 +57,12 @@ function VilkarInnhold({ vilkar, underOppfolging, privatModusStatus }) {
 VilkarInnhold.propTypes = {
     vilkar: AppPT.vilkar.isRequired,
     underOppfolging: PT.bool.isRequired,
-    privatModusStatus: AppPT.status.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
 };
 
-VisibleIfElementFormattedMessage.propTypes = {
-    underOppfolging: PT.bool.isRequired,
-    privatModusReducer: AppPT.reducer.isRequired,
-};
-
-const mapStateToProps = state => {
-    const underOppfolging = selectErUnderOppfolging(state);
-    const privatModusStatus = selectPrivatModusStatus(state);
-    return {
-        underOppfolging,
-        privatModusStatus,
-    };
-};
+const mapStateToProps = state => ({
+    underOppfolging: selectErUnderOppfolging(state),
+    avhengigheter: [selectPrivatModusStatus(state)],
+});
 
 export default hiddenIf(connect(mapStateToProps)(VilkarInnhold));

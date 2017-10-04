@@ -6,6 +6,7 @@ import { Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Link } from 'react-router-dom';
 import * as AppPT from '../../../../proptypes';
+import Lenke from '../../../../felles-komponenter/utils/lenke';
 import {
     formaterDatoKortManed,
     formaterDatoKortManedTid,
@@ -152,15 +153,17 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         <DetaljFelt
             key="lenke"
             tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
-            visible={lenke != null}
+            visible={lenke}
         >
-            <Link
-                to={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
+            <Lenke
+                href={
+                    lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`
+                }
                 className="detaljfelt__lenke"
                 target="_blank"
             >
                 {lenke}
-            </Link>
+            </Lenke>
         </DetaljFelt>;
 
     const ledigStillingFelter = () => [
@@ -279,7 +282,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             innhold={gruppeAktivitetStatus}
         />,
         <section key="moteplan" className="aktivitetsbeskrivelse">
-            <EtikettLiten className="aktivitetsbeskrivelse__tittel">
+            <EtikettLiten className="aktivitetsbeskrivelse__tittel" tag="h1">
                 <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
             </EtikettLiten>
             {moeteplanListe.map(mote =>
@@ -308,7 +311,10 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         const oppfolgingSection =
             avtaleOppfolging &&
             <section key="avtaleOppfolging" className="aktivitetsbeskrivelse">
-                <EtikettLiten className="aktivitetsbeskrivelse__tittel">
+                <EtikettLiten
+                    className="aktivitetsbeskrivelse__tittel"
+                    tag="h1"
+                >
                     <FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />
                 </EtikettLiten>
                 <Tekstomrade className="aktivitetsbeskrivelse__tekst">

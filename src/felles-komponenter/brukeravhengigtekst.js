@@ -2,6 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { selectErBruker } from '../moduler/identitet/identitet-selector';
 
 function BrukerAvhengigTekst({ id, erBruker }) {
     const postFix = erBruker ? 'bruker' : 'veileder';
@@ -15,7 +16,7 @@ BrukerAvhengigTekst.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    erBruker: state.data.identitet.data.erBruker,
+    erBruker: selectErBruker(state),
 });
 
 export default connect(mapStateToProps, null)(BrukerAvhengigTekst);

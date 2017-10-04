@@ -1,30 +1,24 @@
 import { aggregerStatus } from '../../ducks/utils';
+import {
+    selectErBruker,
+    selectErVeileder,
+    selectIdentitetStatus,
+} from '../identitet/identitet-selector';
+import {
+    selectErUnderOppfolging,
+    selectSituasjonStatus,
+} from '../situasjon/situasjon-selector';
 
 export function selectErPrivatModus(state) {
-    const stateData = state.data;
-    const situasjonReducer = stateData.situasjon;
-    const identitetReducer = stateData.identitet;
-
-    return (
-        situasjonReducer.data.underOppfolging === false &&
-        identitetReducer.data.erVeileder
-    );
-}
-
-export function selectErUnderOppfolging(state) {
-    const stateData = state.data;
-    const situasjonReducer = stateData.situasjon;
-
-    return situasjonReducer.data.underOppfolging === false;
+    return !selectErUnderOppfolging(state) && selectErVeileder(state);
 }
 
 export function selectPrivatModusSlice(state) {
-    const stateData = state.data;
-    const situasjonReducer = stateData.situasjon;
-    const identitetReducer = stateData.identitet;
-
     return {
-        status: aggregerStatus(situasjonReducer, identitetReducer),
+        status: aggregerStatus(
+            selectSituasjonStatus(state),
+            selectIdentitetStatus(state)
+        ),
         data: {
             erPrivatModus: selectErPrivatModus(state),
         },
@@ -33,4 +27,8 @@ export function selectPrivatModusSlice(state) {
 
 export function selectPrivatModusStatus(state) {
     return selectPrivatModusSlice(state).status;
+}
+
+export function selectErPrivatBruker(state) {
+    return !selectErUnderOppfolging(state) && selectErBruker(state);
 }

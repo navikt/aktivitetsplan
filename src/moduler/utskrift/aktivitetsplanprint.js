@@ -115,7 +115,7 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
             </div>
             <Systemtittel
                 tag="h1"
-                className="printmodal-body__utskrift-overskrift"
+                className="printmodal-body__utskrift--overskrift"
             >
                 <FormattedMessage id="hovedside.tittel" />
             </Systemtittel>
@@ -125,7 +125,7 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
             >
                 <Undertittel
                     tag="h1"
-                    className="printmodal-body__visprintmelding-overskrift"
+                    className="printmodal-body__visprintmelding--overskrift"
                 >
                     {overskrift}
                 </Undertittel>
@@ -139,7 +139,7 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
             >
                 <Undertittel
                     tag="h1"
-                    className="printmodal-body__vismittmal-overskrift"
+                    className="printmodal-body__vismittmal--overskrift"
                 >
                     <FormattedMessage id="aktivitetsmal.mitt-mal" />
                 </Undertittel>

@@ -12,7 +12,9 @@ import {
 import ArbeidslisteSVG from './arbeidsliste.svg';
 import ArbeidslisteActiveSVG from './arbeidsliste-active.svg';
 import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
-import HiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
+import HiddenIfHOC, {
+    div as HiddenIfDiv,
+} from '../../../felles-komponenter/hidden-if/hidden-if';
 
 function NavigasjonslinjeMeny({
     brukerErMin,
@@ -20,15 +22,24 @@ function NavigasjonslinjeMeny({
     kanFjerne,
     kanRedigere,
 }) {
+    const Arbeidslisteikon = ({ fyldt }) =>
+        <FormattedMessage id="arbeidsliste.flaggikon" values={{ fyldt }}>
+            {altTekst =>
+                <Bilde
+                    className="navigasjonslinje-meny__arbeidsliste-flagg"
+                    src={fyldt ? ArbeidslisteActiveSVG : ArbeidslisteSVG}
+                    alt={altTekst}
+                />}
+        </FormattedMessage>;
+
+    Arbeidslisteikon.propTypes = {
+        fyldt: PT.bool.isRequired,
+    };
+
     const LeggTilLenke = HiddenIfHOC(() =>
         <span>
-            <Bilde
-                className="arbeidsliste-flagg"
-                src={ArbeidslisteSVG}
-                alt="arbeidsliste.icon.alt.tekst"
-            />
+            <Arbeidslisteikon fyldt={false} />
             <Knappelenke
-                className="navigasjonslinje__button"
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/leggtil')}
             >
@@ -38,16 +49,9 @@ function NavigasjonslinjeMeny({
     );
 
     const FjernLenke = HiddenIfHOC(() =>
-        <span>
-            <span className="navigasjonslinje-meny__fjern">
-                <Bilde
-                    className="arbeidsliste-flagg"
-                    src={ArbeidslisteActiveSVG}
-                    alt="arbeidsliste.icon.alt.tekst"
-                />
-            </span>
+        <span className="navigasjonslinje-meny__fjern-lenke">
+            <Arbeidslisteikon fyldt />
             <Knappelenke
-                className="navigasjonslinje__button"
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/fjern')}
             >
@@ -57,20 +61,21 @@ function NavigasjonslinjeMeny({
     );
 
     const RedigerLenke = HiddenIfHOC(() =>
-        <Knappelenke
-            className="navigasjonslinje__button"
-            onClick={() => history.push('arbeidsliste/rediger')}
-        >
+        <Knappelenke onClick={() => history.push('arbeidsliste/rediger')}>
             <FormattedMessage id="navigasjon.vis.kommentarer" />
         </Knappelenke>
     );
 
     return (
-        <div className="navigasjonslinje-meny">
+        <HiddenIfDiv
+            hidden={!kanLeggeTil && !kanFjerne && !kanRedigere}
+            className="navigasjonslinje-meny"
+        >
             <LeggTilLenke hidden={!kanLeggeTil} />
             <FjernLenke hidden={!kanFjerne} />
             <RedigerLenke hidden={!kanRedigere} />
-        </div>
+            <i className="navigasjonslinje-meny__skillelinje" />
+        </HiddenIfDiv>
     );
 }
 
