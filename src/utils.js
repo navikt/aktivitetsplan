@@ -234,3 +234,10 @@ export function toISOLocalDate(date) {
         dateObject.getUTCMonth() + 1
     )}-${pad(dateObject.getUTCDate())}`;
 }
+
+export function HiddenIf({ hidden, children }) {
+    if (hidden) {
+        return null;
+    }
+    return children;
+};
