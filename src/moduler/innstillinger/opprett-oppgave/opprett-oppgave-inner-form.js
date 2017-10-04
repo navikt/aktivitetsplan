@@ -5,7 +5,6 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Select from '../../../felles-komponenter/skjema/input/select';
 import {
     BESKRIVELSE_MAKS_LENGDE,
-    enhetlisteToKeyValueMap,
     erValgtEnhetLikInnloggetEnhet,
     filtrerBasertPaTema,
     oppgavetyper,
@@ -18,13 +17,8 @@ import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 import { STATUS } from '../../../ducks/utils';
 import * as AppPT from '../../../proptypes';
 import VelgVeileder from './velg-veileder';
-
-const HiddenIf = ({ hidden, children }) => {
-    if (hidden) {
-        return null;
-    }
-    return children;
-};
+import VelgEnhet from './velg-enhet';
+import { HiddenIf } from '../../../utils';
 
 export function OpprettOppgaveInnerForm({
     behandlendeEnheter,
@@ -88,17 +82,7 @@ export function OpprettOppgaveInnerForm({
                         </div>
                     </PeriodeValidering>
                     <div className="enhet-veileder-container blokk-m">
-                        <Select
-                            blankOptionParameters={{ hidden: true }}
-                            feltNavn="enhetId"
-                            labelId="innstillinger.modal.opprett-oppgave.enhet.tittel"
-                            bredde="m"
-                            onChange={v => hentVeiledere(v.target.value)}
-                        >
-                            {optionsFromObjectWithIntl(
-                                enhetlisteToKeyValueMap(enhetliste)
-                            )}
-                        </Select>
+                        <VelgEnhet enhetliste={enhetliste} hentVeiledere={hentVeiledere} />
                         <HiddenIf
                             hidden={!erValgtEnhetLikInnloggetEnhet(valgtEnhet)}
                         >

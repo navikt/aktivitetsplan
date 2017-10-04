@@ -52,9 +52,10 @@ class VelgVeileder extends Component {
                 </label>
                 <Dropdown
                     knappeTekst={knappetekst}
-                    className="input--m velg-veileder--dropdown"
+                    className="input--m velg-enhet-veileder--dropdown"
+                    name="velg-veileder-dropdown"
                 >
-                    <SokFilter data={veilederliste} label="">
+                    <SokFilter data={veilederliste} label="" placeholder="">
                         <RadioFilterForm
                             onSubmit={this.setValgtVeileder}
                             createLabel={settSammenNavn}

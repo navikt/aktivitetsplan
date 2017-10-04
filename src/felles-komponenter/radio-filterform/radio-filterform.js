@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Radio } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
+import { HiddenIf } from '../../utils';
 
 class RadioFilterForm extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class RadioFilterForm extends Component {
             createLabel,
             createValue,
             radioName,
+            fjernNullstill,
             ...rest
         } = this.props;
         const { selected } = this.state;
@@ -49,15 +51,17 @@ class RadioFilterForm extends Component {
                     >
                         <FormattedMessage id="components.filterform.button.velg" />
                     </Hovedknapp>
-                    <Knapp
-                        mini
-                        onClick={event => {
-                            this.changeSelected(undefined);
-                            onSubmit({ event, value: null, ...rest });
-                        }}
-                    >
-                        <FormattedMessage id="components.filterform.button.nullstill" />
-                    </Knapp>
+                    <HiddenIf hidden={fjernNullstill}>
+                        <Knapp
+                            mini
+                            onClick={event => {
+                                this.changeSelected(undefined);
+                                onSubmit({ event, value: null, ...rest });
+                            }}
+                        >
+                            <FormattedMessage id="components.filterform.button.nullstill" />
+                        </Knapp>
+                    </HiddenIf>
                 </div>
             </div>
         );
@@ -70,6 +74,11 @@ RadioFilterForm.propTypes = {
     createLabel: PT.func.isRequired,
     createValue: PT.func.isRequired,
     radioName: PT.string.isRequired,
+    fjernNullstill: PT.bool,
+};
+
+RadioFilterForm.defaultProps = {
+    fjernNullstill: false,
 };
 
 export default RadioFilterForm;
