@@ -21,11 +21,6 @@ function AktivitetskortTillegg({
             hidden={!(erAvtalt || harEtikett || harDialog)}
             className="aktivitetskort__ikon-blokk"
         >
-            <AktivitetEtikettGruppe
-                aktivitet={aktivitet}
-                className="aktivitetskort__etiketter"
-            />
-
             <HiddenIfDiv
                 hidden={antallHendvendelser <= 0}
                 className="aktivitetskort__henvendelser"
@@ -34,6 +29,11 @@ function AktivitetskortTillegg({
                     {antallUlesteHenvendelser}
                 </TallAlert>
             </HiddenIfDiv>
+
+            <AktivitetEtikettGruppe
+                aktivitet={aktivitet}
+                className="aktivitetskort__etiketter"
+            />
         </HiddenIfDiv>
     );
 }
