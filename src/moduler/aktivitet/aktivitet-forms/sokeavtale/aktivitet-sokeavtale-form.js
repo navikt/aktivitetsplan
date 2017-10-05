@@ -54,7 +54,10 @@ const numericAntall = (value, props) =>
 const begrensetAntallSoknader = (value, props) =>
     (value && value < MAKS_SOKNADER) || erAvtalt(value, props)
         ? undefined
-        : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.soknad-antall" />;
+        : <FormattedMessage
+              id="sokeavtale-aktivitet-form.feilmelding.soknad-antall"
+              values={{ MAKS_LENGDE: MAKS_SOKNADER }}
+          />;
 
 const begrensetAvtaleOppfolgingLengde = maksLengde(
     'sokeavtale-aktivitet-form.feilmelding.oppfolging-lengde',

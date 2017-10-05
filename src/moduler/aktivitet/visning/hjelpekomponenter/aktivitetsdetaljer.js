@@ -99,8 +99,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         arrangoer,
         deltakelseProsent,
         antallDagerPerUke,
-        gruppeAktivitetSted,
-        gruppeAktivitetStatus,
         moeteplanListe,
         oppfolging,
         antallStillingerSokes,
