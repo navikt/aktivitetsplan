@@ -77,7 +77,7 @@ Adresse.propTypes = {
 
 function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
     const { fodselsnummer, fornavn, etternavn } = bruker;
-    const { overskrift, beskrivelse } = printMelding;
+    const { beskrivelse } = printMelding;
 
     const statusGrupper = grupper.map(gruppe =>
         <StatusGruppe gruppe={gruppe} key={gruppe.status} />
@@ -123,12 +123,6 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                 hidden={!printMelding}
                 className="printmodal-body__visprintmelding"
             >
-                <Undertittel
-                    tag="h1"
-                    className="printmodal-body__visprintmelding--overskrift"
-                >
-                    {overskrift}
-                </Undertittel>
                 <p>
                     {beskrivelse}
                 </p>

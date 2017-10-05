@@ -82,7 +82,10 @@ export function OpprettOppgaveInnerForm({
                         </div>
                     </PeriodeValidering>
                     <div className="enhet-veileder-container blokk-m">
-                        <VelgEnhet enhetliste={enhetliste} hentVeiledere={hentVeiledere} />
+                        <VelgEnhet
+                            enhetliste={enhetliste}
+                            hentVeiledere={hentVeiledere}
+                        />
                         <HiddenIf
                             hidden={!erValgtEnhetLikInnloggetEnhet(valgtEnhet)}
                         >

@@ -8,26 +8,14 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet/aktivitet-forms/aktivitet-form-utils';
 import * as AppPT from '../../proptypes';
 import { storeForbokstaver } from '../../utils';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../felles-komponenter/skjema/validering';
+import { maksLengde } from '../../felles-komponenter/skjema/validering';
 import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
-import Input from '../../felles-komponenter/skjema/input/input';
 import { hentPrintMelding } from './utskrift-selector';
 import { lagrePrintMelding } from './utskrift-duck';
 import { selectBruker } from '../bruker/bruker-selector';
 
-const OVERSKRIFT_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 2000;
 
-const pakrevdOverskrift = pakrevd(
-    'print-melding-form.feilmelding.pakrevd-overskrift'
-);
-const begrensetOverskriftLengde = maksLengde(
-    'print-melding-form.feilmelding.overskrift-lengde',
-    OVERSKRIFT_MAKS_LENGDE
-);
 const begrensetBeskrivelseLengde = maksLengde(
     'print-melding-form.feilmelding.beskrivelse-lengde',
     BESKRIVELSE_MAKS_LENGDE
@@ -52,12 +40,6 @@ function PrintMeldingForm({ errorSummary, handleSubmit, lagrer, bruker }) {
                         <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
                     </Undertekst>
                 </div>
-
-                <Input
-                    feltNavn="overskrift"
-                    labelId="print-melding-form.label.overskrift"
-                    bredde="fullbredde"
-                />
 
                 <Textarea
                     feltNavn="beskrivelse"
@@ -92,7 +74,6 @@ const PrintMeldingReduxForm = validForm({
         <FormattedMessage id="print-melding-form.feiloppsummering-tittel" />
     ),
     validate: {
-        overskrift: [pakrevdOverskrift, begrensetOverskriftLengde],
         beskrivelse: [begrensetBeskrivelseLengde],
     },
 })(PrintMeldingForm);

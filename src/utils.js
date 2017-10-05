@@ -240,4 +240,4 @@ export function HiddenIf({ hidden, children }) {
         return null;
     }
     return children;
-};
+}
