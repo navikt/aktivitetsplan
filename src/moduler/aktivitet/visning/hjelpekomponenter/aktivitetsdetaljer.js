@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst, EtikettLiten } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Link } from 'react-router-dom';
 import * as AppPT from '../../../../proptypes';
@@ -26,7 +26,6 @@ import {
 } from '../../../../constant';
 import DetaljFelt from './detalj-felt';
 import { endreAktivitetRoute } from '../../../../routing';
-import AktivitetBeskrivelse from './aktivitetsbeskrivelse';
 import {
     beregnKlokkeslettVarighet,
     formatterKlokkeslett,
@@ -50,13 +49,20 @@ RedigerLink.propTypes = {
     felt: PT.string.isRequired,
 };
 
-function Informasjonsfelt({ tittel, innhold, fullbredde, formattertTekst }) {
+function Informasjonsfelt({
+    tittel,
+    innhold,
+    fullbredde,
+    formattertTekst,
+    beskrivelse,
+}) {
     const Container = formattertTekst ? Tekstomrade : Normaltekst;
     return (
         <DetaljFelt
             tittel={tittel}
             visible={innhold !== null}
             fullbredde={fullbredde}
+            beskrivelse={beskrivelse}
         >
             <Container className="detaljfelt__tekst">
                 {innhold}
@@ -70,12 +76,14 @@ Informasjonsfelt.propTypes = {
     innhold: PT.node,
     fullbredde: PT.bool,
     formattertTekst: PT.bool,
+    beskrivelse: PT.bool,
 };
 
 Informasjonsfelt.defaultProps = {
     innhold: undefined,
     fullbredde: false,
     formattertTekst: false,
+    beskrivelse: false,
 };
 
 const HiddenIfInformasjonsfelt = HiddenIfHOC(Informasjonsfelt);
@@ -281,17 +289,17 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             tittel={<FormattedMessage id="aktivitetdetaljer.status-label" />}
             innhold={gruppeAktivitetStatus}
         />,
-        <section key="moteplan" className="aktivitetsbeskrivelse">
-            <EtikettLiten className="aktivitetsbeskrivelse__tittel" tag="h1">
-                <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
-            </EtikettLiten>
-            {moeteplanListe.map(mote =>
-                <Normaltekst key={mote.startDato} className="detaljfelt__tekst">
+        <Informasjonsfelt
+            key="moteplan"
+            tittel={<FormattedMessage id="aktivitetdetaljer.moteplan-label" />}
+            beskrivelse
+            innhold={moeteplanListe.map(mote =>
+                <Normaltekst key={mote.startDato}>
                     {formaterDatoKortManedTid(mote.startDato)} -{' '}
                     {formaterTid(mote.sluttDato)} på {mote.sted}
                 </Normaltekst>
             )}
-        </section>,
+        />,
     ];
 
     const utdanningFelter = () => [
@@ -310,17 +318,15 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     const sokeavtaleFelter = () => {
         const oppfolgingSection =
             avtaleOppfolging &&
-            <section key="avtaleOppfolging" className="aktivitetsbeskrivelse">
-                <EtikettLiten
-                    className="aktivitetsbeskrivelse__tittel"
-                    tag="h1"
-                >
+            <Informasjonsfelt
+                key="avtaleOppfolging"
+                tittel={
                     <FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />
-                </EtikettLiten>
-                <Tekstomrade className="aktivitetsbeskrivelse__tekst">
-                    {avtaleOppfolging}
-                </Tekstomrade>
-            </section>;
+                }
+                beskrivelse
+                formattertTekst
+                innhold={avtaleOppfolging}
+            />;
         return [
             <Informasjonsfelt
                 key="fradato"
@@ -506,8 +512,13 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     return (
         <section className={cls(className)}>
             {map[aktivitetstype]()}
-            <AktivitetBeskrivelse
-                beskrivelse={beskrivelse}
+            <HiddenIfInformasjonsfelt
+                tittel={
+                    <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
+                }
+                innhold={beskrivelse}
+                beskrivelse
+                fullbredde
                 hidden={
                     aktivitetstype === MOTE_TYPE ||
                     aktivitetstype === SAMTALEREFERAT_TYPE
