@@ -183,7 +183,10 @@ const mapDispatchToProps = dispatch => ({
                 history.push('innstillinger/feilkvittering');
             }),
     // eslint-disable-next-line no-confusing-arrow
-    hentVeiledere: enhetId => getEnhetFromUrl() === enhetId ? dispatch(hentVeiledereForEnhet(enhetId)) : null,
+    hentVeiledere: enhetId =>
+        getEnhetFromUrl() === enhetId
+            ? dispatch(hentVeiledereForEnhet(enhetId))
+            : null,
 });
 
 OpprettOppgaveReduxForm.defaultProps = {};

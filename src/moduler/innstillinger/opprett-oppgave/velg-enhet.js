@@ -48,10 +48,7 @@ class VelgEnhet extends Component {
         const { enhetliste } = this.props;
         const { valgtEnhet } = this.state;
 
-        const valgtEnhetObjekt = finnEnhetnavnForId(
-            enhetliste,
-            valgtEnhet
-        );
+        const valgtEnhetObjekt = finnEnhetnavnForId(enhetliste, valgtEnhet);
 
         const knappetekst = valgtEnhetObjekt
             ? settSammenNavn(valgtEnhetObjekt)
@@ -78,10 +75,7 @@ class VelgEnhet extends Component {
                         />
                     </SokFilter>
                 </Dropdown>
-                <Field
-                    component={hiddenInput(enhetGuid)}
-                    name="enhetId"
-                />
+                <Field component={hiddenInput(enhetGuid)} name="enhetId" />
             </div>
         );
     }
