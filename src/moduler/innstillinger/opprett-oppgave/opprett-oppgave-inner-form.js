@@ -5,26 +5,20 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Select from '../../../felles-komponenter/skjema/input/select';
 import {
     BESKRIVELSE_MAKS_LENGDE,
-    enhetlisteToKeyValueMap,
     erValgtEnhetLikInnloggetEnhet,
     filtrerBasertPaTema,
     oppgavetyper,
     optionsFromObjectWithIntl,
     prioritet,
-    veilederlisteToKeyValueMap,
 } from './opprett-oppgave-utils';
 import PeriodeValidering from '../../../felles-komponenter/skjema/datovelger/periode-validering';
 import Datovelger from '../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
 import { STATUS } from '../../../ducks/utils';
 import * as AppPT from '../../../proptypes';
-
-const HiddenIf = ({ hidden, children }) => {
-    if (hidden) {
-        return null;
-    }
-    return children;
-};
+import VelgVeileder from './velg-veileder';
+import VelgEnhet from './velg-enhet';
+import { HiddenIf } from '../../../utils';
 
 export function OpprettOppgaveInnerForm({
     behandlendeEnheter,
@@ -87,33 +81,16 @@ export function OpprettOppgaveInnerForm({
                             />
                         </div>
                     </PeriodeValidering>
-                    <div className="enhet-veileder-container">
-                        <Select
-                            blankOptionParameters={{ hidden: true }}
-                            feltNavn="enhetId"
-                            labelId="innstillinger.modal.opprett-oppgave.enhet.tittel"
-                            bredde="m"
-                            onChange={v => hentVeiledere(v.target.value)}
-                        >
-                            {optionsFromObjectWithIntl(
-                                enhetlisteToKeyValueMap(enhetliste)
-                            )}
-                        </Select>
+                    <div className="enhet-veileder-container blokk-m">
+                        <VelgEnhet
+                            enhetliste={enhetliste}
+                            hentVeiledere={hentVeiledere}
+                        />
                         <HiddenIf
                             hidden={!erValgtEnhetLikInnloggetEnhet(valgtEnhet)}
                         >
                             <Innholdslaster avhengigheter={[veiledere]}>
-                                <Select
-                                    feltNavn="veilederId"
-                                    bredde="m"
-                                    labelId="innstillinger.modal.opprett-oppgave.veileder.tittel"
-                                >
-                                    {optionsFromObjectWithIntl(
-                                        veilederlisteToKeyValueMap(
-                                            veilederliste
-                                        )
-                                    )}
-                                </Select>
+                                <VelgVeileder veilederliste={veilederliste} />
                             </Innholdslaster>
                         </HiddenIf>
                     </div>
