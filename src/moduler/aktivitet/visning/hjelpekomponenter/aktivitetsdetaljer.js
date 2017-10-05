@@ -99,8 +99,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         arrangoer,
         deltakelseProsent,
         antallDagerPerUke,
-        gruppeAktivitetSted,
-        gruppeAktivitetStatus,
         moeteplanListe,
         oppfolging,
         antallStillingerSokes,
@@ -278,16 +276,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             key="tildato"
             tittel={tilDatoTekst(aktivitetstype)}
             innhold={tilDato || 'Dato ikke satt'}
-        />,
-        <Informasjonsfelt
-            key="gruppeAktivitetSted"
-            tittel={<FormattedMessage id="aktivitetdetaljer.sted-label" />}
-            innhold={gruppeAktivitetSted}
-        />,
-        <Informasjonsfelt
-            key="gruppeAktivitetStatus"
-            tittel={<FormattedMessage id="aktivitetdetaljer.status-label" />}
-            innhold={gruppeAktivitetStatus}
         />,
         <Informasjonsfelt
             key="moteplan"
