@@ -3,12 +3,10 @@ import PT from 'prop-types';
 import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm } from 'react-redux-form-validation';
 import LagreAktivitet from '../lagre-aktivitet';
 import { formNavn } from '../aktivitet-form-utils';
-import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
@@ -21,6 +19,7 @@ import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
+import AktivitetFormHeader from '../aktivitet-form-header';
 
 function erAvtalt(verdi, props) {
     return !!props.avtalt;
@@ -85,16 +84,11 @@ class SokeAvtaleAktivitetForm extends Component {
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
                     {errorSummary}
-                    <div className="aktivitetskjema__header">
-                        <Innholdstittel>
-                            <FormattedMessage id="sokeavtale-aktivitet-form.header" />
-                        </Innholdstittel>
-                        <Undertekst>
-                            <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                        </Undertekst>
-                    </div>
-
-                    <AktivitetIngress type={SOKEAVTALE_AKTIVITET_TYPE} />
+                    <AktivitetFormHeader
+                        tittelId="sokeavtale-aktivitet-form.header"
+                        ingressType={SOKEAVTALE_AKTIVITET_TYPE}
+                        pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    />
 
                     <Input
                         feltNavn="tittel"

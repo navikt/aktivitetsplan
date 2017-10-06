@@ -2,7 +2,6 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import { validForm } from 'react-redux-form-validation';
 import { formNavn } from '../aktivitet-form-utils';
 import {
@@ -15,7 +14,6 @@ import Select from '../../../../felles-komponenter/skjema/input/select';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import VelgKanal from '../velg-kanal';
 import { MOTE_TYPE, STATUS_PLANLAGT } from '../../../../constant';
-import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
@@ -23,6 +21,7 @@ import {
     formatterVarighet,
 } from '../../aktivitet-util';
 import LagreAktivitet from '../lagre-aktivitet';
+import AktivitetFormHeader from '../aktivitet-form-header';
 
 const TITTEL_MAKS_LENGDE = 255;
 const ADRESSE_MAKS_LENGDE = 255;
@@ -101,16 +100,11 @@ function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit }) {
             <div className="skjema-innlogget aktivitetskjema">
                 {errorSummary}
 
-                <div className="aktivitetskjema__header">
-                    <Innholdstittel>
-                        <FormattedMessage id="mote-aktivitet-form.header" />
-                    </Innholdstittel>
-                    <Undertekst>
-                        <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                    </Undertekst>
-                </div>
-
-                <AktivitetIngress type={MOTE_TYPE} />
+                <AktivitetFormHeader
+                    tittelId="mote-aktivitet-form.header"
+                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    ingressType={MOTE_TYPE}
+                />
 
                 <Input
                     feltNavn="tittel"
