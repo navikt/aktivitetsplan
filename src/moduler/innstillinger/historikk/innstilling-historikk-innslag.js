@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
 import { hentVeileder } from '../../../ducks/veileder';
 import * as AppPT from '../../../proptypes';
 import Lenke from '../../../felles-komponenter/utils/lenke';
+import { temaValg, oppgavetyper } from './../opprett-oppgave/opprett-oppgave-utils';
 
 const NAV = 'NAV';
 const SYSTEM = 'SYSTEM';
@@ -64,6 +65,8 @@ class InnstillingHistorikkInnslag extends Component {
             oppgaveTema,
             oppgaveType,
         } = this.props.innstillingHistorikk;
+
+        const { intl } = this.props;
         const tekstType = type.replace(/_/g, '-').toLowerCase();
         const innslagHeaderId = `innstillinger.historikk.innslag.${tekstType}`;
 
@@ -74,8 +77,8 @@ class InnstillingHistorikkInnslag extends Component {
                         <FormattedMessage
                             id="innstillinger.opprett.oppgave.historikk.data"
                             values={{
-                                oppgavetema: oppgaveTema,
-                                oppgavetype: oppgaveType,
+                                oppgavetema: intl.formatMessage({ id: temaValg[oppgaveTema] }),
+                                oppgavetype: intl.formatMessage({ id: oppgavetyper[oppgaveType] }),
                             }
                             } />
                     </Normaltekst>
@@ -133,6 +136,7 @@ InnstillingHistorikkInnslag.propTypes = {
     innstillingHistorikk: AppPT.innstillingHistorikk.isRequired,
     doHentVeileder: PT.func.isRequired,
     veileder: AppPT.veileder,
+    intl: intlShape.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -144,5 +148,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    InnstillingHistorikkInnslag
+    injectIntl(InnstillingHistorikkInnslag)
 );
