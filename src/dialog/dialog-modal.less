@@ -80,8 +80,11 @@
 }
 
 .dialog-modal__eskalerings-filter {
-    padding: 1rem 0 1rem 1.68rem;
-    border-top: 0.1rem solid @gray-background;
+    margin: auto 0 auto auto;
+
+    .skjemaelement--horisontal {
+        margin: 0;
+    }
 }
 
 .dialog-modal__ny-dialog-knapp {
@@ -155,10 +158,6 @@
     .dialog-modal--full-bredde {
         width: @mobil-bredde;
         border-top-right-radius: 4px;
-    }
-
-    .dialog-modal--filter-hoyde.ReactModal__Content {
-        height: 776px;
     }
 
     .dialog-modal--historisk-visning.ReactModal__Content {

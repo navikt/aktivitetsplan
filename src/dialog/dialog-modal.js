@@ -22,10 +22,9 @@ import { selectMotpartSlice } from '../moduler/motpart/motpart-selector';
 import {
     selectAnpassaDialogModalHistoriskVisning,
     selectDialogMedId,
-    selectVisEskaleringsFilter,
 } from '../moduler/dialog/dialog-selector';
 import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
-import DialogFilter from './filter-dialoger';
+import DialogFilter from './dialog-filter';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
@@ -98,8 +97,8 @@ function VenstreKolonne({
                 >
                     <FormattedMessage id="dialog.modal.ny-dialog" />
                 </Knappelenke>
+                <DialogFilter />
             </HideableSection>
-            <DialogFilter />
             <Dialoger
                 className="dialog-modal__dialoger"
                 valgtDialog={valgtDialog}
@@ -198,7 +197,6 @@ DialogModalContent.defaultProps = {
 function DialogModal(props) {
     const className = classNames('dialog-modal', {
         'dialog-modal--full-bredde': props.harNyDialogEllerValgtDialog,
-        'dialog-modal--filter-hoyde': props.visEskaleringsFilter,
         'dialog-modal--historisk-visning':
             props.anpassaStorrelseHistoriskVisning,
     });
@@ -230,7 +228,6 @@ DialogModal.propTypes = {
     motpart: AppPT.motpart.isRequired,
     navnPaMotpart: PT.string,
     historiskVisning: PT.bool.isRequired,
-    visEskaleringsFilter: PT.bool.isRequired,
     anpassaStorrelseHistoriskVisning: PT.bool.isRequired,
 };
 
@@ -253,8 +250,6 @@ const mapStateToProps = (state, props) => {
         motpart,
         navnPaMotpart: motpart.data.navn,
         historiskVisning,
-        visEskaleringsFilter:
-            selectVisEskaleringsFilter(state) && !historiskVisning,
         anpassaStorrelseHistoriskVisning:
             historiskVisning && selectAnpassaDialogModalHistoriskVisning(state),
     };
