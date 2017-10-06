@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm } from 'react-redux-form-validation';
 import { formNavn } from '../aktivitet-form-utils';
@@ -15,12 +14,12 @@ import {
     STATUS_BRUKER_ER_INTRESSERT,
 } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
-import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import {
-    pakrevd,
     maksLengde,
+    pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import LagreAktivitet from '../lagre-aktivitet';
+import AktivitetFormHeader from '../aktivitet-form-header';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -86,16 +85,12 @@ class EgenAktivitetForm extends Component {
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
                     {errorSummary}
-                    <div className="aktivitetskjema__header">
-                        <Innholdstittel>
-                            <FormattedMessage id="egen-aktivitet-form.header" />
-                        </Innholdstittel>
-                        <Undertekst>
-                            <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                        </Undertekst>
-                    </div>
 
-                    <AktivitetIngress type={EGEN_AKTIVITET_TYPE} />
+                    <AktivitetFormHeader
+                        tittelId="egen-aktivitet-form.header"
+                        pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                        ingressType={EGEN_AKTIVITET_TYPE}
+                    />
 
                     <Input
                         feltNavn="tittel"

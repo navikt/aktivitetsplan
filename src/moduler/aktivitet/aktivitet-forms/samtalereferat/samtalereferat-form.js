@@ -2,7 +2,6 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet-form-utils';
@@ -12,16 +11,15 @@ import Input from '../../../../felles-komponenter/skjema/input/input';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import {
     SAMTALEREFERAT_TYPE,
-    STATUS_BRUKER_ER_INTRESSERT,
     STATUS_PLANLAGT,
     TELEFON_KANAL,
 } from '../../../../constant';
-import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import { dateToISODate } from '../../../../utils';
+import AktivitetFormHeader from '../aktivitet-form-header';
 
 const TITTEL_MAKS_LENGDE = 255;
 const REFERAT_MAKS_LENGDE = 5000;
@@ -60,16 +58,11 @@ function MoteAktivitetForm({
             <div className="skjema-innlogget aktivitetskjema">
                 {errorSummary}
 
-                <div className="aktivitetskjema__header">
-                    <Innholdstittel>
-                        <FormattedMessage id="samtalereferat-form.header" />
-                    </Innholdstittel>
-                    <Undertekst>
-                        <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                    </Undertekst>
-                </div>
-
-                <AktivitetIngress type={SAMTALEREFERAT_TYPE} />
+                <AktivitetFormHeader
+                    tittelId="samtalereferat-form.header"
+                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    ingressType={SAMTALEREFERAT_TYPE}
+                />
 
                 <Input
                     feltNavn="tittel"

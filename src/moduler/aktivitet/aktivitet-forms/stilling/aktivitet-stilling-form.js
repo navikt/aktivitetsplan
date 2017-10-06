@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { validForm } from 'react-redux-form-validation';
 import { formNavn } from '../aktivitet-form-utils';
@@ -14,11 +13,11 @@ import Input from '../../../../felles-komponenter/skjema/input/input';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { STATUS_PLANLAGT, STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
-import AktivitetIngress from '../../visning/aktivitetingress/aktivitetingress';
 import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
+import AktivitetFormHeader from '../aktivitet-form-header';
 
 function erAvtalt(verdi, props) {
     return !!props.avtalt;
@@ -89,16 +88,11 @@ class StillingAktivitetForm extends Component {
             <form onSubmit={handleSubmit}>
                 <div className="skjema-innlogget aktivitetskjema">
                     {errorSummary}
-                    <div className="aktivitetskjema__header">
-                        <Innholdstittel>
-                            <FormattedMessage id="stilling-aktivitet-form.header" />
-                        </Innholdstittel>
-                        <Undertekst>
-                            <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                        </Undertekst>
-                    </div>
-
-                    <AktivitetIngress type={STILLING_AKTIVITET_TYPE} />
+                    <AktivitetFormHeader
+                        tittelId="stilling-aktivitet-form.header"
+                        pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                        ingressType={STILLING_AKTIVITET_TYPE}
+                    />
 
                     <Input
                         feltNavn="tittel"

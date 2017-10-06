@@ -1,5 +1,17 @@
 import PT from 'prop-types';
 import { STATUS } from './ducks/utils';
+import {
+    BEHANDLING_AKTIVITET_TYPE,
+    EGEN_AKTIVITET_TYPE,
+    GRUPPE_AKTIVITET_TYPE,
+    IJOBB_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    SOKEAVTALE_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE,
+    TILTAK_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+} from './constant';
 
 export const aktivitet = PT.shape({
     tittel: PT.string,
@@ -195,3 +207,16 @@ export const printMelding = PT.shape({
     overskrift: PT.string,
     beskrivelse: PT.string,
 });
+
+export const aktivitettype = PT.oneOf([
+    SOKEAVTALE_AKTIVITET_TYPE,
+    EGEN_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE,
+    TILTAK_AKTIVITET_TYPE,
+    GRUPPE_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+    IJOBB_AKTIVITET_TYPE,
+    BEHANDLING_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+]);
