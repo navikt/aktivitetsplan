@@ -23,7 +23,7 @@ class InnstillingHistorikk extends Component {
         autobind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.doHentInnstillingHistorikk();
         this.props.doHentInnstillingOppgavehistorikk();
     }
