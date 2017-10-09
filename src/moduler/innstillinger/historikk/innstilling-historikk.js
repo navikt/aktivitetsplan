@@ -9,7 +9,7 @@ import { autobind } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Accordion from '../../../felles-komponenter/accordion';
 import InnstillingHistorikkInnslag from './innstilling-historikk-innslag';
-import { hentInnstillingHistorikk } from './historikk-reducer';
+import { hentInnstillingHistorikk, hentInnstillingOppgavehistorikk } from './historikk-reducer';
 
 class InnstillingHistorikk extends Component {
     constructor(props) {
@@ -22,6 +22,7 @@ class InnstillingHistorikk extends Component {
 
     componentWillMount() {
         this.props.doHentInnstillingHistorikk();
+        this.props.doHentInnstillingOppgavehistorikk();
     }
 
     onClick() {
@@ -30,7 +31,7 @@ class InnstillingHistorikk extends Component {
 
     render() {
         const { historikkReducer } = this.props;
-        const historikkListeSorted = [...historikkReducer.data].sort((a, b) =>
+        const historikkListeSorted = [...historikkReducer.situasjon.data, ...historikkReducer.oppgave.data].sort((a, b) =>
             b.dato.localeCompare(a.dato)
         );
 
@@ -63,7 +64,7 @@ class InnstillingHistorikk extends Component {
 
         return (
             <Innholdslaster
-                avhengigheter={[historikkReducer]}
+                avhengigheter={[historikkReducer.oppgave, historikkReducer.situasjon]}
                 spinnerStorrelse="m"
                 className="instillinger__historikk-spinner"
             >
@@ -85,6 +86,7 @@ class InnstillingHistorikk extends Component {
 InnstillingHistorikk.propTypes = {
     historikkReducer: AppPT.reducer.isRequired,
     doHentInnstillingHistorikk: PT.func.isRequired,
+    doHentInnstillingOppgavehistorikk: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -93,6 +95,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     doHentInnstillingHistorikk: () => dispatch(hentInnstillingHistorikk()),
+    doHentInnstillingOppgavehistorikk: () => dispatch(hentInnstillingOppgavehistorikk()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
