@@ -60,4 +60,12 @@ export function selectBrukerHarAvslatt(state) {
     return selectSituasjonSlice(state).brukerHarAvslatt;
 }
 
+export function selectKanIkkeStartaEskaleringen(state) {
+    return (
+        selectErEskalert(state) ||
+        !selectErUnderOppfolging(state) ||
+        (selectReservasjonKRR(state) && selectErBrukerManuell(state))
+    );
+}
+
 export default {};

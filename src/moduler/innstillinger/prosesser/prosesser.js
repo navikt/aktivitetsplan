@@ -16,6 +16,7 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import {
     selectErEskalert,
     selectErUnderOppfolging,
+    selectKanIkkeStartaEskaleringen,
 } from '../../situasjon/situasjon-selector';
 import {
     selectErManuell,
@@ -36,6 +37,7 @@ class Prosesser extends Component {
             erUnderOppfolging,
             erManuell,
             kanStarteOppfolging,
+            kanIkkeStartaEskalering,
             motpart,
         } = this.props;
         return (
@@ -43,7 +45,7 @@ class Prosesser extends Component {
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <div>
                         <StartEskaleringProsess
-                            hidden={erEskalert || !erUnderOppfolging}
+                            hidden={kanIkkeStartaEskalering}
                         />
                         <StoppEskaleringProsess
                             hidden={!erEskalert || !erUnderOppfolging}
@@ -69,6 +71,7 @@ Prosesser.defaultProps = {
     erUnderOppfolging: undefined,
     erManuell: undefined,
     kanStarteOppfolging: undefined,
+    kanIkkeStartaEskalering: undefined,
 };
 
 Prosesser.propTypes = {
@@ -78,6 +81,7 @@ Prosesser.propTypes = {
     erUnderOppfolging: PT.bool,
     erManuell: PT.bool,
     kanStarteOppfolging: PT.bool,
+    kanIkkeStartaEskalering: PT.bool,
     motpart: AppPT.motpart.isRequired,
 };
 
@@ -87,6 +91,7 @@ const mapStateToProps = state => ({
     erUnderOppfolging: selectErUnderOppfolging(state),
     erManuell: selectErManuell(state),
     kanStarteOppfolging: selectKanStarteOppfolging(state),
+    kanIkkeStartaEskalering: selectKanIkkeStartaEskaleringen(state),
     motpart: selectMotpartSlice(state),
 });
 
