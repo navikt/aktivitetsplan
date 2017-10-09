@@ -6,7 +6,7 @@
 
 // overstyring av default modal
 .aktivitet-modal.dialog-modal {
-    position: fixed;
+    position: absolute;
     max-width: none;
 }
 
@@ -142,6 +142,10 @@
     .dialog-modal {
         width: @dialogkort-bredde;
         min-width: @dialogkort-bredde;
+    }
+
+    .aktivitet-modal.dialog-modal {
+        position: fixed;
     }
 }
 
