@@ -1,17 +1,19 @@
 .verktoylinje {
     &__verktoy {
         display: flex;
-        align-items: stretch;
         flex-direction: column;
+        width: 100%;
         margin-bottom: 1rem;
 
-        &:last-child {
+        .dropdown {
             margin-bottom: 0;
         }
     }
 
     &__verktoy-container {
         display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
     }
 }
 
@@ -21,8 +23,12 @@
         justify-content: space-between;
 
         &__verktoy {
+            width: auto;
+            margin-right: 1rem;
+
             &:last-child {
-                margin-bottom: auto;
+                margin-bottom: 0;
+                margin-right: 0;
             }
         }
     }

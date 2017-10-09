@@ -1,4 +1,7 @@
-import { OPPGAVE_BASE_URL, SITUASJON_PROXY_BASE_URL } from '../../../environment';
+import {
+    OPPGAVE_BASE_URL,
+    SITUASJON_PROXY_BASE_URL,
+} from '../../../environment';
 import { fetchToJson } from '../../../ducks/utils';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -9,7 +12,5 @@ export function hentInnstillingHistorikk() {
 }
 
 export function hentInnstillingOppgavehistorikk() {
-    return fetchToJson(
-        `${OPPGAVE_BASE_URL}/oppgavehistorikk`
-    );
+    return fetchToJson(`${OPPGAVE_BASE_URL}/oppgavehistorikk`);
 }

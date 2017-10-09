@@ -1,17 +1,15 @@
 @import 'filteringslabel/filtrering-label';
 
 .filter {
-    margin-left: 1rem;
+    margin-bottom: 1rem;
 
     &__innhold {
         width: 400px;
     }
 
     &__container {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: flex-start;
-        padding: 1rem 1.5rem 0.8rem 0.5rem;
+        display: block;
+        padding: 2rem;
     }
 
     &__overskrift {
@@ -22,33 +20,54 @@
         margin-bottom: 0.5rem;
         font-size: 1.125rem;
     }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.verktoylinje .filter {
+    margin-left: 0;
 }
 
 .periode-filter-dropdown__innhold {
-    width: ~'calc(100% + 36px)';
-
     .filter__radio--periode label {
         white-space: nowrap;
     }
 }
 
 .filter-dropdown__innhold {
-    width: auto;
-
     .skjemaelement__label {
         white-space: nowrap;
     }
 }
 
-@media (max-width: @screen-md-min) {
-    .filter-dropdown__innhold,
+@media (min-width: @screen-sm) {
+    .periode-filter-dropdown__innhold {
+        width: ~'calc(100% + 3rem)';
+        padding-right: 1rem;
+    }
+
+    .filter-dropdown__innhold {
+        width: auto;
+
+        .filter {
+            margin-left: 1rem;
+
+            &:last-child {
+                margin-left: 0.5rem;
+            }
+        }
+    }
+
     .filter {
-        width: 100%;
+        width: auto;
 
         &__container {
-            display: block;
-            margin-top: 1rem;
-            margin-left: 1rem;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+            padding: 1rem;
         }
     }
 }

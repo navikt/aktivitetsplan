@@ -7,7 +7,10 @@ import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
 import { hentVeileder } from '../../../ducks/veileder';
 import * as AppPT from '../../../proptypes';
 import Lenke from '../../../felles-komponenter/utils/lenke';
-import { temaValg, oppgavetyper } from './../opprett-oppgave/opprett-oppgave-utils';
+import {
+    temaValg,
+    oppgavetyper,
+} from './../opprett-oppgave/opprett-oppgave-utils';
 
 const NAV = 'NAV';
 const SYSTEM = 'SYSTEM';
@@ -77,10 +80,14 @@ class InnstillingHistorikkInnslag extends Component {
                         <FormattedMessage
                             id="innstillinger.opprett.oppgave.historikk.data"
                             values={{
-                                oppgavetema: intl.formatMessage({ id: temaValg[oppgaveTema] }),
-                                oppgavetype: intl.formatMessage({ id: oppgavetyper[oppgaveType] }),
-                            }
-                            } />
+                                oppgavetema: intl.formatMessage({
+                                    id: temaValg[oppgaveTema],
+                                }),
+                                oppgavetype: intl.formatMessage({
+                                    id: oppgavetyper[oppgaveType],
+                                }),
+                            }}
+                        />
                     </Normaltekst>
                 );
             }
@@ -88,9 +95,9 @@ class InnstillingHistorikkInnslag extends Component {
                 const begrunnelseTekst =
                     !!begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
                         ? `${begrunnelse.substring(
-                        0,
-                        ESKALERING_MAX_LENGTH
-                    )}... `
+                              0,
+                              ESKALERING_MAX_LENGTH
+                          )}... `
                         : `${begrunnelse} `;
                 return (
                     <Normaltekst className="innslag__begrunnelse">

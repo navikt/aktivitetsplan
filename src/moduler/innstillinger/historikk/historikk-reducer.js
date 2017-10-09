@@ -8,8 +8,10 @@ export const HENT_HISTORIKK_PENDING = 'historikk/hent_historikk/PENDING';
 
 // Actions
 export const HENT_OPPGAVEHISTORIKK_OK = 'historikk/hent_oppgavehistorikk/OK';
-export const HENT_OPPGAVEHISTORIKK_FEILET = 'historikk/hent_oppgavehistorikk/FEILET';
-export const HENT_OPPGAVEHISTORIKK_PENDING = 'historikk/hent_oppgavehistorikk/PENDING';
+export const HENT_OPPGAVEHISTORIKK_FEILET =
+    'historikk/hent_oppgavehistorikk/FEILET';
+export const HENT_OPPGAVEHISTORIKK_PENDING =
+    'historikk/hent_oppgavehistorikk/PENDING';
 
 const initalState = {
     situasjon: {
@@ -51,7 +53,6 @@ export default function reducer(state = initalState, action) {
                             ? STATUS.PENDING
                             : STATUS.RELOADING,
                 },
-
             };
         case HENT_OPPGAVEHISTORIKK_OK:
             return {
@@ -79,7 +80,6 @@ export default function reducer(state = initalState, action) {
                             ? STATUS.PENDING
                             : STATUS.RELOADING,
                 },
-
             };
         default:
             return state;
