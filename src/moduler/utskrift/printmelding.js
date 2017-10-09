@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { formNavn } from '../aktivitet/aktivitet-forms/aktivitet-form-utils';
@@ -36,9 +36,6 @@ function PrintMeldingForm({ errorSummary, handleSubmit, lagrer, bruker }) {
                             }}
                         />
                     </Innholdstittel>
-                    <Undertekst>
-                        <FormattedMessage id="aktivitet-form.pakrevd-felt-info" />
-                    </Undertekst>
                 </div>
 
                 <Textarea

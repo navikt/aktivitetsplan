@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
 import { hentVeileder } from '../../../ducks/veileder';
 import * as AppPT from '../../../proptypes';
 import Lenke from '../../../felles-komponenter/utils/lenke';
+import { temaValg, oppgavetyper } from './../opprett-oppgave/opprett-oppgave-utils';
 
 const NAV = 'NAV';
 const SYSTEM = 'SYSTEM';
@@ -14,6 +15,7 @@ const EKSTERN = 'EKSTERN';
 
 const ESKALERING_STOPPET = 'ESKALERING_STOPPET';
 const ESKALERING_STARTET = 'ESKALERING_STARTET';
+const OPPRETTET_OPPGAVE = 'OPPRETTET_OPPGAVE';
 const ESKALERING_MAX_LENGTH = 120;
 
 class InnstillingHistorikkInnslag extends Component {
@@ -60,18 +62,35 @@ class InnstillingHistorikkInnslag extends Component {
             dato,
             begrunnelse,
             dialogId,
+            oppgaveTema,
+            oppgaveType,
         } = this.props.innstillingHistorikk;
+
+        const { intl } = this.props;
         const tekstType = type.replace(/_/g, '-').toLowerCase();
         const innslagHeaderId = `innstillinger.historikk.innslag.${tekstType}`;
 
-        const begrunnelseVisning = () => {
+        const historikkdata = () => {
+            if (type === OPPRETTET_OPPGAVE) {
+                return (
+                    <Normaltekst className="innslag__begrunnelse">
+                        <FormattedMessage
+                            id="innstillinger.opprett.oppgave.historikk.data"
+                            values={{
+                                oppgavetema: intl.formatMessage({ id: temaValg[oppgaveTema] }),
+                                oppgavetype: intl.formatMessage({ id: oppgavetyper[oppgaveType] }),
+                            }
+                            } />
+                    </Normaltekst>
+                );
+            }
             if ([ESKALERING_STARTET, ESKALERING_STOPPET].includes(type)) {
                 const begrunnelseTekst =
                     !!begrunnelse && begrunnelse.length > ESKALERING_MAX_LENGTH
                         ? `${begrunnelse.substring(
-                              0,
-                              ESKALERING_MAX_LENGTH
-                          )}... `
+                        0,
+                        ESKALERING_MAX_LENGTH
+                    )}... `
                         : `${begrunnelse} `;
                 return (
                     <Normaltekst className="innslag__begrunnelse">
@@ -97,7 +116,7 @@ class InnstillingHistorikkInnslag extends Component {
                 <Element className="innslag__header">
                     <FormattedMessage id={innslagHeaderId} />
                 </Element>
-                {begrunnelseVisning()}
+                {historikkdata()}
                 <Undertekst>
                     <DatoEllerTidSiden>{dato}</DatoEllerTidSiden>
                     &nbsp;
@@ -117,6 +136,7 @@ InnstillingHistorikkInnslag.propTypes = {
     innstillingHistorikk: AppPT.innstillingHistorikk.isRequired,
     doHentVeileder: PT.func.isRequired,
     veileder: AppPT.veileder,
+    intl: intlShape.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -128,5 +148,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    InnstillingHistorikkInnslag
+    injectIntl(InnstillingHistorikkInnslag)
 );
