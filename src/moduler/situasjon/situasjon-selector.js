@@ -64,8 +64,9 @@ export function selectKanIkkeStartaEskaleringen(state) {
     return (
         selectErEskalert(state) ||
         !selectErUnderOppfolging(state) ||
-        selectReservasjonKRR(state) || selectErBrukerManuell(state))
-
+        selectReservasjonKRR(state) ||
+        selectErBrukerManuell(state)
+    );
 }
 
 export default {};
