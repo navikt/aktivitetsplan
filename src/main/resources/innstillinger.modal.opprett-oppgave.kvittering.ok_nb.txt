@@ -1,0 +1,1 @@
+Oppgave av tema {tema} av type {type} opprettet.
