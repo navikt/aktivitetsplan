@@ -14,7 +14,7 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case OPPRETT_OPPGAVE_OK: {
-            return { status: STATUS.OK };
+            return { status: STATUS.OK, data: action.data };
         }
         case OPPRETT_OPPGAVE_PENDING: {
             return { status: STATUS.PENDING };

@@ -17,6 +17,7 @@ import StartEskaleringKvittering from './start-eskalering/start-eskalering-kvitt
 import StoppEskaleringKvittering from './stopp-eskalering/stopp-eskalering-kvittering';
 import OpprettOppgave from './opprett-oppgave/opprett-oppgave';
 import Feilkvittering from './feilkvittering';
+import OppgaveOpprettetKvittering from './opprett-oppgave/oppgave-opprettet-kvittering';
 
 function InnstillingerRoutes({ match }) {
     const path = match.path;
@@ -85,8 +86,8 @@ function InnstillingerRoutes({ match }) {
                 component={OpprettOppgave}
             />
             <Route
-                path={`${path}/oppgave/opprett/kvittering`}
-                component={OpprettOppgave}
+                path={`${path}/oppgave/kvittering`}
+                component={OppgaveOpprettetKvittering}
             />
             <Route path={`${path}/feilkvittering`} component={Feilkvittering} />
         </Switch>
