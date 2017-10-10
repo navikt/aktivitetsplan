@@ -166,11 +166,11 @@ const mapDispatchToProps = dispatch => ({
         )
             .then(() => {
                 dispatch(resetEnheter());
-                history.push('/');
+                history.push('/innstillinger/oppgave/kvittering/');
             })
             .catch(() => {
                 dispatch(resetEnheter());
-                history.push('innstillinger/feilkvittering');
+                history.push('/innstillinger/oppgave/kvittering/');
             });
     },
     hentEnheter: tema =>
