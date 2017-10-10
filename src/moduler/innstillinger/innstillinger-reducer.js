@@ -1,11 +1,11 @@
 import * as SituasjonApi from '../situasjon/situasjon-api';
-import { doThenDispatch, STATUS } from '../../ducks/utils';
+import { doThenDispatch, handterFeil, STATUS } from '../../ducks/utils';
 import {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
 } from '../../ducks/dialog';
-import { hentSituasjon } from '../situasjon/situasjon';
+import { hentSituasjon, OK as SITUASJON_OK } from '../situasjon/situasjon';
 import history from '../../history';
 
 // Actions
@@ -132,14 +132,17 @@ export function kanAvslutteOppfolging() {
 }
 
 export function avsluttOppfolging(begrunnelse, veilederId) {
-    return doThenDispatch(
-        () => SituasjonApi.avsluttOppfolging(begrunnelse, veilederId),
-        {
-            OK: AVSLUTT_OPPFOLGING_OK,
-            FEILET: AVSLUTT_OPPFOLGING_FEILET,
-            PENDING: AVSLUTT_OPPFOLGING_PENDING,
-        }
-    );
+    return dispatch => {
+        dispatch({ type: AVSLUTT_OPPFOLGING_PENDING });
+        return SituasjonApi.avsluttOppfolging(
+            begrunnelse,
+            veilederId
+        ).then(data => {
+            dispatch({ type: AVSLUTT_OPPFOLGING_OK, data });
+            dispatch({ type: SITUASJON_OK, data });
+            return data;
+        }, handterFeil(dispatch, AVSLUTT_OPPFOLGING_FEILET));
+    };
 }
 
 export function settManuellOppfolging(begrunnelse, veilederId) {

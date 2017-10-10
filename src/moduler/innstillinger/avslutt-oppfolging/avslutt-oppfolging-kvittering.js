@@ -7,18 +7,15 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
-import {
-    HiddenIfAlertStripeAdvarsel,
-    HiddenIfAlertStripeSuksess,
-} from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
-import {
-    selectAvslutningStatus,
-    selectKanAvslutte,
-} from '../../situasjon/situasjon-selector';
+import { HiddenIfAlertStripeSuksess } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import {
     selectMotpartStatus,
     selectNavnPaMotpart,
 } from '../../motpart/motpart-selector';
+import {
+    selectAvslutningStatus,
+    selectUnderOppfolging,
+} from '../../situasjon/situasjon-selector';
 
 function AvsluttOppfolgingKvittering({ avhengigheter, navn, avsluttet }) {
     return (
@@ -49,12 +46,6 @@ function AvsluttOppfolgingKvittering({ avhengigheter, navn, avsluttet }) {
                             values={{ navn }}
                         />
                     </HiddenIfAlertStripeSuksess>
-                    <HiddenIfAlertStripeAdvarsel
-                        hidden={avsluttet}
-                        className="blokk-m"
-                    >
-                        <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.kvittering.feil" />
-                    </HiddenIfAlertStripeAdvarsel>
                 </article>
             </Innholdslaster>
         </Modal>
@@ -70,7 +61,7 @@ AvsluttOppfolgingKvittering.propTypes = {
 const mapStateToProps = state => ({
     avhengigheter: [selectMotpartStatus(state)],
     navn: selectNavnPaMotpart(state),
-    avsluttet: selectAvslutningStatus(state) && !selectKanAvslutte(state),
+    avsluttet: selectAvslutningStatus(state) && !selectUnderOppfolging(state),
 });
 
 export default connect(mapStateToProps)(AvsluttOppfolgingKvittering);

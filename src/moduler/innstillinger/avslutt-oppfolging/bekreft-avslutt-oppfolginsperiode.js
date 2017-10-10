@@ -11,7 +11,6 @@ import history from '../../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
 import { RemoteResetKnapp } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import InnstillingerModal from '../innstillinger-modal';
-import { hentSituasjon } from '../../situasjon/situasjon';
 import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerBegrunnelse } from '../innstillinger-selector';
@@ -78,7 +77,6 @@ const mapDispatchToProps = dispatch => ({
     doAvsluttOppfolging: (begrunnelse, veilederId) => {
         dispatch(avsluttOppfolging(begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/avslutt/kvittering'))
-            .then(() => dispatch(hentSituasjon()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

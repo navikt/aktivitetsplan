@@ -2,6 +2,9 @@ export const selectSituasjonSlice = state => state.data.situasjon;
 
 const selectSituasjonData = state => selectSituasjonSlice(state).data;
 
+export function selectSituasjonStatus(state) {
+    return selectSituasjonSlice(state).status;
+}
 export const selectReservasjonKRR = state =>
     selectSituasjonData(state).reservasjonKRR;
 
@@ -44,20 +47,16 @@ export function selectTilHorendeDialogId(state) {
     return null;
 }
 
-export function selectSituasjonStatus(state) {
-    return selectSituasjonSlice(state).status;
-}
-
 export function selectAvslutningStatus(state) {
-    return selectSituasjonSlice(state).avslutningStatus;
+    return selectSituasjonData(state).avslutningStatus;
 }
 
-export function selectKanAvslutte(state) {
-    return selectAvslutningStatus(state).kanAvslutte;
+export function selectUnderOppfolging(state) {
+    return selectAvslutningStatus(state).underOppfolging;
 }
 
 export function selectBrukerHarAvslatt(state) {
-    return selectSituasjonSlice(state).brukerHarAvslatt;
+    return selectSituasjonData(state).brukerHarAvslatt;
 }
 
 export function selectKanIkkeStartaEskaleringen(state) {
