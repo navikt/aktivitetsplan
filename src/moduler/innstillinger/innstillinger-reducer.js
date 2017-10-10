@@ -1,5 +1,5 @@
 import * as SituasjonApi from '../situasjon/situasjon-api';
-import {doThenDispatch, handterFeil, STATUS} from '../../ducks/utils';
+import { doThenDispatch, handterFeil, STATUS } from '../../ducks/utils';
 import {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
@@ -134,14 +134,14 @@ export function kanAvslutteOppfolging() {
 export function avsluttOppfolging(begrunnelse, veilederId) {
     return dispatch => {
         dispatch({ type: AVSLUTT_OPPFOLGING_PENDING });
-        return SituasjonApi.avsluttOppfolging(begrunnelse, veilederId).then(
-            data => {
-                dispatch({ type: AVSLUTT_OPPFOLGING_OK, data });
-                dispatch({ type: SITUASJON_OK, data });
-                return data;
-            },
-            handterFeil(dispatch, AVSLUTT_OPPFOLGING_FEILET)
-        );
+        return SituasjonApi.avsluttOppfolging(
+            begrunnelse,
+            veilederId
+        ).then(data => {
+            dispatch({ type: AVSLUTT_OPPFOLGING_OK, data });
+            dispatch({ type: SITUASJON_OK, data });
+            return data;
+        }, handterFeil(dispatch, AVSLUTT_OPPFOLGING_FEILET));
     };
 }
 
