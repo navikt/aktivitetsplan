@@ -8,8 +8,18 @@ import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import Checkbox from '../../felles-komponenter/skjema/input/checkbox';
 import history from '../../history';
 import { godtaVilkar, avslaVilkar } from '../situasjon/situasjon';
+import { selectSituasjonStatus } from '../situasjon/situasjon-selector';
+import { STATUS } from '../../ducks/utils';
+import * as AppPT from '../../proptypes';
 
-function GodkjennVilkarForm({ visVilkar, handleSubmit, reset, doAvslaVilkar }) {
+function GodkjennVilkarForm({
+    visVilkar,
+    handleSubmit,
+    reset,
+    doAvslaVilkar,
+    situasjonStatus,
+}) {
+    const lasterData = situasjonStatus !== STATUS.OK;
     const avsla = () => {
         doAvslaVilkar();
         reset();
@@ -33,7 +43,11 @@ function GodkjennVilkarForm({ visVilkar, handleSubmit, reset, doAvslaVilkar }) {
             </div>
 
             <div>
-                <Hovedknapp type="submit">
+                <Hovedknapp
+                    type="submit"
+                    spinner={lasterData}
+                    disabled={lasterData}
+                >
                     <FormattedMessage id="vilkar.ga-til-aktivitetsplan" />
                 </Hovedknapp>
             </div>
@@ -52,6 +66,7 @@ GodkjennVilkarForm.propTypes = {
     visVilkar: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     doAvslaVilkar: PT.func.isRequired,
+    situasjonStatus: AppPT.status.isRequired,
 };
 
 const pakrevdGodkjenning = value =>
@@ -65,6 +80,10 @@ const GodkjennVilkarReduxForm = validForm({
         godkjent: [pakrevdGodkjenning],
     },
 })(GodkjennVilkarForm);
+
+const mapStateToProps = state => ({
+    situasjonStatus: selectSituasjonStatus(state),
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     const doAvslaVilkar = () => {
@@ -85,4 +104,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(GodkjennVilkarReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    GodkjennVilkarReduxForm
+);
