@@ -1,5 +1,2 @@
-{ select, erFyldt,
-   true { Flagg for arbeidsliste, fyldt }
-   false { Flagg for arbeidsliste, utlinjet }
-}
+arbeidsliste
 
