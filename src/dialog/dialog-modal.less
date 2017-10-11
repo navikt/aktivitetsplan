@@ -7,11 +7,10 @@
 // overstyring av default modal
 .aktivitet-modal.dialog-modal {
     position: fixed;
-    max-width: none;
 }
 
 .dialog-modal {
-    min-width: 100%;
+    width: 100%;
     height: 100%;
     margin: 0;
     bottom: 0;
@@ -36,7 +35,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: auto;
 }
 
 .dialog-modal__header {
@@ -76,7 +74,7 @@
     align-self: center;
     padding: 1rem 1rem 1rem 1.5rem;
     height: 62px;
-    width: 400px;
+    width: @dialogkort-bredde;
     background-color: @white;
 }
 
@@ -132,50 +130,71 @@
     display: none;
 }
 
-@media (min-width: @screen-md) {
-    .dialog-modal__kolonne--dialoger {
-        width: @dialogkort-bredde;
+// 768px
+@media (min-width: @screen-sm) {
+    .dialog-modal__kolonne--dialog {
+        padding: 1rem 1rem 1rem 2rem;
     }
 }
 
-@media (min-width: @screen-sm-min) {
+@media (min-height: @screen-sm) AND (min-width: @screen-md) {
+    .dialog-modal__dialoger {
+        height: ~'calc(100% - 112px)';
+    }
+
+    .dialog-modal.ReactModal__Content {
+        height: 100%;
+    }
+
+    .dialog-modal__kolonne--dialoger-valgt-dialog {
+        display: block;
+    }
+}
+
+// 992px
+@media (min-width: @screen-md) {
     .dialog-modal {
         width: @dialogkort-bredde;
         min-width: @dialogkort-bredde;
     }
-}
 
-@media (min-height: @screen-sm) {
+    .dialog-modal--full-bredde {
+        width: @mobil-bredde;
+        max-width: @mobil-bredde;
+        border-top-right-radius: 4px;
+    }
+
     .dialog-modal__dialoger {
         // Sikrer at "dialoger" bredden aldri blir smalere enn et dialoger-innslag aka dialogkort
         min-width: @dialogkort-bredde;
         height: 592px;
     }
 
-    .dialog-modal.ReactModal__Content {
-        height: 716px;
+    .dialog-modal__kolonne--dialoger-valgt-dialog {
+        width: 42%;
     }
 
-    .dialog-modal--full-bredde {
-        width: @mobil-bredde;
-        border-top-right-radius: 4px;
+    .dialog-modal__kolonne--dialog {
+        width: 56%;
+    }
+
+    .dialog-modal.ReactModal__Content {
+        height: 716px;
     }
 
     .dialog-modal--historisk-visning.ReactModal__Content {
         height: 660px;
     }
 
-    .dialog-modal__kolonne--dialoger-valgt-dialog {
-        display: inline-block;
-        width: @dialogkort-bredde;
-        min-width: @dialogkort-bredde;
-    }
-
-    .dialog-modal__kolonne--dialog {
-        padding: 1rem 1rem 1rem 2rem;
-    }
-
     .dialog-modal__tilbake-knapp.pil-knapp {
         display: none;
     }
+}
+
+@media (min-height: @screen-md) AND (min-width: @screen-sm) {
+    /*
+    .dialog-modal__kolonne--dialoger-valgt-dialog {
+        display: none;
+    }
+    */
 }

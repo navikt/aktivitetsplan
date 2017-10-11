@@ -42,7 +42,6 @@
         border: 1px solid @navGra40;
         background: @gray-background;
         outline: none;
-        max-width: 45rem;
 
         &__overlay {
             position: fixed;
@@ -60,7 +59,8 @@
     z-index: 10000;
 }
 
-@media (min-width: @screen-md-min) {
+// 992px
+@media (min-width: @screen-md) {
     .modal {
         max-height: none;
         overflow: visible;
@@ -92,7 +92,6 @@
             border: 1px solid @navGra40;
             background: @gray-background;
             outline: none;
-            max-width: 45rem;
         }
     }
 }
