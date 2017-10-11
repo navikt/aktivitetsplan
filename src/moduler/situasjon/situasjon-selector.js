@@ -1,8 +1,8 @@
-export function selectSituasjonSlice (state) {
+export function selectSituasjonSlice(state) {
     return state.data.situasjon;
 }
 
-function selectSituasjonData (state) {
+function selectSituasjonData(state) {
     return selectSituasjonSlice(state).data;
 }
 
