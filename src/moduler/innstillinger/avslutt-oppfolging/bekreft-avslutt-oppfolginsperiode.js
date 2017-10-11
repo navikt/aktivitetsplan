@@ -38,14 +38,12 @@ function BekreftAvslutning({
             </section>
             <ModalFooter>
                 <Hovedknapp
-                    mini
                     onClick={() => doAvsluttOppfolging(begrunnelse, veilederId)}
                 >
                     <FormattedMessage id="innstillinger.modal.avslutt.bekreft.knapp.bekreft" />
                 </Hovedknapp>
                 <RemoteResetKnapp
                     formNavn={AVSLUTT_FORM_NAME}
-                    mini
                     onClick={() => history.push('/')}
                 >
                     <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.knapp.avbryt" />

@@ -31,7 +31,6 @@ function FjernArbeidsliste({ navn, onBekreftSlett, lukkModal }) {
             </ModalContainer>
             <ModalFooter>
                 <Hovedknapp
-                    mini
                     htmlType="button"
                     onClick={() => {
                         onBekreftSlett();
@@ -41,7 +40,6 @@ function FjernArbeidsliste({ navn, onBekreftSlett, lukkModal }) {
                     <FormattedMessage id="arbeidsliste.knapp.bekreft" />
                 </Hovedknapp>
                 <Knapp
-                    mini
                     htmlType="button"
                     onClick={() => {
                         lukkModal();

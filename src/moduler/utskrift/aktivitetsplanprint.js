@@ -202,7 +202,6 @@ class AktivitetsplanPrintModal extends Component {
                             </div>
                         </Knappelenke>
                         <Hovedknapp
-                            mini
                             className="printmodal-header__printknapp"
                             onClick={() => window.print()}
                         >

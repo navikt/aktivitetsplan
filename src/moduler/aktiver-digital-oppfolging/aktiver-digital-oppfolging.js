@@ -91,7 +91,6 @@ export class AktiverDigitalOppfolgingPure extends Component {
 
         const ReservasjonDifiKnapp = () =>
             <HiddenIfHovedknapp
-                mini
                 spinner={lasterSituasjon}
                 disabled={lasterSituasjon}
                 hidden={!reservertIKRR}
@@ -105,7 +104,6 @@ export class AktiverDigitalOppfolgingPure extends Component {
 
         const AktiverDigitalOppfolgingKnapp = () =>
             <HiddenIfHovedknapp
-                mini
                 spinner={setterDigital}
                 disabled={setterDigital}
                 hidden={reservertIKRR}

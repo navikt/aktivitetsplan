@@ -29,10 +29,10 @@ function BekreftStart({ doStartOppfolging, navn }) {
                 </AlertStripeInfoSolid>
             </section>
             <ModalFooter>
-                <Hovedknapp mini onClick={() => doStartOppfolging()}>
+                <Hovedknapp onClick={() => doStartOppfolging()}>
                     <FormattedMessage id="innstillinger.modal.startoppfolging.knapp.bekreft" />
                 </Hovedknapp>
-                <Knapp mini onClick={() => history.push('/')}>
+                <Knapp onClick={() => history.push('/')}>
                     <FormattedMessage id="innstillinger.modal.startoppfolging.knapp.avbryt" />
                 </Knapp>
             </ModalFooter>

@@ -66,12 +66,11 @@ function AvsluttOppfolgingperiode({
                         />
                     </section>
                     <ModalFooter>
-                        <RemoteSubmitKnapp formNavn={AVSLUTT_FORM_NAME} mini>
+                        <RemoteSubmitKnapp formNavn={AVSLUTT_FORM_NAME}>
                             <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.knapp.avslutt" />
                         </RemoteSubmitKnapp>
                         <RemoteResetKnapp
                             formNavn={AVSLUTT_FORM_NAME}
-                            mini
                             onClick={() => history.push('/')}
                         >
                             <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.knapp.avbryt" />

@@ -52,7 +52,6 @@ function SettDigitalOppfolging({
             <ModalFooter>
                 <RemoteSubmitKnapp
                     formNavn={SETT_DIGITAL_FORM_NAME}
-                    mini
                     spinner={situasjonLaster}
                     disabled={situasjonLaster}
                 >
@@ -60,7 +59,6 @@ function SettDigitalOppfolging({
                 </RemoteSubmitKnapp>
                 <RemoteResetKnapp
                     formNavn={SETT_DIGITAL_FORM_NAME}
-                    mini
                     onClick={() => history.push('/')}
                 >
                     <FormattedMessage id="innstillinger.modal.digital.avbryt.knapp" />

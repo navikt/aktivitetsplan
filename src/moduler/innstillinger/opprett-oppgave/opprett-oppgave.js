@@ -37,7 +37,6 @@ function OpprettOppgave({ innstillingerStatus, slettEnheter, valgtTema }) {
                 <ModalFooter>
                     <RemoteSubmitKnapp
                         formNavn={OPPRETT_OPPGAVE_FORM}
-                        mini
                         spinner={
                             innstillingerStatus === STATUS.PENDING ||
                             innstillingerStatus === STATUS.RELOADING
@@ -49,7 +48,6 @@ function OpprettOppgave({ innstillingerStatus, slettEnheter, valgtTema }) {
                     </RemoteSubmitKnapp>
                     <RemoteResetKnapp
                         formNavn={OPPRETT_OPPGAVE_FORM}
-                        mini
                         onClick={() => {
                             slettEnheter();
                             history.push('/');

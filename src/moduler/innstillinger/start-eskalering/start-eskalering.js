@@ -51,7 +51,6 @@ function StartEskalering({ handleSubmit, innstillingerStatus }) {
                     <ModalFooter>
                         <RemoteSubmitKnapp
                             formNavn={START_ESKALERING_FORM_NAME}
-                            mini
                             spinner={
                                 innstillingerStatus === STATUS.PENDING ||
                                 innstillingerStatus === STATUS.RELOADING
@@ -62,7 +61,6 @@ function StartEskalering({ handleSubmit, innstillingerStatus }) {
                         </RemoteSubmitKnapp>
                         <RemoteResetKnapp
                             formNavn={START_ESKALERING_FORM_NAME}
-                            mini
                             onClick={() => history.push('/')}
                         >
                             <FormattedMessage id="innstillinger.modal.start-eskalering.knapp.avbryt" />

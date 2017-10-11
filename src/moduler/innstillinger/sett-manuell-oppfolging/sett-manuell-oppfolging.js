@@ -52,7 +52,6 @@ function SettManuellOppfolging({
             <ModalFooter>
                 <RemoteSubmitKnapp
                     formNavn={SETT_MANUELL_FORM_NAME}
-                    mini
                     spinner={situasjonLaster}
                     disabled={situasjonLaster}
                 >
@@ -60,7 +59,6 @@ function SettManuellOppfolging({
                 </RemoteSubmitKnapp>
                 <RemoteResetKnapp
                     formNavn={SETT_MANUELL_FORM_NAME}
-                    mini
                     onClick={() => history.push('/')}
                 >
                     <FormattedMessage id="innstillinger.modal.manuell.avbryt.knapp" />

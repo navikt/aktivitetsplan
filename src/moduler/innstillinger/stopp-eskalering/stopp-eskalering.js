@@ -54,7 +54,6 @@ function StoppEskalering({
                     <ModalFooter>
                         <RemoteSubmitKnapp
                             formNavn={STOPP_ESKALERING_FORM_NAME}
-                            mini
                             spinner={
                                 innstillingerStatus === STATUS.PENDING ||
                                 innstillingerStatus === STATUS.RELOADING
@@ -65,7 +64,6 @@ function StoppEskalering({
                         </RemoteSubmitKnapp>
                         <RemoteResetKnapp
                             formNavn={STOPP_ESKALERING_FORM_NAME}
-                            mini
                             onClick={() => history.push('/')}
                         >
                             <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.avbryt" />

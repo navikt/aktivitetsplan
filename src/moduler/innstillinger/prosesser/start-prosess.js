@@ -23,7 +23,6 @@ function Prosess({
             </Undertittel>
             {children}
             <Knapp
-                mini
                 spinner={laster}
                 autoDisableVedSpinner
                 disabled={disabled}
