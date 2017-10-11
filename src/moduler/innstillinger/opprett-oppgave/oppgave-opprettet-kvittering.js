@@ -7,17 +7,14 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
-import { HiddenIfAlertStripeSuksess } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import {
-    selectMotpartStatus,
-    selectNavnPaMotpart,
-} from '../../motpart/motpart-selector';
-import {
-    selectAvslutningStatus,
-    selectUnderOppfolging,
-} from '../../situasjon/situasjon-selector';
+    HiddenIfAlertStripeAdvarsel,
+    HiddenIfAlertStripeSuksess,
+} from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
+import { selectOpprettOppgave } from './opprett-oppgave-reducer';
 
-function AvsluttOppfolgingKvittering({ avhengigheter, navn, avsluttet }) {
+function OppgaveOpprettetKvittering({ avhengigheter, navn, opprettOppgave }) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
@@ -34,34 +31,45 @@ function AvsluttOppfolgingKvittering({ avhengigheter, navn, avsluttet }) {
                     </Innholdstittel>
                     <div className="innstillinger__innhold blokk-xs">
                         <Systemtittel>
-                            <FormattedMessage id="innstillinger.modal.avslutt.oppfolging.overskrift" />
+                            <FormattedMessage id="innstillinger.modal.opprett-oppgave.beskrivelse" />
                         </Systemtittel>
                     </div>
                     <HiddenIfAlertStripeSuksess
-                        hidden={!avsluttet}
+                        hidden={!opprettOppgave}
                         className="blokk-m"
                     >
                         <FormattedMessage
-                            id="innstillinger.modal.avslutt.oppfolging.kvittering"
-                            values={{ navn }}
-                        />
+                            id="innstillinger.modal.opprett-oppgave.kvittering.ok"
+                            values={{ ...opprettOppgave }}
+                        >
+                            {text =>
+                                <span className="whitespace">
+                                    {text}
+                                </span>}
+                        </FormattedMessage>
                     </HiddenIfAlertStripeSuksess>
+                    <HiddenIfAlertStripeAdvarsel
+                        hidden={!!opprettOppgave}
+                        className="blokk-m"
+                    >
+                        <FormattedMessage id="innstillinger.modal.opprett-oppgave.kvittering.feilet" />
+                    </HiddenIfAlertStripeAdvarsel>
                 </article>
             </Innholdslaster>
         </Modal>
     );
 }
 
-AvsluttOppfolgingKvittering.propTypes = {
+OppgaveOpprettetKvittering.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
-    avsluttet: PT.bool.isRequired,
     navn: PT.string.isRequired,
+    opprettOppgave: PT.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    avhengigheter: [selectMotpartStatus(state)],
+    avhengigheter: [selectOpprettOppgave(state)],
     navn: selectNavnPaMotpart(state),
-    avsluttet: selectAvslutningStatus(state) && !selectUnderOppfolging(state),
+    opprettOppgave: selectOpprettOppgave(state).data,
 });
 
-export default connect(mapStateToProps)(AvsluttOppfolgingKvittering);
+export default connect(mapStateToProps)(OppgaveOpprettetKvittering);
