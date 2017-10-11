@@ -1,4 +1,4 @@
-{ select, underOppfolging,
+{ underOppfolging, select,
  true {
 
  Hvis du svarer nei til å ta i bruk aktivitetsplanen, fyller du ikke vilkårene for å få oppfølging og utbetalinger fra NAV.
