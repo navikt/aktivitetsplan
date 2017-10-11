@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedHTMLMessage } from 'react-intl';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { hentSituasjon } from '../situasjon/situasjon';
 import { hentIdentitet } from '../identitet/identitet-duck';
@@ -11,7 +10,7 @@ import { STATUS } from '../../ducks/utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
-import { selectErPrivatBruker } from '../privat-modus/privat-modus-selector';
+
 import {
     selectBrukerHarAvslatt,
     selectErBrukerManuell,
@@ -23,27 +22,18 @@ import {
     selectErVeileder,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
+import { HtmlText } from '../../text';
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
-export function GodkjennVilkarMedVarsling({
-    visVilkar,
-    brukerHarAvslatt,
-    erPrivatBruker,
-}) {
-    const visTekstForPrivatBruker = erPrivatBruker
-        ? 'PRIVAT_BRUKER'
-        : 'DEFAULT';
+export function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
     return (
         <div>
             <Alert
                 className="feil-container"
                 visible={!visVilkar && brukerHarAvslatt}
             >
-                <FormattedHTMLMessage
-                    id="vilkar.info-avslag-vilkar"
-                    values={{ status: visTekstForPrivatBruker }}
-                />
+                <HtmlText id="vilkar.info-avslag-vilkar" />
             </Alert>
             <GodkjennVilkar visVilkar={visVilkar} />
         </div>
@@ -57,7 +47,6 @@ GodkjennVilkarMedVarsling.defaultProps = {
 GodkjennVilkarMedVarsling.propTypes = {
     brukerHarAvslatt: PT.bool,
     visVilkar: PT.bool.isRequired,
-    erPrivatBruker: PT.bool.isRequired,
 };
 
 export function oppfolgingStatusKomponent(props) {
@@ -67,7 +56,6 @@ export function oppfolgingStatusKomponent(props) {
         manuell,
         vilkarMaBesvares,
         brukerHarAvslatt,
-        erPrivatBruker,
         visVilkar,
     } = props;
     if (erVeileder) {
@@ -79,7 +67,6 @@ export function oppfolgingStatusKomponent(props) {
             <GodkjennVilkarMedVarsling
                 visVilkar={visVilkar}
                 brukerHarAvslatt={brukerHarAvslatt}
-                erPrivatBruker={erPrivatBruker}
             />
         );
     }
@@ -95,7 +82,6 @@ oppfolgingStatusKomponent.defaultProps = {
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
     visVilkar: false,
-    erPrivatBruker: false,
 };
 
 oppfolgingStatusKomponent.propTypes = {
@@ -106,7 +92,6 @@ oppfolgingStatusKomponent.propTypes = {
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool,
-    erPrivatBruker: PT.bool,
 };
 
 class OppfolgingStatus extends Component {
@@ -146,7 +131,6 @@ const mapStateToProps = state => ({
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     situasjonStatus: selectSituasjonStatus(state),
     identitetStatus: selectIdentitetStatus(state),
-    erPrivatBruker: selectErPrivatBruker(state),
 });
 
 const mapDispatchToProps = dispatch => ({
