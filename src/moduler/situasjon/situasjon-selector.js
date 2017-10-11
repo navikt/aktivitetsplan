@@ -1,6 +1,10 @@
-export const selectSituasjonSlice = state => state.data.situasjon;
+export function selectSituasjonSlice (state) {
+    return state.data.situasjon;
+}
 
-const selectSituasjonData = state => selectSituasjonSlice(state).data;
+function selectSituasjonData (state) {
+    return selectSituasjonSlice(state).data;
+}
 
 export function selectSituasjonStatus(state) {
     return selectSituasjonSlice(state).status;
@@ -56,7 +60,7 @@ export function selectUnderOppfolging(state) {
 }
 
 export function selectBrukerHarAvslatt(state) {
-    return selectSituasjonData(state).brukerHarAvslatt;
+    return selectSituasjonSlice(state).brukerHarAvslatt;
 }
 
 export function selectKanIkkeStartaEskaleringen(state) {
