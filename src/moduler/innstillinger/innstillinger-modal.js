@@ -18,11 +18,16 @@ function InnstillingerModal({
     children,
     navnPaMotpart,
     onRequestClose,
+    ingenTilbakeKnapp,
 }) {
     return (
         <Modal
             header={
-                <ModalHeader tilbakeTekstId="innstillinger.modal.tilbake" />
+                <ModalHeader
+                    tilbakeTekstId={
+                        ingenTilbakeKnapp ? null : 'innstillinger.modal.tilbake'
+                    }
+                />
             }
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
@@ -55,6 +60,7 @@ InnstillingerModal.defaultProps = {
     children: undefined,
     navnPaMotpart: undefined,
     onRequestClose: undefined,
+    ingenTilbakeKnapp: undefined,
 };
 
 InnstillingerModal.propTypes = {
@@ -62,6 +68,7 @@ InnstillingerModal.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     children: PT.node,
     onRequestClose: PT.func,
+    ingenTilbakeKnapp: PT.bool,
 };
 
 const mapStateToProps = state => ({

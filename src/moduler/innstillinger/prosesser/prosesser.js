@@ -41,7 +41,7 @@ class Prosesser extends Component {
             motpart,
         } = this.props;
         return (
-            <InnstillingerModal>
+            <InnstillingerModal ingenTilbakeKnapp>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <div>
                         <StartEskaleringProsess
