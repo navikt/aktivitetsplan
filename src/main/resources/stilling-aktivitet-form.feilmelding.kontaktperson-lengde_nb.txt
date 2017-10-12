@@ -1,1 +1,1 @@
-Kontaktpersontekst kan ikke være lenger en {KONTAKTPERSON_MAKS_LENGDE} tegn
+Kontaktpersontekst kan ikke være lenger en {MAKS_LENGDE} tegn
