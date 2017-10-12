@@ -7,7 +7,6 @@ import moment from 'moment';
 import { TILLAT_SLETTING } from '~config'; // eslint-disable-line
 import {
     hentAktivitet,
-    hentAktiviteter,
     settForrigeAktiveAktivitetId,
     fjernForrigeAktiveAktivitetId,
 } from '../aktivitet-actions';
@@ -55,10 +54,15 @@ class AktivitetvisningContainer extends Component {
         const {
             valgtAktivitet,
             doHentAktivitet,
+            doHentArenaAktiviteter,
             doFjernForrigeAktiveAktivitetId,
         } = this.props;
         if (valgtAktivitet) {
-            doHentAktivitet(valgtAktivitet.id);
+            if (valgtAktivitet.arenaAktivitet) {
+                doHentArenaAktiviteter();
+            } else {
+                doHentAktivitet(valgtAktivitet.id);
+            }
         }
         doFjernForrigeAktiveAktivitetId();
     }
@@ -99,7 +103,6 @@ AktivitetvisningContainer.propTypes = {
     tillatEndring: PT.bool.isRequired,
     slettingErTillatt: PT.bool.isRequired,
     doHentAktivitet: PT.func.isRequired,
-    doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
     doSettForrigeAktiveAktivitetId: PT.func.isRequired,
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
@@ -142,7 +145,6 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
             doHentAktivitet: hentAktivitet,
-            doHentAktiviteter: hentAktiviteter,
             doHentArenaAktiviteter: hentArenaAktiviteter,
             doSettForrigeAktiveAktivitetId: settForrigeAktiveAktivitetId,
             doFjernForrigeAktiveAktivitetId: fjernForrigeAktiveAktivitetId,

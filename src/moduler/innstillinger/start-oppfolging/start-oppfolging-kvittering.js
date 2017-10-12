@@ -18,7 +18,7 @@ function StartOppfolgingKvittering({ avhengigheter, navn }) {
             contentLabel="instillinger-modal"
             contentClass="innstillinger"
         >
-            <Innholdslaster avhengigheter={avhengigheter}>
+            <Innholdslaster avhengigheter={[avhengigheter]}>
                 <article className="innstillinger__container">
                     <Innholdstittel>
                         <FormattedMessage
