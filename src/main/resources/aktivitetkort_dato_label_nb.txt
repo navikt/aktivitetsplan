@@ -1,0 +1,4 @@
+{ label, select,
+FRA {Fra:}
+Til {Til:}
+} {DATO}
