@@ -4,7 +4,7 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl, intlShape } from 'react-intl';
 import {
-    AlertStripeAdvarsel,
+    AlertStripeNavansatt,
     AlertStripeInfo,
     AlertStripeInfoSolid,
 } from 'nav-frontend-alertstriper';
@@ -18,14 +18,14 @@ import * as AppPT from '../../proptypes';
 import Text from '../../text';
 
 const typer = {
-    [AlertStripeAdvarsel]: 1,
+    [AlertStripeNavansatt]: 1,
     [AlertStripeInfoSolid]: 2,
     [AlertStripeInfo]: 3,
 };
 
 const stripeTyper = {
-    UKJENT: AlertStripeAdvarsel,
-    FINNES_IKKE: AlertStripeAdvarsel,
+    UKJENT: AlertStripeNavansatt,
+    FINNES_IKKE: AlertStripeNavansatt,
     INGEN_TILGANG: AlertStripeInfoSolid,
     UGYLDIG_REQUEST: AlertStripeInfo,
     VERSJONSKONFLIKT: AlertStripeInfo,
