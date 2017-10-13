@@ -1,18 +1,37 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { MOTE_TYPE } from '../../../constant';
+import { injectIntl, intlShape } from 'react-intl';
+
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { formaterDato } from '../../../utils';
 import * as PT from '../../../proptypes';
 
-function AktiviteskortPeriodeVisning({ aktivitet }) {
+function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
     const { type, fraDato, tilDato } = aktivitet;
     function periodeVisning() {
-        if (type === MOTE_TYPE) {
+        if (type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE ) {
             return formaterDato(fraDato);
         }
-        return [formaterDato(fraDato), formaterDato(tilDato)]
-            .filter(d => d)
-            .join(' - ');
+        if (!fraDato) {
+            const tilDatoValues = {
+                label: 'TIL',
+                DATO: formaterDato(fraDato),
+            };
+
+            return intl.formatMessage({
+                id: 'aktivitetkort.dato_label',
+            }, tilDatoValues);
+        }
+        if (!tilDato) {
+            const fraDatoValues = {
+                label: 'FRA',
+                DATO: formaterDato(fraDato),
+            };
+
+            return intl.formatMessage({id: 'aktivitetkort.dato_label'}, fraDatoValues);
+        }
+
+        return [formaterDato(fraDato), formaterDato(tilDato)].join(' - ');
     }
     return (
         <Normaltekst className="aktivitetskort__dato">
@@ -23,6 +42,7 @@ function AktiviteskortPeriodeVisning({ aktivitet }) {
 
 AktiviteskortPeriodeVisning.propTypes = {
     aktivitet: PT.aktivitet.isRequired,
+    intl: intlShape.isRequired,
 };
 
-export default AktiviteskortPeriodeVisning;
+export default injectIntl(AktiviteskortPeriodeVisning);

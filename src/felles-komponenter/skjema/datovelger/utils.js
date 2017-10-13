@@ -25,10 +25,9 @@ export function validerDatoField(input, intl, alternativer) {
             fradato: toDatePrettyPrint(fraDato.toDate()),
             tildato: toDatePrettyPrint(tilDato.toDate()),
         };
-        return intl.formatMessage({
-            id: 'datepicker.feilmelding.innenfor-periode',
-            values: msgValues,
-        });
+        return intl.formatMessage(
+        {id: 'datepicker.feilmelding.innenfor-periode'}, msgValues,
+        );
     }
     return undefined;
 }
