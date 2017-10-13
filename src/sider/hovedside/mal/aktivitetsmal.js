@@ -67,7 +67,7 @@ function malListeVisning(gjeldendeMal) {
             </span>{' '}
             {formaterDatoEllerTidSiden(gjeldendeMal.dato)}
             <Tekstomrade className="aktivitetmal__historikk-tekst">
-                {gjeldendeMal.mal}
+                {gjeldendeMal.mal || ''}
             </Tekstomrade>
         </article>
     );
@@ -113,7 +113,7 @@ class AktivitetsMal extends Component {
                             historiskVisning={historiskVisning}
                         />
                         <Tekstomrade className="aktivitetmal__tekst">
-                            {mal}
+                            {mal || ''}
                         </Tekstomrade>
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
@@ -158,7 +158,7 @@ class AktivitetsMal extends Component {
 }
 
 AktivitetsMal.defaultProps = {
-    mal: null,
+    mal: '',
 };
 
 AktivitetsMal.propTypes = {
