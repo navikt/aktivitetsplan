@@ -7,6 +7,7 @@
 // overstyring av default modal
 .aktivitet-modal.dialog-modal {
     position: fixed;
+    top: 0;
 }
 
 .dialog-modal {
@@ -137,7 +138,8 @@
     }
 }
 
-@media (min-height: @screen-sm) AND (min-width: @screen-md) {
+// Samsung Galaxy height AND 992px
+@media (min-height: 678px) AND (min-width: @screen-md) {
     .dialog-modal__dialoger {
         height: ~'calc(100% - 112px)';
     }
