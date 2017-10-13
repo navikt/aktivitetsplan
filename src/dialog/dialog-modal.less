@@ -7,7 +7,6 @@
 // overstyring av default modal
 .aktivitet-modal.dialog-modal {
     position: fixed;
-    top: 0;
 }
 
 .dialog-modal {
@@ -129,6 +128,10 @@
 
 .dialog-modal__kolonne--dialoger-valgt-dialog {
     display: none;
+}
+
+@media (max-height: 678px) {
+    top: 0;
 }
 
 // 768px
