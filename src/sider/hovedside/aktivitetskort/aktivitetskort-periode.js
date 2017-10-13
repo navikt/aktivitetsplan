@@ -9,7 +9,7 @@ import * as PT from '../../../proptypes';
 function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
     const { type, fraDato, tilDato } = aktivitet;
     function periodeVisning() {
-        if (type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE ) {
+        if (type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) {
             return formaterDato(fraDato);
         }
         if (!fraDato) {
@@ -18,9 +18,12 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
                 DATO: formaterDato(fraDato),
             };
 
-            return intl.formatMessage({
-                id: 'aktivitetkort.dato_label',
-            }, tilDatoValues);
+            return intl.formatMessage(
+                {
+                    id: 'aktivitetkort.dato_label',
+                },
+                tilDatoValues
+            );
         }
         if (!tilDato) {
             const fraDatoValues = {
@@ -28,7 +31,10 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
                 DATO: formaterDato(fraDato),
             };
 
-            return intl.formatMessage({id: 'aktivitetkort.dato_label'}, fraDatoValues);
+            return intl.formatMessage(
+                { id: 'aktivitetkort.dato_label' },
+                fraDatoValues
+            );
         }
 
         return [formaterDato(fraDato), formaterDato(tilDato)].join(' - ');
