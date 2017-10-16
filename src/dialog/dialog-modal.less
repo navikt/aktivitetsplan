@@ -130,6 +130,10 @@
     display: none;
 }
 
+@media (max-height: 678px) {
+    top: 0;
+}
+
 // 768px
 @media (min-width: @screen-sm) {
     .dialog-modal__kolonne--dialog {
@@ -137,7 +141,8 @@
     }
 }
 
-@media (min-height: @screen-sm) AND (min-width: @screen-md) {
+// Samsung Galaxy height AND 992px
+@media (min-height: 678px) AND (min-width: @screen-md) {
     .dialog-modal__dialoger {
         height: ~'calc(100% - 112px)';
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import { withRouter } from 'react-router-dom';
@@ -40,13 +40,14 @@ function dialogOpprettet(dialog) {
     history.push(`/dialog/${dialog.id}`);
 }
 
-function Header({ harNyDialogEllerValgtDialog, motpart, navnPaMotpart }) {
+function Header({ harNyDialogEllerValgtDialog, motpart, navnPaMotpart, intl }) {
     return (
         <div className="dialog-modal__header">
             <PilKnapp
                 visible={harNyDialogEllerValgtDialog}
                 className="dialog-modal__tilbake-knapp"
                 onClick={tilbake}
+                aria-label={intl.formatMessage({ id: 'dialog.modal.tilbake' })}
             />
             <Innholdslaster avhengigheter={[motpart]} spinnerStorrelse="m">
                 <Element className="dialog-modal__tittel" tag="h1">
@@ -68,6 +69,7 @@ Header.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
     motpart: AppPT.reducer.isRequired,
     navnPaMotpart: PT.string,
+    intl: intlShape.isRequired,
 };
 
 function VenstreKolonne({
@@ -194,7 +196,7 @@ DialogModalContent.defaultProps = {
     valgtAktivitetId: undefined,
 };
 
-function DialogModal(props) {
+function DialogModal(props, intl) {
     const className = classNames('dialog-modal', {
         'dialog-modal--full-bredde': props.harNyDialogEllerValgtDialog,
         'dialog-modal--historisk-visning':
@@ -205,7 +207,7 @@ function DialogModal(props) {
         <Modal
             className={className}
             contentClass="aktivitetsplanfs dialog-modal__content"
-            header={<Header {...props} />}
+            header={<Header intl={intl} {...props} />}
         >
             <DialogModalContent {...props} />
         </Modal>
@@ -229,6 +231,7 @@ DialogModal.propTypes = {
     navnPaMotpart: PT.string,
     historiskVisning: PT.bool.isRequired,
     anpassaStorrelseHistoriskVisning: PT.bool.isRequired,
+    intl: intlShape.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
@@ -255,4 +258,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps)(DialogModal));
+export default withRouter(connect(mapStateToProps)(injectIntl(DialogModal)));
