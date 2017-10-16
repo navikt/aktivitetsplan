@@ -63,7 +63,11 @@ function StillingEtikettForm(props) {
                 </div>
             </div>
             <VisibleIfDiv visible={dirty}>
-                <Hovedknapp spinner={lasterData} autoDisableVedSpinner>
+                <Hovedknapp
+                    spinner={lasterData}
+                    autoDisableVedSpinner
+                    className="oppdater-status"
+                >
                     <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
                 </Hovedknapp>
             </VisibleIfDiv>
