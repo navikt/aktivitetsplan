@@ -15,7 +15,7 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
         if (!fraDato) {
             const tilDatoValues = {
                 label: 'TIL',
-                DATO: formaterDato(fraDato),
+                DATO: formaterDato(tilDato),
             };
 
             return intl.formatMessage(
