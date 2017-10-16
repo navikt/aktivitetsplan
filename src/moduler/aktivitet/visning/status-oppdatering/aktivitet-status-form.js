@@ -146,9 +146,8 @@ function AktivitetStatusForm(props) {
 
                 <Hovedknapp
                     spinner={lasterData}
-                    mini
                     autoDisableVedSpinner
-                    className="knapp--mini oppdater-status"
+                    className="oppdater-status"
                 >
                     <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
                 </Hovedknapp>
@@ -240,7 +239,10 @@ const mapDispatchToProps = () => ({
                 values.begrunnelse
             )
         ).then(
-            dispatch(untouch(AKTIVITET_STATUS_FORM_NAME, BEGRUNNELSE_FELT_NAME))
+            () =>  {
+                document.querySelector('.aktivitet-modal').focus();
+                dispatch(untouch(AKTIVITET_STATUS_FORM_NAME, BEGRUNNELSE_FELT_NAME));
+            }
         );
     },
 });

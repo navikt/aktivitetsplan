@@ -86,7 +86,7 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                         melding: parseError(data),
                     },
                 });
-            });
+        });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
             dispatch({

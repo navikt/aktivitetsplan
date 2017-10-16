@@ -20,7 +20,7 @@ function VisAdvarsel({ handleSubmit, headerTekst }) {
                 </AlertStripeInfoSolid>
             </ModalContainer>
             <ModalFooter>
-                <Hovedknapp mini>
+                <Hovedknapp>
                     <FormattedMessage id="ferdigstilt.modal.lagre" />
                 </Hovedknapp>
             </ModalFooter>
