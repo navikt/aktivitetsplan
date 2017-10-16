@@ -8,8 +8,8 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import history from '../../../history';
 import {
+    selectMalStatus,
     selectGjeldendeMal,
-    selectMalSlice,
 } from '../../../moduler/mal/mal-selector';
 
 class AktivitetmalEndre extends Component {
@@ -45,7 +45,7 @@ AktivitetmalEndre.propTypes = {
 
 const mapStateToProps = state => ({
     mal: selectGjeldendeMal(state),
-    avhengigheter: [selectMalSlice(state)],
+    avhengigheter: [selectMalStatus(state)],
 });
 
 const mapDispatchToProps = dispatch => ({

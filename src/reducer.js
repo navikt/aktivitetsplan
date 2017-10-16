@@ -11,6 +11,7 @@ import etiketterReducer from './ducks/etiketter';
 import versjonReducer from './ducks/aktivitet-versjoner';
 import dialogReducer from './ducks/dialog';
 import malReducer from './moduler/mal/mal-reducer';
+import malListeReducer from './moduler/mal/malliste-reducer';
 import identitetReducer from './moduler/identitet/identitet-duck';
 import motpartReducer from './moduler/motpart/motpart-duck';
 import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
@@ -42,6 +43,7 @@ const combinedReducers = combineReducers({
         versjoner: versjonReducer,
         dialog: dialogReducer,
         mal: malReducer,
+        malListe: malListeReducer,
         motpart: motpartReducer,
         identitet: identitetReducer,
         filter: filterReducer,

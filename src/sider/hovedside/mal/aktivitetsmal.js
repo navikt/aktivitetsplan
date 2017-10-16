@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import {
-    hentMal,
-    hentMalListe,
-    fjernMalListe,
-} from '../../../moduler/mal/mal-reducer';
+import { hentMal } from '../../../moduler/mal/mal-reducer';
 import * as AppPT from '../../../proptypes';
 import { autobind, formaterDatoEllerTidSiden } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -24,13 +20,18 @@ import {
     HiddenIfKnapp,
 } from '../../../felles-komponenter/hidden-if/hidden-if-knapper';
 import {
+    selectMalStatus,
     selectGjeldendeMal,
     selectMalListe,
-    selectMalStatus,
+    selectMalListeStatus,
 } from '../../../moduler/mal/mal-selector';
 import { selectViserHistoriskPeriode } from '../../../moduler/filtrering/filter/filter-selector';
 import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import {
+    fjernMalListe,
+    hentMalListe,
+} from '../../../moduler/mal/malliste-reducer';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 
@@ -172,17 +173,13 @@ AktivitetsMal.propTypes = {
     doFjernMalListe: PT.func.isRequired,
 };
 
-const mapStateToProps = state => {
-    const gjeldendeMal = selectGjeldendeMal(state);
-    const malListe = selectMalListe(state);
-    return {
-        avhengigheter: [selectMalStatus(state)],
-        mal: gjeldendeMal && gjeldendeMal.mal,
-        historiskeMal: malListe.slice(1, malListe.length),
-        historiskVisning: selectViserHistoriskPeriode(state),
-        kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
-    };
-};
+const mapStateToProps = state => ({
+    avhengigheter: [selectMalStatus(state), selectMalListeStatus(state)],
+    mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
+    historiskeMal: selectMalListe(state),
+    historiskVisning: selectViserHistoriskPeriode(state),
+    kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
+});
 
 const mapDispatchToProps = dispatch => ({
     doHentMal: () => dispatch(hentMal()),
