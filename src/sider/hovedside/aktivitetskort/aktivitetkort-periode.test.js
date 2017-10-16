@@ -3,13 +3,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
-import {
-    MOTE_TYPE,
-    IJOBB_AKTIVITET_TYPE,
-} from '../../../constant';
-import {
-    mountWithIntl
-} from '../../../../test/intl-enzyme-test-helper';
+import { MOTE_TYPE, IJOBB_AKTIVITET_TYPE } from '../../../constant';
+import { mountWithIntl } from '../../../../test/intl-enzyme-test-helper';
 
 describe('Aktivitet-periode', () => {
     it('Skal vise kun fra dato hvis aktiviten er ett møte med NAV', () => {
@@ -35,5 +30,4 @@ describe('Aktivitet-periode', () => {
         );
         expect(wrapper.text()).to.equal('17. aug 2017 - 20. aug 2017');
     });
-
 });
