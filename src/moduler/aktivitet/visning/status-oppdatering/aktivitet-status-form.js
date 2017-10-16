@@ -238,12 +238,12 @@ const mapDispatchToProps = () => ({
                 values.aktivitetstatus,
                 values.begrunnelse
             )
-        ).then(
-            () =>  {
-                document.querySelector('.aktivitet-modal').focus();
-                dispatch(untouch(AKTIVITET_STATUS_FORM_NAME, BEGRUNNELSE_FELT_NAME));
-            }
-        );
+        ).then(() => {
+            document.querySelector('.aktivitet-modal').focus();
+            dispatch(
+                untouch(AKTIVITET_STATUS_FORM_NAME, BEGRUNNELSE_FELT_NAME)
+            );
+        });
     },
 });
 
