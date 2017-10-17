@@ -44,7 +44,7 @@ class Dropdown extends Component {
         this.handler = e => {
             if (!isChildOf(this.component, e.target)) {
                 this.toggleDropdown();
-            } else if (e.code === "Escape") {
+            } else if (e.code === 'Escape') {
                 this.toggleDropdown();
             }
         };
