@@ -12,7 +12,7 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
         if (type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) {
             return formaterDato(fraDato);
         }
-        if (!fraDato) {
+        if (!fraDato && tilDato) {
             const tilDatoValues = {
                 label: 'TIL',
                 DATO: formaterDato(tilDato),
@@ -25,7 +25,7 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
                 tilDatoValues
             );
         }
-        if (!tilDato) {
+        if (!tilDato && fraDato) {
             const fraDatoValues = {
                 label: 'FRA',
                 DATO: formaterDato(fraDato),
@@ -37,7 +37,9 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
             );
         }
 
-        return [formaterDato(fraDato), formaterDato(tilDato)].join(' - ');
+        return [formaterDato(fraDato), formaterDato(tilDato)]
+            .filter(dato => dato)
+            .join(' - ');
     }
     return (
         <Normaltekst className="aktivitetskort__dato">

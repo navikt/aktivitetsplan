@@ -65,9 +65,8 @@ function StillingEtikettForm(props) {
             <VisibleIfDiv visible={dirty}>
                 <Hovedknapp
                     spinner={lasterData}
-                    mini
                     autoDisableVedSpinner
-                    className="knapp--mini oppdater-status"
+                    className="oppdater-status"
                 >
                     <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
                 </Hovedknapp>
@@ -116,7 +115,7 @@ const mapDispatchToProps = () => ({
                 : values.etikettstatus;
         dispatch(
             oppdaterAktivitetEtikett({ ...props.aktivitet, etikett: nyEtikett })
-        );
+        ).then(() => document.querySelector('.aktivitet-modal').focus());
     },
 });
 
