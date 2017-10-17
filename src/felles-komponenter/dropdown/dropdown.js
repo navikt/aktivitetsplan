@@ -42,24 +42,24 @@ class Dropdown extends Component {
         this.lukkDropdown = this.lukkDropdown.bind(this);
         this.bindComponent = this.bindComponent.bind(this);
         this.handler = e => {
-            if (this.state.apen && !isChildOf(this.component, e.target)) {
-                this.lukkDropdown();
+            if (!isChildOf(this.component, e.target)) {
+                this.toggleDropdown();
+            } else if (e.code === "Escape") {
+                this.toggleDropdown();
             }
         };
-    }
-
-    componentDidMount() {
-        document.body.addEventListener('click', this.handler); // eslint-disable-line no-undef
-    }
-
-    componentWillUnmount() {
-        document.body.removeEventListener('click', this.handler); // eslint-disable-line no-undef
     }
 
     toggleDropdown() {
         const { onLukk } = this.props;
         if (this.state.apen) {
+            document.body.removeEventListener('click', this.handler); // eslint-disable-line no-undef
+            document.body.removeEventListener('keyup', this.handler); // eslint-disable-line no-undef
+            this.btn.focus();
             onLukk();
+        } else {
+            document.body.addEventListener('click', this.handler); // eslint-disable-line no-undef
+            document.body.addEventListener('keyup', this.handler); // eslint-disable-line no-undef
         }
         this.setState({ apen: !this.state.apen });
     }
@@ -67,7 +67,6 @@ class Dropdown extends Component {
     lukkDropdown() {
         const { onLukk } = this.props;
         this.setState({ apen: false });
-        this.btn.focus();
         onLukk();
     }
 
@@ -81,7 +80,7 @@ class Dropdown extends Component {
 
         const augmentedChild = Children.map(children, child =>
             cloneElement(child, {
-                closeDropdown: this.lukkDropdown,
+                closeDropdown: this.toggleDropdown,
             })
         );
         const innhold = !apen
