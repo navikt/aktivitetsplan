@@ -1,1 +1,1 @@
-Brukeren har gjennomført aktiviteten, oppgaven eller møtet, og varselet gjelder ikke lenger.  
+Brukeren har gjennomført eller gjort seg kjent med aktiviteten, oppgaven eller møtet, og varselet gjelder ikke lenger.  
