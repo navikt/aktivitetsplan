@@ -1,1 +1,1 @@
-Legg inn eller rediger tekst som sendes til brukeren
+Legg inn eller rediger tekst som sendes til brukeren i feltet under. Du må skrive hvilken aktivitet brukeren skal gjennomføre med en fristdato. For eventuelt å kunne stanse en ytelse, må du henvise til gjeldende lovhjemler i varselutsendingen. 
