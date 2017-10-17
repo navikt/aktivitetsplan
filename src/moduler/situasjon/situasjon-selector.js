@@ -13,7 +13,7 @@ export const selectReservasjonKRR = state =>
     selectSituasjonData(state).reservasjonKRR;
 
 export function selectOppfolgingsPerioder(state) {
-    return selectSituasjonData(state).oppfolgingsPerioder;
+    return selectSituasjonData(state).oppfolgingsPerioder || [];
 }
 
 export function selectHistoriskeOppfolgingsPerioder(state) {
@@ -56,7 +56,7 @@ export function selectAvslutningStatus(state) {
 }
 
 export function selectUnderOppfolging(state) {
-    return selectAvslutningStatus(state).underOppfolging;
+    return selectSituasjonData(state).underOppfolging;
 }
 
 export function selectBrukerHarAvslatt(state) {
@@ -71,5 +71,3 @@ export function selectKanIkkeStartaEskaleringen(state) {
         selectErBrukerManuell(state)
     );
 }
-
-export default {};
