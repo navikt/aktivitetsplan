@@ -13,7 +13,7 @@ export const selectReservasjonKRR = state =>
     selectSituasjonData(state).reservasjonKRR;
 
 export function selectOppfolgingsPerioder(state) {
-    return selectSituasjonData(state).oppfolgingsPerioder;
+    return selectSituasjonData(state).oppfolgingsPerioder || [];
 }
 
 export function selectHistoriskeOppfolgingsPerioder(state) {

@@ -1,22 +1,38 @@
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 
-export function selectMalSlice(state) {
+function selectMalSlice(state) {
     return state.data.mal;
+}
+
+function selectMalListeSlice(state) {
+    return state.data.malListe;
+}
+
+function selectMalData(state) {
+    return selectMalSlice(state).data;
+}
+
+function selectMalListeData(state) {
+    return selectMalListeSlice(state).data;
 }
 
 export function selectMalStatus(state) {
     return selectMalSlice(state).status;
 }
 
+export function selectMalListeStatus(state) {
+    return selectMalListeSlice(state).status;
+}
+
 export function selectMalListe(state) {
-    return selectMalSlice(state).liste.filter(mal =>
+    return selectMalListeData(state).filter(mal =>
         datoErIPeriode(mal.dato, state)
     );
 }
 
 export function selectGjeldendeMal(state) {
     return selectViserInneverendePeriode(state)
-        ? selectMalSlice(state).gjeldende
+        ? selectMalData(state)
         : selectMalListe(state)[0];
 }
