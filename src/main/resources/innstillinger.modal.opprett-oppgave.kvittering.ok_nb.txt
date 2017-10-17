@@ -1,1 +1,1 @@
-Oppgave med tema {tema} av type {type} opprettet.
+Oppgave med tema {tema} av type {type} er opprettet.
