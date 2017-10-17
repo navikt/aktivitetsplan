@@ -37,7 +37,9 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
             );
         }
 
-        return [formaterDato(fraDato), formaterDato(tilDato)].filter(dato => dato).join(' - ');
+        return [formaterDato(fraDato), formaterDato(tilDato)]
+            .filter(dato => dato)
+            .join(' - ');
     }
     return (
         <Normaltekst className="aktivitetskort__dato">
