@@ -3,12 +3,14 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
+import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectErVeileder } from '../identitet/identitet-selector';
 
-function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
+function Verktoylinje({ viserHistoriskPeriode, privatModus, erVeileder }) {
     return (
         <div className="verktoylinje">
             <div className="verktoylinje__verktoy">
@@ -20,10 +22,13 @@ function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenkeknapp>
             </div>
-            <div className="verktoylinje__verktoy-container">
+            <HiddenIfDiv
+                className="verktoylinje__verktoy-container"
+                hidden={privatModus && erVeileder}
+            >
                 <PeriodeFilter className="verktoylinje__verktoy" />
                 <Filter className="verktoylinje__verktoy" />
-            </div>
+            </HiddenIfDiv>
         </div>
     );
 }
@@ -31,11 +36,13 @@ function Verktoylinje({ viserHistoriskPeriode, privatModus }) {
 Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
     privatModus: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     viserHistoriskPeriode: selectViserHistoriskPeriode(state),
     privatModus: selectErPrivatModus(state),
+    erVeileder: selectErVeileder(state),
 });
 
 export default connect(mapStateToProps)(Verktoylinje);
