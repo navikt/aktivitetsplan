@@ -9,5 +9,3 @@ export function selectArenaAktiviteterData(state) {
 export function selectArenaAktivitetStatus(state) {
     return selectArenaAktiviteterSlice(state).status;
 }
-
-export default {};

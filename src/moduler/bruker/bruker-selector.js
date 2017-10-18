@@ -6,4 +6,6 @@ export function selectBruker(state) {
     return selectBrukerSlice(state).data;
 }
 
-export default {};
+export function selectBrukerStatus(state) {
+    return selectBrukerSlice(state).status;
+}
