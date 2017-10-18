@@ -43,19 +43,21 @@ class Dropdown extends Component {
         this.bindComponent = this.bindComponent.bind(this);
         this.handler = e => {
             if (!isChildOf(this.component, e.target)) {
-                this.toggleDropdown();
+                this.toggleDropdown(false);
             } else if (e.code === 'Escape') {
-                this.toggleDropdown();
+                this.toggleDropdown(true);
             }
         };
     }
 
-    toggleDropdown() {
+    toggleDropdown(settFokusPaKnapp) {
         const { onLukk } = this.props;
+        if (settFokusPaKnapp) {
+            this.btn.focus();
+        }
         if (this.state.apen) {
             document.body.removeEventListener('click', this.handler); // eslint-disable-line no-undef
             document.body.removeEventListener('keyup', this.handler); // eslint-disable-line no-undef
-            this.btn.focus();
             onLukk();
         } else {
             document.body.addEventListener('click', this.handler); // eslint-disable-line no-undef
