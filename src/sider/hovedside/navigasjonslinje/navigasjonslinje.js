@@ -24,7 +24,7 @@ import * as AppPT from '../../../proptypes';
 import {
     selectErUnderOppfolging,
     selectVilkarMaBesvares,
-} from '../../../moduler/situasjon/situasjon-selector';
+} from '../../../moduler/oppfolging/oppfolging-selector';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
     selectViserHistoriskPeriode,

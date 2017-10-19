@@ -9,7 +9,7 @@ import { startOppfolging } from '../innstillinger-reducer';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import InnstillingerModal from '../innstillinger-modal';
-import { hentSituasjon } from '../../situasjon/situasjon';
+import { hentOppfolging } from '../../oppfolging/oppfolging-reducer';
 import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
 
 function BekreftStart({ doStartOppfolging, navn }) {
@@ -56,7 +56,7 @@ const mapDispatchToProps = dispatch => ({
     doStartOppfolging: () => {
         dispatch(startOppfolging())
             .then(() => history.push('/innstillinger/start/kvittering'))
-            .then(() => dispatch(hentSituasjon()))
+            .then(() => dispatch(hentOppfolging()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

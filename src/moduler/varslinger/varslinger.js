@@ -16,8 +16,8 @@ import {
     selectReservasjonKRR,
     selectTilHorendeDialogId,
     selectErEskalert,
-    selectSituasjonStatus,
-} from '../situasjon/situasjon-selector';
+    selectOppfolgingStatus,
+} from '../oppfolging/oppfolging-selector';
 import {
     selectErBruker,
     selectIdentitetStatus,
@@ -119,7 +119,10 @@ Varslinger.propTypes = {
 
 const mapStateToProps = state => ({
     erBruker: selectErBruker(state),
-    avhengigheter: [selectSituasjonStatus(state), selectIdentitetStatus(state)],
+    avhengigheter: [
+        selectOppfolgingStatus(state),
+        selectIdentitetStatus(state),
+    ],
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),

@@ -18,7 +18,7 @@ import {
 } from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
-import { hentSituasjon } from '../../situasjon/situasjon';
+import { hentOppfolging } from '../../oppfolging/oppfolging-reducer';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 
@@ -29,7 +29,7 @@ function SettDigitalOppfolging({
     innstillingerStatus,
     handleSubmit,
 }) {
-    const situasjonLaster =
+    const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
         innstillingerStatus === STATUS.RELOADING;
     return (
@@ -52,8 +52,8 @@ function SettDigitalOppfolging({
             <ModalFooter>
                 <RemoteSubmitKnapp
                     formNavn={SETT_DIGITAL_FORM_NAME}
-                    spinner={situasjonLaster}
-                    disabled={situasjonLaster}
+                    spinner={oppfolgingStatus}
+                    disabled={oppfolgingStatus}
                 >
                     <FormattedMessage id="innstillinger.modal.digital.bekreft.knapp" />
                 </RemoteSubmitKnapp>
@@ -89,7 +89,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(settDigitalOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/digital/kvittering'))
-            .then(() => dispatch(hentSituasjon()))
+            .then(() => dispatch(hentOppfolging()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

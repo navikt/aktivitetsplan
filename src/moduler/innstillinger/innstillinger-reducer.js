@@ -1,17 +1,20 @@
-import * as SituasjonApi from '../situasjon/situasjon-api';
+import * as OppfolgingApi from '../oppfolging/oppfolging-api';
 import { doThenDispatch, handterFeil, STATUS } from '../../ducks/utils';
 import {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
 } from '../../ducks/dialog';
-import { hentSituasjon, OK as SITUASJON_OK } from '../situasjon/situasjon';
+import {
+    hentOppfolging,
+    OK as OPPFOLGING_OK,
+} from '../oppfolging/oppfolging-reducer';
 import history from '../../history';
 
 // Actions
-export const HENT_SITUASJON_OK = 'innstillinger/hent_situasjon/OK';
-export const HENT_SITUASJON_FEILET = 'innstillinger/hent_situasjon/FEILET';
-export const HENT_SITUASJON_PENDING = 'innstillinger/hent_situasjon/PENDING';
+export const HENT_OPPFOLGING_OK = 'innstillinger/hent_oppfolging/OK';
+export const HENT_OPPFOLGING_FEILET = 'innstillinger/hent_oppfolging/FEILET';
+export const HENT_OPPFOLGING_PENDING = 'innstillinger/hent_opppfolging/PENDING';
 
 export const KAN_AVSLUTTE_OK = 'innstillinger/kan_avslutte/OK';
 export const KAN_AVSLUTTE_FEILET = 'innstillinger/kan_avslutte/FEILET';
@@ -53,7 +56,7 @@ const initalState = {
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
-        case HENT_SITUASJON_OK:
+        case HENT_OPPFOLGING_OK:
         case KAN_AVSLUTTE_OK:
         case AVSLUTT_OPPFOLGING_OK:
         case START_OPPFOLGING_OK:
@@ -66,7 +69,7 @@ export default function reducer(state = initalState, action) {
                 status: STATUS.OK,
                 data: action.data,
             };
-        case HENT_SITUASJON_FEILET:
+        case HENT_OPPFOLGING_FEILET:
         case KAN_AVSLUTTE_FEILET:
         case AVSLUTT_OPPFOLGING_FEILET:
         case START_OPPFOLGING_FEILET:
@@ -79,7 +82,7 @@ export default function reducer(state = initalState, action) {
                 status: STATUS.ERROR,
                 feil: action.data,
             };
-        case HENT_SITUASJON_PENDING:
+        case HENT_OPPFOLGING_PENDING:
         case KAN_AVSLUTTE_PENDING:
         case AVSLUTT_OPPFOLGING_PENDING:
         case START_OPPFOLGING_PENDING:
@@ -107,16 +110,16 @@ export default function reducer(state = initalState, action) {
 }
 
 // Action creator
-export function hentSituasjonData() {
-    return doThenDispatch(() => SituasjonApi.hentSituasjon(), {
-        OK: HENT_SITUASJON_OK,
-        FEILET: HENT_SITUASJON_FEILET,
-        PENDING: HENT_SITUASJON_PENDING,
+export function hentOppfolgingData() {
+    return doThenDispatch(() => OppfolgingApi.hentOppfolging(), {
+        OK: HENT_OPPFOLGING_OK,
+        FEILET: HENT_OPPFOLGING_FEILET,
+        PENDING: HENT_OPPFOLGING_PENDING,
     });
 }
 
 export function startOppfolging() {
-    return doThenDispatch(() => SituasjonApi.startOppfolging(), {
+    return doThenDispatch(() => OppfolgingApi.startOppfolging(), {
         OK: START_OPPFOLGING_OK,
         FEILET: START_OPPFOLGING_FEILET,
         PENDING: START_OPPFOLGING_PENDING,
@@ -124,7 +127,7 @@ export function startOppfolging() {
 }
 
 export function kanAvslutteOppfolging() {
-    return doThenDispatch(() => SituasjonApi.kanAvslutte(), {
+    return doThenDispatch(() => OppfolgingApi.kanAvslutte(), {
         OK: KAN_AVSLUTTE_OK,
         FEILET: KAN_AVSLUTTE_FEILET,
         PENDING: KAN_AVSLUTTE_PENDING,
@@ -134,12 +137,12 @@ export function kanAvslutteOppfolging() {
 export function avsluttOppfolging(begrunnelse, veilederId) {
     return dispatch => {
         dispatch({ type: AVSLUTT_OPPFOLGING_PENDING });
-        return SituasjonApi.avsluttOppfolging(
+        return OppfolgingApi.avsluttOppfolging(
             begrunnelse,
             veilederId
         ).then(data => {
             dispatch({ type: AVSLUTT_OPPFOLGING_OK, data });
-            dispatch({ type: SITUASJON_OK, data });
+            dispatch({ type: OPPFOLGING_OK, data });
             return data;
         }, handterFeil(dispatch, AVSLUTT_OPPFOLGING_FEILET));
     };
@@ -147,7 +150,7 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
 
 export function settManuellOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(
-        () => SituasjonApi.settManuellOppfolging(begrunnelse, veilederId),
+        () => OppfolgingApi.settManuellOppfolging(begrunnelse, veilederId),
         {
             OK: SETT_MANUELL_OK,
             FEILET: SETT_MANUELL_FEILET,
@@ -158,7 +161,7 @@ export function settManuellOppfolging(begrunnelse, veilederId) {
 
 export function settDigitalOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(
-        () => SituasjonApi.settDigitalOppfolging(begrunnelse, veilederId),
+        () => OppfolgingApi.settDigitalOppfolging(begrunnelse, veilederId),
         {
             OK: SETT_DIGITAL_OK,
             FEILET: SETT_DIGITAL_FEILET,
@@ -169,7 +172,7 @@ export function settDigitalOppfolging(begrunnelse, veilederId) {
 
 function startEskaleringMedDialog(dialogId, begrunnelse) {
     return doThenDispatch(
-        () => SituasjonApi.startEskalering(dialogId, begrunnelse),
+        () => OppfolgingApi.startEskalering(dialogId, begrunnelse),
         {
             OK: START_ESKALERING_OK,
             FEILET: START_ESKALERING_FEILET,
@@ -196,7 +199,7 @@ export function startEskalering(eskaleringData) {
                     startEskaleringMedDialog(dialogId, begrunnelse)
                 );
             })
-            .then(() => dispatch(hentSituasjon()))
+            .then(() => dispatch(hentOppfolging()))
             .then(() =>
                 history.push('/innstillinger/startEskalering/kvittering')
             )
@@ -204,7 +207,7 @@ export function startEskalering(eskaleringData) {
 }
 
 function stoppEskaleringMedBegrunnelse(begrunnelse) {
-    return doThenDispatch(() => SituasjonApi.stoppEskalering(begrunnelse), {
+    return doThenDispatch(() => OppfolgingApi.stoppEskalering(begrunnelse), {
         OK: STOPP_ESKALERING_OK,
         FEILET: STOPP_ESKALERING_FEILET,
         PENDING: STOPP_ESKALERING_PENDING,
@@ -222,7 +225,7 @@ export function stoppEskalering(stoppEskaleringData) {
             })
         )
             .then(() => dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
-            .then(() => dispatch(hentSituasjon()))
+            .then(() => dispatch(hentOppfolging()))
             .then(() =>
                 history.push('/innstillinger/stoppEskalering/kvittering')
             )

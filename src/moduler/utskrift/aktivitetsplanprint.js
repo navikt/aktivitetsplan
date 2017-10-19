@@ -37,7 +37,7 @@ import {
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { hentMal, hentMalListe } from '../mal/mal-reducer';
-import { selectSituasjonStatus } from '../situasjon/situasjon-selector';
+import { selectOppfolgingStatus } from '../oppfolging/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 
@@ -304,7 +304,7 @@ const mapStateToProps = state => {
     return {
         avhengigheter: [
             selectMalStatus(state),
-            selectSituasjonStatus(state),
+            selectOppfolgingStatus(state),
             selectAktivitetListeStatus(state),
         ],
         aktiviteter,

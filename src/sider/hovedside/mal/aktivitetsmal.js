@@ -26,7 +26,7 @@ import {
     selectMalListeStatus,
 } from '../../../moduler/mal/mal-selector';
 import { selectViserHistoriskPeriode } from '../../../moduler/filtrering/filter/filter-selector';
-import { selectErUnderOppfolging } from '../../../moduler/situasjon/situasjon-selector';
+import { selectErUnderOppfolging } from '../../../moduler/oppfolging/oppfolging-selector';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
     fjernMalListe,

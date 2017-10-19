@@ -6,11 +6,11 @@ import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import { settDigital } from './aktiver-digital-oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
-import { hentSituasjon } from '../situasjon/situasjon';
+import { hentOppfolging } from '../oppfolging/oppfolging-reducer';
 import {
     selectReservasjonKRR,
-    selectSituasjonStatus,
-} from '../situasjon/situasjon-selector';
+    selectOppfolgingStatus,
+} from '../oppfolging/oppfolging-selector';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import { selectAktiverDigitalOppfolgingStatus } from './aktiver-digital-oppfolgning-selector';
@@ -83,19 +83,19 @@ export class AktiverDigitalOppfolgingPure extends Component {
         const {
             reservertIKRR,
             doSettDigital,
-            doHentSituasjon,
+            doHentOppfolging,
             setterDigital,
-            lasterSituasjon,
+            lasterOppfolging,
             settDigitalFeilet,
         } = this.props;
 
         const ReservasjonDifiKnapp = () =>
             <HiddenIfHovedknapp
-                spinner={lasterSituasjon}
-                disabled={lasterSituasjon}
+                spinner={lasterOppfolging}
+                disabled={lasterOppfolging}
                 hidden={!reservertIKRR}
                 onClick={() => {
-                    doHentSituasjon();
+                    doHentOppfolging();
                     this.setState({ harTrykketRefresh: true });
                 }}
             >
@@ -128,11 +128,11 @@ export class AktiverDigitalOppfolgingPure extends Component {
 
 AktiverDigitalOppfolgingPure.propTypes = {
     reservertIKRR: PT.bool.isRequired,
-    lasterSituasjon: PT.bool.isRequired,
+    lasterOppfolging: PT.bool.isRequired,
     setterDigital: PT.bool.isRequired,
     settDigitalFeilet: PT.bool.isRequired,
     doSettDigital: PT.func.isRequired,
-    doHentSituasjon: PT.func.isRequired,
+    doHentOppfolging: PT.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -145,22 +145,22 @@ const mapStateToProps = state => {
         aktiverDigitalOppfolgingStatus === STATUS.PENDING ||
         aktiverDigitalOppfolgingStatus === STATUS.RELOADING;
 
-    const situasjonStatus = selectSituasjonStatus(state);
-    const lasterSituasjon =
-        situasjonStatus === STATUS.PENDING ||
-        situasjonStatus === STATUS.RELOADING;
+    const oppfolgingStatus = selectOppfolgingStatus(state);
+    const lasterOppfolging =
+        oppfolgingStatus === STATUS.PENDING ||
+        oppfolgingStatus === STATUS.RELOADING;
 
     return {
         reservertIKRR: selectReservasjonKRR(state),
         settDigitalFeilet,
         setterDigital,
-        lasterSituasjon,
+        lasterOppfolging,
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     doSettDigital: () => dispatch(settDigital()),
-    doHentSituasjon: () => dispatch(hentSituasjon()),
+    doHentOppfolging: () => dispatch(hentOppfolging()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

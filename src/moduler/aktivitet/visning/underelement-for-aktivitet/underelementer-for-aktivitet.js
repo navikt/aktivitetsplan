@@ -14,7 +14,7 @@ import {
     span as HiddenIfSpan,
     button as HiddenIfButton,
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
-import { selectErUnderOppfolging } from '../../../situasjon/situasjon-selector';
+import { selectErUnderOppfolging } from '../../../oppfolging/oppfolging-selector';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 
 const DIALOG = 'dialog';

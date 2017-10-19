@@ -1,19 +1,19 @@
-export function selectSituasjonSlice(state) {
-    return state.data.situasjon;
+export function selectOppfolgingSlice(state) {
+    return state.data.oppfolging;
 }
 
-function selectSituasjonData(state) {
-    return selectSituasjonSlice(state).data;
+function selectOppfolgingData(state) {
+    return selectOppfolgingSlice(state).data;
 }
 
-export function selectSituasjonStatus(state) {
-    return selectSituasjonSlice(state).status;
+export function selectOppfolgingStatus(state) {
+    return selectOppfolgingSlice(state).status;
 }
 export const selectReservasjonKRR = state =>
-    selectSituasjonData(state).reservasjonKRR;
+    selectOppfolgingData(state).reservasjonKRR;
 
 export function selectOppfolgingsPerioder(state) {
-    return selectSituasjonData(state).oppfolgingsPerioder || [];
+    return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
 
 export function selectHistoriskeOppfolgingsPerioder(state) {
@@ -21,23 +21,23 @@ export function selectHistoriskeOppfolgingsPerioder(state) {
 }
 
 export function selectErUnderOppfolging(state) {
-    return selectSituasjonData(state).underOppfolging;
+    return selectOppfolgingData(state).underOppfolging;
 }
 
 export function selectOppfolgingUtgang(state) {
-    return selectSituasjonData(state).oppfolgingUtgang;
+    return selectOppfolgingData(state).oppfolgingUtgang;
 }
 
 export function selectErBrukerManuell(state) {
-    return selectSituasjonData(state).manuell;
+    return selectOppfolgingData(state).manuell;
 }
 
 export function selectVilkarMaBesvares(state) {
-    return selectSituasjonData(state).vilkarMaBesvares;
+    return selectOppfolgingData(state).vilkarMaBesvares;
 }
 
 export function selectGjeldendeEskaleringsVarsel(state) {
-    return selectSituasjonData(state).gjeldendeEskaleringsvarsel;
+    return selectOppfolgingData(state).gjeldendeEskaleringsvarsel;
 }
 
 export function selectErEskalert(state) {
@@ -52,7 +52,7 @@ export function selectTilHorendeDialogId(state) {
 }
 
 export function selectAvslutningStatus(state) {
-    return selectSituasjonData(state).avslutningStatus;
+    return selectOppfolgingData(state).avslutningStatus;
 }
 
 export function selectUnderOppfolging(state) {
@@ -60,7 +60,7 @@ export function selectUnderOppfolging(state) {
 }
 
 export function selectBrukerHarAvslatt(state) {
-    return selectSituasjonSlice(state).brukerHarAvslatt;
+    return selectOppfolgingSlice(state).brukerHarAvslatt;
 }
 
 export function selectKanIkkeStartaEskaleringen(state) {

@@ -20,7 +20,7 @@ import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
-import { hentSituasjon } from '../../situasjon/situasjon';
+import { hentOppfolging } from '../../oppfolging/oppfolging-reducer';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 
@@ -29,7 +29,7 @@ function SettManuellOppfolging({
     innstillingerStatus,
     handleSubmit,
 }) {
-    const situasjonLaster =
+    const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
         innstillingerStatus === STATUS.RELOADING;
     return (
@@ -52,8 +52,8 @@ function SettManuellOppfolging({
             <ModalFooter>
                 <RemoteSubmitKnapp
                     formNavn={SETT_MANUELL_FORM_NAME}
-                    spinner={situasjonLaster}
-                    disabled={situasjonLaster}
+                    spinner={oppfolgingStatus}
+                    disabled={oppfolgingStatus}
                 >
                     <FormattedMessage id="innstillinger.modal.manuell.bekreft.knapp" />
                 </RemoteSubmitKnapp>
@@ -88,7 +88,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(settManuellOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/manuell/kvittering'))
-            .then(() => dispatch(hentSituasjon()))
+            .then(() => dispatch(hentOppfolging()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
-import { selectErUnderOppfolging } from './moduler/situasjon/situasjon-selector';
+import { selectErUnderOppfolging } from './moduler/oppfolging/oppfolging-selector';
 import hiddenIf from './felles-komponenter/hidden-if/hidden-if';
 
 const mapStateToProps = state => ({

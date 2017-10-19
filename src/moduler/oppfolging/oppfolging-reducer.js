@@ -1,19 +1,19 @@
-import * as Api from './situasjon-api';
+import * as Api from './oppfolging-api';
 import { STATUS, doThenDispatch } from '../../ducks/utils';
 import { SETT_DIGITAL_OK } from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
 
 // Actions
-export const OK = 'situasjon/OK';
-export const FEILET = 'situasjon/FEILET';
-export const PENDING = 'situasjon/PENDING';
+export const OK = 'oppfolging/OK';
+export const FEILET = 'oppfolging/FEILET';
+export const PENDING = 'oppfolging/PENDING';
 
-export const AVSLA_OK = 'situasjon/avsla/OK';
-export const AVSLA_FEILET = 'situasjon/avsla/FEILET';
-export const AVSLA_PENDING = 'situasjon/avsla/PENDING';
+export const AVSLA_OK = 'oppfolging/avsla/OK';
+export const AVSLA_FEILET = 'oppfolging/avsla/FEILET';
+export const AVSLA_PENDING = 'oppfolging/avsla/PENDING';
 
-export const GODTA_OK = 'situasjon/godta/OK';
-export const GODTA_FEILET = 'situasjon/godta/FEILET';
-export const GODTA_PENDING = 'situasjon/godta/PENDING';
+export const GODTA_OK = 'oppfolging/godta/OK';
+export const GODTA_FEILET = 'oppfolging/godta/FEILET';
+export const GODTA_PENDING = 'oppfolging/godta/PENDING';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
@@ -69,8 +69,8 @@ export default function reducer(state = initalState, action) {
 }
 
 // Action Creators - NB! Denne brukes av aktivitetsplan
-export function hentSituasjon() {
-    return doThenDispatch(() => Api.hentSituasjon(), {
+export function hentOppfolging() {
+    return doThenDispatch(() => Api.hentOppfolging(), {
         OK,
         FEILET,
         PENDING,

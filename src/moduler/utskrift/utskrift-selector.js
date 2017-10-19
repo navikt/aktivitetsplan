@@ -1,5 +1,5 @@
 import { selectErVeileder } from '../identitet/identitet-selector';
-import { selectErBrukerManuell } from '../situasjon/situasjon-selector';
+import { selectErBrukerManuell } from '../oppfolging/oppfolging-selector';
 
 const selectUtskriftSlice = state => state.view.utskrift;
 export const hentPrintMelding = state => selectUtskriftSlice(state).data;
