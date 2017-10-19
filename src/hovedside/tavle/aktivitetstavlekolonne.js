@@ -5,20 +5,20 @@ import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
-import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
-import AktivitetsKort from '../aktivitetskort/aktivitetskort';
+import AktivitetsplanHjelpetekst from '../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
+import { flyttAktivitet } from '../../moduler/aktivitet/aktivitet-actions';
+import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 import {
     STATUS_PLANLAGT,
     STATUS_GJENNOMFOERT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
-} from '../../../constant';
-import history from '../../../history';
-import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
-import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
-import { compareAktivitet } from '../../../moduler/aktivitet/aktivitet-util';
+} from '../../constant';
+import history from '../../history';
+import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
+import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetliste-selector';
+import { compareAktivitet } from '../../moduler/aktivitet/aktivitet-util';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {

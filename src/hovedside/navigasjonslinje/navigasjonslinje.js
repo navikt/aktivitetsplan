@@ -5,33 +5,31 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import NavigasjonslinjeMeny from './navigasjonslinje-meny';
-import Lenke from '../../../felles-komponenter/utils/lenke';
-import Feature, {
-    harFeature,
-} from '../../../felles-komponenter/feature/feature';
-import TallAlert from '../../../felles-komponenter/tall-alert';
-import { hentDialog } from '../../../moduler/dialog/dialog-reducer';
-import { dialogFilter } from '../../../moduler/filtrering/filter/filter-utils';
-import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-reducer';
-import { getFodselsnummer } from '../../../bootstrap/fnr-util';
-import { selectErPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import Lenke from '../../felles-komponenter/utils/lenke';
+import Feature, { harFeature } from '../../felles-komponenter/feature/feature';
+import TallAlert from '../../felles-komponenter/tall-alert';
+import { hentDialog } from '../../moduler/dialog/dialog-reducer';
+import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
+import { hentArbeidsliste } from '../../moduler/arbeidsliste/arbeidsliste-reducer';
+import { getFodselsnummer } from '../../bootstrap/fnr-util';
+import { selectErPrivatModus } from '../../moduler/privat-modus/privat-modus-selector';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
     selectHarVeilederTilgang,
     selectArbeidslisteReducer,
-} from '../../../moduler/arbeidsliste/arbeidsliste-selector';
-import * as AppPT from '../../../proptypes';
+} from '../../moduler/arbeidsliste/arbeidsliste-selector';
+import * as AppPT from '../../proptypes';
 import {
     selectErUnderOppfolging,
     selectVilkarMaBesvares,
-} from '../../../moduler/oppfolging/oppfolging-selector';
-import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+} from '../../moduler/oppfolging/oppfolging-selector';
+import { selectErBruker } from '../../moduler/identitet/identitet-selector';
 import {
     selectViserHistoriskPeriode,
     selectViserInneverendePeriode,
-} from '../../../moduler/filtrering/filter/filter-selector';
-import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
-import { selectDialoger } from '../../../moduler/dialog/dialog-selector';
+} from '../../moduler/filtrering/filter/filter-selector';
+import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
+import { selectDialoger } from '../../moduler/dialog/dialog-selector';
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {

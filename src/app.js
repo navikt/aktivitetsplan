@@ -8,9 +8,9 @@ import Feature from './felles-komponenter/feature/feature';
 import './index.less';
 import Routing from './routing';
 import routerHistory from './history';
-import Hovedside from './sider/hovedside/hovedside';
 import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
 import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
+import Hovedside from './hovedside/hovedside';
 
 function App() {
     return (

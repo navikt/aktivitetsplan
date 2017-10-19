@@ -1,4 +1,4 @@
-import * as Api from '../../ducks/api';
+import * as Api from './arbeidsliste-api';
 import { STATUS, doThenDispatch } from '../../ducks/utils';
 
 // Actions

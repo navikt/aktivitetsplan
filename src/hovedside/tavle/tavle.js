@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl, intlShape } from 'react-intl';
 import SprettendeScrollbars from './sprettende-scrollbars';
-import { autobind } from '../../../utils';
+import { autobind } from '../../utils';
 
 const KOLONNEBREDDE = 300;
 const KOLONNEMARGIN = 10;

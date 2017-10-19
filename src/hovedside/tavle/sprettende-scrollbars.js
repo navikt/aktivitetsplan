@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { SpringSystem } from 'rebound';
-import { autobind } from '../../../utils';
+import { autobind } from '../../utils';
 
 class SprettendeScrollbars extends Component {
     constructor(props) {

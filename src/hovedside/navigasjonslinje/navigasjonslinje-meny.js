@@ -2,19 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import Bilde from '../../../felles-komponenter/bilde/bilde';
-import history from '../../../history';
+import Bilde from '../../felles-komponenter/bilde/bilde';
+import history from '../../history';
 import {
     selectErBrukerIArbeidsliste,
     selectHarVeilederTilgang,
     selectIsOppfolgendeVeileder,
-} from '../../../moduler/arbeidsliste/arbeidsliste-selector';
+} from '../../moduler/arbeidsliste/arbeidsliste-selector';
 import ArbeidslisteSVG from './arbeidsliste.svg';
 import ArbeidslisteActiveSVG from './arbeidsliste-active.svg';
-import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
+import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import HiddenIfHOC, {
     div as HiddenIfDiv,
-} from '../../../felles-komponenter/hidden-if/hidden-if';
+} from '../../felles-komponenter/hidden-if/hidden-if';
 
 function NavigasjonslinjeMeny({
     brukerErMin,

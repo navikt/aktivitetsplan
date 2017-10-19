@@ -3,19 +3,19 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
-import * as AppPT from '../../proptypes';
-import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
-import history from '../../history';
+import * as AppPT from '../../../proptypes';
+import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
+import history from '../../../history';
 import {
     DIALOG_ESKALERING,
     DIALOG_IKKE_FERDIGBEHANDLET,
     DIALOG_MA_BESVARES,
-} from '../../constant';
-import visibleIfHOC from '../../hocs/visible-if';
-import Dato from '../../felles-komponenter/dato';
-import Lenkepanel from '../../felles-komponenter/lenkepanel';
-import Etikett from '../../felles-komponenter/aktivitet-etikett/aktivitet-etikett';
-import { erEskaleringsDialog } from './dialog-utils';
+} from '../../../constant';
+import visibleIfHOC from '../../../hocs/visible-if';
+import Dato from '../../../felles-komponenter/dato';
+import Lenkepanel from '../../../felles-komponenter/lenkepanel';
+import Etikett from '../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett';
+import { erEskaleringsDialog } from '../dialog-utils';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />

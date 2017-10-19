@@ -1,6 +1,6 @@
 // Actions
 import { doThenDispatch, STATUS } from '../../../ducks/utils';
-import * as Api from '../../../ducks/api';
+import * as Api from './hent-veiledere-for-oppgave-api';
 
 export const HENT_VEILEDERE_OK = '/hent_veiledere/OK';
 export const HENT_VEILEDERE_FEILET = '/hent_veiledere/FEILET';

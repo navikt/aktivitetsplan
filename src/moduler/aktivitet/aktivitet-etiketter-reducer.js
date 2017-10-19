@@ -1,5 +1,5 @@
-import * as Api from './api';
-import { STATUS, doThenDispatch } from './utils';
+import * as Api from './aktivitet-api';
+import { doThenDispatch, STATUS } from '../../ducks/utils';
 
 // Actions
 export const OK = 'etiketter/OK';

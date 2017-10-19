@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import history from '../../../history';
+import history from '../../history';
 
 function NavigasjonslinjeKnapp({ ariaLabel, lenke, className }) {
     return (

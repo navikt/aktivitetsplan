@@ -3,11 +3,11 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Tavle from './tavle';
 import Kolonne from './aktivitetstavlekolonne';
-import * as AppPT from '../../../proptypes';
-import { hentAktiviteter } from '../../../moduler/aktivitet/aktivitet-actions';
-import { hentArenaAktiviteter } from '../../../moduler/aktivitet/arena-aktiviteter-reducer';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import { STATUS } from '../../../ducks/utils';
+import * as AppPT from '../../proptypes';
+import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
+import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { STATUS } from '../../ducks/utils';
 
 import {
     STATUS_BRUKER_ER_INTRESSERT,
@@ -15,9 +15,9 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
-} from '../../../constant';
-import { selectAktivitetStatus } from '../../../moduler/aktivitet/aktivitet-selector';
-import { selectArenaAktivitetStatus } from '../../../moduler/aktivitet/arena-aktivitet-selector';
+} from '../../constant';
+import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
+import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 
 class AktivitetsTavle extends Component {
     componentDidMount() {

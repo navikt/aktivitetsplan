@@ -5,25 +5,25 @@ import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
 import moment from 'moment';
-import { STATUS } from '../../ducks/utils';
+import { STATUS } from '../../../ducks/utils';
 import {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
-} from './dialog';
-import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
-import Input from '../../felles-komponenter/skjema/input/input';
-import { HiddenIfAlertStripeSuksessSolid } from '../../felles-komponenter/hidden-if/hidden-if-alertstriper';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
-import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
-import Checkbox from '../../felles-komponenter/skjema/input/checkbox';
-import { selectErBruker } from '../identitet/identitet-selector';
+} from '../dialog-reducer';
+import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
+import Input from '../../../felles-komponenter/skjema/input/input';
+import { HiddenIfAlertStripeSuksessSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
+import Checkbox from '../../../felles-komponenter/skjema/input/checkbox';
+import { selectErBruker } from '../../identitet/identitet-selector';
 import {
     selectDialogMedId,
     selectDialogStatus,
     selectSisteHenvendelseData,
-} from './dialog-selector';
-import { selectAktivitetMedId } from '../aktivitet/aktivitetliste-selector';
+} from '../dialog-selector';
+import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
