@@ -1,11 +1,11 @@
-import * as Api from './api';
+import * as Api from './aktivitet-api';
 import {
     OPPDATER_OK,
     FLYTT_OK,
     OPPDATER_REFERAT_OK,
     PUBLISER_REFERAT_OK,
-} from '../moduler/aktivitet/aktivitet-action-types';
-import { doThenDispatch, STATUS } from './utils';
+} from './aktivitet-action-types';
+import { doThenDispatch, STATUS } from '../../ducks/utils';
 
 // Actions
 export const OK = 'versjoner/OK';

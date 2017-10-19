@@ -1,5 +1,5 @@
-import { datoComparator } from '../utils';
-import { DIALOG_ESKALERING } from '../constant';
+import { datoComparator } from '../../utils';
+import { DIALOG_ESKALERING } from '../../constant';
 
 export function sammenlignDialogerForBruker(a, b) {
     if (a.lest !== b.lest) {

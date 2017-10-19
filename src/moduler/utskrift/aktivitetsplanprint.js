@@ -30,13 +30,16 @@ import {
     selectSkalVisePrintMeldingForm,
 } from './utskrift-selector';
 import { redigerPrintMelding } from './utskrift-duck';
-import { selectGjeldendeMal, selectMalStatus } from '../mal/mal-selector';
+import {
+    selectGjeldendeMal,
+    selectMalStatus,
+} from '../mal/aktivitetsmal-selector';
 import {
     section as HiddenIfSection,
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { hentMal, hentMalListe } from '../mal/mal-reducer';
+import { hentMal, hentMalListe } from '../mal/aktivitetsmal-reducer';
 import { selectOppfolgingStatus } from '../oppfolging/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';

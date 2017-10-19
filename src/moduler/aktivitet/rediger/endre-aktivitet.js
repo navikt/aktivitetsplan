@@ -39,7 +39,7 @@ import {
 } from '../../../constant';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Modal from '../../../felles-komponenter/modal/modal';
-import { LUKK_MODAL } from '../../../ducks/modal';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../../../routing';
 import { selectAktivitetReducer } from '../aktivitet-reducer';

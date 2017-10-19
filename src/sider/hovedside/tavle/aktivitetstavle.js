@@ -5,7 +5,7 @@ import Tavle from './tavle';
 import Kolonne from './aktivitetstavlekolonne';
 import * as AppPT from '../../../proptypes';
 import { hentAktiviteter } from '../../../moduler/aktivitet/aktivitet-actions';
-import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
+import { hentArenaAktiviteter } from '../../../moduler/aktivitet/arena-aktiviteter-reducer';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../../ducks/utils';
 

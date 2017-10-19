@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { validForm, rules } from 'react-redux-form-validation';
-import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
-import { autobind } from '../../../utils';
-import { STATUS } from '../../../ducks/utils';
-import { oppdaterMal } from '../../../moduler/mal/mal-reducer';
-import { selectMalStatus } from '../../../moduler/mal/mal-selector';
+import { oppdaterMal } from './aktivitetsmal-reducer';
+import { selectMalStatus } from './aktivitetsmal-selector';
+import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
+import { autobind } from '../../utils';
+import { STATUS } from '../../ducks/utils';
 
 const MALTEKST_MAKSLENGDE = 500;
 

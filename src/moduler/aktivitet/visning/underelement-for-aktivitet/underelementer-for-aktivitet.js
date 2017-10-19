@@ -6,9 +6,9 @@ import classNames from 'classnames';
 import * as AppPT from '../../../../proptypes';
 import { autobind } from '../../../../utils';
 import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
-import NyHenvendelse from '../../../../dialog/ny-henvendelse';
-import Henvendelser from '../../../../dialog/henvendelser';
-import EndreDialog from '../../../../dialog/endre-dialog';
+import NyHenvendelse from '../../../dialog/ny-henvendelse';
+import Henvendelser from '../../../dialog/henvendelser';
+import EndreDialog from '../../../dialog/endre-dialog';
 import {
     div as HiddenIfDiv,
     span as HiddenIfSpan,

@@ -7,60 +7,12 @@ import {
 
 import { fetchToJson, postAsJson, putAsJson } from './../ducks/utils';
 
-import {
-    DIALOG_BASE_URL,
-    AKTIVITET_PROXY_BASE_URL,
-    OPPGAVE_BASE_URL,
-} from '../environment';
-
 export function hentLedetekster() {
     return fetchToJson(`${API_BASE_URL}/tekster`);
 }
 
-export function hentVeileder(veilederId) {
-    return fetchToJson(`${VEILEDER_BASE_URL}/veileder/${veilederId}`);
-}
-
 export function hentPerson(fnr) {
     return fetchToJson(`${PERSON_BASE_URL}/person/${fnr}`);
-}
-
-export function hentDialog() {
-    return fetchToJson(`${DIALOG_BASE_URL}/dialog`);
-}
-
-export function nyHenvendelse(henvendelse) {
-    return postAsJson(`${DIALOG_BASE_URL}/dialog`, henvendelse);
-}
-
-export function markerDialogSomLest(dialogId) {
-    return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/les`);
-}
-
-export function oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet) {
-    return putAsJson(
-        `${DIALOG_BASE_URL}/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}`
-    );
-}
-
-export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
-    return putAsJson(
-        `${DIALOG_BASE_URL}/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}`
-    );
-}
-
-export function hentArenaAktiviteter() {
-    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/arena`);
-}
-
-export function hentVersjonerTilAktivitet(aktivitet) {
-    return fetchToJson(
-        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`
-    );
-}
-
-export function hentEtiketter() {
-    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/etiketter`);
 }
 
 export function hentArbeidsliste(fnr) {
@@ -87,14 +39,10 @@ export function slettArbeidsliste(fnr) {
     });
 }
 
-export function hentBehandlendeEnheter(tema) {
-    return fetchToJson(`${OPPGAVE_BASE_URL}/enheter/?&tema=${tema}`);
-}
-
 export function hentVeieldereForEnhet(enhetid) {
     return fetchToJson(`${VEILEDER_BASE_URL}/enhet/${enhetid}/veiledere`);
 }
 
-export function opprettOppgaveForBruker(body) {
-    return postAsJson(`${OPPGAVE_BASE_URL}/oppgave`, body);
+export function hentVeileder(veilederId) {
+    return fetchToJson(`${VEILEDER_BASE_URL}/veileder/${veilederId}`);
 }

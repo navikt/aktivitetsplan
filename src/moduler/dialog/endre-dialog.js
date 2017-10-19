@@ -3,10 +3,13 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Checkbox } from 'nav-frontend-skjema';
-import { hentIdentitet } from '../moduler/identitet/identitet-duck';
-import { oppdaterFerdigbehandlet, oppdaterVenterPaSvar } from '../ducks/dialog';
-import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
-import { selectErVeileder } from '../moduler/identitet/identitet-selector';
+import { hentIdentitet } from '../identitet/identitet-duck';
+import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
+import { selectErVeileder } from '../identitet/identitet-selector';
+import {
+    oppdaterFerdigbehandlet,
+    oppdaterVenterPaSvar,
+} from './dialog-reducer';
 
 class EndreDialogStatus extends Component {
     componentDidMount() {

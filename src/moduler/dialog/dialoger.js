@@ -2,17 +2,14 @@ import React from 'react';
 import PT from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
-import * as AppPT from '../proptypes';
-import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
-import {
-    selectDialoger,
-    selectDialogStatus,
-} from '../moduler/dialog/dialog-selector';
+import * as AppPT from '../../proptypes';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { selectDialoger, selectDialogStatus } from './dialog-selector';
 import DialogVisning from './dialog-visning';
-import { selectAlleAktiviter } from '../moduler/aktivitet/aktivitetliste-selector';
-import { selectErBruker } from '../moduler/identitet/identitet-selector';
+import { selectAlleAktiviter } from '../aktivitet/aktivitetliste-selector';
+import { selectErBruker } from '../identitet/identitet-selector';
 import { dialogSammenlingnerMedTilhorendeDialogIdOgErBruker } from './dialog-utils';
-import { selectGjeldendeEskaleringsVarsel } from '../moduler/oppfolging/oppfolging-selector';
+import { selectGjeldendeEskaleringsVarsel } from '../oppfolging/oppfolging-selector';
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 class Dialoger extends React.Component {

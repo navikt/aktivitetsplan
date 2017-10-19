@@ -10,7 +10,7 @@ import Feature, {
     harFeature,
 } from '../../../felles-komponenter/feature/feature';
 import TallAlert from '../../../felles-komponenter/tall-alert';
-import { hentDialog } from '../../../ducks/dialog';
+import { hentDialog } from '../../../moduler/dialog/dialog-reducer';
 import { dialogFilter } from '../../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-reducer';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';

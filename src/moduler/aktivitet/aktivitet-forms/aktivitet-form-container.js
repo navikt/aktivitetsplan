@@ -5,7 +5,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import { LUKK_MODAL } from '../../../ducks/modal';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import StillingAktivitet from './stilling/ny-aktivitet-stilling';
 import SokeavtaleAktivitet from './sokeavtale/ny-aktivitet-sokeavtale';
 import BehandlingAktivitet from './behandling/ny-aktivitet-behandling';

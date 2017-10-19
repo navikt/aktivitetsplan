@@ -15,7 +15,7 @@ import FjernArbeidsliste from './arbeidsliste-fjern';
 import LeggTilArbeidsliste from './arbeidsliste-legg-til';
 import { selectArbeidslisteReducer } from './arbeidsliste-selector';
 import { slettArbeidsliste } from './arbeidsliste-reducer';
-import { LUKK_MODAL } from '../../ducks/modal';
+import { LUKK_MODAL } from '../../felles-komponenter/modal/modal-reducer';
 import Modal from '../../felles-komponenter/modal/modal';
 
 function ArbeidslisteContainer({

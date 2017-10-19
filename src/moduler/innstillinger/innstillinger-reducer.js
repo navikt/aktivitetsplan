@@ -4,7 +4,7 @@ import {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
-} from '../../ducks/dialog';
+} from '../dialog/dialog-reducer';
 import {
     hentOppfolging,
     OK as OPPFOLGING_OK,

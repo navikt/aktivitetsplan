@@ -10,7 +10,7 @@ import {
     settForrigeAktiveAktivitetId,
     fjernForrigeAktiveAktivitetId,
 } from '../aktivitet-actions';
-import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
+import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvinsing from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import {

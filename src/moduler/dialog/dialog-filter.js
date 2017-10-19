@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
-import { ESKALERINGS_FILTER } from '../ducks/dialog';
+import { ESKALERINGS_FILTER } from './dialog-reducer';
 import {
     selectEskaleringsFilter,
     selectVisEskaleringsFilter,
-} from '../moduler/dialog/dialog-selector';
-import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
+} from './dialog-selector';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 
 function EskaleringsFilter({ doToggleEskaleringsFilter, erFilterAktivt }) {
     return (

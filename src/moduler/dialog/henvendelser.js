@@ -5,12 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { formaterDatoTid, datoComparator } from './../utils';
-import * as AppPT from '../proptypes';
-import Dato from '../felles-komponenter/dato';
-import { markerDialogSomLest } from '../ducks/dialog';
-import visibleIfHOC from '../hocs/visible-if';
-import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
+import { formaterDatoTid, datoComparator } from '../../utils';
+import * as AppPT from '../../proptypes';
+import Dato from '../../felles-komponenter/dato';
+import visibleIfHOC from '../../hocs/visible-if';
+import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
+import { markerDialogSomLest } from './dialog-reducer';
 
 const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) =>
     <section className="henvendelser__lest-av-bruker">

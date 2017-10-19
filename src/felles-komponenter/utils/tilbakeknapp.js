@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import history from '../../history';
-import { TILBAKE_MODAL } from '../../ducks/modal';
+import { TILBAKE_MODAL } from '../modal/modal-reducer';
 
 function Tilbakeknapp(props) {
     function tilbake(e) {

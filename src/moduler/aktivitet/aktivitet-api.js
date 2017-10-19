@@ -56,3 +56,17 @@ export function oppdaterReferat(aktivitet) {
         aktivitet
     );
 }
+
+export function hentArenaAktiviteter() {
+    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/arena`);
+}
+
+export function hentVersjonerTilAktivitet(aktivitet) {
+    return fetchToJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`
+    );
+}
+
+export function hentEtiketter() {
+    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/etiketter`);
+}

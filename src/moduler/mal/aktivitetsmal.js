@@ -4,34 +4,31 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { hentMal } from '../../../moduler/mal/mal-reducer';
-import * as AppPT from '../../../proptypes';
-import { autobind, formaterDatoEllerTidSiden } from '../../../utils';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import Identitet from '../../../moduler/identitet/identitet';
-import Accordion from '../../../felles-komponenter/accordion';
-import history from '../../../history';
+import { hentMal } from './aktivitetsmal-reducer';
+import * as AppPT from '../../proptypes';
+import { autobind, formaterDatoEllerTidSiden } from '../../utils';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import Identitet from '../identitet/identitet';
+import Accordion from '../../felles-komponenter/accordion';
+import history from '../../history';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import hiddenIf, {
     div as HiddenIfDiv,
-} from '../../../felles-komponenter/hidden-if/hidden-if';
+} from '../../felles-komponenter/hidden-if/hidden-if';
 import {
     HiddenIfHovedknapp,
     HiddenIfKnapp,
-} from '../../../felles-komponenter/hidden-if/hidden-if-knapper';
+} from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import {
     selectMalStatus,
     selectGjeldendeMal,
     selectMalListe,
     selectMalListeStatus,
-} from '../../../moduler/mal/mal-selector';
-import { selectViserHistoriskPeriode } from '../../../moduler/filtrering/filter/filter-selector';
-import { selectErUnderOppfolging } from '../../../moduler/oppfolging/oppfolging-selector';
-import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
-import {
-    fjernMalListe,
-    hentMalListe,
-} from '../../../moduler/mal/malliste-reducer';
+} from './aktivitetsmal-selector';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectErUnderOppfolging } from '../oppfolging/oppfolging-selector';
+import { selectErBruker } from '../identitet/identitet-selector';
+import { fjernMalListe, hentMalListe } from './malliste-reducer';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 

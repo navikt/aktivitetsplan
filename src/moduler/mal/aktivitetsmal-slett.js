@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import BekreftSlettVisning from '../../../moduler/aktivitet/visning/bekreft-slett-visning/bekreft-slett-visning';
-import history from '../../../history';
-import { slettMal } from '../../../moduler/mal/mal-reducer';
+import BekreftSlettVisning from '../aktivitet/visning/bekreft-slett-visning/bekreft-slett-visning';
+import history from '../../history';
+import { slettMal } from './aktivitetsmal-reducer';
 import AktivitetsmalModal from './aktivitetsmal-modal';
-import { selectMalListe } from '../../../moduler/mal/mal-selector';
-import * as AppPT from '../../../proptypes';
+import { selectMalListe } from './aktivitetsmal-selector';
+import * as AppPT from '../../proptypes';
 
 // denne brukes i routing og må da være component
 // eslint-disable-next-line react/prefer-stateless-function
