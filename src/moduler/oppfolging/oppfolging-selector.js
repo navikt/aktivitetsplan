@@ -56,7 +56,7 @@ export function selectAvslutningStatus(state) {
 }
 
 export function selectUnderOppfolging(state) {
-    return selectSituasjonData(state).underOppfolging;
+    return selectOppfolgingData(state).underOppfolging;
 }
 
 export function selectBrukerHarAvslatt(state) {
