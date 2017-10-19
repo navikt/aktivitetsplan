@@ -24,9 +24,9 @@ function Hovedside({ children }) {
                     </Container>
                     <AktivitetsTavle />
                     <FooterInfo />
+                    {children}
                 </OppfolgingStatus>
             </div>
-            {children}
         </div>
     );
 }
