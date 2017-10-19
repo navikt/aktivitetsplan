@@ -13,5 +13,3 @@ export function selectAktivitetStatus(state) {
 export function selectForrigeAktiveAktivitetId(state) {
     return selectAktiviteterSlice(state).forrigeAktiveAktivitetId;
 }
-
-export default {};

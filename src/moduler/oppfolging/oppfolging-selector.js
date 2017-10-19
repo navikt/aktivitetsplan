@@ -56,7 +56,7 @@ export function selectAvslutningStatus(state) {
 }
 
 export function selectUnderOppfolging(state) {
-    return selectAvslutningStatus(state).underOppfolging;
+    return selectSituasjonData(state).underOppfolging;
 }
 
 export function selectBrukerHarAvslatt(state) {
@@ -71,5 +71,3 @@ export function selectKanIkkeStartaEskaleringen(state) {
         selectErBrukerManuell(state)
     );
 }
-
-export default {};
