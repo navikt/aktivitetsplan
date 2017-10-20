@@ -18,7 +18,7 @@ function Prosess({
 }) {
     return (
         <article className={cls(className)}>
-            <Undertittel className="prosess_overskrift">
+            <Undertittel className="prosess_overskrift" id={tittelId}>
                 <FormattedMessage id={tittelId} />
             </Undertittel>
             {children}
@@ -27,6 +27,7 @@ function Prosess({
                 autoDisableVedSpinner
                 disabled={disabled}
                 onClick={onClick}
+                aria-labelledby={tittelId}
             >
                 <FormattedMessage id={knappetekstId} />
             </Knapp>

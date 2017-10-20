@@ -284,7 +284,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             innhold={moeteplanListe.map(mote =>
                 <Normaltekst key={mote.startDato}>
                     {formaterDatoKortManedTid(mote.startDato)} -{' '}
-                    {formaterTid(mote.sluttDato)} på {mote.sted}
+                    {formaterTid(mote.sluttDato)}, {mote.sted}
                 </Normaltekst>
             )}
         />,
@@ -507,6 +507,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 innhold={beskrivelse}
                 beskrivelse
                 fullbredde
+                formattertTekst
                 hidden={
                     aktivitetstype === MOTE_TYPE ||
                     aktivitetstype === SAMTALEREFERAT_TYPE
