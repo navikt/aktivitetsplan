@@ -1,5 +1,5 @@
 import { doThenDispatch, STATUS } from '../../../ducks/utils';
-import * as Api from '../../../ducks/api';
+import * as Api from './hent-behandlende-enheter-api';
 
 // Actions
 export const OPPRETT_OPPGAVE_OK = 'opprett_oppgave/OK';

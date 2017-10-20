@@ -1,4 +1,4 @@
-import * as Api from '../../ducks/api';
+import Api from '../motpart/motpart-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 
 // Actions

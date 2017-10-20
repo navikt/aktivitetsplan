@@ -67,6 +67,3 @@ export function hentVersjonerTilAktivitet(aktivitet) {
     );
 }
 
-export function hentEtiketter() {
-    return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/etiketter`);
-}

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
-import { hentVeileder } from '../../../ducks/veileder';
+import { hentVeileder } from '../../../ducks/veileder-reducer';
 import * as AppPT from '../../../proptypes';
 import Lenke from '../../../felles-komponenter/utils/lenke';
 import {

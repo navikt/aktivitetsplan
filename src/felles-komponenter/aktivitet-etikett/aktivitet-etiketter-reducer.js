@@ -1,4 +1,4 @@
-import * as Api from './aktivitet-api';
+import Api from './aktivitet-etiketter-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 
 // Actions
