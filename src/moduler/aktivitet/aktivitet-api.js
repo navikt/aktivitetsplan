@@ -66,4 +66,3 @@ export function hentVersjonerTilAktivitet(aktivitet) {
         `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`
     );
 }
-
