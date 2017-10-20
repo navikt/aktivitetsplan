@@ -5,9 +5,9 @@ RUN build
 FROM docker.adeo.no:5000/fo/app-mock
 RUN reset-mock-data
 
-COPY --from=npm-build /example /web
-COPY --from=npm-build /example/build/ /web
-COPY --from=npm-build /example/build/ /web/aktivitetsplanfelles
+COPY --from=npm-build /source/example /web
+COPY --from=npm-build /source/example/build/ /web
+COPY --from=npm-build /source/example/build/ /web/aktivitetsplanfelles
 # vis fram content - for debugging
 RUN ls /web
 
