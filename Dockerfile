@@ -1,21 +1,13 @@
-FROM docker.adeo.no:5000/bekkci/npm-builder
-
-ARG DOCKER_HOST
-RUN docker ps
-
+FROM docker.adeo.no:5000/bekkci/npm-builder as npm-build
 ADD / /source
 RUN build
 
 FROM docker.adeo.no:5000/fo/app-mock
 RUN reset-mock-data
 
-# slett evt mock-data for aktivitetsplanfelles
-RUN rm -rf /web/aktivitetsplanfelles
-
-ADD /example /web
-ADD /example/build/ /web
-ADD /example/build/ /web/aktivitetsplanfelles
-
+COPY --from=npm-build /example /web
+COPY --from=npm-build /example/build/ /web
+COPY --from=npm-build /example/build/ /web/aktivitetsplanfelles
 # vis fram content - for debugging
 RUN ls /web
 
