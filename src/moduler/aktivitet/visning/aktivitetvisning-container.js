@@ -73,12 +73,7 @@ class AktivitetvisningContainer extends Component {
     }
 
     render() {
-        const {
-            avhengigheter,
-            valgtAktivitet,
-            slettingErTillatt,
-            tillatEndring,
-        } = this.props;
+        const { avhengigheter, valgtAktivitet, ...props } = this.props;
         return (
             <Modal
                 contentLabel="aktivitetsvisning-modal"
@@ -86,11 +81,7 @@ class AktivitetvisningContainer extends Component {
                 avhengigheter={avhengigheter}
                 header={aktivitetvisningHeader(valgtAktivitet)}
             >
-                <Aktivitetvinsing
-                    aktivitet={valgtAktivitet}
-                    tillatSletting={slettingErTillatt}
-                    tillatEndring={tillatEndring}
-                />
+                <Aktivitetvinsing aktivitet={valgtAktivitet} {...props} />
             </Modal>
         );
     }
@@ -100,8 +91,6 @@ AktivitetvisningContainer.propTypes = {
     aktivitetId: PT.string.isRequired,
     valgtAktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
-    tillatEndring: PT.bool.isRequired,
-    slettingErTillatt: PT.bool.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
     doSettForrigeAktiveAktivitetId: PT.func.isRequired,
@@ -121,7 +110,7 @@ const mapStateToProps = (state, props) => {
           )
         : false;
 
-    const slettingErTillatt =
+    const tillatSletting =
         valgtAktivitet &&
         !valgtAktivitet.historisk &&
         TILLAT_SLETTING &&
@@ -137,7 +126,7 @@ const mapStateToProps = (state, props) => {
         ],
         valgtAktivitet,
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
-        slettingErTillatt,
+        tillatSletting,
     };
 };
 

@@ -208,6 +208,7 @@ function DialogModal(props, intl) {
             className={className}
             contentClass="aktivitetsplanfs dialog-modal__content"
             header={<Header intl={intl} {...props} />}
+            contentLabel="dialog-modal"
         >
             <DialogModalContent {...props} />
         </Modal>
@@ -224,9 +225,9 @@ DialogModal.defaultProps = {
 DialogModal.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
     harNyDialog: PT.bool,
-    valgtDialog: AppPT.dialog.isRequired,
+    valgtDialog: AppPT.dialog,
     harValgtDialog: PT.bool.isRequired,
-    valgtAktivitetId: PT.number,
+    valgtAktivitetId: PT.string,
     motpart: AppPT.motpart.isRequired,
     navnPaMotpart: PT.string,
     historiskVisning: PT.bool.isRequired,

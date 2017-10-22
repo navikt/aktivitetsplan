@@ -21,6 +21,7 @@ import VarslingBoks from './hjelpekomponenter/varsling-boks';
 import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
 import OppdaterReferatContainer from './status-oppdatering/oppdater-referat-container';
+import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 
 function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
     const arenaAktivitet = [
@@ -112,4 +113,4 @@ Aktivitetvisning.propTypes = {
     tillatEndring: PT.bool.isRequired,
 };
 
-export default Aktivitetvisning;
+export default lazyHOC(Aktivitetvisning);

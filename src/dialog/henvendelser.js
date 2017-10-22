@@ -75,7 +75,7 @@ class Dialog extends Component {
             );
 
         const henvendelseKomponenter = henvendelserSynkende.map(h =>
-            <div>
+            <div key={h.id}>
                 <LestAvBruker
                     visible={h === sisteHenvendelseLestAvBruker}
                     lestAvBrukerTidspunkt={lestAvBrukerTidspunkt}

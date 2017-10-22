@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Link } from 'react-router-dom';
 import * as AppPT from '../../../../proptypes';
 import Lenke from '../../../../felles-komponenter/utils/lenke';
 import {
@@ -35,12 +34,12 @@ import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 
 function RedigerLink({ id, felt }) {
     return (
-        <Link to={endreAktivitetRoute(id)}>
+        <Lenke href={endreAktivitetRoute(id)}>
             <FormattedMessage
                 id="aktivitetsdetaljer.legg-til-felt"
                 values={{ felt }}
             />
-        </Link>
+        </Lenke>
     );
 }
 

@@ -68,7 +68,9 @@ export function getDisplayName(WrappedComponent) {
 }
 
 export function erInternlenke(href) {
-    return !href.startsWith('http://') && !href.startsWith('https://');
+    return (
+        !!href && !href.startsWith('http://') && !href.startsWith('https://')
+    );
 }
 
 export function proxy(func, { before, after } = {}) {

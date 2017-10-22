@@ -14,7 +14,7 @@ export const VIS_SIDEBANNER = true;
 
 // innside
 export const FNR_I_URL = true;
-export const EKSEMPEL_FNR = '10108000398';
+export const EKSEMPEL_FNR = '06128074978';
 
 // utside
 /*

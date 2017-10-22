@@ -1,9 +1,5 @@
-import React, {
-    Children,
-    cloneElement,
-    Component,
-    PropTypes as PT,
-} from 'react';
+import React, { Children, cloneElement, Component } from 'react';
+import PT from 'prop-types';
 import classNames from 'classnames';
 
 const btnCls = (erApen, className) =>

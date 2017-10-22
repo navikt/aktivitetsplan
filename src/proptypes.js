@@ -19,7 +19,7 @@ export const aktivitet = PT.shape({
     tilDato: PT.string,
     opprettetDato: PT.string.isRequired,
     endretDato: PT.string,
-    historisk: PT.bool.isRequired,
+    historisk: PT.bool,
     lagtInnAv: PT.string,
     detaljer: PT.object,
     beskrivelse: PT.string,

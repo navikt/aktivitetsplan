@@ -125,6 +125,9 @@ describe('app utils', () => {
 
             expect(Utils.erInternlenke(httpsHref)).to.equal(false);
             expect(Utils.erInternlenke(httpHref)).to.equal(false);
+            expect(Utils.erInternlenke('/a/b/c')).to.equal(true);
+            expect(Utils.erInternlenke(null)).to.equal(false);
+            expect(Utils.erInternlenke(undefined)).to.equal(false);
         });
     });
 

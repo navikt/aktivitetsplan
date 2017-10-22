@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../proptypes';
 import Accordion from '../../felles-komponenter/accordion';
 import { formaterDatoKortManed, autobind } from '../../utils';
+import Lenke from '../../felles-komponenter/utils/lenke';
 
 class VilkarHistorikk extends Component {
     constructor(props) {
@@ -23,8 +23,8 @@ class VilkarHistorikk extends Component {
         function historiskVilkarLink(status, dato, guid) {
             const formattertDato = formaterDatoKortManed(dato);
             return (
-                <Link
-                    to={`vilkar/${guid}`}
+                <Lenke
+                    href={`vilkar/${guid}`}
                     key={`${guid}`}
                     className="vilkar__link lenke lenke--frittstaende"
                 >
@@ -32,7 +32,7 @@ class VilkarHistorikk extends Component {
                         id="vilkar.modal.gjeldende-status-dato-link"
                         values={{ status, dato: formattertDato }}
                     />
-                </Link>
+                </Lenke>
             );
         }
         const accordionLabelId = this.state.apen

@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
+import * as AppPT from '../proptypes';
 import { ESKALERINGS_FILTER } from '../ducks/dialog';
 import {
     selectEskaleringsFilter,
     selectVisEskaleringsFilter,
 } from '../moduler/dialog/dialog-selector';
 import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
+import lazyHOC from '../felles-komponenter/lazy/lazyHOC';
+import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
+import { selectIdentitetStatus } from '../moduler/identitet/identitet-selector';
 
 function EskaleringsFilter({ doToggleEskaleringsFilter, erFilterAktivt }) {
     return (
@@ -50,7 +54,22 @@ DialogFilter.propTypes = {
     doToggleEskaleringsFilter: PT.func.isRequired,
 };
 
+const LazyDialogFilter = lazyHOC(DialogFilter);
+
+function DialogFilterMedInnholdslaster({ avhengigheter, ...props }) {
+    return (
+        <Innholdslaster avhengigheter={avhengigheter}>
+            <LazyDialogFilter {...props} />
+        </Innholdslaster>
+    );
+}
+
+DialogFilterMedInnholdslaster.propTypes = {
+    avhengigheter: AppPT.avhengigheter.isRequired,
+};
+
 const mapStateToProps = state => ({
+    avhengigheter: [selectIdentitetStatus(state)],
     erFilterAktivt: selectEskaleringsFilter(state),
     visEskaleringsFilter: selectVisEskaleringsFilter(state),
 });
@@ -59,4 +78,6 @@ const mapDispatchToProps = dispatch => ({
     doToggleEskaleringsFilter: () => dispatch(ESKALERINGS_FILTER),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DialogFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    DialogFilterMedInnholdslaster
+);

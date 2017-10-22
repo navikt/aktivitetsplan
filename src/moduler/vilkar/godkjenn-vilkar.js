@@ -1,4 +1,5 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { hentVilkar } from './vilkar-reducer';
 import { STATUS } from '../../ducks/utils';

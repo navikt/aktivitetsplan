@@ -1,23 +1,14 @@
 import React from 'react';
-import PT from 'prop-types';
-import { Link } from 'react-router-dom';
 import NavLenkepanel from 'nav-frontend-lenkepanel';
+import Lenke from './utils/lenke';
 import hiddenIf from './hidden-if/hidden-if';
 
-function ReactRouterLink({ href, children, ...props }) {
-    return (
-        <Link to={href} {...props}>
-            {children}
-        </Link>
-    );
+function LenkeUtenStyling(props) {
+    return <Lenke brukLenkestyling={false} {...props} />;
 }
-ReactRouterLink.propTypes = {
-    href: PT.string.isRequired,
-    children: PT.node.isRequired,
-};
 
 function Lenkepanel(props) {
-    return <NavLenkepanel linkCreator={ReactRouterLink} {...props} />;
+    return <NavLenkepanel linkCreator={LenkeUtenStyling} {...props} />;
 }
 
 export default hiddenIf(Lenkepanel);

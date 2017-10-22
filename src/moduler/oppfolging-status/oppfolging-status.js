@@ -65,7 +65,7 @@ export function oppfolgingStatusKomponent(props) {
     } else if (vilkarMaBesvares) {
         return (
             <GodkjennVilkarMedVarsling
-                visVilkar={visVilkar}
+                visVilkar={!!visVilkar}
                 brukerHarAvslatt={brukerHarAvslatt}
             />
         );
