@@ -1,9 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { VenstreChevron } from 'nav-frontend-chevron';
+import Lenke from './lenke';
 import history from '../../history';
 import { TILBAKE_MODAL } from '../modal/modal-reducer';
 
@@ -21,7 +21,7 @@ function Tilbakeknapp(props) {
     }
 
     return (
-        <Link to="/" onClick={tilbake} className="tilbakeknapp">
+        <Lenke href="/" onClick={tilbake} className="tilbakeknapp">
             <div className="tilbakeknapp-innhold">
                 <VenstreChevron />
                 <span className="tilbakeknapp-innhold__tekst">
@@ -31,7 +31,7 @@ function Tilbakeknapp(props) {
                     />
                 </span>
             </div>
-        </Link>
+        </Lenke>
     );
 }
 

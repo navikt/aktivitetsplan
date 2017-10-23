@@ -1,4 +1,5 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
@@ -43,11 +44,7 @@ function GodkjennVilkarForm({
             </div>
 
             <div>
-                <Hovedknapp
-                    type="submit"
-                    spinner={lasterData}
-                    disabled={lasterData}
-                >
+                <Hovedknapp spinner={lasterData} disabled={lasterData}>
                     <FormattedMessage id="vilkar.ga-til-aktivitetsplan" />
                 </Hovedknapp>
             </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
@@ -23,68 +23,97 @@ import {
     selectDialogStatus,
     selectSisteHenvendelseData,
 } from '../dialog-selector';
-import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
+import { autobind } from '../../../utils';
+import {selectAktivitetMedId} from "../../aktivitet/aktivitetliste-selector";
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 
-function NyHenvendelseForm({
-    handleSubmit,
-    harEksisterendeOverskrift,
-    erNyDialog,
-    oppretter,
-    visBrukerInfo,
-    erBruker,
-    skalHaAutofokus,
-}) {
-    return (
-        <form onSubmit={handleSubmit} className="ny-henvendelse-form">
-            <VisibleIfDiv
-                visible={erNyDialog && !erBruker}
-                className="endre-dialog__sjekkbokser"
-            >
-                <Checkbox
-                    className="endre-dialog__sjekkboks"
-                    labelId="dialog.ikke-ferdigbehandlet"
-                    feltNavn="ikkeFerdigbehandlet"
-                />
-                <Checkbox
-                    className="endre-dialog__sjekkboks"
-                    labelId="dialog.venter-pa-svar"
-                    feltNavn="venterPaSvar"
-                />
-            </VisibleIfDiv>
+class NyHenvendelseForm extends Component {
+    constructor(props) {
+        super(props);
+        autobind(this);
+        this.state = {
+            timer: moment(0),
+        };
+    }
 
-            {harEksisterendeOverskrift ||
-                <Input
-                    feltNavn="overskrift"
-                    labelId="dialog.overskrift-label"
+    setTimer() {
+        this.setState({
+            timer: moment(),
+        });
+    }
+
+    render() {
+        const {
+            handleSubmit,
+            harEksisterendeOverskrift,
+            erNyDialog,
+            oppretter,
+            visBrukerInfo,
+            erBruker,
+            skalHaAutofokus,
+        } = this.props;
+
+        const visSendtBekreftelse =
+            visBrukerInfo &&
+            moment(this.state.timer).add(5, 'seconds').isAfter(moment());
+
+        return (
+            <form onSubmit={handleSubmit} className="ny-henvendelse-form">
+                <VisibleIfDiv
+                    visible={erNyDialog && !erBruker}
+                    className="endre-dialog__sjekkbokser"
+                >
+                    <Checkbox
+                        className="endre-dialog__sjekkboks"
+                        labelId="dialog.ikke-ferdigbehandlet"
+                        feltNavn="ikkeFerdigbehandlet"
+                    />
+                    <Checkbox
+                        className="endre-dialog__sjekkboks"
+                        labelId="dialog.venter-pa-svar"
+                        feltNavn="venterPaSvar"
+                    />
+                </VisibleIfDiv>
+
+                {harEksisterendeOverskrift ||
+                    <Input
+                        feltNavn="overskrift"
+                        labelId="dialog.overskrift-label"
+                        disabled={oppretter}
+                        autoFocus
+                    />}
+                <Textarea
+                    labelId="dialog.tekst-label"
+                    feltNavn="tekst"
+                    placeholder="Skriv her"
+                    maxLength={BESKRIVELSE_MAKS_LENGDE}
                     disabled={oppretter}
-                    autoFocus
-                />}
-            <Textarea
-                labelId="dialog.tekst-label"
-                feltNavn="tekst"
-                placeholder="Skriv her"
-                maxLength={BESKRIVELSE_MAKS_LENGDE}
-                disabled={oppretter}
-                visTellerFra={1000}
-                autoFocus={harEksisterendeOverskrift && skalHaAutofokus}
-            />
-            <Hovedknapp type="hoved" spinner={oppretter} disabled={oppretter}>
-                <FormattedMessage id="dialog.lag-ny-dialog" />
-            </Hovedknapp>
+                    visTellerFra={1000}
+                    autoFocus={harEksisterendeOverskrift && skalHaAutofokus}
+                />
+                <Hovedknapp
+                    type="hoved"
+                    spinner={oppretter}
+                    disabled={oppretter}
+                    onClick={this.setTimer}
+                >
+                    <FormattedMessage id="dialog.lag-ny-dialog" />
+                </Hovedknapp>
 
-            <HiddenIfAlertStripeSuksessSolid
-                style={{ marginTop: '1rem' }}
-                hidden={!visBrukerInfo}
-            >
-                <FormattedMessage id="dialog.info-til-bruker" />
-            </HiddenIfAlertStripeSuksessSolid>
-        </form>
-    );
+                <HiddenIfAlertStripeSuksessSolid
+                    style={{ marginTop: '1rem' }}
+                    hidden={!visSendtBekreftelse}
+                >
+                    <FormattedMessage id="dialog.info-til-bruker" />
+                </HiddenIfAlertStripeSuksessSolid>
+            </form>
+        );
+    }
 }
+
 NyHenvendelseForm.defaultProps = {
     skalHaAutofokus: false,
 };
@@ -137,22 +166,17 @@ const mapStateToProps = (state, props) => {
     const erNyDialog = Object.keys(dialog).length === 0;
     const aktivitet = selectAktivitetMedId(state, aktivitetId) || {};
     const overskrift = aktivitet.tittel || dialog.overskrift;
-    const sisteDato = dialog.sisteDato;
     const erBruker = selectErBruker(state);
+    const sisteHenvendelse = selectSisteHenvendelseData(state);
+    const sistHenvendelseId = sisteHenvendelse && sisteHenvendelse.id;
     return {
         form: props.formNavn,
-        initialValues: {
-            overskrift,
-        },
+        initialValues: { overskrift },
         harEksisterendeOverskrift: !!overskrift,
         erNyDialog,
         oppretter: selectDialogStatus(state) !== STATUS.OK,
         erBruker,
-        visBrukerInfo: !!(
-            erBruker &&
-            selectSisteHenvendelseData(state) === dialog &&
-            moment(sisteDato).add(5, 's').isAfter(moment())
-        ),
+        visBrukerInfo: erBruker && sistHenvendelseId === dialog.id,
     };
 };
 
@@ -179,6 +203,7 @@ const mapDispatchToProps = () => ({
             if (onComplete) {
                 onComplete(data);
             }
+            document.getElementById('tekst').focus();
         });
     },
 });

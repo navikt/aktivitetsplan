@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { erInternlenke } from '../../utils';
 import visibleIfHOC from '../../hocs/visible-if';
+import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 const cls = (className, lenkeType, lenkestyling) =>
     classNames(className, lenkeType, {
@@ -19,10 +20,12 @@ function Lenke({
     ...rest
 }) {
     if (erInternlenke(href)) {
+        const fodselsnummer = getFodselsnummer();
+        const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
         return (
             <Link
                 {...rest}
-                to={href}
+                to={internHref}
                 className={cls(className, 'internlenke', brukLenkestyling)}
                 ref={focusRef}
             >

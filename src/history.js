@@ -14,9 +14,12 @@ function prependBasePath(fn) {
     return url => {
         const fodselsnummer = getFodselsnummer();
         const urlParams = nyURLHarQueryString(url) ? '' : location.search;
+        const fodselsnummerPath = `/${fodselsnummer}`;
         return fn.call(this, {
             pathname:
-                (fodselsnummer ? `/${fodselsnummer}` : '') +
+                (fodselsnummer && !url.startsWith(fodselsnummerPath)
+                    ? fodselsnummerPath
+                    : '') +
                 (url.startsWith('/') ? '' : '/') +
                 url,
             search: urlParams,

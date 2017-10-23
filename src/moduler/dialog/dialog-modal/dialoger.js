@@ -74,9 +74,8 @@ class Dialoger extends React.Component {
         return (
             <div className={className} onKeyDown={dialogPiling}>
                 {dialogerSortert.map(d =>
-                    <section className="dialoger__dialog--section">
+                    <section className="dialoger__dialog--section" key={d.id}>
                         <DialogVisning
-                            key={d.id}
                             ref={ref => (dialogRefs[d.id] = ref)}
                             dialog={d}
                             erTabBar={erTabBar(d)}

@@ -22,7 +22,10 @@ const Markering = visibleIfHOC(props =>
 );
 const Info = visibleIfHOC(({ slash, className, children }) =>
     <span>
-        {slash && <Undertekst className="dialoger__slash" />}
+        {slash &&
+            <Undertekst className="dialoger__slash">
+                <span />
+            </Undertekst>}
         <Undertekst className={className} tag="span">
             {children}
         </Undertekst>
@@ -65,20 +68,11 @@ class DialogVisning extends React.Component {
             }
         };
 
-        function Test({ children }) {
-            return (
-                <div style={{ display: 'inline-block' }}>
-                    {children}
-                </div>
-            );
-        }
-
         return (
             <Lenkepanel
                 tabIndex={erTabBar ? '0' : '-1'}
                 onFocus={handleOnFocus}
                 className={dialogCls(erValgt, !dialog.lest)}
-                customComponent={Test}
                 href={`/dialog/${dialog.id}`}
                 aria-expanded={erValgt}
             >

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import Dato from '../../../felles-komponenter/dato';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../proptypes';
 import { selectHistoriskPeriode } from './filter-selector';
 import { selectHistoriskeOppfolgingsPerioder } from '../../oppfolging/oppfolging-selector';
@@ -44,6 +45,7 @@ function PeriodeFilter({
     historiskePerioder,
     doVelgHistoriskPeriode,
     className,
+    skjulInneverende,
 }) {
     return (
         <VisibleIfDiv
@@ -58,16 +60,18 @@ function PeriodeFilter({
                                 <Undertittel className="filter__tittel">
                                     <FormattedMessage id="filter.periode.tittel" />
                                 </Undertittel>
-                                <Radio
-                                    className="filter__radio--periode"
-                                    label={
-                                        <FormattedMessage id="filter.periode.inneverende" />
-                                    }
-                                    name="inneverende"
-                                    onChange={() =>
-                                        doVelgHistoriskPeriode(null)}
-                                    checked={!historiskPeriode}
-                                />
+                                <HiddenIfDiv hidden={skjulInneverende}>
+                                    <Radio
+                                        className="filter__radio--periode"
+                                        label={
+                                            <FormattedMessage id="filter.periode.inneverende" />
+                                        }
+                                        name="inneverende"
+                                        onChange={() =>
+                                            doVelgHistoriskPeriode(null)}
+                                        checked={!historiskPeriode}
+                                    />
+                                </HiddenIfDiv>
                                 {historiskePerioder.map(t => {
                                     const id = t.id;
                                     return (
@@ -104,6 +108,7 @@ PeriodeFilter.propTypes = {
     historiskPeriode: AppPT.oppfolgingsPeriode,
     doVelgHistoriskPeriode: PT.func.isRequired,
     className: PT.string,
+    skjulInneverende: PT.bool.isRequired,
 };
 
 PeriodeFilter.defaultProps = {

@@ -83,6 +83,10 @@
             margin: 1rem 0;
         }
     }
+
+    .skjemaelement__input.textarea--medMeta {
+        padding: 0.35rem;
+    }
 }
 
 .ReactModal__Body--open {
@@ -125,6 +129,10 @@
 }
 
 @media print {
+    .ReactModal__Body--open {
+        position: absolute;
+    }
+
     .appContainer[aria-hidden='true'],
     .veilarbpersonflatefs[aria-hidden='true'] {
         display: none;

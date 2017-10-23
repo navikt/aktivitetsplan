@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Link } from 'react-router-dom';
 import * as AppPT from '../../../../proptypes';
 import Lenke from '../../../../felles-komponenter/utils/lenke';
 import {
@@ -35,12 +34,12 @@ import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 
 function RedigerLink({ id, felt }) {
     return (
-        <Link to={endreAktivitetRoute(id)}>
+        <Lenke href={endreAktivitetRoute(id)}>
             <FormattedMessage
                 id="aktivitetsdetaljer.legg-til-felt"
                 values={{ felt }}
             />
-        </Link>
+        </Lenke>
     );
 }
 
@@ -284,7 +283,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             innhold={moeteplanListe.map(mote =>
                 <Normaltekst key={mote.startDato}>
                     {formaterDatoKortManedTid(mote.startDato)} -{' '}
-                    {formaterTid(mote.sluttDato)} på {mote.sted}
+                    {formaterTid(mote.sluttDato)}, {mote.sted}
                 </Normaltekst>
             )}
         />,
@@ -507,6 +506,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 innhold={beskrivelse}
                 beskrivelse
                 fullbredde
+                formattertTekst
                 hidden={
                     aktivitetstype === MOTE_TYPE ||
                     aktivitetstype === SAMTALEREFERAT_TYPE
