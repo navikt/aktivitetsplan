@@ -20,7 +20,7 @@ function App() {
                     <div className="fullbredde">
                         <Router history={routerHistory}>
                             <ScrollToTop>
-                                <Hovedside/>
+                                <Hovedside />
                             </ScrollToTop>
                         </Router>
                         <Feature name="timeoutbox">
