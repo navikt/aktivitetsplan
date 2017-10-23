@@ -22,13 +22,15 @@ function Verktoylinje({ viserHistoriskPeriode, privatModus, erVeileder }) {
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenkeknapp>
             </div>
-            <HiddenIfDiv
-                className="verktoylinje__verktoy-container"
-                hidden={privatModus && erVeileder}
-            >
-                <PeriodeFilter className="verktoylinje__verktoy" />
-                <Filter className="verktoylinje__verktoy" />
-            </HiddenIfDiv>
+            <div className="verktoylinje__verktoy-container">
+                <PeriodeFilter
+                    className="verktoylinje__verktoy"
+                    skjulInneverende={privatModus && erVeileder}
+                />
+                <HiddenIfDiv hidden={privatModus && erVeileder}>
+                    <Filter className="verktoylinje__verktoy" />
+                </HiddenIfDiv>
+            </div>
         </div>
     );
 }
