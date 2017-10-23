@@ -8,7 +8,6 @@ function getActions(navn) {
     };
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export function createActionsAndReducer(navn) {
     const defaultState = { data: {}, status: STATUS.NOT_STARTED };
     const actions = getActions(navn);
@@ -33,3 +32,5 @@ export function createActionsAndReducer(navn) {
         action: fn => doThenDispatch(fn, actions),
     };
 }
+
+export default createActionsAndReducer;
