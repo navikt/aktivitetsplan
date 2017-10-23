@@ -66,7 +66,3 @@ export default function reducer(state = initalState, action) {
             return state;
     }
 }
-
-export function selectAktivitetReducer(state) {
-    return state.data.aktiviteter;
-}

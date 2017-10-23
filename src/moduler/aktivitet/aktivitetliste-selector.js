@@ -49,7 +49,7 @@ export function selectAktivitetMedId(state, aktivitetId) {
     );
 }
 
-export function selectAktivitetListeReducer(state) {
+export function selectAktivitetListeSlice(state) {
     const status = aggregerStatus(
         selectPrivatModusSlice(state),
         selectAktivitetStatus(state),
@@ -62,7 +62,7 @@ export function selectAktivitetListeReducer(state) {
 }
 
 export function selectAktivitetListeStatus(state) {
-    return selectAktivitetListeReducer(state).status;
+    return selectAktivitetListeSlice(state).status;
 }
 
 export function selectKanEndreAktivitetStatus(state, aktivitet) {

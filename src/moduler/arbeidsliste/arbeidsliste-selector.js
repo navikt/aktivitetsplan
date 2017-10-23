@@ -1,17 +1,30 @@
-export const selectArbeidslisteReducer = state => state.data.arbeidsliste;
+function selectArbeidslisteSlice(state) {
+    return state.data.arbeidsliste;
+}
 
-export const selectHarVeilederTilgang = state =>
-    selectArbeidslisteReducer(state).data.harVeilederTilgang;
+export function selectArbeidslisteData(state) {
+    return selectArbeidslisteSlice(state).data;
+}
 
-export const selectIsOppfolgendeVeileder = state =>
-    selectArbeidslisteReducer(state).data.isOppfolgendeVeileder || false;
+export function selectArbeidslisteStatus(state) {
+    return selectArbeidslisteSlice(state).status;
+}
 
-export const selectEndretDato = state =>
-    selectArbeidslisteReducer(state).data.endringstidspunkt;
+export function selectHarVeilederTilgang(state) {
+    return selectArbeidslisteData(state).harVeilederTilgang;
+}
+export function selectIsOppfolgendeVeileder(state) {
+    return selectArbeidslisteData(state).isOppfolgendeVeileder || false;
+}
+export function selectEndretDato(state) {
+    return selectArbeidslisteData(state).endringstidspunkt;
+}
 
-export const selectSistEndretAv = state => {
-    const sistEndretAv = selectArbeidslisteReducer(state).data.sistEndretAv;
+export function selectSistEndretAv(state) {
+    const sistEndretAv = selectArbeidslisteData(state).sistEndretAv;
     return sistEndretAv && sistEndretAv.veilederId;
-};
+}
 
-export const selectErBrukerIArbeidsliste = state => !!selectEndretDato(state);
+export function selectErBrukerIArbeidsliste(state) {
+    return !!selectEndretDato(state);
+}
