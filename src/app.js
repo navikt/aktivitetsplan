@@ -6,7 +6,6 @@ import Provider from './provider';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import Feature from './felles-komponenter/feature/feature';
 import './index.less';
-import Routing from './routing';
 import routerHistory from './history';
 import Hovedside from './sider/hovedside/hovedside';
 import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
@@ -21,9 +20,7 @@ function App() {
                     <div className="fullbredde">
                         <Router history={routerHistory}>
                             <ScrollToTop>
-                                <Hovedside>
-                                    <Routing />
-                                </Hovedside>
+                                <Hovedside/>
                             </ScrollToTop>
                         </Router>
                         <Feature name="timeoutbox">
