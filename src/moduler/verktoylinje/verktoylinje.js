@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
-import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
@@ -27,9 +26,12 @@ function Verktoylinje({ viserHistoriskPeriode, privatModus, erVeileder }) {
                     className="verktoylinje__verktoy"
                     skjulInneverende={privatModus && erVeileder}
                 />
-                <HiddenIfDiv hidden={privatModus && erVeileder}>
-                    <Filter className="verktoylinje__verktoy" />
-                </HiddenIfDiv>
+                <Filter
+                    className="verktoylinje__verktoy"
+                    skjulIPrivatModus={
+                        !viserHistoriskPeriode && privatModus && erVeileder
+                    }
+                />
             </div>
         </div>
     );
