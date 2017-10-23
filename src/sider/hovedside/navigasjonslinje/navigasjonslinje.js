@@ -17,8 +17,8 @@ import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import { selectErPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import {
+    selectArbeidslisteStatus,
     selectHarVeilederTilgang,
-    selectArbeidslisteReducer,
 } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../../proptypes';
 import {
@@ -85,7 +85,7 @@ class Navigasjonslinje extends Component {
     render() {
         const {
             antallUlesteDialoger,
-            arbeidslisteReducer,
+            avhengigheter,
             harVeilederTilgangTilArbeidsliste,
             disabled,
             kanHaDialog,
@@ -121,7 +121,7 @@ class Navigasjonslinje extends Component {
                 <div className="navigasjonslinje__verktoy">
                     <Feature name={navigasjonslinjemenyFeature}>
                         <Innholdslaster
-                            avhengigheter={[arbeidslisteReducer]}
+                            avhengigheter={avhengigheter}
                             spinnerStorrelse="xs"
                             className="navigasjonslinje__spinner"
                         >
@@ -156,7 +156,7 @@ Navigasjonslinje.propTypes = {
     doHentDialog: PT.func.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
     doHentArbeidsliste: PT.func.isRequired,
-    arbeidslisteReducer: AppPT.reducer.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     kanHaDialog: PT.bool.isRequired,
     harVeilederTilgangTilArbeidsliste: PT.bool,
     disabled: PT.bool.isRequired,
@@ -186,7 +186,7 @@ const mapStateToProps = state => {
         antallUlesteDialoger,
         privatModus: selectErPrivatModus(state),
         underOppfolging,
-        arbeidslisteReducer: selectArbeidslisteReducer(state),
+        avhengigheter: [selectArbeidslisteStatus(state)],
         harVeilederTilgangTilArbeidsliste: selectHarVeilederTilgang(state),
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
         ikkeTilgangTilVilkar,

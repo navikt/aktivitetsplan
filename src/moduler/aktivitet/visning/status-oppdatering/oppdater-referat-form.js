@@ -7,7 +7,6 @@ import { Knapp } from 'nav-frontend-knapper';
 import {
     oppdaterReferat,
     publiserReferat,
-    selectReferatReducer,
 } from '../../aktivitet-referat-reducer';
 import { STATUS } from '../../../../ducks/utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
@@ -17,6 +16,7 @@ import {
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/hidden-if-knapper';
+import { selectReferatStatus } from '../../aktivitet-referat-selector';
 
 const REFERAT_MAKS_LENGDE = 5000;
 
@@ -86,7 +86,7 @@ const mapStateToProps = (state, props) => {
         initialValues: {
             referat,
         },
-        oppdaterer: selectReferatReducer(state).status === STATUS.PENDING,
+        oppdaterer: selectReferatStatus(state) === STATUS.PENDING,
         erReferatPublisert,
     };
 };
