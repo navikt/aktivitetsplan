@@ -32,15 +32,6 @@ function getPathWithBase(path) {
 
 const Routing = ({ location }) =>
     <Switch location={location}>
-        <Route
-            exact
-            path={getPathWithBase('/vilkar')}
-            component={VilkarModalMedHistorikk}
-        />
-        <Route
-            path={getPathWithBase('/vilkar/:key')}
-            component={VilkarModalUtenHistorikk}
-        />
         <Route exact path={getPathWithBase('/mal')} component={Aktivitetsmal} />
         <Route
             path={getPathWithBase('/mal/endre')}
@@ -76,15 +67,38 @@ const Routing = ({ location }) =>
             path={getPathWithBase('/utskrift')}
             component={AktivitetsplanPrint}
         />
-        <Route
-            path={getPathWithBase('/informasjon')}
-            component={InformasjonRoutes}
-        />
     </Switch>;
 
 Routing.propTypes = {
     location: PT.object.isRequired,
 };
+
+function Public({ location }) {
+    return (
+        <Switch location={location}>
+            <Route
+                exact
+                path={getPathWithBase('/vilkar')}
+                component={VilkarModalMedHistorikk}
+            />
+            <Route
+                path={getPathWithBase('/vilkar/:key')}
+                component={VilkarModalUtenHistorikk}
+            />
+
+            <Route
+                path={getPathWithBase('/informasjon')}
+                component={InformasjonRoutes}
+            />
+        </Switch>
+    );
+}
+
+Public.propTypes = {
+    location: PT.object.isRequired,
+};
+
+export const PublicRouting = withRouter(Public);
 
 export default withRouter(Routing);
 
