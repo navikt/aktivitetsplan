@@ -102,11 +102,6 @@
     }
 }
 
-@media print {
-    .ReactModal__Body--open {
-        position: absolute;
-    }
-}
 
 @media (min-width: @screen-md-min) {
     .ReactModal__Body--open {
@@ -135,6 +130,10 @@
 }
 
 @media print {
+    .ReactModal__Body--open {
+        position: absolute;
+    }
+
     .appContainer[aria-hidden='true'],
     .veilarbpersonflatefs[aria-hidden='true'] {
         display: none;
