@@ -1,1 +1,1 @@
-Arbeidstid (dag, kveld, helg)
+Arbeidstid (dag, kveld, helg, stillingsprosent eller lignende)
