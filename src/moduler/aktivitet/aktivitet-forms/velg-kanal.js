@@ -3,13 +3,10 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../../proptypes';
-import {
-    selectKanaler,
-    selectKanalerReducer,
-    hentKanaler,
-} from '../kanaler-reducer';
+import { hentKanaler } from '../kanaler-reducer';
 import Select from '../../../felles-komponenter/skjema/input/select';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import { selectKanalerData, selectKanalerStatus } from '../kanaler-selector';
 
 class VelgKanal extends Component {
     componentDidMount() {
@@ -17,10 +14,10 @@ class VelgKanal extends Component {
     }
 
     render() {
-        const { kanaler, kanalerReducer, labelId, disabled } = this.props;
+        const { kanaler, avhengigheter, labelId, disabled } = this.props;
 
         return (
-            <Innholdslaster avhengigheter={[kanalerReducer]}>
+            <Innholdslaster avhengigheter={avhengigheter}>
                 <Select
                     feltNavn="kanal"
                     disabled={disabled}
@@ -45,7 +42,7 @@ class VelgKanal extends Component {
 }
 
 VelgKanal.propTypes = {
-    kanalerReducer: AppPT.reducer.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     kanaler: PT.arrayOf(PT.string).isRequired,
     labelId: PT.string.isRequired,
     disabled: PT.bool,
@@ -57,8 +54,8 @@ VelgKanal.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    kanalerReducer: selectKanalerReducer(state),
-    kanaler: selectKanaler(state),
+    avhengigheter: [selectKanalerStatus(state)],
+    kanaler: selectKanalerData(state),
 });
 
 const mapDispatchToProps = dispatch => ({
