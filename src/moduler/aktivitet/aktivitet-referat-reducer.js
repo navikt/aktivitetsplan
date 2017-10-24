@@ -38,7 +38,3 @@ export function publiserReferat(aktivitet) {
         PENDING: AT.PUBLISER_REFERAT,
     });
 }
-
-export function selectReferatReducer(state) {
-    return state.data.referat;
-}

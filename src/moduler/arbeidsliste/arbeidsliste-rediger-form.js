@@ -11,9 +11,9 @@ import Datovelger from '../../felles-komponenter/skjema/datovelger/datovelger';
 import { redigerArbeidsliste } from './arbeidsliste-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import {
-    selectArbeidslisteReducer,
     selectSistEndretAv,
     selectEndretDato,
+    selectArbeidslisteData,
 } from './arbeidsliste-selector';
 import { LUKK_MODAL } from '../../ducks/modal';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
@@ -100,14 +100,14 @@ const RedigerArbeidslisteFormValidation = validForm({
 })(RedigerArbeidslisteForm);
 
 const mapStateToProps = state => {
-    const arbeidsliste = selectArbeidslisteReducer(state);
+    const arbeidsliste = selectArbeidslisteData(state);
     return {
         sistEndretAv: selectSistEndretAv(state),
         endretDato: selectEndretDato(state),
         veileder: selectIdentitetId(state),
         initialValues: {
-            kommentar: arbeidsliste.data.kommentar,
-            frist: arbeidsliste.data.frist,
+            kommentar: arbeidsliste.kommentar,
+            frist: arbeidsliste.frist,
         },
     };
 };

@@ -6,26 +6,25 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
-    selectMotpartSlice,
+    selectMotpartStatus,
     selectNavnPaMotpart,
 } from '../motpart/motpart-selector';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import RedigerArbeidsliste from './arbeidsliste-rediger';
 import FjernArbeidsliste from './arbeidsliste-fjern';
 import LeggTilArbeidsliste from './arbeidsliste-legg-til';
-import { selectArbeidslisteReducer } from './arbeidsliste-selector';
+import { selectArbeidslisteStatus } from './arbeidsliste-selector';
 import { slettArbeidsliste } from './arbeidsliste-reducer';
 import { LUKK_MODAL } from '../../ducks/modal';
 import Modal from '../../felles-komponenter/modal/modal';
 
 function ArbeidslisteContainer({
-    navnPaMotpart,
+    avhengigheter,
     path,
-    arbeidslisteReducer,
+    navnPaMotpart,
     onSlettArbeidsliste,
     history,
     lukkModal,
-    motpart,
 }) {
     const onLukkModal = () => {
         history.push('/');
@@ -35,7 +34,7 @@ function ArbeidslisteContainer({
     return (
         <Modal contentLabel="arbeidsliste-modal" contentClass="arbeidsliste">
             <Innholdslaster
-                avhengigheter={[arbeidslisteReducer, motpart]}
+                avhengigheter={avhengigheter}
                 className="arbeidsliste__spinner"
             >
                 <Switch>
@@ -63,20 +62,21 @@ ArbeidslisteContainer.defaultProps = {
 };
 
 ArbeidslisteContainer.propTypes = {
-    navnPaMotpart: PT.string,
-    motpart: AppPT.reducer.isRequired,
-    arbeidslisteReducer: AppPT.reducer.isRequired,
+    avhengigheter: AppPT.avhengigheter.isRequired,
     path: PT.string.isRequired,
+    navnPaMotpart: PT.string,
     history: PT.object.isRequired,
     onSlettArbeidsliste: PT.func.isRequired,
     lukkModal: PT.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    motpart: selectMotpartSlice(state),
+    avhengigheter: [
+        selectMotpartStatus(state),
+        selectArbeidslisteStatus(state),
+    ],
     path: ownProps.match.path,
     navnPaMotpart: selectNavnPaMotpart(state),
-    arbeidslisteReducer: selectArbeidslisteReducer(state),
 });
 
 const mapDispatchToProps = dispatch =>
