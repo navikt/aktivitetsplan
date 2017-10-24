@@ -100,7 +100,7 @@ class Navigasjonslinje extends Component {
                     disabled={
                         disabled ||
                         !kanHaDialog ||
-                        !ikkeFinnesDialogerIHistoriskPeriode
+                        ikkeFinnesDialogerIHistoriskPeriode
                     }
                     aria-live="polite"
                 >
