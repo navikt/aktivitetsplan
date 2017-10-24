@@ -1,10 +1,11 @@
 import { doThenDispatch, STATUS } from './utils';
 
 function getActions(navn) {
+    const navnUppercase = navn.toUpperCase();
     return {
-        PENDING: `${navn.toUpperCase()}/PENDING`,
-        OK: `${navn.toUpperCase()}/OK`,
-        FEILET: `${navn.toUpperCase()}/FEILET`,
+        PENDING: `${navnUppercase}/PENDING`,
+        OK: `${navnUppercase}/OK`,
+        FEILET: `${navnUppercase}/FEILET`,
     };
 }
 
