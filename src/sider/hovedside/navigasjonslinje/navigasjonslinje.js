@@ -90,13 +90,18 @@ class Navigasjonslinje extends Component {
             disabled,
             kanHaDialog,
             ikkeTilgangTilVilkar,
+            ikkeFinnesDialogerIHistoriskPeriode,
         } = this.props;
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement
                     sti="/dialog"
                     tekstId="navigasjon.dialog"
-                    disabled={disabled || !kanHaDialog}
+                    disabled={
+                        disabled ||
+                        !kanHaDialog ||
+                        !ikkeFinnesDialogerIHistoriskPeriode
+                    }
                     aria-live="polite"
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
@@ -161,6 +166,7 @@ Navigasjonslinje.propTypes = {
     harVeilederTilgangTilArbeidsliste: PT.bool,
     disabled: PT.bool.isRequired,
     ikkeTilgangTilVilkar: PT.bool.isRequired,
+    ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
@@ -170,7 +176,8 @@ Navigasjonslinje.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const antallUlesteDialoger = selectDialoger(state)
+    const dialoger = selectDialoger(state);
+    const antallUlesteDialoger = dialoger
         .filter(d => !d.lest)
         .filter(d => dialogFilter(d, state)).length;
     const underOppfolging = selectErUnderOppfolging(state);
@@ -194,6 +201,8 @@ const mapStateToProps = state => {
             erIkkeBruker &&
             !underOppfolging &&
             selectViserInneverendePeriode(state),
+        ikkeFinnesDialogerIHistoriskPeriode:
+            dialoger.length < 1 && !selectViserInneverendePeriode(state),
     };
 };
 
