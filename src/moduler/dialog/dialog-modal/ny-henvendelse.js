@@ -24,7 +24,7 @@ import {
     selectSisteHenvendelseData,
 } from '../dialog-selector';
 import { autobind } from '../../../utils';
-import {selectAktivitetMedId} from "../../aktivitet/aktivitetliste-selector";
+import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;

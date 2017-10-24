@@ -8,7 +8,7 @@ import {
     setNAVsomMotpart,
 } from '../moduler/motpart/motpart-reducer';
 import history from '../history';
-import { hentBruker } from '../moduler/bruker/bruker-duck';
+import { hentBruker } from '../moduler/bruker/bruker-reducer';
 
 export function fnrFraUrl() {
     const fnrMatch = window.location.pathname.match(`${CONTEXT_PATH}/(\\d*)`);

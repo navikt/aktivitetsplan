@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import hiddenIf from './felles-komponenter/hidden-if/hidden-if';
 import Innholdslaster from './felles-komponenter/utils/innholdslaster';
-import {selectErUnderOppfolging, selectOppfolgingStatus} from "./moduler/oppfolging/oppfolging-selector";
+import {
+    selectErUnderOppfolging,
+    selectOppfolgingStatus,
+} from './moduler/oppfolging/oppfolging-selector';
 
 const mapStateToProps = state => ({
     avhengigheter: [selectOppfolgingStatus(state)],

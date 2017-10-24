@@ -1,4 +1,4 @@
-import Api from './motpart-api';
+import * as Api from './motpart-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 import { storeForbokstaver } from '../../utils';
 

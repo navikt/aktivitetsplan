@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { hentOppfolging } from '../oppfolging/oppfolging-reducer';
-import { hentIdentitet } from '../identitet/identitet-duck';
+import { hentIdentitet } from '../identitet/identitet-reducer';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../ducks/utils';

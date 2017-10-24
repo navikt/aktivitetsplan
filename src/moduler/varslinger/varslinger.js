@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Container } from 'nav-frontend-grid';
-import { hentIdentitet } from '../identitet/identitet-duck';
+import { hentIdentitet } from '../identitet/identitet-reducer';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../proptypes';
 import {

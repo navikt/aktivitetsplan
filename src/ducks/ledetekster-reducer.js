@@ -1,4 +1,4 @@
-import Api from './ledtekster-api';
+import * as Api from './ledtekster-api';
 import { STATUS, doThenDispatch } from './utils';
 
 // Actions

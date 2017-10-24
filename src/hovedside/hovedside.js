@@ -9,7 +9,7 @@ import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Feilmelding from '../moduler/feilmelding/feilmelding';
 import VisaValgtFilter from '../moduler/filtrering/filter-vis-label';
 import FooterInfo from './footer-info';
-import Routing, { PublicRouting } from '../../routing';
+import Routing, { PublicRouting } from '../routing';
 
 function Hovedside() {
     return (
