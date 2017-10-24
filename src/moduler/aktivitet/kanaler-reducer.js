@@ -1,6 +1,7 @@
 import * as AT from './aktivitet-action-types';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 import * as Api from './aktivitet-api';
+import { selectKanalerStatus } from './kanaler-selector';
 
 const initalState = {
     data: [],
@@ -21,21 +22,9 @@ export default function reducer(state = initalState, action) {
     }
 }
 
-export function selectKanalerReducer(state) {
-    return state.data.kanaler;
-}
-
-export function selectStatus(state) {
-    return selectKanalerReducer(state).status;
-}
-
-export function selectKanaler(state) {
-    return selectKanalerReducer(state).data;
-}
-
 export function hentKanaler() {
     return (dispatch, getState) => {
-        const status = selectStatus(getState());
+        const status = selectKanalerStatus(getState());
         if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
             doThenDispatch(() => Api.hentKanaler(), {
                 OK: AT.HENT_KANALER_OK,

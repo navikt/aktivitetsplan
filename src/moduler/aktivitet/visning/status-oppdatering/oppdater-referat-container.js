@@ -10,12 +10,10 @@ import {
     hr as HiddenIfHr,
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import OppdaterReferat from './oppdater-referat';
-import {
-    publiserReferat,
-    selectReferatReducer,
-} from '../../aktivitet-referat-reducer';
+import { publiserReferat } from '../../aktivitet-referat-reducer';
 import { autobind } from '../../../../utils';
 import { STATUS } from '../../../../ducks/utils';
+import { selectReferatStatus } from '../../aktivitet-referat-selector';
 
 class OppdaterReferatContainer extends Component {
     constructor(props) {
@@ -100,7 +98,7 @@ const mapStateToProps = (state, props) => {
         (harReferat || !aktivitet.historisk);
 
     return {
-        publiserer: selectReferatReducer(state).status === STATUS.PENDING,
+        publiserer: selectReferatStatus(state) === STATUS.PENDING,
         erVeileder,
         erReferatPublisert,
         kanHaReferat,
