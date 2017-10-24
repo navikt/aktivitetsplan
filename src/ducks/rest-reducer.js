@@ -24,7 +24,11 @@ export function createActionsAndReducer(navn) {
                 case actions.OK:
                     return { ...state, data: action.data, status: STATUS.OK };
                 case actions.FEILET:
-                    return { ...state, status: STATUS.ERROR };
+                    return {
+                        ...state,
+                        feil: action.data,
+                        status: STATUS.ERROR,
+                    };
                 default:
                     return state;
             }
