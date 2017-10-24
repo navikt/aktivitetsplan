@@ -102,12 +102,6 @@
     }
 }
 
-@media print {
-    .ReactModal__Body--open {
-        position: absolute;
-    }
-}
-
 @media (min-width: @screen-md-min) {
     .ReactModal__Body--open {
         .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']):not([class*='dialog-modal']) {
@@ -135,6 +129,10 @@
 }
 
 @media print {
+    .ReactModal__Body--open {
+        position: relative;
+    }
+
     .appContainer[aria-hidden='true'],
     .veilarbpersonflatefs[aria-hidden='true'] {
         display: none;

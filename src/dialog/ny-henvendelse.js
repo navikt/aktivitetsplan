@@ -203,6 +203,7 @@ const mapDispatchToProps = () => ({
             if (onComplete) {
                 onComplete(data);
             }
+            document.getElementById('tekst').focus();
         });
     },
 });
