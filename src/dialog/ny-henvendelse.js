@@ -148,7 +148,7 @@ const mapStateToProps = (state, props) => {
         oppretter: selectDialogStatus(state) !== STATUS.OK,
         erBruker,
         dialogId,
-        visBrukerInfo: false && selectVisBrukerInfo(state, dialogId),
+        visBrukerInfo: selectVisBrukerInfo(state, dialogId),
     };
 };
 
