@@ -133,7 +133,7 @@ class UnderelementerForAktivitet extends Component {
                         dialogId={dialog && dialog.id}
                         hidden={!kanOppretteNyHenvendelse}
                         aktivitetId={aktivitetId}
-                        scrollElementId = {`underelementer-aktivitet__dialogvisning-${aktivitetId}`}
+                        scrollElementId={`underelementer-aktivitet__dialogvisning-${aktivitetId}`}
                     />
                     <Henvendelser hidden={!dialog} dialog={dialog} />
                 </HiddenIfDiv>

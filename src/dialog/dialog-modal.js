@@ -154,9 +154,7 @@ function HoyreKolonne({
                 >
                     <FormattedMessage id="dialog.modal.til-aktiviteten" />
                 </Knappelenke>
-                <Dialog
-                    dialog={valgtDialog}
-                />
+                <Dialog dialog={valgtDialog} />
             </VisibleDiv>
         </VisibleIfTag>
     );

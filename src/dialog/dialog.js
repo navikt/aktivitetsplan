@@ -10,11 +10,11 @@ import { selectAktivitetMedId } from '../moduler/aktivitet/aktivitetliste-select
 
 const SCROLL_ELEMENT_ID = 'hoyre-kolonne-id';
 
-function Dialog({ dialog, overskrift, className}) {
+function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;
     const historisk = dialog.historisk;
     return (
-        <div className={className} id ={SCROLL_ELEMENT_ID}>
+        <div className={className} id={SCROLL_ELEMENT_ID}>
             <Undertittel tag="h1" className="endre-dialog__tittel">
                 {overskrift}
             </Undertittel>

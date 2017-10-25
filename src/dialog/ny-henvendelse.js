@@ -177,7 +177,9 @@ const mapDispatchToProps = () => ({
             dispatch(visBekreftelse(dialogId, moment().add(5, 'seconds')));
 
             // hvis man sender en veldig lang henvendelse, ønsker vi å bevare fokus på formen
-            const scrollElement = document.getElementById(props.scrollElementId);
+            const scrollElement = document.getElementById(
+                props.scrollElementId
+            );
             if (scrollElement) {
                 scrollElement.scrollIntoView();
             }
