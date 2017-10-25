@@ -6,10 +6,7 @@ export const HENT_AKTIVITET = 'aktivitet/hent_aktivitet';
 export const HENT_AKTIVITET_OK = 'aktivitet/hent_aktivitet/ok';
 export const HENT_AKTIVITET_FEILET = 'aktivitet/hent_aktivitet/fail';
 
-export const HENT_KANALER = 'kanal/hent';
-export const HENT_KANALER_OK = 'kanal/hent/ok';
-export const HENT_KANALER_FEILET = 'kanal/hent/fail';
-
+// TODO: Disse brukes i flere reducere. Fiks det
 export const OPPDATER_REFERAT = 'referat/oppdater';
 export const OPPDATER_REFERAT_OK = 'referat/oppdater/ok';
 export const OPPDATER_REFERAT_FEILET = 'referat/oppdater/fail';
@@ -17,6 +14,7 @@ export const OPPDATER_REFERAT_FEILET = 'referat/oppdater/fail';
 export const PUBLISER_REFERAT = 'referat/publiser';
 export const PUBLISER_REFERAT_OK = 'referat/publiser/ok';
 export const PUBLISER_REFERAT_FEILET = 'referat/publiser/fail';
+//
 
 export const FLYTTER = 'aktivitet/flytt';
 export const FLYTT_OK = 'aktivitet/flytt/ok';

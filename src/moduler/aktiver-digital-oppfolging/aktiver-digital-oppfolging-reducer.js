@@ -1,49 +1,10 @@
 import * as Api from './aktiver-digital-oppfolging-api';
-import { STATUS, doThenDispatch } from '../../ducks/utils';
+import { createActionsAndReducer } from '../../ducks/rest-reducer';
 
-// Actions
-export const SETT_DIGITAL_PENDING = 'digital_oppfolging/sett/pending';
-export const SETT_DIGITAL_OK = 'digital_oppfolging/sett/ok';
-export const SETT_DIGITAL_FEILET = 'digital_oppfolging/sett/fail';
+const { reducer, action } = createActionsAndReducer('digital_oppfolging', []);
 
-const initalState = {
-    data: [],
-    status: STATUS.NOT_STARTED,
-};
+export default reducer;
 
-// Reducer
-export default function reducer(state = initalState, action) {
-    switch (action.type) {
-        case SETT_DIGITAL_OK:
-            return {
-                ...state,
-                status: STATUS.OK,
-                data: action.data,
-            };
-        case SETT_DIGITAL_FEILET:
-            return {
-                ...state,
-                status: STATUS.ERROR,
-                feil: action.data,
-            };
-        case SETT_DIGITAL_PENDING:
-            return {
-                ...state,
-                status:
-                    state.status === STATUS.NOT_STARTED
-                        ? STATUS.PENDING
-                        : STATUS.RELOADING,
-            };
-        default:
-            return state;
-    }
-}
-
-// Action Creators
 export function settDigital() {
-    return doThenDispatch(() => Api.settDigital(), {
-        OK: SETT_DIGITAL_OK,
-        FEILET: SETT_DIGITAL_FEILET,
-        PENDING: SETT_DIGITAL_PENDING,
-    });
+    return action(Api.settDigital);
 }
