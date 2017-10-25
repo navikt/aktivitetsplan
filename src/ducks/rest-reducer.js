@@ -9,24 +9,28 @@ function getActions(navn) {
     };
 }
 
-export function createActionsAndReducer(navn) {
-    const defaultState = { data: {}, status: STATUS.NOT_STARTED };
+export function createActionsAndReducer(navn, defaultData = {}) {
+    const defaultState = { data: defaultData, status: STATUS.NOT_STARTED };
     const actions = getActions(navn);
     return {
         reducer: (state = defaultState, action) => {
+            const data = action.data;
             switch (action.type) {
                 case actions.PENDING:
                     return {
                         ...state,
-                        data: action.data,
-                        status: STATUS.PENDING,
+                        data,
+                        status:
+                            state.status === STATUS.NOT_STARTED
+                                ? STATUS.PENDING
+                                : STATUS.RELOADING,
                     };
                 case actions.OK:
-                    return { ...state, data: action.data, status: STATUS.OK };
+                    return { ...state, data, status: STATUS.OK };
                 case actions.FEILET:
                     return {
                         ...state,
-                        feil: action.data,
+                        feil: data,
                         status: STATUS.ERROR,
                     };
                 default:
