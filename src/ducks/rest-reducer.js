@@ -11,12 +11,12 @@ function getActions(navn) {
 
 export function createActionsAndReducer(navn, defaultData = {}) {
     const defaultState = { data: defaultData, status: STATUS.NOT_STARTED };
-    const actions = getActions(navn);
+    const actionTypes = getActions(navn);
     return {
         reducer: (state = defaultState, action) => {
             const data = action.data;
             switch (action.type) {
-                case actions.PENDING:
+                case actionTypes.PENDING:
                     return {
                         ...state,
                         data,
@@ -25,9 +25,9 @@ export function createActionsAndReducer(navn, defaultData = {}) {
                                 ? STATUS.PENDING
                                 : STATUS.RELOADING,
                     };
-                case actions.OK:
+                case actionTypes.OK:
                     return { ...state, data, status: STATUS.OK };
-                case actions.FEILET:
+                case actionTypes.FEILET:
                     return {
                         ...state,
                         feil: data,
@@ -38,7 +38,7 @@ export function createActionsAndReducer(navn, defaultData = {}) {
             }
         },
 
-        action: fn => doThenDispatch(fn, actions),
+        action: fn => doThenDispatch(fn, actionTypes),
     };
 }
 
