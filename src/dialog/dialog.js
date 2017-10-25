@@ -8,7 +8,7 @@ import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
 import { selectAktivitetMedId } from '../moduler/aktivitet/aktivitetliste-selector';
 
-const SCROLL_ELEMENT_ID = 'hoyre-kolonne-id';
+const SCROLL_ELEMENT_ID = 'dialog-div';
 
 function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;

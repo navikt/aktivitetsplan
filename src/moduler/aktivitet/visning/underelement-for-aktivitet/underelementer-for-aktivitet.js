@@ -79,7 +79,7 @@ class UnderelementerForAktivitet extends Component {
             classNames('underelementer-aktivitet__historikk-knapp', {
                 'underelementer-aktivitet__historikk-knapp--aktiv': historikkAktiv,
             });
-
+        const underelementId = `underelementer-aktivitet__dialogvisning-${aktivitetId}`;
         return (
             <section className={cls(className)}>
                 <div className="velgVisning">
@@ -121,7 +121,7 @@ class UnderelementerForAktivitet extends Component {
                 <HiddenIfDiv
                     hidden={!visDialog}
                     className="underelementer-aktivitet__dialogvisning"
-                    id={`underelementer-aktivitet__dialogvisning-${aktivitetId}`}
+                    id={underelementId}
                 >
                     <EndreDialog
                         hidden={!kanEndreDialog}
@@ -133,7 +133,7 @@ class UnderelementerForAktivitet extends Component {
                         dialogId={dialog && dialog.id}
                         hidden={!kanOppretteNyHenvendelse}
                         aktivitetId={aktivitetId}
-                        scrollElementId={`underelementer-aktivitet__dialogvisning-${aktivitetId}`}
+                        scrollElementId={underelementId}
                     />
                     <Henvendelser hidden={!dialog} dialog={dialog} />
                 </HiddenIfDiv>
