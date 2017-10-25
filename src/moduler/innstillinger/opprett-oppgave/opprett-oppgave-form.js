@@ -36,7 +36,7 @@ import {
     selectOppgaveVeiledere,
 } from './hent-veieldere-for-oppgave-reducer';
 import { OpprettOppgaveInnerForm } from './opprett-oppgave-inner-form';
-import { toISOLocalDate } from '../../../utils';
+import { toLocalDate } from '../../../utils';
 
 const pakrevdFraDato = pakrevd(
     'opprett-oppgave-form.feilmelding.paakrevd-fradato'
@@ -157,8 +157,8 @@ const mapDispatchToProps = dispatch => ({
                 ...props,
                 fnr: getFodselsnummer(),
                 avsenderenhetId: getEnhetFromUrl(),
-                fraDato: toISOLocalDate(props.fraDato),
-                tilDato: toISOLocalDate(props.tilDato),
+                fraDato: toLocalDate(props.fraDato),
+                tilDato: toLocalDate(props.tilDato),
                 veilederId: erValgtEnhetLikInnloggetEnhet(props.enhetId)
                     ? props.veilederId
                     : null,
