@@ -14,23 +14,21 @@ export function createActionsAndReducer(navn, defaultData = {}) {
     const actionTypes = getActions(navn);
     return {
         reducer: (state = defaultState, action) => {
-            const data = action.data;
             switch (action.type) {
                 case actionTypes.PENDING:
                     return {
                         ...state,
-                        data,
                         status:
                             state.status === STATUS.NOT_STARTED
                                 ? STATUS.PENDING
                                 : STATUS.RELOADING,
                     };
                 case actionTypes.OK:
-                    return { ...state, data, status: STATUS.OK };
+                    return { ...state, data: action.data, status: STATUS.OK };
                 case actionTypes.FEILET:
                     return {
                         ...state,
-                        feil: data,
+                        feil: action.data,
                         status: STATUS.ERROR,
                     };
                 default:
