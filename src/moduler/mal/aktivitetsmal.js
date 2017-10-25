@@ -26,7 +26,7 @@ import {
     selectMalListeStatus,
 } from './aktivitetsmal-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { selectErUnderOppfolging } from '../oppfolging/oppfolging-selector';
+import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { fjernMalListe, hentMalListe } from './malliste-reducer';
 

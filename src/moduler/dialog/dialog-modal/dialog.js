@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
 import NyHenvendelse from './ny-henvendelse';
-import EndreDialog from '../endre-dialog/endre-dialog';
+import EndreDialog from './endre-dialog';
 import Henvendelser from './henvendelser';
 import * as AppPT from '../../../proptypes';
 import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';

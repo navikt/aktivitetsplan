@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'react-redux-form-validation';
 import ledetekstReducer from './ducks/ledetekster-reducer';
-import opppfolgingReducer from './moduler/oppfolging/oppfolging-reducer';
+import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reducer';
@@ -33,7 +33,7 @@ const combinedReducers = combineReducers({
     form: formReducer,
     data: combineReducers({
         ledetekster: ledetekstReducer,
-        oppfolging: opppfolgingReducer,
+        oppfolging: oppfolgingReducer,
         innstillinger: innstillingerReducer,
         vilkar: vilkarReducer,
         historiskeVilkar: historiskeVilkarReducer,

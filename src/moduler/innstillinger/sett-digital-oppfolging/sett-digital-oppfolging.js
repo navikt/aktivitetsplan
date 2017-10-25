@@ -18,7 +18,7 @@ import {
 } from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
-import { hentOppfolging } from '../../oppfolging/oppfolging-reducer';
+import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 

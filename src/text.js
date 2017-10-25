@@ -6,7 +6,7 @@ import Innholdslaster from './felles-komponenter/utils/innholdslaster';
 import {
     selectErUnderOppfolging,
     selectOppfolgingStatus,
-} from './moduler/oppfolging/oppfolging-selector';
+} from './moduler/oppfolging-status/oppfolging-selector';
 
 const mapStateToProps = state => ({
     avhengigheter: [selectOppfolgingStatus(state)],

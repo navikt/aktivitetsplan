@@ -11,7 +11,7 @@ import * as AppPT from '../../../proptypes';
 import {
     selectGjeldendeEskaleringsVarsel,
     selectOppfolgingStatus,
-} from '../../oppfolging/oppfolging-selector';
+} from '../../oppfolging-status/oppfolging-selector';
 import {
     selectMotpartStatus,
     selectNavnPaMotpart,

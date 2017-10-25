@@ -7,7 +7,7 @@ import { fetchToJson } from '../../../ducks/utils';
 // eslint-disable-next-line import/prefer-default-export
 export function hentInnstillingHistorikk() {
     return fetchToJson(
-        `${OPPFOLGING_PROXY_BASE_URL}/opppfolging/innstillingsHistorikk`
+        `${OPPFOLGING_PROXY_BASE_URL}/oppfolging/innstillingsHistorikk`
     );
 }
 

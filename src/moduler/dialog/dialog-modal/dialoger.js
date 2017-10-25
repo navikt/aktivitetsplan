@@ -9,7 +9,7 @@ import DialogVisning from './dialog-visning';
 import { selectAlleAktiviter } from '../../aktivitet/aktivitetliste-selector';
 import { selectErBruker } from '../../identitet/identitet-selector';
 import { dialogSammenlingnerMedTilhorendeDialogIdOgErBruker } from '../dialog-utils';
-import { selectGjeldendeEskaleringsVarsel } from '../../oppfolging/oppfolging-selector';
+import { selectGjeldendeEskaleringsVarsel } from '../../oppfolging-status/oppfolging-selector';
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 class Dialoger extends React.Component {

@@ -21,7 +21,7 @@ import {
     selectErUnderOppfolging,
     selectOppfolgingUtgang,
     selectOppfolgingStatus,
-} from '../../oppfolging/oppfolging-selector';
+} from '../../oppfolging-status/oppfolging-selector';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';

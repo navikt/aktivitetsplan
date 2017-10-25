@@ -1,4 +1,4 @@
-import * as Api from '../oppfolging/oppfolging-api';
+import * as Api from '../oppfolging-status/oppfolging-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 import { hentMalListe } from './malliste-reducer';
 

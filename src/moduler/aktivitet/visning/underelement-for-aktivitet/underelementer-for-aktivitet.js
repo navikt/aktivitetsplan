@@ -8,13 +8,13 @@ import { autobind } from '../../../../utils';
 import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
 import NyHenvendelse from '../../../dialog/dialog-modal/ny-henvendelse';
 import Henvendelser from '../../../dialog/dialog-modal/henvendelser';
-import EndreDialog from '../../../dialog/endre-dialog/endre-dialog';
+import EndreDialog from '../../../dialog/dialog-modal/endre-dialog';
 import {
     div as HiddenIfDiv,
     span as HiddenIfSpan,
     button as HiddenIfButton,
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
-import { selectErUnderOppfolging } from '../../../oppfolging/oppfolging-selector';
+import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 
 const DIALOG = 'dialog';

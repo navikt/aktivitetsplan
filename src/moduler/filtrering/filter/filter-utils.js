@@ -1,4 +1,4 @@
-import { selectHistoriskeOppfolgingsPerioder } from '../../oppfolging/oppfolging-selector';
+import { selectHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
 import {
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,

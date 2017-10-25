@@ -1,4 +1,4 @@
-import * as OppfolgingApi from '../oppfolging/oppfolging-api';
+import * as OppfolgingApi from '../oppfolging-status/oppfolging-api';
 import { doThenDispatch, handterFeil, STATUS } from '../../ducks/utils';
 import {
     nyHenvendelse,
@@ -8,13 +8,13 @@ import {
 import {
     hentOppfolging,
     OK as OPPFOLGING_OK,
-} from '../oppfolging/oppfolging-reducer';
+} from '../oppfolging-status/oppfolging-reducer';
 import history from '../../history';
 
 // Actions
 export const HENT_OPPFOLGING_OK = 'innstillinger/hent_oppfolging/OK';
 export const HENT_OPPFOLGING_FEILET = 'innstillinger/hent_oppfolging/FEILET';
-export const HENT_OPPFOLGING_PENDING = 'innstillinger/hent_opppfolging/PENDING';
+export const HENT_OPPFOLGING_PENDING = 'innstillinger/hent_oppfolging/PENDING';
 
 export const KAN_AVSLUTTE_OK = 'innstillinger/kan_avslutte/OK';
 export const KAN_AVSLUTTE_FEILET = 'innstillinger/kan_avslutte/FEILET';

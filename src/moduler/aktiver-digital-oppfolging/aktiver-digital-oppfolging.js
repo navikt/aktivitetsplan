@@ -6,11 +6,11 @@ import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import { settDigital } from './aktiver-digital-oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
-import { hentOppfolging } from '../oppfolging/oppfolging-reducer';
+import { hentOppfolging } from '../oppfolging-status/oppfolging-reducer';
 import {
     selectReservasjonKRR,
     selectOppfolgingStatus,
-} from '../oppfolging/oppfolging-selector';
+} from '../oppfolging-status/oppfolging-selector';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import { selectAktiverDigitalOppfolgingStatus } from './aktiver-digital-oppfolgning-selector';

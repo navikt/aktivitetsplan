@@ -17,7 +17,7 @@ import {
     selectErEskalert,
     selectErUnderOppfolging,
     selectKanIkkeStartaEskaleringen,
-} from '../../oppfolging/oppfolging-selector';
+} from '../../oppfolging-status/oppfolging-selector';
 import {
     selectErManuell,
     selectInnstillingerStatus,

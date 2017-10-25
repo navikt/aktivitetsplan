@@ -12,7 +12,7 @@ import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { formaterDatoKortManed } from '../../utils';
 import { selectPrivatModusStatus } from '../privat-modus/privat-modus-selector';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectErUnderOppfolging } from '../oppfolging/oppfolging-selector';
+import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 
 const VisibleIfElementFormattedMessage = VisibleIfHOC(props =>
     <Element className="vilkar__metaData">

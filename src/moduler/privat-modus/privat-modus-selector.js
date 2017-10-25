@@ -7,7 +7,7 @@ import {
 import {
     selectErUnderOppfolging,
     selectOppfolgingStatus,
-} from '../oppfolging/oppfolging-selector';
+} from '../oppfolging-status/oppfolging-selector';
 
 export function selectErPrivatModus(state) {
     return !selectErUnderOppfolging(state) && selectErVeileder(state);

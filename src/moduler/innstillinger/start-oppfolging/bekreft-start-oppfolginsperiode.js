@@ -9,7 +9,7 @@ import { startOppfolging } from '../innstillinger-reducer';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import InnstillingerModal from '../innstillinger-modal';
-import { hentOppfolging } from '../../oppfolging/oppfolging-reducer';
+import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
 import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
 
 function BekreftStart({ doStartOppfolging, navn }) {

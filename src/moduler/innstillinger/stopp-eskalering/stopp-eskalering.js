@@ -17,7 +17,7 @@ import { STATUS } from '../../../ducks/utils';
 import {
     selectGjeldendeEskaleringsVarsel,
     selectOppfolgingStatus,
-} from '../../oppfolging/oppfolging-selector';
+} from '../../oppfolging-status/oppfolging-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
 

@@ -40,7 +40,7 @@ import {
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { hentMal, hentMalListe } from '../mal/aktivitetsmal-reducer';
-import { selectOppfolgingStatus } from '../oppfolging/oppfolging-selector';
+import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 

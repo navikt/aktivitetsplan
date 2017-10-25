@@ -20,7 +20,7 @@ import InnstillingerModal from '../innstillinger-modal';
 import { STATUS } from '../../../ducks/utils';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
-import { hentOppfolging } from '../../oppfolging/oppfolging-reducer';
+import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 

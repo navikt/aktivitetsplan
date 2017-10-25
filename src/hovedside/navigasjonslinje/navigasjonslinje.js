@@ -22,7 +22,7 @@ import * as AppPT from '../../proptypes';
 import {
     selectErUnderOppfolging,
     selectVilkarMaBesvares,
-} from '../../moduler/oppfolging/oppfolging-selector';
+} from '../../moduler/oppfolging-status/oppfolging-selector';
 import { selectErBruker } from '../../moduler/identitet/identitet-selector';
 import {
     selectViserHistoriskPeriode,
