@@ -10,6 +10,7 @@ import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
 import etiketterReducer from './ducks/etiketter';
 import versjonReducer from './ducks/aktivitet-versjoner';
 import dialogReducer from './ducks/dialog';
+import dialogViewReducer from './moduler/dialog/dialog-view-reducer';
 import malReducer from './moduler/mal/mal-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
 import identitetReducer from './moduler/identitet/identitet-duck';
@@ -60,6 +61,7 @@ const combinedReducers = combineReducers({
     }),
     view: combineReducers({
         utskrift: utskriftReducer,
+        dialog: dialogViewReducer,
     }),
 });
 
