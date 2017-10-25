@@ -38,4 +38,11 @@ export function createActionsAndReducer(navn) {
     };
 }
 
-export default createActionsAndReducer;
+export function createDefaultDataSelectors(path, initialData = {}) {
+    const selectSlice = state => state.data[path];
+    return {
+        selectSlice,
+        selectStatus: state => selectSlice(state).status,
+        selectData: state => selectSlice(state).data || initialData,
+    };
+}

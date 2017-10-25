@@ -1,24 +1,23 @@
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
+import { createDefaultDataSelectors } from '../../ducks/rest-reducer';
 
-function selectMalSlice(state) {
-    return state.data.mal;
+const { selectStatus, selectData } = createDefaultDataSelectors('mal', {});
+
+function selectMalData(state) {
+    return selectData(state);
+}
+
+export function selectMalStatus(state) {
+    return selectStatus(state);
 }
 
 function selectMalListeSlice(state) {
     return state.data.malListe;
 }
 
-function selectMalData(state) {
-    return selectMalSlice(state).data;
-}
-
 function selectMalListeData(state) {
     return selectMalListeSlice(state).data;
-}
-
-export function selectMalStatus(state) {
-    return selectMalSlice(state).status;
 }
 
 export function selectMalListeStatus(state) {
