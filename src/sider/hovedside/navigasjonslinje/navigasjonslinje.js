@@ -16,10 +16,7 @@ import { hentArbeidsliste } from '../../../moduler/arbeidsliste/arbeidsliste-red
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import { selectErPrivatModus } from '../../../moduler/privat-modus/privat-modus-selector';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import {
-    selectArbeidslisteStatus,
-    selectHarVeilederTilgang,
-} from '../../../moduler/arbeidsliste/arbeidsliste-selector';
+import { selectArbeidslisteStatus } from '../../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../../proptypes';
 import {
     selectErUnderOppfolging,
@@ -86,7 +83,6 @@ class Navigasjonslinje extends Component {
         const {
             antallUlesteDialoger,
             avhengigheter,
-            harVeilederTilgangTilArbeidsliste,
             disabled,
             kanHaDialog,
             ikkeTilgangTilVilkar,
@@ -130,11 +126,7 @@ class Navigasjonslinje extends Component {
                             spinnerStorrelse="xs"
                             className="navigasjonslinje__spinner"
                         >
-                            <NavigasjonslinjeMeny
-                                harVeilederTilgangTilArbeidsliste={
-                                    harVeilederTilgangTilArbeidsliste
-                                }
-                            />
+                            <NavigasjonslinjeMeny />
                         </Innholdslaster>
                     </Feature>
 
@@ -163,14 +155,12 @@ Navigasjonslinje.propTypes = {
     doHentArbeidsliste: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     kanHaDialog: PT.bool.isRequired,
-    harVeilederTilgangTilArbeidsliste: PT.bool,
     disabled: PT.bool.isRequired,
     ikkeTilgangTilVilkar: PT.bool.isRequired,
     ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
-    harVeilederTilgangTilArbeidsliste: false,
     vilkarMaBesvares: true,
     erBruker: true,
 };
@@ -194,7 +184,6 @@ const mapStateToProps = state => {
         privatModus: selectErPrivatModus(state),
         underOppfolging,
         avhengigheter: [selectArbeidslisteStatus(state)],
-        harVeilederTilgangTilArbeidsliste: selectHarVeilederTilgang(state),
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
         ikkeTilgangTilVilkar,
         disabled:
