@@ -9,7 +9,7 @@ export function opprettOppgaveForBruker(oppgave) {
     return action(() => Api.opprettOppgaveForBruker(oppgave));
 }
 
-// TODO: Fjern denne og fiks stedene den brukes slik at de henter data direkte
+// TODO: Slutt å exporte denne og implementer heller en selectOpprettOppgevaData og Status
 export function selectOpprettOppgave(state) {
     return state.data.opprettOppgave;
 }
