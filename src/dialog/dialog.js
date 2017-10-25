@@ -8,11 +8,13 @@ import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
 import { selectAktivitetMedId } from '../moduler/aktivitet/aktivitetliste-selector';
 
-function Dialog({ dialog, overskrift, className, scrollElementId }) {
+const SCROLL_ELEMENT_ID = 'hoyre-kolonne-id';
+
+function Dialog({ dialog, overskrift, className}) {
     const dialogId = dialog.id;
     const historisk = dialog.historisk;
     return (
-        <div className={className}>
+        <div className={className} id ={SCROLL_ELEMENT_ID}>
             <Undertittel tag="h1" className="endre-dialog__tittel">
                 {overskrift}
             </Undertittel>
@@ -26,7 +28,7 @@ function Dialog({ dialog, overskrift, className, scrollElementId }) {
                 formNavn={`ny-henvendelse-dialog-${dialogId}`}
                 dialogId={dialogId}
                 skalHaAutofokus={false}
-                scrollElementId={scrollElementId}
+                scrollElementId={SCROLL_ELEMENT_ID}
             />
             <Henvendelser dialog={dialog} />
         </div>
@@ -36,14 +38,12 @@ function Dialog({ dialog, overskrift, className, scrollElementId }) {
 Dialog.propTypes = {
     className: PT.string,
     overskrift: PT.string,
-    scrollElementId: PT.string,
     dialog: AppPT.dialog.isRequired,
 };
 
 Dialog.defaultProps = {
     overskrift: undefined,
     className: undefined,
-    scrollElementId: undefined,
 };
 
 const mapStateToProps = (state, props) => {

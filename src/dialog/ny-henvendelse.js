@@ -147,8 +147,7 @@ const mapStateToProps = (state, props) => {
         erNyDialog,
         oppretter: selectDialogStatus(state) !== STATUS.OK,
         erBruker,
-        dialogId,
-        visBrukerInfo: selectVisBrukerInfo(state, dialogId),
+        visBrukerInfo: erBruker && selectVisBrukerInfo(state, dialogId),
     };
 };
 
@@ -178,9 +177,9 @@ const mapDispatchToProps = () => ({
             dispatch(visBekreftelse(dialogId, moment().add(5, 'seconds')));
 
             // hvis man sender en veldig lang henvendelse, ønsker vi å bevare fokus på formen
-            const submitKnapp = document.getElementById(props.scrollElementId);
-            if (submitKnapp) {
-                submitKnapp.scrollTop = 0;
+            const scrollElement = document.getElementById(props.scrollElementId);
+            if (scrollElement) {
+                scrollElement.scrollIntoView();
             }
             // });
         });

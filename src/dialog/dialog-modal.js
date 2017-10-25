@@ -27,7 +27,6 @@ import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter
 import DialogFilter from './dialog-filter';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
-const HOYRE_KOLONNE_ID = 'hoyre-kolonne-id';
 
 function nyDialog() {
     history.push('/dialog/ny');
@@ -134,7 +133,6 @@ function HoyreKolonne({
 
     return (
         <VisibleIfTag
-            id={HOYRE_KOLONNE_ID}
             tagName="section"
             visible={harNyDialogEllerValgtDialog}
             className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
@@ -158,7 +156,6 @@ function HoyreKolonne({
                 </Knappelenke>
                 <Dialog
                     dialog={valgtDialog}
-                    scrollElementId={HOYRE_KOLONNE_ID}
                 />
             </VisibleDiv>
         </VisibleIfTag>
