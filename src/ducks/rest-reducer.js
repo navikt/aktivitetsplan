@@ -1,4 +1,4 @@
-import { doThenDispatch, STATUS } from './utils';
+import {doThenDispatch, STATUS} from './utils';
 
 function getActions(navn) {
     const navnUppercase = navn.toUpperCase();
@@ -9,11 +9,11 @@ function getActions(navn) {
     };
 }
 
-export function createActionsAndReducer(navn, defaultData = {}) {
-    const defaultState = { data: defaultData, status: STATUS.NOT_STARTED };
+export function createActionsAndReducer(navn, initialData = {}) {
+    const initialState = {data: initialData, status: STATUS.NOT_STARTED};
     const actionTypes = getActions(navn);
     return {
-        reducer: (state = defaultState, action) => {
+        reducer: (state = initialState, action) => {
             const data = action.data;
             switch (action.type) {
                 case actionTypes.PENDING:
@@ -26,7 +26,7 @@ export function createActionsAndReducer(navn, defaultData = {}) {
                                 : STATUS.RELOADING,
                     };
                 case actionTypes.OK:
-                    return { ...state, data, status: STATUS.OK };
+                    return {...state, data, status: STATUS.OK};
                 case actionTypes.FEILET:
                     return {
                         ...state,
@@ -45,7 +45,6 @@ export function createActionsAndReducer(navn, defaultData = {}) {
 export function createDefaultDataSelectors(path, initialData = {}) {
     const selectSlice = state => state.data[path];
     return {
-        selectSlice,
         selectStatus: state => selectSlice(state).status,
         selectData: state => selectSlice(state).data || initialData,
     };
