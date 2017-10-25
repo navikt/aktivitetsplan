@@ -11,7 +11,7 @@ export function hentKanaler() {
     return (dispatch, getState) => {
         const status = selectKanalerStatus(getState());
         if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
-            action(() => Api.hentKanaler());
+            action(() => Api.hentKanaler())(dispatch);
         }
     };
 }
