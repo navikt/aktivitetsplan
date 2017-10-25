@@ -1,41 +1,15 @@
-import { doThenDispatch, STATUS } from '../../../ducks/utils';
 import * as Api from '../../../ducks/api';
+import { createActionsAndReducer } from '../../../ducks/rest-reducer';
 
-// Actions
-export const OPPRETT_OPPGAVE_OK = 'opprett_oppgave/OK';
-export const OPPRETT_OPPGAVE_FEILET = 'opprett_oppgave/FEILET';
-export const OPPRETT_OPPGAVE_PENDING = 'opprett_oppgave/PENDING';
+const { reducer, action } = createActionsAndReducer('opprett_oppgave');
 
-const initialState = {
-    status: STATUS.OK,
-};
-
-// reducer
-export default function reducer(state = initialState, action) {
-    switch (action.type) {
-        case OPPRETT_OPPGAVE_OK: {
-            return { status: STATUS.OK, data: action.data };
-        }
-        case OPPRETT_OPPGAVE_PENDING: {
-            return { status: STATUS.PENDING };
-        }
-        case OPPRETT_OPPGAVE_FEILET: {
-            return { status: STATUS.OK };
-        }
-        default:
-            return state;
-    }
-}
-
-// Selectors
-export function selectOpprettOppgave(state) {
-    return state.data.opprettOppgave;
-}
+export default reducer;
 
 export function opprettOppgaveForBruker(oppgave) {
-    return doThenDispatch(() => Api.opprettOppgaveForBruker(oppgave), {
-        OK: OPPRETT_OPPGAVE_OK,
-        FEILET: OPPRETT_OPPGAVE_FEILET,
-        PENDING: OPPRETT_OPPGAVE_PENDING,
-    });
+    return action(() => Api.opprettOppgaveForBruker(oppgave));
+}
+
+// TODO: Slutt å exporte denne og implementer heller en selectOpprettOppgevaData og Status
+export function selectOpprettOppgave(state) {
+    return state.data.opprettOppgave;
 }
