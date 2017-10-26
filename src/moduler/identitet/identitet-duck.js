@@ -1,47 +1,10 @@
 import * as Api from '../situasjon/situasjon-api';
-import { STATUS, doThenDispatch } from '../../ducks/utils';
+import { createActionsAndReducer } from '../../ducks/rest-reducer';
 
-// Actions
-export const OK = 'identitet/OK';
-export const FEILET = 'identitet/FEILET';
-export const PENDING = 'identitet/PENDING';
+const { reducer, cashedAction } = createActionsAndReducer('identitet');
 
-const initalState = {
-    status: STATUS.NOT_STARTED,
-    data: {},
-};
+export default reducer;
 
-// Reducer
-export default function reducer(state = initalState, action) {
-    switch (action.type) {
-        case PENDING:
-            return {
-                ...state,
-                status:
-                    state.status === STATUS.NOT_STARTED
-                        ? STATUS.PENDING
-                        : STATUS.RELOADING,
-            };
-        case FEILET:
-            return { ...state, status: STATUS.ERROR, feil: action.data };
-        case OK: {
-            return { ...state, status: STATUS.OK, data: action.data };
-        }
-        default:
-            return state;
-    }
-}
-
-// Action Creators
 export function hentIdentitet() {
-    return (dispatch, getState) => {
-        const status = getState().data.identitet.status;
-        if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
-            doThenDispatch(() => Api.hentIdentitet(), {
-                OK,
-                FEILET,
-                PENDING,
-            })(dispatch);
-        }
-    };
+    return cashedAction(() => Api.hentIdentitet());
 }

@@ -1,7 +1,10 @@
 import * as Api from '../../../ducks/api';
 import { createActionsAndReducer } from '../../../ducks/rest-reducer';
 
-const { reducer, action } = createActionsAndReducer('opprett_oppgave');
+const { reducer, action } = createActionsAndReducer(
+    'opprett_oppgave',
+    'opprettOppgave'
+);
 
 export default reducer;
 

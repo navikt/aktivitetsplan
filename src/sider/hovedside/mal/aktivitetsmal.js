@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { hentMal } from '../../../moduler/mal/mal-reducer';
 import * as AppPT from '../../../proptypes';
 import { autobind, formaterDatoEllerTidSiden } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -20,8 +19,11 @@ import {
     HiddenIfKnapp,
 } from '../../../felles-komponenter/hidden-if/hidden-if-knapper';
 import {
+    hentMal,
     selectMalStatus,
     selectGjeldendeMal,
+} from '../../../moduler/mal/mal-reducer';
+import {
     selectMalListe,
     selectMalListeStatus,
 } from '../../../moduler/mal/mal-selector';
