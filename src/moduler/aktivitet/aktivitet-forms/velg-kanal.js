@@ -16,6 +16,14 @@ class VelgKanal extends Component {
     render() {
         const { kanaler, avhengigheter, labelId, disabled } = this.props;
 
+        const lagkanalOption = kanal =>
+            <FormattedMessage key={kanal} id={`kanal.${kanal}`.toLowerCase()}>
+                {kanalTekst =>
+                    <option value={kanal}>
+                        {kanalTekst}
+                    </option>}
+            </FormattedMessage>;
+
         return (
             <Innholdslaster avhengigheter={avhengigheter}>
                 <Select
@@ -23,18 +31,9 @@ class VelgKanal extends Component {
                     disabled={disabled}
                     labelId={labelId}
                     bredde="fullbredde"
+                    noBlankOption
                 >
-                    {kanaler.map(kanal =>
-                        <FormattedMessage
-                            key={kanal}
-                            id={`kanal.${kanal}`.toLowerCase()}
-                        >
-                            {kanalTekst =>
-                                <option value={kanal}>
-                                    {kanalTekst}
-                                </option>}
-                        </FormattedMessage>
-                    )}
+                    {kanaler.map(lagkanalOption)}
                 </Select>
             </Innholdslaster>
         );
