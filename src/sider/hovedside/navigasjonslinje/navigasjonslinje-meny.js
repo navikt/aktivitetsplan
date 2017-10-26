@@ -36,6 +36,8 @@ function NavigasjonslinjeMeny({
         fyldt: PT.bool.isRequired,
     };
 
+    const HiddenArbeidslisteikon =  HiddenIfHOC(() => <Arbeidslisteikon fyldt/>);
+
     const LeggTilLenke = HiddenIfHOC(() =>
         <span>
             <Arbeidslisteikon fyldt={false} />
@@ -50,7 +52,6 @@ function NavigasjonslinjeMeny({
 
     const FjernLenke = HiddenIfHOC(() =>
         <span className="navigasjonslinje-meny__fjern-lenke">
-            <Arbeidslisteikon fyldt />
             <Knappelenke
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/fjern')}
@@ -71,6 +72,7 @@ function NavigasjonslinjeMeny({
             hidden={!kanLeggeTil && !kanFjerne && !kanRedigere}
             className="navigasjonslinje-meny"
         >
+            <HiddenArbeidslisteikon hidden={!kanRedigere}/>
             <LeggTilLenke hidden={!kanLeggeTil} />
             <FjernLenke hidden={!kanFjerne} />
             <RedigerLenke hidden={!kanRedigere} />
