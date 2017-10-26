@@ -31,16 +31,17 @@ import {
 } from './utskrift-selector';
 import { redigerPrintMelding } from './utskrift-duck';
 import {
+    hentMal,
     selectGjeldendeMal,
     selectMalStatus,
-} from '../mal/aktivitetsmal-selector';
+} from '../mal/mal-reducer';
+import { hentMalListe } from '../mal/malliste-reducer';
 import {
     section as HiddenIfSection,
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { hentMal, hentMalListe } from '../mal/aktivitetsmal-reducer';
-import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
+import { selectSituasjonStatus } from '../situasjon/situasjon-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 
@@ -307,7 +308,7 @@ const mapStateToProps = state => {
     return {
         avhengigheter: [
             selectMalStatus(state),
-            selectOppfolgingStatus(state),
+            selectSituasjonStatus(state),
             selectAktivitetListeStatus(state),
         ],
         aktiviteter,

@@ -32,9 +32,7 @@ function Modal({
                 minstEn={minstEnAvhengighet}
                 avhengigheter={avhengigheter}
             >
-                <div>
-                    {children}
-                </div>
+                {children}
             </Innholdslaster>
         </NavFrontendModal>
     );

@@ -23,7 +23,6 @@ export const ESKALERINGS_FILTER = { type: ESKALERINGS_FILTER_TYPE };
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
-    sisteHenvendelseData: null,
     esklaringsFilter: false,
 };
 
@@ -62,10 +61,6 @@ export default function reducer(state = initalState, action) {
         case OPPDATER_DIALOG_FEILET:
             return { ...state, status: STATUS.ERROR, feil: data };
         case OPPRETTET_HENVENDELSE:
-            return {
-                ...nyStateMedOppdatertDialog(state, data),
-                sisteHenvendelseData: data,
-            };
         case DIALOG_LEST_OK:
         case OPPDATER_DIALOG_OK:
             return nyStateMedOppdatertDialog(state, data);

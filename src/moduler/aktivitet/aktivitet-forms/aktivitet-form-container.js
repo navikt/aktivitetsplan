@@ -18,8 +18,8 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { formNavn } from './aktivitet-form-utils';
-import { selectAktivitetReducer } from '../aktivitet-reducer';
 import { STATUS } from '../../../ducks/utils';
+import { selectAktivitetStatus } from '../aktivitet-selector';
 
 class AktivitetFormContainer extends Component {
     componentDidMount() {
@@ -136,7 +136,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-    lagrer: selectAktivitetReducer(state).status !== STATUS.OK,
+    lagrer: selectAktivitetStatus(state) !== STATUS.OK,
     formIsDirty: isDirty(formNavn)(state),
 });
 

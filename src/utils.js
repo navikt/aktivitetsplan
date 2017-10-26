@@ -231,11 +231,11 @@ function pad(number) {
     return number < 10 ? `0${number}` : number;
 }
 
-export function toISOLocalDate(date) {
+export function toLocalDate(date) {
     const dateObject = typeof date === 'string' ? new Date(date) : date;
-    return `${dateObject.getUTCFullYear()}-${pad(
-        dateObject.getUTCMonth() + 1
-    )}-${pad(dateObject.getUTCDate())}`;
+    return `${dateObject.getFullYear()}-${pad(dateObject.getMonth() + 1)}-${pad(
+        dateObject.getDate()
+    )}`;
 }
 
 export function HiddenIf({ hidden, children }) {

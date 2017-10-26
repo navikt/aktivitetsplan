@@ -42,9 +42,9 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../../../routing';
-import { selectAktivitetReducer } from '../aktivitet-reducer';
 import { STATUS } from '../../../ducks/utils';
 import { selectAktivitetMedId } from '../aktivitetliste-selector';
+import { selectAktivitetStatus } from '../aktivitet-selector';
 
 function EndreAktivitetForm({
     valgtAktivitet,
@@ -208,7 +208,7 @@ const mapStateToProps = (state, props) => {
         valgtAktivitet,
         avhengigheter: [valgtAktivitet ? STATUS.OK : STATUS.PENDING],
         formIsDirty: isDirty(formNavn)(state),
-        lagrer: selectAktivitetReducer(state).status !== STATUS.OK,
+        lagrer: selectAktivitetStatus(state) !== STATUS.OK,
     };
 };
 

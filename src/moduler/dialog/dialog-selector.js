@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { dialogFilter } from '../filtrering/filter/filter-utils';
 import { erEskaleringsDialog } from './dialog-utils';
 import {
@@ -9,12 +10,12 @@ function selectDialogSlice(state) {
     return state.data.dialog;
 }
 
-export function selectDialogStatus(state) {
-    return selectDialogSlice(state).status;
+function selectDialogViewSlice(state) {
+    return state.view.dialog;
 }
 
-export function selectSisteHenvendelseData(state) {
-    return selectDialogSlice(state).sisteHenvendelseData;
+export function selectDialogStatus(state) {
+    return selectDialogSlice(state).status;
 }
 
 export function selectEskaleringsFilter(state) {
@@ -61,5 +62,14 @@ export function selectAnpassaDialogModalHistoriskVisning(state) {
     return (
         selectErVeileder(state) ||
         (!selectHarEskaleringer(state) && selectErBruker(state))
+    );
+}
+
+export function selectVisBrukerInfo(state, dialogId_) {
+    const { dialogId, utlopTidspunkt } = selectDialogViewSlice(state).data;
+    return (
+        !!utlopTidspunkt &&
+        utlopTidspunkt.isAfter(moment()) &&
+        dialogId === dialogId_
     );
 }

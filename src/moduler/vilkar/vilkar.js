@@ -2,6 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import * as AppPT from '../../proptypes';
 import VilkarInnhold from './vilkar-innhold';
 import VilkarHistorikk from './vilkar-historikk';
@@ -9,9 +10,14 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 
 const ManglerVilkar = hiddenIf(() =>
-    <AlertStripeInfoSolid>
-        <FormattedMessage id="vilkar.mangler" />
-    </AlertStripeInfoSolid>
+    <div className="ingen-vilkar">
+        <Innholdstittel className="ingen-vilkar__header">
+            <FormattedMessage id="navigasjon.vilkar" />
+        </Innholdstittel>
+        <AlertStripeInfoSolid>
+            <FormattedMessage id="vilkar.mangler" />
+        </AlertStripeInfoSolid>
+    </div>
 );
 
 function Vilkar({ vilkarListe, visHistorikk }) {

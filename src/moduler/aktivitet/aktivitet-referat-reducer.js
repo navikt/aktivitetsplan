@@ -7,6 +7,7 @@ const initalState = {
     status: STATUS.OK,
 };
 
+// TODO: Denne er en god kandidtat til å bli forenklet, men action-ene brukes i flere reducere...
 export default function reducer(state = initalState, action) {
     switch (action.type) {
         case AT.OPPDATER_REFERAT:
@@ -37,8 +38,4 @@ export function publiserReferat(aktivitet) {
         FEILET: AT.PUBLISER_REFERAT_FEILET,
         PENDING: AT.PUBLISER_REFERAT,
     });
-}
-
-export function selectReferatReducer(state) {
-    return state.data.referat;
 }
