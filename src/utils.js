@@ -233,9 +233,9 @@ function pad(number) {
 
 export function toLocalDate(date) {
     const dateObject = typeof date === 'string' ? new Date(date) : date;
-    return `${dateObject.getFullYear()}-${pad(
-        dateObject.getMonth() + 1
-    )}-${pad(dateObject.getDate())}`;
+    return `${dateObject.getFullYear()}-${pad(dateObject.getMonth() + 1)}-${pad(
+        dateObject.getDate()
+    )}`;
 }
 
 export function HiddenIf({ hidden, children }) {
