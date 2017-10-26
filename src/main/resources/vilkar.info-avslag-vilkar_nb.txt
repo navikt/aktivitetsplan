@@ -10,7 +10,7 @@
  }
  other {
 
- Snellere tekst
+ Når du velger å takke nei til brukervilkår, får du heller ikke tilgang til aktivitetsplanen.
 
  }
 }
