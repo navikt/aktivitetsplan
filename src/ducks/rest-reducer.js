@@ -48,7 +48,7 @@ export function createActionsAndReducer(
         },
 
         selectStatus,
-        selectData: state => selectSlice(state).data || initialData,
+        selectData: state => selectSlice(state).data,
 
         action: actionFunction,
         cashedAction: fn => (dispatch, getState) => {
