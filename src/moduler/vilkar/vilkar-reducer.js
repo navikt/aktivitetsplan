@@ -1,7 +1,9 @@
 import * as Api from '../situasjon/situasjon-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 
-const { reducer, action } = createActionsAndReducer('vilkar', { tekst: '' });
+const { reducer, action } = createActionsAndReducer('vilkar', 'vilkar', {
+    tekst: '',
+});
 
 export default reducer;
 

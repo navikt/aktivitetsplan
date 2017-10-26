@@ -9,9 +9,16 @@ function getActions(navn) {
     };
 }
 
-export function createActionsAndReducer(navn, initialData = {}) {
+export function createActionsAndReducer(
+    navn,
+    statePath = navn,
+    initialData = {}
+) {
     const initialState = { data: initialData, status: STATUS.NOT_STARTED };
     const actionTypes = getActions(navn);
+    const selectSlice = state => state.data[statePath];
+    const selectStatus = state => selectSlice(state).status;
+    const actionFunction = fn => doThenDispatch(fn, actionTypes);
     return {
         reducer: (state = initialState, action) => {
             switch (action.type) {
@@ -24,7 +31,11 @@ export function createActionsAndReducer(navn, initialData = {}) {
                                 : STATUS.RELOADING,
                     };
                 case actionTypes.OK:
-                    return { ...state, data: action.data, status: STATUS.OK };
+                    return {
+                        ...state,
+                        data: action.data || initialData,
+                        status: STATUS.OK,
+                    };
                 case actionTypes.FEILET:
                     return {
                         ...state,
@@ -36,14 +47,17 @@ export function createActionsAndReducer(navn, initialData = {}) {
             }
         },
 
-        action: fn => doThenDispatch(fn, actionTypes),
+        selectStatus,
+        selectData: state => selectSlice(state).data || initialData,
+
+        action: actionFunction,
+        cashedAction: fn => (dispatch, getState) => {
+            const status = selectStatus(getState());
+            if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
+                actionFunction(fn)(dispatch);
+            }
+        },
     };
 }
 
-export function createDefaultDataSelectors(path, initialData = {}) {
-    const selectSlice = state => state.data[path];
-    return {
-        selectStatus: state => selectSlice(state).status,
-        selectData: state => selectSlice(state).data || initialData,
-    };
-}
+export default createActionsAndReducer;
