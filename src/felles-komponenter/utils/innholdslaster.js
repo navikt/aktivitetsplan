@@ -32,6 +32,13 @@ function Innholdslaster({
         if (typeof children === 'function') {
             return children(avhengigheter);
         }
+        if (Array.isArray(children)) {
+            return (
+                <div>
+                    {children}
+                </div>
+            );
+        }
         return children;
     }
 

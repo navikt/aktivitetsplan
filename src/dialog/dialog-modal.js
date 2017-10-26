@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
+import NavFrontendModal from 'nav-frontend-modal';
 import Dialog from './dialog';
 import Dialoger from './dialoger';
-import Modal from '../felles-komponenter/modal/modal';
 import history from '../history';
 import Knappelenke from '../felles-komponenter/utils/knappelenke';
 import PilKnapp from '../felles-komponenter/utils/pil-knapp';
@@ -25,6 +25,7 @@ import {
 } from '../moduler/dialog/dialog-selector';
 import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
 import DialogFilter from './dialog-filter';
+import Feilmelding from '../moduler/feilmelding/feilmelding';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
@@ -176,6 +177,7 @@ HoyreKolonne.defaultProps = {
 function DialogModalContent(props) {
     return (
         <div className="dialog-modal__wrapper">
+            <Feilmelding className="feilmelding--systemfeil" />
             <div className="dialog-modal__innhold">
                 <VenstreKolonne {...props} />
                 <HoyreKolonne {...props} />
@@ -204,14 +206,19 @@ function DialogModal(props, intl) {
     });
 
     return (
-        <Modal
-            className={className}
+        <NavFrontendModal
+            isOpen
+            className={classNames('aktivitet-modal', className)}
             contentClass="aktivitetsplanfs dialog-modal__content"
-            header={<Header intl={intl} {...props} />}
             contentLabel="dialog-modal"
+            overlayClassName="aktivitet-modal__overlay"
+            portalClassName="aktivitetsplanfs aktivitet-modal-portal"
+            shouldCloseOnOverlayClick={false}
+            onRequestClose={() => history.push('/')}
         >
+            <Header intl={intl} {...props} />
             <DialogModalContent {...props} />
-        </Modal>
+        </NavFrontendModal>
     );
 }
 
@@ -234,7 +241,6 @@ DialogModal.propTypes = {
     anpassaStorrelseHistoriskVisning: PT.bool.isRequired,
     intl: intlShape.isRequired,
 };
-
 const mapStateToProps = (state, props) => {
     const { match } = props;
     const { id } = match.params;

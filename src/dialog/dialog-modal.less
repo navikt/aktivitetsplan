@@ -34,7 +34,7 @@
 .dialog-modal__wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: ~'calc(100% - 62px)'; // Minus height of dialog-modal__header
 }
 
 .dialog-modal__header {
@@ -110,7 +110,7 @@
     padding: 1rem;
     background-color: @gray-background;
     overflow-y: auto;
-    height: 654px;
+    overflow-x: hidden;
     width: 100%;
 
     &:focus {
@@ -126,10 +126,6 @@
     z-index: 1;
 }
 
-.dialog-modal__kolonne--dialoger-valgt-dialog {
-    display: none;
-}
-
 @media (max-height: 678px) {
     top: 0;
 }
@@ -142,17 +138,16 @@
 }
 
 // Samsung Galaxy height AND 992px
-@media (min-height: 678px) AND (min-width: @screen-md) {
-    .dialog-modal__dialoger {
-        height: ~'calc(100% - 112px)';
+@media (max-height: 678px) {
+    .modal.dialog-modal--historisk-visning.ReactModal__Content,
+    .modal.dialog-modal.ReactModal__Content {
+        height: 100vh;
     }
+}
 
-    .dialog-modal.ReactModal__Content {
-        height: 100%;
-    }
-
+@media (max-width: @screen-md) {
     .dialog-modal__kolonne--dialoger-valgt-dialog {
-        display: block;
+        display: none;
     }
 }
 
@@ -172,7 +167,11 @@
     .dialog-modal__dialoger {
         // Sikrer at "dialoger" bredden aldri blir smalere enn et dialoger-innslag aka dialogkort
         min-width: @dialogkort-bredde;
-        height: 592px;
+        height: ~'calc(100% - 62px)'; // Minus height of dialog-modal__ny-dialog
+    }
+
+    .dialog-modal--historisk-visning .dialog-modal__dialoger {
+        height: 100%;
     }
 
     .dialog-modal__kolonne--dialoger-valgt-dialog {
