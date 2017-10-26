@@ -1,1 +1,1 @@
-Sendt varsel til brukeren
+Send varsel til brukeren
