@@ -8,24 +8,24 @@ import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
 import Dialog from './dialog';
 import Dialoger from './dialoger';
-import history from '../history';
-import Knappelenke from '../felles-komponenter/utils/knappelenke';
-import PilKnapp from '../felles-komponenter/utils/pil-knapp';
+import history from '../../../history';
+import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
+import PilKnapp from '../../../felles-komponenter/utils/pil-knapp';
 import NyHenvendelse from './ny-henvendelse';
-import visibleIfHOC from '../hocs/visible-if';
-import { section as HideableSection } from '../felles-komponenter/hidden-if/hidden-if';
-import VisibleIfTag from '../felles-komponenter/utils/visible-if-tag';
-import * as AppPT from '../proptypes';
-import Innholdslaster from '../felles-komponenter/utils/innholdslaster';
-import { aktivitetRoute } from '../routing';
-import { selectMotpartSlice } from '../moduler/motpart/motpart-selector';
+import visibleIfHOC from '../../../hocs/visible-if';
+import { section as HideableSection } from '../../../felles-komponenter/hidden-if/hidden-if';
+import VisibleIfTag from '../../../felles-komponenter/utils/visible-if-tag';
+import * as AppPT from '../../../proptypes';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import { aktivitetRoute } from '../../../routing';
+import { selectMotpartSlice } from '../../motpart/motpart-selector';
 import {
     selectAnpassaDialogModalHistoriskVisning,
     selectDialogMedId,
-} from '../moduler/dialog/dialog-selector';
-import { selectViserHistoriskPeriode } from '../moduler/filtrering/filter/filter-selector';
-import DialogFilter from './dialog-filter';
-import Feilmelding from '../moduler/feilmelding/feilmelding';
+} from '../dialog-selector';
+import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
+import DialogFilter from '../dialog-filter';
+import Feilmelding from '../../feilmelding/feilmelding';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 

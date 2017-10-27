@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import * as AppPT from '../../../proptypes';
-import { autobind, formaterDatoEllerTidSiden } from '../../../utils';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import Identitet from '../../../moduler/identitet/identitet';
-import Accordion from '../../../felles-komponenter/accordion';
-import history from '../../../history';
+import * as AppPT from '../../proptypes';
+import { autobind, formaterDatoEllerTidSiden } from '../../utils';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import Identitet from '../../moduler/identitet/identitet';
+import Accordion from '../../felles-komponenter/accordion';
+import history from '../../history';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import hiddenIf, {
     div as HiddenIfDiv,
@@ -22,11 +22,8 @@ import {
     hentMal,
     selectMalStatus,
     selectGjeldendeMal,
-} from '../../../moduler/mal/mal-reducer';
-import {
-    selectMalListe,
-    selectMalListeStatus,
-} from './aktivitetsmal-selector';
+} from '../../moduler/mal/aktivitetsmal-reducer';
+import { selectMalListe, selectMalListeStatus } from './aktivitetsmal-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { selectErBruker } from '../identitet/identitet-selector';

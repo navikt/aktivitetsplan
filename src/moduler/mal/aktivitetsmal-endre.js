@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import * as AppPT from '../../../proptypes';
+import * as AppPT from '../../proptypes';
 import AktivitetsmalForm from './aktivitetsmal-form';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import AktivitetsmalModal from './aktivitetsmal-modal';
-import history from '../../../history';
+import history from '../../history';
 import {
     hentMal,
     selectMalStatus,
     selectGjeldendeMal,
-} from '../../../moduler/mal/mal-reducer';
+} from './aktivitetsmal-reducer';
 
 class AktivitetmalEndre extends Component {
     componentDidMount() {

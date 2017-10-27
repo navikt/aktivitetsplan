@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { validForm, rules } from 'react-redux-form-validation';
-import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
-import { autobind } from '../../../utils';
-import { STATUS } from '../../../ducks/utils';
-import { oppdaterMal, selectMalStatus } from '../../../moduler/mal/mal-reducer';
+import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
+import { autobind } from '../../utils';
+import { STATUS } from '../../ducks/utils';
+import { oppdaterMal, selectMalStatus } from './aktivitetsmal-reducer';
 
 const MALTEKST_MAKSLENGDE = 500;
 

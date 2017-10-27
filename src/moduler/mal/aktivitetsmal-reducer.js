@@ -1,8 +1,8 @@
-import * as Api from '../situasjon/situasjon-api';
+import * as Api from '../oppfolging-status/oppfolging-api';
 import { hentMalListe } from './malliste-reducer';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
-import { selectMalListe } from './mal-selector';
+import { selectMalListe } from './aktivitetsmal-selector';
 
 const { reducer, action, selectStatus, selectData } = createActionsAndReducer(
     'mal'

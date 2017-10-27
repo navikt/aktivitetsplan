@@ -1,4 +1,4 @@
-import * as Api from '../situasjon/situasjon-api';
+import * as Api from '../oppfolging-status/oppfolging-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 
 const { reducer, cashedAction } = createActionsAndReducer('identitet');

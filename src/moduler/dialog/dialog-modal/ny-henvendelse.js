@@ -5,26 +5,26 @@ import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
 import moment from 'moment';
-import { STATUS } from '../ducks/utils';
+import { STATUS } from '../../../ducks/utils';
 import {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
-} from '../ducks/dialog';
-import Textarea from '../felles-komponenter/skjema/textarea/textarea';
-import Input from '../felles-komponenter/skjema/input/input';
-import { HiddenIfAlertStripeSuksessSolid } from '../felles-komponenter/hidden-if/hidden-if-alertstriper';
-import VisibleIfDiv from '../felles-komponenter/utils/visible-if-div';
-import hiddenIf from '../felles-komponenter/hidden-if/hidden-if';
-import Checkbox from '../felles-komponenter/skjema/input/checkbox';
-import { selectErBruker } from '../moduler/identitet/identitet-selector';
+} from '../dialog-reducer';
+import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
+import Input from '../../../felles-komponenter/skjema/input/input';
+import { HiddenIfAlertStripeSuksessSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
+import Checkbox from '../../../felles-komponenter/skjema/input/checkbox';
+import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
     selectDialogMedId,
     selectDialogStatus,
     selectVisBrukerInfo,
-} from '../moduler/dialog/dialog-selector';
-import { selectAktivitetMedId } from '../moduler/aktivitet/aktivitetliste-selector';
-import { visBekreftelse } from '../moduler/dialog/dialog-view-reducer';
+} from '../dialog-selector';
+import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
+import { visBekreftelse } from '../dialog-view-reducer';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
