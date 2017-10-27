@@ -8,13 +8,11 @@ import Henvendelser from './henvendelser';
 import * as AppPT from '../proptypes';
 import { selectAktivitetMedId } from '../moduler/aktivitet/aktivitetliste-selector';
 
-const SCROLL_ELEMENT_ID = 'dialog-div';
-
 function Dialog({ dialog, overskrift, className }) {
     const dialogId = dialog.id;
     const historisk = dialog.historisk;
     return (
-        <div className={className} id={SCROLL_ELEMENT_ID}>
+        <div className={className}>
             <Undertittel tag="h1" className="endre-dialog__tittel">
                 {overskrift}
             </Undertittel>
@@ -28,7 +26,6 @@ function Dialog({ dialog, overskrift, className }) {
                 formNavn={`ny-henvendelse-dialog-${dialogId}`}
                 dialogId={dialogId}
                 skalHaAutofokus={false}
-                scrollElementId={SCROLL_ELEMENT_ID}
             />
             <Henvendelser dialog={dialog} />
         </div>

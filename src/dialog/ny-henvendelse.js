@@ -29,7 +29,6 @@ import { visBekreftelse } from '../moduler/dialog/dialog-view-reducer';
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
-const SCROLL_ELEMENT_ID = 'ny-henvendelse-form-id';
 
 function NyHenvendelseForm({
     handleSubmit,
@@ -41,11 +40,7 @@ function NyHenvendelseForm({
     skalHaAutofokus,
 }) {
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="ny-henvendelse-form"
-            id={SCROLL_ELEMENT_ID}
-        >
+        <form onSubmit={handleSubmit} className="ny-henvendelse-form">
             <VisibleIfDiv
                 visible={erNyDialog && !erBruker}
                 className="endre-dialog__sjekkbokser"
@@ -182,11 +177,13 @@ const mapDispatchToProps = () => ({
             dispatch(visBekreftelse(dialogId, moment().add(5, 'seconds')));
 
             // hvis man sender en veldig lang henvendelse, ønsker vi å bevare fokus på formen
-            const scrollElement = document.getElementById(
-                props.scrollElementId || SCROLL_ELEMENT_ID
-            );
-            if (scrollElement) {
-                scrollElement.scrollIntoView();
+            if (props.scrollElementId) {
+                const scrollElement = document.getElementById(
+                    props.scrollElementId
+                );
+                if (scrollElement) {
+                    scrollElement.scrollIntoView();
+                }
             }
         });
     },
