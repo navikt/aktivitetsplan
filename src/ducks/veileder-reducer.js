@@ -1,4 +1,4 @@
-import * as  Api from './veileder-api';
+import * as Api from './veileder-api';
 import { doThenDispatch, STATUS } from './utils';
 import { storeForbokstaver } from '../utils';
 

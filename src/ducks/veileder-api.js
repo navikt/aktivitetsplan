@@ -6,5 +6,4 @@ export function hentVeileder(veilederId) {
     return fetchToJson(`${VEILEDER_BASE_URL}/veileder/${veilederId}`);
 }
 
-
 export default {};
