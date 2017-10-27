@@ -1,1 +1,1 @@
-Legg inn eller rediger tekst som sendes til brukeren. Du må skrive hvilken oppgave brukeren skal gjennomføre og hva som fristen for denne oppgave. Når du varsler brukeren om en konsekvens for ytelse eller om en annen relasjon fra NAV, må du henvise til lovhjemler.
+Legg inn eller rediger tekst som du sender til brukeren. Du må skrive hvilken oppgave brukeren skal gjennomføre og hva som fristen for denne oppgave. Når du varsler brukeren om konsekvenser for en ytelse eller om en annen reaksjon  fra NAV, må du henvise til lovhjemler.
