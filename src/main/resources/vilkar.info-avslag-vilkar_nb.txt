@@ -10,7 +10,7 @@
  }
  other {
 
- Når du velger å takke nei til brukervilkår, får du heller ikke tilgang til aktivitetsplanen.
+Du har valgt å ikke akseptere brukervilkårene og får derfor ikke tilgang til aktivitetsplanen. Aktivitetsplanen er et frivillig tilbud når du ikke er registrert som arbeidssøker eller får helsemessig eller annen oppfølging fra NAV.
 
  }
 }
