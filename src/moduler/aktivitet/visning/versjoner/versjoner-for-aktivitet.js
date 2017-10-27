@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
     hentVersjonerForAktivtet,
     fjernVersjoner,
-} from '../../../../ducks/aktivitet-versjoner';
+} from '../../aktivitet-versjoner-reducer';
 import * as AppPT from '../../../../proptypes';
 import visibleIfHOC from '../../../../hocs/visible-if';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';

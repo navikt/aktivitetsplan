@@ -11,13 +11,13 @@ import OpprettOppgaveProsess from '../opprett-oppgave/opprett-oppgave-prosess';
 import InnstillingHistorikk from '../historikk/innstilling-historikk';
 import * as AppPT from '../../../proptypes';
 import InnstillingerModal from '../innstillinger-modal';
-import { hentSituasjonData } from '../innstillinger-reducer';
+import { hentOppfolgingData } from '../innstillinger-reducer';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import {
     selectErEskalert,
     selectErUnderOppfolging,
     selectKanIkkeStartaEskaleringen,
-} from '../../situasjon/situasjon-selector';
+} from '../../oppfolging-status/oppfolging-selector';
 import {
     selectErManuell,
     selectInnstillingerStatus,
@@ -27,7 +27,7 @@ import { selectMotpartSlice } from '../../motpart/motpart-selector';
 
 class Prosesser extends Component {
     componentDidMount() {
-        this.props.doHentSituasjon();
+        this.props.doHentOppfolging();
     }
 
     render() {
@@ -75,7 +75,7 @@ Prosesser.defaultProps = {
 };
 
 Prosesser.propTypes = {
-    doHentSituasjon: PT.func.isRequired,
+    doHentOppfolging: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     erEskalert: PT.bool.isRequired,
     erUnderOppfolging: PT.bool,
@@ -96,7 +96,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doHentSituasjon: () => dispatch(hentSituasjonData()),
+    doHentOppfolging: () => dispatch(hentOppfolgingData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Prosesser);

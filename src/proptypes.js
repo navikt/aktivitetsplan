@@ -94,7 +94,7 @@ export const eskaleringsvarsel = PT.shape({
     tilhorendeDialogId: PT.number,
 });
 
-export const situasjon = PT.shape({
+export const oppfolging = PT.shape({
     status: PT.string,
     brukerHarAvslatt: PT.bool,
     data: PT.shape({

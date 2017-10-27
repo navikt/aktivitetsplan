@@ -16,8 +16,8 @@ import { stoppEskalering } from '../innstillinger-reducer';
 import { STATUS } from '../../../ducks/utils';
 import {
     selectGjeldendeEskaleringsVarsel,
-    selectSituasjonStatus,
-} from '../../situasjon/situasjon-selector';
+    selectOppfolgingStatus,
+} from '../../oppfolging-status/oppfolging-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
 
@@ -88,10 +88,10 @@ StoppEskalering.propTypes = {
 
 const mapStateToProps = state => {
     const innstillingerStatus = selectInnstillingerStatus(state);
-    const situasjonStatus = selectSituasjonStatus(state);
+    const oppfolgingStatus = selectOppfolgingStatus(state);
     const gjeldendeEskaleringsVarsel = selectGjeldendeEskaleringsVarsel(state);
     return {
-        avhengigheter: [situasjonStatus, innstillingerStatus],
+        avhengigheter: [oppfolgingStatus, innstillingerStatus],
         innstillingerStatus,
         tilhorendeDialogId:
             gjeldendeEskaleringsVarsel &&

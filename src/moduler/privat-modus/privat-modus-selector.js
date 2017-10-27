@@ -6,8 +6,8 @@ import {
 } from '../identitet/identitet-selector';
 import {
     selectErUnderOppfolging,
-    selectSituasjonStatus,
-} from '../situasjon/situasjon-selector';
+    selectOppfolgingStatus,
+} from '../oppfolging-status/oppfolging-selector';
 
 export function selectErPrivatModus(state) {
     return !selectErUnderOppfolging(state) && selectErVeileder(state);
@@ -16,7 +16,7 @@ export function selectErPrivatModus(state) {
 export function selectPrivatModusSlice(state) {
     return {
         status: aggregerStatus(
-            selectSituasjonStatus(state),
+            selectOppfolgingStatus(state),
             selectIdentitetStatus(state)
         ),
         data: {

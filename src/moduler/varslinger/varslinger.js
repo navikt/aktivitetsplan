@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Container } from 'nav-frontend-grid';
-import { hentIdentitet } from '../identitet/identitet-duck';
+import { hentIdentitet } from '../identitet/identitet-reducer';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../proptypes';
 import {
@@ -16,8 +16,8 @@ import {
     selectReservasjonKRR,
     selectTilHorendeDialogId,
     selectErEskalert,
-    selectSituasjonStatus,
-} from '../situasjon/situasjon-selector';
+    selectOppfolgingStatus,
+} from '../oppfolging-status/oppfolging-selector';
 import {
     selectErBruker,
     selectIdentitetStatus,
@@ -119,7 +119,10 @@ Varslinger.propTypes = {
 
 const mapStateToProps = state => ({
     erBruker: selectErBruker(state),
-    avhengigheter: [selectSituasjonStatus(state), selectIdentitetStatus(state)],
+    avhengigheter: [
+        selectOppfolgingStatus(state),
+        selectIdentitetStatus(state),
+    ],
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),

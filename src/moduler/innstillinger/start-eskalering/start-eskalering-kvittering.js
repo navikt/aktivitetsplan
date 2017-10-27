@@ -10,8 +10,8 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
 import {
     selectGjeldendeEskaleringsVarsel,
-    selectSituasjonStatus,
-} from '../../situasjon/situasjon-selector';
+    selectOppfolgingStatus,
+} from '../../oppfolging-status/oppfolging-selector';
 import {
     selectMotpartStatus,
     selectNavnPaMotpart,
@@ -61,7 +61,7 @@ const mapStateToProps = state => {
     return {
         avhengigheter: [
             selectMotpartStatus(state),
-            selectSituasjonStatus(state),
+            selectOppfolgingStatus(state),
         ],
         navn: selectNavnPaMotpart(state),
         dato: eskaleringsVarsel && eskaleringsVarsel.opprettetDato,

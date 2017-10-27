@@ -1,4 +1,4 @@
-import * as Api from '../../../ducks/api';
+import * as Api from './hent-veiledere-for-oppgave-api';
 
 import { createActionsAndReducer } from '../../../ducks/rest-reducer';
 

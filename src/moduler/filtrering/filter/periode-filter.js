@@ -10,7 +10,7 @@ import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../proptypes';
 import { selectHistoriskPeriode } from './filter-selector';
-import { selectHistoriskeOppfolgingsPerioder } from '../../situasjon/situasjon-selector';
+import { selectHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
 import { velgHistoriskPeriode } from './filter-reducer';
 import Dropdown from '../../../felles-komponenter/dropdown/dropdown';
 import { dateToISODate } from '../../../utils';

@@ -9,7 +9,7 @@ import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import Datovelger from '../../felles-komponenter/skjema/datovelger/datovelger';
 import { leggTilArbeidsliste } from './arbeidsliste-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import { LUKK_MODAL } from '../../ducks/modal';
+import { LUKK_MODAL } from '../../felles-komponenter/modal/modal-reducer';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import {

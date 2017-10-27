@@ -1,0 +1,40 @@
+@import 'navigasjonslinje/navigasjonslinje';
+@import '../moduler/mal/aktivitetsmal';
+@import 'tavle/tavle';
+@import 'tavle/aktivitetstavle';
+@import 'footer-info';
+
+@full-desktop: 1480px;
+
+.hovedsideinnhold {
+    .sidebanner {
+        width: 100%;
+    }
+}
+
+.fullbredde {
+    width: 100%;
+}
+
+.begrensetbredde {
+    width: @mobil-bredde;
+}
+
+@media (min-width: @screen-md-min) {
+    .container {
+        width: 890px;
+    }
+
+    .hovedsideinnhold {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+    }
+}
+
+@media (min-width: @full-desktop) {
+    .container {
+        width: 956px;
+    }
+}
