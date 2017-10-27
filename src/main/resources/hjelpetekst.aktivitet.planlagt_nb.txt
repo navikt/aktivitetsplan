@@ -1,1 +1,1 @@
-Flytt aktiviteter hit som du planlegger å gjennomføre. Når du faktisk starter aktiviteten, flytter du den til Gjennomfører.
+Legg til en aktivitet som du faktisk planlegger å gjøre her. Når du starter aktiviteten, drar du den til Gjennomfører.
