@@ -16,16 +16,16 @@ function App() {
         <div className="aktivitetsplanfs">
             <Provider>
                 <SideBanner visible={VIS_SIDEBANNER} />
-                        <div className="aktivitetsplan-wrapper">
-                            <div className="fullbredde">
-                                <Router history={routerHistory}>
-                                    <ScrollToTop>
-                                        <Hovedside />
-                                    </ScrollToTop>
-                                </Router>
-                                <Feature name="timeoutbox">
-                                    <Timeoutbox />
-                                </Feature>
+                <div className="aktivitetsplan-wrapper">
+                    <div className="fullbredde">
+                        <Router history={routerHistory}>
+                            <ScrollToTop>
+                                <Hovedside />
+                            </ScrollToTop>
+                        </Router>
+                        <Feature name="timeoutbox">
+                            <Timeoutbox />
+                        </Feature>
                     </div>
                 </div>
             </Provider>

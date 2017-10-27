@@ -17,7 +17,6 @@ import {
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
-    BEHANDLING_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
     SAMTALEREFERAT_TYPE,
@@ -56,7 +55,6 @@ class AktivitetsKort extends Component {
             isDragging,
             connectDragSource,
             erFlyttbar,
-            erBehandlingAktivitet,
         } = this.props;
         const { id, type, tittel, antallStillingerSokes } = aktivitet;
 
@@ -85,9 +83,7 @@ class AktivitetsKort extends Component {
                             'aktivitetskort__tittel--drag': isDragging,
                         })}
                     >
-                        {erBehandlingAktivitet
-                            ? <FormattedMessage id="aktivitetskort.behandling.tittel" />
-                            : tittel}
+                        {tittel}
                     </Element>
                     <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
                     <VisibleIfDiv
@@ -134,7 +130,6 @@ AktivitetsKort.propTypes = {
     connectDragSource: PT.func.isRequired,
     forrigeAktiveAktivitetId: PT.string,
     erFlyttbar: PT.bool.isRequired,
-    erBehandlingAktivitet: PT.bool.isRequired,
 };
 
 AktivitetsKort.defaultProps = {
@@ -145,14 +140,9 @@ const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
     AktivitetsKort
 );
 
-const mapStateToProps = (state, props) => {
-    const { type } = props.aktivitet;
-    const behandlingAktivitet = BEHANDLING_AKTIVITET_TYPE === type;
-    return {
-        forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
-        erBehandlingAktivitet: behandlingAktivitet,
-        erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)),
-    };
-};
+const mapStateToProps = (state, props) => ({
+    forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
+    erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)),
+});
 
 export default connect(mapStateToProps)(dragbartAktivitetskort);
