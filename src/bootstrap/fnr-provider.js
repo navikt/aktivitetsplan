@@ -3,9 +3,12 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
 import { RESET_STORE } from '../reducer';
-import { hentPerson, setNAVsomMotpart } from '../moduler/motpart/motpart-duck';
+import {
+    hentPerson,
+    setNAVsomMotpart,
+} from '../moduler/motpart/motpart-reducer';
 import history from '../history';
-import { hentBruker } from '../moduler/bruker/bruker-duck';
+import { hentBruker } from '../moduler/bruker/bruker-reducer';
 
 export function fnrFraUrl() {
     const fnrMatch = window.location.pathname.match(`${CONTEXT_PATH}/(\\d*)`);

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import nb from 'react-intl/locale-data/nb';
 import Innholdslaster from './felles-komponenter/utils/innholdslaster';
-import { hentLedetekster } from './ducks/ledetekster-ressurs';
+import { hentLedetekster } from './ducks/ledetekster-reducer';
 import { STATUS } from './ducks/utils';
 
 addLocaleData(nb);

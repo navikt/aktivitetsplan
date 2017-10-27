@@ -15,7 +15,7 @@ import {
 import {
     selectAvslutningStatus,
     selectUnderOppfolging,
-} from '../../situasjon/situasjon-selector';
+} from '../../oppfolging-status/oppfolging-selector';
 
 function AvsluttOppfolgingKvittering({ avhengigheter, navn, avsluttet }) {
     return (

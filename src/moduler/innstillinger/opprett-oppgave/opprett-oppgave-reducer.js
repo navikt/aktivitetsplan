@@ -1,4 +1,4 @@
-import * as Api from '../../../ducks/api';
+import * as Api from './hent-behandlende-enheter-api';
 import { createActionsAndReducer } from '../../../ducks/rest-reducer';
 
 const { reducer, action } = createActionsAndReducer(

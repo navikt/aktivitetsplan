@@ -8,8 +8,11 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import Checkbox from '../../felles-komponenter/skjema/input/checkbox';
 import history from '../../history';
-import { godtaVilkar, avslaVilkar } from '../situasjon/situasjon';
-import { selectSituasjonStatus } from '../situasjon/situasjon-selector';
+import {
+    godtaVilkar,
+    avslaVilkar,
+} from '../oppfolging-status/oppfolging-reducer';
+import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../ducks/utils';
 import * as AppPT from '../../proptypes';
 
@@ -18,9 +21,9 @@ function GodkjennVilkarForm({
     handleSubmit,
     reset,
     doAvslaVilkar,
-    situasjonStatus,
+    oppfolgingStatus,
 }) {
-    const lasterData = situasjonStatus !== STATUS.OK;
+    const lasterData = oppfolgingStatus !== STATUS.OK;
     const avsla = () => {
         doAvslaVilkar();
         reset();
@@ -63,7 +66,7 @@ GodkjennVilkarForm.propTypes = {
     visVilkar: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     doAvslaVilkar: PT.func.isRequired,
-    situasjonStatus: AppPT.status.isRequired,
+    oppfolgingStatus: AppPT.status.isRequired,
 };
 
 const pakrevdGodkjenning = value =>
@@ -79,7 +82,7 @@ const GodkjennVilkarReduxForm = validForm({
 })(GodkjennVilkarForm);
 
 const mapStateToProps = state => ({
-    situasjonStatus: selectSituasjonStatus(state),
+    oppfolgingStatus: selectOppfolgingStatus(state),
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {

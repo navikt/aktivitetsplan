@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { hentSituasjon } from '../situasjon/situasjon';
-import { hentIdentitet } from '../identitet/identitet-duck';
+import { hentOppfolging } from './oppfolging-reducer';
+import { hentIdentitet } from '../identitet/identitet-reducer';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../ducks/utils';
@@ -15,9 +15,9 @@ import {
     selectBrukerHarAvslatt,
     selectErBrukerManuell,
     selectErUnderOppfolging,
-    selectSituasjonStatus,
+    selectOppfolgingStatus,
     selectVilkarMaBesvares,
-} from '../situasjon/situasjon-selector';
+} from './oppfolging-selector';
 import {
     selectErVeileder,
     selectIdentitetStatus,
@@ -97,8 +97,8 @@ oppfolgingStatusKomponent.propTypes = {
 class OppfolgingStatus extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
-        if (this.props.situasjonStatus === STATUS.NOT_STARTED) {
-            this.props.doHentSituasjon();
+        if (this.props.oppfolgingStatus === STATUS.NOT_STARTED) {
+            this.props.doHentOppfolging();
         }
     }
 
@@ -107,7 +107,7 @@ class OppfolgingStatus extends Component {
 
         return (
             <Innholdslaster
-                avhengigheter={[props.situasjonStatus, props.identitetStatus]}
+                avhengigheter={[props.oppfolgingStatus, props.identitetStatus]}
             >
                 <div className="fullbredde">
                     {oppfolgingStatusKomponent(props)}
@@ -117,9 +117,9 @@ class OppfolgingStatus extends Component {
     }
 }
 OppfolgingStatus.propTypes = {
-    situasjonStatus: AppPT.status.isRequired,
+    oppfolgingStatus: AppPT.status.isRequired,
     identitetStatus: AppPT.status.isRequired,
-    doHentSituasjon: PT.func.isRequired,
+    doHentOppfolging: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
 };
 
@@ -129,12 +129,12 @@ const mapStateToProps = state => ({
     brukerHarAvslatt: selectBrukerHarAvslatt(state),
     manuell: selectErBrukerManuell(state),
     vilkarMaBesvares: selectVilkarMaBesvares(state),
-    situasjonStatus: selectSituasjonStatus(state),
+    oppfolgingStatus: selectOppfolgingStatus(state),
     identitetStatus: selectIdentitetStatus(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-    doHentSituasjon: () => dispatch(hentSituasjon()),
+    doHentOppfolging: () => dispatch(hentOppfolging()),
     doHentIdentitet: () => dispatch(hentIdentitet()),
 });
 

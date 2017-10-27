@@ -10,7 +10,7 @@ import {
     settForrigeAktiveAktivitetId,
     fjernForrigeAktiveAktivitetId,
 } from '../aktivitet-actions';
-import { hentArenaAktiviteter } from '../../../ducks/arena-aktiviteter';
+import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvinsing from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import {
@@ -20,8 +20,8 @@ import {
 import {
     selectErUnderOppfolging,
     selectOppfolgingUtgang,
-    selectSituasjonStatus,
-} from '../../situasjon/situasjon-selector';
+    selectOppfolgingStatus,
+} from '../../oppfolging-status/oppfolging-selector';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
@@ -118,7 +118,7 @@ const mapStateToProps = (state, props) => {
 
     return {
         avhengigheter: [
-            selectSituasjonStatus(state),
+            selectOppfolgingStatus(state),
             // merk at vi egentlig avhenger av både vanlige aktiviteter og arena-aktiviteter
             // MEN: vi ønsker å rendre med en gang vi har riktig aktivitet tilgjengelig, slik
             // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena

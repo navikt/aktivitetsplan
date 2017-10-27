@@ -35,7 +35,7 @@ class InnstillingHistorikk extends Component {
     render() {
         const { historikkReducer } = this.props;
         const historikkListeSorted = [
-            ...historikkReducer.situasjon.data,
+            ...historikkReducer.oppfolging.data,
             ...historikkReducer.oppgave.data,
         ].sort((a, b) => b.dato.localeCompare(a.dato));
 
@@ -70,7 +70,7 @@ class InnstillingHistorikk extends Component {
             <Innholdslaster
                 avhengigheter={[
                     historikkReducer.oppgave,
-                    historikkReducer.situasjon,
+                    historikkReducer.oppfolging,
                 ]}
                 spinnerStorrelse="m"
                 className="instillinger__historikk-spinner"
