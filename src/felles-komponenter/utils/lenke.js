@@ -17,6 +17,7 @@ function Lenke({
     brukLenkestyling,
     children,
     focusRef,
+    onClick,
     ...rest
 }) {
     if (erInternlenke(href)) {
@@ -28,6 +29,7 @@ function Lenke({
                 to={internHref}
                 className={cls(className, 'internlenke', brukLenkestyling)}
                 ref={focusRef}
+                onClick={onClick}
             >
                 {children}
             </Link>
@@ -51,11 +53,13 @@ Lenke.propTypes = {
     brukLenkestyling: PT.bool,
     className: PT.string,
     focusRef: PT.func,
+    onClick: PT.func,
 };
 
 Lenke.defaultProps = {
     className: undefined,
     focusRef: () => {},
+    onClick: () => {},
     brukLenkestyling: true,
 };
 
