@@ -82,7 +82,7 @@ class Varslinger extends Component {
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
                     onClick={() => {
-                        doViseNuvarandePeriode()
+                        doViseNuvarandePeriode();
                     }}
                 />
                 <HiddenIfVarslingMedLenke
