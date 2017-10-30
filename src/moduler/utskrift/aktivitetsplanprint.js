@@ -30,14 +30,18 @@ import {
     selectSkalVisePrintMeldingForm,
 } from './utskrift-selector';
 import { redigerPrintMelding } from './utskrift-duck';
-import { selectGjeldendeMal, selectMalStatus } from '../mal/mal-selector';
+import {
+    hentMal,
+    selectGjeldendeMal,
+    selectMalStatus,
+} from '../mal/aktivitetsmal-reducer';
+import { hentMalListe } from '../mal/malliste-reducer';
 import {
     section as HiddenIfSection,
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { hentMal, hentMalListe } from '../mal/mal-reducer';
-import { selectSituasjonStatus } from '../situasjon/situasjon-selector';
+import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 
@@ -304,7 +308,7 @@ const mapStateToProps = state => {
     return {
         avhengigheter: [
             selectMalStatus(state),
-            selectSituasjonStatus(state),
+            selectOppfolgingStatus(state),
             selectAktivitetListeStatus(state),
         ],
         aktiviteter,

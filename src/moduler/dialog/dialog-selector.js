@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { dialogFilter } from '../filtrering/filter/filter-utils';
-import { erEskaleringsDialog } from '../../dialog/dialog-utils';
+import { erEskaleringsDialog } from './dialog-utils';
 import {
     selectErBruker,
     selectErVeileder,

@@ -1,0 +1,73 @@
+@import '../../../variables';
+
+.aktivitetskort {
+    .blokk-xxs();
+    display: block;
+    background-color: @color-background;
+    color: @gray-text;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    border-radius: @border-radius-base;
+    padding: 0.75rem 1rem 1rem;
+    cursor: pointer;
+
+    &:focus {
+        outline: 0;
+        box-shadow: 0 0 0 3px @orange-focus;
+    }
+
+    &:hover {
+        box-shadow: 1px 1px 3px 0 @navGra60;
+
+        .aktivitetskort__tittel {
+            color: @navBla;
+            text-decoration: underline;
+
+            &--drag {
+                border-bottom-color: @navLysGra;
+            }
+        }
+    }
+}
+
+.aktivitetskort__type {
+    text-transform: uppercase;
+}
+
+.aktivitetskort--drag {
+    background-color: @navLysGra;
+}
+
+.aktivitetskort__tittel {
+    display: inline-block;
+    border-bottom: 1.5px solid @white;
+    .blokk-xxxs();
+}
+
+.aktivitetskort__ikon-blokk {
+    margin-top: 1rem;
+    .clearfix();
+}
+
+.aktivitetskort__henvendelser {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0;
+    padding: 0.5rem 1rem 1rem 1.25rem;
+    background: data-uri(
+            '@{aktivitetsplanPath}/moduler/aktivitet/aktivitet-kort/aktivitetskort-henvendelser.svg'
+        )
+        no-repeat left bottom;
+}
+
+.aktivitetskort__henvendelser + .aktivitetskort__etiketter {
+    max-width: ~'calc(100% - 30px)';
+}
+
+.aktivitetskort--flyttbar {
+    cursor: move;
+    cursor: -webkit-grab; // lesshint duplicateProperty: false
+    cursor: -moz-grab; // lesshint duplicateProperty: false
+    cursor: grab; // lesshint duplicateProperty: false
+}

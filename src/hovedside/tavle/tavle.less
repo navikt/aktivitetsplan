@@ -1,0 +1,122 @@
+@knapp-storrelse: 42px;
+@full-desktop: 1480px;
+
+.tavle {
+    .tavle__scrollknapp {
+        display: none;
+        cursor: pointer;
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 3px @orange-focus;
+        }
+
+        &:disabled {
+            cursor: default;
+            background: data-uri(
+                    '@{aktivitetsplanPath}/hovedside/tavle/pil-disabled.svg'
+                )
+                no-repeat;
+
+            &:hover {
+                background: data-uri(
+                        '@{aktivitetsplanPath}/hovedside/tavle/pil-disabled.svg'
+                    )
+                    no-repeat;
+            }
+        }
+    }
+
+    .kolonner {
+        display: block;
+        padding-bottom: 2rem;
+    }
+}
+
+@media (min-width: @screen-sm-min) {
+    .tavle {
+        &.aktivitetstavle {
+            width: @container-sm;
+            margin: 0 auto;
+        }
+
+        .knapp-forrige {
+            margin: 1rem 0.5rem 0 0;
+        }
+
+        .knapp-neste {
+            margin: 1rem 0 0 0.5rem;
+            transform: rotate(180deg);
+
+            &:hover,
+            &:disabled,
+            &:hover:disabled {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .tavle {
+        display: flex;
+        justify-content: space-around;
+
+        &.aktivitetstavle {
+            width: @screen-md-min;
+            margin: 0 auto;
+        }
+
+        .kolonner {
+            display: flex;
+            justify-content: space-between;
+            transition: margin 0.2s ease-in-out;
+            margin-bottom: 0;
+        }
+
+        .tavle__scrollknapp {
+            display: block;
+            height: @knapp-storrelse;
+            width: @knapp-storrelse;
+            padding: calc(@knapp-storrelse / 2);
+            border: 0;
+            background-size: contain;
+            background: data-uri(
+                    '@{aktivitetsplanPath}/hovedside/tavle/pil.svg'
+                )
+                no-repeat;
+
+            &:hover,
+            &:active,
+            &:active:hover {
+                border: 0;
+                background: transparent
+                    data-uri(
+                        '@{aktivitetsplanPath}/hovedside/tavle/pil-hover.svg'
+                    )
+                    no-repeat;
+            }
+        }
+
+        .tavle-kolonne {
+            min-width: 31.33333%;
+            margin: 1%;
+        }
+    }
+}
+
+@media (min-width: @full-desktop) {
+    .tavle {
+        &.aktivitetstavle {
+            width: 100%;
+        }
+
+        .tavle__scrollknapp {
+            .hide();
+        }
+
+        .tavle-kolonne {
+            min-width: 18%;
+        }
+    }
+}

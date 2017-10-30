@@ -1,67 +1,67 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'react-redux-form-validation';
-import ledetekstReducer from './ducks/ledetekster-ressurs';
-import situasjonReducer from './moduler/situasjon/situasjon';
-import vilkarReducer from './moduler/vilkar/vilkar-reducer';
-import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
-import arenaAktiviteterReducer from './ducks/arena-aktiviteter';
-import kanalerReducer from './moduler/aktivitet/kanaler-reducer';
-import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
-import etiketterReducer from './ducks/etiketter';
-import versjonReducer from './ducks/aktivitet-versjoner';
-import dialogReducer from './ducks/dialog';
-import dialogViewReducer from './moduler/dialog/dialog-view-reducer';
-import malReducer from './moduler/mal/mal-reducer';
-import malListeReducer from './moduler/mal/malliste-reducer';
-import identitetReducer from './moduler/identitet/identitet-duck';
-import motpartReducer from './moduler/motpart/motpart-duck';
-import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
-import filterReducer from './moduler/filtrering/filter/filter-reducer';
-import veilederReducer from './ducks/veileder';
-import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
-import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
 import aktiverDigitalOppfolgingReducer from './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
+import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
 import arbeidslisteReducer from './moduler/arbeidsliste/arbeidsliste-reducer';
-import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
-import brukerReducer from './moduler/bruker/bruker-duck';
-import utskriftReducer from './moduler/utskrift/utskrift-duck';
+import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reducer';
 import behandlendeEnheterReducer from './moduler/innstillinger/opprett-oppgave/hent-behandlende-enheter-reducer';
+import brukerReducer from './moduler/bruker/bruker-reducer';
+import dialogReducer from './moduler/dialog/dialog-reducer';
+import dialogViewReducer from './moduler/dialog/dialog-view-reducer';
+import etiketterReducer from './felles-komponenter/aktivitet-etikett/aktivitet-etiketter-reducer';
+import filterReducer from './moduler/filtrering/filter/filter-reducer';
+import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
+import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
+import identitetReducer from './moduler/identitet/identitet-reducer';
+import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
+import kanalerReducer from './moduler/aktivitet/kanaler-reducer';
+import ledetekstReducer from './ducks/ledetekster-reducer';
+import malListeReducer from './moduler/mal/malliste-reducer';
+import malReducer from './moduler/mal/aktivitetsmal-reducer';
+import motpartReducer from './moduler/motpart/motpart-reducer';
+import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
 import oppgaveVeiledereReducer from './moduler/innstillinger/opprett-oppgave/hent-veieldere-for-oppgave-reducer';
+import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
+import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
+import utskriftReducer from './moduler/utskrift/utskrift-duck';
+import veilederReducer from './ducks/veileder-reducer';
+import versjonReducer from './moduler/aktivitet/aktivitet-versjoner-reducer';
+import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
 const combinedReducers = combineReducers({
     form: formReducer,
     data: combineReducers({
-        ledetekster: ledetekstReducer,
-        situasjon: situasjonReducer,
-        innstillinger: innstillingerReducer,
-        vilkar: vilkarReducer,
-        historiskeVilkar: historiskeVilkarReducer,
+        aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
         aktiviteter: aktiviteterReducer,
+        arbeidsliste: arbeidslisteReducer,
         arenaAktiviteter: arenaAktiviteterReducer,
-        etiketter: etiketterReducer,
-        versjoner: versjonReducer,
+        behandlendeEnheter: behandlendeEnheterReducer,
+        bruker: brukerReducer,
         dialog: dialogReducer,
+        etiketter: etiketterReducer,
+        filter: filterReducer,
+        historiskeVilkar: historiskeVilkarReducer,
+        identitet: identitetReducer,
+        innstillinger: innstillingerReducer,
+        innstillingerHistorikk: historikkReducer,
+        kanaler: kanalerReducer,
+        ledetekster: ledetekstReducer,
         mal: malReducer,
         malListe: malListeReducer,
         motpart: motpartReducer,
-        identitet: identitetReducer,
-        filter: filterReducer,
-        veiledere: veilederReducer,
-        innstillingerHistorikk: historikkReducer,
-        aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
-        arbeidsliste: arbeidslisteReducer,
-        kanaler: kanalerReducer,
-        referat: referatReducer,
-        opprettOppgave: oppgaveReducer,
-        bruker: brukerReducer,
-        behandlendeEnheter: behandlendeEnheterReducer,
         oppgaveVeiledere: oppgaveVeiledereReducer,
+        opprettOppgave: oppgaveReducer,
+        referat: referatReducer,
+        oppfolging: oppfolgingReducer,
+        veiledere: veilederReducer,
+        versjoner: versjonReducer,
+        vilkar: vilkarReducer,
     }),
     view: combineReducers({
-        utskrift: utskriftReducer,
         dialog: dialogViewReducer,
+        utskrift: utskriftReducer,
     }),
 });
 

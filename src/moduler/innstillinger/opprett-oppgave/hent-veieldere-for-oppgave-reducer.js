@@ -1,8 +1,12 @@
-import * as Api from '../../../ducks/api';
+import * as Api from './hent-veiledere-for-oppgave-api';
 
 import { createActionsAndReducer } from '../../../ducks/rest-reducer';
 
-const { reducer, action } = createActionsAndReducer('hent_veiledere', []);
+const { reducer, action } = createActionsAndReducer(
+    'hent_veiledere',
+    'veiledere',
+    []
+);
 
 export default reducer;
 

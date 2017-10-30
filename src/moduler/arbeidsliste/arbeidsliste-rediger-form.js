@@ -15,7 +15,7 @@ import {
     selectEndretDato,
     selectArbeidslisteData,
 } from './arbeidsliste-selector';
-import { LUKK_MODAL } from '../../ducks/modal';
+import { LUKK_MODAL } from '../../felles-komponenter/modal/modal-reducer';
 import ModalFooter from '../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import {

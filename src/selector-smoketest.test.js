@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import * as malSelector from './moduler/mal/mal-selector';
-import * as situasjonSelector from './moduler/situasjon/situasjon-selector';
+import * as malSelector from './moduler/mal/aktivitetsmal-selector';
+import * as oppfolgingSelector from './moduler/oppfolging-status/oppfolging-selector';
 import * as identitetSelector from './moduler/identitet/identitet-selector';
 import * as dialogSelector from './moduler/dialog/dialog-selector';
 import * as brukerSelector from './moduler/bruker/bruker-selector';
@@ -44,7 +44,7 @@ function selectorModulTest(selectorModul) {
 }
 
 selectorModulTest(malSelector);
-selectorModulTest(situasjonSelector);
+selectorModulTest(oppfolgingSelector);
 selectorModulTest(identitetSelector);
 selectorModulTest(dialogSelector);
 selectorModulTest(brukerSelector);

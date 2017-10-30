@@ -14,7 +14,7 @@ export const HENT_OPPGAVEHISTORIKK_PENDING =
     'historikk/hent_oppgavehistorikk/PENDING';
 
 const initalState = {
-    situasjon: {
+    oppfolging: {
         status: STATUS.NOT_STARTED,
         data: {},
     },
@@ -30,7 +30,7 @@ export default function reducer(state = initalState, action) {
         case HENT_HISTORIKK_OK:
             return {
                 ...state,
-                situasjon: {
+                oppfolging: {
                     status: STATUS.OK,
                     data: action.data,
                 },
@@ -38,7 +38,7 @@ export default function reducer(state = initalState, action) {
         case HENT_HISTORIKK_FEILET:
             return {
                 ...state,
-                situasjon: {
+                oppfolging: {
                     status: STATUS.ERROR,
                     feil: action.data,
                 },
@@ -46,10 +46,10 @@ export default function reducer(state = initalState, action) {
         case HENT_HISTORIKK_PENDING:
             return {
                 ...state,
-                situasjon: {
-                    ...state.situasjon,
+                oppfolging: {
+                    ...state.oppfolging,
                     status:
-                        state.situasjon.status === STATUS.NOT_STARTED
+                        state.oppfolging.status === STATUS.NOT_STARTED
                             ? STATUS.PENDING
                             : STATUS.RELOADING,
                 },

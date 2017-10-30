@@ -1,6 +1,6 @@
 //  Actions
 import { doThenDispatch, STATUS } from '../../../ducks/utils';
-import * as Api from '../../../ducks/api';
+import * as Api from './hent-behandlende-enheter-api';
 
 export const HENT_BEHANDLENDE_ENHETER_OK = '/hent_behandlende_enheter/OK';
 export const HENT_BEHANDLENDE_ENHETER_FEILET =
