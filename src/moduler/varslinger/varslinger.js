@@ -38,7 +38,7 @@ class Varslinger extends Component {
             reservertIKRR,
             brukerErEskalert,
             tilhorendeDialogId,
-            doViseNuvarandePeriode,
+            doVelgNavarendePeriode,
         } = this.props;
 
         const visVarslingerForBruker = (
@@ -50,7 +50,7 @@ class Varslinger extends Component {
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
                     onClick={() => {
-                        doViseNuvarandePeriode();
+                        doVelgNavarendePeriode();
                     }}
                 />
             </Container>
@@ -82,7 +82,7 @@ class Varslinger extends Component {
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
                     onClick={() => {
-                        doViseNuvarandePeriode();
+                        doVelgNavarendePeriode();
                     }}
                 />
                 <HiddenIfVarslingMedLenke
@@ -122,7 +122,7 @@ Varslinger.propTypes = {
     brukerErManuell: PT.bool,
     reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
-    doViseNuvarandePeriode: PT.func.isRequired,
+    doVelgNavarendePeriode: PT.func.isRequired,
     brukerErEskalert: PT.bool,
     tilhorendeDialogId: PT.number,
 };
@@ -143,7 +143,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
-    doViseNuvarandePeriode: () => dispatch(velgHistoriskPeriode(null)),
+    doVelgNavarendePeriode: () => dispatch(velgHistoriskPeriode(null)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Varslinger);
