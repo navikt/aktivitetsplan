@@ -22,7 +22,6 @@ import {
     selectErBruker,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 
 class Varslinger extends Component {
@@ -39,7 +38,6 @@ class Varslinger extends Component {
             reservertIKRR,
             brukerErEskalert,
             tilhorendeDialogId,
-            historiskVisning,
             doViseNuvarandePeriode,
         } = this.props;
 
@@ -51,6 +49,9 @@ class Varslinger extends Component {
                     lenkeTekstId="oppfolgning.bruker.bruker-er-eskalert.lenke-tekst"
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
+                    onClick={() => {
+                        doViseNuvarandePeriode();
+                    }}
                 />
             </Container>
         );
@@ -80,9 +81,9 @@ class Varslinger extends Component {
                     lenkeTekstId="oppfolgning.veileder.bruker-er-eskalert.lenke-tekst"
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
-                    onClink={
-                        historiskVisning ? doViseNuvarandePeriode : () => {}
-                    }
+                    onClick={() => {
+                        doViseNuvarandePeriode()
+                    }}
                 />
                 <HiddenIfVarslingMedLenke
                     hidden={reservertIKRR || !brukerErManuell}
@@ -124,7 +125,6 @@ Varslinger.propTypes = {
     doViseNuvarandePeriode: PT.func.isRequired,
     brukerErEskalert: PT.bool,
     tilhorendeDialogId: PT.number,
-    historiskVisning: PT.bool,
 };
 
 const mapStateToProps = state => ({
@@ -139,7 +139,6 @@ const mapStateToProps = state => ({
     reservertIKRR: selectReservasjonKRR(state),
     brukerErEskalert: selectErEskalert(state),
     tilhorendeDialogId: selectTilHorendeDialogId(state),
-    historiskVisning: selectViserHistoriskPeriode(state),
 });
 
 const mapDispatchToProps = dispatch => ({
