@@ -11,34 +11,38 @@ import {
 import { selectAlleFeilmeldinger } from './feilmelding-selector';
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import FeilmeldingDetaljer from './feilmelding-detaljer';
-import { parseFeil, finnHoyesteAlvorlighetsgrad } from './feilmelding-utils';
+import {
+    parseFeil,
+    finnHoyesteAlvorlighetsgrad,
+    UKJENT_KATEGORI,
+    FINNES_IKKE_KATEGORI,
+    INGEN_TILGANG_KATEGORI,
+    UGYLDIG_REQUEST_KATEGORI,
+    VERSJONSKONFLIKT_KATEGORI,
+    KATEGORI_RANGERING,
+} from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import * as AppPT from '../../proptypes';
 import Text from '../../text';
 
-const typer = {
-    [AlertStripeNavansatt]: 1,
-    [AlertStripeInfoSolid]: 2,
-    [AlertStripeInfo]: 3,
-};
-
 const stripeTyper = {
-    UKJENT: AlertStripeNavansatt,
-    FINNES_IKKE: AlertStripeNavansatt,
-    INGEN_TILGANG: AlertStripeInfoSolid,
-    UGYLDIG_REQUEST: AlertStripeInfo,
-    VERSJONSKONFLIKT: AlertStripeInfo,
+    [UKJENT_KATEGORI]: AlertStripeNavansatt,
+    [FINNES_IKKE_KATEGORI]: AlertStripeNavansatt,
+    [INGEN_TILGANG_KATEGORI]: AlertStripeInfoSolid,
+    [UGYLDIG_REQUEST_KATEGORI]: AlertStripeInfo,
+    [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo,
 };
 
-function FeilStripe({ alertStripe, feil, erVeileder, intl }) {
+function FeilStripe({ feil, erVeileder, intl }) {
     const vistekster = window.location.search.indexOf('vistekster') !== -1;
-    const Stripe = alertStripe;
     const aktor = erVeileder ? 'veileder' : 'bruker';
-    const typeNr = typer[alertStripe];
     const feilType = feil.type;
     const melding = feil.melding;
-    const feilKategori = melding && melding.type;
+    const feilKategori = (melding && melding.type) || UKJENT_KATEGORI;
+    const Stripe = stripeTyper[feilKategori] || AlertStripeNavansatt;
+    const typeNr = KATEGORI_RANGERING[feilKategori] || 1;
+
     const feilKeys = parseFeil(
         `feilmelding.type${typeNr}/${feilKategori}/${aktor}/${feilType}`
             .replace('/fail', '')
@@ -74,13 +78,11 @@ function FeilStripe({ alertStripe, feil, erVeileder, intl }) {
 }
 
 FeilStripe.defaultProps = {
-    alertStripe: undefined,
     tekstIds: undefined,
     erVeileder: false,
 };
 
 FeilStripe.propTypes = {
-    alertStripe: PT.func,
     feil: AppPT.feil.isRequired,
     erVeileder: PT.bool,
     intl: intlShape.isRequired,
@@ -111,13 +113,6 @@ class Feilmelding extends Component {
                 className={classNames(className, 'feilmelding')}
             >
                 <FeilStripe
-                    alertStripe={
-                        stripeTyper[
-                            (alvorligsteFeil.melding &&
-                                alvorligsteFeil.melding.type) ||
-                                'UKJENT'
-                        ]
-                    }
                     feil={alvorligsteFeil}
                     erVeileder={erVeileder}
                     intl={intl}
