@@ -25,11 +25,17 @@ Varsling.propTypes = {
     className: PT.string,
 };
 
-export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className }) {
+export function VarslingMedLenke({
+    tekstId,
+    lenkeTekstId,
+    href,
+    className,
+    onClick,
+}) {
     return (
         <AlertStripeInfoSolid className={className}>
             <FormattedMessage id={tekstId} />&nbsp;
-            <Lenke href={href}>
+            <Lenke href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
             </Lenke>
         </AlertStripeInfoSolid>
@@ -38,6 +44,7 @@ export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className }) {
 
 VarslingMedLenke.defaultProps = {
     className: '',
+    onClick: () => {},
 };
 
 VarslingMedLenke.propTypes = {
@@ -45,6 +52,7 @@ VarslingMedLenke.propTypes = {
     lenkeTekstId: PT.string.isRequired,
     href: PT.string.isRequired,
     className: PT.string,
+    onClick: PT.func,
 };
 
 export function AdvarselVarsling({ tekstId, className }) {

@@ -22,6 +22,7 @@ import {
     selectErBruker,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
+import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -37,6 +38,7 @@ class Varslinger extends Component {
             reservertIKRR,
             brukerErEskalert,
             tilhorendeDialogId,
+            doViseNuvarandePeriode,
         } = this.props;
 
         const visVarslingerForBruker = (
@@ -47,6 +49,9 @@ class Varslinger extends Component {
                     lenkeTekstId="oppfolgning.bruker.bruker-er-eskalert.lenke-tekst"
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
+                    onClick={() => {
+                        doViseNuvarandePeriode();
+                    }}
                 />
             </Container>
         );
@@ -76,6 +81,9 @@ class Varslinger extends Component {
                     lenkeTekstId="oppfolgning.veileder.bruker-er-eskalert.lenke-tekst"
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
+                    onClick={() => {
+                        doViseNuvarandePeriode();
+                    }}
                 />
                 <HiddenIfVarslingMedLenke
                     hidden={reservertIKRR || !brukerErManuell}
@@ -102,6 +110,7 @@ Varslinger.defaultProps = {
     brukerErManuell: false,
     reservertIKRR: false,
     brukerErEskalert: false,
+    historiskVisning: false,
     tilhorendeDialogId: undefined,
 };
 
@@ -113,6 +122,7 @@ Varslinger.propTypes = {
     brukerErManuell: PT.bool,
     reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
+    doViseNuvarandePeriode: PT.func.isRequired,
     brukerErEskalert: PT.bool,
     tilhorendeDialogId: PT.number,
 };
@@ -133,6 +143,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
+    doViseNuvarandePeriode: () => dispatch(velgHistoriskPeriode(null)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Varslinger);
