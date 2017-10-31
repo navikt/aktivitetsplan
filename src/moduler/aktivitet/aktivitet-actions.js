@@ -20,18 +20,11 @@ export function hentAktivitet(aktivitetId) {
 }
 
 export function flyttAktivitet(aktivitet, status) {
-    return dispatch => {
-        dispatch({ type: AT.FLYTTER, data: { aktivitet, status } });
-        return Api.oppdaterAktivitetStatus({ ...aktivitet, status })
-            .then(response => {
-                dispatch({ type: AT.FLYTT_OK, data: response });
-                return Promise.resolve(response);
-            })
-            .catch(error => {
-                dispatch({ type: AT.FLYTT_FAIL, data: { aktivitet, error } });
-                return Promise.reject(error);
-            });
-    };
+    return doThenDispatch(() => Api.oppdaterAktivitetStatus({ ...aktivitet, status }), {
+        OK: AT.FLYTT_OK,
+        FEILET: AT.FLYTT_FAIL,
+        PENDING: AT.FLYTTER,
+    });
 }
 
 export function oppdaterAktivitetEtikett(aktivitet) {
