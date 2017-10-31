@@ -20,11 +20,14 @@ export function hentAktivitet(aktivitetId) {
 }
 
 export function flyttAktivitet(aktivitet, status) {
-    return doThenDispatch(() => Api.oppdaterAktivitetStatus({ ...aktivitet, status }), {
-        OK: AT.FLYTT_OK,
-        FEILET: AT.FLYTT_FAIL,
-        PENDING: AT.FLYTTER,
-    });
+    return doThenDispatch(
+        () => Api.oppdaterAktivitetStatus({ ...aktivitet, status }),
+        {
+            OK: AT.FLYTT_OK,
+            FEILET: AT.FLYTT_FAIL,
+            PENDING: AT.FLYTTER,
+        }
+    );
 }
 
 export function oppdaterAktivitetEtikett(aktivitet) {
