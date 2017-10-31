@@ -1,6 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import visibleIfHOC from '../../../hocs/visible-if';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
@@ -28,6 +29,12 @@ function AktivitetskortTillegg({
                 <TallAlert hidden={antallUlesteHenvendelser <= 0}>
                     {antallUlesteHenvendelser}
                 </TallAlert>
+                <HiddenIfDiv
+                    hidden={antallUlesteHenvendelser > 0}
+                    className="kun-for-skjermleser"
+                >
+                    <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
+                </HiddenIfDiv>
             </HiddenIfDiv>
 
             <AktivitetEtikettGruppe
