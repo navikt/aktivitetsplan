@@ -27,8 +27,14 @@ function Innholdslaster({
     className,
     children,
     minstEn,
+    visChildrenVedFeil,
 }) {
-    if (alleLastet(avhengigheter) || (minstEn && minstEnErOK(avhengigheter))) {
+    const visChildren =
+        alleLastet(avhengigheter) ||
+        (minstEn && minstEnErOK(avhengigheter)) ||
+        (visChildrenVedFeil && noenHarFeil(avhengigheter));
+
+    if (visChildren) {
         if (typeof children === 'function') {
             return children(avhengigheter);
         }
@@ -55,6 +61,7 @@ Innholdslaster.defaultProps = {
     spinnerStorrelse: 'xl',
     className: '',
     minstEn: false,
+    visChildrenVedFeil: false,
 };
 
 Innholdslaster.propTypes = {
@@ -63,6 +70,7 @@ Innholdslaster.propTypes = {
     className: PT.string,
     spinnerStorrelse: PT.string,
     minstEn: PT.bool,
+    visChildrenVedFeil: PT.bool,
 };
 
 export default Innholdslaster;

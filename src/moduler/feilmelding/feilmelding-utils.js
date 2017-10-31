@@ -31,7 +31,8 @@ export const parseFeil = feilId => {
 export const finnHoyesteAlvorlighetsgrad = feilmeldinger =>
     feilmeldinger.reduce(
         (alvorligste, feilmelding) => {
-            const data = feilmelding.melding.data;
+            const melding = feilmelding.melding;
+            const data = melding && melding.data;
             const type = (data && data.type) || UKJENT_KATEGORI;
             if (
                 KATEGORI_RANGERING[type] <

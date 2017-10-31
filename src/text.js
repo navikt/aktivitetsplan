@@ -13,11 +13,15 @@ const mapStateToProps = state => ({
     underOppfolging: selectErUnderOppfolging(state),
 });
 
-function textHOC(Component) {
+function textHOC(Component, props) {
+    const { visChildrenVedFeil } = props || {};
     // eslint-disable-next-line react/prop-types
     function Text({ id, children, avhengigheter, ...rest }) {
         return (
-            <Innholdslaster avhengigheter={avhengigheter}>
+            <Innholdslaster
+                avhengigheter={avhengigheter}
+                visChildrenVedFeil={visChildrenVedFeil}
+            >
                 <Component id={id} values={rest}>
                     {children}
                 </Component>
@@ -30,3 +34,6 @@ function textHOC(Component) {
 
 export default textHOC(FormattedMessage);
 export const HtmlText = textHOC(FormattedHTMLMessage);
+export const FailsafeText = textHOC(FormattedHTMLMessage, {
+    visChildrenVedFeil: true,
+});

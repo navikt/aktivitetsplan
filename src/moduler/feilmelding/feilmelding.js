@@ -24,7 +24,7 @@ import {
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import * as AppPT from '../../proptypes';
-import Text from '../../text';
+import { FailsafeText } from '../../text';
 
 const stripeTyper = {
     [UKJENT_KATEGORI]: AlertStripeNavansatt,
@@ -71,7 +71,7 @@ function FeilStripe({ feil, erVeileder, intl }) {
                             </div>
                         );
                     })}
-                <Text id={mostSpesificKey} hidden={vistekster} />
+                <FailsafeText id={mostSpesificKey} hidden={vistekster} />
             </div>
         </Stripe>
     );
