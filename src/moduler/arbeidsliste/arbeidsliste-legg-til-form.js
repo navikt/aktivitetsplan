@@ -31,6 +31,7 @@ function LeggTilArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
                         labelId="arbeidsliste.kommentar"
                         feltNavn={'kommentar'}
                         maxLength={KOMMENTAR_MAKS_LENGDE}
+                        visTellerFra={500}
                         disabled={false}
                     />
                     <Datovelger
