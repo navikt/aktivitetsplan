@@ -1,3 +1,5 @@
+import { dateToISODate } from '../../utils';
+
 export function selectOppfolgingSlice(state) {
     return state.data.oppfolging;
 }
@@ -18,6 +20,23 @@ export function selectOppfolgingsPerioder(state) {
 
 export function selectHistoriskeOppfolgingsPerioder(state) {
     return selectOppfolgingsPerioder(state).filter(p => p.sluttDato);
+}
+
+export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
+    let nesteFra = dateToISODate(new Date(0));
+    return selectHistoriskeOppfolgingsPerioder(state)
+        .sort((a, b) => b.sluttDato.localeCompare(a.sluttDato))
+        .map(periode => {
+            const sluttDato = periode.sluttDato;
+            const fra = nesteFra;
+            nesteFra = sluttDato;
+            return {
+                id: sluttDato,
+                til: sluttDato,
+                vistFra: periode.startDato,
+                fra,
+            };
+        });
 }
 
 export function selectErUnderOppfolging(state) {

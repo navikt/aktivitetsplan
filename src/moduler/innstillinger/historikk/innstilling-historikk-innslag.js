@@ -12,8 +12,8 @@ import {
     temaValg,
 } from './../opprett-oppgave/opprett-oppgave-utils';
 import { selectAlleDialoger } from '../../dialog/dialog-selector';
-import { selectHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
-import { dateToISODate, erTidspunktIPeriode } from '../../../utils';
+import { selectSorterteHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
+import { erTidspunktIPeriode } from '../../../utils';
 import { velgHistoriskPeriode } from '../../filtrering/filter/filter-reducer';
 import history from '../../../history';
 
@@ -185,27 +185,11 @@ InnstillingHistorikkInnslag.propTypes = {
     historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
 };
 
-const mapStateToProps = state => {
-    let nesteFra = dateToISODate(new Date(0));
-    return {
-        veileder: state.data.veiledere.data,
-        dialoger: selectAlleDialoger(state),
-        historiskePerioder: selectHistoriskeOppfolgingsPerioder(state)
-            .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
-            .map(periode => {
-                const sluttDato = periode.sluttDato;
-                const fra = nesteFra;
-                nesteFra = sluttDato;
-                return {
-                    id: sluttDato,
-                    til: sluttDato,
-                    vistFra: periode.startDato,
-                    fra,
-                };
-            })
-            .reverse(),
-    };
-};
+const mapStateToProps = state => ({
+    veileder: state.data.veiledere.data,
+    dialoger: selectAlleDialoger(state),
+    historiskePerioder: selectSorterteHistoriskeOppfolgingsPerioder(state),
+});
 
 const mapDispatchToProps = dispatch => ({
     doHentVeileder: veilederId => dispatch(hentVeileder(veilederId)),
