@@ -41,11 +41,17 @@ class InnstillingHistorikkInnslag extends Component {
             doVelgHistoriskPeriode,
         } = this.props;
 
-        const valgtDialog = dialoger.find(dialog => dialog.id === dialogId.toString());
+        const valgtDialog = dialoger.find(
+            dialog => dialog.id === dialogId.toString()
+        );
 
         if (valgtDialog.historisk) {
             const historiskPeriode = historiskePerioder.find(periode =>
-                erTidspunktIPeriode(valgtDialog.sisteDato, periode.fra, periode.til)
+                erTidspunktIPeriode(
+                    valgtDialog.sisteDato,
+                    periode.fra,
+                    periode.til
+                )
             );
             doVelgHistoriskPeriode(historiskPeriode);
         }
@@ -127,10 +133,12 @@ class InnstillingHistorikkInnslag extends Component {
                         {begrunnelseTekst}
                         <Lenke
                             href={`/dialog/${dialogId}`}
-                            onClick={(e) => {
+                            onClick={e => {
                                 e.preventDefault();
-                                this.gaTilDialogIRiktigHistoriskPeroiode(dialogId)}
-                            }
+                                this.gaTilDialogIRiktigHistoriskPeroiode(
+                                    dialogId
+                                );
+                            }}
                         >
                             <FormattedMessage
                                 id={'innstillinger.historikk.innslag.les_mer'}
@@ -201,7 +209,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     doHentVeileder: veilederId => dispatch(hentVeileder(veilederId)),
-    doVelgHistoriskPeriode: (historiskPeriode) => dispatch(velgHistoriskPeriode(historiskPeriode)),
+    doVelgHistoriskPeriode: historiskPeriode =>
+        dispatch(velgHistoriskPeriode(historiskPeriode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
