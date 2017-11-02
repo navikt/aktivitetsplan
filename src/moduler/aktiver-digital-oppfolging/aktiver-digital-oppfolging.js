@@ -4,16 +4,17 @@ import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
-import { settDigital } from './aktiver-digital-oppfolging-reducer';
+import {
+    settDigital,
+    hentOppfolging,
+} from '../oppfolging-status/oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
-import { hentOppfolging } from '../oppfolging-status/oppfolging-reducer';
 import {
     selectReservasjonKRR,
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Lenke from '../../felles-komponenter/utils/lenke';
-import { selectAktiverDigitalOppfolgingStatus } from './aktiver-digital-oppfolgning-selector';
 
 export function AktiverDigitalOppfolgingVarsel({
     reservertIKRR,
@@ -84,9 +85,8 @@ export class AktiverDigitalOppfolgingPure extends Component {
             reservertIKRR,
             doSettDigital,
             doHentOppfolging,
-            setterDigital,
             lasterOppfolging,
-            settDigitalFeilet,
+            settOppfolgingFeilet,
         } = this.props;
 
         const ReservasjonDifiKnapp = () =>
@@ -104,8 +104,8 @@ export class AktiverDigitalOppfolgingPure extends Component {
 
         const AktiverDigitalOppfolgingKnapp = () =>
             <HiddenIfHovedknapp
-                spinner={setterDigital}
-                disabled={setterDigital}
+                spinner={lasterOppfolging}
+                disabled={lasterOppfolging}
                 hidden={reservertIKRR}
                 onClick={doSettDigital}
             >
@@ -116,7 +116,7 @@ export class AktiverDigitalOppfolgingPure extends Component {
             <div className="sett-digital">
                 <AktiverDigitalOppfolgingVarsel
                     reservertIKRR={reservertIKRR}
-                    settDigitalFeilet={settDigitalFeilet}
+                    settDigitalFeilet={settOppfolgingFeilet}
                     harTrykketRefresh={this.state.harTrykketRefresh}
                 />
                 <ReservasjonDifiKnapp />
@@ -129,31 +129,23 @@ export class AktiverDigitalOppfolgingPure extends Component {
 AktiverDigitalOppfolgingPure.propTypes = {
     reservertIKRR: PT.bool.isRequired,
     lasterOppfolging: PT.bool.isRequired,
-    setterDigital: PT.bool.isRequired,
-    settDigitalFeilet: PT.bool.isRequired,
+    settOppfolgingFeilet: PT.bool.isRequired,
     doSettDigital: PT.func.isRequired,
     doHentOppfolging: PT.func.isRequired,
 };
 
 const mapStateToProps = state => {
-    const aktiverDigitalOppfolgingStatus = selectAktiverDigitalOppfolgingStatus(
-        state
-    );
-    const settDigitalFeilet = aktiverDigitalOppfolgingStatus === STATUS.ERROR;
-
-    const setterDigital =
-        aktiverDigitalOppfolgingStatus === STATUS.PENDING ||
-        aktiverDigitalOppfolgingStatus === STATUS.RELOADING;
-
     const oppfolgingStatus = selectOppfolgingStatus(state);
+
+    const settOppfolgingFeilet = oppfolgingStatus === STATUS.ERROR;
+
     const lasterOppfolging =
         oppfolgingStatus === STATUS.PENDING ||
         oppfolgingStatus === STATUS.RELOADING;
 
     return {
         reservertIKRR: selectReservasjonKRR(state),
-        settDigitalFeilet,
-        setterDigital,
+        settOppfolgingFeilet,
         lasterOppfolging,
     };
 };
