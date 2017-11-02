@@ -6,8 +6,6 @@ import { formValueSelector, change } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import moment from 'moment';
 import { OPPRETT_OPPGAVE_FORM } from './opprett-oppgave';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import * as AppPT from '../../../proptypes';
 import {
     begrensetBeskrivelseLengde,
     beskrivelsePakrevd,
@@ -21,10 +19,7 @@ import {
 import { pakrevd } from '../../../felles-komponenter/skjema/validering';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import Select from '../../../felles-komponenter/skjema/input/select';
-import {
-    opprettOppgaveForBruker,
-    selectOpprettOppgave,
-} from './opprett-oppgave-reducer';
+import { opprettOppgaveForBruker } from './opprett-oppgave-reducer';
 import history from '../../../history';
 import {
     hentBehandlendeEnheter,
@@ -68,7 +63,6 @@ function hentVeiledereDersomSammeEnhet(dispatch, props) {
 
 function OpprettOppgaveForm({
     onSubmit,
-    avhengigheter,
     hentEnheter,
     errorSummary,
     intl,
@@ -76,30 +70,27 @@ function OpprettOppgaveForm({
 }) {
     return (
         <form onSubmit={onSubmit}>
-            <Innholdslaster avhengigheter={avhengigheter}>
-                <div className="opprett-oppgave-skjema">
-                    {errorSummary}
-                    <Select
-                        blankOptionParameters={{ hidden: true }}
-                        feltNavn="tema"
-                        labelId="innstillinger.modal.opprett-oppgave.tema.tittel"
-                        bredde="fullbredde"
-                        onChange={v => {
-                            hentEnheter(v.target.value);
-                        }}
-                    >
-                        {optionsFromObjectWithIntl(temaValg, intl)}
-                    </Select>
-                    <OpprettOppgaveInnerForm intl={intl} {...rest} />
-                </div>
-            </Innholdslaster>
+            <div className="opprett-oppgave-skjema">
+                {errorSummary}
+                <Select
+                    blankOptionParameters={{ hidden: true }}
+                    feltNavn="tema"
+                    labelId="innstillinger.modal.opprett-oppgave.tema.tittel"
+                    bredde="fullbredde"
+                    onChange={v => {
+                        hentEnheter(v.target.value);
+                    }}
+                >
+                    {optionsFromObjectWithIntl(temaValg, intl)}
+                </Select>
+                <OpprettOppgaveInnerForm intl={intl} {...rest} />
+            </div>
         </form>
     );
 }
 
 OpprettOppgaveForm.propTypes = {
     onSubmit: PT.func.isRequired,
-    avhengigheter: AppPT.avhengigheter.isRequired,
     hentEnheter: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
     intl: intlShape.isRequired,
@@ -145,7 +136,6 @@ const mapStateToProps = (state, props) => {
             : undefined,
         valgtEnhet: selector(state, 'enhetId'),
         tema: selector(state, 'tema'),
-        avhengigheter: [selectOpprettOppgave(state)],
         behandlendeEnheter: selectBehandlendeEnheter(state),
     };
 };
