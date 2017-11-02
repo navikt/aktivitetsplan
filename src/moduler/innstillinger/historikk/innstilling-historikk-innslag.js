@@ -6,7 +6,7 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
 import { hentVeileder } from '../../../ducks/veileder-reducer';
 import * as AppPT from '../../../proptypes';
-import KnappLenke from '../../../felles-komponenter/utils/knappelenke';
+import Lenke from '../../../felles-komponenter/utils/lenke';
 import {
     oppgavetyper,
     temaValg,
@@ -34,24 +34,22 @@ class InnstillingHistorikkInnslag extends Component {
         }
     }
 
-    settHistoriskPeriodeForDialog(dialogId) {
+    gaTilDialogIRiktigHistoriskPeroiode(dialogId) {
         const {
             dialoger,
             historiskePerioder,
             doVelgHistoriskPeriode,
         } = this.props;
 
-        const historiskDialog = dialoger
-            .filter(dialog => dialog.historisk)
-            .find(dialog => dialog.id === `${dialogId}`);
+        const valgtDialog = dialoger.find(dialog => dialog.id === dialogId.toString());
 
-        if (historiskDialog) {
-            const dialogAvsluttet = historiskDialog.sisteDato;
+        if (valgtDialog.historisk) {
             const historiskPeriode = historiskePerioder.find(periode =>
-                erTidspunktIPeriode(dialogAvsluttet, periode.fra, periode.til)
+                erTidspunktIPeriode(valgtDialog.sisteDato, periode.fra, periode.til)
             );
-            doVelgHistoriskPeriode(historiskPeriode, dialogId);
+            doVelgHistoriskPeriode(historiskPeriode);
         }
+        history.push(`/dialog/${dialogId}`);
     }
 
     hentKomponentMedNavn() {
@@ -127,14 +125,17 @@ class InnstillingHistorikkInnslag extends Component {
                 return (
                     <Normaltekst className="innslag__begrunnelse">
                         {begrunnelseTekst}
-                        <KnappLenke
-                            onClick={() =>
-                                this.settHistoriskPeriodeForDialog(dialogId)}
+                        <Lenke
+                            href={`/dialog/${dialogId}`}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                this.gaTilDialogIRiktigHistoriskPeroiode(dialogId)}
+                            }
                         >
                             <FormattedMessage
                                 id={'innstillinger.historikk.innslag.les_mer'}
                             />
-                        </KnappLenke>
+                        </Lenke>
                     </Normaltekst>
                 );
             }
@@ -200,10 +201,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     doHentVeileder: veilederId => dispatch(hentVeileder(veilederId)),
-    doVelgHistoriskPeriode: (historiskPeriode, dialogId) => {
-        dispatch(velgHistoriskPeriode(historiskPeriode));
-        history.push(`/dialog/${dialogId}`);
-    },
+    doVelgHistoriskPeriode: (historiskPeriode) => dispatch(velgHistoriskPeriode(historiskPeriode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
