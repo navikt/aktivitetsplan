@@ -1,11 +1,14 @@
 import * as Api from './oppfolging-api';
 import { STATUS, doThenDispatch } from '../../ducks/utils';
-import { SETT_DIGITAL_OK } from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
 
 // Actions
 export const OK = 'oppfolging/OK';
 export const FEILET = 'oppfolging/FEILET';
 export const PENDING = 'oppfolging/PENDING';
+
+export const SETT_DIGITAL_OK = 'oppfolging/digital/OK';
+export const SETT_DIGITAL_FEILET = 'oppfolging/digital/FEILET';
+export const SETT_DIGITAL_PENDING = 'oppfolging/digital/PENDING';
 
 export const AVSLA_OK = 'oppfolging/avsla/OK';
 export const AVSLA_FEILET = 'oppfolging/avsla/FEILET';
@@ -48,6 +51,7 @@ export default function reducer(state = initalState, action) {
         case FEILET:
         case GODTA_FEILET:
         case AVSLA_FEILET:
+        case SETT_DIGITAL_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
@@ -56,6 +60,7 @@ export default function reducer(state = initalState, action) {
         case PENDING:
         case GODTA_PENDING:
         case AVSLA_PENDING:
+        case SETT_DIGITAL_PENDING:
             return {
                 ...state,
                 status:
@@ -92,5 +97,13 @@ export function avslaVilkar(hash) {
         OK: AVSLA_OK,
         FEILET: AVSLA_FEILET,
         PENDING: AVSLA_PENDING,
+    });
+}
+
+export function settDigital() {
+    return doThenDispatch(() => Api.settDigital(), {
+        OK: SETT_DIGITAL_OK,
+        FEILET: SETT_DIGITAL_FEILET,
+        PENDING: SETT_DIGITAL_PENDING,
     });
 }

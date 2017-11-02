@@ -8,10 +8,9 @@ import {
     shallowWithIntl,
     mountWithIntl,
 } from '../../../test/intl-enzyme-test-helper';
-import {
-    AktiverDigitalOppfolgingPure,
-    AktiverDigitalOppfolgingVarsel,
-} from './aktiver-digital-oppfolging';
+import { AktiverDigitalOppfolgingPure } from './aktiver-digital-oppfolging';
+import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel';
+
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 
 describe('aktiver-digital-oppfolging', () => {
