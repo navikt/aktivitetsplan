@@ -6,11 +6,16 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
 import { hentVeileder } from '../../../ducks/veileder-reducer';
 import * as AppPT from '../../../proptypes';
-import Lenke from '../../../felles-komponenter/utils/lenke';
+import KnappLenke from '../../../felles-komponenter/utils/knappelenke';
 import {
-    temaValg,
     oppgavetyper,
+    temaValg,
 } from './../opprett-oppgave/opprett-oppgave-utils';
+import { selectAlleDialoger } from '../../dialog/dialog-selector';
+import { selectHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
+import { dateToISODate, erTidspunktIPeriode } from '../../../utils';
+import { velgHistoriskPeriode } from '../../filtrering/filter/filter-reducer';
+import history from '../../../history';
 
 const NAV = 'NAV';
 const SYSTEM = 'SYSTEM';
@@ -26,6 +31,26 @@ class InnstillingHistorikkInnslag extends Component {
         const innstillingHistorikk = this.props.innstillingHistorikk;
         if (innstillingHistorikk.opprettetAv === NAV) {
             this.props.doHentVeileder(innstillingHistorikk.opprettetAvBrukerId);
+        }
+    }
+
+    settHistoriskPeriodeForDialog(dialogId) {
+        const {
+            dialoger,
+            historiskePerioder,
+            doVelgHistoriskPeriode,
+        } = this.props;
+
+        const historiskDialog = dialoger
+            .filter(dialog => dialog.historisk)
+            .find(dialog => dialog.id === `${dialogId}`);
+
+        if (historiskDialog) {
+            const dialogAvsluttet = historiskDialog.sisteDato;
+            const historiskPeriode = historiskePerioder.find(periode =>
+                erTidspunktIPeriode(dialogAvsluttet, periode.fra, periode.til)
+            );
+            doVelgHistoriskPeriode(historiskPeriode, dialogId);
         }
     }
 
@@ -102,11 +127,14 @@ class InnstillingHistorikkInnslag extends Component {
                 return (
                     <Normaltekst className="innslag__begrunnelse">
                         {begrunnelseTekst}
-                        <Lenke href={`/dialog/${dialogId}`}>
+                        <KnappLenke
+                            onClick={() =>
+                                this.settHistoriskPeriodeForDialog(dialogId)}
+                        >
                             <FormattedMessage
                                 id={'innstillinger.historikk.innslag.les_mer'}
                             />
-                        </Lenke>
+                        </KnappLenke>
                     </Normaltekst>
                 );
             }
@@ -135,23 +163,47 @@ class InnstillingHistorikkInnslag extends Component {
 }
 
 InnstillingHistorikkInnslag.defaultProps = {
-    doHentVeileder: undefined,
     veileder: undefined,
 };
 
 InnstillingHistorikkInnslag.propTypes = {
     innstillingHistorikk: AppPT.innstillingHistorikk.isRequired,
     doHentVeileder: PT.func.isRequired,
+    doVelgHistoriskPeriode: PT.func.isRequired,
     veileder: AppPT.veileder,
     intl: intlShape.isRequired,
+    dialoger: PT.arrayOf(AppPT.dialog).isRequired,
+    historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
 };
 
-const mapStateToProps = state => ({
-    veileder: state.data.veiledere.data,
-});
+const mapStateToProps = state => {
+    let nesteFra = dateToISODate(new Date(0));
+    return {
+        veileder: state.data.veiledere.data,
+        dialoger: selectAlleDialoger(state),
+        historiskePerioder: selectHistoriskeOppfolgingsPerioder(state)
+            .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
+            .map(periode => {
+                const sluttDato = periode.sluttDato;
+                const fra = nesteFra;
+                nesteFra = sluttDato;
+                return {
+                    id: sluttDato,
+                    til: sluttDato,
+                    vistFra: periode.startDato,
+                    fra,
+                };
+            })
+            .reverse(),
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     doHentVeileder: veilederId => dispatch(hentVeileder(veilederId)),
+    doVelgHistoriskPeriode: (historiskPeriode, dialogId) => {
+        dispatch(velgHistoriskPeriode(historiskPeriode));
+        history.push(`/dialog/${dialogId}`);
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
