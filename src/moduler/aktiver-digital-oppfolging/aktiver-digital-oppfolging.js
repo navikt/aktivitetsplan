@@ -2,75 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import {
-    settDigital,
     hentOppfolging,
+    settDigital,
 } from '../oppfolging-status/oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
 import {
-    selectReservasjonKRR,
     selectOppfolgingStatus,
+    selectReservasjonKRR,
 } from '../oppfolging-status/oppfolging-selector';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
-import Lenke from '../../felles-komponenter/utils/lenke';
-
-export function AktiverDigitalOppfolgingVarsel({
-    reservertIKRR,
-    settDigitalFeilet,
-    harTrykketRefresh,
-}) {
-    const InformasjonContainer = () =>
-        <div>
-            <FormattedMessage id="informasjon-mer" />&nbsp;
-            <Lenke href="/informasjon">
-                <FormattedMessage id="informasjon-mer-lenke" />
-            </Lenke>
-        </div>;
-
-    if (!reservertIKRR && !settDigitalFeilet) {
-        return (
-            <AlertStripeInfoSolid className="sett-digital__varsel">
-                <div>
-                    <FormattedMessage id="sett-digital.manuell-oppfolging.infotekst" />
-                </div>
-                <InformasjonContainer />
-            </AlertStripeInfoSolid>
-        );
-    } else if (reservertIKRR && !settDigitalFeilet) {
-        const resertvertTekst = harTrykketRefresh
-            ? 'sett-digital.reservert-i-krr.fjern.reservasjon.infotekst'
-            : 'sett-digital.reservert-i-krr.infotekst';
-        return (
-            <FormattedMessage id="sett-digital.reservert-i-krr.url-lenke">
-                {url =>
-                    <AlertStripeInfoSolid className="sett-digital__varsel">
-                        <div className="blokk-s">
-                            <FormattedMessage id={resertvertTekst} />&nbsp;
-                            <Lenke href={url}>
-                                <FormattedMessage id="sett-digital.reservert-i-krr.lenketekst" />
-                            </Lenke>
-                        </div>
-                        <InformasjonContainer />
-                    </AlertStripeInfoSolid>}
-            </FormattedMessage>
-        );
-    } else if (settDigitalFeilet) {
-        return (
-            <AdvarselVarsling
-                tekstId="sett-digital.feilmelding"
-                className="sett-digital__varsel"
-            />
-        );
-    }
-}
-
-AktiverDigitalOppfolgingVarsel.propTypes = {
-    reservertIKRR: PT.bool.isRequired,
-    settDigitalFeilet: PT.bool.isRequired,
-    harTrykketRefresh: PT.bool.isRequired,
-};
+import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel'
 
 export class AktiverDigitalOppfolgingPure extends Component {
     constructor(props) {
@@ -104,10 +46,10 @@ export class AktiverDigitalOppfolgingPure extends Component {
 
         const AktiverDigitalOppfolgingKnapp = () =>
             <HiddenIfHovedknapp
-                spinner={lasterOppfolging}
                 disabled={lasterOppfolging}
                 hidden={reservertIKRR}
                 onClick={doSettDigital}
+                autoDisableVedSpinner
             >
                 <FormattedMessage id="sett-digital.manuell-oppfolging.aktiver-digital-knapp" />
             </HiddenIfHovedknapp>;
