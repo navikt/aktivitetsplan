@@ -37,8 +37,8 @@ export default function reducer(state = initalState, action) {
 // Action creator
 export function hentVeileder(veilederId) {
     return (dispatch, getState) => {
-        const cached = getState().data.veiledere.data[veilederId];
-        if (!cached) {
+        const status = getState().data.veiledere.status;
+        if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
             doThenDispatch(() => Api.hentVeileder(veilederId), {
                 OK: HENTER_VEILEDER_OK,
                 PENDING: HENTER_VEILEDER_PENDING,
