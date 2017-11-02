@@ -22,6 +22,10 @@ export function selectEskaleringsFilter(state) {
     return selectDialogSlice(state).esklaringsFilter;
 }
 
+export function selectAlleDialoger(state) {
+    return selectDialogSlice(state).data;
+}
+
 export function selectDialoger(state) {
     const ikkeFjernDeSomIkkeErEskaleringer = !selectEskaleringsFilter(state);
     return selectDialogSlice(state).data
