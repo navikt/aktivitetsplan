@@ -12,7 +12,7 @@ import {
     selectReservasjonKRR,
 } from '../oppfolging-status/oppfolging-selector';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
-import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel'
+import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel';
 
 export class AktiverDigitalOppfolgingPure extends Component {
     constructor(props) {
