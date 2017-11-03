@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'react-redux-form-validation';
-import aktiverDigitalOppfolgingReducer from './moduler/aktiver-digital-oppfolging/aktiver-digital-oppfolging-reducer';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
 import arbeidslisteReducer from './moduler/arbeidsliste/arbeidsliste-reducer';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reducer';
@@ -33,7 +32,6 @@ export const RESET_STORE = { type: 'store/reset' };
 const combinedReducers = combineReducers({
     form: formReducer,
     data: combineReducers({
-        aktiverDigitalOppfolging: aktiverDigitalOppfolgingReducer,
         aktiviteter: aktiviteterReducer,
         arbeidsliste: arbeidslisteReducer,
         arenaAktiviteter: arenaAktiviteterReducer,

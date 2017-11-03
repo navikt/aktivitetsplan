@@ -5,6 +5,10 @@ export function hentIdentitet() {
     return fetchToJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/me`);
 }
 
+export function settDigital() {
+    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/settDigital`);
+}
+
 export function hentOppfolging() {
     return fetchToJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging`);
 }
