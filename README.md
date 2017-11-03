@@ -23,7 +23,7 @@ Tekstnøkler for feilmeldinger er håndtert litt spessielt i løsningen. For en 
 
 #### Opprettelse av nye filer
 Hvis man ønsker å legge til en mer spesifikk feilmelding, må man opprett en ny fil i BitBucket for den nøkkelen.
-# Klikk på `+ New File` knappen oppe til høyre
-# Fyll inn følgende i boksen for filename: `src/main/resources/[nøkkel]_nb.txt` hvor du erstatter [nøkkel] med den aktuelle nøkkelen du ønsker å legge til en tekst for. Husk å få med riktig språkkode og filendelse. Og desverre er man nødt til å ha med `src/main/resources/` foran filnavnet for at filen skal havne i riktig mappe.
-# Fyll inn ønsket tekst i editeringsvinduet.
-# Klikk på `Commit...` knappen og dertter på `Commit Changes` knappen i dialogen som dukker opp.
+1. Klikk på `+ New File` knappen oppe til høyre
+1. Fyll inn følgende i boksen for filename: `src/main/resources/[nøkkel]_nb.txt` hvor du erstatter [nøkkel] med den aktuelle nøkkelen du ønsker å legge til en tekst for. Husk å få med riktig språkkode og filendelse. Og desverre er man nødt til å ha med `src/main/resources/` foran filnavnet for at filen skal havne i riktig mappe.
+1. Fyll inn ønsket tekst i editeringsvinduet.
+1. Klikk på `Commit...` knappen og dertter på `Commit Changes` knappen i dialogen som dukker opp.
