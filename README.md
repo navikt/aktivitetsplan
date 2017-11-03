@@ -7,7 +7,7 @@ Et eksempel på en tekst med ?vistekster parameteren på, er `Aktivitetsplan [ho
 
 ## Parameter substitusjon
 I noen tilfeller vil en tekst inneholde krøllparenteser `{}`. Disse brukes for å legge til en veriabel verdi i teksten. For eksempel `Beskrivelsen kan ikke være lenger enn {MAKS_LENGDE} tegn`. I dette tilfellet vil `MAKS_LENGDE` være en parameter som erstattes med f.eks. tallet 500.
-Man kan fritt endre teksten utenfor krøllparentesene, men det som står innfenfor er en kodeverdi som må spesifiseres akkurat slik.
+Man kan fritt endre teksten utenfor krøllparentesene, men det som står innenfor er en kodeverdi som må spesifiseres akkurat slik.
 
 
 ## Forskjellige meldinger basert på parameter verdi
@@ -25,8 +25,8 @@ I eksempelet over sjekker vi parameteren `underOppfolging` og velger en av to te
 Tekstnøkler for feilmeldinger er håndtert litt spessielt i løsningen. For en gitt feilsituasjon som kan oppstå genererer vi et sett med nøkkler basert på hvilken opperasjon man forsøkte å utføre i det feilsituasjonen oppsto. Hvis man bruker `vistekster` parameteren vil man se en liste med alle nøklene for den aktuelle feilen, sortert synkende etter hvor spesifik nøkkelen er. Mange av disse nøklene vil ikke ha en verdi i BitBucket, og den som vises til bruker vil være den mest spesifikke som har en verdi.
 
 #### Opprettelse av nye filer
-Hvis man ønsker å legge til en mer spesifikk feilmelding, må man opprett en ny fil i BitBucket for den nøkkelen.
+Hvis man ønsker å legge til en mer spesifikk feilmelding, må man opprette en ny fil i BitBucket for den nøkkelen.
 1. Klikk på `+ New File` knappen oppe til høyre
-1. Fyll inn følgende i boksen for filename: `src/main/resources/[nøkkel]_nb.txt` hvor du erstatter [nøkkel] med den aktuelle nøkkelen du ønsker å legge til en tekst for. Husk å få med riktig språkkode og filendelse. Og desverre er man nødt til å ha med `src/main/resources/` foran filnavnet for at filen skal havne i riktig mappe.
+1. Fyll inn følgende i boksen for filename: `src/main/resources/[nøkkel]_nb.txt` hvor du erstatter `[nøkkel]` med den aktuelle nøkkelen du ønsker å legge til en tekst for. Husk å få med riktig språkkode og filendelse. Og desverre er man nødt til å ha med `src/main/resources/` foran filnavnet for at filen skal havne i riktig mappe.
 1. Fyll inn ønsket tekst i editeringsvinduet.
 1. Klikk på `Commit...` knappen og dertter på `Commit Changes` knappen i dialogen som dukker opp.
