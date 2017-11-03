@@ -8,9 +8,14 @@ import { hentVeileder } from '../../../ducks/veileder-reducer';
 import * as AppPT from '../../../proptypes';
 import Lenke from '../../../felles-komponenter/utils/lenke';
 import {
-    temaValg,
     oppgavetyper,
+    temaValg,
 } from './../opprett-oppgave/opprett-oppgave-utils';
+import { selectAlleDialoger } from '../../dialog/dialog-selector';
+import { selectSorterteHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
+import { erTidspunktIPeriode } from '../../../utils';
+import { velgHistoriskPeriode } from '../../filtrering/filter/filter-reducer';
+import history from '../../../history';
 
 const NAV = 'NAV';
 const SYSTEM = 'SYSTEM';
@@ -27,6 +32,30 @@ class InnstillingHistorikkInnslag extends Component {
         if (innstillingHistorikk.opprettetAv === NAV) {
             this.props.doHentVeileder(innstillingHistorikk.opprettetAvBrukerId);
         }
+    }
+
+    gaTilDialogIRiktigHistoriskPeroiode(dialogId) {
+        const {
+            dialoger,
+            historiskePerioder,
+            doVelgHistoriskPeriode,
+        } = this.props;
+
+        const valgtDialog = dialoger.find(
+            dialog => dialog.id === dialogId.toString()
+        );
+
+        if (valgtDialog.historisk) {
+            const historiskPeriode = historiskePerioder.find(periode =>
+                erTidspunktIPeriode(
+                    valgtDialog.sisteDato,
+                    periode.fra,
+                    periode.til
+                )
+            );
+            doVelgHistoriskPeriode(historiskPeriode);
+        }
+        history.push(`/dialog/${dialogId}`);
     }
 
     hentKomponentMedNavn() {
@@ -102,7 +131,15 @@ class InnstillingHistorikkInnslag extends Component {
                 return (
                     <Normaltekst className="innslag__begrunnelse">
                         {begrunnelseTekst}
-                        <Lenke href={`/dialog/${dialogId}`}>
+                        <Lenke
+                            href={`/dialog/${dialogId}`}
+                            onClick={e => {
+                                e.preventDefault();
+                                this.gaTilDialogIRiktigHistoriskPeroiode(
+                                    dialogId
+                                );
+                            }}
+                        >
                             <FormattedMessage
                                 id={'innstillinger.historikk.innslag.les_mer'}
                             />
@@ -135,23 +172,29 @@ class InnstillingHistorikkInnslag extends Component {
 }
 
 InnstillingHistorikkInnslag.defaultProps = {
-    doHentVeileder: undefined,
     veileder: undefined,
 };
 
 InnstillingHistorikkInnslag.propTypes = {
     innstillingHistorikk: AppPT.innstillingHistorikk.isRequired,
     doHentVeileder: PT.func.isRequired,
+    doVelgHistoriskPeriode: PT.func.isRequired,
     veileder: AppPT.veileder,
     intl: intlShape.isRequired,
+    dialoger: PT.arrayOf(AppPT.dialog).isRequired,
+    historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
 };
 
 const mapStateToProps = state => ({
     veileder: state.data.veiledere.data,
+    dialoger: selectAlleDialoger(state),
+    historiskePerioder: selectSorterteHistoriskeOppfolgingsPerioder(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     doHentVeileder: veilederId => dispatch(hentVeileder(veilederId)),
+    doVelgHistoriskPeriode: historiskPeriode =>
+        dispatch(velgHistoriskPeriode(historiskPeriode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

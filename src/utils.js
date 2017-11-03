@@ -244,3 +244,7 @@ export function HiddenIf({ hidden, children }) {
     }
     return children;
 }
+
+export function erTidspunktIPeriode(tidspunkt, fra, til) {
+    return moment(tidspunkt).isBetween(moment(fra), moment(til));
+}
