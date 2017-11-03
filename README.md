@@ -26,4 +26,4 @@ Hvis man ønsker å legge til en mer spesifikk feilmelding, må man opprett en n
 # Klikk på `+ New File` knappen oppe til høyre
 # Fyll inn følgende i boksen for filename: `src/main/resources/[nøkkel]_nb.txt` hvor du erstatter [nøkkel] med den aktuelle nøkkelen du ønsker å legge til en tekst for. Husk å få med riktig språkkode og filendelse. Og desverre er man nødt til å ha med `src/main/resources/` foran filnavnet for at filen skal havne i riktig mappe.
 # Fyll inn ønsket tekst i editeringsvinduet.
-# Klikk på
+# Klikk på `Commit...` knappen og dertter på `Commit Changes` knappen i dialogen som dukker opp.
