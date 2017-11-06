@@ -1,0 +1,1 @@
+Det er fare for at du kan ha forskjellige brukere i forskjellige flater/vinduer. Systemet feiler og klarer ikke oppfatte endringer du eventuelt har gjort i andre vinuer.

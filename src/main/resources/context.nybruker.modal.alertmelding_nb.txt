@@ -1,0 +1,1 @@
+Du har endret bruker i et annet vindu. Du kan ikke jobbe med 2 brukere samtidig. Velger du avbryt mister du arbeidet du ikke har lagret.

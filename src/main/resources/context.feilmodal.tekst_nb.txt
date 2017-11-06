@@ -1,0 +1,1 @@
+Kommunikasjonen med bruker i context feilet. Dette betyr at det er fare for at du kan ha forskjellige brukere i de ulike flatene.
