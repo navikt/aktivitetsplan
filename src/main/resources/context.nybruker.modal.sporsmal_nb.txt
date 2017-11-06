@@ -1,1 +1,1 @@
-Vil du fortsette å jobbe med bruker som har fødselsnummer {bruker}
+Ønsker du å endre bruker til {bruker}?
