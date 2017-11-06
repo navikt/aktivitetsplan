@@ -1,4 +1,4 @@
-import {dateToISODate, sammenlignDato} from '../../utils';
+import { dateToISODate, sammenlignDato } from '../../utils';
 
 export function selectOppfolgingSlice(state) {
     return state.data.oppfolging;
