@@ -7,10 +7,18 @@ import {
     selectErUnderOppfolging,
     selectOppfolgingStatus,
 } from './moduler/oppfolging-status/oppfolging-selector';
+import {
+    selectErVeileder,
+    selectIdentitetStatus,
+} from './moduler/identitet/identitet-selector';
 
 const mapStateToProps = state => ({
-    avhengigheter: [selectOppfolgingStatus(state)],
+    avhengigheter: [
+        selectOppfolgingStatus(state),
+        selectIdentitetStatus(state),
+    ],
     underOppfolging: selectErUnderOppfolging(state),
+    erVeileder: selectErVeileder(state),
 });
 
 function textHOC(Component, props) {

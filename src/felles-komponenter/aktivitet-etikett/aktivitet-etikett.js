@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
+import Text from '../../text';
 import hiddenIfHOC from '../../felles-komponenter/hidden-if/hidden-if';
 import * as statuskoder from '../../constant';
 
@@ -31,7 +31,7 @@ const setType = etikettnavn => {
 function AktivitetEtikett({ etikett, id }) {
     return (
         <span key={etikett} className={cls(setType(etikett))}>
-            <FormattedMessage id={id} />
+            <Text id={id} />
         </span>
     );
 }

@@ -38,6 +38,7 @@ function NyHenvendelseForm({
     visBrukerInfo,
     erBruker,
     skalHaAutofokus,
+    erKnyttTilAktivitet,
 }) {
     return (
         <form onSubmit={handleSubmit} className="ny-henvendelse-form">
@@ -65,7 +66,9 @@ function NyHenvendelseForm({
                     autoFocus
                 />}
             <Textarea
-                labelId="dialog.tekst-label"
+                labelId={`dialog.tekst-label${erKnyttTilAktivitet
+                    ? '-aktivitet'
+                    : '-generell'}`}
                 feltNavn="tekst"
                 placeholder="Skriv her"
                 maxLength={BESKRIVELSE_MAKS_LENGDE}
@@ -99,6 +102,7 @@ NyHenvendelseForm.propTypes = {
     erBruker: PT.bool.isRequired,
     visBrukerInfo: PT.bool.isRequired,
     skalHaAutofokus: PT.bool,
+    erKnyttTilAktivitet: PT.bool.isRequired,
 };
 
 const pakrevdOverskrift = rules.minLength(
@@ -148,6 +152,7 @@ const mapStateToProps = (state, props) => {
         oppretter: selectDialogStatus(state) !== STATUS.OK,
         erBruker,
         visBrukerInfo: erBruker && selectVisBrukerInfo(state, dialogId),
+        erKnyttTilAktivitet: !!aktivitetId || (dialog && !!dialog.aktivitetId),
     };
 };
 

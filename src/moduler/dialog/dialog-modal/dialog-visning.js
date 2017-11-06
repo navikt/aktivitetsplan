@@ -110,7 +110,7 @@ class DialogVisning extends React.Component {
                 >
                     <Etikett
                         hidden={!venterPaSvar}
-                        id="dialog.venter-pa-svar"
+                        id="dialog.venter-pa-svar-etikett"
                         etikett={DIALOG_MA_BESVARES}
                     />
                     <Etikett
