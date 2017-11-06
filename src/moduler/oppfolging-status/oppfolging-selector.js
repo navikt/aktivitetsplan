@@ -1,4 +1,4 @@
-import { dateToISODate } from '../../utils';
+import {dateToISODate, sammenlignDato} from '../../utils';
 
 export function selectOppfolgingSlice(state) {
     return state.data.oppfolging;
@@ -25,16 +25,16 @@ export function selectHistoriskeOppfolgingsPerioder(state) {
 export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
     let nesteFra = dateToISODate(new Date(0));
     return selectHistoriskeOppfolgingsPerioder(state)
-        .sort((a, b) => b.sluttDato.localeCompare(a.sluttDato))
+        .sort(sammenlignDato)
         .map(periode => {
             const sluttDato = periode.sluttDato;
             const fra = nesteFra;
             nesteFra = sluttDato;
             return {
                 id: sluttDato,
+                fra,
                 til: sluttDato,
                 vistFra: periode.startDato,
-                fra,
             };
         });
 }
