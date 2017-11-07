@@ -43,7 +43,7 @@ class VersjonerForAktivitet extends Component {
 
     render() {
         const { versjonerData, className } = this.props;
-        const versjoner = versjonerData.data;
+        const versjoner = versjonerData.data.sort((a, b) => b.endretDato - a.endretDato);
 
         const versjonerInnslag = versjoner
             .slice(0, MAX_SIZE)
