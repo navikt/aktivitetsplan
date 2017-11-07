@@ -43,6 +43,7 @@ function RedigerArbeidslisteForm({
                         labelId="arbeidsliste.kommentar"
                         feltNavn={'kommentar'}
                         maxLength={KOMMENTAR_MAKS_LENGDE}
+                        visTellerFra={500}
                         disabled={false}
                     />
 
