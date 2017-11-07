@@ -6,7 +6,7 @@ Et eksempel på en tekst med ?vistekster parameteren på, er `Aktivitetsplan [ho
 
 
 ## Parameter substitusjon
-I noen tilfeller vil en tekst inneholde krøllparenteser `{}`. Disse brukes for å legge til en veriabel verdi i teksten. For eksempel `Beskrivelsen kan ikke være lenger enn {MAKS_LENGDE} tegn`. I dette tilfellet vil `MAKS_LENGDE` være en parameter som erstattes med f.eks. tallet 500.
+I noen tilfeller vil en tekst inneholde krøllparenteser `{}`. Disse brukes for å legge til en variabel verdi i teksten. For eksempel `Beskrivelsen kan ikke være lenger enn {MAKS_LENGDE} tegn`. I dette tilfellet vil `MAKS_LENGDE` være en parameter som erstattes med f.eks. tallet 500.
 Man kan fritt endre teksten utenfor krøllparentesene, men det som står innenfor er en kodeverdi som må spesifiseres akkurat slik.
 
 
