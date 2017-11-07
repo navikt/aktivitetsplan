@@ -248,7 +248,3 @@ export function HiddenIf({ hidden, children }) {
 export function erTidspunktIPeriode(tidspunkt, fra, til) {
     return moment(tidspunkt).isBetween(moment(fra), moment(til));
 }
-
-export function sammenlignDato(a, b) {
-    return moment(a).isBefore(b);
-}
