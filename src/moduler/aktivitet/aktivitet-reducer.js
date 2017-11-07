@@ -18,7 +18,11 @@ export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
         case AT.SLETT_OK:
-            return { ...state, status: STATUS.OK, data: state.data.filter(a => a.id !== data.id) };
+            return {
+                ...state,
+                status: STATUS.OK,
+                data: state.data.filter(a => a.id !== data.id),
+            };
         case AT.OPPDATER_OK:
         case AT.FLYTT_OK:
         case AT.OPPDATER_REFERAT_OK:
