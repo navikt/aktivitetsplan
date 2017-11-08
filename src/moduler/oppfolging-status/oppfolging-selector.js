@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { dateToISODate, sammenlignDato } from '../../utils';
+import { dateToISODate } from '../../utils';
 
 export function selectOppfolgingSlice(state) {
     return state.data.oppfolging;
@@ -36,7 +36,7 @@ export const selectForrigeHistoriskeSluttDato = createSelector(
 export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
     let nesteFra = dateToISODate(new Date(0));
     return selectHistoriskeOppfolgingsPerioder(state)
-        .sort(sammenlignDato)
+        .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
         .map(periode => {
             const sluttDato = periode.sluttDato;
             const fra = nesteFra;
@@ -47,7 +47,8 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
                 til: sluttDato,
                 vistFra: periode.startDato,
             };
-        });
+        })
+        .reverse();
 }
 
 export function selectErUnderOppfolging(state) {
