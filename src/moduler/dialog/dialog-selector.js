@@ -1,5 +1,8 @@
 import moment from 'moment';
-import { dialogFilter } from '../filtrering/filter/filter-utils';
+import { createSelector } from 'reselect';
+import { newDatoErIPeriode } from '../filtrering/filter/filter-utils';
+import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
 import { erEskaleringsDialog } from './dialog-utils';
 import {
     selectErBruker,
@@ -26,14 +29,31 @@ export function selectAlleDialoger(state) {
     return selectDialogSlice(state).data;
 }
 
-export function selectDialoger(state) {
-    const ikkeFjernDeSomIkkeErEskaleringer = !selectEskaleringsFilter(state);
-    return selectDialogSlice(state).data
-        .filter(d => dialogFilter(d, state))
-        .filter(
-            d => erEskaleringsDialog(d) || ikkeFjernDeSomIkkeErEskaleringer
-        );
-}
+const hentDialogerFraState = (
+    dialoger,
+    esklaringsFilter,
+    historiskPeriode,
+    forrigeSluttDato
+) =>
+    dialoger.data
+        .filter(d =>
+            newDatoErIPeriode(
+                d.opprettetDato,
+                historiskPeriode,
+                forrigeSluttDato
+            )
+        )
+        .filter(d => erEskaleringsDialog(d) || !esklaringsFilter);
+
+export const selectDialoger = createSelector(
+    [
+        selectDialogSlice,
+        selectEskaleringsFilter,
+        selectHistoriskPeriode,
+        selectForrigeHistoriskeSluttDato,
+    ],
+    hentDialogerFraState
+);
 
 export function selectDialogMedId(state, dialogId) {
     return selectDialoger(state).find(d => d.id === dialogId);

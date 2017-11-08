@@ -97,7 +97,6 @@ Dialoger.defaultProps = {
 
 Dialoger.propTypes = {
     className: PT.string,
-    avhengigheter: AppPT.avhengigheter,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
     valgtDialog: AppPT.dialog,
@@ -110,20 +109,20 @@ Dialoger.defaultProps = {
     valgtDialog: undefined,
 };
 
-function DialogerMedInnholdslaster({ avhengigheter, ...props }) {
+function DialogerMedInnholdslaster({ avhengighet, ...props }) {
     return (
-        <Innholdslaster avhengigheter={avhengigheter}>
+        <Innholdslaster avhengigheter={avhengighet}>
             <Dialoger {...props} />
         </Innholdslaster>
     );
 }
 
 DialogerMedInnholdslaster.propTypes = {
-    avhengigheter: AppPT.avhengigheter.isRequired,
+    avhengighet: AppPT.avhengigheter.isRequired,
 };
 
 const mapStateToProps = state => ({
-    avhengigheter: [selectDialogStatus(state)],
+    avhengighet: selectDialogStatus(state),
     dialoger: selectDialoger(state),
     aktiviteter: selectAlleAktiviter(state),
     erBruker: selectErBruker(state),

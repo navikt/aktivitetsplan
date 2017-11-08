@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect';
 import {
     selectAktiviteterData,
     selectAktivitetStatus,
@@ -24,11 +25,11 @@ import {
 } from '../../constant';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 
-export function selectAlleAktiviter(state) {
-    return selectAktiviteterData(state).concat(
-        selectArenaAktiviteterData(state)
-    );
-}
+export const selectAlleAktiviter = createSelector(
+    selectAktiviteterData,
+    selectArenaAktiviteterData,
+    (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter)
+);
 
 export function selectAktiviterForAktuellePerioden(state) {
     return selectAlleAktiviter(state).filter(a =>

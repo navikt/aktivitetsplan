@@ -12,12 +12,12 @@ const harStatus = (...status) => element =>
         typeof element === 'string' ? element : element.status
     );
 const noenHarFeil = avhengigheter =>
-    avhengigheter && avhengigheter.some(harStatus(STATUS.ERROR));
+    avhengigheter && array(avhengigheter).some(harStatus(STATUS.ERROR));
 const minstEnErOK = avhengigheter =>
-    avhengigheter && avhengigheter.some(harStatus(STATUS.OK));
+    avhengigheter && array(avhengigheter).some(harStatus(STATUS.OK));
 const alleLastet = avhengigheter =>
     avhengigheter &&
-    avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
+    array(avhengigheter).every(harStatus(STATUS.OK, STATUS.RELOADING));
 
 const HiddenIfSpinner = HiddenIfHOC(Spinner);
 

@@ -11,6 +11,7 @@ function erAktivtFilter(filterData) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
 
+// TODO depricated see newDatoErIPeriode
 export function datoErIPeriode(dato, state) {
     const historiskPeriode = selectHistoriskPeriode(state);
     if (historiskPeriode) {
@@ -23,6 +24,13 @@ export function datoErIPeriode(dato, state) {
         .map(p => p.sluttDato)
         .sort()
         .reverse()[0];
+    return !forrigeSluttDato || dato >= forrigeSluttDato;
+}
+
+export function newDatoErIPeriode(dato, historiskPeriode, forrigeSluttDato) {
+    if (historiskPeriode) {
+        return dato >= historiskPeriode.fra && dato <= historiskPeriode.til;
+    }
     return !forrigeSluttDato || dato >= forrigeSluttDato;
 }
 
