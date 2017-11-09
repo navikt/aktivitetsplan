@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
     hentVersjonerForAktivtet,
     fjernVersjoner,
-} from '../../aktivitet-versjoner-reducer';
+} from '../../aktivitet-versjoner/aktivitet-versjoner-reducer';
 import * as AppPT from '../../../../proptypes';
 import visibleIfHOC from '../../../../hocs/visible-if';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
@@ -12,6 +12,10 @@ import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster'
 import Accordion from '../../../../felles-komponenter/accordion';
 import { autobind } from '../../../../utils';
 import VersjonInnslag from './versjoninnslag';
+import {
+    selectSorterteVersjoner,
+    selectVersjonerStatus,
+} from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
 
 const MAX_SIZE = 10;
 
@@ -33,6 +37,7 @@ class VersjonerForAktivitet extends Component {
         doFjernVersjoner();
         doHentVersjonerForAktivitet(aktivitet);
     }
+
     componentWillUnmount() {
         this.props.doFjernVersjoner();
     }
@@ -42,10 +47,7 @@ class VersjonerForAktivitet extends Component {
     }
 
     render() {
-        const { versjonerData, className } = this.props;
-        const versjoner = versjonerData.data.sort(
-            (a, b) => b.endretDato - a.endretDato
-        );
+        const { avhengighet, versjoner, className } = this.props;
 
         const versjonerInnslag = versjoner
             .slice(0, MAX_SIZE)
@@ -77,10 +79,7 @@ class VersjonerForAktivitet extends Component {
         );
 
         return (
-            <Innholdslaster
-                avhengigheter={[versjonerData]}
-                spinnerStorrelse="m"
-            >
+            <Innholdslaster avhengigheter={avhengighet} spinnerStorrelse="m">
                 <section className={className}>
                     {versjonerInnslag}
                     <VisibleIfDiv visible={versjoner.length > MAX_SIZE}>
@@ -93,7 +92,8 @@ class VersjonerForAktivitet extends Component {
 }
 
 VersjonerForAktivitet.propTypes = {
-    versjonerData: AppPT.reducerArray.isRequired,
+    avhengighet: AppPT.avhengighet.isRequired,
+    versjoner: AppPT.reducerArray.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
     doHentVersjonerForAktivitet: PT.func.isRequired,
     doFjernVersjoner: PT.func.isRequired,
@@ -105,7 +105,8 @@ VersjonerForAktivitet.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    versjonerData: state.data.versjoner,
+    avhengighet: selectVersjonerStatus(state),
+    versjoner: selectSorterteVersjoner(state),
 });
 
 const mapDispatchToProps = dispatch => ({

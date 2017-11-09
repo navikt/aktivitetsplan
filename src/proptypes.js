@@ -75,7 +75,9 @@ export const reducerArray = PT.shape({
 
 export const status = PT.oneOf(Object.keys(STATUS));
 
-export const avhengigheter = PT.arrayOf(PT.oneOfType([slice, status]));
+export const avhengighet = PT.oneOfType([slice, status]);
+
+export const avhengigheter = PT.arrayOf(avhengighet);
 
 export const avslutningStatus = PT.shape({
     kanAvslutte: PT.bool,
