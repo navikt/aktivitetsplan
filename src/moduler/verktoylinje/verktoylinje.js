@@ -8,15 +8,25 @@ import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
+import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 
-function Verktoylinje({ viserHistoriskPeriode, privatModus, erVeileder }) {
+function Verktoylinje({
+    viserHistoriskPeriode,
+    harTilgangTilAktiviteter,
+    privatModus,
+    erVeileder,
+}) {
     return (
         <div className="verktoylinje">
             <div className="verktoylinje__verktoy">
                 <Lenkeknapp
                     type="hoved"
                     href="/aktivitet/ny"
-                    disabled={viserHistoriskPeriode || privatModus}
+                    disabled={
+                        viserHistoriskPeriode ||
+                        privatModus ||
+                        !harTilgangTilAktiviteter
+                    }
                 >
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenkeknapp>
@@ -41,11 +51,13 @@ Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
     privatModus: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
+    harTilgangTilAktiviteter: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     viserHistoriskPeriode: selectViserHistoriskPeriode(state),
     privatModus: selectErPrivatModus(state),
+    harTilgangTilAktiviteter: selectHarTilgangTilAktiviteter(state),
     erVeileder: selectErVeileder(state),
 });
 

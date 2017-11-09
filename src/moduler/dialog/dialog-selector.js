@@ -8,6 +8,7 @@ import {
     selectErBruker,
     selectErVeileder,
 } from '../identitet/identitet-selector';
+import { STATUS } from '../../ducks/utils';
 
 function selectDialogSlice(state) {
     return state.data.dialog;
@@ -96,4 +97,8 @@ export function selectVisBrukerInfo(state, dialogId_) {
         utlopTidspunkt.isAfter(moment()) &&
         dialogId === dialogId_
     );
+}
+
+export function selectHarTilgangTilDialog(state) {
+    return selectDialogStatus(state) === STATUS.OK;
 }
