@@ -14,5 +14,5 @@ SOKEAVTALE { Jobbsøking }
 IJOBB { Jobb jeg har nå }
 BEHANDLING { Behandling }
 MOTE { Møte med NAV }
-SAMTALEREFERAT { Samtale }
+SAMTALEREFERAT { Samtalereferat }
 }
