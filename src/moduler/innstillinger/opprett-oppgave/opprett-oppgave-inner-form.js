@@ -34,7 +34,7 @@ export function OpprettOppgaveInnerForm({
         ? behandlendeEnheter.data
         : [];
 
-    const veilederliste = Array.isArray(veiledere.data) ? veiledere.data : [];
+    const veilederliste = veiledere.data.veilederListe ? veiledere.data.veilederListe : [];
 
     return (
         <HiddenIf

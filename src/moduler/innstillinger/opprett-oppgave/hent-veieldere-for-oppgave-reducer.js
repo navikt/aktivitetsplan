@@ -4,8 +4,7 @@ import { createActionsAndReducer } from '../../../ducks/rest-reducer';
 
 const { reducer, action } = createActionsAndReducer(
     'hent_veiledere',
-    'veiledere',
-    []
+    'oppgaveVeiledere',
 );
 
 export default reducer;
