@@ -79,7 +79,7 @@ class VersjonerForAktivitet extends Component {
         );
 
         return (
-            <Innholdslaster avhengigheter={[avhengighet]} spinnerStorrelse="m">
+            <Innholdslaster avhengigheter={avhengighet} spinnerStorrelse="m">
                 <section className={className}>
                     {versjonerInnslag}
                     <VisibleIfDiv visible={versjoner.length > MAX_SIZE}>
