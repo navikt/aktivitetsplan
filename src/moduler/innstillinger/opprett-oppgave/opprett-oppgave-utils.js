@@ -94,5 +94,5 @@ export const getEnhetFromUrl = () => queryString.parse(location.search).enhet;
 
 export function erValgtEnhetLikInnloggetEnhet(valgtEnhet) {
     const innloggetEnhet = getEnhetFromUrl();
-    return innloggetEnhet === valgtEnhet && !!innloggetEnhet;
+    return innloggetEnhet && innloggetEnhet === valgtEnhet;
 }
