@@ -34,7 +34,9 @@ export function OpprettOppgaveInnerForm({
         ? behandlendeEnheter.data
         : [];
 
-    const veilederliste = veiledere.data.veilederListe ? veiledere.data.veilederListe : [];
+    const veilederliste = veiledere.data.veilederListe
+        ? veiledere.data.veilederListe
+        : [];
 
     return (
         <HiddenIf
