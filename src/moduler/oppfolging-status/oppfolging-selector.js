@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect';
 import { dateToISODate } from '../../utils';
 
 export function selectOppfolgingSlice(state) {
@@ -18,9 +19,19 @@ export function selectOppfolgingsPerioder(state) {
     return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
 
-export function selectHistoriskeOppfolgingsPerioder(state) {
-    return selectOppfolgingsPerioder(state).filter(p => p.sluttDato);
-}
+export const selectHistoriskeOppfolgingsPerioder = createSelector(
+    selectOppfolgingsPerioder,
+    oppfolgingsPerioder => oppfolgingsPerioder.filter(p => p.sluttDato)
+);
+
+export const selectForrigeHistoriskeSluttDato = createSelector(
+    selectHistoriskeOppfolgingsPerioder,
+    historiskeOppfolgingsPerioder =>
+        (historiskeOppfolgingsPerioder || [])
+            .map(p => p.sluttDato)
+            .sort()
+            .reverse()[0]
+);
 
 export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
     let nesteFra = dateToISODate(new Date(0));
