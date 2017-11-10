@@ -65,7 +65,10 @@ class Varslinger extends Component {
                 />
                 <HiddenIfVarsling
                     hidden={
-                        reservertIKRR || !vilkarMaBesvares || brukerErManuell
+                        reservertIKRR ||
+                        !vilkarMaBesvares ||
+                        brukerErManuell ||
+                        !underOppfolging
                     }
                     tekstId="oppfolging.vilkar-ikke-godkjent"
                     className="varsling"
