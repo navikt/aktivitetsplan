@@ -1,1 +1,1 @@
-Behandlingssted / behandler kan ikke være lenger enn {BEHANDLINGS_STED_MAKS_LENGDE} tegn
+Behandlingssted / behandler kan ikke være lenger enn {MAKS_LENGDE} tegn

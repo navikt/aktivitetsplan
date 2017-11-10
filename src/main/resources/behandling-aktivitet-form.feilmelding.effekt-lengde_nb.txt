@@ -1,1 +1,1 @@
-Effektteksten kan ikke være lenger enn {EFFEKT_MAKS_LENGDE} tegn
+Effektteksten kan ikke være lenger enn {MAKS_LENGDE} tegn
