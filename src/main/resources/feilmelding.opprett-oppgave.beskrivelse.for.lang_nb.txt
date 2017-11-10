@@ -1,1 +1,1 @@
-Beskrivelse kan ikke være lengre enn {MAKS_LENGDE} tegn.
+Du må korte ned teksten til {MAKS_LENGDE} tegn
