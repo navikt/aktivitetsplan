@@ -35,7 +35,7 @@ const Info = visibleIfHOC(({ slash, className, children }) =>
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 // eslint-disable-next-line react/prefer-stateless-function
-class DialogVisning extends React.Component {
+class DialogVisning extends React.PureComponent {
     render() {
         const { dialog, erValgt, aktiviteter, erTabBar } = this.props;
 
