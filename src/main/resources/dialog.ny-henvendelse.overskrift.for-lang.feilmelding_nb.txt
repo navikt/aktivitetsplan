@@ -1,1 +1,1 @@
-Du må korte ned overskriften til {antall_tegn} tegn
+Du må korte ned teksten til {antall_tegn} tegn
