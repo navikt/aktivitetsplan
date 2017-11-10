@@ -1,1 +1,1 @@
-Fnr:
+Fødselsnummer:
