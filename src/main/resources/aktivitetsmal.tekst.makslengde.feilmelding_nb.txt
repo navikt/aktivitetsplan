@@ -1,1 +1,1 @@
-Beskrivelsen av målet kan ikke være lenger en {antall_tegn} tegn
+Du må korte ned teksten til {antall_tegn} tegn
