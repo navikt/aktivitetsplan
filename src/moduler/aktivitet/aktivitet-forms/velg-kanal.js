@@ -31,7 +31,6 @@ class VelgKanal extends Component {
                     disabled={disabled}
                     labelId={labelId}
                     bredde="fullbredde"
-                    noBlankOption
                 >
                     {kanaler.map(lagkanalOption)}
                 </Select>
