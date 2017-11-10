@@ -39,9 +39,11 @@ function NyHenvendelseForm({
     erBruker,
     skalHaAutofokus,
     erKnyttTilAktivitet,
+    errorSummary,
 }) {
     return (
         <form onSubmit={handleSubmit} className="ny-henvendelse-form">
+            {errorSummary}
             <VisibleIfDiv
                 visible={erNyDialog && !erBruker}
                 className="endre-dialog__sjekkbokser"
@@ -103,6 +105,7 @@ NyHenvendelseForm.propTypes = {
     visBrukerInfo: PT.bool.isRequired,
     skalHaAutofokus: PT.bool,
     erKnyttTilAktivitet: PT.bool.isRequired,
+    errorSummary: PT.node.isRequired,
 };
 
 const pakrevdOverskrift = rules.minLength(
@@ -130,6 +133,9 @@ const begrensetTekstLengde = rules.maxLength(
 );
 
 const NyHenvendelseReduxForm = validForm({
+    errorSummaryTitle: (
+        <FormattedMessage id="dialog.ny-henvendelse.feiloppsummering-tittel" />
+    ),
     validate: {
         overskrift: [pakrevdOverskrift, begrensetTittelLengde],
         tekst: [pakrevdTekst, begrensetTekstLengde],
