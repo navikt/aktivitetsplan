@@ -1,1 +1,1 @@
-Fomdato kan ikke være større enn tomdato
+Fra dato kan ikke være etter til dato
