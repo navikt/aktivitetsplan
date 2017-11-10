@@ -133,7 +133,7 @@ class DatoField extends Component {
                             disabled={disabled}
                             className={`skjemaelement__input input--m datovelger__input ${meta.touched &&
                             meta.error
-                                ? 'input--feil'
+                                ? 'skjemaelement__input--harFeil'
                                 : ''}`}
                             {...maskedInputProps}
                         />
