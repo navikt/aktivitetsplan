@@ -6,12 +6,14 @@ import hiddenIfHOC from '../felles-komponenter/hidden-if/hidden-if';
 function TallAlert({ children }) {
     return (
         <span className="tall-alert">
-            <span className="kun-for-skjermleser">
-                <FormattedMessage id="tall-alert-foran-antall" />
+            <span aria-hidden="true">
+                {children}
             </span>
-            {children}
             <span className="kun-for-skjermleser">
-                <FormattedMessage id="tall-alert-etter-antall" />
+                <FormattedMessage
+                    id="tall-alert.antall.skjermleser"
+                    values={{ ULESTE_MELDINGER: children }}
+                />
             </span>
         </span>
     );

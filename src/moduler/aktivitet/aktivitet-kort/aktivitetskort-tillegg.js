@@ -25,7 +25,6 @@ function AktivitetskortTillegg({
             <HiddenIfDiv
                 hidden={antallHendvendelser <= 0}
                 className="aktivitetskort__henvendelser"
-                role="img"
             >
                 <TallAlert hidden={antallUlesteHenvendelser <= 0}>
                     {antallUlesteHenvendelser}
