@@ -1,1 +1,4 @@
-Du har {ULESTE_MELDINGER} uleste meldinger
+Du har {ULESTE_MELDINGER, plural,
+    one { # ulest melding på aktiviteten}
+    other { # uleste meldinger på aktiviteten }
+}
