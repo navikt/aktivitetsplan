@@ -1,4 +1,4 @@
 Du har {ULESTE_MELDINGER, plural,
-    one { # ulest melding på aktiviteten}
-    other { # uleste meldinger på aktiviteten }
+    one { # ulest melding}
+    other { # uleste meldinger }
 }
