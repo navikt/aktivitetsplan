@@ -145,7 +145,6 @@ function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit }) {
                     feltNavn="adresse"
                     labelId="mote-aktivitet-form.label.adresse"
                     bredde="fullbredde"
-                    maxLength={ADRESSE_MAKS_LENGDE}
                 />
                 <Textarea
                     feltNavn="beskrivelse"
