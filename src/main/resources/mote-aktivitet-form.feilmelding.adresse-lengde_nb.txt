@@ -1,1 +1,1 @@
-For lang sted og adresse
+Møtestedfeltet kan ikke være lenger enn {MAKS_LENGDE} tegn
