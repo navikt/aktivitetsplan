@@ -1,188 +1,47 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { Undertittel, Element } from 'nav-frontend-typografi';
 import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
-import Dialog from './dialog';
-import Dialoger from './dialoger';
 import history from '../../../history';
-import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
-import PilKnapp from '../../../felles-komponenter/utils/pil-knapp';
-import NyHenvendelse from './ny-henvendelse';
-import visibleIfHOC from '../../../hocs/visible-if';
-import { section as HideableSection } from '../../../felles-komponenter/hidden-if/hidden-if';
-import VisibleIfTag from '../../../felles-komponenter/utils/visible-if-tag';
 import * as AppPT from '../../../proptypes';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import { aktivitetRoute } from '../../../routing';
 import { selectMotpartSlice } from '../../motpart/motpart-selector';
 import {
-    selectAnpassaDialogModalHistoriskVisning,
+    selectTilpasseDialogModalHistoriskVisning,
     selectDialogMedId,
 } from '../dialog-selector';
 import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
-import DialogFilter from '../dialog-filter';
 import Feilmelding from '../../feilmelding/feilmelding';
-import { hoyreKolonneSectionId } from '../../../ducks/utils';
-
-const VisibleDiv = visibleIfHOC(props => <div {...props} />);
-
-function nyDialog() {
-    history.push('/dialog/ny');
-}
-
-function tilbake() {
-    history.push('/dialog');
-}
-
-function dialogOpprettet(dialog) {
-    history.push(`/dialog/${dialog.id}`);
-}
-
-function Header({ harNyDialogEllerValgtDialog, motpart, navnPaMotpart, intl }) {
-    return (
-        <div className="dialog-modal__header">
-            <PilKnapp
-                visible={harNyDialogEllerValgtDialog}
-                className="dialog-modal__tilbake-knapp"
-                onClick={tilbake}
-                aria-label={intl.formatMessage({ id: 'dialog.modal.tilbake' })}
-            />
-            <Innholdslaster avhengigheter={[motpart]} spinnerStorrelse="m">
-                <Element className="dialog-modal__tittel" tag="h1">
-                    <FormattedMessage
-                        id="dialog.tittel"
-                        values={{ motpart: navnPaMotpart }}
-                    />
-                </Element>
-            </Innholdslaster>
-        </div>
-    );
-}
-
-Header.defaultProps = {
-    navnPaMotpart: null,
-};
-
-Header.propTypes = {
-    harNyDialogEllerValgtDialog: PT.bool.isRequired,
-    motpart: AppPT.reducer.isRequired,
-    navnPaMotpart: PT.string,
-    intl: intlShape.isRequired,
-};
-
-function VenstreKolonne({
-    valgtDialog,
-    harNyDialog,
-    harNyDialogEllerValgtDialog,
-    historiskVisning,
-}) {
-    const className = classNames(
-        'dialog-modal__kolonne',
-        'dialog-modal__kolonne--dialoger',
-        {
-            'dialog-modal__kolonne--dialoger-valgt-dialog': harNyDialogEllerValgtDialog,
-        }
-    );
-
-    return (
-        <div className={className}>
-            <HideableSection
-                className="dialog-modal__ny-dialog"
-                hidden={historiskVisning}
-            >
-                <Knappelenke
-                    onClick={nyDialog}
-                    disabled={harNyDialog}
-                    className="dialog-modal__ny-dialog-knapp"
-                >
-                    <FormattedMessage id="dialog.modal.ny-dialog" />
-                </Knappelenke>
-                <DialogFilter />
-            </HideableSection>
-            <Dialoger
-                className="dialog-modal__dialoger"
-                valgtDialog={valgtDialog}
-            />
-        </div>
-    );
-}
-
-VenstreKolonne.propTypes = {
-    valgtDialog: AppPT.dialog,
-    harNyDialog: PT.bool.isRequired,
-    harNyDialogEllerValgtDialog: PT.bool.isRequired,
-    historiskVisning: PT.bool.isRequired,
-};
-
-VenstreKolonne.defaultProps = {
-    valgtDialog: undefined,
-};
-
-function HoyreKolonne({
-    valgtDialog,
-    harValgtDialog,
-    harNyDialog,
-    harNyDialogEllerValgtDialog,
-    valgtAktivitetId,
-}) {
-    function apneAktivitet() {
-        history.push(aktivitetRoute(valgtAktivitetId));
-    }
-
-    return (
-        <VisibleIfTag
-            tagName="section"
-            visible={harNyDialogEllerValgtDialog}
-            className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
-            id={hoyreKolonneSectionId}
-        >
-            <VisibleDiv visible={harNyDialog}>
-                <Undertittel tag="h1" className="endre-dialog__tittel">
-                    <FormattedMessage id="dialog.ny-dialog" />
-                </Undertittel>
-                <NyHenvendelse
-                    formNavn="ny-dialog"
-                    onComplete={dialogOpprettet}
-                />
-            </VisibleDiv>
-            <VisibleDiv visible={harValgtDialog}>
-                <Knappelenke
-                    visible={!!valgtAktivitetId}
-                    onClick={apneAktivitet}
-                    className="endre-dialog__til-aktiviteten"
-                >
-                    <FormattedMessage id="dialog.modal.til-aktiviteten" />
-                </Knappelenke>
-                <Dialog dialog={valgtDialog} />
-            </VisibleDiv>
-        </VisibleIfTag>
-    );
-}
-
-HoyreKolonne.propTypes = {
-    valgtDialog: AppPT.dialog,
-    valgtAktivitetId: PT.string,
-    harNyDialog: PT.bool.isRequired,
-    harValgtDialog: PT.bool.isRequired,
-    harNyDialogEllerValgtDialog: PT.bool.isRequired,
-};
-
-HoyreKolonne.defaultProps = {
-    valgtDialog: undefined,
-    valgtAktivitetId: undefined,
-};
+import DialogHeader from './dialog-header';
+import DialogOversikt from './dialog-oversikt';
+import DialogHenvendelse from './dialog-henvendelse';
 
 function DialogModalContent(props) {
+    const {
+        harNyDialogEllerValgtDialog,
+        valgtDialog,
+        harNyDialog,
+        historiskVisning,
+        harValgtDialog,
+        valgtAktivitetId,
+    } = props;
     return (
         <div className="dialog-modal__wrapper">
             <Feilmelding className="feilmelding--systemfeil" />
             <div className="dialog-modal__innhold">
-                <VenstreKolonne {...props} />
-                <HoyreKolonne {...props} />
+                <DialogOversikt
+                    valgtDialog={valgtDialog}
+                    harNyDialog={harNyDialog}
+                    harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
+                    historiskVisning={historiskVisning}
+                />
+                <DialogHenvendelse
+                    valgtDialog={valgtDialog}
+                    harNyDialog={harNyDialog}
+                    harValgtDialog={harValgtDialog}
+                    valgtAktivitetId={valgtAktivitetId}
+                />
             </div>
         </div>
     );
@@ -193,6 +52,8 @@ DialogModalContent.propTypes = {
     valgtAktivitetId: PT.string,
     harNyDialog: PT.bool.isRequired,
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
+    historiskVisning: PT.bool.isRequired,
+    harValgtDialog: PT.bool.isRequired,
 };
 
 DialogModalContent.defaultProps = {
@@ -200,17 +61,28 @@ DialogModalContent.defaultProps = {
     valgtAktivitetId: undefined,
 };
 
-function DialogModal(props, intl) {
-    const className = classNames('dialog-modal', {
-        'dialog-modal--full-bredde': props.harNyDialogEllerValgtDialog,
-        'dialog-modal--historisk-visning':
-            props.anpassaStorrelseHistoriskVisning,
+function DialogModal(props) {
+    const {
+        harNyDialogEllerValgtDialog,
+        tilpasseStorrelseHistoriskVisning,
+        motpart,
+        navnPaMotpart,
+        valgtDialog,
+        valgtAktivitetId,
+        harNyDialog,
+        harValgtDialog,
+        historiskVisning,
+    } = props;
+
+    const className = classNames('dialog-modal', 'aktivitet-modal', {
+        'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
+        'dialog-modal--historisk-visning': tilpasseStorrelseHistoriskVisning,
     });
 
     return (
         <NavFrontendModal
             isOpen
-            className={classNames('aktivitet-modal', className)}
+            className={className}
             contentClass="aktivitetsplanfs dialog-modal__content"
             contentLabel="dialog-modal"
             overlayClassName="aktivitet-modal__overlay"
@@ -218,8 +90,19 @@ function DialogModal(props, intl) {
             shouldCloseOnOverlayClick={false}
             onRequestClose={() => history.push('/')}
         >
-            <Header intl={intl} {...props} />
-            <DialogModalContent {...props} />
+            <DialogHeader
+                harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
+                motpart={motpart}
+                navnPaMotpart={navnPaMotpart}
+            />
+            <DialogModalContent
+                valgtDialog={valgtDialog}
+                valgtAktivitetId={valgtAktivitetId}
+                harNyDialog={harNyDialog}
+                harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
+                harValgtDialog={harValgtDialog}
+                historiskVisning={historiskVisning}
+            />
         </NavFrontendModal>
     );
 }
@@ -240,8 +123,7 @@ DialogModal.propTypes = {
     motpart: AppPT.motpart.isRequired,
     navnPaMotpart: PT.string,
     historiskVisning: PT.bool.isRequired,
-    anpassaStorrelseHistoriskVisning: PT.bool.isRequired,
-    intl: intlShape.isRequired,
+    tilpasseStorrelseHistoriskVisning: PT.bool.isRequired,
 };
 const mapStateToProps = (state, props) => {
     const { match } = props;
@@ -262,9 +144,10 @@ const mapStateToProps = (state, props) => {
         motpart,
         navnPaMotpart: motpart.data.navn,
         historiskVisning,
-        anpassaStorrelseHistoriskVisning:
-            historiskVisning && selectAnpassaDialogModalHistoriskVisning(state),
+        tilpasseStorrelseHistoriskVisning:
+            historiskVisning &&
+            selectTilpasseDialogModalHistoriskVisning(state),
     };
 };
 
-export default withRouter(connect(mapStateToProps)(injectIntl(DialogModal)));
+export default withRouter(connect(mapStateToProps)(DialogModal));

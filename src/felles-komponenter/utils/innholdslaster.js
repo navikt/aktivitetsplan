@@ -65,7 +65,8 @@ Innholdslaster.defaultProps = {
 };
 
 Innholdslaster.propTypes = {
-    avhengigheter: AppPT.avhengigheter.isRequired,
+    avhengigheter: PT.oneOfType([AppPT.aktivitet, AppPT.avhengigheter])
+        .isRequired,
     children: PT.oneOfType([PT.node, PT.func]).isRequired,
     className: PT.string,
     spinnerStorrelse: PT.string,

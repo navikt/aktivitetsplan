@@ -83,7 +83,7 @@ export function selectVisEskaleringsFilter(state) {
     return selectHarEskaleringer(state) && selectErBruker(state);
 }
 
-export function selectAnpassaDialogModalHistoriskVisning(state) {
+export function selectTilpasseDialogModalHistoriskVisning(state) {
     return (
         selectErVeileder(state) ||
         (!selectHarEskaleringer(state) && selectErBruker(state))
