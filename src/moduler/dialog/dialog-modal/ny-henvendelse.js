@@ -5,7 +5,7 @@ import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
 import moment from 'moment';
-import { STATUS } from '../../../ducks/utils';
+import { hoyreKolonneSectionId, STATUS } from '../../../ducks/utils';
 import {
     nyHenvendelse,
     oppdaterFerdigbehandlet,
@@ -192,9 +192,9 @@ const mapDispatchToProps = () => ({
                 const scrollElement = document.getElementById(
                     props.scrollElementId
                 );
-                if (scrollElement) {
-                    scrollElement.scrollIntoView();
-                }
+                scrollElement.scrollIntoView();
+            } else {
+                document.getElementById(hoyreKolonneSectionId).scrollTop = 0;
             }
         });
     },

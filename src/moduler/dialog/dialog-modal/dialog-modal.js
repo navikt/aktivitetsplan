@@ -26,6 +26,7 @@ import {
 import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import DialogFilter from '../dialog-filter';
 import Feilmelding from '../../feilmelding/feilmelding';
+import { hoyreKolonneSectionId } from '../../../ducks/utils';
 
 const VisibleDiv = visibleIfHOC(props => <div {...props} />);
 
@@ -137,6 +138,7 @@ function HoyreKolonne({
             tagName="section"
             visible={harNyDialogEllerValgtDialog}
             className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
+            id={hoyreKolonneSectionId}
         >
             <VisibleDiv visible={harNyDialog}>
                 <Undertittel tag="h1" className="endre-dialog__tittel">
