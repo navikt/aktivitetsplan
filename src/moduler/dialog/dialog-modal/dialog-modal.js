@@ -6,7 +6,10 @@ import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
 import history from '../../../history';
 import * as AppPT from '../../../proptypes';
-import { selectMotpartSlice } from '../../motpart/motpart-selector';
+import {
+    selectMotpartStatus,
+    selectNavnPaMotpart,
+} from '../../motpart/motpart-selector';
 import {
     selectTilpasseDialogModalHistoriskVisning,
     selectDialogMedId,
@@ -17,15 +20,14 @@ import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse from './dialog-henvendelse';
 
-function DialogModalContent(props) {
-    const {
-        harNyDialogEllerValgtDialog,
-        valgtDialog,
-        harNyDialog,
-        historiskVisning,
-        harValgtDialog,
-        valgtAktivitetId,
-    } = props;
+function DialogModalContent({
+    harNyDialogEllerValgtDialog,
+    valgtDialog,
+    harNyDialog,
+    historiskVisning,
+    harValgtDialog,
+    valgtAktivitetId,
+}) {
     return (
         <div className="dialog-modal__wrapper">
             <Feilmelding className="feilmelding--systemfeil" />
@@ -41,6 +43,7 @@ function DialogModalContent(props) {
                     harNyDialog={harNyDialog}
                     harValgtDialog={harValgtDialog}
                     valgtAktivitetId={valgtAktivitetId}
+                    harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
                 />
             </div>
         </div>
@@ -61,19 +64,17 @@ DialogModalContent.defaultProps = {
     valgtAktivitetId: undefined,
 };
 
-function DialogModal(props) {
-    const {
-        harNyDialogEllerValgtDialog,
-        tilpasseStorrelseHistoriskVisning,
-        motpart,
-        navnPaMotpart,
-        valgtDialog,
-        valgtAktivitetId,
-        harNyDialog,
-        harValgtDialog,
-        historiskVisning,
-    } = props;
-
+function DialogModal({
+    harNyDialogEllerValgtDialog,
+    tilpasseStorrelseHistoriskVisning,
+    motpartStatus,
+    navnPaMotpart,
+    valgtDialog,
+    valgtAktivitetId,
+    harNyDialog,
+    harValgtDialog,
+    historiskVisning,
+}) {
     const className = classNames('dialog-modal', 'aktivitet-modal', {
         'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
         'dialog-modal--historisk-visning': tilpasseStorrelseHistoriskVisning,
@@ -92,7 +93,7 @@ function DialogModal(props) {
         >
             <DialogHeader
                 harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
-                motpart={motpart}
+                motpartStatus={motpartStatus}
                 navnPaMotpart={navnPaMotpart}
             />
             <DialogModalContent
@@ -120,7 +121,7 @@ DialogModal.propTypes = {
     valgtDialog: AppPT.dialog,
     harValgtDialog: PT.bool.isRequired,
     valgtAktivitetId: PT.string,
-    motpart: AppPT.motpart.isRequired,
+    motpartStatus: AppPT.avhengighet.isRequired,
     navnPaMotpart: PT.string,
     historiskVisning: PT.bool.isRequired,
     tilpasseStorrelseHistoriskVisning: PT.bool.isRequired,
@@ -128,10 +129,8 @@ DialogModal.propTypes = {
 const mapStateToProps = (state, props) => {
     const { match } = props;
     const { id } = match.params;
-    const motpart = selectMotpartSlice(state);
     const valgtDialog = selectDialogMedId(state, id);
     const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
-
     const harNyDialog = id === 'ny';
     const harValgtDialog = !!valgtDialog;
     const historiskVisning = selectViserHistoriskPeriode(state);
@@ -141,8 +140,8 @@ const mapStateToProps = (state, props) => {
         harValgtDialog,
         harNyDialogEllerValgtDialog: harNyDialog || harValgtDialog,
         valgtAktivitetId,
-        motpart,
-        navnPaMotpart: motpart.data.navn,
+        motpartStatus: selectMotpartStatus(state),
+        navnPaMotpart: selectNavnPaMotpart(state),
         historiskVisning,
         tilpasseStorrelseHistoriskVisning:
             historiskVisning &&

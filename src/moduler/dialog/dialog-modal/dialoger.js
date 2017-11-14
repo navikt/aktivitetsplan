@@ -118,7 +118,7 @@ function DialogerMedInnholdslaster({ avhengighet, ...props }) {
 }
 
 DialogerMedInnholdslaster.propTypes = {
-    avhengighet: AppPT.avhengigheter.isRequired,
+    avhengighet: AppPT.avhengighet.isRequired,
 };
 
 const mapStateToProps = state => ({

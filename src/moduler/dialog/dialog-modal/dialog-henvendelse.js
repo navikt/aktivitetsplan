@@ -30,7 +30,7 @@ function DialogHenvendelse({
 }) {
     return (
         <HiddenIfSection
-            visible={!harNyDialogEllerValgtDialog}
+            hidden={!harNyDialogEllerValgtDialog}
             className="dialog-modal__kolonne dialog-modal__kolonne--dialog"
             id={hoyreKolonneSectionId}
         >

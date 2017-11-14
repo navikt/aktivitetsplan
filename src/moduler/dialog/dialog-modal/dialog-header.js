@@ -11,7 +11,11 @@ function tilbake() {
     history.push('/dialog');
 }
 
-function DialogHeader({ harNyDialogEllerValgtDialog, motpart, navnPaMotpart }) {
+function DialogHeader({
+    harNyDialogEllerValgtDialog,
+    motpartStatus,
+    navnPaMotpart,
+}) {
     return (
         <div className="dialog-modal__header">
             <FormattedMessage id="dialog.modal.tilbake">
@@ -23,7 +27,7 @@ function DialogHeader({ harNyDialogEllerValgtDialog, motpart, navnPaMotpart }) {
                         aria-label={label}
                     />}
             </FormattedMessage>
-            <Innholdslaster avhengigheter={motpart} spinnerStorrelse="m">
+            <Innholdslaster avhengigheter={motpartStatus} spinnerStorrelse="m">
                 <Element className="dialog-modal__tittel" tag="h1">
                     <FormattedMessage
                         id="dialog.tittel"
@@ -41,7 +45,7 @@ DialogHeader.defaultProps = {
 
 DialogHeader.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
-    motpart: AppPT.reducer.isRequired,
+    motpartStatus: AppPT.avhengighet.isRequired,
     navnPaMotpart: PT.string,
 };
 
