@@ -132,6 +132,7 @@ function methodToJson(method, url, data, config) {
             method,
             headers: new Headers({
                 'Content-Type': 'application/json',
+                'NAV_CSRF_PROTECTION' : getCookie('NAV_CSRF_PROTECTION'),
             }),
             body: JSON.stringify(data),
         },
