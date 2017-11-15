@@ -1,1 +1,1 @@
-Bruker i context feilet
+Teknisk feil i brukerkontrollen
