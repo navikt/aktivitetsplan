@@ -127,12 +127,13 @@ export function fetchToJson(url, config = {}) {
 }
 
 function methodToJson(method, url, data, config) {
+    //eslint-disable-next-line
     return fetchToJson(url, {
         ...{
             method,
             headers: new Headers({
                 'Content-Type': 'application/json',
-                'NAV_CSRF_PROTECTION' : getCookie('NAV_CSRF_PROTECTION'),
+                'NAV_CSRF_PROTECTION': getCookie('NAV_CSRF_PROTECTION'),
             }),
             body: JSON.stringify(data),
         },
