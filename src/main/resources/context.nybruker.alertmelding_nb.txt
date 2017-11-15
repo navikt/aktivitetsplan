@@ -1,1 +1,1 @@
-Det er fare for at du kan ha forskjellige brukere i forskjellige flater/vinduer. Systemet feiler og klarer ikke oppfatte endringer du eventuelt har gjort i andre vinuer.
+Teknisk feil: Vær oppmerksom på at du kan ha ulike brukere oppe samtidig i forskjellige vinduer. På grunn av en feil oppfatter ikke systemet eventuelle endringer du har gjort i andre vinduer.   
