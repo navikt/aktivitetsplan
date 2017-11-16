@@ -3,10 +3,6 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
 import { RESET_STORE } from '../reducer';
-import {
-    hentPerson,
-    setNAVsomMotpart,
-} from '../moduler/motpart/motpart-reducer';
 import history from '../history';
 import { hentBruker } from '../moduler/bruker/bruker-reducer';
 
@@ -31,12 +27,8 @@ class FnrProvider extends Component {
             // e.g. på innsiden - merk at urlen ikke alltid har et fnr!
             const fnr = fnrFraUrl();
             if (fnr) {
-                dispatch(hentPerson(fnr));
                 dispatch(hentBruker(fnr));
             }
-        } else {
-            // e.g. på utsiden
-            dispatch(setNAVsomMotpart());
         }
         document.addEventListener('flate-person-endret', this.listener);
     }

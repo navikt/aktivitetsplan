@@ -17,7 +17,6 @@ import kanalerReducer from './moduler/aktivitet/kanaler-reducer';
 import ledetekstReducer from './ducks/ledetekster-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
-import motpartReducer from './moduler/motpart/motpart-reducer';
 import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
 import oppgaveVeiledereReducer from './moduler/innstillinger/opprett-oppgave/hent-veieldere-for-oppgave-reducer';
 import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
@@ -48,7 +47,6 @@ const combinedReducers = combineReducers({
         ledetekster: ledetekstReducer,
         mal: malReducer,
         malListe: malListeReducer,
-        motpart: motpartReducer,
         oppgaveVeiledere: oppgaveVeiledereReducer,
         opprettOppgave: oppgaveReducer,
         referat: referatReducer,
