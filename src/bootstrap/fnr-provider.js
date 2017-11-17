@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
-import { RESET_STORE } from '../reducer';
-import history from '../history';
 import { hentBruker, setStatusOk } from '../moduler/bruker/bruker-reducer';
 
 export function fnrFraUrl() {
@@ -12,15 +10,6 @@ export function fnrFraUrl() {
 }
 
 class FnrProvider extends Component {
-    constructor(props) {
-        super(props);
-        const { dispatch } = props;
-        this.listener = () => {
-            dispatch(RESET_STORE);
-            history.replace('/');
-        };
-    }
-
     componentDidMount() {
         const { dispatch } = this.props;
         if (FNR_I_URL) {
@@ -33,16 +22,11 @@ class FnrProvider extends Component {
             // på utsiden
             dispatch(setStatusOk());
         }
-        document.addEventListener('flate-person-endret', this.listener);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('flate-person-endret', this.listener);
     }
 
     render() {
         return (
-            <div id="asdfasdfasdfasdfasdf">
+            <div>
                 {!FNR_I_URL || fnrFraUrl() ? this.props.children : []}
             </div>
         );

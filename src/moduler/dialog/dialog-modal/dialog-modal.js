@@ -19,6 +19,7 @@ import Feilmelding from '../../feilmelding/feilmelding';
 import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse from './dialog-henvendelse';
+import FnrProvider from './../../../bootstrap/fnr-provider';
 
 function DialogModalContent({
     harNyDialogEllerValgtDialog,
@@ -29,24 +30,30 @@ function DialogModalContent({
     valgtAktivitetId,
 }) {
     return (
-        <div className="dialog-modal__wrapper">
-            <Feilmelding className="feilmelding--systemfeil" />
-            <div className="dialog-modal__innhold">
-                <DialogOversikt
-                    valgtDialog={valgtDialog}
-                    harNyDialog={harNyDialog}
-                    harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
-                    historiskVisning={historiskVisning}
-                />
-                <DialogHenvendelse
-                    valgtDialog={valgtDialog}
-                    harNyDialog={harNyDialog}
-                    harValgtDialog={harValgtDialog}
-                    valgtAktivitetId={valgtAktivitetId}
-                    harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
-                />
+        <FnrProvider>
+            <div className="dialog-modal__wrapper">
+                <Feilmelding className="feilmelding--systemfeil" />
+                <div className="dialog-modal__innhold">
+                    <DialogOversikt
+                        valgtDialog={valgtDialog}
+                        harNyDialog={harNyDialog}
+                        harNyDialogEllerValgtDialog={
+                            harNyDialogEllerValgtDialog
+                        }
+                        historiskVisning={historiskVisning}
+                    />
+                    <DialogHenvendelse
+                        valgtDialog={valgtDialog}
+                        harNyDialog={harNyDialog}
+                        harValgtDialog={harValgtDialog}
+                        valgtAktivitetId={valgtAktivitetId}
+                        harNyDialogEllerValgtDialog={
+                            harNyDialogEllerValgtDialog
+                        }
+                    />
+                </div>
             </div>
-        </div>
+        </FnrProvider>
     );
 }
 

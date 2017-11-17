@@ -12,6 +12,7 @@ import {
     selectMotpartSlice,
     selectNavnPaMotpart,
 } from '../motpart/motpart-selector';
+import FnrProvider from './../../bootstrap/fnr-provider';
 
 function InnstillingerModal({
     avhengigheter,
@@ -21,38 +22,42 @@ function InnstillingerModal({
     ingenTilbakeKnapp,
 }) {
     return (
-        <Modal
-            header={
-                <ModalHeader
-                    tilbakeTekstId={
-                        ingenTilbakeKnapp ? null : 'innstillinger.modal.tilbake'
-                    }
-                />
-            }
-            contentLabel="instillinger-modal"
-            contentClass="innstillinger"
-            onRequestClose={onRequestClose}
-        >
-            <article className="innstillinger__container">
-                <Innholdslaster
-                    avhengigheter={avhengigheter}
-                    className="innstillinger__spinner"
-                >
-                    <Innholdstittel className="innstillinger__overskrift">
-                        <FormattedMessage
-                            id="innstillinger.modal.overskrift"
-                            values={{ navn: navnPaMotpart }}
-                        />
-                    </Innholdstittel>
-                </Innholdslaster>
-                <VisibleIfDiv
-                    visible={!!children}
-                    className="innstillinger__innhold"
-                >
-                    {children}
-                </VisibleIfDiv>
-            </article>
-        </Modal>
+        <FnrProvider>
+            <Modal
+                header={
+                    <ModalHeader
+                        tilbakeTekstId={
+                            ingenTilbakeKnapp
+                                ? null
+                                : 'innstillinger.modal.tilbake'
+                        }
+                    />
+                }
+                contentLabel="instillinger-modal"
+                contentClass="innstillinger"
+                onRequestClose={onRequestClose}
+            >
+                <article className="innstillinger__container">
+                    <Innholdslaster
+                        avhengigheter={avhengigheter}
+                        className="innstillinger__spinner"
+                    >
+                        <Innholdstittel className="innstillinger__overskrift">
+                            <FormattedMessage
+                                id="innstillinger.modal.overskrift"
+                                values={{ navn: navnPaMotpart }}
+                            />
+                        </Innholdstittel>
+                    </Innholdslaster>
+                    <VisibleIfDiv
+                        visible={!!children}
+                        className="innstillinger__innhold"
+                    >
+                        {children}
+                    </VisibleIfDiv>
+                </article>
+            </Modal>
+        </FnrProvider>
     );
 }
 
