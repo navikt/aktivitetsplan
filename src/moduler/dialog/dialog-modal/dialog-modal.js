@@ -19,34 +19,37 @@ import Feilmelding from '../../feilmelding/feilmelding';
 import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse from './dialog-henvendelse';
+import FnrProvider from './../../../bootstrap/fnr-provider';
 
 function DialogModalContent({
-    harNyDialogEllerValgtDialog,
-    valgtDialog,
-    harNyDialog,
-    historiskVisning,
-    harValgtDialog,
-    valgtAktivitetId,
-}) {
+                                harNyDialogEllerValgtDialog,
+                                valgtDialog,
+                                harNyDialog,
+                                historiskVisning,
+                                harValgtDialog,
+                                valgtAktivitetId,
+                            }) {
     return (
-        <div className="dialog-modal__wrapper">
-            <Feilmelding className="feilmelding--systemfeil" />
-            <div className="dialog-modal__innhold">
-                <DialogOversikt
-                    valgtDialog={valgtDialog}
-                    harNyDialog={harNyDialog}
-                    harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
-                    historiskVisning={historiskVisning}
-                />
-                <DialogHenvendelse
-                    valgtDialog={valgtDialog}
-                    harNyDialog={harNyDialog}
-                    harValgtDialog={harValgtDialog}
-                    valgtAktivitetId={valgtAktivitetId}
-                    harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
-                />
+        <FnrProvider>
+            <div className="dialog-modal__wrapper">
+                <Feilmelding className="feilmelding--systemfeil" />
+                <div className="dialog-modal__innhold">
+                    <DialogOversikt
+                        valgtDialog={valgtDialog}
+                        harNyDialog={harNyDialog}
+                        harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
+                        historiskVisning={historiskVisning}
+                    />
+                    <DialogHenvendelse
+                        valgtDialog={valgtDialog}
+                        harNyDialog={harNyDialog}
+                        harValgtDialog={harValgtDialog}
+                        valgtAktivitetId={valgtAktivitetId}
+                        harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
+                    />
+                </div>
             </div>
-        </div>
+        </FnrProvider>
     );
 }
 
@@ -65,16 +68,16 @@ DialogModalContent.defaultProps = {
 };
 
 function DialogModal({
-    harNyDialogEllerValgtDialog,
-    tilpasseStorrelseHistoriskVisning,
-    motpartStatus,
-    navnPaMotpart,
-    valgtDialog,
-    valgtAktivitetId,
-    harNyDialog,
-    harValgtDialog,
-    historiskVisning,
-}) {
+                         harNyDialogEllerValgtDialog,
+                         tilpasseStorrelseHistoriskVisning,
+                         motpartStatus,
+                         navnPaMotpart,
+                         valgtDialog,
+                         valgtAktivitetId,
+                         harNyDialog,
+                         harValgtDialog,
+                         historiskVisning,
+                     }) {
     const className = classNames('dialog-modal', 'aktivitet-modal', {
         'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
         'dialog-modal--historisk-visning': tilpasseStorrelseHistoriskVisning,
@@ -143,9 +146,8 @@ const mapStateToProps = (state, props) => {
         motpartStatus: selectMotpartStatus(state),
         navnPaMotpart: selectNavnPaMotpart(state),
         historiskVisning,
-        tilpasseStorrelseHistoriskVisning:
-            historiskVisning &&
-            selectTilpasseDialogModalHistoriskVisning(state),
+        tilpasseStorrelseHistoriskVisning: historiskVisning &&
+        selectTilpasseDialogModalHistoriskVisning(state),
     };
 };
 

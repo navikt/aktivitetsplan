@@ -17,43 +17,47 @@ import { selectArbeidslisteStatus } from './arbeidsliste-selector';
 import { slettArbeidsliste } from './arbeidsliste-reducer';
 import { LUKK_MODAL } from '../../felles-komponenter/modal/modal-reducer';
 import Modal from '../../felles-komponenter/modal/modal';
+import FnrProvider from './../../bootstrap/fnr-provider';
+
 
 function ArbeidslisteContainer({
-    avhengigheter,
-    path,
-    navnPaMotpart,
-    onSlettArbeidsliste,
-    history,
-    lukkModal,
-}) {
+                                   avhengigheter,
+                                   path,
+                                   navnPaMotpart,
+                                   onSlettArbeidsliste,
+                                   history,
+                                   lukkModal,
+                               }) {
     const onLukkModal = () => {
         history.push('/');
         lukkModal();
     };
 
     return (
-        <Modal contentLabel="arbeidsliste-modal" contentClass="arbeidsliste">
-            <Innholdslaster
-                avhengigheter={avhengigheter}
-                className="arbeidsliste__spinner"
-            >
-                <Switch>
-                    <Route exact path={`${path}/leggtil`}>
-                        <LeggTilArbeidsliste navn={navnPaMotpart} />
-                    </Route>
-                    <Route exact path={`${path}/rediger`}>
-                        <RedigerArbeidsliste navn={navnPaMotpart} />
-                    </Route>
-                    <Route exact path={`${path}/fjern`}>
-                        <FjernArbeidsliste
-                            navn={navnPaMotpart}
-                            onBekreftSlett={onSlettArbeidsliste}
-                            lukkModal={onLukkModal}
-                        />
-                    </Route>
-                </Switch>
-            </Innholdslaster>
-        </Modal>
+        <FnrProvider>
+            <Modal contentLabel="arbeidsliste-modal" contentClass="arbeidsliste">
+                <Innholdslaster
+                    avhengigheter={avhengigheter}
+                    className="arbeidsliste__spinner"
+                >
+                    <Switch>
+                        <Route exact path={`${path}/leggtil`}>
+                            <LeggTilArbeidsliste navn={navnPaMotpart} />
+                        </Route>
+                        <Route exact path={`${path}/rediger`}>
+                            <RedigerArbeidsliste navn={navnPaMotpart} />
+                        </Route>
+                        <Route exact path={`${path}/fjern`}>
+                            <FjernArbeidsliste
+                                navn={navnPaMotpart}
+                                onBekreftSlett={onSlettArbeidsliste}
+                                lukkModal={onLukkModal}
+                            />
+                        </Route>
+                    </Switch>
+                </Innholdslaster>
+            </Modal>
+        </FnrProvider>
     );
 }
 
