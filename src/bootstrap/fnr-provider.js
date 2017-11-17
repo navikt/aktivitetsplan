@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
 import { RESET_STORE } from '../reducer';
 import history from '../history';
-import { hentBruker } from '../moduler/bruker/bruker-reducer';
+import { hentBruker, setStatusOk } from '../moduler/bruker/bruker-reducer';
 
 export function fnrFraUrl() {
     const fnrMatch = window.location.pathname.match(`${CONTEXT_PATH}/(\\d*)`);
@@ -24,11 +24,14 @@ class FnrProvider extends Component {
     componentDidMount() {
         const { dispatch } = this.props;
         if (FNR_I_URL) {
-            // e.g. på innsiden - merk at urlen ikke alltid har et fnr!
+            // på innsiden - merk at urlen ikke alltid har et fnr!
             const fnr = fnrFraUrl();
             if (fnr) {
                 dispatch(hentBruker(fnr));
             }
+        } else {
+            // på utsiden
+            dispatch(setStatusOk());
         }
         document.addEventListener('flate-person-endret', this.listener);
     }

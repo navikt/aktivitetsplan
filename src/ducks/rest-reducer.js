@@ -57,6 +57,8 @@ export function createActionsAndReducer(
                 actionFunction(fn)(dispatch);
             }
         },
+
+        actionTypes,
     };
 }
 
