@@ -19,15 +19,14 @@ import { LUKK_MODAL } from '../../felles-komponenter/modal/modal-reducer';
 import Modal from '../../felles-komponenter/modal/modal';
 import FnrProvider from './../../bootstrap/fnr-provider';
 
-
 function ArbeidslisteContainer({
-                                   avhengigheter,
-                                   path,
-                                   navnPaMotpart,
-                                   onSlettArbeidsliste,
-                                   history,
-                                   lukkModal,
-                               }) {
+    avhengigheter,
+    path,
+    navnPaMotpart,
+    onSlettArbeidsliste,
+    history,
+    lukkModal,
+}) {
     const onLukkModal = () => {
         history.push('/');
         lukkModal();
@@ -35,7 +34,10 @@ function ArbeidslisteContainer({
 
     return (
         <FnrProvider>
-            <Modal contentLabel="arbeidsliste-modal" contentClass="arbeidsliste">
+            <Modal
+                contentLabel="arbeidsliste-modal"
+                contentClass="arbeidsliste"
+            >
                 <Innholdslaster
                     avhengigheter={avhengigheter}
                     className="arbeidsliste__spinner"

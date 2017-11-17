@@ -14,21 +14,22 @@ import {
 } from '../motpart/motpart-selector';
 import FnrProvider from './../../bootstrap/fnr-provider';
 
-
 function InnstillingerModal({
-                                avhengigheter,
-                                children,
-                                navnPaMotpart,
-                                onRequestClose,
-                                ingenTilbakeKnapp,
-                            }) {
+    avhengigheter,
+    children,
+    navnPaMotpart,
+    onRequestClose,
+    ingenTilbakeKnapp,
+}) {
     return (
         <FnrProvider>
             <Modal
                 header={
                     <ModalHeader
                         tilbakeTekstId={
-                            ingenTilbakeKnapp ? null : 'innstillinger.modal.tilbake'
+                            ingenTilbakeKnapp
+                                ? null
+                                : 'innstillinger.modal.tilbake'
                         }
                     />
                 }

@@ -22,13 +22,13 @@ import DialogHenvendelse from './dialog-henvendelse';
 import FnrProvider from './../../../bootstrap/fnr-provider';
 
 function DialogModalContent({
-                                harNyDialogEllerValgtDialog,
-                                valgtDialog,
-                                harNyDialog,
-                                historiskVisning,
-                                harValgtDialog,
-                                valgtAktivitetId,
-                            }) {
+    harNyDialogEllerValgtDialog,
+    valgtDialog,
+    harNyDialog,
+    historiskVisning,
+    harValgtDialog,
+    valgtAktivitetId,
+}) {
     return (
         <FnrProvider>
             <div className="dialog-modal__wrapper">
@@ -37,7 +37,9 @@ function DialogModalContent({
                     <DialogOversikt
                         valgtDialog={valgtDialog}
                         harNyDialog={harNyDialog}
-                        harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
+                        harNyDialogEllerValgtDialog={
+                            harNyDialogEllerValgtDialog
+                        }
                         historiskVisning={historiskVisning}
                     />
                     <DialogHenvendelse
@@ -45,7 +47,9 @@ function DialogModalContent({
                         harNyDialog={harNyDialog}
                         harValgtDialog={harValgtDialog}
                         valgtAktivitetId={valgtAktivitetId}
-                        harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
+                        harNyDialogEllerValgtDialog={
+                            harNyDialogEllerValgtDialog
+                        }
                     />
                 </div>
             </div>
@@ -68,16 +72,16 @@ DialogModalContent.defaultProps = {
 };
 
 function DialogModal({
-                         harNyDialogEllerValgtDialog,
-                         tilpasseStorrelseHistoriskVisning,
-                         motpartStatus,
-                         navnPaMotpart,
-                         valgtDialog,
-                         valgtAktivitetId,
-                         harNyDialog,
-                         harValgtDialog,
-                         historiskVisning,
-                     }) {
+    harNyDialogEllerValgtDialog,
+    tilpasseStorrelseHistoriskVisning,
+    motpartStatus,
+    navnPaMotpart,
+    valgtDialog,
+    valgtAktivitetId,
+    harNyDialog,
+    harValgtDialog,
+    historiskVisning,
+}) {
     const className = classNames('dialog-modal', 'aktivitet-modal', {
         'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
         'dialog-modal--historisk-visning': tilpasseStorrelseHistoriskVisning,
@@ -146,8 +150,9 @@ const mapStateToProps = (state, props) => {
         motpartStatus: selectMotpartStatus(state),
         navnPaMotpart: selectNavnPaMotpart(state),
         historiskVisning,
-        tilpasseStorrelseHistoriskVisning: historiskVisning &&
-        selectTilpasseDialogModalHistoriskVisning(state),
+        tilpasseStorrelseHistoriskVisning:
+            historiskVisning &&
+            selectTilpasseDialogModalHistoriskVisning(state),
     };
 };
 
