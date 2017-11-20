@@ -23,7 +23,7 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../constant';
-import { selectBruker } from '../bruker/bruker-selector';
+import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
 import {
     hentPrintMelding,
     selectKanHaPrintMeldingForm,
@@ -44,6 +44,8 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
+import FnrProvider from './../../bootstrap/fnr-provider';
+
 
 const StatusGruppePT = PT.shape({
     status: PT.string.isRequired,
@@ -219,24 +221,26 @@ class AktivitetsplanPrintModal extends Component {
         const innhold = visPrintMeldingForm
             ? <PrintMelding />
             : <Print
-                  grupper={sorterteStatusGrupper}
-                  bruker={bruker}
-                  printMelding={printMelding}
-                  mittMal={mittMal}
-                  erVeileder={erVeileder}
-              />;
+                grupper={sorterteStatusGrupper}
+                bruker={bruker}
+                printMelding={printMelding}
+                mittMal={mittMal}
+                erVeileder={erVeileder}
+            />;
 
         return (
             <section>
-                <Modal
-                    contentLabel="aktivitetsplanPrint"
-                    className="aktivitetsplanprint"
-                    header={header}
-                >
-                    <Innholdslaster avhengigheter={avhengigheter}>
-                        {innhold}
-                    </Innholdslaster>
-                </Modal>
+                <FnrProvider>
+                    <Modal
+                        contentLabel="aktivitetsplanPrint"
+                        className="aktivitetsplanprint"
+                        header={header}
+                    >
+                        <Innholdslaster avhengigheter={avhengigheter}>
+                            {innhold}
+                        </Innholdslaster>
+                    </Modal>
+                </FnrProvider>
             </section>
         );
     }
@@ -310,6 +314,7 @@ const mapStateToProps = state => {
             selectMalStatus(state),
             selectOppfolgingStatus(state),
             selectAktivitetListeStatus(state),
+            selectBrukerStatus(state),
         ],
         aktiviteter,
         sorterteStatusGrupper,
