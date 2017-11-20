@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
@@ -25,11 +25,7 @@ class FnrProvider extends Component {
     }
 
     render() {
-        return (
-            <div>
-                {!FNR_I_URL || fnrFraUrl() ? this.props.children : []}
-            </div>
-        );
+        return !FNR_I_URL || fnrFraUrl() ? this.props.children : null;
     }
 }
 

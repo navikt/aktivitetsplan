@@ -46,7 +46,6 @@ import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import FnrProvider from './../../bootstrap/fnr-provider';
 
-
 const StatusGruppePT = PT.shape({
     status: PT.string.isRequired,
     aktiviteter: AppPT.aktiviteter,
@@ -221,12 +220,12 @@ class AktivitetsplanPrintModal extends Component {
         const innhold = visPrintMeldingForm
             ? <PrintMelding />
             : <Print
-                grupper={sorterteStatusGrupper}
-                bruker={bruker}
-                printMelding={printMelding}
-                mittMal={mittMal}
-                erVeileder={erVeileder}
-            />;
+                  grupper={sorterteStatusGrupper}
+                  bruker={bruker}
+                  printMelding={printMelding}
+                  mittMal={mittMal}
+                  erVeileder={erVeileder}
+              />;
 
         return (
             <section>

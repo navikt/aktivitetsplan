@@ -1,7 +1,9 @@
 import * as Api from '../motpart/motpart-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 
-const { reducer, cashedAction, actionTypes } = createActionsAndReducer('bruker');
+const { reducer, cashedAction, actionTypes } = createActionsAndReducer(
+    'bruker'
+);
 
 export default reducer;
 
