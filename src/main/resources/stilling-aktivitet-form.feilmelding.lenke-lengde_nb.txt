@@ -1,1 +1,1 @@
-Du må korte ned teksten til {MAKS_LENGDE} tegn
+Lenken kan ikke være lenger enn {MAKS_LENGDE} tegn
