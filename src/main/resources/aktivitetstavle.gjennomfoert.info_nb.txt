@@ -1,1 +1,1 @@
-Informasjon om gjennomfører-kolonnen
+Informasjon om statusen Gjennomfører
