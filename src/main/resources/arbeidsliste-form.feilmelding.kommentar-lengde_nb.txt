@@ -1,1 +1,1 @@
-Kommentaren kan ikke være lenger enn {MAKS_LENGDE}
+Du må korte ned teksten til {MAKS_LENGDE} tegn
