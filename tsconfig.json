@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outDir": "out/",
+    "jsx": "react",
+    "lib": [
+      "DOM",
+      "es2015",
+      "es2016",
+      "es2017"
+    ]
+  },
+  "include": [
+    "app/**/*",
+    "@types/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*-spec.js",
+    "**/*-test.js",
+    "**/*.less",
+    "documentation"
+  ]
+}

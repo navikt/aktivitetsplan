@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import { UndertekstBold, Undertekst } from 'nav-frontend-typografi';
 import Ikon from 'nav-frontend-ikoner-assets';
-import Text from '../text';
+import Text from '../text.js'
 
 function FooterInfo() {
     return (
@@ -12,7 +12,7 @@ function FooterInfo() {
                 height="1.5rem"
                 width="1.5rem"
                 title="Informasjons-ikon"
-                aria-label="Informasjons-ikon"
+                ariaLabel="Informasjons-ikon"
             />
             <UndertekstBold>
                 <Text id="info.aktivitetsplan.lanseringsdato" />

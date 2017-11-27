@@ -18,6 +18,11 @@ const RULES = [
         loader: 'babel-loader',
     },
     {
+        test: /\.js$|\.tsx?$/,
+        exclude: /node_modules/,
+        loader: 'awesome-typescript-loader',
+    },
+    {
         test: /\.(svg|png)$/,
         use: {
             loader: 'url-loader',
@@ -56,7 +61,7 @@ module.exports = function(env) {
             alias: {
                 '~config': path.resolve(__dirname, './example/config'),
             },
-            extensions: ['.js', '.jsx', '.json'],
+            extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
         },
         output: {
             path: path.resolve(__dirname, 'example/build'),

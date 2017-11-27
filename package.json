@@ -23,6 +23,7 @@
     "test:watch": "mocha --watch",
     "depcheck": "node ./node_modules/npm-check-updates/bin/npm-check-updates -e 2 -x react-motion,react-router-dom,react-collapse,mocha,react-height --packageFile ./package.json",
     "eslint": "eslint src --ext .js --ext .jsx",
+    "tslint": "tslint ./app/**/*.ts* --fix",
     "eslint-staged": "eslint",
     "lesshint": "lesshint --reporter ./lesshint-reporter src/",
     "lesshint-staged": "lesshint --reporter ./lesshint-reporter",
@@ -120,7 +121,9 @@
     "sanitize-html": "1.14.1"
   },
   "devDependencies": {
+    "@types/react": "^16.0.25",
     "autoless": "0.1.7",
+    "awesome-typescript-loader": "^3.4.0",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-loader": "7.0.0",
@@ -162,6 +165,8 @@
     "sinon": "2.2.0",
     "sinon-chai": "2.10.0",
     "text-table": "0.2.0",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1",
     "url-loader": "0.5.8",
     "webpack": "2.5.1",
     "webpack-dev-server": "2.4.5",
