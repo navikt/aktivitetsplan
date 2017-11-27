@@ -18,7 +18,7 @@
     ]
   },
   "include": [
-    "app/**/*",
+    "src/**/*",
     "@types/*"
   ],
   "exclude": [
