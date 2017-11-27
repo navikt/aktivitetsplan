@@ -8,7 +8,7 @@ import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Feilmelding from '../moduler/feilmelding/feilmelding';
 import VisaValgtFilter from '../moduler/filtrering/filter-vis-label';
-import FooterInfo from './footer-info';
+import FooterInfo from './footer-info.tsx';
 import Routing, { PublicRouting } from '../routing';
 
 function Hovedside() {
