@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { UndertekstBold, Undertekst } from 'nav-frontend-typografi';
 import Ikon from 'nav-frontend-ikoner-assets';
-import Text from '../text.js'
+import Text from '../text'
 
 function FooterInfo() {
     return (

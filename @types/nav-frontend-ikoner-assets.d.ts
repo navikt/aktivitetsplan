@@ -7,7 +7,7 @@ declare module "nav-frontend-ikoner-assets" {
         kind?: string,
         onClick?: () => any,
         preview?: boolean,
-        size: string | number,
+        size?: string | number,
         style?: any,
         wrapperStyle?: any,
         title?: string,
