@@ -21,6 +21,7 @@
   "scripts": {
     "test": "mocha",
     "test:watch": "mocha --watch",
+    "test:coverage": "nyc --reporter=html npm test",
     "depcheck": "node ./node_modules/npm-check-updates/bin/npm-check-updates -e 2 -x react-motion,react-router-dom,react-collapse,mocha,react-height --packageFile ./package.json",
     "eslint": "eslint src --ext .js --ext .jsx",
     "eslint-staged": "eslint",
