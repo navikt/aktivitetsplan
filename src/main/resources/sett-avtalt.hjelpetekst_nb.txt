@@ -1,1 +1,1 @@
-Aktiviteter som oppfyller brukers aktivitets- og medvirkningsplikt skal settes som "Avtalt med NAV" 
+Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt med NAV" 
