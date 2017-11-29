@@ -1,8 +1,8 @@
 # Tekster for aktivitetsplan
 
 ## Tekstnøkler og navn på filer
-Når man bruker applikasjonen kan man legge til parameteren `vistekster` i URL'en for å få se hvilke nøkler som ligger bak hvilke tekster. Avhengig av miljø vil URL'en se omtrent slik ut: `https://tjenester-t4.nav.no/aktivitetsplan/?vistekster`. Dette fungerer både i brukers flate og i saksbehandlers flate.
-Et eksempel på en tekst med ?vistekster parameteren på, er `Aktivitetsplan [hovedside.tittel]`. Det som står mellom hakeparentesene er nøkkelen man kan bruke for å slå opp i BitBucket. Den akutelle filen for nøkkelen `hovedside.tittel` vil være `hovedside.tittel_nb.txt`. `nb` står for norsk bokmål, og hvis man skal oversette applikasjonen til andre spårk vil man lage et nytt sett med filer med andre språkkoder, f.eks. `nn` for nynorsk eller `en` for engelsk. Legg også merke til filendelsen `.txt` som må være med. Innholdet i filen er den teksten som vil vises i applikasjonen.
+Når man bruker applikasjonen kan man legge til parameteren `vistekster=true` i URL'en for å få se hvilke nøkler som ligger bak hvilke tekster. Avhengig av miljø vil URL'en se omtrent slik ut: `https://tjenester-t4.nav.no/aktivitetsplan/?vistekster=true`. Dette fungerer både i brukers flate og i saksbehandlers flate.
+Et eksempel på en tekst med ?vistekster=true parameteren på, er `Aktivitetsplan [hovedside.tittel]`. Det som står mellom hakeparentesene er nøkkelen man kan bruke for å slå opp i BitBucket. Den akutelle filen for nøkkelen `hovedside.tittel` vil være `hovedside.tittel_nb.txt`. `nb` står for norsk bokmål, og hvis man skal oversette applikasjonen til andre spårk vil man lage et nytt sett med filer med andre språkkoder, f.eks. `nn` for nynorsk eller `en` for engelsk. Legg også merke til filendelsen `.txt` som må være med. Innholdet i filen er den teksten som vil vises i applikasjonen.
 
 
 ## Parameter substitusjon
@@ -22,7 +22,7 @@ I eksempelet over sjekker vi parameteren `underOppfolging` og velger en av to te
 
 
 ## Nøkler for feilmeldinger
-Tekstnøkler for feilmeldinger er håndtert litt spessielt i løsningen. For en gitt feilsituasjon som kan oppstå genererer vi et sett med nøkkler basert på hvilken opperasjon man forsøkte å utføre i det feilsituasjonen oppsto. Hvis man bruker `vistekster` parameteren vil man se en liste med alle nøklene for den aktuelle feilen, sortert synkende etter hvor spesifik nøkkelen er. Mange av disse nøklene vil ikke ha en verdi i BitBucket, og den som vises til bruker vil være den mest spesifikke som har en verdi.
+Tekstnøkler for feilmeldinger er håndtert litt spessielt i løsningen. For en gitt feilsituasjon som kan oppstå genererer vi et sett med nøkkler basert på hvilken opperasjon man forsøkte å utføre i det feilsituasjonen oppsto. Hvis man bruker `vistekster=true` parameteren vil man se en liste med alle nøklene for den aktuelle feilen, sortert synkende etter hvor spesifik nøkkelen er. Mange av disse nøklene vil ikke ha en verdi i BitBucket, og den som vises til bruker vil være den mest spesifikke som har en verdi.
 
 #### Opprettelse av nye filer
 Hvis man ønsker å legge til en mer spesifikk feilmelding, må man opprette en ny fil i BitBucket for den nøkkelen.
