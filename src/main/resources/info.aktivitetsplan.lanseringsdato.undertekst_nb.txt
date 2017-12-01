@@ -1,1 +1,5 @@
-Har du tidligere fått en aktivitetsplan på papir fra NAV, vil ikke aktiviteter du fullførte før 4. des 2017 vises her.
+{underOppfolging, select,
+true { Har du tidligere fått en aktivitetsplan på papir fra NAV, vil ikke aktiviteter du fullførte før 4. des 2017 vises her. }
+false { Legg til aktiviteter og ta den i bruk }
+}
+
