@@ -1,19 +1,24 @@
-Vi kan stanse arbeidsavklaringspengene dine dersom du ikke kommer på møtet vi har innkalt deg
-til, og du ikke har gitt oss beskjed på forhånd. Hvis du ikke melder fra på forhånd, vil fraværet ditt
-alltid bli regnet for å være uten grunn.
-Dette går fram av folketrygdloven § 11-8.
+Generell innledningstekst:
+Les denne meldingen nøye og gi beskjed til veilederen din hvis det er noe du lurer på. Det gjør du ved å svare på denne meldingen. 
+Vi har [beskriv aktiviteten eller møtet du har lagt til] i aktivitetsplanen din. For at du skal nå målet ditt om å komme raskt i arbeid, er det viktig at du [gjennomfører aktiviteten/møter opp]. 
 
-Du plikter å komme til avtalte møter hos NAV. Du må gi oss beskjed på forhånd dersom du ikke
-kan komme, og du må dokumentere grunnen til fraværet.
-Du kan miste retten til å få utbetalt dagpenger i en periode dersom du uten rimelig grunn ikke
-kommer på møtet som vi har innkalt deg til. Det er vi som avgjør hva som er rimelig grunn.
-Dette går fram av folketrygdloven § 4-20 første ledd bokstav e.
+Bruk dette avsnittet hvis du har kalt inn brukeren til et møte:
+Hvis du ikke møter opp, risikerer du at stønaden du mottar fra NAV stanses eller faller bort for en periode. 
 
-Vi kan stanse arbeidsavklaringspengene dine dersom du ikke kommer på møtet vi har innkalt deg
-til, og du ikke har gitt oss beskjed på forhånd. Hvis du ikke melder fra på forhånd, vil fraværet ditt
-alltid bli regnet for å være uten grunn.
+Bruk dette avsnittet hvis du har lagt til en avtalt aktivitet: 
+Hvis du ikke gjennomfører denne aktiviteten, risikerer du at stønaden du mottar fra NAV stanses eller faller bort for en periode. 
 
-Dette går fram av folketrygdloven § 11-8.
+Bruk dette avsnittet hvis du har lagt til en pålagt aktivitet:
+Når du er arbeidssøker og mottar en stønad fra NAV, kan vi pålegge deg å gjennomføre arbeidsrettede aktiviteter. Hvis du ikke gjennomfører disse aktivitetene, risikerer du at stønaden du mottar fra NAV stanses eller faller bort for en periode. 
+
+Bruk dette avsnittet hvis brukeren mottar dagpenger:
+Kravene til deg som er arbeidsledig og mottar dagpenger går fram av folketrygdloven § 4-5 og forskrift om dagpenger § 4-1. Du må være reell arbeidssøker. Det betyr at du må delta i arbeidsrettede aktiviteter, aktivt søke arbeid og møte hos NAV når vi har behov for å snakke med deg. Hvis du ikke oppfyller aktivitetsplikten din, kan vi stanse dagpengene dine fra NAV (folketrygdloven § 4-21). Takker du nei til arbeid eller arbeidsmarkedstiltak eller lar være å møte hos oss etter at vi har kalt deg inn, kan du miste retten til dagpenger i en periode (folketrygdloven § 4-20).
 
 
-Hilsen NAV
+Bruk dette avsnittet hvis brukeren mottar overgangsstønad:
+Kravene til deg som mottar overgangsstønad og er arbeidssøker går fram av folketrygdloven § 15-12 og § 15-6. Fordi du er en reell arbeidssøker krever vi at du skal ha minst 50 prosent med arbeidsrettede aktiviteter. Du må også aktivt søke arbeid og møte hos oss når vi har behov for å snakke med deg. Takker du nei til arbeid eller arbeidsmarkedstiltak eller ikke møter hos NAV etter at vi har kalt deg inn, kan du miste retten til overgangsstønad fra NAV i én måned. NAV kan også stanse overgangsstønaden din hvis du ikke lenger fyller aktivitetsplikten du har som reell arbeidssøker og ikke har rett til stønaden på andre vilkår.
+
+
+Bruk dette avsnittet hvis brukeren mottar sykepenger:
+Kravene til deg som har sykepenger og blir friskmeldt til å kunne søke jobber mens du beholder sykepengene i en periode, går fram av folketrygdloven § 8-5 og § 21-8. Du må være reell arbeidssøker i denne perioden. Det betyr at du må delta i arbeidsrettede aktiviteter, aktivt søke arbeid og møte hos oss når vi har behov for å snakke med deg. Hvis du takker nei til et arbeidsrettet tiltak, kan du miste retten til sykepenger.
+
