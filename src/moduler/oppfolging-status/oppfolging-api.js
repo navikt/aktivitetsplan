@@ -1,5 +1,5 @@
 import { OPPFOLGING_PROXY_BASE_URL } from '../../environment';
-import { fetchToJson, postAsJson } from '../../ducks/utils';
+import { fetchToJson, postAsJson, deleteAsJson } from '../../ducks/utils';
 
 export function hentIdentitet() {
     return fetchToJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/me`);
@@ -44,9 +44,7 @@ export function lagreMal(mal) {
 }
 
 export function slettMal() {
-    return fetchToJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/mal`, {
-        method: 'delete',
-    });
+    return deleteAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/mal`);
 }
 
 export function startOppfolging() {

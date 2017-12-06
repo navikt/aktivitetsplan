@@ -1,5 +1,5 @@
 import { AKTIVITET_PROXY_BASE_URL } from '../../environment';
-import { fetchToJson, postAsJson, putAsJson } from './../../ducks/utils';
+import { fetchToJson, postAsJson, putAsJson, deleteAsJson } from './../../ducks/utils';
 
 export function hentAktivitet(aktivitetId) {
     return fetchToJson(`${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitetId}`);
@@ -34,9 +34,8 @@ export function oppdaterAktivitetEtikett(aktivitet) {
 }
 
 export function slettAktivitet(aktivitet) {
-    return fetchToJson(
-        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`,
-        { method: 'delete' }
+    return deleteAsJson(
+        `${AKTIVITET_PROXY_BASE_URL}/aktivitet/${aktivitet.id}`
     );
 }
 
