@@ -1,1 +1,1 @@
-Opprett en ny oppgave for {navn}.
+Opprett en ny oppgave for brukeren.
