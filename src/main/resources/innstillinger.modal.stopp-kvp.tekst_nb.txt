@@ -1,0 +1,1 @@
+Slå av kontorsperre for brukere som har fullført KVP
