@@ -17,6 +17,7 @@ import {
     selectErEskalert,
     selectErUnderOppfolging,
     selectKanIkkeStartaEskaleringen,
+    selectErUnderKvpOppfolging,
 } from '../../oppfolging-status/oppfolging-selector';
 import {
     selectErManuell,
@@ -24,6 +25,8 @@ import {
     selectKanStarteOppfolging,
 } from '../innstillinger-selector';
 import { selectMotpartSlice } from '../../motpart/motpart-selector';
+import StartKvpPeriodeProsess from '../start-kvp-periode/start-kvp-periode-prosess';
+import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prosess';
 
 class Prosesser extends Component {
     componentDidMount() {
@@ -38,6 +41,7 @@ class Prosesser extends Component {
             erManuell,
             kanStarteOppfolging,
             kanIkkeStartaEskalering,
+            erUnderKvpOppfolging,
             motpart,
         } = this.props;
         return (
@@ -59,6 +63,8 @@ class Prosesser extends Component {
                             hidden={!erUnderOppfolging || !erManuell}
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
+                        <StartKvpPeriodeProsess hidden={!erUnderKvpOppfolging} />
+                        <StoppKvpPeriodeProsess  hidden={erUnderKvpOppfolging} />
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>
@@ -72,6 +78,7 @@ Prosesser.defaultProps = {
     erManuell: undefined,
     kanStarteOppfolging: undefined,
     kanIkkeStartaEskalering: undefined,
+    erUnderKvpOppfolging: undefined,
 };
 
 Prosesser.propTypes = {
@@ -82,6 +89,7 @@ Prosesser.propTypes = {
     erManuell: PT.bool,
     kanStarteOppfolging: PT.bool,
     kanIkkeStartaEskalering: PT.bool,
+    erUnderKvpOppfolging: PT.bool,
     motpart: AppPT.motpart.isRequired,
 };
 
@@ -92,6 +100,7 @@ const mapStateToProps = state => ({
     erManuell: selectErManuell(state),
     kanStarteOppfolging: selectKanStarteOppfolging(state),
     kanIkkeStartaEskalering: selectKanIkkeStartaEskaleringen(state),
+    erUnderKvpOppfolging: selectErUnderKvpOppfolging(state),
     motpart: selectMotpartSlice(state),
 });
 

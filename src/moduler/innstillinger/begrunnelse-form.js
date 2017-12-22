@@ -23,6 +23,7 @@ const pakrevdBegrunnelse = pakrevd('avslutt.oppfolging.feilmelding.for-kort');
 function BegrunnelseForm({ handleSubmit, labelId, maksBeskrivelseLengde }) {
     return (
         <form onSubmit={handleSubmit}>
+        <br/>
             <Textarea
                 feltNavn="begrunnelse"
                 labelId={labelId}

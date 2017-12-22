@@ -48,6 +48,14 @@ export const LAGRE_BEGRUNNELSE = 'form/lagre_begrunnelse';
 export const SLETT_BEGRUNNELSE = 'form/slett_begrunnelse';
 export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
 
+export const START_KVP_OK = 'innstillinger/start_kvp/OK';
+export const START_KVP_FEILET = 'innstillinger/start_kvp/FEILET';
+export const START_KVP_PENDING = 'innstillinger/start_kvp/PENDING';
+
+export const STOPP_KVP_OK = 'innstillinger/stopp_kvp/OK';
+export const STOPP_KVP_FEILET = 'innstillinger/stopp_kvp/FEILET';
+export const STOPP_KVP_PENDING = 'innstillinger/stopp_kvp/PENDING';
+
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
@@ -64,6 +72,8 @@ export default function reducer(state = initalState, action) {
         case SETT_DIGITAL_OK:
         case START_ESKALERING_OK:
         case STOPP_ESKALERING_OK:
+        case START_KVP_OK:
+        case STOPP_KVP_OK:
             return {
                 ...state,
                 status: STATUS.OK,
@@ -77,6 +87,8 @@ export default function reducer(state = initalState, action) {
         case SETT_DIGITAL_FEILET:
         case START_ESKALERING_FEILET:
         case STOPP_ESKALERING_FEILET:
+        case START_KVP_FEILET:
+        case STOPP_KVP_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
@@ -90,10 +102,11 @@ export default function reducer(state = initalState, action) {
         case SETT_DIGITAL_PENDING:
         case START_ESKALERING_PENDING:
         case STOPP_ESKALERING_PENDING:
+        case START_KVP_PENDING:
+        case STOPP_KVP_PENDING:
             return {
                 ...state,
-                status:
-                    state.status === STATUS.NOT_STARTED
+                status: state.status === STATUS.NOT_STARTED
                         ? STATUS.PENDING
                         : STATUS.RELOADING,
             };
@@ -103,7 +116,10 @@ export default function reducer(state = initalState, action) {
                 begrunnelse: action.data,
             };
         case SLETT_BEGRUNNELSE:
-            return { ...state, begrunnelse: null };
+            return {
+                ...state,
+                begrunnelse: null
+            };
         default:
             return state;
     }
@@ -190,20 +206,18 @@ export function startEskalering(eskaleringData) {
                 tekst: begrunnelse,
                 egenskaper: ['ESKALERINGSVARSEL'],
             })
-        )
-            .then(henvendelse => {
-                const dialogId = henvendelse.data.id;
-                dispatch(oppdaterVenterPaSvar(dialogId, true));
-                dispatch(oppdaterFerdigbehandlet(dialogId, true));
-                return dispatch(
-                    startEskaleringMedDialog(dialogId, begrunnelse)
-                );
-            })
-            .then(() => dispatch(hentOppfolging()))
-            .then(() =>
+        ).then(henvendelse => {
+            const dialogId = henvendelse.data.id;
+            dispatch(oppdaterVenterPaSvar(dialogId, true));
+            dispatch(oppdaterFerdigbehandlet(dialogId, true));
+            return dispatch(
+                startEskaleringMedDialog(dialogId, begrunnelse)
+            );
+        }).then(() => dispatch(hentOppfolging()))
+          .then(() =>
                 history.push('/innstillinger/startEskalering/kvittering')
-            )
-            .catch(() => history.push('/innstillinger/feilkvittering'));
+          )
+          .catch(() => history.push('/innstillinger/feilkvittering'));
 }
 
 function stoppEskaleringMedBegrunnelse(begrunnelse) {
@@ -237,4 +251,26 @@ export function lagreBegrunnelse(begrunnelse) {
         type: LAGRE_BEGRUNNELSE,
         data: begrunnelse,
     };
+}
+
+export function startKvpOppfolging(begrunnelse, veilederId) {
+    return doThenDispatch(
+        () => OppfolgingApi.startKvpOppfolging(begrunnelse, veilederId),
+        {
+            OK: START_KVP_OK,
+            FEILET: START_KVP_FEILET,
+            PENDING: START_KVP_PENDING,
+        }
+    );
+}
+
+export function stoppKvpOppfolging(begrunnelse, veilederId) {
+    return doThenDispatch(
+        () => OppfolgingApi.stoppKvpOppfolging(begrunnelse, veilederId),
+        {
+            OK: STOPP_KVP_OK,
+            FEILET: STOPP_KVP_FEILET,
+            PENDING: STOPP_KVP_PENDING,
+        }
+    );
 }

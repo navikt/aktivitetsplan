@@ -102,3 +102,7 @@ export function selectKanIkkeStartaEskaleringen(state) {
         selectErBrukerManuell(state)
     );
 }
+
+export function selectErUnderKvpOppfolging(state) {
+    return selectOppfolgingData(state).underKvpOppfolging;
+}

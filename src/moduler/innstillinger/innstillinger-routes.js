@@ -18,6 +18,10 @@ import StoppEskaleringKvittering from './stopp-eskalering/stopp-eskalering-kvitt
 import OpprettOppgave from './opprett-oppgave/opprett-oppgave';
 import Feilkvittering from './feilkvittering';
 import OppgaveOpprettetKvittering from './opprett-oppgave/oppgave-opprettet-kvittering';
+import StartKvpPeriode from './start-kvp-periode/start-kvp-periode';
+import StoppKvpPeriode from './stopp-kvp-periode/stopp-kvp-periode';
+import StartKvpKvittering from './start-kvp-periode/start-kvp-periode-kvittering';
+import StoppKvpKvittering from './stopp-kvp-periode/stopp-kvp-periode-kvittering';
 
 function InnstillingerRoutes({ match }) {
     const path = match.path;
@@ -88,6 +92,24 @@ function InnstillingerRoutes({ match }) {
             <Route
                 path={`${path}/oppgave/kvittering`}
                 component={OppgaveOpprettetKvittering}
+            />
+            <Route
+                exact
+                path={`${path}/startKvpPeriode`}
+                component={StartKvpPeriode}
+            />
+            <Route
+                path={`${path}/startKvp/kvittering`}
+                component={StartKvpKvittering}
+            />
+            <Route
+                exact
+                path={`${path}/stoppKvpPeriode`}
+                component={StoppKvpPeriode}
+            />
+            <Route
+                path={`${path}/stoppKvp/kvittering`}
+                component={StoppKvpKvittering}
             />
             <Route path={`${path}/feilkvittering`} component={Feilkvittering} />
         </Switch>
