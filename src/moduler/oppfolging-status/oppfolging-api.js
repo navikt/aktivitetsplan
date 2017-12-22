@@ -81,29 +81,25 @@ export function avsluttOppfolging(begrunnelse, veilederId) {
 }
 
 export function settManuellOppfolging(begrunnelse, veilederId) {
-    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/settManuell`, {
-        begrunnelse,
-        veilederId,
-    });
+    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/settManuell`,
+        { begrunnelse, veilederId }
+    );
 }
 
 export function settDigitalOppfolging(begrunnelse, veilederId) {
-    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/settDigital`, {
-        begrunnelse,
-        veilederId,
-    });
+    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/settDigital`,
+        { begrunnelse, veilederId }
+    );
 }
 
 export function startKvpOppfolging(begrunnelse, veilederId) {
-    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/startKvp`, {
-        begrunnelse,
-        veilederId,
-    });
+    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/startKvp`,
+        { begrunnelse, veilederId }
+    );
 }
 
 export function stoppKvpOppfolging(begrunnelse, veilederId) {
-    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/stoppKvp`, {
-        begrunnelse,
-        veilederId,
-    });
+    return postAsJson(`${OPPFOLGING_PROXY_BASE_URL}/oppfolging/stoppKvp`,
+        { begrunnelse, veilederId }
+    );
 }
