@@ -11,6 +11,7 @@ import { selectIdentitetId } from '../../identitet/identitet-selector';
 import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import { STATUS } from '../../../ducks/utils';
+import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import {
@@ -81,7 +82,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(startKvpOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/startKvp/kvittering'))
-            // .then(() => dispatch(hentOppfolging()))
+            .then(() => dispatch(hentOppfolging()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });
