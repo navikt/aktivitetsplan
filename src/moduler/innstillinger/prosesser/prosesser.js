@@ -48,24 +48,14 @@ class Prosesser extends Component {
             <InnstillingerModal ingenTilbakeKnapp>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <div>
-                        <StartEskaleringProsess
-                            hidden={kanIkkeStartaEskalering}
-                        />
-                        <StoppEskaleringProsess
-                            hidden={!erEskalert || !erUnderOppfolging}
-                        />
+                        <StartEskaleringProsess hidden={kanIkkeStartaEskalering} />
+                        <StoppEskaleringProsess hidden={!erEskalert || !erUnderOppfolging} />
                         <AvsluttOppfolgingProsess hidden={!erUnderOppfolging} />
                         <StartOppfolgingProsess hidden={!kanStarteOppfolging} />
-                        <SettManuellOppfolgingProsess
-                            hidden={!erUnderOppfolging || erManuell}
-                        />
-                        <SettDigitalOppfolgingProsess
-                            hidden={!erUnderOppfolging || !erManuell}
-                        />
+                        <SettManuellOppfolgingProsess hidden={!erUnderOppfolging || erManuell} />
+                        <SettDigitalOppfolgingProsess hidden={!erUnderOppfolging || !erManuell} />
                         <OpprettOppgaveProsess motpart={motpart} />
-                        <StartKvpPeriodeProsess
-                            hidden={!erUnderKvpOppfolging}
-                        />
+                        <StartKvpPeriodeProsess hidden={!erUnderKvpOppfolging} />
                         <StoppKvpPeriodeProsess hidden={erUnderKvpOppfolging} />
                         <InnstillingHistorikk />
                     </div>
