@@ -81,7 +81,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(startKvpOppfolging(form.begrunnelse, veilederId))
             .then(() => history.push('/innstillinger/startKvp/kvittering'))
-         // .then(() => dispatch(hentOppfolging()))
+            // .then(() => dispatch(hentOppfolging()))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });
