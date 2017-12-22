@@ -63,8 +63,10 @@ class Prosesser extends Component {
                             hidden={!erUnderOppfolging || !erManuell}
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
-                        <StartKvpPeriodeProsess hidden={!erUnderKvpOppfolging} />
-                        <StoppKvpPeriodeProsess  hidden={erUnderKvpOppfolging} />
+                        <StartKvpPeriodeProsess
+                            hidden={!erUnderKvpOppfolging}
+                        />
+                        <StoppKvpPeriodeProsess hidden={erUnderKvpOppfolging} />
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>

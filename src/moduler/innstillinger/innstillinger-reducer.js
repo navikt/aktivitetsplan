@@ -106,7 +106,8 @@ export default function reducer(state = initalState, action) {
         case STOPP_KVP_PENDING:
             return {
                 ...state,
-                status: state.status === STATUS.NOT_STARTED
+                status:
+                    state.status === STATUS.NOT_STARTED
                         ? STATUS.PENDING
                         : STATUS.RELOADING,
             };
@@ -118,7 +119,7 @@ export default function reducer(state = initalState, action) {
         case SLETT_BEGRUNNELSE:
             return {
                 ...state,
-                begrunnelse: null
+                begrunnelse: null,
             };
         default:
             return state;
@@ -206,18 +207,20 @@ export function startEskalering(eskaleringData) {
                 tekst: begrunnelse,
                 egenskaper: ['ESKALERINGSVARSEL'],
             })
-        ).then(henvendelse => {
-            const dialogId = henvendelse.data.id;
-            dispatch(oppdaterVenterPaSvar(dialogId, true));
-            dispatch(oppdaterFerdigbehandlet(dialogId, true));
-            return dispatch(
-                startEskaleringMedDialog(dialogId, begrunnelse)
-            );
-        }).then(() => dispatch(hentOppfolging()))
-          .then(() =>
+        )
+            .then(henvendelse => {
+                const dialogId = henvendelse.data.id;
+                dispatch(oppdaterVenterPaSvar(dialogId, true));
+                dispatch(oppdaterFerdigbehandlet(dialogId, true));
+                return dispatch(
+                    startEskaleringMedDialog(dialogId, begrunnelse)
+                );
+            })
+            .then(() => dispatch(hentOppfolging()))
+            .then(() =>
                 history.push('/innstillinger/startEskalering/kvittering')
-          )
-          .catch(() => history.push('/innstillinger/feilkvittering'));
+            )
+            .catch(() => history.push('/innstillinger/feilkvittering'));
 }
 
 function stoppEskaleringMedBegrunnelse(begrunnelse) {
