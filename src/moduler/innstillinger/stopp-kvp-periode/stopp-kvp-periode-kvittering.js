@@ -1,8 +1,8 @@
 import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
-import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
 import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -16,17 +16,17 @@ import {
     selectNavnPaMotpart,
 } from '../../motpart/motpart-selector';
 import {
-    selectErManuell,
     selectInnstillingerBegrunnelse,
     selectInnstillingerSlice,
 } from '../innstillinger-selector';
+import { selectErUnderKvpOppfolging } from '../../oppfolging-status/oppfolging-selector';
 
 function StoppKvpKvittering({
-                                             avhengigheter,
-                                             begrunnelse,
-                                             manuell,
-                                             navn,
-                                         }) {
+    avhengigheter,
+    begrunnelse,
+    erUnderKvpOppfolging,
+    navn,
+}) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
@@ -41,17 +41,18 @@ function StoppKvpKvittering({
                             values={{ navn }}
                         />
                     </Innholdstittel>
+                    <br />
                     <div className="innstillinger__innhold blokk-xs">
                         <Systemtittel>
-                            <FormattedMessage id="innstillinger.modal.manuell.overskrift" />
+                            <FormattedMessage id="innstillinger.modal.stopp-kvp.tittel" />
                         </Systemtittel>
                     </div>
                     <HiddenIfAlertStripeSuksess
-                        hidden={!manuell}
+                        hidden={!erUnderKvpOppfolging}
                         className="blokk-m"
                     >
                         <FormattedMessage
-                            id="innstillinger.modal.manuell.kvittering.ok"
+                            id="innstillinger.modal.stopp-kvp.kvittering.ok"
                             values={{ begrunnelse }}
                         >
                             {text =>
@@ -61,10 +62,10 @@ function StoppKvpKvittering({
                         </FormattedMessage>
                     </HiddenIfAlertStripeSuksess>
                     <HiddenIfAlertStripeAdvarsel
-                        hidden={manuell}
+                        hidden={erUnderKvpOppfolging}
                         className="blokk-m"
                     >
-                        <FormattedMessage id="innstillinger.modal.manuell.kvittering.feilet" />
+                        <FormattedMessage id="innstillinger.modal.stopp-kvp.kvittering.feilet" />
                     </HiddenIfAlertStripeAdvarsel>
                 </article>
             </Innholdslaster>
@@ -72,17 +73,17 @@ function StoppKvpKvittering({
     );
 }
 
-StoppKVPKvittering.propTypes = {
+StoppKvpKvittering.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     navn: PT.string.isRequired,
-    manuell: PT.bool.isRequired,
+    erUnderKvpOppfolging: PT.bool.isRequired,
     begrunnelse: PT.string.isRequired,
 };
 
 const mapStateToProps = state => ({
     avhengigheter: [selectInnstillingerSlice(state), selectMotpartSlice(state)],
     navn: selectNavnPaMotpart(state),
-    manuell: selectErManuell(state),
+    erUnderKvpOppfolging: selectErUnderKvpOppfolging(state),
     begrunnelse: selectInnstillingerBegrunnelse(state),
 });
 
