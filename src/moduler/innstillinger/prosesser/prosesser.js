@@ -55,8 +55,8 @@ class Prosesser extends Component {
                         <SettManuellOppfolgingProsess hidden={!erUnderOppfolging || erManuell} />
                         <SettDigitalOppfolgingProsess hidden={!erUnderOppfolging || !erManuell} />
                         <OpprettOppgaveProsess motpart={motpart} />
-                        <StartKvpPeriodeProsess hidden={!erUnderKvpOppfolging} />
-                        <StoppKvpPeriodeProsess hidden={erUnderKvpOppfolging} />
+                        <StartKvpPeriodeProsess hidden={erUnderKvpOppfolging} />
+                        <StoppKvpPeriodeProsess hidden={!erUnderKvpOppfolging} />
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>
@@ -70,7 +70,7 @@ Prosesser.defaultProps = {
     erManuell: undefined,
     kanStarteOppfolging: undefined,
     kanIkkeStartaEskalering: undefined,
-    erUnderKvpOppfolging: undefined,
+    erUnderKvpOppfolging: false,
 };
 
 Prosesser.propTypes = {
