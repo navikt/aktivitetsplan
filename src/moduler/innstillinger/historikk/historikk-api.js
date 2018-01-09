@@ -1,13 +1,10 @@
-import {
-    OPPGAVE_BASE_URL,
-    OPPFOLGING_PROXY_BASE_URL,
-} from '../../../environment';
+import { OPPGAVE_BASE_URL, OPPFOLGING_BASE_URL } from '../../../environment';
 import { fetchToJson } from '../../../ducks/utils';
 
 // eslint-disable-next-line import/prefer-default-export
 export function hentInnstillingHistorikk() {
     return fetchToJson(
-        `${OPPFOLGING_PROXY_BASE_URL}/oppfolging/innstillingsHistorikk`
+        `${OPPFOLGING_BASE_URL}/oppfolging/innstillingsHistorikk`
     );
 }
 
