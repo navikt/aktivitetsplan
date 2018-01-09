@@ -123,7 +123,9 @@ class Navigasjonslinje extends Component {
                     disabled={disabled}
                 />
                 <div className="navigasjonslinje__verktoy">
-                    <Feature name={navigasjonslinjemenyFeature}>
+
+
+                    <IsVeileder>
                         <Innholdslaster
                             avhengigheter={avhengigheter}
                             spinnerStorrelse="xs"
@@ -131,7 +133,7 @@ class Navigasjonslinje extends Component {
                         >
                             <NavigasjonslinjeMeny />
                         </Innholdslaster>
-                    </Feature>
+                    </IsVeileder>
 
                     <NavigasjonslinjeKnapp
                         ariaLabel="utskrift.ikon.alt.tekst"

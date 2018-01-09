@@ -32,6 +32,7 @@ class Provider extends Component {
     render() {
         return (
             <ReduxProvider store={store}>
+                <FeatureProvider />
                 <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
                     {this.props.children}
                 </IntlProvider>

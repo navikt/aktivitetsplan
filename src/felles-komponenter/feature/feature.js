@@ -1,10 +1,13 @@
 import PT from 'prop-types';
+import {connect} from "react-redux";
 
 export function harFeature(name) {
-    return window.features && window.features[name] === true;
+    const app = window.app;
+    let feature = feature[app][name];
+    return feature && feature === true;
 }
 
-export default function Feature({ name, children }) {
+function Feature({ name, children }) {
     return harFeature(name) ? children : null;
 }
 
@@ -12,3 +15,9 @@ Feature.propTypes = {
     name: PT.string.isRequired,
     children: PT.node.isRequired,
 };
+
+const mapStateToProps = state => ({
+    feature: state.data.feature,
+});
+
+export default connect(mapStateToProps)(Feature);

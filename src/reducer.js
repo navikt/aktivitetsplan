@@ -8,6 +8,7 @@ import brukerReducer from './moduler/bruker/bruker-reducer';
 import dialogReducer from './moduler/dialog/dialog-reducer';
 import dialogViewReducer from './moduler/dialog/dialog-view-reducer';
 import etiketterReducer from './felles-komponenter/aktivitet-etikett/aktivitet-etiketter-reducer';
+import featureReducer from './ducks/feature-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
 import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
@@ -54,6 +55,7 @@ const combinedReducers = combineReducers({
         veiledere: veilederReducer,
         versjoner: versjonReducer,
         vilkar: vilkarReducer,
+        feature: featureReducer,
     }),
     view: combineReducers({
         dialog: dialogViewReducer,
