@@ -1,5 +1,4 @@
-import { VEILEDER_BASE_URL } from '~config'; // eslint-disable-line
-
+import { VEILEDER_BASE_URL } from '../environment';
 import { fetchToJson } from './../ducks/utils';
 
 export function hentVeileder(veilederId) {
