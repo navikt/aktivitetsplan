@@ -23,6 +23,7 @@ import {
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
+import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger/innstillinger-reducer';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -39,6 +40,7 @@ class Varslinger extends Component {
             brukerErEskalert,
             tilhorendeDialogId,
             doVelgNavarendePeriode,
+            slettBegrunnelse,
         } = this.props;
 
         const visVarslingerForBruker = (
@@ -94,6 +96,7 @@ class Varslinger extends Component {
                     lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
                     href="/innstillinger/digital"
                     className="varsling"
+                    onClick={() => slettBegrunnelse()}
                 />
             </Container>
         );
@@ -126,6 +129,7 @@ Varslinger.propTypes = {
     reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
     doVelgNavarendePeriode: PT.func.isRequired,
+    slettBegrunnelse: PT.func.isRequired,
     brukerErEskalert: PT.bool,
     tilhorendeDialogId: PT.number,
 };
@@ -147,6 +151,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
     doVelgNavarendePeriode: () => dispatch(velgHistoriskPeriode(null)),
+    slettBegrunnelse: () => dispatch(SLETT_BEGRUNNELSE_ACTION),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Varslinger);
