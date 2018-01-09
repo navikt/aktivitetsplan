@@ -1,9 +1,9 @@
 import PT from 'prop-types';
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 
 export function harFeature(name) {
     const app = window.app;
-    let feature = feature[app][name];
+    const feature = this.props.feature[app][name];
     return feature && feature === true;
 }
 
