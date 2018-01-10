@@ -46,7 +46,6 @@ export const STOPP_ESKALERING_PENDING = 'instillinger/stopp_eskalering/PENDING';
 
 export const LAGRE_BEGRUNNELSE = 'form/lagre_begrunnelse';
 export const SLETT_BEGRUNNELSE = 'form/slett_begrunnelse';
-export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
 
 export const START_KVP_OK = 'innstillinger/start_kvp/OK';
 export const START_KVP_FEILET = 'innstillinger/start_kvp/FEILET';
@@ -255,6 +254,8 @@ export function lagreBegrunnelse(begrunnelse) {
         data: begrunnelse,
     };
 }
+
+export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
 
 export function startKvpOppfolging(begrunnelse, veilederId) {
     return doThenDispatch(

@@ -1,4 +1,4 @@
-import { PORTEFOLJE_BASE_URL } from '~config'; //eslint-disable-line
+import { PORTEFOLJE_BASE_URL } from '../../environment';
 import {
     deleteAsJson,
     fetchToJson,
