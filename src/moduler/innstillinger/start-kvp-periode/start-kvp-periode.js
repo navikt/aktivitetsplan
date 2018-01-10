@@ -34,7 +34,9 @@ function StartKvpPeriode({ veilederId, handleSubmit, innstillingerStatus }) {
                         <Systemtittel>
                             <FormattedMessage id="innstillinger.modal.start-kvp.tittel" />
                         </Systemtittel>
-                        <FormattedMessage id="innstillinger.modal.start-kvp.infotekst" />
+                        <div className="blokk-xxs">
+                            <FormattedMessage id="innstillinger.modal.start-kvp.infotekst" />
+                        </div>
                         <BegrunnelseForm
                             labelId="innstillinger.modal.start-kvp.begrunnelse.tittel"
                             formNavn={START_KVP_FORM_NAVN}

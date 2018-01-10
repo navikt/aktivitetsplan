@@ -34,8 +34,9 @@ function StoppKvpPeriode({ veilederId, handleSubmit, innstillingerStatus }) {
                         <Systemtittel>
                             <FormattedMessage id="innstillinger.modal.stopp-kvp.tittel" />
                         </Systemtittel>
-                        <FormattedMessage id="innstillinger.modal.stopp-kvp.tekst" />
-
+                        <div className="blokk-xxs">
+                            <FormattedMessage id="innstillinger.modal.stopp-kvp.tekst" />
+                        </div>
                         <BegrunnelseForm
                             labelId="innstillinger.modal.stopp-kvp.begrunnelse.tittel"
                             formNavn={STOPP_KVP_FORM_NAVN}
