@@ -6,7 +6,6 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import IntlProvider from './intl-provider';
 import componentize from './componentize';
 import { RESET_STORE } from './reducer';
-import FeatureProvider from './feature-provider';
 
 import createStore from './store';
 import history from './history';
@@ -33,7 +32,6 @@ class Provider extends Component {
     render() {
         return (
             <ReduxProvider store={store}>
-                <FeatureProvider />
                 <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
                     {this.props.children}
                 </IntlProvider>

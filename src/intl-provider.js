@@ -7,12 +7,14 @@ import nb from 'react-intl/locale-data/nb';
 import Innholdslaster from './felles-komponenter/utils/innholdslaster';
 import { hentLedetekster } from './ducks/ledetekster-reducer';
 import { STATUS } from './ducks/utils';
+import { hentFeature } from './ducks/feature-reducer';
 
 addLocaleData(nb);
 
 class IntlProvider extends Component {
     componentDidMount() {
         this.props.actions.hentLedetekster();
+        this.props.actions.hentFeature();
     }
 
     componentDidUpdate() {
@@ -23,13 +25,19 @@ class IntlProvider extends Component {
     }
 
     render() {
-        const { children, actions: _, ledetekster, ...props } = this.props;
+        const {
+            children,
+            actions: _,
+            ledetekster,
+            features,
+            ...props
+        } = this.props;
         const locale = this.props.locale;
 
         return (
             <Provider {...props} messages={ledetekster.data[locale] || {}}>
                 <div>
-                    <Innholdslaster avhengigheter={[ledetekster]}>
+                    <Innholdslaster avhengigheter={[ledetekster, features]}>
                         {children}
                     </Innholdslaster>
                 </div>
@@ -46,15 +54,21 @@ IntlProvider.propTypes = {
         status: PT.string.isRequired,
         data: PT.object,
     }).isRequired,
+    features: PT.shape({
+        status: PT.string.isRequired,
+        data: PT.object,
+    }).isRequired,
 };
 
 const mapStateToProps = state => ({
     ledetekster: state.data.ledetekster,
+    features: state.data.feature,
 });
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(
         {
             hentLedetekster,
+            hentFeature,
         },
         dispatch
     ),
