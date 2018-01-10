@@ -17,7 +17,7 @@ import {
     selectErEskalert,
     selectErUnderOppfolging,
     selectKanIkkeStartaEskaleringen,
-    selectErUnderKvpOppfolging,
+    selectErUnderKvp,
 } from '../../oppfolging-status/oppfolging-selector';
 import {
     selectErManuell,
@@ -41,7 +41,7 @@ class Prosesser extends Component {
             erManuell,
             kanStarteOppfolging,
             kanIkkeStartaEskalering,
-            erUnderKvpOppfolging,
+            erUnderKvp,
             motpart,
         } = this.props;
         return (
@@ -63,10 +63,8 @@ class Prosesser extends Component {
                             hidden={!erUnderOppfolging || !erManuell}
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
-                        <StartKvpPeriodeProsess hidden={erUnderKvpOppfolging} />
-                        <StoppKvpPeriodeProsess
-                            hidden={!erUnderKvpOppfolging}
-                        />
+                        <StartKvpPeriodeProsess hidden={erUnderKvp} />
+                        <StoppKvpPeriodeProsess hidden={!erUnderKvp} />
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>
@@ -80,7 +78,7 @@ Prosesser.defaultProps = {
     erManuell: undefined,
     kanStarteOppfolging: undefined,
     kanIkkeStartaEskalering: undefined,
-    erUnderKvpOppfolging: false,
+    erUnderKvp: false,
 };
 
 Prosesser.propTypes = {
@@ -91,7 +89,7 @@ Prosesser.propTypes = {
     erManuell: PT.bool,
     kanStarteOppfolging: PT.bool,
     kanIkkeStartaEskalering: PT.bool,
-    erUnderKvpOppfolging: PT.bool,
+    erUnderKvp: PT.bool,
     motpart: AppPT.motpart.isRequired,
 };
 
@@ -102,7 +100,7 @@ const mapStateToProps = state => ({
     erManuell: selectErManuell(state),
     kanStarteOppfolging: selectKanStarteOppfolging(state),
     kanIkkeStartaEskalering: selectKanIkkeStartaEskaleringen(state),
-    erUnderKvpOppfolging: selectErUnderKvpOppfolging(state),
+    erUnderKvp: selectErUnderKvp(state),
     motpart: selectMotpartSlice(state),
 });
 

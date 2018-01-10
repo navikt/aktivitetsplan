@@ -19,14 +19,9 @@ import {
     selectInnstillingerBegrunnelse,
     selectInnstillingerSlice,
 } from '../innstillinger-selector';
-import { selectErUnderKvpOppfolging } from '../../oppfolging-status/oppfolging-selector';
+import { selectErUnderKvp } from '../../oppfolging-status/oppfolging-selector';
 
-function StartKvpKvittering({
-    avhengigheter,
-    begrunnelse,
-    erUnderKvpOppfolging,
-    navn,
-}) {
+function StartKvpKvittering({ avhengigheter, begrunnelse, erUnderKvp, navn }) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
@@ -48,7 +43,7 @@ function StartKvpKvittering({
                         </Systemtittel>
                     </div>
                     <HiddenIfAlertStripeSuksess
-                        hidden={!erUnderKvpOppfolging}
+                        hidden={!erUnderKvp}
                         className="blokk-m"
                     >
                         <FormattedMessage
@@ -62,7 +57,7 @@ function StartKvpKvittering({
                         </FormattedMessage>
                     </HiddenIfAlertStripeSuksess>
                     <HiddenIfAlertStripeAdvarsel
-                        hidden={erUnderKvpOppfolging}
+                        hidden={erUnderKvp}
                         className="blokk-m"
                     >
                         <FormattedMessage id="innstillinger.modal.start-kvp.kvittering.feilet" />
@@ -76,14 +71,14 @@ function StartKvpKvittering({
 StartKvpKvittering.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     navn: PT.string.isRequired,
-    erUnderKvpOppfolging: PT.bool.isRequired,
+    erUnderKvp: PT.bool.isRequired,
     begrunnelse: PT.string.isRequired,
 };
 
 const mapStateToProps = state => ({
     avhengigheter: [selectInnstillingerSlice(state), selectMotpartSlice(state)],
     navn: selectNavnPaMotpart(state),
-    erUnderKvpOppfolging: selectErUnderKvpOppfolging(state),
+    erUnderKvp: selectErUnderKvp(state),
     begrunnelse: selectInnstillingerBegrunnelse(state),
 });
 

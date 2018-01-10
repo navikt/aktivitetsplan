@@ -103,6 +103,6 @@ export function selectKanIkkeStartaEskaleringen(state) {
     );
 }
 
-export function selectErUnderKvpOppfolging(state) {
-    return selectOppfolgingData(state).underKvpOppfolging;
+export function selectErUnderKvp(state) {
+    return selectOppfolgingData(state).underKvp;
 }
