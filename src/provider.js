@@ -4,6 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import IntlProvider from './intl-provider';
+import InitiellDataLast from './initiell-data-last';
 import componentize from './componentize';
 import { RESET_STORE } from './reducer';
 
@@ -32,9 +33,13 @@ class Provider extends Component {
     render() {
         return (
             <ReduxProvider store={store}>
-                <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
-                    {this.props.children}
-                </IntlProvider>
+                <InitiellDataLast>
+                    <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
+                        <div>
+                            {this.props.children}
+                        </div>
+                    </IntlProvider>
+                </InitiellDataLast>
             </ReduxProvider>
         );
     }
