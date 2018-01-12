@@ -1,5 +1,6 @@
 import PT from 'prop-types';
 import { connect } from 'react-redux';
+import { selectFeatureData } from './feature-selector';
 
 export function harFeature(name, features) {
     const app = window.app;
@@ -18,7 +19,7 @@ Feature.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    features: state.data.feature.data,
+    features: selectFeatureData(state),
 });
 
 export default connect(mapStateToProps)(Feature);

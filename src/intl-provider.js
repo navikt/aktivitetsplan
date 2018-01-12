@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { addLocaleData, IntlProvider as Provider } from 'react-intl';
 import { connect } from 'react-redux';
 import nb from 'react-intl/locale-data/nb';
+import { selectLedeteksterData } from './ducks/ledetekster-selector';
 
 addLocaleData(nb);
 
@@ -11,7 +12,7 @@ function IntlProvider({ children, ledetekster, locale, ...props }) {
         <Provider
             {...props}
             locale={locale}
-            messages={ledetekster.data[locale] || {}}
+            messages={ledetekster[locale] || {}}
         >
             {children}
         </Provider>
@@ -21,14 +22,11 @@ function IntlProvider({ children, ledetekster, locale, ...props }) {
 IntlProvider.propTypes = {
     children: PT.node.isRequired,
     locale: PT.string.isRequired,
-    ledetekster: PT.shape({
-        status: PT.string.isRequired,
-        data: PT.object,
-    }).isRequired,
+    ledetekster: PT.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    ledetekster: state.data.ledetekster,
+    ledetekster: selectLedeteksterData(state),
 });
 
 export default connect(mapStateToProps)(IntlProvider);

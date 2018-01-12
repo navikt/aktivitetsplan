@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import Innholdslaster from './felles-komponenter/utils/innholdslaster';
 import { hentFeature } from './ducks/feature-reducer';
 import { hentLedetekster } from './ducks/ledetekster-reducer';
+import { selectFeatureStatus } from './felles-komponenter/feature/feature-selector';
+import { selectLedeteksterStatus } from './ducks/ledetekster-selector';
 
 class InitiellDataLast extends Component {
     componentDidMount() {
@@ -13,10 +15,12 @@ class InitiellDataLast extends Component {
     }
 
     render() {
-        const { children, ledetekster, features } = this.props;
+        const { children, ledeteksterStatus, featureStatus } = this.props;
         return (
             <div>
-                <Innholdslaster avhengigheter={[ledetekster, features]}>
+                <Innholdslaster
+                    avhengigheter={[ledeteksterStatus, featureStatus]}
+                >
                     {children}
                 </Innholdslaster>
             </div>
@@ -27,19 +31,13 @@ class InitiellDataLast extends Component {
 InitiellDataLast.propTypes = {
     children: PT.node.isRequired,
     actions: PT.objectOf(PT.func).isRequired,
-    ledetekster: PT.shape({
-        status: PT.string.isRequired,
-        data: PT.object,
-    }).isRequired,
-    features: PT.shape({
-        status: PT.string.isRequired,
-        data: PT.object,
-    }).isRequired,
+    ledeteksterStatus: PT.string.isRequired,
+    featureStatus: PT.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-    ledetekster: state.data.ledetekster,
-    features: state.data.feature,
+    ledeteksterStatus: selectLedeteksterStatus(state),
+    featureStatus: selectFeatureStatus(state),
 });
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(
