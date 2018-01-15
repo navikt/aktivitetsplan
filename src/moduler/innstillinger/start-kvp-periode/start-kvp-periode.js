@@ -7,7 +7,6 @@ import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import { startKvpOppfolging, lagreBegrunnelse } from '../innstillinger-reducer';
-import { selectIdentitetId } from '../../identitet/identitet-selector';
 import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import { STATUS } from '../../../ducks/utils';
@@ -21,7 +20,7 @@ import {
 
 const START_KVP_FORM_NAVN = 'start-kvp-form';
 
-function StartKvpPeriode({ veilederId, handleSubmit, innstillingerStatus }) {
+function StartKvpPeriode({ handleSubmit, innstillingerStatus }) {
     const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
         innstillingerStatus === STATUS.RELOADING;
@@ -40,7 +39,7 @@ function StartKvpPeriode({ veilederId, handleSubmit, innstillingerStatus }) {
                         <BegrunnelseForm
                             labelId="innstillinger.modal.start-kvp.begrunnelse.tittel"
                             formNavn={START_KVP_FORM_NAVN}
-                            onSubmit={form => handleSubmit(form, veilederId)}
+                            onSubmit={form => handleSubmit(form)}
                         />
                     </section>
                     <ModalFooter>
@@ -64,27 +63,21 @@ function StartKvpPeriode({ veilederId, handleSubmit, innstillingerStatus }) {
     );
 }
 
-StartKvpPeriode.defaultProps = {
-    veilederId: undefined,
-};
-
 StartKvpPeriode.propTypes = {
-    veilederId: PT.string,
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
 };
 
 const mapStateToProps = state => ({
-    veilederId: selectIdentitetId(state),
     innstillingerStatus: selectInnstillingerStatus(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleSubmit: (form, veilederId) => {
+    handleSubmit: form => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
-        dispatch(startKvpOppfolging(form.begrunnelse, veilederId))
-            .then(() => history.push('/innstillinger/startKvp/kvittering'))
+        dispatch(startKvpOppfolging(form.begrunnelse))
             .then(() => dispatch(hentOppfolging()))
+            .then(() => history.push('/innstillinger/startKvp/kvittering'))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

@@ -9,7 +9,6 @@ import { selectInnstillingerStatus } from '../innstillinger-selector';
 import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { STATUS } from '../../../ducks/utils';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import {
@@ -21,7 +20,7 @@ import { stoppKvpOppfolging, lagreBegrunnelse } from '../innstillinger-reducer';
 
 const STOPP_KVP_FORM_NAVN = 'stopp-kvp-form';
 
-function StoppKvpPeriode({ veilederId, handleSubmit, innstillingerStatus }) {
+function StoppKvpPeriode({ handleSubmit, innstillingerStatus }) {
     const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
         innstillingerStatus === STATUS.RELOADING;
@@ -40,7 +39,7 @@ function StoppKvpPeriode({ veilederId, handleSubmit, innstillingerStatus }) {
                         <BegrunnelseForm
                             labelId="innstillinger.modal.stopp-kvp.begrunnelse.tittel"
                             formNavn={STOPP_KVP_FORM_NAVN}
-                            onSubmit={form => handleSubmit(form, veilederId)}
+                            onSubmit={form => handleSubmit(form)}
                         />
                     </section>
                     <ModalFooter>
@@ -64,27 +63,21 @@ function StoppKvpPeriode({ veilederId, handleSubmit, innstillingerStatus }) {
     );
 }
 
-StoppKvpPeriode.defaultProps = {
-    veilederId: undefined,
-};
-
 StoppKvpPeriode.propTypes = {
-    veilederId: PT.string,
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
 };
 
 const mapStateToProps = state => ({
-    veilederId: selectIdentitetId(state),
     innstillingerStatus: selectInnstillingerStatus(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleSubmit: (form, veilederId) => {
+    handleSubmit: form => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
-        dispatch(stoppKvpOppfolging(form.begrunnelse, veilederId))
-            .then(() => history.push('/innstillinger/stoppKvp/kvittering'))
+        dispatch(stoppKvpOppfolging(form.begrunnelse))
             .then(() => dispatch(hentOppfolging()))
+            .then(() => history.push('/innstillinger/stoppKvp/kvittering'))
             .catch(() => history.push('/innstillinger/feilkvittering'));
     },
 });

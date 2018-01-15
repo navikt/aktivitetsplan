@@ -257,24 +257,18 @@ export function lagreBegrunnelse(begrunnelse) {
 
 export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
 
-export function startKvpOppfolging(begrunnelse, veilederId) {
-    return doThenDispatch(
-        () => OppfolgingApi.startKvpOppfolging(begrunnelse, veilederId),
-        {
-            OK: START_KVP_OK,
-            FEILET: START_KVP_FEILET,
-            PENDING: START_KVP_PENDING,
-        }
-    );
+export function startKvpOppfolging(begrunnelse) {
+    return doThenDispatch(() => OppfolgingApi.startKvpOppfolging(begrunnelse), {
+        OK: START_KVP_OK,
+        FEILET: START_KVP_FEILET,
+        PENDING: START_KVP_PENDING,
+    });
 }
 
-export function stoppKvpOppfolging(begrunnelse, veilederId) {
-    return doThenDispatch(
-        () => OppfolgingApi.stoppKvpOppfolging(begrunnelse, veilederId),
-        {
-            OK: STOPP_KVP_OK,
-            FEILET: STOPP_KVP_FEILET,
-            PENDING: STOPP_KVP_PENDING,
-        }
-    );
+export function stoppKvpOppfolging(begrunnelse) {
+    return doThenDispatch(() => OppfolgingApi.stoppKvpOppfolging(begrunnelse), {
+        OK: STOPP_KVP_OK,
+        FEILET: STOPP_KVP_FEILET,
+        PENDING: STOPP_KVP_PENDING,
+    });
 }

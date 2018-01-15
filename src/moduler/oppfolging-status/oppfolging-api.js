@@ -89,16 +89,14 @@ export function settDigitalOppfolging(begrunnelse, veilederId) {
     });
 }
 
-export function startKvpOppfolging(begrunnelse, veilederId) {
+export function startKvpOppfolging(begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startKvp`, {
         begrunnelse,
-        veilederId,
     });
 }
 
-export function stoppKvpOppfolging(begrunnelse, veilederId) {
+export function stoppKvpOppfolging(begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppKvp`, {
         begrunnelse,
-        veilederId,
     });
 }

@@ -27,6 +27,9 @@ import {
 import { selectMotpartSlice } from '../../motpart/motpart-selector';
 import StartKvpPeriodeProsess from '../start-kvp-periode/start-kvp-periode-prosess';
 import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prosess';
+import Feature, {
+    KVP_FEATURE,
+} from '../../../felles-komponenter/feature/feature';
 
 class Prosesser extends Component {
     componentDidMount() {
@@ -63,8 +66,12 @@ class Prosesser extends Component {
                             hidden={!erUnderOppfolging || !erManuell}
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
-                        <StartKvpPeriodeProsess hidden={erUnderKvp} />
-                        <StoppKvpPeriodeProsess hidden={!erUnderKvp} />
+                        <Feature name={KVP_FEATURE}>
+                            <StartKvpPeriodeProsess hidden={erUnderKvp} />
+                        </Feature>
+                        <Feature name={KVP_FEATURE}>
+                            <StoppKvpPeriodeProsess hidden={!erUnderKvp} />
+                        </Feature>
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>

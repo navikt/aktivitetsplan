@@ -25,7 +25,7 @@ import {
 } from '../identitet/identitet-selector';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger/innstillinger-reducer';
-import { selectHarVeilederTilgang } from '../../moduler/arbeidsliste/arbeidsliste-selector';
+import Feature, { KVP_FEATURE } from '../../felles-komponenter/feature/feature';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -44,7 +44,6 @@ class Varslinger extends Component {
             doVelgNavarendePeriode,
             slettBegrunnelse,
             erUnderKvp,
-            harVeilederTilgang,
         } = this.props;
 
         const visVarslingerForBruker = (
@@ -69,11 +68,13 @@ class Varslinger extends Component {
                     tekstId="oppfolging.ikke-under-oppfolging"
                     className="varsling"
                 />
-                <HiddenIfVarsling
-                    hidden={!erUnderKvp || !harVeilederTilgang}
-                    tekstId="oppfolging.veileder.under-kvp-oppfolging.varsel"
-                    className="varsling"
-                />
+                <Feature name={KVP_FEATURE}>
+                    <HiddenIfVarsling
+                        hidden={!erUnderKvp}
+                        tekstId="oppfolging.veileder.under-kvp-oppfolging.varsel"
+                        className="varsling"
+                    />
+                </Feature>
                 <HiddenIfVarsling
                     hidden={
                         reservertIKRR ||
@@ -128,7 +129,6 @@ Varslinger.defaultProps = {
     historiskVisning: false,
     tilhorendeDialogId: undefined,
     erUnderKvp: false,
-    harVeilederTilgang: false,
 };
 
 Varslinger.propTypes = {
@@ -144,7 +144,6 @@ Varslinger.propTypes = {
     brukerErEskalert: PT.bool,
     tilhorendeDialogId: PT.number,
     erUnderKvp: PT.bool,
-    harVeilederTilgang: PT.bool,
 };
 
 const mapStateToProps = state => ({
@@ -160,7 +159,6 @@ const mapStateToProps = state => ({
     brukerErEskalert: selectErEskalert(state),
     tilhorendeDialogId: selectTilHorendeDialogId(state),
     erUnderKvp: selectErUnderKvp(state),
-    harVeilederTilgang: selectHarVeilederTilgang(state),
 });
 
 const mapDispatchToProps = dispatch => ({

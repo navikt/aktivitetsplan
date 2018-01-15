@@ -43,7 +43,7 @@ function StoppKvpKvittering({ avhengigheter, begrunnelse, erUnderKvp, navn }) {
                         </Systemtittel>
                     </div>
                     <HiddenIfAlertStripeSuksess
-                        hidden={!erUnderKvp}
+                        hidden={erUnderKvp}
                         className="blokk-m"
                     >
                         <FormattedMessage
@@ -57,7 +57,7 @@ function StoppKvpKvittering({ avhengigheter, begrunnelse, erUnderKvp, navn }) {
                         </FormattedMessage>
                     </HiddenIfAlertStripeSuksess>
                     <HiddenIfAlertStripeAdvarsel
-                        hidden={erUnderKvp}
+                        hidden={!erUnderKvp}
                         className="blokk-m"
                     >
                         <FormattedMessage id="innstillinger.modal.stopp-kvp.kvittering.feilet" />
