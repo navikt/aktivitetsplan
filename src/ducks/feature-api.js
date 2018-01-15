@@ -3,7 +3,7 @@ import { fetchToJson } from './../ducks/utils';
 
 export function hentFeature() {
     return fetchToJson(FEATURE_BASE_URL).catch(() => {});
-    // Ikke gi feilmelding hvis feature filer, men anta alle features=false
+    // Ikke gi feilmelding hvis feature feiler, men anta alle features=false
 }
 
 export default {};
