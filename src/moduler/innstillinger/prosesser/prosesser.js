@@ -18,6 +18,7 @@ import {
     selectErUnderOppfolging,
     selectKanIkkeStartaEskaleringen,
     selectErUnderKvp,
+    selectVeilederHarKontorTilgang,
 } from '../../oppfolging-status/oppfolging-selector';
 import {
     selectErManuell,
@@ -46,6 +47,7 @@ class Prosesser extends Component {
             kanIkkeStartaEskalering,
             erUnderKvp,
             motpart,
+            veilederHarKontorTilgang,
         } = this.props;
         return (
             <InnstillingerModal ingenTilbakeKnapp>
@@ -67,10 +69,16 @@ class Prosesser extends Component {
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
                         <Feature name={KVP_FEATURE}>
-                            <StartKvpPeriodeProsess hidden={erUnderKvp} />
+                            <StartKvpPeriodeProsess
+                                hidden={erUnderKvp || !veilederHarKontorTilgang}
+                            />
                         </Feature>
                         <Feature name={KVP_FEATURE}>
-                            <StoppKvpPeriodeProsess hidden={!erUnderKvp} />
+                            <StoppKvpPeriodeProsess
+                                hidden={
+                                    !erUnderKvp || !veilederHarKontorTilgang
+                                }
+                            />
                         </Feature>
                         <InnstillingHistorikk />
                     </div>
@@ -86,6 +94,7 @@ Prosesser.defaultProps = {
     kanStarteOppfolging: undefined,
     kanIkkeStartaEskalering: undefined,
     erUnderKvp: false,
+    veilederHarKontorTilgang: false,
 };
 
 Prosesser.propTypes = {
@@ -98,6 +107,7 @@ Prosesser.propTypes = {
     kanIkkeStartaEskalering: PT.bool,
     erUnderKvp: PT.bool,
     motpart: AppPT.motpart.isRequired,
+    veilederHarKontorTilgang: PT.bool,
 };
 
 const mapStateToProps = state => ({
@@ -109,6 +119,7 @@ const mapStateToProps = state => ({
     kanIkkeStartaEskalering: selectKanIkkeStartaEskaleringen(state),
     erUnderKvp: selectErUnderKvp(state),
     motpart: selectMotpartSlice(state),
+    veilederHarKontorTilgang: selectVeilederHarKontorTilgang(state),
 });
 
 const mapDispatchToProps = dispatch => ({
