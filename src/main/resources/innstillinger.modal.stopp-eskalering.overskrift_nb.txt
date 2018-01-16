@@ -1,1 +1,1 @@
-Deaktiver varsel
+Fjern markering av varsel
