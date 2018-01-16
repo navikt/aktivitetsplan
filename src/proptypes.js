@@ -110,6 +110,7 @@ export const oppfolging = PT.shape({
         gjeldendeEkskaleringsvarsel: eskaleringsvarsel,
         kanStarteOppfolging: PT.bool,
         underKvp: PT.bool,
+        veilederHarKontorTilgang: PT.bool,
         avslutningStatus,
         oppfolgingsPerioder: PT.arrayOf(PT.object),
     }),

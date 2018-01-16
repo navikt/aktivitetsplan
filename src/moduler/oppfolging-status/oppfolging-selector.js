@@ -106,3 +106,7 @@ export function selectKanIkkeStartaEskaleringen(state) {
 export function selectErUnderKvp(state) {
     return selectOppfolgingData(state).underKvp;
 }
+
+export function selectVeilederHarKontorTilgang(state) {
+    return selectOppfolgingData(state).veilederHarKontorTilgang;
+}

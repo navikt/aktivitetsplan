@@ -17,7 +17,7 @@ import {
     selectTilHorendeDialogId,
     selectErEskalert,
     selectOppfolgingStatus,
-    selectErUnderKvp,
+    selectErUnderKvp, selectVeilederHarKontorTilgang,
 } from '../oppfolging-status/oppfolging-selector';
 import {
     selectErBruker,
@@ -44,6 +44,7 @@ class Varslinger extends Component {
             doVelgNavarendePeriode,
             slettBegrunnelse,
             erUnderKvp,
+            veilederHarKontorTilgang,
         } = this.props;
 
         const visVarslingerForBruker = (
@@ -70,7 +71,7 @@ class Varslinger extends Component {
                 />
                 <Feature name={KVP_FEATURE}>
                     <HiddenIfVarsling
-                        hidden={!erUnderKvp}
+                        hidden={!erUnderKvp || !veilederHarKontorTilgang}
                         tekstId="oppfolging.veileder.under-kvp-oppfolging.varsel"
                         className="varsling"
                     />
@@ -129,6 +130,7 @@ Varslinger.defaultProps = {
     historiskVisning: false,
     tilhorendeDialogId: undefined,
     erUnderKvp: false,
+    veilederHarKontorTilgang: false,
 };
 
 Varslinger.propTypes = {
@@ -144,6 +146,7 @@ Varslinger.propTypes = {
     brukerErEskalert: PT.bool,
     tilhorendeDialogId: PT.number,
     erUnderKvp: PT.bool,
+    veilederHarKontorTilgang: PT.bool,
 };
 
 const mapStateToProps = state => ({
@@ -159,6 +162,7 @@ const mapStateToProps = state => ({
     brukerErEskalert: selectErEskalert(state),
     tilhorendeDialogId: selectTilHorendeDialogId(state),
     erUnderKvp: selectErUnderKvp(state),
+    veilederHarKontorTilgang: selectVeilederHarKontorTilgang(state),
 });
 
 const mapDispatchToProps = dispatch => ({
