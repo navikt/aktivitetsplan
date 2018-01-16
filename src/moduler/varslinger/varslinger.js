@@ -17,7 +17,8 @@ import {
     selectTilHorendeDialogId,
     selectErEskalert,
     selectOppfolgingStatus,
-    selectErUnderKvp, selectVeilederHarKontorTilgang,
+    selectErUnderKvp,
+    selectVeilederHarKontorTilgang,
 } from '../oppfolging-status/oppfolging-selector';
 import {
     selectErBruker,
