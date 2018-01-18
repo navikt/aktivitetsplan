@@ -100,3 +100,7 @@ export function stoppKvpOppfolging(begrunnelse) {
         begrunnelse,
     });
 }
+
+export function hentVeilederTilgang() {
+    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/veilederTilgang`);
+}

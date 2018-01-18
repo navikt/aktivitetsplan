@@ -18,7 +18,6 @@ import {
     selectErUnderOppfolging,
     selectKanIkkeStartaEskaleringen,
     selectErUnderKvp,
-    selectVeilederHarKontorTilgang,
 } from '../../oppfolging-status/oppfolging-selector';
 import {
     selectErManuell,
@@ -31,10 +30,13 @@ import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prose
 import Feature, {
     KVP_FEATURE,
 } from '../../../felles-komponenter/feature/feature';
+import { hentVeilederTilgang } from '../../../felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
+import { selectTilgangTilBrukersKontor } from '../../../felles-komponenter/veilederTilgang/veilder-tilgang-selector';
 
 class Prosesser extends Component {
     componentDidMount() {
         this.props.doHentOppfolging();
+        this.props.doHentVeilederTilgang();
     }
 
     render() {
@@ -47,7 +49,7 @@ class Prosesser extends Component {
             kanIkkeStartaEskalering,
             erUnderKvp,
             motpart,
-            veilederHarKontorTilgang,
+            tilgangTilBrukersKontor,
         } = this.props;
         return (
             <InnstillingerModal ingenTilbakeKnapp>
@@ -70,14 +72,12 @@ class Prosesser extends Component {
                         <OpprettOppgaveProsess motpart={motpart} />
                         <Feature name={KVP_FEATURE}>
                             <StartKvpPeriodeProsess
-                                hidden={erUnderKvp || !veilederHarKontorTilgang}
+                                hidden={erUnderKvp || !tilgangTilBrukersKontor}
                             />
                         </Feature>
                         <Feature name={KVP_FEATURE}>
                             <StoppKvpPeriodeProsess
-                                hidden={
-                                    !erUnderKvp || !veilederHarKontorTilgang
-                                }
+                                hidden={!erUnderKvp || !tilgangTilBrukersKontor}
                             />
                         </Feature>
                         <InnstillingHistorikk />
@@ -94,11 +94,12 @@ Prosesser.defaultProps = {
     kanStarteOppfolging: undefined,
     kanIkkeStartaEskalering: undefined,
     erUnderKvp: false,
-    veilederHarKontorTilgang: false,
+    tilgangTilBrukersKontor: false,
 };
 
 Prosesser.propTypes = {
     doHentOppfolging: PT.func.isRequired,
+    doHentVeilederTilgang: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     erEskalert: PT.bool.isRequired,
     erUnderOppfolging: PT.bool,
@@ -107,7 +108,7 @@ Prosesser.propTypes = {
     kanIkkeStartaEskalering: PT.bool,
     erUnderKvp: PT.bool,
     motpart: AppPT.motpart.isRequired,
-    veilederHarKontorTilgang: PT.bool,
+    tilgangTilBrukersKontor: PT.bool,
 };
 
 const mapStateToProps = state => ({
@@ -119,11 +120,12 @@ const mapStateToProps = state => ({
     kanIkkeStartaEskalering: selectKanIkkeStartaEskaleringen(state),
     erUnderKvp: selectErUnderKvp(state),
     motpart: selectMotpartSlice(state),
-    veilederHarKontorTilgang: selectVeilederHarKontorTilgang(state),
+    tilgangTilBrukersKontor: selectTilgangTilBrukersKontor(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     doHentOppfolging: () => dispatch(hentOppfolgingData()),
+    doHentVeilederTilgang: () => dispatch(hentVeilederTilgang()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Prosesser);

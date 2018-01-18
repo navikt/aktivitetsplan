@@ -26,6 +26,7 @@ import utskriftReducer from './moduler/utskrift/utskrift-duck';
 import veilederReducer from './ducks/veileder-reducer';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
+import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -56,6 +57,7 @@ const combinedReducers = combineReducers({
         versjoner: versjonReducer,
         vilkar: vilkarReducer,
         feature: featureReducer,
+        veilederTilgang: veilederTilgangReducer,
     }),
     view: combineReducers({
         dialog: dialogViewReducer,
