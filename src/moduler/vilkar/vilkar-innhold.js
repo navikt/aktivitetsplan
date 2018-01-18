@@ -26,17 +26,33 @@ VisibleIfElementFormattedMessage.propTypes = {
     values: PT.object.isRequired,
 };
 
-function VilkarInnhold({ vilkar, underOppfolging, avhengigheter }) {
+function VilkarInnhold({
+    vilkar,
+    harHistorikk,
+    underOppfolging,
+    avhengigheter,
+}) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
-    const tittelTekst = underOppfolging
-        ? 'vilkar.modal.gjeldende.samarbeid-tittel'
-        : 'vilkar.modal.gjeldende.privat-tittel';
+
+    function hentTittelTekst() {
+        if (harHistorikk) {
+            return underOppfolging
+                ? 'vilkar.modal.gjeldende.samarbeid-tittel'
+                : 'vilkar.modal.gjeldende.privat-tittel';
+        }
+
+        return 'vilkar.modal.historisk.tittel';
+    }
+
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <div className="vilkar__innhold">
                 <Bilde src={vilkarSvg} alt="" />
                 <Innholdstittel className="vilkar__tittel">
-                    <FormattedMessage id={tittelTekst} />
+                    <FormattedMessage
+                        id={hentTittelTekst()}
+                        values={{ dato: vilkar.dato }}
+                    />
                 </Innholdstittel>
                 <UnsafeHtml className="vilkar__tekst">
                     {vilkar.tekst}
@@ -54,8 +70,13 @@ function VilkarInnhold({ vilkar, underOppfolging, avhengigheter }) {
     );
 }
 
+VilkarInnhold.defaultProps = {
+    harHistorikk: false,
+};
+
 VilkarInnhold.propTypes = {
     vilkar: AppPT.vilkar.isRequired,
+    harHistorikk: PT.bool,
     underOppfolging: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
 };
