@@ -29,7 +29,7 @@ function Vilkar({ vilkarListe, visHistorikk }) {
             <ManglerVilkar hidden={gjeldendeVilkar} />
             <VilkarInnhold
                 vilkar={gjeldendeVilkar}
-                harHistorikk={vilkarListe.length > 0}
+                harHistorikk={resterendeVilkar.length > 0}
                 hidden={!gjeldendeVilkar}
             />
             <VisibleIfDiv
