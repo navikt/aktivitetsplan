@@ -51,7 +51,7 @@ function VilkarInnhold({
                 <Innholdstittel className="vilkar__tittel">
                     <FormattedMessage
                         id={hentTittelTekst()}
-                        values={{ dato: vilkar.dato }}
+                        values={{ dato: formattertDato }}
                     />
                 </Innholdstittel>
                 <UnsafeHtml className="vilkar__tekst">
