@@ -28,20 +28,20 @@ VisibleIfElementFormattedMessage.propTypes = {
 
 function VilkarInnhold({
     vilkar,
-    harHistorikk,
+    erHistorisk,
     underOppfolging,
     avhengigheter,
 }) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
 
     function hentTittelTekst() {
-        if (harHistorikk) {
-            return underOppfolging
-                ? 'vilkar.modal.gjeldende.samarbeid-tittel'
-                : 'vilkar.modal.gjeldende.privat-tittel';
+        if (erHistorisk) {
+            return 'vilkar.modal.historisk.tittel';
         }
 
-        return 'vilkar.modal.historisk.tittel';
+        return underOppfolging
+            ? 'vilkar.modal.gjeldende.samarbeid-tittel'
+            : 'vilkar.modal.gjeldende.privat-tittel';
     }
 
     return (
@@ -71,12 +71,12 @@ function VilkarInnhold({
 }
 
 VilkarInnhold.defaultProps = {
-    harHistorikk: false,
+    erHistorisk: false,
 };
 
 VilkarInnhold.propTypes = {
     vilkar: AppPT.vilkar.isRequired,
-    harHistorikk: PT.bool,
+    erHistorisk: PT.bool,
     underOppfolging: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
 };

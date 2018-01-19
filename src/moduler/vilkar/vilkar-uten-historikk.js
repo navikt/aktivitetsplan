@@ -26,7 +26,7 @@ class VilkarUtenHistorikkStoreConnector extends Component {
         const { historiskeVilkarStatus, vilkar } = this.props;
         return (
             <Innholdslaster avhengigheter={[historiskeVilkarStatus]}>
-                <Vilkar vilkarListe={[vilkar]} />
+                <Vilkar vilkarListe={[vilkar]} erHistorisk />
             </Innholdslaster>
         );
     }
