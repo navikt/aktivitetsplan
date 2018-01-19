@@ -37,11 +37,10 @@ function VilkarInnhold({
     function hentTittelTekst() {
         if (erHistorisk) {
             return 'vilkar.modal.historisk.tittel';
+        } else if (underOppfolging) {
+            return 'vilkar.modal.gjeldende.samarbeid-tittel';
         }
-
-        return underOppfolging
-            ? 'vilkar.modal.gjeldende.samarbeid-tittel'
-            : 'vilkar.modal.gjeldende.privat-tittel';
+        return 'vilkar.modal.gjeldende.privat-tittel';
     }
 
     return (
