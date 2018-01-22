@@ -50,7 +50,10 @@ function VilkarInnhold({
                 <Innholdstittel className="vilkar__tittel">
                     <FormattedMessage
                         id={hentTittelTekst()}
-                        values={{ dato: formattertDato, status: vilkar.vilkarstatus }}
+                        values={{
+                            dato: formattertDato,
+                            status: vilkar.vilkarstatus,
+                        }}
                     />
                 </Innholdstittel>
                 <UnsafeHtml className="vilkar__tekst">
