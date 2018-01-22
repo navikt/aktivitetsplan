@@ -36,7 +36,7 @@ function VilkarInnhold({
 
     function hentTittelTekst() {
         if (erHistorisk) {
-            return 'vilkar.modal.historisk.tittel';
+            return 'vilkar.modal.historisk.status.tittel';
         } else if (underOppfolging) {
             return 'vilkar.modal.gjeldende.samarbeid-tittel';
         }
