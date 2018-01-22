@@ -28,20 +28,19 @@ VisibleIfElementFormattedMessage.propTypes = {
 
 function VilkarInnhold({
     vilkar,
-    harHistorikk,
+    erHistorisk,
     underOppfolging,
     avhengigheter,
 }) {
     const formattertDato = formaterDatoKortManed(vilkar.dato);
 
     function hentTittelTekst() {
-        if (harHistorikk) {
-            return underOppfolging
-                ? 'vilkar.modal.gjeldende.samarbeid-tittel'
-                : 'vilkar.modal.gjeldende.privat-tittel';
+        if (erHistorisk) {
+            return 'vilkar.modal.historisk.status.tittel';
+        } else if (underOppfolging) {
+            return 'vilkar.modal.gjeldende.samarbeid-tittel';
         }
-
-        return 'vilkar.modal.historisk.tittel';
+        return 'vilkar.modal.gjeldende.privat-tittel';
     }
 
     return (
@@ -51,7 +50,10 @@ function VilkarInnhold({
                 <Innholdstittel className="vilkar__tittel">
                     <FormattedMessage
                         id={hentTittelTekst()}
-                        values={{ dato: formattertDato }}
+                        values={{
+                            dato: formattertDato,
+                            status: vilkar.vilkarstatus,
+                        }}
                     />
                 </Innholdstittel>
                 <UnsafeHtml className="vilkar__tekst">
@@ -71,12 +73,12 @@ function VilkarInnhold({
 }
 
 VilkarInnhold.defaultProps = {
-    harHistorikk: false,
+    erHistorisk: false,
 };
 
 VilkarInnhold.propTypes = {
     vilkar: AppPT.vilkar.isRequired,
-    harHistorikk: PT.bool,
+    erHistorisk: PT.bool,
     underOppfolging: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
 };
