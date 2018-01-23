@@ -29,14 +29,18 @@ import StartKvpPeriodeProsess from '../start-kvp-periode/start-kvp-periode-prose
 import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prosess';
 import Feature, {
     KVP_FEATURE,
+    harFeature,
 } from '../../../felles-komponenter/feature/feature';
 import { hentVeilederTilgang } from '../../../felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 import { selectTilgangTilBrukersKontor } from '../../../felles-komponenter/veilederTilgang/veilder-tilgang-selector';
+import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 
 class Prosesser extends Component {
     componentDidMount() {
         this.props.doHentOppfolging();
-        this.props.doHentVeilederTilgang();
+        if (harFeature(KVP_FEATURE, this.props.features)) {
+            this.props.doHentVeilederTilgang();
+        }
     }
 
     render() {
@@ -109,6 +113,7 @@ Prosesser.propTypes = {
     erUnderKvp: PT.bool,
     motpart: AppPT.motpart.isRequired,
     tilgangTilBrukersKontor: PT.bool,
+    features: PT.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -121,6 +126,7 @@ const mapStateToProps = state => ({
     erUnderKvp: selectErUnderKvp(state),
     motpart: selectMotpartSlice(state),
     tilgangTilBrukersKontor: selectTilgangTilBrukersKontor(state),
+    features: selectFeatureData(state),
 });
 
 const mapDispatchToProps = dispatch => ({
