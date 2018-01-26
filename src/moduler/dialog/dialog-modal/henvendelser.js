@@ -31,9 +31,16 @@ function Henvendelse({ henvendelse }) {
             'ikon--veileder': fraVeileder,
             'ikon--bruker-noytral': !fraVeileder,
         });
+
+    const dato = formaterDatoTid(henvendelse.sendt);
+    const snakkebobleHeader =
+        avsenderVeileder && henvendelse.avsenderId
+            ? `${dato} - ${henvendelse.avsenderId}`
+            : dato;
+
     return (
         <Snakkeboble
-            dato={formaterDatoTid(henvendelse.sendt)}
+            dato={snakkebobleHeader}
             ikonClass={ikonCls(avsenderVeileder, false)}
             pilHoyre={avsenderVeileder}
         >
