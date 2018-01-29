@@ -76,7 +76,11 @@ class Prosesser extends Component {
                         <OpprettOppgaveProsess motpart={motpart} />
                         <Feature name={KVP_FEATURE}>
                             <StartKvpPeriodeProsess
-                                hidden={erUnderKvp || !tilgangTilBrukersKontor}
+                                hidden={
+                                    !erUnderOppfolging ||
+                                    erUnderKvp ||
+                                    !tilgangTilBrukersKontor
+                                }
                             />
                         </Feature>
                         <Feature name={KVP_FEATURE}>
