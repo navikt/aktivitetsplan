@@ -32,7 +32,10 @@ import Feature, {
     harFeature,
 } from '../../../felles-komponenter/feature/feature';
 import { hentVeilederTilgang } from '../../../felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
-import { selectTilgangTilBrukersKontor } from '../../../felles-komponenter/veilederTilgang/veilder-tilgang-selector';
+import {
+    selectTilgangTilBrukersKontor,
+    selectVeilederTilgangStatus,
+} from '../../../felles-komponenter/veilederTilgang/veilder-tilgang-selector';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 
 class Prosesser extends Component {
@@ -60,18 +63,41 @@ class Prosesser extends Component {
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <div>
                         <StartEskaleringProsess
-                            hidden={kanIkkeStartaEskalering}
+                            hidden={
+                                !tilgangTilBrukersKontor ||
+                                kanIkkeStartaEskalering
+                            }
                         />
                         <StoppEskaleringProsess
-                            hidden={!erEskalert || !erUnderOppfolging}
+                            hidden={
+                                !tilgangTilBrukersKontor ||
+                                !erEskalert ||
+                                !erUnderOppfolging
+                            }
                         />
-                        <AvsluttOppfolgingProsess hidden={!erUnderOppfolging} />
-                        <StartOppfolgingProsess hidden={!kanStarteOppfolging} />
+                        <AvsluttOppfolgingProsess
+                            hidden={
+                                !tilgangTilBrukersKontor || !erUnderOppfolging
+                            }
+                        />
+                        <StartOppfolgingProsess
+                            hidden={
+                                !tilgangTilBrukersKontor || !kanStarteOppfolging
+                            }
+                        />
                         <SettManuellOppfolgingProsess
-                            hidden={!erUnderOppfolging || erManuell}
+                            hidden={
+                                !tilgangTilBrukersKontor ||
+                                !erUnderOppfolging ||
+                                erManuell
+                            }
                         />
                         <SettDigitalOppfolgingProsess
-                            hidden={!erUnderOppfolging || !erManuell}
+                            hidden={
+                                !tilgangTilBrukersKontor ||
+                                !erUnderOppfolging ||
+                                !erManuell
+                            }
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
                         <Feature name={KVP_FEATURE}>
@@ -117,7 +143,10 @@ Prosesser.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    avhengigheter: [selectInnstillingerStatus(state)],
+    avhengigheter: [
+        selectInnstillingerStatus(state),
+        selectVeilederTilgangStatus(state),
+    ],
     erEskalert: selectErEskalert(state),
     erUnderOppfolging: selectErUnderOppfolging(state),
     erManuell: selectErManuell(state),
