@@ -94,15 +94,6 @@ export function selectBrukerHarAvslatt(state) {
     return selectOppfolgingSlice(state).brukerHarAvslatt;
 }
 
-export function selectKanIkkeStartaEskaleringen(state) {
-    return (
-        selectErEskalert(state) ||
-        !selectErUnderOppfolging(state) ||
-        selectReservasjonKRR(state) ||
-        selectErBrukerManuell(state)
-    );
-}
-
 export function selectErUnderKvp(state) {
     return selectOppfolgingData(state).underKvp;
 }
