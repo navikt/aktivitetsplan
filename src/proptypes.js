@@ -41,7 +41,7 @@ export const henvendelse = PT.shape({
 
 export const dialog = PT.shape({
     id: PT.string.isRequired,
-    overskrift: PT.string,
+    overskrift: PT.string.isRequired,
     aktivitetId: PT.string,
     lest: PT.bool,
     sisteDato: PT.string,

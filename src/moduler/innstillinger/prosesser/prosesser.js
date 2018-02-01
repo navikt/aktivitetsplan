@@ -63,7 +63,7 @@ class Prosesser extends Component {
                             hidden={kanIkkeStartaEskalering}
                         />
                         <StoppEskaleringProsess
-                            hidden={erEskalert || !erUnderOppfolging}
+                            hidden={!erEskalert || !erUnderOppfolging}
                         />
                         <AvsluttOppfolgingProsess hidden={!erUnderOppfolging} />
                         <StartOppfolgingProsess hidden={!kanStarteOppfolging} />
