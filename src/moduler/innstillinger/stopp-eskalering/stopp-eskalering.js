@@ -8,8 +8,8 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import {
-RemoteSubmitKnapp,
-RemoteResetKnapp,
+    RemoteSubmitKnapp,
+    RemoteResetKnapp,
 } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
@@ -17,8 +17,8 @@ import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { stoppEskalering } from '../innstillinger-reducer';
 import { STATUS } from '../../../ducks/utils';
 import {
-selectGjeldendeEskaleringsVarsel,
-selectOppfolgingStatus,
+    selectGjeldendeEskaleringsVarsel,
+    selectOppfolgingStatus,
 } from '../../oppfolging-status/oppfolging-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
