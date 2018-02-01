@@ -85,6 +85,7 @@ export const avslutningStatus = PT.shape({
     underOppfolging: PT.bool,
     harYtelser: PT.bool,
     harTiltak: PT.bool,
+    underKvp: PT.bool,
     inaktiveringsDato: PT.string,
 });
 

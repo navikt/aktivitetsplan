@@ -42,7 +42,7 @@ class AvsluttOppfolgingProsess extends Component {
 
     render() {
         const { avslutningStatus, laster, slettBegrunnelse } = this.props;
-        const { underOppfolging, harYtelser, harTiltak } =
+        const { underOppfolging, harYtelser, harTiltak, underKvp } =
             avslutningStatus || {};
         const { harSjekket, kanAvslutte } = this.state;
         return (
@@ -75,6 +75,10 @@ class AvsluttOppfolgingProsess extends Component {
                             {harTiltak &&
                                 <li>
                                     <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak" />
+                                </li>}
+                            {underKvp &&
+                                <li>
+                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.under-kvp" />
                                 </li>}
                         </ul>
                     </HiddenIfAlertStripeInfoSolid>
