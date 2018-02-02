@@ -128,7 +128,7 @@ class Navigasjonslinje extends Component {
                     <ConfigToggle name={navigasjonslinjemenyFeature}>
                         <Innholdslaster
                             avhengigheter={avhengigheter}
-                            spinnerStorrelse="xs"
+                            spinnerStorrelse="XS"
                             className="navigasjonslinje__spinner"
                         >
                             <NavigasjonslinjeMeny />
