@@ -222,7 +222,7 @@ export function startEskalering(eskaleringData) {
             .catch(() => history.push('/innstillinger/feilkvittering'));
 }
 
-function stoppEskaleringMedBegrunnelse(begrunnelse) {
+function stoppEskaleringProsess(begrunnelse) {
     return doThenDispatch(() => OppfolgingApi.stoppEskalering(begrunnelse), {
         OK: STOPP_ESKALERING_OK,
         FEILET: STOPP_ESKALERING_FEILET,
@@ -240,7 +240,17 @@ export function stoppEskalering(stoppEskaleringData) {
                 egenskaper: ['ESKALERINGSVARSEL'],
             })
         )
-            .then(() => dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
+            .then(() => dispatch(stoppEskaleringProsess(begrunnelse)))
+            .then(() => dispatch(hentOppfolging()))
+            .then(() =>
+                history.push('/innstillinger/stoppEskalering/kvittering')
+            )
+            .catch(() => history.push('/innstillinger/feilkvittering'));
+}
+
+export function stoppEskaleringUtenHenvendelse() {
+    return dispatch =>
+        dispatch(stoppEskaleringProsess())
             .then(() => dispatch(hentOppfolging()))
             .then(() =>
                 history.push('/innstillinger/stoppEskalering/kvittering')

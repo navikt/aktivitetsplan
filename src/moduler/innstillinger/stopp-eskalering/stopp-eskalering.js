@@ -14,7 +14,10 @@ import {
 import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import { stoppEskalering } from '../innstillinger-reducer';
+import {
+    stoppEskalering,
+    stoppEskaleringUtenHenvendelse,
+} from '../innstillinger-reducer';
 import { STATUS } from '../../../ducks/utils';
 import {
     selectGjeldendeEskaleringsVarsel,
@@ -100,12 +103,9 @@ class StoppEskalering extends Component {
                                       <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                                   </RemoteSubmitKnapp>
                                 : <Hovedknapp
-                                      onClick={() =>
-                                          history.push(
-                                              '/innstillinger/stoppEskalering/kvittering'
-                                          )}
+                                      onClick={this.props.submitUtenHenvendelse}
                                   >
-                                      <FormattedMessage id="innstillinger.modal.prosess.start.knapp" />
+                                      <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                                   </Hovedknapp>}
                             <RemoteResetKnapp
                                 formNavn={STOPP_ESKALERING_FORM_NAME}
@@ -128,6 +128,7 @@ StoppEskalering.defaultProps = {
 StoppEskalering.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     handleSubmit: PT.func.isRequired,
+    submitUtenHenvendelse: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
     tilhorendeDialogId: PT.number,
 };
@@ -153,6 +154,7 @@ const mapDispatchToProps = dispatch => ({
                 dialogId,
             })
         ),
+    submitUtenHenvendelse: () => dispatch(stoppEskaleringUtenHenvendelse()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoppEskalering);
