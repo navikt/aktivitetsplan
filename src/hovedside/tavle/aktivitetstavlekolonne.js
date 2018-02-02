@@ -40,58 +40,6 @@ const mottaAktivitetsKort = {
     },
 };
 
-function hjelpetekst(aktivitetStatus) {
-    switch (aktivitetStatus) {
-        case STATUS_BRUKER_ER_INTRESSERT:
-            return (
-                <AktivitetsplanHjelpetekst
-                    tittelId="aktivitetstavle.brukerErInteressert.info"
-                    hjelpetekstId="hjelpetekst.aktivitet.er.interessert"
-                    retning="hoyre"
-                />
-            );
-
-        case STATUS_PLANLAGT:
-            return (
-                <AktivitetsplanHjelpetekst
-                    tittelId="aktivitetstavle.planlagt.info"
-                    hjelpetekstId="hjelpetekst.aktivitet.planlagt"
-                    retning="hoyre"
-                />
-            );
-
-        case STATUS_GJENNOMFOERT:
-            return (
-                <AktivitetsplanHjelpetekst
-                    tittelId="aktivitetstavle.gjennomfoert.info"
-                    hjelpetekstId="hjelpetekst.aktivitet.gjennomfoert"
-                    retning="hoyre"
-                />
-            );
-
-        case STATUS_FULLFOERT:
-            return (
-                <AktivitetsplanHjelpetekst
-                    tittelId="aktivitetstavle.fullfoert.info"
-                    hjelpetekstId="hjelpetekst.aktivitet.fullfoert"
-                    retning="venstre"
-                />
-            );
-
-        case STATUS_AVBRUTT:
-            return (
-                <AktivitetsplanHjelpetekst
-                    tittelId="aktivitetstavle.avbrutt.info"
-                    hjelpetekstId="hjelpetekst.aktivitet.avbrutt"
-                    retning="venstre"
-                />
-            );
-
-        default:
-            return null;
-    }
-}
-
 function hjelpeklasse(aktivitetStatus) {
     switch (aktivitetStatus) {
         case STATUS_BRUKER_ER_INTRESSERT:
@@ -151,7 +99,7 @@ function KolonneFunction({
                     >
                         <FormattedMessage id={tittelId} />
                     </Undertittel>
-                    {hjelpetekst(status)}
+                    <AktivitetsplanHjelpetekst status={status} />
                 </div>
                 {aktivitetsKort}
             </div>
