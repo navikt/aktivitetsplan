@@ -69,6 +69,7 @@ class StoppEskalering extends Component {
                                 onChange={this.toggleHenvedelseTekstFelt}
                             />
                             <HiddenIfDiv hidden={!this.state.checked}>
+                                <FormattedMessage id="innstillinger.modal.stopp-eskalering.beskrivelse" />
                                 <FormattedMessage id="innstillinger.modal.stopp-eskalering.automatisk-tekst">
                                     {defaultBegrunnelse =>
                                         <BegrunnelseForm
