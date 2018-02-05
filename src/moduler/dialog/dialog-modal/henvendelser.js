@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import { selectErVeileder } from './../../identitet/identitet-selector';
 import { formaterDatoTid, datoComparator } from '../../../utils';
 import * as AppPT from '../../../proptypes';
 import Dato from '../../../felles-komponenter/dato';
@@ -24,16 +25,23 @@ const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) =>
     </section>
 );
 
-function Henvendelse({ henvendelse }) {
+function Henvendelse({ henvendelse, erPaInnsiden }) {
     const avsenderVeileder = henvendelse.avsender === 'VEILEDER';
     const ikonCls = fraVeileder =>
         classNames('ikon', {
             'ikon--veileder': fraVeileder,
             'ikon--bruker-noytral': !fraVeileder,
         });
+
+    const dato = formaterDatoTid(henvendelse.sendt);
+    const snakkebobleHeader =
+        erPaInnsiden && avsenderVeileder && henvendelse.avsenderId
+            ? `${dato} - ${henvendelse.avsenderId}`
+            : dato;
+
     return (
         <Snakkeboble
-            dato={formaterDatoTid(henvendelse.sendt)}
+            dato={snakkebobleHeader}
             ikonClass={ikonCls(avsenderVeileder, false)}
             pilHoyre={avsenderVeileder}
         >
@@ -46,6 +54,7 @@ function Henvendelse({ henvendelse }) {
 
 Henvendelse.propTypes = {
     henvendelse: AppPT.henvendelse,
+    erPaInnsiden: PT.bool.isRequired,
 };
 
 Henvendelse.defaultProps = {
@@ -62,7 +71,7 @@ class Dialog extends Component {
     }
 
     render() {
-        const { dialog } = this.props;
+        const { dialog, erPaInnsiden } = this.props;
         const henvendelser = dialog.henvendelser;
         const lestAvBrukerTidspunkt = dialog.lestAvBrukerTidspunkt;
         const henvendelserSynkende = [...henvendelser].sort((a, b) =>
@@ -80,7 +89,11 @@ class Dialog extends Component {
                     visible={h === sisteHenvendelseLestAvBruker}
                     lestAvBrukerTidspunkt={lestAvBrukerTidspunkt}
                 />
-                <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} />
+                <Henvendelse
+                    key={`${h.dialogId}-${h.sendt}`}
+                    henvendelse={h}
+                    erPaInnsiden={erPaInnsiden}
+                />
             </div>
         );
         return (
@@ -93,10 +106,13 @@ class Dialog extends Component {
 
 Dialog.propTypes = {
     dialog: AppPT.dialog.isRequired,
+    erPaInnsiden: PT.bool.isRequired,
     doMarkerDialogSomLest: PT.func.isRequired,
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+    erPaInnsiden: selectErVeileder(state),
+});
 
 const mapDispatchToProps = (dispatch, props) => {
     const dialog = props.dialog;
