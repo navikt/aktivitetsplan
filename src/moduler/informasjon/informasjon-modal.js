@@ -26,7 +26,7 @@ function InformasjonModal() {
                     src={ONBOARDING_VIDEO_URL}
                     className="video-player"
                 />
-                <Undertittel className="video-teksten-tittel">
+                <Undertittel>
                     <FormattedMessage id="informasjon.videokontent.tittel" />
                 </Undertittel>
                 <HtmlText id="informasjon.videokontent.text" />
