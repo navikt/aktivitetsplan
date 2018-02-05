@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import { ONBOARDING_VIDEO_URL } from '../../environment';
@@ -25,6 +25,12 @@ function InformasjonModal() {
                     src={ONBOARDING_VIDEO_URL}
                     className="video-player"
                 />
+                <Undertittel>
+                    <FormattedMessage id="informasjon.videokontent.tittel" />
+                </Undertittel>
+                <Normaltekst>
+                    <FormattedMessage id="informasjon.videokontent.text" />
+                </Normaltekst>
             </ModalContainer>
         </Modal>
     );
