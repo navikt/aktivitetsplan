@@ -52,13 +52,13 @@ function Innholdslaster({
         <HiddenIfSpinner
             hidden={noenHarFeil(avhengigheter)}
             className={className}
-            storrelse={spinnerStorrelse}
+            type={spinnerStorrelse}
         />
     );
 }
 
 Innholdslaster.defaultProps = {
-    spinnerStorrelse: 'xl',
+    spinnerStorrelse: 'XL',
     className: '',
     minstEn: false,
     visChildrenVedFeil: false,
