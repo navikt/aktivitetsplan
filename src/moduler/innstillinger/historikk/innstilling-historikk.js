@@ -81,7 +81,7 @@ class InnstillingHistorikk extends Component {
                     historikkReducer.oppgave,
                     historikkReducer.oppfolging,
                 ]}
-                spinnerStorrelse="m"
+                spinnerStorrelse="M"
                 className="instillinger__historikk-spinner"
             >
                 <section className="innstillinger__historikk">
