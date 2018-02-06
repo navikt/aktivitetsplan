@@ -25,30 +25,38 @@ const LestAvBruker = visibleIfHOC(({ lestAvBrukerTidspunkt }) =>
     </section>
 );
 
+const ikonCls = fraVeileder =>
+    classNames('ikon', {
+        'ikon--veileder': fraVeileder,
+        'ikon--bruker-noytral': !fraVeileder,
+    });
+
 function Henvendelse({ henvendelse, erPaInnsiden }) {
     const avsenderVeileder = henvendelse.avsender === 'VEILEDER';
-    const ikonCls = fraVeileder =>
-        classNames('ikon', {
-            'ikon--veileder': fraVeileder,
-            'ikon--bruker-noytral': !fraVeileder,
-        });
-
     const dato = formaterDatoTid(henvendelse.sendt);
-    const snakkebobleHeader =
-        erPaInnsiden && avsenderVeileder && henvendelse.avsenderId
-            ? `${dato} - ${henvendelse.avsenderId}`
-            : dato;
+    const visveileder = !!(
+        erPaInnsiden &&
+        avsenderVeileder &&
+        henvendelse.avsenderId
+    );
+    const veileder = avsenderVeileder && henvendelse.avsenderId;
 
     return (
-        <Snakkeboble
-            dato={snakkebobleHeader}
-            ikonClass={ikonCls(avsenderVeileder, false)}
-            pilHoyre={avsenderVeileder}
+        <FormattedMessage
+            id="dialog.henvendelse.topp"
+            values={{ visveileder, dato, veileder }}
         >
-            <Tekstomrade>
-                {henvendelse.tekst}
-            </Tekstomrade>
-        </Snakkeboble>
+            {topptekst =>
+                <Snakkeboble
+                    topp={topptekst}
+                    ikonClass={ikonCls(avsenderVeileder, false)}
+                    pilHoyre={avsenderVeileder}
+                >
+                    <Tekstomrade>
+                        {henvendelse.tekst}
+                    </Tekstomrade>
+                </Snakkeboble>}
+        </FormattedMessage>
     );
 }
 
