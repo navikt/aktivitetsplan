@@ -36,7 +36,8 @@ function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
         !arenaAktivitet &&
         aktivitet.avtalt === true &&
         ((aktivitet.status === STATUS_FULLFOERT &&
-            aktivitet.type !== SAMTALEREFERAT_TYPE && aktivitet.type !== MOTE_TYPE)||
+            aktivitet.type !== SAMTALEREFERAT_TYPE &&
+            aktivitet.type !== MOTE_TYPE) ||
             aktivitet.status === STATUS_AVBRUTT);
 
     const AktivitetvisningFooter = ({ visible }) =>
