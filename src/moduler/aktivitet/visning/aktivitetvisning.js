@@ -15,6 +15,8 @@ import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
+    SAMTALEREFERAT_TYPE,
+    MOTE_TYPE,
 } from '../../../constant';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import VarslingBoks from './hjelpekomponenter/varsling-boks';
@@ -33,7 +35,8 @@ function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
     const visBegrunnelse =
         !arenaAktivitet &&
         aktivitet.avtalt === true &&
-        (aktivitet.status === STATUS_FULLFOERT ||
+        ((aktivitet.status === STATUS_FULLFOERT &&
+            aktivitet.type !== SAMTALEREFERAT_TYPE && aktivitet.type !== MOTE_TYPE)||
             aktivitet.status === STATUS_AVBRUTT);
 
     const AktivitetvisningFooter = ({ visible }) =>
