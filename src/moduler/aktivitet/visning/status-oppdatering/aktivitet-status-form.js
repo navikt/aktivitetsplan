@@ -20,8 +20,8 @@ import {
 } from '../../../../felles-komponenter/skjema/validering';
 import { manglerPubliseringAvSamtaleReferat } from '../../aktivitet-util';
 import {
-    INGEN_VALGT, 
-    MOTE_TYPE, 
+    INGEN_VALGT,
+    MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,

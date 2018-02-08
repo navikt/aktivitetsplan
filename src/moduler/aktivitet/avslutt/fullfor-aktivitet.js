@@ -15,7 +15,7 @@ import {
 import PubliserReferat from './publiser-referat';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import {MOTE_TYPE, SAMTALEREFERAT_TYPE} from "../../../constant";
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 
 const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     const headerTekst = (
