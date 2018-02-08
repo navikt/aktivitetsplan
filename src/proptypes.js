@@ -35,6 +35,7 @@ export const henvendelse = PT.shape({
     dialogId: PT.string.isRequired,
     tekst: PT.string.isRequired,
     avsender: PT.string.isRequired,
+    avsenderId: PT.string,
     sendt: PT.string.isRequired,
     lest: PT.bool.isRequired,
 });

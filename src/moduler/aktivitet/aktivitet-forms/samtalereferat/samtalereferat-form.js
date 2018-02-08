@@ -11,7 +11,7 @@ import Input from '../../../../felles-komponenter/skjema/input/input';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import {
     SAMTALEREFERAT_TYPE,
-    STATUS_PLANLAGT,
+    STATUS_GJENNOMFOERT,
     TELEFON_KANAL,
 } from '../../../../constant';
 import {
@@ -126,7 +126,7 @@ const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {
-            status: STATUS_PLANLAGT,
+            status: STATUS_GJENNOMFOERT,
             fraDato: dateToISODate(new Date()),
             avtalt: true,
             kanal: TELEFON_KANAL,
