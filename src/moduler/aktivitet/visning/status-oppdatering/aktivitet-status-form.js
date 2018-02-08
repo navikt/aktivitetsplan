@@ -42,7 +42,12 @@ function statusKreverInformasjonMelding(status) {
 }
 
 function statusKreverBegrunnelse(status, aktivitetType) {
-    return ((status === STATUS_FULLFOERT && aktivitetType !== SAMTALEREFERAT_TYPE && aktivitetType !== MOTE_TYPE) || status === STATUS_AVBRUTT);
+    return (
+        (status === STATUS_FULLFOERT &&
+            aktivitetType !== SAMTALEREFERAT_TYPE &&
+            aktivitetType !== MOTE_TYPE) ||
+        status === STATUS_AVBRUTT
+    );
 }
 
 function AktivitetStatusForm(props) {
@@ -58,7 +63,10 @@ function AktivitetStatusForm(props) {
     } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
     const visAdvarsel = statusKreverInformasjonMelding(valgtAktivitetStatus);
-    const visBegrunnelseFelt = statusKreverBegrunnelse(valgtAktivitetStatus, aktivitet.type);
+    const visBegrunnelseFelt = statusKreverBegrunnelse(
+        valgtAktivitetStatus,
+        aktivitet.type
+    );
 
     return (
         <form onSubmit={handleSubmit}>
@@ -172,7 +180,10 @@ const harBegrunnelse = pakrevd(
 );
 const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
     props.aktivitet.avtalt &&
-    statusKreverBegrunnelse(props.values.aktivitetstatus, props.aktivitet.type) &&
+    statusKreverBegrunnelse(
+        props.values.aktivitetstatus,
+        props.aktivitet.type
+    ) &&
     harBegrunnelse(begrunnelse, props);
 
 function kanOppdatereStatus() {
