@@ -4,7 +4,7 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl, intlShape } from 'react-intl';
 import {
-    AlertStripeNavansatt,
+    AlertStripeNavAnsatt,
     AlertStripeInfo,
     AlertStripeInfoSolid,
 } from 'nav-frontend-alertstriper';
@@ -27,8 +27,8 @@ import * as AppPT from '../../proptypes';
 import { FailsafeText } from '../../text';
 
 const stripeTyper = {
-    [UKJENT_KATEGORI]: AlertStripeNavansatt,
-    [FINNES_IKKE_KATEGORI]: AlertStripeNavansatt,
+    [UKJENT_KATEGORI]: AlertStripeNavAnsatt,
+    [FINNES_IKKE_KATEGORI]: AlertStripeNavAnsatt,
     [INGEN_TILGANG_KATEGORI]: AlertStripeInfoSolid,
     [UGYLDIG_REQUEST_KATEGORI]: AlertStripeInfo,
     [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo,
@@ -40,7 +40,7 @@ function FeilStripe({ feil, erVeileder, intl }) {
     const feilType = feil.type;
     const melding = feil.melding;
     const feilKategori = (melding && melding.type) || UKJENT_KATEGORI;
-    const Stripe = stripeTyper[feilKategori] || AlertStripeNavansatt;
+    const Stripe = stripeTyper[feilKategori] || AlertStripeNavAnsatt;
     const typeNr = KATEGORI_RANGERING[feilKategori] || 1;
 
     const feilKeys = parseFeil(
