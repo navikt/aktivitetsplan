@@ -1,6 +1,10 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import {
+    Innholdstittel,
+    Normaltekst,
+    Undertittel,
+} from 'nav-frontend-typografi';
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import { ONBOARDING_VIDEO_URL } from '../../environment';

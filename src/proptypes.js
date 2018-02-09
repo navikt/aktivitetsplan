@@ -114,6 +114,7 @@ export const oppfolging = PT.shape({
         underKvp: PT.bool,
         avslutningStatus,
         oppfolgingsPerioder: PT.arrayOf(PT.object),
+        harSkriveTilgang: PT.bool,
     }),
 });
 

@@ -54,11 +54,11 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     return (
         <Modal header={<ModalHeader />} contentLabel="fullfor-aktivitet">
             <PubliserReferat aktivitet={valgtAktivitet}>
-                {(valgtAktivitet.avtalt &&
-                  valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&
-                  valgtAktivitet.type !== MOTE_TYPE
-                 ) ? begrunnelse : advarsel
-                }
+                {valgtAktivitet.avtalt &&
+                valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&
+                valgtAktivitet.type !== MOTE_TYPE
+                    ? begrunnelse
+                    : advarsel}
             </PubliserReferat>
         </Modal>
     );
