@@ -97,3 +97,9 @@ export function selectBrukerHarAvslatt(state) {
 export function selectErUnderKvp(state) {
     return selectOppfolgingData(state).underKvp;
 }
+
+export function selectHarSkriveTilgang(state) {
+    const harSkriveTilgang = selectOppfolgingData(state).harSkriveTilgang;
+    return harSkriveTilgang === undefined || harSkriveTilgang;
+    // For å kunne være bakoverkompatiblem med at oppfolgingStatus ikke returnerer dene propertien.
+}

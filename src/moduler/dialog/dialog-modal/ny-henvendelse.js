@@ -25,6 +25,7 @@ import {
 } from '../dialog-selector';
 import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 import { visBekreftelse } from '../dialog-view-reducer';
+import { selectHarSkriveTilgang } from '../../oppfolging-status/oppfolging-selector';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
@@ -40,6 +41,7 @@ function NyHenvendelseForm({
     skalHaAutofokus,
     erKnyttTilAktivitet,
     errorSummary,
+    harSkriveTilgang,
 }) {
     return (
         <form onSubmit={handleSubmit} className="ny-henvendelse-form">
@@ -52,11 +54,13 @@ function NyHenvendelseForm({
                     className="endre-dialog__sjekkboks"
                     labelId="dialog.ikke-ferdigbehandlet"
                     feltNavn="ikkeFerdigbehandlet"
+                    disabled={!harSkriveTilgang}
                 />
                 <Checkbox
                     className="endre-dialog__sjekkboks"
                     labelId="dialog.venter-pa-svar"
                     feltNavn="venterPaSvar"
+                    disabled={!harSkriveTilgang}
                 />
             </VisibleIfDiv>
 
@@ -64,7 +68,7 @@ function NyHenvendelseForm({
                 <Input
                     feltNavn="overskrift"
                     labelId="dialog.overskrift-label"
-                    disabled={oppretter}
+                    disabled={!harSkriveTilgang || oppretter}
                     autoFocus
                 />}
             <Textarea
@@ -74,11 +78,15 @@ function NyHenvendelseForm({
                 feltNavn="tekst"
                 placeholder="Skriv her"
                 maxLength={BESKRIVELSE_MAKS_LENGDE}
-                disabled={oppretter}
+                disabled={!harSkriveTilgang || oppretter}
                 visTellerFra={1000}
                 autoFocus={harEksisterendeOverskrift && skalHaAutofokus}
             />
-            <Hovedknapp type="hoved" spinner={oppretter} disabled={oppretter}>
+            <Hovedknapp
+                type="hoved"
+                spinner={oppretter}
+                disabled={!harSkriveTilgang || oppretter}
+            >
                 <FormattedMessage id="dialog.lag-ny-dialog" />
             </Hovedknapp>
 
@@ -106,6 +114,7 @@ NyHenvendelseForm.propTypes = {
     skalHaAutofokus: PT.bool,
     erKnyttTilAktivitet: PT.bool.isRequired,
     errorSummary: PT.node.isRequired,
+    harSkriveTilgang: PT.bool.isRequired,
 };
 
 const pakrevdOverskrift = rules.minLength(
@@ -159,6 +168,7 @@ const mapStateToProps = (state, props) => {
         erBruker,
         visBrukerInfo: erBruker && selectVisBrukerInfo(state, dialogId),
         erKnyttTilAktivitet: !!aktivitetId || (dialog && !!dialog.aktivitetId),
+        harSkriveTilgang: selectHarSkriveTilgang(state),
     };
 };
 
