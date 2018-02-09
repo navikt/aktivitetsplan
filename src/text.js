@@ -1,4 +1,5 @@
 import React from 'react';
+import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import hiddenIf from './felles-komponenter/hidden-if/hidden-if';
@@ -40,8 +41,28 @@ function textHOC(Component, props) {
     return hiddenIf(connect(mapStateToProps)(Text));
 }
 
+function FormattedHTMLMessageProxy(props) {
+    return (
+        <FormattedHTMLMessage {...props}>
+            {content =>
+                <div
+                    className={props.className}
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />}
+        </FormattedHTMLMessage>
+    );
+}
+
+FormattedHTMLMessageProxy.propTypes = {
+    className: PT.string,
+};
+
+FormattedHTMLMessageProxy.defaultProps = {
+    className: '',
+};
+
 export default textHOC(FormattedMessage);
-export const HtmlText = textHOC(FormattedHTMLMessage);
+export const HtmlText = textHOC(FormattedHTMLMessageProxy);
 export const FailsafeText = textHOC(FormattedHTMLMessage, {
     visChildrenVedFeil: true,
 });
