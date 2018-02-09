@@ -36,7 +36,7 @@ class Accordion extends Component {
             >
                 <FormattedMessage id={this.props.labelId} />
                 <NavFrontendChevron
-                    orientasjon={this.state.apen ? 'opp' : 'ned'}
+                    type={this.state.apen ? 'opp' : 'ned'}
                     className={classNames('accordion__chevron')}
                 />
             </a>
