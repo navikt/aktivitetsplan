@@ -29,7 +29,7 @@ function InformasjonModal() {
                 <Undertittel>
                     <FormattedMessage id="informasjon.videokontent.tittel" />
                 </Undertittel>
-                <HtmlText id="informasjon.videokontent.text" />
+                <HtmlText className="mellomrom" id="informasjon.videokontent.text" />
             </ModalContainer>
         </Modal>
     );
