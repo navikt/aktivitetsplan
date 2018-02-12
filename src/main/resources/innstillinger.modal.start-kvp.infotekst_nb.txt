@@ -1,1 +1,1 @@
-Når du klikker "Bekreft" blir alle dialoger og aktiviteter i KVP-perioden kontorsperret. Du må skrive en kommentar før du bekrefter. 
+Når du klikker "Bekreft" kan bare veiledere på min alle dialoger, aktiviteter og mål i KVP-perioden skjermet for veiledere på andre enheter. Du må skrive en kommentar før du bekrefter. 
