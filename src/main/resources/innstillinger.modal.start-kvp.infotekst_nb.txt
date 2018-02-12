@@ -1,1 +1,1 @@
-Marker at bruker deltar i Kvalifiseringsprogrammet. Alle dialoger og aktiviteter i perioden bruker deltar på KVP blir kontorsperret.
+Når du klikker "Bekreft" blir alle dialoger og aktiviteter i KVP-perioden kontorsperret. Du må skrive en kommentar før du bekrefter. 
