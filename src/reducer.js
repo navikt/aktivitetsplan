@@ -23,7 +23,6 @@ import oppgaveVeiledereReducer from './moduler/innstillinger/opprett-oppgave/hen
 import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
-import veilederReducer from './ducks/veileder-reducer';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
@@ -53,7 +52,6 @@ const combinedReducers = combineReducers({
         opprettOppgave: oppgaveReducer,
         referat: referatReducer,
         oppfolging: oppfolgingReducer,
-        veiledere: veilederReducer,
         versjoner: versjonReducer,
         vilkar: vilkarReducer,
         feature: featureReducer,
