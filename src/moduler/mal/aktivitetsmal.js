@@ -25,7 +25,10 @@ import {
 } from '../../moduler/mal/aktivitetsmal-reducer';
 import { selectMalListe, selectMalListeStatus } from './aktivitetsmal-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectErUnderOppfolging,
+    selectHarSkriveTilgang,
+} from '../oppfolging-status/oppfolging-selector';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { fjernMalListe, hentMalListe } from './malliste-reducer';
 
@@ -96,6 +99,7 @@ class AktivitetsMal extends Component {
             historiskeMal,
             historiskVisning,
             kanSletteMal,
+            harSkriveTilgang,
         } = this.props;
 
         const harMal = !!mal;
@@ -115,6 +119,7 @@ class AktivitetsMal extends Component {
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
                             hidden={historiskVisning}
+                            disabled={!harSkriveTilgang}
                         >
                             <FormattedMessage
                                 id={
@@ -128,6 +133,7 @@ class AktivitetsMal extends Component {
                             onClick={() => history.push('mal/slett/')}
                             className="aktivitetmal__slett-knapp"
                             hidden={!harMal || !kanSletteMal}
+                            disabled={!harSkriveTilgang}
                         >
                             <FormattedMessage id="aktivitetvisning.slett-knapp" />
                         </HiddenIfKnapp>
@@ -167,6 +173,7 @@ AktivitetsMal.propTypes = {
     doHentMal: PT.func.isRequired,
     doHentMalListe: PT.func.isRequired,
     doFjernMalListe: PT.func.isRequired,
+    harSkriveTilgang: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -175,6 +182,7 @@ const mapStateToProps = state => ({
     historiskeMal: selectMalListe(state),
     historiskVisning: selectViserHistoriskPeriode(state),
     kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
+    harSkriveTilgang: selectHarSkriveTilgang(state),
 });
 
 const mapDispatchToProps = dispatch => ({

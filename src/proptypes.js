@@ -35,6 +35,7 @@ export const henvendelse = PT.shape({
     dialogId: PT.string.isRequired,
     tekst: PT.string.isRequired,
     avsender: PT.string.isRequired,
+    avsenderId: PT.string,
     sendt: PT.string.isRequired,
     lest: PT.bool.isRequired,
 });
@@ -84,6 +85,7 @@ export const avslutningStatus = PT.shape({
     underOppfolging: PT.bool,
     harYtelser: PT.bool,
     harTiltak: PT.bool,
+    underKvp: PT.bool,
     inaktiveringsDato: PT.string,
 });
 
@@ -109,8 +111,10 @@ export const oppfolging = PT.shape({
         oppfolgingUtgang: PT.string,
         gjeldendeEkskaleringsvarsel: eskaleringsvarsel,
         kanStarteOppfolging: PT.bool,
+        underKvp: PT.bool,
         avslutningStatus,
         oppfolgingsPerioder: PT.arrayOf(PT.object),
+        harSkriveTilgang: PT.bool,
     }),
 });
 

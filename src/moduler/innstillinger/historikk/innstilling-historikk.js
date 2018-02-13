@@ -13,6 +13,8 @@ import {
     hentInnstillingHistorikk,
     hentInnstillingOppgavehistorikk,
 } from './historikk-reducer';
+import { harFeature } from '../../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 
 class InnstillingHistorikk extends Component {
     constructor(props) {
@@ -33,11 +35,18 @@ class InnstillingHistorikk extends Component {
     }
 
     render() {
+        const kvpFeature = harFeature('kvp', this.props.features);
         const { historikkReducer } = this.props;
         const historikkListeSorted = [
             ...historikkReducer.oppfolging.data,
             ...historikkReducer.oppgave.data,
-        ].sort((a, b) => b.dato.localeCompare(a.dato));
+        ]
+            .filter(
+                h =>
+                    kvpFeature ||
+                    (h.type !== 'KVP_STARTET' && h.type !== 'KVP_STOPPET')
+            )
+            .sort((a, b) => b.dato.localeCompare(a.dato));
 
         const forstePeriode =
             historikkListeSorted[0] &&
@@ -72,7 +81,7 @@ class InnstillingHistorikk extends Component {
                     historikkReducer.oppgave,
                     historikkReducer.oppfolging,
                 ]}
-                spinnerStorrelse="m"
+                spinnerStorrelse="M"
                 className="instillinger__historikk-spinner"
             >
                 <section className="innstillinger__historikk">
@@ -94,10 +103,12 @@ InnstillingHistorikk.propTypes = {
     historikkReducer: AppPT.reducer.isRequired,
     doHentInnstillingHistorikk: PT.func.isRequired,
     doHentInnstillingOppgavehistorikk: PT.func.isRequired,
+    features: PT.object.isRequired,
 };
 
 const mapStateToProps = state => ({
     historikkReducer: state.data.innstillingerHistorikk,
+    features: selectFeatureData(state),
 });
 
 const mapDispatchToProps = dispatch => ({

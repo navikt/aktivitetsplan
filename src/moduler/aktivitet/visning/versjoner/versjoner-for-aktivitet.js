@@ -79,7 +79,7 @@ class VersjonerForAktivitet extends Component {
         );
 
         return (
-            <Innholdslaster avhengigheter={avhengighet} spinnerStorrelse="m">
+            <Innholdslaster avhengigheter={avhengighet} spinnerStorrelse="M">
                 <section className={className}>
                     {versjonerInnslag}
                     <VisibleIfDiv visible={versjoner.length > MAX_SIZE}>
@@ -93,7 +93,7 @@ class VersjonerForAktivitet extends Component {
 
 VersjonerForAktivitet.propTypes = {
     avhengighet: AppPT.avhengighet.isRequired,
-    versjoner: AppPT.reducerArray.isRequired,
+    versjoner: AppPT.aktiviteter.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
     doHentVersjonerForAktivitet: PT.func.isRequired,
     doFjernVersjoner: PT.func.isRequired,

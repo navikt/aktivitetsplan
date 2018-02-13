@@ -8,6 +8,7 @@ import brukerReducer from './moduler/bruker/bruker-reducer';
 import dialogReducer from './moduler/dialog/dialog-reducer';
 import dialogViewReducer from './moduler/dialog/dialog-view-reducer';
 import etiketterReducer from './felles-komponenter/aktivitet-etikett/aktivitet-etiketter-reducer';
+import featureReducer from './ducks/feature-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
 import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
@@ -22,9 +23,9 @@ import oppgaveVeiledereReducer from './moduler/innstillinger/opprett-oppgave/hen
 import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
-import veilederReducer from './ducks/veileder-reducer';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
+import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -51,9 +52,10 @@ const combinedReducers = combineReducers({
         opprettOppgave: oppgaveReducer,
         referat: referatReducer,
         oppfolging: oppfolgingReducer,
-        veiledere: veilederReducer,
         versjoner: versjonReducer,
         vilkar: vilkarReducer,
+        feature: featureReducer,
+        veilederTilgang: veilederTilgangReducer,
     }),
     view: combineReducers({
         dialog: dialogViewReducer,

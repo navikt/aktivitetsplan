@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom';
 import SideBanner from './moduler/sidebanner/sidebanner';
 import Provider from './provider';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
-import Feature from './felles-komponenter/feature/feature';
+import ConfigToggle from './felles-komponenter/feature/config-toggle';
 import './index.less';
 import routerHistory from './history';
 import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
@@ -23,9 +23,9 @@ function App() {
                                 <Hovedside />
                             </ScrollToTop>
                         </Router>
-                        <Feature name="timeoutbox">
+                        <ConfigToggle name="timeoutbox">
                             <Timeoutbox />
-                        </Feature>
+                        </ConfigToggle>
                     </div>
                 </div>
             </Provider>

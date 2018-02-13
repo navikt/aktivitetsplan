@@ -58,7 +58,10 @@ function VersjonInnslag({ versjon, prevVersjon }) {
     return (
         <div className="versjon-for-aktivitet-innslag">
             <Element className="versjon-for-aktivitet-innslag__identitet">
-                <BrukerAvhengigTekst id={`lagtInnAv.${versjon.lagtInnAv}`} />
+                <BrukerAvhengigTekst
+                    id={`lagtInnAv.${versjon.lagtInnAv}`}
+                    endretAv={versjon.endretAv}
+                />
                 &nbsp;
             </Element>
             {endringsTekst()}

@@ -6,7 +6,9 @@ import { Element } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import NavigasjonslinjeMeny from './navigasjonslinje-meny';
 import Lenke from '../../felles-komponenter/utils/lenke';
-import Feature, { harFeature } from '../../felles-komponenter/feature/feature';
+import ConfigToggle, {
+    harConfigToggle,
+} from '../../felles-komponenter/feature/config-toggle';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../moduler/dialog/dialog-reducer';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
@@ -75,7 +77,7 @@ class Navigasjonslinje extends Component {
     componentDidMount() {
         const { doHentDialog, doHentArbeidsliste } = this.props;
         doHentDialog();
-        if (harFeature(navigasjonslinjemenyFeature)) {
+        if (harConfigToggle(navigasjonslinjemenyFeature)) {
             doHentArbeidsliste(getFodselsnummer());
         }
     }
@@ -123,15 +125,15 @@ class Navigasjonslinje extends Component {
                     disabled={disabled}
                 />
                 <div className="navigasjonslinje__verktoy">
-                    <Feature name={navigasjonslinjemenyFeature}>
+                    <ConfigToggle name={navigasjonslinjemenyFeature}>
                         <Innholdslaster
                             avhengigheter={avhengigheter}
-                            spinnerStorrelse="xs"
+                            spinnerStorrelse="XS"
                             className="navigasjonslinje__spinner"
                         >
                             <NavigasjonslinjeMeny />
                         </Innholdslaster>
-                    </Feature>
+                    </ConfigToggle>
 
                     <NavigasjonslinjeKnapp
                         ariaLabel="utskrift.ikon.alt.tekst"
@@ -139,13 +141,13 @@ class Navigasjonslinje extends Component {
                         className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
                     />
 
-                    <Feature name={navigasjonslinjemenyFeature}>
+                    <ConfigToggle name={navigasjonslinjemenyFeature}>
                         <NavigasjonslinjeKnapp
                             ariaLabel="navigasjon.innstillinger"
                             lenke="/innstillinger"
                             className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
                         />
-                    </Feature>
+                    </ConfigToggle>
                 </div>
             </nav>
         );

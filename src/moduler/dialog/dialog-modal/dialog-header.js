@@ -27,7 +27,7 @@ function DialogHeader({
                         aria-label={label}
                     />}
             </FormattedMessage>
-            <Innholdslaster avhengigheter={motpartStatus} spinnerStorrelse="m">
+            <Innholdslaster avhengigheter={motpartStatus} spinnerStorrelse="M">
                 <Element className="dialog-modal__tittel" tag="h1">
                     <FormattedMessage
                         id="dialog.tittel"

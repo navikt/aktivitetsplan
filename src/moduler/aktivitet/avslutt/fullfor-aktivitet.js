@@ -15,6 +15,7 @@ import {
 import PubliserReferat from './publiser-referat';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 
 const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     const headerTekst = (
@@ -53,7 +54,11 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     return (
         <Modal header={<ModalHeader />} contentLabel="fullfor-aktivitet">
             <PubliserReferat aktivitet={valgtAktivitet}>
-                {valgtAktivitet.avtalt ? begrunnelse : advarsel}
+                {valgtAktivitet.avtalt &&
+                valgtAktivitet.type !== SAMTALEREFERAT_TYPE &&
+                valgtAktivitet.type !== MOTE_TYPE
+                    ? begrunnelse
+                    : advarsel}
             </PubliserReferat>
         </Modal>
     );

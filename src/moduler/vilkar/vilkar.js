@@ -20,14 +20,18 @@ const ManglerVilkar = hiddenIf(() =>
     </div>
 );
 
-function Vilkar({ vilkarListe, visHistorikk }) {
+function Vilkar({ vilkarListe, visHistorikk, erHistorisk }) {
     const gjeldendeVilkar = vilkarListe[0];
     const resterendeVilkar = visHistorikk ? [...vilkarListe].splice(1) : [];
 
     return (
         <div className="vilkar">
             <ManglerVilkar hidden={gjeldendeVilkar} />
-            <VilkarInnhold vilkar={gjeldendeVilkar} hidden={!gjeldendeVilkar} />
+            <VilkarInnhold
+                vilkar={gjeldendeVilkar}
+                erHistorisk={erHistorisk}
+                hidden={!gjeldendeVilkar}
+            />
             <VisibleIfDiv
                 visible={visHistorikk}
                 className="vilkar__historikk-container"
@@ -42,11 +46,13 @@ function Vilkar({ vilkarListe, visHistorikk }) {
 Vilkar.propTypes = {
     vilkarListe: PT.arrayOf(AppPT.vilkar),
     visHistorikk: PT.bool,
+    erHistorisk: PT.bool,
 };
 
 Vilkar.defaultProps = {
     visHistorikk: false,
     vilkarListe: undefined,
+    erHistorisk: false,
 };
 
 export default Vilkar;

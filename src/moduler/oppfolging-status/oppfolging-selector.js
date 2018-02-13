@@ -94,11 +94,12 @@ export function selectBrukerHarAvslatt(state) {
     return selectOppfolgingSlice(state).brukerHarAvslatt;
 }
 
-export function selectKanIkkeStartaEskaleringen(state) {
-    return (
-        selectErEskalert(state) ||
-        !selectErUnderOppfolging(state) ||
-        selectReservasjonKRR(state) ||
-        selectErBrukerManuell(state)
-    );
+export function selectErUnderKvp(state) {
+    return selectOppfolgingData(state).underKvp;
+}
+
+export function selectHarSkriveTilgang(state) {
+    const harSkriveTilgang = selectOppfolgingData(state).harSkriveTilgang;
+    return harSkriveTilgang === undefined || harSkriveTilgang;
+    // For å kunne være bakoverkompatiblem med at oppfolgingStatus ikke returnerer dene propertien.
 }

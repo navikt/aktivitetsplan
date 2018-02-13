@@ -141,6 +141,10 @@ function methodToJson(method, url, data, config) {
     });
 }
 
+export function deleteAsJson(url, config = {}) {
+    return methodToJson('delete', url, null, config);
+}
+
 export function postAsJson(url, data = {}, config = {}) {
     return methodToJson('post', url, data, config);
 }

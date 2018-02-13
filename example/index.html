@@ -13,11 +13,17 @@
             // switch denne for å få innside/utside
             if (true) {
                 // innside
+                window.app = "veilarbaktivitetsplanfs";
+
                 window.aktivitetsplan = {
                     veilarbdialog_url: '/veilarbdialog/api',
                     veilarbaktivitet_url: '/veilarbaktivitet/api',
                     veilarboppfolging_url: '/veilarboppfolging/api',
                     veilarboppgave_url: '/veilarboppgave/api',
+                    veilarbperson_url: '/veilarbperson/api',
+                    veilarbportefolje_url: '/veilarbportefolje/api',
+                    veilarbveileder_url: '/veilarbveileder/api',
+                    feature_endpoint_url: 'https://feature-t6.nais.preprod.local/fo-feature',
                     sone: 'FSS',
                 };
 
@@ -25,6 +31,8 @@
 
             } else {
                 // utside
+                window.app = "aktivitetsplan";
+
                 window.aktivitetsplan = {
                     veilarbdialog_url: '/veilarbdialogproxy/api',
                     veilarbaktivitet_url: '/veilarbaktivitetproxy/api',

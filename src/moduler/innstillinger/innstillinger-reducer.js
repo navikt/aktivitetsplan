@@ -46,7 +46,14 @@ export const STOPP_ESKALERING_PENDING = 'instillinger/stopp_eskalering/PENDING';
 
 export const LAGRE_BEGRUNNELSE = 'form/lagre_begrunnelse';
 export const SLETT_BEGRUNNELSE = 'form/slett_begrunnelse';
-export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
+
+export const START_KVP_OK = 'innstillinger/start_kvp/OK';
+export const START_KVP_FEILET = 'innstillinger/start_kvp/FEILET';
+export const START_KVP_PENDING = 'innstillinger/start_kvp/PENDING';
+
+export const STOPP_KVP_OK = 'innstillinger/stopp_kvp/OK';
+export const STOPP_KVP_FEILET = 'innstillinger/stopp_kvp/FEILET';
+export const STOPP_KVP_PENDING = 'innstillinger/stopp_kvp/PENDING';
 
 const initalState = {
     data: [],
@@ -64,6 +71,8 @@ export default function reducer(state = initalState, action) {
         case SETT_DIGITAL_OK:
         case START_ESKALERING_OK:
         case STOPP_ESKALERING_OK:
+        case START_KVP_OK:
+        case STOPP_KVP_OK:
             return {
                 ...state,
                 status: STATUS.OK,
@@ -77,6 +86,8 @@ export default function reducer(state = initalState, action) {
         case SETT_DIGITAL_FEILET:
         case START_ESKALERING_FEILET:
         case STOPP_ESKALERING_FEILET:
+        case START_KVP_FEILET:
+        case STOPP_KVP_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
@@ -90,6 +101,8 @@ export default function reducer(state = initalState, action) {
         case SETT_DIGITAL_PENDING:
         case START_ESKALERING_PENDING:
         case STOPP_ESKALERING_PENDING:
+        case START_KVP_PENDING:
+        case STOPP_KVP_PENDING:
             return {
                 ...state,
                 status:
@@ -103,7 +116,10 @@ export default function reducer(state = initalState, action) {
                 begrunnelse: action.data,
             };
         case SLETT_BEGRUNNELSE:
-            return { ...state, begrunnelse: null };
+            return {
+                ...state,
+                begrunnelse: null,
+            };
         default:
             return state;
     }
@@ -206,7 +222,7 @@ export function startEskalering(eskaleringData) {
             .catch(() => history.push('/innstillinger/feilkvittering'));
 }
 
-function stoppEskaleringMedBegrunnelse(begrunnelse) {
+function stoppEskaleringProsess(begrunnelse) {
     return doThenDispatch(() => OppfolgingApi.stoppEskalering(begrunnelse), {
         OK: STOPP_ESKALERING_OK,
         FEILET: STOPP_ESKALERING_FEILET,
@@ -224,7 +240,17 @@ export function stoppEskalering(stoppEskaleringData) {
                 egenskaper: ['ESKALERINGSVARSEL'],
             })
         )
-            .then(() => dispatch(stoppEskaleringMedBegrunnelse(begrunnelse)))
+            .then(() => dispatch(stoppEskaleringProsess(begrunnelse)))
+            .then(() => dispatch(hentOppfolging()))
+            .then(() =>
+                history.push('/innstillinger/stoppEskalering/kvittering')
+            )
+            .catch(() => history.push('/innstillinger/feilkvittering'));
+}
+
+export function stoppEskaleringUtenHenvendelse() {
+    return dispatch =>
+        dispatch(stoppEskaleringProsess())
             .then(() => dispatch(hentOppfolging()))
             .then(() =>
                 history.push('/innstillinger/stoppEskalering/kvittering')
@@ -237,4 +263,22 @@ export function lagreBegrunnelse(begrunnelse) {
         type: LAGRE_BEGRUNNELSE,
         data: begrunnelse,
     };
+}
+
+export const SLETT_BEGRUNNELSE_ACTION = { type: SLETT_BEGRUNNELSE };
+
+export function startKvpOppfolging(begrunnelse) {
+    return doThenDispatch(() => OppfolgingApi.startKvpOppfolging(begrunnelse), {
+        OK: START_KVP_OK,
+        FEILET: START_KVP_FEILET,
+        PENDING: START_KVP_PENDING,
+    });
+}
+
+export function stoppKvpOppfolging(begrunnelse) {
+    return doThenDispatch(() => OppfolgingApi.stoppKvpOppfolging(begrunnelse), {
+        OK: STOPP_KVP_OK,
+        FEILET: STOPP_KVP_FEILET,
+        PENDING: STOPP_KVP_PENDING,
+    });
 }
