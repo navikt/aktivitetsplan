@@ -164,7 +164,7 @@ const mapStateToProps = (state, props) => {
         initialValues: { overskrift },
         harEksisterendeOverskrift: !!overskrift,
         erNyDialog,
-        oppretter: selectDialogStatus(state) !== STATUS.OK,
+        oppretter: selectDialogStatus(state) !== STATUS.OK && selectDialogStatus(state) !== STATUS.ERROR,
         erBruker,
         visBrukerInfo: erBruker && selectVisBrukerInfo(state, dialogId),
         erKnyttTilAktivitet: !!aktivitetId || (dialog && !!dialog.aktivitetId),
