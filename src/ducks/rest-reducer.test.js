@@ -26,7 +26,7 @@ describe('rest-reducer', () => {
                     }
                 );
                 expect(result).to.deep.equal({
-                    data: { test: 'This is fine.' },
+                    data: { test: 'This is fine' },
                     status: 'RELOADING',
                 });
             });
