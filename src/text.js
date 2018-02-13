@@ -47,7 +47,7 @@ function FormattedHTMLMessageProxy(props) {
             {content =>
                 <div
                     className={props.className}
-                    dangerouslySetInnerHTML={{ __html: content }}
+                    dangerouslySetInnerHTML={{ __html: content }} // eslint-disable-line react/no-danger
                 />}
         </FormattedHTMLMessage>
     );

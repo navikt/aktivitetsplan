@@ -33,7 +33,10 @@ function InformasjonModal() {
                 <Undertittel>
                     <FormattedMessage id="informasjon.videokontent.tittel" />
                 </Undertittel>
-                <HtmlText className="mellomrom" id="informasjon.videokontent.text" />
+                <HtmlText
+                    className="mellomrom"
+                    id="informasjon.videokontent.text"
+                />
             </ModalContainer>
         </Modal>
     );

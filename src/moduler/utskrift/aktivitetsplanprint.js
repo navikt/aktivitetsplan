@@ -45,10 +45,16 @@ import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import FnrProvider from './../../bootstrap/fnr-provider';
+import {
+    selectAlleDialoger,
+    selectDialogStatus,
+} from '../dialog/dialog-selector';
+import DialogPrint from './dialog-print';
 
 const StatusGruppePT = PT.shape({
     status: PT.string.isRequired,
     aktiviteter: AppPT.aktiviteter,
+    dialoger: PT.arrayOf(AppPT.dialog),
 });
 
 function Adresse({ bruker }) {
@@ -80,7 +86,14 @@ Adresse.propTypes = {
     bruker: AppPT.bruker.isRequired,
 };
 
-function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
+function Print({
+    grupper,
+    bruker,
+    printMelding,
+    mittMal,
+    erVeileder,
+    dialoger,
+}) {
     const { fodselsnummer, fornavn, etternavn } = bruker;
     const { beskrivelse } = printMelding;
 
@@ -90,6 +103,9 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
 
     const behandlendeEnhet = bruker.behandlendeEnhet;
     const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
+
+    const dialogerUtenAktivitet = dialoger.filter(d => d.aktivitetId === null);
+
     return (
         <div className="printmodal-body">
             <Bilde
@@ -147,6 +163,12 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                 </p>
             </HiddenIfSection>
             {statusGrupper}
+            <section className="printmodal-body__statusgrupper">
+                {dialogerUtenAktivitet &&
+                    dialogerUtenAktivitet.map(d =>
+                        <DialogPrint key={d.dialogId} dialog={d} />
+                    )}
+            </section>
         </div>
     );
 }
@@ -157,6 +179,7 @@ Print.propTypes = {
     printMelding: AppPT.printMelding.isRequired,
     mittMal: AppPT.mal,
     erVeileder: PT.bool,
+    dialoger: PT.arrayOf(AppPT.dialog).isRequired,
 };
 
 Print.defaultProps = {
@@ -182,6 +205,7 @@ class AktivitetsplanPrintModal extends Component {
             bruker,
             mittMal,
             erVeileder,
+            dialoger,
         } = this.props;
 
         const header = (
@@ -221,6 +245,7 @@ class AktivitetsplanPrintModal extends Component {
             ? <PrintMelding />
             : <Print
                   grupper={sorterteStatusGrupper}
+                  dialoger={dialoger}
                   bruker={bruker}
                   printMelding={printMelding}
                   mittMal={mittMal}
@@ -254,6 +279,7 @@ AktivitetsplanPrintModal.propTypes = {
     kanHaPrintMelding: PT.bool,
     fortsettRedigerPrintMelding: PT.func.isRequired,
     aktiviteter: AppPT.aktiviteter.isRequired,
+    dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     sorterteStatusGrupper: PT.arrayOf(StatusGruppePT),
     doHentMal: PT.func.isRequired,
     doHentMalListe: PT.func.isRequired,
@@ -283,6 +309,8 @@ const statusRekkefolge = [
 const mapStateToProps = state => {
     const aktiviteter = selectAktivitetListe(state);
 
+    const dialoger = selectAlleDialoger(state);
+
     const statusTilAktiviteter = aktiviteter.reduce((memo, aktivitet) => {
         const status = aktivitet.status;
         const nesteMemo = memo;
@@ -301,6 +329,7 @@ const mapStateToProps = state => {
         .map(status => ({
             status,
             aktiviteter: statusTilAktiviteter[status],
+            dialoger,
         }));
 
     const bruker = selectBruker(state);
@@ -314,8 +343,10 @@ const mapStateToProps = state => {
             selectOppfolgingStatus(state),
             selectAktivitetListeStatus(state),
             selectBrukerStatus(state),
+            selectDialogStatus(state),
         ],
         aktiviteter,
+        dialoger,
         sorterteStatusGrupper,
         visPrintMeldingForm: selectSkalVisePrintMeldingForm(state),
         kanHaPrintMelding: selectKanHaPrintMeldingForm(state),

@@ -7,6 +7,7 @@ import * as AppPT from '../../proptypes';
 import AktivitetEtikettGruppe from '../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import { compareAktivitet } from '../aktivitet/aktivitet-util';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
+import DialogPrint from './dialog-print';
 
 function AktivitetReferat({ aktivitet }) {
     const { referat, erReferatPublisert } = aktivitet;
@@ -28,7 +29,7 @@ AktivitetReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
 };
 
-function AktivitetPrint({ aktivitet, intl }) {
+function AktivitetPrint({ aktivitet, dialog, intl }) {
     const { id, type, tittel } = aktivitet;
     let aktivitetType = intl.formatMessage({
         id: `aktivitetskort.type.${type}`.toLowerCase(),
@@ -56,17 +57,23 @@ function AktivitetPrint({ aktivitet, intl }) {
                 aktivitet={aktivitet}
                 className="printmodal-body__aktivitetvisning--etikett"
             />
+            <DialogPrint dialog={dialog} />
         </div>
     );
 }
 
+AktivitetPrint.defaultProps = {
+    dialog: null,
+};
+
 AktivitetPrint.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
+    dialog: AppPT.dialog,
     intl: intlShape.isRequired,
 };
 
 function StatusGruppe({ gruppe, intl }) {
-    const { status, aktiviteter } = gruppe;
+    const { status, aktiviteter, dialoger } = gruppe;
     return (
         <section className="printmodal-body__statusgrupper">
             <Undertittel
@@ -77,15 +84,19 @@ function StatusGruppe({ gruppe, intl }) {
                     id={`aktivitetstavle.print.${status.toLowerCase()}`}
                 />
             </Undertittel>
-            {aktiviteter
-                .sort(compareAktivitet)
-                .map(aktivitet =>
+            {aktiviteter.sort(compareAktivitet).map(aktivitet => {
+                const dialogForAktivitet = dialoger.find(
+                    d => d.aktivitetId === aktivitet.id
+                );
+                return (
                     <AktivitetPrint
                         aktivitet={aktivitet}
                         key={aktivitet.id}
                         intl={intl}
+                        dialog={dialogForAktivitet}
                     />
-                )}
+                );
+            })}
         </section>
     );
 }
@@ -94,6 +105,7 @@ StatusGruppe.propTypes = {
     gruppe: PT.shape({
         status: PT.string.isRequired,
         aktiviteter: AppPT.aktiviteter.isRequired,
+        dialoger: PT.arrayOf(AppPT.dialog),
     }),
     intl: intlShape.isRequired,
 };
