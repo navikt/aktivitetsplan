@@ -2,20 +2,36 @@ import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
+import {
+    GRUPPE_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+} from '../../../constant';
 import { formaterDato } from '../../../utils';
 import * as PT from '../../../proptypes';
+import { erGruppeDatoeneLike } from '../aktivitet-util';
 
 function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
     const { type, fraDato, tilDato } = aktivitet;
+    const formatertFraDato = formaterDato(fraDato);
+    const formatertTilDato = formaterDato(tilDato);
+
     function periodeVisning() {
         if (type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) {
-            return formaterDato(fraDato);
+            return formatertFraDato;
         }
+
+        if (
+            type === GRUPPE_AKTIVITET_TYPE &&
+            erGruppeDatoeneLike(formatertFraDato, formatertTilDato)
+        ) {
+            return formatertFraDato;
+        }
+
         if (!fraDato && tilDato) {
             const tilDatoValues = {
                 label: 'TIL',
-                DATO: formaterDato(tilDato),
+                DATO: formatertTilDato,
             };
 
             return intl.formatMessage(
@@ -25,10 +41,11 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
                 tilDatoValues
             );
         }
+
         if (!tilDato && fraDato) {
             const fraDatoValues = {
                 label: 'FRA',
-                DATO: formaterDato(fraDato),
+                DATO: formatertFraDato,
             };
 
             return intl.formatMessage(
@@ -37,7 +54,7 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
             );
         }
 
-        return [formaterDato(fraDato), formaterDato(tilDato)]
+        return [formatertFraDato, formatertTilDato]
             .filter(dato => dato)
             .join(' - ');
     }
