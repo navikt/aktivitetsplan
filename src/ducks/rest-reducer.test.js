@@ -20,7 +20,7 @@ describe('rest-reducer', () => {
             });
             it('skal sette status til reloading når det finnes eksisterende state', () => {
                 const result = reducer(
-                    { data: { test: 'This is fine.' }, status: 'OK' },
+                    { data: { test: 'This is fine' }, status: 'OK' },
                     {
                         type: actionTypes.PENDING,
                     }
