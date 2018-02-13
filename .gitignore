@@ -4,3 +4,5 @@ node_modules/
 example/build/
 npm-debug.log*
 *.iml
+.nyc_output/
+coverage/

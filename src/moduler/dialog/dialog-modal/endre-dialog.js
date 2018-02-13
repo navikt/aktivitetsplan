@@ -10,6 +10,7 @@ import {
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
 } from '../dialog-reducer';
+import { selectHarSkriveTilgang } from '../../oppfolging-status/oppfolging-selector';
 
 class EndreDialogStatus extends Component {
     componentDidMount() {
@@ -23,6 +24,7 @@ class EndreDialogStatus extends Component {
             ferdigBehandlet,
             toggleFerdigbehandlet,
             toggleVentePaSvar,
+            harSkriveTilgang,
         } = this.props;
         if (!kanEndreDialog) {
             return <div />;
@@ -36,12 +38,14 @@ class EndreDialogStatus extends Component {
                     }
                     onChange={toggleFerdigbehandlet}
                     checked={!ferdigBehandlet}
+                    disabled={!harSkriveTilgang}
                 />
                 <Checkbox
                     label={<FormattedMessage id="dialog.venter-pa-svar" />}
                     className="endre-dialog__sjekkboks"
                     onChange={toggleVentePaSvar}
                     checked={venterPaSvar}
+                    disabled={!harSkriveTilgang}
                 />
             </div>
         );
@@ -55,10 +59,12 @@ EndreDialogStatus.propTypes = {
     kanEndreDialog: PT.bool.isRequired,
     venterPaSvar: PT.bool.isRequired,
     ferdigBehandlet: PT.bool.isRequired,
+    harSkriveTilgang: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     kanEndreDialog: selectErVeileder(state),
+    harSkriveTilgang: selectHarSkriveTilgang(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => {

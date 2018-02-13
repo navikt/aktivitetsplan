@@ -6,6 +6,10 @@ import React, {
 } from 'react';
 import { Input } from 'nav-frontend-skjema';
 
+function limit(liste, antall) {
+    return liste.slice(0, antall);
+}
+
 class SokFilter extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +23,7 @@ class SokFilter extends Component {
 
     render() {
         const { data, filter, children, ...props } = this.props;
-        const filteredData = data.filter(filter(this.state.query));
+        const filteredData = limit(data.filter(filter(this.state.query)), 20);
         const child = Children.map(children, barn =>
             cloneElement(barn, { ...props, data: filteredData })
         );

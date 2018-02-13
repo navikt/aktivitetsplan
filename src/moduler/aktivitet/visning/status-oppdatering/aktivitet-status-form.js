@@ -21,6 +21,8 @@ import {
 import { manglerPubliseringAvSamtaleReferat } from '../../aktivitet-util';
 import {
     INGEN_VALGT,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
@@ -35,8 +37,17 @@ const MAKS_LENGDE = 255;
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);
 
-function statusKreverBegrunnelse(status) {
+function statusKreverInformasjonMelding(status) {
     return status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
+}
+
+function statusKreverBegrunnelse(status, aktivitetType) {
+    return (
+        (status === STATUS_FULLFOERT &&
+            aktivitetType !== SAMTALEREFERAT_TYPE &&
+            aktivitetType !== MOTE_TYPE) ||
+        status === STATUS_AVBRUTT
+    );
 }
 
 function AktivitetStatusForm(props) {
@@ -51,7 +62,11 @@ function AktivitetStatusForm(props) {
         manglerReferatPublisering,
     } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
-    const visAdvarsel = statusKreverBegrunnelse(valgtAktivitetStatus);
+    const visAdvarsel = statusKreverInformasjonMelding(valgtAktivitetStatus);
+    const visBegrunnelseFelt = statusKreverBegrunnelse(
+        valgtAktivitetStatus,
+        aktivitet.type
+    );
 
     return (
         <form onSubmit={handleSubmit}>
@@ -129,7 +144,7 @@ function AktivitetStatusForm(props) {
 
                 {errorSummary}
 
-                <VisibleIfDiv visible={aktivitet.avtalt && visAdvarsel}>
+                <VisibleIfDiv visible={aktivitet.avtalt && visBegrunnelseFelt}>
                     <Textarea
                         labelId={
                             <FormattedMessage
@@ -165,7 +180,10 @@ const harBegrunnelse = pakrevd(
 );
 const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
     props.aktivitet.avtalt &&
-    statusKreverBegrunnelse(props.values.aktivitetstatus) &&
+    statusKreverBegrunnelse(
+        props.values.aktivitetstatus,
+        props.aktivitet.type
+    ) &&
     harBegrunnelse(begrunnelse, props);
 
 function kanOppdatereStatus() {

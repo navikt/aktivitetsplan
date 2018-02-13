@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
-import { hentVeileder } from '../../../ducks/veileder-reducer';
 import * as AppPT from '../../../proptypes';
 import Lenke from '../../../felles-komponenter/utils/lenke';
 import {
@@ -27,13 +26,6 @@ const OPPRETTET_OPPGAVE = 'OPPRETTET_OPPGAVE';
 const ESKALERING_MAX_LENGTH = 120;
 
 class InnstillingHistorikkInnslag extends Component {
-    componentWillMount() {
-        const innstillingHistorikk = this.props.innstillingHistorikk;
-        if (innstillingHistorikk.opprettetAv === NAV) {
-            this.props.doHentVeileder(innstillingHistorikk.opprettetAvBrukerId);
-        }
-    }
-
     gaTilDialogIRiktigHistoriskPeroiode(dialogId) {
         const {
             dialoger,
@@ -68,11 +60,7 @@ class InnstillingHistorikkInnslag extends Component {
                 return (
                     <FormattedMessage
                         id="innstillinger.historikk.innslag.opprettet-av-nav"
-                        values={{
-                            veileder: `${this.props.veileder[
-                                opprettetAvBrukerId
-                            ] || ''}`,
-                        }}
+                        values={{ veileder: opprettetAvBrukerId }}
                     />
                 );
             case SYSTEM:
@@ -171,28 +159,20 @@ class InnstillingHistorikkInnslag extends Component {
     }
 }
 
-InnstillingHistorikkInnslag.defaultProps = {
-    veileder: undefined,
-};
-
 InnstillingHistorikkInnslag.propTypes = {
     innstillingHistorikk: AppPT.innstillingHistorikk.isRequired,
-    doHentVeileder: PT.func.isRequired,
     doVelgHistoriskPeriode: PT.func.isRequired,
-    veileder: AppPT.veileder,
     intl: intlShape.isRequired,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
 };
 
 const mapStateToProps = state => ({
-    veileder: state.data.veiledere.data,
     dialoger: selectAlleDialoger(state),
     historiskePerioder: selectSorterteHistoriskeOppfolgingsPerioder(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-    doHentVeileder: veilederId => dispatch(hentVeileder(veilederId)),
     doVelgHistoriskPeriode: historiskPeriode =>
         dispatch(velgHistoriskPeriode(historiskPeriode)),
 });

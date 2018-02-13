@@ -7,7 +7,6 @@ export function selectVersjonerStatus(state) {
 }
 
 export function selectSorterteVersjoner(state) {
-    return selectVersjonerSlice(state).data.sort((a, b) =>
-        b.endretDato.localeCompare(a.endretDato)
-    );
+    const versjoner = [...selectVersjonerSlice(state).data];
+    return versjoner.sort((a, b) => b.endretDato.localeCompare(a.endretDato));
 }

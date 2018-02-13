@@ -34,40 +34,48 @@ class Dropdown extends Component {
 
         this.state = { apen: this.props.apen };
 
-        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.eventHandler = this.eventHandler.bind(this);
+        this.apneDropdown = this.apneDropdown.bind(this);
         this.lukkDropdown = this.lukkDropdown.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
         this.bindComponent = this.bindComponent.bind(this);
-        this.handler = e => {
-            if (!isChildOf(this.component, e.target)) {
-                this.toggleDropdown();
-            } else if (e.code === 'Escape') {
-                this.toggleDropdown();
-                this.btn.focus();
-            }
-        };
+        this.bindBtn = this.bindBtn.bind(this);
     }
 
-    toggleDropdown() {
-        const { onLukk } = this.props;
-        if (this.state.apen) {
-            document.body.removeEventListener('click', this.handler); // eslint-disable-line no-undef
-            document.body.removeEventListener('keyup', this.handler); // eslint-disable-line no-undef
-            onLukk();
-        } else {
-            document.body.addEventListener('click', this.handler); // eslint-disable-line no-undef
-            document.body.addEventListener('keyup', this.handler); // eslint-disable-line no-undef
+    eventHandler(e) {
+        if (e.code === 'Escape' || !isChildOf(this.component, e.target)) {
+            this.lukkDropdown();
         }
-        this.setState({ apen: !this.state.apen });
+    }
+
+    apneDropdown() {
+        document.body.addEventListener('click', this.eventHandler); // eslint-disable-line no-undef
+        document.body.addEventListener('keyup', this.eventHandler); // eslint-disable-line no-undef
+        this.setState({ apen: true });
     }
 
     lukkDropdown() {
-        const { onLukk } = this.props;
+        document.body.removeEventListener('click', this.eventHandler); // eslint-disable-line no-undef
+        document.body.removeEventListener('keyup', this.eventHandler); // eslint-disable-line no-undef
         this.setState({ apen: false });
-        onLukk();
+        this.btn.focus();
+        this.props.onLukk();
+    }
+
+    toggleDropdown() {
+        if (this.state.apen) {
+            this.lukkDropdown();
+        } else {
+            this.apneDropdown();
+        }
     }
 
     bindComponent(component) {
         this.component = component;
+    }
+
+    bindBtn(btn) {
+        this.btn = btn;
     }
 
     render() {
@@ -76,7 +84,7 @@ class Dropdown extends Component {
 
         const augmentedChild = Children.map(children, child =>
             cloneElement(child, {
-                closeDropdown: this.toggleDropdown,
+                closeDropdown: this.lukkDropdown,
             })
         );
         const innhold = !apen
@@ -93,9 +101,7 @@ class Dropdown extends Component {
             <div className={btnCls(apen, className)} ref={this.bindComponent}>
                 <div className="dropdown__btnwrapper">
                     <button
-                        ref={btn => {
-                            this.btn = btn;
-                        }}
+                        ref={this.bindBtn}
                         type="button"
                         className="dropdown__btn"
                         onClick={this.toggleDropdown}

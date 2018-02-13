@@ -1,4 +1,4 @@
-import { PERSON_BASE_URL } from '~config'; //eslint-disable-line
+import { PERSON_BASE_URL } from '../../environment';
 import { fetchToJson } from '../../ducks/utils';
 
 export function hentPerson(fnr) {

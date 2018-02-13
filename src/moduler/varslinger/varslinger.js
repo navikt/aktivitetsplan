@@ -17,12 +17,15 @@ import {
     selectTilHorendeDialogId,
     selectErEskalert,
     selectOppfolgingStatus,
+    selectErUnderKvp,
 } from '../oppfolging-status/oppfolging-selector';
 import {
     selectErBruker,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
+import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger/innstillinger-reducer';
+import Feature, { KVP_FEATURE } from '../../felles-komponenter/feature/feature';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -39,6 +42,8 @@ class Varslinger extends Component {
             brukerErEskalert,
             tilhorendeDialogId,
             doVelgNavarendePeriode,
+            slettBegrunnelse,
+            erUnderKvp,
         } = this.props;
 
         const visVarslingerForBruker = (
@@ -63,6 +68,13 @@ class Varslinger extends Component {
                     tekstId="oppfolging.ikke-under-oppfolging"
                     className="varsling"
                 />
+                <Feature name={KVP_FEATURE}>
+                    <HiddenIfVarsling
+                        hidden={!erUnderKvp}
+                        tekstId="oppfolging.veileder.under-kvp-oppfolging.varsel"
+                        className="varsling"
+                    />
+                </Feature>
                 <HiddenIfVarsling
                     hidden={
                         reservertIKRR ||
@@ -94,6 +106,7 @@ class Varslinger extends Component {
                     lenkeTekstId="oppfolging.bruker-er-manuell.lenke-tekst"
                     href="/innstillinger/digital"
                     className="varsling"
+                    onClick={() => slettBegrunnelse()}
                 />
             </Container>
         );
@@ -115,6 +128,7 @@ Varslinger.defaultProps = {
     brukerErEskalert: false,
     historiskVisning: false,
     tilhorendeDialogId: undefined,
+    erUnderKvp: false,
 };
 
 Varslinger.propTypes = {
@@ -126,8 +140,10 @@ Varslinger.propTypes = {
     reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
     doVelgNavarendePeriode: PT.func.isRequired,
+    slettBegrunnelse: PT.func.isRequired,
     brukerErEskalert: PT.bool,
     tilhorendeDialogId: PT.number,
+    erUnderKvp: PT.bool,
 };
 
 const mapStateToProps = state => ({
@@ -142,11 +158,13 @@ const mapStateToProps = state => ({
     reservertIKRR: selectReservasjonKRR(state),
     brukerErEskalert: selectErEskalert(state),
     tilhorendeDialogId: selectTilHorendeDialogId(state),
+    erUnderKvp: selectErUnderKvp(state),
 });
 
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
     doVelgNavarendePeriode: () => dispatch(velgHistoriskPeriode(null)),
+    slettBegrunnelse: () => dispatch(SLETT_BEGRUNNELSE_ACTION),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Varslinger);

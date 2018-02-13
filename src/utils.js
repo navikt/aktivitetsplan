@@ -81,15 +81,13 @@ export function proxy(func, { before, after } = {}) {
     };
 }
 
-export function storeForbokstaver() {
-    const tekst = Array.prototype.filter.call(arguments, s => s).join(' ');
-    return (
-        tekst &&
-        tekst.replace(
-            /\w\S*/g,
-            ord => ord.charAt(0).toUpperCase() + ord.substr(1).toLowerCase()
-        )
-    );
+export function storeForbokstaver(...tekster) {
+    const tekst = tekster.filter(s => s).join(' ');
+
+    return tekst
+        .split(' ')
+        .map(ord => ord.charAt(0).toUpperCase() + ord.slice(1).toLowerCase())
+        .join(' ');
 }
 
 export const erGyldigISODato = isoDato => {

@@ -11,6 +11,7 @@ function InnerCheckboxComponent({
     labelId,
     errorMessage,
     submitOnChange,
+    ...rest
 }) {
     const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
 
@@ -26,6 +27,7 @@ function InnerCheckboxComponent({
             label={<FormattedMessage id={labelId} />}
             feil={feil}
             checked={input.value}
+            {...rest}
             {...input}
             onChange={onChange}
         />

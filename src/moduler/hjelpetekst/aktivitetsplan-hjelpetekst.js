@@ -1,46 +1,57 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+import { HjelpetekstUnderVenstre } from 'nav-frontend-hjelpetekst';
 import {
-    HjelpetekstVenstre,
-    HjelpetekstHoyre,
-    HjelpetekstOver,
-    HjelpetekstUnder,
-    HjelpetekstMidt,
-    HjelpetekstAuto,
-} from 'nav-frontend-hjelpetekst';
+    STATUS_AVBRUTT,
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_FULLFOERT,
+    STATUS_GJENNOMFOERT,
+    STATUS_PLANLAGT,
+} from '../../constant';
 
-// Retninger
-export const VENSTRE = 'venstre';
-export const HOYRE = 'hoyre';
-export const OVER = 'over';
-export const UNDER = 'under';
-export const MIDT = 'midt';
-export const AUTO = 'auto';
-
-const map = {
-    [VENSTRE]: HjelpetekstVenstre,
-    [HOYRE]: HjelpetekstHoyre,
-    [OVER]: HjelpetekstOver,
-    [UNDER]: HjelpetekstUnder,
-    [MIDT]: HjelpetekstMidt,
-    [AUTO]: HjelpetekstAuto,
+const hjelpetekster = {
+    [STATUS_PLANLAGT]: {
+        tittelId: 'aktivitetstavle.brukerErInteressert.info',
+        innholdId: 'hjelpetekst.aktivitet.er.interessert',
+    },
+    [STATUS_GJENNOMFOERT]: {
+        tittelId: 'aktivitetstavle.planlagt.info',
+        innholdId: 'hjelpetekst.aktivitet.planlagt',
+    },
+    [STATUS_BRUKER_ER_INTRESSERT]: {
+        tittelId: 'aktivitetstavle.gjennomfoert.info',
+        innholdId: 'hjelpetekst.aktivitet.gjennomfoert',
+    },
+    [STATUS_FULLFOERT]: {
+        tittelId: 'aktivitetstavle.fullfoert.info',
+        innholdId: 'hjelpetekst.aktivitet.fullfoert',
+    },
+    [STATUS_AVBRUTT]: {
+        tittelId: 'aktivitetstavle.avbrutt.info',
+        innholdId: 'hjelpetekst.aktivitet.avbrutt',
+    },
 };
 
-function AktivitetsplanHjelpetekst({ tittelId, hjelpetekstId, retning, intl }) {
-    const HjelpetekstFelles = map[retning];
+function AktivitetsplanHjelpetekst({ status }) {
+    const config = hjelpetekster[status];
+    if (!config) {
+        return null;
+    }
+
+    const { tittelId, innholdId } = config;
     return (
-        <HjelpetekstFelles tittel={intl.formatMessage({ id: tittelId })}>
-            <FormattedMessage id={hjelpetekstId} />
-        </HjelpetekstFelles>
+        <FormattedMessage id={tittelId}>
+            {tittel =>
+                <HjelpetekstUnderVenstre id={tittelId} tittel={tittel}>
+                    <FormattedMessage id={innholdId} />
+                </HjelpetekstUnderVenstre>}
+        </FormattedMessage>
     );
 }
 
 AktivitetsplanHjelpetekst.propTypes = {
-    tittelId: PT.string.isRequired,
-    hjelpetekstId: PT.string.isRequired,
-    retning: PT.oneOf(Object.keys(map)).isRequired,
-    intl: intlShape.isRequired,
+    status: PT.oneOf(Object.keys(hjelpetekster)).isRequired,
 };
 
-export default injectIntl(AktivitetsplanHjelpetekst);
+export default AktivitetsplanHjelpetekst;

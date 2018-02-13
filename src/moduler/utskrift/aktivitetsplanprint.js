@@ -133,7 +133,7 @@ function Print({ grupper, bruker, printMelding, mittMal, erVeileder }) {
                 </p>
             </HiddenIfSection>
             <HiddenIfSection
-                hidden={!mittMal.mal}
+                hidden={!mittMal || !mittMal.mal}
                 className="printmodal-body__vismittmal"
             >
                 <Undertittel

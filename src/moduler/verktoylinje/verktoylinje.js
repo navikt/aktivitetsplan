@@ -9,12 +9,14 @@ import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
+import { selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 
 function Verktoylinje({
     viserHistoriskPeriode,
     harTilgangTilAktiviteter,
     privatModus,
     erVeileder,
+    harSkriveTilgang,
 }) {
     return (
         <div className="verktoylinje">
@@ -25,7 +27,8 @@ function Verktoylinje({
                     disabled={
                         viserHistoriskPeriode ||
                         privatModus ||
-                        !harTilgangTilAktiviteter
+                        !harTilgangTilAktiviteter ||
+                        !harSkriveTilgang
                     }
                 >
                     <FormattedMessage id="nyaktivitetsknapp" />
@@ -52,6 +55,7 @@ Verktoylinje.propTypes = {
     privatModus: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
     harTilgangTilAktiviteter: PT.bool.isRequired,
+    harSkriveTilgang: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -59,6 +63,7 @@ const mapStateToProps = state => ({
     privatModus: selectErPrivatModus(state),
     harTilgangTilAktiviteter: selectHarTilgangTilAktiviteter(state),
     erVeileder: selectErVeileder(state),
+    harSkriveTilgang: selectHarSkriveTilgang(state),
 });
 
 export default connect(mapStateToProps)(Verktoylinje);
