@@ -1,1 +1,1 @@
-Du har startet KVP-periode for bruker. Alle dialoger, aktiviteter og mål opprettet i KVP perioden blir skjult for veiledere på andre enheter..
+Du har startet en KVP-periode for brukeren. Bare veiledere i din enhet har nå tilgang til dialoger, aktiviteter og mål som blir opprettet i KVP-perioden.
