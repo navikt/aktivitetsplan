@@ -77,3 +77,7 @@ export function manglerPubliseringAvSamtaleReferat(aktivitet) {
             !erReferatPublisert)
     );
 }
+
+export function erGruppeDatoeneLike(fradato, tildato) {
+    return moment(fradato).isSame(tildato);
+}

@@ -11,7 +11,7 @@ import {
     fjernForrigeAktiveAktivitetId,
 } from '../aktivitet-actions';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
-import Aktivitetvinsing from './aktivitetvisning';
+import Aktivitetvisning from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import {
     selectAktivitetMedId,
@@ -81,7 +81,7 @@ class AktivitetvisningContainer extends Component {
                 avhengigheter={avhengigheter}
                 header={aktivitetvisningHeader(valgtAktivitet)}
             >
-                <Aktivitetvinsing aktivitet={valgtAktivitet} {...props} />
+                <Aktivitetvisning aktivitet={valgtAktivitet} {...props} />
             </Modal>
         );
     }

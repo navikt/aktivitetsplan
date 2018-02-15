@@ -48,6 +48,7 @@ class StoppEskalering extends Component {
         const {
             avhengigheter,
             handleSubmit,
+            submitUtenHenvendelse,
             innstillingerStatus,
             tilhorendeDialogId,
         } = this.props;
@@ -104,7 +105,7 @@ class StoppEskalering extends Component {
                                       <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                                   </RemoteSubmitKnapp>
                                 : <Hovedknapp
-                                      onClick={this.props.submitUtenHenvendelse}
+                                      onClick={submitUtenHenvendelse}
                                   >
                                       <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                                   </Hovedknapp>}
