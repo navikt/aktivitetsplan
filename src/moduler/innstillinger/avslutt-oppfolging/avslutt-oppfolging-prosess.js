@@ -17,7 +17,23 @@ import {
     selectInnstillingerStatus,
     selectKanStarteOppfolging,
 } from '../innstillinger-selector';
-import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import AlertstripeListe from '../../../felles-komponenter/alertstripe-liste';
+import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
+import { harFeature } from '../../../felles-komponenter/feature/feature';
+
+function lagAlertstripelisteConfig({
+    underOppfolging,
+    harYtelser,
+    harTiltak,
+    underKvp,
+}) {
+    return {
+        'innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging': underOppfolging,
+        'innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser': harYtelser,
+        'innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak': harTiltak,
+        'innstillinger.prosess.avslutt-oppfolging.feil.under-kvp': underKvp,
+    };
+}
 
 class AvsluttOppfolgingProsess extends Component {
     constructor(props) {
@@ -41,7 +57,12 @@ class AvsluttOppfolgingProsess extends Component {
     };
 
     render() {
-        const { avslutningStatus, laster, slettBegrunnelse } = this.props;
+        const {
+            avslutningStatus,
+            laster,
+            slettBegrunnelse,
+            features,
+        } = this.props;
         const { underOppfolging, harYtelser, harTiltak, underKvp } =
             avslutningStatus || {};
         const { harSjekket, kanAvslutte } = this.state;
@@ -51,37 +72,33 @@ class AvsluttOppfolgingProsess extends Component {
                 tittelId="innstillinger.prosess.avslutt.tittel"
                 knappetekstId="innstillinger.modal.prosess.start.knapp"
                 laster={laster}
+                disabled={harSjekket && !kanAvslutte}
                 onClick={() => {
                     slettBegrunnelse();
                     this.gaTilBekreft('/innstillinger/avslutt');
                 }}
             >
                 <div className="blokk-xs">
-                    <Normaltekst>
+                    <Normaltekst className="blokk-xs">
                         <FormattedMessage id="innstillinger.prosess.avslutt.tekst" />
                     </Normaltekst>
-                    <HiddenIfAlertStripeInfoSolid
+                    <AlertstripeListe
+                        nopadding
+                        nobullets={false}
                         hidden={!harSjekket || kanAvslutte}
+                        config={lagAlertstripelisteConfig({
+                            underOppfolging,
+                            harYtelser:
+                                !harFeature(
+                                    'aktivitetsplan.unngasjekkpagaendeytelser',
+                                    features
+                                ) && harYtelser,
+                            harTiltak,
+                            underKvp,
+                        })}
                     >
-                        <ul>
-                            {underOppfolging &&
-                                <li>
-                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging" />
-                                </li>}
-                            {harYtelser &&
-                                <li>
-                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser" />
-                                </li>}
-                            {harTiltak &&
-                                <li>
-                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak" />
-                                </li>}
-                            {underKvp &&
-                                <li>
-                                    <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.under-kvp" />
-                                </li>}
-                        </ul>
-                    </HiddenIfAlertStripeInfoSolid>
+                        <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.feil.forklaring" />
+                    </AlertstripeListe>
                 </div>
             </StartProsess>
         );
@@ -97,12 +114,14 @@ AvsluttOppfolgingProsess.propTypes = {
     doKanAvslutteOppfolging: PT.func.isRequired,
     slettBegrunnelse: PT.func.isRequired,
     avslutningStatus: AppPT.avslutningStatus,
+    features: PT.object.isRequired,
 };
 
 const mapStateToProps = state => ({
     avslutningStatus: selectAvslutningStatus(state),
     kanStarte: selectKanStarteOppfolging(state),
     laster: selectInnstillingerStatus(state) === STATUS.RELOADING,
+    features: selectFeatureData(state),
 });
 
 const mapDispatchToProps = dispatch => ({
