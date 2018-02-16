@@ -1,6 +1,7 @@
 // Actions
 export const LAGRER_PRINTMELDING = 'utskrift/lagre-printmelding';
 export const REDIGER_PRINTMELDING = 'utskrift/rediger-printmelding';
+export const VELG_PRINT_TYPE = 'utskrift/velg-print-type';
 
 const initalState = {
     data: {},
@@ -36,5 +37,11 @@ export function lagrePrintMelding(printmelding) {
 export function redigerPrintMelding() {
     return {
         type: REDIGER_PRINTMELDING,
+    };
+}
+
+export function velgPrintType() {
+    return {
+        type: VELG_PRINT_TYPE,
     };
 }

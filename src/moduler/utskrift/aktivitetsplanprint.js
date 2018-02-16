@@ -50,6 +50,7 @@ import {
     selectDialogStatus,
 } from '../dialog/dialog-selector';
 import DialogPrint from './dialog-print';
+import KvpUtskrift from './kvp-utskrift';
 
 const StatusGruppePT = PT.shape({
     status: PT.string.isRequired,
@@ -241,7 +242,7 @@ class AktivitetsplanPrintModal extends Component {
             </Innholdslaster>
         );
 
-        const innhold = visPrintMeldingForm
+        let innhold = visPrintMeldingForm
             ? <PrintMelding />
             : <Print
                   grupper={sorterteStatusGrupper}
@@ -251,6 +252,8 @@ class AktivitetsplanPrintModal extends Component {
                   mittMal={mittMal}
                   erVeileder={erVeileder}
               />;
+
+        innhold = <KvpUtskrift />;
 
         return (
             <section>
