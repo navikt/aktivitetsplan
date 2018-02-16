@@ -29,6 +29,7 @@ import {
     beregnKlokkeslettVarighet,
     formatterKlokkeslett,
     formatterVarighet,
+    erGruppeDatoeneLike,
 } from '../../aktivitet-util';
 import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 
@@ -223,7 +224,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
             innhold={hensikt}
         />,
-
         <Informasjonsfelt
             key="oppfolging"
             tittel={
@@ -265,29 +265,50 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         />,
     ];
 
-    const gruppeFelter = () => [
-        <Informasjonsfelt
-            key="fradato"
-            tittel={fraDatoTekst(aktivitetstype)}
-            innhold={fraDato || 'Dato ikke satt'}
-        />,
-        <Informasjonsfelt
-            key="tildato"
-            tittel={tilDatoTekst(aktivitetstype)}
-            innhold={tilDato || 'Dato ikke satt'}
-        />,
-        <Informasjonsfelt
-            key="moteplan"
-            tittel={<FormattedMessage id="aktivitetdetaljer.moteplan-label" />}
-            beskrivelse
-            innhold={moeteplanListe.map(mote =>
-                <Normaltekst key={mote.startDato}>
-                    {formaterDatoKortManedTid(mote.startDato)} -{' '}
-                    {formaterTid(mote.sluttDato)}, {mote.sted}
-                </Normaltekst>
-            )}
-        />,
-    ];
+    const gruppeFelter = () => {
+        const erGruppeDatoLike = erGruppeDatoeneLike(fraDato, tilDato);
+        const moteplan = moeteplanListe.map(mote =>
+            <Normaltekst key={mote.startDato}>
+                {formaterDatoKortManedTid(mote.startDato)}
+                {formaterTid(mote.sluttDato) === '00:00'
+                    ? ''
+                    : ` - ${formaterTid(mote.sluttDato)}`},
+                {' '}
+                {mote.sted}
+            </Normaltekst>
+        );
+
+        return [
+            <HiddenIfInformasjonsfelt
+                hidden={erGruppeDatoLike}
+                key="fradato"
+                tittel={fraDatoTekst(aktivitetstype)}
+                innhold={fraDato || 'Dato ikke satt'}
+            />,
+            <HiddenIfInformasjonsfelt
+                hidden={erGruppeDatoLike}
+                key="tildato"
+                tittel={tilDatoTekst(aktivitetstype)}
+                innhold={tilDato || 'Dato ikke satt'}
+            />,
+            <HiddenIfInformasjonsfelt
+                hidden={!erGruppeDatoLike}
+                key="likeGruppeDato"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.dato-tekst.gruppeaktivitet" />
+                }
+                innhold={fraDato || 'Dato ikke satt'}
+            />,
+            <Informasjonsfelt
+                key="moteplanutenslutteklokke"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.moteplan-label" />
+                }
+                beskrivelse
+                innhold={moteplan}
+            />,
+        ];
+    };
 
     const utdanningFelter = () => [
         <Informasjonsfelt

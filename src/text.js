@@ -41,12 +41,13 @@ function textHOC(Component, props) {
     return hiddenIf(connect(mapStateToProps)(Text));
 }
 
-function FormattedHTMLMessageProxy(props) {
+function FormattedHTMLMessageProxy({ id, values }) {
+    const { className, restValues } = values;
     return (
-        <FormattedHTMLMessage {...props}>
+        <FormattedHTMLMessage id={id} values={restValues}>
             {content =>
                 <div
-                    className={props.className}
+                    className={className}
                     dangerouslySetInnerHTML={{ __html: content }} // eslint-disable-line react/no-danger
                 />}
         </FormattedHTMLMessage>
@@ -54,11 +55,8 @@ function FormattedHTMLMessageProxy(props) {
 }
 
 FormattedHTMLMessageProxy.propTypes = {
-    className: PT.string,
-};
-
-FormattedHTMLMessageProxy.defaultProps = {
-    className: '',
+    id: PT.string.isRequired,
+    values: PT.object.isRequired,
 };
 
 export default textHOC(FormattedMessage);
