@@ -104,9 +104,7 @@ class StoppEskalering extends Component {
                                   >
                                       <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                                   </RemoteSubmitKnapp>
-                                : <Hovedknapp
-                                      onClick={submitUtenHenvendelse}
-                                  >
+                                : <Hovedknapp onClick={submitUtenHenvendelse}>
                                       <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                                   </Hovedknapp>}
                             <RemoteResetKnapp

@@ -10,7 +10,11 @@ const initialData = {
     },
 };
 
-const { reducer, cashedAction } = createActionsAndReducer('feature', 'feature', initialData);
+const { reducer, cashedAction } = createActionsAndReducer(
+    'feature',
+    'feature',
+    initialData
+);
 
 export default reducer;
 
