@@ -75,9 +75,7 @@ class StoppEskalering extends Component {
                                     {defaultBegrunnelse =>
                                         <BegrunnelseForm
                                             labelId="innstillinger.modal.stopp-eskalering.begrunnelse"
-                                            pakrevdFeilmelding={
-                                                'stopp.eskalering.begrunnelse.for-kort'
-                                            }
+                                            pakrevdFeilmelding="stopp.eskalering.begrunnelse.for-kort"
                                             defaultBegrunnelse={
                                                 defaultBegrunnelse
                                             }
