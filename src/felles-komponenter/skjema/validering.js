@@ -24,7 +24,9 @@ function leggTilDSL(valideringsFabrikkFunksjon) {
     return (...args) => {
         const valideringsfunksjon = valideringsFabrikkFunksjon(...args);
 
-        valideringsfunksjon.hvisIkke = leggTilDSL(hvisIkkeFabrikk(valideringsfunksjon));
+        valideringsfunksjon.hvisIkke = leggTilDSL(
+            hvisIkkeFabrikk(valideringsfunksjon)
+        );
 
         return valideringsfunksjon;
     };

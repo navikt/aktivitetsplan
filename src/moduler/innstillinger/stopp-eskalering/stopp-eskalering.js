@@ -75,7 +75,9 @@ class StoppEskalering extends Component {
                                     {defaultBegrunnelse =>
                                         <BegrunnelseForm
                                             labelId="innstillinger.modal.stopp-eskalering.begrunnelse"
-                                            pakrevdFeilmelding={'stopp.eskalering.begrunnelse.for-kort'}
+                                            pakrevdFeilmelding={
+                                                'stopp.eskalering.begrunnelse.for-kort'
+                                            }
                                             defaultBegrunnelse={
                                                 defaultBegrunnelse
                                             }
@@ -105,9 +107,7 @@ class StoppEskalering extends Component {
                                   >
                                       <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                                   </RemoteSubmitKnapp>
-                                : <Hovedknapp
-                                      onClick={submitUtenHenvendelse}
-                                  >
+                                : <Hovedknapp onClick={submitUtenHenvendelse}>
                                       <FormattedMessage id="innstillinger.modal.stopp-eskalering.knapp.bekreft" />
                                   </Hovedknapp>}
                             <RemoteResetKnapp

@@ -38,7 +38,9 @@ function StartKvpPeriode({ handleSubmit, innstillingerStatus }) {
                         </div>
                         <BegrunnelseForm
                             labelId="innstillinger.modal.start-kvp.begrunnelse.tittel"
-                            pakrevdFeilmelding={'start.kvp.begrunnelse.for-kort'}
+                            pakrevdFeilmelding={
+                                'start.kvp.begrunnelse.for-kort'
+                            }
                             formNavn={START_KVP_FORM_NAVN}
                             onSubmit={form => handleSubmit(form)}
                         />

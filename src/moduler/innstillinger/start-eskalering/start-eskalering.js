@@ -37,7 +37,9 @@ function StartEskalering({ handleSubmit, innstillingerStatus }) {
                                     {defaultTekst =>
                                         <BegrunnelseForm
                                             labelId="innstillinger.modal.start-eskalering.begrunnelse"
-                                            pakrevdFeilmelding={'start.eskalering.begrunnelse.for-kort'}
+                                            pakrevdFeilmelding={
+                                                'start.eskalering.begrunnelse.for-kort'
+                                            }
                                             formNavn={
                                                 START_ESKALERING_FORM_NAME
                                             }
