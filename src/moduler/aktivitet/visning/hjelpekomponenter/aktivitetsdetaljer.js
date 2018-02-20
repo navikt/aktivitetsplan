@@ -546,4 +546,4 @@ Aktivitetsdetaljer.defaultProps = {
     className: undefined,
 };
 
-export default Aktivitetsdetaljer;
+module.exports = {Aktivitetsdetaljer, Informasjonsfelt};
