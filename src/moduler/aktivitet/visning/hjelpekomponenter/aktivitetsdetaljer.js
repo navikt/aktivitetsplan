@@ -273,8 +273,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 {formaterTid(mote.sluttDato) === '00:00'
                     ? ''
                     : ` - ${formaterTid(mote.sluttDato)}`},
-                {' '}
-                {mote.sted}
+                {` ${mote.sted}`}
             </Normaltekst>
         );
 
