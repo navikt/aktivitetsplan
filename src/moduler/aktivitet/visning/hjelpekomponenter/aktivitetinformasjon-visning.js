@@ -5,7 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import history from '../../../../history';
-import AktivitetsDetaljer from './aktivitetsdetaljer';
+import { Aktivitetsdetaljer } from './aktivitetsdetaljer';
 import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import AktivitetEtikettGruppe from '../../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
@@ -32,7 +32,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring }) {
                     className="aktivitetvisning__etikett"
                 />
 
-                <AktivitetsDetaljer
+                <Aktivitetsdetaljer
                     className="aktivitetvisning__detaljer"
                     valgtAktivitet={valgtAktivitet}
                 />
