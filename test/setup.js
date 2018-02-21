@@ -28,7 +28,7 @@ window.aktivitetsplan = {
     veilarbperson_url: '/veilarbperson/api',
     veilarbportefolje_url: '/veilarbportefolje/api',
     veilarbveileder_url: '/veilarbveileder/api',
-    feature_endpoint_url: 'https://feature-t6.nais.preprod.local/fo-feature',
+    feature_endpoint_url: 'https://feature-t6.nais.preprod.local/feature',
     onboarding_video_url:
         'https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E',
     sone: 'FSS',
