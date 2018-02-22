@@ -16,3 +16,11 @@ export function selectSkalVisePrintMeldingForm(state) {
         selectKanHaPrintMeldingForm(state) && !utskriftSlice.printMeldingFerdig
     );
 }
+
+export function selectUtskriftPlanType(state) {
+    return selectUtskriftSlice(state).data.utskriftPlanType;
+}
+
+export function selectSkalViseVelgPrintType(state) {
+    return !selectUtskriftPlanType(state);
+}

@@ -2,13 +2,35 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import {
+    Innholdstittel,
+    Normaltekst,
+    Undertittel,
+} from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { reduxForm } from 'redux-form';
 import Radio from '../../felles-komponenter/skjema/input/radio';
 import { velgPrintType } from './utskrift-duck';
 
-function KvpUtskriftForm({ handleSubmit, lagrer }) {
+function UtskriftValg({ tittelId, tekstId }) {
+    return (
+        <div>
+            <Undertittel>
+                <FormattedMessage id={tittelId} />
+            </Undertittel>
+            <Normaltekst>
+                <FormattedMessage id={tekstId} />
+            </Normaltekst>
+        </div>
+    );
+}
+
+UtskriftValg.propTypes = {
+    tittelId: PT.string.isRequired,
+    tekstId: PT.string.isRequired,
+};
+
+function KvpUtskriftForm({ handleSubmit }) {
     return (
         <form onSubmit={handleSubmit} className="printmelding__form">
             <div className="printmelding__skjema">
@@ -20,34 +42,42 @@ function KvpUtskriftForm({ handleSubmit, lagrer }) {
 
                 <div>
                     <Radio
-                        feltNavn="helePlanen"
+                        feltNavn="utskriftPlanType"
                         label={
-                            <div>
-                                <FormattedMessage id="Hele aktivitetsplanen" />
-                                <Normaltekst>
-                                    <FormattedMessage id="Skriver ut hele aktivitetsplan, også kontorsperret periode. Er ment å bruke hvis du skal print ut til bruker" />
-                                </Normaltekst>
-                            </div>
+                            <UtskriftValg
+                                tittelId="Hele aktivitetsplan"
+                                tekstId="Skriver ut hele aktivitetsplan, også kontorsperret periode. Er ment å bruke hvis du skal print ut til bruker."
+                            />
                         }
                         value="helePlanen"
                         id="id--helePlanen"
                     />
                     <Radio
-                        feltNavn="aktivitetsplan"
-                        label={<FormattedMessage id="aktivitetsplan" />}
+                        feltNavn="utskriftPlanType"
+                        label={
+                            <UtskriftValg
+                                tittelId="Aktivitetsplan"
+                                tekstId="Skriver ut aktivitetsplanen uten kontorsperret periode. Er ment å bruke hvis du skal sende aktivitsplanen til trygdeetaten(stat)."
+                            />
+                        }
                         value="aktivitetsplan"
                         id="id--aktivitetsplan"
                     />
                     <Radio
-                        feltNavn="kvpPlan"
-                        label={<FormattedMessage id="kvpPlan" />}
+                        feltNavn="utskriftPlanType"
+                        label={
+                            <UtskriftValg
+                                tittelId="Kontorsperret aktivitetsplan"
+                                tekstId="Skriv kun ut kontrosperret periode. Er ment å bruke for arkivering i kommunalt akriv. Kontorsperret periode må være avsluttet før du kan skrive ut."
+                            />
+                        }
                         value="kvpPlan"
                         id="id--kvpPlan"
                     />
                 </div>
             </div>
             <div className="printmelding__knapperad">
-                <Hovedknapp spinner={lagrer} disabled={lagrer}>
+                <Hovedknapp>
                     <FormattedMessage id="print-melding-form.lagre" />
                 </Hovedknapp>
             </div>
@@ -56,8 +86,7 @@ function KvpUtskriftForm({ handleSubmit, lagrer }) {
 }
 
 KvpUtskriftForm.propTypes = {
-    handleSubmit: PT.object.isRequired,
-    lagrer: PT.bool.isRequired,
+    handleSubmit: PT.func.isRequired,
 };
 
 const KvpUtskriftFormForm = reduxForm({
@@ -70,4 +99,4 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default connect(mapDispatchToProps)(KvpUtskriftFormForm);
+export default connect(null, mapDispatchToProps)(KvpUtskriftFormForm);

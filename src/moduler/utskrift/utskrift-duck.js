@@ -22,6 +22,11 @@ export default function reducer(state = initalState, action) {
                 ...state,
                 printMeldingFerdig: false,
             };
+        case VELG_PRINT_TYPE:
+            return {
+                ...state,
+                data,
+            };
         default:
             return state;
     }
@@ -40,8 +45,9 @@ export function redigerPrintMelding() {
     };
 }
 
-export function velgPrintType() {
+export function velgPrintType(printType) {
     return {
         type: VELG_PRINT_TYPE,
+        data: printType,
     };
 }

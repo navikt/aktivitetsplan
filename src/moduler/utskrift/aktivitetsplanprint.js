@@ -28,6 +28,7 @@ import {
     hentPrintMelding,
     selectKanHaPrintMeldingForm,
     selectSkalVisePrintMeldingForm,
+    selectSkalViseVelgPrintType,
 } from './utskrift-selector';
 import { redigerPrintMelding } from './utskrift-duck';
 import {
@@ -202,6 +203,7 @@ class AktivitetsplanPrintModal extends Component {
             sorterteStatusGrupper,
             visPrintMeldingForm,
             kanHaPrintMelding,
+            visVelgPrintType,
             fortsettRedigerPrintMelding,
             bruker,
             mittMal,
@@ -242,7 +244,7 @@ class AktivitetsplanPrintModal extends Component {
             </Innholdslaster>
         );
 
-        let innhold = visPrintMeldingForm
+        const meldingForm = visPrintMeldingForm
             ? <PrintMelding />
             : <Print
                   grupper={sorterteStatusGrupper}
@@ -253,7 +255,7 @@ class AktivitetsplanPrintModal extends Component {
                   erVeileder={erVeileder}
               />;
 
-        innhold = <KvpUtskrift />;
+        const innhold = visVelgPrintType ? <KvpUtskrift /> : meldingForm;
 
         return (
             <section>
@@ -280,6 +282,7 @@ AktivitetsplanPrintModal.propTypes = {
     bruker: AppPT.motpart.isRequired,
     visPrintMeldingForm: PT.bool,
     kanHaPrintMelding: PT.bool,
+    visVelgPrintType: PT.bool,
     fortsettRedigerPrintMelding: PT.func.isRequired,
     aktiviteter: AppPT.aktiviteter.isRequired,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
@@ -296,6 +299,7 @@ AktivitetsplanPrintModal.defaultProps = {
     grupper: undefined,
     visPrintMeldingForm: undefined,
     kanHaPrintMelding: undefined,
+    visVelgPrintType: undefined,
     sorterteStatusGrupper: undefined,
     mittMal: null,
     erVeileder: undefined,
@@ -353,6 +357,7 @@ const mapStateToProps = state => {
         sorterteStatusGrupper,
         visPrintMeldingForm: selectSkalVisePrintMeldingForm(state),
         kanHaPrintMelding: selectKanHaPrintMeldingForm(state),
+        visVelgPrintType: selectSkalViseVelgPrintType(state),
         bruker,
         printMelding,
         mittMal,
