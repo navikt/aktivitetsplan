@@ -42,7 +42,7 @@ function textHOC(Component, props) {
 }
 
 function FormattedHTMLMessageProxy({ id, values }) {
-    const { className, restValues } = values;
+    const { className, ...restValues } = values;
     return (
         <FormattedHTMLMessage id={id} values={restValues}>
             {content =>

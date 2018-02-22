@@ -2,7 +2,10 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertittel, Element } from 'nav-frontend-typografi';
-import Aktivitetsdetaljer from '../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
+import {
+    Aktivitetsdetaljer,
+    Informasjonsfelt,
+} from '../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import * as AppPT from '../../proptypes';
 import AktivitetEtikettGruppe from '../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import { compareAktivitet } from '../aktivitet/aktivitet-util';
@@ -20,7 +23,11 @@ function AktivitetReferat({ aktivitet }) {
             hidden={!visReferat}
             className="printmodal-body__aktivitetreferat"
         >
-            {referat}
+            <Informasjonsfelt
+                key="referat"
+                tittel={<FormattedMessage id="referat.header" />}
+                innhold={referat}
+            />
         </HiddenIfDiv>
     );
 }
@@ -31,12 +38,9 @@ AktivitetReferat.propTypes = {
 
 function AktivitetPrint({ aktivitet, dialog, intl }) {
     const { id, type, tittel } = aktivitet;
-    let aktivitetType = intl.formatMessage({
+    const aktivitetType = intl.formatMessage({
         id: `aktivitetskort.type.${type}`.toLowerCase(),
     });
-    aktivitetType =
-        aktivitetType.substring(0, 1).toUpperCase() +
-        aktivitetType.substring(1, aktivitetType.length).toLowerCase();
     return (
         <div key={id} className="printmodal-body__statusgruppe">
             <p className="printmodal-body__statusgruppe--type">

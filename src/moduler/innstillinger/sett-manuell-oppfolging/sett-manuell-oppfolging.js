@@ -45,6 +45,7 @@ function SettManuellOppfolging({
                 </AlertStripeInfoSolid>
                 <BegrunnelseForm
                     labelId="innstillinger.modal.manuell.begrunnelse"
+                    pakrevdFeilmelding="sett-manuell.begrunnelse.for-kort"
                     formNavn={SETT_MANUELL_FORM_NAME}
                     onSubmit={form => handleSubmit(form, veilederId)}
                 />

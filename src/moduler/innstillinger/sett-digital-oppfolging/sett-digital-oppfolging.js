@@ -45,6 +45,7 @@ function SettDigitalOppfolging({
                 </AlertStripeInfoSolid>
                 <BegrunnelseForm
                     labelId="innstillinger.modal.digital.begrunnelse"
+                    pakrevdFeilmelding="sett-digital.begrunnelse.for-kort"
                     formNavn={SETT_DIGITAL_FORM_NAME}
                     onSubmit={form => handleSubmit(form, veilederId)}
                 />

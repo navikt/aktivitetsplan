@@ -18,7 +18,9 @@ function forLangBegrunnelse(verdi, props) {
     ).apply(this, arguments); // eslint-disable-line prefer-rest-params
 }
 
-const pakrevdBegrunnelse = pakrevd('avslutt.oppfolging.feilmelding.for-kort');
+function pakrevdBegrunnelse(_verdi, props) {
+    return pakrevd(props.pakrevdFeilmelding)(_verdi, props);
+}
 
 function BegrunnelseForm({ handleSubmit, labelId, maksBeskrivelseLengde }) {
     return (
@@ -40,6 +42,7 @@ BegrunnelseForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     labelId: PT.string.isRequired,
     maksBeskrivelseLengde: PT.number,
+    pakrevdFeilmelding: PT.string.isRequired,
 };
 
 const BegrunnelseReduxForm = validForm({

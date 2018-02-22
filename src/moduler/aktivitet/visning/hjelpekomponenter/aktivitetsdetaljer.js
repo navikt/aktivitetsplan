@@ -272,7 +272,8 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 {formaterDatoKortManedTid(mote.startDato)}
                 {formaterTid(mote.sluttDato) === '00:00'
                     ? ''
-                    : ` - ${formaterTid(mote.sluttDato)}`}, {mote.sted}
+                    : ` - ${formaterTid(mote.sluttDato)}`},
+                {` ${mote.sted}`}
             </Normaltekst>
         );
 
@@ -544,4 +545,4 @@ Aktivitetsdetaljer.defaultProps = {
     className: undefined,
 };
 
-export default Aktivitetsdetaljer;
+module.exports = { Aktivitetsdetaljer, Informasjonsfelt };

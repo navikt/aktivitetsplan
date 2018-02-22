@@ -78,6 +78,7 @@ function AvsluttOppfolgingperiode({
                         </AlertstripeListe>
                         <BegrunnelseForm
                             labelId="innstillinger.modal.avslutt.oppfolging.begrunnelse"
+                            pakrevdFeilmelding="avslutt.oppfolging.begrunnelse.for-kort"
                             formNavn={AVSLUTT_FORM_NAME}
                             onSubmit={onSubmit}
                         />
