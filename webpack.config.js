@@ -1,12 +1,20 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpack = require('webpack');
 
-const PLUGINS = [
-    new HtmlWebpackPlugin({
-        template: 'example/index.html',
-    }),
-];
+const plugins = isMock =>
+    [
+        new OptimizeCssAssetsPlugin(),
+        new ExtractTextPlugin('index.css'),
+        new webpack.DefinePlugin({
+            MOCK: JSON.stringify(isMock),
+        }),
+        new HtmlWebpackPlugin({
+            template: 'example/index.html',
+        }),
+    ];
 
 const BABEL_INCLUDE = [/src/, /example/];
 
@@ -18,57 +26,61 @@ const RULES = [
         loader: 'babel-loader',
     },
     {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract({
+            use: [{
+                loader: 'css-loader'
+            }, {
+                loader: 'less-loader',
+                options: {
+                    globalVars: {
+                        coreModulePath: "'./../../../node_modules/'",
+                        nodeModulesPath: "'./../../../node_modules/'"
+                    }
+                }
+            }]
+        })
+    },
+    {
         test: /\.(svg|png)$/,
         use: {
             loader: 'url-loader',
             options: { noquotes: true },
         },
-    },
-    { test: /\.less$/, loader: 'ignore-loader' },
-];
-
-const LOADERS = [
-    {
-        test: /\.jsx?$/,
-        include: BABEL_INCLUDE,
-        loader: 'babel-loader',
-        query: {
-            plugins: [
-                'react-html-attrs',
-                'transform-decorators-legacy',
-                'transform-class-properties',
-            ],
-        },
-    },
+    }
 ];
 
 module.exports = function(env) {
-    const dev = env && env.dev;
+    const isDev = env && env.dev;
+    const isMock = env && env.mock;
+
     return {
-        context: __dirname,
-        devtool: dev ? 'source-map' : false,
         entry: ['whatwg-fetch', './example/example.js'],
+        devtool: isDev ? 'source-map' : false,
+        output: {
+            path: path.resolve(__dirname, 'example/build'),
+            filename: 'bundle.js',
+            publicPath: '/aktivitetsplanfelles/'
+        },
+        stats: {
+            children: false
+        },
+        plugins: plugins(isMock),
         module: {
             rules: RULES,
-            loaders: LOADERS,
         },
         resolve: {
             alias: {
                 '~config': path.resolve(__dirname, './example/config'),
             },
-            extensions: ['.js', '.jsx', '.json'],
-        },
-        output: {
-            path: path.resolve(__dirname, 'example/build'),
-            filename: 'bundle.js',
-            publicPath: '/aktivitetsplanfelles/',
+            extensions: ['.js', '.jsx', '.json', '.less'],
         },
         devServer: {
-            contentBase: path.resolve(__dirname, 'example'),
+            port: 3000,
+            open: true,
             historyApiFallback: {
                 index: '/aktivitetsplanfelles/',
             },
         },
-        plugins: PLUGINS,
     };
 };
