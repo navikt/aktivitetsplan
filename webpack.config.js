@@ -4,17 +4,16 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 
-const plugins = isMock =>
-    [
-        new OptimizeCssAssetsPlugin(),
-        new ExtractTextPlugin('index.css'),
-        new webpack.DefinePlugin({
-            MOCK: JSON.stringify(isMock),
-        }),
-        new HtmlWebpackPlugin({
-            template: 'example/index.html',
-        }),
-    ];
+const plugins = isMock => [
+    new OptimizeCssAssetsPlugin(),
+    new ExtractTextPlugin('index.css'),
+    new webpack.DefinePlugin({
+        MOCK: JSON.stringify(isMock),
+    }),
+    new HtmlWebpackPlugin({
+        template: 'example/index.html',
+    }),
+];
 
 const BABEL_INCLUDE = [/src/, /example/];
 
@@ -28,18 +27,21 @@ const RULES = [
     {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract({
-            use: [{
-                loader: 'css-loader'
-            }, {
-                loader: 'less-loader',
-                options: {
-                    globalVars: {
-                        coreModulePath: "'./../../../node_modules/'",
-                        nodeModulesPath: "'./../../../node_modules/'"
-                    }
-                }
-            }]
-        })
+            use: [
+                {
+                    loader: 'css-loader',
+                },
+                {
+                    loader: 'less-loader',
+                    options: {
+                        globalVars: {
+                            coreModulePath: "'./../../../node_modules/'",
+                            nodeModulesPath: "'./../../../node_modules/'",
+                        },
+                    },
+                },
+            ],
+        }),
     },
     {
         test: /\.(svg|png)$/,
@@ -47,7 +49,7 @@ const RULES = [
             loader: 'url-loader',
             options: { noquotes: true },
         },
-    }
+    },
 ];
 
 module.exports = function(env) {
@@ -60,10 +62,10 @@ module.exports = function(env) {
         output: {
             path: path.resolve(__dirname, 'example/build'),
             filename: 'bundle.js',
-            publicPath: '/aktivitetsplanfelles/'
+            publicPath: '/aktivitetsplanfelles/',
         },
         stats: {
-            children: false
+            children: false,
         },
         plugins: plugins(isMock),
         module: {
