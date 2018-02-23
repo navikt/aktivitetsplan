@@ -31,7 +31,7 @@
     "lint": "npm run prettier && npm run eslint && npm run lesshint",
     "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
     "dev": "webpack-dev-server --env.dev --port 8888",
-    "dev:mock": "webpack-dev-server --env.dev --env.mock --port",
+    "dev:mock": "webpack-dev-server --env.dev --env.mock",
     "build": "webpack --optimize-minimize",
     "precommit": "lint-staged"
   },
@@ -169,6 +169,9 @@
     "webpack-dev-server": "2.9.2",
     "extract-text-webpack-plugin": "3.0.1",
     "optimize-css-assets-webpack-plugin": "3.2.0",
-    "yargs": "8.0.1"
+    "yargs": "8.0.1",
+    "fetch-mock": "5.12.1",
+    "faker": "4.1.0",
+    "path-to-regexp": "1.7.0"
   }
 }
