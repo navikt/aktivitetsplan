@@ -51,6 +51,15 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
         .reverse();
 }
 
+export function selectKvpPeriodeForValgteOppfolging(state) {
+    const valgtOppfolging = state.data.filter.historiskPeriode;
+    const valgtOppfolgingId = valgtOppfolging && valgtOppfolging.id;
+    const oppfolging = selectOppfolgingsPerioder(state).filter(
+        p => p.sluttDato === valgtOppfolgingId
+    );
+    return oppfolging[0].kvpPerioder;
+}
+
 export function selectErUnderOppfolging(state) {
     return selectOppfolgingData(state).underOppfolging;
 }

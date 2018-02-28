@@ -1,5 +1,8 @@
 import { selectErVeileder } from '../identitet/identitet-selector';
-import { selectErBrukerManuell } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectErBrukerManuell,
+    selectKvpPeriodeForValgteOppfolging,
+} from '../oppfolging-status/oppfolging-selector';
 
 const selectUtskriftSlice = state => state.view.utskrift;
 export const hentPrintMelding = state => selectUtskriftSlice(state).data;
@@ -10,17 +13,16 @@ export function selectKanHaPrintMeldingForm(state) {
     return erVeileder && erBrukerManuell;
 }
 
-export function selectSkalVisePrintMeldingForm(state) {
-    const utskriftSlice = selectUtskriftSlice(state);
-    return (
-        selectKanHaPrintMeldingForm(state) && !utskriftSlice.printMeldingFerdig
-    );
+export function selectKanVelgePlanType(state) {
+    const erVeileder = selectErVeileder(state);
+    const harKvpPeriode = selectKvpPeriodeForValgteOppfolging(state).length > 0;
+    return erVeileder && harKvpPeriode;
 }
 
 export function selectUtskriftPlanType(state) {
     return selectUtskriftSlice(state).data.utskriftPlanType;
 }
 
-export function selectSkalViseVelgPrintType(state) {
-    return !selectUtskriftPlanType(state);
+export function selectCurrentStepUtskrift(state) {
+    return selectUtskriftSlice(state).currentStep;
 }

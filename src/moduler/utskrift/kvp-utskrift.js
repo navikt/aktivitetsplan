@@ -11,6 +11,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { reduxForm } from 'redux-form';
 import Radio from '../../felles-komponenter/skjema/input/radio';
 import { velgPrintType } from './utskrift-duck';
+import { selectKvpPeriodeForValgteOppfolging } from '../oppfolging-status/oppfolging-selector';
 
 function UtskriftValg({ tittelId, tekstId }) {
     return (
@@ -30,7 +31,7 @@ UtskriftValg.propTypes = {
     tekstId: PT.string.isRequired,
 };
 
-function KvpUtskriftForm({ handleSubmit }) {
+function KvpUtskriftForm({ handleSubmit, kvpPerioder }) {
     return (
         <form onSubmit={handleSubmit} className="printmelding__form">
             <div className="printmelding__skjema">
@@ -63,17 +64,25 @@ function KvpUtskriftForm({ handleSubmit }) {
                         value="aktivitetsplan"
                         id="id--aktivitetsplan"
                     />
-                    <Radio
-                        feltNavn="utskriftPlanType"
-                        label={
-                            <UtskriftValg
-                                tittelId="Kontorsperret aktivitetsplan"
-                                tekstId="Skriv kun ut kontrosperret periode. Er ment å bruke for arkivering i kommunalt akriv. Kontorsperret periode må være avsluttet før du kan skrive ut."
-                            />
-                        }
-                        value="kvpPlan"
-                        id="id--kvpPlan"
+                    <UtskriftValg
+                        tittelId="Kontorsperret aktivitetsplan"
+                        tekstId="Skriv kun ut kontrosperret periode. Er ment å bruke for arkivering i kommunalt akriv. Kontorsperret periode må være avsluttet før du kan skrive ut."
                     />
+                    {kvpPerioder &&
+                        kvpPerioder.map(kvp =>
+                            <Radio
+                                id={kvp.opprettetDato}
+                                feltNavn="utskriftPlanType"
+                                label={
+                                    <Normaltekst>
+                                        <FormattedMessage
+                                            id={`${kvp.opprettetDato} - ${kvp.avsluttetDato}`}
+                                        />
+                                    </Normaltekst>
+                                }
+                                value={kvp.opprettetDato}
+                            />
+                        )}
                 </div>
             </div>
             <div className="printmelding__knapperad">
@@ -87,11 +96,26 @@ function KvpUtskriftForm({ handleSubmit }) {
 
 KvpUtskriftForm.propTypes = {
     handleSubmit: PT.func.isRequired,
+    kvpPerioder: PT.arrayOf(PT.object),
+};
+
+KvpUtskriftForm.defaultProps = {
+    kvpPerioder: [],
 };
 
 const KvpUtskriftFormForm = reduxForm({
     form: 'velg-print-form',
 })(KvpUtskriftForm);
+
+const mapStateToProps = state => {
+    const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
+    return {
+        initialValues: {
+            utskriftPlanType: 'helePlanen',
+        },
+        kvpPerioder,
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: data => {
@@ -99,4 +123,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default connect(null, mapDispatchToProps)(KvpUtskriftFormForm);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    KvpUtskriftFormForm
+);

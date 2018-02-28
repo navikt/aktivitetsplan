@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel, Systemtittel } from 'nav-frontend-typografi';
 import Bilde from '../../felles-komponenter/bilde/bilde';
 import { formaterDato } from '../../utils';
@@ -26,11 +25,11 @@ import {
 import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
 import {
     hentPrintMelding,
+    selectCurrentStepUtskrift,
     selectKanHaPrintMeldingForm,
-    selectSkalVisePrintMeldingForm,
-    selectSkalViseVelgPrintType,
+    selectKanVelgePlanType,
 } from './utskrift-selector';
-import { redigerPrintMelding } from './utskrift-duck';
+import { goToStepUtskrift, resetUtskrift } from './utskrift-duck';
 import {
     hentMal,
     selectGjeldendeMal,
@@ -41,6 +40,7 @@ import {
     section as HiddenIfSection,
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
+import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
@@ -52,6 +52,7 @@ import {
 } from '../dialog/dialog-selector';
 import DialogPrint from './dialog-print';
 import KvpUtskrift from './kvp-utskrift';
+import history from '../../history';
 
 const StatusGruppePT = PT.shape({
     status: PT.string.isRequired,
@@ -165,12 +166,14 @@ function Print({
                 </p>
             </HiddenIfSection>
             {statusGrupper}
-            <section className="printmodal-body__statusgrupper">
-                {dialogerUtenAktivitet &&
-                    dialogerUtenAktivitet.map(d =>
-                        <DialogPrint key={d.dialogId} dialog={d} />
-                    )}
-            </section>
+            <HiddenIfSection
+                hidden={!dialogerUtenAktivitet}
+                className="printmodal-body__statusgrupper"
+            >
+                {dialogerUtenAktivitet.map(d =>
+                    <DialogPrint key={d.dialogId} dialog={d} />
+                )}
+            </HiddenIfSection>
         </div>
     );
 }
@@ -190,6 +193,10 @@ Print.defaultProps = {
     erVeileder: false,
 };
 
+const STEP_VELG_PLAN = 'VELG_PLAN';
+const STEP_MELDING_FORM = 'MELDING_FORM';
+const STEP_UTSKRIFT = 'UTSKRIFT';
+
 class AktivitetsplanPrintModal extends Component {
     componentDidMount() {
         this.props.doHentMal();
@@ -199,31 +206,25 @@ class AktivitetsplanPrintModal extends Component {
     render() {
         const {
             avhengigheter,
-            printMelding,
-            sorterteStatusGrupper,
-            visPrintMeldingForm,
-            kanHaPrintMelding,
-            visVelgPrintType,
-            fortsettRedigerPrintMelding,
-            bruker,
-            mittMal,
-            erVeileder,
-            dialoger,
+            stepOrder,
+            steps,
+            currentStep,
+            goToStep,
+            doResetUtskrift,
         } = this.props;
+
+        const currentStepIndex = stepOrder.indexOf(currentStep);
 
         const header = (
             <Innholdslaster avhengigheter={avhengigheter}>
                 <header className="modal-header">
-                    <HiddenIfDiv
-                        hidden={visPrintMeldingForm}
-                        className="printmodal-header"
-                    >
+                    <div className="printmodal-header">
                         <Knappelenke
                             className="tilbakeknapp printmodal-header__tilbakeknapp"
-                            onClick={fortsettRedigerPrintMelding}
+                            onClick={() => goToStep(currentStepIndex - 1)}
                             role="link"
                             tabIndex="0"
-                            hidden={!kanHaPrintMelding}
+                            hidden={currentStepIndex === 0}
                         >
                             <div className="tilbakeknapp-innhold">
                                 <i className="nav-frontend-chevron chevronboks chevron--venstre" />
@@ -233,29 +234,17 @@ class AktivitetsplanPrintModal extends Component {
                                 />
                             </div>
                         </Knappelenke>
-                        <Hovedknapp
+                        <HiddenIfHovedknapp
+                            hidden={currentStep !== STEP_UTSKRIFT}
                             className="printmodal-header__printknapp"
                             onClick={() => window.print()}
                         >
                             Skriv ut
-                        </Hovedknapp>
-                    </HiddenIfDiv>
+                        </HiddenIfHovedknapp>
+                    </div>
                 </header>
             </Innholdslaster>
         );
-
-        const meldingForm = visPrintMeldingForm
-            ? <PrintMelding />
-            : <Print
-                  grupper={sorterteStatusGrupper}
-                  dialoger={dialoger}
-                  bruker={bruker}
-                  printMelding={printMelding}
-                  mittMal={mittMal}
-                  erVeileder={erVeileder}
-              />;
-
-        const innhold = visVelgPrintType ? <KvpUtskrift /> : meldingForm;
 
         return (
             <section>
@@ -264,9 +253,10 @@ class AktivitetsplanPrintModal extends Component {
                         contentLabel="aktivitetsplanPrint"
                         className="aktivitetsplanprint"
                         header={header}
+                        onRequestClose={doResetUtskrift}
                     >
                         <Innholdslaster avhengigheter={avhengigheter}>
-                            {innhold}
+                            {steps[currentStep]}
                         </Innholdslaster>
                     </Modal>
                 </FnrProvider>
@@ -277,32 +267,17 @@ class AktivitetsplanPrintModal extends Component {
 
 AktivitetsplanPrintModal.propTypes = {
     avhengigheter: PT.array,
-    printMelding: AppPT.printMelding,
-    grupper: PT.arrayOf(StatusGruppe),
-    bruker: AppPT.motpart.isRequired,
-    visPrintMeldingForm: PT.bool,
-    kanHaPrintMelding: PT.bool,
-    visVelgPrintType: PT.bool,
-    fortsettRedigerPrintMelding: PT.func.isRequired,
-    aktiviteter: AppPT.aktiviteter.isRequired,
-    dialoger: PT.arrayOf(AppPT.dialog).isRequired,
-    sorterteStatusGrupper: PT.arrayOf(StatusGruppePT),
     doHentMal: PT.func.isRequired,
     doHentMalListe: PT.func.isRequired,
-    mittMal: AppPT.mal,
-    erVeileder: PT.bool,
+    stepOrder: PT.arrayOf(PT.string).isRequired,
+    steps: PT.object.isRequired,
+    currentStep: PT.string.isRequired,
+    goToStep: PT.func.isRequired,
+    doResetUtskrift: PT.func.isRequired,
 };
 
 AktivitetsplanPrintModal.defaultProps = {
     avhengigheter: [],
-    printMelding: undefined,
-    grupper: undefined,
-    visPrintMeldingForm: undefined,
-    kanHaPrintMelding: undefined,
-    visVelgPrintType: undefined,
-    sorterteStatusGrupper: undefined,
-    mittMal: null,
-    erVeileder: undefined,
 };
 
 const statusRekkefolge = [
@@ -344,6 +319,37 @@ const mapStateToProps = state => {
     const mittMal = selectGjeldendeMal(state);
     const erVeileder = selectErVeileder(state);
 
+    const print = (
+        <Print
+            grupper={sorterteStatusGrupper}
+            dialoger={dialoger}
+            bruker={bruker}
+            printMelding={printMelding}
+            mittMal={mittMal}
+            erVeileder={erVeileder}
+        />
+    );
+    const meldingForm = <PrintMelding />;
+    const printValg = <KvpUtskrift />;
+
+    const kanHaPrintValg = selectKanVelgePlanType(state);
+    const kanHaPrintMelding = selectKanHaPrintMeldingForm(state);
+
+    const stepOrder = [];
+    const steps = {};
+
+    if (kanHaPrintValg) {
+        stepOrder.push(STEP_VELG_PLAN);
+        steps[STEP_VELG_PLAN] = printValg;
+    }
+    if (kanHaPrintMelding) {
+        stepOrder.push(STEP_MELDING_FORM);
+        steps[STEP_MELDING_FORM] = meldingForm;
+    }
+    stepOrder.push(STEP_UTSKRIFT);
+    steps[STEP_UTSKRIFT] = print;
+    const currentStep = stepOrder[selectCurrentStepUtskrift(state)];
+
     return {
         avhengigheter: [
             selectMalStatus(state),
@@ -352,22 +358,19 @@ const mapStateToProps = state => {
             selectBrukerStatus(state),
             selectDialogStatus(state),
         ],
-        aktiviteter,
-        dialoger,
-        sorterteStatusGrupper,
-        visPrintMeldingForm: selectSkalVisePrintMeldingForm(state),
-        kanHaPrintMelding: selectKanHaPrintMeldingForm(state),
-        visVelgPrintType: selectSkalViseVelgPrintType(state),
-        bruker,
-        printMelding,
-        mittMal,
-        erVeileder,
+        stepOrder,
+        steps,
+        currentStep,
     };
 };
 
 function mapDispatchToProps(dispatch) {
     return {
-        fortsettRedigerPrintMelding: () => dispatch(redigerPrintMelding()),
+        goToStep: step => dispatch(goToStepUtskrift(step)),
+        doResetUtskrift: () => {
+            dispatch(resetUtskrift());
+            history.push('/');
+        },
         doHentMal: () => dispatch(hentMal()),
         doHentMalListe: () => dispatch(hentMalListe()),
     };
