@@ -62,7 +62,7 @@ const aktiviteter = [
         endretAv: 'Z123456',
         avtalt: false,
         lagtInnAv: 'NAV',
-        transaksjonsType: 'OPPRETTET',
+        transaksjonsType: 'STATUS_ENDRET',
         hensikt: 'Lære meg HTML',
         oppfolging: 'Bli en bedre sjørøver',
         erReferatPublisert: false,

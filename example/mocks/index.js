@@ -56,6 +56,22 @@ mock.post(
     '/veilarbaktivitet/api/aktivitet/ny',
     respondWith(({ body }) => opprettAktivitet(body))
 );
+mock.get(
+    '/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner',
+    respondWith(({ pathParams }) => {
+        const aktivitet = getAktivitet(pathParams.aktivitetId);
+        return [
+            aktivitet,
+            {
+                ...aktivitet,
+                endretDato: '2017-02-26T15:51:44.85+01:00',
+                versjon: '2',
+                lagtInnAv: 'BRUKER',
+                transaksjonsType: 'OPPRETTET',
+            },
+        ];
+    })
+);
 mock.put(
     '/veilarbaktivitet/api/aktivitet/:aktivitetId',
     respondWith(({ pathParams, body }) =>
