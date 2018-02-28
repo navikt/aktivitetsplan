@@ -15,14 +15,23 @@ import aktiviteter, {
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
+import mal, {malListe} from './mal';
 
+
+//tekster
 mock.get('/veilarbaktivitetsplanfs/api/tekster', respondWith(tekster));
+
+//veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', respondWith(me));
+mock.get('/veilarboppfolging/api/oppfolging/mal', respondWith(mal));
+mock.get('/veilarboppfolging/api/oppfolging/malListe', respondWith(malListe()));
 mock.get(
     '/veilarboppfolging/api/oppfolging',
     respondWith(({ queryParams }) => oppfolging(queryParams))
 );
 
+
+//veilarbportefolje-api
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', respondWith(arbeidsliste));
 
 //veilarbdialog-api
@@ -43,6 +52,8 @@ mock.post(
     '/veilarbdialog/api/dialog',
     respondWith(({ body }) => opprettDialog(body))
 );
+
+
 
 // veilarbaktivitet-api
 mock.get('/veilarbaktivitet/api/aktivitet/arena', respondWith(arena));
