@@ -2,7 +2,11 @@ import { mock, delayed, respondWith, randomFailure } from './utils';
 import tekster from './tekster';
 import me from './me';
 import oppfolging from './oppfolging';
-import dialog from './dialog';
+import dialog, {
+    setVenterPaSvar,
+    setFerdigBehandlet,
+    opprettDialog,
+} from './dialog';
 import arbeidsliste from './arbeidsliste';
 import aktiviteter, {
     getAktivitet,
@@ -10,6 +14,7 @@ import aktiviteter, {
     oppdaterAktivitet,
 } from './aktivitet';
 import arena from './arena';
+import getPerson from './person';
 
 mock.get('/veilarbaktivitetsplanfs/api/tekster', respondWith(tekster));
 mock.get('/veilarboppfolging/api/oppfolging/me', respondWith(me));
@@ -18,8 +23,26 @@ mock.get(
     respondWith(({ queryParams }) => oppfolging(queryParams))
 );
 
-mock.get('/veilarbdialog/api/dialog', respondWith(dialog));
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', respondWith(arbeidsliste));
+
+//veilarbdialog-api
+mock.get('/veilarbdialog/api/dialog', respondWith(dialog));
+mock.put(
+    '/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool',
+    respondWith(({ pathParams }) =>
+        setVenterPaSvar(pathParams.dialogId, pathParams.bool)
+    )
+);
+mock.put(
+    '/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool',
+    respondWith(({ pathParams }) =>
+        setFerdigBehandlet(pathParams.dialogId, pathParams.bool)
+    )
+);
+mock.post(
+    '/veilarbdialog/api/dialog',
+    respondWith(({ body }) => opprettDialog(body))
+);
 
 // veilarbaktivitet-api
 mock.get('/veilarbaktivitet/api/aktivitet/arena', respondWith(arena));
@@ -50,4 +73,10 @@ mock.put(
     respondWith(({ pathParams, body }) =>
         oppdaterAktivitet(pathParams.aktivitetId, body)
     )
+);
+
+//veilarbperson-api
+mock.get(
+    '/veilarbperson/api/person/:fnr',
+    respondWith(({ pathParams }) => getPerson(pathParams.fnr))
 );

@@ -1,3 +1,5 @@
+import { rndId } from './utils';
+
 const aktiviteter = [
     wrapAktivitet({
         id: '1',
@@ -128,13 +130,9 @@ export function getAktivitet(aktivitetId) {
     return aktiviteter.filter(akivitet => akivitet.id === aktivitetId)[0];
 }
 
-function rnd() {
-    return `${Math.floor(Math.random() * 100000000)}`;
-}
-
 export function opprettAktivitet(aktivitet) {
     const newAktivitet = wrapAktivitet({
-        id: rnd(),
+        id: rndId(),
         opprettetDato: new Date(),
         versjon: '1',
         ...aktivitet,

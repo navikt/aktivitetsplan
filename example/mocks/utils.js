@@ -8,6 +8,10 @@ export const MOCK_CONFIG = {
     seed: 9001,
 };
 
+export function rndId() {
+    return `${Math.floor(Math.random() * 100000000)}`;
+}
+
 export function randomFailure(fn) {
     return (...args) => {
         const shouldFail = Math.random() <= MOCK_CONFIG.failureRate;
