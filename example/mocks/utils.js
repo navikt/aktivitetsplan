@@ -3,15 +3,10 @@ import fetchmock from 'fetch-mock';
 import qs from 'query-string';
 import pathRegex from 'path-to-regexp';
 
-
 export const MOCK_CONFIG = {
     failureRate: -1,
-    seed: 9001
+    seed: 9001,
 };
-
-export function rnd(start, stop) {
-    return Math.round(Math.random() * (stop - start) + start);
-}
 
 export function randomFailure(fn) {
     return (...args) => {
@@ -28,72 +23,76 @@ export function randomFailure(fn) {
 }
 
 export function delayed(time, response) {
-    return () => new Promise((resolve) => setTimeout(() => resolve(response), time));
+    return () =>
+        new Promise(resolve => setTimeout(() => resolve(response), time));
 }
 
 export function respondWith(handler) {
-    return (url, config, extra) => {
+    return (url, config, matcherUrl) => {
         const queryParams = qs.parse(qs.extract(url));
-        const bodyParams = config.body && JSON.parse(config.body);
+        const body = config.body && JSON.parse(config.body);
+        const { matches, keys } = parsePath(matcherUrl, url);
+        const pathParams = Object.assign(
+            {},
+            ...keys.map(({ name }, index) => ({ [name]: matches[index + 1] }))
+        );
 
         let response;
 
         if (typeof handler === 'function') {
-            response = handler(url, config, { queryParams, bodyParams, extra });
+            response = handler({ queryParams, body, pathParams, url, config });
         } else {
             response = handler; // Trust me, its data
         }
 
-        console.groupCollapsed(url);
+        const method = config.method || 'get';
+
+        console.groupCollapsed(method.toUpperCase() + ' ' + url);
         console.groupCollapsed('config');
         console.log('url', url);
         console.log('config', config);
+        console.log('pathParams', pathParams);
         console.log('queryParams', queryParams);
-        console.log('bodyParams', bodyParams);
-        console.log('extra', extra);
+        console.log('body', body);
         console.groupEnd();
-
         console.log('response', response);
         console.groupEnd();
 
-        return response;
+        if (response instanceof Response) {
+            return response;
+        }
+        return JSON.stringify(response);
     };
 }
 
+function parsePath(matcherUrl, url) {
+    const keys = [];
+    const regexp = pathRegex(matcherUrl, keys);
+    const urlWithoutQueryString = url.split('?')[0];
+    return { matches: regexp.exec(urlWithoutQueryString), keys };
+}
+
+function createMatcherFromUrl(matcherUrl, method) {
+    return (url, options) => {
+        const usedMethod = (options && options.method) || 'get';
+        return usedMethod === method && !!parsePath(matcherUrl, url).matches;
+    };
+}
+
+function createFetchmockProxy(method) {
+    return (matcherUrl, handler) =>
+        fetchmock[method](
+            createMatcherFromUrl(matcherUrl, method),
+            (url, config) => handler(url, config, matcherUrl)
+        );
+}
+
+export const mock = {
+    get: createFetchmockProxy('get'),
+    post: createFetchmockProxy('post'),
+    put: createFetchmockProxy('put'),
+    delete: createFetchmockProxy('delete'),
+};
+
 fetchmock._mock(); // Må kalles slik at window.fetch blir byttet ut
-export const mock = ['get', 'post', 'put', 'delete', 'head', 'patch', 'mock']
-    .map((method) => ({
-        [method]: (...args) => {
-            const handler = args.pop();
-            const routeurl = args[0];
-
-            let preprocessor;
-            if (routeurl.startsWith('express:')) {
-                const pureUrl = routeurl.replace(/^express:/, '');
-                const keys = [];
-                const regexp = pathRegex(pureUrl, keys);
-
-                preprocessor = (url) => {
-                    const result = regexp.exec(url);
-                    return result && keys
-                        .map((key, index) => {
-                            if (key.name && result[index]) {
-                                return { [key.name]: result[index] };
-                            }
-                            return null;
-                        })
-                        .filter((obj) => obj !== null)
-                        .reduce((acc, obj) => ({ ...acc, ...obj }), {});
-                };
-            }
-
-            return fetchmock[method](...args, (url, ...handlerArgs) => {
-                const extra = (preprocessor && preprocessor(url, ...handlerArgs, ...args)) || {};
-                extra.args = args;
-                return handler(url, ...handlerArgs, extra);
-            });
-        }
-    }))
-    .reduce((acc, method) => ({ ...acc, ...method }), {});
-
 mock.realFetch = fetchmock.realFetch;

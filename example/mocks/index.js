@@ -4,16 +4,50 @@ import me from './me';
 import oppfolging from './oppfolging';
 import dialog from './dialog';
 import arbeidsliste from './arbeidsliste';
-import aktivitet from './aktivitet';
+import aktiviteter, {
+    getAktivitet,
+    opprettAktivitet,
+    oppdaterAktivitet,
+} from './aktivitet';
 import arena from './arena';
 
+mock.get('/veilarbaktivitetsplanfs/api/tekster', respondWith(tekster));
+mock.get('/veilarboppfolging/api/oppfolging/me', respondWith(me));
+mock.get(
+    '/veilarboppfolging/api/oppfolging',
+    respondWith(({ queryParams }) => oppfolging(queryParams))
+);
 
-mock.get('express:/veilarbaktivitetsplanfs/api/tekster*', respondWith(tekster));
-mock.get('express:/veilarboppfolging/api/oppfolging/me?fnr=:fnr', respondWith(me));
-mock.get('express:/veilarboppfolging/api/oppfolging?fnr=:fnr',
-    respondWith((url, config, {queryParams, bodyParams, extra}) => oppfolging(queryParams)));
+mock.get('/veilarbdialog/api/dialog', respondWith(dialog));
+mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', respondWith(arbeidsliste));
 
-mock.get('express:/veilarbdialog/api/dialog?fnr=:fnr', respondWith(dialog));
-mock.get('express:/veilarbportefolje/api/arbeidsliste/:fnr?fnr=:fnr', respondWith(arbeidsliste));
-mock.get('express:/veilarbaktivitet/api/aktivitet?fnr=:fnr', respondWith(aktivitet));
-mock.get('express:/veilarbaktivitet/api/aktivitet/arena?fnr=:fnr', respondWith(arena));
+// veilarbaktivitet-api
+mock.get('/veilarbaktivitet/api/aktivitet/arena', respondWith(arena));
+mock.get(
+    '/veilarbaktivitet/api/aktivitet/:aktivitetId',
+    respondWith(({ pathParams }) => getAktivitet(pathParams.aktivitetId))
+);
+mock.get('/veilarbaktivitet/api/aktivitet', respondWith(aktiviteter));
+
+mock.post(
+    '/veilarbaktivitet/api/aktivitet/ny',
+    respondWith(({ body }) => opprettAktivitet(body))
+);
+mock.put(
+    '/veilarbaktivitet/api/aktivitet/:aktivitetId',
+    respondWith(({ pathParams, body }) =>
+        oppdaterAktivitet(pathParams.aktivitetId, body)
+    )
+);
+mock.put(
+    '/veilarbaktivitet/api/aktivitet/:aktivitetId/status',
+    respondWith(({ pathParams, body }) =>
+        oppdaterAktivitet(pathParams.aktivitetId, body)
+    )
+);
+mock.put(
+    '/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett',
+    respondWith(({ pathParams, body }) =>
+        oppdaterAktivitet(pathParams.aktivitetId, body)
+    )
+);
