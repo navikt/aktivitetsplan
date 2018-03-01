@@ -17,6 +17,7 @@ import arena from './arena';
 import getPerson from './person';
 import mal, { malListe } from './mal';
 import vilkar from './vilkar';
+import veilederTilgang from './veilderTilgang';
 
 //tekster
 mock.get('/veilarbaktivitetsplanfs/api/tekster', respondWith(tekster));
@@ -29,8 +30,22 @@ mock.get(
     '/veilarboppfolging/api/oppfolging',
     respondWith(({ queryParams }) => oppfolging(queryParams))
 );
+mock.get(
+    '/veilarboppfolging/api/oppfolging/hentVilkaarStatusListe',
+    respondWith(vilkar)
+);
 
-mock.get('/veilarboppfolging/api/oppfolging/hentVilkaarStatusListe', respondWith(vilkar))
+mock.get(
+    '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
+    respondWith([])
+);
+mock.get(
+    '/veilarboppfolging/api/oppfolging/veilederTilgang',
+    respondWith(veilederTilgang)
+);
+
+//veilarboppgave-api
+mock.get('/veilarboppgave/api/oppgavehistorikk', respondWith([]));
 
 //veilarbportefolje-api
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', respondWith(arbeidsliste));
