@@ -15,8 +15,8 @@ import aktiviteter, {
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
-import mal, {malListe} from './mal';
-
+import mal, { malListe } from './mal';
+import vilkar from './vilkar';
 
 //tekster
 mock.get('/veilarbaktivitetsplanfs/api/tekster', respondWith(tekster));
@@ -30,6 +30,7 @@ mock.get(
     respondWith(({ queryParams }) => oppfolging(queryParams))
 );
 
+mock.get('/veilarboppfolging/api/oppfolging/hentVilkaarStatusListe', respondWith(vilkar))
 
 //veilarbportefolje-api
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', respondWith(arbeidsliste));
@@ -52,8 +53,6 @@ mock.post(
     '/veilarbdialog/api/dialog',
     respondWith(({ body }) => opprettDialog(body))
 );
-
-
 
 // veilarbaktivitet-api
 mock.get('/veilarbaktivitet/api/aktivitet/arena', respondWith(arena));

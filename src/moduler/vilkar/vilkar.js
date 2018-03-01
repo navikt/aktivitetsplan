@@ -26,7 +26,7 @@ function Vilkar({ vilkarListe, visHistorikk, erHistorisk }) {
 
     return (
         <div className="vilkar">
-            <ManglerVilkar hidden={gjeldendeVilkar} />
+            <ManglerVilkar hidden={!!gjeldendeVilkar} />
             <VilkarInnhold
                 vilkar={gjeldendeVilkar}
                 erHistorisk={erHistorisk}
