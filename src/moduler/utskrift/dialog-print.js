@@ -48,7 +48,11 @@ function DialogPrint({ dialog }) {
 }
 
 DialogPrint.propTypes = {
-    dialog: PT.object.isRequired,
+    dialog: PT.object,
+};
+
+DialogPrint.defaultProps = {
+    dialog: undefined,
 };
 
 export default DialogPrint;

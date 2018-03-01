@@ -28,6 +28,7 @@ import {
     selectCurrentStepUtskrift,
     selectKanHaPrintMeldingForm,
     selectKanVelgePlanType,
+    selectUtskriftPlanType,
 } from './utskrift-selector';
 import { goToStepUtskrift, resetUtskrift } from './utskrift-duck';
 import {
@@ -42,7 +43,10 @@ import {
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectKvpPeriodeForValgteOppfolging,
+    selectOppfolgingStatus,
+} from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import FnrProvider from './../../bootstrap/fnr-provider';
@@ -96,6 +100,8 @@ function Print({
     mittMal,
     erVeileder,
     dialoger,
+    utskriftPlanType,
+    valgtKvpPeriode,
 }) {
     const { fodselsnummer, fornavn, etternavn } = bruker;
     const { beskrivelse } = printMelding;
@@ -107,7 +113,23 @@ function Print({
     const behandlendeEnhet = bruker.behandlendeEnhet;
     const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
 
-    const dialogerUtenAktivitet = dialoger.filter(d => d.aktivitetId === null);
+    const skjulDialoger =
+        utskriftPlanType === 'helePlanen' ||
+        utskriftPlanType === 'aktivitetsplan';
+
+    let dialogerUtenAktivitet;
+    let filtrerteDialoger;
+    if (!skjulDialoger) {
+        dialogerUtenAktivitet =
+            dialoger && dialoger.filter(d => d.aktivitetId === null);
+        filtrerteDialoger =
+            dialogerUtenAktivitet &&
+            dialogerUtenAktivitet.filter(
+                d =>
+                    d.sisteDato >= valgtKvpPeriode.opprettetDato &&
+                    d.sisteDato <= valgtKvpPeriode.avsluttetDato
+            );
+    }
 
     return (
         <div className="printmodal-body">
@@ -167,12 +189,13 @@ function Print({
             </HiddenIfSection>
             {statusGrupper}
             <HiddenIfSection
-                hidden={!dialogerUtenAktivitet}
+                hidden={skjulDialoger || !filtrerteDialoger}
                 className="printmodal-body__statusgrupper"
             >
-                {dialogerUtenAktivitet.map(d =>
-                    <DialogPrint key={d.dialogId} dialog={d} />
-                )}
+                {filtrerteDialoger &&
+                    filtrerteDialoger.map(d =>
+                        <DialogPrint key={d.dialogId} dialog={d} />
+                    )}
             </HiddenIfSection>
         </div>
     );
@@ -185,12 +208,16 @@ Print.propTypes = {
     mittMal: AppPT.mal,
     erVeileder: PT.bool,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
+    utskriftPlanType: PT.string,
+    valgtKvpPeriode: PT.object,
 };
 
 Print.defaultProps = {
     grupper: [],
     mittMal: null,
     erVeileder: false,
+    utskriftPlanType: 'helePlanen',
+    valgtKvpPeriode: undefined,
 };
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
@@ -318,6 +345,10 @@ const mapStateToProps = state => {
     const printMelding = hentPrintMelding(state);
     const mittMal = selectGjeldendeMal(state);
     const erVeileder = selectErVeileder(state);
+    const utskriftPlanType = selectUtskriftPlanType(state);
+    const valgtKvpPeriode = selectKvpPeriodeForValgteOppfolging(state).filter(
+        periode => periode.opprettetDato === utskriftPlanType
+    )[0];
 
     const print = (
         <Print
@@ -327,6 +358,8 @@ const mapStateToProps = state => {
             printMelding={printMelding}
             mittMal={mittMal}
             erVeileder={erVeileder}
+            utskriftPlanType={utskriftPlanType}
+            valgtKvpPeriode={valgtKvpPeriode}
         />
     );
     const meldingForm = <PrintMelding />;
