@@ -51,7 +51,7 @@ import {
     selectDialogStatus,
 } from '../dialog/dialog-selector';
 import DialogPrint from './dialog-print';
-import KvpUtskrift from './kvp-utskrift';
+import VelgPlanUtskrift from './velg-plan-utskrift';
 import history from '../../history';
 
 const StatusGruppePT = PT.shape({
@@ -330,7 +330,7 @@ const mapStateToProps = state => {
         />
     );
     const meldingForm = <PrintMelding />;
-    const printValg = <KvpUtskrift />;
+    const printValg = <VelgPlanUtskrift />;
 
     const kanHaPrintValg = selectKanVelgePlanType(state);
     const kanHaPrintMelding = selectKanHaPrintMeldingForm(state);
