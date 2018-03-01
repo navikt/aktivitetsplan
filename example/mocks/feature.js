@@ -1,15 +1,15 @@
 export default {
-    "aktivitetsplan": {
-        "kvp": false,
-        "unngasjekkpagaendeytelser": true
+    aktivitetsplan: {
+        kvp: false,
+        unngasjekkpagaendeytelser: true,
     },
-    "veilarbaktivitetsplanfs": {
-        "kvp": true,
-        "unngasjekkpagaendeytelser": true
+    veilarbaktivitetsplanfs: {
+        kvp: true,
+        unngasjekkpagaendeytelser: true,
     },
-    "veilarboppfolging": {
-        "unngasjekkpagaendeytelser": true,
-        "registrering": true,
-        "opprettbrukeriarena": false
-    }
-}
+    veilarboppfolging: {
+        unngasjekkpagaendeytelser: true,
+        registrering: true,
+        opprettbrukeriarena: false,
+    },
+};

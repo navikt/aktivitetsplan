@@ -18,8 +18,7 @@ import getPerson from './person';
 import mal, { malListe } from './mal';
 import vilkar from './vilkar';
 import veilederTilgang from './veilderTilgang';
-import feature from './feature'
-
+import feature from './feature';
 
 //feature-api
 mock.get('/feature', respondWith(feature));
