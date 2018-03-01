@@ -25,7 +25,6 @@ import {
 } from '../identitet/identitet-selector';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger/innstillinger-reducer';
-import Feature, { KVP_FEATURE } from '../../felles-komponenter/feature/feature';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -68,13 +67,11 @@ class Varslinger extends Component {
                     tekstId="oppfolging.ikke-under-oppfolging"
                     className="varsling"
                 />
-                <Feature name={KVP_FEATURE}>
-                    <HiddenIfVarsling
-                        hidden={!erUnderKvp}
-                        tekstId="oppfolging.veileder.under-kvp-oppfolging.varsel"
-                        className="varsling"
-                    />
-                </Feature>
+                <HiddenIfVarsling
+                    hidden={!erUnderKvp}
+                    tekstId="oppfolging.veileder.under-kvp-oppfolging.varsel"
+                    className="varsling"
+                />
                 <HiddenIfVarsling
                     hidden={
                         reservertIKRR ||

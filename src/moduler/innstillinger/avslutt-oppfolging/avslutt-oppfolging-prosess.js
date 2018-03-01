@@ -90,7 +90,7 @@ class AvsluttOppfolgingProsess extends Component {
                             underOppfolging,
                             harYtelser:
                                 !harFeature(
-                                    'aktivitetsplan.unngasjekkpagaendeytelser',
+                                    'unngasjekkpagaendeytelser',
                                     features
                                 ) && harYtelser,
                             harTiltak,

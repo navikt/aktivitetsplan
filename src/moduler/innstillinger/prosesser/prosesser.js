@@ -27,23 +27,16 @@ import {
 import { selectMotpartSlice } from '../../motpart/motpart-selector';
 import StartKvpPeriodeProsess from '../start-kvp-periode/start-kvp-periode-prosess';
 import StoppKvpPeriodeProsess from '../stopp-kvp-periode/stopp-kvp-periode-prosess';
-import Feature, {
-    KVP_FEATURE,
-    harFeature,
-} from '../../../felles-komponenter/feature/feature';
 import { hentVeilederTilgang } from '../../../felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 import {
     selectTilgangTilBrukersKontor,
     selectVeilederTilgangStatus,
 } from '../../../felles-komponenter/veilederTilgang/veilder-tilgang-selector';
-import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 
 class Prosesser extends Component {
     componentDidMount() {
         this.props.doHentOppfolging();
-        if (harFeature(KVP_FEATURE, this.props.features)) {
-            this.props.doHentVeilederTilgang();
-        }
+        this.props.doHentVeilederTilgang();
     }
 
     render() {
@@ -76,12 +69,8 @@ class Prosesser extends Component {
                             hidden={skjulSettDigital}
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
-                        <Feature name={KVP_FEATURE}>
-                            <StartKvpPeriodeProsess hidden={skjulStartKvp} />
-                        </Feature>
-                        <Feature name={KVP_FEATURE}>
-                            <StoppKvpPeriodeProsess hidden={skjulStopKvp} />
-                        </Feature>
+                        <StartKvpPeriodeProsess hidden={skjulStartKvp} />
+                        <StoppKvpPeriodeProsess hidden={skjulStopKvp} />
                         <InnstillingHistorikk />
                     </div>
                 </Innholdslaster>
@@ -106,7 +95,6 @@ Prosesser.propTypes = {
     doHentVeilederTilgang: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     motpart: AppPT.motpart.isRequired,
-    features: PT.object.isRequired,
     skjulStartEskalering: PT.bool,
     skjulStopEskalering: PT.bool,
     skjulStartOppfolging: PT.bool,
@@ -117,48 +105,43 @@ Prosesser.propTypes = {
     skjulStopKvp: PT.bool,
 };
 
-const mapStateToProps = state => {
-    const features = selectFeatureData(state);
-    let tilgangTilBrukersKontor = true;
-    const avhengigheter = [selectInnstillingerStatus(state)];
-    if (harFeature(KVP_FEATURE, features)) {
-        tilgangTilBrukersKontor = selectTilgangTilBrukersKontor(state);
-        avhengigheter.push(selectVeilederTilgangStatus(state));
-    }
-
-    return {
-        avhengigheter,
-        motpart: selectMotpartSlice(state),
-        features,
-        skjulStartEskalering:
-            !tilgangTilBrukersKontor ||
-            !selectErUnderOppfolging(state) ||
-            selectErEskalert(state) ||
-            selectReservasjonKRR(state) ||
-            selectErBrukerManuell(state),
-        skjulStopEskalering:
-            !tilgangTilBrukersKontor ||
-            !selectErUnderOppfolging(state) ||
-            !selectErEskalert(state),
-        skjulStartOppfolging:
-            !tilgangTilBrukersKontor || !selectKanStarteOppfolging(state),
-        skjulAvsluttOppfolging:
-            !tilgangTilBrukersKontor || !selectErUnderOppfolging(state),
-        skjulSettManuell:
-            !tilgangTilBrukersKontor ||
-            !selectErUnderOppfolging(state) ||
-            selectErBrukerManuell(state),
-        skjulSettDigital:
-            !tilgangTilBrukersKontor ||
-            !selectErUnderOppfolging(state) ||
-            !selectErBrukerManuell(state),
-        skjulStartKvp:
-            !tilgangTilBrukersKontor ||
-            !selectErUnderOppfolging(state) ||
-            selectErUnderKvp(state),
-        skjulStopKvp: !tilgangTilBrukersKontor || !selectErUnderKvp(state),
-    };
-};
+const mapStateToProps = state => ({
+    avhengigheter: [
+        selectInnstillingerStatus(state),
+        selectVeilederTilgangStatus(state),
+    ],
+    motpart: selectMotpartSlice(state),
+    skjulStartEskalering:
+        !selectTilgangTilBrukersKontor(state) ||
+        !selectErUnderOppfolging(state) ||
+        selectErEskalert(state) ||
+        selectReservasjonKRR(state) ||
+        selectErBrukerManuell(state),
+    skjulStopEskalering:
+        !selectTilgangTilBrukersKontor(state) ||
+        !selectErUnderOppfolging(state) ||
+        !selectErEskalert(state),
+    skjulStartOppfolging:
+        !selectTilgangTilBrukersKontor(state) ||
+        !selectKanStarteOppfolging(state),
+    skjulAvsluttOppfolging:
+        !selectTilgangTilBrukersKontor(state) ||
+        !selectErUnderOppfolging(state),
+    skjulSettManuell:
+        !selectTilgangTilBrukersKontor(state) ||
+        !selectErUnderOppfolging(state) ||
+        selectErBrukerManuell(state),
+    skjulSettDigital:
+        !selectTilgangTilBrukersKontor(state) ||
+        !selectErUnderOppfolging(state) ||
+        !selectErBrukerManuell(state),
+    skjulStartKvp:
+        !selectTilgangTilBrukersKontor(state) ||
+        !selectErUnderOppfolging(state) ||
+        selectErUnderKvp(state),
+    skjulStopKvp:
+        !selectTilgangTilBrukersKontor(state) || !selectErUnderKvp(state),
+});
 
 const mapDispatchToProps = dispatch => ({
     doHentOppfolging: () => dispatch(hentOppfolgingData()),
