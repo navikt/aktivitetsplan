@@ -67,10 +67,6 @@ const begrensetBeskrivelseLengde = maksLengde(
     BESKRIVELSE_MAKS_LENGDE
 ).hvisIkke(erAvtaltFunc);
 
-const pakrevForberedelse = pakrevd(
-    'mote-aktivitet-form.feilmelding.pakrevd-forberedelser'
-).hvisIkke(erAvtaltFunc);
-
 const begrensetForberedelserLengde = maksLengde(
     'mote-aktivitet-form.feilmelding.forberedelser-lengde',
     FORBEREDELSER_MAKS_LENGDE
@@ -188,7 +184,7 @@ const MoteAktivitetReduxForm = validForm({
         klokkeslett: [pakrevdKlokkeslett],
         adresse: [pakrevdAdresse, begrensetAdresseLengde],
         beskrivelse: [begrensetBeskrivelseLengde],
-        forberedelser: [pakrevForberedelse, begrensetForberedelserLengde],
+        forberedelser: [begrensetForberedelserLengde],
     },
 })(MoteAktivitetForm);
 

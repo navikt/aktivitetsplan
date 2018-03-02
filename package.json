@@ -5,6 +5,7 @@
   "description": "Aktivitetsplan felles",
   "main": "src/app.js",
   "styles": "src/main.less",
+  "license": "MIT",
   "files": [
     "src/"
   ],
@@ -30,12 +31,9 @@
     "lesshint-staged": "lesshint --reporter ./lesshint-reporter",
     "lint": "npm run prettier && npm run eslint && npm run lesshint",
     "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
-    "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\"",
-    "dev:js": "webpack-dev-server --progress --hot --watch --env.dev=true --port 8888",
-    "dev:less": "autoless --source-map --interval 100 ./src ./example/aktivitetsplanfelles",
-    "build": "npm run build:less && npm run build:js",
-    "build:js": "webpack --optimize-minimize",
-    "build:less": "node ./node_modules/less/bin/lessc src/index.less ./example/aktivitetsplanfelles/index.css",
+    "dev": "webpack-dev-server --env.dev --port 8888",
+    "dev:mock": "webpack-dev-server --env.dev --env.mock --port",
+    "build": "webpack --optimize-minimize",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -123,10 +121,9 @@
     "sanitize-html": "1.14.1"
   },
   "devDependencies": {
-    "autoless": "0.1.7",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
-    "babel-loader": "7.0.0",
+    "babel-loader": "7.1.3",
     "babel-plugin-react-html-attrs": "2.0.0",
     "babel-plugin-react-intl": "2.3.1",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -149,11 +146,12 @@
     "eslint-plugin-jsx-a11y": "5.0.1",
     "eslint-plugin-react": "7.0.1",
     "file-loader": "0.11.1",
-    "html-webpack-plugin": "2.28.0",
+    "html-webpack-plugin": "2.30.1",
     "husky": "0.13.4",
     "ignore-loader": "0.1.2",
     "ignore-styles": "5.0.1",
     "less": "2.7.2",
+    "less-loader": "4.0.5",
     "lesshint": "3.3.1",
     "lint-staged": "3.5.1",
     "mocha": "3.4.1",
@@ -167,8 +165,11 @@
     "sinon-chai": "2.10.0",
     "text-table": "0.2.0",
     "url-loader": "0.5.8",
-    "webpack": "2.5.1",
-    "webpack-dev-server": "2.4.5",
+    "webpack": "3.7.1",
+    "css-loader": "0.28.7",
+    "webpack-dev-server": "2.9.2",
+    "extract-text-webpack-plugin": "3.0.1",
+    "optimize-css-assets-webpack-plugin": "3.2.0",
     "yargs": "8.0.1"
   }
 }
