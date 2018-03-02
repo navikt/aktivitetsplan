@@ -316,7 +316,39 @@ const statusRekkefolge = [
 ];
 
 const mapStateToProps = state => {
-    const aktiviteter = selectAktivitetListe(state);
+    let aktiviteter;
+
+    const utskriftPlanType = selectUtskriftPlanType(state);
+    const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
+    const valgtKvpPeriode = kvpPerioder.find(
+        periode => periode.opprettetDato === utskriftPlanType
+    );
+    const valgtKvpPeriodeId =
+        (valgtKvpPeriode && valgtKvpPeriode.opprettetDato) || '';
+
+    switch (utskriftPlanType) {
+        case 'helePlanen':
+            aktiviteter = selectAktivitetListe(state);
+            break;
+        case 'aktivitetsplan':
+            aktiviteter = selectAktivitetListe(state).filter(a =>
+                kvpPerioder.some(
+                    kvp =>
+                        a.opprettetDato < kvp.opprettetDato ||
+                        a.opprettetDato > kvp.avsluttetDato
+                )
+            );
+            break;
+        case valgtKvpPeriodeId:
+            aktiviteter = selectAktivitetListe(state).filter(
+                a =>
+                    a.opprettetDato >= valgtKvpPeriode.opprettetDato &&
+                    a.opprettetDato <= valgtKvpPeriode.avsluttetDato
+            );
+            break;
+        default:
+            aktiviteter = selectAktivitetListe(state);
+    }
 
     const dialoger = selectAlleDialoger(state);
 
@@ -331,6 +363,10 @@ const mapStateToProps = state => {
         return nesteMemo;
     }, {});
 
+    const skjulDialoger =
+        utskriftPlanType === 'helePlanen' ||
+        utskriftPlanType === 'aktivitetsplan';
+
     const sorterteStatusGrupper = Object.keys(statusTilAktiviteter)
         .sort(
             (a, b) => statusRekkefolge.indexOf(a) - statusRekkefolge.indexOf(b)
@@ -338,17 +374,13 @@ const mapStateToProps = state => {
         .map(status => ({
             status,
             aktiviteter: statusTilAktiviteter[status],
-            dialoger,
+            dialoger: skjulDialoger ? [] : dialoger,
         }));
 
     const bruker = selectBruker(state);
     const printMelding = hentPrintMelding(state);
     const mittMal = selectGjeldendeMal(state);
     const erVeileder = selectErVeileder(state);
-    const utskriftPlanType = selectUtskriftPlanType(state);
-    const valgtKvpPeriode = selectKvpPeriodeForValgteOppfolging(state).filter(
-        periode => periode.opprettetDato === utskriftPlanType
-    )[0];
 
     const print = (
         <Print

@@ -28,12 +28,14 @@ function DialogPrint({ dialog }) {
                 </Element>
                 {henvendelserSynkende &&
                     henvendelserSynkende.map(h =>
-                        <div className={h.avsender} key={h.id}>
+                        <div className="henvendelse" key={h.id}>
                             <EtikettLiten
                                 className="detaljfelt__tittel"
                                 tag="h2"
                             >
-                                {`${h.avsender} - ${formaterDatoKortManed(
+                                {`${h.avsender === 'VEILEDER'
+                                    ? h.avsenderId
+                                    : 'BRUKER'} - ${formaterDatoKortManed(
                                     h.sendt
                                 )}`}
                             </EtikettLiten>
