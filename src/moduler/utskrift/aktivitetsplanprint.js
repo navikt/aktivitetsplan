@@ -320,7 +320,7 @@ const mapStateToProps = state => {
 
     const utskriftPlanType = selectUtskriftPlanType(state);
     const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
-    const valgtKvpPeriode = kvpPerioder.find(
+    const valgtKvpPeriode = kvpPerioder && kvpPerioder.find(
         periode => periode.opprettetDato === utskriftPlanType
     );
     const valgtKvpPeriodeId =
