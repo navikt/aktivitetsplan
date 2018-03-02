@@ -54,10 +54,10 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
 export function selectKvpPeriodeForValgteOppfolging(state) {
     const valgtOppfolging = state.data.filter.historiskPeriode;
     const valgtOppfolgingId = valgtOppfolging && valgtOppfolging.id;
-    const oppfolging = selectOppfolgingsPerioder(state).filter(
+    const oppfolging = selectOppfolgingsPerioder(state).find(
         p => p.sluttDato === valgtOppfolgingId
     );
-    return oppfolging[0].kvpPerioder;
+    return oppfolging && oppfolging.kvpPerioder;
 }
 
 export function selectErUnderOppfolging(state) {

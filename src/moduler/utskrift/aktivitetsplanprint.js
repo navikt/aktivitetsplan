@@ -332,7 +332,7 @@ const mapStateToProps = state => {
             break;
         case 'aktivitetsplan':
             aktiviteter = selectAktivitetListe(state).filter(a =>
-                kvpPerioder.some(
+                kvpPerioder.every(
                     kvp =>
                         a.opprettetDato < kvp.opprettetDato ||
                         a.opprettetDato > kvp.avsluttetDato

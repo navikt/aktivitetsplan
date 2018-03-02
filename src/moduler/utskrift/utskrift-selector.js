@@ -15,7 +15,8 @@ export function selectKanHaPrintMeldingForm(state) {
 
 export function selectKanVelgePlanType(state) {
     const erVeileder = selectErVeileder(state);
-    const harKvpPeriode = selectKvpPeriodeForValgteOppfolging(state).length > 0;
+    const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
+    const harKvpPeriode = kvpPerioder && kvpPerioder.length > 0;
     return erVeileder && harKvpPeriode;
 }
 
