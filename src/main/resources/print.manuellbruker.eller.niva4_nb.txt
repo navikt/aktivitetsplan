@@ -1,0 +1,1 @@
+{ erManuell, select, true { Manuell bruker } false { Pålogget nivå 4 }}

@@ -1,0 +1,1 @@
+Skriver ut aktivitetsplanen uten kontorsperret periode. Er ment å brukes hvis du skal sende aktivitsplanen til trygdeetaten(stat).

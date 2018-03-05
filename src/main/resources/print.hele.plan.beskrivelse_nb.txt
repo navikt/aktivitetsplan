@@ -1,0 +1,1 @@
+Skriver ut hele aktivitetsplan, også kontorsperret periode. Er ment å brukes hvis du skal printe ut til bruker.
