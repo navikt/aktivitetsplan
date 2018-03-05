@@ -364,6 +364,7 @@ const mapStateToProps = state => {
     }, {});
 
     const skjulDialoger =
+        utskriftPlanType === undefined ||
         utskriftPlanType === 'helePlanen' ||
         utskriftPlanType === 'aktivitetsplan';
 
