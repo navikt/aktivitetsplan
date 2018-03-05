@@ -18,34 +18,32 @@ function DialogPrint({ dialog }) {
         dialog.aktivitetId === null ? dialog.overskrift : 'Dialog';
 
     return (
-        <div>
-            <HiddenIfDiv hidden={!henvendelserSynkende}>
-                <Element
-                    tag="h2"
-                    className="printmodal-body__statusgruppe--overskrift"
-                >
-                    {overskrift}
-                </Element>
-                {henvendelserSynkende &&
-                    henvendelserSynkende.map(h =>
-                        <div className="henvendelse" key={h.id}>
-                            <EtikettLiten
-                                className="detaljfelt__tittel"
-                                tag="h2"
-                            >
-                                {`${h.avsender === 'VEILEDER'
-                                    ? h.avsenderId
-                                    : 'BRUKER'} - ${formaterDatoKortManed(
-                                    h.sendt
-                                )}`}
-                            </EtikettLiten>
-                            <Normaltekst>
-                                {h.tekst}
-                            </Normaltekst>
-                        </div>
-                    )}
-            </HiddenIfDiv>
-        </div>
+        <HiddenIfDiv
+            hidden={!henvendelserSynkende}
+            className="printmodal-body__dialog"
+        >
+            <Element
+                tag="h2"
+                className="printmodal-body__statusgruppe--overskrift"
+            >
+                {overskrift}
+            </Element>
+            {henvendelserSynkende &&
+                henvendelserSynkende.map(h =>
+                    <div className="henvendelse" key={h.id}>
+                        <EtikettLiten className="detaljfelt__tittel" tag="h2">
+                            {`${h.avsender === 'VEILEDER'
+                                ? h.avsenderId
+                                : 'BRUKER'} - ${formaterDatoKortManed(
+                                h.sendt
+                            )}`}
+                        </EtikettLiten>
+                        <Normaltekst>
+                            {h.tekst}
+                        </Normaltekst>
+                    </div>
+                )}
+        </HiddenIfDiv>
     );
 }
 
