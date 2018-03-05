@@ -1,12 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 
 const plugins = isMock => [
-    new OptimizeCssAssetsPlugin(),
-    new ExtractTextPlugin('index.css'),
     new webpack.DefinePlugin({
         MOCK: JSON.stringify(isMock),
     }),
@@ -25,32 +21,13 @@ const RULES = [
         loader: 'babel-loader',
     },
     {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract({
-            use: [
-                {
-                    loader: 'css-loader',
-                },
-                {
-                    loader: 'less-loader',
-                    options: {
-                        globalVars: {
-                            coreModulePath: "'./../../../node_modules/'",
-                            nodeModulesPath: "'./../../../node_modules/'",
-                            aktivitetsplanNodeModulesPath: "'./../node_modules/'",
-                        },
-                    },
-                },
-            ],
-        }),
-    },
-    {
         test: /\.(svg|png)$/,
         use: {
             loader: 'url-loader',
             options: { noquotes: true },
         },
     },
+    { test: /\.less$/, loader: 'ignore-loader' },
 ];
 
 module.exports = function(env) {
@@ -76,11 +53,12 @@ module.exports = function(env) {
             alias: {
                 '~config': path.resolve(__dirname, './example/config'),
             },
-            extensions: ['.js', '.jsx', '.json', '.less'],
+            extensions: ['.js', '.jsx', '.json'],
         },
         devServer: {
             port: 3000,
             open: true,
+            contentBase: path.resolve(__dirname, 'example'),
             historyApiFallback: {
                 index: '/aktivitetsplanfelles/',
             },
