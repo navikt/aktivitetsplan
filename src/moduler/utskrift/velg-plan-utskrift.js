@@ -12,7 +12,7 @@ import { reduxForm } from 'redux-form';
 import Radio from '../../felles-komponenter/skjema/input/radio';
 import { velgPrintType } from './utskrift-duck';
 import { selectKvpPeriodeForValgteOppfolging } from '../oppfolging-status/oppfolging-selector';
-import { formaterDatoKortManed } from '../../utils';
+import { datoComparator, formaterDatoKortManed } from '../../utils';
 
 function UtskriftValg({ tittelId, tekstId }) {
     return (
@@ -39,8 +39,8 @@ function KvpPlanValg({ kvpPeriode }) {
             feltNavn="utskriftPlanType"
             label={
                 <UtskriftValg
-                    tittelId="Kontorsperret aktivitetsplan"
-                    tekstId="Skriv ut kontrosperret periode. Er ment å brukes for arkivering i kommunalt akriv. Kontorsperret periode må være avsluttet før du kan skrive ut."
+                    tittelId="print.kvp-plan"
+                    tekstId="print.kvp-plan.beskrivelse"
                 />
             }
             value={kvpPeriode.opprettetDato}
@@ -57,22 +57,28 @@ function KvpPlanListeValg({ kvpPerioder }) {
     return (
         <div className="kvp-plan-valg">
             <UtskriftValg
-                tittelId="Kontorsperret aktivitetsplan"
-                tekstId="Skriv ut kontrosperret periode. Er ment å brukes for arkivering i kommunalt akriv. Kontorsperret periode må være avsluttet før du kan skrive ut."
+                tittelId="print.kvp-plan"
+                tekstId="print.kvp-plan.beskrivelse"
             />
             {kvpPerioder &&
                 kvpPerioder.map(kvp =>
                     <Radio
+                        key={kvp.opprettetDato}
                         id={kvp.opprettetDato}
                         feltNavn="utskriftPlanType"
                         label={
                             <Normaltekst>
                                 <FormattedMessage
-                                    id={`${formaterDatoKortManed(
-                                        kvp.opprettetDato
-                                    )} - ${formaterDatoKortManed(
-                                        kvp.avsluttetDato
-                                    ) || 'nå'}`}
+                                    id="print.kvp-plan-periode"
+                                    values={{
+                                        fra: formaterDatoKortManed(
+                                            kvp.opprettetDato
+                                        ),
+                                        til:
+                                            formaterDatoKortManed(
+                                                kvp.avsluttetDato
+                                            ) || 'nå',
+                                    }}
                                 />
                             </Normaltekst>
                         }
@@ -95,7 +101,7 @@ function VelgPlanUtskriftForm({ handleSubmit, kvpPerioder }) {
             <div className="printmelding__skjema">
                 <div className="printmelding__tittel">
                     <Innholdstittel>
-                        <FormattedMessage id="Velg hva du ønsker å skrive ut" />
+                        <FormattedMessage id="print.velg.type" />
                     </Innholdstittel>
                 </div>
 
@@ -104,8 +110,8 @@ function VelgPlanUtskriftForm({ handleSubmit, kvpPerioder }) {
                         feltNavn="utskriftPlanType"
                         label={
                             <UtskriftValg
-                                tittelId="Hele aktivitetsplan"
-                                tekstId="Skriver ut hele aktivitetsplan, også kontorsperret periode. Er ment å brukes hvis du skal printe ut til bruker."
+                                tittelId="print.hele.plan"
+                                tekstId="print.hele.plan.beskrivelse"
                             />
                         }
                         value="helePlanen"
@@ -115,8 +121,8 @@ function VelgPlanUtskriftForm({ handleSubmit, kvpPerioder }) {
                         feltNavn="utskriftPlanType"
                         label={
                             <UtskriftValg
-                                tittelId="Aktivitetsplan"
-                                tekstId="Skriver ut aktivitetsplanen uten kontorsperret periode. Er ment å brukes hvis du skal sende aktivitsplanen til trygdeetaten(stat)."
+                                tittelId="print.aktivitetsplan"
+                                tekstId="print.aktivitetsplan.beskrivelse"
                             />
                         }
                         value="aktivitetsplan"
@@ -150,7 +156,10 @@ const VelgPlanUtskrift = reduxForm({
 })(VelgPlanUtskriftForm);
 
 const mapStateToProps = state => {
-    const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
+    const kvpPerioderUsortert = selectKvpPeriodeForValgteOppfolging(state);
+    const kvpPerioder = [...kvpPerioderUsortert].sort((a, b) =>
+        datoComparator(b.opprettetDato, a.opprettetDato)
+    );
     return {
         initialValues: {
             utskriftPlanType: 'helePlanen',

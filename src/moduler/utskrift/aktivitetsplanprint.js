@@ -44,6 +44,7 @@ import {
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
+    selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
@@ -102,6 +103,7 @@ function Print({
     dialoger,
     utskriftPlanType,
     valgtKvpPeriode,
+    erManuell,
 }) {
     const { fodselsnummer, fornavn, etternavn } = bruker;
     const { beskrivelse } = printMelding;
@@ -113,13 +115,16 @@ function Print({
     const behandlendeEnhet = bruker.behandlendeEnhet;
     const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
 
-    const skjulDialoger =
-        utskriftPlanType === 'helePlanen' ||
-        utskriftPlanType === 'aktivitetsplan';
+    const erKvpUtskrift =
+        utskriftPlanType !== undefined &&
+        utskriftPlanType !== 'helePlanen' &&
+        utskriftPlanType !== 'aktivitetsplan';
 
     let dialogerUtenAktivitet;
     let filtrerteDialoger;
-    if (!skjulDialoger) {
+    let kvpPeriodeFra;
+    let kvpPeriodeTil;
+    if (erKvpUtskrift) {
         dialogerUtenAktivitet =
             dialoger && dialoger.filter(d => d.aktivitetId === null);
         filtrerteDialoger =
@@ -129,6 +134,8 @@ function Print({
                     d.sisteDato >= valgtKvpPeriode.opprettetDato &&
                     d.sisteDato <= valgtKvpPeriode.avsluttetDato
             );
+        kvpPeriodeFra = formaterDato(valgtKvpPeriode.opprettetDato);
+        kvpPeriodeTil = formaterDato(valgtKvpPeriode.avsluttetDato);
     }
 
     return (
@@ -156,6 +163,21 @@ function Print({
                     <HiddenIfDiv hidden={!fodselsnummer}>
                         <FormattedMessage id="print.modal.utskrift.fnr" />
                         {` ${fodselsnummer}`}
+                    </HiddenIfDiv>
+                    <HiddenIfDiv hidden={!erKvpUtskrift}>
+                        <FormattedMessage id="print.modia.oppfolging" />
+                    </HiddenIfDiv>
+                    <HiddenIfDiv hidden={!erKvpUtskrift}>
+                        <FormattedMessage
+                            id="print.oppfolgingperiode"
+                            values={{ fra: kvpPeriodeFra, til: kvpPeriodeTil }}
+                        />
+                    </HiddenIfDiv>
+                    <HiddenIfDiv hidden={!erKvpUtskrift}>
+                        <FormattedMessage
+                            id="print.manuellbruker.eller.niva4"
+                            values={{ erManuell }}
+                        />
                     </HiddenIfDiv>
                 </div>
             </div>
@@ -189,7 +211,7 @@ function Print({
             </HiddenIfSection>
             {statusGrupper}
             <HiddenIfSection
-                hidden={skjulDialoger || !filtrerteDialoger}
+                hidden={!erKvpUtskrift || !filtrerteDialoger}
                 className="printmodal-body__statusgrupper"
             >
                 {filtrerteDialoger &&
@@ -210,6 +232,7 @@ Print.propTypes = {
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     utskriftPlanType: PT.string,
     valgtKvpPeriode: PT.object,
+    erManuell: PT.bool,
 };
 
 Print.defaultProps = {
@@ -218,6 +241,7 @@ Print.defaultProps = {
     erVeileder: false,
     utskriftPlanType: 'helePlanen',
     valgtKvpPeriode: undefined,
+    erManuell: false,
 };
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
@@ -382,6 +406,7 @@ const mapStateToProps = state => {
     const printMelding = hentPrintMelding(state);
     const mittMal = selectGjeldendeMal(state);
     const erVeileder = selectErVeileder(state);
+    const erManuell = selectErBrukerManuell(state);
 
     const print = (
         <Print
@@ -393,6 +418,7 @@ const mapStateToProps = state => {
             erVeileder={erVeileder}
             utskriftPlanType={utskriftPlanType}
             valgtKvpPeriode={valgtKvpPeriode}
+            erManuell={erManuell}
         />
     );
     const meldingForm = <PrintMelding />;
