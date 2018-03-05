@@ -68,6 +68,7 @@ class OppdaterReferatContainer extends Component {
 OppdaterReferatContainer.defaultProps = {
     className: undefined,
     delelinje: false,
+    erReferatPublisert: false,
 };
 
 OppdaterReferatContainer.propTypes = {
