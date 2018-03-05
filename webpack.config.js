@@ -37,6 +37,7 @@ const RULES = [
                         globalVars: {
                             coreModulePath: "'./../../../node_modules/'",
                             nodeModulesPath: "'./../../../node_modules/'",
+                            aktivitetsplanNodeModulesPath: "'./../node_modules/'",
                         },
                     },
                 },
