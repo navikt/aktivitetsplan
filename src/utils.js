@@ -1,7 +1,11 @@
-import moment from 'moment';
+import momentImpl from 'moment';
+import 'moment-timezone';
 import 'moment/locale/nb';
 
-moment.locale('nb');
+momentImpl.locale('nb');
+momentImpl.tz.setDefault("Europe/Oslo");
+
+export const moment = momentImpl;
 
 export function fn(value) {
     return typeof value === 'function' ? value : () => value;
