@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import moment from 'moment';
 import { TILLAT_SLETTING } from '~config'; // eslint-disable-line
+import { moment } from '../../../utils';
 import {
     hentAktivitet,
     settForrigeAktiveAktivitetId,

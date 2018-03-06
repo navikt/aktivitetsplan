@@ -3,7 +3,7 @@ import 'moment-timezone';
 import 'moment/locale/nb';
 
 momentImpl.locale('nb');
-momentImpl.tz.setDefault("Europe/Oslo");
+momentImpl.tz.setDefault('Europe/Oslo');
 
 export const moment = momentImpl;
 

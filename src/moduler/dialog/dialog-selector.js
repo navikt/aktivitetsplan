@@ -1,5 +1,5 @@
-import moment from 'moment';
 import { createSelector } from 'reselect';
+import { moment } from '../../utils';
 import { newDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';

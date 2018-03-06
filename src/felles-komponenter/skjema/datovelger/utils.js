@@ -1,5 +1,4 @@
-import moment from 'moment';
-import { toDatePrettyPrint, erGyldigISODato } from '../../../utils';
+import { toDatePrettyPrint, erGyldigISODato, moment } from '../../../utils';
 
 // eslint-disable-next-line import/prefer-default-export
 export function validerDatoField(input, intl, alternativer) {

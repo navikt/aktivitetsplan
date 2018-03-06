@@ -1,7 +1,7 @@
 import React from 'react';
 import { rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
-import Moment from 'moment';
+import { Moment } from '../../utils';
 
 export const lagArbeidsliste = (fnr, form, props) => ({
     fnr,

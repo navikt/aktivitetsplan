@@ -4,8 +4,8 @@ import { change, touch } from 'redux-form';
 import classNames from 'classnames';
 import { CustomField } from 'react-redux-form-validation';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import { injectIntl, intlShape } from 'react-intl';
+import { moment } from './../../../utils';
 
 function isValidDate(dato) {
     return dato && moment(dato).isValid();
