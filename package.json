@@ -18,7 +18,7 @@
   ],
   "author": "",
   "publishConfig": {
-    "registry": "http://maven.adeo.no/nexus/content/repositories/npm-internal/"
+    "registry": "https://repo.adeo.no/repository/npm-internal/"
   },
   "scripts": {
     "test": "mocha",
