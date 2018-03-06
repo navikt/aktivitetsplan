@@ -159,7 +159,8 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         <DetaljFelt
             key="lenke"
             tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
-            visible={lenke}
+            visible={lenke != null}
+            fullbredde={false}
         >
             <Lenke
                 href={

@@ -13,10 +13,16 @@
 
         &:disabled {
             cursor: default;
-            background: data-uri('./pil-disabled.svg') no-repeat;
+            background: data-uri(
+                    '@{aktivitetsplanPath}/hovedside/tavle/pil-disabled.svg'
+                )
+                no-repeat;
 
             &:hover {
-                background: data-uri('./pil-disabled.svg') no-repeat;
+                background: data-uri(
+                        '@{aktivitetsplanPath}/hovedside/tavle/pil-disabled.svg'
+                    )
+                    no-repeat;
             }
         }
     }
@@ -75,13 +81,20 @@
             padding: calc(@knapp-storrelse / 2);
             border: 0;
             background-size: contain;
-            background: data-uri('./pil.svg') no-repeat;
+            background: data-uri(
+                    '@{aktivitetsplanPath}/hovedside/tavle/pil.svg'
+                )
+                no-repeat;
 
             &:hover,
             &:active,
             &:active:hover {
                 border: 0;
-                background: transparent data-uri('./pil-hover.svg') no-repeat;
+                background: transparent
+                    data-uri(
+                        '@{aktivitetsplanPath}/hovedside/tavle/pil-hover.svg'
+                    )
+                    no-repeat;
             }
         }
 

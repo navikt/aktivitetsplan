@@ -3,15 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <style>
-            body {
-                height: 100%;
-                margin: 0;
-                background: #e9e7e7;
-            }
-        </style>
-
         <script>
             // NB må fungere i IE!
 
@@ -32,7 +23,7 @@
                     veilarbperson_url: '/veilarbperson/api',
                     veilarbportefolje_url: '/veilarbportefolje/api',
                     veilarbveileder_url: '/veilarbveileder/api',
-                    feature_endpoint_url: 'https://app-t6.adeo.no/feature',
+                    feature_endpoint_url: '/feature',
                     sone: 'FSS',
                 };
 
@@ -46,7 +37,7 @@
                     veilarbdialog_url: '/veilarbdialogproxy/api',
                     veilarbaktivitet_url: '/veilarbaktivitetproxy/api',
                     veilarboppfolging_url: '/veilarboppfolgingproxy/api',
-                    feature_endpoint_url: 'https://tjenester-t6.nav.no/feature',
+                    feature_endpoint_url: '/feature',
                     sone: 'SBS',
                 };
             }
@@ -56,6 +47,7 @@
             aktivitetsplan.onboarding_video_url = 'https://video.qbrick.com/play2/embed/player?accountId=763558&mediaId=74420478-00015227-993dea3a&configId=default&pageStyling=adaptive&autoplay=true&repeat=true&sharing=true';
 
         </script>
+        <link type="text/css" rel="stylesheet" href="/aktivitetsplanfelles/example-dev.css">
         <title>Aktivitetsplan Demo</title>
     </head>
     <body>
