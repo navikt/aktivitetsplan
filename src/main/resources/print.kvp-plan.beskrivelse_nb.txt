@@ -1,1 +1,1 @@
-Skriv ut kontrosperret periode. Er ment å brukes for arkivering i kommunalt akriv. Kontorsperret periode må være avsluttet før du kan skrive ut.
+Du skriver ut innholdet i KVP-perioden
