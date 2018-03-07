@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
 import { formValueSelector, change } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import moment from 'moment';
 import { OPPRETT_OPPGAVE_FORM } from './opprett-oppgave';
 import {
     begrensetBeskrivelseLengde,
@@ -31,7 +30,7 @@ import {
     selectOppgaveVeiledere,
 } from './hent-veieldere-for-oppgave-reducer';
 import { OpprettOppgaveInnerForm } from './opprett-oppgave-inner-form';
-import { toLocalDate } from '../../../utils';
+import { moment, toLocalDate } from '../../../utils';
 
 const pakrevdFraDato = pakrevd(
     'opprett-oppgave-form.feilmelding.paakrevd-fradato'

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { validForm, rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
-import moment from 'moment';
+import { moment } from '../../../utils';
 import { hoyreKolonneSectionId, STATUS } from '../../../ducks/utils';
 import {
     nyHenvendelse,

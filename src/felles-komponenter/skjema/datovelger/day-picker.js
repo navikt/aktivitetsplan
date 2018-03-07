@@ -1,10 +1,10 @@
 /* eslint-env browser */
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import moment from 'moment';
 import { FormattedDate, injectIntl, intlShape } from 'react-intl';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
+import { moment } from '../../../utils';
 
 const localeUtils = {
     ...MomentLocaleUtils,

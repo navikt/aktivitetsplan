@@ -1,9 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
-import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
+import { moment } from '../../../utils';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import history from '../../../history';
 import {

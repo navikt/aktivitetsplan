@@ -1,5 +1,5 @@
-import moment from 'moment';
 import 'moment-duration-format';
+import { moment } from '../../utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
 
 export function aktivitetEquals(a, b) {
