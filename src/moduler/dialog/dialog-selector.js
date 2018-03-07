@@ -61,7 +61,7 @@ export function selectDialogMedId(state, dialogId) {
 }
 
 export function selectDialogForAktivitetId(state, aktivitetId) {
-    return selectDialoger(state).find(d => d.aktivitetId === aktivitetId);
+    return selectAlleDialoger(state).find(d => d.aktivitetId === aktivitetId);
 }
 
 export function selectHarUbehandledeDialoger(state) {
