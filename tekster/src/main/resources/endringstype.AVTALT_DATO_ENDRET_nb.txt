@@ -1,0 +1,1 @@
+endret til dato på aktiviteten fra { fra } til { til }

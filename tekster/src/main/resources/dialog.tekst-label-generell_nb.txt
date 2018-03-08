@@ -1,0 +1,4 @@
+{erVeileder, select,
+true {Skriv en melding til brukeren}
+false {Skriv en melding til NAV-kontoret ditt om arbeid og oppfølging}
+}

@@ -1,0 +1,1 @@
+Send et varsel om en viktig aktivitet, oppgave eller møte som brukeren må gjennomføre med en frist.

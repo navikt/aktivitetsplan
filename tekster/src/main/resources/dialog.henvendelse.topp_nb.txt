@@ -1,0 +1,4 @@
+{ visveileder, select,
+  true { {dato} - Skrevet av {veileder} }
+  other { {dato} }
+}

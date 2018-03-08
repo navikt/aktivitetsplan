@@ -1,0 +1,3 @@
+Dra aktiviteter som du er ferdig med hit. Flytter du en aktivitet til Fullført, blir den låst og kan ikke redigeres. Hvis du angrer, kan du opprette en ny tilsvarende aktivitet.
+
+

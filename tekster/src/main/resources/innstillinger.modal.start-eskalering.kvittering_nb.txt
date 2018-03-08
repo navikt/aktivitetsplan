@@ -1,0 +1,1 @@
+Varselet er sendt til brukeren {dato} på sms med lenke til aktivitetsplanen
