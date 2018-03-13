@@ -1,7 +1,7 @@
 import React from 'react';
 import { rules } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
-import { Moment } from '../../utils';
+import { moment } from '../../utils';
 
 export const lagArbeidsliste = (fnr, form, props) => ({
     fnr,
@@ -26,7 +26,7 @@ export const begrensetKommentarLengde = rules.maxLength(
 
 export function fristErEtterIDag(value) {
     return !value ||
-    Moment(value).isAfter(Moment().subtract(1, 'day').startOf('day'), 'd')
+    moment(value).isAfter(moment().subtract(1, 'day').startOf('day'), 'd')
         ? undefined
         : <FormattedMessage id="arbeidsliste-form.feilmeleding.frist.etter" />;
 }
