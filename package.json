@@ -35,7 +35,7 @@
     "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\" \"build:tekster\"",
     "dev:js": "webpack-dev-server --env.dev --port 8888",
     "dev:less": "autoless --source-map --interval 100 ./src ./example/aktivitetsplanfelles",
-    "build": "npm run build:less && npm run build:js && npm run build:tekster",
+    "build": "npm run build:tekster && npm run build:less && npm run build:js",
     "build:js": "webpack --optimize-minimize",
     "build:less": "node ./node_modules/less/bin/lessc src/index.less ./example/aktivitetsplanfelles/index.css",
     "build:tekster": "node ./src/utils/build-tekster.js",
