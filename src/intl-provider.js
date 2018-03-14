@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { addLocaleData, IntlProvider as Provider } from 'react-intl';
 import nb from 'react-intl/locale-data/nb';
-import tekster from './tekster';  // eslint-disable-line import/extensions import/no-unresolved
+import tekster from './tekster'; // eslint-disable-line
 
 addLocaleData(nb);
 
