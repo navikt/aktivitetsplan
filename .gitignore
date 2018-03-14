@@ -6,3 +6,4 @@ npm-debug.log*
 *.iml
 .nyc_output/
 coverage/
+src/tekster.js

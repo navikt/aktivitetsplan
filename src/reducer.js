@@ -15,7 +15,6 @@ import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
 import identitetReducer from './moduler/identitet/identitet-reducer';
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
 import kanalerReducer from './moduler/aktivitet/kanaler-reducer';
-import ledetekstReducer from './ducks/ledetekster-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
@@ -45,7 +44,6 @@ const combinedReducers = combineReducers({
         innstillinger: innstillingerReducer,
         innstillingerHistorikk: historikkReducer,
         kanaler: kanalerReducer,
-        ledetekster: ledetekstReducer,
         mal: malReducer,
         malListe: malListeReducer,
         oppgaveVeiledere: oppgaveVeiledereReducer,

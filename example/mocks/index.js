@@ -1,5 +1,4 @@
 import { mock, delayed, respondWith, randomFailure } from './utils';
-import tekster from './tekster';
 import me from './me';
 import oppfolging from './oppfolging';
 import dialog, {
@@ -22,9 +21,6 @@ import feature from './feature';
 
 //feature-api
 mock.get('/feature', respondWith(feature));
-
-//tekster
-mock.get('/veilarbaktivitetsplanfs/api/tekster', respondWith(tekster));
 
 //veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', respondWith(me));
