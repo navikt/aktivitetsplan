@@ -71,8 +71,6 @@
 }
 
 .dialog-modal__ny-dialog {
-    display: flex;
-    align-self: center;
     padding: 1rem 1rem 1rem 1.5rem;
     height: 62px;
     width: @dialogkort-bredde;
@@ -96,12 +94,11 @@
     background-size: 24px 24px;
 
     &.knappelenke {
-        padding-left: 2rem;
+        padding: 0.25rem 0 0 2rem;
     }
 }
 
 .dialog-modal__dialoger {
-    height: 100%;
     background-color: @white;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -123,6 +120,8 @@
 }
 
 .dialog-modal__kolonne--dialoger {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     background-color: @white;
     z-index: 1;
