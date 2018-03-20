@@ -25,7 +25,6 @@ function IntlProvider({ children, locale, ...props }) {
 IntlProvider.propTypes = {
     children: PT.node.isRequired,
     locale: PT.string.isRequired,
-    showKeys: PT.bool
 };
 
 export default IntlProvider;
