@@ -14,7 +14,7 @@ import aktiviteter, {
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
-import mal, { malListe } from './mal';
+import { malListe, opprettMal, sisteMal } from './mal';
 import vilkar from './vilkar';
 import veilederTilgang from './veilderTilgang';
 import feature from './feature';
@@ -24,7 +24,15 @@ mock.get('/feature', respondWith(feature));
 
 //veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', respondWith(me));
-mock.get('/veilarboppfolging/api/oppfolging/mal', respondWith(mal));
+
+mock.get(
+    '/veilarboppfolging/api/oppfolging/mal',
+    respondWith(() => sisteMal())
+);
+mock.post(
+    '/veilarboppfolging/api/oppfolging/mal',
+    respondWith(({ body }) => opprettMal(body))
+);
 mock.get('/veilarboppfolging/api/oppfolging/malListe', respondWith(malListe()));
 mock.get(
     '/veilarboppfolging/api/oppfolging',
@@ -70,6 +78,10 @@ mock.post(
 );
 
 // veilarbaktivitet-api
+mock.get(
+    '/veilarbaktivitet/api/aktivitet/kanaler',
+    respondWith(['internett', 'oppmote', 'telefon'])
+);
 mock.get('/veilarbaktivitet/api/aktivitet/arena', respondWith(arena));
 mock.get(
     '/veilarbaktivitet/api/aktivitet/:aktivitetId',
