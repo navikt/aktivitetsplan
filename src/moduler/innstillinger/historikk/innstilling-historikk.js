@@ -9,12 +9,14 @@ import { autobind } from '../../../utils';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import Accordion from '../../../felles-komponenter/accordion';
 import InnstillingHistorikkInnslag from './innstilling-historikk-innslag';
-import {
-    hentInnstillingHistorikk,
-    hentInnstillingOppgavehistorikk,
-} from './historikk-reducer';
+import { hentInnstillingHistorikk } from './oppfolging-historikk-reducer';
+import { hentInnstillingOppgavehistorikk } from './oppgave-historikk-reducer';
 import { harFeature } from '../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
+import {
+    selectInnstillingHistorikk,
+    selectInnstillingHistorikkStatus,
+} from './historikk-selector';
 
 class InnstillingHistorikk extends Component {
     constructor(props) {
@@ -36,11 +38,9 @@ class InnstillingHistorikk extends Component {
 
     render() {
         const kvpFeature = harFeature('kvp', this.props.features);
-        const { historikkReducer } = this.props;
-        const historikkListeSorted = [
-            ...historikkReducer.oppfolging.data,
-            ...historikkReducer.oppgave.data,
-        ]
+        const { innstillingHistorikk, innstillingHistorikkStatus } = this.props;
+
+        const historikkListeSorted = innstillingHistorikk
             .filter(
                 h =>
                     kvpFeature ||
@@ -77,10 +77,7 @@ class InnstillingHistorikk extends Component {
 
         return (
             <Innholdslaster
-                avhengigheter={[
-                    historikkReducer.oppgave,
-                    historikkReducer.oppfolging,
-                ]}
+                avhengigheter={[innstillingHistorikkStatus]}
                 spinnerStorrelse="M"
                 className="instillinger__historikk-spinner"
             >
@@ -100,14 +97,16 @@ class InnstillingHistorikk extends Component {
 }
 
 InnstillingHistorikk.propTypes = {
-    historikkReducer: AppPT.reducer.isRequired,
+    innstillingHistorikkStatus: AppPT.status.isRequired,
+    innstillingHistorikk: PT.arrayOf(AppPT.innstillingHistorikk).isRequired,
     doHentInnstillingHistorikk: PT.func.isRequired,
     doHentInnstillingOppgavehistorikk: PT.func.isRequired,
     features: PT.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    historikkReducer: state.data.innstillingerHistorikk,
+    innstillingHistorikkStatus: selectInnstillingHistorikkStatus(state),
+    innstillingHistorikk: selectInnstillingHistorikk(state),
     features: selectFeatureData(state),
 });
 

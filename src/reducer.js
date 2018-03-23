@@ -10,7 +10,8 @@ import dialogViewReducer from './moduler/dialog/dialog-view-reducer';
 import etiketterReducer from './felles-komponenter/aktivitet-etikett/aktivitet-etiketter-reducer';
 import featureReducer from './ducks/feature-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
-import historikkReducer from './moduler/innstillinger/historikk/historikk-reducer';
+import oppgaveHistorikkReducer from './moduler/innstillinger/historikk/oppgave-historikk-reducer';
+import oppfolgingHistorikkReducer from './moduler/innstillinger/historikk/oppfolging-historikk-reducer';
 import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
 import identitetReducer from './moduler/identitet/identitet-reducer';
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
@@ -42,7 +43,8 @@ const combinedReducers = combineReducers({
         historiskeVilkar: historiskeVilkarReducer,
         identitet: identitetReducer,
         innstillinger: innstillingerReducer,
-        innstillingerHistorikk: historikkReducer,
+        oppgaveHistorikk: oppgaveHistorikkReducer,
+        oppfolgingHistorikk: oppfolgingHistorikkReducer,
         kanaler: kanalerReducer,
         mal: malReducer,
         malListe: malListeReducer,
