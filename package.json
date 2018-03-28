@@ -35,11 +35,14 @@
     "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\" \"npm run build:tekster\"",
     "dev:js": "webpack-dev-server --env.dev --port 8888",
     "dev:less": "autoless --source-map --interval 100 ./src ./example/aktivitetsplanfelles",
-    "build": "npm run build:tekster && npm run build:less && npm run build:js",
+    "build": "npm run build:tekster && npm run build:less && npm run build:less:ny && npm run build:js && npm run build:js:ssb & npm run build:js:fss",
     "build:js": "webpack --optimize-minimize",
     "build:less": "node ./node_modules/less/bin/lessc src/index.less ./example/aktivitetsplanfelles/index.css",
+    "build:less:ny": "node ./node_modules/less/bin/lessc src/index.less ./build/css/index.css",
     "build:tekster": "node ./build-tekster.js",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "build:js:ssb": "webpack --config webpackssb.config.js --optimize-minimize",
+    "build:js:fss": "webpack --config webpackffs.config.js --optimize-minimize"
   },
   "lint-staged": {
     "*.js": [
