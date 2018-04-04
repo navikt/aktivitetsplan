@@ -12,7 +12,7 @@ const LIBRARIES = [
     'react-router',
     'react-redux-form-validation',
     'react-day-picker',
-    'react-intl'
+    'react-intl',
 ];
 
 const DEBUG = process.env.NODE_ENV !== 'production';
@@ -20,33 +20,36 @@ const DEBUG = process.env.NODE_ENV !== 'production';
 const PRODUCTION_PLUGINS = [
     new webpack.DefinePlugin({
         'process.env': {
-            'NODE_ENV': JSON.stringify('production')
-        }
+            NODE_ENV: JSON.stringify('production'),
+        },
     }),
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /nb/),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({name : 'vendor', filename: 'vendor.bundle.js'}),
-    new UglifyJSPlugin({sourcemap: true}),
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        filename: 'vendor.bundle.js',
+    }),
+    new UglifyJSPlugin({ sourcemap: true }),
     new HtmlWebpackPlugin({
         hash: true,
         template: './src/ssb/index.html',
-        js: ['vendor.bundle.js','bundle.js']
-    })
+        js: ['vendor.bundle.js', 'bundle.js'],
+    }),
 ];
 
 const PLUGINS = [
-    new webpack.optimize.CommonsChunkPlugin({name : 'vendor', filename: 'vendor.bundle.js'}),
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        filename: 'vendor.bundle.js',
+    }),
     new HtmlWebpackPlugin({
         hash: true,
         template: './src/ssb/index.html',
-        js: ['vendor.bundle.js','bundle.js']
-    })
-]
-
-const BABEL_INCLUDE = [
-    /src/,
-    /node_modules.*src/
+        js: ['vendor.bundle.js', 'bundle.js'],
+    }),
 ];
+
+const BABEL_INCLUDE = [/src/, /node_modules.*src/];
 
 const RULES = [
     {
@@ -59,8 +62,8 @@ const RULES = [
         test: /\.(svg|png)$/,
         use: {
             loader: 'url-loader',
-            options: {'noquotes': true}
-        }
+            options: { noquotes: true },
+        },
     },
     { test: /\.less$/, loader: 'ignore-loader' },
 ];
@@ -71,32 +74,36 @@ const LOADERS = [
         include: BABEL_INCLUDE,
         loader: 'babel-loader',
         query: {
-            plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
-        }
-    }
+            plugins: [
+                'react-html-attrs',
+                'transform-decorators-legacy',
+                'transform-class-properties',
+            ],
+        },
+    },
 ];
 
 module.exports = {
     context: __dirname,
     devtool: DEBUG ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
-    entry:{
+    entry: {
         app: './src/ssb/index.js',
-        vendor: LIBRARIES
+        vendor: LIBRARIES,
     },
     module: {
         rules: RULES,
-        loaders: LOADERS
+        loaders: LOADERS,
     },
     resolve: {
         alias: {
-            "~config": path.resolve(__dirname, "./src/ssb/config")
+            '~config': path.resolve(__dirname, './src/ssb/config'),
         },
-        extensions: ['.js', '.jsx', '.json']
+        extensions: ['.js', '.jsx', '.json'],
     },
     output: {
-        path: path.resolve(__dirname,'./build/'),
-        filename: "bundle.js",
-        publicPath: "/aktivitetsplan/",
+        path: path.resolve(__dirname, './build/'),
+        filename: 'bundle.js',
+        publicPath: '/aktivitetsplan/',
     },
     plugins: DEBUG ? PLUGINS : PRODUCTION_PLUGINS,
 };

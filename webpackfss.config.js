@@ -3,23 +3,20 @@ const webpack = require('webpack');
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-const DEBUG = process.env.NODE_ENV !== "production";
+const DEBUG = process.env.NODE_ENV !== 'production';
 
 const PLUGINS = [
     new webpack.DefinePlugin({
         'process.env': {
-            NODE_ENV: JSON.stringify('production')
-        }
+            NODE_ENV: JSON.stringify('production'),
+        },
     }),
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /nb/),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new UglifyJSPlugin({sourceMap: true}),
+    new UglifyJSPlugin({ sourceMap: true }),
 ];
 
-const BABEL_INCLUDE = [
-    /src/,
-    /node_modules.*src/
-];
+const BABEL_INCLUDE = [/src/, /node_modules.*src/];
 
 const RULES = [
     {
@@ -32,10 +29,10 @@ const RULES = [
         test: /\.(svg|png)$/,
         use: {
             loader: 'url-loader',
-            options: {'noquotes': true}
-        }
+            options: { noquotes: true },
+        },
     },
-    { test: /\.less$/, loader: 'ignore-loader' }
+    { test: /\.less$/, loader: 'ignore-loader' },
 ];
 
 const LOADERS = [
@@ -44,9 +41,13 @@ const LOADERS = [
         include: BABEL_INCLUDE,
         loader: 'babel-loader',
         query: {
-            plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
-        }
-    }
+            plugins: [
+                'react-html-attrs',
+                'transform-decorators-legacy',
+                'transform-class-properties',
+            ],
+        },
+    },
 ];
 
 module.exports = {
@@ -55,25 +56,25 @@ module.exports = {
     entry: ['whatwg-fetch', './src/fss/aktivitetsplan-root.js'],
     module: {
         rules: RULES,
-        loaders: LOADERS
+        loaders: LOADERS,
     },
     resolve: {
         alias: {
-            "~config": path.resolve(__dirname, "./src/fss/config")
+            '~config': path.resolve(__dirname, './src/fss/config'),
         },
-        extensions: ['.js', '.jsx', '.json']
+        extensions: ['.js', '.jsx', '.json'],
     },
     output: {
-        path: path.resolve(__dirname,'./build/'),
-        filename: "aktivitetsplan.fss.min.js",
-        library: "AktivitetsplanRoot",
+        path: path.resolve(__dirname, './build/'),
+        filename: 'aktivitetsplan.fss.min.js',
+        library: 'AktivitetsplanRoot',
     },
     externals: {
-        'react': 'React',
+        react: 'React',
         'react-dom': 'ReactDOM', // NB! vi er transitivt avhengig av denne gjennom nav-react-*.
-        'redux': 'Redux',
+        redux: 'Redux',
         'redux-thunk': 'ReduxThunk',
         'react-redux': 'ReactRedux',
     },
-    plugins: DEBUG ? [] : PLUGINS
+    plugins: DEBUG ? [] : PLUGINS,
 };
