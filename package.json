@@ -35,14 +35,14 @@
     "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\" \"npm run build:tekster\"",
     "dev:js": "webpack-dev-server --env.dev --port 8888",
     "dev:less": "autoless --source-map --interval 100 ./src ./example/aktivitetsplanfelles",
-    "build": "npm run build:tekster && npm run build:less && npm run build:less:ny && npm run build:js && npm run build:js:ssb & npm run build:js:fss",
+    "build": "npm run build:tekster && npm run build:less && npm run build:less:ny && npm run build:js && npm run build:js:sbs && npm run build:js:fss",
     "build:js": "webpack --optimize-minimize",
     "build:less": "node ./node_modules/less/bin/lessc src/index.less ./example/aktivitetsplanfelles/index.css",
     "build:less:ny": "node ./node_modules/less/bin/lessc src/index.less ./build/css/index.css",
     "build:tekster": "node ./build-tekster.js",
     "precommit": "lint-staged",
-    "build:js:ssb": "webpack --config webpackssb.config.js --optimize-minimize",
-    "build:js:fss": "webpack --config webpackffs.config.js --optimize-minimize"
+    "build:js:sbs": "webpack --config webpacksbs.config.js",
+    "build:js:fss": "webpack --config webpackfss.config.js"
   },
   "lint-staged": {
     "*.js": [
@@ -138,6 +138,8 @@
     "babel-plugin-react-intl": "2.3.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
+    "uglify-js": "2.7.4",
+    "uglifyjs-webpack-plugin": "0.4.6",
     "babel-polyfill": "6.26.0",
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "6.24.1",

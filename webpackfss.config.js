@@ -65,7 +65,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname,'./build/'),
-        filename: "aktivitetsplan.ffs.min.js",
+        filename: "aktivitetsplan.fss.min.js",
         library: "AktivitetsplanRoot",
     },
     externals: {

@@ -1,0 +1,66 @@
+# ref https://raw.githubusercontent.com/nais/naisd/master/nais_example.yaml
+image: docker.adeo.no:5000/fo/aktivitetsplan-felles
+replicas:
+  min: 2
+  max: 4
+  cpuThresholdPercentage: 50
+port: 8080
+healthcheck:
+  liveness:
+    path: veilarbaktivitetsplanfs/internal/isAlive
+    initialDelay: 60
+  readiness:
+    path: veilarbaktivitetsplanfs/internal/selftest
+    initialDelay: 60
+prometheus:
+  enabled: true
+  path: veilarbaktivitetsplanfs/internal/metrics
+fasitResources:
+  used:
+  - alias: appres.cms
+    resourceType: baseurl
+
+  - alias: aktivitetsplan.onboarding.video
+    resourceType: baseurl
+    propertyMap:
+      url: PUBLIC_ONBOARDING_VIDEO_URL
+
+  - alias: veilArbAktivitetAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBAKTIVITET_URL
+
+  - alias: veilArbOppfolgingAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBOPPFOLGING_URL
+
+  - alias: veilarbdialogAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBDIALOG_URL
+
+  - alias: veilarboppgave.api
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBOPPGAVE_URL
+
+  - alias: veilArbPersonAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBPERSON_URL
+
+  - alias: veilArbPortefoljeAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBPORTEFOLJE_URL
+
+  - alias: veilArbVeilederAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBVEILEDER_URL
+
+  - alias: feature_endpoint
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_FEATURE_ENDPOINT_URL

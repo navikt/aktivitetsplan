@@ -1,0 +1,46 @@
+# ref https://raw.githubusercontent.com/nais/naisd/master/nais_example.yaml
+image: docker.adeo.no:5000/fo/aktivitetsplan-felles
+replicas:
+  min: 2
+  max: 4
+  cpuThresholdPercentage: 50
+port: 8080
+healthcheck:
+  liveness:
+    path: aktivitetsplan/internal/isAlive
+    initialDelay: 60
+  readiness:
+    path: aktivitetsplan/internal/selftest
+    initialDelay: 60
+prometheus:
+  enabled: true
+  path: aktivitetsplan/internal/metrics
+fasitResources:
+  used:
+  - alias: appres.cms
+    resourceType: baseurl
+
+  - alias: aktivitetsplan.onboarding.video
+    resourceType: baseurl
+    propertyMap:
+      url: PUBLIC_ONBOARDING_VIDEO_URL
+
+  - alias: veilarbaktivitetproxyAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBAKTIVITET_URL
+
+  - alias: veilarboppfolgingproxyAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBOPPFOLGING_URL
+
+  - alias: veilarbdialogproxyAPI
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_VEILARBDIALOG_URL
+
+  - alias: feature_endpoint_sbs
+    resourceType: restservice
+    propertyMap:
+      url: PUBLIC_FEATURE_ENDPOINT_URL
