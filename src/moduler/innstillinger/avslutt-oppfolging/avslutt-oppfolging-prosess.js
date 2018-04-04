@@ -55,12 +55,8 @@ class AvsluttOppfolgingProsess extends Component {
     };
 
     render() {
-        const {
-            avslutningStatus,
-            laster,
-            slettBegrunnelse,
-        } = this.props;
-        const { underOppfolging, harYtelser, harTiltak, underKvp } =
+        const { avslutningStatus, laster, slettBegrunnelse } = this.props;
+        const { underOppfolging, harTiltak, underKvp } =
             avslutningStatus || {};
         const { harSjekket, kanAvslutte } = this.state;
         return (
@@ -85,7 +81,6 @@ class AvsluttOppfolgingProsess extends Component {
                         hidden={!harSjekket || kanAvslutte}
                         config={lagAlertstripelisteConfig({
                             underOppfolging,
-                            harYtelser,
                             harTiltak,
                             underKvp,
                         })}
