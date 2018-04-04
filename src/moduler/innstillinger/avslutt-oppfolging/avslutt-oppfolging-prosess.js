@@ -56,8 +56,7 @@ class AvsluttOppfolgingProsess extends Component {
 
     render() {
         const { avslutningStatus, laster, slettBegrunnelse } = this.props;
-        const { underOppfolging, harTiltak, underKvp } =
-            avslutningStatus || {};
+        const { underOppfolging, harTiltak, underKvp } = avslutningStatus || {};
         const { harSjekket, kanAvslutte } = this.state;
         return (
             <StartProsess
