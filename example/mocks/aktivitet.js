@@ -130,6 +130,20 @@ export function getAktivitet(aktivitetId) {
     return aktiviteter.filter(akivitet => akivitet.id === aktivitetId)[0];
 }
 
+export function getAktivitetVersjoner(aktivitetId) {
+    const aktivitet = getAktivitet(aktivitetId);
+    return [
+        aktivitet,
+        {
+            ...aktivitet,
+            endretDato: '2017-02-26T15:51:44.85+01:00',
+            versjon: '2',
+            lagtInnAv: 'BRUKER',
+            transaksjonsType: 'OPPRETTET',
+        },
+    ];
+}
+
 export function opprettAktivitet(aktivitet) {
     const newAktivitet = wrapAktivitet({
         id: rndId(),
