@@ -7,14 +7,14 @@ replicas:
 port: 8080
 healthcheck:
   liveness:
-    path: aktivitetsplan/internal/isAlive
+    path: aktivitetsplan-felles/internal/isAlive
     initialDelay: 60
   readiness:
-    path: aktivitetsplan/internal/selftest
+    path: aktivitetsplan-felles/internal/selftest
     initialDelay: 60
 prometheus:
   enabled: true
-  path: aktivitetsplan/internal/metrics
+  path: aktivitetsplan-felles/internal/metrics
 fasitResources:
   used:
   - alias: appres.cms
