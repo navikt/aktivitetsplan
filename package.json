@@ -38,7 +38,7 @@
     "build": "npm run build:tekster && npm run build:less && npm run build:less:ny && npm run build:js && npm run build:js:sbs && npm run build:js:fss",
     "build:js": "webpack --optimize-minimize",
     "build:less": "node ./node_modules/less/bin/lessc src/index.less ./example/aktivitetsplanfelles/index.css",
-    "build:less:ny": "node ./node_modules/less/bin/lessc src/index.less ./build/css/index.css",
+    "build:less:ny": "node ./node_modules/less/bin/lessc --compress src/index.less ./build/css/index.css",
     "build:tekster": "node ./build-tekster.js",
     "precommit": "lint-staged",
     "build:js:sbs": "webpack --config webpacksbs.config.js",
