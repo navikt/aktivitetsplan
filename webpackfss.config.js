@@ -16,7 +16,7 @@ const PLUGINS = [
     new UglifyJSPlugin({ sourceMap: true }),
 ];
 
-const BABEL_INCLUDE = [/src/, /node_modules.*src/];
+const BABEL_INCLUDE = [/fss/, /src/, /node_modules.*src/];
 
 const RULES = [
     {
@@ -53,14 +53,14 @@ const LOADERS = [
 module.exports = {
     context: __dirname,
     devtool: DEBUG ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
-    entry: ['whatwg-fetch', './src/fss/aktivitetsplan-root.js'],
+    entry: ['whatwg-fetch', './fss/aktivitetsplan-root.js'],
     module: {
         rules: RULES,
         loaders: LOADERS,
     },
     resolve: {
         alias: {
-            '~config': path.resolve(__dirname, './src/fss/config'),
+            '~config': path.resolve(__dirname, './fss/config'),
         },
         extensions: ['.js', '.jsx', '.json'],
     },

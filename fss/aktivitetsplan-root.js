@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import '../index.less';
-import App from '../app';
+import '../src/index.less';
+import App from '../src/app';
 
 export default function AktivitetsplanRoot() {
     // Må settes etter at dokumentet er parset

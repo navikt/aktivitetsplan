@@ -32,7 +32,7 @@ const PRODUCTION_PLUGINS = [
     new UglifyJSPlugin({ sourcemap: true }),
     new HtmlWebpackPlugin({
         hash: true,
-        template: './src/ssb/index.html',
+        template: './ssb/index.html',
         js: ['vendor.bundle.js', 'bundle.js'],
     }),
 ];
@@ -44,12 +44,12 @@ const PLUGINS = [
     }),
     new HtmlWebpackPlugin({
         hash: true,
-        template: './src/ssb/index.html',
+        template: './ssb/index.html',
         js: ['vendor.bundle.js', 'bundle.js'],
     }),
 ];
 
-const BABEL_INCLUDE = [/src/, /node_modules.*src/];
+const BABEL_INCLUDE = [/ssb/, /src/, /node_modules.*src/];
 
 const RULES = [
     {
@@ -87,7 +87,7 @@ module.exports = {
     context: __dirname,
     devtool: DEBUG ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
     entry: {
-        app: './src/ssb/index.js',
+        app: './ssb/index.js',
         vendor: LIBRARIES,
     },
     module: {
@@ -96,7 +96,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '~config': path.resolve(__dirname, './src/ssb/config'),
+            '~config': path.resolve(__dirname, './ssb/config'),
         },
         extensions: ['.js', '.jsx', '.json'],
     },

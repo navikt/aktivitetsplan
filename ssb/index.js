@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ReactModal from 'react-modal';
-import App from '../app';
+import App from '../src/app';
 
 /* eslint-disable global-require */
 if (!global.Intl) {
