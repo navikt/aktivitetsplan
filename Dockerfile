@@ -10,6 +10,5 @@ ENV NODE_ENV=production
 RUN npm run build
 
 FROM docker.adeo.no:5000/pus/decorator
-ENV APPLICATION_NAME=aktivitetsplan
 ENV ENVIRONMENT_CONTEXT=aktivitetsplan
 COPY --from=builder /source/build /app
