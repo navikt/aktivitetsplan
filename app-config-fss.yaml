@@ -7,16 +7,19 @@ replicas:
 port: 8080
 healthcheck:
   liveness:
-    path: veilarbaktivitetsplanfs/internal/isAlive
+    path: aktivitetsplan-felles-fss/internal/isAlive
     initialDelay: 60
   readiness:
-    path: veilarbaktivitetsplanfs/internal/selftest
+    path: aktivitetsplan-felles-fss/internal/selftest
     initialDelay: 60
 prometheus:
   enabled: true
-  path: veilarbaktivitetsplanfs/internal/metrics
+  path: aktivitetsplan-felles-fss/internal/metrics
 fasitResources:
   used:
+  - alias: loadbalancer:aktivitetsplan-fss
+    resourceType: loadbalancerconfig
+
   - alias: appres.cms
     resourceType: baseurl
 
