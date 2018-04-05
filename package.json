@@ -152,6 +152,7 @@
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.0.1",
     "eslint-plugin-react": "7.0.1",
+    "faker": "4.1.0",
     "file-loader": "0.11.1",
     "html-webpack-plugin": "2.30.1",
     "husky": "0.13.4",
@@ -163,6 +164,7 @@
     "mocha": "3.4.1",
     "nyc": "11.3.0",
     "parallelshell": "3.0.2",
+    "path-to-regexp": "1.7.0",
     "prettier": "1.5.2",
     "react-addons-test-utils": "15.5.1",
     "react-test-renderer": "15.5.4",
@@ -173,8 +175,6 @@
     "webpack": "3.7.1",
     "webpack-dev-server": "2.9.2",
     "yargs": "8.0.1",
-    "fetch-mock": "5.12.1",
-    "faker": "4.1.0",
-    "path-to-regexp": "1.7.0"
+    "yet-another-fetch-mock": "^2.2.0"
   }
 }
