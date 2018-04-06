@@ -1,7 +1,0 @@
-# ref https://raw.githubusercontent.com/nais/naisd/master/nais_example.yaml
-image: docker.adeo.no:5000/fo/aktivitetsplan-felles
-replicas:
-  min: 1
-  max: 2
-  cpuThresholdPercentage: 50
-port: 8080
