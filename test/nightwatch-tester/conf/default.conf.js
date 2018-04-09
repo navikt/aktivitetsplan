@@ -19,7 +19,7 @@ const nightwatch_config = {
             default_path_prefix: '',
             timeout: 10000,
             baseUrl: 'http://localhost:3000',
-            fnr: '',
+            fnr: '1234556',
             javaScriptEnabled: true,
             acceptSslCerts: true,
             screenshots: {
@@ -39,9 +39,7 @@ const nightwatch_config = {
 };
 let defaultSettings = nightwatch_config.test_settings.default;
 defaultSettings.fnr =
-    defaultSettings.fnr.length === 0
-        ? EKSEMPEL_FNR
-        : defaultSettings.fnr.length;
+    defaultSettings.fnr.length === 0 ? EKSEMPEL_FNR : defaultSettings.fnr;
 defaultSettings.loginUrl = `${defaultSettings.baseUrl}/aktivitetsplanfelles/${defaultSettings.fnr}`;
 
 module.exports = nightwatch_config;
