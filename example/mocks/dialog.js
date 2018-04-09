@@ -79,21 +79,23 @@ export function opprettDialog(update) {
         sendt: new Date(),
     };
 
-    const maybeDialoger = dialoger.filter(
+    const eksisterendeDialoger = dialoger.filter(
         dialog => dialog.id === update.dialogId
     );
-    if (maybeDialoger.length === 1) {
-        const oldDialog = maybeDialoger[0];
+    if (eksisterendeDialoger.length === 1) {
+        const oldDialog = eksisterendeDialoger[0];
+        oldDialog.sisteTekst = update.tekst;
+        oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
         return oldDialog;
+
     } else {
-        const id = rndId();
-        nyHenvendelse.dialogId = id;
+        nyHenvendelse.dialogId = rndId();
         const nyDialog = {
-            id: id,
+            id: nyHenvendelse.dialogId,
             ferdigBehandlet: !update.ikkeFerdigbehandlet,
             venterPaSvar: !!update.venterPaSvar,
-            aktivitetId: null,
+            aktivitetId: update.aktivitetId === undefined? null: update.aktivitetId,
             overskrift: update.overskrift,
             sisteTekst: update.tekst,
             sisteDato: new Date(),

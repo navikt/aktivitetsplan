@@ -18,3 +18,7 @@ export function fetchmockMiddleware(request, response) {
     console.groupEnd();
     return response;
 }
+
+export function rndId() {
+    return `${Math.floor(Math.random() * 100000000)}`;
+}
