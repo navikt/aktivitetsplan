@@ -20,14 +20,34 @@ import {
 } from '../vilkar/historiske-vilkar-selector';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import Accordion from '../../felles-komponenter/accordion';
+import { autobind } from '../../utils';
 
 class InformasjonModal extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            apen: false,
+        };
+        autobind(this);
+    }
+
     componentDidMount() {
         const { doHentHistoriskeVilkar } = this.props;
         doHentHistoriskeVilkar();
     }
+
+    onClick() {
+        this.setState({
+            apen: !this.state.apen,
+        });
+    }
+
     render() {
         const { historiskeVilkar, historiskeVilkarStatus } = this.props;
+        const accordionLabelId = this.state.apen
+            ? 'informasjon.videokontent.skjul.tekst'
+            : 'informasjon.videokontent.vis.tekst';
 
         return (
             <Modal
@@ -48,6 +68,16 @@ class InformasjonModal extends Component {
                         src={ONBOARDING_VIDEO_URL}
                         className="video-player"
                     />
+                    <Accordion
+                        className="videotekst-accordion"
+                        labelId={accordionLabelId}
+                        onClick={this.onClick}
+                    >
+                        <HtmlText
+                            className="mellomrom"
+                            id="informasjon.videokontent.text"
+                        />
+                    </Accordion>
                     <Undertittel>
                         <FormattedMessage id="informasjon.informasjonstekst.tittel" />
                     </Undertittel>
