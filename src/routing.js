@@ -78,7 +78,7 @@ Routing.propTypes = {
 };
 
 function Public({ location, features }) {
-    const brukervilkarFeature = !!harFeature(
+    const brukervilkarFeature = harFeature(
         'aktivitetsplan.brukervilkar',
         features
     );
