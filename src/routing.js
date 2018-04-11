@@ -1,6 +1,8 @@
 import 'babel-polyfill';
 import React from 'react';
 import PT from 'prop-types';
+import { connect } from 'react-redux';
+import { FNR_I_URL } from '~config'; //eslint-disable-line
 import { Route, Switch, withRouter } from 'react-router-dom';
 import VilkarModalMedHistorikk from './moduler/vilkar/vilkar-med-historikk';
 import VilkarModalUtenHistorikk from './moduler/vilkar/vilkar-uten-historikk';
@@ -12,8 +14,10 @@ import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
-import InformasjonRoutes from './moduler/informasjon/informasjon-routes';
-import { FNR_I_URL } from '~config'; // eslint-disable-line
+import { harFeature } from './felles-komponenter/feature/feature';
+import { selectFeatureData } from './felles-komponenter/feature/feature-selector';
+import InformasjonModal from './moduler/informasjon/informasjon-modal';
+import VideoModal from './moduler/informasjon/video-modal'; // eslint-disable-line
 
 export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
 export const endreAktivitetRoute = aktivitetId =>
@@ -73,7 +77,15 @@ Routing.propTypes = {
     location: PT.object.isRequired,
 };
 
-function Public({ location }) {
+function Public({ location, features }) {
+    const brukervilkarFeature = harFeature(
+        'aktivitetsplan.brukervilkar',
+        features
+    );
+    const FeaturedInformasjon = brukervilkarFeature
+        ? InformasjonModal
+        : VideoModal;
+
     return (
         <Switch location={location}>
             <Route
@@ -85,10 +97,9 @@ function Public({ location }) {
                 path={getPathWithBase('/vilkar/:key')}
                 component={VilkarModalUtenHistorikk}
             />
-
             <Route
                 path={getPathWithBase('/informasjon')}
-                component={InformasjonRoutes}
+                component={FeaturedInformasjon}
             />
         </Switch>
     );
@@ -96,9 +107,14 @@ function Public({ location }) {
 
 Public.propTypes = {
     location: PT.object.isRequired,
+    features: PT.object.isRequired,
 };
 
-export const PublicRouting = withRouter(Public);
+const mapStateToProps = state => ({
+    features: selectFeatureData(state),
+});
+
+export const PublicRouting = withRouter(connect(mapStateToProps)(Public));
 
 export default withRouter(Routing);
 
