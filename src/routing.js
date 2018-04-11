@@ -78,10 +78,7 @@ Routing.propTypes = {
 };
 
 function Public({ location, features }) {
-    const brukervilkarFeature = harFeature(
-        'aktivitetsplan.brukervilkar',
-        features
-    );
+    const brukervilkarFeature = harFeature('brukervilkar', features);
     const FeaturedInformasjon = brukervilkarFeature
         ? InformasjonModal
         : VideoModal;
