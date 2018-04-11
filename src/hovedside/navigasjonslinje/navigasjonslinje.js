@@ -96,10 +96,7 @@ class Navigasjonslinje extends Component {
             features,
         } = this.props;
 
-        const informasjonFeature = harFeature(
-            'aktivitetsplan.brukervilkar',
-            features
-        );
+        const informasjonFeature = harFeature('brukervilkar', features);
         const informasjonsTekstId = informasjonFeature
             ? 'navigasjon.informasjon'
             : 'navigasjon.informasjonsvideo';
