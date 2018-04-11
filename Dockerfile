@@ -10,5 +10,9 @@ ENV NODE_ENV=production
 RUN npm run build
 
 FROM docker.adeo.no:5000/pus/decorator
-ENV ENVIRONMENT_CONTEXT=aktivitetsplan
+
+# medfører 2 ting i pus-decorator:
+#  - /environment.js-endepunktet legger public properties på window.aktivitetsplan
+#  - applikasjonen får /aktivitetsplan som contextpath i begge soner
+ENV APPLICATION_NAME=aktivitetsplan
 COPY --from=builder /source/build /app

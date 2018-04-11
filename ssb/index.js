@@ -9,6 +9,6 @@ if (!global.Intl) {
     require('intl/locale-data/jsonp/nb.js');
 }
 
-ReactModal.setAppElement('#modal-a11y-wrapper');
+ReactModal.setAppElement('#pagewrapper');
 
 render(<App />, document.getElementById('mainapp'));
