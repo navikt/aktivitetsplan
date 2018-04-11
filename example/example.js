@@ -20,6 +20,6 @@ if (!fnrFraUrl() && EKSEMPEL_FNR) {
     );
 }
 
-Modal.setAppElement('#modal-a11y-wrapper');
+Modal.setAppElement('#pagewrapper');
 
-render(<App />, document.getElementById('modal-a11y-wrapper'));
+render(<App />, document.getElementById('mainapp'));
