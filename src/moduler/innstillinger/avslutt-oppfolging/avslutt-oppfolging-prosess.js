@@ -18,8 +18,6 @@ import {
     selectKanStarteOppfolging,
 } from '../innstillinger-selector';
 import AlertstripeListe from '../../../felles-komponenter/alertstripe-liste';
-import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
-import { harFeature } from '../../../felles-komponenter/feature/feature';
 
 function lagAlertstripelisteConfig({
     underOppfolging,
@@ -57,14 +55,8 @@ class AvsluttOppfolgingProsess extends Component {
     };
 
     render() {
-        const {
-            avslutningStatus,
-            laster,
-            slettBegrunnelse,
-            features,
-        } = this.props;
-        const { underOppfolging, harYtelser, harTiltak, underKvp } =
-            avslutningStatus || {};
+        const { avslutningStatus, laster, slettBegrunnelse } = this.props;
+        const { underOppfolging, harTiltak, underKvp } = avslutningStatus || {};
         const { harSjekket, kanAvslutte } = this.state;
         return (
             <StartProsess
@@ -88,11 +80,6 @@ class AvsluttOppfolgingProsess extends Component {
                         hidden={!harSjekket || kanAvslutte}
                         config={lagAlertstripelisteConfig({
                             underOppfolging,
-                            harYtelser:
-                                !harFeature(
-                                    'unngasjekkpagaendeytelser',
-                                    features
-                                ) && harYtelser,
                             harTiltak,
                             underKvp,
                         })}
@@ -114,14 +101,12 @@ AvsluttOppfolgingProsess.propTypes = {
     doKanAvslutteOppfolging: PT.func.isRequired,
     slettBegrunnelse: PT.func.isRequired,
     avslutningStatus: AppPT.avslutningStatus,
-    features: PT.object.isRequired,
 };
 
 const mapStateToProps = state => ({
     avslutningStatus: selectAvslutningStatus(state),
     kanStarte: selectKanStarteOppfolging(state),
     laster: selectInnstillingerStatus(state) === STATUS.RELOADING,
-    features: selectFeatureData(state),
 });
 
 const mapDispatchToProps = dispatch => ({

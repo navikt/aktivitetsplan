@@ -33,6 +33,8 @@ import {
     selectHarTilgangTilDialog,
 } from '../../moduler/dialog/dialog-selector';
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
+import { harFeature } from '../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -91,7 +93,14 @@ class Navigasjonslinje extends Component {
             tilgangTilDialog,
             ikkeTilgangTilVilkar,
             ikkeFinnesDialogerIHistoriskPeriode,
+            features,
         } = this.props;
+
+        const informasjonFeature = harFeature('brukervilkar', features);
+        const informasjonsTekstId = informasjonFeature
+            ? 'navigasjon.informasjon'
+            : 'navigasjon.informasjonsvideo';
+
         return (
             <nav className="navigasjonslinje">
                 <NavigasjonsElement
@@ -115,13 +124,14 @@ class Navigasjonslinje extends Component {
                     disabled={disabled}
                 />
                 <NavigasjonsElement
+                    hidden={informasjonFeature}
                     sti="/vilkar"
                     tekstId="navigasjon.vilkar"
                     disabled={disabled || ikkeTilgangTilVilkar}
                 />
                 <NavigasjonsElement
                     sti="/informasjon"
-                    tekstId="navigasjon.informasjon"
+                    tekstId={informasjonsTekstId}
                     disabled={disabled}
                 />
                 <div className="navigasjonslinje__verktoy">
@@ -164,6 +174,7 @@ Navigasjonslinje.propTypes = {
     tilgangTilDialog: PT.bool.isRequired,
     ikkeTilgangTilVilkar: PT.bool.isRequired,
     ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
+    features: PT.object.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
@@ -199,6 +210,7 @@ const mapStateToProps = state => {
             selectViserInneverendePeriode(state),
         ikkeFinnesDialogerIHistoriskPeriode:
             dialoger.length < 1 && !selectViserInneverendePeriode(state),
+        features: selectFeatureData(state),
     };
 };
 

@@ -66,7 +66,7 @@ Accordion.propTypes = {
     labelId: PT.string.isRequired,
     onClick: PT.func,
     apen: PT.bool,
-    children: PT.arrayOf(PT.node),
+    children: PT.oneOfType([PT.node, PT.arrayOf(PT.node)]),
     className: PT.string,
 };
 
