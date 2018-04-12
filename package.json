@@ -45,6 +45,8 @@
     "precommit": "lint-staged",
     "build:js:sbs": "webpack --config webpacksbs.config.js",
     "build:js:fss": "webpack --config webpackfss.config.js"
+    "browserstack": "node test/nightwatch-tester/scripts/browserstack.runner.js -c test/nightwatch-tester/conf/browserstack.conf.js -e safari,chrome,ios,ie --tag browserstack"
+
   },
   "lint-staged": {
     "*.js": [
