@@ -180,7 +180,7 @@
     "webpack": "3.7.1",
     "webpack-dev-server": "2.9.2",
     "yargs": "8.0.1",
-    "yet-another-fetch-mock": "^2.2.0",
+    "yet-another-fetch-mock": "^2.3.2",
     "nightwatch": "0.9.19"
   }
 }
