@@ -62,9 +62,11 @@ module.exports = function(env) {
             historyApiFallback: {
                 index: '/aktivitetsplanfelles/',
             },
-            before: (app) => {
-                app.get('/', (req, res) => res.redirect('/aktivitetsplanfelles/'))
-            }
+            before: app => {
+                app.get('/', (req, res) =>
+                    res.redirect('/aktivitetsplanfelles/')
+                );
+            },
         },
     };
 };
