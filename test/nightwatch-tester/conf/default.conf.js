@@ -31,7 +31,7 @@ const nightwatch_config = {
             desiredCapabilities: {
                 browserName: 'chrome',
                 chromeOptions: {
-                    args: ['--no-sandbox', '--disable-gpu', '--log-level=3'],
+                    args: ['--headless', '--no-sandbox', '--disable-gpu', '--log-level=3'],
                 },
             },
         },
