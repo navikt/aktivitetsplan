@@ -21,7 +21,7 @@
     "registry": "https://repo.adeo.no/repository/npm-internal/"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha;npm run test:e2e",
     "test:watch": "mocha --watch",
     "test:coverage": "nyc --reporter=html npm test",
     "test:e2e": "node test/nightwatch-tester/nightwatch.js -c test/nightwatch-tester/conf/default.conf.js",
