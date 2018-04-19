@@ -63,6 +63,8 @@ fasitResources:
     propertyMap:
       url: PUBLIC_VEILARBVEILEDER_URL
 
+    # nais konfigurerer ikke riktig url i fasit, bruker window.location.origin til å bygge url,
+    # men lar denne avhengigheten være for å vise avhengigheten
   - alias: feature_endpoint
     resourceType: restservice
     propertyMap:

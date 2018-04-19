@@ -39,9 +39,6 @@ export const VEILEDER_BASE_URL = getEnviromentVariable(
     true
 );
 
-export const FEATURE_BASE_URL = getEnviromentVariable(
-    'FEATURE_ENDPOINT_URL',
-    true
-);
+export const FEATURE_BASE_URL = `${window.location.origin}/feature`;
 
 export default {};
