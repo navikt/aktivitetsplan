@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script>
+
+            // utside
+            window.features = {
+                timeoutbox: true,
+                navigasjonslinjemeny: false
+            };
+            window.app = "aktivitetsplan";
+
+            window.aktivitetsplan = {
+                veilarbdialog_url: '/veilarbdialogproxy/api',
+                veilarbaktivitet_url: '/veilarbaktivitetproxy/api',
+                veilarboppfolging_url: '/veilarboppfolgingproxy/api',
+                feature_endpoint_url: '/feature',
+                sone: 'SBS',
+            };
+
+            window.aktivitetsplan.onboarding_video_url = 'https://video.qbrick.com/play2/embed/player?accountId=763558&mediaId=74420478-00015227-993dea3a&configId=default&pageStyling=adaptive&autoplay=true&repeat=true&sharing=true';
+
+        </script>
+        <link type="text/css" rel="stylesheet" href="/aktivitetsplanfelles/example-dev.css">
+        <title>Aktivitetsplan Demo SBS</title>
+    </head>
+    <body>
+        <div id="pagewrapper">
+            <div id="mainapp" class="appContainer"></div>
+        </div>
+    </body>
+</html>
