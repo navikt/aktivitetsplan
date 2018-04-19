@@ -140,6 +140,7 @@ class Navigasjonslinje extends Component {
                             avhengigheter={avhengigheter}
                             spinnerStorrelse="XS"
                             className="navigasjonslinje__spinner"
+                            alleOK
                         >
                             <NavigasjonslinjeMeny />
                         </Innholdslaster>

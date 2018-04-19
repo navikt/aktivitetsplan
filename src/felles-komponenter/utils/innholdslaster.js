@@ -18,6 +18,8 @@ const minstEnErOK = avhengigheter =>
 const alleLastet = avhengigheter =>
     avhengigheter &&
     array(avhengigheter).every(harStatus(STATUS.OK, STATUS.RELOADING));
+const alleErOK = avhengigheter =>
+    avhengigheter && array(avhengigheter).every(harStatus(STATUS.OK));
 
 const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
@@ -28,15 +30,18 @@ function Innholdslaster({
     children,
     minstEn,
     visChildrenVedFeil,
+    alleOK,
+    ...rest
 }) {
-    const visChildren =
-        alleLastet(avhengigheter) ||
-        (minstEn && minstEnErOK(avhengigheter)) ||
-        (visChildrenVedFeil && noenHarFeil(avhengigheter));
+    const visChildren = alleOK
+        ? alleErOK(avhengigheter)
+        : alleLastet(avhengigheter) ||
+          (minstEn && minstEnErOK(avhengigheter)) ||
+          (visChildrenVedFeil && noenHarFeil(avhengigheter));
 
     if (visChildren) {
         if (typeof children === 'function') {
-            return children(avhengigheter);
+            return children(avhengigheter, rest);
         }
         if (Array.isArray(children)) {
             return (
@@ -62,6 +67,7 @@ Innholdslaster.defaultProps = {
     className: '',
     minstEn: false,
     visChildrenVedFeil: false,
+    alleOK: false,
 };
 
 Innholdslaster.propTypes = {
@@ -72,6 +78,7 @@ Innholdslaster.propTypes = {
     spinnerStorrelse: PT.string,
     minstEn: PT.bool,
     visChildrenVedFeil: PT.bool,
+    alleOK: PT.bool,
 };
 
 export default Innholdslaster;

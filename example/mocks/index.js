@@ -16,12 +16,15 @@ import arena from './arena';
 import getPerson from './person';
 import { malListe, opprettMal, sisteMal } from './mal';
 import vilkar from './vilkar';
-import veilederTilgang from './veilderTilgang';
+import veilederTilgang from './veilederTilgang';
+import veiledere from './veiledere';
+import enheter from './enheter';
 import feature from './feature';
 import fetchMock from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
 
 const mock = fetchMock.configure({
+    enableFallback: false,
     middleware: fetchmockMiddleware,
 });
 
@@ -100,3 +103,19 @@ mock.put(
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
     getPerson(pathParams.fnr)
 );
+
+//veilarbveileder-api
+mock.get(
+    '/veilarbveileder/api/enhet/:enhetNr/veiledere',
+    ({ pathParams }) => veiledere
+);
+
+//veilarboppgave-api
+mock.get('/veilarboppgave/api/enheter', ({ queryParams }) => enheter);
+
+mock.post('/veilarboppfolging/api/oppfolging/tilordneveileder', ({ body }) => {
+    return {
+        feilendeTilordninger: [],
+        resultat: 'OK: Veiledere tilordnet',
+    };
+});

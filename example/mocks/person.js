@@ -19,7 +19,10 @@ export default function(fnr) {
         diskresjonskode: null,
         kontonummer: '',
         geografiskTilknytning: '',
-        behandlendeEnhet: {},
+        behandlendeEnhet: {
+            enhetsNummer: '007',
+            navn: 'Den sorte dame',
+        },
         telefon: null,
         epost: null,
         statsborgerskap: 'NORGE',

@@ -15,6 +15,7 @@ import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import HiddenIfHOC, {
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
+import TildelVeileder from '../../moduler/tildel-veileder/tildel-veileder';
 
 function NavigasjonslinjeMeny({
     brukerErMin,
@@ -53,7 +54,7 @@ function NavigasjonslinjeMeny({
     );
 
     const FjernLenke = HiddenIfHOC(() =>
-        <span className="navigasjonslinje-meny__fjern-lenke">
+        <span>
             <Knappelenke
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/fjern')}
@@ -64,9 +65,14 @@ function NavigasjonslinjeMeny({
     );
 
     const RedigerLenke = HiddenIfHOC(() =>
-        <Knappelenke onClick={() => history.push('arbeidsliste/rediger')}>
-            <FormattedMessage id="navigasjon.vis.kommentarer" />
-        </Knappelenke>
+        <span>
+            <Knappelenke
+                className="navigasjonslinje-meny__rediger-lenke"
+                onClick={() => history.push('arbeidsliste/rediger')}
+            >
+                <FormattedMessage id="navigasjon.vis.kommentarer" />
+            </Knappelenke>
+        </span>
     );
 
     return (
@@ -77,7 +83,16 @@ function NavigasjonslinjeMeny({
             <HiddenArbeidslisteikon hidden={!kanRedigere} />
             <LeggTilLenke hidden={!kanLeggeTil} />
             <FjernLenke hidden={!kanFjerne} />
+            <HiddenIfDiv
+                hidden={!kanFjerne && !kanLeggeTil}
+                className="navigasjonslinje-meny__skillelinje"
+            />
             <RedigerLenke hidden={!kanRedigere} />
+            <HiddenIfDiv
+                hidden={!kanRedigere}
+                className="navigasjonslinje-meny__skillelinje"
+            />
+            <TildelVeileder />
             <i className="navigasjonslinje-meny__skillelinje" />
         </HiddenIfDiv>
     );

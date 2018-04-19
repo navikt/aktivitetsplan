@@ -19,6 +19,8 @@ export function createActionsAndReducer(
     const selectSlice = state => state.data[statePath];
     const selectStatus = state => selectSlice(state).status;
     const actionFunction = fn => doThenDispatch(fn, actionTypes);
+    let promise = null;
+
     return {
         reducer: (state = initialState, action) => {
             switch (action.type) {
@@ -54,8 +56,10 @@ export function createActionsAndReducer(
         cashedAction: fn => (dispatch, getState) => {
             const status = selectStatus(getState());
             if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
-                actionFunction(fn)(dispatch);
+                promise = actionFunction(fn)(dispatch);
+                return promise;
             }
+            return promise;
         },
 
         actionTypes,
