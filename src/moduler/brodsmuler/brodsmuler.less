@@ -1,0 +1,28 @@
+.brodsmuler-container {
+    background-color: @navLysBlaLighten60;
+}
+
+.brodsmuler {
+    display: flex;
+    align-items: center;
+
+    &__list {
+        list-style: none;
+        margin: inherit;
+        padding: 0.5rem;
+    }
+
+    &__item {
+        float: left;
+
+        &:not(:last-child)::after {
+            content: '/';
+            margin: 0 0.5rem;
+        }
+    }
+
+    &__illustrasjon {
+        max-width: 30px;
+        max-height: 30px;
+    }
+}
