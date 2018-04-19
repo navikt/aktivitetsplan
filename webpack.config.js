@@ -2,13 +2,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
-const plugins = (isMock, isSBS) => [
+const plugins = (isMock, innside) => [
     new webpack.DefinePlugin({
         MOCK: JSON.stringify(isMock),
-        SBS: JSON.stringify(isSBS),
+        INTERNFLATE: JSON.stringify(innside),
     }),
     new HtmlWebpackPlugin({
-        template: isSBS ? 'example/indexsbs.html' : 'example/indexffs.html',
+        template: innside ? 'example/index-innside.html': 'example/index-utside.html' ,
     }),
 ];
 
@@ -34,7 +34,7 @@ const RULES = [
 module.exports = function(env) {
     const isDev = env && env.dev;
     const isMock = env && env.mock;
-    const isSBS = env && env.sbs;
+    const innside = !(env && env.utside);
 
     return {
         entry: ['whatwg-fetch', './example/example.js'],
@@ -47,7 +47,7 @@ module.exports = function(env) {
         stats: {
             children: false,
         },
-        plugins: plugins(isMock, isSBS),
+        plugins: plugins(isMock, innside),
         module: {
             rules: RULES,
         },

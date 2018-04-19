@@ -1,7 +1,7 @@
 import { EKSEMPEL_FNR, EKSEMPEL_VEILEDER } from '../config';
 
 export default {
-    id: SBS ? EKSEMPEL_FNR : EKSEMPEL_VEILEDER,
-    erVeileder: !SBS,
-    erBruker: SBS,
+    id: INTERNFLATE ? EKSEMPEL_VEILEDER : EKSEMPEL_FNR,
+    erVeileder: INTERNFLATE,
+    erBruker: !INTERNFLATE,
 };

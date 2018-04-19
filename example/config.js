@@ -8,7 +8,7 @@ export const TILLAT_SET_AVTALT = true;
 
 export const VIS_SIDEBANNER = true;
 
-export const FNR_I_URL = !SBS; //innside/utside
+export const FNR_I_URL = INTERNFLATE;
 
 export const EKSEMPEL_FNR = '06128074978';
 
