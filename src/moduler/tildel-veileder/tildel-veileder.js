@@ -15,6 +15,8 @@ import {
     selectVeilederListe,
     selectVeilederStatus,
 } from '../veiledere-pa-enhet/veiledere-pa-enhet-reducer';
+import { selectVeilederId } from '../oppfolging-status/oppfolging-selector';
+import { hentOppfolging } from '../oppfolging-status/oppfolging-reducer';
 
 function settSammenNavn(veileder) {
     return `${veileder.etternavn}, ${veileder.fornavn}`;
@@ -38,6 +40,7 @@ class TildelVeileder extends Component {
         const fnr = getFodselsnummer();
         this.props.tildelTilVeileder(fnr, [
             {
+                fraVeilderId: this.props.veilederId,
                 tilVeilederId: value,
                 brukerFnr: fnr,
             },
@@ -88,22 +91,25 @@ TildelVeileder.propTypes = {
     tildelTilVeileder: PT.func.isRequired,
     doHentVeiledereForEnhet: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
+    veilederId: PT.string,
 };
 
 TildelVeileder.defaultProps = {
     veilederliste: [],
+    veilederId: null,
 };
 
 const mapStateToProps = state => ({
     veilederliste: selectVeilederListe(state),
+    veilederId: selectVeilederId(state),
     avhengigheter: [selectBrukerStatus(state), selectVeilederStatus(state)],
 });
 
 const mapDispatchToProps = dispatch => ({
     tildelTilVeileder: (fnr, tilordning) =>
-        dispatch(tildelVeileder(tilordning)).then(
-            dispatch(hentArbeidsliste(fnr))
-        ),
+        dispatch(tildelVeileder(tilordning))
+            .then(dispatch(hentOppfolging(fnr)))
+            .then(dispatch(hentArbeidsliste(fnr))),
     doHentVeiledereForEnhet: fnr =>
         dispatch(hentBruker(fnr)).then(({ data }) =>
             dispatch(hentVeiledereForEnhet(data.behandlendeEnhet.enhetsNummer))

@@ -7,7 +7,14 @@ export function tildordneVeileder(tilordninger) {
     }).then(json => {
         const feil = json.feilendeTilordninger;
         if (feil && feil.length > 0) {
-            return Promise.reject(feil);
+            const feilmld = {
+                id: null,
+                type: 'TILDELING-FEILET-VEILEDER-ALLEREDE-SATT',
+                detaljer: null,
+            };
+            const error = new Error('TILDEL-VEILEDER/FEILET');
+            error.response = new Response(JSON.stringify(feilmld));
+            throw error;
         }
         return json;
     });

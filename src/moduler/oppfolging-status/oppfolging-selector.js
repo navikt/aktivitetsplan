@@ -9,6 +9,10 @@ function selectOppfolgingData(state) {
     return selectOppfolgingSlice(state).data;
 }
 
+export function selectVeilederId(state) {
+    return selectOppfolgingData(state).veilederId;
+}
+
 export function selectOppfolgingStatus(state) {
     return selectOppfolgingSlice(state).status;
 }
