@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { EKSEMPEL_FNR, CONTEXT_PATH } from './config';
+import { EKSEMPEL_FNR, CONTEXT_PATH, FNR_I_URL } from './config';
 import App from '../src/app';
 import { fnrFraUrl } from '../src/bootstrap/fnr-provider';
 import Modal from 'react-modal';
@@ -12,7 +12,7 @@ if (MOCK) {
     require('./mocks'); // eslint-disable-line global-require
 }
 
-if (!fnrFraUrl() && EKSEMPEL_FNR) {
+if (!fnrFraUrl() && FNR_I_URL) {
     window.history.replaceState(
         EKSEMPEL_FNR,
         '',

@@ -8,12 +8,8 @@ export const TILLAT_SET_AVTALT = true;
 
 export const VIS_SIDEBANNER = true;
 
-// innside
-export const FNR_I_URL = true;
+export const FNR_I_URL = INTERNFLATE;
+
 export const EKSEMPEL_FNR = '06128074978';
 
-// utside
-/*
-export const FNR_I_URL = false;
-export const EKSEMPEL_FNR = '';
-*/
+export const EKSEMPEL_VEILEDER = 'Z123456';
