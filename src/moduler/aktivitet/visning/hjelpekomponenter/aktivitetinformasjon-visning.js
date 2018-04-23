@@ -21,7 +21,10 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring }) {
     return (
         <div>
             <div className="aktivitetvisning__underseksjon">
-                <Sidetittel id="modal-aktivitetsvisning-header">
+                <Sidetittel
+                    id="modal-aktivitetsvisning-header"
+                    className="softbreak"
+                >
                     {tittel}
                 </Sidetittel>
 
