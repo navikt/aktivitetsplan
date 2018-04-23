@@ -20,6 +20,7 @@ import { selectArbeidslisteStatus } from '../../moduler/arbeidsliste/arbeidslist
 import * as AppPT from '../../proptypes';
 import {
     selectErUnderOppfolging,
+    selectOppfolgingStatus,
     selectVilkarMaBesvares,
 } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { selectErBruker } from '../../moduler/identitet/identitet-selector';
@@ -35,6 +36,7 @@ import {
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
 import { harFeature } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
+import { selectTildelVeilederStatus } from '../../moduler/tildel-veileder/tildel-veileder-selector';
 
 const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
     const elementKlasser = classNames({
@@ -140,6 +142,7 @@ class Navigasjonslinje extends Component {
                             avhengigheter={avhengigheter}
                             spinnerStorrelse="XS"
                             className="navigasjonslinje__spinner"
+                            alleOK
                         >
                             <NavigasjonslinjeMeny />
                         </Innholdslaster>
@@ -200,7 +203,11 @@ const mapStateToProps = state => {
         antallUlesteDialoger,
         privatModus: selectErPrivatModus(state),
         underOppfolging,
-        avhengigheter: [selectArbeidslisteStatus(state)],
+        avhengigheter: [
+            selectArbeidslisteStatus(state),
+            selectTildelVeilederStatus(state),
+            selectOppfolgingStatus(state),
+        ],
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
         tilgangTilDialog: selectHarTilgangTilDialog(state),
         ikkeTilgangTilVilkar,

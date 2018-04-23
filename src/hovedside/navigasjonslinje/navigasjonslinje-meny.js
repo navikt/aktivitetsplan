@@ -15,12 +15,14 @@ import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import HiddenIfHOC, {
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
+import TildelVeileder from '../../moduler/tildel-veileder/tildel-veileder';
 
 function NavigasjonslinjeMeny({
     brukerErMin,
     kanLeggeTil,
     kanFjerne,
     kanRedigere,
+    harVeilederTilgang,
 }) {
     const Arbeidslisteikon = ({ fyldt }) =>
         <FormattedMessage id="arbeidsliste.flaggikon" values={{ fyldt }}>
@@ -53,7 +55,7 @@ function NavigasjonslinjeMeny({
     );
 
     const FjernLenke = HiddenIfHOC(() =>
-        <span className="navigasjonslinje-meny__fjern-lenke">
+        <span>
             <Knappelenke
                 disabled={!brukerErMin}
                 onClick={() => history.push('arbeidsliste/fjern')}
@@ -64,20 +66,39 @@ function NavigasjonslinjeMeny({
     );
 
     const RedigerLenke = HiddenIfHOC(() =>
-        <Knappelenke onClick={() => history.push('arbeidsliste/rediger')}>
-            <FormattedMessage id="navigasjon.vis.kommentarer" />
-        </Knappelenke>
+        <span>
+            <Knappelenke
+                className="navigasjonslinje-meny__rediger-lenke"
+                onClick={() => history.push('arbeidsliste/rediger')}
+            >
+                <FormattedMessage id="navigasjon.vis.kommentarer" />
+            </Knappelenke>
+        </span>
     );
 
     return (
         <HiddenIfDiv
-            hidden={!kanLeggeTil && !kanFjerne && !kanRedigere}
+            hidden={
+                !kanLeggeTil &&
+                !kanFjerne &&
+                !kanRedigere &&
+                !harVeilederTilgang
+            }
             className="navigasjonslinje-meny"
         >
             <HiddenArbeidslisteikon hidden={!kanRedigere} />
             <LeggTilLenke hidden={!kanLeggeTil} />
             <FjernLenke hidden={!kanFjerne} />
+            <HiddenIfDiv
+                hidden={!kanFjerne && !kanLeggeTil}
+                className="navigasjonslinje-meny__skillelinje"
+            />
             <RedigerLenke hidden={!kanRedigere} />
+            <HiddenIfDiv
+                hidden={!kanRedigere}
+                className="navigasjonslinje-meny__skillelinje"
+            />
+            <TildelVeileder />
             <i className="navigasjonslinje-meny__skillelinje" />
         </HiddenIfDiv>
     );
@@ -88,6 +109,7 @@ NavigasjonslinjeMeny.propTypes = {
     kanRedigere: PT.bool.isRequired,
     kanLeggeTil: PT.bool.isRequired,
     kanFjerne: PT.bool.isRequired,
+    harVeilederTilgang: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -105,6 +127,7 @@ const mapStateToProps = state => {
         kanLeggeTil,
         kanFjerne,
         kanRedigere,
+        harVeilederTilgang,
     };
 };
 

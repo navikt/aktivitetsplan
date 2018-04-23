@@ -1,4 +1,4 @@
-import * as Api from './hent-veiledere-for-oppgave-api';
+import * as Api from '../../veiledere-pa-enhet/veiledere-pa-enhet-api';
 
 import { createActionsAndReducer } from '../../../ducks/rest-reducer';
 
