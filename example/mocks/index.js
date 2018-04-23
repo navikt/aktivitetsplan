@@ -29,7 +29,7 @@ const mock = fetchMock.configure({
 });
 
 //feature-api
-mock.get('/feature', feature);
+mock.get(`${window.location.origin}/feature`, feature);
 
 //veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', me);
@@ -76,7 +76,6 @@ mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettDialog(body));
 //veilarbdialogproxy
 mock.get('/veilarbdialogproxy/api/dialog', dialog);
 
-
 // veilarbaktivitet-api
 mock.get('/veilarbaktivitet/api/aktivitet/kanaler', [
     'internett',
@@ -111,11 +110,11 @@ mock.put(
 
 //veilarbaktivitetproxy
 mock.get('/veilarbaktivitetproxy/api/aktivitet/arena', arena);
-mock.get('/veilarbaktivitetproxy/api/aktivitet/:aktivitetId', ({ pathParams }) =>
-    getAktivitet(pathParams.aktivitetId)
+mock.get(
+    '/veilarbaktivitetproxy/api/aktivitet/:aktivitetId',
+    ({ pathParams }) => getAktivitet(pathParams.aktivitetId)
 );
 mock.get('/veilarbaktivitetproxy/api/aktivitet', aktiviteter);
-
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
