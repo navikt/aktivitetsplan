@@ -65,6 +65,7 @@ class TildelVeileder extends Component {
                             data={veilederliste}
                             label=""
                             placeholder=""
+                            limitSize={null}
                             {...sokFilterProps}
                         >
                             {(data, radioFilterProps) =>
