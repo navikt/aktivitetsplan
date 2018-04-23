@@ -79,9 +79,12 @@ class AktivitetsKort extends Component {
                     </Undertekst>
                     <Element
                         tag="h1"
-                        className={classNames('aktivitetskort__tittel', {
-                            'aktivitetskort__tittel--drag': isDragging,
-                        })}
+                        className={classNames(
+                            'aktivitetskort__tittel softbreak',
+                            {
+                                'aktivitetskort__tittel--drag': isDragging,
+                            }
+                        )}
                     >
                         {tittel}
                     </Element>
