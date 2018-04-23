@@ -11,15 +11,15 @@ import {
 } from '../../constant';
 
 const hjelpetekster = {
-    [STATUS_PLANLAGT]: {
+    [STATUS_BRUKER_ER_INTRESSERT]: {
         tittelId: 'aktivitetstavle.brukerErInteressert.info',
         innholdId: 'hjelpetekst.aktivitet.er.interessert',
     },
-    [STATUS_GJENNOMFOERT]: {
+    [STATUS_PLANLAGT]: {
         tittelId: 'aktivitetstavle.planlagt.info',
         innholdId: 'hjelpetekst.aktivitet.planlagt',
     },
-    [STATUS_BRUKER_ER_INTRESSERT]: {
+    [STATUS_GJENNOMFOERT]: {
         tittelId: 'aktivitetstavle.gjennomfoert.info',
         innholdId: 'hjelpetekst.aktivitet.gjennomfoert',
     },

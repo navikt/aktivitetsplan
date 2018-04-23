@@ -1,5 +1,7 @@
+import { EKSEMPEL_FNR, EKSEMPEL_VEILEDER } from '../config';
+
 export default {
-    id: 'Z123456',
-    erVeileder: true,
-    erBruker: false,
+    id: INTERNFLATE ? EKSEMPEL_VEILEDER : EKSEMPEL_FNR,
+    erVeileder: INTERNFLATE,
+    erBruker: !INTERNFLATE,
 };
