@@ -129,3 +129,5 @@ const mapStateToProps = state => ({
     gjeldendeEskaleringsvarsel: selectGjeldendeEskaleringsVarsel(state),
 });
 export default connect(mapStateToProps)(DialogerMedInnholdslaster);
+
+export const DialogerPure = Dialoger;
