@@ -19,7 +19,10 @@ class SokFilter extends Component {
     render() {
         const { data, filter, limitSize, children, ...props } = this.props;
         const rawfilteredData = data.filter(filter(this.state.query));
-        const filteredData = limitSize === null ? rawfilteredData : limit(rawfilteredData, limitSize);
+        const filteredData =
+            limitSize === null
+                ? rawfilteredData
+                : limit(rawfilteredData, limitSize);
 
         return (
             <div>
@@ -50,7 +53,7 @@ SokFilter.defaultProps = {
     filter: query => dataEntry =>
         !query ||
         JSON.stringify(dataEntry).toLowerCase().includes(query.toLowerCase()),
-    limitSize: 20
+    limitSize: 20,
 };
 
 export default SokFilter;
