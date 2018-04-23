@@ -113,7 +113,7 @@ mock.get(
 //veilarboppgave-api
 mock.get('/veilarboppgave/api/enheter', ({ queryParams }) => enheter);
 
-mock.post('/veilarboppfolging/api/oppfolging/tilordneveileder', ({ body }) => {
+mock.post('/veilarboppfolging/api/tilordneveileder', ({ body }) => {
     return {
         feilendeTilordninger: [],
         resultat: 'OK: Veiledere tilordnet',

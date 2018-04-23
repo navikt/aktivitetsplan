@@ -25,7 +25,6 @@ function settSammenNavn(veileder) {
 class TildelVeileder extends Component {
     constructor(props) {
         super(props);
-        this.state = { valgtVeileder: undefined };
         this.setValgtVeileder = this.setValgtVeileder.bind(this);
     }
 
@@ -36,11 +35,11 @@ class TildelVeileder extends Component {
 
     setValgtVeileder({ event, value, closeDropdown }) {
         event.preventDefault();
-        this.setState({ valgtVeileder: value });
         const fnr = getFodselsnummer();
+
         this.props.tildelTilVeileder(fnr, [
             {
-                fraVeilderId: this.props.veilederId,
+                fraVeilederId: this.props.veilederId,
                 tilVeilederId: value,
                 brukerFnr: fnr,
             },
@@ -108,11 +107,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     tildelTilVeileder: (fnr, tilordning) =>
         dispatch(tildelVeileder(tilordning))
-            .then(dispatch(hentOppfolging(fnr)))
-            .then(dispatch(hentArbeidsliste(fnr))),
+            .then(() => dispatch(hentOppfolging(fnr)))
+            .then(() => dispatch(hentArbeidsliste(fnr))),
     doHentVeiledereForEnhet: fnr =>
         dispatch(hentBruker(fnr)).then(({ data }) =>
-            dispatch(hentVeiledereForEnhet(data.behandlendeEnhet.enhetsNummer))
+            dispatch(hentVeiledereForEnhet(data.behandlendeEnhet.enhetsnummer))
         ),
 });
 

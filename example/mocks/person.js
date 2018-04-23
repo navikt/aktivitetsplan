@@ -20,7 +20,7 @@ export default function(fnr) {
         kontonummer: '',
         geografiskTilknytning: '',
         behandlendeEnhet: {
-            enhetsNummer: '007',
+            enhetsnummer: '007',
             navn: 'Den sorte dame',
         },
         telefon: null,

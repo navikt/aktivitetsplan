@@ -22,6 +22,7 @@ function NavigasjonslinjeMeny({
     kanLeggeTil,
     kanFjerne,
     kanRedigere,
+    harVeilederTilgang,
 }) {
     const Arbeidslisteikon = ({ fyldt }) =>
         <FormattedMessage id="arbeidsliste.flaggikon" values={{ fyldt }}>
@@ -77,7 +78,12 @@ function NavigasjonslinjeMeny({
 
     return (
         <HiddenIfDiv
-            hidden={!kanLeggeTil && !kanFjerne && !kanRedigere}
+            hidden={
+                !kanLeggeTil &&
+                !kanFjerne &&
+                !kanRedigere &&
+                !harVeilederTilgang
+            }
             className="navigasjonslinje-meny"
         >
             <HiddenArbeidslisteikon hidden={!kanRedigere} />
@@ -103,6 +109,7 @@ NavigasjonslinjeMeny.propTypes = {
     kanRedigere: PT.bool.isRequired,
     kanLeggeTil: PT.bool.isRequired,
     kanFjerne: PT.bool.isRequired,
+    harVeilederTilgang: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -120,6 +127,7 @@ const mapStateToProps = state => {
         kanLeggeTil,
         kanFjerne,
         kanRedigere,
+        harVeilederTilgang,
     };
 };
 
