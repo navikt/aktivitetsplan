@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .brodsmuler {
     display: flex;
     align-items: center;
@@ -10,6 +12,10 @@
 
     &__item {
         float: left;
+
+        .lenke {
+            color: @navDypBla;
+        }
 
         &:not(:last-child)::after {
             content: '/';
