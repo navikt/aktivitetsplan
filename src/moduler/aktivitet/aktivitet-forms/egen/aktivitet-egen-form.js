@@ -20,6 +20,19 @@ import {
 } from '../../../../felles-komponenter/skjema/validering';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import {
+    hentMalverkMedType,
+    settValgtMalverk,
+    slettValgtMalverk,
+} from '../../../malverk/malverk-reducer';
+import * as AppPT from '../../../../proptypes';
+import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import {
+    selectMalverkData,
+    selectMalverkMedTittel,
+    selectMalverkStatus,
+    selectValgtMalverkSlice,
+} from '../../../malverk/malverk-selector';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -71,6 +84,16 @@ const begrensetoppfolginLengde = maksLengde(
 // TODO fiks i separat quickfix
 // eslint-disable-next-line react/prefer-stateless-function
 class EgenAktivitetForm extends Component {
+    componentDidMount() {
+        const { doHentMalverMedType } = this.props;
+        doHentMalverMedType();
+    }
+
+    componentWillUnmount() {
+        const { doSlettValgtMalverk } = this.props;
+        doSlettValgtMalverk();
+    }
+
     render() {
         const props = this.props;
         const {
@@ -79,8 +102,55 @@ class EgenAktivitetForm extends Component {
             handleSubmit,
             errorSummary,
             avtalt,
+            malverk,
+            avhengigheter,
+            doHentMalverkMedTittel,
+            doSettValgtMalverk,
         } = props;
         const erAktivitetAvtalt = avtalt === true;
+
+        function lagMalverkOption(mal) {
+            return (
+                <option key={mal.tittel} value={mal.tittel}>
+                    {mal.tittel}
+                </option>
+            );
+        }
+
+        function onChangeMalverk(event) {
+            event.preventDefault();
+            // event.target.value er tittel på malverk
+            const valgtMalverk = doHentMalverkMedTittel(event.target.value);
+            doSettValgtMalverk(valgtMalverk);
+        }
+
+        const selectMalverk = (
+            <div className="skjemaelement">
+                <Innholdslaster
+                    avhengigheter={avhengigheter}
+                    spinnerStorrelse="S"
+                >
+                    <label className="skjemaelement__label" htmlFor="malverk">
+                        <FormattedMessage id="aktivitet-form.label.malverk" />
+                    </label>
+                    <div className="selectContainer input--fullbredde">
+                        <select
+                            className="skjemaelement__input"
+                            name="malverk"
+                            onClick={onChangeMalverk}
+                        >
+                            <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
+                                {text =>
+                                    <option value="ingen">
+                                        {text}
+                                    </option>}
+                            </FormattedMessage>
+                            {Object.values(malverk).map(lagMalverkOption)}
+                        </select>
+                    </div>
+                </Innholdslaster>
+            </div>
+        );
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
@@ -91,7 +161,7 @@ class EgenAktivitetForm extends Component {
                         pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
                         ingressType={EGEN_AKTIVITET_TYPE}
                     />
-
+                    {selectMalverk}
                     <Input
                         feltNavn="tittel"
                         disabled={erAktivitetAvtalt}
@@ -159,6 +229,12 @@ EgenAktivitetForm.propTypes = {
     currentTilDato: PT.instanceOf(Date),
     avtalt: PT.bool,
     isDirty: PT.bool.isRequired,
+    doHentMalverMedType: PT.func.isRequired,
+    malverk: PT.oneOfType([PT.arrayOf(AppPT.malverktype), AppPT.malverktype]),
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    doHentMalverkMedTittel: PT.func.isRequired,
+    doSettValgtMalverk: PT.func.isRequired,
+    doSlettValgtMalverk: PT.func.isRequired,
 };
 
 EgenAktivitetForm.defaultProps = {
@@ -166,6 +242,7 @@ EgenAktivitetForm.defaultProps = {
     currentFraDato: undefined,
     currentTilDato: undefined,
     avtalt: false,
+    malverk: undefined,
 };
 
 const EgenAktivitetReduxForm = validForm({
@@ -173,6 +250,7 @@ const EgenAktivitetReduxForm = validForm({
     errorSummaryTitle: (
         <FormattedMessage id="egen-aktivitet-form.feiloppsummering-tittel" />
     ),
+    enableReinitialize: true,
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
@@ -185,9 +263,23 @@ const EgenAktivitetReduxForm = validForm({
     },
 })(EgenAktivitetForm);
 
+const mapDispatchToProps = dispatch => ({
+    doHentMalverMedType: () => {
+        dispatch(hentMalverkMedType('EGEN'));
+    },
+    doSettValgtMalverk: valgtMalverk => {
+        dispatch(settValgtMalverk(valgtMalverk));
+    },
+    doSlettValgtMalverk: () => {
+        dispatch(slettValgtMalverk());
+    },
+});
+
 const mapStateToProps = (state, props) => {
     const selector = formValueSelector(formNavn);
-    const aktivitet = props.aktivitet || {};
+    const valgtMalverk = selectValgtMalverkSlice(state);
+    const aktivitet = valgtMalverk || props.aktivitet || {};
+
     return {
         initialValues: {
             status: STATUS_BRUKER_ER_INTRESSERT,
@@ -201,7 +293,12 @@ const mapStateToProps = (state, props) => {
             : undefined,
         isDirty: isDirty(formNavn)(state),
         avtalt: aktivitet && aktivitet.avtalt,
+        malverk: selectMalverkData(state),
+        avhengigheter: [selectMalverkStatus(state)],
+        doHentMalverkMedTittel: tittel => selectMalverkMedTittel(state, tittel),
     };
 };
 
-export default connect(mapStateToProps)(EgenAktivitetReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    EgenAktivitetReduxForm
+);
