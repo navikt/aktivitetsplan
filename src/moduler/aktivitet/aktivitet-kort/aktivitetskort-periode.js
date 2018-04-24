@@ -9,7 +9,6 @@ import {
 } from '../../../constant';
 import { formaterDato } from '../../../utils';
 import * as PT from '../../../proptypes';
-import { erGruppeDatoeneLike } from '../aktivitet-util';
 
 function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
     const { type, fraDato, tilDato } = aktivitet;
@@ -23,7 +22,8 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
 
         if (
             type === GRUPPE_AKTIVITET_TYPE &&
-            erGruppeDatoeneLike(formatertFraDato, formatertTilDato)
+            formatertTilDato &&
+            formatertFraDato === formatertTilDato
         ) {
             return formatertFraDato;
         }
