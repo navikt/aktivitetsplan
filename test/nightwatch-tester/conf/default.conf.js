@@ -1,4 +1,4 @@
-import { EKSEMPEL_FNR } from '../../../example/config';
+const EKSEMPEL_FNR = '06128074978';
 
 const nightwatch_config = {
     src_folders: ['test/nightwatch-tester/integration/tests'],
