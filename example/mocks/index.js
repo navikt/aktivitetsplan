@@ -20,6 +20,7 @@ import veilederTilgang from './veilederTilgang';
 import veiledere from './veiledere';
 import enheter from './enheter';
 import feature from './feature';
+import oppfoelgingsstatus from './oppfoelgingsstatus';
 import fetchMock from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
 
@@ -76,7 +77,6 @@ mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettDialog(body));
 //veilarbdialogproxy
 mock.get('/veilarbdialogproxy/api/dialog', dialog);
 
-
 // veilarbaktivitet-api
 mock.get('/veilarbaktivitet/api/aktivitet/kanaler', [
     'internett',
@@ -111,11 +111,11 @@ mock.put(
 
 //veilarbaktivitetproxy
 mock.get('/veilarbaktivitetproxy/api/aktivitet/arena', arena);
-mock.get('/veilarbaktivitetproxy/api/aktivitet/:aktivitetId', ({ pathParams }) =>
-    getAktivitet(pathParams.aktivitetId)
+mock.get(
+    '/veilarbaktivitetproxy/api/aktivitet/:aktivitetId',
+    ({ pathParams }) => getAktivitet(pathParams.aktivitetId)
 );
 mock.get('/veilarbaktivitetproxy/api/aktivitet', aktiviteter);
-
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
@@ -123,10 +123,14 @@ mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
 );
 
 //veilarbveileder-api
-mock.get(
-    '/veilarbveileder/api/enhet/:enhetNr/veiledere',
-    ({ pathParams }) => veiledere
-);
+mock.get('/veilarbveileder/api/enhet/:enhetNr/veiledere', ({ pathParams }) => {
+    // 9999 er oppfolgingsenhet, som stortsett er den som skal brukes av aktivitetsplanen
+    // 007 er geografiskenhet, men per i dag er vi ikke interessert i denne her.
+    if (pathParams.enhetNr !== '9999') {
+        throw new Error('Har nok spurt om feil enhet her?');
+    }
+    return veiledere;
+});
 
 //veilarboppgave-api
 mock.get('/veilarboppgave/api/enheter', ({ queryParams }) => enheter);
@@ -137,3 +141,8 @@ mock.post('/veilarboppfolging/api/tilordneveileder', ({ body }) => {
         resultat: 'OK: Veiledere tilordnet',
     };
 });
+
+mock.get(
+    '/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus',
+    oppfoelgingsstatus
+);

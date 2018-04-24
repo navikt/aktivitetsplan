@@ -24,6 +24,7 @@ import veilederePaEnhetReducer from './moduler/veiledere-pa-enhet/veiledere-pa-e
 import tildelVeilederReducer from './moduler/tildel-veileder/tildel-veileder-reducer';
 import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
+import oppfolgingstatusReducer from './moduler/oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
@@ -54,6 +55,7 @@ const combinedReducers = combineReducers({
         opprettOppgave: oppgaveReducer,
         referat: referatReducer,
         oppfolging: oppfolgingReducer,
+        oppfoelgingsstatus: oppfolgingstatusReducer,
         versjoner: versjonReducer,
         vilkar: vilkarReducer,
         feature: featureReducer,
