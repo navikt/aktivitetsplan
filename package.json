@@ -33,7 +33,6 @@
     "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
     "dev:mock": "parallelshell \"npm run dev:less\" \"npm run dev:js:mock\" \"npm run build:tekster\"",
     "dev:mock:utside": "parallelshell \"npm run dev:less\" \"npm run dev:js:mock -- --env.utside\" \"npm run build:tekster\"",
-    "dev:e2e": "parallelshell \"npm run dev:less\" \"npm run dev:js:mock -- --open=false\" \"npm run build:tekster\"",
     "dev:js:mock": "webpack-dev-server --env.dev --env.mock",
     "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\" \"npm run build:tekster\"",
     "dev:js": "webpack-dev-server --env.dev --port 8888",
