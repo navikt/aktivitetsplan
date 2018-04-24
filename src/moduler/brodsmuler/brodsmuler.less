@@ -15,7 +15,12 @@
 
         .lenke {
             color: @navDypBla;
+
+            &:hover {
+                border-bottom-color: @navDypBla;
+            }
         }
+
 
         &:not(:last-child)::after {
             content: '/';
