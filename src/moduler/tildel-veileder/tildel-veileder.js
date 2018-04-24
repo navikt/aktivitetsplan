@@ -4,9 +4,9 @@ import SokFilter from './../../felles-komponenter/sok-filter/sok-filter';
 import Dropdown from './../../felles-komponenter/dropdown/dropdown';
 import * as AppPT from '../../proptypes';
 import RadioFilterForm from '../../felles-komponenter/radio-filterform/radio-filterform';
-import { hentBruker } from '../bruker/bruker-reducer';
+import { hentOppfolgingsstatus } from '../oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectBrukerStatus } from '../bruker/bruker-selector';
+import { selectOppfoelgingsstatusStatus } from '../oppfoelgingsstatus/oppfoelgingsstatus-selector';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import { hentArbeidsliste } from '../arbeidsliste/arbeidsliste-reducer';
 import { tildelVeileder } from './tildel-veileder-reducer';
@@ -102,7 +102,10 @@ TildelVeileder.defaultProps = {
 const mapStateToProps = state => ({
     veilederliste: selectVeilederListe(state),
     veilederId: selectVeilederId(state),
-    avhengigheter: [selectBrukerStatus(state), selectVeilederStatus(state)],
+    avhengigheter: [
+        selectOppfoelgingsstatusStatus(state),
+        selectVeilederStatus(state),
+    ],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -111,8 +114,8 @@ const mapDispatchToProps = dispatch => ({
             .then(() => dispatch(hentOppfolging(fnr)))
             .then(() => dispatch(hentArbeidsliste(fnr))),
     doHentVeiledereForEnhet: fnr =>
-        dispatch(hentBruker(fnr)).then(({ data }) =>
-            dispatch(hentVeiledereForEnhet(data.behandlendeEnhet.enhetsnummer))
+        dispatch(hentOppfolgingsstatus(fnr)).then(({ data }) =>
+            dispatch(hentVeiledereForEnhet(data.oppfolgingsenhet.enhetId))
         ),
 });
 
