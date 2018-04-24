@@ -21,7 +21,8 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
         }
 
         if (
-            type === GRUPPE_AKTIVITET_TYPE && formatertTilDato &&
+            type === GRUPPE_AKTIVITET_TYPE &&
+            formatertTilDato &&
             formatertFraDato === formatertTilDato
         ) {
             return formatertFraDato;
