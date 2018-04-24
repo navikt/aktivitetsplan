@@ -1,5 +1,7 @@
 # Tekster for aktivitetsplan
 
+FOO
+
 ## Tekstnøkler og navn på filer
 Når man bruker applikasjonen kan man legge til parameteren `vistekster=true` i URL'en for å få se hvilke nøkler som ligger bak hvilke tekster. Avhengig av miljø vil URL'en se omtrent slik ut: `https://tjenester-t4.nav.no/aktivitetsplan/?vistekster=true`. Dette fungerer både i brukers flate og i saksbehandlers flate.
 Et eksempel på en tekst med ?vistekster=true parameteren på, er `Aktivitetsplan [hovedside.tittel]`. Det som står mellom hakeparentesene er nøkkelen man kan bruke for å slå opp i BitBucket. Den akutelle filen for nøkkelen `hovedside.tittel` vil være `hovedside.tittel_nb.txt`. `nb` står for norsk bokmål, og hvis man skal oversette applikasjonen til andre spårk vil man lage et nytt sett med filer med andre språkkoder, f.eks. `nn` for nynorsk eller `en` for engelsk. Legg også merke til filendelsen `.txt` som må være med. Innholdet i filen er den teksten som vil vises i applikasjonen.
