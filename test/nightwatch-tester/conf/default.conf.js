@@ -1,5 +1,3 @@
-const EKSEMPEL_FNR = '06128074978';
-
 const nightwatch_config = {
     src_folders: ['test/nightwatch-tester/integration/tests'],
     output_folder: 'test/nightwatch-tester/reports',
@@ -19,7 +17,7 @@ const nightwatch_config = {
             default_path_prefix: '',
             timeout: 10000,
             baseUrl: 'http://localhost:3000',
-            fnr: '1234556',
+            fnr: '12345612345',
             javaScriptEnabled: true,
             acceptSslCerts: true,
             screenshots: {
@@ -38,8 +36,7 @@ const nightwatch_config = {
     },
 };
 let defaultSettings = nightwatch_config.test_settings.default;
-defaultSettings.fnr =
-    defaultSettings.fnr.length === 0 ? EKSEMPEL_FNR : defaultSettings.fnr;
+defaultSettings.fnr = defaultSettings.fnr;
 defaultSettings.loginUrl = `${defaultSettings.baseUrl}/aktivitetsplanfelles/${defaultSettings.fnr}`;
 
 module.exports = nightwatch_config;
