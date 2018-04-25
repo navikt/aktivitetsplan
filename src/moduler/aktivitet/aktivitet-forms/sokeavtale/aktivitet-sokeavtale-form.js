@@ -20,6 +20,19 @@ import {
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../../proptypes';
+import {
+    hentMalverkMedType,
+    settValgtMalverk,
+    slettValgtMalverk,
+} from '../../../malverk/malverk-reducer';
+import {
+    selectMalverkData,
+    selectMalverkMedTittel,
+    selectMalverkStatus,
+    selectValgtMalverkSlice,
+} from '../../../malverk/malverk-selector';
 
 function erAvtalt(verdi, props) {
     return !!props.avtalt;
@@ -71,6 +84,16 @@ const begrensetBeskrivelseLengde = maksLengde(
 // TODO fiks i separat quickfix
 // eslint-disable-next-line react/prefer-stateless-function
 class SokeAvtaleAktivitetForm extends Component {
+    componentDidMount() {
+        const { doHentMalverMedType } = this.props;
+        doHentMalverMedType();
+    }
+
+    componentWillUnmount() {
+        const { doSlettValgtMalverk } = this.props;
+        doSlettValgtMalverk();
+    }
+
     render() {
         const {
             handleSubmit,
@@ -78,8 +101,58 @@ class SokeAvtaleAktivitetForm extends Component {
             currentFraDato,
             currentTilDato,
             avtalt,
+            malverk,
+            avhengigheter,
+            doHentMalverkMedTittel,
+            doSettValgtMalverk,
         } = this.props;
+
         const erAktivitetAvtalt = avtalt === true;
+
+        function lagMalverkOption(mal) {
+            return (
+                <option key={mal.tittel} value={mal.tittel}>
+                    {mal.tittel}
+                </option>
+            );
+        }
+
+        function onChangeMalverk(event) {
+            event.preventDefault();
+            // event.target.value er tittel på malverk
+            const valgtMalverk = doHentMalverkMedTittel(event.target.value);
+            doSettValgtMalverk(valgtMalverk);
+        }
+
+        const selectMalverk = (
+            <div className="skjemaelement">
+                <Innholdslaster
+                    avhengigheter={avhengigheter}
+                    spinnerStorrelse="S"
+                >
+                    <label className="skjemaelement__label" htmlFor="malverk">
+                        <FormattedMessage id="aktivitet-form.label.malverk" />
+                    </label>
+                    <div className="selectContainer input--fullbredde">
+                        <select
+                            className="skjemaelement__input"
+                            name="malverk"
+                            onClick={onChangeMalverk}
+                            disabled={erAktivitetAvtalt}
+                        >
+                            <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
+                                {text =>
+                                    <option value="ingen">
+                                        {text}
+                                    </option>}
+                            </FormattedMessage>
+                            {Object.values(malverk).map(lagMalverkOption)}
+                        </select>
+                    </div>
+                </Innholdslaster>
+            </div>
+        );
+
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
@@ -89,7 +162,7 @@ class SokeAvtaleAktivitetForm extends Component {
                         ingressType={SOKEAVTALE_AKTIVITET_TYPE}
                         pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
                     />
-
+                    {selectMalverk}
                     <Input
                         feltNavn="tittel"
                         disabled
@@ -122,7 +195,7 @@ class SokeAvtaleAktivitetForm extends Component {
                         feltNavn="antallStillingerSokes"
                         disabled={erAktivitetAvtalt}
                         labelId="sokeavtale-aktivitet-form.label.antall"
-                        bredde="s"
+                        bredde="S"
                     />
                     <Textarea
                         feltNavn="avtaleOppfolging"
@@ -152,6 +225,12 @@ SokeAvtaleAktivitetForm.propTypes = {
     currentTilDato: PT.instanceOf(Date),
     avtalt: PT.bool,
     isDirty: PT.bool.isRequired,
+    doHentMalverMedType: PT.func.isRequired,
+    malverk: PT.arrayOf(AppPT.malverktype),
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    doHentMalverkMedTittel: PT.func.isRequired,
+    doSettValgtMalverk: PT.func.isRequired,
+    doSlettValgtMalverk: PT.func.isRequired,
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
@@ -159,6 +238,7 @@ SokeAvtaleAktivitetForm.defaultProps = {
     currentFraDato: undefined,
     currentTilDato: undefined,
     avtalt: false,
+    malverk: undefined,
 };
 
 const SokeavtaleAktivitetReduxForm = validForm({
@@ -166,6 +246,7 @@ const SokeavtaleAktivitetReduxForm = validForm({
     errorSummaryTitle: (
         <FormattedMessage id="sokeavtale-aktivitet-form.feiloppsummering-tittel" />
     ),
+    enableReinitialize: true,
     validate: {
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
@@ -180,9 +261,22 @@ const SokeavtaleAktivitetReduxForm = validForm({
     },
 })(SokeAvtaleAktivitetForm);
 
+const mapDispatchToProps = dispatch => ({
+    doHentMalverMedType: () => {
+        dispatch(hentMalverkMedType('SOKEAVTALE'));
+    },
+    doSettValgtMalverk: valgtMalverk => {
+        dispatch(settValgtMalverk(valgtMalverk));
+    },
+    doSlettValgtMalverk: () => {
+        dispatch(slettValgtMalverk());
+    },
+});
+
 const mapStateToProps = (state, props) => {
     const selector = formValueSelector(formNavn);
-    const aktivitet = props.aktivitet || {};
+    const valgtMalverk = selectValgtMalverkSlice(state);
+    const aktivitet = valgtMalverk || props.aktivitet || {};
     return {
         initialValues: {
             status: STATUS_PLANLAGT,
@@ -198,7 +292,12 @@ const mapStateToProps = (state, props) => {
             : undefined,
         isDirty: isDirty(formNavn)(state),
         avtalt: aktivitet && aktivitet.avtalt,
+        malverk: selectMalverkData(state),
+        avhengigheter: [selectMalverkStatus(state)],
+        doHentMalverkMedTittel: tittel => selectMalverkMedTittel(state, tittel),
     };
 };
 
-export default connect(mapStateToProps)(SokeavtaleAktivitetReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    SokeavtaleAktivitetReduxForm
+);

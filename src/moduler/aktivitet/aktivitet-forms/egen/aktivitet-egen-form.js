@@ -107,6 +107,7 @@ class EgenAktivitetForm extends Component {
             doHentMalverkMedTittel,
             doSettValgtMalverk,
         } = props;
+
         const erAktivitetAvtalt = avtalt === true;
 
         function lagMalverkOption(mal) {
@@ -138,6 +139,7 @@ class EgenAktivitetForm extends Component {
                             className="skjemaelement__input"
                             name="malverk"
                             onClick={onChangeMalverk}
+                            disabled={erAktivitetAvtalt}
                         >
                             <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
                                 {text =>
@@ -151,6 +153,7 @@ class EgenAktivitetForm extends Component {
                 </Innholdslaster>
             </div>
         );
+
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
@@ -230,7 +233,7 @@ EgenAktivitetForm.propTypes = {
     avtalt: PT.bool,
     isDirty: PT.bool.isRequired,
     doHentMalverMedType: PT.func.isRequired,
-    malverk: PT.oneOfType([PT.arrayOf(AppPT.malverktype), AppPT.malverktype]),
+    malverk: PT.arrayOf(AppPT.malverktype),
     avhengigheter: AppPT.avhengigheter.isRequired,
     doHentMalverkMedTittel: PT.func.isRequired,
     doSettValgtMalverk: PT.func.isRequired,
