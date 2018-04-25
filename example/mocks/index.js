@@ -16,13 +16,17 @@ import arena from './arena';
 import getPerson from './person';
 import { malListe, opprettMal, sisteMal } from './mal';
 import vilkar from './vilkar';
-import veilederTilgang from './veilderTilgang';
+import veilederTilgang from './veilederTilgang';
+import veiledere from './veiledere';
+import enheter from './enheter';
 import feature from './feature';
+import oppfoelgingsstatus from './oppfoelgingsstatus';
 import fetchMock from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
 import { hentMalverkMedType } from './malverk';
 
 const mock = fetchMock.configure({
+    enableFallback: false,
     middleware: fetchmockMiddleware,
 });
 
@@ -117,6 +121,31 @@ mock.get('/veilarbaktivitetproxy/api/aktivitet', aktiviteter);
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
     getPerson(pathParams.fnr)
+);
+
+//veilarbveileder-api
+mock.get('/veilarbveileder/api/enhet/:enhetNr/veiledere', ({ pathParams }) => {
+    // 9999 er oppfolgingsenhet, som stortsett er den som skal brukes av aktivitetsplanen
+    // 007 er geografiskenhet, men per i dag er vi ikke interessert i denne her.
+    if (pathParams.enhetNr !== '9999') {
+        throw new Error('Har nok spurt om feil enhet her?');
+    }
+    return veiledere;
+});
+
+//veilarboppgave-api
+mock.get('/veilarboppgave/api/enheter', ({ queryParams }) => enheter);
+
+mock.post('/veilarboppfolging/api/tilordneveileder', ({ body }) => {
+    return {
+        feilendeTilordninger: [],
+        resultat: 'OK: Veiledere tilordnet',
+    };
+});
+
+mock.get(
+    '/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus',
+    oppfoelgingsstatus
 );
 
 //veilarbmalverk-api

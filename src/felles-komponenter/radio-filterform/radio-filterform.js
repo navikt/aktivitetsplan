@@ -24,6 +24,7 @@ class RadioFilterForm extends Component {
             createValue,
             radioName,
             fjernNullstill,
+            visLukkKnapp,
             ...rest
         } = this.props;
         const { selected } = this.state;
@@ -42,15 +43,22 @@ class RadioFilterForm extends Component {
                     )}
                 </div>
                 <div className="knapperad blokk-xxs">
-                    <Hovedknapp
-                        mini
-                        className="radio-velg--knapp"
-                        onClick={event =>
-                            onSubmit({ event, value: selected, ...rest })}
-                        disabled={!selected}
-                    >
-                        <FormattedMessage id="components.filterform.button.velg" />
-                    </Hovedknapp>
+                    <HiddenIf hidden={visLukkKnapp && !selected}>
+                        <Hovedknapp
+                            mini
+                            className="radio-velg--knapp"
+                            onClick={event =>
+                                onSubmit({ event, value: selected, ...rest })}
+                            disabled={!selected}
+                        >
+                            <FormattedMessage id="components.filterform.button.velg" />
+                        </Hovedknapp>
+                    </HiddenIf>
+                    <HiddenIf hidden={!visLukkKnapp || !!selected}>
+                        <Knapp mini onClick={this.props.closeDropdown}>
+                            <FormattedMessage id="components.filterform.button.lukk" />
+                        </Knapp>
+                    </HiddenIf>
                     <HiddenIf hidden={fjernNullstill}>
                         <Knapp
                             mini
@@ -73,12 +81,15 @@ RadioFilterForm.propTypes = {
     onSubmit: PT.func.isRequired,
     createLabel: PT.func.isRequired,
     createValue: PT.func.isRequired,
+    closeDropdown: PT.func.isRequired,
     radioName: PT.string.isRequired,
     fjernNullstill: PT.bool,
+    visLukkKnapp: PT.bool,
 };
 
 RadioFilterForm.defaultProps = {
     fjernNullstill: false,
+    visLukkKnapp: false,
 };
 
 export default RadioFilterForm;

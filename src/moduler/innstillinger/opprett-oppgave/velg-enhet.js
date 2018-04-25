@@ -66,13 +66,16 @@ class VelgEnhet extends Component {
                     name="velg-enhet-dropdown"
                 >
                     <SokFilter data={enhetliste} label="" placeholder="">
-                        <RadioFilterForm
-                            onSubmit={this.setValgtEnhet}
-                            createLabel={settSammenNavn}
-                            createValue={enhet => enhet.enhetId}
-                            radioName="velg-enhet"
-                            fjernNullstill
-                        />
+                        {(data, props) =>
+                            <RadioFilterForm
+                                onSubmit={this.setValgtEnhet}
+                                createLabel={settSammenNavn}
+                                createValue={enhet => enhet.enhetId}
+                                radioName="velg-enhet"
+                                data={data}
+                                fjernNullstill
+                                {...props}
+                            />}
                     </SokFilter>
                 </Dropdown>
                 <Field component={hiddenInput(enhetGuid)} name="enhetId" />

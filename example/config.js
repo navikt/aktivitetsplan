@@ -10,6 +10,6 @@ export const VIS_SIDEBANNER = true;
 
 export const FNR_I_URL = INTERNFLATE;
 
-export const EKSEMPEL_FNR = '06128074978';
+export const EKSEMPEL_FNR = '12345678912';
 
 export const EKSEMPEL_VEILEDER = 'Z123456';

@@ -56,12 +56,14 @@ class VelgVeileder extends Component {
                     name="velg-veileder-dropdown"
                 >
                     <SokFilter data={veilederliste} label="" placeholder="">
-                        <RadioFilterForm
-                            onSubmit={this.setValgtVeileder}
-                            createLabel={settSammenNavn}
-                            createValue={veileder => veileder.ident}
-                            radioName="velg-veileder"
-                        />
+                        {(data, props) =>
+                            <RadioFilterForm
+                                onSubmit={this.setValgtVeileder}
+                                createLabel={settSammenNavn}
+                                createValue={veileder => veileder.ident}
+                                radioName="velg-veileder"
+                                {...props}
+                            />}
                     </SokFilter>
                 </Dropdown>
                 <Field

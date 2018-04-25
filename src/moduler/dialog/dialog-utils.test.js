@@ -1,6 +1,9 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
-import { sammenlignDialogerForVeileder } from './dialog-utils';
+import {
+    sammenlignDialogerForBruker,
+    sammenlignDialogerForVeileder,
+} from './dialog-utils';
 
 function knuth(array) {
     let currentIndex = array.length;
@@ -23,7 +26,7 @@ function erIdStorreEnForrige(element, index, array) {
     return index > 0 ? element.id > array[index - 1].id : true;
 }
 
-describe('dialog sortering på innsiden', () => {
+describe('dialogsortering på innsiden', () => {
     it('Skal sorteres på dato hvis tags er like', () => {
         const dialoger = [
             {
@@ -423,5 +426,31 @@ describe('dialog sortering på innsiden', () => {
                     .every(erIdStorreEnForrige)
             ).to.equal(true);
         }
+    });
+});
+
+describe('dialogsortering på utsiden', () => {
+    it('Skal sortere på dato hvis resten er likt', () => {
+        const dialoger = [
+            {
+                id: '1',
+                sisteDato: '2017-07-19T14:09:59.334+02:00',
+                lest: false,
+                venterPaSvar: false,
+                ferdigBehandlet: false,
+            },
+            {
+                id: '2',
+                sisteDato: '2017-07-18T14:09:59.334+02:00',
+                lest: false,
+                venterPaSvar: false,
+                ferdigBehandlet: false,
+            },
+        ];
+        expect(
+            dialoger
+                .sort(sammenlignDialogerForBruker)
+                .every(erIdStorreEnForrige)
+        ).to.equal(true);
     });
 });
