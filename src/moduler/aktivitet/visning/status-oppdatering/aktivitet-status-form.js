@@ -121,11 +121,7 @@ function AktivitetStatusForm(props) {
                         }
                         value={STATUS_AVBRUTT}
                         id={`id--${STATUS_AVBRUTT}`}
-                        disabled={
-                            disableStatusEndring ||
-                            lasterData ||
-                            manglerReferatPublisering
-                        }
+                        disabled={disableStatusEndring || lasterData}
                     />
                 </div>
             </div>
@@ -188,13 +184,10 @@ const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
 
 function kanOppdatereStatus() {
     return (ignored, props) => {
-        const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(
-            props.valgtAktivitetStatus
-        );
+        const fullfoert = STATUS_FULLFOERT === props.valgtAktivitetStatus;
         return (
-            ferdigStatus &&
-            manglerPubliseringAvSamtaleReferat(props.aktivitet || {}) &&
-            <FormattedMessage id="referat.validering.ikke-publisert" />
+            fullfoert &&
+            manglerPubliseringAvSamtaleReferat(props.aktivitet || {})
         );
     };
 }

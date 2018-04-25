@@ -69,12 +69,12 @@ export function formatterKlokkeslett(klokkeslett) {
     return formatterVarighet(klokkeslett);
 }
 
-export function manglerPubliseringAvSamtaleReferat(aktivitet) {
+export function manglerPubliseringAvSamtaleReferat(aktivitet, avbryt) {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
-        ((type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) &&
-            !erReferatPublisert)
+        (type === MOTE_TYPE && !erReferatPublisert && !avbryt) ||
+        (type === SAMTALEREFERAT_TYPE && !erReferatPublisert)
     );
 }
 

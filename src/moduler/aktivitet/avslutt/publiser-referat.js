@@ -7,8 +7,8 @@ import OppdaterReferatContainer from '../visning/status-oppdatering/oppdater-ref
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import * as AppPT from '../../../proptypes';
 
-function PubliserReferat({ aktivitet, children }) {
-    if (manglerPubliseringAvSamtaleReferat(aktivitet)) {
+function PubliserReferat({ aktivitet, avbryt, children }) {
+    if (manglerPubliseringAvSamtaleReferat(aktivitet, avbryt)) {
         return (
             <ModalContainer className="publiser-referat">
                 <AlertStripeInfoSolid className="publiser-referat__info">
@@ -23,6 +23,7 @@ function PubliserReferat({ aktivitet, children }) {
 
 PubliserReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
+    avbryt: PT.bool.isRequired,
     children: PT.node.isRequired,
 };
 

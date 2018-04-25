@@ -49,7 +49,7 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
             header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
             contentLabel="avbryt-aktivitet"
         >
-            <PubliserReferat aktivitet={valgtAktivitet}>
+            <PubliserReferat aktivitet={valgtAktivitet} avbryt>
                 {valgtAktivitet.avtalt ? begrunnelse : advarsel}
             </PubliserReferat>
         </Modal>
