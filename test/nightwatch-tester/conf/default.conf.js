@@ -22,6 +22,7 @@ const nightwatch_config = {
             fnr: '1234556',
             javaScriptEnabled: true,
             acceptSslCerts: true,
+            disable_colors: true,
             screenshots: {
                 enabled: true,
                 on_failure: true,
