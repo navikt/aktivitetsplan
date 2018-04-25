@@ -85,8 +85,10 @@ const begrensetoppfolginLengde = maksLengde(
 // eslint-disable-next-line react/prefer-stateless-function
 class EgenAktivitetForm extends Component {
     componentDidMount() {
-        const { doHentMalverMedType } = this.props;
-        doHentMalverMedType();
+        const { doHentMalverMedType, endre } = this.props;
+        if (!endre) {
+            doHentMalverMedType();
+        }
     }
 
     componentWillUnmount() {
@@ -95,7 +97,6 @@ class EgenAktivitetForm extends Component {
     }
 
     render() {
-        const props = this.props;
         const {
             currentFraDato,
             currentTilDato,
@@ -106,7 +107,8 @@ class EgenAktivitetForm extends Component {
             avhengigheter,
             doHentMalverkMedTittel,
             doSettValgtMalverk,
-        } = props;
+            endre,
+        } = this.props;
 
         const erAktivitetAvtalt = avtalt === true;
 
@@ -125,7 +127,8 @@ class EgenAktivitetForm extends Component {
             doSettValgtMalverk(valgtMalverk);
         }
 
-        const selectMalverk = (
+        const selectMalverk =
+            !endre &&
             <div className="skjemaelement">
                 <Innholdslaster
                     avhengigheter={avhengigheter}
@@ -139,7 +142,6 @@ class EgenAktivitetForm extends Component {
                             className="skjemaelement__input"
                             name="malverk"
                             onClick={onChangeMalverk}
-                            disabled={erAktivitetAvtalt}
                         >
                             <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
                                 {text =>
@@ -151,8 +153,7 @@ class EgenAktivitetForm extends Component {
                         </select>
                     </div>
                 </Innholdslaster>
-            </div>
-        );
+            </div>;
 
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
@@ -238,6 +239,7 @@ EgenAktivitetForm.propTypes = {
     doHentMalverkMedTittel: PT.func.isRequired,
     doSettValgtMalverk: PT.func.isRequired,
     doSlettValgtMalverk: PT.func.isRequired,
+    endre: PT.bool,
 };
 
 EgenAktivitetForm.defaultProps = {
@@ -246,6 +248,7 @@ EgenAktivitetForm.defaultProps = {
     currentTilDato: undefined,
     avtalt: false,
     malverk: undefined,
+    endre: false,
 };
 
 const EgenAktivitetReduxForm = validForm({
@@ -281,7 +284,9 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = (state, props) => {
     const selector = formValueSelector(formNavn);
     const valgtMalverk = selectValgtMalverkSlice(state);
-    const aktivitet = valgtMalverk || props.aktivitet || {};
+    const aktivitet = props.endre
+        ? props.aktivitet
+        : valgtMalverk || props.aktivitet || {};
 
     return {
         initialValues: {

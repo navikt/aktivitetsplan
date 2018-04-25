@@ -85,8 +85,10 @@ const begrensetBeskrivelseLengde = maksLengde(
 // eslint-disable-next-line react/prefer-stateless-function
 class SokeAvtaleAktivitetForm extends Component {
     componentDidMount() {
-        const { doHentMalverMedType } = this.props;
-        doHentMalverMedType();
+        const { doHentMalverMedType, endre } = this.props;
+        if (!endre) {
+            doHentMalverMedType();
+        }
     }
 
     componentWillUnmount() {
@@ -105,6 +107,7 @@ class SokeAvtaleAktivitetForm extends Component {
             avhengigheter,
             doHentMalverkMedTittel,
             doSettValgtMalverk,
+            endre,
         } = this.props;
 
         const erAktivitetAvtalt = avtalt === true;
@@ -124,7 +127,8 @@ class SokeAvtaleAktivitetForm extends Component {
             doSettValgtMalverk(valgtMalverk);
         }
 
-        const selectMalverk = (
+        const selectMalverk =
+            !endre &&
             <div className="skjemaelement">
                 <Innholdslaster
                     avhengigheter={avhengigheter}
@@ -138,7 +142,6 @@ class SokeAvtaleAktivitetForm extends Component {
                             className="skjemaelement__input"
                             name="malverk"
                             onClick={onChangeMalverk}
-                            disabled={erAktivitetAvtalt}
                         >
                             <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
                                 {text =>
@@ -150,8 +153,7 @@ class SokeAvtaleAktivitetForm extends Component {
                         </select>
                     </div>
                 </Innholdslaster>
-            </div>
-        );
+            </div>;
 
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
@@ -231,6 +233,7 @@ SokeAvtaleAktivitetForm.propTypes = {
     doHentMalverkMedTittel: PT.func.isRequired,
     doSettValgtMalverk: PT.func.isRequired,
     doSlettValgtMalverk: PT.func.isRequired,
+    endre: PT.bool,
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
@@ -239,6 +242,7 @@ SokeAvtaleAktivitetForm.defaultProps = {
     currentTilDato: undefined,
     avtalt: false,
     malverk: undefined,
+    endre: false,
 };
 
 const SokeavtaleAktivitetReduxForm = validForm({
@@ -276,7 +280,9 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = (state, props) => {
     const selector = formValueSelector(formNavn);
     const valgtMalverk = selectValgtMalverkSlice(state);
-    const aktivitet = valgtMalverk || props.aktivitet || {};
+    const aktivitet = props.endre
+        ? props.aktivitet
+        : valgtMalverk || props.aktivitet || {};
     return {
         initialValues: {
             status: STATUS_PLANLAGT,
