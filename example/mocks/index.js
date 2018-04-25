@@ -20,6 +20,7 @@ import veilederTilgang from './veilderTilgang';
 import feature from './feature';
 import fetchMock from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
+import { hentMalverkMedType } from './malverk';
 
 const mock = fetchMock.configure({
     middleware: fetchmockMiddleware,
@@ -73,7 +74,6 @@ mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettDialog(body));
 //veilarbdialogproxy
 mock.get('/veilarbdialogproxy/api/dialog', dialog);
 
-
 // veilarbaktivitet-api
 mock.get('/veilarbaktivitet/api/aktivitet/kanaler', [
     'internett',
@@ -108,13 +108,16 @@ mock.put(
 
 //veilarbaktivitetproxy
 mock.get('/veilarbaktivitetproxy/api/aktivitet/arena', arena);
-mock.get('/veilarbaktivitetproxy/api/aktivitet/:aktivitetId', ({ pathParams }) =>
-    getAktivitet(pathParams.aktivitetId)
+mock.get(
+    '/veilarbaktivitetproxy/api/aktivitet/:aktivitetId',
+    ({ pathParams }) => getAktivitet(pathParams.aktivitetId)
 );
 mock.get('/veilarbaktivitetproxy/api/aktivitet', aktiviteter);
-
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
     getPerson(pathParams.fnr)
 );
+
+//veilarbmalverk-api
+mock.post('/veilarbmalverk/api/mal', ({ body }) => hentMalverkMedType(body));
