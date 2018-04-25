@@ -1,3 +1,5 @@
+
+
 function getEnviromentVariable(
     variableName,
     ignoreIfMissing = false,
@@ -12,7 +14,8 @@ function getEnviromentVariable(
     }
 
     if (stripDomain && value) {
-        const url = new URL(value);
+        const  url = document.createElement("a");
+        url.href = value;
         return `${url.pathname}${url.search}`;
     }
 
