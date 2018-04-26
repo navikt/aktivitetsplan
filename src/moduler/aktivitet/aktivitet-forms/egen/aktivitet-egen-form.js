@@ -4,6 +4,7 @@ import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
+import { VIS_MALER } from '~config'; // eslint-disable-line
 import { formNavn } from '../aktivitet-form-utils';
 import { moment } from '../../../../utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
@@ -95,7 +96,7 @@ class EgenAktivitetForm extends Component {
                         pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
                         ingressType={EGEN_AKTIVITET_TYPE}
                     />
-                    <Malverk endre={endre} type="EGEN" />
+                    <Malverk visible={VIS_MALER} endre={endre} type="EGEN" />
                     <Input
                         feltNavn="tittel"
                         disabled={erAktivitetAvtalt}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
+import visibleIfHOC from './../../hocs/visible-if';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
     selectMalverkData,
@@ -113,4 +114,6 @@ const mapStateToProps = state => ({
     doHentMalverkMedTittel: tittel => selectMalverkMedTittel(state, tittel),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Malverk);
+export default visibleIfHOC(
+    connect(mapStateToProps, mapDispatchToProps)(Malverk)
+);
