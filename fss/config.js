@@ -7,3 +7,4 @@ export const TILLAT_SLETTING = false;
 export const VIS_INNSTILLINGER = true;
 export const VIS_SIDEBANNER = false;
 export const FNR_I_URL = true;
+export const VIS_MALER = true;
