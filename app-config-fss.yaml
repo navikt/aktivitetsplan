@@ -64,7 +64,7 @@ fasitResources:
       url: PUBLIC_VEILARBVEILEDER_URL
 
   - alias: veilarbmalverkAPI
-    resourceTyoe: restservice
+    resourceType: restservice
     propertymap:
         url: PUBLIC_VEILARBMALVERK_URL
 
