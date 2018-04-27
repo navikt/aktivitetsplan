@@ -4,6 +4,7 @@ import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
+import { VIS_MALER } from '~config'; // eslint-disable-line
 import { formNavn } from '../aktivitet-form-utils';
 import { moment } from '../../../../utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
@@ -20,6 +21,8 @@ import {
 } from '../../../../felles-komponenter/skjema/validering';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import { selectValgtMalverkSlice } from '../../../malverk/malverk-selector';
+import Malverk from '../../../malverk/malverk';
 
 const TITTEL_MAKS_LENGDE = 255;
 const HENSIKT_MAKS_LENGDE = 255;
@@ -72,15 +75,17 @@ const begrensetoppfolginLengde = maksLengde(
 // eslint-disable-next-line react/prefer-stateless-function
 class EgenAktivitetForm extends Component {
     render() {
-        const props = this.props;
         const {
             currentFraDato,
             currentTilDato,
             handleSubmit,
             errorSummary,
             avtalt,
-        } = props;
+            endre,
+        } = this.props;
+
         const erAktivitetAvtalt = avtalt === true;
+
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
@@ -91,7 +96,7 @@ class EgenAktivitetForm extends Component {
                         pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
                         ingressType={EGEN_AKTIVITET_TYPE}
                     />
-
+                    <Malverk visible={VIS_MALER} endre={endre} type="EGEN" />
                     <Input
                         feltNavn="tittel"
                         disabled={erAktivitetAvtalt}
@@ -159,6 +164,7 @@ EgenAktivitetForm.propTypes = {
     currentTilDato: PT.instanceOf(Date),
     avtalt: PT.bool,
     isDirty: PT.bool.isRequired,
+    endre: PT.bool,
 };
 
 EgenAktivitetForm.defaultProps = {
@@ -166,6 +172,7 @@ EgenAktivitetForm.defaultProps = {
     currentFraDato: undefined,
     currentTilDato: undefined,
     avtalt: false,
+    endre: false,
 };
 
 const EgenAktivitetReduxForm = validForm({
@@ -173,6 +180,7 @@ const EgenAktivitetReduxForm = validForm({
     errorSummaryTitle: (
         <FormattedMessage id="egen-aktivitet-form.feiloppsummering-tittel" />
     ),
+    enableReinitialize: true,
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
@@ -187,7 +195,11 @@ const EgenAktivitetReduxForm = validForm({
 
 const mapStateToProps = (state, props) => {
     const selector = formValueSelector(formNavn);
-    const aktivitet = props.aktivitet || {};
+    const valgtMalverk = selectValgtMalverkSlice(state);
+    const aktivitet = props.endre
+        ? props.aktivitet
+        : valgtMalverk || props.aktivitet || {};
+
     return {
         initialValues: {
             status: STATUS_BRUKER_ER_INTRESSERT,

@@ -29,6 +29,7 @@ import utskriftReducer from './moduler/utskrift/utskrift-duck';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
+import malverkReducer from './moduler/malverk/malverk-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -60,6 +61,7 @@ const combinedReducers = combineReducers({
         vilkar: vilkarReducer,
         feature: featureReducer,
         veilederTilgang: veilederTilgangReducer,
+        malverk: malverkReducer,
         veilederePaEnhet: veilederePaEnhetReducer,
         tildelVeileder: tildelVeilederReducer,
     }),
