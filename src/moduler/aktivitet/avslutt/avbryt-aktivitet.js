@@ -15,6 +15,9 @@ import {
 import PubliserReferat from './publiser-referat';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import { STATUS_AVBRUTT } from '../../../constant';
+import { trengerBegrunnelse } from '../aktivitet-util';
+
 
 const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
     const begrunnelse = (
@@ -44,13 +47,15 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
         />
     );
 
+    const maaBegrunnes = trengerBegrunnelse(valgtAktivitet.avtalt, STATUS_AVBRUTT, valgtAktivitet.type);
+
     return (
         <Modal
             header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
             contentLabel="avbryt-aktivitet"
         >
-            <PubliserReferat aktivitet={valgtAktivitet}>
-                {valgtAktivitet.avtalt ? begrunnelse : advarsel}
+            <PubliserReferat aktivitet={valgtAktivitet} nyStatus={STATUS_AVBRUTT}>
+                {maaBegrunnes ? begrunnelse : advarsel}
             </PubliserReferat>
         </Modal>
     );

@@ -7,16 +7,11 @@ import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import AvtaltContainer from './avtalt-container/avtalt-container';
 import {
-    STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
-    SAMTALEREFERAT_TYPE,
-    MOTE_TYPE,
 } from '../../../constant';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import VarslingBoks from './hjelpekomponenter/varsling-boks';
@@ -24,6 +19,8 @@ import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjo
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
 import OppdaterReferatContainer from './status-oppdatering/oppdater-referat-container';
 import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
+import { trengerBegrunnelse } from '../aktivitet-util';
+
 
 function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
     const arenaAktivitet = [
@@ -33,12 +30,7 @@ function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
     ].includes(aktivitet.type);
 
     const visBegrunnelse =
-        !arenaAktivitet &&
-        aktivitet.avtalt === true &&
-        ((aktivitet.status === STATUS_FULLFOERT &&
-            aktivitet.type !== SAMTALEREFERAT_TYPE &&
-            aktivitet.type !== MOTE_TYPE) ||
-            aktivitet.status === STATUS_AVBRUTT);
+        !arenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
     const AktivitetvisningFooter = ({ visible }) =>
         <ModalFooter visible={visible}>

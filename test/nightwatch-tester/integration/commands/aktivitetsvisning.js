@@ -198,8 +198,7 @@ module.exports = {
             forventedeStatuser
                 .filter(
                     x =>
-                        x.status === AktivitetStatus.FULLFORT ||
-                        x.status === AktivitetStatus.AVBRUTT
+                        x.status === AktivitetStatus.FULLFORT
                 )
                 .forEach(y => {
                     y.disablet = 'true';

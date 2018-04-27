@@ -6,13 +6,24 @@ import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
 import OppdaterReferatContainer from '../visning/status-oppdatering/oppdater-referat-container';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import * as AppPT from '../../../proptypes';
+import { MOTE_TYPE } from '../../../constant';
 
-function PubliserReferat({ aktivitet, children }) {
-    if (manglerPubliseringAvSamtaleReferat(aktivitet)) {
+function manglerpubliseringTextId(aktivitet) {
+    const type = aktivitet.type;
+    if (type === MOTE_TYPE) {
+        return 'aktivitetstatus.mangler-publisering-av-samtalereferat.mote';
+    }
+
+    return 'aktivitetstatus.mangler-publisering-av-samtalereferat';
+}
+
+
+function PubliserReferat({ aktivitet, nyStatus, children }) {
+    if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {
         return (
             <ModalContainer className="publiser-referat">
                 <AlertStripeInfoSolid className="publiser-referat__info">
-                    <FormattedMessage id="aktivitetstatus.mangler-publisering-av-samtalereferat" />
+                    <FormattedMessage id={manglerpubliseringTextId(aktivitet)} />
                 </AlertStripeInfoSolid>
                 <OppdaterReferatContainer aktivitet={aktivitet} />
             </ModalContainer>
@@ -23,7 +34,12 @@ function PubliserReferat({ aktivitet, children }) {
 
 PubliserReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
+    nyStatus: PT.string,
     children: PT.node.isRequired,
+};
+
+PubliserReferat.defaultProps = {
+    nyStatus: undefined,
 };
 
 export default PubliserReferat;
