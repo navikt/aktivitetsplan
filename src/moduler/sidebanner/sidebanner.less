@@ -1,11 +1,8 @@
-.sidebanner-container {
-    .blokk-s();
-    background: @navDypBlaLighten80;
-    border-bottom: 3px solid @navDypBlaLighten60;
-    padding: 0.5rem 0.5rem 0 0.5rem;
-}
-
 .sidebanner {
+    .blokk-s();
+    width: 100%;
+    background-color: @navLysBlaLighten60;
+    border-bottom: 3px solid @navLysBlaLighten20;
     display: flex;
     justify-content: center;
     align-items: baseline;
@@ -22,19 +19,12 @@
 }
 
 @media (min-width: @screen-md-min) {
-    .sidebanner-container {
+    .sidebanner {
         .blokk-l();
     }
 
-    .sidebanner-grid {
-        width: 956px;
-        margin: 0 auto;
-    }
-
-    .sidebanner {
-        &__illustrasjon {
-            display: inline;
-            flex: 0 0 3.75rem;
-        }
+    .sidebanner__illustrasjon {
+        display: inline;
+        flex: 0 0 3.75rem;
     }
 }
