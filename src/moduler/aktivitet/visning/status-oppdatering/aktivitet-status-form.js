@@ -18,9 +18,13 @@ import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
-import { manglerPubliseringAvSamtaleReferat, trengerBegrunnelse } from '../../aktivitet-util';
 import {
-    INGEN_VALGT, MOTE_TYPE,
+    manglerPubliseringAvSamtaleReferat,
+    trengerBegrunnelse,
+} from '../../aktivitet-util';
+import {
+    INGEN_VALGT,
+    MOTE_TYPE,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
@@ -175,9 +179,11 @@ const harBegrunnelse = pakrevd(
     'opprett-begrunnelse.melding.feilmelding.for-kort'
 );
 const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
-    trengerBegrunnelse(props.aktivitet.avtalt, props.values.aktivitetstatus,
-        props.aktivitet.type) &&
-    harBegrunnelse(begrunnelse, props);
+    trengerBegrunnelse(
+        props.aktivitet.avtalt,
+        props.values.aktivitetstatus,
+        props.aktivitet.type
+    ) && harBegrunnelse(begrunnelse, props);
 
 function kanOppdatereStatus() {
     return (ignored, props) => {
@@ -186,7 +192,10 @@ function kanOppdatereStatus() {
         );
         return (
             ferdigStatus &&
-            manglerPubliseringAvSamtaleReferat(props.aktivitet || {}, props.valgtAktivitetStatus) &&
+            manglerPubliseringAvSamtaleReferat(
+                props.aktivitet || {},
+                props.valgtAktivitetStatus
+            ) &&
             <FormattedMessage id="referat.validering.ikke-publisert" />
         );
     };
@@ -232,7 +241,8 @@ const mapStateToProps = (state, props) => {
             'aktivitetstatus'
         ),
         manglerReferatPublisering: manglerPubliseringAvSamtaleReferat(
-            aktivitet, status
+            aktivitet,
+            status
         ),
         initialValues: {
             begrunnelse: avsluttetKommentar,

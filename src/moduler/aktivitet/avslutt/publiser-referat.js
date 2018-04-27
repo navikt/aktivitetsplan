@@ -17,13 +17,14 @@ function manglerpubliseringTextId(aktivitet) {
     return 'aktivitetstatus.mangler-publisering-av-samtalereferat';
 }
 
-
 function PubliserReferat({ aktivitet, nyStatus, children }) {
     if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {
         return (
             <ModalContainer className="publiser-referat">
                 <AlertStripeInfoSolid className="publiser-referat__info">
-                    <FormattedMessage id={manglerpubliseringTextId(aktivitet)} />
+                    <FormattedMessage
+                        id={manglerpubliseringTextId(aktivitet)}
+                    />
                 </AlertStripeInfoSolid>
                 <OppdaterReferatContainer aktivitet={aktivitet} />
             </ModalContainer>

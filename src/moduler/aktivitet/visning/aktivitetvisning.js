@@ -21,7 +21,6 @@ import OppdaterReferatContainer from './status-oppdatering/oppdater-referat-cont
 import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 import { trengerBegrunnelse } from '../aktivitet-util';
 
-
 function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
     const arenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
@@ -30,7 +29,8 @@ function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
     ].includes(aktivitet.type);
 
     const visBegrunnelse =
-        !arenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
+        !arenaAktivitet &&
+        trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
     const AktivitetvisningFooter = ({ visible }) =>
         <ModalFooter visible={visible}>

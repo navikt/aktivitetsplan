@@ -18,7 +18,6 @@ import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { STATUS_AVBRUTT } from '../../../constant';
 import { trengerBegrunnelse } from '../aktivitet-util';
 
-
 const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
     const begrunnelse = (
         <BegrunnelseAktivitet
@@ -47,14 +46,21 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
         />
     );
 
-    const maaBegrunnes = trengerBegrunnelse(valgtAktivitet.avtalt, STATUS_AVBRUTT, valgtAktivitet.type);
+    const maaBegrunnes = trengerBegrunnelse(
+        valgtAktivitet.avtalt,
+        STATUS_AVBRUTT,
+        valgtAktivitet.type
+    );
 
     return (
         <Modal
             header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
             contentLabel="avbryt-aktivitet"
         >
-            <PubliserReferat aktivitet={valgtAktivitet} nyStatus={STATUS_AVBRUTT}>
+            <PubliserReferat
+                aktivitet={valgtAktivitet}
+                nyStatus={STATUS_AVBRUTT}
+            >
                 {maaBegrunnes ? begrunnelse : advarsel}
             </PubliserReferat>
         </Modal>

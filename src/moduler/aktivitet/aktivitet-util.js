@@ -1,6 +1,11 @@
 import 'moment-duration-format';
 import { moment } from '../../utils';
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import {
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+} from '../../constant';
 
 export function aktivitetEquals(a, b) {
     return (
@@ -73,11 +78,10 @@ export function manglerPubliseringAvSamtaleReferat(aktivitet, status) {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
-        type === MOTE_TYPE &&
-        !erReferatPublisert &&
-        status !== STATUS_AVBRUTT ||
-        type === SAMTALEREFERAT_TYPE &&
-        !erReferatPublisert
+        (type === MOTE_TYPE &&
+            !erReferatPublisert &&
+            status !== STATUS_AVBRUTT) ||
+        (type === SAMTALEREFERAT_TYPE && !erReferatPublisert)
     );
 }
 
@@ -90,13 +94,20 @@ function erAvbrytAvtalt(erAvtalt, status) {
 }
 
 function erFullfoertUtenReferat(erAvtalt, status, aktivitetType) {
-    return erAvtalt && status === STATUS_FULLFOERT && aktivitetType !== SAMTALEREFERAT_TYPE && aktivitetType !== MOTE_TYPE;
+    return (
+        erAvtalt &&
+        status === STATUS_FULLFOERT &&
+        aktivitetType !== SAMTALEREFERAT_TYPE &&
+        aktivitetType !== MOTE_TYPE
+    );
 }
 
 export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
-    return erAvbrytAvtalt(erAvtalt, status) ||
+    return (
+        erAvbrytAvtalt(erAvtalt, status) ||
         erFullfoertUtenReferat(erAvtalt, status, aktivitetType) ||
-        erAbrutMote(status, aktivitetType);
+        erAbrutMote(status, aktivitetType)
+    );
 }
 
 export function erGruppeDatoeneLike(fradato, tildato) {
