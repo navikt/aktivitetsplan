@@ -74,10 +74,14 @@ export function formatterKlokkeslett(klokkeslett) {
     return formatterVarighet(klokkeslett);
 }
 
-function moteManglerPubliseringAvSamtalereferat(type, status, erReferatPublisert) {
-    return type === MOTE_TYPE &&
-        !erReferatPublisert &&
-        status !== STATUS_AVBRUTT;
+function moteManglerPubliseringAvSamtalereferat(
+    type,
+    status,
+    erReferatPublisert
+) {
+    return (
+        type === MOTE_TYPE && !erReferatPublisert && status !== STATUS_AVBRUTT
+    );
 }
 
 function samtalreferatManglerPublisering(type, erReferatPublisert) {
@@ -88,7 +92,11 @@ export function manglerPubliseringAvSamtaleReferat(aktivitet, status) {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
-        moteManglerPubliseringAvSamtalereferat(type, status, erReferatPublisert) ||
+        moteManglerPubliseringAvSamtalereferat(
+            type,
+            status,
+            erReferatPublisert
+        ) ||
         samtalreferatManglerPublisering(type, erReferatPublisert)
     );
 }

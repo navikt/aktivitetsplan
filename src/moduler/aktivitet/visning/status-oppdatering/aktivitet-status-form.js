@@ -117,14 +117,17 @@ function AktivitetStatusForm(props) {
                         disabled={
                             disableStatusEndring ||
                             lasterData ||
-                            manglerReferatPublisering && aktivitet.type !== MOTE_TYPE
+                            (manglerReferatPublisering &&
+                                aktivitet.type !== MOTE_TYPE)
                         }
                     />
                 </div>
             </div>
 
             <HiddenIfAlertStripeInfo hidden={!manglerReferatPublisering}>
-                <FormattedMessage id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`} />
+                <FormattedMessage
+                    id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`}
+                />
             </HiddenIfAlertStripeInfo>
 
             <VisibleIfDiv className="status-alert" visible={dirty}>
