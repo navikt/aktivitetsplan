@@ -1,8 +1,8 @@
 import React from 'react';
 import personSvg from './person.svg';
 
-const DITTNAVN_PATH = '/dittnav';
-const VEIENTILARBEID_PATH = '/veientilarbeid';
+const DITTNAVN_PATH = '/dittnav/';
+const VEIENTILARBEID_PATH = '/veientilarbeid/';
 
 function Brodsmuler() {
     return (
