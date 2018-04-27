@@ -3,6 +3,7 @@
 require('babel-core/register');
 require('core-js/shim');
 
+const url = require('url');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const chaiEnzyme = require('chai-enzyme');
@@ -15,6 +16,7 @@ var jsdom = require('jsdom');
 var document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 var window = document.defaultView;
 window.call = function() {};
+window.URL = url.URL;
 
 global.document = document;
 global.document.cookie = '';
