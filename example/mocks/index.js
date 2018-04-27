@@ -23,6 +23,7 @@ import feature from './feature';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
 import fetchMock from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
+import { hentMalverkMedType } from './malverk';
 
 const mock = fetchMock.configure({
     enableFallback: false,
@@ -146,3 +147,6 @@ mock.get(
     '/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus',
     oppfoelgingsstatus
 );
+
+//veilarbmalverk-api
+mock.post('/veilarbmalverk/api/mal', ({ body }) => hentMalverkMedType(body));
