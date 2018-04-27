@@ -65,6 +65,12 @@ export const VEILEDER_BASE_URL = getEnviromentVariable(
     true
 );
 
+export const MALVERK_BASE_URL = getEnviromentVariable(
+    'VEILARBMALVERK_URL',
+    true,
+    true
+);
+
 export const FEATURE_BASE_URL = getEnviromentVariable(
     'FEATURE_ENDPOINT_URL',
     true,

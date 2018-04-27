@@ -30,6 +30,7 @@ window.aktivitetsplan = {
     veilarbperson_url: 'http://localhost:8080/veilarbperson/api',
     veilarbportefolje_url: 'http://localhost:8080/veilarbportefolje/api',
     veilarbveileder_url: 'http://localhost:8080/veilarbveileder/api',
+    veilarbmalverk_url: 'http://localhost:8080/veilarbmalverk/api',
     feature_endpoint_url: 'https://feature-t6.nais.preprod.local/feature',
     onboarding_video_url:
         'https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E',

@@ -13,3 +13,5 @@ export const FNR_I_URL = INTERNFLATE;
 export const EKSEMPEL_FNR = '12345678912';
 
 export const EKSEMPEL_VEILEDER = 'Z123456';
+
+export const VIS_MALER = INTERNFLATE;

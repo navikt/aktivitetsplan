@@ -43,6 +43,7 @@ function EndreAktivitetForm({
                 <EgenAktivitetForm
                     aktivitet={valgtAktivitet}
                     onSubmit={oppdater}
+                    endre
                 />
             );
         case SOKEAVTALE_AKTIVITET_TYPE:
@@ -50,6 +51,7 @@ function EndreAktivitetForm({
                 <SokeavtaleAktivitetForm
                     aktivitet={valgtAktivitet}
                     onSubmit={oppdater}
+                    endre
                 />
             );
         case BEHANDLING_AKTIVITET_TYPE:
