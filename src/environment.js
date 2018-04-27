@@ -1,4 +1,8 @@
-function getEnviromentVariable(variableName, ignoreIfMissing) {
+function getEnviromentVariable(
+    variableName,
+    ignoreIfMissing = false,
+    stripDomain = false
+) {
     const value =
         window.aktivitetsplan[variableName] ||
         window.aktivitetsplan[variableName.toLowerCase()];
@@ -7,15 +11,30 @@ function getEnviromentVariable(variableName, ignoreIfMissing) {
         throw new Error(`Mangler: ${variableName}`);
     }
 
+    if (stripDomain && value) {
+        const url = new URL(value);
+        return `${url.pathname}${url.search}`;
+    }
+
     return value;
 }
 
-export const DIALOG_BASE_URL = getEnviromentVariable('VEILARBDIALOG_URL');
+export const DIALOG_BASE_URL = getEnviromentVariable(
+    'VEILARBDIALOG_URL',
+    false,
+    true
+);
 
-export const AKTIVITET_BASE_URL = getEnviromentVariable('VEILARBAKTIVITET_URL');
+export const AKTIVITET_BASE_URL = getEnviromentVariable(
+    'VEILARBAKTIVITET_URL',
+    false,
+    true
+);
 
 export const OPPFOLGING_BASE_URL = getEnviromentVariable(
-    'VEILARBOPPFOLGING_URL'
+    'VEILARBOPPFOLGING_URL',
+    false,
+    true
 );
 
 export const ONBOARDING_VIDEO_URL = getEnviromentVariable(
@@ -24,26 +43,38 @@ export const ONBOARDING_VIDEO_URL = getEnviromentVariable(
 
 export const OPPGAVE_BASE_URL = getEnviromentVariable(
     'VEILARBOPPGAVE_URL',
+    true,
     true
 );
 
-export const PERSON_BASE_URL = getEnviromentVariable('VEILARBPERSON_URL', true);
+export const PERSON_BASE_URL = getEnviromentVariable(
+    'VEILARBPERSON_URL',
+    true,
+    true
+);
 
 export const PORTEFOLJE_BASE_URL = getEnviromentVariable(
     'VEILARBPORTEFOLJE_URL',
+    true,
     true
 );
 
 export const VEILEDER_BASE_URL = getEnviromentVariable(
     'VEILARBVEILEDER_URL',
+    true,
     true
 );
 
 export const MALVERK_BASE_URL = getEnviromentVariable(
     'VEILARBMALVERK_URL',
+    true,
     true
 );
 
-export const FEATURE_BASE_URL = `${window.location.origin}/feature`;
+export const FEATURE_BASE_URL = getEnviromentVariable(
+    'FEATURE_ENDPOINT_URL',
+    true,
+    true
+);
 
 export default {};
