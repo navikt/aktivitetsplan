@@ -4,6 +4,7 @@ import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
+import { VIS_MALER } from '~config'; // eslint-disable-line
 import LagreAktivitet from '../lagre-aktivitet';
 import { formNavn } from '../aktivitet-form-utils';
 import { moment } from '../../../../utils';
@@ -20,6 +21,8 @@ import {
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import { selectValgtMalverkSlice } from '../../../malverk/malverk-selector';
+import Malverk from '../../../malverk/malverk';
 
 function erAvtalt(verdi, props) {
     return !!props.avtalt;
@@ -78,8 +81,11 @@ class SokeAvtaleAktivitetForm extends Component {
             currentFraDato,
             currentTilDato,
             avtalt,
+            endre,
         } = this.props;
+
         const erAktivitetAvtalt = avtalt === true;
+
         return (
             <form onSubmit={handleSubmit} noValidate="noValidate">
                 <div className="skjema-innlogget aktivitetskjema">
@@ -89,7 +95,11 @@ class SokeAvtaleAktivitetForm extends Component {
                         ingressType={SOKEAVTALE_AKTIVITET_TYPE}
                         pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
                     />
-
+                    <Malverk
+                        visible={VIS_MALER}
+                        endre={endre}
+                        type="SOKEAVTALE"
+                    />
                     <Input
                         feltNavn="tittel"
                         disabled
@@ -122,7 +132,7 @@ class SokeAvtaleAktivitetForm extends Component {
                         feltNavn="antallStillingerSokes"
                         disabled={erAktivitetAvtalt}
                         labelId="sokeavtale-aktivitet-form.label.antall"
-                        bredde="s"
+                        bredde="S"
                     />
                     <Textarea
                         feltNavn="avtaleOppfolging"
@@ -152,6 +162,7 @@ SokeAvtaleAktivitetForm.propTypes = {
     currentTilDato: PT.instanceOf(Date),
     avtalt: PT.bool,
     isDirty: PT.bool.isRequired,
+    endre: PT.bool,
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
@@ -159,6 +170,7 @@ SokeAvtaleAktivitetForm.defaultProps = {
     currentFraDato: undefined,
     currentTilDato: undefined,
     avtalt: false,
+    endre: false,
 };
 
 const SokeavtaleAktivitetReduxForm = validForm({
@@ -166,6 +178,7 @@ const SokeavtaleAktivitetReduxForm = validForm({
     errorSummaryTitle: (
         <FormattedMessage id="sokeavtale-aktivitet-form.feiloppsummering-tittel" />
     ),
+    enableReinitialize: true,
     validate: {
         fraDato: [pakrevdFraDato],
         tilDato: [pakrevdTilDato],
@@ -182,7 +195,10 @@ const SokeavtaleAktivitetReduxForm = validForm({
 
 const mapStateToProps = (state, props) => {
     const selector = formValueSelector(formNavn);
-    const aktivitet = props.aktivitet || {};
+    const valgtMalverk = selectValgtMalverkSlice(state);
+    const aktivitet = props.endre
+        ? props.aktivitet
+        : valgtMalverk || props.aktivitet || {};
     return {
         initialValues: {
             status: STATUS_PLANLAGT,
