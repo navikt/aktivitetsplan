@@ -39,15 +39,6 @@ const MAKS_LENGDE = 255;
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);
 
-function manglerpubliseringTextId(aktivitet) {
-    const type = aktivitet.type;
-    if (type === MOTE_TYPE) {
-        return 'aktivitetstatus.mangler-publisering-av-samtalereferat.mote';
-    }
-
-    return 'aktivitetstatus.mangler-publisering-av-samtalereferat';
-}
-
 function statusKreverInformasjonMelding(status) {
     return status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
 }
@@ -70,8 +61,6 @@ function AktivitetStatusForm(props) {
         valgtAktivitetStatus,
         aktivitet.type
     );
-
-    const manglerSamtalereferatId = manglerpubliseringTextId(aktivitet);
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
@@ -125,13 +114,17 @@ function AktivitetStatusForm(props) {
                         }
                         value={STATUS_AVBRUTT}
                         id={`id--${STATUS_AVBRUTT}`}
-                        disabled={disableStatusEndring || lasterData}
+                        disabled={
+                            disableStatusEndring ||
+                            lasterData ||
+                            manglerReferatPublisering && aktivitet.type !== MOTE_TYPE
+                        }
                     />
                 </div>
             </div>
 
             <HiddenIfAlertStripeInfo hidden={!manglerReferatPublisering}>
-                <FormattedMessage id={manglerSamtalereferatId} />
+                <FormattedMessage id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`} />
             </HiddenIfAlertStripeInfo>
 
             <VisibleIfDiv className="status-alert" visible={dirty}>
