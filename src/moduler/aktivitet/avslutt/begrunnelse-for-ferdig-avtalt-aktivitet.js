@@ -17,7 +17,7 @@ const MAKS_LENGDE = 255;
 function BegrunnelseForFerdigAvtaltAktivitet({
     handleSubmit,
     headerTekst,
-    beskrivelseTekst,
+    beskrivelseTekstId,
     errorSummary,
     lagrer,
 }) {
@@ -31,7 +31,7 @@ function BegrunnelseForFerdigAvtaltAktivitet({
                     {errorSummary}
                     <Textarea
                         feltNavn="begrunnelse"
-                        labelId={beskrivelseTekst}
+                        labelId={beskrivelseTekstId}
                         name="begrunnelse-aktivitet"
                         maxLength={MAKS_LENGDE}
                         disabled={lagrer}
@@ -49,7 +49,7 @@ function BegrunnelseForFerdigAvtaltAktivitet({
 
 BegrunnelseForFerdigAvtaltAktivitet.propTypes = {
     headerTekst: PT.element.isRequired,
-    beskrivelseTekst: PT.element.isRequired,
+    beskrivelseTekstId: PT.string.isRequired,
     lagrer: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
