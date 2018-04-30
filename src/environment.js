@@ -1,3 +1,5 @@
+import '@webcomponents/url';
+
 function getEnviromentVariable(
     variableName,
     ignoreIfMissing = false,
