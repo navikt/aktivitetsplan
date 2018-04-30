@@ -5,9 +5,11 @@ import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
 module.exports = {
     validerInnhold(aktivitet) {
-        this.api.getText(this.elements.txtSideTittel.selector, tittel => {
-            this.assert.equal(tittel.value, aktivitet.tittel);
-        });
+        this.api.validerTekst(
+            this.elements.txtSideTittel.selector,
+            aktivitet.tittel,
+            'Aktivitetsvisning: Validerer sidetittel'
+        );
 
         if (aktivitet.type === AktivitetsType.STILLING)
             this.validerStilling(aktivitet);
@@ -113,10 +115,7 @@ module.exports = {
                 if (verdi.length !== 0) {
                     let detalFeltXpath =
                         callback.value + this.elements.detaljFeltTekst.selector;
-                    this.api.getText(detalFeltXpath, tekst => {
-                        this.api.assert.equal(tekst.status, 0, melding);
-                        this.api.verify.equal(tekst.value, verdi, melding);
-                    });
+                    this.api.validerTekst(detalFeltXpath, verdi, melding);
                 }
             }
         );
@@ -139,10 +138,8 @@ module.exports = {
                     let detaljFeltXpath =
                         callback.value + this.elements.detaljFeltLenke.selector;
 
-                    this.api.getText(detaljFeltXpath, tekst => {
-                        this.api.assert.equal(tekst.status, 0, melding);
-                        this.api.verify.equal(tekst.value, verdi, melding);
-                    });
+                    this.api.validerTekst(detaljFeltXpath, verdi, melding);
+
                     this.api.getAttribute(detaljFeltXpath, 'href', href => {
                         this.api.assert.equal(href.status, 0, melding);
                         this.api.verify.equal(href.value, verdi, melding);
@@ -184,7 +181,7 @@ module.exports = {
         let forventedeStatuser = [
             { status: AktivitetStatus.FORSLAG, disablet: 'null' },
             { status: AktivitetStatus.PLANLEGGER, disablet: 'null' },
-            { status: AktivitetStatus.GJENNOMFORER, disablet: 'null' },
+            { status: AktivitetStatus.GJENNOMFORES, disablet: 'null' },
             { status: AktivitetStatus.FULLFORT, disablet: 'null' },
             { status: AktivitetStatus.AVBRUTT, disablet: 'null' },
         ];
@@ -280,7 +277,7 @@ module.exports = {
                     label: elementer.labelPlanlegger.selector,
                     rdio: elementer.rdioPlanlegger.selector,
                 };
-            case AktivitetStatus.GJENNOMFORER:
+            case AktivitetStatus.GJENNOMFORES:
                 return {
                     label: elementer.labelGjennomforer.selector,
                     rdio: elementer.rdioGjennomforer.selector,

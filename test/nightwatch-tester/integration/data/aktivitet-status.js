@@ -1,7 +1,7 @@
 export const AktivitetStatus = {
     FORSLAG: 1,
     PLANLEGGER: 2,
-    GJENNOMFORER: 3,
+    GJENNOMFORES: 3,
     FULLFORT: 4,
     AVBRUTT: 5,
 
