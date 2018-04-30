@@ -101,11 +101,11 @@ export function manglerPubliseringAvSamtaleReferat(aktivitet, status) {
     );
 }
 
-function erAbrutMote(status, aktivitetType) {
+function erMoteOgAvbrutt(status, aktivitetType) {
     return status === STATUS_AVBRUTT && aktivitetType === MOTE_TYPE;
 }
 
-function erAvbrytAvtalt(erAvtalt, status) {
+function erAvtaltOgAvbrutt(erAvtalt, status) {
     return erAvtalt && status === STATUS_AVBRUTT;
 }
 
@@ -120,9 +120,9 @@ function erFullfoertUtenReferat(erAvtalt, status, aktivitetType) {
 
 export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
     return (
-        erAvbrytAvtalt(erAvtalt, status) ||
+        erAvtaltOgAvbrutt(erAvtalt, status) ||
         erFullfoertUtenReferat(erAvtalt, status, aktivitetType) ||
-        erAbrutMote(status, aktivitetType)
+        erMoteOgAvbrutt(status, aktivitetType)
     );
 }
 
