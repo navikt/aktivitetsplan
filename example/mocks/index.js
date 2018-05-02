@@ -31,7 +31,7 @@ const mock = fetchMock.configure({
 });
 
 //feature-api
-mock.get('/feature', feature);
+mock.get(`${window.location.origin}/feature`, feature);
 
 //veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', me);
