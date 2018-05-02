@@ -6,6 +6,8 @@ på en bestemt jobb eller motta behandling. Bruker har også mulighet til å kom
 
 ![aktivitetsplan forside](/screenshots/forside.png)
 
+Dette prosjektet benytter seg av felleskomponenter fra [nav-frontend-moduler](https://github.com/navikt/nav-frontend-moduler).
+
 ### Hvordan bygge
 
 Løsningen består av en versjon tilpasset for sluttbruker (utside) samt en versjon tilpasset veiledere på NAV (innside).
