@@ -1,10 +1,10 @@
 # Aktivitetsplan
 
 Aktivitetsplan er et verktøy for veiledere og brukere av NAV som skal synliggjøre hvilke aktiviteter og tiltak som skal
-gjennomføres for at en bruker skal oppnå sine mål. Her kan brukere opprette aktiviteter som å delta på kurs, søke jobb
-eller motta behandling. Bruker har også mulighet til å kommunisere direkte med sin veileder via en dialogløsning.  
+gjennomføres for at en bruker skal oppnå sine mål. Her kan brukere opprette aktiviteter som å delta på kurs, søke 
+på en bestemt jobb eller motta behandling. Bruker har også mulighet til å kommunisere direkte med sin veileder via en dialogløsning.  
 
-![aktivitetsplan](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![aktivitetsplan forside](/screenshots/forside.png)
 
 ### Hvordan bygge
 
@@ -27,4 +27,4 @@ følger en bestemt formatering.
 
 Opprett en issue i GitHub for eventuelle spørsmål.
 
-Er du ansatt i NAV kan du stille spørsmål på Slack i kanalen #teamoppfølging. 
+Er du ansatt i NAV kan du stille spørsmål på Slack i kanalen #teamoppfølging.
