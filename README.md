@@ -14,9 +14,9 @@ Løsningen består av en versjon tilpasset for sluttbruker (utside) samt en vers
 
 Kjør `npm run build` for å bygge både innside og utside.
 
-#### Dev-server
+### Utviklingsmilø
 
-For å starte en dev-server som kjører kontinuerlig bygg kan man kjøre `npm run dev:mock` for innside og 
+For å starte et utviklingsmiljø som kjører kontinuerlig bygg kan man kjøre `npm run dev:mock` for innside og 
 `npm run dev:mock:utside` for utside.
 
 ### Kodestil
