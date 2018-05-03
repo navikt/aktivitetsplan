@@ -7,9 +7,6 @@ let nightwatch_config = {
     custom_commands_path: '',
     custom_assertions_path: '',
     page_objects_path: ['test/nightwatch-tester/integration/pages'],
-    selenium: {
-        start_process: false,
-    },
 
     selenium: {
         start_process: false,
@@ -29,6 +26,7 @@ let nightwatch_config = {
                 baseUrl: 'http://localhost:3000',
                 fnr: '123456789',
                 launch_url: '',
+                timeout: 10000
             },
             screenshots: {
                 enabled: true,
