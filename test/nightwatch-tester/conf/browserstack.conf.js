@@ -26,7 +26,7 @@ let nightwatch_config = {
                 baseUrl: 'http://localhost:3000',
                 fnr: '123456789',
                 launch_url: '',
-                timeout: 10000
+                timeout: 10000,
             },
             screenshots: {
                 enabled: true,

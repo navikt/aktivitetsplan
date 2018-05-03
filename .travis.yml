@@ -1,0 +1,10 @@
+language: node_js
+
+script:
+    - "npm run test:browserstack"
+
+addons:
+  browserstack:
+    username: pederkorsveien1
+    access_key:
+      secure: "poF3WUjVP8Srfaj4yRTL1ylqv1xQK+uAn4ZvKuq92LjShnbw9XXVILw4TN/UgTEc3uot34U+E4UDWkccY+7aD8c+QWBGT6Xc9jfQA+vinIGZVjU/uicbJYUmVjGZntgI3TEaH/fcyCtlZZtJwuu1DFhooUIEiMAjrml/66MjmaQziwC216vh1ZjW7ucnjPdcxTNXAbMDcoJfUXE6WltP5cSyHE3ncYZ+qrmkWsi1nqCuuQdv2EyW1Mo+6audCTHzm79ZyTqiqmRD0Og6ydZ6VrME8xsyxJs1Vkf+uJ/FcJPz84iS2Xy0E/RLG6Lut+LvS1Kdx1WCW4QRyEWvH+G89aXVN0aAx3y1ccWMA5rVTe2iYX/2KM0d2csqmy7OjG3RWLe8jy2+bOsCcB1oxHVuxAd6Gvw1YXwSx+rVXYxoauYu/u3s4xxYuNS9Y4f4RlC1PADT2ISesX8ugPL9+NYoMIph+hQHpSra9uLMqvRLIZrjTlUGRQTxXITcML+RJ0iUGT/rpys7+KfxZiwPhqOL4Rqgw2WiX/ns5xlbcK6bA0OLr217gmB229nb8yF/4FSlC0yzDYHe1MTNUJMgmRJueYHI8ks2bYjQMCvWXXRmnHDj6Yr4Pzlcnme4gmV8q11ww3io2q92QpxyYTFkWsa0+M3fmTemi2iwrZLkxuR7tuY="
