@@ -17,7 +17,7 @@ const nightwatch_config = {
             default_path_prefix: '',
             timeout: 10000,
             baseUrl: 'http://localhost:3000',
-            fnr: '12345612345',
+            fnr: '12345678912',
             javaScriptEnabled: true,
             acceptSslCerts: true,
             disable_colors: true,
