@@ -1,3 +1,5 @@
+import { AktivitetTilstand } from '../data/aktivitet-tilstand';
+import { AktivitetStatus } from '../data/aktivitet-status';
 const aktivitetsvisning = require('../commands/aktivitetsvisning.js');
 
 module.exports = {
@@ -53,6 +55,21 @@ module.exports = {
                 txtAlert:
                     '//div[@class="status-alert"]//span[contains(@class, "alertstripe__tekst")]/span',
             },
+            commands: [
+                {
+                    hentStatusSelektor(status) {
+                        const selectorId =
+                            AktivitetStatus.properties[status].selectorId;
+                        const label = `label${selectorId}`;
+                        const rdio = `rdio${selectorId}`;
+
+                        return {
+                            label: this.elements[label].selector,
+                            rdio: this.elements[rdio].selector,
+                        };
+                    },
+                },
+            ],
         },
 
         tilstandSection: {
@@ -60,18 +77,31 @@ module.exports = {
             elements: {
                 labelIngen: '//label[@for="id--INGEN_VALGT"]',
                 labelSoknadSendt: '//label[@for="id--SOKNAD_SENDT"]',
-                labelInnkaltTilIntervju:
-                    '//label[@for="id--INNKALT_TIL_INTERVJU"]',
+                labelInnkalt: '//label[@for="id--INNKALT_TIL_INTERVJU"]',
                 labelAvslag: '//label[@for="id--AVSLAG"]',
                 labelJobbtilbud: '//label[@for="id--JOBBTILBUD"]',
                 rdioIngen: '//input[@id="id--INGEN_VALGT"]',
                 rdioSoknadSendt: '//input[@id="id--SOKNAD_SENDT"]',
-                rdioInnkaltTilIntervju:
-                    '//input[@id="id--INNKALT_TIL_INTERVJU"]',
+                rdioInnkalt: '//input[@id="id--INNKALT_TIL_INTERVJU"]',
                 rdioAvslag: '//input[@id="id--AVSLAG"]',
                 rdioJobbtilbud: '//input[@id="id--JOBBTILBUD"]',
                 btnBekreft: '//button[contains(@class, "oppdater-status")]',
             },
+            commands: [
+                {
+                    hentTilstandSelektor(status) {
+                        const selectorId =
+                            AktivitetTilstand.properties[status].selectorId;
+                        const label = `label${selectorId}`;
+                        const rdio = `rdio${selectorId}`;
+
+                        return {
+                            label: this.elements[label].selector,
+                            rdio: this.elements[rdio].selector,
+                        };
+                    },
+                },
+            ],
         },
     },
 };

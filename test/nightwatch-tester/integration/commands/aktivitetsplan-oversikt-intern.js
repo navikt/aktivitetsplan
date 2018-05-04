@@ -7,12 +7,12 @@ module.exports = {
     },
 
     validerAlertTekst(tekst) {
-        this.getText(
+        this.validerTekst(
             this.section.InternSection.elements.alertText.selector,
-            callback => {
-                this.assert.equal(callback.value, tekst);
-            }
+            tekst,
+            'Validerer advarseltekst'
         );
+
         return this;
     },
 

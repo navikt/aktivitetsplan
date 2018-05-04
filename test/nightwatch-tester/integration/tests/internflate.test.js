@@ -56,7 +56,7 @@ module.exports = {
     },
 
     'Veileder - Oppdatere livslopsstatus - Planlegger': function(browser) {
-        aktivitetDataMote.kolonne = AktivitetStatus.GJENNOMFORER;
+        aktivitetDataMote.kolonne = AktivitetStatus.GJENNOMFORES;
 
         aktivitetsplanOversiktSide(browser)
             .velgAktivitetMedHref(

@@ -2,7 +2,7 @@ const nightwatch_config = {
     src_folders: ['test/nightwatch-tester/integration/tests'],
     output_folder: 'test/nightwatch-tester/reports',
     output: true,
-    custom_commands_path: '',
+    custom_commands_path: 'test/nightwatch-tester/custom',
     custom_assertions_path: '',
     page_objects_path: ['test/nightwatch-tester/integration/pages'],
     globals_path: 'test/nightwatch-tester/integration/globals.js',
