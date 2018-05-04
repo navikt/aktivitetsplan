@@ -118,7 +118,7 @@ class Feilmelding extends Component {
                     intl={intl}
                 />
                 <Knappelenke onClick={this.toggleDetaljer} className="">
-                    Vis detaljer
+                    <span>Vis detaljer</span>
                 </Knappelenke>
                 <VisibleIfDiv
                     visible={this.state.apen}

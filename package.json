@@ -65,7 +65,7 @@
     "invariant": "2.2.2",
     "jsdom": "9.9.1",
     "lodash.throttle": "4.1.1",
-    "moment": "2.18.1",
+    "moment": "2.22.1",
     "moment-duration-format": "1.3.0",
     "moment-timezone": "0.5.14",
     "nav-frontend-alertstriper": "0.2.22",

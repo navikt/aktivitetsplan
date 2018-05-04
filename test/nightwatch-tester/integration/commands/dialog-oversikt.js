@@ -48,30 +48,17 @@ module.exports = {
     },
 
     validerDialogTekster(xPathDialog, tema, tekst) {
-        this.getText(this.dialogTema(xPathDialog), resultat => {
-            this.assert.equal(
-                resultat.status,
-                0,
-                'Validerer at dialogtema element kan hentes'
-            );
-            this.assert.equal(
-                resultat.value,
-                tema,
-                'Validerer at dialogtema har riktig verdi i dialogliste'
-            );
-        });
-        this.getText(this.dialogTekst(xPathDialog), resultat => {
-            this.assert.equal(
-                resultat.status,
-                0,
-                'Validerer at dialogtekst element kan hentes'
-            );
-            this.assert.equal(
-                resultat.value,
-                tekst,
-                'Validerer at dialogtekst har riktig verdi i dialogliste'
-            );
-        });
+        this.validerTekst(
+            this.dialogTema(xPathDialog),
+            tema,
+            'Validerer at dialogtema har riktig verdi i dialogliste'
+        );
+
+        this.validerTekst(
+            this.dialogTekst(xPathDialog),
+            tekst,
+            'Validerer at dialogtekst har riktig verdi i dialogliste'
+        );
     },
 
     validerEtiketter(xPathDialog, venterPaNav, venterPaBruker) {
