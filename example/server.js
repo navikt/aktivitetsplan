@@ -3,9 +3,11 @@ var express = require('express');
 
 var app = express();
 
-app.use('/aktivitetsplanfelles', express.static(path.join(__dirname, './aktivitetsplanfelles')));
+app.use(
+    '/aktivitetsplanfelles',
+    express.static(path.join(__dirname, './aktivitetsplanfelles'))
+);
 app.set('port', process.env.PORT || 8080);
-
 
 app.get('*', function(req, res) {
     res.sendFile(path.resolve(__dirname + '/aktivitetsplanfelles/index.html'));

@@ -9,7 +9,9 @@ const plugins = (isMock, innside) => [
     }),
     new HtmlWebpackPlugin({
         hash: true,
-        template: innside ? 'example/index-innside.html': 'example/index-utside.html' ,
+        template: innside
+            ? 'example/index-innside.html'
+            : 'example/index-utside.html',
     }),
 ];
 
