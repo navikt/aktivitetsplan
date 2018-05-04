@@ -21,6 +21,7 @@ import veiledere from './veiledere';
 import enheter from './enheter';
 import feature from './feature';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
+import instillingsHistorikk from './innstillings-historikk';
 import fetchMock from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
 import { hentMalverkMedType } from './malverk';
@@ -48,7 +49,10 @@ mock.get('/veilarboppfolging/api/oppfolging', ({ queryParams }) =>
 
 mock.get('/veilarboppfolging/api/oppfolging/hentVilkaarStatusListe', vilkar);
 
-mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', []);
+mock.get(
+    '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
+    instillingsHistorikk
+);
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', veilederTilgang);
 
 //veilarboppfolgingproxy
