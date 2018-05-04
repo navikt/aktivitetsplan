@@ -5,9 +5,11 @@ import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
 module.exports = {
     validerInnhold(aktivitet) {
-        this.api.getText(this.elements.txtSideTittel.selector, tittel => {
-            this.assert.equal(tittel.value, aktivitet.tittel);
-        });
+        this.api.validerTekst(
+            this.elements.txtSideTittel.selector,
+            aktivitet.tittel,
+            'Aktivitetsvisning: Validerer sidetittel'
+        );
 
         if (aktivitet.type === AktivitetsType.STILLING)
             this.validerStilling(aktivitet);
@@ -33,7 +35,7 @@ module.exports = {
         this.validerDetaljFeltTekst('FRA DATO', aktivitet.fraDatoMedMnd);
         this.validerDetaljFeltTekst('BESKRIVELSE', aktivitet.beskrivelse);
         this.validerDetaljFeltLenke('LENKE', aktivitet.lenke);
-        this.validerDetaljFeltTekst('SØKNADSFRIST', aktivitet.tilDatoMedMnd);
+        this.validerDetaljFeltTekst('FRIST', aktivitet.tilDatoMedMnd);
         this.validerDetaljFeltTekst('KONTAKTPERSON', aktivitet.kontaktperson);
         this.validerDetaljFeltTekst('ARBEIDSGIVER', aktivitet.arbeidsgiver);
         this.validerDetaljFeltTekst('ARBEIDSSTED', aktivitet.arbeidssted);
@@ -113,10 +115,7 @@ module.exports = {
                 if (verdi.length !== 0) {
                     let detalFeltXpath =
                         callback.value + this.elements.detaljFeltTekst.selector;
-                    this.api.getText(detalFeltXpath, tekst => {
-                        this.api.assert.equal(tekst.status, 0, melding);
-                        this.api.verify.equal(tekst.value, verdi, melding);
-                    });
+                    this.api.validerTekst(detalFeltXpath, verdi, melding);
                 }
             }
         );
@@ -139,10 +138,8 @@ module.exports = {
                     let detaljFeltXpath =
                         callback.value + this.elements.detaljFeltLenke.selector;
 
-                    this.api.getText(detaljFeltXpath, tekst => {
-                        this.api.assert.equal(tekst.status, 0, melding);
-                        this.api.verify.equal(tekst.value, verdi, melding);
-                    });
+                    this.api.validerTekst(detaljFeltXpath, verdi, melding);
+
                     this.api.getAttribute(detaljFeltXpath, 'href', href => {
                         this.api.assert.equal(href.status, 0, melding);
                         this.api.verify.equal(href.value, verdi, melding);
@@ -160,7 +157,7 @@ module.exports = {
         );
 
         forventedeStatuser.forEach(forventet => {
-            const statusRdio = this.hentStatusSelektor(forventet.status).rdio;
+            const statusRdio = this.section.statusSection.hentStatusSelektor(forventet.status).rdio;
             const msgTekst =
                 'Validerer aktivert/deaktivert status: ' +
                 AktivitetStatus.properties[forventet.status].value;
@@ -184,7 +181,7 @@ module.exports = {
         let forventedeStatuser = [
             { status: AktivitetStatus.FORSLAG, disablet: 'null' },
             { status: AktivitetStatus.PLANLEGGER, disablet: 'null' },
-            { status: AktivitetStatus.GJENNOMFORER, disablet: 'null' },
+            { status: AktivitetStatus.GJENNOMFORES, disablet: 'null' },
             { status: AktivitetStatus.FULLFORT, disablet: 'null' },
             { status: AktivitetStatus.AVBRUTT, disablet: 'null' },
         ];
@@ -196,11 +193,7 @@ module.exports = {
             forventedeStatuser.forEach(x => (x.disablet = 'true'));
         } else if (aktivitetType === AktivitetsType.MOTE) {
             forventedeStatuser
-                .filter(
-                    x =>
-                        x.status === AktivitetStatus.FULLFORT ||
-                        x.status === AktivitetStatus.AVBRUTT
-                )
+                .filter(x => x.status === AktivitetStatus.FULLFORT)
                 .forEach(y => {
                     y.disablet = 'true';
                 });
@@ -214,7 +207,7 @@ module.exports = {
         const forventedeTilstander = this.hentForventetTilstand(status);
 
         forventedeTilstander.forEach(forventet => {
-            const tilstandRdio = this.hentTilstandSelektor(forventet.status)
+            const tilstandRdio = this.section.tilstandSection.hentTilstandSelektor(forventet.status)
                 .rdio;
             const msgTekst =
                 'Validerer aktivert/deaktivert status: ' +
@@ -267,74 +260,8 @@ module.exports = {
         return nesteSide;
     },
 
-    hentStatusSelektor(status) {
-        var elementer = this.section.statusSection.elements;
-        switch (status) {
-            case AktivitetStatus.FORSLAG:
-                return {
-                    label: elementer.labelForslag.selector,
-                    rdio: elementer.rdioForslag.selector,
-                };
-            case AktivitetStatus.PLANLEGGER:
-                return {
-                    label: elementer.labelPlanlegger.selector,
-                    rdio: elementer.rdioPlanlegger.selector,
-                };
-            case AktivitetStatus.GJENNOMFORER:
-                return {
-                    label: elementer.labelGjennomforer.selector,
-                    rdio: elementer.rdioGjennomforer.selector,
-                };
-            case AktivitetStatus.FULLFORT:
-                return {
-                    label: elementer.labelFullfort.selector,
-                    rdio: elementer.rdioFullfort.selector,
-                };
-            case AktivitetStatus.AVBRUTT:
-                return {
-                    label: elementer.labelAvbrutt.selector,
-                    rdio: elementer.rdioAvbrutt.selector,
-                };
-            default:
-                return undefined;
-        }
-    },
-
-    hentTilstandSelektor(status) {
-        var elementer = this.section.tilstandSection.elements;
-        switch (status) {
-            case AktivitetTilstand.INGEN:
-                return {
-                    label: elementer.labelIngen.selector,
-                    rdio: elementer.rdioIngen.selector,
-                };
-            case AktivitetTilstand.SOKNADSENDT:
-                return {
-                    label: elementer.labelSoknadSendt.selector,
-                    rdio: elementer.rdioSoknadSendt.selector,
-                };
-            case AktivitetTilstand.INNKALT:
-                return {
-                    label: elementer.labelInnkaltTilIntervju.selector,
-                    rdio: elementer.rdioInnkaltTilIntervju.selector,
-                };
-            case AktivitetTilstand.AVSLAG:
-                return {
-                    label: elementer.labelAvslag.selector,
-                    rdio: elementer.rdioAvslag.selector,
-                };
-            case AktivitetTilstand.JOBBTILBUD:
-                return {
-                    label: elementer.labelJobbtilbud.selector,
-                    rdio: elementer.rdioJobbtilbud.selector,
-                };
-            default:
-                return undefined;
-        }
-    },
-
     setStatus(status) {
-        let rdioSelector = this.hentStatusSelektor(status).label;
+        let rdioSelector = this.section.statusSection.hentStatusSelektor(status).label;
         const statusSection = this.section.statusSection.elements;
         const btnBekreft = statusSection.btnBekreft.selector;
         const timeout = this.api.globals.test_settings.timeout;
@@ -376,7 +303,7 @@ module.exports = {
     },
 
     setTilstand(tilstand) {
-        let rdioSelector = this.hentTilstandSelektor(tilstand).label;
+        let rdioSelector = this.section.tilstandSection.hentTilstandSelektor(tilstand).label;
         let btnBekreft = this.section.tilstandSection.elements.btnBekreft
             .selector;
         let timeout = this.api.globals.test_settings.timeout;
@@ -417,6 +344,7 @@ module.exports = {
         this.api.page.dialogvisning().leggTilMelding(dialog, false);
         return this;
     },
+
     lukkVindu(nesteSide) {
         var timeout = this.api.globals.test_settings.timeout;
         this.click(this.elements.btnLukk.selector);

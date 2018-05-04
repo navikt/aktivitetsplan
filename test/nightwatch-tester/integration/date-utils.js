@@ -1,4 +1,12 @@
-var moment = require('moment');
+import momentImpl from 'moment';
+import 'moment-timezone';
+import 'moment/locale/nb';
+
+momentImpl.locale('nb');
+momentImpl.tz.setDefault('Europe/Oslo');
+
+export const moment = momentImpl;
+
 
 moment.updateLocale('nb', {
     monthsShort: [
@@ -24,7 +32,7 @@ export const getRelativeDate = days => {
 };
 
 export function getRelativeDatePrettyPrint(dato) {
-    var format = 'Do. MMM YYYY';
+    var format = 'Do MMM YYYY';
 
     if (dato) {
         const datoVerdi = moment(dato);

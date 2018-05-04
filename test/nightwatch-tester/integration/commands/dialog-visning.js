@@ -19,18 +19,12 @@ module.exports = {
         const tekstSelektor = this.snakkebobleTekst(xPathBoble);
 
         this.waitForElementVisible(bobleSelektor, timeout);
-        this.getText(tekstSelektor, resultat => {
-            this.assert.equal(
-                resultat.status,
-                0,
-                'Validerer at det er tekst på snakkeboble'
-            );
-            this.assert.equal(
-                resultat.value,
-                tekst,
-                'Validerer tekstverdi på snakkeboble'
-            );
-        });
+        this.validerTekst(
+            tekstSelektor,
+            tekst,
+            'Validerer tekstverdi på snakkeboble'
+        );
+
         return this;
     },
 

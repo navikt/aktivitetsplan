@@ -7,12 +7,14 @@ import OppdaterReferatContainer from '../visning/status-oppdatering/oppdater-ref
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import * as AppPT from '../../../proptypes';
 
-function PubliserReferat({ aktivitet, children }) {
-    if (manglerPubliseringAvSamtaleReferat(aktivitet)) {
+function PubliserReferat({ aktivitet, nyStatus, children }) {
+    if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {
         return (
             <ModalContainer className="publiser-referat">
                 <AlertStripeInfoSolid className="publiser-referat__info">
-                    <FormattedMessage id="aktivitetstatus.mangler-publisering-av-samtalereferat" />
+                    <FormattedMessage
+                        id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`}
+                    />
                 </AlertStripeInfoSolid>
                 <OppdaterReferatContainer aktivitet={aktivitet} />
             </ModalContainer>
@@ -23,7 +25,12 @@ function PubliserReferat({ aktivitet, children }) {
 
 PubliserReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
+    nyStatus: PT.string,
     children: PT.node.isRequired,
+};
+
+PubliserReferat.defaultProps = {
+    nyStatus: undefined,
 };
 
 export default PubliserReferat;

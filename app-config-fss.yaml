@@ -65,7 +65,7 @@ fasitResources:
 
   - alias: veilarbmalverkAPI
     resourceType: restservice
-    propertymap:
+    propertyMap:
         url: PUBLIC_VEILARBMALVERK_URL
 
     # nais konfigurerer ikke riktig url i fasit, bruker window.location.origin til å bygge url,

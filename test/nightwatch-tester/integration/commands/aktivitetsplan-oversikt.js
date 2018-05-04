@@ -63,52 +63,22 @@ module.exports = {
             this.genererXpathForForKolonne(aktivitet.kolonne) +
             this.aktivitetskortHref(aktivitet.aktivitetURL);
 
-        this.api.getText(
+        this.api.validerTekst(
             aktivitetsKortSelector + this.elements.tittel.selector,
-            tittel => {
-                this.api.assert.equal(
-                    tittel.status,
-                    0,
-                    'Aktivitetsplan oversikt: tittel'
-                );
-                this.api.verify.equal(
-                    tittel.value,
-                    aktivitet.tittel,
-                    'Aktivitetsplan oversikt: tittel'
-                );
-            }
+            aktivitet.tittel,
+            'Aktivitetsplan oversikt: tittel'
         );
 
-        this.api.getText(
+        this.api.validerTekst(
             aktivitetsKortSelector + this.elements.type.selector,
-            type => {
-                this.api.assert.equal(
-                    type.status,
-                    0,
-                    'Aktivitetsplan oversikt: type'
-                );
-                this.api.verify.equal(
-                    type.value,
-                    AktivitetsType.properties[aktivitet.type].oversiktNavn,
-                    'Aktivitetsplan oversikt: type'
-                );
-            }
+            AktivitetsType.properties[aktivitet.type].oversiktNavn,
+            'Aktivitetsplan oversikt: type'
         );
 
-        this.api.getText(
+        this.api.validerTekst(
             aktivitetsKortSelector + this.elements.dato.selector,
-            dato => {
-                this.api.assert.equal(
-                    dato.status,
-                    0,
-                    'Aktivitetsplan oversikt: dato'
-                );
-                this.api.verify.equal(
-                    dato.value,
-                    aktivitet.aktivitetskortDato,
-                    'Aktivitetsplan oversikt: dato'
-                );
-            }
+            aktivitet.aktivitetskortDato,
+            'Aktivitetsplan oversikt: dato'
         );
 
         if (aktivitet.tilstand === AktivitetTilstand.INGEN) {
@@ -117,41 +87,21 @@ module.exports = {
                 'Aktivitetsplan oversikt: tilstand Ingen'
             );
         } else {
-            this.api.getText(
+            const tilstand =
+                AktivitetTilstand.properties[aktivitet.tilstand].value;
+            this.api.validerTekst(
                 aktivitetsKortSelector + this.elements.etikett.selector,
-                tilstand => {
-                    this.api.assert.equal(
-                        tilstand.status,
-                        0,
-                        'Aktivitetsplan oversikt: tilstand'
-                    );
-                    this.api.verify.equal(
-                        tilstand.value,
-                        AktivitetTilstand.properties[aktivitet.tilstand].value,
-                        'Aktivitetsplan oversikt: tilstand:' +
-                            aktivitet.tilstand
-                    );
-                }
+                tilstand,
+                'Aktivitetsplan oversikt: tilstand:' + tilstand
             );
         }
         if (aktivitet.type === AktivitetsType.AVTALE) {
-            this.api.getText(
+            const expected =
+                'Antall søknader i perioden: ' + aktivitet.antallSoknader;
+            this.api.validerTekst(
                 aktivitetsKortSelector + this.elements.antallSoknader.selector,
-                antall => {
-                    const expected =
-                        'Antall søknader i perioden: ' +
-                        aktivitet.antallSoknader;
-                    this.api.assert.equal(
-                        antall.status,
-                        0,
-                        'Aktivitetsplan oversikt: Antall'
-                    );
-                    this.api.verify.equal(
-                        antall.value,
-                        expected,
-                        'Aktivitetsplan oversikt: Antall'
-                    );
-                }
+                expected,
+                'Aktivitetsplan oversikt: Antall'
             );
         }
         return this;
@@ -209,7 +159,7 @@ module.exports = {
                 return elementer.kolForslag.selector;
             case AktivitetStatus.PLANLEGGER:
                 return elementer.kolPlanlegger.selector;
-            case AktivitetStatus.GJENNOMFORER:
+            case AktivitetStatus.GJENNOMFORES:
                 return elementer.kolGjennomForer.selector;
             case AktivitetStatus.FULLFORT:
                 return elementer.kolFullfort.selector;

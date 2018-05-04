@@ -1,6 +1,11 @@
 import 'moment-duration-format';
 import { moment } from '../../utils';
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../constant';
+import {
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+} from '../../constant';
 
 export function aktivitetEquals(a, b) {
     return (
@@ -69,12 +74,55 @@ export function formatterKlokkeslett(klokkeslett) {
     return formatterVarighet(klokkeslett);
 }
 
-export function manglerPubliseringAvSamtaleReferat(aktivitet) {
+function moteManglerPubliseringAvSamtalereferat(
+    type,
+    status,
+    erReferatPublisert
+) {
+    return (
+        type === MOTE_TYPE && !erReferatPublisert && status !== STATUS_AVBRUTT
+    );
+}
+
+function samtalreferatManglerPublisering(type, erReferatPublisert) {
+    return type === SAMTALEREFERAT_TYPE && !erReferatPublisert;
+}
+
+export function manglerPubliseringAvSamtaleReferat(aktivitet, status) {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
-        ((type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) &&
-            !erReferatPublisert)
+        moteManglerPubliseringAvSamtalereferat(
+            type,
+            status,
+            erReferatPublisert
+        ) ||
+        samtalreferatManglerPublisering(type, erReferatPublisert)
+    );
+}
+
+function erMoteOgAvbrutt(status, aktivitetType) {
+    return status === STATUS_AVBRUTT && aktivitetType === MOTE_TYPE;
+}
+
+function erAvtaltOgAvbrutt(erAvtalt, status) {
+    return erAvtalt && status === STATUS_AVBRUTT;
+}
+
+function erFullfoertUtenReferat(erAvtalt, status, aktivitetType) {
+    return (
+        erAvtalt &&
+        status === STATUS_FULLFOERT &&
+        aktivitetType !== SAMTALEREFERAT_TYPE &&
+        aktivitetType !== MOTE_TYPE
+    );
+}
+
+export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
+    return (
+        erAvtaltOgAvbrutt(erAvtalt, status) ||
+        erFullfoertUtenReferat(erAvtalt, status, aktivitetType) ||
+        erMoteOgAvbrutt(status, aktivitetType)
     );
 }
 

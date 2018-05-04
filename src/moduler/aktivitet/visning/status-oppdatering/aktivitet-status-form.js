@@ -18,11 +18,13 @@ import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
-import { manglerPubliseringAvSamtaleReferat } from '../../aktivitet-util';
+import {
+    manglerPubliseringAvSamtaleReferat,
+    trengerBegrunnelse,
+} from '../../aktivitet-util';
 import {
     INGEN_VALGT,
     MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
@@ -41,15 +43,6 @@ function statusKreverInformasjonMelding(status) {
     return status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
 }
 
-function statusKreverBegrunnelse(status, aktivitetType) {
-    return (
-        (status === STATUS_FULLFOERT &&
-            aktivitetType !== SAMTALEREFERAT_TYPE &&
-            aktivitetType !== MOTE_TYPE) ||
-        status === STATUS_AVBRUTT
-    );
-}
-
 function AktivitetStatusForm(props) {
     const {
         aktivitet,
@@ -63,11 +56,11 @@ function AktivitetStatusForm(props) {
     } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
     const visAdvarsel = statusKreverInformasjonMelding(valgtAktivitetStatus);
-    const visBegrunnelseFelt = statusKreverBegrunnelse(
+    const visBegrunnelseFelt = trengerBegrunnelse(
+        aktivitet.avtalt,
         valgtAktivitetStatus,
         aktivitet.type
     );
-
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
@@ -124,14 +117,17 @@ function AktivitetStatusForm(props) {
                         disabled={
                             disableStatusEndring ||
                             lasterData ||
-                            manglerReferatPublisering
+                            (manglerReferatPublisering &&
+                                aktivitet.type !== MOTE_TYPE)
                         }
                     />
                 </div>
             </div>
 
             <HiddenIfAlertStripeInfo hidden={!manglerReferatPublisering}>
-                <FormattedMessage id="aktivitetstatus.mangler-publisering-av-samtalereferat" />
+                <FormattedMessage
+                    id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`}
+                />
             </HiddenIfAlertStripeInfo>
 
             <VisibleIfDiv className="status-alert" visible={dirty}>
@@ -144,7 +140,7 @@ function AktivitetStatusForm(props) {
 
                 {errorSummary}
 
-                <VisibleIfDiv visible={aktivitet.avtalt && visBegrunnelseFelt}>
+                <VisibleIfDiv visible={visBegrunnelseFelt}>
                     <Textarea
                         labelId={
                             <FormattedMessage
@@ -179,12 +175,11 @@ const harBegrunnelse = pakrevd(
     'opprett-begrunnelse.melding.feilmelding.for-kort'
 );
 const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
-    props.aktivitet.avtalt &&
-    statusKreverBegrunnelse(
+    trengerBegrunnelse(
+        props.aktivitet.avtalt,
         props.values.aktivitetstatus,
         props.aktivitet.type
-    ) &&
-    harBegrunnelse(begrunnelse, props);
+    ) && harBegrunnelse(begrunnelse, props);
 
 function kanOppdatereStatus() {
     return (ignored, props) => {
@@ -193,7 +188,10 @@ function kanOppdatereStatus() {
         );
         return (
             ferdigStatus &&
-            manglerPubliseringAvSamtaleReferat(props.aktivitet || {}) &&
+            manglerPubliseringAvSamtaleReferat(
+                props.aktivitet || {},
+                props.valgtAktivitetStatus
+            ) &&
             <FormattedMessage id="referat.validering.ikke-publisert" />
         );
     };
@@ -239,7 +237,8 @@ const mapStateToProps = (state, props) => {
             'aktivitetstatus'
         ),
         manglerReferatPublisering: manglerPubliseringAvSamtaleReferat(
-            aktivitet
+            aktivitet,
+            status
         ),
         initialValues: {
             begrunnelse: avsluttetKommentar,

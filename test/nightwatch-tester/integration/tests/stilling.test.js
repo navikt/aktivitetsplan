@@ -59,7 +59,7 @@ module.exports = {
     },
 
     'Bruker - Oppdatere livslopsstatus - Gjennomforer': function(browser) {
-        aktivitetData.kolonne = AktivitetStatus.GJENNOMFORER;
+        aktivitetData.kolonne = AktivitetStatus.GJENNOMFORES;
 
         aktivitetsplanOversiktSide(browser)
             .velgAktivitetMedHref(
@@ -105,7 +105,7 @@ module.exports = {
 
         aktivitetsplanOversiktSide(browser)
             .velgAktivitetMedHref(
-                AktivitetStatus.GJENNOMFORER,
+                AktivitetStatus.GJENNOMFORES,
                 aktivitetData.aktivitetURL
             )
             .setStatus(aktivitetData.kolonne)
