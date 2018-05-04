@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import * as AppPT from '../../../../proptypes';
-import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
 import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-etikett';
 import {
@@ -28,21 +27,19 @@ function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, erBruker }) {
 
     const visOppdaterStatusContainer = (
         <div>
-            <OppdaterAktivitetStatus
-                status={status}
-                aktivitetId={id}
-                className="aktivitetvisning__underseksjon"
-            />
-
             <VisibleIfDiv visible={type === STILLING_AKTIVITET_TYPE}>
-                <hr className="aktivitetvisning__delelinje" />
                 <OppdaterAktivitetEtikett
                     status={status}
                     paramsId={id}
                     className="aktivitetvisning__underseksjon"
                 />
+                <hr className="aktivitetvisning__delelinje" />
             </VisibleIfDiv>
-
+            <OppdaterAktivitetStatus
+                status={status}
+                aktivitetId={id}
+                className="aktivitetvisning__underseksjon"
+            />
             <hr className="aktivitetvisning__delelinje" />
         </div>
     );

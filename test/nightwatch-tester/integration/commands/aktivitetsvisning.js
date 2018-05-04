@@ -35,7 +35,7 @@ module.exports = {
         this.validerDetaljFeltTekst('FRA DATO', aktivitet.fraDatoMedMnd);
         this.validerDetaljFeltTekst('BESKRIVELSE', aktivitet.beskrivelse);
         this.validerDetaljFeltLenke('LENKE', aktivitet.lenke);
-        this.validerDetaljFeltTekst('SØKNADSFRIST', aktivitet.tilDatoMedMnd);
+        this.validerDetaljFeltTekst('FRIST', aktivitet.tilDatoMedMnd);
         this.validerDetaljFeltTekst('KONTAKTPERSON', aktivitet.kontaktperson);
         this.validerDetaljFeltTekst('ARBEIDSGIVER', aktivitet.arbeidsgiver);
         this.validerDetaljFeltTekst('ARBEIDSSTED', aktivitet.arbeidssted);

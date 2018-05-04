@@ -11,8 +11,6 @@ import Accordion from '../../../felles-komponenter/accordion';
 import InnstillingHistorikkInnslag from './innstilling-historikk-innslag';
 import { hentInnstillingHistorikk } from './oppfolging-historikk-reducer';
 import { hentInnstillingOppgavehistorikk } from './oppgave-historikk-reducer';
-import { harFeature } from '../../../felles-komponenter/feature/feature';
-import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 import {
     selectInnstillingHistorikk,
     selectInnstillingHistorikkStatus,
@@ -37,16 +35,11 @@ class InnstillingHistorikk extends Component {
     }
 
     render() {
-        const kvpFeature = harFeature('kvp', this.props.features);
         const { innstillingHistorikk, innstillingHistorikkStatus } = this.props;
 
-        const historikkListeSorted = innstillingHistorikk
-            .filter(
-                h =>
-                    kvpFeature ||
-                    (h.type !== 'KVP_STARTET' && h.type !== 'KVP_STOPPET')
-            )
-            .sort((a, b) => b.dato.localeCompare(a.dato));
+        const historikkListeSorted = innstillingHistorikk.sort((a, b) =>
+            b.dato.localeCompare(a.dato)
+        );
 
         const forstePeriode =
             historikkListeSorted[0] &&
@@ -101,13 +94,11 @@ InnstillingHistorikk.propTypes = {
     innstillingHistorikk: PT.arrayOf(AppPT.innstillingHistorikk).isRequired,
     doHentInnstillingHistorikk: PT.func.isRequired,
     doHentInnstillingOppgavehistorikk: PT.func.isRequired,
-    features: PT.object.isRequired,
 };
 
 const mapStateToProps = state => ({
     innstillingHistorikkStatus: selectInnstillingHistorikkStatus(state),
     innstillingHistorikk: selectInnstillingHistorikk(state),
-    features: selectFeatureData(state),
 });
 
 const mapDispatchToProps = dispatch => ({
