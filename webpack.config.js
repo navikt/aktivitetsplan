@@ -8,6 +8,7 @@ const plugins = (isMock, innside) => [
         INTERNFLATE: JSON.stringify(innside),
     }),
     new HtmlWebpackPlugin({
+        hash: true,
         template: innside ? 'example/index-innside.html': 'example/index-utside.html' ,
     }),
 ];
@@ -40,7 +41,7 @@ module.exports = function(env) {
         entry: ['whatwg-fetch', './example/example.js'],
         devtool: isDev ? 'source-map' : false,
         output: {
-            path: path.resolve(__dirname, 'example/build'),
+            path: path.resolve(__dirname, 'example/aktivitetsplanfelles'),
             filename: 'bundle.js',
             publicPath: '/aktivitetsplanfelles/',
         },

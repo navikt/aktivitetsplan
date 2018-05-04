@@ -1,1 +1,1 @@
-web: npm run dev:mock
+web: node example/server.js
