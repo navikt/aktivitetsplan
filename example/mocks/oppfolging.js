@@ -1,6 +1,6 @@
 import { EKSEMPEL_VEILEDER } from '../config';
 
-let oppfolging = {
+const oppfolging = {
     fnr: null,
     veilederId: null,
     reservasjonKRR: false,
