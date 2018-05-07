@@ -68,9 +68,11 @@ const dialoger = [
 ];
 
 export function opprettDialog(update) {
+    const dialogId =
+        update.dialogId === undefined ? rndId() : `${update.dialogId}`;
     const nyHenvendelse = {
         id: rndId(),
-        dialogId: update.dialogId,
+        dialogId: dialogId,
         avsender: 'VEILEDER',
         avsenderId: 'Z123456',
         overskrift: update.overskrift,
@@ -80,22 +82,22 @@ export function opprettDialog(update) {
     };
 
     const eksisterendeDialoger = dialoger.filter(
-        dialog => dialog.id === update.dialogId
+        dialog => update.dialogId !== undefined && dialog.id === dialogId
     );
+
     if (eksisterendeDialoger.length === 1) {
         const oldDialog = eksisterendeDialoger[0];
         oldDialog.sisteTekst = update.tekst;
         oldDialog.sisteDato = nyHenvendelse.sendt;
         oldDialog.henvendelser.push(nyHenvendelse);
         return oldDialog;
-
     } else {
-        nyHenvendelse.dialogId = rndId();
         const nyDialog = {
             id: nyHenvendelse.dialogId,
             ferdigBehandlet: !update.ikkeFerdigbehandlet,
             venterPaSvar: !!update.venterPaSvar,
-            aktivitetId: update.aktivitetId === undefined? null: update.aktivitetId,
+            aktivitetId:
+                update.aktivitetId === undefined ? null : update.aktivitetId,
             overskrift: update.overskrift,
             sisteTekst: update.tekst,
             sisteDato: new Date(),
@@ -105,7 +107,8 @@ export function opprettDialog(update) {
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             henvendelser: [nyHenvendelse],
-            egenskaper: [],
+            egenskaper:
+                update.egenskaper === undefined ? [] : update.egenskaper,
         };
         dialoger.push(nyDialog);
         return nyDialog;
