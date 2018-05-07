@@ -80,6 +80,14 @@ export function handterFeil(dispatch, FEILET_TYPE) {
         if (response) {
             response.text().then(data => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
+                dispatch({
+                    type: FEILET_TYPE,
+                    data: {
+                        type: FEILET_TYPE,
+                        httpStatus: response.status,
+                        melding: parseError(data),
+                    },
+                });
                 const errorData = JSON.parse(data);
 
                 (window.frontendlogger && window.frontendlogger.error)({
@@ -91,14 +99,6 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                             : ''}`,
                         errorData.detaljer ? errorData.detaljer.stackTrace : '',
                     ].join('\n'),
-                });
-                dispatch({
-                    type: FEILET_TYPE,
-                    data: {
-                        type: FEILET_TYPE,
-                        httpStatus: response.status,
-                        melding: parseError(data),
-                    },
                 });
             });
         } else {
