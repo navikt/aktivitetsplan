@@ -1,0 +1,9 @@
+{
+  "name": "aktivitetsplan",
+  "description": "Aktivitetsplan i nav",
+  "scripts": {},
+  "env": {},
+  "formation": {},
+  "addons": [],
+  "buildpacks": []
+}

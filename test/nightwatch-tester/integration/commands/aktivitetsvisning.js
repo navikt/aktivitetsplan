@@ -21,6 +21,8 @@ module.exports = {
             this.validerSokeJobber(aktivitet);
         else if (aktivitet.type === AktivitetsType.MEDISINSKBEHANDLING)
             this.validerMedisinsk(aktivitet);
+        else if (aktivitet.type === AktivitetsType.ARENA)
+            this.validerArena(aktivitet);
         else
             this.assert.fail(
                 `Validering av innhold for ${AktivitetsType[aktivitet.type]
@@ -100,6 +102,16 @@ module.exports = {
         this.validerDetaljFeltTekst('BESKRIVELSE', aktivitet.beskrivelse);
     },
 
+    validerArena(aktivitet){
+        this.validerDetaljFeltTekst('FRA DATO', aktivitet.fraDatoMedMnd);
+        this.validerDetaljFeltTekst('TIL DATO', aktivitet.tilDatoMedMnd);
+        this.validerDetaljFeltTekst('ARRANGØR', aktivitet.arrangoer);
+        this.validerDetaljFeltTekst('DELTAKELSE', aktivitet.deltakelseProsent);
+        this.validerDetaljFeltTekst('ANTALL DAGER PER UKE', aktivitet.antallDagerPerUke);
+        this.validerDetaljFeltTekst('BESKRIVELSE', aktivitet.beskrivelse);
+
+    },
+
     validerDetaljFeltTekst(navn, verdi) {
         const timeout = this.api.globals.test_settings.timeout;
         const melding = 'Aktivitet detaljvisning: ' + navn;
@@ -155,7 +167,10 @@ module.exports = {
             status,
             aktivitetsType
         );
-
+        if(aktivitetsType === AktivitetsType.ARENA){
+            this.assert.elementNotPresent(this.section.statusSection.selector);
+            return;
+        }
         forventedeStatuser.forEach(forventet => {
             const statusRdio = this.section.statusSection.hentStatusSelektor(forventet.status).rdio;
             const msgTekst =
