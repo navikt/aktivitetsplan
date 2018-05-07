@@ -10,10 +10,13 @@ import Feilmelding from '../moduler/feilmelding/feilmelding';
 import VisaValgtFilter from '../moduler/filtrering/filter-vis-label';
 import FooterInfo from './footer-info';
 import Routing, { PublicRouting } from '../routing';
+import { getFodselsnummer } from '../bootstrap/fnr-util';
 
 function Hovedside() {
+    const fnr = getFodselsnummer();
+
     return (
-        <div className="hovedside">
+        <div className="hovedside" key={fnr}>
             <div className="hovedsideinnhold">
                 <Feilmelding className="container" />
                 <OppfolgingStatus>
