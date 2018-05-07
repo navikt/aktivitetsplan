@@ -80,6 +80,18 @@ export function handterFeil(dispatch, FEILET_TYPE) {
         if (response) {
             response.text().then(data => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
+                const errorData = JSON.parse(data);
+
+                (window.frontendlogger && window.frontendlogger.error)({
+                    message: [
+                        error.stack,
+                        `Id: ${errorData.id}`,
+                        `Type: ${errorData.type} ${errorData.detaljer
+                            ? errorData.detaljer.detaljertType
+                            : ''}`,
+                        errorData.detaljer ? errorData.detaljer.stackTrace : '',
+                    ].join('\n'),
+                });
                 dispatch({
                     type: FEILET_TYPE,
                     data: {
