@@ -1,5 +1,5 @@
 import me from './me';
-import oppfolging from './oppfolging';
+import oppfolging, { startEskalering, stoppEskalering } from './oppfolging';
 import dialog, {
     setVenterPaSvar,
     setFerdigBehandlet,
@@ -21,6 +21,7 @@ import veiledere from './veiledere';
 import enheter from './enheter';
 import feature from './feature';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
+import instillingsHistorikk from './innstillings-historikk';
 import fetchMock from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
 import { hentMalverkMedType } from './malverk';
@@ -48,8 +49,19 @@ mock.get('/veilarboppfolging/api/oppfolging', ({ queryParams }) =>
 
 mock.get('/veilarboppfolging/api/oppfolging/hentVilkaarStatusListe', vilkar);
 
-mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', []);
+mock.get(
+    '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
+    instillingsHistorikk
+);
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', veilederTilgang);
+
+mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }) =>
+    startEskalering(body)
+);
+
+mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }) =>
+    stoppEskalering(body)
+);
 
 //veilarboppfolgingproxy
 mock.get('/veilarboppfolgingproxy/api/oppfolging/me', me);

@@ -1,13 +1,14 @@
-import { getParentPathByChildText } from '../utils';
 import { AktivitetsType } from '../data/aktivitet-type';
 import { AktivitetStatus } from '../data/aktivitet-status';
 import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
 module.exports = {
     validerInnhold(aktivitet) {
-        this.api.getText(this.elements.txtSideTittel.selector, tittel => {
-            this.assert.equal(tittel.value, aktivitet.tittel);
-        });
+        this.api.validerTekst(
+            this.elements.txtSideTittel.selector,
+            aktivitet.tittel,
+            'Aktivitetsvisning: Validerer sidetittel'
+        );
 
         if (aktivitet.type === AktivitetsType.STILLING)
             this.validerStilling(aktivitet);
@@ -19,6 +20,8 @@ module.exports = {
             this.validerSokeJobber(aktivitet);
         else if (aktivitet.type === AktivitetsType.MEDISINSKBEHANDLING)
             this.validerMedisinsk(aktivitet);
+        else if (aktivitet.type === AktivitetsType.ARENA)
+            this.validerArena(aktivitet);
         else
             this.assert.fail(
                 `Validering av innhold for ${AktivitetsType[aktivitet.type]
@@ -29,141 +32,174 @@ module.exports = {
         return this;
     },
 
-    validerStilling(aktivitet) {
-        this.validerDetaljFeltTekst('FRA DATO', aktivitet.fraDatoMedMnd);
-        this.validerDetaljFeltTekst('BESKRIVELSE', aktivitet.beskrivelse);
-        this.validerDetaljFeltLenke('LENKE', aktivitet.lenke);
-        this.validerDetaljFeltTekst('SØKNADSFRIST', aktivitet.tilDatoMedMnd);
-        this.validerDetaljFeltTekst('KONTAKTPERSON', aktivitet.kontaktperson);
-        this.validerDetaljFeltTekst('ARBEIDSGIVER', aktivitet.arbeidsgiver);
-        this.validerDetaljFeltTekst('ARBEIDSSTED', aktivitet.arbeidssted);
-        this.validerTilstand(aktivitet.kolonne);
+    validerStilling(data) {
+        const msg = 'Aktivitetsvisning: ',
+            side = this.elements;
+        this.valider(side.txtFraDato, data.fraDatoMedMnd, `${msg}Fra dato`);
+        this.valider(
+            side.txtBeskrivelse,
+            data.beskrivelse,
+            `${msg}Beskrivelse`
+        );
+        this.validerLenkeFelt(side.lenke, data.lenke, `${msg}Lenke`);
+        this.valider(side.txtTilDato, data.tilDatoMedMnd, `${msg}Frist`);
+        this.valider(
+            side.txtKontaktperson,
+            data.kontaktperson,
+            `${msg}Kontaktperson`
+        );
+        this.valider(
+            side.txtArbeidsgiver,
+            data.arbeidsgiver,
+            `${msg}Arbeidsgiver`
+        );
+        this.valider(
+            side.txtArbeidssted,
+            data.arbeidssted,
+            `${msg}Arbeidssted`
+        );
+
+        this.validerTilstand(data.kolonne);
     },
 
-    validerEgenaktivitet(aktivitet) {
-        this.validerDetaljFeltTekst('FRA DATO', aktivitet.fraDatoMedMnd);
-        this.validerDetaljFeltTekst('BESKRIVELSE', aktivitet.beskrivelse);
-        this.validerDetaljFeltLenke('LENKE', aktivitet.lenke);
-        this.validerDetaljFeltTekst('TIL DATO', aktivitet.tilDatoMedMnd);
-        this.validerDetaljFeltTekst('MÅL MED AKTIVITETEN', aktivitet.hensikt);
-        this.validerDetaljFeltTekst('MIN HUSKELISTE', aktivitet.huskeliste);
+    validerEgenaktivitet(data) {
+        const msg = 'Aktivitetsvisning: ',
+            side = this.elements;
+        this.valider(side.txtFraDato, data.fraDatoMedMnd, `${msg}Fra dato`);
+        this.valider(
+            side.txtBeskrivelse,
+            data.beskrivelse,
+            `${msg}Beskrivelse`
+        );
+        this.valider(side.lenke, data.lenke, `${msg}Lenke`);
+        this.valider(side.txtTilDato, data.tilDatoMedMnd, `${msg}Til dato`);
+        this.valider(side.txtHensikt, data.hensikt, `${msg}Hensikt`);
+        this.valider(side.txtHuskeliste, data.huskeliste, `${msg}Huskeliste`);
     },
 
-    validerMote(aktivitet) {
-        this.validerDetaljFeltTekst('DATO', aktivitet.fraDatoMedMnd);
-        this.validerDetaljFeltTekst('KLOKKESLETT', aktivitet.klokkeslett);
-        this.validerDetaljFeltTekst('MØTEFORM', aktivitet.moteform);
-        this.validerDetaljFeltTekst('VARIGHET', aktivitet.varighet);
-        this.validerDetaljFeltTekst(
-            'MØTESTED ELLER ANNEN PRAKTISK INFORMASJON',
-            aktivitet.motested
+    validerMote(data) {
+        const msg = 'Aktivitetsvisning: ',
+            side = this.elements;
+        this.valider(side.txtDato, data.fraDatoMedMnd, `${msg}Dato`);
+        this.valider(
+            side.txtKlokkeslett,
+            data.klokkeslett,
+            `${msg}Klokkeslett`
         );
-        this.validerDetaljFeltTekst('HENSIKT MED MØTET', aktivitet.hensikt);
-        this.validerDetaljFeltTekst(
-            'FORBEREDELSER TIL MØTET',
-            aktivitet.forberedelser
-        );
-    },
-
-    validerSokeJobber(aktivitet) {
-        this.validerDetaljFeltTekst('FRA DATO', aktivitet.fraDatoMedMnd);
-        this.validerDetaljFeltTekst('TIL DATO', aktivitet.tilDatoMedMnd);
-        this.validerDetaljFeltTekst(
-            'ANTALL SØKNADER I PERIODEN',
-            aktivitet.antallSoknader
-        );
-        this.validerDetaljFeltTekst(
-            'OPPFØLGING FRA NAV',
-            aktivitet.oppfolgingFraNav
-        );
-        this.validerDetaljFeltTekst('BESKRIVELSE', aktivitet.beskrivelse);
-    },
-
-    validerMedisinsk(aktivitet) {
-        this.validerDetaljFeltTekst(
-            'TYPE BEHANDLING',
-            aktivitet.behandlingsType
-        );
-        this.validerDetaljFeltTekst(
-            'BEHANDLINGSSTED',
-            aktivitet.behandlingsSted
-        );
-        this.validerDetaljFeltTekst('FRA DATO', aktivitet.fraDatoMedMnd);
-        this.validerDetaljFeltTekst('TIL DATO', aktivitet.tilDatoMedMnd);
-        this.validerDetaljFeltTekst('MÅL FOR BEHANDLINGEN', aktivitet.mal);
-        this.validerDetaljFeltTekst(
-            'OPPFØLGING FRA NAV',
-            aktivitet.oppfolgingFraNav
-        );
-        this.validerDetaljFeltTekst('BESKRIVELSE', aktivitet.beskrivelse);
-    },
-
-    validerDetaljFeltTekst(navn, verdi) {
-        const timeout = this.api.globals.test_settings.timeout;
-        const melding = 'Aktivitet detaljvisning: ' + navn;
-        getParentPathByChildText(
-            this.api,
-            navn,
-            this.elements.detaljFelt.selector,
-            this.elements.detaljFeltTittel.selector,
-            timeout,
-            callback => {
-                if (!callback.success && verdi.length !== 0)
-                    this.api.assert.fail(navn + ':' + callback.errorText);
-                if (verdi.length !== 0) {
-                    let detalFeltXpath =
-                        callback.value + this.elements.detaljFeltTekst.selector;
-                    this.api.getText(detalFeltXpath, tekst => {
-                        this.api.assert.equal(tekst.status, 0, melding);
-                        this.api.verify.equal(tekst.value, verdi, melding);
-                    });
-                }
-            }
+        this.valider(side.txtKanal, data.moteform, `${msg}Møteform`);
+        this.valider(side.txtVarighet, data.varighet, `${msg}Varighet`);
+        this.valider(side.txtAdresse, data.motested, `${msg}Møtested`);
+        this.valider(side.txtBakgrunn, data.hensikt, `${msg}Hensikt`);
+        this.valider(
+            side.txtForberedelser,
+            data.forberedelser,
+            `${msg}Forberedelser`
         );
     },
 
-    validerDetaljFeltLenke(navn, verdi) {
-        const timeout = this.api.globals.test_settings.timeout;
-        const melding = 'Aktivitet detaljvisning: ' + navn;
-        getParentPathByChildText(
-            this.api,
-            navn,
-            this.elements.detaljFelt.selector,
-            this.elements.detaljFeltTittel.selector,
-            timeout,
-            callback => {
-                if (!callback.success && verdi.length !== 0)
-                    this.api.assert.fail(callback.errorText);
-
-                if (verdi.length !== 0) {
-                    let detaljFeltXpath =
-                        callback.value + this.elements.detaljFeltLenke.selector;
-
-                    this.api.getText(detaljFeltXpath, tekst => {
-                        this.api.assert.equal(tekst.status, 0, melding);
-                        this.api.verify.equal(tekst.value, verdi, melding);
-                    });
-                    this.api.getAttribute(detaljFeltXpath, 'href', href => {
-                        this.api.assert.equal(href.status, 0, melding);
-                        this.api.verify.equal(href.value, verdi, melding);
-                    });
-                }
-            }
+    validerSokeJobber(data) {
+        const msg = 'Aktivitetsvisning: ',
+            side = this.elements;
+        this.valider(side.txtFraDato, data.fraDatoMedMnd, `${msg}Fra dato`);
+        this.valider(side.txtTilDato, data.tilDatoMedMnd, `${msg}Til dato`);
+        this.valider(side.txtAntall, data.antallSoknader, `${msg}Antall`);
+        this.valider(
+            side.txtOppfolging,
+            data.oppfolgingFraNav,
+            `${msg}Oppfølging`
         );
+        this.valider(
+            side.txtBeskrivelse,
+            data.beskrivelse,
+            `${msg}Beskrivelse`
+        );
+    },
+
+    validerMedisinsk(data) {
+        const msg = 'Aktivitetsvisning: ',
+            side = this.elements;
+        this.valider(
+            side.txtBehandlingType,
+            data.behandlingsType,
+            `${msg}Behandlingstype`
+        );
+        this.valider(
+            side.txtBehandlingType,
+            data.behandlingsType,
+            `${msg}Behandlingstype`
+        );
+        this.valider(side.txtFraDato, data.fraDatoMedMnd, `${msg}Fra dato`);
+        this.valider(side.txtTilDato, data.tilDatoMedMnd, `${msg}Til dato`);
+        this.valider(
+            side.txtBehandlingOppfolgning,
+            data.oppfolgingFraNav,
+            `${msg}Mål`
+        );
+        this.valider(
+            side.txtBeskrivelse,
+            data.beskrivelse,
+            `${msg}Beskrivelse`
+        );
+    },
+
+    validerArena(data) {
+        const msg = 'Aktivitetsvisning: ',
+            side = this.elements;
+        this.valider(side.txtFraDato, data.fraDatoMedMnd, `${msg}Fra dato`);
+        this.valider(side.txtTilDato, data.tilDatoMedMnd, `${msg}Til dato`);
+        this.valider(side.txtArrangoer, data.arrangoer, `${msg}Arrangør`);
+        this.valider(
+            side.txtDeltakelseProsent,
+            data.deltakelseProsent,
+            `${msg}Deltakelse`
+        );
+        this.valider(
+            side.txtDagerPerUke,
+            data.antallDagerPerUke,
+            `${msg}Dager per uke`
+        );
+        this.valider(
+            side.txtBeskrivelse,
+            data.beskrivelse,
+            `${msg}Dager per uke`
+        );
+    },
+
+    valider(element, forventet, melding) {
+        const msg = `Forventet at <${melding}> ikke skulle være synlig`;
+
+        if (forventet.length === 0) {
+            this.api.elements('xpath', element.selector, elements => {
+                this.assert.equal(elements.value.length, 0, msg);
+            });
+        } else this.api.validerTekst(element.selector, forventet, melding);
+    },
+
+    validerLenkeFelt(element, forventet, melding) {
+        const msg = `Forventet at <${melding}> ikke skulle være synlig`;
+
+        if (forventet.length === 0) {
+            this.api.elements('xpath', element.selector, elements => {
+                this.assert.equal(elements.value.length, 0, msg);
+            });
+        } else this.api.validerLenke(element.selector, forventet, melding);
     },
 
     validerStatus(status, aktivitetsType) {
-        const disabledAtt = 'disabled';
-        const forventedeStatuser = this.hentForventetStatus(
-            status,
-            aktivitetsType
-        );
+        const disabledAtt = 'disabled',
+            section = this.section.statusSection,
+            forventet = this.hentForventetStatus(status, aktivitetsType);
 
-        forventedeStatuser.forEach(forventet => {
-            const statusRdio = this.hentStatusSelektor(forventet.status).rdio;
+        if (aktivitetsType === AktivitetsType.ARENA) {
+            this.assert.elementNotPresent(section.selector);
+            return;
+        }
+        forventet.forEach(element => {
+            const statusRdio = section.hentStatusSelektor(element.status).rdio;
             const msgTekst =
                 'Validerer aktivert/deaktivert status: ' +
-                AktivitetStatus.properties[forventet.status].value;
+                AktivitetStatus.properties[element.status].value;
+
             this.waitForElementPresent(
                 statusRdio,
                 this.api.globals.test_settings.timeout
@@ -171,7 +207,7 @@ module.exports = {
             this.getAttribute(statusRdio, disabledAtt, callback => {
                 this.assert.equal(
                     String(callback.value),
-                    forventet.disablet,
+                    element.disablet,
                     msgTekst
                 );
             });
@@ -184,7 +220,7 @@ module.exports = {
         let forventedeStatuser = [
             { status: AktivitetStatus.FORSLAG, disablet: 'null' },
             { status: AktivitetStatus.PLANLEGGER, disablet: 'null' },
-            { status: AktivitetStatus.GJENNOMFORER, disablet: 'null' },
+            { status: AktivitetStatus.GJENNOMFORES, disablet: 'null' },
             { status: AktivitetStatus.FULLFORT, disablet: 'null' },
             { status: AktivitetStatus.AVBRUTT, disablet: 'null' },
         ];
@@ -210,8 +246,9 @@ module.exports = {
         const forventedeTilstander = this.hentForventetTilstand(status);
 
         forventedeTilstander.forEach(forventet => {
-            const tilstandRdio = this.hentTilstandSelektor(forventet.status)
-                .rdio;
+            const tilstandRdio = this.section.tilstandSection.hentTilstandSelektor(
+                forventet.status
+            ).rdio;
             const msgTekst =
                 'Validerer aktivert/deaktivert status: ' +
                 AktivitetTilstand.properties[forventet.status].value;
@@ -263,76 +300,10 @@ module.exports = {
         return nesteSide;
     },
 
-    hentStatusSelektor(status) {
-        var elementer = this.section.statusSection.elements;
-        switch (status) {
-            case AktivitetStatus.FORSLAG:
-                return {
-                    label: elementer.labelForslag.selector,
-                    rdio: elementer.rdioForslag.selector,
-                };
-            case AktivitetStatus.PLANLEGGER:
-                return {
-                    label: elementer.labelPlanlegger.selector,
-                    rdio: elementer.rdioPlanlegger.selector,
-                };
-            case AktivitetStatus.GJENNOMFORER:
-                return {
-                    label: elementer.labelGjennomforer.selector,
-                    rdio: elementer.rdioGjennomforer.selector,
-                };
-            case AktivitetStatus.FULLFORT:
-                return {
-                    label: elementer.labelFullfort.selector,
-                    rdio: elementer.rdioFullfort.selector,
-                };
-            case AktivitetStatus.AVBRUTT:
-                return {
-                    label: elementer.labelAvbrutt.selector,
-                    rdio: elementer.rdioAvbrutt.selector,
-                };
-            default:
-                return undefined;
-        }
-    },
-
-    hentTilstandSelektor(status) {
-        var elementer = this.section.tilstandSection.elements;
-        switch (status) {
-            case AktivitetTilstand.INGEN:
-                return {
-                    label: elementer.labelIngen.selector,
-                    rdio: elementer.rdioIngen.selector,
-                };
-            case AktivitetTilstand.SOKNADSENDT:
-                return {
-                    label: elementer.labelSoknadSendt.selector,
-                    rdio: elementer.rdioSoknadSendt.selector,
-                };
-            case AktivitetTilstand.INNKALT:
-                return {
-                    label: elementer.labelInnkaltTilIntervju.selector,
-                    rdio: elementer.rdioInnkaltTilIntervju.selector,
-                };
-            case AktivitetTilstand.AVSLAG:
-                return {
-                    label: elementer.labelAvslag.selector,
-                    rdio: elementer.rdioAvslag.selector,
-                };
-            case AktivitetTilstand.JOBBTILBUD:
-                return {
-                    label: elementer.labelJobbtilbud.selector,
-                    rdio: elementer.rdioJobbtilbud.selector,
-                };
-            default:
-                return undefined;
-        }
-    },
-
     setStatus(status) {
-        let rdioSelector = this.hentStatusSelektor(status).label;
-        const statusSection = this.section.statusSection.elements;
-        const btnBekreft = statusSection.btnBekreft.selector;
+        const section = this.section.statusSection;
+        let rdioSelector = section.hentStatusSelektor(status).label;
+        const btnBekreft = section.elements.btnBekreft.selector;
         const timeout = this.api.globals.test_settings.timeout;
 
         this.click(rdioSelector).waitForElementVisible(btnBekreft, timeout);
@@ -341,8 +312,8 @@ module.exports = {
             status === AktivitetStatus.FULLFORT ||
             status === AktivitetStatus.AVBRUTT
         ) {
-            this.assert.visible(statusSection.ikonAlert.selector);
-            this.assert.visible(statusSection.txtAlert.selector);
+            this.assert.visible(section.elements.ikonAlert.selector);
+            this.assert.visible(section.elements.txtAlert.selector);
         }
 
         this.click(btnBekreft);
@@ -351,30 +322,25 @@ module.exports = {
     },
 
     markerAvtaltMedNav() {
-        const timeout = this.api.globals.test_settings.timeout;
-        this.click(
-            this.elements.rdioAvtaltMedNav.selector
-        ).waitForElementVisible(
-            this.elements.btnBekreftAvtaltMedNav.selector,
+        const timeout = this.api.globals.test_settings.timeout,
+            side = this.elements,
+            msg = 'Aktiviteten er nå merket "Avtalt med NAV"';
+        this.click(side.rdioAvtaltMedNav.selector).waitForElementVisible(
+            side.btnBekreftAvtaltMedNav.selector,
             timeout
         );
-        this.click(
-            this.elements.btnBekreftAvtaltMedNav.selector
-        ).waitForElementVisible(
-            this.elements.txtAvtaltMedNav.selector,
+        this.click(side.btnBekreftAvtaltMedNav.selector).waitForElementVisible(
+            side.txtAvtaltMedNav.selector,
             timeout
         );
-        this.assert.containsText(
-            this.elements.txtAvtaltMedNav.selector,
-            'Aktiviteten er nå merket "Avtalt med NAV"'
-        );
+        this.assert.containsText(side.txtAvtaltMedNav.selector, msg);
         return this;
     },
 
     setTilstand(tilstand) {
-        let rdioSelector = this.hentTilstandSelektor(tilstand).label;
-        let btnBekreft = this.section.tilstandSection.elements.btnBekreft
-            .selector;
+        const section = this.section.tilstandSection;
+        let rdioSelector = section.hentTilstandSelektor(tilstand).label;
+        let btnBekreft = section.elements.btnBekreft.selector;
         let timeout = this.api.globals.test_settings.timeout;
 
         this.waitForElementVisible(rdioSelector, timeout)
@@ -387,22 +353,21 @@ module.exports = {
     },
 
     slettAktivitet(nesteside) {
-        const timeout = this.api.globals.test_settings.timeout;
-        this.waitForElementVisible(this.elements.btnSlett.selector, timeout);
+        const timeout = this.api.globals.test_settings.timeout,
+            side = this.elements;
+
+        this.waitForElementVisible(side.btnSlett.selector, timeout);
         this.api.pause(500); // slett knapp har en tendens til å bli utdatert(stale).
-        this.click(this.elements.btnSlett.selector, callback => {
+        this.click(side.btnSlett.selector, callback => {
             if (callback.status !== 0) {
                 console.log(callback);
-                this.click(this.elements.btnSlett.selector);
+                this.click(side.btnSlett.selector);
             }
         })
-            .waitForElementPresent(
-                this.elements.wndBekreftSletting.selector,
-                timeout
-            )
-            .click(this.elements.btnBekreftSletting.selector)
+            .waitForElementPresent(side.wndBekreftSletting.selector, timeout)
+            .click(side.btnBekreftSletting.selector)
             .waitForElementNotPresent(
-                this.elements.wndBekreftSletting.selector,
+                side.wndBekreftSletting.selector,
                 timeout
             );
         return nesteside;
@@ -413,6 +378,7 @@ module.exports = {
         this.api.page.dialogvisning().leggTilMelding(dialog, false);
         return this;
     },
+
     lukkVindu(nesteSide) {
         var timeout = this.api.globals.test_settings.timeout;
         this.click(this.elements.btnLukk.selector);
