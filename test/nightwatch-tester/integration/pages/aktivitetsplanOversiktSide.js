@@ -1,3 +1,5 @@
+import { AktivitetStatus } from '../data/aktivitet-status';
+
 const aktivitetsPlanOversikt = require('../commands/aktivitetsplan-oversikt.js');
 const aktivitetsPlanOversiktIntern = require('../commands/aktivitetsplan-oversikt-intern.js');
 
@@ -19,6 +21,29 @@ module.exports = {
                 );
                 return `//a[contains(@class, "aktivitetskort") and @href="${href}"]`;
             },
+
+            hentKolonneSelektor(kolonne) {
+                const elementer = this.elements;
+                switch (kolonne) {
+                    case AktivitetStatus.FORSLAG:
+                        return elementer.kolForslag.selector;
+                    case AktivitetStatus.PLANLEGGER:
+                        return elementer.kolPlanlegger.selector;
+                    case AktivitetStatus.GJENNOMFORES:
+                        return elementer.kolGjennomForer.selector;
+                    case AktivitetStatus.FULLFORT:
+                        return elementer.kolFullfort.selector;
+                    case AktivitetStatus.AVBRUTT:
+                        return elementer.kolAvbrutt.selector;
+                    default:
+                        return undefined;
+                }
+            },
+
+            hentXpathForAktivitetskort(kolonne) {
+                var kolonne = this.hentKolonneSelektor(kolonne);
+                return kolonne + this.elements.aktivitetsKort.selector;
+            },
         },
     ],
 
@@ -28,11 +53,11 @@ module.exports = {
             '//div[@class="verktoylinje__verktoy"]/button | //div[@class="verktoylinje__verktoy"]/a[@role="button"]',
         cbFilter: '//button[@class="dropdown__btn"]',
         tavle: '//section[contains(@class, "aktivitetstavle")]',
-        kolForslag: '//section[@class="tavle-kolonne"][1]',
-        kolPlanlegger: '//section[@class="tavle-kolonne"][2]/div/div',
-        kolGjennomForer: '//section[@class="tavle-kolonne"][3]',
-        kolFullfort: '//section[@class="tavle-kolonne"][4]',
-        kolAvbrutt: '//section[@class="tavle-kolonne"][5]',
+        kolForslag: '//*[@data-testid="aktivitetstavle.brukerErInteressert"]',
+        kolPlanlegger: '//*[@data-testid="aktivitetstavle.planlagt"]/div/div',
+        kolGjennomForer: '//*[@data-testid="aktivitetstavle.gjennomfoert"]',
+        kolFullfort: '//*[@data-testid="aktivitetstavle.fullfoert"]',
+        kolAvbrutt: '//*[@data-testid="aktivitetstavle.avbrutt"]',
         aktivitetsKort: '//a[contains(@class, "aktivitetskort")]',
         tittel: '/h1',
         dato: '/p[contains(@class, "aktivitetskort__dato")]',
