@@ -14,13 +14,59 @@ module.exports = {
         side: '//section[@class="aktivitetsvisning"]',
         btnLukk: '//button[contains(@class, "lukknapp")]',
         txtSideTittel: '//h1[@id="modal-aktivitetsvisning-header"]',
-        detaljFelt:
-            '//div[contains(@class,"aktivitetsdetaljer__felt detaljfelt")]',
-        detaljFeltTittel: '/h2/span',
-        detaljFeltTekst: '/*[contains(@class, "detaljfelt__tekst")]',
-        detaljFeltLenke: '/a[@class="detaljfelt__lenke eksternlenke lenke"]',
-        txtFraDato: '(//p[contains(@class, "detaljfelt__tekst")])[1]',
-        txtTilDato: '(//p[contains(@class, "detaljfelt__tekst")])[2]',
+
+        lenke: '//*[@data-testid="aktivitetdetaljer.lenke-label"]/a',
+        txtFraDato:
+            '//*[contains(@data-testid, "aktivitetdetaljer.fra-dato-tekst")]/p',
+        txtTilDato:
+            '//*[contains(@data-testid, "aktivitetdetaljer.til-dato-tekst")]/p',
+
+        // STILLING
+        txtArbeidsgiver:
+            '//*[@data-testid="aktivitetdetaljer.arbeidsgiver-label"]/p',
+        txtArbeidssted:
+            '//*[@data-testid="aktivitetdetaljer.arbeidssted-label"]/p',
+        txtKontaktperson:
+            '//*[@data-testid="aktivitetdetaljer.kontaktperson-label"]/p',
+        txtBeskrivelse:
+            '//*[@data-testid="aktivitetvisning.beskrivelse-label"]/div[@class="detaljfelt__tekst"]//span',
+
+        // ARENA TILTAK
+        txtArrangoer: '//*[@data-testid="aktivitetdetaljer.aarrangor-label"]/p',
+        txtDeltakelseProsent:
+            '//*[@data-testid="aktivitetdetaljer.deltakelsesprosent-label"]/p',
+        txtDagerPerUke:
+            '//*[@data-testid="aktivitetdetaljer.antall-dager-per-uke-label"]/p',
+
+        // MØTE
+        txtDato: '//*[@data-testid="aktivitetdetaljer.dato"]/p',
+        txtKlokkeslett: '//*[@data-testid="aktivitetdetaljer.klokkeslett"]/p',
+        txtKanal: '//*[@data-testid="aktivitetdetaljer.kanal"]/p',
+        txtVarighet: '//*[@data-testid="aktivitetdetaljer.varighet"]/p',
+        txtAdresse: '//*[@data-testid="aktivitetdetaljer.adresse"]/p',
+        txtBakgrunn:
+            '//*[@data-testid="aktivitetdetaljer.bakgrunn"]/div[@class="detaljfelt__tekst"]//span',
+        txtForberedelser:
+            '//*[@data-testid="aktivitetdetaljer.forberedelser"]/div[@class="detaljfelt__tekst"]//span',
+
+        // EGENAKTIVITET
+        txtHuskeliste:
+            '//*[@data-testid="aktivitetdetaljer.oppfolging-label"]/p',
+        txtHensikt: '//*[@data-testid="aktivitetdetaljer.hensikt-label"]/p',
+
+        // AVTALE OM Å SØKE
+        txtAntall: '//*[@data-testid="aktivitetdetaljer.antall-label"]/p',
+        txtOppfolging:
+            '//*[@data-testid="aktivitetdetaljer.avtale-oppfolging-label"]/div[@class="detaljfelt__tekst"]//span',
+
+        // MEDISINSK
+        txtBehandlingType:
+            '//*[@data-testid="aktivitetdetaljer.behandling-type-label"]/p',
+        txtBehandlingSted:
+            '//*[@data-testid="aktivitetdetaljer.behandling-sted-label"]/p',
+        txtBehandlingOppfolgning:
+            '//*[@data-testid="aktivitetdetaljer.behandling-oppfolging-label"]/p',
+
         btnEndre:
             '//button[contains(@class, "knapp knapp-liten modal-footer__knapp knapp--hoved")]',
         rdioAvtaltMedNav: '//div[@class="avtalt-container__radio"]/div/label',

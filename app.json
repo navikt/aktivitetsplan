@@ -1,9 +1,7 @@
 {
   "name": "aktivitetsplan",
   "description": "Aktivitetsplan i nav",
-  "scripts": {
-      "heroku-postbuild": "npm run heroku-build"
-  },
+  "scripts": {},
   "env": {},
   "formation": {},
   "addons": [],

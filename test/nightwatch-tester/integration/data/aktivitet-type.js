@@ -6,6 +6,7 @@ export const AktivitetsType = {
     MEDISINSKBEHANDLING: 5,
     SAMTALEREFERAT: 6,
     JOBBJEGHAR: 7,
+    ARENA: 8,
 
     properties: {
         1: { value: 'Stilling jeg skal søke', oversiktNavn: 'STILLING' },
@@ -18,5 +19,7 @@ export const AktivitetsType = {
         5: { value: 'Medisinsk behandling', oversiktNavn: 'BEHANDLING' },
         6: { value: 'Samtalereferat' },
         7: { value: 'Jobb jeg har nå', oversiktNavn: 'JOBB JEG HAR NÅ' },
+        8: { value: '', oversiktNavn: 'TILTAK GJENNOM NAV'}
+
     },
 };
