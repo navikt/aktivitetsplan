@@ -61,16 +61,17 @@ module.exports = {
         const aktivitetsKortSelector =
             this.hentKolonneSelektor(aktivitet.kolonne) +
             this.aktivitetskortHref(aktivitet.aktivitetURL);
+        const typeSelektor = this.hentAktivitetTypeSelektor(
+            aktivitetsKortSelector,
+            aktivitet.type
+        );
+
+        this.assert.visible(typeSelektor);
 
         this.api.validerTekst(
             aktivitetsKortSelector + this.elements.tittel.selector,
             aktivitet.tittel,
             'Aktivitetsplan oversikt: tittel'
-        );
-        this.api.validerTekst(
-            aktivitetsKortSelector + this.elements.type.selector,
-            AktivitetsType.properties[aktivitet.type].oversiktNavn,
-            'Aktivitetsplan oversikt: type'
         );
 
         this.api.validerTekst(

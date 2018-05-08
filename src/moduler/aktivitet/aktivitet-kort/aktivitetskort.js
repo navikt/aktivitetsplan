@@ -72,7 +72,11 @@ class AktivitetsKort extends Component {
                         this.aktivitetskortSomSkalFaFokusNarLukkes = aktivitetskort;
                     }}
                 >
-                    <Undertekst tag="p" className="aktivitetskort__type">
+                    <Undertekst
+                        tag="p"
+                        className="aktivitetskort__type"
+                        data-testId={type}
+                    >
                         <FormattedMessage
                             id={`aktivitetskort.type.${type}`.toLowerCase()}
                         />

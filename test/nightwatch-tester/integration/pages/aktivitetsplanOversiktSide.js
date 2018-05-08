@@ -1,4 +1,5 @@
 import { AktivitetStatus } from '../data/aktivitet-status';
+import { AktivitetsType } from '../data/aktivitet-type';
 
 const aktivitetsPlanOversikt = require('../commands/aktivitetsplan-oversikt.js');
 const aktivitetsPlanOversiktIntern = require('../commands/aktivitetsplan-oversikt-intern.js');
@@ -43,6 +44,11 @@ module.exports = {
             hentXpathForAktivitetskort(kolonne) {
                 var kolonne = this.hentKolonneSelektor(kolonne);
                 return kolonne + this.elements.aktivitetsKort.selector;
+            },
+
+            hentAktivitetTypeSelektor(prefix, aktivitetstype) {
+                const id = AktivitetsType.properties[aktivitetstype].testId;
+                return `${prefix}//*[@data-testid="${id}"]`;
             },
         },
     ],
