@@ -86,13 +86,11 @@ module.exports = {
                 'Aktivitetsplan oversikt: tilstand Ingen'
             );
         } else {
-            const tilstand =
-                AktivitetTilstand.properties[aktivitet.tilstand].value;
-            this.api.validerTekst(
-                aktivitetsKortSelector + this.elements.etikett.selector,
-                tilstand,
-                'Aktivitetsplan oversikt: tilstand:' + tilstand
+            const merkelapp = this.hentMerkelappSelektor(
+                aktivitetsKortSelector,
+                aktivitet.tilstand
             );
+            this.api.assert.visible(merkelapp);
         }
         if (aktivitet.type === AktivitetsType.AVTALE) {
             const expected =

@@ -1,5 +1,6 @@
 import { AktivitetStatus } from '../data/aktivitet-status';
 import { AktivitetsType } from '../data/aktivitet-type';
+import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
 const aktivitetsPlanOversikt = require('../commands/aktivitetsplan-oversikt.js');
 const aktivitetsPlanOversiktIntern = require('../commands/aktivitetsplan-oversikt-intern.js');
@@ -48,6 +49,13 @@ module.exports = {
 
             hentAktivitetTypeSelektor(prefix, aktivitetstype) {
                 const id = AktivitetsType.properties[aktivitetstype].testId;
+                return `${prefix}//*[@data-testid="${id}"]`;
+            },
+
+            hentMerkelappSelektor(prefix, aktivitetstilstand) {
+                const id =
+                    AktivitetTilstand.properties[aktivitetstilstand]
+                        .merkelappId;
                 return `${prefix}//*[@data-testid="${id}"]`;
             },
         },

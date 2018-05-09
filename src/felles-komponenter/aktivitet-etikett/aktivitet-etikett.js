@@ -30,7 +30,7 @@ const setType = etikettnavn => {
 
 function AktivitetEtikett({ etikett, id }) {
     return (
-        <span key={etikett} className={cls(setType(etikett))}>
+        <span key={etikett} className={cls(setType(etikett))} data-testId={id}>
             <Text id={id} />
         </span>
     );
