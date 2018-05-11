@@ -9,17 +9,16 @@ export const AktivitetsType = {
     ARENA: 8,
 
     properties: {
-        1: { value: 'Stilling jeg skal søke', oversiktNavn: 'STILLING' },
-        2: { value: 'Møte med NAV', oversiktNavn: 'MØTE MED NAV' },
+        1: { value: 'Stilling jeg skal søke', testId: 'STILLING' },
+        2: { value: 'Møte med NAV', testId: 'MOTE' },
         3: {
             value: 'Jobbrettet egenaktivitet',
-            oversiktNavn: 'JOBBRETTET EGENAKTIVITET',
+            testId: 'EGEN',
         },
-        4: { value: 'Avtale om å søke jobber', oversiktNavn: 'JOBBSØKING' },
-        5: { value: 'Medisinsk behandling', oversiktNavn: 'BEHANDLING' },
-        6: { value: 'Samtalereferat' },
-        7: { value: 'Jobb jeg har nå', oversiktNavn: 'JOBB JEG HAR NÅ' },
-        8: { value: '', oversiktNavn: 'TILTAK GJENNOM NAV'}
-
+        4: { value: 'Avtale om å søke jobber', testId: 'SOKEAVTALE' },
+        5: { value: 'Medisinsk behandling', testId: 'BEHANDLING' },
+        6: { value: 'Samtalereferat', testId: 'SAMTALEREFERAT' },
+        7: { value: 'Jobb jeg har nå', testId: 'IJOBB' },
+        8: { value: '', testId: 'TILTAKSAKTIVITET' },
     },
 };
