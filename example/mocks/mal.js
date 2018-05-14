@@ -9,10 +9,10 @@ export function sisteMal() {
     return maler[maler.length - 1];
 }
 
-export function opprettMal(update) {
+export function opprettMal(update, erVeileder) {
     let nyMal = {
         mal: update.mal,
-        endretAv: 'VEILEDER',
+        endretAv: erVeileder ?  'VEILEDER' : '12345678912',
         dato: new Date(),
     };
     maler.push(nyMal);
