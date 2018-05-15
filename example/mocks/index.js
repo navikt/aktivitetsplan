@@ -39,7 +39,7 @@ mock.get('/veilarboppfolging/api/oppfolging/me', me);
 
 mock.get('/veilarboppfolging/api/oppfolging/mal', () => sisteMal());
 mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }) =>
-    opprettMal(body)
+    opprettMal(body, true)
 );
 
 mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
@@ -68,6 +68,12 @@ mock.get('/veilarboppfolgingproxy/api/oppfolging/me', me);
 mock.get('/veilarboppfolgingproxy/api/oppfolging', ({ queryParams }) =>
     oppfolging(queryParams)
 );
+mock.get('/veilarboppfolgingproxy/api/oppfolging/mal', () => sisteMal());
+mock.post('/veilarboppfolgingproxy/api/oppfolging/mal', ({ body }) =>
+    opprettMal(body, false)
+);
+
+mock.get('/veilarboppfolgingproxy/api/oppfolging/malListe', () => malListe());
 
 //veilarboppgave-api
 mock.get('/veilarboppgave/api/oppgavehistorikk', []);
