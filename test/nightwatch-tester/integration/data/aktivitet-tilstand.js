@@ -8,10 +8,30 @@ export const AktivitetTilstand = {
 
     properties: {
         1: { value: 'Ingen', selectorId: 'Ingen' },
-        2: { value: 'Søknaden er sendt', selectorId: 'SoknadSendt' },
-        3: { value: 'Innkalt til intervju', selectorId: 'Innkalt' },
-        4: { value: 'Fått avslag', selectorId: 'Avslag' },
-        5: { value: 'Fått jobbtilbud', selectorId: 'Jobbtilbud' },
-        6: { value: 'Avtalt med NAV', selectorId: 'Avtalt' },
+        2: {
+            value: 'Søknaden er sendt',
+            selectorId: 'SoknadSendt',
+            merkelappId: 'etikett.SOKNAD_SENDT',
+        },
+        3: {
+            value: 'Innkalt til intervju',
+            selectorId: 'Innkalt',
+            merkelappId: 'etikett.INNKALT_TIL_INTERVJU',
+        },
+        4: {
+            value: 'Fått avslag',
+            selectorId: 'Avslag',
+            merkelappId: 'etikett.AVSLAG',
+        },
+        5: {
+            value: 'Fått jobbtilbud',
+            selectorId: 'Jobbtilbud',
+            merkelappId: 'etikett.JOBBTILBUD',
+        },
+        6: {
+            value: 'Avtalt med NAV',
+            selectorId: 'Avtalt',
+            merkelappId: 'sett-avtalt.label',
+        },
     },
 };

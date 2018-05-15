@@ -1,5 +1,5 @@
 import me from './me';
-import oppfolging from './oppfolging';
+import oppfolging, { startEskalering, stoppEskalering } from './oppfolging';
 import dialog, {
     setVenterPaSvar,
     setFerdigBehandlet,
@@ -39,7 +39,7 @@ mock.get('/veilarboppfolging/api/oppfolging/me', me);
 
 mock.get('/veilarboppfolging/api/oppfolging/mal', () => sisteMal());
 mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }) =>
-    opprettMal(body)
+    opprettMal(body, true)
 );
 
 mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
@@ -55,11 +55,25 @@ mock.get(
 );
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', veilederTilgang);
 
+mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }) =>
+    startEskalering(body)
+);
+
+mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }) =>
+    stoppEskalering(body)
+);
+
 //veilarboppfolgingproxy
 mock.get('/veilarboppfolgingproxy/api/oppfolging/me', me);
 mock.get('/veilarboppfolgingproxy/api/oppfolging', ({ queryParams }) =>
     oppfolging(queryParams)
 );
+mock.get('/veilarboppfolgingproxy/api/oppfolging/mal', () => sisteMal());
+mock.post('/veilarboppfolgingproxy/api/oppfolging/mal', ({ body }) =>
+    opprettMal(body, false)
+);
+
+mock.get('/veilarboppfolgingproxy/api/oppfolging/malListe', () => malListe());
 
 //veilarboppgave-api
 mock.get('/veilarboppgave/api/oppgavehistorikk', []);

@@ -1,6 +1,5 @@
 'use strict';
 import { getParentPathByChildText } from '../utils';
-import { AktivitetStatus } from '../data/aktivitet-status';
 import { AktivitetsType } from '../data/aktivitet-type';
 import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
@@ -60,19 +59,19 @@ module.exports = {
 
     validerAktivitet(aktivitet) {
         const aktivitetsKortSelector =
-            this.genererXpathForForKolonne(aktivitet.kolonne) +
+            this.hentKolonneSelektor(aktivitet.kolonne) +
             this.aktivitetskortHref(aktivitet.aktivitetURL);
+        const typeSelektor = this.hentAktivitetTypeSelektor(
+            aktivitetsKortSelector,
+            aktivitet.type
+        );
+
+        this.assert.visible(typeSelektor);
 
         this.api.validerTekst(
             aktivitetsKortSelector + this.elements.tittel.selector,
             aktivitet.tittel,
             'Aktivitetsplan oversikt: tittel'
-        );
-
-        this.api.validerTekst(
-            aktivitetsKortSelector + this.elements.type.selector,
-            AktivitetsType.properties[aktivitet.type].oversiktNavn,
-            'Aktivitetsplan oversikt: type'
         );
 
         this.api.validerTekst(
@@ -87,13 +86,11 @@ module.exports = {
                 'Aktivitetsplan oversikt: tilstand Ingen'
             );
         } else {
-            const tilstand =
-                AktivitetTilstand.properties[aktivitet.tilstand].value;
-            this.api.validerTekst(
-                aktivitetsKortSelector + this.elements.etikett.selector,
-                tilstand,
-                'Aktivitetsplan oversikt: tilstand:' + tilstand
+            const merkelapp = this.hentMerkelappSelektor(
+                aktivitetsKortSelector,
+                aktivitet.tilstand
             );
+            this.api.assert.visible(merkelapp);
         }
         if (aktivitet.type === AktivitetsType.AVTALE) {
             const expected =
@@ -110,8 +107,7 @@ module.exports = {
     velgAktivitetMedHref(kolonne, url) {
         const timeout = this.api.globals.test_settings.timeout;
         const xPath =
-            this.genererXpathForForKolonne(kolonne) +
-            this.aktivitetskortHref(url);
+            this.hentKolonneSelektor(kolonne) + this.aktivitetskortHref(url);
         const nesteSide = this.api.page.aktivitetsvisningModal();
         this.api.click(xPath);
         this.api.waitForElementVisible(
@@ -124,15 +120,14 @@ module.exports = {
     validerSletting(kolonne, url) {
         const timeout = this.api.globals.test_settings.timeout;
         let xPath =
-            this.genererXpathForForKolonne(kolonne) +
-            this.aktivitetskortHref(url);
+            this.hentKolonneSelektor(kolonne) + this.aktivitetskortHref(url);
         this.api.waitForElementNotPresent(xPath, timeout);
         return this;
     },
 
     velgAktivitetMedTittel(kolonne, tittel, nesteSide) {
         let timeout = this.api.globals.test_settings.timeout;
-        let xPathAk = this.genererXpathForAktivitetskort(kolonne);
+        let xPathAk = this.hentKolonneSelektor(kolonne);
 
         getParentPathByChildText(
             this.api,
@@ -150,29 +145,6 @@ module.exports = {
         );
 
         return nesteSide;
-    },
-
-    genererXpathForForKolonne(kolonne) {
-        const elementer = this.elements;
-        switch (kolonne) {
-            case AktivitetStatus.FORSLAG:
-                return elementer.kolForslag.selector;
-            case AktivitetStatus.PLANLEGGER:
-                return elementer.kolPlanlegger.selector;
-            case AktivitetStatus.GJENNOMFORES:
-                return elementer.kolGjennomForer.selector;
-            case AktivitetStatus.FULLFORT:
-                return elementer.kolFullfort.selector;
-            case AktivitetStatus.AVBRUTT:
-                return elementer.kolAvbrutt.selector;
-            default:
-                return undefined;
-        }
-    },
-
-    genererXpathForAktivitetskort(kolonne) {
-        var kolonne = this.genererXpathForForKolonne(kolonne);
-        return kolonne + this.elements.aktivitetsKort.selector;
     },
 
     klikkDialog(nesteSide) {

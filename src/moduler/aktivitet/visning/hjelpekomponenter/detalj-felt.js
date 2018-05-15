@@ -11,6 +11,7 @@ function DetaljFelt({ tittel, children, fullbredde, beskrivelse }) {
                 'detaljfelt--fullbredde': fullbredde,
                 'detaljfelt--beskrivelse': beskrivelse,
             })}
+            data-testId={tittel.props.id}
         >
             <EtikettLiten className="detaljfelt__tittel" tag="h2">
                 {tittel}
