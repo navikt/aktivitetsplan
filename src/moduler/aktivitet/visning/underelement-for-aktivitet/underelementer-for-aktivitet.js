@@ -16,6 +16,7 @@ import {
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
+import getScrollParent from '../../../../utils/getScrollParent';
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
@@ -26,6 +27,17 @@ class UnderelementerForAktivitet extends Component {
         super();
         autobind(this);
         this.state = {};
+        this.me = null;
+    }
+
+    scrollMeIntoView() {
+        console.log(getScrollParent(this.me));
+        if (this.me) {
+            setTimeout(
+                () => getScrollParent(this.me).scrollTo(0, this.me.offsetTop),
+                0
+            );
+        }
     }
 
     toggleDialog() {
@@ -34,9 +46,12 @@ class UnderelementerForAktivitet extends Component {
                 vis: INGEN,
             });
         } else {
-            this.setState({
-                vis: DIALOG,
-            });
+            this.setState(
+                {
+                    vis: DIALOG,
+                },
+                this.scrollMeIntoView
+            );
         }
     }
 
@@ -46,9 +61,12 @@ class UnderelementerForAktivitet extends Component {
                 vis: INGEN,
             });
         } else {
-            this.setState({
-                vis: HISTORIKK,
-            });
+            this.setState(
+                {
+                    vis: HISTORIKK,
+                },
+                this.scrollMeIntoView
+            );
         }
     }
 
@@ -81,7 +99,7 @@ class UnderelementerForAktivitet extends Component {
             });
         const underelementId = `underelementer-aktivitet__dialogvisning-${aktivitetId}`;
         return (
-            <section className={cls(className)}>
+            <section ref={me => (this.me = me)} className={cls(className)}>
                 <div className="velgVisning">
                     <HiddenIfButton
                         hidden={!kanSeDialog}
