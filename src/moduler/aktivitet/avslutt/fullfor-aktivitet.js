@@ -21,15 +21,13 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
     const headerTekst = (
         <FormattedMessage id="opprett-begrunnelse.fullfoert.header" />
     );
-    const beskrivelseTekst = (
-        <FormattedMessage id="opprett-begrunnelse.fullfoert.melding" />
-    );
+    const beskrivelseTekstId = 'opprett-begrunnelse.fullfoert.melding';
 
     const begrunnelse = (
         <BegrunnelseAktivitet
             aktivitet={valgtAktivitet}
             headerTekst={headerTekst}
-            beskrivelseTekst={beskrivelseTekst}
+            beskrivelseTekstId={beskrivelseTekstId}
             lagrer={lagrer}
             onSubmit={beskrivelseForm => {
                 doAvsluttOppfolging(

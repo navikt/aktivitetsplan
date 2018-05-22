@@ -51,9 +51,12 @@ class Tavle extends Component {
 
     render() {
         const { children, className, intl } = this.props;
-
         const kolonner = children.map((child, index) =>
-            <section key={child.key || index} className="tavle-kolonne">
+            <section
+                key={child.key || index}
+                className="tavle-kolonne"
+                data-testId={child.props.tittelId}
+            >
                 {child}
             </section>
         );

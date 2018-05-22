@@ -25,9 +25,7 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
             headerTekst={
                 <FormattedMessage id="opprett-begrunnelse.avbrutt.header" />
             }
-            beskrivelseTekst={
-                <FormattedMessage id="opprett-begrunnelse.avbrutt.melding" />
-            }
+            beskrivelseTekstId="opprett-begrunnelse.avbrutt.melding"
             lagrer={lagrer}
             onSubmit={beskrivelseForm => {
                 lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);

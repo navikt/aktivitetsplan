@@ -40,12 +40,13 @@
     "dev:less": "autoless --source-map --interval 100 ./src ./example/aktivitetsplanfelles",
     "build": "npm run build:tekster && npm run build:less && npm run build:less:ny && npm run build:js && npm run build:js:sbs && npm run build:js:fss",
     "build:js": "webpack --optimize-minimize",
-    "build:less": "node ./node_modules/less/bin/lessc src/index.less ./example/aktivitetsplanfelles/index.css",
+    "build:less": "node ./node_modules/less/bin/lessc src/index-dev.less ./example/aktivitetsplanfelles/index-dev.css",
     "build:less:ny": "node ./node_modules/less/bin/lessc --compress src/index.less ./build/css/index.css",
     "build:tekster": "node ./build-tekster.js",
     "precommit": "lint-staged",
     "build:js:sbs": "webpack --config webpacksbs.config.js",
-    "build:js:fss": "webpack --config webpackfss.config.js"
+    "build:js:fss": "webpack --config webpackfss.config.js",
+    "heroku-postbuild": "npm run build:tekster && npm run build:less && npm run build:js -- --env.dev --env.mock"
   },
   "lint-staged": {
     "*.js": [
@@ -186,6 +187,7 @@
     "yet-another-fetch-mock": "^2.3.2",
     "browserstack-local": "1.3.0",
     "nightwatch": "0.9.19",
-    "tree-kill": "1.2.0"
+    "tree-kill": "1.2.0",
+    "express": "^4.16.3"
   }
 }
