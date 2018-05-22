@@ -177,3 +177,23 @@ export class MedisinskBehandlingAktivitet extends AktivitetData {
         return this.fraDatoMedMnd + ' - ' + this.tilDatoMedMnd;
     }
 }
+
+export class ArenaAktivitet extends AktivitetData {
+    constructor(tittel, fraDato, tilDato, beskrivelse, status, avtalt, arrangoer, antallDagerPerUke, deltakelseProsent){
+        super(tittel, fraDato, tilDato, status);
+        this.beskrivelse = beskrivelse;
+        this.avtalt = avtalt;
+        this.arrangoer = arrangoer;
+        this.antallDagerPerUke = antallDagerPerUke;
+        this.deltakelseProsent = `${deltakelseProsent}%`;
+    }
+
+    get type() {
+        return AktivitetsType.ARENA;
+    }
+
+    get aktivitetskortDato() {
+        return this.fraDatoMedMnd + ' - ' + this.tilDatoMedMnd;
+    }
+
+}
