@@ -31,7 +31,6 @@ class UnderelementerForAktivitet extends Component {
     }
 
     scrollMeIntoView() {
-        console.log(getScrollParent(this.me));
         if (this.me) {
             setTimeout(
                 () => getScrollParent(this.me).scrollTo(0, this.me.offsetTop),

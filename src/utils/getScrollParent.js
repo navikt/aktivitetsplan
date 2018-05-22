@@ -33,7 +33,5 @@ export default function getScrollParent(element, includeHidden) {
     ) {
         parent = parent.parentElement;
     }
-    console.log(parent);
-
     return !parent ? document.body : parent;
 }
