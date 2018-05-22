@@ -6,6 +6,7 @@ let nightwatch_config = {
     output: true,
     custom_commands_path: '',
     custom_assertions_path: '',
+    globals_path: 'test/nightwatch-tester/integration/globals.js',
     page_objects_path: ['test/nightwatch-tester/integration/pages'],
 
     selenium: {
