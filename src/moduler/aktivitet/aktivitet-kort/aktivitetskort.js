@@ -58,8 +58,10 @@ class AktivitetsKort extends Component {
         } = this.props;
         const { id, type, tittel, antallStillingerSokes } = aktivitet;
 
+        const ariaLabel = `aktivitetskort__header__${id} aktivitetskort__dato__${id}`;
+
         const aktivitetsKort = (
-            <article>
+            <div>
                 <Lenke
                     href={aktivitetRoute(id)}
                     draggable={erFlyttbar}
@@ -72,40 +74,43 @@ class AktivitetsKort extends Component {
                         this.aktivitetskortSomSkalFaFokusNarLukkes = aktivitetskort;
                     }}
                 >
-                    <Undertekst
-                        tag="p"
-                        className="aktivitetskort__type"
-                        data-testId={type}
-                    >
-                        <FormattedMessage
-                            id={`aktivitetskort.type.${type}`.toLowerCase()}
-                        />
-                    </Undertekst>
-                    <Element
-                        tag="h1"
-                        className={classNames(
-                            'aktivitetskort__tittel softbreak',
-                            {
-                                'aktivitetskort__tittel--drag': isDragging,
+                    <article aria-labelledby={ariaLabel}>
+                        <Undertekst
+                            tag="p"
+                            className="aktivitetskort__type"
+                            data-testId={type}
+                        >
+                            <FormattedMessage
+                                id={`aktivitetskort.type.${type}`.toLowerCase()}
+                            />
+                        </Undertekst>
+                        <Element
+                            tag="h1"
+                            id={`aktivitetskort__header__${id}`}
+                            className={classNames(
+                                'aktivitetskort__tittel softbreak',
+                                {
+                                    'aktivitetskort__tittel--drag': isDragging,
+                                }
+                            )}
+                        >
+                            {tittel}
+                        </Element>
+                        <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
+                        <VisibleIfDiv
+                            visible={
+                                type === SOKEAVTALE_AKTIVITET_TYPE &&
+                                antallStillingerSokes > 0
                             }
-                        )}
-                    >
-                        {tittel}
-                    </Element>
-                    <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
-                    <VisibleIfDiv
-                        visible={
-                            type === SOKEAVTALE_AKTIVITET_TYPE &&
-                            antallStillingerSokes > 0
-                        }
-                    >
-                        <FormattedMessage id="aktivitetskort.antall-label" />
-                        &nbsp;
-                        {antallStillingerSokes}
-                    </VisibleIfDiv>
-                    <AktivitetskortTillegg aktivitet={aktivitet} />
+                        >
+                            <FormattedMessage id="aktivitetskort.antall-label" />
+                            &nbsp;
+                            {antallStillingerSokes}
+                        </VisibleIfDiv>
+                        <AktivitetskortTillegg aktivitet={aktivitet} />
+                    </article>
                 </Lenke>
-            </article>
+            </div>
         );
 
         return erFlyttbar ? connectDragSource(aktivitetsKort) : aktivitetsKort;
