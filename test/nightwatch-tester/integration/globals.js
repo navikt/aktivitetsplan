@@ -2,19 +2,27 @@ const driver = require('../selenium/driver');
 const mock = require('../mock');
 
 module.exports = {
+    'default' : {
+        isLocal : true,
+    },
+
     before: function(done) {
         mock.startMock();
-        driver.start();
+
+        if(this.isLocal) driver.start();
+
         setTimeout(function() {
             done();
-        }, 2000);
+        }, 5000);
     },
 
     after: function(done) {
         mock.stopMock();
-        driver.stop();
+
+        if(this.isLocal) driver.stop();
+
         setTimeout(function() {
             done();
-        }, 200);
+        }, 5000);
     },
 };
