@@ -78,7 +78,7 @@ nightwatch_config.common_capabilities['browserstack.user'] = process.env.BROWSER
 nightwatch_config.common_capabilities['browserstack.key'] = process.env.BROWSERSTACK_KEY;
 
 var globals = nightwatch_config.test_settings.default.globals;
-nightwatch_config.test_settings.default.launch_url = `${globals.baseUrl}/aktivitetsplanfelles/${globals.fnr}`;
+globals.launch_url = `${globals.baseUrl}/aktivitetsplanfelles/${globals.fnr}`;
 
 for (var i in nightwatch_config.test_settings) {
     var config = nightwatch_config.test_settings[i];

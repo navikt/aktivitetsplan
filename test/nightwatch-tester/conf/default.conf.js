@@ -12,12 +12,16 @@ const nightwatch_config = {
 
     test_settings: {
         default: {
+            globals: {
+                loginUrl: '',
+                timeout: 10000,
+                baseUrl: 'http://localhost:3000',
+                fnr: '12345678912',
+            },
             selenium_port: 9515,
             selenium_host: 'localhost',
             default_path_prefix: '',
-            timeout: 10000,
-            baseUrl: 'http://localhost:3000',
-            fnr: '12345678912',
+
             javaScriptEnabled: true,
             acceptSslCerts: true,
             disable_colors: true,
@@ -36,8 +40,7 @@ const nightwatch_config = {
         },
     },
 };
-let defaultSettings = nightwatch_config.test_settings.default;
-defaultSettings.fnr = defaultSettings.fnr;
+let defaultSettings = nightwatch_config.test_settings.default.globals;
 defaultSettings.loginUrl = `${defaultSettings.baseUrl}/aktivitetsplanfelles/${defaultSettings.fnr}`;
 
 module.exports = nightwatch_config;

@@ -7,9 +7,7 @@ const aktivitetsPlanOversiktIntern = require('../commands/aktivitetsplan-oversik
 
 module.exports = {
     url: function() {
-        return (
-            this.api.globals.test_settings.baseUrl + '/aktivitetsplanfelles/'
-        );
+        return this.api.globals.baseUrl + '/aktivitetsplanfelles/';
     },
 
     commands: [
@@ -17,10 +15,7 @@ module.exports = {
         aktivitetsPlanOversiktIntern,
         {
             aktivitetskortHref(url) {
-                let href = url.replace(
-                    this.api.globals.test_settings.baseUrl,
-                    ''
-                );
+                let href = url.replace(this.api.globals.baseUrl, '');
                 return `//a[contains(@class, "aktivitetskort") and @href="${href}"]`;
             },
 

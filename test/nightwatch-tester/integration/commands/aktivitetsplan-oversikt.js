@@ -5,7 +5,7 @@ import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
 module.exports = {
     ventPaSideLast() {
-        let timeout = this.api.globals.test_settings.timeout;
+        let timeout = this.api.globals.timeout;
         const pageObjects = this.elements;
         this.waitForElementVisible(
             pageObjects.btnLeggTilAktivitet.selector,
@@ -49,7 +49,7 @@ module.exports = {
 
     trykkLeggTilAktivitet(nesteSide) {
         const pageObjects = this.elements;
-        let timeout = this.api.globals.test_settings.timeout;
+        let timeout = this.api.globals.timeout;
 
         this.click(
             pageObjects.btnLeggTilAktivitet.selector
@@ -105,7 +105,7 @@ module.exports = {
     },
 
     velgAktivitetMedHref(kolonne, url) {
-        const timeout = this.api.globals.test_settings.timeout;
+        const timeout = this.api.globals.timeout;
         const xPath =
             this.hentKolonneSelektor(kolonne) + this.aktivitetskortHref(url);
         const nesteSide = this.api.page.aktivitetsvisningModal();
@@ -118,7 +118,7 @@ module.exports = {
     },
 
     validerSletting(kolonne, url) {
-        const timeout = this.api.globals.test_settings.timeout;
+        const timeout = this.api.globals.timeout;
         let xPath =
             this.hentKolonneSelektor(kolonne) + this.aktivitetskortHref(url);
         this.api.waitForElementNotPresent(xPath, timeout);
@@ -126,7 +126,7 @@ module.exports = {
     },
 
     velgAktivitetMedTittel(kolonne, tittel, nesteSide) {
-        let timeout = this.api.globals.test_settings.timeout;
+        let timeout = this.api.globals.timeout;
         let xPathAk = this.hentKolonneSelektor(kolonne);
 
         getParentPathByChildText(
@@ -148,7 +148,7 @@ module.exports = {
     },
 
     klikkDialog(nesteSide) {
-        let timeout = this.api.globals.test_settings.timeout;
+        let timeout = this.api.globals.timeout;
         this.waitForElementVisible(this.elements.linkDialog.selector, timeout)
             .click(this.elements.linkDialog.selector)
             .waitForElementVisible(nesteSide.elements.side.selector, timeout);

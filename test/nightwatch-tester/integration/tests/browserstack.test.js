@@ -1,3 +1,5 @@
+import { aktivitetsplanOversiktSide } from '../pages/sider';
+
 let env, path;
 module.exports = {
     tags: ['browserstack'],
@@ -11,8 +13,8 @@ module.exports = {
 
     'Naviger til side': function(browser) {
         const screenshots = `${path}/AktivitetsplanOversikt_${env}.png`;
-        browser.url(browser.launch_url);
-        browser.waitForElementPresent('html/body', 1000);
+        aktivitetsplanOversiktSide(browser).navigate();
+
         browser.saveScreenshot(screenshots);
         browser.end();
     },
