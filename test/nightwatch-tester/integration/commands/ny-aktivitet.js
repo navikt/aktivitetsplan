@@ -4,7 +4,7 @@ module.exports = {
     velgAktivitetsType(navn, nesteSide) {
         const pageItems = this.elements;
         const internPageItems = this.section.InternSection.elements;
-        let timeout = this.api.globals.test_settings.timeout;
+        let timeout = this.api.globals.timeout;
         switch (navn) {
             case AktivitetsType.STILLING:
                 this.click(pageItems.btnStilling.selector);
