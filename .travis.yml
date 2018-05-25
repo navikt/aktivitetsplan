@@ -2,5 +2,4 @@ language: node_js
 node_js: "8"
 
 script:
-    - "npm run dev:mock"
-    - "npm run test:browserstack"
+    - "npm-run-all -p -r dev:mock test:browserstack"

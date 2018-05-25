@@ -15,7 +15,7 @@ module.exports = {
 
         setTimeout(function() {
             done();
-        }, 5000);
+        }, 200);
     },
 
     after: function(done) {
@@ -27,6 +27,6 @@ module.exports = {
 
         setTimeout(function() {
             done();
-        }, 5000);
+        }, 200);
     },
 };
