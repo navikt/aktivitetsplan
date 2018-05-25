@@ -12,11 +12,7 @@ module.exports = {
             timeout
         )
             .waitForElementVisible(pageObjects.kolForslag.selector, timeout)
-            .waitForElementVisible(pageObjects.cbFilter.selector, timeout)
-            .waitForElementVisible(
-                pageObjects.btnLeggTilAktivitet.selector,
-                timeout
-            );
+            .waitForElementVisible(pageObjects.cbFilter.selector, timeout);
     },
 
     leggTilOgValiderAktivitet(aktivitet, kunObligatoriske = true) {

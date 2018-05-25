@@ -60,7 +60,8 @@ module.exports = {
         side: '//section[contains(@class, "aktivitetstavle")]',
         btnLeggTilAktivitet:
             '//div[@class="verktoylinje__verktoy"]/button | //div[@class="verktoylinje__verktoy"]/a[@role="button"]',
-        cbFilter: '//button[@class="dropdown__btn"]',
+        cbFilter:
+            '//div[@class="verktoylinje"]//button[@class="dropdown__btn"]',
         tavle: '//section[contains(@class, "aktivitetstavle")]',
         kolForslag: '//*[@data-testid="aktivitetstavle.brukerErInteressert"]',
         kolPlanlegger: '//*[@data-testid="aktivitetstavle.planlagt"]/div/div',

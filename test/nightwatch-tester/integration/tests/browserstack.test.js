@@ -13,7 +13,9 @@ module.exports = {
 
     'Naviger til side': function(browser) {
         const screenshots = `${path}/AktivitetsplanOversikt_${env}.png`;
-        aktivitetsplanOversiktSide(browser).navigate();
+        aktivitetsplanOversiktSide(browser)
+            .navigate()
+            .ventPaSideLast();
 
         browser.saveScreenshot(screenshots);
         browser.end();
