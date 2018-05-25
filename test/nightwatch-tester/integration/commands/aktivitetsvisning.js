@@ -200,10 +200,7 @@ module.exports = {
                 'Validerer aktivert/deaktivert status: ' +
                 AktivitetStatus.properties[element.status].value;
 
-            this.waitForElementPresent(
-                statusRdio,
-                this.api.globals.test_settings.timeout
-            );
+            this.waitForElementPresent(statusRdio, this.api.globals.timeout);
             this.getAttribute(statusRdio, disabledAtt, callback => {
                 this.assert.equal(
                     String(callback.value),
@@ -252,10 +249,7 @@ module.exports = {
             const msgTekst =
                 'Validerer aktivert/deaktivert status: ' +
                 AktivitetTilstand.properties[forventet.status].value;
-            this.waitForElementPresent(
-                tilstandRdio,
-                this.api.globals.test_settings.timeout
-            );
+            this.waitForElementPresent(tilstandRdio, this.api.globals.timeout);
             this.getAttribute(tilstandRdio, disabledAtt, callback => {
                 this.assert.equal(
                     String(callback.value),
@@ -286,7 +280,7 @@ module.exports = {
     },
 
     trykkEndre(nesteSide) {
-        let timeout = this.api.globals.test_settings.timeout;
+        let timeout = this.api.globals.timeout;
         this.api.waitForElementVisible(
             this.elements.btnEndre.selector,
             timeout
@@ -304,7 +298,7 @@ module.exports = {
         const section = this.section.statusSection;
         let rdioSelector = section.hentStatusSelektor(status).label;
         const btnBekreft = section.elements.btnBekreft.selector;
-        const timeout = this.api.globals.test_settings.timeout;
+        const timeout = this.api.globals.timeout;
 
         this.click(rdioSelector).waitForElementVisible(btnBekreft, timeout);
 
@@ -322,7 +316,7 @@ module.exports = {
     },
 
     markerAvtaltMedNav() {
-        const timeout = this.api.globals.test_settings.timeout,
+        const timeout = this.api.globals.timeout,
             side = this.elements,
             msg = 'Aktiviteten er nå merket "Avtalt med NAV"';
         this.click(side.rdioAvtaltMedNav.selector).waitForElementVisible(
@@ -341,7 +335,7 @@ module.exports = {
         const section = this.section.tilstandSection;
         let rdioSelector = section.hentTilstandSelektor(tilstand).label;
         let btnBekreft = section.elements.btnBekreft.selector;
-        let timeout = this.api.globals.test_settings.timeout;
+        let timeout = this.api.globals.timeout;
 
         this.waitForElementVisible(rdioSelector, timeout)
             .click(rdioSelector)
@@ -353,7 +347,7 @@ module.exports = {
     },
 
     slettAktivitet(nesteside) {
-        const timeout = this.api.globals.test_settings.timeout,
+        const timeout = this.api.globals.timeout,
             side = this.elements;
 
         this.waitForElementVisible(side.btnSlett.selector, timeout);
@@ -380,7 +374,7 @@ module.exports = {
     },
 
     lukkVindu(nesteSide) {
-        var timeout = this.api.globals.test_settings.timeout;
+        var timeout = this.api.globals.timeout;
         this.click(this.elements.btnLukk.selector);
         this.waitForElementVisible(nesteSide.elements.side.selector, timeout);
         return nesteSide;

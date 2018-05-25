@@ -13,7 +13,7 @@ module.exports = {
     },
 
     'Veileder - naviger til side': function(browser) {
-        browser.url(browser.globals.test_settings.loginUrl);
+        browser.url(browser.globals.loginUrl);
     },
 
     'Veileder - Valider arenaaktivitet': function(browser) {
@@ -30,7 +30,7 @@ module.exports = {
             arena1.deltakelseProsent
         );
         arenaAktivitet.tilstand = arena1.avtalt ? AktivitetTilstand.AVTALTMEDNAV : AktivitetTilstand.INGEN;
-        arenaAktivitet.aktivitetURL = `${browser.globals.test_settings.loginUrl}/aktivitet/vis/${arena1.id}`;
+        arenaAktivitet.aktivitetURL = `${browser.globals.loginUrl}/aktivitet/vis/${arena1.id}`;
 
         aktivitetsplanOversiktSide(browser)
             .validerAktivitet(arenaAktivitet)

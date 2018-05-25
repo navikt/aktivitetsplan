@@ -2,10 +2,7 @@ const nyAktivitet = require('../commands/ny-aktivitet.js');
 
 module.exports = {
     url: function() {
-        return (
-            this.api.globals.test_settings.baseUrl +
-            '/aktivitetsplan/aktivitet/ny'
-        );
+        return this.api.globals.baseUrl + '/aktivitetsplan/aktivitet/ny';
     },
 
     commands: [nyAktivitet],
