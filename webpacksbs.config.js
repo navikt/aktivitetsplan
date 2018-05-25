@@ -29,7 +29,7 @@ const PRODUCTION_PLUGINS = [
         name: 'vendor',
         filename: 'vendor.bundle.js',
     }),
-    new UglifyJSPlugin({ sourcemap: true }),
+    new UglifyJSPlugin({ sourceMap: true }),
     new HtmlWebpackPlugin({
         hash: true,
         template: './ssb/index.html',
@@ -85,7 +85,7 @@ const LOADERS = [
 
 module.exports = {
     context: __dirname,
-    devtool: DEBUG ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
+    devtool: DEBUG ? 'cheap-module-eval-source-map' : 'source-map',
     entry: {
         app: './ssb/index.js',
         vendor: LIBRARIES,
