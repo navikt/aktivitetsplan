@@ -13,7 +13,7 @@ module.exports = {
     },
 
     'Veileder - naviger til side': function(browser) {
-        browser.url(browser.globals.test_settings.loginUrl);
+        browser.url(browser.globals.loginUrl);
     },
 
     'Veileder - Lag ny dialog': function(browser) {
