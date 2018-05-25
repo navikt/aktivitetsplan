@@ -77,7 +77,10 @@ let nightwatch_config = {
 nightwatch_config.common_capabilities['browserstack.user'] = process.env.BROWSERSTACK_USER;
 nightwatch_config.common_capabilities['browserstack.key'] = process.env.BROWSERSTACK_KEY;
 
-const branch = process.env.TRAVIS_BRANCH || 'Local';
+const pullRequest = process.env.TRAVIS_PULL_REQUEST || false;
+const branch = pullRequest
+    ? process.env.TRAVIS_PULL_REQUEST_BRANCH
+    : process.env.TRAVIS_BRANCH || 'Local';
 nightwatch_config.common_capabilities['build'] = branch;
 
 var globals = nightwatch_config.test_settings.default.globals;
