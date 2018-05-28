@@ -5,15 +5,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>aktivitetsplan</title>
-        <link type="text/css" rel="stylesheet" href="/aktivitetsplan/css/index.css?ts=<%=  new Date().getTime() %>">
-        <script type="text/javascript" charset="UTF-8" src="/aktivitetsplan/environment.js?ts=<%=  new Date().getTime() %>"></script>
         <script>
             window.features = {
                 timeoutbox: true,
                 navigasjonslinjemeny: false
             };
             window.app = "aktivitetsplan";
+            window.aktivitetsplan = {};
         </script>
+        <script type="text/javascript" charset="UTF-8" src="/aktivitetsplan/environment.js?ts=<%=  new Date().getTime() %>"></script>
+        <link type="text/css" rel="stylesheet" href="/aktivitetsplan/css/index.css?ts=<%=  new Date().getTime() %>">
     </head>
     <body>
         <div id="mainapp" class="appContainer"></div>
