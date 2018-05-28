@@ -4,10 +4,7 @@ const aktivitetsvisning = require('../commands/aktivitetsvisning.js');
 
 module.exports = {
     url: function() {
-        return (
-            this.api.globals.test_settings.baseUrl +
-            '/aktivitetsplan/aktivitet/vis'
-        );
+        return this.api.globals.baseUrl + '/aktivitetsplan/aktivitet/vis';
     },
 
     elements: {
