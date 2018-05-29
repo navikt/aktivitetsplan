@@ -144,8 +144,9 @@ mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
 //veilarbveileder-api
 mock.get('/veilarbveileder/api/enhet/:enhetNr/veiledere', ({ pathParams }) => {
     // 9999 er oppfolgingsenhet, som stortsett er den som skal brukes av aktivitetsplanen
+    // 0001 er oppgave-enhet,
     // 007 er geografiskenhet, men per i dag er vi ikke interessert i denne her.
-    if (pathParams.enhetNr !== '9999') {
+    if (pathParams.enhetNr !== '9999' && pathParams.enhetNr !== '0001') {
         throw new Error('Har nok spurt om feil enhet her?');
     }
     return veiledere;

@@ -62,6 +62,7 @@ class VelgVeileder extends Component {
                                 createLabel={settSammenNavn}
                                 createValue={veileder => veileder.ident}
                                 radioName="velg-veileder"
+                                data={data}
                                 {...props}
                             />}
                     </SokFilter>
