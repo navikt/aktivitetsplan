@@ -11,7 +11,7 @@ import { formaterDato } from '../../../utils';
 import * as PT from '../../../proptypes';
 
 function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
-    const { type, fraDato, tilDato } = aktivitet;
+    const { id, type, fraDato, tilDato } = aktivitet;
     const formatertFraDato = formaterDato(fraDato);
     const formatertTilDato = formaterDato(tilDato);
 
@@ -59,7 +59,10 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
             .join(' - ');
     }
     return (
-        <Normaltekst className="aktivitetskort__dato">
+        <Normaltekst
+            className="aktivitetskort__dato"
+            id={`aktivitetskort__dato__${id}`}
+        >
             {periodeVisning()}
         </Normaltekst>
     );
