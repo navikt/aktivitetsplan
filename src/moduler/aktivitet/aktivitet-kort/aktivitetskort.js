@@ -98,6 +98,7 @@ class AktivitetsKort extends Component {
                         </Element>
                         <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
                         <VisibleIfDiv
+                            data-testId="antall-stillinger"
                             visible={
                                 type === SOKEAVTALE_AKTIVITET_TYPE &&
                                 antallStillingerSokes > 0
