@@ -29,7 +29,11 @@ function OppdaterReferatForm({
 }) {
     function oppdaterOgPubliser(e) {
         e.preventDefault();
-        handleSubmit(e).then(dispatchPubliserReferat);
+        handleSubmit(e).then((response) => {
+            if(response === undefined){
+                dispatchPubliserReferat(response);
+            }
+        });
     }
 
     return (
@@ -63,7 +67,6 @@ OppdaterReferatForm.propTypes = {
     erReferatPublisert: PT.bool.isRequired,
     oppdaterer: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,
-
     errorSummary: PT.node.isRequired,
 };
 
