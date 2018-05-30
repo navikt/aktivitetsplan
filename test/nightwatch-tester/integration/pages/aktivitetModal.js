@@ -8,8 +8,7 @@ const aktivitetMedisinsk = require('../commands/aktivitet-medisinsk');
 module.exports = {
     url: function() {
         return (
-            this.api.globals.test_settings.baseUrl +
-            '/aktivitetsplan/aktivitet/ny/stilling'
+            this.api.globals.baseUrl + '/aktivitetsplan/aktivitet/ny/stilling'
         );
     },
     commands: [

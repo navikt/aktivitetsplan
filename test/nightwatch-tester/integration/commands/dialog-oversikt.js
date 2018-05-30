@@ -13,7 +13,7 @@ module.exports = {
 
     trykkPaDialog(indeks) {
         const selektor = this.elements.radDialog.selector;
-        const timeout = this.api.globals.test_settings.timeout;
+        const timeout = this.api.globals.timeout;
         const xPath = getXPathWithIndex(selektor, indeks);
         const nesteSide = this.api.page.dialogvisning();
         this.assert.elementPresent(xPath, 'Fant dialog på indeks: ' + indeks);
@@ -62,7 +62,7 @@ module.exports = {
     },
 
     validerEtiketter(xPathDialog, venterPaNav, venterPaBruker) {
-        const timeout = this.api.globals.test_settings.timeout * 2;
+        const timeout = this.api.globals.timeout * 2;
         const merkelappNav = this.etikettVenterPaNav(xPathDialog);
         const merkelappBruker = this.etikettVenterPaBruker(xPathDialog);
 

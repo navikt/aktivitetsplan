@@ -74,7 +74,7 @@ module.exports = {
 
     lagre(nesteSide) {
         const elements = this.elements;
-        const timeout = this.api.globals.test_settings.timeout;
+        const timeout = this.api.globals.timeout;
         this.click(elements.btnLagre.selector)
             .waitForElementNotPresent(elements.side.selector, timeout)
             .waitForElementVisible(nesteSide.elements.side.selector, timeout);

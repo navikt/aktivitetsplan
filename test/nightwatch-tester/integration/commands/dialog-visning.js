@@ -14,7 +14,7 @@ module.exports = {
 
     validerSnakkeboble(tekst) {
         const bobleSelektor = this.alleSnakkebobler();
-        const timeout = this.api.globals.test_settings.timeout;
+        const timeout = this.api.globals.timeout;
         const xPathBoble = getXPathWithIndex(bobleSelektor, 0);
         const tekstSelektor = this.snakkebobleTekst(xPathBoble);
 
@@ -29,7 +29,7 @@ module.exports = {
     },
 
     skrivNyMeldingIDialog(tekst) {
-        const timeout = this.api.globals.test_settings.timeout;
+        const timeout = this.api.globals.timeout;
         this.setValue(this.elements.txtTekst.selector, tekst);
         this.click(this.elements.btnSend.selector);
         this.api.pause(50); // unngå at neste linje passerer med en gang før knappen har rukket å bli disabled
