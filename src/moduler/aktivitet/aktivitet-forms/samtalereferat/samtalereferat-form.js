@@ -49,7 +49,7 @@ function MoteAktivitetForm({
 }) {
     function lagreOgDel(e) {
         e.preventDefault();
-        dispatch(change('erReferatPublisert', true));
+        dispatch(change(formNavn, 'erReferatPublisert', true));
         setTimeout(() => handleSubmit(e));
     }
 

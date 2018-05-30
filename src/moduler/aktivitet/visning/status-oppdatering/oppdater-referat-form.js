@@ -29,8 +29,8 @@ function OppdaterReferatForm({
 }) {
     function oppdaterOgPubliser(e) {
         e.preventDefault();
-        handleSubmit(e).then((response) => {
-            if(response === undefined){
+        handleSubmit(e).then(response => {
+            if (response === undefined) {
                 dispatchPubliserReferat(response);
             }
         });
