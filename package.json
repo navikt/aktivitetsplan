@@ -35,6 +35,7 @@
     "dev:mock": "parallelshell \"npm run dev:less\" \"npm run dev:js:mock\" \"npm run build:tekster\"",
     "dev:mock:utside": "parallelshell \"npm run dev:less\" \"npm run dev:js:mock -- --env.utside\" \"npm run build:tekster\"",
     "dev:js:mock": "webpack-dev-server --env.dev --env.mock",
+    "dev:utside": "parallelshell \"npm run dev:less\" \"npm run dev:js -- --env.utside\" \"npm run build:tekster\"",
     "dev": "parallelshell \"npm run dev:less\" \"npm run dev:js\" \"npm run build:tekster\"",
     "dev:js": "webpack-dev-server --env.dev --port 8888",
     "dev:less": "autoless --source-map --interval 100 ./src ./example/aktivitetsplanfelles",
