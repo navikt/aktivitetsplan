@@ -5,6 +5,12 @@ import App from '../src/app';
 import { fnrFraUrl } from '../src/bootstrap/fnr-provider';
 import Modal from 'react-modal';
 
+/* eslint-disable global-require */
+if (!global.Intl) {
+    require('intl');
+    require('intl/locale-data/jsonp/nb.js');
+}
+
 if (MOCK) {
     console.log('=========================='); // eslint-disable-line no-console
     console.log('======== MED MOCK ========'); // eslint-disable-line no-console
