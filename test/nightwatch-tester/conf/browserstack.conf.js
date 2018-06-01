@@ -36,32 +36,39 @@ let nightwatch_config = {
                 path: 'test/nightwatch-tester/reports',
             },
         },
-        chrome: {
+        win_chrome: {
             desiredCapabilities: {
                 os: 'Windows',
                 os_version: '10',
                 browser: 'Chrome',
-                browser_version: '65.0',
                 resolution: '1024x768',
             },
         },
-        safari: {
+        osx_safari: {
             desiredCapabilities: {
                 os: 'OS X',
-                os_version: 'High Sierra',
+                os_version: 'Sierra',
                 browser: 'Safari',
-                browser_version: '11.0',
+                browser_version: '10.0',
                 resolution: '1024x768',
             },
         },
         ios: {
             desiredCapabilities: {
-                device: 'iPhone 8',
+                device: 'iPhone X',
                 realMobile: 'true',
                 os_version: '11.0',
             },
         },
-        ie: {
+        android_chrome: {
+            desiredCapabilities: {
+                os_version: '7.0',
+                device: 'Samsung Galaxy S8',
+                real_mobile: 'true',
+                browser: 'Chrome',
+            },
+        },
+        win_ie: {
             desiredCapabilities: {
                 os: 'Windows',
                 os_version: '10',
@@ -70,12 +77,22 @@ let nightwatch_config = {
                 resolution: '1024x768',
             },
         },
+        win_edge: {
+            desiredCapabilities: {
+                os: 'Windows',
+                os_version: '10',
+                browser: 'Edge',
+                resolution: '1024x768',
+            },
+        },
     },
 };
 
 // Code to support common capabilites
-nightwatch_config.common_capabilities['browserstack.user'] = process.env.BROWSERSTACK_USER;
-nightwatch_config.common_capabilities['browserstack.key'] = process.env.BROWSERSTACK_KEY;
+nightwatch_config.common_capabilities['browserstack.user'] =
+    process.env.BROWSERSTACK_USER;
+nightwatch_config.common_capabilities['browserstack.key'] =
+    process.env.BROWSERSTACK_KEY;
 
 const pullRequest = process.env.TRAVIS_PULL_REQUEST || false;
 const branch = pullRequest

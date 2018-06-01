@@ -25,7 +25,7 @@
     "test:watch": "mocha --watch",
     "test:coverage": "nyc --reporter=html npm test",
     "test:e2e": "node test/nightwatch-tester/nightwatch.js -c test/nightwatch-tester/conf/default.conf.js --skiptags browserstack",
-    "test:browserstack": "node test/nightwatch-tester/scripts/browserstack.runner.js -c test/nightwatch-tester/conf/browserstack.conf.js -e safari,chrome,ie --tag browserstack",
+    "test:browserstack": "node test/nightwatch-tester/scripts/browserstack.runner.js -c test/nightwatch-tester/conf/browserstack.conf.js -e win_chrome,osx_safari,android_chrome,win_ie,win_edge --tag browserstack",
     "eslint": "eslint src --ext .js --ext .jsx",
     "eslint-staged": "eslint",
     "lesshint": "lesshint --reporter ./lesshint-reporter src/",
