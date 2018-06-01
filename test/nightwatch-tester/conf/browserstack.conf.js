@@ -24,7 +24,7 @@ let nightwatch_config = {
     test_settings: {
         default: {
             globals: {
-                baseUrl: 'http://localhost:3000',
+                baseUrl: 'http://localhost:8080',
                 fnr: '123456789',
                 launch_url: '',
                 timeout: 10000,
