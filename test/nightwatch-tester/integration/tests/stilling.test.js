@@ -22,7 +22,7 @@ module.exports = {
     },
 
     'Bruker - naviger til side': function(browser) {
-        browser.url(browser.globals.test_settings.loginUrl);
+        browser.url(browser.globals.loginUrl);
     },
 
     'Bruker - Legg til aktivitet med obligatoriske verdier - Stilling': function(

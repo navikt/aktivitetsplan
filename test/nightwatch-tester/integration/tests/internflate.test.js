@@ -46,7 +46,7 @@ module.exports = {
     },
 
     'Veileder - naviger til side': function(browser) {
-        browser.url(browser.globals.test_settings.loginUrl);
+        browser.url(browser.globals.loginUrl);
     },
 
     'Veileder - Legg til aktivitet - Mote med nav': function(browser) {
