@@ -5,7 +5,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import Lenke from '../../felles-komponenter/utils/lenke';
-
+import mittMalSvg from './Illustrasjon_dette_gjor_du_bra.svg';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
     hentMal,
@@ -19,7 +19,7 @@ const MalHeaderLenke = ({ harMaal }) => {
 
     return (
         <Lenke href={url} className="maalheader__lenke">
-            <Element className="maalheader__element" tag="span">
+            <Element className="maalheader__element">
                 <FormattedMessage id={'aktivitetsmal.mitt-mal'} />
             </Element>
         </Lenke>
@@ -53,12 +53,15 @@ class MittMaal extends Component {
 
         return (
             <div className="mitt-maal">
-                <div>
+                <img
+                    src={mittMalSvg}
+                    alt="mittmal-illustrasjon"
+                    className="mittmal__illustrasjon"
+                />
+                <div className="mittmal_content">
                     <MalHeaderLenke harMaal={!!mal} />
                     <Innholdslaster avhengigheter={avhengigheter}>
-                        <div className="maal_text">
-                            <Mal mal={mal} />
-                        </div>
+                        <Mal mal={mal} />
                     </Innholdslaster>
                 </div>
             </div>
