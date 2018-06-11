@@ -1,28 +1,29 @@
 @import '../../variables';
+@import './../../../node_modules/nav-frontend-paneler-style/src/mixins';
 
 .mitt-maal {
-    background-color: @navLysBlaLighten80;
-    margin-bottom: 1rem;
-    border-bottom: hidden;
-    padding: 1rem;
-    width: 100%;
-    display: inline-block;
+    .panel-mixin();
+    .panel-focushover-mixin();
+    text-decoration: none;
+
+    background-color: @navGronnLighten80;
+    color: @navMorkGra;
+    display: flex;
+
+    margin-bottom: 2rem;
+
+    &:hover .mittmal__content-header {
+        text-decoration: underline;
+        color: @navDypBla;
+    }
 }
 
 .mittmal__illustrasjon {
-    max-width: 12%;
-    max-height: 12%;
-    display: inline;
-    float: left;
+    max-width: 6rem;
+    max-height: 6rem;
 }
 
 .mittmal_content {
-    display: inline;
-    float: left;
-    margin-top: 0.5rem;
-    margin-left: 1rem;
-    max-width: 80%;
-    max-height: 12%;
-    text-decoration: none;
     color: @navMorkGra;
+    margin-left: 1.5rem;
 }

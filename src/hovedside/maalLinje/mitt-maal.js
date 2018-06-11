@@ -42,7 +42,7 @@ class MittMaal extends Component {
 
     render() {
         const { avhengigheter, mal, erPaInnsiden } = this.props;
-        const url = !!mal ? '/mal' : '/mal/endre';
+        const url = mal ? '/mal' : '/mal/endre';
 
         return (
             <HiddenIfDiv hidden={!erPaInnsiden}>
@@ -57,7 +57,7 @@ class MittMaal extends Component {
                         className="mittmal__illustrasjon"
                     />
                     <div className="mittmal_content">
-                        <Element>
+                        <Element className="mittmal__content-header">
                             <FormattedMessage id={'aktivitetsmal.mitt-mal'} />
                         </Element>
                         <Innholdslaster avhengigheter={avhengigheter}>
