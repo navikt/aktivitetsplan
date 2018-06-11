@@ -21,10 +21,7 @@ class AktivitetsmalForm extends Component {
         super(props);
         autobind(this);
     }
-   /* avbryt(e) {
-        e.preventDefault();
-        history.push('/');
-    }*/
+
     render() {
         const { oppdaterer, handleSubmit } = this.props;
         return (
@@ -45,7 +42,7 @@ class AktivitetsmalForm extends Component {
                     <FormattedMessage id="aktivitetsmal.lagre" />
                 </Hovedknapp>
                 <Knapp
-                    onClick={()=> history.push('/')}
+                    onClick={() => history.push('/')}
                     disabled={oppdaterer}
                     htmlType="button"
                 >
