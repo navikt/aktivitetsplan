@@ -1,14 +1,18 @@
-import { aktivitetsplanOversiktSide } from '../pages/sider';
+import {
+    aktivitetsplanOversiktSide,
+    dialogOversiktModal,
+} from '../pages/sider';
 
 let env, path;
 module.exports = {
     tags: ['browserstack'],
 
     before: function(browser) {
-        browser.useXpath();
         const capabilities = browser.options.desiredCapabilities;
         path = browser.options.screenshotsPath;
         env = `${capabilities.os}_${capabilities.browser}`;
+
+        browser.useXpath();
     },
 
     'Naviger til side': function(browser) {
@@ -18,6 +22,20 @@ module.exports = {
             .ventPaSideLast();
 
         browser.saveScreenshot(screenshots);
+    },
+
+    'Åpne dialog og trykk på første': function(browser) {
+        const screenshotsListe = `${path}/Dialogliste_${env}.png`;
+        const screenshotsDialog = `${path}/Dialog_${env}.png`;
+        const oversikt = aktivitetsplanOversiktSide(browser);
+
+        const dialogOversikt = oversikt.klikkDialog(
+            dialogOversiktModal(browser)
+        );
+        browser.saveScreenshot(screenshotsListe);
+        dialogOversikt.trykkPaDialog(0);
+
+        browser.saveScreenshot(screenshotsDialog);
         browser.end();
     },
 };
