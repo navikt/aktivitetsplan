@@ -27,7 +27,7 @@ let nightwatch_config = {
                 baseUrl: 'http://localhost:8080',
                 fnr: '123456789',
                 launch_url: '',
-                timeout: 10000,
+                timeout: 20000,
             },
             screenshots: {
                 enabled: true,
@@ -44,16 +44,7 @@ let nightwatch_config = {
                 resolution: '1024x768',
             },
         },
-        osx_safari: {
-            desiredCapabilities: {
-                os: 'OS X',
-                os_version: 'Sierra',
-                browser: 'Safari',
-                browser_version: '10.0',
-                resolution: '1024x768',
-            },
-        },
-        ios: {
+        ios_safari: {
             desiredCapabilities: {
                 device: 'iPhone X',
                 realMobile: 'true',
@@ -100,9 +91,6 @@ const branch = pullRequest
     : process.env.TRAVIS_BRANCH || 'Local';
 nightwatch_config.common_capabilities['build'] = branch;
 
-var globals = nightwatch_config.test_settings.default.globals;
-globals.launch_url = `${globals.baseUrl}/aktivitetsplanfelles/${globals.fnr}`;
-
 for (var i in nightwatch_config.test_settings) {
     var config = nightwatch_config.test_settings[i];
     config['selenium_host'] = nightwatch_config.selenium.host;
@@ -115,4 +103,5 @@ for (var i in nightwatch_config.test_settings) {
             nightwatch_config.common_capabilities[j];
     }
 }
+
 module.exports = nightwatch_config;
