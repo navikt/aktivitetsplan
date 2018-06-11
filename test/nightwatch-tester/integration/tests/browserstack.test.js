@@ -10,16 +10,16 @@ module.exports = {
     before: function(browser) {
         const capabilities = browser.options.desiredCapabilities;
         path = browser.options.screenshotsPath;
-        env = `${capabilities.os}_${capabilities.browser}`;
+        env = `${capabilities.device !== undefined
+            ? capabilities.device
+            : capabilities.os}_${capabilities.browser}`;
 
         browser.useXpath();
     },
 
     'Naviger til side': function(browser) {
         const screenshots = `${path}/AktivitetsplanOversikt_${env}.png`;
-        aktivitetsplanOversiktSide(browser)
-            .navigate()
-            .ventPaSideLast();
+        aktivitetsplanOversiktSide(browser).navigate().ventPaSideLast();
 
         browser.saveScreenshot(screenshots);
     },
