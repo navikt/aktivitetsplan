@@ -5,8 +5,10 @@ function Brodsmule(props) {
     if (!props.skalVises) {
         return null;
     }
-    const tekstEllerLink = props.path ?
-        <a href={props.path} className="lenke"> {props.tekst} </a>
+    const tekstEllerLink = props.path
+        ? <a href={props.path} className="lenke">
+              {`${props.tekst}`}
+          </a>
         : props.tekst;
 
     return (
@@ -14,7 +16,6 @@ function Brodsmule(props) {
             {tekstEllerLink}
         </li>
     );
-
 }
 
 Brodsmule.propTypes = {
