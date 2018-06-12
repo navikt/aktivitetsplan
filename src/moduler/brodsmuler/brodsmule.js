@@ -20,13 +20,11 @@ function Brodsmule(props) {
 Brodsmule.propTypes = {
     tekst: PT.string.isRequired,
     skalVises: PT.bool,
-    erGjeldendeSmule: PT.bool,
     path: PT.string,
 };
 
 Brodsmule.defaultProps = {
     skalVises: true,
-    erGjeldendeSmule: false,
     path: undefined,
 };
 
