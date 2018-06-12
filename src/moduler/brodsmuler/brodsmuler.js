@@ -23,7 +23,7 @@ function Brodsmuler(props) {
                     path={VEIENTILARBEID_PATH}
                     skalVises={props.underOppfolging}
                 />
-                <Brodsmule tekst="Aktivitetsplan" erGjeldendeSmule />
+                <Brodsmule tekst="Aktivitetsplan"/>
             </ol>
         </div>
     );

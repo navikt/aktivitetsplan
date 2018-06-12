@@ -5,15 +5,16 @@ function Brodsmule(props) {
     if (!props.skalVises) {
         return null;
     }
-    return props.erGjeldendeSmule
-        ? <li className="brodsmuler__item typo-normal">
-              {props.tekst}
-          </li>
-        : <li className="brodsmuler__item typo-normal">
-              <a href={props.path} className="lenke">
-                  {props.tekst}
-              </a>
-          </li>;
+    const tekstEllerLink = props.path ?
+        <a href={props.path} className="lenke"> {props.tekst} </a>
+        : props.tekst;
+
+    return (
+        <li className="brodsmuler__item typo-normal">
+            {tekstEllerLink}
+        </li>
+    );
+
 }
 
 Brodsmule.propTypes = {
@@ -26,7 +27,7 @@ Brodsmule.propTypes = {
 Brodsmule.defaultProps = {
     skalVises: true,
     erGjeldendeSmule: false,
-    path: '/',
+    path: undefined,
 };
 
 export default Brodsmule;
