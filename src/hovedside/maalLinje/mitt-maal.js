@@ -16,12 +16,10 @@ import {
 } from '../../moduler/mal/aktivitetsmal-reducer';
 import * as AppPT from '../../proptypes';
 
-const Mal = ({ mal }) => {
+function Mal({ mal }) {
     if (!mal) {
         return (
-            <div>
-                <FormattedMessage id={'aktivitetsmal.mitt-mal-deafult'} />
-            </div>
+            <FormattedMessage tagName="div" id={'aktivitetsmal.mitt-mal-deafult'} />
         );
     }
     return (
