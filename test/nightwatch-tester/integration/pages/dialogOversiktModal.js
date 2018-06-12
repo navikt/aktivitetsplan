@@ -39,7 +39,6 @@ module.exports = {
                 );
                 const selector = `${this.elements.radDialog
                     .selector}//p[@class="typo-element" and text()="${tekst}"]/ancestor::${ancestor}`;
-                console.log(selector);
                 return selector;
             },
         },
