@@ -121,11 +121,6 @@ class Navigasjonslinje extends Component {
                     </TallAlert>
                 </NavigasjonsElement>
                 <NavigasjonsElement
-                    sti="/mal"
-                    tekstId="aktivitetsmal.mitt-mal"
-                    disabled={disabled}
-                />
-                <NavigasjonsElement
                     hidden={informasjonFeature}
                     sti="/vilkar"
                     tekstId="navigasjon.vilkar"

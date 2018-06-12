@@ -1,0 +1,41 @@
+@import '../../variables';
+@import './../../../node_modules/nav-frontend-paneler-style/src/mixins';
+
+.mitt-maal {
+    .panel-mixin();
+    .panel-focushover-mixin();
+    text-decoration: none;
+
+    background-color: @navGronnLighten80;
+    color: @navMorkGra;
+    display: flex;
+
+    margin-bottom: 2rem;
+
+    &:hover .mittmal__content-header {
+        text-decoration: underline;
+        color: @navDypBla;
+    }
+}
+
+.mittmal__illustrasjon {
+        display: none;
+}
+
+.mittmal_content {
+    color: @navMorkGra;
+    margin: 0 1rem 0 1rem;
+}
+
+@media (min-width: @screen-md-min) {
+    .mittmal__illustrasjon {
+        max-width: 6rem;
+        max-height: 6rem;
+        display: inline;
+    }
+
+    .mittmal_content {
+        color: @navMorkGra;
+        margin: 0 0 0 1.5rem;
+    }
+}
