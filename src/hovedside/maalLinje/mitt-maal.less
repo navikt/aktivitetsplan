@@ -1,16 +1,8 @@
 @import '../../variables';
 @import './../../../node_modules/nav-frontend-paneler-style/src/mixins';
 
-.mitt-maal {
-    .panel-mixin();
+a.mitt-maal {
     .panel-focushover-mixin();
-    text-decoration: none;
-
-    background-color: @navGronnLighten80;
-    color: @navMorkGra;
-    display: flex;
-
-    margin-bottom: 2rem;
 
     &:hover .mittmal__content-header {
         text-decoration: underline;
@@ -18,8 +10,20 @@
     }
 }
 
+.mitt-maal {
+    .panel-mixin();
+
+    text-decoration: none;
+
+    background-color: @navGronnLighten80;
+    color: @navMorkGra;
+    display: flex;
+
+    margin-bottom: 2rem;
+}
+
 .mittmal__illustrasjon {
-        display: none;
+    display: none;
 }
 
 .mittmal_content {

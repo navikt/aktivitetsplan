@@ -29,6 +29,10 @@ function Brodsmuler(props) {
     );
 }
 
+Brodsmuler.defaultProps = {
+    underOppfolging: false,
+};
+
 Brodsmuler.propTypes = {
     underOppfolging: PT.bool,
 };
