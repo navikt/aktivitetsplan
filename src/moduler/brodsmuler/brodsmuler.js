@@ -21,7 +21,7 @@ function Brodsmuler(props) {
                 <Brodsmule
                     tekst="Veien til arbeid"
                     path={VEIENTILARBEID_PATH}
-                    skalVises={props.underOppfolging}
+                    skalVises={true || props.underOppfolging}
                 />
                 <Brodsmule tekst="Aktivitetsplan" />
             </ol>
@@ -30,7 +30,11 @@ function Brodsmuler(props) {
 }
 
 Brodsmuler.propTypes = {
-    underOppfolging: PT.bool.isRequired,
+    underOppfolging: PT.bool,
+};
+
+Brodsmuler.defaultProps = {
+    underOppfolging: true,
 };
 
 const mapStateToProps = state => ({
