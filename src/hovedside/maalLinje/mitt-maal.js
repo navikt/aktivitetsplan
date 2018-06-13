@@ -17,8 +17,8 @@ import {
 } from '../../moduler/mal/aktivitetsmal-reducer';
 import * as AppPT from '../../proptypes';
 
-function Mal({ mal }) {
-    if (!mal) {
+function Mal({ mal, privatModus }) {
+    if (!mal || privatModus) {
         return (
             <FormattedMessage
                 tagName="div"
@@ -41,7 +41,7 @@ class MittMaal extends Component {
     }
 
     render() {
-        const { avhengigheter, mal, disabled } = this.props;
+        const { avhengigheter, mal, privatModus } = this.props;
         const url = mal ? '/mal' : '/mal/endre';
 
         return (
@@ -49,7 +49,7 @@ class MittMaal extends Component {
                 brukLenkestyling={false}
                 href={url}
                 className="mitt-maal"
-                disabled={disabled}
+                disabled={privatModus}
             >
                 <img
                     src={mittMalSvg}
@@ -61,7 +61,7 @@ class MittMaal extends Component {
                         <FormattedMessage id={'aktivitetsmal.mitt-mal'} />
                     </Element>
                     <Innholdslaster avhengigheter={avhengigheter}>
-                        <Mal mal={mal} />
+                        <Mal mal={mal} privatModus={privatModus} />
                     </Innholdslaster>
                 </div>
             </Lenke>
@@ -71,35 +71,38 @@ class MittMaal extends Component {
 
 Mal.defaultProps = {
     mal: undefined,
+    privatModus: false,
 };
 
 Mal.propTypes = {
     mal: PT.string,
+    privatModus: PT.bool.isRequired,
 };
 
 MittMaal.defaultProps = {
     mal: undefined,
-    disabled: false,
+    privatModus: false,
 };
 
 MittMaal.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     mal: PT.string,
     doHentMal: PT.func.isRequired,
-    disabled: PT.bool.isRequired,
+    privatModus: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
-    const underOppfolging = selectErUnderOppfolging(state);
+    const ikkeUnderOppfolging = !selectErUnderOppfolging(state);
     const erIkkeBruker = !selectErBruker(state);
+    const erPrivatModus =
+        erIkkeBruker &&
+        ikkeUnderOppfolging &&
+        selectViserInneverendePeriode(state);
 
     return {
         avhengigheter: [selectMalStatus(state)],
         mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
-        disabled:
-            erIkkeBruker &&
-            !underOppfolging &&
-            selectViserInneverendePeriode(state),
+        privatModus: erPrivatModus,
     };
 };
 
