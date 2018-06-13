@@ -91,7 +91,7 @@ MittMaal.propTypes = {
 
 const mapStateToProps = state => {
     const underOppfolging = selectErUnderOppfolging(state);
-    const erIkkeBruker = selectErBruker(state);
+    const erIkkeBruker = !selectErBruker(state);
 
     return {
         avhengigheter: [selectMalStatus(state)],
