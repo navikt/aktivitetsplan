@@ -7,6 +7,13 @@ import { Element } from 'nav-frontend-typografi';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import mittMalSvg from './Illustrasjon_dette_gjor_du_bra.svg';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { selectErBruker } from '../../moduler/identitet/identitet-selector';
+import {
+    selectErUnderOppfolging
+} from '../../moduler/oppfolging-status/oppfolging-selector';
+import {
+    selectViserInneverendePeriode
+} from '../../moduler/filtrering/filter/filter-selector';
 import {
     hentMal,
     selectGjeldendeMal,
@@ -38,11 +45,11 @@ class MittMaal extends Component {
     }
 
     render() {
-        const { avhengigheter, mal } = this.props;
+        const { avhengigheter, mal, disabled } = this.props;
         const url = mal ? '/mal' : '/mal/endre';
 
         return (
-            <Lenke brukLenkestyling={false} href={url} className="mitt-maal">
+            <Lenke brukLenkestyling={false} href={url} className="mitt-maal" disabled={disabled}>
                 <img
                     src={mittMalSvg}
                     alt="mittmal-illustrasjon"
@@ -71,18 +78,29 @@ Mal.propTypes = {
 
 MittMaal.defaultProps = {
     mal: undefined,
+    disabled:false,
 };
 
 MittMaal.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     mal: PT.string,
     doHentMal: PT.func.isRequired,
+    disabled: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+    const underOppfolging = selectErUnderOppfolging(state);
+    const erIkkeBruker = selectErBruker(state);
+
+    return {
     avhengigheter: [selectMalStatus(state)],
     mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
-});
+    disabled:
+    erIkkeBruker &&
+    !underOppfolging &&
+    selectViserInneverendePeriode(state)
+};
+};
 
 const mapDispatchToProps = dispatch => ({
     doHentMal: () => dispatch(hentMal()),
