@@ -9,6 +9,9 @@ const DITTNAVN_PATH = '/dittnav/';
 const VEIENTILARBEID_PATH = '/veientilarbeid/';
 
 function Brodsmuler(props) {
+    if (props.underOppfolging === undefined) {
+        return null;
+    }
     return (
         <div className="brodsmuler">
             <img
@@ -21,7 +24,7 @@ function Brodsmuler(props) {
                 <Brodsmule
                     tekst="Veien til arbeid"
                     path={VEIENTILARBEID_PATH}
-                    skalVises={true || props.underOppfolging}
+                    skalVises={props.underOppfolging}
                 />
                 <Brodsmule tekst="Aktivitetsplan" />
             </ol>
@@ -38,7 +41,7 @@ Brodsmuler.propTypes = {
 };
 
 Brodsmuler.defaultProps = {
-    underOppfolging: true,
+    underOppfolging: undefined,
 };
 
 const mapStateToProps = state => ({
