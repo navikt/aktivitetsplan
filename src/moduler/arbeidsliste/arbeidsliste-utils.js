@@ -10,7 +10,7 @@ export const lagArbeidsliste = (fnr, form, props) => ({
     frist: form.frist,
 });
 
-export const KOMMENTAR_MAKS_LENGDE = 250;
+export const KOMMENTAR_MAKS_LENGDE = 500;
 export const pakrevd = rules.minLength(
     0,
     <FormattedMessage id="arbeidsliste.feilmelding.for-kort" />
