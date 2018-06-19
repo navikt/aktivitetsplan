@@ -9,7 +9,7 @@ function TallAlert({ children }) {
             <span aria-hidden="true">
                 {children}
             </span>
-            <span className="kun-for-skjermleser">
+            <span className="sr-only">
                 <FormattedMessage
                     id="tall-alert.antall.skjermleser"
                     values={{ ULESTE_MELDINGER: children }}

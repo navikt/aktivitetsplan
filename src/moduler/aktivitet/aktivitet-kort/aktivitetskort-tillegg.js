@@ -31,7 +31,7 @@ function AktivitetskortTillegg({
                 </TallAlert>
                 <HiddenIfDiv
                     hidden={antallUlesteHenvendelser > 0}
-                    className="kun-for-skjermleser"
+                    className="sr-only"
                 >
                     <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
                 </HiddenIfDiv>
