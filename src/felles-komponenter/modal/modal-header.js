@@ -27,7 +27,7 @@ function ModalHeader({
             {/* header til slutt for å få denne sist i tabrekkefølgen */}
 
             <header className="modal-header">
-                <span aria-live="assertive" className="kun-for-skjermleser">
+                <span aria-live="assertive" className="sr-only">
                     {aktivitetErLaast
                         ? intl.formatMessage({
                               id: 'aktivitetsmodal.kan.ikke.redigeres',
