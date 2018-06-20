@@ -87,15 +87,16 @@ class Dropdown extends Component {
                 closeDropdown: this.lukkDropdown,
             })
         );
-        const innhold = !apen
-            ? null
-            : <div
-                  className={`${name}-dropdown__innhold dropdown__innhold`}
-                  id={`${name}-dropdown__innhold`}
-                  ref={settFokus}
-              >
-                  {augmentedChild}
-              </div>;
+        const innhold = (
+            <div
+                hidden={!apen}
+                className={`${name}-dropdown__innhold dropdown__innhold`}
+                id={`${name}-dropdown__innhold`}
+                ref={settFokus}
+            >
+                {augmentedChild}
+            </div>
+        );
 
         return (
             <div className={btnCls(apen, className)} ref={this.bindComponent}>
