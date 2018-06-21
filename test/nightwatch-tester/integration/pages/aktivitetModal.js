@@ -26,7 +26,7 @@ module.exports = {
         inputTilDato: '//input[@id="tilDato"]',
         inputLenke: '//input[@id="lenke"]',
         inputBeskrivelse: '//textarea[@id="beskrivelse"]',
-        btnLagre: '//button[@type="submit"]',
+        btnLagre: '//div[@class="aktivitetskjema__lagre-knapp"]/button',
     },
     sections: {
         stilling: {
