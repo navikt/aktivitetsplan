@@ -1,0 +1,6 @@
+links:
+  - link: 'http://aktivitetsplan.herokuapp.com'
+    options:
+      ignoreRules: "hidden-content"
+      commands:
+        - waitFor: '.aktivitetstavle'
