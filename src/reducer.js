@@ -31,9 +31,7 @@ import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
 
-export const RESET_STORE = { type: 'store/reset' };
-
-const combinedReducers = combineReducers({
+export default combineReducers({
     form: formReducer,
     data: combineReducers({
         aktiviteter: aktiviteterReducer,
@@ -70,10 +68,3 @@ const combinedReducers = combineReducers({
         utskrift: utskriftReducer,
     }),
 });
-
-export default function(state, action) {
-    if (action.type === RESET_STORE.type) {
-        return combinedReducers(undefined, action);
-    }
-    return combinedReducers(state, action);
-}

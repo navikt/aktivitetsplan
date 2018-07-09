@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import React from 'react';
+import React, { PropTypes as PT } from 'react';
 import { Router } from 'react-router-dom';
 import SideBanner from './moduler/sidebanner/sidebanner';
 import Provider from './provider';
@@ -11,10 +11,10 @@ import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
 import Hovedside from './hovedside/hovedside';
 import './index.less';
 
-function App() {
+function App({ fnr }) {
     return (
         <div className="aktivitetsplanfs">
-            <Provider>
+            <Provider key={fnr}>
                 <SideBanner visible={VIS_SIDEBANNER} />
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
@@ -32,5 +32,13 @@ function App() {
         </div>
     );
 }
+
+App.propTypes = {
+    fnr: PT.string,
+};
+
+App.defaultProps = {
+    fnr: undefined,
+};
 
 export default App;
