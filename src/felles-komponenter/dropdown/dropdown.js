@@ -82,11 +82,12 @@ class Dropdown extends Component {
         const { name, className, children, knappeTekst } = this.props;
         const { apen } = this.state;
 
-        const augmentedChild = Children.map(children, child =>
-            cloneElement(child, {
-                closeDropdown: this.lukkDropdown,
-            })
-        );
+        const augmentedChild = Children.map(children, child => {
+            if (typeof child.type === 'string') {
+                return child;
+            }
+            return cloneElement(child, { closeDropdown: this.lukkDropdown });
+        });
         const innhold = (
             <div
                 hidden={!apen}

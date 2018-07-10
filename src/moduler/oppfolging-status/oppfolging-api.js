@@ -1,5 +1,11 @@
 import { OPPFOLGING_BASE_URL } from '../../environment';
-import { fetchToJson, postAsJson, deleteAsJson } from '../../ducks/utils';
+import {
+    fetchToJson,
+    postAsJson,
+    deleteAsJson,
+    getCookie,
+} from '../../ducks/utils';
+import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 export function hentIdentitet() {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/me`);
@@ -103,4 +109,17 @@ export function stoppKvpOppfolging(begrunnelse) {
 
 export function hentVeilederTilgang() {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/veilederTilgang`);
+}
+
+export function doLesAktivitetsplan() {
+    // Denne er fire-n-forget, så bruker ikke ikke `postAsJson` da denne forventer en response.
+    const fnr = getFodselsnummer();
+    return fetch(`${OPPFOLGING_BASE_URL}/${fnr}/lestaktivitetsplan`, {
+        method: 'post',
+        credentials: 'include',
+        headers: new Headers({
+            'Content-Type': 'application/json',
+            NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
+        }),
+    });
 }
