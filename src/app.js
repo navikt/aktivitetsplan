@@ -13,6 +13,7 @@ import './index.less';
 
 function App({ fnr }) {
     const history = createHistory();
+    console.log('history is being recreated'); // eslint-disable-line
     return (
         <div className="aktivitetsplanfs">
             <Provider key={fnr}>

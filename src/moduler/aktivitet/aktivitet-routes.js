@@ -30,25 +30,35 @@ function AktivitetRoutes({ match }) {
                 component={props =>
                     <BekreftSlettVisningContainer
                         aktivitetId={props.match.params.id}
+                        {...props}
                     />}
             />
             <Route
                 exact
                 path={`${basePath}/endre/:id`}
                 component={props =>
-                    <EndreAktivitet aktivitetId={props.match.params.id} />}
+                    <EndreAktivitet
+                        aktivitetId={props.match.params.id}
+                        {...props}
+                    />}
             />
             <Route
                 exact
                 path={`${basePath}/avbryt/:id`}
                 component={props =>
-                    <AvbrytAktivitet aktivitetId={props.match.params.id} />}
+                    <AvbrytAktivitet
+                        aktivitetId={props.match.params.id}
+                        {...props}
+                    />}
             />
             <Route
                 exact
                 path={`${basePath}/fullfor/:id`}
                 component={props =>
-                    <FullforAktivitet aktivitetId={props.match.params.id} />}
+                    <FullforAktivitet
+                        aktivitetId={props.match.params.id}
+                        {...props}
+                    />}
             />
         </Switch>
     );
