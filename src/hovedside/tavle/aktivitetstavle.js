@@ -7,6 +7,7 @@ import * as AppPT from '../../proptypes';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { STATUS } from '../../ducks/utils';
 
 import {
@@ -18,10 +19,14 @@ import {
 } from '../../constant';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
+import { doLesAktivitetsplan } from '../../moduler/oppfolging-status/oppfolging-api';
 
 class AktivitetsTavle extends Component {
     componentDidMount() {
         if (this.props.reducersNotStarted) {
+            if (this.props.erVeileder) {
+                doLesAktivitetsplan();
+            }
             this.props.doHentAktiviteter();
             this.props.doHentArenaAktiviteter();
         }
@@ -64,6 +69,7 @@ class AktivitetsTavle extends Component {
 AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
+    erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
 };
@@ -71,12 +77,14 @@ AktivitetsTavle.propTypes = {
 const mapStateToProps = state => {
     const statusAktiviteter = selectAktivitetStatus(state);
     const statusArenaAktiviteter = selectArenaAktivitetStatus(state);
+    const erVeileder = selectErVeileder(state);
 
     const reducersNotStarted =
         statusAktiviteter === STATUS.NOT_STARTED &&
         statusArenaAktiviteter === STATUS.NOT_STARTED;
 
     return {
+        erVeileder,
         avhengigheter: [statusAktiviteter, statusArenaAktiviteter],
         reducersNotStarted,
     };

@@ -22,7 +22,7 @@ import enheter from './enheter';
 import feature from './feature';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
 import instillingsHistorikk from './innstillings-historikk';
-import fetchMock from 'yet-another-fetch-mock';
+import fetchMock, { ResponseUtils } from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
 import { hentMalverkMedType } from './malverk';
 
@@ -61,6 +61,9 @@ mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }) =>
 
 mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }) =>
     stoppEskalering(body)
+);
+mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () =>
+    ResponseUtils.statusCode(200)
 );
 
 //veilarboppfolgingproxy
