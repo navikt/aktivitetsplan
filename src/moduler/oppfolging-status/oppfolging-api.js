@@ -116,6 +116,7 @@ export function doLesAktivitetsplan() {
     const fnr = getFodselsnummer();
     return fetch(`${OPPFOLGING_BASE_URL}/${fnr}/lestaktivitetsplan`, {
         method: 'post',
+        credentials: 'include',
         headers: new Headers({
             'Content-Type': 'application/json',
             NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
