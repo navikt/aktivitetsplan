@@ -3,12 +3,13 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import history from '../../../history';
+import { withRouter } from 'react-router-dom';
 import StartProsess from '../prosesser/start-prosess';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
+import * as AppPT from '../../../proptypes';
 
-function StartEskaleringProsess({ slettBegrunnelse }) {
+function StartEskaleringProsess({ slettBegrunnelse, history }) {
     return (
         <StartProsess
             className="innstillinger__prosess"
@@ -30,6 +31,7 @@ function StartEskaleringProsess({ slettBegrunnelse }) {
 
 StartEskaleringProsess.propTypes = {
     slettBegrunnelse: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -38,6 +40,6 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default connect(null, mapDispatchToProps)(
-    hiddenIfHoc(StartEskaleringProsess)
+export default withRouter(
+    connect(null, mapDispatchToProps)(hiddenIfHoc(StartEskaleringProsess))
 );

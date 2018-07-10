@@ -1,10 +1,8 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
-import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import {
     selectMotpartStatus,
@@ -81,6 +79,7 @@ function DialogModal({
     harNyDialog,
     harValgtDialog,
     historiskVisning,
+    history,
 }) {
     const className = classNames('dialog-modal', 'aktivitet-modal', {
         'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -132,6 +131,7 @@ DialogModal.propTypes = {
     navnPaMotpart: PT.string,
     historiskVisning: PT.bool.isRequired,
     tilpasseStorrelseHistoriskVisning: PT.bool.isRequired,
+    history: AppPT.history.isRequired,
 };
 const mapStateToProps = (state, props) => {
     const { match } = props;
@@ -156,4 +156,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps)(DialogModal));
+export default connect(mapStateToProps)(DialogModal);

@@ -2,10 +2,11 @@ import React from 'react';
 import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
 import ModalHeader from './modal-header';
-import history from '../../history';
 import Innholdslaster from '../utils/innholdslaster';
 import Feilmelding from '../../moduler/feilmelding/feilmelding';
+import * as AppPT from '../../proptypes';
 
 function Modal({
     header,
@@ -14,8 +15,17 @@ function Modal({
     onRequestClose,
     className,
     minstEnAvhengighet,
+    history,
     ...props
 }) {
+    const closeFuncOrDefault = () => {
+        if (onRequestClose) {
+            onRequestClose();
+            return;
+        }
+
+        history.push('/');
+    };
     return (
         <NavFrontendModal
             {...props}
@@ -24,7 +34,7 @@ function Modal({
             overlayClassName="aktivitet-modal__overlay"
             portalClassName="aktivitetsplanfs aktivitet-modal-portal"
             shouldCloseOnOverlayClick={false}
-            onRequestClose={onRequestClose}
+            onRequestClose={closeFuncOrDefault}
         >
             {header}
             <Feilmelding className="feilmelding--systemfeil" />
@@ -39,7 +49,7 @@ function Modal({
 }
 
 Modal.defaultProps = {
-    onRequestClose: () => history.push('/'),
+    onRequestClose: null,
     className: '',
     header: <ModalHeader />,
     avhengigheter: [],
@@ -47,6 +57,7 @@ Modal.defaultProps = {
 };
 
 Modal.propTypes = {
+    history: AppPT.history.isRequired,
     onRequestClose: PT.func,
     className: PT.string,
     header: PT.node,
@@ -55,4 +66,4 @@ Modal.propTypes = {
     minstEnAvhengighet: PT.bool,
 };
 
-export default Modal;
+export default withRouter(Modal);

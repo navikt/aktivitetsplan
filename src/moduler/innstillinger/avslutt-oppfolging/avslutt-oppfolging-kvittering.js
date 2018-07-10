@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
-import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
 import { HiddenIfAlertStripeSuksess } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
@@ -19,11 +18,7 @@ import {
 
 function AvsluttOppfolgingKvittering({ avhengigheter, navn, avsluttet }) {
     return (
-        <Modal
-            onRequestClose={() => history.push('/')}
-            contentLabel="instillinger-modal"
-            contentClass="innstillinger"
-        >
+        <Modal contentLabel="instillinger-modal" contentClass="innstillinger">
             <Innholdslaster avhengigheter={avhengigheter}>
                 <article className="innstillinger__container">
                     <Innholdstittel>

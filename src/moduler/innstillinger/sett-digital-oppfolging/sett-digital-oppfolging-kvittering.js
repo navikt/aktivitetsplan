@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
-import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
 import {
@@ -26,6 +25,7 @@ function SettDigitalOppfolgingKvittering({
     begrunnelse,
     manuell,
     navn,
+    history,
 }) {
     return (
         <Modal
@@ -77,6 +77,7 @@ SettDigitalOppfolgingKvittering.propTypes = {
     navn: PT.string.isRequired,
     manuell: PT.bool.isRequired,
     begrunnelse: PT.string.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({

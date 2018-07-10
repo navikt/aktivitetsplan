@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { validForm, rules } from 'react-redux-form-validation';
+import { withRouter } from 'react-router-dom';
 import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import { autobind } from '../../utils';
 import { STATUS } from '../../ducks/utils';
 import { oppdaterMal, selectMalStatus } from './aktivitetsmal-reducer';
-import history from '../../history';
+import * as AppPT from '../../proptypes';
 
 const MALTEKST_MAKSLENGDE = 500;
 
@@ -23,7 +24,7 @@ class AktivitetsmalForm extends Component {
     }
 
     render() {
-        const { oppdaterer, handleSubmit } = this.props;
+        const { oppdaterer, handleSubmit, history } = this.props;
         return (
             <form onSubmit={handleSubmit}>
                 <Textarea
@@ -65,6 +66,7 @@ AktivitetsmalForm.propTypes = {
     oppdaterer: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     handleComplete: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const AktivitetsmalReduxForm = validForm({
@@ -92,6 +94,6 @@ const mapDispatchToProps = () => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    AktivitetsmalReduxForm
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(AktivitetsmalReduxForm)
 );

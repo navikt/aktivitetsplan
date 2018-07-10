@@ -3,12 +3,13 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
-import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
 import { HiddenIfAlertStripeInfoSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import { selectReservasjonKRR } from '../../oppfolging-status/oppfolging-selector';
+import * as AppPT from '../../../proptypes';
 
 function SettDigitalOppfolgingProsess({ slettBegrunnelse, reservasjonKRR }) {
     return (
@@ -37,6 +38,7 @@ SettDigitalOppfolgingProsess.defaultProps = {
 
 SettDigitalOppfolgingProsess.propTypes = {
     slettBegrunnelse: PT.func.isRequired,
+    history: AppPT.history.isRequired,
     reservasjonKRR: PT.bool,
 };
 
@@ -44,13 +46,15 @@ const mapStateToProps = state => ({
     reservasjonKRR: selectReservasjonKRR(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     slettBegrunnelse: () => {
         dispatch(SLETT_BEGRUNNELSE_ACTION);
-        history.push('/innstillinger/digital');
+        ownProps.history.push('/innstillinger/digital');
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    hiddenIfHoc(SettDigitalOppfolgingProsess)
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(
+        hiddenIfHoc(SettDigitalOppfolgingProsess)
+    )
 );

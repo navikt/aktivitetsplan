@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { TILLAT_SLETTING } from '~config'; // eslint-disable-line
@@ -141,6 +140,6 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(AktivitetvisningContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(
+    AktivitetvisningContainer
 );

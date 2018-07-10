@@ -2,19 +2,19 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import * as AppPT from '../../proptypes';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import Checkbox from '../../felles-komponenter/skjema/input/checkbox';
-import history from '../../history';
 import {
     godtaVilkar,
     avslaVilkar,
 } from '../oppfolging-status/oppfolging-reducer';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../ducks/utils';
-import * as AppPT from '../../proptypes';
 
 function GodkjennVilkarForm({
     visVilkar,
@@ -67,6 +67,7 @@ GodkjennVilkarForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     doAvslaVilkar: PT.func.isRequired,
     oppfolgingStatus: AppPT.status.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const pakrevdGodkjenning = value =>
@@ -88,11 +89,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => {
     const doAvslaVilkar = () => {
         dispatch(avslaVilkar(ownProps.hash));
-        history.push('/');
+        ownProps.history.push('/');
     };
     const doGodtaVilkar = () => {
         dispatch(godtaVilkar(ownProps.hash));
-        history.push('/');
+        ownProps.history.push('/');
     };
     return {
         onSubmit: formData => {
@@ -104,6 +105,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    GodkjennVilkarReduxForm
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(GodkjennVilkarReduxForm)
 );

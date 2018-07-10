@@ -7,19 +7,20 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import { avsluttOppfolging } from '../innstillinger-reducer';
-import history from '../../../history';
 import { AVSLUTT_FORM_NAME } from './avslutt-oppfolginsperiode';
 import { RemoteResetKnapp } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import InnstillingerModal from '../innstillinger-modal';
 import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerBegrunnelse } from '../innstillinger-selector';
+import * as AppPT from '../../../proptypes';
 
 function BekreftAvslutning({
     doAvsluttOppfolging,
     begrunnelse,
     veilederId,
     navn,
+    history,
 }) {
     return (
         <InnstillingerModal>
@@ -63,6 +64,7 @@ BekreftAvslutning.propTypes = {
     begrunnelse: PT.string,
     veilederId: PT.string,
     doAvsluttOppfolging: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -71,11 +73,11 @@ const mapStateToProps = state => ({
     begrunnelse: selectInnstillingerBegrunnelse(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     doAvsluttOppfolging: (begrunnelse, veilederId) => {
         dispatch(avsluttOppfolging(begrunnelse, veilederId))
-            .then(() => history.push('/innstillinger/avslutt/kvittering'))
-            .catch(() => history.push('/innstillinger/feilkvittering'));
+            .then(() => props.history.push('/innstillinger/avslutt/kvittering'))
+            .catch(() => props.history.push('/innstillinger/feilkvittering'));
     },
 });
 

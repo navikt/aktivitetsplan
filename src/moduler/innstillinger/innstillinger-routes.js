@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Prosesser from './prosesser/prosesser';
 import AvsluttOppfolging from './avslutt-oppfolging/avslutt-oppfolginsperiode';
 import BekreftAvsluttOppfolging from './avslutt-oppfolging/bekreft-avslutt-oppfolginsperiode';
@@ -120,4 +120,4 @@ InnstillingerRoutes.propTypes = {
     match: PT.object.isRequired,
 };
 
-export default withRouter(InnstillingerRoutes);
+export default InnstillingerRoutes;

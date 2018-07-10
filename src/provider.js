@@ -8,12 +8,11 @@ import InitiellDataLast from './initiell-data-last';
 import componentize from './componentize';
 
 import createStore from './store';
-import history from './history';
 
 class Provider extends Component {
     constructor(props) {
         super(props);
-        this.store = createStore(history);
+        this.store = createStore();
     }
 
     render() {

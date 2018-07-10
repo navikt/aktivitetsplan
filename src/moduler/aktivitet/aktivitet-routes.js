@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import AktivitetFormContainer from './aktivitet-forms/aktivitet-form-container';
 import AktivitetvisningContainer from './visning/aktivitetvisning-container';
 import BekreftSlettVisningContainer from './visning/bekreft-slett-visning/bekreft-slett-visning-container';
@@ -58,4 +58,4 @@ AktivitetRoutes.propTypes = {
     match: PT.object.isRequired,
 };
 
-export default withRouter(AktivitetRoutes);
+export default AktivitetRoutes;

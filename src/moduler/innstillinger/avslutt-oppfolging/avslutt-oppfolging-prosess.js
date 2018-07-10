@@ -3,13 +3,13 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import {
     kanAvslutteOppfolging,
     SLETT_BEGRUNNELSE_ACTION,
 } from '../innstillinger-reducer';
 import { STATUS } from '../../../ducks/utils';
-import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import * as AppPT from '../../../proptypes';
 import {
@@ -49,7 +49,7 @@ class AvsluttOppfolgingProsess extends Component {
                 harSjekket: true,
             });
             if (this.state.kanAvslutte) {
-                history.push(url);
+                this.props.history.push(url);
             }
         });
     };
@@ -100,6 +100,7 @@ AvsluttOppfolgingProsess.propTypes = {
     laster: PT.bool.isRequired,
     doKanAvslutteOppfolging: PT.func.isRequired,
     slettBegrunnelse: PT.func.isRequired,
+    history: AppPT.history.isRequired,
     avslutningStatus: AppPT.avslutningStatus,
 };
 
@@ -114,6 +115,8 @@ const mapDispatchToProps = dispatch => ({
     doKanAvslutteOppfolging: () => dispatch(kanAvslutteOppfolging()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    hiddenIfHoc(AvsluttOppfolgingProsess)
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(
+        hiddenIfHoc(AvsluttOppfolgingProsess)
+    )
 );

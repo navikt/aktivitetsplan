@@ -9,7 +9,6 @@ import { autobind, formaterDatoEllerTidSiden } from '../../utils';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import Identitet from '../../moduler/identitet/identitet';
 import Accordion from '../../felles-komponenter/accordion';
-import history from '../../history';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import hiddenIf, {
     div as HiddenIfDiv,
@@ -100,6 +99,7 @@ class AktivitetsMal extends Component {
             historiskVisning,
             kanSletteMal,
             harSkriveTilgang,
+            history,
         } = this.props;
 
         const harMal = !!mal;
@@ -174,6 +174,7 @@ AktivitetsMal.propTypes = {
     doHentMalListe: PT.func.isRequired,
     doFjernMalListe: PT.func.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({

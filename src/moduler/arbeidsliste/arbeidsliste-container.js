@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
@@ -94,6 +94,6 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(ArbeidslisteContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(
+    ArbeidslisteContainer
 );

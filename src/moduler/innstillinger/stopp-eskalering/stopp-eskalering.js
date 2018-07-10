@@ -6,7 +6,6 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
-import history from '../../../history';
 import {
     RemoteSubmitKnapp,
     RemoteResetKnapp,
@@ -51,6 +50,7 @@ class StoppEskalering extends Component {
             submitUtenHenvendelse,
             innstillingerStatus,
             tilhorendeDialogId,
+            history,
         } = this.props;
 
         return (
@@ -132,6 +132,7 @@ StoppEskalering.propTypes = {
     submitUtenHenvendelse: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
     tilhorendeDialogId: PT.number,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -147,15 +148,19 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     handleSubmit: (form, dialogId) =>
         dispatch(
-            stoppEskalering({
-                begrunnelse: form.begrunnelse,
-                dialogId,
-            })
+            stoppEskalering(
+                {
+                    begrunnelse: form.begrunnelse,
+                    dialogId,
+                },
+                props.history
+            )
         ),
-    submitUtenHenvendelse: () => dispatch(stoppEskaleringUtenHenvendelse()),
+    submitUtenHenvendelse: () =>
+        dispatch(stoppEskaleringUtenHenvendelse(props.history)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoppEskalering);

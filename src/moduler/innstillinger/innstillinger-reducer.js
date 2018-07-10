@@ -9,7 +9,6 @@ import {
     hentOppfolging,
     OK as OPPFOLGING_OK,
 } from '../oppfolging-status/oppfolging-reducer';
-import history from '../../history';
 
 // Actions
 export const HENT_OPPFOLGING_OK = 'innstillinger/hent_oppfolging/OK';
@@ -197,7 +196,7 @@ function startEskaleringMedDialog(dialogId, begrunnelse) {
     );
 }
 
-export function startEskalering(eskaleringData) {
+export function startEskalering(eskaleringData, history) {
     const begrunnelse = eskaleringData.begrunnelse;
     return dispatch =>
         dispatch(
@@ -230,7 +229,7 @@ function stoppEskaleringProsess(begrunnelse) {
     });
 }
 
-export function stoppEskalering(stoppEskaleringData) {
+export function stoppEskalering(stoppEskaleringData, history) {
     const begrunnelse = stoppEskaleringData.begrunnelse;
     return dispatch =>
         dispatch(
@@ -248,7 +247,7 @@ export function stoppEskalering(stoppEskaleringData) {
             .catch(() => history.push('/innstillinger/feilkvittering'));
 }
 
-export function stoppEskaleringUtenHenvendelse() {
+export function stoppEskaleringUtenHenvendelse(history) {
     return dispatch =>
         dispatch(stoppEskaleringProsess())
             .then(() => dispatch(hentOppfolging()))

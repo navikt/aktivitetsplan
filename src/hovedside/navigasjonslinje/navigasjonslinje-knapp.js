@@ -1,9 +1,10 @@
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import history from '../../history';
+import { withRouter } from 'react-router-dom';
+import * as AppPT from '../../proptypes';
 
-function NavigasjonslinjeKnapp({ ariaLabel, lenke, className }) {
+function NavigasjonslinjeKnapp({ ariaLabel, lenke, className, history }) {
     return (
         <FormattedMessage id={ariaLabel}>
             {label =>
@@ -23,7 +24,8 @@ NavigasjonslinjeKnapp.defaultProps = {
 NavigasjonslinjeKnapp.propTypes = {
     ariaLabel: PT.string.isRequired,
     lenke: PT.string.isRequired,
+    history: AppPT.history.isRequired,
     className: PT.string,
 };
 
-export default NavigasjonslinjeKnapp;
+export default withRouter(NavigasjonslinjeKnapp);
