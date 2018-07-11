@@ -11,13 +11,13 @@ import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
 import Hovedside from './hovedside/hovedside';
 import './index.less';
 
+const history = createHistory();
+
 class App extends Component {
     componentWillUnmount() {
         console.log('unmounting App'); // eslint-disable-line
     }
     render() {
-        const history = createHistory();
-        console.log('history is being recreated'); // eslint-disable-line
         return (
             <div className="aktivitetsplanfs">
                 <Provider key={this.props.fnr}>

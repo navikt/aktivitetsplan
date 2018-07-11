@@ -6,18 +6,19 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import IntlProvider from './intl-provider';
 import InitiellDataLast from './initiell-data-last';
 import componentize from './componentize';
-
+import { RESET_STORE } from './reducer';
 import createStore from './store';
+
+const store = createStore(history);
 
 class Provider extends Component {
     constructor(props) {
         super(props);
-        this.store = createStore();
+        store.dispatch(RESET_STORE);
     }
-
     render() {
         return (
-            <ReduxProvider store={this.store}>
+            <ReduxProvider store={store}>
                 <InitiellDataLast>
                     <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
                         <div>
