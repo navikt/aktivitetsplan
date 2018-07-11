@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import React, { PropTypes as PT } from 'react';
+import React, { Component, PropTypes as PT } from 'react';
 import { Router } from 'react-router-dom';
 import SideBanner from './moduler/sidebanner/sidebanner';
 import Provider from './provider';
@@ -11,28 +11,33 @@ import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
 import Hovedside from './hovedside/hovedside';
 import './index.less';
 
-function App({ fnr }) {
-    const history = createHistory();
-    console.log('history is being recreated'); // eslint-disable-line
-    return (
-        <div className="aktivitetsplanfs">
-            <Provider key={fnr}>
-                <SideBanner visible={VIS_SIDEBANNER} />
-                <div className="aktivitetsplan-wrapper">
-                    <div className="fullbredde">
-                        <Router history={history}>
-                            <ScrollToTop>
-                                <Hovedside />
-                            </ScrollToTop>
-                        </Router>
-                        <ConfigToggle name="timeoutbox">
-                            <Timeoutbox />
-                        </ConfigToggle>
+class App extends Component {
+    componentWillUnmount() {
+        console.log('unmounting App'); // eslint-disable-line
+    }
+    render() {
+        const history = createHistory();
+        console.log('history is being recreated'); // eslint-disable-line
+        return (
+            <div className="aktivitetsplanfs">
+                <Provider key={this.props.fnr}>
+                    <SideBanner visible={VIS_SIDEBANNER} />
+                    <div className="aktivitetsplan-wrapper">
+                        <div className="fullbredde">
+                            <Router history={history}>
+                                <ScrollToTop>
+                                    <Hovedside />
+                                </ScrollToTop>
+                            </Router>
+                            <ConfigToggle name="timeoutbox">
+                                <Timeoutbox />
+                            </ConfigToggle>
+                        </div>
                     </div>
-                </div>
-            </Provider>
-        </div>
-    );
+                </Provider>
+            </div>
+        );
+    }
 }
 
 App.propTypes = {

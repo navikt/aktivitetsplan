@@ -69,6 +69,7 @@ class AktivitetvisningContainer extends Component {
     componentWillUnmount() {
         const { valgtAktivitet, doSettForrigeAktiveAktivitetId } = this.props;
         doSettForrigeAktiveAktivitetId(valgtAktivitet.id);
+        console.log('unmounting aktivitet visning'); // eslint-disable-line
     }
 
     render() {
