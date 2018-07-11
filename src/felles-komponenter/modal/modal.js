@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
@@ -8,44 +8,52 @@ import Innholdslaster from '../utils/innholdslaster';
 import Feilmelding from '../../moduler/feilmelding/feilmelding';
 import * as AppPT from '../../proptypes';
 
-function Modal({
-    header,
-    children,
-    avhengigheter,
-    onRequestClose,
-    className,
-    minstEnAvhengighet,
-    history,
-    ...props
-}) {
-    const closeFuncOrDefault = () => {
-        if (onRequestClose) {
-            onRequestClose();
-            return;
-        }
+class Modal extends Component {
+    componentWillUnmount() {
+        console.log('unmounting modal'); // eslint-disable-line
+    }
+    render() {
+        const {
+            header,
+            children,
+            avhengigheter,
+            onRequestClose,
+            className,
+            minstEnAvhengighet,
+            history,
+            ...rest
+        } = this.props;
 
-        history.push('/');
-    };
-    return (
-        <NavFrontendModal
-            {...props}
-            isOpen
-            className={classNames('aktivitet-modal', className)}
-            overlayClassName="aktivitet-modal__overlay"
-            portalClassName="aktivitetsplanfs aktivitet-modal-portal"
-            shouldCloseOnOverlayClick={false}
-            onRequestClose={closeFuncOrDefault}
-        >
-            {header}
-            <Feilmelding className="feilmelding--systemfeil" />
-            <Innholdslaster
-                minstEn={minstEnAvhengighet}
-                avhengigheter={avhengigheter}
+        const closeFuncOrDefault = () => {
+            if (onRequestClose) {
+                onRequestClose();
+                return;
+            }
+
+            history.push('/');
+        };
+
+        return (
+            <NavFrontendModal
+                {...rest}
+                isOpen
+                className={classNames('aktivitet-modal', className)}
+                overlayClassName="aktivitet-modal__overlay"
+                portalClassName="aktivitetsplanfs aktivitet-modal-portal"
+                shouldCloseOnOverlayClick={false}
+                onRequestClose={closeFuncOrDefault}
             >
-                {children}
-            </Innholdslaster>
-        </NavFrontendModal>
-    );
+                {header}
+                <Feilmelding className="feilmelding--systemfeil" />
+                <Innholdslaster
+                    minstEn={minstEnAvhengighet}
+                    avhengigheter={avhengigheter}
+                >
+                    {children}
+                </Innholdslaster>
+            </NavFrontendModal>
+        );
+    }
 }
 
 Modal.defaultProps = {
