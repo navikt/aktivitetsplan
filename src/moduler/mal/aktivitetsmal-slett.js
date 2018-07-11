@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import BekreftSlettVisning from '../aktivitet/visning/bekreft-slett-visning/bekreft-slett-visning';
-import history from '../../history';
 import { slettMal } from './aktivitetsmal-reducer';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import { selectMalListe } from './aktivitetsmal-selector';
@@ -12,7 +11,7 @@ import * as AppPT from '../../proptypes';
 // eslint-disable-next-line react/prefer-stateless-function
 class AktivitetmalSlett extends Component {
     render() {
-        const { doSlettMal, malData } = this.props;
+        const { doSlettMal, malData, history } = this.props;
         const bekrefSlettingAvMalListe =
             malData.length > 1
                 ? 'aktivitetsmal.bekreft-sletting.undertittel'
@@ -33,14 +32,16 @@ class AktivitetmalSlett extends Component {
 AktivitetmalSlett.propTypes = {
     doSlettMal: PT.func.isRequired,
     malData: PT.arrayOf(AppPT.mal).isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({
     malData: selectMalListe(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    doSlettMal: () => dispatch(slettMal()).then(() => history.push('/mal')),
+const mapDispatchToProps = (dispatch, props) => ({
+    doSlettMal: () =>
+        dispatch(slettMal()).then(() => props.history.push('/mal')),
 });
 
 export default AktivitetsmalModal(

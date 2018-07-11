@@ -6,7 +6,6 @@ import { isDirty } from 'redux-form';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import * as AppPT from '../../../proptypes';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import history from '../../../history';
 import { formNavn } from '../aktivitet-forms/aktivitet-form-utils';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Modal from '../../../felles-komponenter/modal/modal';
@@ -24,6 +23,7 @@ function EndreAktivitet({
     lukkModal,
     formIsDirty,
     avhengigheter,
+    history,
     ...rest
 }) {
     function visAktivitet() {
@@ -82,6 +82,7 @@ EndreAktivitet.propTypes = {
     formIsDirty: PT.bool.isRequired,
     intl: intlShape.isRequired,
     lukkModal: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = (state, props) => {

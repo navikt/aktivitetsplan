@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { withRouter } from 'react-router-dom';
 import { DatoEllerTidSiden } from '../../../felles-komponenter/dato';
 import * as AppPT from '../../../proptypes';
 import Lenke from '../../../felles-komponenter/utils/lenke';
@@ -14,7 +15,6 @@ import { selectAlleDialoger } from '../../dialog/dialog-selector';
 import { selectSorterteHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
 import { erTidspunktIPeriode } from '../../../utils';
 import { velgHistoriskPeriode } from '../../filtrering/filter/filter-reducer';
-import history from '../../../history';
 
 const NAV = 'NAV';
 const SYSTEM = 'SYSTEM';
@@ -31,6 +31,7 @@ class InnstillingHistorikkInnslag extends Component {
             dialoger,
             historiskePerioder,
             doVelgHistoriskPeriode,
+            history,
         } = this.props;
 
         const valgtDialog = dialoger.find(
@@ -165,6 +166,7 @@ InnstillingHistorikkInnslag.propTypes = {
     intl: intlShape.isRequired,
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     historiskePerioder: PT.arrayOf(AppPT.oppfolgingsPeriode).isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -177,6 +179,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(velgHistoriskPeriode(historiskPeriode)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(InnstillingHistorikkInnslag)
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(
+        injectIntl(InnstillingHistorikkInnslag)
+    )
 );

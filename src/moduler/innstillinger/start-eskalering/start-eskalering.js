@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Systemtittel } from 'nav-frontend-typografi';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
-import history from '../../../history';
 import {
     RemoteSubmitKnapp,
     RemoteResetKnapp,
@@ -19,7 +18,7 @@ import * as AppPT from '../../../proptypes';
 
 export const START_ESKALERING_FORM_NAME = 'start-eskalering-form';
 
-function StartEskalering({ handleSubmit, innstillingerStatus }) {
+function StartEskalering({ handleSubmit, innstillingerStatus, history }) {
     return (
         <InnstillingerModal>
             <Innholdslaster avhengigheter={[innstillingerStatus]}>
@@ -76,19 +75,23 @@ function StartEskalering({ handleSubmit, innstillingerStatus }) {
 StartEskalering.propTypes = {
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({
     innstillingerStatus: selectInnstillingerStatus(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     handleSubmit: (form, overskrift) =>
         dispatch(
-            startEskalering({
-                begrunnelse: form.begrunnelse,
-                overskrift,
-            })
+            startEskalering(
+                {
+                    begrunnelse: form.begrunnelse,
+                    overskrift,
+                },
+                props.history
+            )
         ),
 });
 

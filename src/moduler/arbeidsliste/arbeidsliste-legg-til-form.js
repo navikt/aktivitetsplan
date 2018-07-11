@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import history from '../../history';
+import { withRouter } from 'react-router-dom';
 import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import Datovelger from '../../felles-komponenter/skjema/datovelger/datovelger';
 import { leggTilArbeidsliste } from './arbeidsliste-reducer';
@@ -20,8 +20,14 @@ import {
     fristErEtterIDag,
 } from './arbeidsliste-utils';
 import { selectIdentitetId } from '../identitet/identitet-selector';
+import * as AppPT from '../../proptypes';
 
-function LeggTilArbeidslisteForm({ handleSubmit, lukkModal, errorSummary }) {
+function LeggTilArbeidslisteForm({
+    handleSubmit,
+    lukkModal,
+    errorSummary,
+    history,
+}) {
     return (
         <form onSubmit={handleSubmit}>
             <section className="arbeidsliste__form">
@@ -62,6 +68,7 @@ LeggTilArbeidslisteForm.propTypes = {
     handleSubmit: PT.func.isRequired,
     lukkModal: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const LeggTilArbeidslisteFormValidation = validForm({
@@ -87,13 +94,15 @@ const mapDispatchToProps = (dispatch, props) => {
                 leggTilArbeidsliste(fnr, lagArbeidsliste(fnr, formData, props))
             ).then(() => {
                 dispatch({ type: LUKK_MODAL });
-                history.push('/');
+                props.history.push('/');
             });
         },
         lukkModal: () => dispatch({ type: LUKK_MODAL }),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    LeggTilArbeidslisteFormValidation
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(
+        LeggTilArbeidslisteFormValidation
+    )
 );

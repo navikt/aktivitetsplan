@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
-import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
 import {
@@ -14,7 +13,12 @@ import {
 import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
 import { selectOpprettOppgave } from './opprett-oppgave-reducer';
 
-function OppgaveOpprettetKvittering({ avhengigheter, navn, opprettOppgave }) {
+function OppgaveOpprettetKvittering({
+    avhengigheter,
+    navn,
+    opprettOppgave,
+    history,
+}) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
@@ -64,6 +68,7 @@ OppgaveOpprettetKvittering.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     navn: PT.string.isRequired,
     opprettOppgave: PT.object.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({

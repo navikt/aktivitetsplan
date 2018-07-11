@@ -8,8 +8,6 @@ import {
     RemoteSubmitKnapp,
     RemoteResetKnapp,
 } from '../../../felles-komponenter/remote-knapp/remote-knapp';
-import * as AppPt from '../../../proptypes';
-import history from '../../../history';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import BegrunnelseForm from '../begrunnelse-form';
 import {
@@ -21,6 +19,7 @@ import { STATUS } from '../../../ducks/utils';
 import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
+import * as AppPT from '../../../proptypes';
 
 const SETT_DIGITAL_FORM_NAME = 'sett-digital-form';
 
@@ -28,6 +27,7 @@ function SettDigitalOppfolging({
     veilederId,
     innstillingerStatus,
     handleSubmit,
+    history,
 }) {
     const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
@@ -77,7 +77,8 @@ SettDigitalOppfolging.defaultProps = {
 SettDigitalOppfolging.propTypes = {
     veilederId: PT.string,
     handleSubmit: PT.func.isRequired,
-    innstillingerStatus: AppPt.status,
+    history: AppPT.history.isRequired,
+    innstillingerStatus: AppPT.status,
 };
 
 const mapStateToProps = state => ({
@@ -85,13 +86,13 @@ const mapStateToProps = state => ({
     innstillingerStatus: selectInnstillingerStatus(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     handleSubmit: (form, veilederId) => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(settDigitalOppfolging(form.begrunnelse, veilederId))
-            .then(() => history.push('/innstillinger/digital/kvittering'))
+            .then(() => props.history.push('/innstillinger/digital/kvittering'))
             .then(() => dispatch(hentOppfolging()))
-            .catch(() => history.push('/innstillinger/feilkvittering'));
+            .catch(() => props.history.push('/innstillinger/feilkvittering'));
     },
 });
 

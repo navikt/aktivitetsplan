@@ -5,7 +5,6 @@ import * as AppPT from '../../proptypes';
 import AktivitetsmalForm from './aktivitetsmal-form';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import AktivitetsmalModal from './aktivitetsmal-modal';
-import history from '../../history';
 import {
     hentMal,
     selectMalStatus,
@@ -18,7 +17,7 @@ class AktivitetmalEndre extends Component {
     }
 
     render() {
-        const { mal, avhengigheter } = this.props;
+        const { mal, avhengigheter, history } = this.props;
 
         return (
             <Innholdslaster avhengigheter={avhengigheter}>
@@ -41,6 +40,7 @@ AktivitetmalEndre.propTypes = {
     mal: AppPT.mal,
     doHentMal: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({

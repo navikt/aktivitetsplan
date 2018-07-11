@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
+import { withRouter } from 'react-router-dom';
 import AktivitetsplanHjelpetekst from '../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
 import { flyttAktivitet } from '../../moduler/aktivitet/aktivitet-actions';
 import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
@@ -15,17 +16,17 @@ import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
 } from '../../constant';
-import history from '../../history';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
 import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetliste-selector';
 import { compareAktivitet } from '../../moduler/aktivitet/aktivitet-util';
+import * as AppPT from '../../proptypes';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
         return props.status !== monitor.getItem().status;
     },
 
-    drop({ doFlyttAktivitet, status }, monitor) {
+    drop({ doFlyttAktivitet, status, history }, monitor) {
         const aktivitet = monitor.getItem();
         // utsett håndteringen til droppet er fullført. Unngår f.eks. F17HL3-144
         setTimeout(() => {
@@ -112,6 +113,7 @@ KolonneFunction.propTypes = {
     tittelId: PT.string.isRequired,
     aktiviteter: PT.arrayOf(PT.object).isRequired,
     doFlyttAktivitet: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -123,6 +125,10 @@ const mapDispatchToProps = dispatch => ({
         flyttAktivitet(aktivitet, status)(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    DropTarget('AktivitetsKort', mottaAktivitetsKort, collect)(KolonneFunction)
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(
+        DropTarget('AktivitetsKort', mottaAktivitetsKort, collect)(
+            KolonneFunction
+        )
+    )
 );

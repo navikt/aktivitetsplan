@@ -57,7 +57,6 @@ import {
 } from '../dialog/dialog-selector';
 import DialogPrint from './dialog-print';
 import VelgPlanUtskrift from './velg-plan-utskrift';
-import history from '../../history';
 
 const StatusGruppePT = PT.shape({
     status: PT.string.isRequired,
@@ -325,6 +324,7 @@ AktivitetsplanPrintModal.propTypes = {
     currentStep: PT.string.isRequired,
     goToStep: PT.func.isRequired,
     doResetUtskrift: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 AktivitetsplanPrintModal.defaultProps = {
@@ -456,12 +456,12 @@ const mapStateToProps = state => {
     };
 };
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, props) {
     return {
         goToStep: step => dispatch(goToStepUtskrift(step)),
         doResetUtskrift: () => {
             dispatch(resetUtskrift());
-            history.push('/');
+            props.history.push('/');
         },
         doHentMal: () => dispatch(hentMal()),
         doHentMalListe: () => dispatch(hentMalListe()),

@@ -4,12 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { slettAktivitet } from '../../aktivitet-actions';
 import BekreftSlettVisning from './bekreft-slett-visning';
-import history from '../../../../history';
 import * as AppPT from '../../../../proptypes';
 import Modal from '../../../../felles-komponenter/modal/modal';
 import { selectAktivitetMedId } from '../../aktivitetliste-selector';
 
-function BekreftSlettVisningContainer({ doSlettAktivitet, valgtAktivitet }) {
+function BekreftSlettVisningContainer({
+    doSlettAktivitet,
+    valgtAktivitet,
+    history,
+}) {
     return (
         <Modal contentLabel="aktivitetsvisningModal">
             <BekreftSlettVisning
@@ -33,6 +36,7 @@ BekreftSlettVisningContainer.defaultProps = {
 BekreftSlettVisningContainer.propTypes = {
     doSlettAktivitet: PT.func,
     aktivitetId: PT.string.isRequired,
+    history: AppPT.history.isRequired,
     valgtAktivitet: AppPT.aktivitet,
 };
 

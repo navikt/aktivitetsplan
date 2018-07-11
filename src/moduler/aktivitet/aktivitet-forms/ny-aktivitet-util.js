@@ -1,8 +1,7 @@
-import history from '../../../history';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import { aktivitetRoute } from '../../../routing';
 
-export function nyAktivitetMedType(aktivitet, type) {
+export function nyAktivitetMedType(aktivitet, type, history) {
     return dispatch => {
         const nyAktivitet = {
             ...aktivitet,

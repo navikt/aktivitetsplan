@@ -5,13 +5,12 @@ import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
-import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
 import { selectPrivatModusStatus } from '../../privat-modus/privat-modus-selector';
 import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
 
-function StartOppfolgingKvittering({ avhengigheter, navn }) {
+function StartOppfolgingKvittering({ avhengigheter, navn, history }) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
@@ -49,6 +48,7 @@ StartOppfolgingKvittering.defaultProps = {
 
 StartOppfolgingKvittering.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
+    history: AppPT.history.isRequired,
     navn: PT.string,
 };
 

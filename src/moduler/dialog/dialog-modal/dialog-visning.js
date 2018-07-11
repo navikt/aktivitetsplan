@@ -3,9 +3,9 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
+import { withRouter } from 'react-router-dom';
 import * as AppPT from '../../../proptypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
-import history from '../../../history';
 import {
     DIALOG_ESKALERING,
     DIALOG_IKKE_FERDIGBEHANDLET,
@@ -37,7 +37,7 @@ const Info = visibleIfHOC(({ slash, className, children }) =>
 // eslint-disable-next-line react/prefer-stateless-function
 class DialogVisning extends React.PureComponent {
     render() {
-        const { dialog, erValgt, aktiviteter, erTabBar } = this.props;
+        const { dialog, erValgt, aktiviteter, erTabBar, history } = this.props;
 
         const venterPaSvar = dialog.venterPaSvar;
         const ferdigBehandlet = dialog.ferdigBehandlet;
@@ -137,6 +137,7 @@ DialogVisning.propTypes = {
     erValgt: PT.bool.isRequired,
     erTabBar: PT.bool.isRequired,
     aktiviteter: PT.arrayOf(AppPT.aktivitet).isRequired,
+    history: AppPT.history.isRequired,
 };
 
-export default DialogVisning;
+export default withRouter(DialogVisning);

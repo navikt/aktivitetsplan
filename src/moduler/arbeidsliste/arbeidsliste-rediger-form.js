@@ -5,7 +5,7 @@ import { validForm } from 'react-redux-form-validation';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
-import history from '../../history';
+import { withRouter } from 'react-router-dom';
 import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import Datovelger from '../../felles-komponenter/skjema/datovelger/datovelger';
 import { redigerArbeidsliste } from './arbeidsliste-reducer';
@@ -26,6 +26,7 @@ import {
 } from './arbeidsliste-utils';
 import { formaterDato } from '../../utils';
 import { selectIdentitetId } from '../identitet/identitet-selector';
+import * as AppPT from '../../proptypes';
 
 function RedigerArbeidslisteForm({
     handleSubmit,
@@ -33,6 +34,7 @@ function RedigerArbeidslisteForm({
     errorSummary,
     sistEndretAv,
     endretDato,
+    history,
 }) {
     return (
         <form onSubmit={handleSubmit}>
@@ -88,6 +90,7 @@ RedigerArbeidslisteForm.propTypes = {
     errorSummary: PT.node.isRequired,
     sistEndretAv: PT.string.isRequired,
     endretDato: PT.string.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const RedigerArbeidslisteFormValidation = validForm({
@@ -121,13 +124,15 @@ const mapDispatchToProps = (dispatch, props) => {
                 redigerArbeidsliste(fnr, lagArbeidsliste(fnr, formData, props))
             ).then(() => {
                 dispatch({ type: LUKK_MODAL });
-                history.push('/');
+                props.history.push('/');
             });
         },
         lukkModal: () => dispatch({ type: LUKK_MODAL }),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    RedigerArbeidslisteFormValidation
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(
+        RedigerArbeidslisteFormValidation
+    )
 );

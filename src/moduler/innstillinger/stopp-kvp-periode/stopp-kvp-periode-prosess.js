@@ -3,10 +3,11 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import StartProsess from '../prosesser/start-prosess';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
-import history from '../../../history';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
+import * as AppPT from '../../../proptypes';
 
 function StoppKvpPeriodeProsess({ slettBegrunnelse }) {
     return (
@@ -27,15 +28,16 @@ function StoppKvpPeriodeProsess({ slettBegrunnelse }) {
 
 StoppKvpPeriodeProsess.propTypes = {
     slettBegrunnelse: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     slettBegrunnelse: () => {
         dispatch(SLETT_BEGRUNNELSE_ACTION);
-        history.push('/innstillinger/stoppKvpPeriode');
+        props.history.push('/innstillinger/stoppKvpPeriode');
     },
 });
 
-export default connect(null, mapDispatchToProps)(
-    hiddenIfHoc(StoppKvpPeriodeProsess)
+export default withRouter(
+    connect(null, mapDispatchToProps)(hiddenIfHoc(StoppKvpPeriodeProsess))
 );

@@ -6,7 +6,6 @@ import * as AppPT from '../../../proptypes';
 import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
-import history from '../../../history';
 import VisAdvarsel from './vis-advarsel';
 import {
     selectAktivitetListeStatus,
@@ -17,7 +16,12 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 
-const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging }) => {
+const FullforAktivitet = ({
+    valgtAktivitet,
+    lagrer,
+    doAvsluttOppfolging,
+    history,
+}) => {
     const headerTekst = (
         <FormattedMessage id="opprett-begrunnelse.fullfoert.header" />
     );
@@ -67,6 +71,7 @@ FullforAktivitet.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     lagrer: PT.bool.isRequired,
     doAvsluttOppfolging: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

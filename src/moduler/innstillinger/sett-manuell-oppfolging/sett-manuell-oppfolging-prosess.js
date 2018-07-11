@@ -3,10 +3,11 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
-import history from '../../../history';
 import StartProsess from '../prosesser/start-prosess';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
+import * as AppPT from '../../../proptypes';
 
 function SettManuellOppfolgingProsess({ slettBegrunnelse }) {
     return (
@@ -27,15 +28,16 @@ function SettManuellOppfolgingProsess({ slettBegrunnelse }) {
 
 SettManuellOppfolgingProsess.propTypes = {
     slettBegrunnelse: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     slettBegrunnelse: () => {
         dispatch(SLETT_BEGRUNNELSE_ACTION);
-        history.push('/innstillinger/manuell');
+        props.history.push('/innstillinger/manuell');
     },
 });
 
-export default connect(null, mapDispatchToProps)(
-    hiddenIfHoc(SettManuellOppfolgingProsess)
+export default withRouter(
+    connect(null, mapDispatchToProps)(hiddenIfHoc(SettManuellOppfolgingProsess))
 );
