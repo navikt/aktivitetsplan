@@ -23,6 +23,8 @@ import {
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
 import { HtmlText } from '../../text';
+import { hentOppfolgingsstatus } from '../oppfoelgingsstatus/oppfoelgingsstatus-reducer';
+import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
@@ -97,6 +99,7 @@ oppfolgingStatusKomponent.propTypes = {
 class OppfolgingStatus extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
+        this.props.doHentOppfolgingStatus(getFodselsnummer());
         if (this.props.oppfolgingStatus === STATUS.NOT_STARTED) {
             this.props.doHentOppfolging();
         }
@@ -121,6 +124,7 @@ OppfolgingStatus.propTypes = {
     identitetStatus: AppPT.status.isRequired,
     doHentOppfolging: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
+    doHentOppfolgingStatus: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -136,6 +140,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     doHentOppfolging: () => dispatch(hentOppfolging()),
     doHentIdentitet: () => dispatch(hentIdentitet()),
+    doHentOppfolgingStatus: fnr => dispatch(hentOppfolgingsstatus(fnr)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OppfolgingStatus);
