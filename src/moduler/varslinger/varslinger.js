@@ -23,18 +23,27 @@ import {
     selectErBruker,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
-import { selectErBrukerAktivIArena } from '../oppfoelgingsstatus/oppfoelgingsstatus-selector';
+import {
+    selectErBrukerAktivIArena,
+    selectOppfoelgingsstatusStatus,
+} from '../oppfoelgingsstatus/oppfoelgingsstatus-selector';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger/innstillinger-reducer';
+import { getFodselsnummer } from '../../bootstrap/fnr-util';
+import { hentOppfolgingsstatus } from '../oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 
 class Varslinger extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
+        if (!this.props.erBruker) {
+            this.props.doHentOppfolgingsstatus(getFodselsnummer());
+        }
     }
     render() {
         const {
             erBruker,
             avhengigheter,
+            innsideAvhengigheter,
             underOppfolging,
             brukerErAktivIArena,
             vilkarMaBesvares,
@@ -115,8 +124,11 @@ class Varslinger extends Component {
             </Container>
         );
 
+        const soneAvhengigheter = erBruker
+            ? avhengigheter
+            : avhengigheter.concat(innsideAvhengigheter);
         return (
-            <Innholdslaster avhengigheter={avhengigheter}>
+            <Innholdslaster avhengigheter={soneAvhengigheter}>
                 {erBruker ? visVarslingerForBruker : visVarslingerForVeileder}
             </Innholdslaster>
         );
@@ -139,6 +151,7 @@ Varslinger.defaultProps = {
 Varslinger.propTypes = {
     erBruker: PT.bool,
     avhengigheter: AppPT.avhengigheter.isRequired,
+    innsideAvhengigheter: AppPT.avhengigheter.isRequired,
     underOppfolging: PT.bool,
     brukerErAktivIArena: PT.bool,
     vilkarMaBesvares: PT.bool,
@@ -146,6 +159,7 @@ Varslinger.propTypes = {
     reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
     doVelgNavarendePeriode: PT.func.isRequired,
+    doHentOppfolgingsstatus: PT.func.isRequired,
     slettBegrunnelse: PT.func.isRequired,
     brukerErEskalert: PT.bool,
     tilhorendeDialogId: PT.number,
@@ -158,6 +172,7 @@ const mapStateToProps = state => ({
         selectOppfolgingStatus(state),
         selectIdentitetStatus(state),
     ],
+    innsideAvhengigheter: [selectOppfoelgingsstatusStatus(state)],
     brukerErAktivIArena: selectErBrukerAktivIArena(state),
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     underOppfolging: selectErUnderOppfolging(state),
@@ -171,6 +186,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
     doVelgNavarendePeriode: () => dispatch(velgHistoriskPeriode(null)),
+    doHentOppfolgingsstatus: fnr => dispatch(hentOppfolgingsstatus(fnr)),
     slettBegrunnelse: () => dispatch(SLETT_BEGRUNNELSE_ACTION),
 });
 
