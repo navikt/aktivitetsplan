@@ -9,3 +9,15 @@ export function selectOppfoelgingsstatusStatus(state) {
 export function selectOppfoelgingsstatusData(state) {
     return selectOppfoelgingsstatusSlice(state).data;
 }
+
+export function selectFormidlingsgruppe(state) {
+    return selectOppfoelgingsstatusData(state).formidlingsgruppe;
+}
+
+export function selectErBrukerInaktivIArena(state) {
+    return selectFormidlingsgruppe(state) === 'ISERV';
+}
+
+export function selectErBrukerAktivIArena(state) {
+    return !selectErBrukerInaktivIArena(state);
+}
