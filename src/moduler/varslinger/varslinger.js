@@ -23,6 +23,7 @@ import {
     selectErBruker,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
+import { selectErBrukerAktivIArena } from '../oppfoelgingsstatus/oppfoelgingsstatus-selector';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger/innstillinger-reducer';
 
@@ -35,6 +36,7 @@ class Varslinger extends Component {
             erBruker,
             avhengigheter,
             underOppfolging,
+            brukerErAktivIArena,
             vilkarMaBesvares,
             brukerErManuell,
             reservertIKRR,
@@ -87,6 +89,11 @@ class Varslinger extends Component {
                     tekstId="oppfolging.bruker-reservert-i-krr"
                     className="varsling"
                 />
+                <HiddenIfVarsling
+                    hidden={brukerErAktivIArena}
+                    tekstId="oppfolging.bruker-iserv"
+                    className="varsling"
+                />
                 <HiddenIfVarslingMedLenke
                     hidden={!brukerErEskalert}
                     tekstId="oppfolgning.veileder.bruker-er-eskalert"
@@ -119,6 +126,7 @@ class Varslinger extends Component {
 Varslinger.defaultProps = {
     erBruker: false,
     underOppfolging: false,
+    brukerErAktivIArena: false,
     vilkarMaBesvares: false,
     brukerErManuell: false,
     reservertIKRR: false,
@@ -132,6 +140,7 @@ Varslinger.propTypes = {
     erBruker: PT.bool,
     avhengigheter: AppPT.avhengigheter.isRequired,
     underOppfolging: PT.bool,
+    brukerErAktivIArena: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerErManuell: PT.bool,
     reservertIKRR: PT.bool,
@@ -149,6 +158,7 @@ const mapStateToProps = state => ({
         selectOppfolgingStatus(state),
         selectIdentitetStatus(state),
     ],
+    brukerErAktivIArena: selectErBrukerAktivIArena(state),
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     underOppfolging: selectErUnderOppfolging(state),
     brukerErManuell: selectErBrukerManuell(state),

@@ -7,12 +7,12 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { startOppfolging } from '../innstillinger-reducer';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
-import history from '../../../history';
 import InnstillingerModal from '../innstillinger-modal';
 import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
 import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
+import * as AppPT from '../../../proptypes';
 
-function BekreftStart({ doStartOppfolging, navn }) {
+function BekreftStart({ doStartOppfolging, navn, history }) {
     return (
         <InnstillingerModal>
             <section className="innstillinger__prosess">
@@ -46,18 +46,19 @@ BekreftStart.defaultProps = {
 BekreftStart.propTypes = {
     navn: PT.string,
     doStartOppfolging: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({
     navn: selectNavnPaMotpart(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     doStartOppfolging: () => {
         dispatch(startOppfolging())
-            .then(() => history.push('/innstillinger/start/kvittering'))
+            .then(() => props.history.push('/innstillinger/start/kvittering'))
             .then(() => dispatch(hentOppfolging()))
-            .catch(() => history.push('/innstillinger/feilkvittering'));
+            .catch(() => props.history.push('/innstillinger/feilkvittering'));
     },
 });
 

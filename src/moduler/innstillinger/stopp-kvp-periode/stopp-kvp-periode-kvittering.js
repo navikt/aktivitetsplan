@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import Modal from '../../../felles-komponenter/modal/modal';
-import history from '../../../history';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
 import {
@@ -21,7 +20,13 @@ import {
 } from '../innstillinger-selector';
 import { selectErUnderKvp } from '../../oppfolging-status/oppfolging-selector';
 
-function StoppKvpKvittering({ avhengigheter, begrunnelse, erUnderKvp, navn }) {
+function StoppKvpKvittering({
+    avhengigheter,
+    begrunnelse,
+    erUnderKvp,
+    navn,
+    history,
+}) {
     return (
         <Modal
             onRequestClose={() => history.push('/')}
@@ -73,6 +78,7 @@ StoppKvpKvittering.propTypes = {
     navn: PT.string.isRequired,
     erUnderKvp: PT.bool.isRequired,
     begrunnelse: PT.string.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({

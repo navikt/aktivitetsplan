@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import Bilde from '../../felles-komponenter/bilde/bilde';
-import history from '../../history';
 import {
     selectErBrukerIArbeidsliste,
     selectHarVeilederTilgang,
@@ -16,6 +16,7 @@ import HiddenIfHOC, {
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
 import TildelVeileder from '../../moduler/tildel-veileder/tildel-veileder';
+import * as AppPT from '../../proptypes';
 
 function NavigasjonslinjeMeny({
     brukerErMin,
@@ -23,6 +24,7 @@ function NavigasjonslinjeMeny({
     kanFjerne,
     kanRedigere,
     harVeilederTilgang,
+    history,
 }) {
     const Arbeidslisteikon = ({ fyldt }) =>
         <FormattedMessage id="arbeidsliste.flaggikon" values={{ fyldt }}>
@@ -110,6 +112,7 @@ NavigasjonslinjeMeny.propTypes = {
     kanLeggeTil: PT.bool.isRequired,
     kanFjerne: PT.bool.isRequired,
     harVeilederTilgang: PT.bool.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -131,4 +134,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(NavigasjonslinjeMeny);
+export default withRouter(connect(mapStateToProps)(NavigasjonslinjeMeny));

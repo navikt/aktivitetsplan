@@ -7,7 +7,6 @@ import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
 import VisAdvarsel from './vis-advarsel';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
-import history from '../../../history';
 import {
     selectAktivitetListeStatus,
     selectAktivitetMedId,
@@ -18,7 +17,12 @@ import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { STATUS_AVBRUTT } from '../../../constant';
 import { trengerBegrunnelse } from '../aktivitet-util';
 
-const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse }) => {
+const AvbrytAktivitet = ({
+    lagrer,
+    valgtAktivitet,
+    lagreBegrunnelse,
+    history,
+}) => {
     const begrunnelse = (
         <BegrunnelseAktivitet
             aktivitet={valgtAktivitet}
@@ -70,6 +74,7 @@ AvbrytAktivitet.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     lagrer: PT.bool.isRequired,
     lagreBegrunnelse: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

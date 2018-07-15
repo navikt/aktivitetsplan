@@ -2,8 +2,8 @@ import React from 'react';
 import PT from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import UnderelementerForAktivitet from './underelement-for-aktivitet/underelementer-for-aktivitet';
-import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
@@ -21,7 +21,12 @@ import OppdaterReferatContainer from './status-oppdatering/oppdater-referat-cont
 import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 import { trengerBegrunnelse } from '../aktivitet-util';
 
-function Aktivitetvisning({ aktivitet, tillatSletting, tillatEndring }) {
+function Aktivitetvisning({
+    aktivitet,
+    tillatSletting,
+    tillatEndring,
+    history,
+}) {
     const arenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
         GRUPPE_AKTIVITET_TYPE,
@@ -107,6 +112,7 @@ Aktivitetvisning.propTypes = {
     aktivitet: AppPT.aktivitet,
     tillatSletting: PT.bool.isRequired,
     tillatEndring: PT.bool.isRequired,
+    history: AppPT.history.isRequired,
 };
 
-export default lazyHOC(Aktivitetvisning);
+export default withRouter(lazyHOC(Aktivitetvisning));

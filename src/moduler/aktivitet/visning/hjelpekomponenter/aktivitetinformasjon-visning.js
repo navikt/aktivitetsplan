@@ -3,16 +3,19 @@ import PT from 'prop-types';
 import { Sidetittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
-import history from '../../../../history';
 import { Aktivitetsdetaljer } from './aktivitetsdetaljer';
-import { TILLAT_SLETTING, TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import AktivitetEtikettGruppe from '../../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
 
-function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring }) {
+function AktivitetinformasjonVisning({
+    valgtAktivitet,
+    tillatEndring,
+    history,
+}) {
     const { tittel, type, arenaAktivitet } = valgtAktivitet;
 
     const gaTilEndreAktivitet = () =>
@@ -57,6 +60,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring }) {
 AktivitetinformasjonVisning.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     tillatEndring: PT.bool.isRequired,
+    history: AppPT.history.isRequired,
 };
 
-export default AktivitetinformasjonVisning;
+export default withRouter(AktivitetinformasjonVisning);

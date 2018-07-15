@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { validForm } from 'react-redux-form-validation';
 import { formValueSelector, change } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import { OPPRETT_OPPGAVE_FORM } from './opprett-oppgave';
 import {
     begrensetBeskrivelseLengde,
@@ -19,7 +20,6 @@ import { pakrevd } from '../../../felles-komponenter/skjema/validering';
 import { getFodselsnummer } from '../../../bootstrap/fnr-util';
 import Select from '../../../felles-komponenter/skjema/input/select';
 import { opprettOppgaveForBruker } from './opprett-oppgave-reducer';
-import history from '../../../history';
 import {
     hentBehandlendeEnheter,
     resetEnheter,
@@ -31,6 +31,7 @@ import {
 } from './hent-veieldere-for-oppgave-reducer';
 import { OpprettOppgaveInnerForm } from './opprett-oppgave-inner-form';
 import { moment, toLocalDate } from '../../../utils';
+import * as AppPT from '../../../proptypes';
 
 const pakrevdFraDato = pakrevd(
     'opprett-oppgave-form.feilmelding.paakrevd-fradato'
@@ -93,6 +94,7 @@ OpprettOppgaveForm.propTypes = {
     hentEnheter: PT.func.isRequired,
     errorSummary: PT.node.isRequired,
     intl: intlShape.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 OpprettOppgaveForm.defaultProps = {
@@ -139,7 +141,7 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: props => {
         dispatch(
             opprettOppgaveForBruker({
@@ -155,11 +157,11 @@ const mapDispatchToProps = dispatch => ({
         )
             .then(() => {
                 dispatch(resetEnheter());
-                history.push('/innstillinger/oppgave/kvittering/');
+                ownProps.history.push('/innstillinger/oppgave/kvittering/');
             })
             .catch(() => {
                 dispatch(resetEnheter());
-                history.push('/innstillinger/oppgave/kvittering/');
+                ownProps.history.push('/innstillinger/oppgave/kvittering/');
             });
     },
     hentEnheter: tema =>
@@ -169,7 +171,7 @@ const mapDispatchToProps = dispatch => ({
                 hentVeiledereDersomSammeEnhet(dispatch, props)
             )
             .catch(() => {
-                history.push('innstillinger/feilkvittering');
+                ownProps.history.push('innstillinger/feilkvittering');
             }),
     // eslint-disable-next-line no-confusing-arrow
     hentVeiledere: enhetId =>
@@ -182,6 +184,8 @@ OpprettOppgaveReduxForm.defaultProps = {};
 
 OpprettOppgaveReduxForm.propTypes = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(OpprettOppgaveReduxForm)
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(
+        injectIntl(OpprettOppgaveReduxForm)
+    )
 );

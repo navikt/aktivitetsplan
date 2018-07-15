@@ -6,7 +6,7 @@ import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 
 function AktivitetsmalModal(Component) {
-    return function inner() {
+    return function inner(props) {
         return (
             <div>
                 <Modal
@@ -17,7 +17,7 @@ function AktivitetsmalModal(Component) {
                         <Innholdstittel className="aktivitetmal__header">
                             <FormattedMessage id="aktivitetsmal.mitt-mal.header" />
                         </Innholdstittel>
-                        <Component />
+                        <Component {...props} />
                     </ModalContainer>
                 </Modal>
             </div>

@@ -7,28 +7,14 @@ import IntlProvider from './intl-provider';
 import InitiellDataLast from './initiell-data-last';
 import componentize from './componentize';
 import { RESET_STORE } from './reducer';
-
 import createStore from './store';
-import history from './history';
 
 const store = createStore(history);
 
 class Provider extends Component {
     constructor(props) {
         super(props);
-        const dispatch = store.dispatch;
-        this.listener = () => {
-            dispatch(RESET_STORE);
-            history.replace('/');
-        };
-    }
-
-    componentDidMount() {
-        document.addEventListener('flate-person-endret', this.listener);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('flate-person-endret', this.listener);
+        store.dispatch(RESET_STORE);
     }
     render() {
         return (

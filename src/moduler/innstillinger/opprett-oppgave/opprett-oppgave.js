@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { formValueSelector } from 'redux-form';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
-import history from '../../../history';
 import {
     RemoteSubmitKnapp,
     RemoteResetKnapp,
@@ -19,7 +18,12 @@ import { resetEnheter } from './hent-behandlende-enheter-reducer';
 
 export const OPPRETT_OPPGAVE_FORM = 'opprett-oppgave-form';
 
-function OpprettOppgave({ innstillingerStatus, slettEnheter, valgtTema }) {
+function OpprettOppgave({
+    innstillingerStatus,
+    slettEnheter,
+    valgtTema,
+    history,
+}) {
     const onRequestClose = () => {
         slettEnheter();
         history.push('/');
@@ -64,6 +68,7 @@ function OpprettOppgave({ innstillingerStatus, slettEnheter, valgtTema }) {
 OpprettOppgave.propTypes = {
     innstillingerStatus: AppPT.status.isRequired,
     slettEnheter: PT.func.isRequired,
+    history: AppPT.history.isRequired,
     valgtTema: PT.string,
 };
 

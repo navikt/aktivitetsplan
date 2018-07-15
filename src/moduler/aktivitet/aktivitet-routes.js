@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import AktivitetFormContainer from './aktivitet-forms/aktivitet-form-container';
 import AktivitetvisningContainer from './visning/aktivitetvisning-container';
 import BekreftSlettVisningContainer from './visning/bekreft-slett-visning/bekreft-slett-visning-container';
@@ -30,25 +30,35 @@ function AktivitetRoutes({ match }) {
                 component={props =>
                     <BekreftSlettVisningContainer
                         aktivitetId={props.match.params.id}
+                        {...props}
                     />}
             />
             <Route
                 exact
                 path={`${basePath}/endre/:id`}
                 component={props =>
-                    <EndreAktivitet aktivitetId={props.match.params.id} />}
+                    <EndreAktivitet
+                        aktivitetId={props.match.params.id}
+                        {...props}
+                    />}
             />
             <Route
                 exact
                 path={`${basePath}/avbryt/:id`}
                 component={props =>
-                    <AvbrytAktivitet aktivitetId={props.match.params.id} />}
+                    <AvbrytAktivitet
+                        aktivitetId={props.match.params.id}
+                        {...props}
+                    />}
             />
             <Route
                 exact
                 path={`${basePath}/fullfor/:id`}
                 component={props =>
-                    <FullforAktivitet aktivitetId={props.match.params.id} />}
+                    <FullforAktivitet
+                        aktivitetId={props.match.params.id}
+                        {...props}
+                    />}
             />
         </Switch>
     );
@@ -58,4 +68,4 @@ AktivitetRoutes.propTypes = {
     match: PT.object.isRequired,
 };
 
-export default withRouter(AktivitetRoutes);
+export default AktivitetRoutes;

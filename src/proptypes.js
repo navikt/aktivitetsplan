@@ -240,3 +240,9 @@ export const malverktype = PT.shape({
     fraDato: PT.string,
     tilDato: PT.string,
 });
+
+export const history = PT.shape({
+    goBack: PT.func.isRequired,
+    push: PT.func.isRequired,
+    replace: PT.func.isRequired,
+});

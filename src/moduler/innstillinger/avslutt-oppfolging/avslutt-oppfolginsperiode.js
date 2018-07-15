@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import { moment } from '../../../utils';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
-import history from '../../../history';
 import {
     RemoteSubmitKnapp,
     RemoteResetKnapp,
@@ -14,7 +13,6 @@ import BegrunnelseForm from '../begrunnelse-form';
 import { lagreBegrunnelse } from '../innstillinger-reducer';
 import InnstillingerModal from '../innstillinger-modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import * as AppPt from '../../../proptypes';
 import hiddenIfHOC from '../../../felles-komponenter/hidden-if/hidden-if';
 import AlertstripeListe from '../../../felles-komponenter/alertstripe-liste';
 import {
@@ -26,6 +24,7 @@ import {
     selectInnstillingerStatus,
     selectAvslutningStatus,
 } from '../innstillinger-selector';
+import * as AppPT from '../../../proptypes';
 
 export const AVSLUTT_FORM_NAME = 'avslutt-oppfolging-form';
 const HiddenIfNormaltekst = hiddenIfHOC(Normaltekst);
@@ -46,6 +45,7 @@ function AvsluttOppfolgingperiode({
     datoErInnenfor28dager,
     avhengigheter,
     harUbehandledeDialoger,
+    history,
 }) {
     return (
         <InnstillingerModal>
@@ -105,13 +105,14 @@ AvsluttOppfolgingperiode.propTypes = {
     harAktiveYtelser: PT.bool.isRequired,
     datoErInnenfor28dager: PT.bool.isRequired,
     harUbehandledeDialoger: PT.bool.isRequired,
-    avhengigheter: PT.arrayOf(AppPt.status).isRequired,
+    avhengigheter: PT.arrayOf(AppPT.status).isRequired,
+    history: AppPT.history.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     onSubmit: form => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
-        return history.push('/innstillinger/avslutt/bekreft');
+        return props.history.push('/innstillinger/avslutt/bekreft');
     },
 });
 

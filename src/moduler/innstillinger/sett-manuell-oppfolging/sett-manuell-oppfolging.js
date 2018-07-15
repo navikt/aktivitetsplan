@@ -8,8 +8,6 @@ import {
     RemoteSubmitKnapp,
     RemoteResetKnapp,
 } from '../../../felles-komponenter/remote-knapp/remote-knapp';
-import * as AppPt from '../../../proptypes';
-import history from '../../../history';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import BegrunnelseForm from '../begrunnelse-form';
 import {
@@ -21,6 +19,7 @@ import { STATUS } from '../../../ducks/utils';
 import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
+import * as AppPT from '../../../proptypes';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 
@@ -28,6 +27,7 @@ function SettManuellOppfolging({
     veilederId,
     innstillingerStatus,
     handleSubmit,
+    history,
 }) {
     const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
@@ -76,7 +76,8 @@ SettManuellOppfolging.defaultProps = {
 SettManuellOppfolging.propTypes = {
     veilederId: PT.string,
     handleSubmit: PT.func.isRequired,
-    innstillingerStatus: AppPt.status.isRequired,
+    innstillingerStatus: AppPT.status.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -84,13 +85,13 @@ const mapStateToProps = state => ({
     innstillingerStatus: selectInnstillingerStatus(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     handleSubmit: (form, veilederId) => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(settManuellOppfolging(form.begrunnelse, veilederId))
-            .then(() => history.push('/innstillinger/manuell/kvittering'))
+            .then(() => props.history.push('/innstillinger/manuell/kvittering'))
             .then(() => dispatch(hentOppfolging()))
-            .catch(() => history.push('/innstillinger/feilkvittering'));
+            .catch(() => props.history.push('/innstillinger/feilkvittering'));
     },
 });
 

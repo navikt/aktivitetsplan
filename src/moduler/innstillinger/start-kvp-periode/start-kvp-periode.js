@@ -7,7 +7,6 @@ import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import { startKvpOppfolging, lagreBegrunnelse } from '../innstillinger-reducer';
-import history from '../../../history';
 import * as AppPT from '../../../proptypes';
 import { STATUS } from '../../../ducks/utils';
 import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
@@ -20,7 +19,7 @@ import {
 
 const START_KVP_FORM_NAVN = 'start-kvp-form';
 
-function StartKvpPeriode({ handleSubmit, innstillingerStatus }) {
+function StartKvpPeriode({ handleSubmit, innstillingerStatus, history }) {
     const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
         innstillingerStatus === STATUS.RELOADING;
@@ -67,19 +66,22 @@ function StartKvpPeriode({ handleSubmit, innstillingerStatus }) {
 StartKvpPeriode.propTypes = {
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => ({
     innstillingerStatus: selectInnstillingerStatus(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
     handleSubmit: form => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(startKvpOppfolging(form.begrunnelse))
             .then(() => dispatch(hentOppfolging()))
-            .then(() => history.push('/innstillinger/startKvp/kvittering'))
-            .catch(() => history.push('/innstillinger/feilkvittering'));
+            .then(() =>
+                props.history.push('/innstillinger/startKvp/kvittering')
+            )
+            .catch(() => props.history.push('/innstillinger/feilkvittering'));
     },
 });
 

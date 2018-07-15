@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import history from '../../../history';
+import { withRouter } from 'react-router-dom';
 import StartProsess from '../prosesser/start-prosess';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../proptypes';
 
-function OpprettOppgaveProsess({ motpart }) {
+function OpprettOppgaveProsess({ motpart, history }) {
     return (
         <StartProsess
             className="innstillinger__prosess"
@@ -32,6 +32,7 @@ function OpprettOppgaveProsess({ motpart }) {
 
 OpprettOppgaveProsess.propTypes = {
     motpart: AppPT.motpart.isRequired,
+    history: AppPT.history.isRequired,
 };
 
-export default hiddenIfHoc(OpprettOppgaveProsess);
+export default withRouter(hiddenIfHoc(OpprettOppgaveProsess));

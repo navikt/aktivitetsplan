@@ -2,8 +2,8 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
+import { withRouter } from 'react-router-dom';
 import Dialog from './dialog';
-import history from '../../../history';
 import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
 import NyHenvendelse from './ny-henvendelse';
 import {
@@ -14,19 +14,13 @@ import * as AppPT from '../../../proptypes';
 import { aktivitetRoute } from '../../../routing';
 import { hoyreKolonneSectionId } from '../../../ducks/utils';
 
-function dialogOpprettet(dialog) {
-    history.push(`/dialog/${dialog.id}`);
-}
-function apneAktivitet(aktivitetId) {
-    history.push(aktivitetRoute(aktivitetId));
-}
-
 function DialogHenvendelse({
     valgtDialog,
     harValgtDialog,
     harNyDialog,
     harNyDialogEllerValgtDialog,
     valgtAktivitetId,
+    history,
 }) {
     return (
         <HiddenIfSection
@@ -40,13 +34,14 @@ function DialogHenvendelse({
                 </Undertittel>
                 <NyHenvendelse
                     formNavn="ny-dialog"
-                    onComplete={dialogOpprettet}
+                    onComplete={dialog => history.push(`/dialog/${dialog.id}`)}
                 />
             </HiddenIfDiv>
             <HiddenIfDiv hidden={!harValgtDialog}>
                 <Knappelenke
                     visible={!!valgtAktivitetId}
-                    onClick={() => apneAktivitet(valgtAktivitetId)}
+                    onClick={() =>
+                        history.push(aktivitetRoute(valgtAktivitetId))}
                     className="endre-dialog__til-aktiviteten"
                 >
                     <FormattedMessage id="dialog.modal.til-aktiviteten" />
@@ -63,6 +58,7 @@ DialogHenvendelse.propTypes = {
     harNyDialog: PT.bool.isRequired,
     harValgtDialog: PT.bool.isRequired,
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 DialogHenvendelse.defaultProps = {
@@ -70,4 +66,4 @@ DialogHenvendelse.defaultProps = {
     valgtAktivitetId: undefined,
 };
 
-export default DialogHenvendelse;
+export default withRouter(DialogHenvendelse);
