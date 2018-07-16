@@ -83,9 +83,11 @@ class BehandlingAktivitetForm extends Component {
         } = this.props;
         const erAktivitetAvtalt = avtalt === true;
         return (
-            <form onSubmit={handleSubmit}
-                  noValidate="noValidate"
-                  autoComplete="off">
+            <form
+                onSubmit={handleSubmit}
+                noValidate="noValidate"
+                autoComplete="off"
+            >
                 <div className="skjema-innlogget aktivitetskjema">
                     {errorSummary}
 
