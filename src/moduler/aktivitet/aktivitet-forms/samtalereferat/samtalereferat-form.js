@@ -54,7 +54,7 @@ function MoteAktivitetForm({
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
             <div className="skjema-innlogget aktivitetskjema">
                 {errorSummary}
 

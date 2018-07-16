@@ -92,7 +92,7 @@ const varigheter = Array.from(new Array(24)).map((noValue, index) => {
 
 function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit }) {
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
             <div className="skjema-innlogget aktivitetskjema">
                 {errorSummary}
 

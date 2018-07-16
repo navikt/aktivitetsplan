@@ -84,7 +84,7 @@ class IJobbAktivitetForm extends Component {
         } = props;
         const erAktivitetAvtalt = avtalt === true;
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
                 <div className="skjema-innlogget aktivitetskjema">
                     {errorSummary}
 

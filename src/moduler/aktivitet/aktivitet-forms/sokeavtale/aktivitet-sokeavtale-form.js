@@ -87,7 +87,9 @@ class SokeAvtaleAktivitetForm extends Component {
         const erAktivitetAvtalt = avtalt === true;
 
         return (
-            <form onSubmit={handleSubmit} noValidate="noValidate">
+            <form onSubmit={handleSubmit}
+                  noValidate="noValidate"
+                  autoComplete="off">
                 <div className="skjema-innlogget aktivitetskjema">
                     {errorSummary}
                     <AktivitetFormHeader
