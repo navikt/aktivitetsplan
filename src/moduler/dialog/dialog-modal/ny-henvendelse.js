@@ -44,7 +44,11 @@ function NyHenvendelseForm({
     harSkriveTilgang,
 }) {
     return (
-        <form onSubmit={handleSubmit} className="ny-henvendelse-form">
+        <form
+            onSubmit={handleSubmit}
+            className="ny-henvendelse-form"
+            autoComplete="off"
+        >
             {errorSummary}
             <VisibleIfDiv
                 visible={erNyDialog && !erBruker}
