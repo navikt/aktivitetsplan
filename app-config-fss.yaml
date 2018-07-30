@@ -23,6 +23,9 @@ fasitResources:
   - alias: appres.cms
     resourceType: baseurl
 
+  - alias: unleash-api
+    resourceType: restservice
+
   - alias: aktivitetsplan.onboarding.video
     resourceType: baseurl
     propertyMap:
