@@ -1,5 +1,9 @@
 import me from './me';
-import oppfolging, { startEskalering, stoppEskalering } from './oppfolging';
+import oppfolging, {
+    startEskalering,
+    stoppEskalering,
+    avslutningStatus,
+} from './oppfolging';
 import dialog, {
     setVenterPaSvar,
     setFerdigBehandlet,
@@ -54,7 +58,9 @@ mock.get(
     instillingsHistorikk
 );
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', veilederTilgang);
-
+mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', ({ body }) =>
+    avslutningStatus(body)
+);
 mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }) =>
     startEskalering(body)
 );
