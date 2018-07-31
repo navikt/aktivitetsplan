@@ -52,10 +52,12 @@
   "lint-staged": {
     "*.js": [
       "prettier --write --single-quote --trailing-comma es5 --tab-width 4",
-      "eslint-staged"
+      "eslint-staged",
+      "git add"
     ],
     "*.less": [
-      "lesshint-staged"
+      "lesshint-staged",
+      "git add"
     ]
   },
   "dependencies": {

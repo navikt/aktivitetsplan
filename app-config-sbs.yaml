@@ -44,3 +44,7 @@ fasitResources:
     resourceType: restservice
     propertyMap:
       url: PUBLIC_FEATURE_ENDPOINT_URL
+team: oppfolging
+resources:
+    limits:
+        cpu: 3
