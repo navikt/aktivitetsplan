@@ -24,10 +24,10 @@ const oppfolging = {
     harSkriveTilgang: true,
 };
 
-export default function(queryParams) {
+export default function(queryParams, changeFn = ob => ob) {
     const { fnr } = queryParams;
     oppfolging.fnr = fnr;
-    return oppfolging;
+    return changeFn(oppfolging);
 }
 
 export function startEskalering(update) {

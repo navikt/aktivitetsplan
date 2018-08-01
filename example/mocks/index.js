@@ -71,6 +71,12 @@ mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }) =>
 mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () =>
     ResponseUtils.statusCode(200)
 );
+mock.post('/veilarboppfolging/api/oppfolging/settManuell', ({ queryParams }) =>
+    oppfolging(queryParams, res => {
+        res.manuell = true;
+        return res;
+    })
+);
 
 //veilarboppfolgingproxy
 mock.get('/veilarboppfolgingproxy/api/oppfolging/me', me);
