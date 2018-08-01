@@ -3,7 +3,7 @@ import { EKSEMPEL_VEILEDER } from '../config';
 const oppfolging = {
     fnr: null,
     veilederId: null,
-    reservasjonKRR: false,
+    reservasjonKRR: true,
     manuell: false,
     underOppfolging: true,
     underKvp: false,
@@ -24,10 +24,10 @@ const oppfolging = {
     harSkriveTilgang: true,
 };
 
-export default function(queryParams) {
+export default function(queryParams, changeFn = ob => ob) {
     const { fnr } = queryParams;
     oppfolging.fnr = fnr;
-    return oppfolging;
+    return changeFn(oppfolging);
 }
 
 export function startEskalering(update) {
@@ -45,4 +45,16 @@ export function startEskalering(update) {
 export function stoppEskalering(update) {
     oppfolging.gjeldendeEskaleringsvarsel = null;
     return {};
+}
+
+export function avslutningStatus(update) {
+    oppfolging.avslutningStatus = {
+        kanAvslutte: false,
+        underOppfolging: false,
+        harYtelser: false,
+        harTiltak: false,
+        underKvp: false,
+        inaktiveringsDato: '2018-06-05T00:00:00+02:00',
+    };
+    return oppfolging;
 }
