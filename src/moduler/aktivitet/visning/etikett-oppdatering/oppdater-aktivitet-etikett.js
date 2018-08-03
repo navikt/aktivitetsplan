@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import Undertittel from 'nav-frontend-typografi/src/undertittel';
+import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import * as statuser from '../../../../constant';
 import * as AppPT from '../../../../proptypes';

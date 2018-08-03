@@ -4,8 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import classNames from 'classnames';
-import Knapp from 'nav-frontend-knapper/src/knapp';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import * as AppPT from '../../../../proptypes';
 import hiddenIf, {
     div as HiddenIfDiv,

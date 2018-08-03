@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import Systemtittel from 'nav-frontend-typografi/src/systemtittel';
+import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import {
     RemoteSubmitKnapp,

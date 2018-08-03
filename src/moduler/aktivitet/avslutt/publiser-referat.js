@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import AlertStripeInfoSolid from 'nav-frontend-alertstriper/src/info-solid-alertstripe';
+import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
 import OppdaterReferatContainer from '../visning/status-oppdatering/oppdater-referat-container';

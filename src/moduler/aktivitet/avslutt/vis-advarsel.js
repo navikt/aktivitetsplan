@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
-import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
-import Hovedknapp from 'nav-frontend-knapper';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { reduxForm } from 'redux-form';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';

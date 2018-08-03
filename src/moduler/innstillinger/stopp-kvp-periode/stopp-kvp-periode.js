@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import Systemtittel from 'nav-frontend-typografi/src/systemtittel';
+import { Systemtittel } from 'nav-frontend-typografi';
 import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
