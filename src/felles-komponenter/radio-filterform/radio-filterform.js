@@ -1,8 +1,7 @@
 import React, { PropTypes as PT, Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Radio } from 'nav-frontend-skjema';
-import { Knapp } from 'nav-frontend-knapper';
-import Hovedknapp from 'nav-frontend-knapper/src/hovedknapp';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { HiddenIf } from '../../utils';
 
 class RadioFilterForm extends Component {
@@ -28,49 +27,59 @@ class RadioFilterForm extends Component {
             ...rest
         } = this.props;
         const { selected } = this.state;
+
+        const submitForm = event =>
+            onSubmit({ event, value: selected, ...rest });
+
         return (
             <div className="radio-filterform">
-                <div className="radio-filterform__valg">
-                    {data.map(o =>
-                        <Radio
-                            name={radioName}
-                            label={createLabel(o)}
-                            value={createValue(o)}
-                            id={createValue(o)}
-                            key={createValue(o)}
-                            onChange={e => this.changeSelected(e.target.value)}
-                        />
-                    )}
-                </div>
-                <div className="knapperad blokk-xxs">
-                    <HiddenIf hidden={visLukkKnapp && !selected}>
-                        <Hovedknapp
-                            mini
-                            className="radio-velg--knapp"
-                            onClick={event =>
-                                onSubmit({ event, value: selected, ...rest })}
-                            disabled={!selected}
-                        >
-                            <FormattedMessage id="components.filterform.button.velg" />
-                        </Hovedknapp>
-                    </HiddenIf>
-                    <HiddenIf hidden={!visLukkKnapp || !!selected}>
-                        <Knapp mini onClick={this.props.closeDropdown}>
-                            <FormattedMessage id="components.filterform.button.lukk" />
-                        </Knapp>
-                    </HiddenIf>
-                    <HiddenIf hidden={fjernNullstill}>
-                        <Knapp
-                            mini
-                            onClick={event => {
-                                this.changeSelected(undefined);
-                                onSubmit({ event, value: null, ...rest });
-                            }}
-                        >
-                            <FormattedMessage id="components.filterform.button.nullstill" />
-                        </Knapp>
-                    </HiddenIf>
-                </div>
+                <form onSubmit={submitForm}>
+                    <div className="radio-filterform__valg">
+                        {data.map(o =>
+                            <Radio
+                                name={radioName}
+                                label={createLabel(o)}
+                                value={createValue(o)}
+                                id={createValue(o)}
+                                key={createValue(o)}
+                                onChange={e =>
+                                    this.changeSelected(e.target.value)}
+                            />
+                        )}
+                    </div>
+                    <div className="knapperad blokk-xxs">
+                        <HiddenIf hidden={visLukkKnapp && !selected}>
+                            <Hovedknapp
+                                mini
+                                htmlType="submit"
+                                disabled={!selected}
+                            >
+                                <FormattedMessage id="components.filterform.button.velg" />
+                            </Hovedknapp>
+                        </HiddenIf>
+                        <HiddenIf hidden={!visLukkKnapp || !!selected}>
+                            <Knapp
+                                mini
+                                htmlType="button"
+                                onClick={this.props.closeDropdown}
+                            >
+                                <FormattedMessage id="components.filterform.button.lukk" />
+                            </Knapp>
+                        </HiddenIf>
+                        <HiddenIf hidden={fjernNullstill}>
+                            <Knapp
+                                mini
+                                htmlType="button"
+                                onClick={event => {
+                                    this.changeSelected(undefined);
+                                    onSubmit({ event, value: null, ...rest });
+                                }}
+                            >
+                                <FormattedMessage id="components.filterform.button.nullstill" />
+                            </Knapp>
+                        </HiddenIf>
+                    </div>
+                </form>
             </div>
         );
     }
