@@ -1,6 +1,6 @@
 # Aktivitetsplan GUI Tester
   
-### Lokal kjøring:
+### Lokal kjøring
 #### Oppsett
     Chrome browser må være installert på maskinen
     Aktivitetsplan vil kjøres opp med mock så man må stoppe kjørende instanser først.
@@ -24,3 +24,4 @@
     BROWSERSTACK_USER=user BROWSERSTACK_KEY=key npm run test:browserstack
 
     Skjermbilder fra kjøringen på de forskjellige browserne havner i mappen reports
+    
