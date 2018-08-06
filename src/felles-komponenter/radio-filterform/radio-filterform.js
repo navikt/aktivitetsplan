@@ -1,7 +1,7 @@
 import React, { PropTypes as PT, Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Radio } from 'nav-frontend-skjema';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { HiddenIf } from '../../utils';
 
 class RadioFilterForm extends Component {

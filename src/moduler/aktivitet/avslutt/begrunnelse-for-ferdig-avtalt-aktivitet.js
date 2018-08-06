@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import Innholdstittel from 'nav-frontend-typografi/src/innholdstittel';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import { validForm } from 'react-redux-form-validation';
 import Hovedknapp from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
