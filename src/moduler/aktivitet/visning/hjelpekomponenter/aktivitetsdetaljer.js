@@ -29,7 +29,6 @@ import {
     beregnKlokkeslettVarighet,
     formatterKlokkeslett,
     formatterVarighet,
-    erGruppeDatoeneLike,
 } from '../../aktivitet-util';
 import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 
@@ -267,7 +266,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
     ];
 
     const gruppeFelter = () => {
-        const erGruppeDatoLike = erGruppeDatoeneLike(fraDato, tilDato);
+        const erGruppeDatoLike = fraDato === tilDato;
         const moteplan = moeteplanListe.map(mote =>
             <Normaltekst key={mote.startDato}>
                 {formaterDatoKortManedTid(mote.startDato)}

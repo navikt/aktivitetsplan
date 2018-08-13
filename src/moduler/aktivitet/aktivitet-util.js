@@ -125,7 +125,3 @@ export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
         erMoteOgAvbrutt(status, aktivitetType)
     );
 }
-
-export function erGruppeDatoeneLike(fradato, tildato) {
-    return moment(fradato).isSame(tildato);
-}
