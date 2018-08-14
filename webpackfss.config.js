@@ -67,7 +67,6 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './build/'),
         filename: 'aktivitetsplan.fss.min.js',
-        library: 'AktivitetsplanRoot',
     },
     plugins: DEBUG ? [] : PLUGINS,
 };
