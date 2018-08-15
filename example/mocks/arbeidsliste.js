@@ -10,7 +10,7 @@ export const arbeidsliste = {
     harVeilederTilgang: true,
 };
 
-export function FjernArbeidsliste() {
+export function fjernArbeidsliste() {
     arbeidsliste.sistEndretAv = null;
     arbeidsliste.endringstidspunkt = null;
     arbeidsliste.kommentar = null;
@@ -20,7 +20,7 @@ export function FjernArbeidsliste() {
     return arbeidsliste;
 }
 
-export function PutArbeidsliste(body) {
+export function putArbeidsliste(body) {
     arbeidsliste.sistEndretAv = { veilederId: 'Z123456' };
     arbeidsliste.endringstidspunkt = new Date();
 

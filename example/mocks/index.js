@@ -11,8 +11,8 @@ import dialog, {
 } from './dialog';
 import {
     arbeidsliste,
-    FjernArbeidsliste,
-    PutArbeidsliste,
+    fjernArbeidsliste,
+    putArbeidsliste,
 } from './arbeidsliste';
 import aktiviteter, {
     getAktivitet,
@@ -100,13 +100,13 @@ mock.get('/veilarboppgave/api/oppgavehistorikk', []);
 //veilarbportefolje-api
 mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', arbeidsliste);
 mock.post('/veilarbportefolje/api/arbeidsliste/:fnr', ({ body }) =>
-    PutArbeidsliste(body)
+    putArbeidsliste(body)
 );
 mock.put('/veilarbportefolje/api/arbeidsliste/:fnr', ({ body }) =>
-    PutArbeidsliste(body)
+    putArbeidsliste(body)
 );
 mock.delete('/veilarbportefolje/api/arbeidsliste/:fnr', () =>
-    FjernArbeidsliste()
+    fjernArbeidsliste()
 );
 
 //veilarbdialog-api
