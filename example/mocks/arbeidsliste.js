@@ -1,4 +1,4 @@
-export default {
+export const arbeidsliste = {
     sistEndretAv: {
         veilederId: 'Z123456',
     },
@@ -9,3 +9,23 @@ export default {
     arbeidslisteAktiv: null,
     harVeilederTilgang: true,
 };
+
+export function FjernArbeidsliste() {
+    arbeidsliste.sistEndretAv = null;
+    arbeidsliste.endringstidspunkt = null;
+    arbeidsliste.kommentar = null;
+    arbeidsliste.frist = null;
+    arbeidsliste.arbeidslisteAktiv = null;
+
+    return arbeidsliste;
+}
+
+export function PutArbeidsliste(body) {
+    arbeidsliste.sistEndretAv = { veilederId: 'Z123456' };
+    arbeidsliste.endringstidspunkt = new Date();
+
+    arbeidsliste.kommentar = body.kommentar;
+    arbeidsliste.frist = body.frist;
+
+    return arbeidsliste;
+}
