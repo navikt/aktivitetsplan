@@ -44,6 +44,10 @@ fasitResources:
     resourceType: restservice
     propertyMap:
       url: PUBLIC_FEATURE_ENDPOINT_URL
+
+  - alias: appdynamics
+    resourceType: applicationproperties
+
 team: oppfolging
 resources:
     limits:
