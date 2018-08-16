@@ -23,7 +23,7 @@ const NavigasjonsElement = HiddenIfHOC(({ sti, tekstId }) =>
     </Lenke>
 );
 
-function ArbeidslisteMeny({
+function NavigasjonslinjeMeny({
     brukerErMin,
     kanLeggeTil,
     kanFjerne,
@@ -102,7 +102,7 @@ function ArbeidslisteMeny({
     );
 }
 
-ArbeidslisteMeny.propTypes = {
+NavigasjonslinjeMeny.propTypes = {
     brukerErMin: PT.bool.isRequired,
     kanRedigere: PT.bool.isRequired,
     kanLeggeTil: PT.bool.isRequired,
@@ -129,4 +129,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(ArbeidslisteMeny);
+export default connect(mapStateToProps)(NavigasjonslinjeMeny);

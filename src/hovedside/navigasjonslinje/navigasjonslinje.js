@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-import ArbeidslisteMeny from './arbeidslistemeny';
+import NavigasjonslinjeMeny from './navigasjonslinjemeny';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import ConfigToggle, {
     harConfigToggle,
@@ -141,7 +141,7 @@ class Navigasjonslinje extends Component {
                             className="navigasjonslinje__spinner"
                             alleOK
                         >
-                            <ArbeidslisteMeny />
+                            <NavigasjonslinjeMeny />
                         </Innholdslaster>
                     </ConfigToggle>
 
