@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 
 export default class NAVSPA {
     static eksporter(name, component) {
+        console.log(component);
+        console.log(name);
+        console.log(NAVSPA);
+        console.log(NAVSPA.scope);
         NAVSPA.scope[name] = (element, props) => {
             ReactDOM.render(React.createElement(component, props), element);
         };
@@ -30,8 +34,5 @@ export default class NAVSPA {
         NAVSPA.scope[name](element, props);
     }
 
-    constructor() {
-        window.NAVSPA = window.NAVSPA || {};
-        this.scope = window.NAVSPA;
-    }
+    static scope = (window.NAVSPA = window.NAVSPA || {});
 }
