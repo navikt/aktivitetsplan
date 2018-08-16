@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { withRouter } from 'react-router-dom';
+
 import Bilde from '../../felles-komponenter/bilde/bilde';
 import {
     selectErBrukerIArbeidsliste,
@@ -11,20 +11,24 @@ import {
 } from '../../moduler/arbeidsliste/arbeidsliste-selector';
 import ArbeidslisteSVG from './arbeidsliste.svg';
 import ArbeidslisteActiveSVG from './arbeidsliste-active.svg';
-import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import HiddenIfHOC, {
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
+import Lenke from '../../felles-komponenter/utils/lenke';
 import TildelVeileder from '../../moduler/tildel-veileder/tildel-veileder';
-import * as AppPT from '../../proptypes';
 
-function NavigasjonslinjeMeny({
+const NavigasjonsElement = HiddenIfHOC(({ sti, tekstId }) =>
+    <Lenke href={sti} className="knappelenke">
+        <FormattedMessage id={tekstId} />
+    </Lenke>
+);
+
+function ArbeidslisteMeny({
     brukerErMin,
     kanLeggeTil,
     kanFjerne,
     kanRedigere,
     harVeilederTilgang,
-    history,
 }) {
     const Arbeidslisteikon = ({ fyldt }) =>
         <FormattedMessage id="arbeidsliste.flaggikon" values={{ fyldt }}>
@@ -47,35 +51,27 @@ function NavigasjonslinjeMeny({
     const LeggTilLenke = HiddenIfHOC(() =>
         <span>
             <Arbeidslisteikon fyldt={false} />
-            <Knappelenke
-                disabled={!brukerErMin}
-                onClick={() => history.push('arbeidsliste/leggtil')}
-            >
-                <FormattedMessage id="navigasjon.legg.i.arbeidsliste" />
-            </Knappelenke>
+            <NavigasjonsElement
+                sti="/arbeidsliste/leggtil"
+                tekstId="navigasjon.legg.i.arbeidsliste"
+            />
         </span>
     );
 
     const FjernLenke = HiddenIfHOC(() =>
-        <span>
-            <Knappelenke
-                disabled={!brukerErMin}
-                onClick={() => history.push('arbeidsliste/fjern')}
-            >
-                <FormattedMessage id="navigasjon.fjern.arbeidsliste" />
-            </Knappelenke>
-        </span>
+        <NavigasjonsElement
+            disabled={!brukerErMin}
+            sti="/arbeidsliste/fjern"
+            tekstId="navigasjon.fjern.arbeidsliste"
+        />
     );
 
     const RedigerLenke = HiddenIfHOC(() =>
-        <span>
-            <Knappelenke
-                className="navigasjonslinje-meny__rediger-lenke"
-                onClick={() => history.push('arbeidsliste/rediger')}
-            >
-                <FormattedMessage id="navigasjon.vis.kommentarer" />
-            </Knappelenke>
-        </span>
+        <NavigasjonsElement
+            sti="/arbeidsliste/rediger"
+            tekstId="navigasjon.vis.kommentarer"
+            className="navigasjonslinje-meny__rediger-lenke"
+        />
     );
 
     return (
@@ -106,13 +102,12 @@ function NavigasjonslinjeMeny({
     );
 }
 
-NavigasjonslinjeMeny.propTypes = {
+ArbeidslisteMeny.propTypes = {
     brukerErMin: PT.bool.isRequired,
     kanRedigere: PT.bool.isRequired,
     kanLeggeTil: PT.bool.isRequired,
     kanFjerne: PT.bool.isRequired,
     harVeilederTilgang: PT.bool.isRequired,
-    history: AppPT.history.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -134,4 +129,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default withRouter(connect(mapStateToProps)(NavigasjonslinjeMeny));
+export default connect(mapStateToProps)(ArbeidslisteMeny);

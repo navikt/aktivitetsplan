@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-import NavigasjonslinjeMeny from './navigasjonslinje-meny';
+import ArbeidslisteMeny from './arbeidslistemeny';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import ConfigToggle, {
     harConfigToggle,
@@ -38,30 +38,32 @@ import { harFeature } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 import { selectTildelVeilederStatus } from '../../moduler/tildel-veileder/tildel-veileder-selector';
 
-const NavigasjonsElement = hiddenIf(({ sti, tekstId, disabled, children }) => {
-    const elementKlasser = classNames({
-        navigasjonslinje__element: !disabled,
-        'navigasjonslinje__lenke--disabled': disabled,
-    });
-    const element = (
-        <Element className={elementKlasser}>
-            <FormattedMessage id={tekstId} />
-            <span className="navigasjonslinje__element-content">
-                {children}
-            </span>
-        </Element>
-    );
+export const NavigasjonsElement = hiddenIf(
+    ({ sti, tekstId, disabled, children }) => {
+        const elementKlasser = classNames({
+            navigasjonslinje__element: !disabled,
+            'navigasjonslinje__lenke--disabled': disabled,
+        });
+        const element = (
+            <Element className={elementKlasser}>
+                <FormattedMessage id={tekstId} />
+                <span className="navigasjonslinje__element-content">
+                    {children}
+                </span>
+            </Element>
+        );
 
-    if (disabled) {
-        return element;
+        if (disabled) {
+            return element;
+        }
+
+        return (
+            <Lenke href={sti} className="navigasjonslinje__lenke">
+                {element}
+            </Lenke>
+        );
     }
-
-    return (
-        <Lenke href={sti} className="navigasjonslinje__lenke">
-            {element}
-        </Lenke>
-    );
-});
+);
 
 NavigasjonsElement.defaultProps = {
     children: null,
@@ -139,7 +141,7 @@ class Navigasjonslinje extends Component {
                             className="navigasjonslinje__spinner"
                             alleOK
                         >
-                            <NavigasjonslinjeMeny />
+                            <ArbeidslisteMeny />
                         </Innholdslaster>
                     </ConfigToggle>
 
