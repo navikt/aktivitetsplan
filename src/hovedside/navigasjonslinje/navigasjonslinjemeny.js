@@ -24,7 +24,6 @@ const NavigasjonsElement = HiddenIfHOC(({ sti, tekstId }) =>
 );
 
 function NavigasjonslinjeMeny({
-    brukerErMin,
     kanLeggeTil,
     kanFjerne,
     kanRedigere,
@@ -60,7 +59,6 @@ function NavigasjonslinjeMeny({
 
     const FjernLenke = HiddenIfHOC(() =>
         <NavigasjonsElement
-            disabled={!brukerErMin}
             sti="/arbeidsliste/fjern"
             tekstId="navigasjon.fjern.arbeidsliste"
         />
@@ -121,7 +119,6 @@ const mapStateToProps = state => {
         brukerErIArbeidsliste && harVeilederTilgang && brukerErMin;
     const kanRedigere = brukerErIArbeidsliste && harVeilederTilgang;
     return {
-        brukerErMin,
         kanLeggeTil,
         kanFjerne,
         kanRedigere,
