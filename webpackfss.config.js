@@ -67,14 +67,6 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './build/'),
         filename: 'aktivitetsplan.fss.min.js',
-        library: 'AktivitetsplanRoot',
-    },
-    externals: {
-        react: 'React',
-        'react-dom': 'ReactDOM', // NB! vi er transitivt avhengig av denne gjennom nav-react-*.
-        redux: 'Redux',
-        'redux-thunk': 'ReduxThunk',
-        'react-redux': 'ReactRedux',
     },
     plugins: DEBUG ? [] : PLUGINS,
 };
