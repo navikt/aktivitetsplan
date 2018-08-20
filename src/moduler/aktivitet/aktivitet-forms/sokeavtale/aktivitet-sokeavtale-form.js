@@ -107,6 +107,7 @@ class SokeAvtaleAktivitetForm extends Component {
                     <Input
                         feltNavn="tittel"
                         disabled
+                        className="hidden"
                         labelId="sokeavtale-aktivitet-form.label.overskrift"
                         bredde="fullbredde"
                     />
