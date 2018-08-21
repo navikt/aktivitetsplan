@@ -126,9 +126,9 @@ mock.get('/veilarbdialogproxy/api/dialog', dialog);
 
 // veilarbaktivitet-api
 mock.get('/veilarbaktivitet/api/aktivitet/kanaler', [
-    'internett',
-    'oppmote',
-    'telefon',
+    'INTERNETT',
+    'OPPMOTE',
+    'TELEFON',
 ]);
 mock.get('/veilarbaktivitet/api/aktivitet/arena', arena);
 mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }) =>

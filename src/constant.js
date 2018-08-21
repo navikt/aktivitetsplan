@@ -38,3 +38,4 @@ export const JOBB_STATUS_HELTID = 'HELTID';
 export const JOBB_STATUS_DELTID = 'DELTID';
 
 export const TELEFON_KANAL = 'TELEFON';
+export const OPPMOTE_KANAL = 'OPPMOTE';

@@ -28,6 +28,7 @@ class VelgKanal extends Component {
             <Innholdslaster avhengigheter={avhengigheter}>
                 <Select
                     feltNavn="kanal"
+                    noBlankOption
                     disabled={disabled}
                     labelId={labelId}
                     bredde="fullbredde"
