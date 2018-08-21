@@ -13,7 +13,11 @@ import Input from '../../../../felles-komponenter/skjema/input/input';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import VelgKanal from '../velg-kanal';
-import { MOTE_TYPE, STATUS_PLANLAGT } from '../../../../constant';
+import {
+    MOTE_TYPE,
+    OPPMOTE_KANAL,
+    STATUS_PLANLAGT,
+} from '../../../../constant';
 import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
@@ -196,6 +200,7 @@ const mapStateToProps = (state, props) => {
             beskrivelse: props.intl.formatMessage({
                 id: 'mote-aktivitet-form.standardtekst.beskrivelse',
             }),
+            kanal: OPPMOTE_KANAL,
             ...aktivitet,
             ...beregnKlokkeslettVarighet(aktivitet),
         },
