@@ -44,7 +44,8 @@ class DatoField extends Component {
     onFocusOut(e) {
         const relatedTarget = e.relatedTarget;
         if (relatedTarget) {
-            const targetErChildnode = this.container.contains(relatedTarget);
+            const targetErChildnode =
+                this.container && this.container.contains(relatedTarget);
             if (!targetErChildnode) {
                 this.lukk(false);
             }
