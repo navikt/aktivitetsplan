@@ -226,6 +226,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         />,
         <Informasjonsfelt
             key="oppfolging"
+            fullbredde
             tittel={
                 <FormattedMessage id="aktivitetdetaljer.oppfolging-label" />
             }
