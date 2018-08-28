@@ -64,7 +64,7 @@ function AktivitetStatusForm(props) {
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
-                <div className="col col-xs-6">
+                <div className="col col-xs-4">
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={
@@ -83,6 +83,8 @@ function AktivitetStatusForm(props) {
                         id={`id--${STATUS_PLANLAGT}`}
                         disabled={disableStatusEndring || lasterData}
                     />
+                </div>
+                <div className="col col-xs-4">
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={
@@ -92,8 +94,6 @@ function AktivitetStatusForm(props) {
                         id={`id--${STATUS_GJENNOMFOERT}`}
                         disabled={disableStatusEndring || lasterData}
                     />
-                </div>
-                <div className="col col-xs-6">
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={
@@ -107,6 +107,8 @@ function AktivitetStatusForm(props) {
                             manglerReferatPublisering
                         }
                     />
+                </div>
+                <div className="col col-xs-4">
                     <Radio
                         feltNavn="aktivitetstatus"
                         label={

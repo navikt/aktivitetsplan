@@ -20,7 +20,7 @@ function StillingEtikettForm(props) {
     return (
         <form onSubmit={handleSubmit}>
             <div className="row">
-                <div className="col col-xs-6">
+                <div className="col col-xs-4">
                     <Radio
                         feltNavn="etikettstatus"
                         label={<FormattedMessage id="etikett.INGEN_VALGT" />}
@@ -35,6 +35,8 @@ function StillingEtikettForm(props) {
                         id={`id--${konstanter.SOKNAD_SENDT}`}
                         disabled={disabled}
                     />
+                </div>
+                <div className="col col-xs-4">
                     <Radio
                         feltNavn="etikettstatus"
                         label={
@@ -44,8 +46,6 @@ function StillingEtikettForm(props) {
                         id={`id--${konstanter.INNKALT_TIL_INTERVJU}`}
                         disabled={disabled}
                     />
-                </div>
-                <div className="col col-xs-6">
                     <Radio
                         feltNavn="etikettstatus"
                         label={<FormattedMessage id="etikett.AVSLAG" />}
@@ -53,6 +53,8 @@ function StillingEtikettForm(props) {
                         id={`id--${konstanter.AVSLAG}`}
                         disabled={disabled}
                     />
+                </div>
+                <div className="col col-xs-4">
                     <Radio
                         feltNavn="etikettstatus"
                         label={<FormattedMessage id="etikett.JOBBTILBUD" />}
