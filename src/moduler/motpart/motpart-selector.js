@@ -14,6 +14,12 @@ export function selectMotpartData(state) {
     return selectMotpartSlice(state).data;
 }
 
+export const selectFnrPaMotpartHvisBruker = createSelector(
+    selectMotpartData,
+    selectErVeileder,
+    (motpart, erVeileder) => (erVeileder ? motpart.fodselsnummer : '')
+);
+
 export const selectNavnPaMotpart = createSelector(
     selectMotpartData,
     selectErVeileder,
