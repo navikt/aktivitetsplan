@@ -467,6 +467,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                 key="adresse"
                 tittel={<FormattedMessage id="aktivitetdetaljer.adresse" />}
                 innhold={adresse}
+                fullbredde
             />,
             <Informasjonsfelt
                 key="bakgrunn"
