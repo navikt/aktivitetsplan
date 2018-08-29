@@ -11,6 +11,7 @@ function DialogHeader({
     harNyDialogEllerValgtDialog,
     motpartStatus,
     navnPaMotpart,
+    fnrPaMotpartHvisBruker,
     history,
 }) {
     return (
@@ -29,7 +30,12 @@ function DialogHeader({
                     <FormattedMessage
                         id="dialog.tittel"
                         values={{ motpart: navnPaMotpart }}
-                    />
+                    >
+                        {txt =>
+                            <spann>
+                                {`${txt} ${fnrPaMotpartHvisBruker}`}
+                            </spann>}
+                    </FormattedMessage>
                 </Element>
             </Innholdslaster>
         </div>
@@ -38,11 +44,13 @@ function DialogHeader({
 
 DialogHeader.defaultProps = {
     navnPaMotpart: null,
+    fnrPaMotpartHvisBruker: null,
 };
 
 DialogHeader.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
     motpartStatus: AppPT.avhengighet.isRequired,
+    fnrPaMotpartHvisBruker: PT.string,
     navnPaMotpart: PT.string,
     history: AppPT.history.isRequired,
 };

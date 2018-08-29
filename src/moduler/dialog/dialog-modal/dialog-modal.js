@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
 import * as AppPT from '../../../proptypes';
 import {
+    selectFnrPaMotpartHvisBruker,
     selectMotpartStatus,
     selectNavnPaMotpart,
 } from '../../motpart/motpart-selector';
@@ -74,6 +75,7 @@ function DialogModal({
     tilpasseStorrelseHistoriskVisning,
     motpartStatus,
     navnPaMotpart,
+    fnrPaMotpartHvisBruker,
     valgtDialog,
     valgtAktivitetId,
     harNyDialog,
@@ -101,6 +103,7 @@ function DialogModal({
                 harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
                 motpartStatus={motpartStatus}
                 navnPaMotpart={navnPaMotpart}
+                fnrPaMotpartHvisBruker={fnrPaMotpartHvisBruker}
             />
             <DialogModalContent
                 valgtDialog={valgtDialog}
@@ -117,6 +120,7 @@ function DialogModal({
 DialogModal.defaultProps = {
     valgtAktivitetId: null,
     navnPaMotpart: null,
+    fnrPaMotpartHvisBruker: null,
     valgtDialog: null,
     harNyDialog: null,
 };
@@ -129,6 +133,7 @@ DialogModal.propTypes = {
     valgtAktivitetId: PT.string,
     motpartStatus: AppPT.avhengighet.isRequired,
     navnPaMotpart: PT.string,
+    fnrPaMotpartHvisBruker: PT.string,
     historiskVisning: PT.bool.isRequired,
     tilpasseStorrelseHistoriskVisning: PT.bool.isRequired,
     history: AppPT.history.isRequired,
@@ -141,6 +146,7 @@ const mapStateToProps = (state, props) => {
     const harNyDialog = id === 'ny';
     const harValgtDialog = !!valgtDialog;
     const historiskVisning = selectViserHistoriskPeriode(state);
+    const fnrPaMotpartHvisBruker = selectFnrPaMotpartHvisBruker(state);
     return {
         harNyDialog,
         valgtDialog,
@@ -149,6 +155,7 @@ const mapStateToProps = (state, props) => {
         valgtAktivitetId,
         motpartStatus: selectMotpartStatus(state),
         navnPaMotpart: selectNavnPaMotpart(state),
+        fnrPaMotpartHvisBruker,
         historiskVisning,
         tilpasseStorrelseHistoriskVisning:
             historiskVisning &&
