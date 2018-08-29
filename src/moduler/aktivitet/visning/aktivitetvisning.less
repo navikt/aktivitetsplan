@@ -22,7 +22,7 @@
             margin-top: 0.5rem;
         }
 
-        .col-xs-6 {
+        .col-xs-4 {
             float: none;
             width: 100%;
         }
@@ -100,13 +100,9 @@
 @media (min-width: @screen-sm-min) {
     .aktivitetvisning {
         &__underseksjon {
-            .col-xs-6 {
+            .col-xs-4 {
                 float: left;
-                width: 50%;
-
-                &:first-child {
-                    width: 40%;
-                }
+                width: ~'calc(100% / 3)';
             }
         }
     }
