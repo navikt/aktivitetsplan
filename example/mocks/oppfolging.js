@@ -49,10 +49,10 @@ export function stoppEskalering(update) {
 
 export function avslutningStatus(update) {
     oppfolging.avslutningStatus = {
-        kanAvslutte: false,
+        kanAvslutte: true,
         underOppfolging: false,
-        harYtelser: false,
-        harTiltak: false,
+        harYtelser: true,
+        harTiltak: true,
         underKvp: false,
         inaktiveringsDato: '2018-06-05T00:00:00+02:00',
     };

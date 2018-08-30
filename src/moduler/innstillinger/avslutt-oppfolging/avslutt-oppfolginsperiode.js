@@ -32,16 +32,19 @@ const HiddenIfNormaltekst = hiddenIfHOC(Normaltekst);
 function lagAlertstripelisteConfig({
     harUbehandledeDialoger,
     harAktiveYtelser,
+    harTiltak,
 }) {
     return {
         'innstillinger.modal.avslutt.ubehandlede-dialoger.alert-melding': harUbehandledeDialoger,
         'innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser': harAktiveYtelser,
+        'innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak': harTiltak,
     };
 }
 
 function AvsluttOppfolgingperiode({
     onSubmit,
     harAktiveYtelser,
+    harTiltak,
     datoErInnenfor28dager,
     avhengigheter,
     harUbehandledeDialoger,
@@ -72,6 +75,7 @@ function AvsluttOppfolgingperiode({
                             config={lagAlertstripelisteConfig({
                                 harUbehandledeDialoger,
                                 harAktiveYtelser,
+                                harTiltak,
                             })}
                         >
                             <FormattedMessage id="innstillinger.prosess.avslutt-oppfolging.bekreft.forklaring" />
@@ -103,6 +107,7 @@ function AvsluttOppfolgingperiode({
 AvsluttOppfolgingperiode.propTypes = {
     onSubmit: PT.func.isRequired,
     harAktiveYtelser: PT.bool.isRequired,
+    harTiltak: PT.bool.isRequired,
     datoErInnenfor28dager: PT.bool.isRequired,
     harUbehandledeDialoger: PT.bool.isRequired,
     avhengigheter: PT.arrayOf(AppPT.status).isRequired,
@@ -123,11 +128,13 @@ const mapStateToProps = state => {
     const avslutningStatus = selectAvslutningStatus(state);
 
     const harAktiveYtelser = avslutningStatus.harYtelser;
+    const harTiltak = avslutningStatus.harTiltak;
     const for28dagerSiden = moment().subtract(28, 'day').toISOString();
     const datoErInnenfor28dager = inaktiveringsDato > for28dagerSiden;
 
     return {
         harAktiveYtelser,
+        harTiltak,
         datoErInnenfor28dager,
         harUbehandledeDialoger: selectHarUbehandledeDialoger(state),
         avhengigheter: [innstillingerStatus, dialogStatus],
