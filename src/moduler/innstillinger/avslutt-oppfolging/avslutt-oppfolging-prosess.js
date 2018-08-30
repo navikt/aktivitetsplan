@@ -19,16 +19,10 @@ import {
 } from '../innstillinger-selector';
 import AlertstripeListe from '../../../felles-komponenter/alertstripe-liste';
 
-function lagAlertstripelisteConfig({
-    underOppfolging,
-    harYtelser,
-    harTiltak,
-    underKvp,
-}) {
+function lagAlertstripelisteConfig({ underOppfolging, harYtelser, underKvp }) {
     return {
         'innstillinger.prosess.avslutt-oppfolging.feil.under-oppfolging': underOppfolging,
         'innstillinger.prosess.avslutt-oppfolging.feil.aktive-ytelser': harYtelser,
-        'innstillinger.prosess.avslutt-oppfolging.feil.aktive-tiltak': harTiltak,
         'innstillinger.prosess.avslutt-oppfolging.feil.under-kvp': underKvp,
     };
 }
@@ -56,7 +50,7 @@ class AvsluttOppfolgingProsess extends Component {
 
     render() {
         const { avslutningStatus, laster, slettBegrunnelse } = this.props;
-        const { underOppfolging, harTiltak, underKvp } = avslutningStatus || {};
+        const { underOppfolging, underKvp } = avslutningStatus || {};
         const { harSjekket, kanAvslutte } = this.state;
         return (
             <StartProsess
@@ -80,7 +74,6 @@ class AvsluttOppfolgingProsess extends Component {
                         hidden={!harSjekket || kanAvslutte}
                         config={lagAlertstripelisteConfig({
                             underOppfolging,
-                            harTiltak,
                             underKvp,
                         })}
                     >
