@@ -83,5 +83,9 @@ fasitResources:
 
 team: oppfolging
 resources:
-    limits:
-        cpu: 3
+  limits:
+    cpu: 500m
+    memory: 768Mi
+  requests:
+    cpu: 200m
+    memory: 512Mi
