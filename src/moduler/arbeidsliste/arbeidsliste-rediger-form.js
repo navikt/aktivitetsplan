@@ -23,10 +23,14 @@ import {
     KOMMENTAR_MAKS_LENGDE,
     pakrevd,
     begrensetKommentarLengde,
+    begrensetOverskriftLengde,
+    pakrevdOverskrift,
+    OVERSKRIFT_MAKS_LENGDE,
 } from './arbeidsliste-utils';
 import { formaterDato } from '../../utils';
 import { selectIdentitetId } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
+import Input from '../../felles-komponenter/skjema/input/input';
 
 function RedigerArbeidslisteForm({
     handleSubmit,
@@ -41,6 +45,12 @@ function RedigerArbeidslisteForm({
             <section>
                 <ModalContainer className="arbeidsliste__form-container">
                     {errorSummary}
+                    <Input
+                        labelId="arbeidsliste.overskrift"
+                        feltNavn={'overskrift'}
+                        maxLength={OVERSKRIFT_MAKS_LENGDE}
+                        disabled={false}
+                    />
                     <Textarea
                         labelId="arbeidsliste.kommentar"
                         feltNavn={'kommentar'}
@@ -100,6 +110,7 @@ const RedigerArbeidslisteFormValidation = validForm({
     ),
     validate: {
         kommentar: [begrensetKommentarLengde, pakrevd],
+        overskrift: [begrensetOverskriftLengde, pakrevdOverskrift],
     },
 })(RedigerArbeidslisteForm);
 
@@ -111,6 +122,7 @@ const mapStateToProps = state => {
         veileder: selectIdentitetId(state),
         initialValues: {
             kommentar: arbeidsliste.kommentar,
+            overskrift: arbeidsliste.overskrift,
             frist: arbeidsliste.frist,
         },
     };

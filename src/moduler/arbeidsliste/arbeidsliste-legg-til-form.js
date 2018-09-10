@@ -18,9 +18,13 @@ import {
     pakrevd,
     begrensetKommentarLengde,
     fristErEtterIDag,
+    begrensetOverskriftLengde,
+    pakrevdOverskrift,
+    OVERSKRIFT_MAKS_LENGDE,
 } from './arbeidsliste-utils';
 import { selectIdentitetId } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
+import Input from '../../felles-komponenter/skjema/input/input';
 
 function LeggTilArbeidslisteForm({
     handleSubmit,
@@ -33,6 +37,12 @@ function LeggTilArbeidslisteForm({
             <section className="arbeidsliste__form">
                 <ModalContainer className="arbeidsliste__form-container">
                     {errorSummary}
+                    <Input
+                        labelId="arbeidsliste.overskrift"
+                        feltNavn={'overskrift'}
+                        maxLength={OVERSKRIFT_MAKS_LENGDE}
+                        disabled={false}
+                    />
                     <Textarea
                         labelId="arbeidsliste.kommentar"
                         feltNavn={'kommentar'}
@@ -78,6 +88,7 @@ const LeggTilArbeidslisteFormValidation = validForm({
     ),
     validate: {
         kommentar: [begrensetKommentarLengde, pakrevd],
+        overskrift: [begrensetOverskriftLengde, pakrevdOverskrift],
         frist: [fristErEtterIDag],
     },
 })(LeggTilArbeidslisteForm);
