@@ -21,3 +21,7 @@ export function selectErBrukerInaktivIArena(state) {
 export function selectErBrukerAktivIArena(state) {
     return !selectErBrukerInaktivIArena(state);
 }
+
+export function selectInaktiveringsDato(state) {
+    return selectOppfoelgingsstatusData(state).inaktiveringsdato;
+}

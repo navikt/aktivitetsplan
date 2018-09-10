@@ -116,3 +116,11 @@ export function selectHarSkriveTilgang(state) {
     return harSkriveTilgang === undefined || harSkriveTilgang;
     // For å kunne være bakoverkompatiblem med at oppfolgingStatus ikke returnerer dene propertien.
 }
+
+export function selectKanReaktiveres(state) {
+    return selectOppfolgingData(state).kanReaktiveres;
+}
+
+export function selectInaktiveringsDato(state) {
+    return selectOppfolgingData(state).inaktiveringsdato;
+}

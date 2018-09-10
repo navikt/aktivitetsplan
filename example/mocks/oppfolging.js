@@ -22,6 +22,8 @@ const oppfolging = {
         },
     ],
     harSkriveTilgang: true,
+    kanReaktiveres: true,
+    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
 };
 
 export default function(queryParams, changeFn = ob => ob) {
