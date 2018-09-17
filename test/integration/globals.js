@@ -1,4 +1,4 @@
-const driver = require('./chrome-driver/driver');
+const driver = require('./driver');
 const mock = require('./mock');
 import { getNetworkIp } from './getNetworkIp';
 
