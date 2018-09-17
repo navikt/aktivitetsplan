@@ -19,7 +19,6 @@ validerLenke.prototype.command = function(selector, expected, text) {
         this.api.assert.equal(href.status, 0, text);
         this.api.verify.equal(href.value, expected, text);
         self.emit('complete');
-
     });
 
     return this;

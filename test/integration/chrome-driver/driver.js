@@ -1,9 +1,9 @@
 exports.path =
     process.platform === 'win32'
-        ? 'test/nightwatch-tester/selenium/chromedriver.exe'
+        ? 'test/integration/chrome-driver/chromedriver.exe'
         : process.platform === 'darwin'
-          ? 'test/nightwatch-tester/selenium/chromedriver_mac64'
-          : 'test/nightwatch-tester/selenium/chromedriver';
+          ? 'test/integration/chrome-driver/chromedriver_mac64'
+          : 'test/integration/chrome-driver/chromedriver';
 
 exports.version = '2.35';
 
