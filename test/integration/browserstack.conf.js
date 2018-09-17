@@ -1,13 +1,13 @@
 require('babel-core/register');
 
 let nightwatch_config = {
-    src_folders: ['test/nightwatch-tester/integration/tests'],
-    output_folder: 'test/nightwatch-tester/reports',
+    src_folders: ['test/integration/tests'],
+    output_folder: 'test/integration/reports',
     output: true,
     custom_commands_path: '',
     custom_assertions_path: '',
-    globals_path: 'test/nightwatch-tester/integration/globals.js',
-    page_objects_path: ['test/nightwatch-tester/integration/pages'],
+    globals_path: 'test/integration/globals.js',
+    page_objects_path: ['test/integration/pages'],
 
     selenium: {
         start_process: false,
@@ -33,7 +33,7 @@ let nightwatch_config = {
                 enabled: true,
                 on_failure: true,
                 on_error: true,
-                path: 'test/nightwatch-tester/reports',
+                path: 'test/integration/reports',
             },
         },
         win_chrome: {

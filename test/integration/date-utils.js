@@ -7,7 +7,6 @@ momentImpl.tz.setDefault('Europe/Oslo');
 
 export const moment = momentImpl;
 
-
 moment.updateLocale('nb', {
     monthsShort: [
         'jan',

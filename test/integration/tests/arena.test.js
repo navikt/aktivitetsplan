@@ -1,6 +1,6 @@
 'use strict';
 import { aktivitetsplanOversiktSide } from '../pages/sider';
-import arenaAktiviteter from '../../../../example/mocks/arena';
+import arenaAktiviteter from '../../../example/mocks/arena';
 import { ArenaAktivitet } from '../data/aktivitet-data';
 import { AktivitetStatus } from '../data/aktivitet-status';
 import { AktivitetTilstand } from '../data/aktivitet-tilstand';
@@ -29,8 +29,11 @@ module.exports = {
             arena1.antallDagerPerUke,
             arena1.deltakelseProsent
         );
-        arenaAktivitet.tilstand = arena1.avtalt ? AktivitetTilstand.AVTALTMEDNAV : AktivitetTilstand.INGEN;
-        arenaAktivitet.aktivitetURL = `${browser.globals.loginUrl}/aktivitet/vis/${arena1.id}`;
+        arenaAktivitet.tilstand = arena1.avtalt
+            ? AktivitetTilstand.AVTALTMEDNAV
+            : AktivitetTilstand.INGEN;
+        arenaAktivitet.aktivitetURL = `${browser.globals
+            .loginUrl}/aktivitet/vis/${arena1.id}`;
 
         aktivitetsplanOversiktSide(browser)
             .validerAktivitet(arenaAktivitet)
