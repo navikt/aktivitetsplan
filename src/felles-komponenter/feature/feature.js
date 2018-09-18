@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { selectFeatureData } from './feature-selector';
 
 export const BRUKERVILKAR = 'brukervilkar';
+export const FORHANDSORIENTERING = 'forhandsorientering';
 
 export function harFeature(name, features) {
     const app = window.app;
