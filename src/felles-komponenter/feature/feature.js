@@ -2,6 +2,8 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { selectFeatureData } from './feature-selector';
 
+export const BRUKERVILKAR = 'brukervilkar';
+
 export function harFeature(name, features) {
     const app = window.app;
     const feature = features && features[app] && features[app][name];
