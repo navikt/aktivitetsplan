@@ -9,8 +9,8 @@ import {
 import { AktivitetStatus } from '../data/aktivitet-status';
 import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
-const fraDato = getRelativeDate(3),
-    tilDato = getRelativeDate(5),
+const fraDato = getRelativeDate(8),
+    tilDato = getRelativeDate(10),
     forventetTittel = 'Møte ' + toDateTimePrettyPrint(new Date());
 let aktivitetDataMote = new MoteMedNavAktivitet(
     forventetTittel,

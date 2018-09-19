@@ -207,6 +207,14 @@ function erMerEnntoDagerSiden(dato) {
         ? datoVerdi.isAfter(moment().subtract(2, 'days').startOf('day'), 'd')
         : false;
 }
+
+export function erMerEnnSyvDagerTil(dato) {
+    const datoVerdi = moment(dato);
+    return datoVerdi.isValid
+        ? datoVerdi.isAfter(moment().add(7, 'days').startOf('day'), 'd')
+        : false;
+}
+
 export function formaterDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid

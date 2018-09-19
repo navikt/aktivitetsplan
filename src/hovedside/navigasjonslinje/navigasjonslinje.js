@@ -34,7 +34,10 @@ import {
     selectHarTilgangTilDialog,
 } from '../../moduler/dialog/dialog-selector';
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
-import { harFeature } from '../../felles-komponenter/feature/feature';
+import {
+    BRUKERVILKAR,
+    harFeature,
+} from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 import { selectTildelVeilederStatus } from '../../moduler/tildel-veileder/tildel-veileder-selector';
 
@@ -100,7 +103,7 @@ class Navigasjonslinje extends Component {
             features,
         } = this.props;
 
-        const informasjonFeature = harFeature('brukervilkar', features);
+        const informasjonFeature = harFeature(BRUKERVILKAR, features);
         const informasjonsTekstId = informasjonFeature
             ? 'navigasjon.informasjon'
             : 'navigasjon.informasjonsvideo';

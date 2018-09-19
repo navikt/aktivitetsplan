@@ -14,7 +14,7 @@ import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
-import { harFeature } from './felles-komponenter/feature/feature';
+import { BRUKERVILKAR, harFeature } from './felles-komponenter/feature/feature';
 import { selectFeatureData } from './felles-komponenter/feature/feature-selector';
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
 import VideoModal from './moduler/informasjon/video-modal'; // eslint-disable-line
@@ -78,7 +78,7 @@ Routing.propTypes = {
 };
 
 function Public({ location, features }) {
-    const brukervilkarFeature = harFeature('brukervilkar', features);
+    const brukervilkarFeature = harFeature(BRUKERVILKAR, features);
     const FeaturedInformasjon = brukervilkarFeature
         ? InformasjonModal
         : VideoModal;
