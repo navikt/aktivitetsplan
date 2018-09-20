@@ -8,16 +8,23 @@ import { Radio } from 'nav-frontend-skjema';
 import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import {
-    UTDANNING_AKTIVITET_TYPE,
-    STATUS_FULLFOERT,
     STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+    UTDANNING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import { STATUS } from '../../../../ducks/utils';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
+import { erMerEnnSyvDagerTil } from '../../../../utils';
+import {
+    FORHANDSORIENTERING,
+    harFeature,
+} from '../../../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -33,6 +40,7 @@ class AvtaltContainer extends Component {
             aktivitetStatus,
             doSetAktivitetTilAvtalt,
             className,
+            features,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
@@ -49,6 +57,24 @@ class AvtaltContainer extends Component {
             arenaAktivitet
         ) {
             return null;
+        }
+
+        if (
+            harFeature(FORHANDSORIENTERING, features) &&
+            !erMerEnnSyvDagerTil(aktivitet.fraDato)
+        ) {
+            return (
+                <div>
+                    <div className={`${className} avtalt-container`}>
+                        <AlertStripeInfo>
+                            <FormattedMessage
+                                id={'sett-til-avtalt-mindre-enn-syv-dager'}
+                            />
+                        </AlertStripeInfo>
+                    </div>
+                    <hr className="aktivitetvisning__delelinje" />
+                </div>
+            );
         }
 
         // Kun vis bekreftet hvis nettopp satt til avtalt.
@@ -108,6 +134,7 @@ AvtaltContainer.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     aktivitetStatus: AppPT.status,
     className: PT.string,
+    features: PT.object.isRequired,
 };
 
 AvtaltContainer.defaultProps = {
@@ -117,6 +144,7 @@ AvtaltContainer.defaultProps = {
 
 const mapStateToProps = state => ({
     aktivitetStatus: selectAktivitetStatus(state),
+    features: selectFeatureData(state),
 });
 
 const mapDispatchToProps = dispatch => ({
