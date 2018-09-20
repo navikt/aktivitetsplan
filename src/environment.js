@@ -73,10 +73,4 @@ export const MALVERK_BASE_URL = getEnviromentVariable(
     true
 );
 
-export const FEATURE_BASE_URL = getEnviromentVariable(
-    'FEATURE_ENDPOINT_URL',
-    true,
-    true
-);
-
 export default {};
