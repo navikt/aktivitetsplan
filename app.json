@@ -2,7 +2,11 @@
   "name": "aktivitetsplan",
   "description": "Aktivitetsplan i nav",
   "scripts": {},
-  "env": {},
+  "env": {
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+  },
   "formation": {},
   "addons": [],
   "buildpacks": []
