@@ -2,14 +2,13 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { selectFeatureData } from './feature-selector';
 
-export const BRUKERVILKAR = 'brukervilkar';
-export const FORHANDSORIENTERING = 'forhandsorientering';
+// Use constants for all features. Makes it easier when cleaning up old toggles.
+// Remember to add you feature to 'ALL_FEATURES' which ensures the feature is looked up in unleash.
+export const BRUKERVILKAR = 'aktivitetsplan.brukervilkar';
+export const FORHANDSORIENTERING = 'aktivitetsplan.forhandsorientering';
+export const ALL_FEATURES = [BRUKERVILKAR, FORHANDSORIENTERING];
 
-export function harFeature(name, features) {
-    const app = window.app;
-    const feature = features && features[app] && features[app][name];
-    return !!feature && feature === true;
-}
+export const harFeature = (name, features) => features[name] === true;
 
 function Feature({ name, children, features }) {
     return harFeature(name, features) ? children : null;

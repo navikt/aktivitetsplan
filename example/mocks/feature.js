@@ -1,10 +1,6 @@
-export default {
-    aktivitetsplan: {
-        brukervilkar: true,
-        forhandsorientering: true,
-    },
-    veilarbaktivitetsplanfs: {
-        brukervilkar: true,
-        forhandsorientering: true,
-    },
-};
+export default function(queryParams) {
+    return queryParams.feature.reduce(
+        (acc, feature) => ({ ...acc, [feature]: true }),
+        {}
+    );
+}
