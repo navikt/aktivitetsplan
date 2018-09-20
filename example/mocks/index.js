@@ -1,13 +1,13 @@
 import me from './me';
 import oppfolging, {
+    avslutningStatus,
     startEskalering,
     stoppEskalering,
-    avslutningStatus,
 } from './oppfolging';
 import dialog, {
-    setVenterPaSvar,
-    setFerdigBehandlet,
     opprettDialog,
+    setFerdigBehandlet,
+    setVenterPaSvar,
 } from './dialog';
 import {
     arbeidsliste,
@@ -17,8 +17,8 @@ import {
 import aktiviteter, {
     getAktivitet,
     getAktivitetVersjoner,
-    opprettAktivitet,
     oppdaterAktivitet,
+    opprettAktivitet,
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
@@ -27,7 +27,7 @@ import vilkar from './vilkar';
 import veilederTilgang from './veilederTilgang';
 import veiledere from './veiledere';
 import enheter from './enheter';
-import feature from './feature';
+import getFeatures from './feature';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
 import instillingsHistorikk from './innstillings-historikk';
 import fetchMock, { ResponseUtils } from 'yet-another-fetch-mock';
@@ -40,7 +40,9 @@ const mock = fetchMock.configure({
 });
 
 //feature-api
-mock.get('/feature', feature);
+mock.get('/aktivitetsplan/api/feature', ({ queryParams }) =>
+    getFeatures(queryParams)
+);
 
 //veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', me);
