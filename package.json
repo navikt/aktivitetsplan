@@ -26,6 +26,7 @@
     "test:coverage": "nyc --reporter=html npm test",
     "start": "node example/server.js",
     "test:e2e": "node test/integration/nightwatch.js -c test/integration/default.conf.js --skiptags browserstack",
+    "pretest:e2e": "git submodule init && git submodule update --remote",
     "test:browserstack": "node test/integration/browserstack.runner.js -c test/integration/browserstack.conf.js -e win_chrome,ios_safari,android_chrome,win_ie,win_edge --tag browserstack",
     "eslint": "eslint src --ext .js --ext .jsx",
     "eslint-staged": "eslint",
@@ -47,8 +48,7 @@
     "precommit": "lint-staged",
     "build:js:sbs": "webpack --config webpacksbs.config.js",
     "build:js:fss": "webpack --config webpackfss.config.js",
-    "heroku-postbuild": "git init && npm run build:tekster && npm run build:less:dev && npm run build:js -- --env.dev --env.mock",
-    "preinstall": "git submodule init && git submodule update --remote"
+    "heroku-postbuild": "npm run build:tekster && npm run build:less:dev && npm run build:js -- --env.dev --env.mock"
   },
   "lint-staged": {
     "*.js": [
