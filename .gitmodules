@@ -1,0 +1,3 @@
+[submodule "test/integration/chrome-driver"]
+	path = test/integration/chrome-driver
+	url = https://github.com/navikt/chrome-driver.git
