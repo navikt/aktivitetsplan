@@ -21,6 +21,7 @@ gconf-service
 RUN wget --no-check-certificate https://dl-ssl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome-stable_current_amd64.deb
 
+RUN npm set strict-ssl false
 RUN npm install
 
 CMD ["npm", "run", "test:e2e"]
