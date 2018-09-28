@@ -37,16 +37,17 @@ let aktivitetMedisinskBehandling = new MedisinskBehandlingAktivitet(
     'Beskrivelse',
     'Oppfølging'
 );
-
+let SBSbruker;
 module.exports = {
     tags: ['intern'],
 
     before: function(browser) {
         browser.useXpath();
+        SBSbruker = browser.globals.testbrukere.SBS;
     },
 
     'Veileder - naviger til side': function(browser) {
-        browser.url(browser.globals.loginUrl);
+        browser.url(browser.globals.FSSUrl + SBSbruker.brukerNavn);
     },
 
     'Veileder - Legg til aktivitet - Mote med nav': function(browser) {

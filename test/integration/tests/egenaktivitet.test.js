@@ -21,7 +21,7 @@ module.exports = {
     },
 
     'Bruker - naviger til side': function(browser) {
-        browser.url(browser.globals.loginUrl);
+        browser.url(browser.globals.SBSUrl);
     },
 
     'Bruker - Legg til aktivitet med obligatoriske verdier - Egenaktivitet': function(

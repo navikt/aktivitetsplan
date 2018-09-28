@@ -1,3 +1,20 @@
+const testmiljo = process.env.MILJO ? process.env.MILJO.toLowerCase() : 'q6';
+const URLBuilder = {
+    baseFSSUrl: env => {
+        return `https://app-${env}.adeo.no`;
+    },
+    baseUrl: env => {
+        return `https://tjenester-${env}.nav.no`;
+    },
+    SBSUrl(env) {
+        return this.baseUrl(env) + '/aktivitetsplan';
+    },
+
+    FSSUrl(env) {
+        return this.baseFSSUrl(env) + '/veilarbpersonflatefs/';
+    },
+};
+
 const nightwatch_config = {
     src_folders: ['test/integration/tests'],
     output_folder: 'test/integration/reports',
@@ -13,10 +30,11 @@ const nightwatch_config = {
     test_settings: {
         default: {
             globals: {
-                loginUrl: '',
+                FSSUrl: 'http://localhost:3000/aktivitetsplanfelles/',
+                SBSUrl: 'http://localhost:3000/aktivitetsplanfelles/',
                 timeout: 10000,
-                baseUrl: 'http://localhost:3000',
-                fnr: '12345678912',
+                FSSBaseUrl: 'http://localhost:3000',
+                SBSBaseUrl: 'http://localhost:3000',
             },
             selenium_port: 9515,
             selenium_host: 'localhost',
@@ -43,9 +61,20 @@ const nightwatch_config = {
                 },
             },
         },
+        verdikjede: {
+            globals: {
+                testmiljo: testmiljo,
+                FSSUrl: URLBuilder.FSSUrl(testmiljo),
+                SBSUrl: URLBuilder.SBSUrl(testmiljo),
+                FSSBaseUrl: URLBuilder.baseFSSUrl(testmiljo),
+                SBSBaseUrl: URLBuilder.baseUrl(testmiljo),
+                timeout: 10000,
+            },
+        },
     },
 };
-let defaultSettings = nightwatch_config.test_settings.default.globals;
-defaultSettings.loginUrl = `${defaultSettings.baseUrl}/aktivitetsplanfelles/${defaultSettings.fnr}`;
 
+nightwatch_config.test_settings.default.globals.testbrukere = {
+    SBS: { brukerNavn: '12345678910' },
+};
 module.exports = nightwatch_config;

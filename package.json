@@ -26,6 +26,7 @@
     "test:coverage": "nyc --reporter=html npm test",
     "start": "node example/server.js",
     "test:e2e": "node test/integration/nightwatch.js -c test/integration/default.conf.js --skiptags browserstack",
+    "test:verdikjede": "node test/integration/nightwatch.js -c test/integration/default.conf.js --skiptags browserstack,arena -e verdikjede",
     "test:browserstack": "node test/integration/browserstack.runner.js -c test/integration/browserstack.conf.js -e win_chrome,ios_safari,android_chrome,win_ie,win_edge --tag browserstack",
     "eslint": "eslint src --ext .js --ext .jsx",
     "eslint-staged": "eslint",

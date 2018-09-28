@@ -4,16 +4,18 @@ import arenaAktiviteter from '../../../example/mocks/arena';
 import { ArenaAktivitet } from '../data/aktivitet-data';
 import { AktivitetStatus } from '../data/aktivitet-status';
 import { AktivitetTilstand } from '../data/aktivitet-tilstand';
+let SBSbruker;
 
 module.exports = {
     tags: ['arena'],
 
     before: function(browser) {
         browser.useXpath();
+        SBSbruker = browser.globals.testbrukere.SBS;
     },
 
     'Veileder - naviger til side': function(browser) {
-        browser.url(browser.globals.loginUrl);
+        browser.url(browser.globals.FSSUrl + SBSbruker.brukerNavn);
     },
 
     'Veileder - Valider arenaaktivitet': function(browser) {
@@ -33,7 +35,7 @@ module.exports = {
             ? AktivitetTilstand.AVTALTMEDNAV
             : AktivitetTilstand.INGEN;
         arenaAktivitet.aktivitetURL = `${browser.globals
-            .loginUrl}/aktivitet/vis/${arena1.id}`;
+            .FSSUrl}${SBSbruker.brukerNavn}/aktivitet/vis/${arena1.id}`;
 
         aktivitetsplanOversiktSide(browser)
             .validerAktivitet(arenaAktivitet)
