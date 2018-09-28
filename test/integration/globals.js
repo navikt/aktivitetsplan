@@ -1,5 +1,5 @@
-const driver = require('../selenium/driver');
-const mock = require('../mock');
+const driver = require('./chrome-driver/driver');
+const mock = require('./mock');
 import { getNetworkIp } from './getNetworkIp';
 
 module.exports = {
