@@ -15,7 +15,10 @@ module.exports = {
         aktivitetsPlanOversiktIntern,
         {
             aktivitetskortHref(url) {
-                let href = url.replace(this.api.globals.baseUrl, '');
+                let href = url
+                    .replace(this.api.globals.FSSBaseUrl, '')
+                    .replace(this.api.globals.SBSBaseUrl, '');
+                href = href.split('?')[0];
                 return `//a[contains(@class, "aktivitetskort") and @href="${href}"]`;
             },
 

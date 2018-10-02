@@ -25,9 +25,9 @@ let nightwatch_config = {
         default: {
             globals: {
                 baseUrl: 'http://localhost:8080',
-                fnr: '123456789',
                 launch_url: '',
                 timeout: 20000,
+                browserstack: true,
             },
             screenshots: {
                 enabled: true,
