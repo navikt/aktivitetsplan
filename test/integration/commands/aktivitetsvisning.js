@@ -227,12 +227,6 @@ module.exports = {
             status === AktivitetStatus.AVBRUTT
         ) {
             forventedeStatuser.forEach(x => (x.disablet = 'true'));
-        } else if (aktivitetType === AktivitetsType.MOTE) {
-            forventedeStatuser
-                .filter(x => x.status === AktivitetStatus.FULLFORT)
-                .forEach(y => {
-                    y.disablet = 'true';
-                });
         }
 
         return forventedeStatuser;
