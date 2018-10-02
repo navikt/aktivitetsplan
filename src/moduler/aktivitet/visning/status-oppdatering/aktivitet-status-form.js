@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import FieldGroupsValidering from '../../../../felles-komponenter/skjema/fieldgroups';
+import FieldGroupsValidering from '../../../../felles-komponenter/skjema/fieldgroups-validering';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';

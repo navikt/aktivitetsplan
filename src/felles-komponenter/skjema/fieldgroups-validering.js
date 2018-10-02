@@ -70,7 +70,6 @@ function FieldGroupsValidering(props) {
     return (
         <div
             className={classNames({
-                skjema__periodevalidering: true,
                 'skjema--harFeil': !valid,
             })}
         >
