@@ -19,6 +19,7 @@ import aktiviteter, {
     getAktivitetVersjoner,
     oppdaterAktivitet,
     opprettAktivitet,
+    publiserReferat,
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
@@ -155,6 +156,14 @@ mock.put(
 );
 mock.put(
     '/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett',
+    ({ pathParams, body }) => oppdaterAktivitet(pathParams.aktivitetId, body)
+);
+mock.put(
+    '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser',
+    ({ pathParams }) => publiserReferat(pathParams.aktivitetId)
+);
+mock.put(
+    '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat',
     ({ pathParams, body }) => oppdaterAktivitet(pathParams.aktivitetId, body)
 );
 
