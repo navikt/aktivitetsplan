@@ -7,7 +7,7 @@ function isValidDate(dato) {
     return dato && moment(dato).isValid();
 }
 
-function validerPeriode(fradato, tildato) {
+export function validerPeriode(fradato, tildato) {
     if (isValidDate(fradato) && isValidDate(tildato)) {
         const momentTilDato = moment(tildato).startOf('day');
         const momentFraDato = moment(fradato).startOf('day');

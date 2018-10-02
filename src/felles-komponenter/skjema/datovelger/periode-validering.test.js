@@ -1,65 +1,39 @@
 /* eslint-env mocha */
-import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
-import { PeriodeValideringPure } from './periode-validering';
+import { validerPeriode } from './periode-validering';
 
-const errorMessage = 'test:periodevalidering:error';
-
-const testIntl = {
-    formatMessage: props => props.id,
-};
-
-function lagPeriodeValidering(fradato, tildato) {
-    return shallow(
-        <PeriodeValideringPure
-            feltNavn="test"
-            errorMessageId={errorMessage}
-            fraDato={fradato}
-            tilDato={tildato}
-            intl={testIntl}
-        />
-    );
-}
-
-describe('periodeValidering', () => {
+describe('validerPeriode', () => {
     it('Skal ikke gi feilmelding om fradato er undefined og tildato satt', () => {
-        const component = lagPeriodeValidering(
-            undefined,
-            new Date('2017-01-01')
-        );
-        expect(component.hasClass('skjema--harFeil')).to.equal(false);
+        const valid = validerPeriode(undefined, new Date('2017-01-01'));
+        expect(valid).to.equal(true);
     });
 
     it('Skal ikke gi feilmelding om tildato er undefined og fradato satt', () => {
-        const component = lagPeriodeValidering(
-            new Date('2017-01-01'),
-            undefined
-        );
-        expect(component.hasClass('skjema--harFeil')).to.equal(false);
+        const valid = validerPeriode(new Date('2017-01-01'), undefined);
+        expect(valid).to.equal(true);
     });
 
     it('Skal ikke gi feilmelding om tildato og fradato er samme dag', () => {
-        const component = lagPeriodeValidering(
+        const valid = validerPeriode(
             new Date('2017-01-01'),
             new Date('2017-01-01')
         );
-        expect(component.hasClass('skjema--harFeil')).to.equal(false);
+        expect(valid).to.equal(true);
     });
 
     it('Skal ikke gi feilmelding om fradato er før tildato', () => {
-        const component = lagPeriodeValidering(
+        const valid = validerPeriode(
             new Date('2017-01-01'),
             new Date('2017-02-02')
         );
-        expect(component.hasClass('skjema--harFeil')).to.equal(false);
+        expect(valid).to.equal(true);
     });
 
     it('Skal gi feilmelding om tildato er før fradato', () => {
-        const component = lagPeriodeValidering(
+        const valid = validerPeriode(
             new Date('2017-02-02'),
             new Date('2017-01-01')
         );
-        expect(component.hasClass('skjema--harFeil')).to.equal(true);
+        expect(valid).to.equal(false);
     });
 });
