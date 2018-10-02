@@ -7,7 +7,6 @@ import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import FieldGroupsValidering from '../../../../felles-komponenter/skjema/fieldgroups';
-import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
@@ -31,6 +30,7 @@ import {
     STATUS_PLANLAGT,
 } from '../../../../constant';
 import { selectAktivitetListeStatus } from '../../aktivitetliste-selector';
+import StatusRadio from './status-radio';
 
 const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
 const BEGRUNNELSE_FELT_NAME = 'begrunnelse';
@@ -85,53 +85,28 @@ function AktivitetStatusForm(props) {
             >
                 <div className="row">
                     <div className="col col-xs-4">
-                        <Radio
-                            feltNavn="aktivitetstatus"
-                            label={
-                                <FormattedMessage id="aktivitetstavle.brukerErInteressert" />
-                            }
-                            value={STATUS_BRUKER_ER_INTRESSERT}
-                            id={`id--${STATUS_BRUKER_ER_INTRESSERT}`}
+                        <StatusRadio
+                            status={STATUS_BRUKER_ER_INTRESSERT}
                             disabled={disabled}
                         />
-                        <Radio
-                            feltNavn="aktivitetstatus"
-                            label={
-                                <FormattedMessage id="aktivitetstavle.planlagt" />
-                            }
-                            value={STATUS_PLANLAGT}
-                            id={`id--${STATUS_PLANLAGT}`}
+                        <StatusRadio
+                            status={STATUS_PLANLAGT}
                             disabled={disabled}
                         />
                     </div>
                     <div className="col col-xs-4">
-                        <Radio
-                            feltNavn="aktivitetstatus"
-                            label={
-                                <FormattedMessage id="aktivitetstavle.gjennomfoert" />
-                            }
-                            value={STATUS_GJENNOMFOERT}
-                            id={`id--${STATUS_GJENNOMFOERT}`}
+                        <StatusRadio
+                            status={STATUS_GJENNOMFOERT}
                             disabled={disabled}
                         />
-                        <Radio
-                            feltNavn="aktivitetstatus"
-                            label={
-                                <FormattedMessage id="aktivitetstavle.fullfoert" />
-                            }
-                            value={STATUS_FULLFOERT}
-                            id={`id--${STATUS_FULLFOERT}`}
+                        <StatusRadio
+                            status={STATUS_FULLFOERT}
                             disabled={disabled}
                         />
                     </div>
                     <div className="col col-xs-4">
-                        <Radio
-                            feltNavn="aktivitetstatus"
-                            label={
-                                <FormattedMessage id="aktivitetstavle.avbrutt" />
-                            }
-                            value={STATUS_AVBRUTT}
-                            id={`id--${STATUS_AVBRUTT}`}
+                        <StatusRadio
+                            status={STATUS_AVBRUTT}
                             disabled={disabled}
                         />
                     </div>
