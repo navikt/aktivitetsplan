@@ -179,7 +179,17 @@ export class MedisinskBehandlingAktivitet extends AktivitetData {
 }
 
 export class ArenaAktivitet extends AktivitetData {
-    constructor(tittel, fraDato, tilDato, beskrivelse, status, avtalt, arrangoer, antallDagerPerUke, deltakelseProsent){
+    constructor(
+        tittel,
+        fraDato,
+        tilDato,
+        beskrivelse,
+        status,
+        avtalt,
+        arrangoer,
+        antallDagerPerUke,
+        deltakelseProsent
+    ) {
         super(tittel, fraDato, tilDato, status);
         this.beskrivelse = beskrivelse;
         this.avtalt = avtalt;
@@ -195,5 +205,4 @@ export class ArenaAktivitet extends AktivitetData {
     get aktivitetskortDato() {
         return this.fraDatoMedMnd + ' - ' + this.tilDatoMedMnd;
     }
-
 }

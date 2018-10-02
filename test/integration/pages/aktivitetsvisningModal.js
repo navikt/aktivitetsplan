@@ -64,8 +64,7 @@ module.exports = {
         txtBehandlingOppfolgning:
             '//*[@data-testid="aktivitetdetaljer.behandling-oppfolging-label"]/p',
 
-        btnEndre:
-            '//button[contains(@class, "knapp knapp-liten modal-footer__knapp knapp--hoved")]',
+        btnEndre: '//a[contains(@class, "knapp knapp--hoved")]',
         rdioAvtaltMedNav: '//div[@class="avtalt-container__radio"]/div/label',
         btnBekreftAvtaltMedNav:
             '//div[contains(@class, "avtalt-container")]/button[@type="submit"]',
