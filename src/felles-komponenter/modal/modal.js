@@ -33,6 +33,7 @@ function Modal({
             className={classNames('aktivitet-modal', className)}
             overlayClassName="aktivitet-modal__overlay"
             portalClassName="aktivitetsplanfs aktivitet-modal-portal"
+            shouldCloseOnOverlayClick={false}
             onRequestClose={closeFuncOrDefault}
         >
             {header}
