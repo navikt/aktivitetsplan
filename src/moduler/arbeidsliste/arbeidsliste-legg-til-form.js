@@ -41,6 +41,7 @@ function LeggTilArbeidslisteForm({
                         labelId="arbeidsliste.overskrift"
                         feltNavn={'overskrift'}
                         maxLength={OVERSKRIFT_MAKS_LENGDE}
+                        bredde="M"
                         disabled={false}
                     />
                     <Textarea
