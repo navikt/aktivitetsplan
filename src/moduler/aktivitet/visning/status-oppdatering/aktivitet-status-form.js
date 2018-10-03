@@ -6,12 +6,11 @@ import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import Radio from '../../../../felles-komponenter/skjema/input/radio';
+import FieldGroupsValidering from '../../../../felles-komponenter/skjema/fieldgroups-validering';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { HiddenIfAlertStripeInfo } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import visibleIf from '../../../../hocs/visible-if';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import {
@@ -24,7 +23,6 @@ import {
 } from '../../aktivitet-util';
 import {
     INGEN_VALGT,
-    MOTE_TYPE,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
@@ -32,6 +30,7 @@ import {
     STATUS_PLANLAGT,
 } from '../../../../constant';
 import { selectAktivitetListeStatus } from '../../aktivitetliste-selector';
+import StatusRadio from './status-radio';
 
 const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
 const BEGRUNNELSE_FELT_NAME = 'begrunnelse';
@@ -43,6 +42,20 @@ function statusKreverInformasjonMelding(status) {
     return status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
 }
 
+function kanOppdatereStatus(props) {
+    const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(
+        props.valgtAktivitetStatus
+    );
+    const ferdigOgManglerPubliseringAvSamtaleReferat =
+        ferdigStatus &&
+        manglerPubliseringAvSamtaleReferat(
+            props.aktivitet || {},
+            props.valgtAktivitetStatus
+        );
+
+    return !ferdigOgManglerPubliseringAvSamtaleReferat;
+}
+
 function AktivitetStatusForm(props) {
     const {
         aktivitet,
@@ -52,7 +65,6 @@ function AktivitetStatusForm(props) {
         valgtAktivitetStatus,
         disableStatusEndring,
         errorSummary,
-        manglerReferatPublisering,
     } = props;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
     const visAdvarsel = statusKreverInformasjonMelding(valgtAktivitetStatus);
@@ -61,76 +73,45 @@ function AktivitetStatusForm(props) {
         valgtAktivitetStatus,
         aktivitet.type
     );
+    const disabled = disableStatusEndring || lasterData;
+
     return (
         <form onSubmit={handleSubmit}>
-            <div className="row">
-                <div className="col col-xs-4">
-                    <Radio
-                        feltNavn="aktivitetstatus"
-                        label={
-                            <FormattedMessage id="aktivitetstavle.brukerErInteressert" />
-                        }
-                        value={STATUS_BRUKER_ER_INTRESSERT}
-                        id={`id--${STATUS_BRUKER_ER_INTRESSERT}`}
-                        disabled={disableStatusEndring || lasterData}
-                    />
-                    <Radio
-                        feltNavn="aktivitetstatus"
-                        label={
-                            <FormattedMessage id="aktivitetstavle.planlagt" />
-                        }
-                        value={STATUS_PLANLAGT}
-                        id={`id--${STATUS_PLANLAGT}`}
-                        disabled={disableStatusEndring || lasterData}
-                    />
+            {errorSummary}
+            <FieldGroupsValidering
+                feltNavn="statusValidering"
+                errorMessageId="referat.validering.ikke-publisert"
+                validate={() => kanOppdatereStatus(props)}
+            >
+                <div className="row">
+                    <div className="col col-xs-4">
+                        <StatusRadio
+                            status={STATUS_BRUKER_ER_INTRESSERT}
+                            disabled={disabled}
+                        />
+                        <StatusRadio
+                            status={STATUS_PLANLAGT}
+                            disabled={disabled}
+                        />
+                    </div>
+                    <div className="col col-xs-4">
+                        <StatusRadio
+                            status={STATUS_GJENNOMFOERT}
+                            disabled={disabled}
+                        />
+                        <StatusRadio
+                            status={STATUS_FULLFOERT}
+                            disabled={disabled}
+                        />
+                    </div>
+                    <div className="col col-xs-4">
+                        <StatusRadio
+                            status={STATUS_AVBRUTT}
+                            disabled={disabled}
+                        />
+                    </div>
                 </div>
-                <div className="col col-xs-4">
-                    <Radio
-                        feltNavn="aktivitetstatus"
-                        label={
-                            <FormattedMessage id="aktivitetstavle.gjennomfoert" />
-                        }
-                        value={STATUS_GJENNOMFOERT}
-                        id={`id--${STATUS_GJENNOMFOERT}`}
-                        disabled={disableStatusEndring || lasterData}
-                    />
-                    <Radio
-                        feltNavn="aktivitetstatus"
-                        label={
-                            <FormattedMessage id="aktivitetstavle.fullfoert" />
-                        }
-                        value={STATUS_FULLFOERT}
-                        id={`id--${STATUS_FULLFOERT}`}
-                        disabled={
-                            disableStatusEndring ||
-                            lasterData ||
-                            manglerReferatPublisering
-                        }
-                    />
-                </div>
-                <div className="col col-xs-4">
-                    <Radio
-                        feltNavn="aktivitetstatus"
-                        label={
-                            <FormattedMessage id="aktivitetstavle.avbrutt" />
-                        }
-                        value={STATUS_AVBRUTT}
-                        id={`id--${STATUS_AVBRUTT}`}
-                        disabled={
-                            disableStatusEndring ||
-                            lasterData ||
-                            (manglerReferatPublisering &&
-                                aktivitet.type !== MOTE_TYPE)
-                        }
-                    />
-                </div>
-            </div>
-
-            <HiddenIfAlertStripeInfo hidden={!manglerReferatPublisering}>
-                <FormattedMessage
-                    id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`}
-                />
-            </HiddenIfAlertStripeInfo>
+            </FieldGroupsValidering>
 
             <VisibleIfDiv className="status-alert" visible={dirty}>
                 <VisibleAlertStripeSuksessSolid
@@ -139,8 +120,6 @@ function AktivitetStatusForm(props) {
                 >
                     <FormattedMessage id="aktivitetstatus.oppdater-status-advarsel" />
                 </VisibleAlertStripeSuksessSolid>
-
-                {errorSummary}
 
                 <VisibleIfDiv visible={visBegrunnelseFelt}>
                     <Textarea
@@ -176,28 +155,13 @@ const ikkeForLangBegrunnelse = maksLengde(
 const harBegrunnelse = pakrevd(
     'opprett-begrunnelse.melding.feilmelding.for-kort'
 );
+
 const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
     trengerBegrunnelse(
         props.aktivitet.avtalt,
         props.values.aktivitetstatus,
         props.aktivitet.type
     ) && harBegrunnelse(begrunnelse, props);
-
-function kanOppdatereStatus() {
-    return (ignored, props) => {
-        const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(
-            props.valgtAktivitetStatus
-        );
-        return (
-            ferdigStatus &&
-            manglerPubliseringAvSamtaleReferat(
-                props.aktivitet || {},
-                props.valgtAktivitetStatus
-            ) &&
-            <FormattedMessage id="referat.validering.ikke-publisert" />
-        );
-    };
-}
 
 const OppdaterReduxForm = validForm({
     form: AKTIVITET_STATUS_FORM_NAME,
@@ -209,7 +173,7 @@ const OppdaterReduxForm = validForm({
             ikkeForLangBegrunnelse,
             harBegrunnelseHvisAvtaltOgPakrevdForStatus,
         ],
-        kanOppdatereStatus: kanOppdatereStatus(),
+        statusValidering: [],
     },
 })(AktivitetStatusForm);
 
@@ -220,7 +184,6 @@ AktivitetStatusForm.defaultProps = {
 
 AktivitetStatusForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
-    manglerReferatPublisering: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     dirty: PT.bool.isRequired,
     valgtAktivitetStatus: PT.string,
@@ -237,10 +200,6 @@ const mapStateToProps = (state, props) => {
         valgtAktivitetStatus: formValueSelector(AKTIVITET_STATUS_FORM_NAME)(
             state,
             'aktivitetstatus'
-        ),
-        manglerReferatPublisering: manglerPubliseringAvSamtaleReferat(
-            aktivitet,
-            status
         ),
         initialValues: {
             begrunnelse: avsluttetKommentar,
