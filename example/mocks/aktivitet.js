@@ -194,17 +194,17 @@ export function opprettAktivitet(aktivitet) {
 }
 
 export function oppdaterAktivitet(aktivitetId, aktivitet) {
-    const oldAktivitet = aktiviteter.filter(
+    const oldAktivitet = aktiviteter.find(
         akivitet => akivitet.id === aktivitetId
-    )[0];
+    );
     Object.assign(oldAktivitet, aktivitet);
     return aktivitet;
 }
 
 export function publiserReferat(aktivitetId) {
-    const oldAktivitet = aktiviteter.filter(
+    const oldAktivitet = aktiviteter.find(
         akivitet => akivitet.id === aktivitetId
-    )[0];
+    );
     return { ...oldAktivitet, erReferatPublisert: true };
 }
 
