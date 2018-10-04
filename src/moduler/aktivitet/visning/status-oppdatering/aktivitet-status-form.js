@@ -140,6 +140,7 @@ function AktivitetStatusForm(props) {
                     spinner={lasterData}
                     autoDisableVedSpinner
                     className="oppdater-status"
+                    disabled={disabled}
                 >
                     <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
                 </Hovedknapp>
