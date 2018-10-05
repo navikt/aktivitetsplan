@@ -1,4 +1,4 @@
-const driver = require('./chrome-driver/driver');
+const chromedriver = require('chromedriver');
 const mock = require('./mock');
 import { getNetworkIp } from './getNetworkIp';
 import { getFasitUsers, setBrowserCookies } from './testbruker';
@@ -42,7 +42,7 @@ module.exports = {
 
     before: function(done) {
         if (this.isLocal) {
-            driver.start();
+            chromedriver.start();
         }
         if (!this.browserstack && !this.verdikjedeTest) {
             mock.startMock();
@@ -54,7 +54,7 @@ module.exports = {
 
     after: function(done) {
         if (this.isLocal) {
-            driver.stop();
+            chromedriver.stop();
         }
         if (!this.browserstack && !this.verdikjedeTest) {
             mock.stopMock();
