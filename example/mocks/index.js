@@ -122,6 +122,9 @@ mock.put(
     ({ pathParams }) => setFerdigBehandlet(pathParams.dialogId, pathParams.bool)
 );
 mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettDialog(body));
+mock.post('/veilarbdialog/api/dialog/forhandsorientering', ({ body }) =>
+    opprettDialog(body)
+);
 
 //veilarbdialogproxy
 mock.get('/veilarbdialogproxy/api/dialog', dialog);

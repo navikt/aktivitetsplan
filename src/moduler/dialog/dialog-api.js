@@ -24,3 +24,10 @@ export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
         `${DIALOG_BASE_URL}/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}`
     );
 }
+
+export function sendForhandsorientering(henvendelse) {
+    return postAsJson(
+        `${DIALOG_BASE_URL}/dialog/forhandsorientering`,
+        henvendelse
+    );
+}
