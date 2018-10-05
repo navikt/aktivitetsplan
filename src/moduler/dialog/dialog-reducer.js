@@ -20,6 +20,11 @@ export const OPPDATER_DIALOG_FEILET = 'dialog/oppdater/fail';
 export const ESKALERINGS_FILTER_TYPE = 'dialog/eskalering';
 export const ESKALERINGS_FILTER = { type: ESKALERINGS_FILTER_TYPE };
 
+export const SEND_FORHANDSORIENTERING_OK = 'dialog/forhandsorientering/ok';
+export const SEND_FORHANDSORIENTERING_FEILET =
+    'dialog/forhandsorientering/fail';
+export const SEND_FORHANDSORIENTERING = 'dialog/forhandsorientering';
+
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
@@ -59,10 +64,12 @@ export default function reducer(state = initalState, action) {
         case OPPRETT_HENVENDELSE_FEILET:
         case DIALOG_LEST_FEILET:
         case OPPDATER_DIALOG_FEILET:
+        case SEND_FORHANDSORIENTERING_FEILET:
             return { ...state, status: STATUS.ERROR, feil: data };
         case OPPRETTET_HENVENDELSE:
         case DIALOG_LEST_OK:
         case OPPDATER_DIALOG_OK:
+        case SEND_FORHANDSORIENTERING_OK:
             return nyStateMedOppdatertDialog(state, data);
         default:
             return state;
@@ -114,4 +121,12 @@ export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
             PENDING: OPPDATER_DIALOG,
         }
     );
+}
+
+export function sendForhandsorientering(henvendelse) {
+    return doThenDispatch(() => Api.sendForhandsorientering(henvendelse), {
+        OK: SEND_FORHANDSORIENTERING_OK,
+        FEILET: SEND_FORHANDSORIENTERING_FEILET,
+        PENDING: SEND_FORHANDSORIENTERING,
+    });
 }

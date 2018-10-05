@@ -101,7 +101,6 @@ function NavigasjonslinjeMeny({
 }
 
 NavigasjonslinjeMeny.propTypes = {
-    brukerErMin: PT.bool.isRequired,
     kanRedigere: PT.bool.isRequired,
     kanLeggeTil: PT.bool.isRequired,
     kanFjerne: PT.bool.isRequired,

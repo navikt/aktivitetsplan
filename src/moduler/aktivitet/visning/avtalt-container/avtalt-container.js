@@ -14,6 +14,7 @@ import {
     STATUS_FULLFOERT,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../../../constant';
+import AvtaltForm from './avtalt-form';
 import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
@@ -25,6 +26,7 @@ import {
     harFeature,
 } from '../../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
+import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -83,7 +85,8 @@ class AvtaltContainer extends Component {
             return null;
         }
 
-        const setAvtaltInnhold = (
+        // Denne denne kan fjernes når feature-toggle 'FORHANDSORIENTERING' er gjort permanent.
+        const avtaltInnhold = (
             <div className={`${className} avtalt-container`}>
                 <Undertittel>
                     <FormattedMessage id="sett-avtalt.header" />
@@ -111,6 +114,22 @@ class AvtaltContainer extends Component {
             </div>
         );
 
+        const avtaltInnholdForhandsvarsel = (
+            <AvtaltForm
+                className={`${className} avtalt-container`}
+                oppdaterer={oppdaterer}
+                lasterData={lasterData}
+                onSubmit={avtaltForm => {
+                    this.setState({ visBekreftAvtalt: true });
+                    doSetAktivitetTilAvtalt(aktivitet, avtaltForm.avtaltText);
+                }}
+            />
+        );
+
+        const setAvtaltInnhold = harFeature(FORHANDSORIENTERING, features)
+            ? avtaltInnholdForhandsvarsel
+            : avtaltInnhold;
+
         const cls = classes =>
             classNames('avtalt-container__vis-avtalt', classes);
         const visAvtalt = (
@@ -130,6 +149,7 @@ class AvtaltContainer extends Component {
         );
     }
 }
+
 AvtaltContainer.propTypes = {
     doSetAktivitetTilAvtalt: PT.func.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
@@ -149,7 +169,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doSetAktivitetTilAvtalt: aktivitet => {
+    doSetAktivitetTilAvtalt: (aktivitet, avtaltTekst) => {
+        sendForhandsorientering({
+            aktivitetId: aktivitet.id,
+            tekst: avtaltTekst,
+            overskrift: aktivitet.tittel,
+        })(dispatch);
         oppdaterAktivitet({ ...aktivitet, avtalt: true })(dispatch);
     },
 });
