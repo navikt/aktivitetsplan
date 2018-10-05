@@ -117,6 +117,8 @@ class AvtaltContainer extends Component {
         const avtaltInnholdForhandsvarsel = (
             <AvtaltForm
                 className={`${className} avtalt-container`}
+                oppdaterer={oppdaterer}
+                lasterData={lasterData}
                 onSubmit={avtaltForm => {
                     this.setState({ visBekreftAvtalt: true });
                     doSetAktivitetTilAvtalt(aktivitet, avtaltForm.avtaltText);

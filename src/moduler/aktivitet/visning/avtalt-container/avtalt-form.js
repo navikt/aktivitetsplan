@@ -31,6 +31,8 @@ const pakrevdForhandsorienteringLengde = pakrevd(
 function AvtaltForm({
     handleSubmit,
     className,
+    oppdaterer,
+    lasterData,
     currentAvtaltSelect,
     currentAvtaltCheckbox,
 }) {
@@ -62,7 +64,7 @@ function AvtaltForm({
                     labelId="sett-avtalt.label"
                     name="avtalt"
                     feltNavn="avtaltCheckbox"
-                    disabled={false} // lasterData
+                    disabled={lasterData}
                 />
                 <HjelpetekstOver>
                     <FormattedMessage id="sett-avtalt.hjelpetekst" />
@@ -116,10 +118,7 @@ function AvtaltForm({
                             {currentAvtaltSelect === SEND_PARAGRAF_11_9 &&
                                 forhadsorienteringstekstParagraf119}
                         </div>}
-                    <Knapp
-                        spinner={false} // oppdaterer
-                        disabled={false} // lasterData
-                    >
+                    <Knapp spinner={oppdaterer} disabled={lasterData}>
                         <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
                     </Knapp>
                 </div>}
@@ -130,7 +129,8 @@ function AvtaltForm({
 AvtaltForm.propTypes = {
     handleSubmit: PT.func,
     className: PT.string,
-    errorSummary: PT.node.isRequired,
+    oppdaterer: PT.bool.isRequired,
+    lasterData: PT.bool.isRequired,
     currentAvtaltSelect: PT.string,
     currentAvtaltCheckbox: PT.bool,
 };
