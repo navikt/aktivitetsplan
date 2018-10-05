@@ -1,19 +1,21 @@
 'use strict';
 import { aktivitetsplanOversiktSide } from '../pages/sider';
-import arenaAktiviteter from '../../../../example/mocks/arena';
+import arenaAktiviteter from '../../../example/mocks/arena';
 import { ArenaAktivitet } from '../data/aktivitet-data';
 import { AktivitetStatus } from '../data/aktivitet-status';
 import { AktivitetTilstand } from '../data/aktivitet-tilstand';
+let SBSbruker;
 
 module.exports = {
     tags: ['arena'],
 
     before: function(browser) {
         browser.useXpath();
+        SBSbruker = browser.globals.testbrukere.SBS;
     },
 
     'Veileder - naviger til side': function(browser) {
-        browser.url(browser.globals.loginUrl);
+        browser.url(browser.globals.FSSUrl + SBSbruker.brukerNavn);
     },
 
     'Veileder - Valider arenaaktivitet': function(browser) {
@@ -29,8 +31,11 @@ module.exports = {
             arena1.antallDagerPerUke,
             arena1.deltakelseProsent
         );
-        arenaAktivitet.tilstand = arena1.avtalt ? AktivitetTilstand.AVTALTMEDNAV : AktivitetTilstand.INGEN;
-        arenaAktivitet.aktivitetURL = `${browser.globals.loginUrl}/aktivitet/vis/${arena1.id}`;
+        arenaAktivitet.tilstand = arena1.avtalt
+            ? AktivitetTilstand.AVTALTMEDNAV
+            : AktivitetTilstand.INGEN;
+        arenaAktivitet.aktivitetURL = `${browser.globals
+            .FSSUrl}${SBSbruker.brukerNavn}/aktivitet/vis/${arena1.id}`;
 
         aktivitetsplanOversiktSide(browser)
             .validerAktivitet(arenaAktivitet)

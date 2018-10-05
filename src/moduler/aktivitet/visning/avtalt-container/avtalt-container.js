@@ -64,7 +64,7 @@ class AvtaltContainer extends Component {
         if (
             harFeature(FORHANDSORIENTERING, features) &&
             !avtalt &&
-            !erMerEnnSyvDagerTil(aktivitet.fraDato)
+            !erMerEnnSyvDagerTil(aktivitet.tilDato)
         ) {
             return (
                 <div>

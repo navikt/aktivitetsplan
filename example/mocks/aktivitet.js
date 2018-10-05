@@ -67,6 +67,44 @@ const aktiviteter = [
         oppfolging: 'Bli en bedre sjørøver',
         erReferatPublisert: false,
     }),
+    wrapAktivitet({
+        id: '6871',
+        versjon: '9389',
+        tittel: 'Beste møtet ever',
+        beskrivelse:
+            'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
+        lenke: null,
+        type: 'MOTE',
+        status: 'PLANLAGT',
+        fraDato: '2018-08-21T08:00:00+02:00',
+        tilDato: '2018-08-21T12:15:00+02:00',
+        opprettetDato: '2018-08-21T11:55:14.044+02:00',
+        endretDato: '2018-08-21T11:57:57.636+02:00',
+        endretAv: 'z990207',
+        historisk: false,
+        avsluttetKommentar: null,
+        avtalt: false,
+        lagtInnAv: 'NAV',
+        transaksjonsType: 'STATUS_ENDRET',
+        etikett: null,
+        kontaktperson: null,
+        arbeidsgiver: null,
+        arbeidssted: null,
+        stillingsTittel: null,
+        hensikt: null,
+        oppfolging: null,
+        antallStillingerSokes: null,
+        avtaleOppfolging: null,
+        jobbStatus: null,
+        ansettelsesforhold: null,
+        arbeidstid: null,
+        behandlingType: null,
+        behandlingSted: null,
+        effekt: null,
+        behandlingOppfolging: null,
+        kanal: 'TELEFON',
+        erReferatPublisert: false,
+    }),
 ];
 
 function valueOrNull(potentialValue) {
@@ -154,12 +192,20 @@ export function opprettAktivitet(aktivitet) {
     aktiviteter.push(newAktivitet);
     return newAktivitet;
 }
+
 export function oppdaterAktivitet(aktivitetId, aktivitet) {
-    const oldAktivitet = aktiviteter.filter(
+    const oldAktivitet = aktiviteter.find(
         akivitet => akivitet.id === aktivitetId
-    )[0];
+    );
     Object.assign(oldAktivitet, aktivitet);
     return aktivitet;
+}
+
+export function publiserReferat(aktivitetId) {
+    const oldAktivitet = aktiviteter.find(
+        akivitet => akivitet.id === aktivitetId
+    );
+    return { ...oldAktivitet, erReferatPublisert: true };
 }
 
 export default {

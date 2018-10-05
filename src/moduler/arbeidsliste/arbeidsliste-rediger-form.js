@@ -48,6 +48,7 @@ function RedigerArbeidslisteForm({
                     <Input
                         labelId="arbeidsliste.overskrift"
                         feltNavn={'overskrift'}
+                        bredde="M"
                         maxLength={OVERSKRIFT_MAKS_LENGDE}
                         disabled={false}
                     />

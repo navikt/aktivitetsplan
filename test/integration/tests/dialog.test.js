@@ -4,16 +4,18 @@ import {
     dialogOversiktModal,
 } from '../pages/sider';
 import { dialoger } from '../data/dialoger';
+let SBSbruker;
 
 module.exports = {
     tags: ['dialog'],
 
     before: function(browser) {
         browser.useXpath();
+        SBSbruker = browser.globals.testbrukere.SBS;
     },
 
     'Veileder - naviger til side': function(browser) {
-        browser.url(browser.globals.loginUrl);
+        browser.url(browser.globals.FSSUrl + SBSbruker.brukerNavn);
     },
 
     'Veileder - Lag ny dialog': function(browser) {
