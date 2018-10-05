@@ -26,6 +26,7 @@ function Aktivitetvisning({
     tillatSletting,
     tillatEndring,
     history,
+    laster,
 }) {
     const arenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
@@ -73,6 +74,7 @@ function Aktivitetvisning({
                     valgtAktivitet={aktivitet}
                     arenaAktivitet={arenaAktivitet}
                     tillatEndring={tillatEndring}
+                    laster={laster}
                 />
 
                 <AvtaltContainer
@@ -113,6 +115,7 @@ Aktivitetvisning.propTypes = {
     tillatSletting: PT.bool.isRequired,
     tillatEndring: PT.bool.isRequired,
     history: AppPT.history.isRequired,
+    laster: PT.bool.isRequired,
 };
 
 export default withRouter(lazyHOC(Aktivitetvisning));

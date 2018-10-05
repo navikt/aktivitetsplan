@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { Knapp } from 'nav-frontend-knapper';
 import Lenke from './lenke';
+import visibleIfHOC from '../../hocs/visible-if';
 
 function Lenkeknapp({ href, className, disabled, type, ...rest }) {
     const lenkeknappClassNames = classNames(
@@ -36,4 +37,4 @@ Lenkeknapp.defaultProps = {
     disabled: false,
 };
 
-export default Lenkeknapp;
+export default visibleIfHOC(Lenkeknapp);

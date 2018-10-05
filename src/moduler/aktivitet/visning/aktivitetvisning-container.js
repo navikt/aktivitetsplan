@@ -13,6 +13,7 @@ import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import {
+    selectAktivitetListeStatus,
     selectAktivitetMedId,
     selectKanEndreAktivitetDetaljer,
 } from '../aktivitetliste-selector';
@@ -90,6 +91,7 @@ AktivitetvisningContainer.propTypes = {
     aktivitetId: PT.string.isRequired,
     valgtAktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
+    laster: PT.bool.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
     doSettForrigeAktiveAktivitetId: PT.func.isRequired,
@@ -114,6 +116,7 @@ const mapStateToProps = (state, props) => {
         !valgtAktivitet.historisk &&
         TILLAT_SLETTING &&
         (!selectErUnderOppfolging(state) || aktivitetErEtterOppfolgingUtgang);
+    const laster = selectAktivitetListeStatus(state) !== STATUS.OK;
 
     return {
         avhengigheter: [
@@ -126,6 +129,7 @@ const mapStateToProps = (state, props) => {
         valgtAktivitet,
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
         tillatSletting,
+        laster,
     };
 };
 

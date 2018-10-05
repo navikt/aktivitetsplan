@@ -22,7 +22,7 @@ function Verktoylinje({
         <div className="verktoylinje">
             <div className="verktoylinje__verktoy">
                 <Lenkeknapp
-                    type="hoved"
+                    type="big-hoved"
                     href="/aktivitet/ny"
                     disabled={
                         viserHistoriskPeriode ||
