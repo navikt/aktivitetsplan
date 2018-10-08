@@ -8,7 +8,7 @@ import { Radio } from 'nav-frontend-skjema';
 import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { AlertStripeInfo, AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import {
     STATUS_AVBRUTT,
     STATUS_FULLFOERT,
@@ -27,6 +27,11 @@ import {
 } from '../../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
+import {
+    selectErBrukerManuell,
+    selectErUnderKvp,
+    selectReservasjonKRR,
+} from '../../../oppfolging-status/oppfolging-selector';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -43,6 +48,7 @@ class AvtaltContainer extends Component {
             doSetAktivitetTilAvtalt,
             className,
             features,
+            erManuellKrrKvpBruker,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
@@ -118,6 +124,7 @@ class AvtaltContainer extends Component {
             <AvtaltForm
                 className={`${className} avtalt-container`}
                 oppdaterer={oppdaterer}
+                erManuellKrrKvpBruker={erManuellKrrKvpBruker}
                 lasterData={lasterData}
                 onSubmit={avtaltForm => {
                     this.setState({ visBekreftAvtalt: true });
@@ -130,14 +137,28 @@ class AvtaltContainer extends Component {
             ? avtaltInnholdForhandsvarsel
             : avtaltInnhold;
 
-        const cls = classes =>
-            classNames('avtalt-container__vis-avtalt', classes);
-        const visAvtalt = (
-            <div className={cls(className)}>
+        const visAvtaltErManuellKrrKvpBruker = (
+            <AlertStripeSuksess>
+                <FormattedMessage id="satt-til-avtalt-manuellkrrkvp" />
+            </AlertStripeSuksess>
+        );
+
+        const visAvtaltBrukerMedAktivitesPlan = (
+            <div>
                 <Icon kind="ok-sirkel-fylt" height="21px" />
                 <Undertittel>
                     <FormattedMessage id="satt-til-avtalt.tekst" />
                 </Undertittel>
+            </div>
+        );
+
+        const cls = classes =>
+            classNames('avtalt-container__vis-avtalt', classes);
+        const visAvtalt = (
+            <div className={cls(className)}>
+                {erManuellKrrKvpBruker
+                    ? visAvtaltErManuellKrrKvpBruker
+                    : visAvtaltBrukerMedAktivitesPlan}
             </div>
         );
 
@@ -156,6 +177,7 @@ AvtaltContainer.propTypes = {
     aktivitetStatus: AppPT.status,
     className: PT.string,
     features: PT.object.isRequired,
+    erManuellKrrKvpBruker: PT.bool.isRequired,
 };
 
 AvtaltContainer.defaultProps = {
@@ -166,6 +188,10 @@ AvtaltContainer.defaultProps = {
 const mapStateToProps = state => ({
     aktivitetStatus: selectAktivitetStatus(state),
     features: selectFeatureData(state),
+    erManuellKrrKvpBruker:
+        selectErBrukerManuell(state) ||
+        selectErUnderKvp(state) ||
+        selectReservasjonKRR(state),
 });
 
 const mapDispatchToProps = dispatch => ({
