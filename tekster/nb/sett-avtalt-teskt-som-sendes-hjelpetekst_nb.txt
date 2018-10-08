@@ -1,1 +1,1 @@
-Brukeren får et varsel på SMS eller e-post om å logge inn for å lese beskjeden (eller aktivietskortet). Det er mobilnummeret eller e-postadressen som brukeren selv har lagt inn i det offentlige kontaktregisteret som brukes.
+Brukeren får et varsel på SMS eller e-post om å logge inn for å lese beskjeden (eller aktivitetskortet). Det er mobilnummeret eller e-postadressen som brukeren selv har lagt inn i det offentlige kontaktregisteret som brukes.

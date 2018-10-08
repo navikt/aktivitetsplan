@@ -15,9 +15,9 @@ import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 
-const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
-const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
-const IKKE_SEND_FORHANDSORIENTERING = 'ikke_send_forhandsorientering';
+export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
+export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
+export const IKKE_SEND_FORHANDSORIENTERING = 'ikke_send_forhandsorientering';
 
 const FORHANDSORIENTERING_MAKS_LENGDE = 500;
 const begrensetForhandsorienteringLengde = maksLengde(
@@ -44,7 +44,7 @@ function AvtaltForm({
 
     const forhadsorienteringstekstParagraf119 = (
         <Textarea
-            feltNavn="avtaltText"
+            feltNavn="avtaltText119"
             maxLength={FORHANDSORIENTERING_MAKS_LENGDE}
         />
     );
@@ -147,7 +147,7 @@ const AvtaltReduxForm = validForm({
     form: formNavn,
     enableReinitialize: false,
     validate: {
-        avtaltText: [
+        avtaltText119: [
             begrensetForhandsorienteringLengde,
             pakrevdForhandsorienteringLengde,
         ],
@@ -159,8 +159,11 @@ const mapStateToProps = (state, props) => {
     return {
         initialValues: {
             avtaltSelect: SEND_FORHANDSORIENTERING,
-            avtaltText: props.intl.formatMessage({
+            avtaltText119: props.intl.formatMessage({
                 id: 'sett-avtalt-paragra-11-9-tekst',
+            }),
+            avtaltText: props.intl.formatMessage({
+                id: 'sett-avtalt-forhandsorientering-tekst',
             }),
             avtaltCheckbox: false,
         },
