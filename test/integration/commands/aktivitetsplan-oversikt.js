@@ -34,12 +34,12 @@ module.exports = {
             .url(result => {
                 aktivitet.aktivitetURL = result.value;
             })
-            .perform(function() {
+            .perform(() =>
                 sider
                     .aktivitetsvisningModal()
                     .lukkVindu(this.api.page.aktivitetsplanOversiktSide())
-                    .validerAktivitet(aktivitet);
-            });
+                    .validerAktivitet(aktivitet)
+            );
         return aktivitet;
     },
 

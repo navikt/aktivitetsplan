@@ -51,6 +51,7 @@ const LOADERS = [
 ];
 
 module.exports = {
+    mode: 'production',
     context: __dirname,
     devtool: DEBUG ? 'cheap-module-eval-source-map' : 'source-map',
     entry: ['whatwg-fetch', './fss/aktivitetsplan-root.js'],

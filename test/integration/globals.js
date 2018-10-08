@@ -7,6 +7,7 @@ module.exports = {
     default: {
         isLocal: true,
     },
+    asyncHookTimeout: 30000,
     verdikjede: {
         verdikjedeTest: true,
         isLocal: true,

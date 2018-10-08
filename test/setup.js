@@ -13,14 +13,14 @@ chai.use(chaiEnzyme());
 const Module = require('module').Module;
 
 var jsdom = require('jsdom');
-var document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-var window = document.defaultView;
-window.call = function() {};
-window.URL = url.URL;
+const { JSDOM } = jsdom;
+const dom = new JSDOM('<!doctype html><html><body></body></html>');
+var window = dom.window;
 
-global.document = document;
+global.document = window.document;
 global.document.cookie = '';
 global.window = window;
+global.URL = url.URL;
 
 window.aktivitetsplan = {
     veilarbdialog_url: 'http://localhost:8080/veilarbdialog/api',

@@ -40,6 +40,7 @@ module.exports = function(env) {
     const innside = !(env && env.utside);
 
     return {
+        mode: 'development',
         entry: ['whatwg-fetch', './example/example.js'],
         devtool: isDev ? 'source-map' : false,
         output: {
