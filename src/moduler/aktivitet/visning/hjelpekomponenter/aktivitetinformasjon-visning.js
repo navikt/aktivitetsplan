@@ -39,7 +39,7 @@ function AktivitetinformasjonVisning({
                 />
 
                 <Lenkeknapp
-                    visable={tillatEndring && !arenaAktivitet}
+                    visible={tillatEndring && !arenaAktivitet}
                     type="hoved"
                     href={endreAktivitetRoute(valgtAktivitet.id)}
                     disabled={laster}

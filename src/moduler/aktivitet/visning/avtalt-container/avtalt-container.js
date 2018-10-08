@@ -41,6 +41,7 @@ class AvtaltContainer extends Component {
             aktivitet,
             aktivitetStatus,
             doSetAktivitetTilAvtalt,
+            doSetAktivitetTilAvtaltUtenForhandsorientering,
             className,
             features,
         } = this.props;
@@ -106,7 +107,10 @@ class AvtaltContainer extends Component {
                 {this.state.visBekreftAvtalt &&
                     <Knapp
                         spinner={oppdaterer}
-                        onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
+                        onClick={() =>
+                            doSetAktivitetTilAvtaltUtenForhandsorientering(
+                                aktivitet
+                            )}
                         disabled={lasterData}
                     >
                         <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
@@ -152,6 +156,7 @@ class AvtaltContainer extends Component {
 
 AvtaltContainer.propTypes = {
     doSetAktivitetTilAvtalt: PT.func.isRequired,
+    doSetAktivitetTilAvtaltUtenForhandsorientering: PT.func.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
     aktivitetStatus: AppPT.status,
     className: PT.string,
@@ -175,6 +180,9 @@ const mapDispatchToProps = dispatch => ({
             tekst: avtaltTekst,
             overskrift: aktivitet.tittel,
         })(dispatch);
+        oppdaterAktivitet({ ...aktivitet, avtalt: true })(dispatch);
+    },
+    doSetAktivitetTilAvtaltUtenForhandsorientering: aktivitet => {
         oppdaterAktivitet({ ...aktivitet, avtalt: true })(dispatch);
     },
 });
