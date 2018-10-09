@@ -12,9 +12,11 @@ class Accordion extends Component {
         this.state = {
             apen: props.apen,
         };
+
+        this.apne = this.apne.bind(this);
     }
 
-    apne = e => {
+    apne(e) {
         e.preventDefault();
         this.setState({
             apen: !this.state.apen,
@@ -23,7 +25,7 @@ class Accordion extends Component {
         if (this.props.onClick !== undefined) {
             this.props.onClick(e);
         }
-    };
+    }
 
     render() {
         const ChevronLink = (

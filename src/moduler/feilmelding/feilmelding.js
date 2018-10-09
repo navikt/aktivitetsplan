@@ -94,13 +94,15 @@ class Feilmelding extends Component {
         this.state = {
             apen: false,
         };
+
+        this.toggleDetaljer = this.toggleDetaljer.bind(this);
     }
 
-    toggleDetaljer = () => {
+    toggleDetaljer() {
         this.setState({
             apen: !this.state.apen,
         });
-    };
+    }
 
     render() {
         const { feilmeldinger, className, erVeileder, intl } = this.props;

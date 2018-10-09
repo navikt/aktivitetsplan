@@ -34,9 +34,11 @@ class AvsluttOppfolgingProsess extends Component {
             kanAvslutte: false,
             harSjekket: false,
         };
+
+        this.gaTilBekreft = this.gaTilBekreft.bind(this);
     }
 
-    gaTilBekreft = url => {
+    gaTilBekreft(url) {
         this.props.doKanAvslutteOppfolging().then(response => {
             this.setState({
                 kanAvslutte: response.data.avslutningStatus.kanAvslutte,
@@ -46,7 +48,7 @@ class AvsluttOppfolgingProsess extends Component {
                 this.props.history.push(url);
             }
         });
-    };
+    }
 
     render() {
         const { avslutningStatus, laster, slettBegrunnelse } = this.props;

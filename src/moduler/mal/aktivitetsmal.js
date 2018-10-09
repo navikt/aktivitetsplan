@@ -77,6 +77,8 @@ class AktivitetsMal extends Component {
         super(props);
         autobind(this);
         this.state = {};
+
+        this.toggleHistoriskeMal = this.toggleHistoriskeMal.bind(this);
     }
 
     componentDidMount() {
@@ -84,12 +86,12 @@ class AktivitetsMal extends Component {
         this.props.doHentMalListe();
     }
 
-    toggleHistoriskeMal = e => {
+    toggleHistoriskeMal(e) {
         e.preventDefault();
         this.setState({
             visHistoriskeMal: !this.state.visHistoriskeMal,
         });
-    };
+    }
 
     render() {
         const {

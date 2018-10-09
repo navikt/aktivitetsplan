@@ -25,6 +25,11 @@ function lagMalverkOption(mal) {
 }
 
 class Malverk extends Component {
+    constructor(props) {
+        super(props);
+        this.onChangeMalverk = this.onChangeMalverk.bind(this);
+    }
+
     componentDidMount() {
         const { doHentMalverMedType, endre, type } = this.props;
         if (!endre) {
@@ -36,14 +41,14 @@ class Malverk extends Component {
         this.props.doSlettValgtMalverk();
     }
 
-    onChangeMalverk = event => {
+    onChangeMalverk(event) {
         event.preventDefault();
         // event.target.value er tittel på malverk
         const valgtMalverk = this.props.doHentMalverkMedTittel(
             event.target.value
         );
         this.props.doSettValgtMalverk(valgtMalverk);
-    };
+    }
 
     render() {
         const { malverk, avhengigheter, endre } = this.props;
