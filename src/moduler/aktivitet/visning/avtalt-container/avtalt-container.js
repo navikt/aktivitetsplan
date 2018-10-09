@@ -156,7 +156,10 @@ class AvtaltContainer extends Component {
             (harFeature(FORHANDSORIENTERING, features) &&
                 <div className={cls(className)}>
                     <AlertStripeSuksess>
-                        <FormattedMessage id="sett-avtalt-bekreftelse" />
+                        <FormattedMessage
+                            id="sett-avtalt-bekreftelse"
+                            values={{ erManuellKrrKvpBruker }}
+                        />
                     </AlertStripeSuksess>
                 </div>) ||
             // Denne kan fjernes når feature-toggle 'FORHANDSORIENTERING' er gjort permanent.

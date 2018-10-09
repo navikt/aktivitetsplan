@@ -15,7 +15,7 @@ function AvtaltStripeKRRKvpManuellBruker({ brukerUtenAktivitesPlan }) {
         brukerUtenAktivitesPlan
     ).find(([key, value]) => value)[0]; // eslint-disable-line no-unused-vars
     return (
-        <div className="avtalt-container__alertstripe">
+        <div>
             <AlertStripeInfo>
                 <FormattedMessage
                     id="sett-avtalt-forhandsrientering-bruker-uten-aktivitesplan"

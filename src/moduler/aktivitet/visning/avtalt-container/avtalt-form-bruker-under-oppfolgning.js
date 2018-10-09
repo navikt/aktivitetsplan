@@ -37,7 +37,7 @@ function AvtaltFormBrukerUnderOppfolgning({
     );
 
     return (
-        <div className="avtalt-container__innhold">
+        <div>
             <Select
                 labelId="sett-avtalt-velg-type"
                 feltNavn="avtaltSelect"

@@ -7,6 +7,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
+import classNames from 'classnames';
 import {
     maksLengde,
     pakrevd,
@@ -59,7 +60,13 @@ function AvtaltForm({
                     <FormattedMessage id="sett-avtalt.hjelpetekst" />
                 </HjelpetekstOver>
             </div>
-            <VisibleIfDiv visible={currentAvtaltCheckbox}>
+            <VisibleIfDiv
+                className={classNames({
+                    'avtalt-container__innhold': !erManuellKrrKvpBruker,
+                    'avtalt-container__alertstripe': erManuellKrrKvpBruker,
+                })}
+                visible={currentAvtaltCheckbox}
+            >
                 <AvtaltFormBrukerUnderOppfolgning
                     hidden={erManuellKrrKvpBruker}
                     currentAvtaltSelect={currentAvtaltSelect}
