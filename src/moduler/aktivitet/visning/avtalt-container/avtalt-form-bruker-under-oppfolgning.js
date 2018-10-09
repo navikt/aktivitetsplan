@@ -3,12 +3,12 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 import { HjelpetekstHoyre } from 'nav-frontend-hjelpetekst';
-import { Textarea } from 'nav-frontend-skjema';
 import {
     IKKE_SEND_FORHANDSORIENTERING,
     SEND_FORHANDSORIENTERING,
     SEND_PARAGRAF_11_9,
 } from './avtalt-form';
+import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import hiddenIfHoc from '../../../../felles-komponenter/hidden-if/hidden-if';
@@ -31,7 +31,7 @@ function AvtaltFormBrukerUnderOppfolgning({
 
     const forhadsorienteringstekstParagraf119 = (
         <Textarea
-            feltNavn="avtaltText"
+            feltNavn="avtaltText119"
             maxLength={forhandsorienteringMaksLengde}
         />
     );
@@ -45,10 +45,10 @@ function AvtaltFormBrukerUnderOppfolgning({
             >
                 {Object.entries(
                     forhandsorienteringTekstIdValuePar
-                ).map(([key, value]) =>
-                    <FormattedMessage id={key}>
+                ).map(([tekstId, optionValue]) =>
+                    <FormattedMessage id={tekstId} key={tekstId}>
                         {tekst =>
-                            <option key={value} value={value}>
+                            <option key={optionValue} value={optionValue}>
                                 {tekst}
                             </option>}
                     </FormattedMessage>

@@ -120,7 +120,7 @@ const mapStateToProps = (state, props) => {
         initialValues: {
             avtaltSelect: SEND_FORHANDSORIENTERING,
             avtaltText119: props.intl.formatMessage({
-                id: 'sett-avtalt-paragra-11-9-tekst',
+                id: 'sett-avtalt-paragraf-11-9-tekst',
             }),
             avtaltText: props.intl.formatMessage({
                 id: 'sett-avtalt-forhandsorientering-tekst',

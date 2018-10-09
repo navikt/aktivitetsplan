@@ -50,6 +50,7 @@ class AvtaltContainer extends Component {
             aktivitet,
             aktivitetStatus,
             doSetAktivitetTilAvtalt,
+            doSendForhandsorientering,
             className,
             features,
             erManuellKrrKvpBruker,
@@ -60,6 +61,7 @@ class AvtaltContainer extends Component {
         const lasterData = aktivitetStatus !== STATUS.OK;
         const oppdaterer = aktivitetStatus === STATUS.RELOADING;
         const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
+        const merEnnsyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato);
 
         if (
             !TILLAT_SET_AVTALT ||
@@ -74,7 +76,7 @@ class AvtaltContainer extends Component {
         if (
             harFeature(FORHANDSORIENTERING, features) &&
             !avtalt &&
-            !erMerEnnSyvDagerTil(aktivitet.tilDato)
+            !merEnnsyvDagerTil
         ) {
             return (
                 <div>
@@ -138,10 +140,17 @@ class AvtaltContainer extends Component {
                 lasterData={lasterData}
                 onSubmit={avtaltForm => {
                     this.setState({ visBekreftAvtalt: true });
-                    doSetAktivitetTilAvtalt(
-                        aktivitet,
-                        avtaltTextMap[avtaltForm.avtaltSelect](avtaltForm)
+                    const avtaltText = avtaltTextMap[avtaltForm.avtaltSelect](
+                        avtaltForm
                     );
+                    const skalSendeVarsel =
+                        !!avtaltText &&
+                        merEnnsyvDagerTil &&
+                        !erManuellKrrKvpBruker;
+                    if (skalSendeVarsel) {
+                        doSendForhandsorientering(aktivitet, avtaltText);
+                    }
+                    doSetAktivitetTilAvtalt(aktivitet);
                 }}
             />
         );
@@ -181,6 +190,7 @@ class AvtaltContainer extends Component {
 
 AvtaltContainer.propTypes = {
     doSetAktivitetTilAvtalt: PT.func.isRequired,
+    doSendForhandsorientering: PT.func.isRequired,
     aktivitet: AppPT.aktivitet.isRequired,
     aktivitetStatus: AppPT.status,
     className: PT.string,
@@ -203,15 +213,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    doSetAktivitetTilAvtalt: (aktivitet, avtaltTekst) => {
-        if (avtaltTekst) {
-            sendForhandsorientering({
-                aktivitetId: aktivitet.id,
-                tekst: avtaltTekst,
-                overskrift: aktivitet.tittel,
-            })(dispatch);
-        }
+    doSetAktivitetTilAvtalt: aktivitet => {
         oppdaterAktivitet({ ...aktivitet, avtalt: true })(dispatch);
+    },
+    doSendForhandsorientering: (aktivitet, avtaltTekst) => {
+        sendForhandsorientering({
+            aktivitetId: aktivitet.id,
+            tekst: avtaltTekst,
+            overskrift: aktivitet.tittel,
+        })(dispatch);
     },
 });
 
