@@ -47,7 +47,7 @@ class RadioFilterForm extends Component {
                             />
                         )}
                     </div>
-                    <div className="knapperad blokk-xxs">
+                    <div className="knapperad--alignleft blokk-xxs">
                         <HiddenIf hidden={visLukkKnapp && !selected}>
                             <Hovedknapp
                                 mini

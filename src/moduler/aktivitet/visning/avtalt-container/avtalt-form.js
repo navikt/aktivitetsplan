@@ -100,7 +100,7 @@ const AvtaltReduxForm = validForm({
     form: formNavn,
     enableReinitialize: false,
     validate: {
-        avtaltText: [
+        avtaltText119: [
             begrensetForhandsorienteringLengde,
             pakrevdForhandsorienteringLengde,
         ],
@@ -112,8 +112,11 @@ const mapStateToProps = (state, props) => {
     return {
         initialValues: {
             avtaltSelect: SEND_FORHANDSORIENTERING,
-            avtaltText: props.intl.formatMessage({
+            avtaltText119: props.intl.formatMessage({
                 id: 'sett-avtalt-paragra-11-9-tekst',
+            }),
+            avtaltText: props.intl.formatMessage({
+                id: 'sett-avtalt-forhandsorientering-tekst',
             }),
             avtaltCheckbox: false,
         },

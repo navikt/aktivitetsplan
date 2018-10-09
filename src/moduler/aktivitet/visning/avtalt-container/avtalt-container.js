@@ -14,7 +14,11 @@ import {
     STATUS_FULLFOERT,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import AvtaltForm from './avtalt-form';
+import AvtaltForm, {
+    IKKE_SEND_FORHANDSORIENTERING,
+    SEND_FORHANDSORIENTERING,
+    SEND_PARAGRAF_11_9,
+} from './avtalt-form';
 import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
@@ -91,7 +95,7 @@ class AvtaltContainer extends Component {
             return null;
         }
 
-        // Denne denne kan fjernes når feature-toggle 'FORHANDSORIENTERING' er gjort permanent.
+        // Denne kan fjernes når feature-toggle 'FORHANDSORIENTERING' er gjort permanent.
         const avtaltInnhold = (
             <div className={`${className} avtalt-container`}>
                 <Undertittel>
@@ -120,6 +124,12 @@ class AvtaltContainer extends Component {
             </div>
         );
 
+        const avtaltTextMap = {
+            [SEND_FORHANDSORIENTERING]: avtaltForm => avtaltForm.avtaltText,
+            [SEND_PARAGRAF_11_9]: avtaltForm => avtaltForm.avtaltText119,
+            [IKKE_SEND_FORHANDSORIENTERING]: () => '',
+        };
+
         const avtaltInnholdForhandsvarsel = (
             <AvtaltForm
                 className={`${className} avtalt-container`}
@@ -128,7 +138,10 @@ class AvtaltContainer extends Component {
                 lasterData={lasterData}
                 onSubmit={avtaltForm => {
                     this.setState({ visBekreftAvtalt: true });
-                    doSetAktivitetTilAvtalt(aktivitet, avtaltForm.avtaltText);
+                    doSetAktivitetTilAvtalt(
+                        aktivitet,
+                        avtaltTextMap[avtaltForm.avtaltSelect](avtaltForm)
+                    );
                 }}
             />
         );
@@ -137,30 +150,22 @@ class AvtaltContainer extends Component {
             ? avtaltInnholdForhandsvarsel
             : avtaltInnhold;
 
-        const visAvtaltErManuellKrrKvpBruker = (
-            <AlertStripeSuksess>
-                <FormattedMessage id="satt-til-avtalt-manuellkrrkvp" />
-            </AlertStripeSuksess>
-        );
-
-        const visAvtaltBrukerMedAktivitesPlan = (
-            <div>
+        const cls = classes =>
+            classNames('avtalt-container__vis-avtalt', classes);
+        const visAvtalt =
+            (harFeature(FORHANDSORIENTERING, features) &&
+                <div className={cls(className)}>
+                    <AlertStripeSuksess>
+                        <FormattedMessage id="sett-avtalt-bekreftelse" />
+                    </AlertStripeSuksess>
+                </div>) ||
+            // Denne kan fjernes når feature-toggle 'FORHANDSORIENTERING' er gjort permanent.
+            <div className={cls(className)}>
                 <Icon kind="ok-sirkel-fylt" height="21px" />
                 <Undertittel>
                     <FormattedMessage id="satt-til-avtalt.tekst" />
                 </Undertittel>
-            </div>
-        );
-
-        const cls = classes =>
-            classNames('avtalt-container__vis-avtalt', classes);
-        const visAvtalt = (
-            <div className={cls(className)}>
-                {erManuellKrrKvpBruker
-                    ? visAvtaltErManuellKrrKvpBruker
-                    : visAvtaltBrukerMedAktivitesPlan}
-            </div>
-        );
+            </div>;
 
         return (
             <div>
@@ -196,11 +201,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     doSetAktivitetTilAvtalt: (aktivitet, avtaltTekst) => {
-        sendForhandsorientering({
-            aktivitetId: aktivitet.id,
-            tekst: avtaltTekst,
-            overskrift: aktivitet.tittel,
-        })(dispatch);
+        if (avtaltTekst) {
+            sendForhandsorientering({
+                aktivitetId: aktivitet.id,
+                tekst: avtaltTekst,
+                overskrift: aktivitet.tittel,
+            })(dispatch);
+        }
         oppdaterAktivitet({ ...aktivitet, avtalt: true })(dispatch);
     },
 });
