@@ -1,0 +1,5 @@
+{brukerUtenAktivitesplan, select,
+brukerErManuell { Forhåndsorientering kan ikke sendes fordi brukeren er manuell bruker. }
+brukerErUnderKvp { Forhåndsorientering kan ikke sendes fordi brukeren er i kvalifiseringsprogrammet. }
+brukerErIReservasjonKRR {Forhåndsorientering kan ikke sendes fordi brukeren har reservert seg i kontaktregisteret.}
+}

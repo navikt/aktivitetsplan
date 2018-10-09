@@ -31,6 +31,11 @@ import {
 } from '../../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
+import {
+    selectErBrukerManuell,
+    selectErUnderKvp,
+    selectReservasjonKRR,
+} from '../../../oppfolging-status/oppfolging-selector';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -47,6 +52,7 @@ class AvtaltContainer extends Component {
             doSetAktivitetTilAvtalt,
             className,
             features,
+            erManuellKrrKvpBruker,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
@@ -128,6 +134,7 @@ class AvtaltContainer extends Component {
             <AvtaltForm
                 className={`${className} avtalt-container`}
                 oppdaterer={oppdaterer}
+                erManuellKrrKvpBruker={erManuellKrrKvpBruker}
                 lasterData={lasterData}
                 onSubmit={avtaltForm => {
                     this.setState({ visBekreftAvtalt: true });
@@ -149,7 +156,10 @@ class AvtaltContainer extends Component {
             (harFeature(FORHANDSORIENTERING, features) &&
                 <div className={cls(className)}>
                     <AlertStripeSuksess>
-                        <FormattedMessage id="sett-avtalt-bekreftelse" />
+                        <FormattedMessage
+                            id="sett-avtalt-bekreftelse"
+                            values={{ erManuellKrrKvpBruker }}
+                        />
                     </AlertStripeSuksess>
                 </div>) ||
             // Denne kan fjernes når feature-toggle 'FORHANDSORIENTERING' er gjort permanent.
@@ -175,6 +185,7 @@ AvtaltContainer.propTypes = {
     aktivitetStatus: AppPT.status,
     className: PT.string,
     features: PT.object.isRequired,
+    erManuellKrrKvpBruker: PT.bool.isRequired,
 };
 
 AvtaltContainer.defaultProps = {
@@ -185,6 +196,10 @@ AvtaltContainer.defaultProps = {
 const mapStateToProps = state => ({
     aktivitetStatus: selectAktivitetStatus(state),
     features: selectFeatureData(state),
+    erManuellKrrKvpBruker:
+        selectErBrukerManuell(state) ||
+        selectErUnderKvp(state) ||
+        selectReservasjonKRR(state),
 });
 
 const mapDispatchToProps = dispatch => ({

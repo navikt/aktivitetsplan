@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { validForm } from 'react-redux-form-validation';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { HjelpetekstHoyre, HjelpetekstOver } from 'nav-frontend-hjelpetekst';
+import { Undertittel } from 'nav-frontend-typografi';
+import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
+import classNames from 'classnames';
 import {
     maksLengde,
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
-import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
-import Select from '../../../../felles-komponenter/skjema/input/select';
+import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import AvtaltFormBrukerUnderOppfolgning from './avtalt-form-bruker-under-oppfolgning';
+import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
@@ -35,20 +37,8 @@ function AvtaltForm({
     lasterData,
     currentAvtaltSelect,
     currentAvtaltCheckbox,
+    erManuellKrrKvpBruker,
 }) {
-    const forhadsorienteringsstekst = (
-        <Normaltekst className="blokk-xs">
-            <FormattedMessage id="sett-avtalt-forhandsorientering-tekst" />
-        </Normaltekst>
-    );
-
-    const forhadsorienteringstekstParagraf119 = (
-        <Textarea
-            feltNavn="avtaltText119"
-            maxLength={FORHANDSORIENTERING_MAKS_LENGDE}
-        />
-    );
-
     return (
         <form
             onSubmit={handleSubmit}
@@ -70,58 +60,27 @@ function AvtaltForm({
                     <FormattedMessage id="sett-avtalt.hjelpetekst" />
                 </HjelpetekstOver>
             </div>
-            {currentAvtaltCheckbox &&
-                <div className="avtalt-container__innhold">
-                    <Select
-                        labelId="sett-avtalt-velg-type"
-                        feltNavn="avtaltSelect"
-                        noBlankOption
-                    >
-                        <FormattedMessage id="sett-avtalt-send-forhandsorientering">
-                            {tekst =>
-                                <option
-                                    key={SEND_FORHANDSORIENTERING}
-                                    value={SEND_FORHANDSORIENTERING}
-                                >
-                                    {tekst}
-                                </option>}
-                        </FormattedMessage>
-                        <FormattedMessage id="sett-avtalt-send-paragraf-11-9">
-                            {tekst =>
-                                <option
-                                    key={SEND_PARAGRAF_11_9}
-                                    value={SEND_PARAGRAF_11_9}
-                                >
-                                    {tekst}
-                                </option>}
-                        </FormattedMessage>
-                        <FormattedMessage id="sett-avtalt-ikke-send-forhandsorientering">
-                            {tekst =>
-                                <option
-                                    key={IKKE_SEND_FORHANDSORIENTERING}
-                                    value={IKKE_SEND_FORHANDSORIENTERING}
-                                >
-                                    {tekst}
-                                </option>}
-                        </FormattedMessage>
-                    </Select>
-                    {currentAvtaltSelect !== IKKE_SEND_FORHANDSORIENTERING &&
-                        <div>
-                            <EtikettLiten className="avtalt-tekst-etikett">
-                                <FormattedMessage id="sett-avltalt-tekst-som-sendes" />
-                            </EtikettLiten>
-                            <HjelpetekstHoyre>
-                                <FormattedMessage id="sett-avtalt-teskt-som-sendes-hjelpetekst" />
-                            </HjelpetekstHoyre>
-                            {currentAvtaltSelect === SEND_FORHANDSORIENTERING &&
-                                forhadsorienteringsstekst}
-                            {currentAvtaltSelect === SEND_PARAGRAF_11_9 &&
-                                forhadsorienteringstekstParagraf119}
-                        </div>}
-                    <Knapp spinner={oppdaterer} disabled={lasterData}>
-                        <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
-                    </Knapp>
-                </div>}
+            <VisibleIfDiv
+                className={classNames({
+                    'avtalt-container__innhold': !erManuellKrrKvpBruker,
+                    'avtalt-container__alertstripe': erManuellKrrKvpBruker,
+                })}
+                visible={currentAvtaltCheckbox}
+            >
+                <AvtaltFormBrukerUnderOppfolgning
+                    hidden={erManuellKrrKvpBruker}
+                    currentAvtaltSelect={currentAvtaltSelect}
+                    forhandsorienteringMaksLengde={
+                        FORHANDSORIENTERING_MAKS_LENGDE
+                    }
+                />
+                <AvtaltStripeKRRKvpManuellBruker
+                    visible={erManuellKrrKvpBruker}
+                />
+                <Knapp spinner={oppdaterer} disabled={lasterData}>
+                    <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
+                </Knapp>
+            </VisibleIfDiv>
         </form>
     );
 }
@@ -133,6 +92,7 @@ AvtaltForm.propTypes = {
     lasterData: PT.bool.isRequired,
     currentAvtaltSelect: PT.string,
     currentAvtaltCheckbox: PT.bool,
+    erManuellKrrKvpBruker: PT.bool.isRequired,
 };
 
 AvtaltForm.defaultProps = {
