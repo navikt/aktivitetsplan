@@ -42,7 +42,7 @@ class AvtaltContainer extends Component {
         super(props);
         this.state = {
             visBekreftAvtalt: false,
-            forhandsorienteringSkallSendes: false,
+            forhandsorienteringSent: false,
         };
     }
 
@@ -132,17 +132,13 @@ class AvtaltContainer extends Component {
                     const avtaltText = avtaltTextMap[avtaltForm.avtaltSelect](
                         avtaltForm
                     );
-                    this.setState({
-                        visBekreftAvtalt: true,
-                        forhandsorienteringSkallSendes: avtaltText || false,
-                    });
-
                     const skalSendeVarsel =
                         !!avtaltText &&
                         merEnnsyvDagerTil &&
                         !erManuellKrrKvpBruker;
                     if (skalSendeVarsel) {
                         doSendForhandsorientering(aktivitet, avtaltText);
+                        this.setState({ forhandsorienteringSent: true });
                     }
                     doSetAktivitetTilAvtalt(aktivitet);
                 }}
@@ -157,10 +153,8 @@ class AvtaltContainer extends Component {
             avtaltMedNavMindreEnnSyvDager:
                 !merEnnsyvDagerTil && this.state.visBekreftAvtalt,
             erManuellKrrKvpBruker,
-            forhandsorienteringSkallSendes: this.state
-                .forhandsorienteringSkallSendes,
-            forhandsorienteringSkallIkkeSendes: !this.state
-                .forhandsorienteringSkallSendes,
+            forhandsorienteringSent: this.state.forhandsorienteringSent,
+            forhandsorienteringIkkeSent: !this.state.forhandsorienteringSent,
         }).find(([tekstVerdi, value]) => value)[0]; // eslint-disable-line no-unused-vars
 
         const cls = classes =>
