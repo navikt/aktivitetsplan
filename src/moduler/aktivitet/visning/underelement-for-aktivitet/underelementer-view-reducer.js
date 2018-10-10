@@ -1,6 +1,8 @@
 // Actions
 export const TOGGLE_DIALOG = 'underlementer-view/toggle-dialog';
+export const APNE_DIALOG = 'underlementer-view/apne-dialog';
 export const TOGGLE_HISTORIKK = 'underlementer-view/toggle-historikk';
+export const LUKK_ALLE = 'underlementer-view/lukk-alle';
 
 const initalState = {
     visDialog: false,
@@ -20,6 +22,13 @@ export default function reducer(state = initalState, action) {
                 visDialog: false,
                 visHistorikk: !state.visHistorikk,
             };
+        case APNE_DIALOG:
+            return {
+                visDialog: true,
+                visHistorikk: false,
+            };
+        case LUKK_ALLE:
+            return initalState;
         default:
             return state;
     }
@@ -35,5 +44,17 @@ export function toggleDialog() {
 export function toggleHistorikk() {
     return {
         type: TOGGLE_HISTORIKK,
+    };
+}
+
+export function apneDialog() {
+    return {
+        type: APNE_DIALOG,
+    };
+}
+
+export function lukkAlle() {
+    return {
+        type: LUKK_ALLE,
     };
 }

@@ -36,7 +36,7 @@ import {
     selectErUnderKvp,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
-import { toggleDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
+import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -56,7 +56,7 @@ class AvtaltContainer extends Component {
             className,
             features,
             erManuellKrrKvpBruker,
-            doToggleDialog,
+            doApneDialog,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
@@ -142,7 +142,7 @@ class AvtaltContainer extends Component {
                     if (skalSendeVarsel) {
                         doSendForhandsorientering(aktivitet, avtaltText);
                         this.setState({ forhandsorienteringSent: true });
-                        doToggleDialog();
+                        doApneDialog();
                     }
                     doSetAktivitetTilAvtalt(aktivitet);
                 }}
@@ -197,7 +197,7 @@ AvtaltContainer.propTypes = {
     className: PT.string,
     features: PT.object.isRequired,
     erManuellKrrKvpBruker: PT.bool.isRequired,
-    doToggleDialog: PT.func.isRequired,
+    doApneDialog: PT.func.isRequired,
 };
 
 AvtaltContainer.defaultProps = {
@@ -225,7 +225,7 @@ const mapDispatchToProps = dispatch => ({
             overskrift: aktivitet.tittel,
         })(dispatch);
     },
-    doToggleDialog: () => dispatch(toggleDialog()),
+    doApneDialog: () => dispatch(apneDialog()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AvtaltContainer);
