@@ -11,7 +11,7 @@ import {
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import hiddenIfHoc from '../../../../felles-komponenter/hidden-if/hidden-if';
+import visibleIfHOC from '../../../../hocs/visible-if';
 
 function AvtaltFormBrukerUnderOppfolgning({
     currentAvtaltSelect,
@@ -82,4 +82,4 @@ AvtaltFormBrukerUnderOppfolgning.defaultProps = {
     forhandsorienteringMaksLengde: 500,
 };
 
-export default hiddenIfHoc(AvtaltFormBrukerUnderOppfolgning);
+export default visibleIfHOC(AvtaltFormBrukerUnderOppfolgning);

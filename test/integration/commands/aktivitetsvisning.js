@@ -312,7 +312,7 @@ module.exports = {
     markerAvtaltMedNav() {
         const timeout = this.api.globals.timeout,
             side = this.elements,
-            msg = '"Avtalt med NAV"';
+            msg = 'Avtalt med NAV';
         this.click(side.rdioAvtaltMedNav.selector).waitForElementVisible(
             side.btnBekreftAvtaltMedNav.selector,
             timeout
