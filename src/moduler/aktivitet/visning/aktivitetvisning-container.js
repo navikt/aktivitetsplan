@@ -26,6 +26,7 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
+import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
 
 function aktivitetvisningHeader(valgtAktivitet) {
     if (!valgtAktivitet) {
@@ -56,6 +57,7 @@ class AktivitetvisningContainer extends Component {
             doHentAktivitet,
             doHentArenaAktiviteter,
             doFjernForrigeAktiveAktivitetId,
+            doLukkDialogEllerHistorikk,
         } = this.props;
         if (valgtAktivitet) {
             if (valgtAktivitet.arenaAktivitet) {
@@ -65,6 +67,7 @@ class AktivitetvisningContainer extends Component {
             }
         }
         doFjernForrigeAktiveAktivitetId();
+        doLukkDialogEllerHistorikk();
     }
 
     componentWillUnmount() {
@@ -96,6 +99,7 @@ AktivitetvisningContainer.propTypes = {
     doHentArenaAktiviteter: PT.func.isRequired,
     doSettForrigeAktiveAktivitetId: PT.func.isRequired,
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
+    doLukkDialogEllerHistorikk: PT.func.isRequired,
 };
 
 AktivitetvisningContainer.defaultProps = {
@@ -140,6 +144,7 @@ const mapDispatchToProps = dispatch =>
             doHentArenaAktiviteter: hentArenaAktiviteter,
             doSettForrigeAktiveAktivitetId: settForrigeAktiveAktivitetId,
             doFjernForrigeAktiveAktivitetId: fjernForrigeAktiveAktivitetId,
+            doLukkDialogEllerHistorikk: lukkAlle,
         },
         dispatch
     );
