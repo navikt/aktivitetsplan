@@ -1,6 +1,7 @@
 import React from 'react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
+import visibleIfHOC from '../../../../hocs/visible-if';
 
 function AvtaltFormMindreEnnSyvDager() {
     return (
@@ -17,4 +18,4 @@ function AvtaltFormMindreEnnSyvDager() {
     );
 }
 
-export default AvtaltFormMindreEnnSyvDager;
+export default visibleIfHOC(AvtaltFormMindreEnnSyvDager);

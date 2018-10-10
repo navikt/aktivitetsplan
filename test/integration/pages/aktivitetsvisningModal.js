@@ -70,7 +70,7 @@ module.exports = {
         btnBekreftAvtaltMedNav:
             '//div[contains(@class, "avtalt-container")]/button[@type="submit"]',
         txtAvtaltMedNav:
-            '//div[contains(@class, "avtalt-container__vis-avtalt")]/div',
+            '//div[contains(@class, "aktivitetvisning__underseksjon")]/div',
         btnSlett: '//div[@class="modal-footer"]/button[@type="submit"]',
         wndBekreftSletting: '//div[@class="bekreft-slett-container"]',
         btnBekreftSletting: '//button[contains(@class, "knapp--fare")]',

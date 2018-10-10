@@ -16,7 +16,6 @@ import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import AvtaltFormBrukerUnderOppfolgning from './avtalt-form-bruker-under-oppfolgning';
 import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
-import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
@@ -74,21 +73,25 @@ function AvtaltForm({
                 })}
                 visible={currentAvtaltCheckbox}
             >
-                <VisibleIfDiv visible={visAvtaltMedNavMindreEnnSyvDager}>
-                    <AvtaltFormMindreEnnSyvDager />
-                </VisibleIfDiv>
-                <HiddenIfDiv hidden={visAvtaltMedNavMindreEnnSyvDager}>
-                    <AvtaltFormBrukerUnderOppfolgning
-                        hidden={erManuellKrrKvpBruker}
-                        currentAvtaltSelect={currentAvtaltSelect}
-                        forhandsorienteringMaksLengde={
-                            FORHANDSORIENTERING_MAKS_LENGDE
-                        }
-                    />
-                    <AvtaltStripeKRRKvpManuellBruker
-                        visible={erManuellKrrKvpBruker}
-                    />
-                </HiddenIfDiv>
+                <AvtaltStripeKRRKvpManuellBruker
+                    visible={erManuellKrrKvpBruker}
+                />
+                <AvtaltFormBrukerUnderOppfolgning
+                    visible={
+                        !erManuellKrrKvpBruker &&
+                        !visAvtaltMedNavMindreEnnSyvDager
+                    }
+                    currentAvtaltSelect={currentAvtaltSelect}
+                    forhandsorienteringMaksLengde={
+                        FORHANDSORIENTERING_MAKS_LENGDE
+                    }
+                />
+                <AvtaltFormMindreEnnSyvDager
+                    visible={
+                        !erManuellKrrKvpBruker &&
+                        visAvtaltMedNavMindreEnnSyvDager
+                    }
+                />
                 <Knapp spinner={oppdaterer} disabled={lasterData}>
                     <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
                 </Knapp>

@@ -161,7 +161,7 @@ class AvtaltContainer extends Component {
             classNames('avtalt-container__vis-avtalt', classes);
         const visAvtalt =
             (harFeature(FORHANDSORIENTERING, features) &&
-                <div className={cls(className)}>
+                <div className={className}>
                     <AlertStripeSuksess>
                         <FormattedMessage
                             id="sett-avtalt-bekreftelse"

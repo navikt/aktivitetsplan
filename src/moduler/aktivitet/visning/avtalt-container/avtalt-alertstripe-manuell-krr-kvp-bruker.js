@@ -3,12 +3,13 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import visibleIfHOC from '../../../../hocs/visible-if';
+
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
+import visibleIfHOC from '../../../../hocs/visible-if';
 
 function AvtaltStripeKRRKvpManuellBruker({ brukerUtenAktivitesPlan }) {
     const brukerUtenAktivitetsPlanSelectValue = Object.entries(
