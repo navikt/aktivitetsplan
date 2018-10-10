@@ -129,6 +129,7 @@ class AvtaltContainer extends Component {
                 erManuellKrrKvpBruker={erManuellKrrKvpBruker}
                 lasterData={lasterData}
                 onSubmit={avtaltForm => {
+                    this.setState({ visBekreftAvtalt: true });
                     const avtaltText = avtaltTextMap[avtaltForm.avtaltSelect](
                         avtaltForm
                     );
@@ -149,13 +150,12 @@ class AvtaltContainer extends Component {
             ? avtaltInnholdForhandsvarsel
             : avtaltInnhold;
 
-        const settAvtaltTekstVerdi = Object.entries({
-            avtaltMedNavMindreEnnSyvDager:
-                !merEnnsyvDagerTil && this.state.visBekreftAvtalt,
-            erManuellKrrKvpBruker,
-            forhandsorienteringSent: this.state.forhandsorienteringSent,
-            forhandsorienteringIkkeSent: !this.state.forhandsorienteringSent,
-        }).find(([tekstVerdi, value]) => value)[0]; // eslint-disable-line no-unused-vars
+        const settAvtaltTekstVerdi =
+            (!merEnnsyvDagerTil && 'avtaltMedNavMindreEnnSyvDager') ||
+            (erManuellKrrKvpBruker && 'erManuellKrrKvpBruker') ||
+            (this.state.forhandsorienteringSent && 'forhandsorienteringSent') ||
+            (!this.state.forhandsorienteringSent &&
+                'forhandsorienteringIkkeSent');
 
         const cls = classes =>
             classNames('avtalt-container__vis-avtalt', classes);
