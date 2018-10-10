@@ -8,7 +8,7 @@ import { Radio } from 'nav-frontend-skjema';
 import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
-import { AlertStripeInfo, AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import {
     STATUS_AVBRUTT,
     STATUS_FULLFOERT,
@@ -42,6 +42,7 @@ class AvtaltContainer extends Component {
         super(props);
         this.state = {
             visBekreftAvtalt: false,
+            forhandsorienteringSent: false,
         };
     }
 
@@ -73,24 +74,10 @@ class AvtaltContainer extends Component {
             return null;
         }
 
-        if (
+        const visAvtaltMedNavMindreEnnSyvDager =
             harFeature(FORHANDSORIENTERING, features) &&
             !avtalt &&
-            !merEnnsyvDagerTil
-        ) {
-            return (
-                <div>
-                    <div className={`${className} avtalt-container`}>
-                        <AlertStripeInfo>
-                            <FormattedMessage
-                                id={'sett-til-avtalt-mindre-enn-syv-dager'}
-                            />
-                        </AlertStripeInfo>
-                    </div>
-                    <hr className="aktivitetvisning__delelinje" />
-                </div>
-            );
-        }
+            !merEnnsyvDagerTil;
 
         // Kun vis bekreftet hvis nettopp satt til avtalt.
         if (this.state.visBekreftAvtalt === false && avtalt) {
@@ -136,6 +123,9 @@ class AvtaltContainer extends Component {
             <AvtaltForm
                 className={`${className} avtalt-container`}
                 oppdaterer={oppdaterer}
+                visAvtaltMedNavMindreEnnSyvDager={
+                    visAvtaltMedNavMindreEnnSyvDager
+                }
                 erManuellKrrKvpBruker={erManuellKrrKvpBruker}
                 lasterData={lasterData}
                 onSubmit={avtaltForm => {
@@ -149,6 +139,7 @@ class AvtaltContainer extends Component {
                         !erManuellKrrKvpBruker;
                     if (skalSendeVarsel) {
                         doSendForhandsorientering(aktivitet, avtaltText);
+                        this.setState({ forhandsorienteringSent: true });
                     }
                     doSetAktivitetTilAvtalt(aktivitet);
                 }}
@@ -159,6 +150,13 @@ class AvtaltContainer extends Component {
             ? avtaltInnholdForhandsvarsel
             : avtaltInnhold;
 
+        const settAvtaltTekstVerdi =
+            (!merEnnsyvDagerTil && 'avtaltMedNavMindreEnnSyvDager') ||
+            (erManuellKrrKvpBruker && 'erManuellKrrKvpBruker') ||
+            (this.state.forhandsorienteringSent && 'forhandsorienteringSent') ||
+            (!this.state.forhandsorienteringSent &&
+                'forhandsorienteringIkkeSent');
+
         const cls = classes =>
             classNames('avtalt-container__vis-avtalt', classes);
         const visAvtalt =
@@ -167,7 +165,7 @@ class AvtaltContainer extends Component {
                     <AlertStripeSuksess>
                         <FormattedMessage
                             id="sett-avtalt-bekreftelse"
-                            values={{ erManuellKrrKvpBruker }}
+                            values={{ settAvtaltTekstVerdi }}
                         />
                     </AlertStripeSuksess>
                 </div>) ||

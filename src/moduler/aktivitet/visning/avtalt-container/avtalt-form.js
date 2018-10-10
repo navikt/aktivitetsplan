@@ -16,6 +16,8 @@ import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import AvtaltFormBrukerUnderOppfolgning from './avtalt-form-bruker-under-oppfolgning';
 import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
+import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
+import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
@@ -38,6 +40,7 @@ function AvtaltForm({
     currentAvtaltSelect,
     currentAvtaltCheckbox,
     erManuellKrrKvpBruker,
+    visAvtaltMedNavMindreEnnSyvDager,
 }) {
     return (
         <form
@@ -62,21 +65,30 @@ function AvtaltForm({
             </div>
             <VisibleIfDiv
                 className={classNames({
-                    'avtalt-container__innhold': !erManuellKrrKvpBruker,
-                    'avtalt-container__alertstripe': erManuellKrrKvpBruker,
+                    'avtalt-container__innhold':
+                        !erManuellKrrKvpBruker &&
+                        !visAvtaltMedNavMindreEnnSyvDager,
+                    'avtalt-container__alertstripe':
+                        erManuellKrrKvpBruker ||
+                        visAvtaltMedNavMindreEnnSyvDager,
                 })}
                 visible={currentAvtaltCheckbox}
             >
-                <AvtaltFormBrukerUnderOppfolgning
-                    hidden={erManuellKrrKvpBruker}
-                    currentAvtaltSelect={currentAvtaltSelect}
-                    forhandsorienteringMaksLengde={
-                        FORHANDSORIENTERING_MAKS_LENGDE
-                    }
-                />
-                <AvtaltStripeKRRKvpManuellBruker
-                    visible={erManuellKrrKvpBruker}
-                />
+                <VisibleIfDiv visible={visAvtaltMedNavMindreEnnSyvDager}>
+                    <AvtaltFormMindreEnnSyvDager />
+                </VisibleIfDiv>
+                <HiddenIfDiv hidden={visAvtaltMedNavMindreEnnSyvDager}>
+                    <AvtaltFormBrukerUnderOppfolgning
+                        hidden={erManuellKrrKvpBruker}
+                        currentAvtaltSelect={currentAvtaltSelect}
+                        forhandsorienteringMaksLengde={
+                            FORHANDSORIENTERING_MAKS_LENGDE
+                        }
+                    />
+                    <AvtaltStripeKRRKvpManuellBruker
+                        visible={erManuellKrrKvpBruker}
+                    />
+                </HiddenIfDiv>
                 <Knapp spinner={oppdaterer} disabled={lasterData}>
                     <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
                 </Knapp>
@@ -93,6 +105,7 @@ AvtaltForm.propTypes = {
     currentAvtaltSelect: PT.string,
     currentAvtaltCheckbox: PT.bool,
     erManuellKrrKvpBruker: PT.bool.isRequired,
+    visAvtaltMedNavMindreEnnSyvDager: PT.bool.isRequired,
 };
 
 AvtaltForm.defaultProps = {

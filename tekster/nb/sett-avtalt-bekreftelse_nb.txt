@@ -1,4 +1,6 @@
-{erManuellKrrKvpBruker, select,
- true {Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering er ikke sendt.}
- false {Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering om konsekvenser ved ikke å gjennomføre aktiviteten er sendt.}
+{settAvtaltTekstVerdi, select,
+ erManuellKrrKvpBruker {Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering er ikke sendt.}
+ forhandsorienteringIkkeSent {Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering er ikke sendt.}
+ forhandsorienteringSent {Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering om konsekvenser ved ikke å gjennomføre aktiviteten er sendt.}
+ avtaltMedNavMindreEnnSyvDager {Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke sendt, men brukeren er informert om aktiviteten og du har dokummentert dette.}
 }
