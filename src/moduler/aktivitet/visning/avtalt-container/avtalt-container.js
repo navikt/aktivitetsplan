@@ -42,6 +42,7 @@ class AvtaltContainer extends Component {
         super(props);
         this.state = {
             visBekreftAvtalt: false,
+            forhandsorienteringSent: false,
         };
     }
 
@@ -149,6 +150,7 @@ class AvtaltContainer extends Component {
                         !erManuellKrrKvpBruker;
                     if (skalSendeVarsel) {
                         doSendForhandsorientering(aktivitet, avtaltText);
+                        this.setState({ forhandsorienteringSent: true });
                     }
                     doSetAktivitetTilAvtalt(aktivitet);
                 }}
@@ -167,7 +169,11 @@ class AvtaltContainer extends Component {
                     <AlertStripeSuksess>
                         <FormattedMessage
                             id="sett-avtalt-bekreftelse"
-                            values={{ erManuellKrrKvpBruker }}
+                            values={{
+                                forhandsorienteringSent:
+                                    this.state.forhandsorienteringSent &&
+                                    !erManuellKrrKvpBruker,
+                            }}
                         />
                     </AlertStripeSuksess>
                 </div>) ||
