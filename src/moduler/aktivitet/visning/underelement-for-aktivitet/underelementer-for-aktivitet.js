@@ -17,17 +17,24 @@ import {
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import getScrollParent from '../../../../utils/getScrollParent';
+import { toggleDialog, toggleHistorikk } from './underelementer-view-reducer';
+import {
+    selectVisDialog,
+    selectVisHistorikk,
+} from './underelementer-view-selector';
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
-const INGEN = '';
 
 class UnderelementerForAktivitet extends Component {
     constructor() {
         super();
         autobind(this);
-        this.state = {};
         this.me = null;
+    }
+
+    componentDidUpdate() {
+        this.scrollMeIntoView();
     }
 
     scrollMeIntoView() {
@@ -35,36 +42,6 @@ class UnderelementerForAktivitet extends Component {
             setTimeout(
                 () => getScrollParent(this.me).scrollTo(0, this.me.offsetTop),
                 0
-            );
-        }
-    }
-
-    toggleDialog() {
-        if (this.state.vis === DIALOG) {
-            this.setState({
-                vis: INGEN,
-            });
-        } else {
-            this.setState(
-                {
-                    vis: DIALOG,
-                },
-                this.scrollMeIntoView
-            );
-        }
-    }
-
-    toggleHistorikk() {
-        if (this.state.vis === HISTORIKK) {
-            this.setState({
-                vis: INGEN,
-            });
-        } else {
-            this.setState(
-                {
-                    vis: HISTORIKK,
-                },
-                this.scrollMeIntoView
             );
         }
     }
@@ -78,15 +55,14 @@ class UnderelementerForAktivitet extends Component {
             kanSeDialog,
             kanOppretteNyHenvendelse,
             kanEndreDialog,
+            doToggleDialog,
+            doToggleHistorikk,
+            visDialog,
+            visHistorikk,
         } = this.props;
 
-        const { vis } = this.state;
         const aktivitetId = aktivitet.id;
         const cls = classes => classNames('underelementer-aktivitet', classes);
-
-        const visDialog = vis === DIALOG;
-        const visHistorikk = vis === HISTORIKK;
-
         const dialogknappCls = dialogAktiv =>
             classNames('underelementer-aktivitet__dialog-knapp', {
                 'underelementer-aktivitet__dialog-knapp--aktiv': dialogAktiv,
@@ -104,7 +80,7 @@ class UnderelementerForAktivitet extends Component {
                         hidden={!kanSeDialog}
                         value={DIALOG}
                         className={dialogknappCls(visDialog)}
-                        onClick={this.toggleDialog}
+                        onClick={doToggleDialog}
                         aria-pressed={visDialog}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
@@ -122,7 +98,7 @@ class UnderelementerForAktivitet extends Component {
                         hidden={aktivitet.arenaAktivitet}
                         value={HISTORIKK}
                         className={historikknappCls(visHistorikk)}
-                        onClick={this.toggleHistorikk}
+                        onClick={doToggleHistorikk}
                         aria-pressed={visHistorikk}
                     >
                         <FormattedMessage id="aktivitetvisning.historikk-knapp" />
@@ -167,6 +143,10 @@ UnderelementerForAktivitet.propTypes = {
     kanOppretteNyHenvendelse: PT.bool.isRequired,
     kanEndreDialog: PT.bool.isRequired,
     className: PT.string,
+    doToggleDialog: PT.func.isRequired,
+    doToggleHistorikk: PT.func.isRequired,
+    visDialog: PT.bool.isRequired,
+    visHistorikk: PT.bool.isRequired,
 };
 
 UnderelementerForAktivitet.defaultProps = {
@@ -196,7 +176,16 @@ const mapStateToProps = (state, props) => {
         kanSeDialog,
         kanOppretteNyHenvendelse,
         kanEndreDialog,
+        visDialog: selectVisDialog(state),
+        visHistorikk: selectVisHistorikk(state),
     };
 };
 
-export default connect(mapStateToProps)(UnderelementerForAktivitet);
+const mapDispatchToProps = dispatch => ({
+    doToggleDialog: () => dispatch(toggleDialog()),
+    doToggleHistorikk: () => dispatch(toggleHistorikk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+    UnderelementerForAktivitet
+);

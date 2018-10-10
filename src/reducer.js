@@ -30,6 +30,7 @@ import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-ve
 import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
+import underelmenterReducer from './moduler/aktivitet/visning/underelement-for-aktivitet/underelementer-view-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -68,6 +69,7 @@ const combinedReducers = combineReducers({
     view: combineReducers({
         dialog: dialogViewReducer,
         utskrift: utskriftReducer,
+        underelementer: underelmenterReducer,
     }),
 });
 
