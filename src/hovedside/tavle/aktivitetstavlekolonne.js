@@ -18,8 +18,9 @@ import {
 } from '../../constant';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
 import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetliste-selector';
-import { compareAktivitet } from '../../moduler/aktivitet/aktivitet-util';
+import { splitIEldreOgNyareAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 import * as AppPT from '../../proptypes';
+import SkjulEldreAktiviteter from './skjul-eldre-aktiviteter-fra-kolonne';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -71,15 +72,10 @@ function KolonneFunction({
     connectDropTarget,
     drag,
 }) {
-    const aktivitetsKort = aktiviteter
-        .filter(a => {
-            if (a.nesteStatus) {
-                return a.nesteStatus === status;
-            }
-            return a.status === status;
-        })
-        .sort(compareAktivitet)
-        .map(a => <AktivitetsKort key={a.id} aktivitet={a} />);
+    const [
+        aktivitetTilDatoMindreEnnToManederSiden,
+        aktivitetTilDatoMerEnnToManederSiden,
+    ] = splitIEldreOgNyareAktiviteter(aktiviteter, status);
 
     return connectDropTarget(
         <div className="aktivitetstavle__kolonne-wrapper">
@@ -102,7 +98,14 @@ function KolonneFunction({
                     </Undertittel>
                     <AktivitetsplanHjelpetekst status={status} />
                 </div>
-                {aktivitetsKort}
+                {aktivitetTilDatoMindreEnnToManederSiden.map(aktivitet =>
+                    <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
+                )}
+                <SkjulEldreAktiviteter
+                    aktivitetTilDatoMerEnnToManederSiden={
+                        aktivitetTilDatoMerEnnToManederSiden
+                    }
+                />
             </div>
         </div>
     );

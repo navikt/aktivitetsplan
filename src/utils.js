@@ -215,6 +215,13 @@ export function erMerEnnSyvDagerTil(dato) {
         : false;
 }
 
+export function erMerEnnToManederSiden(dato) {
+    const datoVerdi = moment(dato);
+    return datoVerdi.isValid
+        ? datoVerdi.isBefore(moment().subtract(2, 'month').startOf('day'), 'd')
+        : false;
+}
+
 export function formaterDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
