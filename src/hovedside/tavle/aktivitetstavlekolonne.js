@@ -18,7 +18,7 @@ import {
 } from '../../constant';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
 import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetliste-selector';
-import { splitIEldreOgNyareAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
+import { splitIEldreOgNyareHvisStatusErFullFordAvbrutt } from '../../moduler/aktivitet/aktivitet-util';
 import * as AppPT from '../../proptypes';
 import SkjulEldreAktiviteter from './skjul-eldre-aktiviteter-fra-kolonne';
 import {
@@ -79,11 +79,11 @@ function KolonneFunction({
     harSkjulAktivitetFeature,
 }) {
     const [
-        aktivitetTilDatoMindreEnnToManederSiden,
+        aktivitetTilDatoMindreEnnToManederSidenEllerAlleAktiviter,
         aktivitetTilDatoMerEnnToManederSiden,
-    ] = splitIEldreOgNyareAktiviteter(aktiviteter, status);
+    ] = splitIEldreOgNyareHvisStatusErFullFordAvbrutt(aktiviteter, status);
 
-    const aktivitestkortNyareEnnToManader = aktivitetTilDatoMindreEnnToManederSiden.map(
+    const aktivitestkortNyareEnnToManaderEllerAlle = aktivitetTilDatoMindreEnnToManederSidenEllerAlleAktiviter.map(
         aktivitet => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
     );
 
@@ -94,7 +94,9 @@ function KolonneFunction({
                 <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
             )
             .map(aktivitetskort =>
-                aktivitestkortNyareEnnToManader.push(aktivitetskort)
+                aktivitetTilDatoMindreEnnToManederSidenEllerAlleAktiviter.push(
+                    aktivitetskort
+                )
             );
     }
 
@@ -119,7 +121,7 @@ function KolonneFunction({
                     </Undertittel>
                     <AktivitetsplanHjelpetekst status={status} />
                 </div>
-                {aktivitestkortNyareEnnToManader}
+                {aktivitestkortNyareEnnToManaderEllerAlle}
                 {harSkjulAktivitetFeature &&
                     <SkjulEldreAktiviteter
                         aktivitetTilDatoMerEnnToManederSiden={
