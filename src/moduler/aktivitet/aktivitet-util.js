@@ -117,7 +117,10 @@ export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
     );
 }
 
-export function splitIEldreOgNyareAktiviteter(aktiviteter, status) {
+export function splitIEldreOgNyareHvisStatusErFullFordAvbrutt(
+    aktiviteter,
+    status
+) {
     return aktiviteter
         .filter(a => {
             if (a.nesteStatus) {
@@ -127,15 +130,21 @@ export function splitIEldreOgNyareAktiviteter(aktiviteter, status) {
         })
         .sort(compareAktivitet)
         .reduce(
-            ([mindreEnnToManederSiden, merEnnToManederSiden], aktivitet) => {
-                if (erMerEnnToManederSiden(aktivitet.tilDato)) {
+            (
+                [mindreEnnToManederSidenEllerAlle, merEnnToManederSiden],
+                aktivitet
+            ) => {
+                if (
+                    erMerEnnToManederSiden(aktivitet.tilDato) &&
+                    (status === STATUS_FULLFOERT || status === STATUS_AVBRUTT)
+                ) {
                     return [
-                        mindreEnnToManederSiden,
+                        mindreEnnToManederSidenEllerAlle,
                         [...merEnnToManederSiden, aktivitet],
                     ];
                 }
                 return [
-                    [...mindreEnnToManederSiden, aktivitet],
+                    [...mindreEnnToManederSidenEllerAlle, aktivitet],
                     merEnnToManederSiden,
                 ];
             },
