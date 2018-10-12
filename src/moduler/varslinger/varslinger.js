@@ -44,7 +44,6 @@ class Varslinger extends Component {
             this.props.doHentOppfolgingsstatus(getFodselsnummer());
         } else {
             this.props.doHentOppfolging();
-            this.hentInfotekstTilInaktivertBrukere(this.props.antallDagerIgjen);
         }
     }
 
