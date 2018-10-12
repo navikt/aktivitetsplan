@@ -21,6 +21,11 @@ import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetliste-sel
 import { splitIEldreOgNyareAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 import * as AppPT from '../../proptypes';
 import SkjulEldreAktiviteter from './skjul-eldre-aktiviteter-fra-kolonne';
+import {
+    harFeature,
+    SKJULELDREAKTIVITETER,
+} from '../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -71,11 +76,27 @@ function KolonneFunction({
     tittelId,
     connectDropTarget,
     drag,
+    harSkjulAktivitetFeature,
 }) {
     const [
         aktivitetTilDatoMindreEnnToManederSiden,
         aktivitetTilDatoMerEnnToManederSiden,
     ] = splitIEldreOgNyareAktiviteter(aktiviteter, status);
+
+    const aktivitestkortNyareEnnToManader = aktivitetTilDatoMindreEnnToManederSiden.map(
+        aktivitet => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
+    );
+
+    // FJERN HELA if-satsen når SKJULELDREAKTIVITETER er på
+    if (!harSkjulAktivitetFeature) {
+        aktivitetTilDatoMerEnnToManederSiden
+            .map(aktivitet =>
+                <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
+            )
+            .map(aktivitetskort =>
+                aktivitestkortNyareEnnToManader.push(aktivitetskort)
+            );
+    }
 
     return connectDropTarget(
         <div className="aktivitetstavle__kolonne-wrapper">
@@ -98,14 +119,13 @@ function KolonneFunction({
                     </Undertittel>
                     <AktivitetsplanHjelpetekst status={status} />
                 </div>
-                {aktivitetTilDatoMindreEnnToManederSiden.map(aktivitet =>
-                    <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
-                )}
-                <SkjulEldreAktiviteter
-                    aktivitetTilDatoMerEnnToManederSiden={
-                        aktivitetTilDatoMerEnnToManederSiden
-                    }
-                />
+                {aktivitestkortNyareEnnToManader}
+                {harSkjulAktivitetFeature &&
+                    <SkjulEldreAktiviteter
+                        aktivitetTilDatoMerEnnToManederSiden={
+                            aktivitetTilDatoMerEnnToManederSiden
+                        }
+                    />}
             </div>
         </div>
     );
@@ -117,10 +137,16 @@ KolonneFunction.propTypes = {
     aktiviteter: PT.arrayOf(PT.object).isRequired,
     doFlyttAktivitet: PT.func.isRequired,
     history: AppPT.history.isRequired,
+    harSkjulAktivitetFeature: PT.bool.isRequired,
 };
 
+// FJERN harSkjulAktivitetFeature når SKJULELDREAKTIVITETER er på
 const mapStateToProps = state => ({
     aktiviteter: selectAktivitetListe(state),
+    harSkjulAktivitetFeature: harFeature(
+        SKJULELDREAKTIVITETER,
+        selectFeatureData(state)
+    ),
 });
 
 const mapDispatchToProps = dispatch => ({
