@@ -93,7 +93,16 @@ function AvtaltForm({
                     }
                 />
                 <Knapp spinner={oppdaterer} disabled={lasterData}>
-                    <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
+                    <FormattedMessage
+                        id="sett-til-avtalt.bekreft-knapp"
+                        values={{
+                            ikkeSend:
+                                currentAvtaltSelect ===
+                                    IKKE_SEND_FORHANDSORIENTERING ||
+                                erManuellKrrKvpBruker ||
+                                visAvtaltMedNavMindreEnnSyvDager,
+                        }}
+                    />
                 </Knapp>
             </VisibleIfDiv>
         </form>
