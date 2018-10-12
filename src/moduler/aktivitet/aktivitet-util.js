@@ -1,5 +1,5 @@
 import 'moment-duration-format';
-import { moment } from '../../utils';
+import { erMerEnnToManederSiden, moment } from '../../utils';
 import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
@@ -115,4 +115,30 @@ export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
         erFullfoertUtenReferat(erAvtalt, status, aktivitetType) ||
         erMoteOgAvbrutt(status, aktivitetType)
     );
+}
+
+export function splitIEldreOgNyareAktiviteter(aktiviteter, status) {
+    return aktiviteter
+        .filter(a => {
+            if (a.nesteStatus) {
+                return a.nesteStatus === status;
+            }
+            return a.status === status;
+        })
+        .sort(compareAktivitet)
+        .reduce(
+            ([mindreEnnToManederSiden, merEnnToManederSiden], aktivitet) => {
+                if (erMerEnnToManederSiden(aktivitet.tilDato)) {
+                    return [
+                        mindreEnnToManederSiden,
+                        [...merEnnToManederSiden, aktivitet],
+                    ];
+                }
+                return [
+                    [...mindreEnnToManederSiden, aktivitet],
+                    merEnnToManederSiden,
+                ];
+            },
+            [[], []]
+        );
 }
