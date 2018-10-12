@@ -14,7 +14,18 @@ function SkjulEldreAktiviteter({ aktivitetTilDatoMerEnnToManederSiden }) {
                 const frontendlogger = window.frontendlogger;
                 if (frontendlogger) {
                     frontendlogger.event(
-                        'aktivitetsplan.skjulaktiviter',
+                        'aktivitetsplan.viseldreaktiviter',
+                        {},
+                        {}
+                    );
+                }
+            }}
+            // eslint-disable-next-line no-unused-vars
+            onClose={event => {
+                const frontendlogger = window.frontendlogger;
+                if (frontendlogger) {
+                    frontendlogger.event(
+                        'aktivitetsplan.skjuleldreaktiviter',
                         {},
                         {}
                     );

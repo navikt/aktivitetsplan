@@ -6,7 +6,12 @@ import { selectFeatureData } from './feature-selector';
 // Remember to add you feature to 'ALL_FEATURES' which ensures the feature is looked up in unleash.
 export const BRUKERVILKAR = 'aktivitetsplan.brukervilkar';
 export const FORHANDSORIENTERING = 'aktivitetsplan.forhandsorientering';
-export const ALL_FEATURES = [BRUKERVILKAR, FORHANDSORIENTERING];
+export const SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviteter';
+export const ALL_FEATURES = [
+    BRUKERVILKAR,
+    FORHANDSORIENTERING,
+    SKJULELDREAKTIVITETER,
+];
 
 export const harFeature = (name, features) => features[name] === true;
 
