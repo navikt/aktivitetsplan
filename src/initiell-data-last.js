@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import queryString from 'query-string';
 import { hentFeature } from './ducks/feature-reducer';
 
 class InitiellDataLast extends Component {
     componentDidMount() {
-        this.props.actions.hentFeature();
+        const enhet = queryString.parse(location.search).enhet;
+        this.props.actions.hentFeature(enhet);
     }
 
     render() {
