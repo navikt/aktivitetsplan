@@ -10,10 +10,7 @@ const featureQueryParams = features => {
 export function hentFeature(enhet) {
     const features = featureQueryParams(ALL_FEATURES);
     const featuresWithEnhet =
-        (features &&
-            enhet &&
-            `${features}&queryParam=enhet&queryValues=${enhet}`) ||
-        features;
+        (features && enhet && `${features}&enhet=${enhet}`) || features;
     return fetchToJson(
         `/aktivitetsplan/api/feature${featuresWithEnhet}`
     ).catch(() => {});
