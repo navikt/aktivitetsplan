@@ -5,6 +5,6 @@ const { reducer, cashedAction } = createActionsAndReducer('feature');
 
 export default reducer;
 
-export function hentFeature() {
-    return cashedAction(() => Api.hentFeature());
+export function hentFeature(enhet) {
+    return cashedAction(() => Api.hentFeature(enhet));
 }
