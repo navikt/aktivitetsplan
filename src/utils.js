@@ -215,8 +215,8 @@ export function erMerEnnSyvDagerTil(dato) {
         : false;
 }
 
-export function erMerEnnToManederSiden(dato) {
-    const datoVerdi = moment(dato);
+export function erMerEnnToManederSiden(aktivitet) {
+    const datoVerdi = moment(aktivitet.tilDato);
     return datoVerdi.isValid
         ? datoVerdi.isBefore(moment().subtract(2, 'month').startOf('day'), 'd')
         : false;
