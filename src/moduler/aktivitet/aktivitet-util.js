@@ -1,5 +1,5 @@
 import 'moment-duration-format';
-import { erMerEnnToManederSiden, moment } from '../../utils';
+import { moment } from '../../utils';
 import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
@@ -117,7 +117,7 @@ export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
     );
 }
 
-export function splitIEldreOgNyareAktiviteter(aktiviteter, status) {
+export function sorterAktiviteter(aktiviteter, status) {
     return aktiviteter
         .filter(a => {
             if (a.nesteStatus) {
@@ -125,20 +125,5 @@ export function splitIEldreOgNyareAktiviteter(aktiviteter, status) {
             }
             return a.status === status;
         })
-        .sort(compareAktivitet)
-        .reduce(
-            ([mindreEnnToManederSiden, merEnnToManederSiden], aktivitet) => {
-                if (erMerEnnToManederSiden(aktivitet.tilDato)) {
-                    return [
-                        mindreEnnToManederSiden,
-                        [...merEnnToManederSiden, aktivitet],
-                    ];
-                }
-                return [
-                    [...mindreEnnToManederSiden, aktivitet],
-                    merEnnToManederSiden,
-                ];
-            },
-            [[], []]
-        );
+        .sort(compareAktivitet);
 }

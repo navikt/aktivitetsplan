@@ -20,6 +20,45 @@ import {
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { doLesAktivitetsplan } from '../../moduler/oppfolging-status/oppfolging-api';
+import { erMerEnnToManederSiden } from '../../utils';
+import SkjulEldreAktiviteter from './skjul-eldre-aktiviteter-fra-kolonne';
+import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
+import {
+    harFeature,
+    SKJULELDREAKTIVITETER,
+} from '../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
+
+function lagAktivitetsListe(aktiviteter) {
+    return aktiviteter.map(aktivitet =>
+        <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
+    );
+}
+
+function renderFullfortAvbrytStatus(
+    aktiviteter,
+    HAR_SKJULELDREAKTIVITETER_FEATURE
+) {
+    // SKJULELDREAKTIVITETER ALLT INNANFØR IFSATSEN SKA RETURNERAS NÅR FEATURETOGGLEN ER PÅ
+    // RESTEN KAN FJERNES
+    if (HAR_SKJULELDREAKTIVITETER_FEATURE) {
+        return (
+            <div>
+                {lagAktivitetsListe(
+                    aktiviteter.filter(
+                        aktivitet => !erMerEnnToManederSiden(aktivitet)
+                    )
+                )}
+                <SkjulEldreAktiviteter
+                    aktivitetTilDatoMerEnnToManederSiden={aktiviteter.filter(
+                        erMerEnnToManederSiden
+                    )}
+                />
+            </div>
+        );
+    }
+    return lagAktivitetsListe(aktiviteter);
+}
 
 class AktivitetsTavle extends Component {
     componentDidMount() {
@@ -43,22 +82,35 @@ class AktivitetsTavle extends Component {
                     <Kolonne
                         status={STATUS_BRUKER_ER_INTRESSERT}
                         tittelId="aktivitetstavle.brukerErInteressert"
+                        render={lagAktivitetsListe}
                     />
                     <Kolonne
                         status={STATUS_PLANLAGT}
                         tittelId="aktivitetstavle.planlagt"
+                        render={lagAktivitetsListe}
                     />
                     <Kolonne
                         status={STATUS_GJENNOMFOERT}
                         tittelId="aktivitetstavle.gjennomfoert"
+                        render={lagAktivitetsListe}
                     />
                     <Kolonne
                         status={STATUS_FULLFOERT}
                         tittelId="aktivitetstavle.fullfoert"
+                        render={aktiviteter =>
+                            renderFullfortAvbrytStatus(
+                                aktiviteter,
+                                this.props.harSkjulAktivitetFeature
+                            )}
                     />
                     <Kolonne
                         status={STATUS_AVBRUTT}
                         tittelId="aktivitetstavle.avbrutt"
+                        render={aktiviteter =>
+                            renderFullfortAvbrytStatus(
+                                aktiviteter,
+                                this.props.harSkjulAktivitetFeature
+                            )}
                     />
                 </Tavle>
             </Innholdslaster>
@@ -72,21 +124,25 @@ AktivitetsTavle.propTypes = {
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
+    harSkjulAktivitetFeature: PT.bool.isRequired, // SKA FJERNAS NÅR SKJULELDREAKTIVITETER ER PÅ
 };
 
 const mapStateToProps = state => {
     const statusAktiviteter = selectAktivitetStatus(state);
     const statusArenaAktiviteter = selectArenaAktivitetStatus(state);
-    const erVeileder = selectErVeileder(state);
 
     const reducersNotStarted =
         statusAktiviteter === STATUS.NOT_STARTED &&
         statusArenaAktiviteter === STATUS.NOT_STARTED;
 
     return {
-        erVeileder,
+        erVeileder: selectErVeileder(state),
         avhengigheter: [statusAktiviteter, statusArenaAktiviteter],
         reducersNotStarted,
+        harSkjulAktivitetFeature: harFeature(
+            SKJULELDREAKTIVITETER,
+            selectFeatureData(state)
+        ),
     };
 };
 
