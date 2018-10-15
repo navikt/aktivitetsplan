@@ -110,7 +110,10 @@ class AvtaltContainer extends Component {
                         onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
                         disabled={lasterData}
                     >
-                        <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
+                        <FormattedMessage
+                            id="sett-til-avtalt.bekreft-knapp"
+                            values={{ ikkeSend: true }}
+                        />
                     </Knapp>}
             </div>
         );
