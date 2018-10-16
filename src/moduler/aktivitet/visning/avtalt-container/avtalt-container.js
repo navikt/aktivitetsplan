@@ -37,6 +37,7 @@ import {
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
+import { loggForhandsorientering } from '../../../../felles-komponenter/utils/logging';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -147,6 +148,13 @@ class AvtaltContainer extends Component {
                         this.setState({ forhandsorienteringSent: true });
                         doApneDialog();
                     }
+
+                    loggForhandsorientering(
+                        erManuellKrrKvpBruker,
+                        !merEnnsyvDagerTil,
+                        avtaltForm.avtaltSelect
+                    );
+
                     doSetAktivitetTilAvtalt(aktivitet);
                 }}
             />
