@@ -36,11 +36,7 @@ function KolonneHeader({ status }) {
             )}`}
         >
             <Undertittel className="aktivitetstavle__kolonne-header" tag="h1">
-                <FormattedMessage
-                    id={`aktivitetstavle.${status
-                        .replace(/_/g, '')
-                        .toLowerCase()}`}
-                />
+                <FormattedMessage id={`aktivitetstavle.${status}`} />
             </Undertittel>
             <AktivitetsplanHjelpetekst status={status} />
         </div>

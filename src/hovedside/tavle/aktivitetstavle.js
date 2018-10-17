@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Tavle from './tavle';
-import {
-    AvbruttKolonne,
-    ForslagKolonne,
-    FullfortKolonne,
-    GjennomforerKolonne,
-    PlanleggerKolonne,
-} from './kolonne/aktivitetstavlekolonner';
 import * as AppPT from '../../proptypes';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
@@ -23,7 +16,47 @@ import {
     SKJULELDREAKTIVITETER,
 } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
-import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetliste-selector';
+import {
+    STATUS_PLANLAGT,
+    STATUS_GJENNOMFOERT,
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+} from '../../constant';
+import { erMerEnnToManederSiden } from '../../utils';
+import KolonneFunction from './kolonne/kolonnefunction';
+import AktivitetsKort from './../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
+import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
+
+export function lagAktivitetsListe(aktiviteter) {
+    return aktiviteter.map(aktivitet =>
+        <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
+    );
+}
+
+function renderFullFortAvbryt(aktiviteter) {
+    const nyereAktiviteter = aktiviteter.filter(
+        aktivitet => !erMerEnnToManederSiden(aktivitet)
+    );
+    const eldreAktiviteter = aktiviteter.filter(aktivitet =>
+        erMerEnnToManederSiden(aktivitet)
+    );
+    return (
+        <div>
+            {lagAktivitetsListe(nyereAktiviteter)}
+            <SkjulEldreAktiviteter
+                aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter}
+            />
+        </div>
+    );
+}
+// TODO FJERN FUNKSJONEN OG BRUK renderFullFortAvbryt NÅR SKJULELDREAKTIVITETER ER PÅ
+function renderFullfortAvbrytFeature(aktiviteter, harSkjuleAktiviteterFeature) {
+    if (harSkjuleAktiviteterFeature) {
+        return renderFullFortAvbryt(aktiviteter);
+    }
+    return lagAktivitetsListe(aktiviteter);
+}
 
 class AktivitetsTavle extends Component {
     componentDidMount() {
@@ -37,7 +70,7 @@ class AktivitetsTavle extends Component {
     }
 
     render() {
-        const { aktiviteter, harSkjulAktivitetFeature } = this.props;
+        const { harSkjulAktivitetFeature } = this.props;
         return (
             <Innholdslaster minstEn avhengigheter={this.props.avhengigheter}>
                 <Tavle
@@ -45,16 +78,33 @@ class AktivitetsTavle extends Component {
                     antallKolonner={3}
                     className="aktivitetstavle"
                 >
-                    <ForslagKolonne aktiviteter={aktiviteter} />
-                    <PlanleggerKolonne aktiviteter={aktiviteter} />
-                    <GjennomforerKolonne aktiviteter={aktiviteter} />
-                    <FullfortKolonne
-                        aktiviteter={aktiviteter}
-                        harSkjulAktivitetFeature={harSkjulAktivitetFeature}
+                    <KolonneFunction
+                        status={STATUS_BRUKER_ER_INTRESSERT}
+                        render={lagAktivitetsListe}
                     />
-                    <AvbruttKolonne
-                        aktiviteter={aktiviteter}
-                        harSkjuleAktiviteterFeature={harSkjulAktivitetFeature}
+                    <KolonneFunction
+                        status={STATUS_PLANLAGT}
+                        render={lagAktivitetsListe}
+                    />
+                    <KolonneFunction
+                        status={STATUS_GJENNOMFOERT}
+                        render={lagAktivitetsListe}
+                    />
+                    <KolonneFunction
+                        status={STATUS_FULLFOERT}
+                        render={aktiviteter =>
+                            renderFullfortAvbrytFeature(
+                                aktiviteter,
+                                harSkjulAktivitetFeature
+                            )}
+                    />
+                    <KolonneFunction
+                        status={STATUS_AVBRUTT}
+                        render={aktiviteter =>
+                            renderFullfortAvbrytFeature(
+                                aktiviteter,
+                                harSkjulAktivitetFeature
+                            )}
                     />
                 </Tavle>
             </Innholdslaster>
@@ -68,7 +118,6 @@ AktivitetsTavle.propTypes = {
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
-    aktiviteter: PT.arrayOf(PT.object).isRequired,
     harSkjulAktivitetFeature: PT.bool.isRequired, // TODO SKA FJERNAS NÅR SKJULELDREAKTIVITETER ER PÅ
 };
 
@@ -84,7 +133,6 @@ const mapStateToProps = state => {
         erVeileder: selectErVeileder(state),
         avhengigheter: [statusAktiviteter, statusArenaAktiviteter],
         reducersNotStarted,
-        aktiviteter: selectAktivitetListe(state),
         harSkjulAktivitetFeature: harFeature(
             SKJULELDREAKTIVITETER,
             selectFeatureData(state)

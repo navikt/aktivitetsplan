@@ -1,14 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PT from 'prop-types';
 import KolonneHeader from './kolonneheader';
 import DropTargetKolonne from './drop-target-kolonne';
+import { sorterAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
+import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
 
-function KolonneFunction({ status, children }) {
+function KolonneFunction({ status, aktiviteter, render }) {
+    const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
     return (
         <div className="aktivitetstavle__kolonne-wrapper">
             <DropTargetKolonne status={status}>
                 <KolonneHeader status={status} />
-                {children}
+                {render(sorterteAktiviter)}
             </DropTargetKolonne>
         </div>
     );
@@ -16,10 +20,12 @@ function KolonneFunction({ status, children }) {
 
 KolonneFunction.propTypes = {
     status: PT.string.isRequired,
-    children: PT.node,
+    aktiviteter: PT.arrayOf(PT.object).isRequired,
+    render: PT.func.isRequired,
 };
 
-KolonneFunction.defaultProps = {
-    children: null,
-};
-export default KolonneFunction;
+const mapStateToProps = state => ({
+    aktiviteter: selectAktivitetListe(state),
+});
+
+export default connect(mapStateToProps)(KolonneFunction);

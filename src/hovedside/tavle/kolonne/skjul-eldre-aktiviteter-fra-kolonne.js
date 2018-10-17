@@ -4,13 +4,16 @@ import PT from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { VisibleIfLesmerpanel } from '../../../felles-komponenter/utils/visible-if-lesmerpanel';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
-import { lagAktivitetsListe } from './aktivitetstavlekolonner';
+import { lagAktivitetsListe } from './../aktivitetstavle';
 
 // const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
 // const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';
 
-function SkjulEldreAktiviteter({ aktivitetTilDatoMerEnnToManederSiden, intl }) {
-    const visible = aktivitetTilDatoMerEnnToManederSiden.length > 0;
+function SkjulEldreAktiviteter({
+    aktiviteteterTilDatoMerEnnToManederSiden,
+    intl,
+}) {
+    const visible = aktiviteteterTilDatoMerEnnToManederSiden.length > 0;
     const apneTekst = intl.formatMessage({
         id: 'vis-eldre-aktiviteter-apnetekst',
     });
@@ -24,7 +27,7 @@ function SkjulEldreAktiviteter({ aktivitetTilDatoMerEnnToManederSiden, intl }) {
             apneTekst={apneTekst}
             lukkTekst={lukkTekst}
         >
-            {lagAktivitetsListe(aktivitetTilDatoMerEnnToManederSiden)}
+            {lagAktivitetsListe(aktiviteteterTilDatoMerEnnToManederSiden)}
         </VisibleIfLesmerpanel>
     );
 }
@@ -34,7 +37,7 @@ const mapStateToProps = state => ({
 });
 
 SkjulEldreAktiviteter.propTypes = {
-    aktivitetTilDatoMerEnnToManederSiden: PT.arrayOf(PT.object).isRequired,
+    aktiviteteterTilDatoMerEnnToManederSiden: PT.arrayOf(PT.object).isRequired,
     erVeileder: PT.bool.isRequired,
     intl: intlShape.isRequired,
 };
