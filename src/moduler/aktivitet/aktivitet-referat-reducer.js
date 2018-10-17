@@ -33,9 +33,12 @@ export function oppdaterReferat(aktivitet) {
 }
 
 export function publiserReferat(aktivitet) {
-    return doThenDispatch(() => Api.publiserReferat(aktivitet.id), {
-        OK: AT.PUBLISER_REFERAT_OK,
-        FEILET: AT.PUBLISER_REFERAT_FEILET,
-        PENDING: AT.PUBLISER_REFERAT,
-    });
+    return doThenDispatch(
+        () => Api.publiserReferat({ ...aktivitet, erReferatPublisert: true }),
+        {
+            OK: AT.PUBLISER_REFERAT_OK,
+            FEILET: AT.PUBLISER_REFERAT_FEILET,
+            PENDING: AT.PUBLISER_REFERAT,
+        }
+    );
 }
