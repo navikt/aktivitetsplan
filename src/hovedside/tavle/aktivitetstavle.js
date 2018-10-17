@@ -2,63 +2,28 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Tavle from './tavle';
-import Kolonne from './aktivitetstavlekolonne';
+import {
+    AvbruttKolonne,
+    ForslagKolonne,
+    FullfortKolonne,
+    GjennomforerKolonne,
+    PlanleggerKolonne,
+} from './kolonne/aktivitetstavlekolonner';
 import * as AppPT from '../../proptypes';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { STATUS } from '../../ducks/utils';
-
-import {
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_PLANLAGT,
-    STATUS_GJENNOMFOERT,
-    STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
-} from '../../constant';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { doLesAktivitetsplan } from '../../moduler/oppfolging-status/oppfolging-api';
-import { erMerEnnToManederSiden } from '../../utils';
-import SkjulEldreAktiviteter from './skjul-eldre-aktiviteter-fra-kolonne';
-import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 import {
     harFeature,
     SKJULELDREAKTIVITETER,
 } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
-
-function lagAktivitetsListe(aktiviteter) {
-    return aktiviteter.map(aktivitet =>
-        <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
-    );
-}
-
-function renderFullfortAvbrytStatus(
-    aktiviteter,
-    HAR_SKJULELDREAKTIVITETER_FEATURE
-) {
-    // SKJULELDREAKTIVITETER ALLT INNANFØR IFSATSEN SKA RETURNERAS NÅR FEATURETOGGLEN ER PÅ
-    // RESTEN KAN FJERNES
-    if (HAR_SKJULELDREAKTIVITETER_FEATURE) {
-        return (
-            <div>
-                {lagAktivitetsListe(
-                    aktiviteter.filter(
-                        aktivitet => !erMerEnnToManederSiden(aktivitet)
-                    )
-                )}
-                <SkjulEldreAktiviteter
-                    aktivitetTilDatoMerEnnToManederSiden={aktiviteter.filter(
-                        erMerEnnToManederSiden
-                    )}
-                />
-            </div>
-        );
-    }
-    return lagAktivitetsListe(aktiviteter);
-}
+import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetliste-selector';
 
 class AktivitetsTavle extends Component {
     componentDidMount() {
@@ -72,6 +37,7 @@ class AktivitetsTavle extends Component {
     }
 
     render() {
+        const { aktiviteter, harSkjulAktivitetFeature } = this.props;
         return (
             <Innholdslaster minstEn avhengigheter={this.props.avhengigheter}>
                 <Tavle
@@ -79,38 +45,16 @@ class AktivitetsTavle extends Component {
                     antallKolonner={3}
                     className="aktivitetstavle"
                 >
-                    <Kolonne
-                        status={STATUS_BRUKER_ER_INTRESSERT}
-                        tittelId="aktivitetstavle.brukerErInteressert"
-                        render={lagAktivitetsListe}
+                    <ForslagKolonne aktiviteter={aktiviteter} />
+                    <PlanleggerKolonne aktiviteter={aktiviteter} />
+                    <GjennomforerKolonne aktiviteter={aktiviteter} />
+                    <FullfortKolonne
+                        aktiviteter={aktiviteter}
+                        harSkjulAktivitetFeature={harSkjulAktivitetFeature}
                     />
-                    <Kolonne
-                        status={STATUS_PLANLAGT}
-                        tittelId="aktivitetstavle.planlagt"
-                        render={lagAktivitetsListe}
-                    />
-                    <Kolonne
-                        status={STATUS_GJENNOMFOERT}
-                        tittelId="aktivitetstavle.gjennomfoert"
-                        render={lagAktivitetsListe}
-                    />
-                    <Kolonne
-                        status={STATUS_FULLFOERT}
-                        tittelId="aktivitetstavle.fullfoert"
-                        render={aktiviteter =>
-                            renderFullfortAvbrytStatus(
-                                aktiviteter,
-                                this.props.harSkjulAktivitetFeature
-                            )}
-                    />
-                    <Kolonne
-                        status={STATUS_AVBRUTT}
-                        tittelId="aktivitetstavle.avbrutt"
-                        render={aktiviteter =>
-                            renderFullfortAvbrytStatus(
-                                aktiviteter,
-                                this.props.harSkjulAktivitetFeature
-                            )}
+                    <AvbruttKolonne
+                        aktiviteter={aktiviteter}
+                        harSkjuleAktiviteterFeature={harSkjulAktivitetFeature}
                     />
                 </Tavle>
             </Innholdslaster>
@@ -124,7 +68,8 @@ AktivitetsTavle.propTypes = {
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
-    harSkjulAktivitetFeature: PT.bool.isRequired, // SKA FJERNAS NÅR SKJULELDREAKTIVITETER ER PÅ
+    aktiviteter: PT.arrayOf(PT.object).isRequired,
+    harSkjulAktivitetFeature: PT.bool.isRequired, // TODO SKA FJERNAS NÅR SKJULELDREAKTIVITETER ER PÅ
 };
 
 const mapStateToProps = state => {
@@ -139,6 +84,7 @@ const mapStateToProps = state => {
         erVeileder: selectErVeileder(state),
         avhengigheter: [statusAktiviteter, statusArenaAktiviteter],
         reducersNotStarted,
+        aktiviteter: selectAktivitetListe(state),
         harSkjulAktivitetFeature: harFeature(
             SKJULELDREAKTIVITETER,
             selectFeatureData(state)

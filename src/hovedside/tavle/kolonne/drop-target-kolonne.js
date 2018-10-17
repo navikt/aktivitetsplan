@@ -1,16 +1,13 @@
 import React from 'react';
-import PT from 'prop-types';
 import { connect } from 'react-redux';
+import PT from 'prop-types';
 import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { withRouter } from 'react-router-dom';
-import { flyttAktivitet } from '../../moduler/aktivitet/aktivitet-actions';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../constant';
-import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../routing';
-import * as AppPT from '../../proptypes';
-import KolonneHeader from './kolonneheader';
-import { selectAktivitetListe } from '../../moduler/aktivitet/aktivitetliste-selector';
-import { sorterAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
+import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
+import * as AppPT from '../../../proptypes';
+import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -39,41 +36,25 @@ function collect(theConnect, monitor) {
     };
 }
 
-function KolonneFunction({
-    aktiviteter,
-    status,
-    tittelId,
-    connectDropTarget,
-    drag,
-    render,
-}) {
+function DropTargetKolonne({ connectDropTarget, drag, children }) {
     return connectDropTarget(
-        <div className="aktivitetstavle__kolonne-wrapper">
-            <div
-                className={classNames(
-                    'aktivitetstavle__kolonne',
-                    drag && 'aktivitetstavle__kolonne--drag'
-                )}
-            >
-                <KolonneHeader status={status} tittelId={tittelId} />
-                {render(sorterAktiviteter(aktiviteter, status))}
-            </div>
+        <div
+            className={classNames(
+                'aktivitetstavle__kolonne',
+                drag && 'aktivitetstavle__kolonne--drag'
+            )}
+        >
+            {children}
         </div>
     );
 }
 
-KolonneFunction.propTypes = {
+DropTargetKolonne.propTypes = {
     status: PT.string.isRequired,
-    tittelId: PT.string.isRequired,
-    aktiviteter: PT.arrayOf(PT.object).isRequired,
     doFlyttAktivitet: PT.func.isRequired,
-    render: PT.func.isRequired,
     history: AppPT.history.isRequired,
+    children: PT.node,
 };
-
-const mapStateToProps = state => ({
-    aktiviteter: selectAktivitetListe(state),
-});
 
 const mapDispatchToProps = dispatch => ({
     doFlyttAktivitet: (aktivitet, status) =>
@@ -81,9 +62,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(
+    connect(null, mapDispatchToProps)(
         DropTarget('AktivitetsKort', mottaAktivitetsKort, collect)(
-            KolonneFunction
+            DropTargetKolonne
         )
     )
 );

@@ -2,15 +2,16 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import AktivitetsplanHjelpetekst from '../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
+import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
 import {
     STATUS_PLANLAGT,
     STATUS_GJENNOMFOERT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
-} from '../../constant';
+} from '../../../constant';
 
+// HAR DETTE NOE MED UU ATT GORA???
 function hjelpeklasse(aktivitetStatus) {
     switch (aktivitetStatus) {
         case STATUS_BRUKER_ER_INTRESSERT:
@@ -27,7 +28,7 @@ function hjelpeklasse(aktivitetStatus) {
     }
 }
 
-function KolonneHeader({ tittelId, status }) {
+function KolonneHeader({ status }) {
     return (
         <div
             className={`aktivitetstavle__kolonne-header-wrapper ${hjelpeklasse(
@@ -35,7 +36,11 @@ function KolonneHeader({ tittelId, status }) {
             )}`}
         >
             <Undertittel className="aktivitetstavle__kolonne-header" tag="h1">
-                <FormattedMessage id={tittelId} />
+                <FormattedMessage
+                    id={`aktivitetstavle.${status
+                        .replace(/_/g, '')
+                        .toLowerCase()}`}
+                />
             </Undertittel>
             <AktivitetsplanHjelpetekst status={status} />
         </div>
@@ -44,7 +49,6 @@ function KolonneHeader({ tittelId, status }) {
 
 KolonneHeader.propTypes = {
     status: PT.string.isRequired,
-    tittelId: PT.string.isRequired,
 };
 
 export default KolonneHeader;
