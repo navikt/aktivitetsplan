@@ -37,6 +37,7 @@ import {
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
+import { loggForhandsorientering } from '../../../../felles-komponenter/utils/logging';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -110,7 +111,10 @@ class AvtaltContainer extends Component {
                         onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
                         disabled={lasterData}
                     >
-                        <FormattedMessage id="sett-til-avtalt.bekreft-knapp" />
+                        <FormattedMessage
+                            id="sett-til-avtalt.bekreft-knapp"
+                            values={{ ikkeSend: true }}
+                        />
                     </Knapp>}
             </div>
         );
@@ -144,6 +148,13 @@ class AvtaltContainer extends Component {
                         this.setState({ forhandsorienteringSent: true });
                         doApneDialog();
                     }
+
+                    loggForhandsorientering(
+                        erManuellKrrKvpBruker,
+                        !merEnnsyvDagerTil,
+                        avtaltForm.avtaltSelect
+                    );
+
                     doSetAktivitetTilAvtalt(aktivitet);
                 }}
             />

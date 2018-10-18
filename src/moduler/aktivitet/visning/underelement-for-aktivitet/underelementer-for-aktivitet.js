@@ -38,9 +38,9 @@ class UnderelementerForAktivitet extends Component {
     }
 
     scrollMeIntoView() {
-        if (this.me) {
+        if (this.me && (this.props.visHistorikk || this.props.visDialog)) {
             setTimeout(
-                () => getScrollParent(this.me).scrollTo(0, this.me.offsetTop),
+                () => (getScrollParent(this.me).scrollTop = this.me.offsetTop),
                 0
             );
         }
