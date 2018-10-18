@@ -32,11 +32,11 @@ function SkjulEldreAktiviteter({
             className="aktivitetstavle__kolonne-lesmerpanel"
             onOpen={loggingAvSkjulEldreAktiviteter(
                 LOGGING_VISELDREAKITIVITETER,
-                erVeileder
+                { erVeileder }
             )}
             onClose={loggingAvSkjulEldreAktiviteter(
                 LOGGING_SKJULELDREAKTIVITETER,
-                erVeileder
+                { erVeileder }
             )}
             apneTekst={apneTekst}
             lukkTekst={lukkTekst}
