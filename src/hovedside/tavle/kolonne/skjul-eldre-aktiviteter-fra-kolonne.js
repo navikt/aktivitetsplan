@@ -10,7 +10,8 @@ import loggEvent from './../../../felles-komponenter/utils/logging';
 const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
 const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';
 
-function loggingAvSkjulEldreAktiviteter(typeEvent, hvem) {
+// eslint-disable-next-line no-unused-vars
+function loggingAvSkjulEldreAktiviteter(event, typeEvent, hvem) {
     loggEvent(typeEvent, hvem);
 }
 
@@ -30,14 +31,18 @@ function SkjulEldreAktiviteter({
         <VisibleIfLesmerpanel
             visible={visible}
             className="aktivitetstavle__kolonne-lesmerpanel"
-            onOpen={loggingAvSkjulEldreAktiviteter(
-                LOGGING_VISELDREAKITIVITETER,
-                { erVeileder }
-            )}
-            onClose={loggingAvSkjulEldreAktiviteter(
-                LOGGING_SKJULELDREAKTIVITETER,
-                { erVeileder }
-            )}
+            onOpen={event =>
+                loggingAvSkjulEldreAktiviteter(
+                    event,
+                    LOGGING_VISELDREAKITIVITETER,
+                    { erVeileder }
+                )}
+            onClose={event =>
+                loggingAvSkjulEldreAktiviteter(
+                    event,
+                    LOGGING_SKJULELDREAKTIVITETER,
+                    { erVeileder }
+                )}
             apneTekst={apneTekst}
             lukkTekst={lukkTekst}
         >
