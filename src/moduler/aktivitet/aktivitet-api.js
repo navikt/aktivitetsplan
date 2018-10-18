@@ -46,9 +46,10 @@ export function hentKanaler() {
     return fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/kanaler`);
 }
 
-export function publiserReferat(aktivitetId) {
+export function publiserReferat(aktivitet) {
     return putAsJson(
-        `${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}/referat/publiser`
+        `${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat/publiser`,
+        aktivitet
     );
 }
 
