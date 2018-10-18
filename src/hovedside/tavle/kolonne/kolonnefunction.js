@@ -9,12 +9,10 @@ import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-
 function KolonneFunction({ status, aktiviteter, render }) {
     const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
     return (
-        <div className="aktivitetstavle__kolonne-wrapper">
-            <DropTargetKolonne status={status}>
-                <KolonneHeader status={status} />
-                {render(sorterteAktiviter)}
-            </DropTargetKolonne>
-        </div>
+        <DropTargetKolonne status={status}>
+            <KolonneHeader status={status} />
+            {render(sorterteAktiviter)}
+        </DropTargetKolonne>
     );
 }
 

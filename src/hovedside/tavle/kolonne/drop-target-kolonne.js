@@ -38,13 +38,15 @@ function collect(theConnect, monitor) {
 
 function DropTargetKolonne({ connectDropTarget, drag, children }) {
     return connectDropTarget(
-        <div
-            className={classNames(
-                'aktivitetstavle__kolonne',
-                drag && 'aktivitetstavle__kolonne--drag'
-            )}
-        >
-            {children}
+        <div className="aktivitetstavle__kolonne-wrapper">
+            <div
+                className={classNames(
+                    'aktivitetstavle__kolonne',
+                    drag && 'aktivitetstavle__kolonne--drag'
+                )}
+            >
+                {children}
+            </div>
         </div>
     );
 }
