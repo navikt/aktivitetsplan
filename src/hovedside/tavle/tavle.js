@@ -55,7 +55,7 @@ class Tavle extends Component {
             <section
                 key={child.key || index}
                 className="tavle-kolonne"
-                data-testId={child.props.tittelId}
+                data-testId={`aktivitetstavle.${child.props.status}`}
             >
                 {child}
             </section>
