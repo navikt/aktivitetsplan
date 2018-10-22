@@ -1,10 +1,12 @@
 /* eslint-env mocha */
 import { expect } from 'chai';
+import { moment } from '../../utils';
 import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
     formatterKlokkeslett,
     formatterVarighet,
+    splitIEldreOgNyereAktiviteter,
 } from './aktivitet-util';
 
 describe('aktivitet-util', () => {
@@ -57,5 +59,29 @@ describe('aktivitet-util', () => {
 
     it('formatterKlokkeslett', () => {
         expect(formatterKlokkeslett(75)).to.equal('1:15');
+    });
+
+    it('skallSplitteRiktigt', () => {
+        const mangladeTilDato = [{ tilDato: null }];
+        const tilDatoMerEnnToManederSiden = {
+            tilDato: moment().subtract(3, 'month').format(),
+        };
+        const tilDatoMindreEnnToManederSiden = { tilDato: moment().format() };
+        const aktiviteter = [
+            mangladeTilDato,
+            tilDatoMerEnnToManederSiden,
+            tilDatoMindreEnnToManederSiden,
+        ];
+        const [
+            listeMedAktiviteterTilDatoMindreEnnToManader,
+            listeMedAktiviteterTilDatoMerEnnToManader,
+        ] = splitIEldreOgNyereAktiviteter(aktiviteter);
+        expect(listeMedAktiviteterTilDatoMindreEnnToManader).to.deep.equal([
+            mangladeTilDato,
+            tilDatoMindreEnnToManederSiden,
+        ]);
+        expect(listeMedAktiviteterTilDatoMerEnnToManader).to.deep.equal([
+            tilDatoMerEnnToManederSiden,
+        ]);
     });
 });

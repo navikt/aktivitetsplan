@@ -23,10 +23,10 @@ import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
 } from '../../constant';
-import { erMerEnnToManederSiden } from '../../utils';
 import KolonneFunction from './kolonne/kolonnefunction';
 import AktivitetsKort from './../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
+import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 
 export function lagAktivitetsListe(aktiviteter) {
     return aktiviteter.map(aktivitet =>
@@ -35,11 +35,8 @@ export function lagAktivitetsListe(aktiviteter) {
 }
 
 function renderFullFortAvbryt(aktiviteter) {
-    const nyereAktiviteter = aktiviteter.filter(
-        aktivitet => !erMerEnnToManederSiden(aktivitet)
-    );
-    const eldreAktiviteter = aktiviteter.filter(aktivitet =>
-        erMerEnnToManederSiden(aktivitet)
+    const [nyereAktiviteter, eldreAktiviteter] = splitIEldreOgNyereAktiviteter(
+        aktiviteter
     );
     return (
         <div>
