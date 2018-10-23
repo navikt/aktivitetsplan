@@ -1,5 +1,5 @@
 import 'moment-duration-format';
-import { moment } from '../../utils';
+import { erMerEnnToManederSiden, moment } from '../../utils';
 import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
@@ -126,4 +126,37 @@ export function sorterAktiviteter(aktiviteter, status) {
             return a.status === status;
         })
         .sort(compareAktivitet);
+}
+
+function manglerTilDatoEllerTilDatoerMindreEnnToManederSiden(aktivitet) {
+    return !aktivitet.tilDato || !erMerEnnToManederSiden(aktivitet);
+}
+
+export function splitIEldreOgNyereAktiviteter(aktiviteter) {
+    return aktiviteter.reduce(
+        (
+            [
+                listeMedAktiviteterTilDatoMindreEnnToManader,
+                listeMedAktiviteterTilDatoMerEnnToManader,
+            ],
+            aktivitet
+        ) => {
+            if (
+                manglerTilDatoEllerTilDatoerMindreEnnToManederSiden(aktivitet)
+            ) {
+                return [
+                    [
+                        ...listeMedAktiviteterTilDatoMindreEnnToManader,
+                        aktivitet,
+                    ],
+                    listeMedAktiviteterTilDatoMerEnnToManader,
+                ];
+            }
+            return [
+                listeMedAktiviteterTilDatoMindreEnnToManader,
+                [...listeMedAktiviteterTilDatoMerEnnToManader, aktivitet],
+            ];
+        },
+        [[], []]
+    );
 }
