@@ -201,7 +201,10 @@ const mapDispatchToProps = () => ({
             if (onComplete) {
                 onComplete(data);
             }
-            dispatch(visBekreftelse(dialogId, moment().add(5, 'seconds')));
+
+            dispatch(
+                visBekreftelse(dialogId, moment().add(5, 'seconds').format())
+            );
 
             // hvis man sender en veldig lang henvendelse, ønsker vi å bevare fokus på formen
             if (props.scrollElementId) {
