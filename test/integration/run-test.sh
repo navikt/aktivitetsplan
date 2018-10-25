@@ -8,7 +8,7 @@ if [ -n "$VERDIKJEDETEST" ]; then
     conf="test/integration/default.conf.js"
     echo ${params}
 
-elif [ -n "$MILJO$BROWSERSTACK_USER" ] && [ -n "$BROWSERSTACK_KEY" ]; then
+elif [ -n "$BROWSERSTACK_USER" ] && [ -n "$BROWSERSTACK_KEY" ]; then
     echo "Kjører browserstack tester"
     params="-e win_chrome,ios_safari,android_chrome,win_ie,win_edge --tag browserstack"
     conf="test/integration/browserstack.conf.js"
