@@ -30,8 +30,8 @@ function OppdaterReferatForm({
     function oppdaterOgPubliser(e) {
         e.preventDefault();
         handleSubmit(e).then(response => {
-            if (response === undefined) {
-                dispatchPubliserReferat(response);
+            if (response.data) {
+                dispatchPubliserReferat(response.data);
             }
         });
     }
@@ -94,21 +94,21 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = (dispatch, props) => {
-    const { aktivitet, onFerdig } = props;
-    return {
-        dispatchPubliserReferat: () => dispatch(publiserReferat(aktivitet)),
-        onSubmit: referatData => {
-            const aktivitetMedOppdatertReferat = {
-                ...aktivitet,
-                ...referatData,
-            };
-            return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then(
-                onFerdig
-            );
-        },
-    };
-};
+const mapDispatchToProps = (dispatch, props) => ({
+    dispatchPubliserReferat: aktivitet => dispatch(publiserReferat(aktivitet)),
+    onSubmit: referatData => {
+        const aktivitetMedOppdatertReferat = {
+            ...props.aktivitet,
+            ...referatData,
+        };
+        return dispatch(
+            oppdaterReferat(aktivitetMedOppdatertReferat)
+        ).then(res => {
+            props.onFerdig();
+            return res;
+        });
+    },
+});
 
 export default hiddenIf(
     connect(mapStateToProps, mapDispatchToProps)(NyHenvendelseReduxForm)
