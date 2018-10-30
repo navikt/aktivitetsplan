@@ -1,13 +1,15 @@
 import { createSelector } from 'reselect';
 import {
     selectAktiviteterData,
+    selectAktiviteterSlice,
     selectAktivitetStatus,
 } from './aktivitet-selector';
 import {
     selectArenaAktiviteterData,
+    selectArenaAktiviteterSlice,
     selectArenaAktivitetStatus,
 } from './arena-aktivitet-selector';
-import { aggregerStatus } from '../../ducks/utils';
+import { aggregerStatus, STATUS } from '../../ducks/utils';
 import {
     selectPrivatModusSlice,
     selectErPrivatModus,
@@ -89,4 +91,15 @@ export function selectKanEndreAktivitetDetaljer(state, aktivitet) {
         type !== SAMTALEREFERAT_TYPE &&
         (avtalt !== true || !!TILLAT_SET_AVTALT)
     );
+}
+
+export function selectAktivitetListeFeilMelding(state) {
+    const alleAktiviteterSlice = [
+        selectAktiviteterSlice(state),
+        selectArenaAktiviteterSlice(state),
+    ];
+
+    return alleAktiviteterSlice.every(slice => slice.status === STATUS.ERROR)
+        ? alleAktiviteterSlice.map(slice => slice.feil).filter(x => x)
+        : [];
 }

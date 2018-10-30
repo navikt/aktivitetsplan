@@ -1,3 +1,5 @@
+import { STATUS } from '../../ducks/utils';
+
 export function selectIdentitetSlice(state) {
     return state.data.identitet;
 }
@@ -16,4 +18,11 @@ export function selectErBruker(state) {
 
 export function selectIdentitetId(state) {
     return selectIdentitetSlice(state).data.id;
+}
+
+export function selectIdentitetFeilMelding(state) {
+    const feilMeldingsdata =
+        selectIdentitetStatus(state) === STATUS.ERROR &&
+        selectIdentitetSlice(state).feil;
+    return feilMeldingsdata ? [feilMeldingsdata] : [];
 }

@@ -9,6 +9,7 @@ import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import leggTilAktivitetSvg from '../../../img/legg-til-aktivitet-illustrasjon.svg';
 import Modal from '../../../felles-komponenter/modal/modal';
 import { selectErVeileder } from '../../identitet/identitet-selector';
+import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 class NyAktivitet extends Component {
     componentDidMount() {
@@ -21,6 +22,7 @@ class NyAktivitet extends Component {
             <Modal
                 contentLabel="ny-aktivitet-modal"
                 contentClass="ny-aktivitet-visning"
+                feilmeldinger={this.props.aktivitetFeilmeldinger}
             >
                 <div className="ny-aktivitet-modal__header">
                     <Bilde
@@ -75,10 +77,12 @@ NyAktivitet.propTypes = {
     doHentIdentitet: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
     intl: intlShape.isRequired,
+    aktivitetFeilmeldinger: PT.array.isRequired,
 };
 
 const mapStateToProps = state => ({
     erVeileder: selectErVeileder(state),
+    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
 });
 
 const mapDispatchToProps = dispatch => ({

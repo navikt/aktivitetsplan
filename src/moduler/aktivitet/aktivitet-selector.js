@@ -1,6 +1,6 @@
 import { STATUS } from '../../ducks/utils';
 
-function selectAktiviteterSlice(state) {
+export function selectAktiviteterSlice(state) {
     return state.data.aktiviteter;
 }
 
@@ -19,3 +19,10 @@ export function selectForrigeAktiveAktivitetId(state) {
 export function selectHarTilgangTilAktiviteter(state) {
     return selectAktivitetStatus(state) === STATUS.OK;
 }
+
+export const selectAktivitetFeilmeldinger = state => {
+    const feilMeldingsdata =
+        selectAktivitetStatus(state) === STATUS.ERROR &&
+        selectAktiviteterSlice(state).feil;
+    return feilMeldingsdata ? [feilMeldingsdata] : [];
+};

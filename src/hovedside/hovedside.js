@@ -1,5 +1,4 @@
 import React from 'react';
-import PT from 'prop-types';
 import { Container } from 'nav-frontend-grid';
 import Varslinger from '../moduler/varslinger/varslinger';
 import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
@@ -37,18 +36,5 @@ function Hovedside() {
         </div>
     );
 }
-
-Hovedside.defaultProps = {
-    children: null,
-    routes: null,
-};
-
-Hovedside.propTypes = {
-    children: PT.node,
-};
-
-Hovedside.defaultProps = {
-    children: undefined,
-};
 
 export default Hovedside;

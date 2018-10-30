@@ -12,6 +12,7 @@ import {
 import {
     selectTilpasseDialogModalHistoriskVisning,
     selectDialogMedId,
+    selectDialogFeilmeldinger,
 } from '../dialog-selector';
 import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import Feilmelding from '../../feilmelding/feilmelding';
@@ -27,11 +28,15 @@ function DialogModalContent({
     historiskVisning,
     harValgtDialog,
     valgtAktivitetId,
+    dialogFeilmeldinger,
 }) {
     return (
         <FnrProvider>
             <div className="dialog-modal__wrapper">
-                <Feilmelding className="feilmelding--systemfeil" />
+                <Feilmelding
+                    className="feilmelding--systemfeil"
+                    feilmeldinger={dialogFeilmeldinger}
+                />
                 <div className="dialog-modal__innhold">
                     <DialogOversikt
                         valgtDialog={valgtDialog}
@@ -63,11 +68,13 @@ DialogModalContent.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
     historiskVisning: PT.bool.isRequired,
     harValgtDialog: PT.bool.isRequired,
+    dialogFeilmeldinger: PT.array,
 };
 
 DialogModalContent.defaultProps = {
     valgtDialog: undefined,
     valgtAktivitetId: undefined,
+    dialogFeilmeldinger: [],
 };
 
 function DialogModal({
@@ -82,6 +89,7 @@ function DialogModal({
     harValgtDialog,
     historiskVisning,
     history,
+    dialogFeilmeldinger,
 }) {
     const className = classNames('dialog-modal', 'aktivitet-modal', {
         'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -112,6 +120,7 @@ function DialogModal({
                 harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
                 harValgtDialog={harValgtDialog}
                 historiskVisning={historiskVisning}
+                dialogFeilmeldinger={dialogFeilmeldinger}
             />
         </NavFrontendModal>
     );
@@ -123,6 +132,7 @@ DialogModal.defaultProps = {
     fnrPaMotpartHvisBruker: null,
     valgtDialog: null,
     harNyDialog: null,
+    dialogFeilmeldinger: [],
 };
 
 DialogModal.propTypes = {
@@ -137,6 +147,7 @@ DialogModal.propTypes = {
     historiskVisning: PT.bool.isRequired,
     tilpasseStorrelseHistoriskVisning: PT.bool.isRequired,
     history: AppPT.history.isRequired,
+    dialogFeilmeldinger: PT.array,
 };
 const mapStateToProps = (state, props) => {
     const { match } = props;
@@ -160,6 +171,7 @@ const mapStateToProps = (state, props) => {
         tilpasseStorrelseHistoriskVisning:
             historiskVisning &&
             selectTilpasseDialogModalHistoriskVisning(state),
+        dialogFeilmeldinger: selectDialogFeilmeldinger(state),
     };
 };
 

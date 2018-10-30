@@ -1,10 +1,10 @@
 import { aggregerStatus } from '../../../ducks/utils';
 
-function selectOppfolgingHistorikkSlice(state) {
+export function selectOppfolgingHistorikkSlice(state) {
     return state.data.oppfolgingHistorikk;
 }
 
-function selectOppgaveHistorikkSlice(state) {
+export function selectOppgaveHistorikkSlice(state) {
     return state.data.oppgaveHistorikk;
 }
 

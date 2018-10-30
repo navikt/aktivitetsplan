@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { dateToISODate } from '../../utils';
+import { STATUS } from '../../ducks/utils';
 
 export function selectOppfolgingSlice(state) {
     return state.data.oppfolging;
@@ -123,4 +124,11 @@ export function selectKanReaktiveres(state) {
 
 export function selectInaktiveringsDato(state) {
     return selectOppfolgingData(state).inaktiveringsdato;
+}
+
+export function selectOppfolgingFeilmeldinger(state) {
+    const feilMeldingsdata =
+        selectOppfolgingStatus(state) === STATUS.ERROR &&
+        selectOppfolgingSlice(state).feil;
+    return feilMeldingsdata ? [feilMeldingsdata] : [];
 }

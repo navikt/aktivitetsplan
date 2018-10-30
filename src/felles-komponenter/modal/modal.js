@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import ModalHeader from './modal-header';
 import Innholdslaster from '../utils/innholdslaster';
-import Feilmelding from '../../moduler/feilmelding/feilmelding';
 import * as AppPT from '../../proptypes';
+import Feilmelding from '../../moduler/feilmelding/feilmelding';
 
 function Modal({
     header,
@@ -16,6 +16,7 @@ function Modal({
     className,
     minstEnAvhengighet,
     history,
+    feilmeldinger,
     ...props
 }) {
     const closeFuncOrDefault = () => {
@@ -37,7 +38,7 @@ function Modal({
             onRequestClose={closeFuncOrDefault}
         >
             {header}
-            <Feilmelding className="feilmelding--systemfeil" />
+            <Feilmelding feilmeldinger={feilmeldinger} />
             <Innholdslaster
                 minstEn={minstEnAvhengighet}
                 avhengigheter={avhengigheter}
@@ -52,8 +53,10 @@ Modal.defaultProps = {
     onRequestClose: null,
     className: '',
     header: <ModalHeader />,
+    feilmelding: null,
     avhengigheter: [],
     minstEnAvhengighet: false,
+    feilmeldinger: [],
 };
 
 Modal.propTypes = {
@@ -61,6 +64,7 @@ Modal.propTypes = {
     onRequestClose: PT.func,
     className: PT.string,
     header: PT.node,
+    feilmeldinger: PT.array,
     children: PT.node.isRequired,
     avhengigheter: PT.array,
     minstEnAvhengighet: PT.bool,

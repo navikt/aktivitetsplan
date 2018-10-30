@@ -19,7 +19,10 @@ import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { formNavn } from './aktivitet-form-utils';
 import { STATUS } from '../../../ducks/utils';
-import { selectAktivitetStatus } from '../aktivitet-selector';
+import {
+    selectAktivitetFeilmeldinger,
+    selectAktivitetStatus,
+} from '../aktivitet-selector';
 
 class AktivitetFormContainer extends Component {
     componentDidMount() {
@@ -50,6 +53,7 @@ class AktivitetFormContainer extends Component {
             intl,
             lukkModal,
             match,
+            aktivitetFeilmeldinger,
         } = this.props;
 
         function onLagre(aktivitet) {
@@ -87,6 +91,7 @@ class AktivitetFormContainer extends Component {
                 key="behandlingAktivitetModal"
                 onRequestClose={onRequestClose}
                 contentLabel="aktivitet-modal"
+                feilmeldinger={aktivitetFeilmeldinger}
             >
                 <article aria-labelledby="modal-behandling-aktivitet-header">
                     <ModalContainer>
@@ -128,6 +133,7 @@ AktivitetFormContainer.propTypes = {
     history: PT.object.isRequired,
     match: PT.object.isRequired,
     intl: intlShape.isRequired,
+    aktivitetFeilmeldinger: PT.array.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -138,6 +144,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
     lagrer: selectAktivitetStatus(state) !== STATUS.OK,
     formIsDirty: isDirty(formNavn)(state),
+    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

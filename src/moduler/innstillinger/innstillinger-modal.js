@@ -13,6 +13,7 @@ import {
     selectNavnPaMotpart,
 } from '../motpart/motpart-selector';
 import FnrProvider from './../../bootstrap/fnr-provider';
+import { selectInnstillingModalFeilmeldinger } from './innstillinger-selector';
 
 function InnstillingerModal({
     avhengigheter,
@@ -20,6 +21,7 @@ function InnstillingerModal({
     navnPaMotpart,
     onRequestClose,
     ingenTilbakeKnapp,
+    innstillingModalFeilmeldinger,
 }) {
     return (
         <FnrProvider>
@@ -36,6 +38,7 @@ function InnstillingerModal({
                 contentLabel="instillinger-modal"
                 contentClass="innstillinger"
                 onRequestClose={onRequestClose}
+                feilmeldinger={innstillingModalFeilmeldinger}
             >
                 <article className="innstillinger__container">
                     <Innholdslaster
@@ -66,6 +69,7 @@ InnstillingerModal.defaultProps = {
     navnPaMotpart: undefined,
     onRequestClose: undefined,
     ingenTilbakeKnapp: undefined,
+    innstillingModalFeilmeldinger: [],
 };
 
 InnstillingerModal.propTypes = {
@@ -74,11 +78,13 @@ InnstillingerModal.propTypes = {
     children: PT.node,
     onRequestClose: PT.func,
     ingenTilbakeKnapp: PT.bool,
+    innstillingModalFeilmeldinger: PT.array,
 };
 
 const mapStateToProps = state => ({
     avhengigheter: [selectMotpartSlice(state)],
     navnPaMotpart: selectNavnPaMotpart(state),
+    innstillingModalFeilmeldinger: selectInnstillingModalFeilmeldinger(state),
 });
 
 export default connect(mapStateToProps)(InnstillingerModal);

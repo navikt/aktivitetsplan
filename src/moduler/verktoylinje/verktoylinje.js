@@ -8,12 +8,10 @@ import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
-import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import { selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 
 function Verktoylinje({
     viserHistoriskPeriode,
-    harTilgangTilAktiviteter,
     privatModus,
     erVeileder,
     harSkriveTilgang,
@@ -27,7 +25,6 @@ function Verktoylinje({
                     disabled={
                         viserHistoriskPeriode ||
                         privatModus ||
-                        !harTilgangTilAktiviteter ||
                         !harSkriveTilgang
                     }
                 >
@@ -54,14 +51,12 @@ Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
     privatModus: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
-    harTilgangTilAktiviteter: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     viserHistoriskPeriode: selectViserHistoriskPeriode(state),
     privatModus: selectErPrivatModus(state),
-    harTilgangTilAktiviteter: selectHarTilgangTilAktiviteter(state),
     erVeileder: selectErVeileder(state),
     harSkriveTilgang: selectHarSkriveTilgang(state),
 });
