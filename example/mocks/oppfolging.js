@@ -3,7 +3,7 @@ import { EKSEMPEL_VEILEDER } from '../config';
 const oppfolging = {
     fnr: null,
     veilederId: null,
-    reservasjonKRR: true,
+    reservasjonKRR: false,
     manuell: false,
     underOppfolging: true,
     underKvp: false,

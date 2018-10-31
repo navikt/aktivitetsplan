@@ -22,12 +22,12 @@ export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 export const IKKE_SEND_FORHANDSORIENTERING = 'ikke_send_forhandsorientering';
 
-const FORHANDSORIENTERING_MAKS_LENGDE = 500;
-const begrensetForhandsorienteringLengde = maksLengde(
+export const FORHANDSORIENTERING_MAKS_LENGDE = 500;
+export const begrensetForhandsorienteringLengde = maksLengde(
     'sett-avtalt-forhandsorientering-lengde',
     FORHANDSORIENTERING_MAKS_LENGDE
 );
-const pakrevdForhandsorienteringLengde = pakrevd(
+export const pakrevdForhandsorienteringLengde = pakrevd(
     'sett-avtalt-forhandsorientering-paakrevd'
 );
 
