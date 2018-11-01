@@ -31,6 +31,8 @@ import {
     harFeature,
 } from '../../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
+import { selectDialogStatus } from '../../../dialog/dialog-selector';
+import { STATUS } from '../../../../ducks/utils';
 
 class ForhandsorienteringArenaAktivitet extends Component {
     constructor() {
@@ -47,6 +49,9 @@ class ForhandsorienteringArenaAktivitet extends Component {
             harFeature(FORHANDSORIENTERING, this.props.features) &&
             this.props.erSpecieltTilpassetInnsatsBruker &&
             !this.props.erManuellKrrKvpBruker;
+
+        const lasterData = this.props.dialogStatus !== STATUS.OK;
+        const oppdaterer = this.props.dialogStatus === STATUS.RELOADING;
 
         const merEnnsyvDagerTil =
             erMerEnnSyvDagerTil(this.props.valgtAktivitet.tilDato) ||
@@ -91,7 +96,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
                     </HjelpetekstHoyre>
                 </div>
                 <Textarea feltNavn="avtaltText119" maxLength={500} />
-                <Knapp>
+                <Knapp spinner={oppdaterer} disabled={lasterData}>
                     <FormattedMessage id="forhandsorientering.arenaaktivitet.bekreft-og-send" />
                 </Knapp>
             </form>;
@@ -128,6 +133,7 @@ ForhandsorienteringArenaAktivitet.propTypes = {
     erManuellKrrKvpBruker: PT.bool.isRequired,
     erSpecieltTilpassetInnsatsBruker: PT.bool.isRequired,
     features: PT.array.isRequired,
+    dialogStatus: AppPT.status.isRequired,
 };
 
 const formNavn = 'send-forhandsorientering-arena-aktivitet-form';
@@ -154,6 +160,7 @@ const mapStateToProps = (state, props) => ({
         selectErBrukerManuell(state) ||
         selectErUnderKvp(state) ||
         selectReservasjonKRR(state),
+    dialogStatus: selectDialogStatus(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
