@@ -13,6 +13,7 @@ import {
 } from '../../../../constant';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectErBruker } from '../../../identitet/identitet-selector';
+import ForhandsorienteringArenaAktivitetForm from '../forhandsorientering/forhandsorientering-arena-aktivitet';
 
 function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, erBruker }) {
     const { status, type, id } = valgtAktivitet;
@@ -22,6 +23,9 @@ function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, erBruker }) {
             <AlertStripeInfo className="aktivitetvisning__alert">
                 <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
             </AlertStripeInfo>
+            <ForhandsorienteringArenaAktivitetForm
+                valgtAktivitet={valgtAktivitet}
+            />
         </div>
     );
 
