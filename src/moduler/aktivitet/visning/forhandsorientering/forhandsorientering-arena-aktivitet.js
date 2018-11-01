@@ -49,7 +49,8 @@ class ForhandsorienteringArenaAktivitet extends Component {
         if (
             [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(
                 this.props.valgtAktivitet.status
-            )
+            ) ||
+            this.props.erBruker
         ) {
             return null;
         }
@@ -140,6 +141,7 @@ ForhandsorienteringArenaAktivitet.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     intl: intlShape.isRequired,
     erManuellKrrKvpBruker: PT.bool.isRequired,
+    erBruker: PT.bool.isRequired,
     erSpecieltTilpassetInnsatsBruker: PT.bool.isRequired,
     features: PT.array.isRequired,
     dialogStatus: AppPT.status.isRequired,

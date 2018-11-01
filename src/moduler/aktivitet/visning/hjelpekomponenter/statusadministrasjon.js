@@ -25,6 +25,7 @@ function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, erBruker }) {
             </AlertStripeInfo>
             <ForhandsorienteringArenaAktivitetForm
                 valgtAktivitet={valgtAktivitet}
+                erBruker={erBruker}
             />
         </div>
     );
