@@ -31,6 +31,7 @@ import {
     harFeature,
 } from '../../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 
 class ForhandsorienteringArenaAktivitet extends Component {
     constructor() {
@@ -43,7 +44,15 @@ class ForhandsorienteringArenaAktivitet extends Component {
     }
 
     render() {
-        const skallViseForhandsirientering =
+        if (
+            [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(
+                this.props.valgtAktivitet.status
+            )
+        ) {
+            return null;
+        }
+
+        const skallViseForhandsorientering =
             harFeature(FORHANDSORIENTERING, this.props.features) &&
             this.props.erSpecieltTilpassetInnsatsBruker &&
             !this.props.erManuellKrrKvpBruker;
@@ -97,7 +106,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
             </form>;
 
         return (
-            <VisibleIfDiv visible={skallViseForhandsirientering}>
+            <VisibleIfDiv visible={skallViseForhandsorientering}>
                 {visAlertStripeHvisMindreEnnSyvDagerTil}
                 <VisibleIfDiv
                     visible={
