@@ -94,7 +94,7 @@ export function selectVisBrukerInfo(state, dialogId_) {
     const { dialogId, utlopTidspunkt } = selectDialogViewSlice(state).data;
     return (
         !!utlopTidspunkt &&
-        utlopTidspunkt.isAfter(moment()) &&
+        moment(utlopTidspunkt).isAfter(moment()) &&
         dialogId === dialogId_
     );
 }
