@@ -34,6 +34,7 @@ import { selectFeatureData } from '../../../../felles-komponenter/feature/featur
 import { selectDialogStatus } from '../../../dialog/dialog-selector';
 import { STATUS } from '../../../../ducks/utils';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
 
 class ForhandsorienteringArenaAktivitet extends Component {
     constructor() {
@@ -95,6 +96,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
                     this.setState({
                         forhandsorienteringSkalSendes: false,
                     });
+                    this.props.doApneDialog();
                 }}
             >
                 <div className="forhandsorientering-arena-aktivitet">
@@ -138,6 +140,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
 
 ForhandsorienteringArenaAktivitet.propTypes = {
     handleSubmit: PT.func.isRequired,
+    doApneDialog: PT.func.isRequired,
     valgtAktivitet: AppPT.aktivitet.isRequired,
     intl: intlShape.isRequired,
     erManuellKrrKvpBruker: PT.bool.isRequired,
@@ -182,6 +185,7 @@ const mapDispatchToProps = (dispatch, props) => ({
             overskrift: props.valgtAktivitet.tittel,
         })(dispatch);
     },
+    doApneDialog: () => dispatch(apneDialog()),
 });
 
 export default injectIntl(
