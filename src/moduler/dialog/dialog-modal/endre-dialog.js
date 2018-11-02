@@ -11,6 +11,8 @@ import {
     oppdaterVenterPaSvar,
 } from '../dialog-reducer';
 import { selectHarSkriveTilgang } from '../../oppfolging-status/oppfolging-selector';
+import { selectDialogStatus } from '../dialog-selector';
+import { STATUS } from '../../../ducks/utils';
 
 class EndreDialogStatus extends Component {
     componentDidMount() {
@@ -25,6 +27,7 @@ class EndreDialogStatus extends Component {
             toggleFerdigbehandlet,
             toggleVentePaSvar,
             harSkriveTilgang,
+            oppdatererDialog,
         } = this.props;
         if (!kanEndreDialog) {
             return <div />;
@@ -38,14 +41,14 @@ class EndreDialogStatus extends Component {
                     }
                     onChange={toggleFerdigbehandlet}
                     checked={!ferdigBehandlet}
-                    disabled={!harSkriveTilgang}
+                    disabled={!harSkriveTilgang || oppdatererDialog}
                 />
                 <Checkbox
                     label={<FormattedMessage id="dialog.venter-pa-svar" />}
                     className="endre-dialog__sjekkboks"
                     onChange={toggleVentePaSvar}
                     checked={venterPaSvar}
-                    disabled={!harSkriveTilgang}
+                    disabled={!harSkriveTilgang || oppdatererDialog}
                 />
             </div>
         );
@@ -60,11 +63,15 @@ EndreDialogStatus.propTypes = {
     venterPaSvar: PT.bool.isRequired,
     ferdigBehandlet: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
+    oppdatererDialog: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     kanEndreDialog: selectErVeileder(state),
     harSkriveTilgang: selectHarSkriveTilgang(state),
+    oppdatererDialog:
+        selectDialogStatus(state) !== STATUS.OK &&
+        selectDialogStatus(state) !== STATUS.ERROR,
 });
 
 const mapDispatchToProps = (dispatch, props) => {

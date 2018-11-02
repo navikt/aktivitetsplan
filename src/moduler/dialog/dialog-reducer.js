@@ -48,6 +48,7 @@ export default function reducer(state = initalState, action) {
     const data = action.data;
     switch (action.type) {
         case OPPRETTER_HENVENDELSE:
+        case OPPDATER_DIALOG:
             return { ...state, status: STATUS.RELOADING };
         case HENTET:
             return {
