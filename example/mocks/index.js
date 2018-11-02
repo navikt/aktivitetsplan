@@ -114,6 +114,7 @@ mock.delete('/veilarbportefolje/api/arbeidsliste/:fnr', () =>
 
 //veilarbdialog-api
 mock.get('/veilarbdialog/api/dialog', dialog);
+
 mock.put(
     '/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool',
     ({ pathParams }) => setVenterPaSvar(pathParams.dialogId, pathParams.bool)
