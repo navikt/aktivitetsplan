@@ -1,1 +1,1 @@
-Send forhåndsorientering om ikke gjennomført aktivitet
+Send forhåndsorientering (standard melding)
