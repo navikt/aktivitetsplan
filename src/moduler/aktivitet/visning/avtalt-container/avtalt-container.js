@@ -45,6 +45,7 @@ class AvtaltContainer extends Component {
         this.state = {
             visBekreftAvtalt: false,
             forhandsorienteringSent: false,
+            forhandsorienteringType: '',
         };
     }
 
@@ -145,7 +146,10 @@ class AvtaltContainer extends Component {
                         !erManuellKrrKvpBruker;
                     if (skalSendeVarsel) {
                         doSendForhandsorientering(aktivitet, avtaltText);
-                        this.setState({ forhandsorienteringSent: true });
+                        this.setState({
+                            forhandsorienteringSent: true,
+                            forhandsorienteringType: avtaltForm.avtaltSelect,
+                        });
                         doApneDialog();
                     }
 
@@ -170,6 +174,7 @@ class AvtaltContainer extends Component {
             (this.state.forhandsorienteringSent && 'forhandsorienteringSent') ||
             (!this.state.forhandsorienteringSent &&
                 'forhandsorienteringIkkeSent');
+        const forhandsorienteringType = this.state.forhandsorienteringType;
 
         const cls = classes =>
             classNames('avtalt-container__vis-avtalt', classes);
@@ -179,7 +184,10 @@ class AvtaltContainer extends Component {
                     <AlertStripeSuksess>
                         <FormattedMessage
                             id="sett-avtalt-bekreftelse"
-                            values={{ settAvtaltTekstVerdi }}
+                            values={{
+                                settAvtaltTekstVerdi,
+                                forhandsorienteringType,
+                            }}
                         />
                     </AlertStripeSuksess>
                 </div>) ||
