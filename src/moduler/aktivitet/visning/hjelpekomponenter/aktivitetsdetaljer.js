@@ -367,7 +367,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         <Informasjonsfelt
             key="tildato"
             tittel={tilDatoTekst(aktivitetstype)}
-            innhold={tilDato}
+            innhold={tilDato || 'Dato ikke satt'}
         />,
         <Informasjonsfelt
             key="jobbstatus"
