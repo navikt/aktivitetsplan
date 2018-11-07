@@ -47,10 +47,6 @@ const pakrevdFraDato = pakrevd(
     'ijobb-aktivitet-form.feilmelding.paakrevd-fradato'
 ).hvisIkke(erAvtalt);
 
-const pakrevdTilDato = pakrevd(
-    'ijobb-aktivitet-form.feilmelding.paakrevd-tildato'
-);
-
 const pakrevdJobbStatus = pakrevd(
     'ijobb-aktivitet-form.feilmelding.paakrevd-jobbStatus'
 ).hvisIkke(erAvtalt);
@@ -192,7 +188,6 @@ const StillingAktivitetReduxForm = validForm({
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
-        tilDato: [pakrevdTilDato],
         jobbStatus: [pakrevdJobbStatus],
         ansettelsesforhold: [begrensetAnsettelsesforholdLengde],
         arbeidstid: [begrensetArbeidstidLengde],
