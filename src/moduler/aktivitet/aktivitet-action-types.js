@@ -6,7 +6,6 @@ export const HENT_AKTIVITET = 'aktivitet/hent_aktivitet';
 export const HENT_AKTIVITET_OK = 'aktivitet/hent_aktivitet/ok';
 export const HENT_AKTIVITET_FEILET = 'aktivitet/hent_aktivitet/fail';
 
-// TODO: Disse brukes i flere reducere. Fiks det
 export const OPPDATER_REFERAT = 'referat/oppdater';
 export const OPPDATER_REFERAT_OK = 'referat/oppdater/ok';
 export const OPPDATER_REFERAT_FEILET = 'referat/oppdater/fail';

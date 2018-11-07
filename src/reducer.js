@@ -7,7 +7,6 @@ import behandlendeEnheterReducer from './moduler/innstillinger/opprett-oppgave/h
 import brukerReducer from './moduler/bruker/bruker-reducer';
 import dialogReducer from './moduler/dialog/dialog-reducer';
 import dialogViewReducer from './moduler/dialog/dialog-view-reducer';
-import etiketterReducer from './felles-komponenter/aktivitet-etikett/aktivitet-etiketter-reducer';
 import featureReducer from './ducks/feature-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import oppgaveHistorikkReducer from './moduler/innstillinger/historikk/oppgave-historikk-reducer';
@@ -15,14 +14,12 @@ import oppfolgingHistorikkReducer from './moduler/innstillinger/historikk/oppfol
 import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
 import identitetReducer from './moduler/identitet/identitet-reducer';
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
-import kanalerReducer from './moduler/aktivitet/kanaler-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
 import oppgaveVeiledereReducer from './moduler/innstillinger/opprett-oppgave/hent-veieldere-for-oppgave-reducer';
 import veilederePaEnhetReducer from './moduler/veiledere-pa-enhet/veiledere-pa-enhet-reducer';
 import tildelVeilederReducer from './moduler/tildel-veileder/tildel-veileder-reducer';
-import referatReducer from './moduler/aktivitet/aktivitet-referat-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import oppfolgingstatusReducer from './moduler/oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
@@ -43,19 +40,16 @@ const combinedReducers = combineReducers({
         behandlendeEnheter: behandlendeEnheterReducer,
         bruker: brukerReducer,
         dialog: dialogReducer,
-        etiketter: etiketterReducer,
         filter: filterReducer,
         historiskeVilkar: historiskeVilkarReducer,
         identitet: identitetReducer,
         innstillinger: innstillingerReducer,
         oppgaveHistorikk: oppgaveHistorikkReducer,
         oppfolgingHistorikk: oppfolgingHistorikkReducer,
-        kanaler: kanalerReducer,
         mal: malReducer,
         malListe: malListeReducer,
         oppgaveVeiledere: oppgaveVeiledereReducer,
         opprettOppgave: oppgaveReducer,
-        referat: referatReducer,
         oppfolging: oppfolgingReducer,
         oppfoelgingsstatus: oppfolgingstatusReducer,
         versjoner: versjonReducer,

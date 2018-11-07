@@ -4,10 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
 import { Knapp } from 'nav-frontend-knapper';
-import {
-    oppdaterReferat,
-    publiserReferat,
-} from '../../aktivitet-referat-reducer';
+import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { STATUS } from '../../../../ducks/utils';
 import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
 import hiddenIf from '../../../../felles-komponenter/hidden-if/hidden-if';
@@ -16,7 +13,7 @@ import {
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/hidden-if-knapper';
-import { selectReferatStatus } from '../../aktivitet-referat-selector';
+import { selectAktivitetStatus } from '../../aktivitet-selector';
 
 const REFERAT_MAKS_LENGDE = 5000;
 
@@ -89,7 +86,9 @@ const mapStateToProps = (state, props) => {
         initialValues: {
             referat,
         },
-        oppdaterer: selectReferatStatus(state) === STATUS.PENDING,
+        oppdaterer:
+            selectAktivitetStatus(state) ===
+            (STATUS.PENDING || STATUS.RELOADING),
         erReferatPublisert,
     };
 };
