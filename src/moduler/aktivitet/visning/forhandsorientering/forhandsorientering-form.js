@@ -94,7 +94,7 @@ const mapStateToProps = (state, props) => {
     return {
         initialValues: {
             avtaltText119: props.intl.formatMessage({
-                id: 'sett-avtalt-paragraf-11-9-tekst',
+                id: 'sett-forhandsorienterings-tekst-arena-aktivitet',
             }),
         },
         dialogStatus: selectDialogStatus(state),
