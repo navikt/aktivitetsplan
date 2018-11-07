@@ -13,19 +13,43 @@ import {
 } from '../../../../constant';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectErBruker } from '../../../identitet/identitet-selector';
-import ForhandsorienteringArenaAktivitetForm from '../forhandsorientering/forhandsorientering-arena-aktivitet';
+import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsorientering-arena-aktivitet';
+import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
+import {
+    selectErBrukerManuell,
+    selectErUnderKvp,
+    selectReservasjonKRR,
+} from '../../../oppfolging-status/oppfolging-selector';
+import {
+    FORHANDSORIENTERING,
+    harFeature,
+} from '../../../../felles-komponenter/feature/feature';
+import { selectErBrukerMedIServiceGruppeSTS } from '../../../oppfoelgingsstatus/oppfoelgingsstatus-selector';
 
-function Statusadministrasjon({ valgtAktivitet, arenaAktivitet, erBruker }) {
+function Statusadministrasjon({
+    valgtAktivitet,
+    arenaAktivitet,
+    erBruker,
+    erManuellKrrKvpBruker,
+    erSpecieltTilpassetInnsatsBruker,
+    features,
+}) {
     const { status, type, id } = valgtAktivitet;
+
+    const skalViseForhandsorienteringsKomponent =
+        harFeature(FORHANDSORIENTERING, features) &&
+        erSpecieltTilpassetInnsatsBruker &&
+        !erBruker &&
+        !erManuellKrrKvpBruker;
 
     const visAdministreresAvVeileder = (
         <div className="aktivitetvisning__underseksjon">
             <AlertStripeInfo className="aktivitetvisning__alert">
                 <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
             </AlertStripeInfo>
-            <ForhandsorienteringArenaAktivitetForm
+            <ForhandsorienteringArenaAktivitet
+                visible={skalViseForhandsorienteringsKomponent}
                 valgtAktivitet={valgtAktivitet}
-                erBruker={erBruker}
             />
         </div>
     );
@@ -66,6 +90,12 @@ Statusadministrasjon.propTypes = {
 
 const mapStateToProps = state => ({
     erBruker: selectErBruker(state),
+    features: selectFeatureData(state),
+    erManuellKrrKvpBruker:
+        selectErBrukerManuell(state) ||
+        selectErUnderKvp(state) ||
+        selectReservasjonKRR(state),
+    erSpecieltTilpassetInnsatsBruker: selectErBrukerMedIServiceGruppeSTS(state),
 });
 
 export default connect(mapStateToProps)(Statusadministrasjon);
