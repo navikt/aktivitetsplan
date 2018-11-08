@@ -99,3 +99,22 @@ export function fjernForrigeAktiveAktivitetId() {
         type: AT.FJERN_FORRIGE_AKTIVE_AKTIVITET_ID,
     };
 }
+
+export function oppdaterReferat(aktivitet) {
+    return doThenDispatch(() => Api.oppdaterReferat(aktivitet), {
+        OK: AT.OPPDATER_REFERAT_OK,
+        FEILET: AT.OPPDATER_REFERAT_FEILET,
+        PENDING: AT.OPPDATER_REFERAT,
+    });
+}
+
+export function publiserReferat(aktivitet) {
+    return doThenDispatch(
+        () => Api.publiserReferat({ ...aktivitet, erReferatPublisert: true }),
+        {
+            OK: AT.PUBLISER_REFERAT_OK,
+            FEILET: AT.PUBLISER_REFERAT_FEILET,
+            PENDING: AT.PUBLISER_REFERAT,
+        }
+    );
+}
