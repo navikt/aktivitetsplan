@@ -8,6 +8,7 @@ import {
     HiddenIfAlertStripeSuksess,
 } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import visibleIfHOC from '../../../../hocs/visible-if';
 
 class ForhandsorienteringArenaAktivitet extends Component {
     constructor() {
@@ -65,4 +66,4 @@ ForhandsorienteringArenaAktivitet.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
 };
 
-export default ForhandsorienteringArenaAktivitet;
+export default visibleIfHOC(ForhandsorienteringArenaAktivitet);
