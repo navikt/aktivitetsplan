@@ -21,19 +21,9 @@ function getEnviromentVariable(
     return value;
 }
 
-const hostname = window.location.hostname;
-const gamleApier =
-    hostname === 'tjenester.nav.no' || hostname === 'tjenester-q0.nav.no';
-
-export const DIALOG_BASE_URL = gamleApier
-    ? '/veilarbdialogproxy/api'
-    : '/veilarbdialog/api';
-export const AKTIVITET_BASE_URL = gamleApier
-    ? '/veilarbaktivitetproxy/api'
-    : '/veilarbaktivitet/api';
-export const OPPFOLGING_BASE_URL = gamleApier
-    ? '/veilarboppfolgingproxy/api'
-    : '/veilarboppfolging/api';
+export const DIALOG_BASE_URL = '/veilarbdialog/api';
+export const AKTIVITET_BASE_URL = '/veilarbaktivitet/api';
+export const OPPFOLGING_BASE_URL = '/veilarboppfolging/api';
 
 export const ONBOARDING_VIDEO_URL = getEnviromentVariable(
     'ONBOARDING_VIDEO_URL'
