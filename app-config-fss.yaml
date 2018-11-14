@@ -10,7 +10,7 @@ healthcheck:
     path: aktivitetsplan/internal/isAlive
     initialDelay: 60
   readiness:
-    path: aktivitetsplan/internal/selftest
+    path: veilarbdemo/internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
@@ -98,3 +98,5 @@ resources:
     memory: 512Mi
 
 webproxy: true
+alertProfiles:
+  - common-java-modules
