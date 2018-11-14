@@ -10,7 +10,7 @@ healthcheck:
     path: aktivitetsplan/internal/isAlive
     initialDelay: 60
   readiness:
-    path: veilarbdemo/internal/isReady
+    path: aktivitetsplan/internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
