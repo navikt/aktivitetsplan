@@ -47,7 +47,15 @@ module.exports = {
     },
 
     lukk() {
-        this.click(this.elements.btnTilbakeTilListe.selector);
+        const timeout = this.api.globals.timeout;
+        const tilbakeknapp = this.elements.btnTilbakeTilListe.selector;
+        this.waitForElementPresent(tilbakeknapp, timeout);
+        //For mobilskjerm
+        this.isVisible(tilbakeknapp, result => {
+            if (result.value) {
+                this.click(tilbakeknapp);
+            }
+        });
         return this.api.page.dialogOversiktModal();
     },
 };
