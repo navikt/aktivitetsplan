@@ -1,5 +1,4 @@
 'use strict';
-import { getParentPathByChildText } from '../utils';
 import { AktivitetsType } from '../data/aktivitet-type';
 import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
@@ -34,7 +33,7 @@ module.exports = {
             .url(result => {
                 aktivitet.aktivitetURL = result.value;
             })
-            .perform(function() {
+            .perform(() => {
                 sider
                     .aktivitetsvisningModal()
                     .lukkVindu(this.api.page.aktivitetsplanOversiktSide())
@@ -110,36 +109,6 @@ module.exports = {
             nesteSide.elements.side.selector,
             timeout
         );
-        return nesteSide;
-    },
-
-    validerSletting(kolonne, url) {
-        const timeout = this.api.globals.timeout;
-        let xPath =
-            this.hentKolonneSelektor(kolonne) + this.aktivitetskortHref(url);
-        this.api.waitForElementNotPresent(xPath, timeout);
-        return this;
-    },
-
-    velgAktivitetMedTittel(kolonne, tittel, nesteSide) {
-        let timeout = this.api.globals.timeout;
-        let xPathAk = this.hentKolonneSelektor(kolonne);
-
-        getParentPathByChildText(
-            this.api,
-            tittel,
-            xPathAk,
-            this.elements.tittel.selector,
-            timeout,
-            callback => {
-                if (callback.success) this.api.click(callback.value);
-            }
-        );
-        this.api.waitForElementVisible(
-            nesteSide.elements.side.selector,
-            timeout
-        );
-
         return nesteSide;
     },
 

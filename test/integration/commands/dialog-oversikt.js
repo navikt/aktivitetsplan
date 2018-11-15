@@ -3,9 +3,9 @@ import { getXPathWithIndex } from '../utils';
 
 module.exports = {
     leggTilDialog(dialog) {
+        const dialogVisning = this.api.page.dialogvisning();
         this.click(this.elements.btnNyDialog.selector);
-
-        this.api.page.dialogvisning().leggTilMelding(dialog).lukk();
+        dialogVisning.leggTilMelding(dialog).lukk();
 
         this.validerDialogPaIndeks(0, dialog);
         return this;
@@ -37,25 +37,18 @@ module.exports = {
         );
     },
 
-    validerDialogMedTekst(dialog) {
-        const xPathDialog = this.dialogMedTekstSelektor(dialog.tema);
-        this.validerDialogTekster(xPathDialog, dialog.tema, dialog.tekst);
-        this.validerEtiketter(
-            xPathDialog,
-            dialog.venterPaNav,
-            dialog.venterPaBruker
-        );
-    },
-
     validerDialogTekster(xPathDialog, tema, tekst) {
-        this.validerTekst(
-            this.dialogTema(xPathDialog),
+        const dialogTema = this.dialogTema(xPathDialog);
+        const dialogTekst = this.dialogTekst(xPathDialog);
+
+        this.api.validerTekst(
+            dialogTema,
             tema,
             'Validerer at dialogtema har riktig verdi i dialogliste'
         );
 
-        this.validerTekst(
-            this.dialogTekst(xPathDialog),
+        this.api.validerTekst(
+            dialogTekst,
             tekst,
             'Validerer at dialogtekst har riktig verdi i dialogliste'
         );
