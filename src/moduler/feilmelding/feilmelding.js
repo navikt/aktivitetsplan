@@ -1,37 +1,27 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl, intlShape } from 'react-intl';
 import {
-    AlertStripeNavAnsatt,
     AlertStripeInfo,
     AlertStripeInfoSolid,
+    AlertStripeNavAnsatt,
 } from 'nav-frontend-alertstriper';
-import {
-    selectErVeileder,
-    selectIdentitetFeilMelding,
-} from '../../moduler/identitet/identitet-selector';
 import FeilmeldingDetaljer from './feilmelding-detaljer';
 import {
-    parseFeil,
-    finnHoyesteAlvorlighetsgrad,
-    UKJENT_KATEGORI,
     FINNES_IKKE_KATEGORI,
+    finnHoyesteAlvorlighetsgrad,
     INGEN_TILGANG_KATEGORI,
-    UGYLDIG_REQUEST_KATEGORI,
-    VERSJONSKONFLIKT_KATEGORI,
     KATEGORI_RANGERING,
+    parseFeil,
+    UGYLDIG_REQUEST_KATEGORI,
+    UKJENT_KATEGORI,
+    VERSJONSKONFLIKT_KATEGORI,
 } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import * as AppPT from '../../proptypes';
 import { FailsafeText } from '../../text';
-import { selectOppfolgingFeilmeldinger } from '../oppfolging-status/oppfolging-selector';
-import { selectAktivitetListeFeilMelding } from '../aktivitet/aktivitetliste-selector';
-import { selectArenaAktivitetStatus } from '../aktivitet/arena-aktivitet-selector';
-import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
-import { STATUS } from '../../ducks/utils';
 
 const stripeTyper = {
     [UKJENT_KATEGORI]: AlertStripeNavAnsatt,
@@ -48,7 +38,7 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
     const melding = feil.melding;
     const feilKategori = (melding && melding.type) || UKJENT_KATEGORI;
     const Stripe =
-        (erArenaFeil && AlertStripeInfoSolid) || stripeTyper[feilKategori];
+        (erArenaFeil && AlertStripeInfo) || stripeTyper[feilKategori];
     const typeNr = KATEGORI_RANGERING[feilKategori] || 1;
 
     const feilKeys = parseFeil(
@@ -118,17 +108,13 @@ class Feilmelding extends Component {
             className,
             erVeileder,
             intl,
-            viktigeFeil,
             erArenaFeil,
         } = this.props;
 
-        const feil = feilmeldinger || viktigeFeil;
-
-        const alvorligsteFeil = finnHoyesteAlvorlighetsgrad(feil);
-
+        const alvorligsteFeil = finnHoyesteAlvorlighetsgrad(feilmeldinger);
         return (
             <VisibleIfDiv
-                visible={feil.length > 0}
+                visible={feilmeldinger.length > 0}
                 className={classNames(className, 'feilmelding')}
             >
                 <FeilStripe
@@ -144,7 +130,7 @@ class Feilmelding extends Component {
                     visible={this.state.apen}
                     className="feilmelding__detaljer"
                 >
-                    {feil.map(feilen => {
+                    {feilmeldinger.map(feilen => {
                         const id =
                             (feilen.melding && feilen.melding.id) ||
                             feilen.type;
@@ -169,8 +155,7 @@ class Feilmelding extends Component {
 }
 
 Feilmelding.defaultProps = {
-    feilmeldinger: undefined,
-    viktigeFeil: [],
+    feilmeldinger: [],
     className: undefined,
     erVeileder: false,
     erArenaFeil: false,
@@ -180,26 +165,8 @@ Feilmelding.propTypes = {
     intl: intlShape.isRequired,
     feilmeldinger: PT.array,
     erVeileder: PT.bool,
-    className: PT.string,
-    viktigeFeil: PT.array,
     erArenaFeil: PT.bool,
+    className: PT.string,
 };
 
-const mapStateToProps = state => {
-    const oppfolgingFeilmeldinger = selectOppfolgingFeilmeldinger(state);
-    const identitetFeilmeldinger = selectIdentitetFeilMelding(state);
-    const feiliArenaOgAktivitet = selectAktivitetListeFeilMelding(state);
-    const erArenaFeil =
-        selectArenaAktivitetStatus(state) === STATUS.ERROR &&
-        selectAktivitetStatus(state) === STATUS.OK;
-    return {
-        erVeileder: selectErVeileder(state),
-        viktigeFeil: oppfolgingFeilmeldinger.concat(
-            identitetFeilmeldinger,
-            feiliArenaOgAktivitet
-        ),
-        erArenaFeil,
-    };
-};
-
-export default connect(mapStateToProps)(injectIntl(Feilmelding));
+export default injectIntl(Feilmelding);

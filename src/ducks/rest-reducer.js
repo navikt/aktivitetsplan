@@ -50,6 +50,7 @@ export function createActionsAndReducer(
         },
 
         selectStatus,
+        selectSlice,
         selectData: state => selectSlice(state).data,
 
         action: actionFunction,

@@ -53,7 +53,6 @@ Modal.defaultProps = {
     onRequestClose: null,
     className: '',
     header: <ModalHeader />,
-    feilmelding: null,
     avhengigheter: [],
     minstEnAvhengighet: false,
     feilmeldinger: [],

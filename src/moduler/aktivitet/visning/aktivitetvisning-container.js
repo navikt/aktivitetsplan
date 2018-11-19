@@ -13,7 +13,6 @@ import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import {
-    selectAktivitetListeStatus,
     selectAktivitetMedId,
     selectKanEndreAktivitetDetaljer,
 } from '../aktivitetliste-selector';
@@ -24,9 +23,17 @@ import {
 } from '../../oppfolging-status/oppfolging-selector';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+import {
+    STATUS_FULLFOERT,
+    STATUS_AVBRUTT,
+    UTDANNING_AKTIVITET_TYPE,
+    GRUPPE_AKTIVITET_TYPE,
+    TILTAK_AKTIVITET_TYPE,
+} from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
 import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
+import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
+import { selectAktivitetStatus } from '../aktivitet-selector';
 
 function aktivitetvisningHeader(valgtAktivitet) {
     if (!valgtAktivitet) {
@@ -109,6 +116,15 @@ AktivitetvisningContainer.defaultProps = {
 const mapStateToProps = (state, props) => {
     const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
 
+    const erArenaAktivitet = [
+        TILTAK_AKTIVITET_TYPE,
+        GRUPPE_AKTIVITET_TYPE,
+        UTDANNING_AKTIVITET_TYPE,
+    ].includes(valgtAktivitet.type);
+    const aktivitetDataStatus = erArenaAktivitet
+        ? selectArenaAktivitetStatus(state)
+        : selectAktivitetStatus(state);
+
     const aktivitetErEtterOppfolgingUtgang = valgtAktivitet
         ? moment(selectOppfolgingUtgang(state)).isAfter(
               valgtAktivitet.opprettetDato
@@ -120,7 +136,7 @@ const mapStateToProps = (state, props) => {
         !valgtAktivitet.historisk &&
         TILLAT_SLETTING &&
         (!selectErUnderOppfolging(state) || aktivitetErEtterOppfolgingUtgang);
-    const laster = selectAktivitetListeStatus(state) !== STATUS.OK;
+    const laster = aktivitetDataStatus !== STATUS.OK;
 
     return {
         avhengigheter: [
