@@ -10,7 +10,7 @@ healthcheck:
     path: aktivitetsplan/internal/isAlive
     initialDelay: 60
   readiness:
-    path: aktivitetsplan/internal/selftest
+    path: aktivitetsplan/internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
@@ -48,6 +48,12 @@ fasitResources:
   - alias: appdynamics
     resourceType: applicationproperties
 
+  # oidc med AzureAD B2C
+  - alias: aad_b2c_clientid
+    resourceType: credential
+  - alias: aad_b2c_discovery
+    resourceType: baseurl
+
 team: oppfolging
 resources:
   limits:
@@ -56,8 +62,7 @@ resources:
   requests:
     cpu: 200m
     memory: 512Mi
-  
-        
-        
-        
-      
+
+webproxy: true
+alertProfiles:
+  - common-java-modules
