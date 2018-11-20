@@ -17,6 +17,10 @@ prometheus:
   path: aktivitetsplan/internal/metrics
 fasitResources:
   used:
+
+  - alias: loadbalancer:aktivitetsplan
+    resourceType: loadbalancerconfig
+
   - alias: appres.cms
     resourceType: baseurl
 
