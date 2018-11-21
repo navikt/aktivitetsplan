@@ -27,6 +27,7 @@ import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
 import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
+import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 
 function aktivitetvisningHeader(valgtAktivitet) {
     if (!valgtAktivitet) {
@@ -100,6 +101,7 @@ AktivitetvisningContainer.propTypes = {
     doSettForrigeAktiveAktivitetId: PT.func.isRequired,
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
     doLukkDialogEllerHistorikk: PT.func.isRequired,
+    privateMode: PT.bool.isRequired,
 };
 
 AktivitetvisningContainer.defaultProps = {
@@ -130,6 +132,7 @@ const mapStateToProps = (state, props) => {
             // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena
             valgtAktivitet ? STATUS.OK : STATUS.PENDING,
         ],
+        privateMode: erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
         valgtAktivitet,
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
         tillatSletting,
