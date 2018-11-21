@@ -30,6 +30,7 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { fjernMalListe, hentMalListe } from './malliste-reducer';
+import { erPrivateBrukerSomSkalSkrusAv } from '../privat-modus/privat-modus-selector';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 
@@ -100,6 +101,7 @@ class AktivitetsMal extends Component {
             kanSletteMal,
             harSkriveTilgang,
             history,
+            privateMode,
         } = this.props;
 
         const harMal = !!mal;
@@ -119,7 +121,7 @@ class AktivitetsMal extends Component {
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
                             hidden={historiskVisning}
-                            disabled={!harSkriveTilgang}
+                            disabled={!harSkriveTilgang || privateMode}
                         >
                             <FormattedMessage
                                 id={
@@ -174,6 +176,7 @@ AktivitetsMal.propTypes = {
     doHentMalListe: PT.func.isRequired,
     doFjernMalListe: PT.func.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
+    privateMode: PT.bool.isRequired,
     history: AppPT.history.isRequired,
 };
 
@@ -184,6 +187,7 @@ const mapStateToProps = state => ({
     historiskVisning: selectViserHistoriskPeriode(state),
     kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
     harSkriveTilgang: selectHarSkriveTilgang(state),
+    privateMode: erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
 });
 
 const mapDispatchToProps = dispatch => ({

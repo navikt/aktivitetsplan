@@ -7,6 +7,7 @@ import AktivitetsTavle from './tavle/aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Feilmelding from '../moduler/feilmelding/feilmelding';
+import PrivateFeilmelding from '../moduler/feilmelding/private-feilmelding';
 import VisaValgtFilter from '../moduler/filtrering/filter-vis-label';
 import MitMaal from './maalLinje/mitt-maal';
 import FooterInfo from './footer-info';
@@ -19,6 +20,7 @@ function Hovedside() {
     return (
         <div className="hovedside" key={fnr}>
             <div className="hovedsideinnhold">
+                <PrivateFeilmelding />
                 <Feilmelding className="container" />
                 <OppfolgingStatus>
                     <Varslinger />

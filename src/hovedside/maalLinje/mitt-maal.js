@@ -16,6 +16,7 @@ import {
     selectMalStatus,
 } from '../../moduler/mal/aktivitetsmal-reducer';
 import * as AppPT from '../../proptypes';
+import { erPrivateBrukerSomSkalSkrusAv } from '../../moduler/privat-modus/privat-modus-selector';
 
 function Mal({ mal, privatModus }) {
     if (!mal || privatModus) {
@@ -41,7 +42,12 @@ class MittMaal extends Component {
     }
 
     render() {
-        const { avhengigheter, mal, privatModus } = this.props;
+        const {
+            avhengigheter,
+            mal,
+            privatModus,
+            privateModusForBruker,
+        } = this.props;
         const url = mal ? '/mal' : '/mal/endre';
 
         return (
@@ -49,7 +55,7 @@ class MittMaal extends Component {
                 brukLenkestyling={false}
                 href={url}
                 className="mitt-maal"
-                disabled={privatModus}
+                disabled={privatModus || (privateModusForBruker && !mal)}
             >
                 <img
                     src={mittMalSvg}
@@ -89,6 +95,7 @@ MittMaal.propTypes = {
     mal: PT.string,
     doHentMal: PT.func.isRequired,
     privatModus: PT.bool.isRequired,
+    privateModusForBruker: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -103,6 +110,7 @@ const mapStateToProps = state => {
         avhengigheter: [selectMalStatus(state)],
         mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
         privatModus: erPrivatModus,
+        privateModusForBruker: erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
     };
 };
 

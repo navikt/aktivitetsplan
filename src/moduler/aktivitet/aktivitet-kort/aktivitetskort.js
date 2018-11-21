@@ -24,6 +24,7 @@ import {
 } from '../../../constant';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
+import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -155,7 +156,9 @@ const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
 
 const mapStateToProps = (state, props) => ({
     forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
-    erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)),
+    erFlyttbar:
+        sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) &&
+        !erPrivateBrukerSomSkalSkrusAv(state),
 });
 
 export default connect(mapStateToProps)(dragbartAktivitetskort);
