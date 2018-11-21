@@ -38,6 +38,34 @@ const dialoger = [
         egenskaper: [],
     },
     {
+        id: '3',
+        aktivitetId: '2',
+        overskrift: 'NOT USED',
+        sisteTekst:
+            'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+        sisteDato: '2018-11-21T13:13:20.685+01:00',
+        opprettetDato: '2018-11-21T13:13:20.663+01:00',
+        historisk: false,
+        lest: true,
+        venterPaSvar: false,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        henvendelser: [
+            {
+                id: '4',
+                dialogId: '3',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z990286',
+                sendt: '2018-11-21T13:13:20.685+01:00',
+                lest: true,
+                tekst:
+                    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+            },
+        ],
+        egenskaper: ['PARAGRAF8'],
+    },
+    {
         id: '2',
         aktivitetId: null,
         overskrift: 'Du har fått et varsel fra NAV',
