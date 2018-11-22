@@ -20,6 +20,7 @@ import visibleIfHOC from '../../../../hocs/visible-if';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import { STATUS } from '../../../../ducks/utils';
 import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
+import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 
 function ForhandsorieteringsForm({
     handleSubmit,
@@ -35,6 +36,7 @@ function ForhandsorieteringsForm({
             onSubmit={formdata => {
                 handleSubmit(formdata);
                 forhandsorienteringSendt();
+                loggForhandsorienteringTiltak();
             }}
         >
             <Undertittel>
