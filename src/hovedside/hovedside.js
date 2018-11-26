@@ -20,9 +20,9 @@ function Hovedside() {
     return (
         <div className="hovedside" key={fnr}>
             <div className="hovedsideinnhold">
-                <PrivateFeilmelding />
                 <Feilmelding className="container" />
                 <OppfolgingStatus>
+                    <PrivateFeilmelding />
                     <Varslinger />
                     <Container>
                         <MitMaal />

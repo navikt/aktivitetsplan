@@ -7,8 +7,9 @@ import EndreDialog from './endre-dialog';
 import Henvendelser from './henvendelser';
 import * as AppPT from '../../../proptypes';
 import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
+import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 
-function Dialog({ dialog, overskrift, className }) {
+function Dialog({ dialog, overskrift, className, privateModus }) {
     const dialogId = dialog.id;
     const historisk = dialog.historisk;
     return (
@@ -17,12 +18,12 @@ function Dialog({ dialog, overskrift, className }) {
                 {overskrift}
             </Undertittel>
             <EndreDialog
-                hidden={historisk}
+                hidden={historisk || privateModus}
                 formNavn={`endre-dialog-${dialogId}`}
                 dialog={dialog}
             />
             <NyHenvendelse
-                hidden={historisk}
+                hidden={historisk || privateModus}
                 formNavn={`ny-henvendelse-dialog-${dialogId}`}
                 dialogId={dialogId}
                 skalHaAutofokus={false}
@@ -36,6 +37,7 @@ Dialog.propTypes = {
     className: PT.string,
     overskrift: PT.string,
     dialog: AppPT.dialog.isRequired,
+    privateModus: PT.bool.isRequired,
 };
 
 Dialog.defaultProps = {
@@ -48,6 +50,7 @@ const mapStateToProps = (state, props) => {
     const aktivitet = selectAktivitetMedId(state, dialog.aktivitetId) || {};
     return {
         overskrift: aktivitet.tittel || dialog.overskrift,
+        privateModus: erPrivateBrukerSomSkalSkrusAv(state),
     };
 };
 
