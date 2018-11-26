@@ -10,6 +10,14 @@ const FORHANDSORIENTERING_LOGGEVENT_KRR_KVP_MANUELL =
     'avtaltMedNavKrrKvpManuell';
 const FORHANDSORIENTERING_LOGGEVENT_MINDRE_ENN_SYV_DAGER =
     'avtaltMedNavMindreEnnSyvDager';
+const FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD =
+    'tilltakSpesialTilltakBruker';
+
+export function loggForhandsorienteringTiltak() {
+    loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
+        forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD,
+    });
+}
 
 export function loggForhandsorientering(
     erManuellKrrKvpBruker,
