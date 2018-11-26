@@ -15,6 +15,7 @@ function DialogOversikt({
     harNyDialogEllerValgtDialog,
     historiskVisning,
     history,
+    privateModus,
 }) {
     const className = classNames(
         'dialog-modal__kolonne',
@@ -28,7 +29,7 @@ function DialogOversikt({
         <div className={className}>
             <HideableSection
                 className="dialog-modal__ny-dialog"
-                hidden={historiskVisning}
+                hidden={historiskVisning || privateModus}
             >
                 <Knappelenke
                     onClick={() => history.push('/dialog/ny')}
@@ -53,6 +54,7 @@ DialogOversikt.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
     historiskVisning: PT.bool.isRequired,
     history: AppPT.history.isRequired,
+    privateModus: PT.bool.isRequired,
 };
 
 DialogOversikt.defaultProps = {

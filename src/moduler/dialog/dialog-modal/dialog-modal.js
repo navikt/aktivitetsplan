@@ -19,56 +19,7 @@ import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse from './dialog-henvendelse';
 import FnrProvider from './../../../bootstrap/fnr-provider';
-
-function DialogModalContent({
-    harNyDialogEllerValgtDialog,
-    valgtDialog,
-    harNyDialog,
-    historiskVisning,
-    harValgtDialog,
-    valgtAktivitetId,
-}) {
-    return (
-        <FnrProvider>
-            <div className="dialog-modal__wrapper">
-                <Feilmelding className="feilmelding--systemfeil" />
-                <div className="dialog-modal__innhold">
-                    <DialogOversikt
-                        valgtDialog={valgtDialog}
-                        harNyDialog={harNyDialog}
-                        harNyDialogEllerValgtDialog={
-                            harNyDialogEllerValgtDialog
-                        }
-                        historiskVisning={historiskVisning}
-                    />
-                    <DialogHenvendelse
-                        valgtDialog={valgtDialog}
-                        harNyDialog={harNyDialog}
-                        harValgtDialog={harValgtDialog}
-                        valgtAktivitetId={valgtAktivitetId}
-                        harNyDialogEllerValgtDialog={
-                            harNyDialogEllerValgtDialog
-                        }
-                    />
-                </div>
-            </div>
-        </FnrProvider>
-    );
-}
-
-DialogModalContent.propTypes = {
-    valgtDialog: AppPT.dialog,
-    valgtAktivitetId: PT.string,
-    harNyDialog: PT.bool.isRequired,
-    harNyDialogEllerValgtDialog: PT.bool.isRequired,
-    historiskVisning: PT.bool.isRequired,
-    harValgtDialog: PT.bool.isRequired,
-};
-
-DialogModalContent.defaultProps = {
-    valgtDialog: undefined,
-    valgtAktivitetId: undefined,
-};
+import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 
 function DialogModal({
     harNyDialogEllerValgtDialog,
@@ -82,6 +33,7 @@ function DialogModal({
     harValgtDialog,
     historiskVisning,
     history,
+    privateModus,
 }) {
     const className = classNames('dialog-modal', 'aktivitet-modal', {
         'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -105,14 +57,31 @@ function DialogModal({
                 navnPaMotpart={navnPaMotpart}
                 fnrPaMotpartHvisBruker={fnrPaMotpartHvisBruker}
             />
-            <DialogModalContent
-                valgtDialog={valgtDialog}
-                valgtAktivitetId={valgtAktivitetId}
-                harNyDialog={harNyDialog}
-                harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
-                harValgtDialog={harValgtDialog}
-                historiskVisning={historiskVisning}
-            />
+            <FnrProvider>
+                <div className="dialog-modal__wrapper">
+                    <Feilmelding className="feilmelding--systemfeil" />
+                    <div className="dialog-modal__innhold">
+                        <DialogOversikt
+                            valgtDialog={valgtDialog}
+                            harNyDialog={harNyDialog}
+                            harNyDialogEllerValgtDialog={
+                                harNyDialogEllerValgtDialog
+                            }
+                            historiskVisning={historiskVisning}
+                            privateModus={privateModus}
+                        />
+                        <DialogHenvendelse
+                            valgtDialog={valgtDialog}
+                            harNyDialog={harNyDialog}
+                            harValgtDialog={harValgtDialog}
+                            valgtAktivitetId={valgtAktivitetId}
+                            harNyDialogEllerValgtDialog={
+                                harNyDialogEllerValgtDialog
+                            }
+                        />
+                    </div>
+                </div>
+            </FnrProvider>
         </NavFrontendModal>
     );
 }
@@ -137,6 +106,7 @@ DialogModal.propTypes = {
     historiskVisning: PT.bool.isRequired,
     tilpasseStorrelseHistoriskVisning: PT.bool.isRequired,
     history: AppPT.history.isRequired,
+    privateModus: PT.bool.isRequired,
 };
 const mapStateToProps = (state, props) => {
     const { match } = props;
@@ -160,6 +130,7 @@ const mapStateToProps = (state, props) => {
         tilpasseStorrelseHistoriskVisning:
             historiskVisning &&
             selectTilpasseDialogModalHistoriskVisning(state),
+        privateModus: erPrivateBrukerSomSkalSkrusAv(state),
     };
 };
 

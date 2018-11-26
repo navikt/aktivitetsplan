@@ -61,16 +61,36 @@ class PrivateFeilmelding extends Component {
                             <FormattedMessage id="private.info.header" />
                         </Sidetittel>
                         <Normaltekst style={{ margin: '1rem 0 1rem 0' }}>
-                            <FormattedMessage id="private.info.1" />
+                            NAV vil fra nå bare tilby aktivitetsplanen som en
+                            tjeneste til registrerte arbeidssøkere med
+                            oppfølging fra NAV. Hvis du ikke er registrert som
+                            arbeidssøker, vil du ikke kunne ta i bruk
+                            aktivitetsplanen.
                         </Normaltekst>
                         <Normaltekst style={{ margin: '1rem 0 1rem 0' }}>
-                            <FormattedMessage id="private.info.2" />
+                            <b>
+                                Til deg som ikke er registrert som arbeidssøker
+                            </b>
+                            <br />
+                            Hvis du allerede har lagt inn aktiviteter i
+                            aktivitetsplanen, men ikke er registrert som
+                            arbeidssøker, kan du skrive ut eller slette
+                            informasjon i planen fram til 3.januar 2019. Du kan
+                            skrive ut ved å klikke på ikonet for utskrift.
                         </Normaltekst>
                         <Normaltekst style={{ margin: '1rem 0 1rem 0' }}>
-                            <FormattedMessage id="private.info.3" />
+                            3.januar 2019 blir alt du har lagt inn slettet og du
+                            vil ikke lenger ha tilgang til planen.
                         </Normaltekst>
                         <Normaltekst style={{ margin: '1rem 0 1rem 0' }}>
-                            <FormattedMessage id="private.info.4" />
+                            <b>
+                                Til deg som har vært registrert som arbeidssøker
+                            </b>
+                            <br />
+                            Hvis du tidligere har vært registrert som
+                            arbeidssøker og brukt aktivitetsplanen, kan du se
+                            tidligere aktivitetsplaner, under Mine historiske
+                            planer.
                         </Normaltekst>
                         <Hovedknapp onClick={this.lukk}>
                             <FormattedMessage id="private.forstatt" />
