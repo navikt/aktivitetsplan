@@ -7,6 +7,7 @@ import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
 import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
+import PrivateFeilmelding from '../moduler/feilmelding/private-feilmelding';
 import VisaValgtFilter from '../moduler/filtrering/filter-vis-label';
 import MitMaal from './maalLinje/mitt-maal';
 import FooterInfo from './footer-info';
@@ -22,6 +23,7 @@ function Hovedside() {
                 <HovedsideFeilmelding />
                 <ArenaFeilmelding />
                 <OppfolgingStatus>
+                    <PrivateFeilmelding />
                     <Varslinger />
                     <Container>
                         <MitMaal />

@@ -10,6 +10,7 @@ import { autobind } from '../../utils';
 import { STATUS } from '../../ducks/utils';
 import { oppdaterMal, selectMalStatus } from './aktivitetsmal-reducer';
 import * as AppPT from '../../proptypes';
+import { erPrivateBrukerSomSkalSkrusAv } from '../privat-modus/privat-modus-selector';
 
 const MALTEKST_MAKSLENGDE = 500;
 
@@ -24,7 +25,7 @@ class AktivitetsmalForm extends Component {
     }
 
     render() {
-        const { oppdaterer, handleSubmit, history } = this.props;
+        const { oppdaterer, handleSubmit, history, privateMode } = this.props;
         return (
             <form onSubmit={handleSubmit}>
                 <Textarea
@@ -38,7 +39,7 @@ class AktivitetsmalForm extends Component {
                 <Hovedknapp
                     className="aktivitetmal__redigering--knapp"
                     spinner={oppdaterer}
-                    disabled={oppdaterer}
+                    disabled={oppdaterer || privateMode}
                 >
                     <FormattedMessage id="aktivitetsmal.lagre" />
                 </Hovedknapp>
@@ -64,6 +65,7 @@ const forLangMaltekst = rules.maxLength(
 
 AktivitetsmalForm.propTypes = {
     oppdaterer: PT.bool.isRequired,
+    privateMode: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     handleComplete: PT.func.isRequired,
     history: AppPT.history.isRequired,
@@ -79,6 +81,7 @@ const AktivitetsmalReduxForm = validForm({
 const mapStateToProps = (state, props) => ({
     initialValues: { mal: props.mal.mal },
     oppdaterer: selectMalStatus(state) === STATUS.RELOADING,
+    privateMode: erPrivateBrukerSomSkalSkrusAv(state), // TODO: Remove me
 });
 
 const mapDispatchToProps = () => ({

@@ -1,5 +1,5 @@
 import { datoComparator } from '../../utils';
-import { DIALOG_ESKALERING } from '../../constant';
+import { DIALOG_ESKALERING, DIALOG_PARAGRAF8 } from '../../constant';
 
 export function sammenlignDialogerForBruker(a, b) {
     if (a.lest !== b.lest) {
@@ -47,4 +47,8 @@ export function dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
 
 export function erEskaleringsDialog(dialog) {
     return dialog.egenskaper.indexOf(DIALOG_ESKALERING) > -1;
+}
+
+export function erParagraf8Dialog(dialog) {
+    return dialog.egenskaper.indexOf(DIALOG_PARAGRAF8) > -1;
 }

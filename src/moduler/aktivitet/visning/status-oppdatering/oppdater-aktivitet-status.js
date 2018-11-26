@@ -9,6 +9,7 @@ import {
     selectAktivitetMedId,
     selectKanEndreAktivitetStatus,
 } from '../../aktivitetliste-selector';
+import { erPrivateBrukerSomSkalSkrusAv } from '../../../privat-modus/privat-modus-selector';
 
 function OppdaterAktivitetStatus({
     className,
@@ -38,10 +39,9 @@ const mapStateToProps = (state, props) => {
     const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
     return {
         valgtAktivitet,
-        disableStatusEndring: !selectKanEndreAktivitetStatus(
-            state,
-            valgtAktivitet
-        ),
+        disableStatusEndring:
+            !selectKanEndreAktivitetStatus(state, valgtAktivitet) ||
+            erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
         initialValues: {
             aktivitetstatus: props.status,
         },

@@ -15,7 +15,7 @@ import visibleIfHOC from '../../../hocs/visible-if';
 import Dato from '../../../felles-komponenter/dato';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import Etikett from '../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett';
-import { erEskaleringsDialog } from '../dialog-utils';
+import { erEskaleringsDialog, erParagraf8Dialog } from '../dialog-utils';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
@@ -60,7 +60,8 @@ class DialogVisning extends React.PureComponent {
             a => a.avsender === 'VEILEDER'
         );
 
-        const erEskalering = erEskaleringsDialog(dialog);
+        const erViktigMelding =
+            erEskaleringsDialog(dialog) || erParagraf8Dialog(dialog);
 
         const handleOnFocus = () => {
             if (!erValgt) {
@@ -105,7 +106,9 @@ class DialogVisning extends React.PureComponent {
                     {dialog.sisteTekst}
                 </Normaltekst>
                 <HiddenIfDiv
-                    hidden={!venterPaSvar && ferdigBehandlet && !erEskalering}
+                    hidden={
+                        !venterPaSvar && ferdigBehandlet && !erViktigMelding
+                    }
                     className="dialoger__dialog-etiketter"
                 >
                     <Etikett
@@ -119,7 +122,7 @@ class DialogVisning extends React.PureComponent {
                         etikett={DIALOG_IKKE_FERDIGBEHANDLET}
                     />
                     <Etikett
-                        hidden={!erEskalering}
+                        hidden={!erViktigMelding}
                         id="dialog.eskalert-melding"
                         etikett={DIALOG_ESKALERING}
                     />

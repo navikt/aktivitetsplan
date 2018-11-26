@@ -21,23 +21,9 @@ function getEnviromentVariable(
     return value;
 }
 
-export const DIALOG_BASE_URL = getEnviromentVariable(
-    'VEILARBDIALOG_URL',
-    false,
-    true
-);
-
-export const AKTIVITET_BASE_URL = getEnviromentVariable(
-    'VEILARBAKTIVITET_URL',
-    false,
-    true
-);
-
-export const OPPFOLGING_BASE_URL = getEnviromentVariable(
-    'VEILARBOPPFOLGING_URL',
-    false,
-    true
-);
+export const DIALOG_BASE_URL = '/veilarbdialog/api';
+export const AKTIVITET_BASE_URL = '/veilarbaktivitet/api';
+export const OPPFOLGING_BASE_URL = '/veilarboppfolging/api';
 
 export const ONBOARDING_VIDEO_URL = getEnviromentVariable(
     'ONBOARDING_VIDEO_URL'

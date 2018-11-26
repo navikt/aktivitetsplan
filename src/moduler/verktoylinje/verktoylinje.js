@@ -5,7 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
-import { selectErPrivatModus } from '../privat-modus/privat-modus-selector';
+import {
+    erPrivateBrukerSomSkalSkrusAv,
+    selectErPrivatModus,
+} from '../privat-modus/privat-modus-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
@@ -15,6 +18,7 @@ function Verktoylinje({
     privatModus,
     erVeileder,
     harSkriveTilgang,
+    erPrivatBruker,
 }) {
     return (
         <div className="verktoylinje">
@@ -25,6 +29,7 @@ function Verktoylinje({
                     disabled={
                         viserHistoriskPeriode ||
                         privatModus ||
+                        erPrivatBruker ||
                         !harSkriveTilgang
                     }
                 >
@@ -52,11 +57,13 @@ Verktoylinje.propTypes = {
     privatModus: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
+    erPrivatBruker: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     viserHistoriskPeriode: selectViserHistoriskPeriode(state),
     privatModus: selectErPrivatModus(state),
+    erPrivatBruker: erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
     erVeileder: selectErVeileder(state),
     harSkriveTilgang: selectHarSkriveTilgang(state),
 });
