@@ -12,6 +12,7 @@ import {
 import {
     selectTilpasseDialogModalHistoriskVisning,
     selectDialogMedId,
+    selectDialogFeilmeldinger,
 } from '../dialog-selector';
 import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import Feilmelding from '../../feilmelding/feilmelding';
@@ -34,6 +35,7 @@ function DialogModal({
     historiskVisning,
     history,
     privateModus,
+    dialogFeilmeldinger,
 }) {
     const className = classNames('dialog-modal', 'aktivitet-modal', {
         'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -59,7 +61,10 @@ function DialogModal({
             />
             <FnrProvider>
                 <div className="dialog-modal__wrapper">
-                    <Feilmelding className="feilmelding--systemfeil" />
+                    <Feilmelding
+                        className="feilmelding--systemfeil"
+                        feilmeldinger={dialogFeilmeldinger}
+                    />
                     <div className="dialog-modal__innhold">
                         <DialogOversikt
                             valgtDialog={valgtDialog}
@@ -92,6 +97,7 @@ DialogModal.defaultProps = {
     fnrPaMotpartHvisBruker: null,
     valgtDialog: null,
     harNyDialog: null,
+    dialogFeilmeldinger: [],
 };
 
 DialogModal.propTypes = {
@@ -106,6 +112,7 @@ DialogModal.propTypes = {
     historiskVisning: PT.bool.isRequired,
     tilpasseStorrelseHistoriskVisning: PT.bool.isRequired,
     history: AppPT.history.isRequired,
+    dialogFeilmeldinger: PT.array,
     privateModus: PT.bool.isRequired,
 };
 const mapStateToProps = (state, props) => {
@@ -131,6 +138,7 @@ const mapStateToProps = (state, props) => {
             historiskVisning &&
             selectTilpasseDialogModalHistoriskVisning(state),
         privateModus: erPrivateBrukerSomSkalSkrusAv(state),
+        dialogFeilmeldinger: selectDialogFeilmeldinger(state),
     };
 };
 

@@ -22,15 +22,19 @@ import {
     trengerBegrunnelse,
 } from '../../aktivitet-util';
 import {
+    GRUPPE_AKTIVITET_TYPE,
     INGEN_VALGT,
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
+    TILTAK_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import { selectAktivitetListeStatus } from '../../aktivitetliste-selector';
 import StatusRadio from './status-radio';
+import { selectAktivitetStatus } from '../../aktivitet-selector';
+import { selectArenaAktivitetStatus } from '../../arena-aktivitet-selector';
 
 const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
 const BEGRUNNELSE_FELT_NAME = 'begrunnelse';
@@ -195,9 +199,17 @@ AktivitetStatusForm.propTypes = {
 
 const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet;
-    const { status, avsluttetKommentar } = aktivitet;
+    const { status, avsluttetKommentar, type } = aktivitet;
+    const erArenaAktivitet = [
+        TILTAK_AKTIVITET_TYPE,
+        GRUPPE_AKTIVITET_TYPE,
+        UTDANNING_AKTIVITET_TYPE,
+    ].includes(type);
+    const aktivitetDataStatus = erArenaAktivitet
+        ? selectArenaAktivitetStatus(state)
+        : selectAktivitetStatus(state);
     return {
-        aktivitetDataStatus: selectAktivitetListeStatus(state),
+        aktivitetDataStatus,
         valgtAktivitetStatus: formValueSelector(AKTIVITET_STATUS_FORM_NAME)(
             state,
             'aktivitetstatus'

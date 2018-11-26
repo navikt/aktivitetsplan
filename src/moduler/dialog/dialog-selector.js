@@ -102,3 +102,10 @@ export function selectVisBrukerInfo(state, dialogId_) {
 export function selectHarTilgangTilDialog(state) {
     return selectDialogStatus(state) === STATUS.OK;
 }
+
+export const selectDialogFeilmeldinger = state => {
+    const feilMeldingsdata =
+        selectDialogStatus(state) === STATUS.ERROR &&
+        selectDialogSlice(state).feil;
+    return feilMeldingsdata ? [feilMeldingsdata] : [];
+};

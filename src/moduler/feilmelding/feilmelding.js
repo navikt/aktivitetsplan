@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl, intlShape } from 'react-intl';
 import {
-    AlertStripeNavAnsatt,
     AlertStripeInfo,
     AlertStripeInfoSolid,
+    AlertStripeNavAnsatt,
 } from 'nav-frontend-alertstriper';
-import { selectAlleFeilmeldinger } from './feilmelding-selector';
-import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import FeilmeldingDetaljer from './feilmelding-detaljer';
 import {
-    parseFeil,
-    finnHoyesteAlvorlighetsgrad,
-    UKJENT_KATEGORI,
     FINNES_IKKE_KATEGORI,
+    finnHoyesteAlvorlighetsgrad,
     INGEN_TILGANG_KATEGORI,
-    UGYLDIG_REQUEST_KATEGORI,
-    VERSJONSKONFLIKT_KATEGORI,
     KATEGORI_RANGERING,
+    parseFeil,
+    UGYLDIG_REQUEST_KATEGORI,
+    UKJENT_KATEGORI,
+    VERSJONSKONFLIKT_KATEGORI,
 } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
@@ -34,13 +31,14 @@ const stripeTyper = {
     [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo,
 };
 
-function FeilStripe({ feil, erVeileder, intl }) {
+function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
     const vistekster = window.location.search.indexOf('vistekster') !== -1;
     const aktor = erVeileder ? 'veileder' : 'bruker';
     const feilType = feil.type;
     const melding = feil.melding;
     const feilKategori = (melding && melding.type) || UKJENT_KATEGORI;
-    const Stripe = stripeTyper[feilKategori] || AlertStripeNavAnsatt;
+    const Stripe =
+        (erArenaFeil && AlertStripeInfo) || stripeTyper[feilKategori];
     const typeNr = KATEGORI_RANGERING[feilKategori] || 1;
 
     const feilKeys = parseFeil(
@@ -80,12 +78,14 @@ function FeilStripe({ feil, erVeileder, intl }) {
 FeilStripe.defaultProps = {
     tekstIds: undefined,
     erVeileder: false,
+    erArenaFeil: false,
 };
 
 FeilStripe.propTypes = {
     feil: AppPT.feil.isRequired,
     erVeileder: PT.bool,
     intl: intlShape.isRequired,
+    erArenaFeil: PT.bool,
 };
 
 class Feilmelding extends Component {
@@ -103,10 +103,15 @@ class Feilmelding extends Component {
     };
 
     render() {
-        const { feilmeldinger, className, erVeileder, intl } = this.props;
+        const {
+            feilmeldinger,
+            className,
+            erVeileder,
+            intl,
+            erArenaFeil,
+        } = this.props;
 
         const alvorligsteFeil = finnHoyesteAlvorlighetsgrad(feilmeldinger);
-
         return (
             <VisibleIfDiv
                 visible={feilmeldinger.length > 0}
@@ -116,6 +121,7 @@ class Feilmelding extends Component {
                     feil={alvorligsteFeil}
                     erVeileder={erVeileder}
                     intl={intl}
+                    erArenaFeil={erArenaFeil}
                 />
                 <Knappelenke onClick={this.toggleDetaljer} className="">
                     <span>Vis detaljer</span>
@@ -152,18 +158,15 @@ Feilmelding.defaultProps = {
     feilmeldinger: [],
     className: undefined,
     erVeileder: false,
+    erArenaFeil: false,
 };
 
 Feilmelding.propTypes = {
     intl: intlShape.isRequired,
     feilmeldinger: PT.array,
     erVeileder: PT.bool,
+    erArenaFeil: PT.bool,
     className: PT.string,
 };
 
-const mapStateToProps = state => ({
-    feilmeldinger: selectAlleFeilmeldinger(state),
-    erVeileder: selectErVeileder(state),
-});
-
-export default connect(mapStateToProps)(injectIntl(Feilmelding));
+export default injectIntl(Feilmelding);

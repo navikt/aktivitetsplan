@@ -16,6 +16,12 @@ import { STATUS } from '../../../ducks/utils';
 import { selectAktivitetMedId } from '../aktivitetliste-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import EndreAktivitetForm from './endre-aktivitet-form';
+import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
+import {
+    GRUPPE_AKTIVITET_TYPE,
+    TILTAK_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+} from '../../../constant';
 
 function EndreAktivitet({
     valgtAktivitet,
@@ -87,11 +93,19 @@ EndreAktivitet.propTypes = {
 
 const mapStateToProps = (state, props) => {
     const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
+    const erArenaAktivitet = [
+        TILTAK_AKTIVITET_TYPE,
+        GRUPPE_AKTIVITET_TYPE,
+        UTDANNING_AKTIVITET_TYPE,
+    ].includes(valgtAktivitet.type);
+    const aktivitetDataStatus = erArenaAktivitet
+        ? selectArenaAktivitetStatus(state)
+        : selectAktivitetStatus(state);
     return {
         valgtAktivitet,
         avhengigheter: [valgtAktivitet ? STATUS.OK : STATUS.PENDING],
         formIsDirty: isDirty(formNavn)(state),
-        lagrer: selectAktivitetStatus(state) !== STATUS.OK,
+        lagrer: aktivitetDataStatus !== STATUS.OK,
     };
 };
 
