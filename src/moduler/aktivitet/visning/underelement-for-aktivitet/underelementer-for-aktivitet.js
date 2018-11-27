@@ -15,9 +15,13 @@ import {
     button as HiddenIfButton,
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
+import {
+    selectDialogFeilmeldinger,
+    selectDialogForAktivitetId,
+} from '../../../dialog/dialog-selector';
 import getScrollParent from '../../../../utils/getScrollParent';
 import { toggleDialog, toggleHistorikk } from './underelementer-view-reducer';
+import Feilmelding from '../../../feilmelding/feilmelding';
 import {
     selectVisDialog,
     selectVisHistorikk,
@@ -59,6 +63,7 @@ class UnderelementerForAktivitet extends Component {
             doToggleHistorikk,
             visDialog,
             visHistorikk,
+            dialogFeilmeldinger,
         } = this.props;
 
         const aktivitetId = aktivitet.id;
@@ -116,6 +121,7 @@ class UnderelementerForAktivitet extends Component {
                     className="underelementer-aktivitet__dialogvisning"
                     id={underelementId}
                 >
+                    <Feilmelding feilmeldinger={dialogFeilmeldinger} />
                     <EndreDialog
                         hidden={!kanEndreDialog}
                         formNavn={`dialog-aktivitet-${aktivitetId}`}
@@ -147,11 +153,13 @@ UnderelementerForAktivitet.propTypes = {
     doToggleHistorikk: PT.func.isRequired,
     visDialog: PT.bool.isRequired,
     visHistorikk: PT.bool.isRequired,
+    dialogFeilmeldinger: PT.array,
 };
 
 UnderelementerForAktivitet.defaultProps = {
     className: '',
     dialog: undefined,
+    dialogFeilmeldinger: [],
 };
 
 const mapStateToProps = (state, props) => {
@@ -178,6 +186,7 @@ const mapStateToProps = (state, props) => {
         kanEndreDialog,
         visDialog: selectVisDialog(state),
         visHistorikk: selectVisHistorikk(state),
+        dialogFeilmeldinger: selectDialogFeilmeldinger(state),
     };
 };
 
