@@ -29,10 +29,7 @@ import {
     selectViserInneverendePeriode,
 } from '../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
-import {
-    selectDialoger,
-    selectHarTilgangTilDialog,
-} from '../../moduler/dialog/dialog-selector';
+import { selectDialoger } from '../../moduler/dialog/dialog-selector';
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
 import {
     BRUKERVILKAR,
@@ -97,7 +94,6 @@ class Navigasjonslinje extends Component {
             avhengigheter,
             disabled,
             kanHaDialog,
-            tilgangTilDialog,
             ikkeTilgangTilVilkar,
             ikkeFinnesDialogerIHistoriskPeriode,
             features,
@@ -115,7 +111,6 @@ class Navigasjonslinje extends Component {
                     tekstId="navigasjon.dialog"
                     disabled={
                         disabled ||
-                        !tilgangTilDialog ||
                         !kanHaDialog ||
                         ikkeFinnesDialogerIHistoriskPeriode
                     }
@@ -174,7 +169,6 @@ Navigasjonslinje.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     kanHaDialog: PT.bool.isRequired,
     disabled: PT.bool.isRequired,
-    tilgangTilDialog: PT.bool.isRequired,
     ikkeTilgangTilVilkar: PT.bool.isRequired,
     ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
     features: PT.object.isRequired,
@@ -209,7 +203,6 @@ const mapStateToProps = state => {
             selectOppfolgingStatus(state),
         ],
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
-        tilgangTilDialog: selectHarTilgangTilDialog(state),
         ikkeTilgangTilVilkar,
         disabled:
             erIkkeBruker &&
