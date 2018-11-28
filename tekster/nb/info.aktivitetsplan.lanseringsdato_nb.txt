@@ -1,6 +1,0 @@
-{underOppfolging, select,
-true { Den digitale aktivitetsplanen ble innført 4. des 2017 }
-false { Dette er din private aktivitetsplan }
-}
-
-
