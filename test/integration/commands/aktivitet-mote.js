@@ -45,12 +45,7 @@ module.exports = {
             motested
         );
     },
-    /*heter det samme som en annen funksjon
-    oppgiHensikt(hensikt){
-        this.clearValue(this.elements.inputBeskrivelse.selector);
-        this.setValue(this.elements.inputBeskrivelse.selector, hensikt);
-    },
-*/
+
     oppgiForberedelser(forberedelser) {
         this.setValue(
             this.section.moteMedNav.elements.inputForberedelser.selector,

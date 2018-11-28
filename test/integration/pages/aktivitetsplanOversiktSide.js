@@ -3,7 +3,6 @@ import { AktivitetsType } from '../data/aktivitet-type';
 import { AktivitetTilstand } from '../data/aktivitet-tilstand';
 
 const aktivitetsPlanOversikt = require('../commands/aktivitetsplan-oversikt.js');
-const aktivitetsPlanOversiktIntern = require('../commands/aktivitetsplan-oversikt-intern.js');
 
 module.exports = {
     url: function() {
@@ -12,7 +11,6 @@ module.exports = {
 
     commands: [
         aktivitetsPlanOversikt,
-        aktivitetsPlanOversiktIntern,
         {
             aktivitetskortHref(url) {
                 let href = url
@@ -38,11 +36,6 @@ module.exports = {
                     default:
                         return undefined;
                 }
-            },
-
-            hentXpathForAktivitetskort(kolonne) {
-                var kolonne = this.hentKolonneSelektor(kolonne);
-                return kolonne + this.elements.aktivitetsKort.selector;
             },
 
             hentAktivitetTypeSelektor(prefix, aktivitetstype) {
@@ -79,17 +72,5 @@ module.exports = {
         antallSoknader: '//*[@data-testid="antall-stillinger"]',
         linkDialog:
             '//a[contains(@class,"navigasjonslinje__lenke") and contains(@href, "/dialog")]',
-    },
-
-    sections: {
-        InternSection: {
-            selector: '//div[@class="aktivitetsplanfs"]',
-            elements: {
-                alertText:
-                    '//span[contains(@class, "alertstripe__tekst")]/span',
-                lenkeNavigasjonsLenke:
-                    '//a[contains(@class, "navigasjonslinje__lenke")]',
-            },
-        },
     },
 };

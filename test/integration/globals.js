@@ -4,6 +4,8 @@ import { getNetworkIp } from './getNetworkIp';
 import { getFasitUsers, setBrowserCookies } from './testbruker';
 
 module.exports = {
+    asyncHookTimeout: 30000,
+
     default: {
         isLocal: true,
     },
