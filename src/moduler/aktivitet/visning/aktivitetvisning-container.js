@@ -118,11 +118,13 @@ AktivitetvisningContainer.defaultProps = {
 const mapStateToProps = (state, props) => {
     const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
 
-    const erArenaAktivitet = [
-        TILTAK_AKTIVITET_TYPE,
-        GRUPPE_AKTIVITET_TYPE,
-        UTDANNING_AKTIVITET_TYPE,
-    ].includes(valgtAktivitet.type);
+    const erArenaAktivitet =
+        !!valgtAktivitet &&
+        [
+            TILTAK_AKTIVITET_TYPE,
+            GRUPPE_AKTIVITET_TYPE,
+            UTDANNING_AKTIVITET_TYPE,
+        ].includes(valgtAktivitet.type);
     const aktivitetDataStatus = erArenaAktivitet
         ? selectArenaAktivitetStatus(state)
         : selectAktivitetStatus(state);

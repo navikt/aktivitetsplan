@@ -1,16 +1,16 @@
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
 import AktivitetIngress from '../visning/aktivitetingress/aktivitetingress';
 import * as AppPT from '../../../proptypes';
 
 function AktivitetFormHeader({ tittelId, ingressType, pakrevdInfoId }) {
     return (
         <div className="aktivitetskjema__header">
-            <Innholdstittel className="skjema-header__tittel">
+            <Sidetittel className="skjema-header__tittel">
                 <FormattedMessage id={tittelId} />
-            </Innholdstittel>
+            </Sidetittel>
             <AktivitetIngress
                 type={ingressType}
                 className="skjema-header__ingress"

@@ -8,6 +8,25 @@ import { Aktivitetsdetaljer } from './aktivitetsdetaljer';
 import AktivitetEtikettGruppe from '../../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
+import {
+    EGEN_AKTIVITET_TYPE,
+    IJOBB_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE,
+} from '../../../../constant';
+
+function visningsIngress(type) {
+    if (
+        [
+            EGEN_AKTIVITET_TYPE,
+            IJOBB_AKTIVITET_TYPE,
+            STILLING_AKTIVITET_TYPE,
+        ].includes(type)
+    ) {
+        return null;
+    }
+
+    return <AktivitetIngress type={type} />;
+}
 
 function AktivitetinformasjonVisning({
     valgtAktivitet,
@@ -27,7 +46,7 @@ function AktivitetinformasjonVisning({
                     {tittel}
                 </Sidetittel>
 
-                <AktivitetIngress type={type} />
+                {visningsIngress(type)}
 
                 <AktivitetEtikettGruppe
                     aktivitet={valgtAktivitet}

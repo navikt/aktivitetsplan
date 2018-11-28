@@ -10,7 +10,6 @@ import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
 import PrivateFeilmelding from '../moduler/feilmelding/private-feilmelding';
 import VisaValgtFilter from '../moduler/filtrering/filter-vis-label';
 import MitMaal from './maalLinje/mitt-maal';
-import FooterInfo from './footer-info';
 import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
 
@@ -32,7 +31,6 @@ function Hovedside() {
                         <VisaValgtFilter />
                     </Container>
                     <AktivitetsTavle />
-                    <FooterInfo />
                     <Routing />
                 </OppfolgingStatus>
                 <PublicRouting />
