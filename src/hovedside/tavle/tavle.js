@@ -63,7 +63,9 @@ class Tavle extends Component {
 
         const venstreKnapp = (
             <button
-                className="tavle__scrollknapp knapp-forrige"
+                className={classNames('tavle__scrollknapp knapp-forrige', {
+                    invisible: this.state.venstreKnappDisabled,
+                })}
                 onClick={this.visForrige}
                 disabled={this.state.venstreKnappDisabled}
                 aria-label={intl.formatMessage({
@@ -74,9 +76,11 @@ class Tavle extends Component {
 
         const hoyreKnapp = (
             <button
-                className="tavle__scrollknapp knapp-neste"
+                className={classNames('tavle__scrollknapp knapp-neste', {
+                    invisible: this.state.hoyreKnappDisabled,
+                })}
                 onClick={this.visNeste}
-                disabled={this.state.hoyreKnappDisabled}
+                hidden={this.state.hoyreKnappDisabled}
                 aria-label={intl.formatMessage({
                     id: 'aktivitetstavle.scrollknapp.neste.label',
                 })}
