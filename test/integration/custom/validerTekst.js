@@ -7,12 +7,20 @@ function validerTekst() {
 
 util.inherits(validerTekst, events.EventEmitter);
 
-validerTekst.prototype.command = function(selector, expected, text, cb) {
+validerTekst.prototype.command = function(selector, expected, text) {
     var self = this;
 
     this.api.getText(selector, result => {
-        this.api.assert.equal(result.status, 0, text);
-        this.api.verify.equal(result.value, expected, text);
+        this.api.assert.equal(
+            result.status,
+            0,
+            `${text}. Selektor: ${selector}`
+        );
+        this.api.verify.equal(
+            result.value,
+            expected,
+            `${text}. got: <${result.value}> expected: <${expected}>. Selektor: ${selector}`
+        );
         self.emit('complete');
     });
 

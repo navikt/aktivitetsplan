@@ -31,16 +31,6 @@ module.exports = {
             etikettVenterPaBruker(dialog) {
                 return dialog + this.elements.merkelappVenterPaBruker.selector;
             },
-
-            dialogMedTekstSelektor(tekst) {
-                const ancestor = this.elements.radDialog.selector.replace(
-                    '//',
-                    ''
-                );
-                const selector = `${this.elements.radDialog
-                    .selector}//p[@class="typo-element" and text()="${tekst}"]/ancestor::${ancestor}`;
-                return selector;
-            },
         },
     ],
 };

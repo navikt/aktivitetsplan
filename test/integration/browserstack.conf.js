@@ -40,7 +40,7 @@ let nightwatch_config = {
             desiredCapabilities: {
                 os: 'Windows',
                 os_version: '10',
-                browser: 'Chrome',
+                browserName: 'Chrome',
                 resolution: '1024x768',
             },
         },
@@ -56,15 +56,14 @@ let nightwatch_config = {
                 os_version: '7.0',
                 device: 'Samsung Galaxy S8',
                 real_mobile: 'true',
-                browser: 'Chrome',
+                browserName: 'Chrome',
             },
         },
         win_ie: {
             desiredCapabilities: {
                 os: 'Windows',
                 os_version: '10',
-                browser: 'IE',
-                browser_version: '11.0',
+                browserName: 'IE',
                 resolution: '1024x768',
             },
         },
@@ -72,7 +71,7 @@ let nightwatch_config = {
             desiredCapabilities: {
                 os: 'Windows',
                 os_version: '10',
-                browser: 'Edge',
+                browserName: 'Edge',
                 resolution: '1024x768',
             },
         },

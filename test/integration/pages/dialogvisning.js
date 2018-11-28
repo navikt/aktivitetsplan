@@ -16,9 +16,9 @@ module.exports = {
         snakkebobleHoyre: '//div[contains(@class, "snakkeboble--hoyre")]',
         txtSnakkeboble: '//div[@class="snakkeboble-panel__tekst"]',
         cbVenterPaNAV:
-            '//div[contains(@class, "endre-dialog__sjekkboks")]//span[text()="Venter på svar fra NAV"]/parent::label',
+            '//div[contains(@class, "endre-dialog__sjekkboks")]//span[text()="Venter på svar fra NAV"]',
         cbVenterPaBruker:
-            '//div[contains(@class, "endre-dialog__sjekkboks")]//span[text()="Venter på svar fra bruker"]/parent::label',
+            '//div[contains(@class, "endre-dialog__sjekkboks")]//span[text()="Venter på svar fra bruker"]',
     },
     commands: [
         dialogActions,
