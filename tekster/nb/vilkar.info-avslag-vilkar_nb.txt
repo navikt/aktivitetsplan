@@ -10,7 +10,7 @@
  }
  other {
 
-Du har valgt å ikke akseptere brukervilkårene og får derfor ikke tilgang til aktivitetsplanen. Aktivitetsplanen er et frivillig tilbud når du ikke er registrert som arbeidssøker eller får helsemessig eller annen oppfølging fra NAV.
+Du har ikke akseptert brukervilkårene og får derfor ikke tilgang til aktivitetsplanen på nav.no. NAV-kontoret kommer allikevel til å bruke aktivitetsplanen for å følge deg opp, men du vil få planen i papirversjon neste gang du møter veilederen din. Ta kontakt med ditt NAV-kontor for mer informasjon.
 
  }
 }
