@@ -1,0 +1,25 @@
+// Actions
+export const SETT_VIST_AKTIVITET = 'aktivitetsview/sett-vist-aktivitet';
+
+const initalState = [];
+
+// Reducer
+export default function reducer(state = initalState, action) {
+    const aktivitet = action.data;
+    switch (action.type) {
+        case SETT_VIST_AKTIVITET:
+            return [...state, aktivitet];
+        default:
+            return state;
+    }
+}
+
+// Action creator
+export function settVistAktivitet(aktivitet) {
+    return {
+        type: SETT_VIST_AKTIVITET,
+        data: {
+            aktivitet,
+        },
+    };
+}

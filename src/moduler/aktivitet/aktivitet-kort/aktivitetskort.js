@@ -25,6 +25,7 @@ import {
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
+import { selectSisteInnlogging } from '../../siste-innlogging/siste-innlogging-selector';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -159,6 +160,7 @@ const mapStateToProps = (state, props) => ({
     erFlyttbar:
         sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) &&
         !erPrivateBrukerSomSkalSkrusAv(state),
+    sisteInnlogging: selectSisteInnlogging(state),
 });
 
 export default connect(mapStateToProps)(dragbartAktivitetskort);

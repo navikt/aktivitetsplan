@@ -7,15 +7,6 @@ import {
     STATUS_FULLFOERT,
 } from '../../constant';
 
-export function aktivitetEquals(a, b) {
-    return (
-        a.status === b.status &&
-        a.type === b.type &&
-        a.etikett === b.etikett &&
-        a.avtalt === b.avtalt
-    );
-}
-
 export function compareAktivitet(a, b) {
     if (b.avtalt && !a.avtalt) {
         return 1;
@@ -29,6 +20,10 @@ export function compareAktivitet(a, b) {
         return 1;
     }
     return b.opprettetDato.localeCompare(a.opprettetDato);
+}
+
+export function nyEndringIAktivitet(aktivitet, sisteInnloggingDato) {
+    return moment(sisteInnloggingDato).isAfter(aktivitet.endretDato);
 }
 
 export function beregnKlokkeslettVarighet(aktivitet) {
