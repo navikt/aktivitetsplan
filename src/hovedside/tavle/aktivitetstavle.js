@@ -22,6 +22,8 @@ import KolonneFunction from './kolonne/kolonnefunction';
 import AktivitetsKort from './../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
+import { hentSisteInnlogging } from '../../moduler/siste-innlogging/siste-innlogging-reducer';
+import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 export function lagAktivitetsListe(aktiviteter) {
     return aktiviteter.map(aktivitet =>
@@ -51,6 +53,7 @@ class AktivitetsTavle extends Component {
             }
             this.props.doHentAktiviteter();
             this.props.doHentArenaAktiviteter();
+            this.props.doHentSisteInnlogging();
         }
     }
 
@@ -93,6 +96,7 @@ class AktivitetsTavle extends Component {
 AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
+    doHentSisteInnlogging: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
@@ -116,6 +120,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     doHentAktiviteter: () => hentAktiviteter()(dispatch),
     doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch),
+    doHentSisteInnlogging: () =>
+        hentSisteInnlogging(getFodselsnummer())(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsTavle);
