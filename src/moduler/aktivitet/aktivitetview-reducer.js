@@ -15,11 +15,15 @@ export default function reducer(state = initalState, action) {
 }
 
 // Action creator
-export function settVistAktivitet(aktivitet) {
+export function settAktivitetSomVist(aktivitet) {
     return {
         type: SETT_VIST_AKTIVITET,
         data: {
             aktivitet,
         },
     };
+}
+
+export function selectAktiviteterSomHarBlittVist(state) {
+    return state.view.visteAktiviteterMedEndringer;
 }

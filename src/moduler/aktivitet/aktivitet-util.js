@@ -22,7 +22,7 @@ export function compareAktivitet(a, b) {
     return b.opprettetDato.localeCompare(a.opprettetDato);
 }
 
-export function nyEndringIAktivitet(aktivitet, sisteInnloggingDato) {
+export function erNyEndringIAktivitet(aktivitet, sisteInnloggingDato) {
     return moment(sisteInnloggingDato).isAfter(aktivitet.endretDato);
 }
 

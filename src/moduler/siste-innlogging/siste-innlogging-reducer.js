@@ -8,7 +8,6 @@ export const PENDING = 'sisteinnlogging/PENDING';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
-    brukerHarAvslatt: false,
     data: {},
 };
 

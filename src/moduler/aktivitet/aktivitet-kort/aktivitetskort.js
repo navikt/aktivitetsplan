@@ -26,6 +26,11 @@ import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 import { selectSisteInnlogging } from '../../siste-innlogging/siste-innlogging-selector';
+import {
+    selectAktiviteterSomHarBlittVist,
+    settAktivitetSomVist,
+} from '../aktivitetview-reducer';
+import { erNyEndringIAktivitet } from '../aktivitet-util';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -57,6 +62,8 @@ class AktivitetsKort extends Component {
             isDragging,
             connectDragSource,
             erFlyttbar,
+            doSettAktivitetMedEndringerSomVist,
+            harUsettEndringerIAktivitet,
         } = this.props;
         const { id, type, tittel, antallStillingerSokes } = aktivitet;
 
@@ -75,6 +82,8 @@ class AktivitetsKort extends Component {
                     focusRef={aktivitetskort => {
                         this.aktivitetskortSomSkalFaFokusNarLukkes = aktivitetskort;
                     }}
+                    onClick={() =>
+                        doSettAktivitetMedEndringerSomVist(aktivitet)}
                 >
                     <article aria-labelledby={ariaLabel}>
                         <Undertekst
@@ -96,6 +105,9 @@ class AktivitetsKort extends Component {
                                 }
                             )}
                         >
+                            <VisibleIfDiv visbile={harUsettEndringerIAktivitet}>
+                                test
+                            </VisibleIfDiv>
                             {tittel}
                         </Element>
                         <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
@@ -145,22 +157,40 @@ AktivitetsKort.propTypes = {
     connectDragSource: PT.func.isRequired,
     forrigeAktiveAktivitetId: PT.string,
     erFlyttbar: PT.bool.isRequired,
+    doSettAktivitetMedEndringerSomVist: PT.func.isRequired,
+    harUsettEndringerIAktivitet: PT.bool,
 };
 
 AktivitetsKort.defaultProps = {
     forrigeAktiveAktivitetId: undefined,
+    harUsettEndringerIAktivitet: false,
 };
 
 const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
     AktivitetsKort
 );
 
-const mapStateToProps = (state, props) => ({
-    forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
-    erFlyttbar:
-        sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) &&
-        !erPrivateBrukerSomSkalSkrusAv(state),
-    sisteInnlogging: selectSisteInnlogging(state),
+const mapStateToProps = (state, props) => {
+    const sisteInnlogging = selectSisteInnlogging(state);
+    const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
+    const harUsettEndringerIAktivitet =
+        erNyEndringIAktivitet(props.aktivitet, sisteInnlogging.dato) &&
+        aktiviteterSomHarBlittVist.filter(a => a.id === props.aktivitet.id)
+            .length === 0;
+    return {
+        forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
+        erFlyttbar:
+            sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) &&
+            !erPrivateBrukerSomSkalSkrusAv(state),
+        harUsettEndringerIAktivitet,
+    };
+};
+
+const mapDispatchToProps = dispatch => ({
+    doSettAktivitetMedEndringerSomVist: aktivitet =>
+        dispatch(settAktivitetSomVist(aktivitet)),
 });
 
-export default connect(mapStateToProps)(dragbartAktivitetskort);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    dragbartAktivitetskort
+);
