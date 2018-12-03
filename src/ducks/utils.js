@@ -121,7 +121,13 @@ export const getCookie = name => {
     return match !== null ? match[1] : '';
 };
 
-export function fetchToJson(url, config = {}) {
+const defaultHeaders = {
+    'Content-Type': 'application/json',
+    NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
+    'Nav-Consumer-Id': 'aktivitetsplan',
+};
+
+export function fetchToJson(url, config = { headers: defaultHeaders }) {
     resetTimeout();
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
 
@@ -143,10 +149,7 @@ function methodToJson(method, url, data, config) {
     return fetchToJson(url, {
         ...{
             method,
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'NAV_CSRF_PROTECTION': getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
-            }),
+            headers: defaultHeaders,
             body: JSON.stringify(data),
         },
         ...config,
