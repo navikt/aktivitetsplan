@@ -23,7 +23,10 @@ export function compareAktivitet(a, b) {
 }
 
 export function erNyEndringIAktivitet(aktivitet, sisteInnloggingDato) {
-    return moment(sisteInnloggingDato).isAfter(aktivitet.endretDato);
+    if (!aktivitet.endretDato || !sisteInnloggingDato) {
+        return false;
+    }
+    return moment(aktivitet.endretDato).isAfter(sisteInnloggingDato);
 }
 
 export function beregnKlokkeslettVarighet(aktivitet) {

@@ -63,7 +63,7 @@ class AktivitetsKort extends Component {
             connectDragSource,
             erFlyttbar,
             doSettAktivitetMedEndringerSomVist,
-            harUsettEndringerIAktivitet,
+            harEndringerIAktivitet,
         } = this.props;
         const { id, type, tittel, antallStillingerSokes } = aktivitet;
 
@@ -105,8 +105,8 @@ class AktivitetsKort extends Component {
                                 }
                             )}
                         >
-                            <VisibleIfDiv visbile={harUsettEndringerIAktivitet}>
-                                test
+                            <VisibleIfDiv visible={harEndringerIAktivitet}>
+                                Endret
                             </VisibleIfDiv>
                             {tittel}
                         </Element>
@@ -158,12 +158,12 @@ AktivitetsKort.propTypes = {
     forrigeAktiveAktivitetId: PT.string,
     erFlyttbar: PT.bool.isRequired,
     doSettAktivitetMedEndringerSomVist: PT.func.isRequired,
-    harUsettEndringerIAktivitet: PT.bool,
+    harEndringerIAktivitet: PT.bool,
 };
 
 AktivitetsKort.defaultProps = {
     forrigeAktiveAktivitetId: undefined,
-    harUsettEndringerIAktivitet: false,
+    harEndringerIAktivitet: false,
 };
 
 const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
@@ -173,16 +173,17 @@ const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
 const mapStateToProps = (state, props) => {
     const sisteInnlogging = selectSisteInnlogging(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
-    const harUsettEndringerIAktivitet =
+    const harEndringerIAktivitet =
         erNyEndringIAktivitet(props.aktivitet, sisteInnlogging.dato) &&
-        aktiviteterSomHarBlittVist.filter(a => a.id === props.aktivitet.id)
-            .length === 0;
+        !aktiviteterSomHarBlittVist.find(
+            aktivitet => aktivitet.id === props.aktivitet.id
+        );
     return {
         forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
         erFlyttbar:
             sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) &&
             !erPrivateBrukerSomSkalSkrusAv(state),
-        harUsettEndringerIAktivitet,
+        harEndringerIAktivitet,
     };
 };
 
