@@ -31,6 +31,11 @@ import {
     settAktivitetSomVist,
 } from '../aktivitetview-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
+import {
+    harFeature,
+    NYENDRINGIAKTIVITET,
+} from '../../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -95,21 +100,26 @@ class AktivitetsKort extends Component {
                                 id={`aktivitetskort.type.${type}`.toLowerCase()}
                             />
                         </Undertekst>
-                        <Element
-                            tag="h1"
-                            id={`aktivitetskort__header__${id}`}
-                            className={classNames(
-                                'aktivitetskort__tittel softbreak',
-                                {
-                                    'aktivitetskort__tittel--drag': isDragging,
-                                }
-                            )}
-                        >
-                            <VisibleIfDiv visible={harEndringerIAktivitet}>
-                                Endret
+                        <div className={'aktivitetskort__header'}>
+                            <VisibleIfDiv
+                                visible={harEndringerIAktivitet}
+                                className={'aktivitetskort__nyendring'}
+                            >
+                                <span className="aktivitetskort__nyendring-sirkel" />
                             </VisibleIfDiv>
-                            {tittel}
-                        </Element>
+                            <Element
+                                tag="h1"
+                                id={`aktivitetskort__header__${id}`}
+                                className={classNames(
+                                    'aktivitetskort__tittel softbreak',
+                                    {
+                                        'aktivitetskort__tittel--drag': isDragging,
+                                    }
+                                )}
+                            >
+                                {tittel}
+                            </Element>
+                        </div>
                         <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
                         <VisibleIfDiv
                             data-testId="antall-stillinger"
@@ -171,9 +181,15 @@ const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
 );
 
 const mapStateToProps = (state, props) => {
-    const sisteInnlogging = selectSisteInnlogging(state);
+    const harNyEndringIAktitetFeature = harFeature(
+        NYENDRINGIAKTIVITET,
+        selectFeatureData(state)
+    );
+    const sisteInnlogging =
+        harNyEndringIAktitetFeature && selectSisteInnlogging(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
     const harEndringerIAktivitet =
+        harNyEndringIAktitetFeature &&
         erNyEndringIAktivitet(props.aktivitet, sisteInnlogging.dato) &&
         !aktiviteterSomHarBlittVist.find(
             aktivitet => aktivitet.id === props.aktivitet.id
