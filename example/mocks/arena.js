@@ -7,7 +7,7 @@ export default [
         beskrivelse: 'Sjørøvere trenger å kunne klatre i seil',
         fraDato: '2017-07-01T00:00:00+02:00',
         tilDato: '2025-12-31T00:00:00+01:00',
-        opprettetDato: '2017-07-02T00:00:00+02:00',
+        opprettetDato: '2018-09-02T00:00:00+02:00',
         avtalt: true,
         deltakelseProsent: 95.6,
         tiltaksnavn: 'Trening123',

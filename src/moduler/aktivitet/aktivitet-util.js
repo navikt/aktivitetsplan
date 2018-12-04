@@ -23,10 +23,16 @@ export function compareAktivitet(a, b) {
 }
 
 export function erNyEndringIAktivitet(aktivitet, sisteInnloggingDato) {
-    if (!aktivitet.endretDato || !sisteInnloggingDato) {
-        return false;
+    const endretDatoAktivietetMoment = moment(
+        aktivitet.endretDato || aktivitet.opprettetDato
+    );
+    if (endretDatoAktivietetMoment && moment(sisteInnloggingDato)) {
+        return (
+            endretDatoAktivietetMoment.isAfter(sisteInnloggingDato) &&
+            endretDatoAktivietetMoment.isBefore(moment())
+        );
     }
-    return moment(aktivitet.endretDato).isAfter(sisteInnloggingDato);
+    return false;
 }
 
 export function beregnKlokkeslettVarighet(aktivitet) {
