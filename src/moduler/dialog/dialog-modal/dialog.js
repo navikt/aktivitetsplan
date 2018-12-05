@@ -8,14 +8,17 @@ import Henvendelser from './henvendelser';
 import * as AppPT from '../../../proptypes';
 import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
+import DialogLenkeTilAktivitet from './dialog-lenke-til-aktivitet';
 
-function Dialog({ dialog, overskrift, className, privateModus }) {
+function Dialog({ dialog, aktivitet, className, privateModus }) {
     const dialogId = dialog.id;
     const historisk = dialog.historisk;
     return (
         <div className={className}>
             <Undertittel tag="h1" className="endre-dialog__tittel">
-                {overskrift}
+                {aktivitet
+                    ? <DialogLenkeTilAktivitet aktivitet={aktivitet} />
+                    : dialog.overskrift}
             </Undertittel>
             <EndreDialog
                 hidden={historisk || privateModus}
@@ -35,21 +38,20 @@ function Dialog({ dialog, overskrift, className, privateModus }) {
 
 Dialog.propTypes = {
     className: PT.string,
-    overskrift: PT.string,
     dialog: AppPT.dialog.isRequired,
+    aktivitet: AppPT.aktivitet,
     privateModus: PT.bool.isRequired,
 };
 
 Dialog.defaultProps = {
-    overskrift: undefined,
     className: undefined,
+    aktivitet: undefined,
 };
 
 const mapStateToProps = (state, props) => {
-    const dialog = props.dialog;
-    const aktivitet = selectAktivitetMedId(state, dialog.aktivitetId) || {};
+    const aktivitet = selectAktivitetMedId(state, props.dialog.aktivitetId);
     return {
-        overskrift: aktivitet.tittel || dialog.overskrift,
+        aktivitet,
         privateModus: erPrivateBrukerSomSkalSkrusAv(state),
     };
 };
