@@ -29,7 +29,6 @@ function DialogModal({
     navnPaMotpart,
     fnrPaMotpartHvisBruker,
     valgtDialog,
-    valgtAktivitetId,
     harNyDialog,
     harValgtDialog,
     historiskVisning,
@@ -79,7 +78,6 @@ function DialogModal({
                             valgtDialog={valgtDialog}
                             harNyDialog={harNyDialog}
                             harValgtDialog={harValgtDialog}
-                            valgtAktivitetId={valgtAktivitetId}
                             harNyDialogEllerValgtDialog={
                                 harNyDialogEllerValgtDialog
                             }
@@ -92,7 +90,6 @@ function DialogModal({
 }
 
 DialogModal.defaultProps = {
-    valgtAktivitetId: null,
     navnPaMotpart: null,
     fnrPaMotpartHvisBruker: null,
     valgtDialog: null,
@@ -105,7 +102,6 @@ DialogModal.propTypes = {
     harNyDialog: PT.bool,
     valgtDialog: AppPT.dialog,
     harValgtDialog: PT.bool.isRequired,
-    valgtAktivitetId: PT.string,
     motpartStatus: AppPT.avhengighet.isRequired,
     navnPaMotpart: PT.string,
     fnrPaMotpartHvisBruker: PT.string,
@@ -119,7 +115,6 @@ const mapStateToProps = (state, props) => {
     const { match } = props;
     const { id } = match.params;
     const valgtDialog = selectDialogMedId(state, id);
-    const valgtAktivitetId = valgtDialog && valgtDialog.aktivitetId;
     const harNyDialog = id === 'ny';
     const harValgtDialog = !!valgtDialog;
     const historiskVisning = selectViserHistoriskPeriode(state);
@@ -129,7 +124,6 @@ const mapStateToProps = (state, props) => {
         valgtDialog,
         harValgtDialog,
         harNyDialogEllerValgtDialog: harNyDialog || harValgtDialog,
-        valgtAktivitetId,
         motpartStatus: selectMotpartStatus(state),
         navnPaMotpart: selectNavnPaMotpart(state),
         fnrPaMotpartHvisBruker,
