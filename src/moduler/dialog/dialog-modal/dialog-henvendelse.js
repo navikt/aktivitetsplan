@@ -4,14 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { withRouter } from 'react-router-dom';
 import Dialog from './dialog';
-import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
 import NyHenvendelse from './ny-henvendelse';
 import {
     div as HiddenIfDiv,
     section as HiddenIfSection,
 } from '../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../proptypes';
-import { aktivitetRoute } from '../../../routing';
 import { hoyreKolonneSectionId } from '../../../ducks/utils';
 
 function DialogHenvendelse({
@@ -19,7 +17,6 @@ function DialogHenvendelse({
     harValgtDialog,
     harNyDialog,
     harNyDialogEllerValgtDialog,
-    valgtAktivitetId,
     history,
 }) {
     return (
@@ -38,14 +35,6 @@ function DialogHenvendelse({
                 />
             </HiddenIfDiv>
             <HiddenIfDiv hidden={!harValgtDialog}>
-                <Knappelenke
-                    visible={!!valgtAktivitetId}
-                    onClick={() =>
-                        history.push(aktivitetRoute(valgtAktivitetId))}
-                    className="endre-dialog__til-aktiviteten"
-                >
-                    <FormattedMessage id="dialog.modal.til-aktiviteten" />
-                </Knappelenke>
                 <Dialog dialog={valgtDialog} />
             </HiddenIfDiv>
         </HiddenIfSection>

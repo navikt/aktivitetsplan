@@ -1,1 +1,1 @@
-Gå til aktiviteten
+Aktivitet: {tittel}
