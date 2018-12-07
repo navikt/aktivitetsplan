@@ -5,8 +5,10 @@ import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import ModalContainer from '../modal/modal-container';
 import ModalFooter from '../modal/modal-footer';
+import { moment } from '../../utils';
 
-function TimeoutboxNedtelling({ tidIgjen }) {
+function TimeoutboxNedtelling({ sekunderIgjen }) {
+    const duration = moment.duration(sekunderIgjen, 'seconds');
     return (
         <div>
             <ModalContainer>
@@ -17,7 +19,7 @@ function TimeoutboxNedtelling({ tidIgjen }) {
                     <Normaltekst className="blokk-xxs">
                         <FormattedMessage
                             id="timeoutbox.innhold.nedtelling"
-                            values={{ tid: tidIgjen.format('mm:ss') }}
+                            values={{ tid: duration.format('mm:ss') }}
                         />
                     </Normaltekst>
                 </div>
@@ -27,7 +29,7 @@ function TimeoutboxNedtelling({ tidIgjen }) {
                     className="modal-footer__knapp"
                     onClick={() => window.location.reload()}
                 >
-                    <FormattedMessage id="timeoutbox.knapp.fortsett" />
+                    <FormattedMessage id="timeoutbox.knapp.last_pa_nytt" />
                 </Hovedknapp>
                 <Knapp
                     className="modal-footer__knapp"
@@ -41,7 +43,7 @@ function TimeoutboxNedtelling({ tidIgjen }) {
 }
 
 TimeoutboxNedtelling.propTypes = {
-    tidIgjen: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    sekunderIgjen: PT.number.isRequired,
 };
 
 export default TimeoutboxNedtelling;

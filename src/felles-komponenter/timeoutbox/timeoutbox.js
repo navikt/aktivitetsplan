@@ -1,50 +1,46 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
 import { injectIntl, intlShape } from 'react-intl';
-import { moment } from './../../utils';
 import TimeoutboxNedtelling from './timeoutbox-nedtelling';
 import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
+import { hentGjenstaendeInnloggetTid } from './auth-reducer';
+import { selectAuthStatus, selectRemainingSeconds } from './auth-selector';
+import { STATUS } from '../../ducks/utils';
 
-const TIMEOUT_TID = moment.duration(30, 'minutes');
-const DISPLAY_TID = moment.duration(5, 'minutes');
-
-export const update = () => {
-    window.timeout = {
-        lastRequest: moment.now(),
-        hidden: false,
-    };
-};
+const FEM_MINUTTER_I_SEKUNDER = 300;
 
 class Timeoutbox extends Component {
     constructor(props) {
         super(props);
+        this.props.doHentGjenstaendeInnloggetTid();
         this.state = {
+            gjenstaendeTid: props.remainingSeconds,
             skalViseModal: false,
-            tidIgjen: null,
-            tidIgjenMoment: null,
+            manueltLukket: false,
         };
     }
 
     componentWillMount() {
         this.rerender = setInterval(() => {
-            const tidSidenForrigeKall =
-                moment.now() - window.timeout.lastRequest;
-            const tidIgjen = TIMEOUT_TID.asMilliseconds() - tidSidenForrigeKall;
-            const tidIgjenMoment = moment(tidIgjen);
+            if (this.state.gjenstaendeTid == null && !this.props.laster) {
+                this.setState({
+                    gjenstaendeTid: this.props.remainingSeconds,
+                });
+            }
+
+            let gjenstaendeTid = this.state.gjenstaendeTid;
             const skalViseModal =
-                tidIgjen <= DISPLAY_TID.asMilliseconds() &&
-                !window.timeout.hidden;
+                gjenstaendeTid < FEM_MINUTTER_I_SEKUNDER &&
+                !this.state.manueltLukket;
+            gjenstaendeTid -= 1;
 
             this.setState({
+                gjenstaendeTid,
                 skalViseModal,
-                tidIgjen,
-                tidIgjenMoment,
             });
-        }, 500);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextState.skalViseModal;
+        }, 1000);
     }
 
     componentWillUnmount() {
@@ -59,15 +55,18 @@ class Timeoutbox extends Component {
                 overlayClassName="aktivitet-modal__overlay"
                 portalClassName="aktivitetsplanfs timeout-modal-portal"
                 onRequestClose={() => {
-                    window.timeout.hidden = true;
+                    this.setState({
+                        skalViseModal: false,
+                        manueltLukket: true,
+                    });
                 }}
                 contentLabel={this.props.intl.formatMessage({
                     id: 'timeoutbox.aria.label',
                 })}
             >
-                {this.state.tidIgjen > 0
+                {this.state.gjenstaendeTid > 0
                     ? <TimeoutboxNedtelling
-                          tidIgjen={this.state.tidIgjenMoment}
+                          sekunderIgjen={this.state.gjenstaendeTid}
                       />
                     : <TimeoutboxLoggetUt />}
             </NavFrontendModal>
@@ -77,6 +76,25 @@ class Timeoutbox extends Component {
 
 Timeoutbox.propTypes = {
     intl: intlShape.isRequired,
+    doHentGjenstaendeInnloggetTid: PT.func.isRequired,
+    remainingSeconds: PT.number,
+    laster: PT.bool.isRequired,
 };
 
-export default injectIntl(Timeoutbox);
+Timeoutbox.defaultProps = {
+    remainingSeconds: null,
+};
+
+const mapStateToProps = state => ({
+    remainingSeconds: selectRemainingSeconds(state),
+    laster: selectAuthStatus(state) !== STATUS.OK,
+});
+
+const mapDispatchToProps = dispatch => ({
+    doHentGjenstaendeInnloggetTid: () =>
+        dispatch(hentGjenstaendeInnloggetTid()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+    injectIntl(Timeoutbox)
+);

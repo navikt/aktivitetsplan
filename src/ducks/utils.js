@@ -1,4 +1,3 @@
-import { update as resetTimeout } from '../felles-komponenter/timeoutbox/timeoutbox';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
 
 /* eslint-env browser */
@@ -128,7 +127,6 @@ const defaultHeaders = {
 };
 
 export function fetchToJson(url, config = { headers: defaultHeaders }) {
-    resetTimeout();
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
 
     const fodselsnummer = getFodselsnummer();
