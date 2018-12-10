@@ -25,7 +25,7 @@ import {
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
-import { selectSisteInnlogging } from '../../siste-innlogging/siste-innlogging-selector';
+import { selectSisteInnlogging } from '../../siste-innlogging/siste-innlogging-reducer';
 import {
     selectAktiviteterSomHarBlittVist,
     settAktivitetSomVist,
@@ -185,15 +185,15 @@ const mapStateToProps = (state, props) => {
         NYENDRINGIAKTIVITET,
         selectFeatureData(state)
     );
-    const sisteInnlogging =
-        harNyEndringIAktitetFeature && selectSisteInnlogging(state);
+    const sisteInnlogging = selectSisteInnlogging(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
+    const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
+        aktivitet => aktivitet.id === props.aktivitet.id
+    );
     const harEndringerIAktivitet =
         harNyEndringIAktitetFeature &&
-        erNyEndringIAktivitet(props.aktivitet, sisteInnlogging.dato) &&
-        !aktiviteterSomHarBlittVist.find(
-            aktivitet => aktivitet.id === props.aktivitet.id
-        );
+        erNyEndringIAktivitet(props.aktivitet, sisteInnlogging) &&
+        aktivitetHarIkkeBlittVist;
     return {
         forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
         erFlyttbar:
