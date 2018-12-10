@@ -36,6 +36,7 @@ import {
     NYENDRINGIAKTIVITET,
 } from '../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
+import AktivitetskortEndring from './aktivitetskort-endring';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -101,12 +102,9 @@ class AktivitetsKort extends Component {
                             />
                         </Undertekst>
                         <div className={'aktivitetskort__header'}>
-                            <VisibleIfDiv
-                                visible={harEndringerIAktivitet}
-                                className={'aktivitetskort__nyendring'}
-                            >
-                                <span className="aktivitetskort__nyendring-sirkel" />
-                            </VisibleIfDiv>
+                            <AktivitetskortEndring
+                                harEndringerIAktivitet={harEndringerIAktivitet}
+                            />
                             <Element
                                 tag="h1"
                                 id={`aktivitetskort__header__${id}`}

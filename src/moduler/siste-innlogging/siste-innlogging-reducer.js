@@ -13,4 +13,4 @@ export function selectSisteInnlogging(state) {
     return selectData(state);
 }
 
-export { reducer };
+export default reducer;
