@@ -1,0 +1,9 @@
+<p>Under navigasjonslinjen finner du en knapp der du kan legge til aktiviteter. Aktiviteten vil legge seg i kolonnene under. Hver kolonne har en status: forslag, planlegger, gjennomfører, fullført og avbrutt. Du flytter en aktivitet fra en kolonne til en annen ved å dra og slippe aktivitetene, eller ved å velge status i aktiviteten. Slik viser du fremdriften på aktiviteten.</p>
+
+<p>NAV kan også legge til en aktivitet for deg som du er forpliktet til å gjennomføre. Den vil ha en blå etikett «Avtalt med NAV». Du kan ikke gjøre endringer i denne aktiviteten. NAV kan også sette etiketten «Avtalt med NAV» på en aktivitet du eller NAV har lagt inn tidligere.  Hvis du er uenig i at vi har merket en aktivitet som avtalt, kan du starte en dialog og forklare hvorfor du er uenig.</p>
+
+<p>Du kan også selv foreslå at en aktivitet skal være avtalt med NAV. Start en dialog med veilederen din hvis du vil foreslå dette.</p>
+
+<p>Hvis vi vil ha kontakt med deg, starter vi en dialog i aktivitetsplanen. Du vil få et varsel fra oss hvis du ikke allerede har sett henvendelsen i aktivitetsplanen.</p>
+
+<b>Vi ønsker deg lykke til med jobbsøkingen!</b>

@@ -1,1 +1,5 @@
-I aktivitetsplanen kan du holde orden på jobbsøkeraktiviteter og andre aktiviteter du gjør i samarbeid med NAV. Se video eller les teksten under om aktivitetsplanen.
+<p>Aktivitetsplanen din er verktøyet du skal bruke for å komme i aktivitet og jobb. For at vi skal kunne følge deg opp best mulig, må du bruke aktivitetsplanen og dele den med oss. Du må følge opp de aktivitetene vi avtaler i planen.</p>
+
+<p>Du kan selv legge inn og redigere mål, aktiviteter og stillinger som du vil søke på. NAV kan også foreslå aktiviteter for deg. Veilederen kan se innholdet i planen og dere kan ha digital dialog om mål og aktivitetene dine for å komme i jobb. Aktiviteter og dialog kan ikke slettes når de først er opprettet.</p>
+
+<p>Når du har digital dialog med NAV gjennom aktivitetsplanen, har du en sikker kanal der du kan stille spørsmål og drøfte alle forhold som har med jobbaktivitetene dine å gjøre.</p>
