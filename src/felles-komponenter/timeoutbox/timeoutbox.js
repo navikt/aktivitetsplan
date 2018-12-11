@@ -4,59 +4,62 @@ import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
 import { injectIntl, intlShape } from 'react-intl';
 import TimeoutboxNedtelling from './timeoutbox-nedtelling';
-import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
 import { hentGjenstaendeInnloggetTid } from './auth-reducer';
-import { selectAuthStatus, selectRemainingSeconds } from './auth-selector';
-import { STATUS } from '../../ducks/utils';
-
-const FEM_MINUTTER_I_SEKUNDER = 300;
+import { selectExpirationTime } from './auth-selector';
+import { moment } from './../../utils';
 
 class Timeoutbox extends Component {
     constructor(props) {
         super(props);
         this.props.doHentGjenstaendeInnloggetTid();
         this.state = {
-            gjenstaendeTid: props.remainingSeconds,
-            skalViseModal: false,
             manueltLukket: false,
         };
     }
 
-    componentWillMount() {
-        this.rerender = setInterval(() => {
-            if (this.state.gjenstaendeTid == null && !this.props.laster) {
-                this.setState({
-                    gjenstaendeTid: this.props.remainingSeconds,
-                });
-            }
-
-            let gjenstaendeTid = this.state.gjenstaendeTid;
-            const skalViseModal =
-                gjenstaendeTid < FEM_MINUTTER_I_SEKUNDER &&
-                !this.state.manueltLukket;
-            gjenstaendeTid -= 1;
-
-            this.setState({
-                gjenstaendeTid,
-                skalViseModal,
-            });
-        }, 1000);
+    componentDidUpdate() {
+        const expirationTime = this.props.expirationTime;
+        if (!this.timeout && expirationTime) {
+            const expirationInMillis = this.visningsTidspunkt().diff(
+                moment(),
+                'ms'
+            );
+            this.timeout = setTimeout(() => {
+                this.forceUpdate();
+            }, expirationInMillis + 100);
+        }
     }
 
     componentWillUnmount() {
-        clearInterval(this.rerender);
+        clearTimeout(this.timeout);
+    }
+
+    skalViseModal() {
+        return (
+            moment().isAfter(this.visningsTidspunkt()) &&
+            !this.state.manueltLukket
+        );
+    }
+
+    visningsTidspunkt() {
+        return moment(this.props.expirationTime).subtract(5, 'minutes');
     }
 
     render() {
+        const skalVise = this.skalViseModal();
+        const utlopsTidspunkt = this.props.expirationTime;
+        if (!utlopsTidspunkt) {
+            return null;
+        }
+
         return (
             <NavFrontendModal
-                isOpen={this.state.skalViseModal}
+                isOpen={skalVise}
                 shouldCloseOnOverlayClick={false}
                 overlayClassName="aktivitet-modal__overlay"
                 portalClassName="aktivitetsplanfs timeout-modal-portal"
                 onRequestClose={() => {
                     this.setState({
-                        skalViseModal: false,
                         manueltLukket: true,
                     });
                 }}
@@ -64,11 +67,7 @@ class Timeoutbox extends Component {
                     id: 'timeoutbox.aria.label',
                 })}
             >
-                {this.state.gjenstaendeTid > 0
-                    ? <TimeoutboxNedtelling
-                          sekunderIgjen={this.state.gjenstaendeTid}
-                      />
-                    : <TimeoutboxLoggetUt />}
+                <TimeoutboxNedtelling utlopsTidspunkt={utlopsTidspunkt} />
             </NavFrontendModal>
         );
     }
@@ -77,17 +76,15 @@ class Timeoutbox extends Component {
 Timeoutbox.propTypes = {
     intl: intlShape.isRequired,
     doHentGjenstaendeInnloggetTid: PT.func.isRequired,
-    remainingSeconds: PT.number,
-    laster: PT.bool.isRequired,
+    expirationTime: PT.string,
 };
 
 Timeoutbox.defaultProps = {
-    remainingSeconds: null,
+    expirationTime: null,
 };
 
 const mapStateToProps = state => ({
-    remainingSeconds: selectRemainingSeconds(state),
-    laster: selectAuthStatus(state) !== STATUS.OK,
+    expirationTime: selectExpirationTime(state),
 });
 
 const mapDispatchToProps = dispatch => ({
