@@ -9,8 +9,7 @@ RUN npm ci
 ENV NODE_ENV=production
 RUN npm run build
 
-#TODO: revert til latest
-FROM docker.adeo.no:5000/pus/decorator:145.20181212.1033
+FROM docker.adeo.no:5000/pus/decorator
 
 # medfører 2 ting i pus-decorator:
 #  - /environment.js-endepunktet legger public properties på window.aktivitetsplan
