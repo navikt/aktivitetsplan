@@ -7,10 +7,12 @@ import { selectFeatureData } from './feature-selector';
 export const BRUKERVILKAR = 'aktivitetsplan.brukervilkar';
 export const FORHANDSORIENTERING = 'aktivitetsplan.forhandsorientering';
 export const SKRUAVPRIVATMODUS = 'aktivitetsplan.skruavprivatmodus';
+export const NYENDRINGIAKTIVITET = 'aktivitetsplan.nyendringiaktivitet';
 export const ALL_FEATURES = [
     BRUKERVILKAR,
     FORHANDSORIENTERING,
     SKRUAVPRIVATMODUS,
+    NYENDRINGIAKTIVITET,
 ];
 
 export const harFeature = (name, features) => features[name] === true;
