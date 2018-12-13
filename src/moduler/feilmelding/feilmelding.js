@@ -16,6 +16,7 @@ import {
     parseFeil,
     UGYLDIG_REQUEST_KATEGORI,
     UKJENT_KATEGORI,
+    UNAUTHORIZED_KATEGORI,
     VERSJONSKONFLIKT_KATEGORI,
 } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
@@ -26,6 +27,7 @@ import { FailsafeText } from '../../text';
 const stripeTyper = {
     [UKJENT_KATEGORI]: AlertStripeNavAnsatt,
     [FINNES_IKKE_KATEGORI]: AlertStripeNavAnsatt,
+    [UNAUTHORIZED_KATEGORI]: AlertStripeNavAnsatt,
     [INGEN_TILGANG_KATEGORI]: AlertStripeInfoSolid,
     [UGYLDIG_REQUEST_KATEGORI]: AlertStripeInfo,
     [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo,
@@ -36,7 +38,10 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
     const aktor = erVeileder ? 'veileder' : 'bruker';
     const feilType = feil.type;
     const melding = feil.melding;
-    const feilKategori = (melding && melding.type) || UKJENT_KATEGORI;
+    const unauthorized = feil.httpStatus === 401;
+    const feilKategori = unauthorized
+        ? UNAUTHORIZED_KATEGORI
+        : (melding && melding.type) || UKJENT_KATEGORI;
     const Stripe =
         (erArenaFeil && AlertStripeInfo) || stripeTyper[feilKategori];
     const typeNr = KATEGORI_RANGERING[feilKategori] || 1;

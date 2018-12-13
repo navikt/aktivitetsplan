@@ -34,6 +34,7 @@ import instillingsHistorikk from './innstillings-historikk';
 import fetchMock, { ResponseUtils } from 'yet-another-fetch-mock';
 import { fetchmockMiddleware } from './utils';
 import { hentMalverkMedType } from './malverk';
+import auth from './auth';
 import sisteInlogging from './sisteInlogging';
 
 const mock = fetchMock.configure({
@@ -218,6 +219,9 @@ mock.get(
 
 //veilarbmalverk-api
 mock.post('/veilarbmalverk/api/mal', ({ body }) => hentMalverkMedType(body));
+
+//aktivitetsplan-api
+mock.get('/aktivitetsplan/api/auth', auth);
 
 ///veilarblest/api
 mock.get(

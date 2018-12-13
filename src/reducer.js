@@ -28,6 +28,7 @@ import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import underelmenterReducer from './moduler/aktivitet/visning/underelement-for-aktivitet/underelementer-view-reducer';
+import authReducer from './felles-komponenter/timeoutbox/auth-reducer';
 import sisteInnloggingReducer from './moduler/siste-innlogging/siste-innlogging-reducer';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
 
@@ -62,6 +63,7 @@ const combinedReducers = combineReducers({
         veilederePaEnhet: veilederePaEnhetReducer,
         tildelVeileder: tildelVeilederReducer,
         sisteInnlogging: sisteInnloggingReducer,
+        auth: authReducer,
     }),
     view: combineReducers({
         dialog: dialogViewReducer,

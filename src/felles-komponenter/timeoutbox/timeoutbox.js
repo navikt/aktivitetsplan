@@ -1,75 +1,73 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
 import { injectIntl, intlShape } from 'react-intl';
-import { moment } from './../../utils';
 import TimeoutboxNedtelling from './timeoutbox-nedtelling';
-import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
-
-const TIMEOUT_TID = moment.duration(30, 'minutes');
-const DISPLAY_TID = moment.duration(5, 'minutes');
-
-export const update = () => {
-    window.timeout = {
-        lastRequest: moment.now(),
-        hidden: false,
-    };
-};
+import { hentGjenstaendeInnloggetTid } from './auth-reducer';
+import { selectExpirationTime } from './auth-selector';
+import { moment } from './../../utils';
 
 class Timeoutbox extends Component {
     constructor(props) {
         super(props);
+        this.props.doHentGjenstaendeInnloggetTid();
         this.state = {
-            skalViseModal: false,
-            tidIgjen: null,
-            tidIgjenMoment: null,
+            manueltLukket: false,
         };
     }
 
-    componentWillMount() {
-        this.rerender = setInterval(() => {
-            const tidSidenForrigeKall =
-                moment.now() - window.timeout.lastRequest;
-            const tidIgjen = TIMEOUT_TID.asMilliseconds() - tidSidenForrigeKall;
-            const tidIgjenMoment = moment(tidIgjen);
-            const skalViseModal =
-                tidIgjen <= DISPLAY_TID.asMilliseconds() &&
-                !window.timeout.hidden;
-
-            this.setState({
-                skalViseModal,
-                tidIgjen,
-                tidIgjenMoment,
-            });
-        }, 500);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextState.skalViseModal;
+    componentDidUpdate() {
+        const expirationTime = this.props.expirationTime;
+        if (!this.timeout && expirationTime) {
+            const expirationInMillis = this.visningsTidspunkt().diff(
+                moment(),
+                'ms'
+            );
+            this.timeout = setTimeout(() => {
+                this.forceUpdate();
+            }, expirationInMillis + 100);
+        }
     }
 
     componentWillUnmount() {
-        clearInterval(this.rerender);
+        clearTimeout(this.timeout);
+    }
+
+    skalViseModal() {
+        return (
+            moment().isAfter(this.visningsTidspunkt()) &&
+            !this.state.manueltLukket
+        );
+    }
+
+    visningsTidspunkt() {
+        return moment(this.props.expirationTime).subtract(5, 'minutes');
     }
 
     render() {
+        const skalVise = this.skalViseModal();
+        const utlopsTidspunkt = this.props.expirationTime;
+        if (!utlopsTidspunkt) {
+            return null;
+        }
+
         return (
             <NavFrontendModal
-                isOpen={this.state.skalViseModal}
+                isOpen={skalVise}
                 shouldCloseOnOverlayClick={false}
                 overlayClassName="aktivitet-modal__overlay"
                 portalClassName="aktivitetsplanfs timeout-modal-portal"
                 onRequestClose={() => {
-                    window.timeout.hidden = true;
+                    this.setState({
+                        manueltLukket: true,
+                    });
                 }}
                 contentLabel={this.props.intl.formatMessage({
                     id: 'timeoutbox.aria.label',
                 })}
             >
-                {this.state.tidIgjen > 0
-                    ? <TimeoutboxNedtelling
-                          tidIgjen={this.state.tidIgjenMoment}
-                      />
-                    : <TimeoutboxLoggetUt />}
+                <TimeoutboxNedtelling utlopsTidspunkt={utlopsTidspunkt} />
             </NavFrontendModal>
         );
     }
@@ -77,6 +75,23 @@ class Timeoutbox extends Component {
 
 Timeoutbox.propTypes = {
     intl: intlShape.isRequired,
+    doHentGjenstaendeInnloggetTid: PT.func.isRequired,
+    expirationTime: PT.string,
 };
 
-export default injectIntl(Timeoutbox);
+Timeoutbox.defaultProps = {
+    expirationTime: null,
+};
+
+const mapStateToProps = state => ({
+    expirationTime: selectExpirationTime(state),
+});
+
+const mapDispatchToProps = dispatch => ({
+    doHentGjenstaendeInnloggetTid: () =>
+        dispatch(hentGjenstaendeInnloggetTid()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+    injectIntl(Timeoutbox)
+);
