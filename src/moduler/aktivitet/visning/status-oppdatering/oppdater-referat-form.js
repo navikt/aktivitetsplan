@@ -16,6 +16,7 @@ import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/hid
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 
 const REFERAT_MAKS_LENGDE = 5000;
+export const oppdaterReferatFormNavn = 'oppdater-referat';
 
 function OppdaterReferatForm({
     errorSummary,
@@ -82,7 +83,7 @@ const NyHenvendelseReduxForm = validForm({
 const mapStateToProps = (state, props) => {
     const { referat, erReferatPublisert } = props.aktivitet;
     return {
-        form: 'oppdater-referat',
+        form: oppdaterReferatFormNavn,
         initialValues: {
             referat,
         },

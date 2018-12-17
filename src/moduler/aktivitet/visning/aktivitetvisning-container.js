@@ -41,6 +41,7 @@ import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-statu
 import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import { avtaltAktivitetFormNavn } from './avtalt-container/avtalt-form';
 import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
+import { oppdaterReferatFormNavn } from './status-oppdatering/oppdater-referat-form';
 
 function aktivitetvisningHeader(valgtAktivitet) {
     if (!valgtAktivitet) {
@@ -186,7 +187,8 @@ const mapStateToProps = (state, props) => {
         formIsDirty:
             isDirty(AKTIVITET_STATUS_FORM_NAME)(state) ||
             isDirty(avtaltAktivitetFormNavn)(state) ||
-            isDirty(STILLING_ETIKETT_FORM_NAME)(state),
+            isDirty(STILLING_ETIKETT_FORM_NAME)(state) ||
+            isDirty(oppdaterReferatFormNavn)(state),
     };
 };
 
