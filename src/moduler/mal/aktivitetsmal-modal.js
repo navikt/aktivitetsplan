@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PT from 'prop-types';
@@ -8,13 +9,33 @@ import Modal from '../../felles-komponenter/modal/modal';
 import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import { selectMalListeFeilmeldinger } from './aktivitetsmal-selector';
+import { LUKK_MODAL } from '../../felles-komponenter/modal/modal-reducer';
+import * as AppPT from '../../proptypes';
+import { formNavn } from './aktivitetsmal-form';
 
-function MalModal({ malFeilMeldinger, children }) {
+function MalModal({
+    malFeilMeldinger,
+    children,
+    formIsDirty,
+    intl,
+    lukkModal,
+    history,
+}) {
     return (
         <Modal
             header={<ModalHeader className="aktivitetmal__modal" />}
             contentLabel="aktivitetsmal-modal"
             feilmeldinger={malFeilMeldinger}
+            onRequestClose={() => {
+                const dialogTekst = intl.formatMessage({
+                    id: 'aktkivitet-skjema.lukk-advarsel',
+                });
+                // eslint-disable-next-line no-alert
+                if (!formIsDirty || confirm(dialogTekst)) {
+                    history.push('/');
+                    lukkModal();
+                }
+            }}
         >
             {children}
         </Modal>
@@ -24,6 +45,10 @@ function MalModal({ malFeilMeldinger, children }) {
 MalModal.propTypes = {
     malFeilMeldinger: PT.array,
     children: PT.node.isRequired,
+    formIsDirty: PT.bool.isRequired,
+    intl: intlShape.isRequired,
+    lukkModal: PT.func.isRequired,
+    history: AppPT.history.isRequired,
 };
 
 MalModal.defaultProps = {
@@ -49,10 +74,16 @@ function AktivitetsmalModalHOC(Component) {
 
 const mapStateToProps = state => ({
     malFeilMeldinger: selectMalListeFeilmeldinger(state),
+    formIsDirty: isDirty(formNavn)(state),
+});
+
+const mapDispatchToProps = dispatch => ({
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
 });
 
 const AktivitetsmalModal = compose(
-    connect(mapStateToProps),
+    injectIntl,
+    connect(mapStateToProps, mapDispatchToProps),
     AktivitetsmalModalHOC
 );
 
