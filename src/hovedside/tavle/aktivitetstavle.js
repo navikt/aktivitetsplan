@@ -23,7 +23,6 @@ import AktivitetsKort from './../../moduler/aktivitet/aktivitet-kort/aktivitetsk
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 import { hentSisteInnlogging } from '../../moduler/siste-innlogging/siste-innlogging-reducer';
-import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import {
     harFeature,
     NYENDRINGIAKTIVITET,
@@ -138,8 +137,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     doHentAktiviteter: () => hentAktiviteter()(dispatch),
     doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch),
-    doHentSisteInnlogging: () =>
-        hentSisteInnlogging(getFodselsnummer())(dispatch),
+    doHentSisteInnlogging: () => hentSisteInnlogging()(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsTavle);
