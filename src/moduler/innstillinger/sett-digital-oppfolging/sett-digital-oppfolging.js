@@ -49,6 +49,7 @@ function SettDigitalOppfolging({
                     lukkModal();
                 }
             }}
+            visConfirmDialog={formIsDirty}
         >
             <section className="innstillinger__prosess">
                 <div className="blokk-xxs">

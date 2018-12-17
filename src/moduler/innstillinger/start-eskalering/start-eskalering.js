@@ -40,6 +40,7 @@ function StartEskalering({
                     lukkModal();
                 }
             }}
+            visConfirmDialog={formIsDirty}
         >
             <Innholdslaster avhengigheter={[innstillingerStatus]}>
                 <div>

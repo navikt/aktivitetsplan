@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
+import { isDirty } from 'redux-form';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -25,6 +26,7 @@ import {
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 
 export const STOPP_ESKALERING_FORM_NAME = 'stopp-eskalering-form';
 
@@ -51,10 +53,25 @@ class StoppEskalering extends Component {
             innstillingerStatus,
             tilhorendeDialogId,
             history,
+            intl,
+            formIsDirty,
+            lukkModal,
         } = this.props;
 
         return (
-            <InnstillingerModal>
+            <InnstillingerModal
+                onRequestClose={() => {
+                    const dialogTekst = intl.formatMessage({
+                        id: 'aktkivitet-skjema.lukk-advarsel',
+                    });
+                    // eslint-disable-next-line no-alert
+                    if (!formIsDirty || confirm(dialogTekst)) {
+                        history.push('/');
+                        lukkModal();
+                    }
+                }}
+                visConfirmDialog={formIsDirty}
+            >
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <div>
                         <section className="innstillinger__prosess">
@@ -133,6 +150,9 @@ StoppEskalering.propTypes = {
     innstillingerStatus: AppPT.status.isRequired,
     tilhorendeDialogId: PT.number,
     history: AppPT.history.isRequired,
+    intl: intlShape.isRequired,
+    formIsDirty: PT.bool.isRequired,
+    lukkModal: PT.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -140,6 +160,7 @@ const mapStateToProps = state => {
     const oppfolgingStatus = selectOppfolgingStatus(state);
     const gjeldendeEskaleringsVarsel = selectGjeldendeEskaleringsVarsel(state);
     return {
+        formIsDirty: isDirty(STOPP_ESKALERING_FORM_NAME)(state),
         avhengigheter: [oppfolgingStatus, innstillingerStatus],
         innstillingerStatus,
         tilhorendeDialogId:
@@ -149,6 +170,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
     handleSubmit: (form, dialogId) =>
         dispatch(
             stoppEskalering(
@@ -163,4 +185,6 @@ const mapDispatchToProps = (dispatch, props) => ({
         dispatch(stoppEskaleringUtenHenvendelse(props.history)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StoppEskalering);
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(StoppEskalering)
+);

@@ -22,12 +22,14 @@ function InnstillingerModal({
     onRequestClose,
     ingenTilbakeKnapp,
     innstillingModalFeilmeldinger,
+    visConfirmDialog,
 }) {
     return (
         <FnrProvider>
             <Modal
                 header={
                     <ModalHeader
+                        visConfirmDialog={visConfirmDialog}
                         tilbakeTekstId={
                             ingenTilbakeKnapp
                                 ? null
@@ -70,6 +72,7 @@ InnstillingerModal.defaultProps = {
     onRequestClose: undefined,
     ingenTilbakeKnapp: undefined,
     innstillingModalFeilmeldinger: [],
+    visConfirmDialog: false,
 };
 
 InnstillingerModal.propTypes = {
@@ -79,6 +82,7 @@ InnstillingerModal.propTypes = {
     onRequestClose: PT.func,
     ingenTilbakeKnapp: PT.bool,
     innstillingModalFeilmeldinger: PT.array,
+    visConfirmDialog: PT.bool,
 };
 
 const mapStateToProps = state => ({

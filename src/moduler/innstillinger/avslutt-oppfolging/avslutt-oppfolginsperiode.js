@@ -67,6 +67,7 @@ function AvsluttOppfolgingperiode({
                     lukkModal();
                 }
             }}
+            visConfirmDialog={formIsDirty}
         >
             <Innholdslaster avhengigheter={avhengigheter}>
                 <div>
