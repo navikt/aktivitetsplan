@@ -26,11 +26,11 @@ export function erNyEndringIAktivitet(aktivitet, sisteInnlogging) {
     const endretDatoAktivietetMoment = moment(
         aktivitet.endretDato || aktivitet.opprettetDato
     );
-    if (endretDatoAktivietetMoment && moment(sisteInnlogging.dato)) {
+    if (endretDatoAktivietetMoment && moment(sisteInnlogging.lestTidspunkt)) {
         // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfør må
         // vi haen sjekk att opprettet dato ikke ligger fram i tiden
         return (
-            endretDatoAktivietetMoment.isAfter(sisteInnlogging.dato) &&
+            endretDatoAktivietetMoment.isAfter(sisteInnlogging.lestTidspunkt) &&
             endretDatoAktivietetMoment.isBefore(moment())
         );
     }
