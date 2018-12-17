@@ -36,7 +36,7 @@ import StatusRadio from './status-radio';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { selectArenaAktivitetStatus } from '../../arena-aktivitet-selector';
 
-const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
+export const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
 const BEGRUNNELSE_FELT_NAME = 'begrunnelse';
 const MAKS_LENGDE = 255;
 

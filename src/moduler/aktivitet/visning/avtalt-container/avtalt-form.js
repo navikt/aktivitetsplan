@@ -127,9 +127,9 @@ AvtaltForm.defaultProps = {
     currentAvtaltCheckbox: false,
 };
 
-const formNavn = 'avtalt-aktivitet-form';
+export const avtaltAktivitetFormNavn = 'avtalt-aktivitet-form';
 const AvtaltReduxForm = validForm({
-    form: formNavn,
+    form: avtaltAktivitetFormNavn,
     enableReinitialize: false,
     validate: {
         avtaltText119: [
@@ -140,7 +140,7 @@ const AvtaltReduxForm = validForm({
 })(AvtaltForm);
 
 const mapStateToProps = (state, props) => {
-    const selector = formValueSelector(formNavn);
+    const selector = formValueSelector(avtaltAktivitetFormNavn);
     return {
         initialValues: {
             avtaltSelect: SEND_FORHANDSORIENTERING,

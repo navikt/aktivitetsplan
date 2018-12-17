@@ -11,7 +11,7 @@ import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 
-const STILLING_ETIKETT_FORM_NAME = 'stilling-etikett-form';
+export const STILLING_ETIKETT_FORM_NAME = 'stilling-etikett-form';
 
 function StillingEtikettForm(props) {
     const { aktivitetDataStatus, disabled, dirty, handleSubmit } = props;
