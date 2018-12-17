@@ -12,6 +12,10 @@
         "baseUrl": "http://veilarbproxy"
     },
     {
+        "contextPath": "/veilarblest",
+        "baseUrl": "http://veilarbproxy"
+    },
+    {
         "contextPath": "/veilarbstepup",
         "baseUrl": "http://veilarbstepup"
     }
