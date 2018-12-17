@@ -1,6 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import { moment } from '../../../utils';
@@ -25,6 +26,7 @@ import {
     selectAvslutningStatus,
 } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 
 export const AVSLUTT_FORM_NAME = 'avslutt-oppfolging-form';
 const HiddenIfNormaltekst = hiddenIfHOC(Normaltekst);
@@ -49,9 +51,23 @@ function AvsluttOppfolgingperiode({
     avhengigheter,
     harUbehandledeDialoger,
     history,
+    intl,
+    formIsDirty,
+    lukkModal,
 }) {
     return (
-        <InnstillingerModal>
+        <InnstillingerModal
+            onRequestClose={() => {
+                const dialogTekst = intl.formatMessage({
+                    id: 'aktkivitet-skjema.lukk-advarsel',
+                });
+                // eslint-disable-next-line no-alert
+                if (!formIsDirty || confirm(dialogTekst)) {
+                    history.push('/');
+                    lukkModal();
+                }
+            }}
+        >
             <Innholdslaster avhengigheter={avhengigheter}>
                 <div>
                     <section className="innstillinger__prosess">
@@ -112,9 +128,13 @@ AvsluttOppfolgingperiode.propTypes = {
     harUbehandledeDialoger: PT.bool.isRequired,
     avhengigheter: PT.arrayOf(AppPT.status).isRequired,
     history: AppPT.history.isRequired,
+    intl: intlShape.isRequired,
+    formIsDirty: PT.bool.isRequired,
+    lukkModal: PT.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
     onSubmit: form => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
         return props.history.push('/innstillinger/avslutt/bekreft');
@@ -138,9 +158,10 @@ const mapStateToProps = state => {
         datoErInnenfor28dager,
         harUbehandledeDialoger: selectHarUbehandledeDialoger(state),
         avhengigheter: [innstillingerStatus, dialogStatus],
+        formIsDirty: isDirty(AVSLUTT_FORM_NAME)(state),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    AvsluttOppfolgingperiode
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(AvsluttOppfolgingperiode)
 );
