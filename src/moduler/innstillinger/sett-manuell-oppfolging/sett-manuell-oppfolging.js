@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { isDirty } from 'redux-form';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import {
@@ -20,6 +21,7 @@ import { selectIdentitetId } from '../../identitet/identitet-selector';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
 import * as AppPT from '../../../proptypes';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 
 const SETT_MANUELL_FORM_NAME = 'sett-manuell-form';
 
@@ -28,12 +30,26 @@ function SettManuellOppfolging({
     innstillingerStatus,
     handleSubmit,
     history,
+    intl,
+    formIsDirty,
+    lukkModal,
 }) {
     const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
         innstillingerStatus === STATUS.RELOADING;
     return (
-        <InnstillingerModal>
+        <InnstillingerModal
+            onRequestClose={() => {
+                const dialogTekst = intl.formatMessage({
+                    id: 'aktkivitet-skjema.lukk-advarsel',
+                });
+                // eslint-disable-next-line no-alert
+                if (!formIsDirty || confirm(dialogTekst)) {
+                    history.push('/');
+                    lukkModal();
+                }
+            }}
+        >
             <section className="innstillinger__prosess">
                 <div className="blokk-xxs">
                     <Systemtittel>
@@ -78,14 +94,19 @@ SettManuellOppfolging.propTypes = {
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
     history: AppPT.history.isRequired,
+    intl: intlShape.isRequired,
+    formIsDirty: PT.bool.isRequired,
+    lukkModal: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     veilederId: selectIdentitetId(state),
     innstillingerStatus: selectInnstillingerStatus(state),
+    formIsDirty: isDirty(SETT_MANUELL_FORM_NAME)(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
     handleSubmit: (form, veilederId) => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(settManuellOppfolging(form.begrunnelse, veilederId))
@@ -95,6 +116,6 @@ const mapDispatchToProps = (dispatch, props) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    SettManuellOppfolging
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(SettManuellOppfolging)
 );
