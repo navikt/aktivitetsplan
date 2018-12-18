@@ -22,9 +22,11 @@ const nightwatch_config = {
     custom_commands_path: 'test/integration/custom',
     custom_assertions_path: '',
     page_objects_path: ['test/integration/pages'],
-    globals_path: 'test/integration/globals.js',
+    globals_path: 'globals.js',
     selenium: {
         start_process: false,
+        port: 9515,
+        host: 'localhost',
     },
 
     test_settings: {
@@ -36,8 +38,6 @@ const nightwatch_config = {
                 FSSBaseUrl: 'http://localhost:3000',
                 SBSBaseUrl: 'http://localhost:3000',
             },
-            selenium_port: 9515,
-            selenium_host: 'localhost',
             default_path_prefix: '',
 
             javaScriptEnabled: true,
