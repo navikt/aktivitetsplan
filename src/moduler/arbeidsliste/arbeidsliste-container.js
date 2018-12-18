@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
+import { injectIntl, intlShape } from 'react-intl';
+import { isDirty } from 'redux-form';
 import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
@@ -18,6 +20,8 @@ import { slettArbeidsliste } from './arbeidsliste-reducer';
 import { LUKK_MODAL } from '../../felles-komponenter/modal/modal-reducer';
 import Modal from '../../felles-komponenter/modal/modal';
 import FnrProvider from './../../bootstrap/fnr-provider';
+import { leggTilArbeidslisteFormNavn } from './arbeidsliste-legg-til-form';
+import { redigerArbeidslisteFormNavn } from './arbeidsliste-rediger-form';
 
 function ArbeidslisteContainer({
     avhengigheter,
@@ -26,6 +30,8 @@ function ArbeidslisteContainer({
     onSlettArbeidsliste,
     history,
     lukkModal,
+    intl,
+    formIsDirty,
 }) {
     const onLukkModal = () => {
         history.push('/');
@@ -35,6 +41,16 @@ function ArbeidslisteContainer({
     return (
         <FnrProvider>
             <Modal
+                onRequestClose={() => {
+                    const dialogTekst = intl.formatMessage({
+                        id: 'aktkivitet-skjema.lukk-advarsel',
+                    });
+                    // eslint-disable-next-line no-alert
+                    if (!formIsDirty || confirm(dialogTekst)) {
+                        history.push('/');
+                        lukkModal();
+                    }
+                }}
                 contentLabel="arbeidsliste-modal"
                 contentClass="arbeidsliste"
             >
@@ -74,6 +90,8 @@ ArbeidslisteContainer.propTypes = {
     history: PT.object.isRequired,
     onSlettArbeidsliste: PT.func.isRequired,
     lukkModal: PT.func.isRequired,
+    intl: intlShape.isRequired,
+    formIsDirty: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -83,6 +101,9 @@ const mapStateToProps = (state, ownProps) => ({
     ],
     path: ownProps.match.path,
     navnPaMotpart: selectNavnPaMotpart(state),
+    formIsDirty:
+        isDirty(leggTilArbeidslisteFormNavn)(state) ||
+        isDirty(redigerArbeidslisteFormNavn)(state),
 });
 
 const mapDispatchToProps = dispatch =>
@@ -94,6 +115,6 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    ArbeidslisteContainer
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(ArbeidslisteContainer)
 );

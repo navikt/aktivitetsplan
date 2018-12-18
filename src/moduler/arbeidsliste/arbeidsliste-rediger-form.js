@@ -104,8 +104,9 @@ RedigerArbeidslisteForm.propTypes = {
     history: AppPT.history.isRequired,
 };
 
+export const redigerArbeidslisteFormNavn = 'arbeidsliste-rediger';
 const RedigerArbeidslisteFormValidation = validForm({
-    form: 'arbeidsliste-rediger',
+    form: redigerArbeidslisteFormNavn,
     errorSummaryTitle: (
         <FormattedMessage id="arbeidsliste.form.feiloppsummering.tittel" />
     ),
