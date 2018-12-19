@@ -30,8 +30,8 @@ import {
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
 
-export const dialogAktivitetFormNavn = 'dialog-aktivitet';
-export const nyHenvendelseAktivitetFormNavn = 'ny-henvendelse-aktivitet';
+export const DIALOG_AKTIVITET_FORM_NAME = 'dialog-aktivitet';
+export const NY_HENVENDELSE_AKTIVITET_FORM_NAME = 'ny-henvendelse-aktivitet';
 
 class UnderelementerForAktivitet extends Component {
     constructor() {
@@ -127,11 +127,11 @@ class UnderelementerForAktivitet extends Component {
                     <Feilmelding feilmeldinger={dialogFeilmeldinger} />
                     <EndreDialog
                         hidden={!kanEndreDialog}
-                        formNavn={`${dialogAktivitetFormNavn}-${aktivitetId}`}
+                        formNavn={`${DIALOG_AKTIVITET_FORM_NAME}-${aktivitetId}`}
                         dialog={dialog}
                     />
                     <NyHenvendelse
-                        formNavn={`${nyHenvendelseAktivitetFormNavn}-${aktivitetId}`}
+                        formNavn={`${NY_HENVENDELSE_AKTIVITET_FORM_NAME}-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
                         hidden={!kanOppretteNyHenvendelse}
                         aktivitetId={aktivitetId}

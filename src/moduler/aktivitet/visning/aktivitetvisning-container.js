@@ -39,12 +39,12 @@ import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-status-form';
 import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
-import { avtaltAktivitetFormNavn } from './avtalt-container/avtalt-form';
+import { AVTALT_AKTIVITET_FORM_NAME } from './avtalt-container/avtalt-form';
 import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
-import { oppdaterReferatFormNavn } from './status-oppdatering/oppdater-referat-form';
+import { OPPDATER_REFERAT_FORM_NAME } from './status-oppdatering/oppdater-referat-form';
 import {
-    nyHenvendelseAktivitetFormNavn,
-    dialogAktivitetFormNavn,
+    NY_HENVENDELSE_AKTIVITET_FORM_NAME,
+    DIALOG_AKTIVITET_FORM_NAME,
 } from './underelement-for-aktivitet/underelementer-for-aktivitet';
 
 function aktivitetvisningHeader(valgtAktivitet) {
@@ -190,13 +190,15 @@ const mapStateToProps = (state, props) => {
         laster,
         formIsDirty:
             isDirty(AKTIVITET_STATUS_FORM_NAME)(state) ||
-            isDirty(avtaltAktivitetFormNavn)(state) ||
+            isDirty(AVTALT_AKTIVITET_FORM_NAME)(state) ||
             isDirty(STILLING_ETIKETT_FORM_NAME)(state) ||
-            isDirty(oppdaterReferatFormNavn)(state) ||
-            isDirty(`${nyHenvendelseAktivitetFormNavn}-${props.aktivitetId}`)(
+            isDirty(OPPDATER_REFERAT_FORM_NAME)(state) ||
+            isDirty(
+                `${NY_HENVENDELSE_AKTIVITET_FORM_NAME}-${props.aktivitetId}`
+            )(state) ||
+            isDirty(`${DIALOG_AKTIVITET_FORM_NAME}-${props.aktivitetId}`)(
                 state
-            ) ||
-            isDirty(`${dialogAktivitetFormNavn}-${props.aktivitetId}`)(state),
+            ),
     };
 };
 
