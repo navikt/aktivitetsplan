@@ -82,8 +82,9 @@ LeggTilArbeidslisteForm.propTypes = {
     history: AppPT.history.isRequired,
 };
 
+export const leggTilArbeidslisteFormNavn = 'arbeidsliste-legg-til';
 const LeggTilArbeidslisteFormValidation = validForm({
-    form: 'arbeidsliste-legg-til',
+    form: leggTilArbeidslisteFormNavn,
     errorSummaryTitle: (
         <FormattedMessage id="arbeidsliste.form.feiloppsummering.tittel" />
     ),

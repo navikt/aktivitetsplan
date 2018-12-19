@@ -1,6 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { Systemtittel } from 'nav-frontend-typografi';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
@@ -15,12 +16,32 @@ import { startEskalering } from '../innstillinger-reducer';
 import { STATUS } from '../../../ducks/utils';
 import { selectInnstillingerStatus } from '../innstillinger-selector';
 import * as AppPT from '../../../proptypes';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 
 export const START_ESKALERING_FORM_NAME = 'start-eskalering-form';
 
-function StartEskalering({ handleSubmit, innstillingerStatus, history }) {
+function StartEskalering({
+    handleSubmit,
+    innstillingerStatus,
+    history,
+    intl,
+    formIsDirty,
+    lukkModal,
+}) {
     return (
-        <InnstillingerModal>
+        <InnstillingerModal
+            onRequestClose={() => {
+                const dialogTekst = intl.formatMessage({
+                    id: 'aktkivitet-skjema.lukk-advarsel',
+                });
+                // eslint-disable-next-line no-alert
+                if (!formIsDirty || confirm(dialogTekst)) {
+                    history.push('/');
+                    lukkModal();
+                }
+            }}
+            visConfirmDialog={formIsDirty}
+        >
             <Innholdslaster avhengigheter={[innstillingerStatus]}>
                 <div>
                     <section className="innstillinger__prosess">
@@ -76,13 +97,18 @@ StartEskalering.propTypes = {
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
     history: AppPT.history.isRequired,
+    intl: intlShape.isRequired,
+    formIsDirty: PT.bool.isRequired,
+    lukkModal: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     innstillingerStatus: selectInnstillingerStatus(state),
+    formIsDirty: isDirty(START_ESKALERING_FORM_NAME)(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
     handleSubmit: (form, overskrift) =>
         dispatch(
             startEskalering(
@@ -95,4 +121,6 @@ const mapDispatchToProps = (dispatch, props) => ({
         ),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StartEskalering);
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(StartEskalering)
+);

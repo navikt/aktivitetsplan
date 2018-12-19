@@ -18,6 +18,8 @@ function trim(str) {
     return str ? str.trim() : '';
 }
 
+export const formNavn = 'aktivitetsmal-form';
+
 class AktivitetsmalForm extends Component {
     constructor(props) {
         super(props);
@@ -72,7 +74,7 @@ AktivitetsmalForm.propTypes = {
 };
 
 const AktivitetsmalReduxForm = validForm({
-    form: 'aktivitetsmal-form',
+    form: formNavn,
     validate: {
         mal: [forLangMaltekst],
     },

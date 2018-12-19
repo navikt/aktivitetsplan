@@ -1,7 +1,8 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { isDirty } from 'redux-form';
 import { Systemtittel } from 'nav-frontend-typografi';
 import BegrunnelseForm from '../begrunnelse-form';
 import InnstillingerModal from '../innstillinger-modal';
@@ -16,16 +17,36 @@ import {
 } from '../../../felles-komponenter/remote-knapp/remote-knapp';
 import { hentOppfolging } from '../../oppfolging-status/oppfolging-reducer';
 import { stoppKvpOppfolging, lagreBegrunnelse } from '../innstillinger-reducer';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 
 const STOPP_KVP_FORM_NAVN = 'stopp-kvp-form';
 
-function StoppKvpPeriode({ handleSubmit, innstillingerStatus, history }) {
+function StoppKvpPeriode({
+    handleSubmit,
+    innstillingerStatus,
+    history,
+    intl,
+    formIsDirty,
+    lukkModal,
+}) {
     const oppfolgingStatus =
         innstillingerStatus === STATUS.PENDING ||
         innstillingerStatus === STATUS.RELOADING;
 
     return (
-        <InnstillingerModal>
+        <InnstillingerModal
+            onRequestClose={() => {
+                const dialogTekst = intl.formatMessage({
+                    id: 'aktkivitet-skjema.lukk-advarsel',
+                });
+                // eslint-disable-next-line no-alert
+                if (!formIsDirty || confirm(dialogTekst)) {
+                    history.push('/');
+                    lukkModal();
+                }
+            }}
+            visConfirmDialog={formIsDirty}
+        >
             <Innholdslaster avhengigheter={[innstillingerStatus]}>
                 <div>
                     <section className="innstillinger__prosess">
@@ -67,13 +88,18 @@ StoppKvpPeriode.propTypes = {
     handleSubmit: PT.func.isRequired,
     innstillingerStatus: AppPT.status.isRequired,
     history: AppPT.history.isRequired,
+    intl: intlShape.isRequired,
+    formIsDirty: PT.bool.isRequired,
+    lukkModal: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     innstillingerStatus: selectInnstillingerStatus(state),
+    formIsDirty: isDirty(STOPP_KVP_FORM_NAVN)(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
     handleSubmit: form => {
         dispatch(lagreBegrunnelse(form.begrunnelse));
         dispatch(stoppKvpOppfolging(form.begrunnelse))
@@ -85,4 +111,6 @@ const mapDispatchToProps = (dispatch, props) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StoppKvpPeriode);
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(StoppKvpPeriode)
+);
