@@ -170,6 +170,7 @@ const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
 
 const OppdaterReduxForm = validForm({
     form: AKTIVITET_STATUS_FORM_NAME,
+    enableReinitialize: true,
     errorSummaryTitle: (
         <FormattedMessage id="aktivitetstatus.form.feiloppsummering-tittel" />
     ),

@@ -80,6 +80,7 @@ function StillingEtikettForm(props) {
 
 const StillingEtikettReduxForm = reduxForm({
     form: STILLING_ETIKETT_FORM_NAME,
+    enableReinitialize: true,
 })(StillingEtikettForm);
 
 StillingEtikettForm.defaultProps = {
