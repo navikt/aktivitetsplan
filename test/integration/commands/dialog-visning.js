@@ -40,7 +40,7 @@ module.exports = {
 
     endreEtiketter(endreVenterPaNav, endreVenterPaBruker) {
         if (endreVenterPaNav) this.click(this.elements.cbVenterPaNAV.selector);
-        if (endreVenterPaBruker && endreVenterPaNav) this.api.pause(100);
+        if (endreVenterPaBruker && endreVenterPaNav) this.api.pause(500);
         if (endreVenterPaBruker)
             this.click(this.elements.cbVenterPaBruker.selector);
         return this;
