@@ -12,6 +12,9 @@ import {
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+// import TallAlert from '../../felles-komponenter/tall-alert';
+// import { NavigasjonsElement } from '../../hovedside/navigasjonslinje/navigasjonslinje';
+import NavigasjonslinjeKnapp from '../../hovedside/navigasjonslinje/navigasjonslinje-knapp';
 
 function Verktoylinje({
     viserHistoriskPeriode,
@@ -22,6 +25,31 @@ function Verktoylinje({
 }) {
     return (
         <div className="verktoylinje">
+            {/* <NavigasjonsElement
+                sti="/dialog"
+                tekstId="navigasjon.dialog"
+                disabled={
+                    disabled ||
+                    !kanHaDialog ||
+                    ikkeFinnesDialogerIHistoriskPeriode
+                }
+                aria-live="polite"
+            >
+                <TallAlert hidden={antallUlesteDialoger <= 0}>
+                    {antallUlesteDialoger}
+                </TallAlert>
+            </NavigasjonsElement> */}
+            {/* <NavigasjonsElement
+                sti="/informasjon"
+                tekstId={informasjonFeature ? 'navigasjon.informasjon' : 'navigasjon.informasjonsvideo'}
+                disabled={disabled}
+            /> */}
+            <NavigasjonslinjeKnapp
+                ariaLabel="utskrift.ikon.alt.tekst"
+                lenke="/utskrift"
+                className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
+            />
+
             <div className="verktoylinje__verktoy">
                 <Lenkeknapp
                     type="big-hoved"

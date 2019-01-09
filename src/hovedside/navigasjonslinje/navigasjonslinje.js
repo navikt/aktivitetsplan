@@ -9,7 +9,6 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import ConfigToggle, {
     harConfigToggle,
 } from '../../felles-komponenter/feature/config-toggle';
-import TallAlert from '../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../moduler/dialog/dialog-reducer';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../moduler/arbeidsliste/arbeidsliste-reducer';
@@ -90,46 +89,21 @@ class Navigasjonslinje extends Component {
 
     render() {
         const {
-            antallUlesteDialoger,
             avhengigheter,
             disabled,
-            kanHaDialog,
             ikkeTilgangTilVilkar,
-            ikkeFinnesDialogerIHistoriskPeriode,
             features,
         } = this.props;
 
         const informasjonFeature = harFeature(BRUKERVILKAR, features);
-        const informasjonsTekstId = informasjonFeature
-            ? 'navigasjon.informasjon'
-            : 'navigasjon.informasjonsvideo';
 
         return (
             <nav className="navigasjonslinje">
-                <NavigasjonsElement
-                    sti="/dialog"
-                    tekstId="navigasjon.dialog"
-                    disabled={
-                        disabled ||
-                        !kanHaDialog ||
-                        ikkeFinnesDialogerIHistoriskPeriode
-                    }
-                    aria-live="polite"
-                >
-                    <TallAlert hidden={antallUlesteDialoger <= 0}>
-                        {antallUlesteDialoger}
-                    </TallAlert>
-                </NavigasjonsElement>
                 <NavigasjonsElement
                     hidden={informasjonFeature}
                     sti="/vilkar"
                     tekstId="navigasjon.vilkar"
                     disabled={disabled || ikkeTilgangTilVilkar}
-                />
-                <NavigasjonsElement
-                    sti="/informasjon"
-                    tekstId={informasjonsTekstId}
-                    disabled={disabled}
                 />
                 <div className="navigasjonslinje__verktoy">
                     <ConfigToggle name={navigasjonslinjemenyFeature}>
@@ -142,13 +116,6 @@ class Navigasjonslinje extends Component {
                             <NavigasjonslinjeMeny />
                         </Innholdslaster>
                     </ConfigToggle>
-
-                    <NavigasjonslinjeKnapp
-                        ariaLabel="utskrift.ikon.alt.tekst"
-                        lenke="/utskrift"
-                        className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
-                    />
-
                     <ConfigToggle name={navigasjonslinjemenyFeature}>
                         <NavigasjonslinjeKnapp
                             ariaLabel="navigasjon.innstillinger"

@@ -19,6 +19,11 @@ function Hovedside() {
     return (
         <div className="hovedside" key={fnr}>
             <div className="hovedsideinnhold">
+                <div className="container">
+                    <div className="fullbredde">
+                        <Navigasjonslinje />
+                    </div>
+                </div>
                 <HovedsideFeilmelding />
                 <ArenaFeilmelding />
                 <OppfolgingStatus>
@@ -26,7 +31,6 @@ function Hovedside() {
                     <Varslinger />
                     <Container>
                         <MitMaal />
-                        <Navigasjonslinje />
                         <Verktoylinje />
                         <VisaValgtFilter />
                     </Container>
