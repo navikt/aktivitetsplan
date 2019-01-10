@@ -18,13 +18,30 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        align-items: center;
+
+        .navigasjonslinje__lenke {
+            margin-bottom: 0;
+        }
+
+        .navigasjonslinje-meny__knapp--print {
+            margin-right: 1rem;
+        }
+
+        .aktivitetskort__henvendelser {
+            position: initial;
+            padding: 0 0.5rem 0.5rem 0.5rem;
+        }
+
     }
 }
 
 @media (min-width: @screen-md-min) {
+
     .verktoylinje {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 1rem;
 
         &__verktoy {
             width: auto;
