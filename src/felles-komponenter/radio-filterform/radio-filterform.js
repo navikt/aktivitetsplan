@@ -40,8 +40,8 @@ class RadioFilterForm extends Component {
                                 name={radioName}
                                 label={createLabel(o)}
                                 value={createValue(o)}
-                                id={createValue(o)}
-                                key={createValue(o)}
+                                id={`${createValue(o)}-${radioName}`}
+                                key={`${createValue(o)}-${radioName}`}
                                 onChange={e =>
                                     this.changeSelected(e.target.value)}
                             />
