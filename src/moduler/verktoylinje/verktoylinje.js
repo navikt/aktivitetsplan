@@ -58,19 +58,19 @@ function Verktoylinje({
                     >
                         <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
                     </HiddenIfDiv>
+                    <Lenke
+                        href="/dialog"
+                        className="knappelenke"
+                        disabled={
+                            disabled ||
+                            !kanHaDialog ||
+                            ikkeFinnesDialogerIHistoriskPeriode
+                        }
+                        aria-live="polite"
+                    >
+                        <FormattedMessage id="navigasjon.dialog" />
+                    </Lenke>
                 </HiddenIfDiv>
-                <Lenke
-                    href="/dialog"
-                    className="knappelenke"
-                    disabled={
-                        disabled ||
-                        !kanHaDialog ||
-                        ikkeFinnesDialogerIHistoriskPeriode
-                    }
-                    aria-live="polite"
-                >
-                    <FormattedMessage id="navigasjon.dialog" />
-                </Lenke>
                 <Lenkeknapp
                     type="big-hoved"
                     href="/aktivitet/ny"
@@ -155,7 +155,7 @@ const mapStateToProps = state => {
             !underOppfolging &&
             selectViserInneverendePeriode(state),
         kanHaDialog: underOppfolging || historiskPeriode,
-        antallUlesteDialoger: dialoger,
+        antallUlesteDialoger: 4,
         ikkeFinnesDialogerIHistoriskPeriode:
             dialoger.length < 1 && !selectViserInneverendePeriode(state),
     };
