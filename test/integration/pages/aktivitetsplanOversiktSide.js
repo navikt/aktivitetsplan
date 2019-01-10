@@ -71,6 +71,6 @@ module.exports = {
         etikett: '//span[contains(@class, "etikett")]/span',
         antallSoknader: '//*[@data-testid="antall-stillinger"]',
         linkDialog:
-            '//a[contains(@class,"navigasjonslinje__lenke") and contains(@href, "/dialog")]',
+            '//a[contains(@class,"knappelenke") and contains(@href, "/dialog")]',
     },
 };
