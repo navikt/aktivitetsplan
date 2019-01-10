@@ -23,7 +23,6 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
-import { NavigasjonsElement } from '../../hovedside/navigasjonslinje/navigasjonslinje';
 import NavigasjonslinjeKnapp from '../../hovedside/navigasjonslinje/navigasjonslinje-knapp';
 import { selectDialoger } from '../../moduler/dialog/dialog-selector';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
@@ -32,6 +31,7 @@ import {
     harFeature,
 } from '../../felles-komponenter/feature/feature';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
+import Lenke from '../../felles-komponenter/utils/lenke';
 
 function Verktoylinje({
     viserHistoriskPeriode,
@@ -59,16 +59,18 @@ function Verktoylinje({
                         <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
                     </HiddenIfDiv>
                 </HiddenIfDiv>
-                <NavigasjonsElement
-                    sti="/dialog"
-                    tekstId="navigasjon.dialog"
+                <Lenke
+                    href="/dialog"
+                    className="knappelenke"
                     disabled={
                         disabled ||
                         !kanHaDialog ||
                         ikkeFinnesDialogerIHistoriskPeriode
                     }
                     aria-live="polite"
-                />
+                >
+                    <FormattedMessage id="navigasjon.dialog" />
+                </Lenke>
                 <Lenkeknapp
                     type="big-hoved"
                     href="/aktivitet/ny"
@@ -83,15 +85,24 @@ function Verktoylinje({
                 </Lenkeknapp>
             </div>
             <div className="verktoylinje__verktoy-container">
-                <NavigasjonsElement
+                <Lenke
                     sti="/informasjon"
+                    className="knappelenke"
                     tekstId={
                         harFeature(BRUKERVILKAR, features)
                             ? 'navigasjon.informasjon'
                             : 'navigasjon.informasjonsvideo'
                     }
                     disabled={disabled}
-                />
+                >
+                    <FormattedMessage
+                        id={
+                            harFeature(BRUKERVILKAR, features)
+                                ? 'navigasjon.informasjon'
+                                : 'navigasjon.informasjonsvideo'
+                        }
+                    />
+                </Lenke>
                 <NavigasjonslinjeKnapp
                     ariaLabel="utskrift.ikon.alt.tekst"
                     lenke="/utskrift"
@@ -144,7 +155,7 @@ const mapStateToProps = state => {
             !underOppfolging &&
             selectViserInneverendePeriode(state),
         kanHaDialog: underOppfolging || historiskPeriode,
-        antallUlesteDialoger: 3,
+        antallUlesteDialoger: dialoger,
         ikkeFinnesDialogerIHistoriskPeriode:
             dialoger.length < 1 && !selectViserInneverendePeriode(state),
     };
