@@ -68,7 +68,7 @@
     "inputmask-core": "2.2.0",
     "intl": "1.2.5",
     "invariant": "2.2.2",
-    "jsdom": "9.9.1",
+    "jsdom": "^13.1.0",
     "lodash.throttle": "4.1.1",
     "moment": "2.22.1",
     "moment-duration-format": "1.3.0",
