@@ -13,12 +13,16 @@ chai.use(chaiEnzyme());
 const Module = require('module').Module;
 
 var jsdom = require('jsdom');
-var document = jsdom.jsdom('<!doctype html><html><body></body></html>');
-var window = document.defaultView;
+const { JSDOM } = jsdom;
+var dom = new JSDOM('<!doctype html><html><body></body></html>', {
+    url: 'http://localhost',
+});
+
+var window = dom.window;
 window.call = function() {};
 window.URL = url.URL;
 
-global.document = document;
+global.document = dom.window.document;
 global.document.cookie = '';
 global.window = window;
 
