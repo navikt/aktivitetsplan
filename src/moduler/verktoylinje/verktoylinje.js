@@ -88,11 +88,6 @@ function Verktoylinje({
                 <Lenke
                     href="/informasjon"
                     className="knappelenke"
-                    tekstId={
-                        harFeature(BRUKERVILKAR, features)
-                            ? 'navigasjon.informasjon'
-                            : 'navigasjon.informasjonsvideo'
-                    }
                     disabled={disabled}
                 >
                     <FormattedMessage

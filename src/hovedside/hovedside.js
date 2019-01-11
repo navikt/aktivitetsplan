@@ -19,10 +19,10 @@ function Hovedside() {
     return (
         <div className="hovedside" key={fnr}>
             <div className="hovedsideinnhold">
-                <Navigasjonslinje />
                 <HovedsideFeilmelding />
                 <ArenaFeilmelding />
                 <OppfolgingStatus>
+                    <Navigasjonslinje />
                     <PrivateFeilmelding />
                     <Varslinger />
                     <Container>

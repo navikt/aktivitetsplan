@@ -99,35 +99,33 @@ class Navigasjonslinje extends Component {
 
         return (
             <div className="container">
-                <div className="fullbredde">
-                    <nav className="navigasjonslinje">
-                        <NavigasjonsElement
-                            hidden={informasjonFeature}
-                            sti="/vilkar"
-                            tekstId="navigasjon.vilkar"
-                            disabled={disabled || ikkeTilgangTilVilkar}
-                        />
-                        <div className="navigasjonslinje__verktoy">
-                            <ConfigToggle name={navigasjonslinjemenyFeature}>
-                                <Innholdslaster
-                                    avhengigheter={avhengigheter}
-                                    spinnerStorrelse="XS"
-                                    className="navigasjonslinje__spinner"
-                                    alleOK
-                                >
-                                    <NavigasjonslinjeMeny />
-                                </Innholdslaster>
-                            </ConfigToggle>
-                            <ConfigToggle name={navigasjonslinjemenyFeature}>
-                                <NavigasjonslinjeKnapp
-                                    ariaLabel="navigasjon.innstillinger"
-                                    lenke="/innstillinger"
-                                    className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
-                                />
-                            </ConfigToggle>
-                        </div>
-                    </nav>
-                </div>
+                <nav className="navigasjonslinje">
+                    <NavigasjonsElement
+                        hidden={informasjonFeature}
+                        sti="/vilkar"
+                        tekstId="navigasjon.vilkar"
+                        disabled={disabled || ikkeTilgangTilVilkar}
+                    />
+                    <div className="navigasjonslinje__verktoy">
+                        <ConfigToggle name={navigasjonslinjemenyFeature}>
+                            <Innholdslaster
+                                avhengigheter={avhengigheter}
+                                spinnerStorrelse="XS"
+                                className="navigasjonslinje__spinner"
+                                alleOK
+                            >
+                                <NavigasjonslinjeMeny />
+                            </Innholdslaster>
+                        </ConfigToggle>
+                        <ConfigToggle name={navigasjonslinjemenyFeature}>
+                            <NavigasjonslinjeKnapp
+                                ariaLabel="navigasjon.innstillinger"
+                                lenke="/innstillinger"
+                                className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
+                            />
+                        </ConfigToggle>
+                    </div>
+                </nav>
             </div>
         );
     }
