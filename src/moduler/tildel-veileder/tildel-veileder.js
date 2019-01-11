@@ -74,7 +74,7 @@ class TildelVeileder extends Component {
                                     onSubmit={this.setValgtVeileder}
                                     createLabel={settSammenNavn}
                                     createValue={veileder => veileder.ident}
-                                    radioName="velg-veileder"
+                                    radioName="tildel-veileder"
                                     fjernNullstill
                                     visLukkKnapp
                                     {...radioFilterProps}

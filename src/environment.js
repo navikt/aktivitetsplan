@@ -1,5 +1,7 @@
 import '@webcomponents/url';
 
+const URL = URL || window.URL; // eslint-disable-line
+
 function getEnviromentVariable(
     variableName,
     ignoreIfMissing = false,
