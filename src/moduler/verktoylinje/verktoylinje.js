@@ -10,8 +10,8 @@ import {
     selectErPrivatModus,
 } from '../privat-modus/privat-modus-selector';
 import {
-    selectViserInneverendePeriode,
     selectViserHistoriskPeriode,
+    selectViserInneverendePeriode,
 } from '../filtrering/filter/filter-selector';
 import {
     selectErBruker,
@@ -20,6 +20,7 @@ import {
 import {
     selectErUnderOppfolging,
     selectHarSkriveTilgang,
+    selectVilkarMaBesvares,
 } from '../oppfolging-status/oppfolging-selector';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
@@ -44,6 +45,7 @@ function Verktoylinje({
     antallUlesteDialoger,
     kanHaDialog,
     ikkeFinnesDialogerIHistoriskPeriode,
+    ikkeTilgangTilVilkar,
 }) {
     return (
         <div className="verktoylinje">
@@ -85,6 +87,14 @@ function Verktoylinje({
                 </Lenkeknapp>
             </div>
             <div className="verktoylinje__verktoy-container">
+                <Lenke
+                    href="/vilkar"
+                    hidden={harFeature(BRUKERVILKAR, features)}
+                    className="knappelenke"
+                    disabled={disabled || ikkeTilgangTilVilkar}
+                >
+                    <FormattedMessage id="navigasjon.vilkar" />
+                </Lenke>
                 <Lenke
                     href="/informasjon"
                     className="knappelenke"
@@ -129,6 +139,7 @@ Verktoylinje.propTypes = {
     antallUlesteDialoger: PT.number.isRequired,
     kanHaDialog: PT.bool.isRequired,
     ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
+    ikkeTilgangTilVilkar: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -137,6 +148,11 @@ const mapStateToProps = state => {
         .filter(d => dialogFilter(d, state)).length;
     const underOppfolging = selectErUnderOppfolging(state);
     const historiskPeriode = selectViserHistoriskPeriode(state);
+    const erIkkeBruker = !selectErBruker(state);
+    const ikkeTilgangTilVilkar =
+        erIkkeBruker &&
+        selectVilkarMaBesvares(state) &&
+        selectViserInneverendePeriode(state);
 
     return {
         viserHistoriskPeriode: historiskPeriode,
@@ -146,13 +162,14 @@ const mapStateToProps = state => {
         harSkriveTilgang: selectHarSkriveTilgang(state),
         features: selectFeatureData(state),
         disabled:
-            !selectErBruker(state) &&
+            erIkkeBruker &&
             !underOppfolging &&
             selectViserInneverendePeriode(state),
         kanHaDialog: underOppfolging || historiskPeriode,
         antallUlesteDialoger: 4,
         ikkeFinnesDialogerIHistoriskPeriode:
             dialoger.length < 1 && !selectViserInneverendePeriode(state),
+        ikkeTilgangTilVilkar,
     };
 };
 
