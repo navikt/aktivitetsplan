@@ -86,7 +86,7 @@ function Verktoylinje({
             </div>
             <div className="verktoylinje__verktoy-container">
                 <Lenke
-                    sti="/informasjon"
+                    href="/informasjon"
                     className="knappelenke"
                     tekstId={
                         harFeature(BRUKERVILKAR, features)

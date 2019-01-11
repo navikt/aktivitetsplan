@@ -1,1 +1,1 @@
-DIALOG
+Dialog
