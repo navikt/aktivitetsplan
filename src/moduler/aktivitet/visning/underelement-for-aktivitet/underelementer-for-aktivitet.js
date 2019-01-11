@@ -40,6 +40,10 @@ class UnderelementerForAktivitet extends Component {
         this.me = null;
     }
 
+    componentWillMount() {
+        if (this.props.dialog) this.props.doToggleDialog();
+    }
+
     componentDidUpdate() {
         this.scrollMeIntoView();
     }
