@@ -22,11 +22,11 @@ function Hovedside() {
                 <HovedsideFeilmelding />
                 <ArenaFeilmelding />
                 <OppfolgingStatus>
+                    <Navigasjonslinje />
                     <PrivateFeilmelding />
                     <Varslinger />
                     <Container>
                         <MitMaal />
-                        <Navigasjonslinje />
                         <Verktoylinje />
                         <VisaValgtFilter />
                     </Container>
