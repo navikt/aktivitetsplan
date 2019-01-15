@@ -9,7 +9,6 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import ConfigToggle, {
     harConfigToggle,
 } from '../../felles-komponenter/feature/config-toggle';
-import TallAlert from '../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../moduler/dialog/dialog-reducer';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../moduler/arbeidsliste/arbeidsliste-reducer';
@@ -31,10 +30,6 @@ import {
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialoger } from '../../moduler/dialog/dialog-selector';
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
-import {
-    BRUKERVILKAR,
-    harFeature,
-} from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 import { selectTildelVeilederStatus } from '../../moduler/tildel-veileder/tildel-veileder-selector';
 
@@ -89,75 +84,30 @@ class Navigasjonslinje extends Component {
     }
 
     render() {
-        const {
-            antallUlesteDialoger,
-            avhengigheter,
-            disabled,
-            kanHaDialog,
-            ikkeTilgangTilVilkar,
-            ikkeFinnesDialogerIHistoriskPeriode,
-            features,
-        } = this.props;
-
-        const informasjonFeature = harFeature(BRUKERVILKAR, features);
-        const informasjonsTekstId = informasjonFeature
-            ? 'navigasjon.informasjon'
-            : 'navigasjon.informasjonsvideo';
+        const { avhengigheter } = this.props;
 
         return (
-            <nav className="navigasjonslinje">
-                <NavigasjonsElement
-                    sti="/dialog"
-                    tekstId="navigasjon.dialog"
-                    disabled={
-                        disabled ||
-                        !kanHaDialog ||
-                        ikkeFinnesDialogerIHistoriskPeriode
-                    }
-                    aria-live="polite"
-                >
-                    <TallAlert hidden={antallUlesteDialoger <= 0}>
-                        {antallUlesteDialoger}
-                    </TallAlert>
-                </NavigasjonsElement>
-                <NavigasjonsElement
-                    hidden={informasjonFeature}
-                    sti="/vilkar"
-                    tekstId="navigasjon.vilkar"
-                    disabled={disabled || ikkeTilgangTilVilkar}
-                />
-                <NavigasjonsElement
-                    sti="/informasjon"
-                    tekstId={informasjonsTekstId}
-                    disabled={disabled}
-                />
-                <div className="navigasjonslinje__verktoy">
-                    <ConfigToggle name={navigasjonslinjemenyFeature}>
-                        <Innholdslaster
-                            avhengigheter={avhengigheter}
-                            spinnerStorrelse="XS"
-                            className="navigasjonslinje__spinner"
-                            alleOK
-                        >
-                            <NavigasjonslinjeMeny />
-                        </Innholdslaster>
-                    </ConfigToggle>
-
-                    <NavigasjonslinjeKnapp
-                        ariaLabel="utskrift.ikon.alt.tekst"
-                        lenke="/utskrift"
-                        className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
-                    />
-
-                    <ConfigToggle name={navigasjonslinjemenyFeature}>
-                        <NavigasjonslinjeKnapp
-                            ariaLabel="navigasjon.innstillinger"
-                            lenke="/innstillinger"
-                            className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
-                        />
-                    </ConfigToggle>
+            <ConfigToggle name={navigasjonslinjemenyFeature}>
+                <div className="container">
+                    <nav className="navigasjonslinje">
+                        <div className="navigasjonslinje__verktoy">
+                            <Innholdslaster
+                                avhengigheter={avhengigheter}
+                                spinnerStorrelse="XS"
+                                className="navigasjonslinje__spinner"
+                                alleOK
+                            >
+                                <NavigasjonslinjeMeny />
+                            </Innholdslaster>
+                            <NavigasjonslinjeKnapp
+                                ariaLabel="navigasjon.innstillinger"
+                                lenke="/innstillinger"
+                                className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
+                            />
+                        </div>
+                    </nav>
                 </div>
-            </nav>
+            </ConfigToggle>
         );
     }
 }
@@ -168,10 +118,7 @@ Navigasjonslinje.propTypes = {
     doHentArbeidsliste: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     kanHaDialog: PT.bool.isRequired,
-    disabled: PT.bool.isRequired,
-    ikkeTilgangTilVilkar: PT.bool.isRequired,
     ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
-    features: PT.object.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {

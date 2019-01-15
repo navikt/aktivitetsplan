@@ -49,14 +49,15 @@ export function setBrowserCookies(browser, testbrukere) {
     const brukerCookies = testbrukere.SBS.cookies;
 
     return new Promise((resolve, reject) => {
-        if (brukerCookies.length !== 1)
-            reject('Forventet en cookie for bruker');
+        if (brukerCookies.length !== 2)
+            reject('Forventet to cookies for bruker');
         if (veilederCookies.length !== 2)
             reject('Forventet to cookies for veileder');
 
         browser
             .url(browser.globals.SBSUrl)
             .setCookie(brukerCookies[0])
+            .setCookie(brukerCookies[1])
             .url(browser.globals.FSSUrl)
             .setCookie(veilederCookies[0])
             .setCookie(veilederCookies[1], () => {

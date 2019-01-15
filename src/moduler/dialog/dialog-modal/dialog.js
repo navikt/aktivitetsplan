@@ -10,6 +10,9 @@ import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 import DialogLenkeTilAktivitet from './dialog-lenke-til-aktivitet';
 
+export const endreDialogFormNavn = 'endre-dialog';
+export const nyHenvendelseDialogFormNavn = 'ny-henvendelse-dialog';
+
 function Dialog({ dialog, aktivitet, className, privateModus }) {
     const dialogId = dialog.id;
     const historisk = dialog.historisk;
@@ -22,12 +25,12 @@ function Dialog({ dialog, aktivitet, className, privateModus }) {
             </Undertittel>
             <EndreDialog
                 hidden={historisk || privateModus}
-                formNavn={`endre-dialog-${dialogId}`}
+                formNavn={`${endreDialogFormNavn}-${dialogId}`}
                 dialog={dialog}
             />
             <NyHenvendelse
                 hidden={historisk || privateModus}
-                formNavn={`ny-henvendelse-dialog-${dialogId}`}
+                formNavn={`${nyHenvendelseDialogFormNavn}-${dialogId}`}
                 dialogId={dialogId}
                 skalHaAutofokus={false}
             />

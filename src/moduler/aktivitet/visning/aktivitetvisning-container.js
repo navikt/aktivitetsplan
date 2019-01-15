@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+import { isDirty } from 'redux-form';
 import { connect } from 'react-redux';
+import { injectIntl, intlShape } from 'react-intl';
 import PT from 'prop-types';
 import { TILLAT_SLETTING } from '~config'; // eslint-disable-line
 import { moment } from '../../../utils';
@@ -35,6 +37,15 @@ import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reduc
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
+import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-status-form';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
+import { AVTALT_AKTIVITET_FORM_NAME } from './avtalt-container/avtalt-form';
+import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
+import { OPPDATER_REFERAT_FORM_NAME } from './status-oppdatering/oppdater-referat-form';
+import {
+    NY_HENVENDELSE_AKTIVITET_FORM_NAME,
+    DIALOG_AKTIVITET_FORM_NAME,
+} from './underelement-for-aktivitet/underelementer-for-aktivitet';
 
 function aktivitetvisningHeader(valgtAktivitet) {
     if (!valgtAktivitet) {
@@ -84,13 +95,31 @@ class AktivitetvisningContainer extends Component {
     }
 
     render() {
-        const { avhengigheter, valgtAktivitet, ...props } = this.props;
+        const {
+            avhengigheter,
+            valgtAktivitet,
+            history,
+            intl,
+            formIsDirty,
+            lukkModal,
+            ...props
+        } = this.props;
         return (
             <Modal
                 contentLabel="aktivitetsvisning-modal"
                 contentClass="aktivitetsvisning"
                 avhengigheter={avhengigheter}
                 header={aktivitetvisningHeader(valgtAktivitet)}
+                onRequestClose={() => {
+                    const dialogTekst = intl.formatMessage({
+                        id: 'aktkivitet-skjema.lukk-advarsel',
+                    });
+                    // eslint-disable-next-line no-alert
+                    if (!formIsDirty || confirm(dialogTekst)) {
+                        history.push('/');
+                        lukkModal();
+                    }
+                }}
             >
                 <Aktivitetvisning aktivitet={valgtAktivitet} {...props} />
             </Modal>
@@ -109,6 +138,10 @@ AktivitetvisningContainer.propTypes = {
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
     doLukkDialogEllerHistorikk: PT.func.isRequired,
     privateMode: PT.bool.isRequired,
+    history: AppPT.history.isRequired,
+    intl: intlShape.isRequired,
+    formIsDirty: PT.bool.isRequired,
+    lukkModal: PT.func.isRequired,
 };
 
 AktivitetvisningContainer.defaultProps = {
@@ -155,6 +188,17 @@ const mapStateToProps = (state, props) => {
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
         tillatSletting,
         laster,
+        formIsDirty:
+            isDirty(AKTIVITET_STATUS_FORM_NAME)(state) ||
+            isDirty(AVTALT_AKTIVITET_FORM_NAME)(state) ||
+            isDirty(STILLING_ETIKETT_FORM_NAME)(state) ||
+            isDirty(OPPDATER_REFERAT_FORM_NAME)(state) ||
+            isDirty(
+                `${NY_HENVENDELSE_AKTIVITET_FORM_NAME}-${props.aktivitetId}`
+            )(state) ||
+            isDirty(`${DIALOG_AKTIVITET_FORM_NAME}-${props.aktivitetId}`)(
+                state
+            ),
     };
 };
 
@@ -166,10 +210,11 @@ const mapDispatchToProps = dispatch =>
             doSettForrigeAktiveAktivitetId: settForrigeAktiveAktivitetId,
             doFjernForrigeAktiveAktivitetId: fjernForrigeAktiveAktivitetId,
             doLukkDialogEllerHistorikk: lukkAlle,
+            lukkModal: () => dispatch({ type: LUKK_MODAL }),
         },
         dispatch
     );
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    AktivitetvisningContainer
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(AktivitetvisningContainer)
 );

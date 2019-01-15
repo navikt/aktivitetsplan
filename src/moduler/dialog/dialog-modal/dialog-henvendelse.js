@@ -12,6 +12,7 @@ import {
 import * as AppPT from '../../../proptypes';
 import { hoyreKolonneSectionId } from '../../../ducks/utils';
 
+export const nyDialogFormNavn = 'ny-dialog';
 function DialogHenvendelse({
     valgtDialog,
     harValgtDialog,
@@ -30,7 +31,7 @@ function DialogHenvendelse({
                     <FormattedMessage id="dialog.ny-dialog" />
                 </Undertittel>
                 <NyHenvendelse
-                    formNavn="ny-dialog"
+                    formNavn={nyDialogFormNavn}
                     onComplete={dialog => history.push(`/dialog/${dialog.id}`)}
                 />
             </HiddenIfDiv>

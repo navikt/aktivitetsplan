@@ -38,7 +38,7 @@ module.exports = {
                 .then(() => done());
         } else if (this.setCookies) {
             browser.globals.testbrukere = this.testbrukere;
-            setBrowserCookies(browser, this.testbrukere);
+            setBrowserCookies(browser, this.testbrukere).then(() => done());
         } else done();
     },
 

@@ -22,6 +22,7 @@ function AktivitetRoutes({ match }) {
                 component={props =>
                     <AktivitetvisningContainer
                         aktivitetId={props.match.params.id}
+                        {...props}
                     />}
             />
             <Route

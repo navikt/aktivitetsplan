@@ -7,15 +7,6 @@ import {
     STATUS_FULLFOERT,
 } from '../../constant';
 
-export function aktivitetEquals(a, b) {
-    return (
-        a.status === b.status &&
-        a.type === b.type &&
-        a.etikett === b.etikett &&
-        a.avtalt === b.avtalt
-    );
-}
-
 export function compareAktivitet(a, b) {
     if (b.avtalt && !a.avtalt) {
         return 1;
@@ -29,6 +20,21 @@ export function compareAktivitet(a, b) {
         return 1;
     }
     return b.opprettetDato.localeCompare(a.opprettetDato);
+}
+
+export function erNyEndringIAktivitet(aktivitet, sisteInnlogging) {
+    const endretDatoAktivietetMoment = moment(
+        aktivitet.endretDato || aktivitet.opprettetDato
+    );
+    if (endretDatoAktivietetMoment && moment(sisteInnlogging.lestTidspunkt)) {
+        // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfør må
+        // vi haen sjekk att opprettet dato ikke ligger fram i tiden
+        return (
+            endretDatoAktivietetMoment.isAfter(sisteInnlogging.lestTidspunkt) &&
+            endretDatoAktivietetMoment.isBefore(moment())
+        );
+    }
+    return false;
 }
 
 export function beregnKlokkeslettVarighet(aktivitet) {
@@ -128,8 +134,8 @@ export function sorterAktiviteter(aktiviteter, status) {
         .sort(compareAktivitet);
 }
 
-function manglerTilDatoEllerTilDatoerMindreEnnToManederSiden(aktivitet) {
-    return !aktivitet.tilDato || !erMerEnnToManederSiden(aktivitet);
+function tilDatoEllerFraDatoerMindreEnnToManederSiden(aktivitet) {
+    return !erMerEnnToManederSiden(aktivitet);
 }
 
 export function splitIEldreOgNyereAktiviteter(aktiviteter) {
@@ -141,9 +147,7 @@ export function splitIEldreOgNyereAktiviteter(aktiviteter) {
             ],
             aktivitet
         ) => {
-            if (
-                manglerTilDatoEllerTilDatoerMindreEnnToManederSiden(aktivitet)
-            ) {
+            if (tilDatoEllerFraDatoerMindreEnnToManederSiden(aktivitet)) {
                 return [
                     [
                         ...listeMedAktiviteterTilDatoMindreEnnToManader,

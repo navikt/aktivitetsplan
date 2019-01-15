@@ -1,6 +1,8 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
+import { injectIntl, intlShape } from 'react-intl';
+import { isDirty } from 'redux-form';
 import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
 import * as AppPT from '../../../proptypes';
@@ -18,9 +20,11 @@ import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-sele
 import Feilmelding from '../../feilmelding/feilmelding';
 import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
-import DialogHenvendelse from './dialog-henvendelse';
+import DialogHenvendelse, { nyDialogFormNavn } from './dialog-henvendelse';
 import FnrProvider from './../../../bootstrap/fnr-provider';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
+import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
+import { endreDialogFormNavn, nyHenvendelseDialogFormNavn } from './dialog';
 
 function DialogModal({
     harNyDialogEllerValgtDialog,
@@ -35,6 +39,9 @@ function DialogModal({
     history,
     privateModus,
     dialogFeilmeldinger,
+    intl,
+    formIsDirty,
+    lukkModal,
 }) {
     const className = classNames('dialog-modal', 'aktivitet-modal', {
         'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -49,8 +56,16 @@ function DialogModal({
             contentLabel="dialog-modal"
             overlayClassName="aktivitet-modal__overlay"
             portalClassName="aktivitetsplanfs aktivitet-modal-portal"
-            shouldCloseOnOverlayClick={false}
-            onRequestClose={() => history.push('/')}
+            onRequestClose={() => {
+                const dialogTekst = intl.formatMessage({
+                    id: 'aktkivitet-skjema.lukk-advarsel',
+                });
+                // eslint-disable-next-line no-alert
+                if (!formIsDirty || confirm(dialogTekst)) {
+                    history.push('/');
+                    lukkModal();
+                }
+            }}
         >
             <DialogHeader
                 harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
@@ -110,6 +125,9 @@ DialogModal.propTypes = {
     history: AppPT.history.isRequired,
     dialogFeilmeldinger: PT.array,
     privateModus: PT.bool.isRequired,
+    lukkModal: PT.func.isRequired,
+    intl: intlShape.isRequired,
+    formIsDirty: PT.bool.isRequired,
 };
 const mapStateToProps = (state, props) => {
     const { match } = props;
@@ -133,7 +151,17 @@ const mapStateToProps = (state, props) => {
             selectTilpasseDialogModalHistoriskVisning(state),
         privateModus: erPrivateBrukerSomSkalSkrusAv(state),
         dialogFeilmeldinger: selectDialogFeilmeldinger(state),
+        formIsDirty:
+            isDirty(nyDialogFormNavn)(state) ||
+            isDirty(`${endreDialogFormNavn}-${id}`)(state) ||
+            isDirty(`${nyHenvendelseDialogFormNavn}-${id}`)(state),
     };
 };
 
-export default connect(mapStateToProps)(DialogModal);
+const mapDispatchToProps = dispatch => ({
+    lukkModal: () => dispatch({ type: LUKK_MODAL }),
+});
+
+export default injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(DialogModal)
+);

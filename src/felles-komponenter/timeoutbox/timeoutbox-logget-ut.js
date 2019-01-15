@@ -23,7 +23,7 @@ function TimeoutboxLoggetUt() {
                     className="modal-footer__knapp"
                     onClick={() => window.location.reload()}
                 >
-                    <FormattedMessage id="timeoutbox.knapp.fortsett" />
+                    <FormattedMessage id="timeoutbox.knapp.last_pa_nytt" />
                 </Hovedknapp>
             </ModalFooter>
         </div>

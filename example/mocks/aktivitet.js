@@ -12,7 +12,7 @@ const aktiviteter = [
         fraDato: '2018-01-24T12:00:00+01:00',
         tilDato: '2030-01-24T12:00:00+01:00',
         opprettetDato: '2018-01-31T10:46:51.622+01:00',
-        endretDato: '2018-01-31T10:46:53.883+01:00',
+        endretDato: '2018-09-30T10:46:51.622+01:00',
         endretAv: 'Z123456',
         historisk: false,
         avtalt: true,
