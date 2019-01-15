@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import Icon from 'nav-frontend-ikoner-assets';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
-import { Undertittel } from 'nav-frontend-typografi';
-import { Radio } from 'nav-frontend-skjema';
-import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
-import { Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import {
@@ -25,11 +19,6 @@ import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import { STATUS } from '../../../../ducks/utils';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { erMerEnnSyvDagerTil } from '../../../../utils';
-import {
-    FORHANDSORIENTERING,
-    harFeature,
-} from '../../../../felles-komponenter/feature/feature';
-import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import {
     selectErBrukerManuell,
@@ -56,7 +45,6 @@ class AvtaltContainer extends Component {
             doSetAktivitetTilAvtalt,
             doSendForhandsorientering,
             className,
-            features,
             erManuellKrrKvpBruker,
             doApneDialog,
         } = this.props;
@@ -78,47 +66,12 @@ class AvtaltContainer extends Component {
             return null;
         }
 
-        const visAvtaltMedNavMindreEnnSyvDager =
-            harFeature(FORHANDSORIENTERING, features) &&
-            !avtalt &&
-            !merEnnsyvDagerTil;
+        const visAvtaltMedNavMindreEnnSyvDager = !avtalt && !merEnnsyvDagerTil;
 
         // Kun vis bekreftet hvis nettopp satt til avtalt.
         if (this.state.visBekreftAvtalt === false && avtalt) {
             return null;
         }
-
-        // Denne kan fjernes når feature-toggle 'FORHANDSORIENTERING' er gjort permanent.
-        const avtaltInnhold = (
-            <div className={`${className} avtalt-container`}>
-                <Undertittel>
-                    <FormattedMessage id="sett-avtalt.header" />
-                </Undertittel>
-                <div className="avtalt-container__radio">
-                    <Radio
-                        onClick={() =>
-                            this.setState({ visBekreftAvtalt: true })}
-                        label={<FormattedMessage id="sett-avtalt.label" />}
-                        name="avtalt"
-                        disabled={lasterData}
-                    />
-                    <HjelpetekstOver>
-                        <FormattedMessage id="sett-avtalt.hjelpetekst" />
-                    </HjelpetekstOver>
-                </div>
-                {this.state.visBekreftAvtalt &&
-                    <Knapp
-                        spinner={oppdaterer}
-                        onClick={() => doSetAktivitetTilAvtalt(aktivitet)}
-                        disabled={lasterData}
-                    >
-                        <FormattedMessage
-                            id="sett-til-avtalt.bekreft-knapp"
-                            values={{ ikkeSend: true }}
-                        />
-                    </Knapp>}
-            </div>
-        );
 
         const avtaltTextMap = {
             [SEND_FORHANDSORIENTERING]: avtaltForm => avtaltForm.avtaltText,
@@ -165,10 +118,6 @@ class AvtaltContainer extends Component {
             />
         );
 
-        const setAvtaltInnhold = harFeature(FORHANDSORIENTERING, features)
-            ? avtaltInnholdForhandsvarsel
-            : avtaltInnhold;
-
         const settAvtaltTekstVerdi =
             (!merEnnsyvDagerTil && 'avtaltMedNavMindreEnnSyvDager') ||
             (erManuellKrrKvpBruker && 'erManuellKrrKvpBruker') ||
@@ -177,32 +126,23 @@ class AvtaltContainer extends Component {
                 'forhandsorienteringIkkeSent');
         const forhandsorienteringType = this.state.forhandsorienteringType;
 
-        const cls = classes =>
-            classNames('avtalt-container__vis-avtalt', classes);
-        const visAvtalt =
-            (harFeature(FORHANDSORIENTERING, features) &&
-                <div className={className}>
-                    <AlertStripeSuksess>
-                        <FormattedMessage
-                            id="sett-avtalt-bekreftelse"
-                            values={{
-                                settAvtaltTekstVerdi,
-                                forhandsorienteringType,
-                            }}
-                        />
-                    </AlertStripeSuksess>
-                </div>) ||
-            // Denne kan fjernes når feature-toggle 'FORHANDSORIENTERING' er gjort permanent.
-            <div className={cls(className)}>
-                <Icon kind="ok-sirkel-fylt" height="21px" />
-                <Undertittel>
-                    <FormattedMessage id="satt-til-avtalt.tekst" />
-                </Undertittel>
-            </div>;
+        const visAvtalt = (
+            <div className={className}>
+                <AlertStripeSuksess>
+                    <FormattedMessage
+                        id="sett-avtalt-bekreftelse"
+                        values={{
+                            settAvtaltTekstVerdi,
+                            forhandsorienteringType,
+                        }}
+                    />
+                </AlertStripeSuksess>
+            </div>
+        );
 
         return (
             <div>
-                {aktivitet.avtalt ? visAvtalt : setAvtaltInnhold}
+                {aktivitet.avtalt ? visAvtalt : avtaltInnholdForhandsvarsel}
                 <hr className="aktivitetvisning__delelinje" />
             </div>
         );
@@ -215,7 +155,6 @@ AvtaltContainer.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     aktivitetStatus: AppPT.status,
     className: PT.string,
-    features: PT.object.isRequired,
     erManuellKrrKvpBruker: PT.bool.isRequired,
     doApneDialog: PT.func.isRequired,
 };
@@ -227,7 +166,6 @@ AvtaltContainer.defaultProps = {
 
 const mapStateToProps = state => ({
     aktivitetStatus: selectAktivitetStatus(state),
-    features: selectFeatureData(state),
     erManuellKrrKvpBruker:
         selectErBrukerManuell(state) ||
         selectErUnderKvp(state) ||
