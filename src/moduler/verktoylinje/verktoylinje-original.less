@@ -1,0 +1,39 @@
+.verktoylinje-original {
+    &__verktoy {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 1rem;
+
+        .dropdown {
+            margin-bottom: 0;
+        }
+    }
+
+    .dropdown .dropdown__btn {
+        padding: 0.7rem 5.6rem 0.7rem 2rem;
+    }
+
+    &__verktoy-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .verktoylinje-original {
+        display: flex;
+        justify-content: space-between;
+
+        &__verktoy {
+            width: auto;
+            margin-right: 1rem;
+
+            &:last-child {
+                margin-bottom: 0;
+                margin-right: 0;
+            }
+        }
+    }
+}

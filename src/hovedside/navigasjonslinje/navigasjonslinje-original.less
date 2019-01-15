@@ -1,0 +1,168 @@
+@import '../../variables';
+
+@meny-knapp-storrelse: 1.25rem;
+
+.navigasjonslinje-original {
+    .blokk-s();
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    background: @hvit;
+    border-radius: @border-radius-small;
+    border: 1px solid @navGra40;
+    padding: 0.5rem 1rem 0;
+}
+
+.navigasjonslinje__element {
+    color: @navMorkGra;
+
+    &:hover {
+        color: @bla;
+    }
+}
+
+.navigasjonslinje__lenke {
+    text-decoration: none;
+    border-bottom: solid 1px transparent;
+    margin: 0 1rem 0.5rem 0;
+
+    &:hover {
+        color: @bla;
+        border-bottom-color: @navGra40;
+    }
+}
+
+.navigasjonslinje__lenke--disabled {
+    color: @navGra40;
+    margin: 0 1rem 0.5rem 0;
+    border-bottom: solid 1px transparent;
+    cursor: default;
+}
+
+.navigasjonslinje__element-content {
+    margin-left: 0.25rem;
+
+    &:empty {
+        display: none;
+    }
+}
+
+.navigasjonslinje__verktoy {
+    height: 100%;
+    display: flex;
+    margin: 0 0 0 auto;
+}
+
+.spinner.navigasjonslinje__spinner {
+    margin: 0 1rem 0 auto;
+}
+
+.navigasjonslinje-meny {
+    position: relative;
+    display: flex;
+}
+
+.navigasjonslinje-meny .knappelenke span {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+        border-bottom: 1px solid @navGra40;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px @orange-focus;
+    }
+}
+
+.navigasjonslinje-meny__arbeidsliste-flagg {
+    margin-right: 0.5rem;
+}
+
+.navigasjonslinje-meny__knapp {
+    height: @meny-knapp-storrelse;
+    width: @meny-knapp-storrelse;
+    border: 0;
+    padding: 0;
+    margin-top: 2px;
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px @orange-focus;
+    }
+
+    &:disabled {
+        color: @navBlaLighten40;
+
+        & span:hover {
+            border-bottom: 1px solid transparent;
+        }
+    }
+
+    &:not(:last-of-type) {
+        margin-right: 1rem;
+
+        &:after {
+            content: '';
+            position: relative;
+            display: block;
+            width: 1px;
+            height: 1.5rem;
+            top: -0.2rem;
+            left: calc(@meny-knapp-storrelse + 0.5rem);
+            background-color: @navGra60;
+        }
+    }
+}
+
+.navigasjonslinje-meny__knapp--innstillinger {
+    background: data-uri(
+        '@{aktivitetsplanPath}/hovedside/navigasjonslinje/tannhjul.svg'
+    )
+    no-repeat center right;
+    background-size: contain;
+
+    &:hover {
+        background-image: data-uri(
+            '@{aktivitetsplanPath}/hovedside/navigasjonslinje/tannhjul-hover.svg'
+        );
+    }
+
+    &:active {
+        background-image: data-uri(
+            '@{aktivitetsplanPath}/hovedside/navigasjonslinje/tannhjul-active.svg'
+        );
+    }
+}
+
+.navigasjonslinje-meny__knapp--print {
+    display: inline-block;
+    background: data-uri('@{aktivitetsplanPath}/moduler/utskrift/printer.svg')
+    no-repeat center right;
+    background-size: contain;
+
+    &:hover {
+        background-image: data-uri(
+            '@{aktivitetsplanPath}/moduler/utskrift/printer-hover.svg'
+        );
+    }
+
+    &:active {
+        background-image: data-uri(
+            '@{aktivitetsplanPath}/moduler/utskrift/printer-active.svg'
+        );
+    }
+}
+
+.navigasjonslinje-meny__skillelinje {
+    content: '';
+    position: relative;
+    display: block;
+    width: 1px;
+    height: 1.5rem;
+    top: -1px;
+    background-color: @navGra60;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
