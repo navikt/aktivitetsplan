@@ -134,8 +134,8 @@ export function sorterAktiviteter(aktiviteter, status) {
         .sort(compareAktivitet);
 }
 
-function manglerTilDatoEllerTilDatoerMindreEnnToManederSiden(aktivitet) {
-    return !aktivitet.tilDato || !erMerEnnToManederSiden(aktivitet);
+function tilDatoEllerFraDatoerMindreEnnToManederSiden(aktivitet) {
+    return !erMerEnnToManederSiden(aktivitet);
 }
 
 export function splitIEldreOgNyereAktiviteter(aktiviteter) {
@@ -147,9 +147,7 @@ export function splitIEldreOgNyereAktiviteter(aktiviteter) {
             ],
             aktivitet
         ) => {
-            if (
-                manglerTilDatoEllerTilDatoerMindreEnnToManederSiden(aktivitet)
-            ) {
+            if (tilDatoEllerFraDatoerMindreEnnToManederSiden(aktivitet)) {
                 return [
                     [
                         ...listeMedAktiviteterTilDatoMindreEnnToManader,
