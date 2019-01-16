@@ -16,8 +16,8 @@ function VerktoylinjeToggle({ harNyVerktoylinje }) {
             {harNyVerktoylinje
                 ? <Verktoylinje />
                 : <div>
-                      <VerktoylinjeOriginal />
                       <NavigasjonslinjeOriginal />
+                      <VerktoylinjeOriginal />
                   </div>}
         </div>
     );
