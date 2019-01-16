@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .verktoylinje {
     &__verktoy {
         display: flex;
@@ -23,9 +25,20 @@
             margin-right: 1rem;
             margin-bottom: 1rem;
 
+            span:hover {
+                border-bottom: 1px solid @navGra40;
+            }
+
             span {
                 border: 0;
                 font-weight: bolder;
+            }
+        }
+
+        .aktivitetskort__henvendelser:hover {
+            > span:last-child {
+                border-bottom: 1px solid @navGra40;
+                margin-bottom: -1px;
             }
         }
 
