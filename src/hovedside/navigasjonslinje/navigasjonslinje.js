@@ -96,7 +96,7 @@ class Navigasjonslinje extends Component {
 
         return (
             <ConfigToggle name={navigasjonslinjemenyFeature}>
-                <div className="container">
+                <div className="container-navigasjonslinje">
                     <nav className="navigasjonslinje">
                         <div className="navigasjonslinje__verktoy">
                             <Innholdslaster
