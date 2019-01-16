@@ -50,7 +50,16 @@ function Verktoylinje({
     return (
         <div className="verktoylinje">
             <div className="verktoylinje__verktoy-container">
-                <HiddenIfDiv className="aktivitetskort__henvendelser">
+                <Lenke
+                    href="/dialog"
+                    className="knappelenke aktivitetskort__henvendelser"
+                    disabled={
+                        disabled ||
+                        !kanHaDialog ||
+                        ikkeFinnesDialogerIHistoriskPeriode
+                    }
+                    aria-live="polite"
+                >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
                     </TallAlert>
@@ -60,19 +69,8 @@ function Verktoylinje({
                     >
                         <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
                     </HiddenIfDiv>
-                    <Lenke
-                        href="/dialog"
-                        className="knappelenke"
-                        disabled={
-                            disabled ||
-                            !kanHaDialog ||
-                            ikkeFinnesDialogerIHistoriskPeriode
-                        }
-                        aria-live="polite"
-                    >
-                        <FormattedMessage id="navigasjon.dialog" />
-                    </Lenke>
-                </HiddenIfDiv>
+                    <FormattedMessage id="navigasjon.dialog" />
+                </Lenke>
                 <Lenkeknapp
                     type="big-hoved"
                     href="/aktivitet/ny"
@@ -166,7 +164,7 @@ const mapStateToProps = state => {
             !underOppfolging &&
             selectViserInneverendePeriode(state),
         kanHaDialog: underOppfolging || historiskPeriode,
-        antallUlesteDialoger: 4,
+        antallUlesteDialoger: dialoger,
         ikkeFinnesDialogerIHistoriskPeriode:
             dialoger.length < 1 && !selectViserInneverendePeriode(state),
         ikkeTilgangTilVilkar,

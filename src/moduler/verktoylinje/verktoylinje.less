@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .verktoylinje {
     &__verktoy {
         display: flex;
@@ -23,25 +25,39 @@
             margin-right: 1rem;
             margin-bottom: 1rem;
 
+            span:hover {
+                border-bottom: 1px solid @navGra40;
+            }
+
             span {
                 border: 0;
                 font-weight: bolder;
             }
         }
 
+        .aktivitetskort__henvendelser:hover {
+            > span:last-child {
+                border-bottom: 1px solid @navGra40;
+                margin-bottom: -1px;
+            }
+        }
+
         .aktivitetskort__henvendelser {
-            width: 9rem;
             margin: 0 auto 0.5rem auto;
             position: relative;
-            padding: 0.5rem 1rem 1rem 1.3rem;
+            padding: 0.5rem 1rem 1rem 1.5rem;
+            bottom: 0;
             top: -9px;
-            right: -27px;
+            width: 9rem;
+            display: block;
+            text-align: center;
+            background-position-x: 18%;
 
-            .knappelenke {
+            > span:last-child {
                 text-transform: uppercase;
                 position: relative;
-                top: 0.5rem;
-                left: 0.5rem;
+                top: 9px;
+                left: 6px;
             }
         }
 
@@ -93,7 +109,10 @@
             }
 
             .aktivitetskort__henvendelser {
-                margin: 0;
+                margin: -24px 39px 0 18px;
+                position: initial;
+                width: initial;
+                background-position-x: initial;
             }
 
             .lenkeknapp {

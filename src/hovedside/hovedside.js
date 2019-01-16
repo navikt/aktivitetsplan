@@ -1,10 +1,11 @@
 import React from 'react';
+import PT from 'prop-types';
 import { Container } from 'nav-frontend-grid';
 import Varslinger from '../moduler/varslinger/varslinger';
-import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
 import AktivitetsTavle from './tavle/aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
+import VerktoylinjeToggle from '../moduler/verktoylinje/verktoylinjeToggle';
 import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
 import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
 import PrivateFeilmelding from '../moduler/feilmelding/private-feilmelding';
@@ -27,7 +28,7 @@ function Hovedside() {
                     <Varslinger />
                     <Container>
                         <MitMaal />
-                        <Verktoylinje />
+                        <VerktoylinjeToggle />
                         <VisaValgtFilter />
                     </Container>
                     <AktivitetsTavle />
@@ -38,5 +39,9 @@ function Hovedside() {
         </div>
     );
 }
+
+Hovedside.propTypes = {
+    harNyVerktoylinje: PT.bool.isRequired,
+};
 
 export default Hovedside;

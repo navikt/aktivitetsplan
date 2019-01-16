@@ -9,6 +9,7 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import ConfigToggle, {
     harConfigToggle,
 } from '../../felles-komponenter/feature/config-toggle';
+import TallAlert from '../../felles-komponenter/tall-alert';
 import { hentDialog } from '../../moduler/dialog/dialog-reducer';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../moduler/arbeidsliste/arbeidsliste-reducer';
@@ -28,14 +29,17 @@ import {
     selectViserInneverendePeriode,
 } from '../../moduler/filtrering/filter/filter-selector';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
-import { selectDialoger } from '../../moduler/dialog/dialog-selector';
+import {
+    selectDialoger,
+    selectHarTilgangTilDialog,
+} from '../../moduler/dialog/dialog-selector';
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
+import {
+    BRUKERVILKAR,
+    harFeature,
+} from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 import { selectTildelVeilederStatus } from '../../moduler/tildel-veileder/tildel-veileder-selector';
-import {
-    harFeature,
-    VERKTOYLINJE,
-} from '../../felles-komponenter/feature/feature';
 
 export const NavigasjonsElement = hiddenIf(
     ({ sti, tekstId, disabled, children }) => {
@@ -88,34 +92,77 @@ class Navigasjonslinje extends Component {
     }
 
     render() {
-        const { avhengigheter } = this.props;
+        const {
+            antallUlesteDialoger,
+            avhengigheter,
+            disabled,
+            kanHaDialog,
+            tilgangTilDialog,
+            ikkeTilgangTilVilkar,
+            ikkeFinnesDialogerIHistoriskPeriode,
+            features,
+        } = this.props;
 
-        if (!this.props.harNyVerktoylinje) {
-            return null;
-        }
+        const informasjonFeature = harFeature(BRUKERVILKAR, features);
+        const informasjonsTekstId = informasjonFeature
+            ? 'navigasjon.informasjon'
+            : 'navigasjon.informasjonsvideo';
 
         return (
-            <ConfigToggle name={navigasjonslinjemenyFeature}>
-                <div className="container">
-                    <nav className="navigasjonslinje">
-                        <div className="navigasjonslinje__verktoy">
-                            <Innholdslaster
-                                avhengigheter={avhengigheter}
-                                spinnerStorrelse="XS"
-                                className="navigasjonslinje__spinner"
-                                alleOK
-                            >
-                                <NavigasjonslinjeMeny />
-                            </Innholdslaster>
-                            <NavigasjonslinjeKnapp
-                                ariaLabel="navigasjon.innstillinger"
-                                lenke="/innstillinger"
-                                className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
-                            />
-                        </div>
-                    </nav>
+            <nav className="navigasjonslinje-original">
+                <NavigasjonsElement
+                    sti="/dialog"
+                    tekstId="navigasjon.dialog"
+                    disabled={
+                        disabled ||
+                        !tilgangTilDialog ||
+                        !kanHaDialog ||
+                        ikkeFinnesDialogerIHistoriskPeriode
+                    }
+                    aria-live="polite"
+                >
+                    <TallAlert hidden={antallUlesteDialoger <= 0}>
+                        {antallUlesteDialoger}
+                    </TallAlert>
+                </NavigasjonsElement>
+                <NavigasjonsElement
+                    hidden={informasjonFeature}
+                    sti="/vilkar"
+                    tekstId="navigasjon.vilkar"
+                    disabled={disabled || ikkeTilgangTilVilkar}
+                />
+                <NavigasjonsElement
+                    sti="/informasjon"
+                    tekstId={informasjonsTekstId}
+                    disabled={disabled}
+                />
+                <div className="navigasjonslinje__verktoy">
+                    <ConfigToggle name={navigasjonslinjemenyFeature}>
+                        <Innholdslaster
+                            avhengigheter={avhengigheter}
+                            spinnerStorrelse="XS"
+                            className="navigasjonslinje__spinner"
+                            alleOK
+                        >
+                            <NavigasjonslinjeMeny />
+                        </Innholdslaster>
+                    </ConfigToggle>
+
+                    <NavigasjonslinjeKnapp
+                        ariaLabel="utskrift.ikon.alt.tekst"
+                        lenke="/utskrift"
+                        className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
+                    />
+
+                    <ConfigToggle name={navigasjonslinjemenyFeature}>
+                        <NavigasjonslinjeKnapp
+                            ariaLabel="navigasjon.innstillinger"
+                            lenke="/innstillinger"
+                            className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
+                        />
+                    </ConfigToggle>
                 </div>
-            </ConfigToggle>
+            </nav>
         );
     }
 }
@@ -126,8 +173,11 @@ Navigasjonslinje.propTypes = {
     doHentArbeidsliste: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     kanHaDialog: PT.bool.isRequired,
+    disabled: PT.bool.isRequired,
+    tilgangTilDialog: PT.bool.isRequired,
+    ikkeTilgangTilVilkar: PT.bool.isRequired,
     ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
-    harNyVerktoylinje: PT.bool.isRequired,
+    features: PT.object.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
@@ -142,10 +192,6 @@ const mapStateToProps = state => {
         .filter(d => dialogFilter(d, state)).length;
     const underOppfolging = selectErUnderOppfolging(state);
     const erIkkeBruker = !selectErBruker(state);
-    const harNyVerktoylinje = harFeature(
-        VERKTOYLINJE,
-        selectFeatureData(state)
-    );
 
     // det gir ikke mening å vise vilkår til ikke-brukere (typisk veiledere)
     // hvis bruker ikke har besvart vilkår for inneværende periode
@@ -163,6 +209,7 @@ const mapStateToProps = state => {
             selectOppfolgingStatus(state),
         ],
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
+        tilgangTilDialog: selectHarTilgangTilDialog(state),
         ikkeTilgangTilVilkar,
         disabled:
             erIkkeBruker &&
@@ -171,7 +218,6 @@ const mapStateToProps = state => {
         ikkeFinnesDialogerIHistoriskPeriode:
             dialoger.length < 1 && !selectViserInneverendePeriode(state),
         features: selectFeatureData(state),
-        harNyVerktoylinje,
     };
 };
 
