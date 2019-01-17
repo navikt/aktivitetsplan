@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .verktoylinje {
     &__verktoy {
         display: flex;
@@ -15,16 +17,78 @@
     }
 
     &__verktoy-container {
-        display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        align-items: center;
+
+        .knappelenke {
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+
+            span:hover {
+                border-bottom: 1px solid @navGra40;
+            }
+
+            span {
+                border: 0;
+                font-weight: bolder;
+            }
+        }
+
+        .aktivitetskort__henvendelser:hover {
+            > span:last-child {
+                border-bottom: 1px solid @navGra40;
+                margin-bottom: -1px;
+            }
+        }
+
+        .aktivitetskort__henvendelser {
+            margin: 0 auto 0.5rem auto;
+            position: relative;
+            padding: 0.5rem 1rem 1rem 1.5rem;
+            bottom: 0;
+            top: -9px;
+            width: 9rem;
+            display: block;
+            text-align: center;
+            background-position-x: 18%;
+
+            > span:last-child {
+                text-transform: uppercase;
+                position: relative;
+                top: 9px;
+                left: 6px;
+            }
+        }
+
+        .lenkeknapp {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .navigasjonslinje-meny__knapp--print {
+            position: relative;
+            top: 6px;
+        }
+
+        .verktoylinje__verktoy {
+            width: auto;
+        }
     }
+
+    &__verktoy-container:nth-child(2) {
+        display: flex;
+        align-items: baseline;
+    }
+
 }
 
 @media (min-width: @screen-md-min) {
+
     .verktoylinje {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 0;
 
         &__verktoy {
             width: auto;
@@ -35,5 +99,27 @@
                 margin-right: 0;
             }
         }
+
+        &__verktoy-container {
+            display: flex;
+
+            .navigasjonslinje-meny__knapp--print,
+            .knappelenke {
+                margin-right: 1rem;
+            }
+
+            .aktivitetskort__henvendelser {
+                margin: -24px 39px 0 18px;
+                position: initial;
+                width: initial;
+                background-position-x: initial;
+            }
+
+            .lenkeknapp {
+                width: initial;
+            }
+
+        }
+
     }
 }

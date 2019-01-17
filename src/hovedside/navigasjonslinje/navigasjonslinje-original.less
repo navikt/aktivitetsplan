@@ -2,16 +2,15 @@
 
 @meny-knapp-storrelse: 1.25rem;
 
-.navigasjonslinje {
+.navigasjonslinje-original {
     .blokk-s();
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
     background: @hvit;
-    border: 1px solid @navLysGra;
-    border-top: 0;
-    padding: 0.5rem 1rem 0.5rem;
-    margin-top: -34px;
+    border-radius: @border-radius-small;
+    border: 1px solid @navGra40;
+    padding: 0.5rem 1rem 0;
 }
 
 .navigasjonslinje__element {
@@ -119,9 +118,9 @@
 
 .navigasjonslinje-meny__knapp--innstillinger {
     background: data-uri(
-            '@{aktivitetsplanPath}/hovedside/navigasjonslinje/tannhjul.svg'
-        )
-        no-repeat center right;
+        '@{aktivitetsplanPath}/hovedside/navigasjonslinje/tannhjul.svg'
+    )
+    no-repeat center right;
     background-size: contain;
 
     &:hover {
@@ -140,7 +139,7 @@
 .navigasjonslinje-meny__knapp--print {
     display: inline-block;
     background: data-uri('@{aktivitetsplanPath}/moduler/utskrift/printer.svg')
-        no-repeat center right;
+    no-repeat center right;
     background-size: contain;
 
     &:hover {
