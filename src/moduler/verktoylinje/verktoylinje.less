@@ -7,9 +7,20 @@
         width: 100%;
         margin-bottom: 1rem;
 
+        //&.filter {
+        //    width: auto;
+        //    .dropdown {
+        //        .filter-dropdown__innhold {
+        //            width: 200%;
+        //            left: -100%;
+        //        }
+        //    }
+        //}
+
         .dropdown {
             margin-bottom: 0;
         }
+
     }
 
     .dropdown .dropdown__btn {
@@ -76,6 +87,7 @@
     &__verktoy-container:nth-child(2) {
         display: flex;
         align-items: baseline;
+        justify-content: space-between;
     }
 
 }
@@ -88,7 +100,6 @@
         margin-bottom: 0.5rem;
 
         &__verktoy {
-            width: auto;
             margin-right: 1rem;
 
             &:last-child {
@@ -97,11 +108,12 @@
             }
         }
 
-        &__verktoy-container {
-            width: 46%;
+        &__verktoy-container:nth-child(2) {
+            justify-content: flex-end;
         }
 
         &__verktoy-container {
+            width: 46%;
             display: flex;
 
             .navigasjonslinje-meny__knapp--print,
@@ -122,5 +134,53 @@
 
         }
 
+    }
+}
+
+@media (min-width: @screen-sm-min) {
+    .verktoylinje {
+        &__verktoy.filter {
+            .dropdown {
+                .filter-dropdown__innhold {
+                    width: auto;
+                    left: inherit;
+                }
+            }
+        }
+    }
+}
+
+
+@media (min-width: 320px) {
+    .verktoylinje {
+        &__verktoy {
+            &.filter {
+                width: auto;
+
+                .dropdown {
+                    .filter-dropdown__innhold {
+                        width: 187%;
+                        left: -87%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 375px) {
+    .verktoylinje {
+        &__verktoy {
+            &.filter {
+                width: auto;
+
+                .dropdown {
+                    .filter-dropdown__innhold {
+                        width: 219%;
+                        left: -119%;
+                    }
+                }
+            }
+        }
     }
 }
