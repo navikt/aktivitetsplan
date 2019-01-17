@@ -22,15 +22,24 @@ export function compareAktivitet(a, b) {
     return b.opprettetDato.localeCompare(a.opprettetDato);
 }
 
-export function erNyEndringIAktivitet(aktivitet, sisteInnlogging) {
+export function erNyEndringIAktivitet(aktivitet, lestInformasjon) {
     const endretDatoAktivietetMoment = moment(
         aktivitet.endretDato || aktivitet.opprettetDato
     );
-    if (endretDatoAktivietetMoment && moment(sisteInnlogging.lestTidspunkt)) {
+
+    const sisteInnlogging =
+        Array.isArray(lestInformasjon) &&
+        lestInformasjon.filter(e => e.ressurs === 'aktivitetsplan')[0];
+
+    if (
+        endretDatoAktivietetMoment &&
+        sisteInnlogging &&
+        moment(sisteInnlogging.tidspunkt)
+    ) {
         // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfør må
         // vi haen sjekk att opprettet dato ikke ligger fram i tiden
         return (
-            endretDatoAktivietetMoment.isAfter(sisteInnlogging.lestTidspunkt) &&
+            endretDatoAktivietetMoment.isAfter(sisteInnlogging.tidspunkt) &&
             endretDatoAktivietetMoment.isBefore(moment())
         );
     }
