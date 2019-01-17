@@ -1,5 +1,39 @@
 @import '../../variables';
 
+@media (min-width: 320px) {
+    .verktoylinje {
+        &__verktoy {
+            &.filter {
+                width: auto;
+
+                .dropdown {
+                    .filter-dropdown__innhold {
+                        width: 187%;
+                        left: -87%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 375px) {
+    .verktoylinje {
+        &__verktoy {
+            &.filter {
+                width: auto;
+
+                .dropdown {
+                    .filter-dropdown__innhold {
+                        width: 219%;
+                        left: -119%;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .verktoylinje {
     &__verktoy {
         display: flex;
@@ -27,13 +61,21 @@
         padding: 0.7rem 5.6rem 0.7rem 2rem;
     }
 
+    &__verktoy-container:first-child {
+        span {
+            border: 0;
+            font-weight: bolder;
+        }
+    }
+
     &__verktoy-container {
         justify-content: space-between;
         flex-wrap: wrap;
         align-items: center;
 
         .knappelenke {
-            margin-right: 1rem;
+            padding-left: 0.5rem;
+            margin-right: 0.5rem;
             margin-bottom: 1rem;
 
             span:hover {
@@ -42,7 +84,6 @@
 
             span {
                 border: 0;
-                font-weight: bolder;
             }
         }
 
@@ -58,7 +99,7 @@
             position: relative;
             padding: 0.5rem 1rem 1rem 1.5rem;
             bottom: 0;
-            top: -9px;
+            top: -10px;
             width: 9rem;
             display: block;
             text-align: center;
@@ -67,8 +108,8 @@
             > span:last-child {
                 text-transform: uppercase;
                 position: relative;
-                top: 9px;
-                left: 6px;
+                top: 2px;
+                left: 7px;
             }
         }
 
@@ -100,12 +141,9 @@
         margin-bottom: 0.5rem;
 
         &__verktoy {
-            margin-right: 1rem;
-
-            &:last-child {
-                margin-bottom: 0;
-                margin-right: 0;
-            }
+            margin-bottom: 0.5rem;
+            margin-right: 0;
+            width: auto;
         }
 
         &__verktoy-container:nth-child(2) {
@@ -122,10 +160,11 @@
             }
 
             .aktivitetskort__henvendelser {
-                margin: -24px 39px 0 18px;
+                margin: -9px 39px 0 18px;
                 position: inherit;
                 width: auto;
                 background-position-x: inherit;
+                background-position-y: 14px;
             }
 
             .lenkeknapp {
@@ -144,41 +183,6 @@
                 .filter-dropdown__innhold {
                     width: auto;
                     left: inherit;
-                }
-            }
-        }
-    }
-}
-
-
-@media (min-width: 320px) {
-    .verktoylinje {
-        &__verktoy {
-            &.filter {
-                width: auto;
-
-                .dropdown {
-                    .filter-dropdown__innhold {
-                        width: 187%;
-                        left: -87%;
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media (min-width: 375px) {
-    .verktoylinje {
-        &__verktoy {
-            &.filter {
-                width: auto;
-
-                .dropdown {
-                    .filter-dropdown__innhold {
-                        width: 219%;
-                        left: -119%;
-                    }
                 }
             }
         }
