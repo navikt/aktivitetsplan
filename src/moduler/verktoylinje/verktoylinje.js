@@ -111,15 +111,15 @@ function Verktoylinje({
                     lenke="/utskrift"
                     className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
                 />
-                <PeriodeFilter
-                    className="verktoylinje__verktoy"
-                    skjulInneverende={privatModus && erVeileder}
-                />
                 <Filter
                     className="verktoylinje__verktoy"
                     skjulIPrivatModus={
                         !viserHistoriskPeriode && privatModus && erVeileder
                     }
+                />
+                <PeriodeFilter
+                    className="verktoylinje__verktoy"
+                    skjulInneverende={privatModus && erVeileder}
                 />
             </div>
         </div>
