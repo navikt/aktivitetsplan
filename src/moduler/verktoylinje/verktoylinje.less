@@ -1,39 +1,5 @@
 @import '../../variables';
 
-@media (min-width: 320px) {
-    .verktoylinje {
-        &__verktoy {
-            &.filter {
-                width: auto;
-
-                .dropdown {
-                    .filter-dropdown__innhold {
-                        width: 187%;
-                        left: -87%;
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media (min-width: 375px) {
-    .verktoylinje {
-        &__verktoy {
-            &.filter {
-                width: auto;
-
-                .dropdown {
-                    .filter-dropdown__innhold {
-                        width: 219%;
-                        left: -119%;
-                    }
-                }
-            }
-        }
-    }
-}
-
 .verktoylinje {
     &__verktoy {
         display: flex;
@@ -41,27 +7,36 @@
         width: 100%;
         margin-bottom: 0.5rem;
 
-        .dropdown {
-            margin-bottom: 0;
-        }
+        &.filter {
+            width: auto;
 
-    }
+            .dropdown {
+                margin-bottom: 0;
 
-    .dropdown .dropdown__btn {
-        padding: 0.7rem 5.6rem 0.7rem 2rem;
-    }
-
-    &__verktoy-container:first-child {
-        span {
-            border: 0;
-            font-weight: bolder;
+                .filter-dropdown__innhold {
+                    width: auto;
+                    left: inherit;
+                }
+            }
         }
     }
 
     &__verktoy-container {
+        display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
         align-items: center;
+
+        &:first-child {
+            span {
+                border: 0;
+                font-weight: bolder;
+            }
+        }
+
+        &:nth-child(2) {
+            flex-wrap: inherit;
+        }
 
         .knappelenke {
             padding-left: 0.5rem;
@@ -88,12 +63,9 @@
             margin: 0 auto 0.5rem auto;
             position: relative;
             padding: 0.5rem 1rem 1rem 1.5rem;
-            bottom: 0;
-            top: -10px;
-            width: 9rem;
-            display: block;
-            text-align: center;
-            background-position-x: 18%;
+            top: -5px;
+            background-position-y: 1rem;
+
 
             > span:last-child {
                 text-transform: uppercase;
@@ -113,13 +85,6 @@
         }
 
     }
-
-    &__verktoy-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
 }
 
 @media (min-width: @screen-md-min) {
@@ -135,17 +100,18 @@
             width: auto;
         }
 
-        &__verktoy-container:nth-child(1) {
-            align-items: flex-start;
-        }
-
-        &__verktoy-container:nth-child(2) {
-            justify-content: flex-end;
-        }
-
         &__verktoy-container {
             width: 46%;
             display: flex;
+
+            &:nth-child(1) {
+                align-items: flex-start;
+            }
+
+            &:nth-child(2) {
+                justify-content: flex-end;
+                flex-wrap: wrap;
+            }
 
             .navigasjonslinje-meny__knapp--print,
             .knappelenke {
@@ -153,11 +119,8 @@
             }
 
             .aktivitetskort__henvendelser {
-                margin: -1px 39px 0 18px;
+                margin: 0 1rem;
                 position: inherit;
-                width: auto;
-                background-position-x: inherit;
-                background-position-y: 14px;
             }
 
             .lenkeknapp {
@@ -167,18 +130,5 @@
 
         }
 
-    }
-}
-
-@media (min-width: @screen-sm-min) {
-    .verktoylinje {
-        &__verktoy.filter {
-            .dropdown {
-                .filter-dropdown__innhold {
-                    width: auto;
-                    left: inherit;
-                }
-            }
-        }
     }
 }
