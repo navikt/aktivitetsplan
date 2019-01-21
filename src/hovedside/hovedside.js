@@ -9,7 +9,7 @@ import VerktoylinjeToggle from '../moduler/verktoylinje/verktoylinjeToggle';
 import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
 import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
 import PrivateFeilmelding from '../moduler/feilmelding/private-feilmelding';
-import VisaValgtFilter from '../moduler/filtrering/filter-vis-label';
+import VisaValgtFilterOriginalToggle from '../moduler/filtrering/filter-vis-label-original';
 import MitMaal from './maalLinje/mitt-maal';
 import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
@@ -29,7 +29,7 @@ function Hovedside() {
                     <Container>
                         <MitMaal />
                         <VerktoylinjeToggle />
-                        <VisaValgtFilter />
+                        <VisaValgtFilterOriginalToggle />
                     </Container>
                     <AktivitetsTavle />
                     <Routing />

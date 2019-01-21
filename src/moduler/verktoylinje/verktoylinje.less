@@ -28,14 +28,22 @@
         align-items: center;
 
         &:first-child {
-            span {
-                border: 0;
-                font-weight: bolder;
+            .knappelenke {
+                span {
+                    border: 0;
+                    font-weight: bolder;
+                }
             }
         }
 
         &:nth-child(2) {
-            flex-wrap: inherit;
+            .indre {
+                display: inherit;
+                flex-wrap: inherit;
+                justify-content: inherit;
+                align-items: inherit;
+                width: 100%;
+            }
         }
 
         .knappelenke {
@@ -62,7 +70,7 @@
         .aktivitetskort__henvendelser {
             margin: 0 auto;
             position: relative;
-            padding: 0.5rem 1rem 1rem 1.5rem;
+            padding: 0.5rem 1rem 0.8rem 1.5rem;
             background-position-y: 1rem;
             top: -0.5rem;
 
@@ -70,6 +78,7 @@
             > span:last-child {
                 text-transform: uppercase;
                 margin-left: 0.5rem;
+                margin-top: 0.2rem;
             }
         }
 
@@ -83,6 +92,16 @@
         }
 
     }
+
+    .filtrering-label-container.vis-mobil {
+        display: flex;
+        width: 100%;
+    }
+
+    .filtrering-label-container.vis-desktop {
+        display: none;
+    }
+
 }
 
 @media (min-width: @screen-md-min) {
@@ -101,13 +120,25 @@
         &__verktoy-container {
             display: flex;
 
+
             &:nth-child(1) {
+                width: 69%;
                 align-items: flex-start;
+                justify-content: flex-start;
             }
 
             &:nth-child(2) {
+                width: 31%;
+                display: flex;
                 justify-content: flex-end;
-                flex-wrap: wrap;
+                align-items: flex-start;
+
+                > .indre {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                    flex-wrap: wrap;
+                }
             }
 
             .navigasjonslinje-meny__knapp--print,
@@ -116,7 +147,7 @@
             }
 
             .aktivitetskort__henvendelser {
-                margin-left: 1rem;
+                margin-left: 1.2rem;
                 margin-right: 1rem;
                 top: 0;
             }
@@ -126,6 +157,15 @@
                 margin-top: 1px;
             }
 
+        }
+
+        .filtrering-label-container.vis-mobil {
+            display: none;
+        }
+
+        .filtrering-label-container.vis-desktop {
+            display: flex;
+            width: 100%;
         }
 
     }
