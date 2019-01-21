@@ -22,6 +22,7 @@ const mapStateToProps = state => ({
     erVeileder: selectErVeileder(state),
 });
 
+// TODO: remove this
 function textHOC(Component, props) {
     const { visChildrenVedFeil } = props || {};
     // eslint-disable-next-line react/prop-types
@@ -41,8 +42,8 @@ function textHOC(Component, props) {
     return hiddenIf(connect(mapStateToProps)(Text));
 }
 
-function FormattedHTMLMessageProxy({ id, values }) {
-    const { className, ...restValues } = values;
+function FormattedHTMLMessageProxy(props) {
+    const { id, className, ...restValues } = props;
     return (
         <FormattedHTMLMessage id={id} values={restValues}>
             {content =>
@@ -56,11 +57,11 @@ function FormattedHTMLMessageProxy({ id, values }) {
 
 FormattedHTMLMessageProxy.propTypes = {
     id: PT.string.isRequired,
-    values: PT.object.isRequired,
+    className: PT.string,
 };
 
 export default textHOC(FormattedMessage);
-export const HtmlText = textHOC(FormattedHTMLMessageProxy);
+export const HtmlText = FormattedHTMLMessageProxy;
 export const FailsafeText = textHOC(FormattedHTMLMessage, {
     visChildrenVedFeil: true,
 });

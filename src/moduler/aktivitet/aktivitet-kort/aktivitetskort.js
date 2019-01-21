@@ -25,7 +25,7 @@ import {
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
-import { selectLest } from '../../siste-innlogging/lest-reducer';
+import { selectLest } from '../../lest/lest-reducer';
 import {
     selectAktiviteterSomHarBlittVist,
     settAktivitetSomVist,

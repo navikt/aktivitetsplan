@@ -29,7 +29,7 @@ import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veilede
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import underelmenterReducer from './moduler/aktivitet/visning/underelement-for-aktivitet/underelementer-view-reducer';
 import authReducer from './felles-komponenter/timeoutbox/auth-reducer';
-import lestReducer from './moduler/siste-innlogging/lest-reducer';
+import lestReducer from './moduler/lest/lest-reducer';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };

@@ -2,7 +2,9 @@ import * as Api from './lest-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 
 const { reducer, action, selectData, selectStatus } = createActionsAndReducer(
-    'lest'
+    'lest',
+    'lest',
+    []
 );
 
 export function hentLest() {

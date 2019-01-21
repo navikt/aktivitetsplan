@@ -23,10 +23,6 @@ import AktivitetsKort from './../../moduler/aktivitet/aktivitet-kort/aktivitetsk
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 import {
-    hentLest,
-    selectLestStatus,
-} from '../../moduler/siste-innlogging/lest-reducer';
-import {
     harFeature,
     NYENDRINGIAKTIVITET,
 } from '../../felles-komponenter/feature/feature';
@@ -60,9 +56,6 @@ class AktivitetsTavle extends Component {
             }
             this.props.doHentAktiviteter();
             this.props.doHentArenaAktiviteter();
-            if (this.props.harNyEndringIAktitetFeature) {
-                this.props.hentLest();
-            }
         }
     }
 
@@ -105,7 +98,6 @@ class AktivitetsTavle extends Component {
 AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
-    hentLest: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
@@ -124,16 +116,12 @@ const mapStateToProps = state => {
 
     const statusAktiviteter = selectAktivitetStatus(state);
     const statusArenaAktiviteter = selectArenaAktivitetStatus(state);
-    const statusLest = selectLestStatus(state);
 
     const reducersNotStarted =
         statusAktiviteter === STATUS.NOT_STARTED &&
         statusArenaAktiviteter === STATUS.NOT_STARTED;
 
     const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
-    if (harNyEndringIAktitetFeature) {
-        avhengigheter.push(statusLest);
-    }
 
     return {
         erVeileder: selectErVeileder(state),
@@ -146,7 +134,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     doHentAktiviteter: () => hentAktiviteter()(dispatch),
     doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch),
-    hentLest: () => hentLest()(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsTavle);

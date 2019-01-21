@@ -7,6 +7,8 @@ import { HtmlText } from '../../text';
 import Ekspanderbartpanel from '../../felles-komponenter/utils/ekspanderbartpanel-med-tittel-og-innhold';
 import Video from './video';
 
+export const INFORMASJON_MODAL_VERSJON = 'v1';
+
 function InformasjonModal() {
     return (
         <Modal
@@ -15,9 +17,12 @@ function InformasjonModal() {
         >
             <ModalContainer className="informasjon-modal-container">
                 <Innholdstittel>
-                    <FormattedMessage id="informasjon.tittel" />
+                    <FormattedMessage id="informasjon.ny_tittel" />
                 </Innholdstittel>
-                <HtmlText className="mellomrom" id="informasjon.hjelpetekst" />
+                <HtmlText
+                    className="mellomrom"
+                    id="informasjon.ny_hjelpetekst"
+                />
                 <Video />
                 <Ekspanderbartpanel
                     tittelId="informasjon.tittel.seksjon.1"

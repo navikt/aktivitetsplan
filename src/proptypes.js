@@ -246,3 +246,9 @@ export const history = PT.shape({
     push: PT.func.isRequired,
     replace: PT.func.isRequired,
 });
+
+export const lest = PT.shape({
+    tidspunkt: PT.string.isRequired,
+    verdi: PT.string,
+    ressurs: PT.string.isRequired,
+});
