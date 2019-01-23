@@ -9,10 +9,12 @@ import {
 } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 
+/**
+ * @return {null}
+ */
 function VisaValgtFilter({ filterSlice, harNyVerktoylinje }) {
-    let FilterElement = null;
     if (!harNyVerktoylinje) {
-        FilterElement = (
+        return (
             <div className="filtrering-label-container">
                 {Object.keys(filterSlice).map(filterKey =>
                     <FilterGruppe
@@ -24,7 +26,7 @@ function VisaValgtFilter({ filterSlice, harNyVerktoylinje }) {
             </div>
         );
     }
-    return FilterElement;
+    return null;
 }
 
 VisaValgtFilter.propTypes = {
