@@ -6,13 +6,11 @@ import { selectFeatureData } from './feature-selector';
 // Remember to add you feature to 'ALL_FEATURES' which ensures the feature is looked up in unleash.
 export const BRUKERVILKAR = 'aktivitetsplan.brukervilkar';
 export const VERKTOYLINJE = 'aktivitetsplan.verktoylinje';
-export const FORHANDSORIENTERING = 'aktivitetsplan.forhandsorientering';
 export const SKRUAVPRIVATMODUS = 'aktivitetsplan.skruavprivatmodus';
 export const NYENDRINGIAKTIVITET = 'aktivitetsplan.nyendringiaktivitet';
 export const ALL_FEATURES = [
     BRUKERVILKAR,
     VERKTOYLINJE,
-    FORHANDSORIENTERING,
     SKRUAVPRIVATMODUS,
     NYENDRINGIAKTIVITET,
 ];

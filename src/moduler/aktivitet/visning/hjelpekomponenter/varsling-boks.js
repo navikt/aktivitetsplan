@@ -15,27 +15,14 @@ import {
     selectErVeileder,
     selectIdentitetStatus,
 } from '../../../identitet/identitet-selector';
-import {
-    FORHANDSORIENTERING,
-    harFeature,
-} from '../../../../felles-komponenter/feature/feature';
-import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
 
-function VarslingBoks({
-    avhengigheter,
-    visVarselOmManglendeDialog,
-    harForhandsorienteringFeature,
-    ...rest
-}) {
-    const varslingTekstId = harForhandsorienteringFeature
-        ? 'mote.varsling.forhandsorientering'
-        : 'mote.varsling.ingen-dialog';
+function VarslingBoks({ avhengigheter, visVarselOmManglendeDialog, ...rest }) {
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
             <Innholdslaster avhengigheter={avhengigheter}>
                 <HiddenIfDiv {...rest} hidden={!visVarselOmManglendeDialog}>
                     <AlertStripeStopp className="varsling-boks" role="alert">
-                        <FormattedMessage id={varslingTekstId} />
+                        <FormattedMessage id="mote.varsling.forhandsorientering" />
                     </AlertStripeStopp>
                 </HiddenIfDiv>
             </Innholdslaster>
@@ -46,12 +33,10 @@ function VarslingBoks({
 VarslingBoks.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     visVarselOmManglendeDialog: PT.bool.isRequired,
-    harForhandsorienteringFeature: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
     const aktivitet = props.aktivitet;
-    const features = selectFeatureData(state);
     return {
         avhengigheter: [
             selectIdentitetStatus(state),
@@ -61,10 +46,6 @@ const mapStateToProps = (state, props) => {
             aktivitet.type === MOTE_TYPE &&
             selectErVeileder(state) &&
             !selectDialogForAktivitetId(state, aktivitet.id),
-        harForhandsorienteringFeature: harFeature(
-            FORHANDSORIENTERING,
-            features
-        ),
     };
 };
 
