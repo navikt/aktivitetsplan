@@ -9,9 +9,6 @@ import {
 } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 
-/**
- * @return {null}
- */
 function VisValgtFilter({ filterSlice, harNyVerktoylinje }) {
     if (!harNyVerktoylinje) {
         return (
