@@ -12,7 +12,7 @@ import { selectFeatureData } from '../../felles-komponenter/feature/feature-sele
 /**
  * @return {null}
  */
-function VisaValgtFilter({ filterSlice, harNyVerktoylinje }) {
+function VisValgtFilter({ filterSlice, harNyVerktoylinje }) {
     if (!harNyVerktoylinje) {
         return (
             <div className="filtrering-label-container">
@@ -29,7 +29,7 @@ function VisaValgtFilter({ filterSlice, harNyVerktoylinje }) {
     return null;
 }
 
-VisaValgtFilter.propTypes = {
+VisValgtFilter.propTypes = {
     filterSlice: PT.object.isRequired,
     harNyVerktoylinje: PT.bool.isRequired,
 };
@@ -45,4 +45,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(VisaValgtFilter);
+export default connect(mapStateToProps)(VisValgtFilter);

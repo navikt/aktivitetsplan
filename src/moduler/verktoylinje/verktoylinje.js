@@ -33,7 +33,7 @@ import {
 } from '../../felles-komponenter/feature/feature';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
-import VisaValgtFilter from '../../moduler/filtrering/filter-vis-label';
+import VisValgtFilter from '../../moduler/filtrering/filter-vis-label';
 
 function Verktoylinje({
     viserHistoriskPeriode,
@@ -84,7 +84,7 @@ function Verktoylinje({
                 >
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenkeknapp>
-                <VisaValgtFilter className="vis-desktop" />
+                <VisValgtFilter className="vis-desktop" />
             </div>
             <div className="verktoylinje__verktoy-container">
                 <div className="indre">
@@ -126,7 +126,7 @@ function Verktoylinje({
                     />
                 </div>
             </div>
-            <VisaValgtFilter className="vis-mobil" />
+            <VisValgtFilter className="vis-mobil" />
         </div>
     );
 }

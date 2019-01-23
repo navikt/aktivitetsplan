@@ -14,7 +14,7 @@ import {
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
 
-function VisaValgtFilter({
+function VisValgtFilter({
     filterSlice,
     doToggleAktivitetsEtikett,
     doToggleAktivitetsStatus,
@@ -91,11 +91,11 @@ function VisaValgtFilter({
     );
 }
 
-VisaValgtFilter.defaultProps = {
+VisValgtFilter.defaultProps = {
     className: '',
 };
 
-VisaValgtFilter.propTypes = {
+VisValgtFilter.propTypes = {
     filterSlice: PT.object.isRequired,
     doToggleAktivitetsEtikett: PT.func.isRequired,
     doToggleAktivitetsStatus: PT.func.isRequired,
@@ -122,4 +122,4 @@ const mapDispatchToProps = dispatch => ({
         dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VisaValgtFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(VisValgtFilter);
