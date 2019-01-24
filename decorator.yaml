@@ -1,0 +1,11 @@
+proxy:
+  - contextPath: "/veilarbaktivitet"
+    baseUrl: "http://veilarbproxy"
+  - contextPath: "/veilarbdialog"
+    baseUrl: "http://veilarbproxy"
+  - contextPath: "/veilarboppfolging"
+    baseUrl: "http://veilarbproxy"
+  - contextPath: "/veilarblest"
+    baseUrl: "http://veilarbproxy"
+  - contextPath: "/veilarbstepup"
+    baseUrl: "http://veilarbstepup"

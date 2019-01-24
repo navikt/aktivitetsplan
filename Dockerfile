@@ -17,5 +17,5 @@ FROM docker.adeo.no:5000/pus/decorator
 ENV APPLICATION_NAME=aktivitetsplan
 COPY --from=builder /source/build /app
 
-ADD proxy.json /proxy.json
+ADD decorator.yaml /decorator.yaml
 ENV OIDC_LOGIN_URL /veilarbstepup/oidc
