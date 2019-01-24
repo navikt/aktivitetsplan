@@ -225,3 +225,4 @@ mock.get('/aktivitetsplan/api/auth', auth);
 
 ///veilarblest/api
 mock.get('/veilarblest/api/aktivitetsplan/les', () => lest);
+mock.put('/veilarblest/api/informasjon/les', ({ queryParams }) => lest);

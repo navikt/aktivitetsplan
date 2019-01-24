@@ -15,6 +15,18 @@ export function selectLest(state) {
     return selectData(state);
 }
 
+function selectLestRessurs(state, ressurs) {
+    return selectLest(state).filter(e => e.ressurs === ressurs)[0];
+}
+
+export function selectLestInformasjon(state) {
+    return selectLestRessurs(state, 'informasjon');
+}
+
+export function selectLestAktivitetsplan(state) {
+    return selectLestRessurs(state, 'aktivitetsplan');
+}
+
 export function selectLestStatus(state) {
     return selectStatus(state);
 }

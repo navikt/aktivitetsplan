@@ -27,19 +27,15 @@ export function erNyEndringIAktivitet(aktivitet, lestInformasjon) {
         aktivitet.endretDato || aktivitet.opprettetDato
     );
 
-    const sisteInnlogging =
-        Array.isArray(lestInformasjon) &&
-        lestInformasjon.filter(e => e.ressurs === 'aktivitetsplan')[0];
-
     if (
         endretDatoAktivietetMoment &&
-        sisteInnlogging &&
-        moment(sisteInnlogging.tidspunkt)
+        lestInformasjon &&
+        moment(lestInformasjon.tidspunkt)
     ) {
         // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfør må
         // vi haen sjekk att opprettet dato ikke ligger fram i tiden
         return (
-            endretDatoAktivietetMoment.isAfter(sisteInnlogging.tidspunkt) &&
+            endretDatoAktivietetMoment.isAfter(lestInformasjon.tidspunkt) &&
             endretDatoAktivietetMoment.isBefore(moment())
         );
     }

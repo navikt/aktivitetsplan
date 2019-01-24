@@ -25,7 +25,7 @@ import {
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
-import { selectLest } from '../../lest/lest-reducer';
+import { selectLestAktivitetsplan } from '../../lest/lest-reducer';
 import {
     selectAktiviteterSomHarBlittVist,
     settAktivitetSomVist,
@@ -183,7 +183,7 @@ const mapStateToProps = (state, props) => {
         NYENDRINGIAKTIVITET,
         selectFeatureData(state)
     );
-    const lest = selectLest(state);
+    const lest = selectLestAktivitetsplan(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
         aktivitet => aktivitet.id === props.aktivitet.id

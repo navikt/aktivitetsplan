@@ -35,8 +35,9 @@ GodkjennVilkarMedVarsling.propTypes = {
 
 class RenderBrukerInfoHook extends Component {
     componentWillMount() {
-        if (this.props.videreSendTilInfo) {
-            this.props.history.push('/informasjon');
+        const { erVeileder, videreSendTilInfo, history } = this.props;
+        if (!erVeileder && videreSendTilInfo) {
+            history.push('/informasjon');
         }
     }
 

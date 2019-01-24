@@ -27,7 +27,11 @@ import {
     BRUKERVILKAR,
     harFeature,
 } from '../../felles-komponenter/feature/feature';
-import { hentLest, selectLest, selectLestStatus } from '../lest/lest-reducer';
+import {
+    hentLest,
+    selectLestInformasjon,
+    selectLestStatus,
+} from '../lest/lest-reducer';
 import RenderBrukerInfo from './render-bruker-info';
 import { INFORMASJON_MODAL_VERSJON } from '../informasjon/informasjon-modal';
 
@@ -41,14 +45,10 @@ class OppfolgingStatus extends Component {
     render() {
         const props = this.props;
 
-        const sisteInformasjonLest = props.lestInfo.filter(
-            e => e.ressurs === 'informasjon'
-        )[0];
-
         const videreSendTilInfo =
             props.lestStatus === STATUS.OK &&
-            !!sisteInformasjonLest &&
-            sisteInformasjonLest.verdi !== INFORMASJON_MODAL_VERSJON;
+            !!props.lestInfo &&
+            props.lestInfo.verdi !== INFORMASJON_MODAL_VERSJON;
 
         return (
             <Innholdslaster
@@ -69,6 +69,11 @@ class OppfolgingStatus extends Component {
         );
     }
 }
+
+OppfolgingStatus.defaultProps = {
+    lestInfo: null,
+};
+
 OppfolgingStatus.propTypes = {
     oppfolgingStatus: AppPT.status.isRequired,
     identitetStatus: AppPT.status.isRequired,
@@ -79,7 +84,7 @@ OppfolgingStatus.propTypes = {
     doHentLest: PT.func.isRequired,
     privateModus: PT.bool.isRequired,
     vilkarToggletAv: PT.bool.isRequired,
-    lestInfo: PT.arrayOf(AppPT.lest).isRequired,
+    lestInfo: AppPT.lest,
 };
 
 const mapStateToProps = state => ({
@@ -94,7 +99,7 @@ const mapStateToProps = state => ({
     vilkarToggletAv: harFeature(BRUKERVILKAR, selectFeatureData(state)),
     toggleStatus: selectFeatureStatus(state),
     lestStatus: selectLestStatus(state),
-    lestInfo: selectLest(state),
+    lestInfo: selectLestInformasjon(state),
 });
 
 const mapDispatchToProps = dispatch => ({
