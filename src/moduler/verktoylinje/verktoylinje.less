@@ -1,6 +1,9 @@
 @import '../../variables';
 
 .verktoylinje {
+    display: flex;
+    flex-direction: column;
+
     &__verktoy {
         display: flex;
         flex-direction: column;
@@ -28,14 +31,26 @@
         align-items: center;
 
         &:first-child {
-            span {
-                border: 0;
-                font-weight: bolder;
+            .knappelenke {
+                span {
+                    border: 0;
+                    font-weight: bolder;
+                }
             }
         }
 
         &:nth-child(2) {
-            flex-wrap: inherit;
+            .indre {
+                display: inherit;
+                flex-wrap: inherit;
+                justify-content: inherit;
+                align-items: inherit;
+                width: 100%;
+            }
+        }
+
+        &:nth-child(3) {
+            order: 4;
         }
 
         .knappelenke {
@@ -62,7 +77,7 @@
         .aktivitetskort__henvendelser {
             margin: 0 auto;
             position: relative;
-            padding: 0.5rem 1rem 1rem 1.5rem;
+            padding: 0.6rem 1rem 0.9rem 1.5rem;
             background-position-y: 1rem;
             top: -0.5rem;
 
@@ -70,6 +85,7 @@
             > span:last-child {
                 text-transform: uppercase;
                 margin-left: 0.5rem;
+                margin-top: 0.1rem;
             }
         }
 
@@ -83,6 +99,7 @@
         }
 
     }
+
 }
 
 @media (min-width: @screen-md-min) {
@@ -91,23 +108,46 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 0.5rem;
+        flex-wrap: wrap;
+        flex-direction: inherit;
 
         &__verktoy {
             margin-bottom: 0.5rem;
             margin-right: 0;
-            width: auto;
         }
 
         &__verktoy-container {
             display: flex;
 
+
             &:nth-child(1) {
+                width: 69%;
                 align-items: flex-start;
+                justify-content: flex-start;
             }
 
             &:nth-child(2) {
+                width: 31%;
+                display: flex;
                 justify-content: flex-end;
-                flex-wrap: wrap;
+                align-items: flex-start;
+
+                > .indre {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                    flex-wrap: wrap;
+                }
+            }
+
+            &:nth-child(3) {
+                width: 69%;
+                order: inherit;
+            }
+
+            &:nth-child(4) {
+                width: 31%;
+                align-items: flex-start;
             }
 
             .navigasjonslinje-meny__knapp--print,
@@ -116,9 +156,9 @@
             }
 
             .aktivitetskort__henvendelser {
-                margin-left: 1rem;
+                margin-left: 1.2rem;
                 margin-right: 1rem;
-                top: 0;
+                top: -0.1rem;
             }
 
             .lenkeknapp {

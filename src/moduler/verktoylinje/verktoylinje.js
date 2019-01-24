@@ -33,6 +33,7 @@ import {
 } from '../../felles-komponenter/feature/feature';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
+import VisValgtFilter from '../../moduler/filtrering/filter-vis-label';
 
 function Verktoylinje({
     viserHistoriskPeriode,
@@ -85,38 +86,45 @@ function Verktoylinje({
                 </Lenkeknapp>
             </div>
             <div className="verktoylinje__verktoy-container">
-                <Lenke
-                    href="/vilkar"
-                    hidden={harFeature(BRUKERVILKAR, features)}
-                    className="knappelenke"
-                    disabled={disabled || ikkeTilgangTilVilkar}
-                >
-                    <FormattedMessage id="navigasjon.vilkar" />
-                </Lenke>
-                <Lenke
-                    href="/informasjon"
-                    className="knappelenke"
-                    disabled={disabled}
-                >
-                    <FormattedMessage
-                        id={
-                            harFeature(BRUKERVILKAR, features)
-                                ? 'navigasjon.informasjon'
-                                : 'navigasjon.informasjonsvideo'
+                <div className="indre">
+                    <Lenke
+                        href="/vilkar"
+                        hidden={harFeature(BRUKERVILKAR, features)}
+                        className="knappelenke"
+                        disabled={disabled || ikkeTilgangTilVilkar}
+                    >
+                        <FormattedMessage id="navigasjon.vilkar" />
+                    </Lenke>
+                    <Lenke
+                        href="/informasjon"
+                        className="knappelenke"
+                        disabled={disabled}
+                    >
+                        <FormattedMessage
+                            id={
+                                harFeature(BRUKERVILKAR, features)
+                                    ? 'navigasjon.informasjon'
+                                    : 'navigasjon.informasjonsvideo'
+                            }
+                        />
+                    </Lenke>
+                    <NavigasjonslinjeKnapp
+                        ariaLabel="utskrift.ikon.alt.tekst"
+                        lenke="/utskrift"
+                        className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
+                    />
+                    <Filter
+                        className="verktoylinje__verktoy"
+                        skjulIPrivatModus={
+                            !viserHistoriskPeriode && privatModus && erVeileder
                         }
                     />
-                </Lenke>
-                <NavigasjonslinjeKnapp
-                    ariaLabel="utskrift.ikon.alt.tekst"
-                    lenke="/utskrift"
-                    className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
-                />
-                <Filter
-                    className="verktoylinje__verktoy"
-                    skjulIPrivatModus={
-                        !viserHistoriskPeriode && privatModus && erVeileder
-                    }
-                />
+                </div>
+            </div>
+            <div className="verktoylinje__verktoy-container">
+                <VisValgtFilter />
+            </div>
+            <div className="verktoylinje__verktoy-container">
                 <PeriodeFilter
                     className="verktoylinje__verktoy"
                     skjulInneverende={privatModus && erVeileder}
