@@ -1,6 +1,9 @@
 @import '../../variables';
 
 .verktoylinje {
+    display: flex;
+    flex-direction: column;
+
     &__verktoy {
         display: flex;
         flex-direction: column;
@@ -44,6 +47,10 @@
                 align-items: inherit;
                 width: 100%;
             }
+        }
+
+        &:nth-child(3) {
+            order: 4;
         }
 
         .knappelenke {
@@ -93,15 +100,6 @@
 
     }
 
-    .filtrering-label-container.vis-mobil {
-        display: flex;
-        width: 100%;
-    }
-
-    .filtrering-label-container.vis-desktop {
-        display: none;
-    }
-
 }
 
 @media (min-width: @screen-md-min) {
@@ -110,6 +108,8 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 0.5rem;
+        flex-wrap: wrap;
+        flex-direction: inherit;
 
         &__verktoy {
             margin-bottom: 0.5rem;
@@ -140,6 +140,16 @@
                 }
             }
 
+            &:nth-child(3) {
+                width: 69%;
+                order: inherit;
+            }
+
+            &:nth-child(4) {
+                width: 31%;
+                align-items: flex-start;
+            }
+
             .navigasjonslinje-meny__knapp--print,
             .knappelenke {
                 margin-right: 1rem;
@@ -156,15 +166,6 @@
                 margin-top: 1px;
             }
 
-        }
-
-        .filtrering-label-container.vis-mobil {
-            display: none;
-        }
-
-        .filtrering-label-container.vis-desktop {
-            display: flex;
-            width: 100%;
         }
 
     }

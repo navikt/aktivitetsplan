@@ -84,7 +84,6 @@ function Verktoylinje({
                 >
                     <FormattedMessage id="nyaktivitetsknapp" />
                 </Lenkeknapp>
-                <VisValgtFilter className="vis-desktop" />
             </div>
             <div className="verktoylinje__verktoy-container">
                 <div className="indre">
@@ -120,13 +119,17 @@ function Verktoylinje({
                             !viserHistoriskPeriode && privatModus && erVeileder
                         }
                     />
-                    <PeriodeFilter
-                        className="verktoylinje__verktoy"
-                        skjulInneverende={privatModus && erVeileder}
-                    />
                 </div>
             </div>
-            <VisValgtFilter className="vis-mobil" />
+            <div className="verktoylinje__verktoy-container">
+                <VisValgtFilter />
+            </div>
+            <div className="verktoylinje__verktoy-container">
+                <PeriodeFilter
+                    className="verktoylinje__verktoy"
+                    skjulInneverende={privatModus && erVeileder}
+                />
+            </div>
         </div>
     );
 }
