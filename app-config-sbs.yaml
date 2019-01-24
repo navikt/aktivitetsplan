@@ -34,11 +34,6 @@ fasitResources:
     propertyMap:
       url: PUBLIC_VEILARBAKTIVITET_URL
 
-  - alias: veilarboppfolgingproxyAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBOPPFOLGING_URL
-
   - alias: veilarbdialogproxyAPI
     resourceType: restservice
     propertyMap:
