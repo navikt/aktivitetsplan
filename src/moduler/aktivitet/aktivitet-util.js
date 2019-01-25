@@ -23,15 +23,15 @@ export function compareAktivitet(a, b) {
 }
 
 export function erNyEndringIAktivitet(aktivitet, lestInformasjon) {
+    if (!lestInformasjon) {
+        return true;
+    }
+
     const endretDatoAktivietetMoment = moment(
         aktivitet.endretDato || aktivitet.opprettetDato
     );
 
-    if (
-        endretDatoAktivietetMoment &&
-        lestInformasjon &&
-        moment(lestInformasjon.tidspunkt)
-    ) {
+    if (endretDatoAktivietetMoment && moment(lestInformasjon.tidspunkt)) {
         // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfør må
         // vi haen sjekk att opprettet dato ikke ligger fram i tiden
         return (
