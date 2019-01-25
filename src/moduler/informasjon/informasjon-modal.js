@@ -40,26 +40,26 @@ class InformasjonModal extends Component {
                     />
                     <Video />
                     <Ekspanderbartpanel
-                        tittelId="informasjon.tittel.seksjon.1"
-                        htmlTextId="informasjon.informasjonstekst.seksjon.1"
+                        tittelId="informasjon.tittel.seksjon.bruk"
+                        htmlTextId="informasjon.informasjonstekst.seksjon.bruk"
                         border
                     />
 
                     <Ekspanderbartpanel
-                        tittelId="informasjon.tittel.seksjon.2"
-                        htmlTextId="informasjon.informasjonstekst.seksjon.2"
+                        tittelId="informasjon.tittel.seksjon.ytelser"
+                        htmlTextId="informasjon.informasjonstekst.seksjon.ytelser"
                         border
                     />
 
                     <Ekspanderbartpanel
-                        tittelId="informasjon.tittel.seksjon.3"
-                        htmlTextId="informasjon.informasjonstekst.seksjon.3"
+                        tittelId="informasjon.tittel.seksjon.meldekort"
+                        htmlTextId="informasjon.informasjonstekst.seksjon.meldekort"
                         border
                     />
 
                     <Ekspanderbartpanel
-                        tittelId="informasjon.tittel.seksjon.4"
-                        htmlTextId="informasjon.informasjonstekst.seksjon.4"
+                        tittelId="informasjon.tittel.seksjon.personvern"
+                        htmlTextId="informasjon.informasjonstekst.seksjon.personvern"
                         border
                     />
                 </ModalContainer>

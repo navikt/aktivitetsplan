@@ -33,7 +33,7 @@ GodkjennVilkarMedVarsling.propTypes = {
     visVilkar: PT.bool.isRequired,
 };
 
-class RenderBrukerInfoHook extends Component {
+class VidereSendBrukereEllerRenderChildren extends Component {
     componentWillMount() {
         const {
             erVeileder,
@@ -84,7 +84,7 @@ class RenderBrukerInfoHook extends Component {
     }
 }
 
-RenderBrukerInfoHook.defaultProps = {
+VidereSendBrukereEllerRenderChildren.defaultProps = {
     children: null,
     erVeileder: null,
     manuell: null,
@@ -96,7 +96,7 @@ RenderBrukerInfoHook.defaultProps = {
     videreSendTilInfo: false,
 };
 
-RenderBrukerInfoHook.propTypes = {
+VidereSendBrukereEllerRenderChildren.propTypes = {
     children: PT.node,
     erVeileder: PT.bool,
     underOppfolging: PT.bool, // eslint-disable-line react/no-unused-prop-types
@@ -110,4 +110,4 @@ RenderBrukerInfoHook.propTypes = {
     history: AppPT.history.isRequired,
 };
 
-export default withRouter(RenderBrukerInfoHook);
+export default withRouter(VidereSendBrukereEllerRenderChildren);

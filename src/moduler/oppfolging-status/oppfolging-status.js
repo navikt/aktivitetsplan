@@ -32,7 +32,7 @@ import {
     selectLestInformasjon,
     selectLestStatus,
 } from '../lest/lest-reducer';
-import RenderBrukerInfo from './render-bruker-info';
+import VidereSendBrukereEllerRenderChildren from './videre-send-bruker-eller-render-children';
 import { INFORMASJON_MODAL_VERSJON } from '../informasjon/informasjon-modal';
 
 class OppfolgingStatus extends Component {
@@ -60,7 +60,7 @@ class OppfolgingStatus extends Component {
                 ]}
             >
                 <div className="fullbredde">
-                    <RenderBrukerInfo
+                    <VidereSendBrukereEllerRenderChildren
                         videreSendTilInfo={videreSendTilInfo}
                         {...props}
                     />
