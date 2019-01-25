@@ -16,6 +16,13 @@ const oppfolging = {
         {
             aktorId: '1234567988888',
             veileder: null,
+            startDato: '2018-01-30T10:46:10.971+01:00',
+            sluttDato: '2018-01-31T10:46:10.971+01:00',
+            begrunnelse: null,
+        },
+        {
+            aktorId: '1234567988888',
+            veileder: null,
             startDato: '2018-01-31T10:46:10.971+01:00',
             sluttDato: null,
             begrunnelse: null,
