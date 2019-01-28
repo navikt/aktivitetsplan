@@ -36,7 +36,7 @@ export function erNyEndringIAktivitet(aktivitet, lestInformasjon) {
         // vi haen sjekk att opprettet dato ikke ligger fram i tiden
         return (
             endretDatoAktivietetMoment.isAfter(lestInformasjon.tidspunkt) &&
-            endretDatoAktivietetMoment.isBefore(moment())
+            endretDatoAktivietetMoment.isBefore(moment().add(5, 'minutes'))
         );
     }
     return false;
