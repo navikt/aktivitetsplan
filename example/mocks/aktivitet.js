@@ -1,4 +1,6 @@
+import moment from 'moment';
 import { rndId } from './utils';
+import me from './me';
 
 const aktiviteter = [
     wrapAktivitet({
@@ -13,7 +15,7 @@ const aktiviteter = [
         tilDato: '2030-01-24T12:00:00+01:00',
         opprettetDato: '2018-01-31T10:46:51.622+01:00',
         endretDato: '2018-09-30T10:46:51.622+01:00',
-        endretAv: 'Z123456',
+        endretAv: 'z990207',
         historisk: false,
         avtalt: true,
         arbeidsgiver: 'Sabeltann',
@@ -114,6 +116,13 @@ function valueOrNull(potentialValue) {
     return null;
 }
 
+function valueOrNow(potentialValue) {
+    if (potentialValue) {
+        return potentialValue;
+    }
+    return moment.now().toString();
+}
+
 function valueOrFalse(potentialValue) {
     if (potentialValue) {
         return potentialValue;
@@ -134,7 +143,7 @@ function wrapAktivitet(aktivitet) {
         tilDato: valueOrNull(aktivitet.tilDato),
         opprettetDato: valueOrNull(aktivitet.opprettetDato),
         endretDato: valueOrNull(aktivitet.endretDato),
-        endretAv: valueOrNull(aktivitet.endretAv),
+        endretAv: valueOrNow(aktivitet.endretAv),
         historisk: valueOrFalse(aktivitet.historisk),
         avsluttetKommentar: valueOrNull(aktivitet.avsluttetKommentar),
         avtalt: valueOrFalse(aktivitet.avtalt),
@@ -198,7 +207,10 @@ export function oppdaterAktivitet(aktivitetId, aktivitet) {
         akivitet => akivitet.id === aktivitetId
     );
     Object.assign(oldAktivitet, aktivitet);
-    return aktivitet;
+    oldAktivitet.endretDato = moment().toISOString();
+    oldAktivitet.endretAv = me.id;
+
+    return oldAktivitet;
 }
 
 export function publiserReferat(aktivitetId) {
