@@ -47,8 +47,8 @@ class OppfolgingStatus extends Component {
 
         const videreSendTilInfo =
             props.lestStatus === STATUS.OK &&
-            !!props.lestInfo &&
-            props.lestInfo.verdi !== INFORMASJON_MODAL_VERSJON;
+            (!props.lestInfo ||
+                props.lestInfo.verdi !== INFORMASJON_MODAL_VERSJON);
 
         return (
             <Innholdslaster
