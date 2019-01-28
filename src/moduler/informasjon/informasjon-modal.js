@@ -19,7 +19,10 @@ class InformasjonModal extends Component {
     componentWillMount() {
         const { erBruker, lestInfo } = this.props;
 
-        if (erBruker && lestInfo.verdi !== INFORMASJON_MODAL_VERSJON) {
+        if (
+            erBruker &&
+            (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)
+        ) {
             Api.lesInformasjon(INFORMASJON_MODAL_VERSJON);
         }
     }
@@ -68,9 +71,13 @@ class InformasjonModal extends Component {
     }
 }
 
+InformasjonModal.defaultProps = {
+    lestInfo: null,
+};
+
 InformasjonModal.propTypes = {
     erBruker: PT.bool.isRequired,
-    lestInfo: AppPT.lest.isRequired,
+    lestInfo: AppPT.lest,
 };
 
 const mapStateToProps = state => ({
