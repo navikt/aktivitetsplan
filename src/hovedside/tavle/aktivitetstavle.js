@@ -22,7 +22,6 @@ import KolonneFunction from './kolonne/kolonnefunction';
 import AktivitetsKort from './../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
-import { hentSisteInnlogging } from '../../moduler/siste-innlogging/siste-innlogging-reducer';
 import {
     harFeature,
     NYENDRINGIAKTIVITET,
@@ -57,9 +56,6 @@ class AktivitetsTavle extends Component {
             }
             this.props.doHentAktiviteter();
             this.props.doHentArenaAktiviteter();
-            if (this.props.harNyEndringIAktitetFeature) {
-                this.props.doHentSisteInnlogging();
-            }
         }
     }
 
@@ -102,7 +98,6 @@ class AktivitetsTavle extends Component {
 AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
-    doHentSisteInnlogging: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
@@ -126,9 +121,11 @@ const mapStateToProps = state => {
         statusAktiviteter === STATUS.NOT_STARTED &&
         statusArenaAktiviteter === STATUS.NOT_STARTED;
 
+    const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
+
     return {
         erVeileder: selectErVeileder(state),
-        avhengigheter: [statusAktiviteter, statusArenaAktiviteter],
+        avhengigheter,
         reducersNotStarted,
         harNyEndringIAktitetFeature,
     };
@@ -137,7 +134,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     doHentAktiviteter: () => hentAktiviteter()(dispatch),
     doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch),
-    doHentSisteInnlogging: () => hentSisteInnlogging()(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsTavle);

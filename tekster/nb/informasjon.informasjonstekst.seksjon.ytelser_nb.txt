@@ -1,0 +1,8 @@
+<p>Du kan ikke ha dialog med veilederen i aktivitetsplanen om ytelser du mottar fra NAV, økonomisk sosialhjelp, bolig eller andre ting som ikke handler om jobbrettede aktiviteter.</p>
+
+<p>
+ <ul>
+    <li>Bruk nav.no til å finne svar på slike spørsmål. Hvis du ikke finner svaret der, kan du ringe oss på 55 55 33 33.</li>
+    <li>Hvis du ikke følger opp avtalte aktiviteter, vil det få konsekvenser for videre oppfølging og dine økonomiske ytelser kan bli stanset.</li>
+ </ul>
+</p>

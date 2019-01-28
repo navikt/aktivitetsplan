@@ -1,104 +1,67 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import {
-    Innholdstittel,
-    Normaltekst,
-    Undertittel,
-} from 'nav-frontend-typografi';
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
-import { ONBOARDING_VIDEO_URL } from '../../environment';
 import { HtmlText } from '../../text';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
-import VilkarHistorikk from '../vilkar/vilkar-historikk';
-import { hentHistoriskeVilkar } from '../vilkar/historiske-vilkar';
-import {
-    selectHistoriskeVilkar,
-    selectHistoriskeVilkarStatus,
-} from '../vilkar/historiske-vilkar-selector';
+import Ekspanderbartpanel from '../../felles-komponenter/utils/ekspanderbartpanel-med-tittel-og-innhold';
+import Video from './video';
+import { selectLestInformasjon } from '../lest/lest-reducer';
+import * as Api from './../lest/lest-api';
+import { selectErBruker } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import Accordion from '../../felles-komponenter/accordion';
-import { autobind } from '../../utils';
+
+export const INFORMASJON_MODAL_VERSJON = 'v1';
 
 class InformasjonModal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            apen: false,
-        };
-        autobind(this);
-    }
+    componentWillMount() {
+        const { erBruker, lestInfo } = this.props;
 
-    componentDidMount() {
-        const { doHentHistoriskeVilkar } = this.props;
-        doHentHistoriskeVilkar();
-    }
-
-    onClick() {
-        this.setState({
-            apen: !this.state.apen,
-        });
+        if (erBruker && lestInfo.verdi !== INFORMASJON_MODAL_VERSJON) {
+            Api.lesInformasjon(INFORMASJON_MODAL_VERSJON);
+        }
     }
 
     render() {
-        const { historiskeVilkar, historiskeVilkarStatus } = this.props;
-        const accordionLabelId = this.state.apen
-            ? 'informasjon.videokontent.skjul.tekst'
-            : 'informasjon.videokontent.vis.tekst';
-
         return (
             <Modal
                 contentLabel="informasjon-modal"
-                contentClass="informasjon-visnign"
+                contentClass="informasjon-visning"
             >
                 <ModalContainer className="informasjon-modal-container">
                     <Innholdstittel>
-                        <FormattedMessage id="informasjon.tittel" />
+                        <FormattedMessage id="informasjon.ny_tittel" />
                     </Innholdstittel>
-                    <Normaltekst>
-                        <FormattedMessage id="informasjon.hjelpetekst" />
-                    </Normaltekst>
-                    <iframe
-                        title="onboarding-video"
-                        frameBorder="0"
-                        scrolling="no"
-                        src={ONBOARDING_VIDEO_URL}
-                        className="video-player"
-                    />
-                    <Accordion
-                        className="videotekst-accordion"
-                        labelId={accordionLabelId}
-                        onClick={this.onClick}
-                    >
-                        <HtmlText
-                            className="mellomrom"
-                            id="informasjon.videokontent.text"
-                        />
-                    </Accordion>
-                    <Undertittel>
-                        <FormattedMessage id="informasjon.informasjonstekst.tittel" />
-                    </Undertittel>
                     <HtmlText
                         className="mellomrom"
-                        id="informasjon.informasjonstekst.tekst"
+                        id="informasjon.ny_hjelpetekst"
                     />
-                    <Innholdslaster
-                        spinnerStorrelse="S"
-                        avhengigheter={[historiskeVilkarStatus]}
-                    >
-                        <VisibleIfDiv
-                            visible={historiskeVilkar.length > 0}
-                            className="vilkar__historikk-container"
-                        >
-                            <hr className="vilkar__delelinje" />
-                            <VilkarHistorikk
-                                resterendeVilkar={historiskeVilkar}
-                            />
-                        </VisibleIfDiv>
-                    </Innholdslaster>
+                    <Video />
+                    <Ekspanderbartpanel
+                        tittelId="informasjon.tittel.seksjon.bruk"
+                        htmlTextId="informasjon.informasjonstekst.seksjon.bruk"
+                        border
+                    />
+
+                    <Ekspanderbartpanel
+                        tittelId="informasjon.tittel.seksjon.ytelser"
+                        htmlTextId="informasjon.informasjonstekst.seksjon.ytelser"
+                        border
+                    />
+
+                    <Ekspanderbartpanel
+                        tittelId="informasjon.tittel.seksjon.meldekort"
+                        htmlTextId="informasjon.informasjonstekst.seksjon.meldekort"
+                        border
+                    />
+
+                    <Ekspanderbartpanel
+                        tittelId="informasjon.tittel.seksjon.personvern"
+                        htmlTextId="informasjon.informasjonstekst.seksjon.personvern"
+                        border
+                    />
                 </ModalContainer>
             </Modal>
         );
@@ -106,18 +69,13 @@ class InformasjonModal extends Component {
 }
 
 InformasjonModal.propTypes = {
-    doHentHistoriskeVilkar: PT.func.isRequired,
-    historiskeVilkarStatus: AppPT.status.isRequired,
-    historiskeVilkar: PT.arrayOf(AppPT.vilkar).isRequired,
+    erBruker: PT.bool.isRequired,
+    lestInfo: AppPT.lest.isRequired,
 };
 
 const mapStateToProps = state => ({
-    historiskeVilkarStatus: selectHistoriskeVilkarStatus(state),
-    historiskeVilkar: selectHistoriskeVilkar(state),
+    lestInfo: selectLestInformasjon(state),
+    erBruker: selectErBruker(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    doHentHistoriskeVilkar: () => dispatch(hentHistoriskeVilkar()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(InformasjonModal);
+export default connect(mapStateToProps)(InformasjonModal);
