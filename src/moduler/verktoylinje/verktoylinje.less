@@ -54,7 +54,6 @@
         }
 
         .knappelenke {
-            padding-left: 0.5rem;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
 
@@ -64,6 +63,15 @@
 
             span {
                 border: 0;
+            }
+
+            &.knappelenke--disabled {
+                color: @navGra40;
+                cursor: default;
+
+                span:hover {
+                    border-bottom: 0;
+                }
             }
         }
 

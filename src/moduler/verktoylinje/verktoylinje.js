@@ -88,9 +88,12 @@ function Verktoylinje({
             <div className="verktoylinje__verktoy-container">
                 <div className="indre">
                     <Lenke
-                        href="/vilkar"
                         hidden={harFeature(BRUKERVILKAR, features)}
-                        className="knappelenke"
+                        href="/vilkar"
+                        className={`knappelenke ${disabled ||
+                        ikkeTilgangTilVilkar
+                            ? 'knappelenke--disabled'
+                            : ''}`}
                         disabled={disabled || ikkeTilgangTilVilkar}
                     >
                         <FormattedMessage id="navigasjon.vilkar" />
