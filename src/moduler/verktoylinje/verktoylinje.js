@@ -25,7 +25,10 @@ import {
 import TallAlert from '../../felles-komponenter/tall-alert';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 import NavigasjonslinjeKnapp from '../../hovedside/navigasjonslinje/navigasjonslinje-knapp';
-import { selectDialoger } from '../../moduler/dialog/dialog-selector';
+import {
+    selectDialoger,
+    selectHarTilgangTilDialog,
+} from '../../moduler/dialog/dialog-selector';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
 import {
     BRUKERVILKAR,
@@ -34,6 +37,7 @@ import {
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import VisValgtFilter from '../../moduler/filtrering/filter-vis-label';
+import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 
 function Verktoylinje({
     viserHistoriskPeriode,
@@ -47,6 +51,8 @@ function Verktoylinje({
     kanHaDialog,
     ikkeFinnesDialogerIHistoriskPeriode,
     ikkeTilgangTilVilkar,
+    harTilgangTilAktiviteter,
+    tilgangTilDialog,
 }) {
     return (
         <div className="verktoylinje">
@@ -56,6 +62,7 @@ function Verktoylinje({
                     className="knappelenke aktivitetskort__henvendelser"
                     disabled={
                         disabled ||
+                        !tilgangTilDialog ||
                         !kanHaDialog ||
                         ikkeFinnesDialogerIHistoriskPeriode
                     }
@@ -79,6 +86,7 @@ function Verktoylinje({
                         viserHistoriskPeriode ||
                         privatModus ||
                         erPrivatBruker ||
+                        !harTilgangTilAktiviteter ||
                         !harSkriveTilgang
                     }
                 >
@@ -88,16 +96,21 @@ function Verktoylinje({
             <div className="verktoylinje__verktoy-container">
                 <div className="indre">
                     <Lenke
-                        href="/vilkar"
                         hidden={harFeature(BRUKERVILKAR, features)}
-                        className="knappelenke"
+                        href="/vilkar"
+                        className={`knappelenke ${disabled ||
+                        ikkeTilgangTilVilkar
+                            ? 'knappelenke--disabled'
+                            : ''}`}
                         disabled={disabled || ikkeTilgangTilVilkar}
                     >
                         <FormattedMessage id="navigasjon.vilkar" />
                     </Lenke>
                     <Lenke
                         href="/informasjon"
-                        className="knappelenke"
+                        className={`knappelenke ${disabled
+                            ? 'knappelenke--disabled'
+                            : ''}`}
                         disabled={disabled}
                     >
                         <FormattedMessage
@@ -146,6 +159,8 @@ Verktoylinje.propTypes = {
     kanHaDialog: PT.bool.isRequired,
     ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
     ikkeTilgangTilVilkar: PT.bool.isRequired,
+    harTilgangTilAktiviteter: PT.bool.isRequired,
+    tilgangTilDialog: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -173,6 +188,8 @@ const mapStateToProps = state => {
             selectViserInneverendePeriode(state),
         kanHaDialog: underOppfolging || historiskPeriode,
         antallUlesteDialoger: dialoger,
+        harTilgangTilAktiviteter: selectHarTilgangTilAktiviteter(state),
+        tilgangTilDialog: selectHarTilgangTilDialog(state),
         ikkeFinnesDialogerIHistoriskPeriode:
             dialoger.length < 1 && !selectViserInneverendePeriode(state),
         ikkeTilgangTilVilkar,
