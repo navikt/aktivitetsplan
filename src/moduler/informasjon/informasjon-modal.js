@@ -12,15 +12,17 @@ import { selectLestInformasjon } from '../lest/lest-reducer';
 import * as Api from './../lest/lest-api';
 import { selectErBruker } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
+import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 
 class InformasjonModal extends Component {
     componentWillMount() {
-        const { erBruker, lestInfo } = this.props;
+        const { erBruker, underOppfolging, lestInfo } = this.props;
 
         if (
             erBruker &&
+            underOppfolging &&
             (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)
         ) {
             Api.lesInformasjon(INFORMASJON_MODAL_VERSJON);
@@ -77,12 +79,14 @@ InformasjonModal.defaultProps = {
 
 InformasjonModal.propTypes = {
     erBruker: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
     lestInfo: AppPT.lest,
 };
 
 const mapStateToProps = state => ({
     lestInfo: selectLestInformasjon(state),
     erBruker: selectErBruker(state),
+    underOppfolging: selectErUnderOppfolging(state),
 });
 
 export default connect(mapStateToProps)(InformasjonModal);
