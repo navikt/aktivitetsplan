@@ -22,7 +22,10 @@ import {
     SAMTALEREFERAT_TYPE,
     MOTE_TYPE,
 } from '../../../constant';
-import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import {
+    selectErBruker,
+    selectIdentitetSlice,
+} from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 import { selectLestAktivitetsplan } from '../../lest/lest-reducer';
@@ -188,9 +191,12 @@ const mapStateToProps = (state, props) => {
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
         aktivitet => aktivitet.id === props.aktivitet.id
     );
+
+    const me = selectIdentitetSlice(state).data;
+
     const harEndringerIAktivitet =
         harNyEndringIAktitetFeature &&
-        erNyEndringIAktivitet(props.aktivitet, lest) &&
+        erNyEndringIAktivitet(props.aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;
     return {
         forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
