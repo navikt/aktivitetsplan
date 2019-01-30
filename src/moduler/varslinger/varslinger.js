@@ -12,7 +12,6 @@ import {
     HiddenIfAdvarselMedLenke,
 } from './varsel-alertstriper';
 import {
-    selectVilkarMaBesvares,
     selectErUnderOppfolging,
     selectErBrukerManuell,
     selectReservasjonKRR,
@@ -69,7 +68,6 @@ class Varslinger extends Component {
             innsideAvhengigheter,
             underOppfolging,
             brukerErAktivIArena,
-            vilkarMaBesvares,
             brukerErManuell,
             reservertIKRR,
             brukerErEskalert,
@@ -119,16 +117,6 @@ class Varslinger extends Component {
                     className="varsling"
                 />
                 <HiddenIfVarsling
-                    hidden={
-                        reservertIKRR ||
-                        !vilkarMaBesvares ||
-                        brukerErManuell ||
-                        !underOppfolging
-                    }
-                    tekstId="oppfolging.vilkar-ikke-godkjent"
-                    className="varsling"
-                />
-                <HiddenIfVarsling
                     hidden={!reservertIKRR}
                     tekstId="oppfolging.bruker-reservert-i-krr"
                     className="varsling"
@@ -174,7 +162,6 @@ Varslinger.defaultProps = {
     erBruker: false,
     underOppfolging: false,
     brukerErAktivIArena: false,
-    vilkarMaBesvares: false,
     brukerErManuell: false,
     reservertIKRR: false,
     brukerErEskalert: false,
@@ -191,7 +178,6 @@ Varslinger.propTypes = {
     innsideAvhengigheter: AppPT.avhengigheter.isRequired,
     underOppfolging: PT.bool,
     brukerErAktivIArena: PT.bool,
-    vilkarMaBesvares: PT.bool,
     brukerErManuell: PT.bool,
     reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
@@ -220,7 +206,6 @@ const mapStateToProps = state => {
         ],
         innsideAvhengigheter: [selectOppfoelgingsstatusStatus(state)],
         brukerErAktivIArena: selectErBrukerAktivIArena(state),
-        vilkarMaBesvares: selectVilkarMaBesvares(state),
         underOppfolging: selectErUnderOppfolging(state),
         brukerErManuell: selectErBrukerManuell(state),
         reservertIKRR: selectReservasjonKRR(state),
