@@ -22,7 +22,7 @@ export function compareAktivitet(a, b) {
     return b.opprettetDato.localeCompare(a.opprettetDato);
 }
 
-export function erNyEndringIAktivitet(aktivitet, lestInformasjon) {
+export function erNyEndringIAktivitet(aktivitet, lestInformasjon, me) {
     if (!lestInformasjon) {
         return true;
     }
@@ -32,12 +32,19 @@ export function erNyEndringIAktivitet(aktivitet, lestInformasjon) {
     );
 
     if (endretDatoAktivietetMoment && moment(lestInformasjon.tidspunkt)) {
-        // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfør må
-        // vi haen sjekk att opprettet dato ikke ligger fram i tiden
-        return (
+        // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfor må
+        // vi ha en sjekk att opprettet dato ikke ligger fram i tiden
+        const endretSidenSist =
             endretDatoAktivietetMoment.isAfter(lestInformasjon.tidspunkt) &&
-            endretDatoAktivietetMoment.isBefore(moment().add(5, 'minutes'))
-        );
+            endretDatoAktivietetMoment.isBefore(moment().add(5, 'minutes'));
+
+        const sisteEndringVarFraMeg =
+            (aktivitet.lagtInnAv === 'BRUKER' && me.erBruker) ||
+            (aktivitet.lagtInnAv === 'NAV' &&
+                me.erVeileder &&
+                aktivitet.endretAv === me.id);
+
+        return endretSidenSist && !sisteEndringVarFraMeg;
     }
     return false;
 }
