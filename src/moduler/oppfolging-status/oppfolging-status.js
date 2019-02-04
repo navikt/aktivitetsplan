@@ -56,7 +56,6 @@ class OppfolgingStatus extends Component {
                     props.oppfolgingStatus,
                     props.identitetStatus,
                     props.toggleStatus,
-                    props.lestStatus,
                 ]}
             >
                 <div className="fullbredde">
