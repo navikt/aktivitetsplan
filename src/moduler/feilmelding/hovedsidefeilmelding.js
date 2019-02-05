@@ -5,6 +5,7 @@ import { selectAktivitetListeFeilMelding } from '../aktivitet/aktivitetliste-sel
 import { selectIdentitetFeilMelding } from '../identitet/identitet-selector';
 import { selectOppfolgingFeilmeldinger } from '../oppfolging-status/oppfolging-selector';
 import Feilmelding from './feilmelding';
+import { selectLestFeilMelding } from '../lest/lest-reducer';
 
 function HovedsideFeilmelding({ hovedsidefeilmeldinger }) {
     return (
@@ -19,10 +20,12 @@ const mapStateToProps = state => {
     const oppfolgingFeilmeldinger = selectOppfolgingFeilmeldinger(state);
     const identitetFeilmeldinger = selectIdentitetFeilMelding(state);
     const feiliArenaOgAktivitet = selectAktivitetListeFeilMelding(state);
+    const feiliLest = selectLestFeilMelding(state);
     return {
         hovedsidefeilmeldinger: oppfolgingFeilmeldinger.concat(
             identitetFeilmeldinger,
-            feiliArenaOgAktivitet
+            feiliArenaOgAktivitet,
+            feiliLest
         ),
     };
 };
