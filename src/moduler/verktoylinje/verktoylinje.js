@@ -38,6 +38,13 @@ import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if
 import Lenke from '../../felles-komponenter/utils/lenke';
 import VisValgtFilter from '../../moduler/filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
+import loggEvent from '../../felles-komponenter/utils/logging';
+
+const LOGGING_ANTALLBRUKERE_DIALOG = 'aktivitetsplan.antallBrukere.dialog';
+
+function loggingAntallBrukereDialog(typeEvent, hvem) {
+    loggEvent(typeEvent, hvem);
+}
 
 function Verktoylinje({
     viserHistoriskPeriode,
@@ -67,6 +74,12 @@ function Verktoylinje({
                         ikkeFinnesDialogerIHistoriskPeriode
                     }
                     aria-live="polite"
+                    onClick={() => {
+                        loggingAntallBrukereDialog(
+                            LOGGING_ANTALLBRUKERE_DIALOG,
+                            { erVeileder }
+                        );
+                    }}
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
                         {antallUlesteDialoger}
