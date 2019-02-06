@@ -22,9 +22,9 @@ import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse, { nyDialogFormNavn } from './dialog-henvendelse';
 import FnrProvider from './../../../bootstrap/fnr-provider';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import { endreDialogFormNavn, nyHenvendelseDialogFormNavn } from './dialog';
+import { selectUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 
 function DialogModal({
     harNyDialogEllerValgtDialog,
@@ -37,7 +37,7 @@ function DialogModal({
     harValgtDialog,
     historiskVisning,
     history,
-    privateModus,
+    underOppfolging,
     dialogFeilmeldinger,
     intl,
     formIsDirty,
@@ -87,7 +87,7 @@ function DialogModal({
                                 harNyDialogEllerValgtDialog
                             }
                             historiskVisning={historiskVisning}
-                            privateModus={privateModus}
+                            underOppfolging={underOppfolging}
                         />
                         <DialogHenvendelse
                             valgtDialog={valgtDialog}
@@ -124,7 +124,7 @@ DialogModal.propTypes = {
     tilpasseStorrelseHistoriskVisning: PT.bool.isRequired,
     history: AppPT.history.isRequired,
     dialogFeilmeldinger: PT.array,
-    privateModus: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
     lukkModal: PT.func.isRequired,
     intl: intlShape.isRequired,
     formIsDirty: PT.bool.isRequired,
@@ -149,7 +149,7 @@ const mapStateToProps = (state, props) => {
         tilpasseStorrelseHistoriskVisning:
             historiskVisning &&
             selectTilpasseDialogModalHistoriskVisning(state),
-        privateModus: erPrivateBrukerSomSkalSkrusAv(state),
+        underOppfolging: selectUnderOppfolging(state),
         dialogFeilmeldinger: selectDialogFeilmeldinger(state),
         formIsDirty:
             isDirty(nyDialogFormNavn)(state) ||
