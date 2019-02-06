@@ -54,11 +54,9 @@ class VidereSendBrukereEllerRenderChildren extends Component {
             vilkarMaBesvares,
             brukerHarAvslatt,
             visVilkar,
-            privateModus,
             vilkarToggletAv,
         } = this.props;
-        const skalVilkaarBesvares =
-            vilkarMaBesvares && !(privateModus || vilkarToggletAv);
+        const skalVilkaarBesvares = vilkarMaBesvares && !vilkarToggletAv;
 
         if (erVeileder) {
             return (
@@ -104,7 +102,6 @@ VidereSendBrukereEllerRenderChildren.propTypes = {
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool,
-    privateModus: PT.bool.isRequired,
     vilkarToggletAv: PT.bool.isRequired,
     videreSendTilInfo: PT.bool.isRequired,
     history: AppPT.history.isRequired,

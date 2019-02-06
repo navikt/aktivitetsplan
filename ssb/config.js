@@ -1,7 +1,6 @@
 export const CONTEXT_PATH = '/aktivitetsplan';
 export const API_BASE_URL = '/aktivitetsplan/api';
 
-export const TILLAT_SLETTING = true;
 export const VIS_MALER = false;
 export const getDynamicBasePath = () => null;
 

@@ -1,11 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Knapp } from 'nav-frontend-knapper';
-import { FormattedMessage } from 'react-intl';
-import { withRouter } from 'react-router-dom';
 import UnderelementerForAktivitet from './underelement-for-aktivitet/underelementer-for-aktivitet';
 import * as AppPT from '../../../proptypes';
-import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import AvtaltContainer from './avtalt-container/avtalt-container';
 import {
@@ -23,11 +19,9 @@ import { trengerBegrunnelse } from '../aktivitet-util';
 
 function Aktivitetvisning({
     aktivitet,
-    tillatSletting,
     tillatEndring,
-    history,
     laster,
-    privateMode,
+    underOppfolging,
 }) {
     const arenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
@@ -38,24 +32,6 @@ function Aktivitetvisning({
     const visBegrunnelse =
         !arenaAktivitet &&
         trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
-
-    const AktivitetvisningFooter = ({ visible }) =>
-        <ModalFooter visible={visible}>
-            <Knapp
-                onClick={() => history.push(`aktivitet/slett/${aktivitet.id}`)}
-                className="knapp-liten modal-footer__knapp"
-            >
-                <FormattedMessage id="aktivitetvisning.slett-knapp" />
-            </Knapp>
-        </ModalFooter>;
-
-    AktivitetvisningFooter.propTypes = {
-        visible: PT.bool,
-    };
-
-    AktivitetvisningFooter.defaultProps = {
-        visible: true,
-    };
 
     return (
         <div>
@@ -75,8 +51,8 @@ function Aktivitetvisning({
                     valgtAktivitet={aktivitet}
                     arenaAktivitet={arenaAktivitet}
                     tillatEndring={tillatEndring}
+                    underOppfolging={underOppfolging}
                     laster={laster}
-                    privateMode={privateMode}
                 />
 
                 <AvtaltContainer
@@ -100,10 +76,6 @@ function Aktivitetvisning({
                     className="aktivitetvisning__underseksjon"
                 />
             </ModalContainer>
-
-            <AktivitetvisningFooter
-                visible={tillatSletting && !arenaAktivitet}
-            />
         </div>
     );
 }
@@ -114,11 +86,9 @@ Aktivitetvisning.defaultProps = {
 
 Aktivitetvisning.propTypes = {
     aktivitet: AppPT.aktivitet,
-    tillatSletting: PT.bool.isRequired,
     tillatEndring: PT.bool.isRequired,
-    history: AppPT.history.isRequired,
     laster: PT.bool.isRequired,
-    privateMode: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
-export default withRouter(lazyHOC(Aktivitetvisning));
+export default lazyHOC(Aktivitetvisning);

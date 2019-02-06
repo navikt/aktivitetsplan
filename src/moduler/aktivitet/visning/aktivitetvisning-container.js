@@ -4,8 +4,6 @@ import { isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import PT from 'prop-types';
-import { TILLAT_SLETTING } from '~config'; // eslint-disable-line
-import { moment } from '../../../utils';
 import {
     hentAktivitet,
     settForrigeAktiveAktivitetId,
@@ -20,7 +18,6 @@ import {
 } from '../aktivitetliste-selector';
 import {
     selectErUnderOppfolging,
-    selectOppfolgingUtgang,
     selectOppfolgingStatus,
 } from '../../oppfolging-status/oppfolging-selector';
 import Modal from '../../../felles-komponenter/modal/modal';
@@ -34,7 +31,6 @@ import {
 } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
 import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-status-form';
@@ -91,7 +87,9 @@ class AktivitetvisningContainer extends Component {
 
     componentWillUnmount() {
         const { valgtAktivitet, doSettForrigeAktiveAktivitetId } = this.props;
-        doSettForrigeAktiveAktivitetId(valgtAktivitet.id);
+        if (valgtAktivitet) {
+            doSettForrigeAktiveAktivitetId(valgtAktivitet.id);
+        }
     }
 
     render() {
@@ -137,11 +135,11 @@ AktivitetvisningContainer.propTypes = {
     doSettForrigeAktiveAktivitetId: PT.func.isRequired,
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
     doLukkDialogEllerHistorikk: PT.func.isRequired,
-    privateMode: PT.bool.isRequired,
     history: AppPT.history.isRequired,
     intl: intlShape.isRequired,
     formIsDirty: PT.bool.isRequired,
     lukkModal: PT.func.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
 AktivitetvisningContainer.defaultProps = {
@@ -162,17 +160,6 @@ const mapStateToProps = (state, props) => {
         ? selectArenaAktivitetStatus(state)
         : selectAktivitetStatus(state);
 
-    const aktivitetErEtterOppfolgingUtgang = valgtAktivitet
-        ? moment(selectOppfolgingUtgang(state)).isAfter(
-              valgtAktivitet.opprettetDato
-          )
-        : false;
-
-    const tillatSletting =
-        valgtAktivitet &&
-        !valgtAktivitet.historisk &&
-        TILLAT_SLETTING &&
-        (!selectErUnderOppfolging(state) || aktivitetErEtterOppfolgingUtgang);
     const laster = aktivitetDataStatus !== STATUS.OK;
 
     return {
@@ -183,11 +170,10 @@ const mapStateToProps = (state, props) => {
             // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena
             valgtAktivitet ? STATUS.OK : STATUS.PENDING,
         ],
-        privateMode: erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
         valgtAktivitet,
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
-        tillatSletting,
         laster,
+        underOppfolging: selectErUnderOppfolging(state),
         formIsDirty:
             isDirty(AKTIVITET_STATUS_FORM_NAME)(state) ||
             isDirty(AVTALT_AKTIVITET_FORM_NAME)(state) ||

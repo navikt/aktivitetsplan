@@ -5,12 +5,12 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { STATUS } from '../../../ducks/utils';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
+import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 
-function LagreAktivitet({ venter, privateMode }) {
+function LagreAktivitet({ venter, underOppfolging }) {
     return (
         <div className="aktivitetskjema__lagre-knapp">
-            <Hovedknapp spinner={venter} disabled={venter || privateMode}>
+            <Hovedknapp spinner={venter} disabled={venter || !underOppfolging}>
                 <FormattedMessage id="aktivitet-form.lagre" />
             </Hovedknapp>
         </div>
@@ -19,7 +19,7 @@ function LagreAktivitet({ venter, privateMode }) {
 
 LagreAktivitet.propTypes = {
     venter: PT.bool.isRequired,
-    privateMode: PT.bool.isRequired, // todo remove me
+    underOppfolging: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -28,7 +28,7 @@ const mapStateToProps = state => {
         venter: !(
             aktivitetStatus === STATUS.OK || aktivitetStatus === STATUS.ERROR
         ),
-        privateMode: erPrivateBrukerSomSkalSkrusAv(state),
+        underOppfolging: selectErUnderOppfolging(state),
     };
 };
 

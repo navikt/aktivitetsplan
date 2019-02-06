@@ -32,7 +32,7 @@ function AktivitetinformasjonVisning({
     valgtAktivitet,
     tillatEndring,
     laster,
-    privateMode,
+    underOppfolging,
 }) {
     const { tittel, type, arenaAktivitet } = valgtAktivitet;
 
@@ -62,7 +62,7 @@ function AktivitetinformasjonVisning({
                     visible={tillatEndring && !arenaAktivitet}
                     type="hoved"
                     href={endreAktivitetRoute(valgtAktivitet.id)}
-                    disabled={laster || privateMode}
+                    disabled={laster || !underOppfolging}
                 >
                     <FormattedMessage id="aktivitetvisning.endre-knapp" />
                 </Lenkeknapp>
@@ -76,7 +76,7 @@ AktivitetinformasjonVisning.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     tillatEndring: PT.bool.isRequired,
     laster: PT.bool.isRequired,
-    privateMode: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
 export default AktivitetinformasjonVisning;

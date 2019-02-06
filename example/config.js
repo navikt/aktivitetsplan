@@ -2,8 +2,6 @@ export const API_BASE_URL = '/veilarbaktivitetsplanfs/api';
 
 export const CONTEXT_PATH = '/aktivitetsplanfelles';
 
-export const TILLAT_SLETTING = true;
-
 export const TILLAT_SET_AVTALT = true;
 
 export const VIS_SIDEBANNER = true;

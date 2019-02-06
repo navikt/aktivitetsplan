@@ -5,12 +5,10 @@ import { selectFeatureData } from './feature-selector';
 // Use constants for all features. Makes it easier when cleaning up old toggles.
 // Remember to add you feature to 'ALL_FEATURES' which ensures the feature is looked up in unleash.
 export const BRUKERVILKAR = 'aktivitetsplan.brukervilkar';
-export const VERKTOYLINJE = 'aktivitetsplan.verktoylinje';
 export const SKRUAVPRIVATMODUS = 'aktivitetsplan.skruavprivatmodus';
 export const NYENDRINGIAKTIVITET = 'aktivitetsplan.nyendringiaktivitet';
 export const ALL_FEATURES = [
     BRUKERVILKAR,
-    VERKTOYLINJE,
     SKRUAVPRIVATMODUS,
     NYENDRINGIAKTIVITET,
 ];

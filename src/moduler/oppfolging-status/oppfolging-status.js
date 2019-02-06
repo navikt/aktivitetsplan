@@ -18,7 +18,6 @@ import {
     selectErVeileder,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
-import { erPrivateBrukerSomSkalSkrusAv } from '../privat-modus/privat-modus-selector';
 import {
     selectFeatureData,
     selectFeatureStatus,
@@ -81,7 +80,6 @@ OppfolgingStatus.propTypes = {
     doHentOppfolging: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
     doHentLest: PT.func.isRequired,
-    privateModus: PT.bool.isRequired,
     vilkarToggletAv: PT.bool.isRequired,
     lestInfo: AppPT.lest,
 };
@@ -94,7 +92,6 @@ const mapStateToProps = state => ({
     vilkarMaBesvares: selectVilkarMaBesvares(state),
     oppfolgingStatus: selectOppfolgingStatus(state),
     identitetStatus: selectIdentitetStatus(state),
-    privateModus: erPrivateBrukerSomSkalSkrusAv(state),
     vilkarToggletAv: harFeature(BRUKERVILKAR, selectFeatureData(state)),
     toggleStatus: selectFeatureStatus(state),
     lestStatus: selectLestStatus(state),

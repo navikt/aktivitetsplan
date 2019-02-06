@@ -5,22 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
-import {
-    erPrivateBrukerSomSkalSkrusAv,
-    selectErPrivatModus,
-} from '../privat-modus/privat-modus-selector';
-import {
-    selectViserHistoriskPeriode,
-    selectViserInneverendePeriode,
-} from '../filtrering/filter/filter-selector';
-import {
-    selectErBruker,
-    selectErVeileder,
-} from '../identitet/identitet-selector';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectErVeileder } from '../identitet/identitet-selector';
 import {
     selectErUnderOppfolging,
     selectHarSkriveTilgang,
-    selectVilkarMaBesvares,
 } from '../oppfolging-status/oppfolging-selector';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
@@ -41,18 +30,12 @@ import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector'
 
 function Verktoylinje({
     viserHistoriskPeriode,
-    privatModus,
-    erVeileder,
+    underOppfolging,
     harSkriveTilgang,
-    erPrivatBruker,
     features,
-    disabled,
     antallUlesteDialoger,
-    kanHaDialog,
-    ikkeFinnesDialogerIHistoriskPeriode,
-    ikkeTilgangTilVilkar,
-    harTilgangTilAktiviteter,
-    tilgangTilDialog,
+    aktivitetLaster,
+    dialogLaster,
 }) {
     return (
         <div className="verktoylinje">
@@ -60,12 +43,7 @@ function Verktoylinje({
                 <Lenke
                     href="/dialog"
                     className="knappelenke aktivitetskort__henvendelser"
-                    disabled={
-                        disabled ||
-                        !tilgangTilDialog ||
-                        !kanHaDialog ||
-                        ikkeFinnesDialogerIHistoriskPeriode
-                    }
+                    disabled={!dialogLaster}
                     aria-live="polite"
                 >
                     <TallAlert hidden={antallUlesteDialoger <= 0}>
@@ -84,9 +62,8 @@ function Verktoylinje({
                     href="/aktivitet/ny"
                     disabled={
                         viserHistoriskPeriode ||
-                        privatModus ||
-                        erPrivatBruker ||
-                        !harTilgangTilAktiviteter ||
+                        !underOppfolging ||
+                        !aktivitetLaster ||
                         !harSkriveTilgang
                     }
                 >
@@ -98,21 +75,11 @@ function Verktoylinje({
                     <Lenke
                         hidden={harFeature(BRUKERVILKAR, features)}
                         href="/vilkar"
-                        className={`knappelenke ${disabled ||
-                        ikkeTilgangTilVilkar
-                            ? 'knappelenke--disabled'
-                            : ''}`}
-                        disabled={disabled || ikkeTilgangTilVilkar}
+                        className="knappelenke"
                     >
                         <FormattedMessage id="navigasjon.vilkar" />
                     </Lenke>
-                    <Lenke
-                        href="/informasjon"
-                        className={`knappelenke ${disabled
-                            ? 'knappelenke--disabled'
-                            : ''}`}
-                        disabled={disabled}
-                    >
+                    <Lenke href="/informasjon" className="knappelenke">
                         <FormattedMessage
                             id={
                                 harFeature(BRUKERVILKAR, features)
@@ -126,12 +93,7 @@ function Verktoylinje({
                         lenke="/utskrift"
                         className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
                     />
-                    <Filter
-                        className="verktoylinje__verktoy"
-                        skjulIPrivatModus={
-                            !viserHistoriskPeriode && privatModus && erVeileder
-                        }
-                    />
+                    <Filter className="verktoylinje__verktoy" />
                 </div>
             </div>
             <div className="verktoylinje__verktoy-container">
@@ -140,7 +102,7 @@ function Verktoylinje({
             <div className="verktoylinje__verktoy-container">
                 <PeriodeFilter
                     className="verktoylinje__verktoy"
-                    skjulInneverende={privatModus && erVeileder}
+                    skjulInneverende={!underOppfolging}
                 />
             </div>
         </div>
@@ -149,18 +111,13 @@ function Verktoylinje({
 
 Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
-    privatModus: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
+    aktivitetLaster: PT.bool.isRequired,
+    dialogLaster: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
-    erPrivatBruker: PT.bool.isRequired,
     features: PT.object.isRequired,
-    disabled: PT.bool.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
-    kanHaDialog: PT.bool.isRequired,
-    ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
-    ikkeTilgangTilVilkar: PT.bool.isRequired,
-    harTilgangTilAktiviteter: PT.bool.isRequired,
-    tilgangTilDialog: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -169,30 +126,16 @@ const mapStateToProps = state => {
         .filter(d => dialogFilter(d, state)).length;
     const underOppfolging = selectErUnderOppfolging(state);
     const historiskPeriode = selectViserHistoriskPeriode(state);
-    const erIkkeBruker = !selectErBruker(state);
-    const ikkeTilgangTilVilkar =
-        erIkkeBruker &&
-        selectVilkarMaBesvares(state) &&
-        selectViserInneverendePeriode(state);
 
     return {
         viserHistoriskPeriode: historiskPeriode,
-        privatModus: selectErPrivatModus(state),
-        erPrivatBruker: erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
+        underOppfolging,
         erVeileder: selectErVeileder(state),
         harSkriveTilgang: selectHarSkriveTilgang(state),
         features: selectFeatureData(state),
-        disabled:
-            erIkkeBruker &&
-            !underOppfolging &&
-            selectViserInneverendePeriode(state),
-        kanHaDialog: underOppfolging || historiskPeriode,
         antallUlesteDialoger: dialoger,
-        harTilgangTilAktiviteter: selectHarTilgangTilAktiviteter(state),
-        tilgangTilDialog: selectHarTilgangTilDialog(state),
-        ikkeFinnesDialogerIHistoriskPeriode:
-            dialoger.length < 1 && !selectViserInneverendePeriode(state),
-        ikkeTilgangTilVilkar,
+        aktivitetLaster: selectHarTilgangTilAktiviteter(state),
+        dialogLaster: selectHarTilgangTilDialog(state),
     };
 };
 
