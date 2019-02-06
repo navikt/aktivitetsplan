@@ -109,6 +109,14 @@ class Varslinger extends Component {
                     href="https://tjenester.nav.no/arbeidssokerregistrering/start"
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
+                <HiddenIfAdvarselMedLenke
+                    hidden={underOppfolging}
+                    tekstId={'ikke.under.oppfolging.reaktivering'}
+                    className="varsling"
+                    lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
+                    href="https://tjenester.nav.no/veiledearbeidssoker/mistet-jobben/registrering-arbeidssoker?sprak=nb"
+                    values={{ antalldagerIgjen: antallDagerIgjen }}
+                />
             </Container>
         );
 

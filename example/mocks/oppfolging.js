@@ -5,7 +5,7 @@ const oppfolging = {
     veilederId: null,
     reservasjonKRR: false,
     manuell: false,
-    underOppfolging: true,
+    underOppfolging: false,
     underKvp: false,
     vilkarMaBesvares: false,
     oppfolgingUtgang: null,
@@ -29,7 +29,7 @@ const oppfolging = {
         },
     ],
     harSkriveTilgang: true,
-    kanReaktiveres: true,
+    kanReaktiveres: false,
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
 };
 

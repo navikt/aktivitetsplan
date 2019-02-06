@@ -8,7 +8,6 @@ import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import VerktoylinjeToggle from '../moduler/verktoylinje/verktoylinjeToggle';
 import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
 import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
-import PrivateFeilmelding from '../moduler/feilmelding/private-feilmelding';
 import VisValgtFilterOrignalToggle from '../moduler/filtrering/filter-vis-label-orginal';
 import MitMaal from './maalLinje/mitt-maal';
 import Routing, { PublicRouting } from '../routing';
@@ -24,7 +23,6 @@ function Hovedside() {
                 <ArenaFeilmelding />
                 <OppfolgingStatus>
                     <Navigasjonslinje />
-                    <PrivateFeilmelding />
                     <Varslinger />
                     <Container>
                         <MitMaal />

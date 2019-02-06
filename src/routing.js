@@ -9,7 +9,6 @@ import VilkarModalUtenHistorikk from './moduler/vilkar/vilkar-uten-historikk';
 import DialogModal from './moduler/dialog/dialog-modal/dialog-modal';
 import AktivitetmalEndre from './moduler/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './moduler/mal/aktivitetsmal';
-import AktivitetmalSlett from './moduler/mal/aktivitetsmal-slett';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
@@ -40,10 +39,6 @@ const Routing = ({ location }) =>
         <Route
             path={getPathWithBase('/mal/endre')}
             component={AktivitetmalEndre}
-        />
-        <Route
-            path={getPathWithBase('/mal/slett')}
-            component={AktivitetmalSlett}
         />
         <Route
             exact
