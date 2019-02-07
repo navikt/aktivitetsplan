@@ -15,8 +15,9 @@ function Brodsmuler(props) {
     return (
         <div className="brodsmuler">
             <img
+                tabIndex="-1"
                 src={personSvg}
-                alt="person-illustrasjon"
+                alt=""
                 className="brodsmuler__illustrasjon"
             />
             <ol className="brodsmuler__list">
