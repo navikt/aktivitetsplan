@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import PT from 'prop-types';
 import { Container } from 'nav-frontend-grid';
@@ -13,10 +14,22 @@ import VisValgtFilterOrignalToggle from '../moduler/filtrering/filter-vis-label-
 import MitMaal from './maalLinje/mitt-maal';
 import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
+import { selectErVeileder } from '../moduler/identitet/identitet-selector';
+import loggEvent from '../felles-komponenter/utils/logging';
 
-function Hovedside() {
+const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallBrukere';
+
+function loggingAntallBrukere(typeEvent, hvem) {
+    const { erVeileder } = hvem;
+    if (erVeileder !== undefined) {
+        loggEvent(typeEvent, hvem);
+    }
+}
+
+function Hovedside({ erVeileder }) {
     const fnr = getFodselsnummer();
 
+    loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
     return (
         <div className="hovedside" key={fnr}>
             <div className="hovedsideinnhold">
@@ -42,6 +55,10 @@ function Hovedside() {
 
 Hovedside.propTypes = {
     harNyVerktoylinje: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired,
 };
+const mapStateToProps = state => ({
+    erVeileder: selectErVeileder(state),
+});
 
-export default Hovedside;
+export default connect(mapStateToProps)(Hovedside);

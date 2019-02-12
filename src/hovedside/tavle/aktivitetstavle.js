@@ -27,13 +27,6 @@ import {
     NYENDRINGIAKTIVITET,
 } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
-import loggEvent from '../../felles-komponenter/utils/logging';
-
-const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallBrukere';
-
-function loggingAntallBrukere(typeEvent, hvem) {
-    loggEvent(typeEvent, hvem);
-}
 
 export function lagAktivitetsListe(aktiviteter) {
     return aktiviteter.map(aktivitet =>
@@ -58,14 +51,11 @@ function renderFullFortAvbryt(aktiviteter) {
 class AktivitetsTavle extends Component {
     componentDidMount() {
         if (this.props.reducersNotStarted) {
-            const { erVeileder } = this.props;
-            if (erVeileder) {
+            if (this.props.erVeileder) {
                 doLesAktivitetsplan();
             }
             this.props.doHentAktiviteter();
             this.props.doHentArenaAktiviteter();
-
-            loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
         }
     }
 
