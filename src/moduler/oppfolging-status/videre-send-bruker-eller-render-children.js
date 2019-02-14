@@ -7,6 +7,16 @@ import visibleIfHOC from '../../hocs/visible-if';
 import { HtmlText } from '../../text';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
+import loggEvent from '../../felles-komponenter/utils/logging';
+
+const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallBrukere';
+
+function loggingAntallBrukere(typeEvent, hvem) {
+    const { erVeileder } = hvem;
+    if (erVeileder !== undefined) {
+        loggEvent(typeEvent, hvem);
+    }
+}
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
@@ -44,6 +54,8 @@ class VidereSendBrukereEllerRenderChildren extends Component {
         if (!erVeileder && vilkarToggletAv && videreSendTilInfo) {
             history.push('/informasjon');
         }
+
+        loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
     }
 
     render() {
