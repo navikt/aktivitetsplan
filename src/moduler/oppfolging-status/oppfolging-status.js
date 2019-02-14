@@ -39,7 +39,6 @@ class OppfolgingStatus extends Component {
     componentDidMount() {
         this.props.doHentIdentitet();
         this.props.doHentOppfolging();
-        this.props.doHentLest();
     }
 
     render() {
