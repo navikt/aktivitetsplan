@@ -40,8 +40,10 @@ function VidereSendBrukereEllerRenderChildren(props) {
         brukerHarAvslatt,
         visVilkar,
         vilkarToggletAv,
+        underOppfolging,
     } = props;
-    const skalVilkaarBesvares = vilkarMaBesvares && !vilkarToggletAv;
+    const skalVilkaarBesvares =
+        vilkarMaBesvares && underOppfolging && !vilkarToggletAv;
 
     if (erVeileder) {
         return (
@@ -70,7 +72,7 @@ VidereSendBrukereEllerRenderChildren.defaultProps = {
     children: null,
     erVeileder: null,
     manuell: null,
-    underOppfolging: null,
+    underOppfolging: false,
     reservasjonKRR: null,
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
@@ -84,6 +86,7 @@ VidereSendBrukereEllerRenderChildren.propTypes = {
     visVilkar: PT.bool,
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
+    underOppfolging: PT.bool,
     brukerHarAvslatt: PT.bool,
     vilkarToggletAv: PT.bool.isRequired,
 };
