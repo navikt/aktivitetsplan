@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PT from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper/lib/alertstripe';
-import * as AppPT from '../../proptypes';
 import visibleIfHOC from '../../hocs/visible-if';
 import { HtmlText } from '../../text';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
@@ -33,55 +31,39 @@ GodkjennVilkarMedVarsling.propTypes = {
     visVilkar: PT.bool.isRequired,
 };
 
-class VidereSendBrukereEllerRenderChildren extends Component {
-    componentWillMount() {
-        const {
-            erVeileder,
-            videreSendTilInfo,
-            vilkarToggletAv,
-            history,
-        } = this.props;
-        if (!erVeileder && vilkarToggletAv && videreSendTilInfo) {
-            history.push('/informasjon');
-        }
-    }
+function VidereSendBrukereEllerRenderChildren(props) {
+    const {
+        children,
+        erVeileder,
+        manuell,
+        vilkarMaBesvares,
+        brukerHarAvslatt,
+        visVilkar,
+        vilkarToggletAv,
+    } = props;
+    const skalVilkaarBesvares = vilkarMaBesvares && !vilkarToggletAv;
 
-    render() {
-        const {
-            children,
-            erVeileder,
-            manuell,
-            vilkarMaBesvares,
-            brukerHarAvslatt,
-            visVilkar,
-            privateModus,
-            vilkarToggletAv,
-        } = this.props;
-        const skalVilkaarBesvares =
-            vilkarMaBesvares && !(privateModus || vilkarToggletAv);
-
-        if (erVeileder) {
-            return (
-                <div>
-                    {children}
-                </div>
-            );
-        } else if (manuell) {
-            return <AktiverDigitalOppfolging />;
-        } else if (skalVilkaarBesvares) {
-            return (
-                <GodkjennVilkarMedVarsling
-                    visVilkar={!!visVilkar}
-                    brukerHarAvslatt={brukerHarAvslatt}
-                />
-            );
-        }
+    if (erVeileder) {
         return (
             <div>
                 {children}
             </div>
         );
+    } else if (manuell) {
+        return <AktiverDigitalOppfolging />;
+    } else if (skalVilkaarBesvares) {
+        return (
+            <GodkjennVilkarMedVarsling
+                visVilkar={!!visVilkar}
+                brukerHarAvslatt={brukerHarAvslatt}
+            />
+        );
     }
+    return (
+        <div>
+            {children}
+        </div>
+    );
 }
 
 VidereSendBrukereEllerRenderChildren.defaultProps = {
@@ -99,15 +81,11 @@ VidereSendBrukereEllerRenderChildren.defaultProps = {
 VidereSendBrukereEllerRenderChildren.propTypes = {
     children: PT.node,
     erVeileder: PT.bool,
-    underOppfolging: PT.bool, // eslint-disable-line react/no-unused-prop-types
     visVilkar: PT.bool,
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     brukerHarAvslatt: PT.bool,
-    privateModus: PT.bool.isRequired,
     vilkarToggletAv: PT.bool.isRequired,
-    videreSendTilInfo: PT.bool.isRequired,
-    history: AppPT.history.isRequired,
 };
 
-export default withRouter(VidereSendBrukereEllerRenderChildren);
+export default VidereSendBrukereEllerRenderChildren;

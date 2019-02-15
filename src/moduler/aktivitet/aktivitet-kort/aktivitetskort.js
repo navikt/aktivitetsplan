@@ -28,7 +28,10 @@ import {
 } from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
-import { selectLestAktivitetsplan } from '../../lest/lest-reducer';
+import {
+    selectLestAktivitetsplan,
+    selectLestStatus,
+} from '../../lest/lest-reducer';
 import {
     selectAktiviteterSomHarBlittVist,
     settAktivitetSomVist,
@@ -40,6 +43,7 @@ import {
 } from '../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 import AktivitetskortEndring from './aktivitetskort-endring';
+import { STATUS } from '../../../ducks/utils';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -187,6 +191,7 @@ const mapStateToProps = (state, props) => {
         selectFeatureData(state)
     );
     const lest = selectLestAktivitetsplan(state);
+    const lestStatus = selectLestStatus(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
         aktivitet => aktivitet.id === props.aktivitet.id
@@ -196,6 +201,7 @@ const mapStateToProps = (state, props) => {
 
     const harEndringerIAktivitet =
         harNyEndringIAktitetFeature &&
+        lestStatus === STATUS.OK &&
         erNyEndringIAktivitet(props.aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;
     return {
