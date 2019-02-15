@@ -50,8 +50,9 @@ class MittMaal extends Component {
                 disabled={underOppfolging || !mal}
             >
                 <img
+                    tabIndex="-1"
                     src={mittMalSvg}
-                    alt="mittmal-illustrasjon"
+                    alt=""
                     className="mittmal__illustrasjon"
                 />
                 <div className="mittmal_content">
