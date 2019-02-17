@@ -4,6 +4,7 @@ import { Container } from 'nav-frontend-grid';
 import Varslinger from '../moduler/varslinger/varslinger';
 import AktivitetsTavle from './tavle/aktivitetstavle';
 import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
+import InformasjonsHenting from '../moduler/informasjon/informasjon-henting';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import VerktoylinjeToggle from '../moduler/verktoylinje/verktoylinjeToggle';
 import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
@@ -23,6 +24,7 @@ function Hovedside() {
                 <HovedsideFeilmelding />
                 <ArenaFeilmelding />
                 <OppfolgingStatus>
+                    <InformasjonsHenting />
                     <Navigasjonslinje />
                     <PrivateFeilmelding />
                     <Varslinger />

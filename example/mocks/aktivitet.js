@@ -195,6 +195,9 @@ export function opprettAktivitet(aktivitet) {
     const newAktivitet = wrapAktivitet({
         id: rndId(),
         opprettetDato: new Date(),
+        lagtInnAv: me.erBruker === true ? 'BRUKER' : 'NAV',
+        endretDato: moment().toISOString(),
+        endretAv: me.id,
         versjon: '1',
         ...aktivitet,
     });
@@ -209,6 +212,7 @@ export function oppdaterAktivitet(aktivitetId, aktivitet) {
     Object.assign(oldAktivitet, aktivitet);
     oldAktivitet.endretDato = moment().toISOString();
     oldAktivitet.endretAv = me.id;
+    oldAktivitet.lagtInnAv = me.erBruker === true ? 'BRUKER' : 'NAV';
 
     return oldAktivitet;
 }
