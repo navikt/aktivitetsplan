@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper/lib/alertstripe';
 import visibleIfHOC from '../../hocs/visible-if';
 import { HtmlText } from '../../text';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
+import loggEvent from '../../felles-komponenter/utils/logging';
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
+
+const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallBrukere';
+
+function loggingAntallBrukere(typeEvent, hvem) {
+    const { erVeileder } = hvem;
+    if (erVeileder !== undefined && erVeileder !== null) {
+        loggEvent(typeEvent, hvem);
+    }
+}
 
 export function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
     return (
@@ -30,42 +40,48 @@ GodkjennVilkarMedVarsling.propTypes = {
     brukerHarAvslatt: PT.bool,
     visVilkar: PT.bool.isRequired,
 };
+class VidereSendBrukereEllerRenderChildren extends Component {
+    componentDidMount() {
+        const { erVeileder } = this.props;
+        loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
+    }
 
-function VidereSendBrukereEllerRenderChildren(props) {
-    const {
-        children,
-        erVeileder,
-        manuell,
-        vilkarMaBesvares,
-        brukerHarAvslatt,
-        visVilkar,
-        vilkarToggletAv,
-        underOppfolging,
-    } = props;
-    const skalVilkaarBesvares =
-        vilkarMaBesvares && underOppfolging && !vilkarToggletAv;
+    render() {
+        const {
+            children,
+            erVeileder,
+            manuell,
+            vilkarMaBesvares,
+            brukerHarAvslatt,
+            visVilkar,
+            vilkarToggletAv,
+            underOppfolging,
+        } = this.props;
+        const skalVilkaarBesvares =
+            vilkarMaBesvares && underOppfolging && !vilkarToggletAv;
 
-    if (erVeileder) {
+        if (erVeileder) {
+            return (
+                <div>
+                    {children}
+                </div>
+            );
+        } else if (manuell) {
+            return <AktiverDigitalOppfolging />;
+        } else if (skalVilkaarBesvares) {
+            return (
+                <GodkjennVilkarMedVarsling
+                    visVilkar={!!visVilkar}
+                    brukerHarAvslatt={brukerHarAvslatt}
+                />
+            );
+        }
         return (
             <div>
                 {children}
             </div>
         );
-    } else if (manuell) {
-        return <AktiverDigitalOppfolging />;
-    } else if (skalVilkaarBesvares) {
-        return (
-            <GodkjennVilkarMedVarsling
-                visVilkar={!!visVilkar}
-                brukerHarAvslatt={brukerHarAvslatt}
-            />
-        );
     }
-    return (
-        <div>
-            {children}
-        </div>
-    );
 }
 
 VidereSendBrukereEllerRenderChildren.defaultProps = {
