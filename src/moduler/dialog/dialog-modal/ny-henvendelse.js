@@ -17,10 +17,7 @@ import { HiddenIfAlertStripeSuksessSolid } from '../../../felles-komponenter/hid
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 import Checkbox from '../../../felles-komponenter/skjema/input/checkbox';
-import {
-    selectErBruker,
-    selectErVeileder,
-} from '../../../moduler/identitet/identitet-selector';
+import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
     selectDialogMedId,
     selectDialogStatus,
@@ -30,100 +27,83 @@ import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 import { visBekreftelse } from '../dialog-view-reducer';
 import { selectHarSkriveTilgang } from '../../oppfolging-status/oppfolging-selector';
 import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
-import loggEvent from '../../../felles-komponenter/utils/logging';
-
-const LOGGING_ANTALLBRUKERE = 'aktivitetskort.antallBrukere.dialog';
-
-function loggingAntallBrukere(typeEvent, hvem) {
-    const { erVeileder } = hvem;
-    if (erVeileder !== undefined && erVeileder !== null) {
-        loggEvent(typeEvent, hvem);
-    }
-}
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 
-class NyHenvendelseForm extends React.PureComponent {
-    componentDidMount() {
-        const { erVeileder } = this.props;
-        loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
-    }
-    render() {
-        const {
-            handleSubmit,
-            harEksisterendeOverskrift,
-            erNyDialog,
-            oppretter,
-            visBrukerInfo,
-            erBruker,
-            skalHaAutofokus,
-            erKnyttTilAktivitet,
-            errorSummary,
-            harSkriveTilgang,
-            privateModus,
-        } = this.props;
-
-        return (
-            <form
-                onSubmit={handleSubmit}
-                className="ny-henvendelse-form"
-                autoComplete="off"
+function NyHenvendelseForm({
+    handleSubmit,
+    harEksisterendeOverskrift,
+    erNyDialog,
+    oppretter,
+    visBrukerInfo,
+    erBruker,
+    skalHaAutofokus,
+    erKnyttTilAktivitet,
+    errorSummary,
+    harSkriveTilgang,
+    privateModus,
+}) {
+    return (
+        <form
+            onSubmit={handleSubmit}
+            className="ny-henvendelse-form"
+            autoComplete="off"
+        >
+            {errorSummary}
+            <VisibleIfDiv
+                visible={erNyDialog && !erBruker}
+                className="endre-dialog__sjekkbokser"
             >
-                {errorSummary}
-                <VisibleIfDiv
-                    visible={erNyDialog && !erBruker}
-                    className="endre-dialog__sjekkbokser"
-                >
-                    <Checkbox
-                        className="endre-dialog__sjekkboks"
-                        labelId="dialog.ikke-ferdigbehandlet"
-                        feltNavn="ikkeFerdigbehandlet"
-                        disabled={!harSkriveTilgang}
-                    />
-                    <Checkbox
-                        className="endre-dialog__sjekkboks"
-                        labelId="dialog.venter-pa-svar"
-                        feltNavn="venterPaSvar"
-                        disabled={!harSkriveTilgang}
-                    />
-                </VisibleIfDiv>
-                {harEksisterendeOverskrift ||
-                    <Input
-                        feltNavn="overskrift"
-                        labelId="dialog.overskrift-label"
-                        disabled={!harSkriveTilgang || oppretter}
-                        autoFocus
-                    />}
-                <Textarea
-                    labelId={`dialog.tekst-label${erKnyttTilAktivitet
-                        ? '-aktivitet'
-                        : '-generell'}`}
-                    feltNavn="tekst"
-                    placeholder="Skriv her"
-                    maxLength={BESKRIVELSE_MAKS_LENGDE}
-                    disabled={!harSkriveTilgang || oppretter}
-                    visTellerFra={1000}
-                    autoFocus={harEksisterendeOverskrift && skalHaAutofokus}
+                <Checkbox
+                    className="endre-dialog__sjekkboks"
+                    labelId="dialog.ikke-ferdigbehandlet"
+                    feltNavn="ikkeFerdigbehandlet"
+                    disabled={!harSkriveTilgang}
                 />
-                <Hovedknapp
-                    type="hoved"
-                    spinner={oppretter}
-                    disabled={!harSkriveTilgang || oppretter || privateModus}
-                >
-                    <FormattedMessage id="dialog.lag-ny-dialog" />
-                </Hovedknapp>
+                <Checkbox
+                    className="endre-dialog__sjekkboks"
+                    labelId="dialog.venter-pa-svar"
+                    feltNavn="venterPaSvar"
+                    disabled={!harSkriveTilgang}
+                />
+            </VisibleIfDiv>
 
-                <HiddenIfAlertStripeSuksessSolid
-                    style={{ marginTop: '1rem' }}
-                    hidden={!visBrukerInfo}
-                >
-                    <FormattedMessage id="dialog.info-til-bruker" />
-                </HiddenIfAlertStripeSuksessSolid>
-            </form>
-        );
-    }
+            {harEksisterendeOverskrift ||
+                <Input
+                    feltNavn="overskrift"
+                    labelId="dialog.overskrift-label"
+                    disabled={!harSkriveTilgang || oppretter}
+                    autoFocus
+                />}
+            <Textarea
+                labelId={`dialog.tekst-label${erKnyttTilAktivitet
+                    ? '-aktivitet'
+                    : '-generell'}`}
+                feltNavn="tekst"
+                placeholder="Skriv her"
+                maxLength={BESKRIVELSE_MAKS_LENGDE}
+                disabled={!harSkriveTilgang || oppretter}
+                visTellerFra={1000}
+                autoFocus={harEksisterendeOverskrift && skalHaAutofokus}
+            />
+            <Hovedknapp
+                type="hoved"
+                spinner={oppretter}
+                disabled={!harSkriveTilgang || oppretter || privateModus}
+            >
+                <FormattedMessage id="dialog.lag-ny-dialog" />
+            </Hovedknapp>
+
+            <HiddenIfAlertStripeSuksessSolid
+                style={{ marginTop: '1rem' }}
+                hidden={!visBrukerInfo}
+            >
+                <FormattedMessage id="dialog.info-til-bruker" />
+            </HiddenIfAlertStripeSuksessSolid>
+        </form>
+    );
 }
 
 NyHenvendelseForm.defaultProps = {
@@ -142,7 +122,6 @@ NyHenvendelseForm.propTypes = {
     errorSummary: PT.node.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
     privateModus: PT.bool.isRequired,
-    erVeileder: PT.bool.isRequired,
 };
 
 const pakrevdOverskrift = rules.minLength(
@@ -200,7 +179,6 @@ const mapStateToProps = (state, props) => {
         erKnyttTilAktivitet: !!aktivitetId || (dialog && !!dialog.aktivitetId),
         harSkriveTilgang: selectHarSkriveTilgang(state),
         privateModus: erPrivateBrukerSomSkalSkrusAv(state),
-        erVeileder: selectErVeileder(state),
     };
 };
 
