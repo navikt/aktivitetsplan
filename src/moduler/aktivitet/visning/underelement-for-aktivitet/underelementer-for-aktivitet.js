@@ -26,17 +26,6 @@ import {
     selectVisDialog,
     selectVisHistorikk,
 } from './underelementer-view-selector';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
-import loggEvent from '../../../../felles-komponenter/utils/logging';
-
-const LOGGING_ANTALLBRUKERE = 'aktivitetskort.antallBrukere.dialog';
-
-function loggingAntallBrukere(typeEvent, hvem) {
-    const { erVeileder } = hvem;
-    if (erVeileder !== undefined && erVeileder !== null) {
-        loggEvent(typeEvent, hvem);
-    }
-}
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
@@ -76,7 +65,6 @@ class UnderelementerForAktivitet extends Component {
             doToggleDialog,
             doToggleHistorikk,
             visDialog,
-            erVeileder,
             visHistorikk,
             dialogFeilmeldinger,
         } = this.props;
@@ -100,14 +88,7 @@ class UnderelementerForAktivitet extends Component {
                         hidden={!kanSeDialog}
                         value={DIALOG}
                         className={dialogknappCls(visDialog)}
-                        onClick={() => {
-                            doToggleDialog();
-                            if (!visDialog) {
-                                loggingAntallBrukere(LOGGING_ANTALLBRUKERE, {
-                                    erVeileder,
-                                });
-                            }
-                        }}
+                        onClick={doToggleDialog}
                         aria-pressed={visDialog}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
@@ -174,7 +155,6 @@ UnderelementerForAktivitet.propTypes = {
     doToggleDialog: PT.func.isRequired,
     doToggleHistorikk: PT.func.isRequired,
     visDialog: PT.bool.isRequired,
-    erVeileder: PT.bool.isRequired,
     visHistorikk: PT.bool.isRequired,
     dialogFeilmeldinger: PT.array,
 };
@@ -208,7 +188,6 @@ const mapStateToProps = (state, props) => {
         kanOppretteNyHenvendelse,
         kanEndreDialog,
         visDialog: selectVisDialog(state),
-        erVeileder: selectErVeileder(state),
         visHistorikk: selectVisHistorikk(state),
         dialogFeilmeldinger: selectDialogFeilmeldinger(state),
     };
