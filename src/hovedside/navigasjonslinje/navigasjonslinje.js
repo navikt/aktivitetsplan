@@ -32,8 +32,9 @@ import { selectDialoger } from '../../moduler/dialog/dialog-selector';
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 import { selectTildelVeilederStatus } from '../../moduler/tildel-veileder/tildel-veileder-selector';
-import {
+import Feature, {
     harFeature,
+    NY_LAYOUT,
     VERKTOYLINJE,
 } from '../../felles-komponenter/feature/feature';
 
@@ -95,27 +96,29 @@ class Navigasjonslinje extends Component {
         }
 
         return (
-            <ConfigToggle name={navigasjonslinjemenyFeature}>
-                <div className="container-navigasjonslinje">
-                    <nav className="navigasjonslinje">
-                        <div className="navigasjonslinje__verktoy">
-                            <Innholdslaster
-                                avhengigheter={avhengigheter}
-                                spinnerStorrelse="XS"
-                                className="navigasjonslinje__spinner"
-                                alleOK
-                            >
-                                <NavigasjonslinjeMeny />
-                            </Innholdslaster>
-                            <NavigasjonslinjeKnapp
-                                ariaLabel="navigasjon.innstillinger"
-                                lenke="/innstillinger"
-                                className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
-                            />
-                        </div>
-                    </nav>
-                </div>
-            </ConfigToggle>
+            <Feature name={NY_LAYOUT}>
+                <ConfigToggle name={navigasjonslinjemenyFeature}>
+                    <div className="container-navigasjonslinje">
+                        <nav className="navigasjonslinje">
+                            <div className="navigasjonslinje__verktoy">
+                                <Innholdslaster
+                                    avhengigheter={avhengigheter}
+                                    spinnerStorrelse="XS"
+                                    className="navigasjonslinje__spinner"
+                                    alleOK
+                                >
+                                    <NavigasjonslinjeMeny />
+                                </Innholdslaster>
+                                <NavigasjonslinjeKnapp
+                                    ariaLabel="navigasjon.innstillinger"
+                                    lenke="/innstillinger"
+                                    className="navigasjonslinje-meny__knapp--innstillinger navigasjonslinje-meny__knapp"
+                                />
+                            </div>
+                        </nav>
+                    </div>
+                </ConfigToggle>
+            </Feature>
         );
     }
 }

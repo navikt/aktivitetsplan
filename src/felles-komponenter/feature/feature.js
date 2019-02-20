@@ -8,11 +8,13 @@ export const BRUKERVILKAR = 'aktivitetsplan.brukervilkar';
 export const VERKTOYLINJE = 'aktivitetsplan.verktoylinje';
 export const SKRUAVPRIVATMODUS = 'aktivitetsplan.skruavprivatmodus';
 export const NYENDRINGIAKTIVITET = 'aktivitetsplan.nyendringiaktivitet';
+export const NY_LAYOUT = 'modia.layout_med_visittkort';
 export const ALL_FEATURES = [
     BRUKERVILKAR,
     VERKTOYLINJE,
     SKRUAVPRIVATMODUS,
     NYENDRINGIAKTIVITET,
+    NY_LAYOUT,
 ];
 
 export const harFeature = (name, features) => features[name] === true;
