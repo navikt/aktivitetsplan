@@ -28,7 +28,7 @@ import vilkar from './vilkar';
 import veilederTilgang from './veilederTilgang';
 import veiledere from './veiledere';
 import enheter from './enheter';
-import getFeatures from './feature';
+import getFeatures from './features';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
 import instillingsHistorikk from './innstillings-historikk';
 import fetchMock, { ResponseUtils } from 'yet-another-fetch-mock';
