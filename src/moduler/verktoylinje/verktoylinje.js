@@ -2,6 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import classNames from 'classnames';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
@@ -28,6 +29,12 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import VisValgtFilter from '../../moduler/filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 
+const knapplenkeCls = (className, disabled) =>
+    classNames(className, {
+        knappelenke: !disabled,
+        'knappelenke knappelenke--disabled': disabled,
+    });
+
 function Verktoylinje({
     viserHistoriskPeriode,
     underOppfolging,
@@ -42,7 +49,10 @@ function Verktoylinje({
             <div className="verktoylinje__verktoy-container">
                 <Lenke
                     href="/dialog"
-                    className="knappelenke aktivitetskort__henvendelser"
+                    className={knapplenkeCls(
+                        'aktivitetskort__henvendelser',
+                        !dialogLaster
+                    )}
                     disabled={!dialogLaster}
                     aria-live="polite"
                 >
