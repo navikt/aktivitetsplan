@@ -19,13 +19,15 @@ export const ALL_FEATURES = [
 
 export const harFeature = (name, features) => features[name] === true;
 
-function Feature({ name, children, features }) {
-    return harFeature(name, features) ? children : null;
+function Feature({ name, children, features, reverse }) {
+    const erFeaturePa = harFeature(name, features) ? children : null;
+    return reverse ? !erFeaturePa : erFeaturePa;
 }
 
 Feature.propTypes = {
     name: PT.string.isRequired,
     children: PT.node.isRequired,
+    reverse: PT.bool,
     features: PT.object,
 };
 
