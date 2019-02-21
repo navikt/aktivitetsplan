@@ -26,6 +26,17 @@ import {
     selectVisDialog,
     selectVisHistorikk,
 } from './underelementer-view-selector';
+import loggEvent from '../../../../felles-komponenter/utils/logging';
+import { selectErVeileder } from '../../../identitet/identitet-selector';
+
+const LOGGING_ANTALLBRUKERE = 'aktivitetskort.antallBrukere.dialog';
+
+function loggingAntallBrukere(typeEvent, hvem) {
+    const { erVeileder } = hvem;
+    if (erVeileder !== undefined && erVeileder !== null) {
+        loggEvent(typeEvent, hvem);
+    }
+}
 
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
@@ -40,10 +51,15 @@ class UnderelementerForAktivitet extends Component {
         this.me = null;
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         this.scrollMeIntoView();
+        const { visDialog, erVeileder } = this.props;
+        if (visDialog !== prevProps.visDialog) {
+            if (visDialog) {
+                loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
+            }
+        }
     }
-
     scrollMeIntoView() {
         if (this.me && (this.props.visHistorikk || this.props.visDialog)) {
             setTimeout(
@@ -156,6 +172,7 @@ UnderelementerForAktivitet.propTypes = {
     doToggleHistorikk: PT.func.isRequired,
     visDialog: PT.bool.isRequired,
     visHistorikk: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired,
     dialogFeilmeldinger: PT.array,
 };
 
@@ -190,6 +207,7 @@ const mapStateToProps = (state, props) => {
         visDialog: selectVisDialog(state),
         visHistorikk: selectVisHistorikk(state),
         dialogFeilmeldinger: selectDialogFeilmeldinger(state),
+        erVeileder: selectErVeileder(state),
     };
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper/lib/alertstripe';
 import visibleIfHOC from '../../hocs/visible-if';
@@ -7,8 +7,18 @@ import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 import * as AppPT from '../../proptypes';
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
+import loggEvent from '../../felles-komponenter/utils/logging';
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
+
+const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallBrukere';
+
+function loggingAntallBrukere(typeEvent, hvem) {
+    const { erVeileder } = hvem;
+    if (erVeileder !== undefined && erVeileder !== null) {
+        loggEvent(typeEvent, hvem);
+    }
+}
 
 export function GodkjennVilkarMedVarsling({ visVilkar, brukerHarAvslatt }) {
     return (
@@ -32,47 +42,53 @@ GodkjennVilkarMedVarsling.propTypes = {
     brukerHarAvslatt: PT.bool,
     visVilkar: PT.bool.isRequired,
 };
-
-function VidereSendBrukereEllerRenderChildren(props) {
-    const {
-        children,
-        erVeileder,
-        manuell,
-        vilkarMaBesvares,
-        brukerHarAvslatt,
-        visVilkar,
-        vilkarToggletAv,
-        underOppfolging,
-        oppfolgingsPerioder,
-    } = props;
-    const skalVilkaarBesvares =
-        vilkarMaBesvares && underOppfolging && !vilkarToggletAv;
-
-    if (!underOppfolging && oppfolgingsPerioder.length === 0) {
-        return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
+class VidereSendBrukereEllerRenderChildren extends Component {
+    componentDidMount() {
+        const { erVeileder } = this.props;
+        loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
     }
 
-    if (erVeileder) {
+    render() {
+        const {
+            children,
+            erVeileder,
+            manuell,
+            vilkarMaBesvares,
+            brukerHarAvslatt,
+            visVilkar,
+            vilkarToggletAv,
+            underOppfolging,
+            oppfolgingsPerioder,
+        } = this.props;
+        const skalVilkaarBesvares =
+            vilkarMaBesvares && underOppfolging && !vilkarToggletAv;
+
+        if (!underOppfolging && oppfolgingsPerioder.length === 0) {
+            return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
+        }
+
+        if (erVeileder) {
+            return (
+                <div>
+                    {children}
+                </div>
+            );
+        } else if (manuell) {
+            return <AktiverDigitalOppfolging />;
+        } else if (skalVilkaarBesvares) {
+            return (
+                <GodkjennVilkarMedVarsling
+                    visVilkar={!!visVilkar}
+                    brukerHarAvslatt={brukerHarAvslatt}
+                />
+            );
+        }
         return (
             <div>
-                {' '}{children}{' '}
+                {children}
             </div>
         );
-    } else if (manuell) {
-        return <AktiverDigitalOppfolging />;
-    } else if (skalVilkaarBesvares) {
-        return (
-            <GodkjennVilkarMedVarsling
-                visVilkar={!!visVilkar}
-                brukerHarAvslatt={brukerHarAvslatt}
-            />
-        );
     }
-    return (
-        <div>
-            {children}
-        </div>
-    );
 }
 
 VidereSendBrukereEllerRenderChildren.defaultProps = {
