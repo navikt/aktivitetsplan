@@ -5,7 +5,7 @@ const oppfolging = {
     veilederId: null,
     reservasjonKRR: false,
     manuell: false,
-    underOppfolging: false,
+    underOppfolging: true,
     underKvp: false,
     vilkarMaBesvares: false,
     oppfolgingUtgang: null,

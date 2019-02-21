@@ -5,6 +5,8 @@ import visibleIfHOC from '../../hocs/visible-if';
 import { HtmlText } from '../../text';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
+import * as AppPT from '../../proptypes';
+import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
 
@@ -41,14 +43,19 @@ function VidereSendBrukereEllerRenderChildren(props) {
         visVilkar,
         vilkarToggletAv,
         underOppfolging,
+        oppfolgingsPerioder,
     } = props;
     const skalVilkaarBesvares =
         vilkarMaBesvares && underOppfolging && !vilkarToggletAv;
 
+    if (!underOppfolging && oppfolgingsPerioder.length === 0) {
+        return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
+    }
+
     if (erVeileder) {
         return (
             <div>
-                {children}
+                {' '}{children}{' '}
             </div>
         );
     } else if (manuell) {
@@ -73,6 +80,7 @@ VidereSendBrukereEllerRenderChildren.defaultProps = {
     erVeileder: null,
     manuell: null,
     underOppfolging: false,
+    oppfolgingsPerioder: [],
     reservasjonKRR: null,
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
@@ -87,6 +95,7 @@ VidereSendBrukereEllerRenderChildren.propTypes = {
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     underOppfolging: PT.bool,
+    oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
     brukerHarAvslatt: PT.bool,
     vilkarToggletAv: PT.bool.isRequired,
 };
