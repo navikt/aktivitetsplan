@@ -96,7 +96,7 @@ class Navigasjonslinje extends Component {
         }
 
         return (
-            <Feature name={NY_LAYOUT}>
+            <Feature name={NY_LAYOUT} reverse>
                 <ConfigToggle name={navigasjonslinjemenyFeature}>
                     <div className="container-navigasjonslinje">
                         <nav className="navigasjonslinje">
