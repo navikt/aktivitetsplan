@@ -53,6 +53,9 @@ fasitResources:
   - alias: aad_b2c_discovery
     resourceType: baseurl
 
+  - alias: veilarbstepup_oidc
+    resourceType: baseurl
+
 team: oppfolging
 resources:
   limits:

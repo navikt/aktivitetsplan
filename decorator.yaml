@@ -1,3 +1,7 @@
+auth:
+  enforce: true
+  loginUrl: {{ VEILARBSTEPUP_OIDC_URL }}
+
 proxy:
   - contextPath: "/veilarbaktivitet"
     baseUrl: "http://veilarbproxy"
