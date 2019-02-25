@@ -91,6 +91,9 @@ fasitResources:
   - alias: aktivitetsplan-fss
     resourceType: applicationproperties
 
+  - alias: veilarbstepup_oidc
+    resourceType: baseurl
+
 team: oppfolging
 resources:
   limits:
