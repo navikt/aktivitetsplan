@@ -13,7 +13,6 @@ import { hentDialog } from '../../moduler/dialog/dialog-reducer';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../moduler/arbeidsliste/arbeidsliste-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import { selectErPrivatModus } from '../../moduler/privat-modus/privat-modus-selector';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectArbeidslisteStatus } from '../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../proptypes';
@@ -145,7 +144,6 @@ const mapStateToProps = state => {
         selectViserInneverendePeriode(state);
     return {
         antallUlesteDialoger,
-        privatModus: selectErPrivatModus(state),
         underOppfolging,
         avhengigheter: [
             selectArbeidslisteStatus(state),

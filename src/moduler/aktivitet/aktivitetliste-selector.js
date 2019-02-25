@@ -11,20 +11,20 @@ import {
 } from './arena-aktivitet-selector';
 import { aggregerStatus, STATUS } from '../../ducks/utils';
 import {
-    selectPrivatModusSlice,
-    selectErPrivatModus,
-} from '../privat-modus/privat-modus-selector';
-import {
     aktivitetFilter,
     datoErIPeriode,
 } from '../filtrering/filter/filter-utils';
-import { selectErVeileder } from '../identitet/identitet-selector';
+import {
+    selectErVeileder,
+    selectIdentitetStatus,
+} from '../identitet/identitet-selector';
 import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     STATUS_AVBRUTT,
     STATUS_FULLFOERT,
 } from '../../constant';
+import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 
 export const selectAlleAktiviter = createSelector(
@@ -40,10 +40,9 @@ export function selectAktiviterForAktuellePerioden(state) {
 }
 
 export function selectAktivitetListe(state) {
-    const privatModus = selectErPrivatModus(state);
-    return selectAktiviterForAktuellePerioden(state)
-        .filter(a => !privatModus || a.historisk || a.arenaAktivitet)
-        .filter(a => aktivitetFilter(a, state));
+    return selectAktiviterForAktuellePerioden(state).filter(a =>
+        aktivitetFilter(a, state)
+    );
 }
 
 export function selectAktivitetMedId(state, aktivitetId) {
@@ -54,7 +53,8 @@ export function selectAktivitetMedId(state, aktivitetId) {
 
 export function selectAktivitetListeSlice(state) {
     const status = aggregerStatus(
-        selectPrivatModusSlice(state),
+        selectOppfolgingStatus(state),
+        selectIdentitetStatus(state),
         selectAktivitetStatus(state),
         selectArenaAktivitetStatus(state)
     );
