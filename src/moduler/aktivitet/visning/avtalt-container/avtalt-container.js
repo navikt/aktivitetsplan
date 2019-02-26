@@ -47,6 +47,7 @@ class AvtaltContainer extends Component {
             className,
             erManuellKrrKvpBruker,
             doApneDialog,
+            underOppfolging,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
@@ -59,6 +60,7 @@ class AvtaltContainer extends Component {
         if (
             !TILLAT_SET_AVTALT ||
             historisk ||
+            !underOppfolging ||
             status === STATUS_FULLFOERT ||
             status === STATUS_AVBRUTT ||
             arenaAktivitet
@@ -156,6 +158,7 @@ AvtaltContainer.propTypes = {
     aktivitetStatus: AppPT.status,
     className: PT.string,
     erManuellKrrKvpBruker: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
     doApneDialog: PT.func.isRequired,
 };
 

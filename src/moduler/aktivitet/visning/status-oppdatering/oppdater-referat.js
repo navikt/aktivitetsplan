@@ -25,6 +25,7 @@ function OppdaterReferat({
     erReferatPublisert,
     startOppdaterReferat,
     stoppOppdaterReferat,
+    underOppfolging,
 }) {
     const aktivitetStatus = aktivitet.status;
     const erHistorisk = aktivitet.historisk;
@@ -46,7 +47,13 @@ function OppdaterReferat({
                     aktivitetStatus === STATUS_AVBRUTT
                 }
             >
-                <HiddenIfDiv hidden={visOppdaterReferatForm || erHistorisk}>
+                <HiddenIfDiv
+                    hidden={
+                        visOppdaterReferatForm ||
+                        erHistorisk ||
+                        !underOppfolging
+                    }
+                >
                     <Hovedknapp
                         onClick={dispatchPubliserReferat}
                         spinner={publiserer}
@@ -74,6 +81,7 @@ OppdaterReferat.propTypes = {
     referat: PT.string,
     aktivitet: AppPT.aktivitet.isRequired,
     erVeileder: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
     visOppdaterReferatForm: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,
     publiserer: PT.bool.isRequired,

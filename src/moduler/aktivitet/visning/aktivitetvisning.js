@@ -56,12 +56,14 @@ function Aktivitetvisning({
                 />
 
                 <AvtaltContainer
+                    underOppfolging={underOppfolging}
                     aktivitet={aktivitet}
                     className="aktivitetvisning__underseksjon"
                 />
 
                 <OppdaterReferatContainer
                     aktivitet={aktivitet}
+                    underOppfolging={underOppfolging}
                     className="aktivitetvisning__underseksjon"
                     delelinje
                 />
