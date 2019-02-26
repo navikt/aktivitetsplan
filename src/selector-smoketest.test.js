@@ -11,7 +11,6 @@ import * as aktivitetListeSelector from './moduler/aktivitet/aktivitetliste-sele
 import * as arbeidsListeSelector from './moduler/arbeidsliste/arbeidsliste-selector';
 import * as innstillningerSelector from './moduler/innstillinger/innstillinger-selector';
 import * as utsktriftSelector from './moduler/utskrift/utskrift-selector';
-import * as privatModusSelector from './moduler/privat-modus/privat-modus-selector';
 import * as motpartSelector from './moduler/motpart/motpart-selector';
 import reducer from './reducer';
 
@@ -54,5 +53,4 @@ selectorModulTest(aktivitetListeSelector);
 selectorModulTest(arbeidsListeSelector);
 selectorModulTest(innstillningerSelector);
 selectorModulTest(utsktriftSelector);
-selectorModulTest(privatModusSelector);
 selectorModulTest(motpartSelector);

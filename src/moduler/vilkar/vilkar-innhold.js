@@ -10,9 +10,12 @@ import vilkarSvg from './vilkar-illustrasjon.svg';
 import VisibleIfHOC from '../../hocs/visible-if';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import { formaterDatoKortManed } from '../../utils';
-import { selectPrivatModusStatus } from '../privat-modus/privat-modus-selector';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectErUnderOppfolging,
+    selectOppfolgingStatus,
+} from '../oppfolging-status/oppfolging-selector';
+import { selectIdentitetStatus } from '../identitet/identitet-selector';
 
 const VisibleIfElementFormattedMessage = VisibleIfHOC(props =>
     <Element className="vilkar__metaData">
@@ -85,7 +88,10 @@ VilkarInnhold.propTypes = {
 
 const mapStateToProps = state => ({
     underOppfolging: selectErUnderOppfolging(state),
-    avhengigheter: [selectPrivatModusStatus(state)],
+    avhengigheter: [
+        selectOppfolgingStatus(state),
+        selectIdentitetStatus(state),
+    ],
 });
 
 export default hiddenIf(connect(mapStateToProps)(VilkarInnhold));

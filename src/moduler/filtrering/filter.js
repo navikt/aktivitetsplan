@@ -44,12 +44,12 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
     );
 }
 
-function Filter({ avhengigheter, harAktivitet, className, skjulIPrivatModus }) {
+function Filter({ avhengigheter, harAktivitet, className }) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <VisibleIfDiv
                 className={filterClassNames(className)}
-                visible={harAktivitet && !skjulIPrivatModus}
+                visible={harAktivitet}
             >
                 <FormattedMessage id="filter.tittel">
                     {tittel =>
@@ -75,7 +75,6 @@ Filter.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     harAktivitet: PT.bool,
     className: PT.string,
-    skjulIPrivatModus: PT.bool.isRequired,
 };
 
 Filter.defaultProps = {

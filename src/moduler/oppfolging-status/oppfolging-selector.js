@@ -113,9 +113,7 @@ export function selectErUnderKvp(state) {
 }
 
 export function selectHarSkriveTilgang(state) {
-    const harSkriveTilgang = selectOppfolgingData(state).harSkriveTilgang;
-    return harSkriveTilgang === undefined || harSkriveTilgang;
-    // For å kunne være bakoverkompatiblem med at oppfolgingStatus ikke returnerer dene propertien.
+    return selectOppfolgingData(state).harSkriveTilgang;
 }
 
 export function selectKanReaktiveres(state) {

@@ -13,10 +13,7 @@ import AktivitetsmalModal from './aktivitetsmal-modal';
 import hiddenIf, {
     div as HiddenIfDiv,
 } from '../../felles-komponenter/hidden-if/hidden-if';
-import {
-    HiddenIfHovedknapp,
-    HiddenIfKnapp,
-} from '../../felles-komponenter/hidden-if/hidden-if-knapper';
+import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import {
     hentMal,
     selectMalStatus,
@@ -28,9 +25,7 @@ import {
     selectErUnderOppfolging,
     selectHarSkriveTilgang,
 } from '../oppfolging-status/oppfolging-selector';
-import { selectErBruker } from '../identitet/identitet-selector';
 import { fjernMalListe, hentMalListe } from './malliste-reducer';
-import { erPrivateBrukerSomSkalSkrusAv } from '../privat-modus/privat-modus-selector';
 
 const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
 
@@ -98,10 +93,9 @@ class AktivitetsMal extends Component {
             mal,
             historiskeMal,
             historiskVisning,
-            kanSletteMal,
             harSkriveTilgang,
             history,
-            privateMode,
+            underOppfolging,
         } = this.props;
 
         const harMal = !!mal;
@@ -121,7 +115,7 @@ class AktivitetsMal extends Component {
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
                             hidden={historiskVisning}
-                            disabled={!harSkriveTilgang || privateMode}
+                            disabled={!harSkriveTilgang || !underOppfolging}
                         >
                             <FormattedMessage
                                 id={
@@ -131,14 +125,6 @@ class AktivitetsMal extends Component {
                                 }
                             />
                         </HiddenIfHovedknapp>
-                        <HiddenIfKnapp
-                            onClick={() => history.push('mal/slett/')}
-                            className="aktivitetmal__slett-knapp"
-                            hidden={!harMal || !kanSletteMal}
-                            disabled={!harSkriveTilgang}
-                        >
-                            <FormattedMessage id="aktivitetvisning.slett-knapp" />
-                        </HiddenIfKnapp>
                     </div>
                     <HiddenIfDiv hidden={historiskeMal.length === 0}>
                         <hr className="aktivitetmal__delelinje" />
@@ -171,13 +157,12 @@ AktivitetsMal.propTypes = {
     mal: PT.string.isRequired,
     historiskeMal: AppPT.malListe.isRequired,
     historiskVisning: PT.bool.isRequired,
-    kanSletteMal: PT.bool.isRequired,
     doHentMal: PT.func.isRequired,
     doHentMalListe: PT.func.isRequired,
     doFjernMalListe: PT.func.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
-    privateMode: PT.bool.isRequired,
     history: AppPT.history.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -185,9 +170,8 @@ const mapStateToProps = state => ({
     mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
     historiskeMal: selectMalListe(state),
     historiskVisning: selectViserHistoriskPeriode(state),
-    kanSletteMal: !selectErUnderOppfolging(state) && selectErBruker(state),
     harSkriveTilgang: selectHarSkriveTilgang(state),
-    privateMode: erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
+    underOppfolging: selectErUnderOppfolging(state),
 });
 
 const mapDispatchToProps = dispatch => ({

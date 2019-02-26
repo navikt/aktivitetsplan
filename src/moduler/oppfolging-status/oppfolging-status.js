@@ -10,6 +10,7 @@ import {
     selectBrukerHarAvslatt,
     selectErBrukerManuell,
     selectErUnderOppfolging,
+    selectOppfolgingsPerioder,
     selectOppfolgingStatus,
     selectVilkarMaBesvares,
 } from './oppfolging-selector';
@@ -67,6 +68,7 @@ OppfolgingStatus.propTypes = {
 const mapStateToProps = state => ({
     erVeileder: selectErVeileder(state),
     underOppfolging: selectErUnderOppfolging(state),
+    oppfolgingsPerioder: selectOppfolgingsPerioder(state),
     brukerHarAvslatt: selectBrukerHarAvslatt(state),
     manuell: selectErBrukerManuell(state),
     vilkarMaBesvares: selectVilkarMaBesvares(state),

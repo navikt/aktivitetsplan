@@ -5,6 +5,8 @@ import visibleIfHOC from '../../hocs/visible-if';
 import { HtmlText } from '../../text';
 import GodkjennVilkar from '../vilkar/godkjenn-vilkar';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
+import * as AppPT from '../../proptypes';
+import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
 import loggEvent from '../../felles-komponenter/utils/logging';
 
 export const Alert = visibleIfHOC(AlertStripeInfoSolid);
@@ -56,9 +58,14 @@ class VidereSendBrukereEllerRenderChildren extends Component {
             visVilkar,
             vilkarToggletAv,
             underOppfolging,
+            oppfolgingsPerioder,
         } = this.props;
         const skalVilkaarBesvares =
             vilkarMaBesvares && underOppfolging && !vilkarToggletAv;
+
+        if (!underOppfolging && oppfolgingsPerioder.length === 0) {
+            return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
+        }
 
         if (erVeileder) {
             return (
@@ -89,6 +96,7 @@ VidereSendBrukereEllerRenderChildren.defaultProps = {
     erVeileder: null,
     manuell: null,
     underOppfolging: false,
+    oppfolgingsPerioder: [],
     reservasjonKRR: null,
     vilkarMaBesvares: null,
     brukerHarAvslatt: null,
@@ -103,6 +111,7 @@ VidereSendBrukereEllerRenderChildren.propTypes = {
     manuell: PT.bool,
     vilkarMaBesvares: PT.bool,
     underOppfolging: PT.bool,
+    oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
     brukerHarAvslatt: PT.bool,
     vilkarToggletAv: PT.bool.isRequired,
 };
