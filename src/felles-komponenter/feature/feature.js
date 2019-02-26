@@ -17,11 +17,11 @@ export const ALL_FEATURES = [
     NY_LAYOUT,
 ];
 
-export const harFeaturePa = (name, features, reverse) =>
+export const harFeature = (name, features, reverse) =>
     features[name] === !reverse;
 
 function Feature({ name, children, features, reverse }) {
-    return harFeaturePa(name, features, reverse) ? children : null;
+    return harFeature(name, features, reverse) ? children : null;
 }
 
 Feature.propTypes = {
