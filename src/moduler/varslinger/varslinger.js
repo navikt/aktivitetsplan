@@ -114,7 +114,7 @@ class Varslinger extends Component {
                     tekstId={'ikke.under.oppfolging.reaktivering'}
                     className="varsling"
                     lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
-                    href="https://tjenester.nav.no/veiledearbeidssoker/mistet-jobben/registrering-arbeidssoker?sprak=nb"
+                    href="https://tjenester.nav.no/arbeidssokerregistrering/start"
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
             </Container>
