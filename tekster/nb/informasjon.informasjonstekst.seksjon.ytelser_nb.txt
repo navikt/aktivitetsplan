@@ -1,8 +1,8 @@
-<p>Du kan ikke ha dialog med veilederen i aktivitetsplanen om ytelser du mottar fra NAV, økonomisk sosialhjelp, bolig eller andre ting som ikke handler om jobbrettede aktiviteter.</p>
+<p>Aktivitetsplanen og dialogen skal kun handle om jobbrettede aktiviteter. Du skal derfor ikke skrive om økonomisk støtte, økonomisk sosialhjelp, boligsituasjon eller andre ting som ikke handler om jobb.</p>
 
 <p>
  <ul>
-    <li>Bruk nav.no til å finne svar på slike spørsmål. Hvis du ikke finner svaret der, kan du ringe oss på 55 55 33 33.</li>
-    <li>Hvis du ikke følger opp avtalte aktiviteter, vil det få konsekvenser for videre oppfølging og dine økonomiske ytelser kan bli stanset.</li>
+    <li>Bruk nav.no til å finne svar på disse spørsmålene. Hvis du ikke finner svaret der, kan du ringe oss på 55 55 33 33.</li>
+    <li>Hvis du ikke følger opp avtalte aktiviteter, kan det få konsekvenser for oppfølgingen du får fra NAV og eventuell økonomisk støtte.</li>
  </ul>
 </p>
