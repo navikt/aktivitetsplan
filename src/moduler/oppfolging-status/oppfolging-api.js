@@ -19,24 +19,6 @@ export function hentOppfolging() {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging`);
 }
 
-export function godtaVilkar(hash) {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/godta/${hash}`);
-}
-
-export function avslaaVilkar(hash) {
-    return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/avslaa/${hash}`);
-}
-
-export function hentVilkar() {
-    return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/vilkar`);
-}
-
-export function hentHistoriskeVilkar() {
-    return fetchToJson(
-        `${OPPFOLGING_BASE_URL}/oppfolging/hentVilkaarStatusListe`
-    );
-}
-
 export function hentMal() {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/mal`);
 }

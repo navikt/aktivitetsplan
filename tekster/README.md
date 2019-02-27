@@ -30,6 +30,3 @@ Hvis man ønsker å legge til en mer spesifikk feilmelding, må man opprette en 
 1. Fyll inn følgende i boksen for filename: `src/main/resources/[nøkkel]_nb.txt` hvor du erstatter `[nøkkel]` med den aktuelle nøkkelen du ønsker å legge til en tekst for. Husk å få med riktig språkkode og filendelse. Og desverre er man nødt til å ha med `src/main/resources/` foran filnavnet for at filen skal havne i riktig mappe.
 1. Fyll inn ønsket tekst i editeringsvinduet.
 1. Klikk på `Commit...` knappen og dertter på `Commit Changes` knappen i dialogen som dukker opp.
-
-## Vilkårsteksten
-I aktivitetsplan håndteres teksten for vilkår separat. Dette er fordi man ønsker å støtte rik formattering med HTML i vilkårsteksten. Og fordi man må ha en entydig historikk over endringer som gjøres i vilkårene. Selve teksten finnes her: http://stash.devillo.no/projects/TEKST/repos/veilarboppfolging-vilkar/browse/src/main/tekster/veilarboppfolging-vilkar Det ligger to filer der, en for brukere som er under oppfølging og en for de som ønsker å bruke planen i privat modus.

@@ -1,5 +1,0 @@
-Du { status, select,
-AVSLATT {avslo}
-GODKJENT {godkjente}
-IKKE_BESVART {har ikke besvart}
-} vilkårene for aktivitetsplanen {dato}

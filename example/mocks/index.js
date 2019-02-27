@@ -24,7 +24,6 @@ import aktiviteter, {
 import arena from './arena';
 import getPerson from './person';
 import { malListe, opprettMal, sisteMal } from './mal';
-import vilkar from './vilkar';
 import veilederTilgang from './veilederTilgang';
 import veiledere from './veiledere';
 import enheter from './enheter';
@@ -64,8 +63,6 @@ mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
 mock.get('/veilarboppfolging/api/oppfolging', ({ queryParams }) =>
     oppfolging(queryParams)
 );
-
-mock.get('/veilarboppfolging/api/oppfolging/hentVilkaarStatusListe', vilkar);
 
 mock.get(
     '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',

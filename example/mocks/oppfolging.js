@@ -7,7 +7,6 @@ const oppfolging = {
     manuell: false,
     underOppfolging: true,
     underKvp: false,
-    vilkarMaBesvares: false,
     oppfolgingUtgang: null,
     gjeldendeEskaleringsvarsel: null,
     kanStarteOppfolging: false,
