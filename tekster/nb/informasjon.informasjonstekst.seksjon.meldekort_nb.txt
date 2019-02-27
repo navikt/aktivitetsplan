@@ -1,7 +1,5 @@
-<p>Har du dagpenger eller tiltakspenger eller er arbeidssøker, skal du føre tiltak, kurs eller utdanning på meldekortet. Aktivitetsplanen din kan inneholde flere avtalte aktiviteter enn meldekortet spør deg om. Det gjelder for eksempel jobbsøking eller oppdatering av CV.</p>
+<p>Hvis du får dagpenger, tiltakspenger eller er arbeidssøker, skal du oppgi tiltak, kurs eller utdanning på meldekortet. Aktivitetsplanen din kan inneholde flere avtalte aktiviteter enn det meldekortet spør deg om. Det kan for eksempel gjelde jobber du skal søke på eller oppdatering av CV-en din.</p>
 
-<p>Har du arbeidsavklaringspenger, skal du føre alle aktiviteter du deltar på.</p>
+<p>Hvis du får arbeidsavklaringspenger, skal du føre opp alle aktiviteter du har gjort på meldekortet.</p>
 
-<p>Mer informasjon finner du i veiledningstekstene til meldekortet.</p>
-
-<a href="https://www.nav.no/no/Person/Arbeid/Dagpenger+ved+arbeidsloshet+og+permittering/Meldekort+hvordan+gjor+du+det">Få mer informasjon om meldekort</a>
+<p>Her kan du lese <a href="https://www.nav.no/no/Person/Arbeid/Dagpenger+ved+arbeidsloshet+og+permittering/Meldekort+hvordan+gjor+du+det">mer informasjon om meldekort</a>.</p>

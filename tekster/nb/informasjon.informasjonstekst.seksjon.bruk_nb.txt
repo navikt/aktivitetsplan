@@ -1,9 +1,8 @@
-<p>Under navigasjonslinjen finner du en knapp der du kan legge til aktiviteter. Aktiviteten vil legge seg i kolonnene under. Hver kolonne har en status: forslag, planlegger, gjennomfører, fullført og avbrutt. Du flytter en aktivitet fra en kolonne til en annen ved å dra og slippe aktivitetene, eller ved å velge status i aktiviteten. Slik viser du fremdriften på aktiviteten.</p>
+<p>Det første du bør gjøre er å bestemme deg for hva som er målet ditt. Tenk over hvilke jobber du kan trives i og som du tror passer for deg. Når du har definert et mål, kan du vurdere hvilke aktiviteter som må til for at du skal nå dette målet. Eksempler på aktiviteter kan være å søke jobber, kortere kurs og arbeidstrening. Aktivitetsplanen skal hjelpe deg med å strukturere og holde oversikt over aktivitetene dine.</p>
 
-<p>NAV kan også legge til en aktivitet for deg som du er forpliktet til å gjennomføre. Den vil ha en blå etikett «Avtalt med NAV». Du kan ikke gjøre endringer i denne aktiviteten. NAV kan også sette etiketten «Avtalt med NAV» på en aktivitet du eller NAV har lagt inn tidligere.  Hvis du er uenig i at vi har merket en aktivitet som avtalt, kan du starte en dialog og forklare hvorfor du er uenig.</p>
+<p>Aktivitetsplanen er delt inn i fem kolonner med statusene forslag, planlegger, gjennomfører, fullført og avbrutt. Du flytter en aktivitet fra en kolonne til en annen ved å dra og slippe aktiviteten, eller ved å velge status inne i aktiviteten. På denne måten viser du fremdriften i aktivitetene du skal gjennomføre.</p>
 
-<p>Du kan også selv foreslå at en aktivitet skal være avtalt med NAV. Start en dialog med veilederen din hvis du vil foreslå dette.</p>
+<p>Du kan selv legge inn aktiviteter i planen. NAV kan også foreslå aktiviteter for deg som du selv velger om du vil gjennomføre. I tillegg kan veilederen din legge til aktiviteter som du er forpliktet til å gjennomføre. Disse aktivitetene vil ha en blå etikett som heter «Avtalt med NAV». Du kan ikke gjøre endringer i slike aktiviteter. Hvis du er uenig i at en aktivitet er merket som avtalt, kan du skrive i dialogen og forklare hvorfor du er uenig.</p>
 
-<p>Hvis vi vil ha kontakt med deg, starter vi en dialog i aktivitetsplanen. Du vil få et varsel fra oss hvis du ikke allerede har sett henvendelsen i aktivitetsplanen.</p>
+<p>Noen ganger vil aktivitetene være merket med en blå prikk. Det betyr at veilederen din har gjort en endring.</p>
 
-<b>Vi ønsker deg lykke til med jobbsøkingen!</b>
