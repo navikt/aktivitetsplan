@@ -13,17 +13,12 @@ import {
     selectHarSkriveTilgang,
 } from '../oppfolging-status/oppfolging-selector';
 import TallAlert from '../../felles-komponenter/tall-alert';
-import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 import NavigasjonslinjeKnapp from '../../hovedside/navigasjonslinje/navigasjonslinje-knapp';
 import {
     selectDialoger,
     selectHarTilgangTilDialog,
 } from '../../moduler/dialog/dialog-selector';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
-import {
-    BRUKERVILKAR,
-    harFeature,
-} from '../../felles-komponenter/feature/feature';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import VisValgtFilter from '../../moduler/filtrering/filter-vis-label';
@@ -39,7 +34,6 @@ function Verktoylinje({
     viserHistoriskPeriode,
     underOppfolging,
     harSkriveTilgang,
-    features,
     antallUlesteDialoger,
     aktivitetLaster,
     dialogLaster,
@@ -82,21 +76,8 @@ function Verktoylinje({
             </div>
             <div className="verktoylinje__verktoy-container">
                 <div className="indre">
-                    <Lenke
-                        hidden={harFeature(BRUKERVILKAR, features)}
-                        href="/vilkar"
-                        className="knappelenke"
-                    >
-                        <FormattedMessage id="navigasjon.vilkar" />
-                    </Lenke>
                     <Lenke href="/informasjon" className="knappelenke">
-                        <FormattedMessage
-                            id={
-                                harFeature(BRUKERVILKAR, features)
-                                    ? 'navigasjon.informasjon'
-                                    : 'navigasjon.informasjonsvideo'
-                            }
-                        />
+                        <FormattedMessage id="navigasjon.informasjon" />
                     </Lenke>
                     <NavigasjonslinjeKnapp
                         ariaLabel="utskrift.ikon.alt.tekst"
@@ -126,7 +107,6 @@ Verktoylinje.propTypes = {
     aktivitetLaster: PT.bool.isRequired,
     dialogLaster: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
-    features: PT.object.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
 };
 
@@ -142,7 +122,6 @@ const mapStateToProps = state => {
         underOppfolging,
         erVeileder: selectErVeileder(state),
         harSkriveTilgang: selectHarSkriveTilgang(state),
-        features: selectFeatureData(state),
         antallUlesteDialoger: dialoger,
         aktivitetLaster: selectHarTilgangTilAktiviteter(state),
         dialogLaster: selectHarTilgangTilDialog(state),

@@ -1,4 +1,0 @@
-Du { status, select,
-GODKJENT {godtok}
-AVSLATT {godtok ikke}
-} brukervilkår for aktivitetsplanen {dato}

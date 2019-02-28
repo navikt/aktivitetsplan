@@ -100,14 +100,12 @@ export const eskaleringsvarsel = PT.shape({
 
 export const oppfolging = PT.shape({
     status: PT.string,
-    brukerHarAvslatt: PT.bool,
     data: PT.shape({
         fnr: PT.string,
         veileder: PT.string,
         reservasjonKRR: PT.bool,
         manuell: PT.bool,
         underOppfolging: PT.bool,
-        vilkarMaBesvares: PT.bool,
         oppfolgingUtgang: PT.string,
         gjeldendeEkskaleringsvarsel: eskaleringsvarsel,
         kanStarteOppfolging: PT.bool,
@@ -116,14 +114,6 @@ export const oppfolging = PT.shape({
         oppfolgingsPerioder: PT.arrayOf(PT.object),
         harSkriveTilgang: PT.bool,
     }),
-});
-
-export const vilkar = PT.shape({
-    tekst: PT.string,
-    hash: PT.string,
-    dato: PT.string,
-    vilkarstatus: PT.string,
-    guid: PT.string,
 });
 
 export const mal = PT.shape({

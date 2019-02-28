@@ -19,7 +19,6 @@ import * as AppPT from '../../proptypes';
 import {
     selectErUnderOppfolging,
     selectOppfolgingStatus,
-    selectVilkarMaBesvares,
 } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { selectErBruker } from '../../moduler/identitet/identitet-selector';
 import {
@@ -124,7 +123,6 @@ Navigasjonslinje.propTypes = {
 };
 
 Navigasjonslinje.defaultProps = {
-    vilkarMaBesvares: true,
     erBruker: true,
 };
 
@@ -136,12 +134,6 @@ const mapStateToProps = state => {
     const underOppfolging = selectErUnderOppfolging(state);
     const erIkkeBruker = !selectErBruker(state);
 
-    // det gir ikke mening å vise vilkår til ikke-brukere (typisk veiledere)
-    // hvis bruker ikke har besvart vilkår for inneværende periode
-    const ikkeTilgangTilVilkar =
-        erIkkeBruker &&
-        selectVilkarMaBesvares(state) &&
-        selectViserInneverendePeriode(state);
     return {
         antallUlesteDialoger,
         underOppfolging,
@@ -151,7 +143,6 @@ const mapStateToProps = state => {
             selectOppfolgingStatus(state),
         ],
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
-        ikkeTilgangTilVilkar,
         disabled:
             erIkkeBruker &&
             !underOppfolging &&

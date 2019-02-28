@@ -77,10 +77,6 @@ export function selectErBrukerManuell(state) {
     return selectOppfolgingData(state).manuell;
 }
 
-export function selectVilkarMaBesvares(state) {
-    return selectOppfolgingData(state).vilkarMaBesvares;
-}
-
 export function selectGjeldendeEskaleringsVarsel(state) {
     return selectOppfolgingData(state).gjeldendeEskaleringsvarsel;
 }
@@ -102,10 +98,6 @@ export function selectAvslutningStatus(state) {
 
 export function selectUnderOppfolging(state) {
     return selectOppfolgingData(state).underOppfolging;
-}
-
-export function selectBrukerHarAvslatt(state) {
-    return selectOppfolgingSlice(state).brukerHarAvslatt;
 }
 
 export function selectErUnderKvp(state) {
