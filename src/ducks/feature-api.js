@@ -11,7 +11,9 @@ export function hentFeature(enhet) {
     const features = featureQueryParams(ALL_FEATURES);
     const featuresWithEnhet =
         (features && enhet && `${features}&enhet=${enhet}`) || features;
-    return fetchToJson(`/api/feature${featuresWithEnhet}`).catch(() => {});
+    return fetchToJson(
+        `/aktivitetsplan/api/feature${featuresWithEnhet}`
+    ).catch(() => {});
     // Ikke gi feilmelding hvis feature feiler, men anta alle features=false
 }
 

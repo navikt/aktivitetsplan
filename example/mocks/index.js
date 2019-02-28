@@ -47,7 +47,9 @@ const defaultFailure = {
 };
 
 //feature-api
-mock.get('/api/feature', ({ queryParams }) => getFeatures(queryParams));
+mock.get('/aktivitetsplan/api/feature', ({ queryParams }) =>
+    getFeatures(queryParams)
+);
 
 //veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', me);

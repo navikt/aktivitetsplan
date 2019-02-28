@@ -38,6 +38,10 @@ fasitResources:
     resourceType: baseurl
   - alias: arbeidssokerregistrering
     resourceType: baseurl
+  - alias: dittnav.link
+    resourceType: baseurl
+  - alias: veientilarbeid
+    resourceType: baseurl
 
 team: oppfolging
 resources:
