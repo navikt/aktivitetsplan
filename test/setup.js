@@ -42,7 +42,7 @@ function propagateToGlobal(window) {
 }
 
 const mockedModules = {
-    '~config': 'test/mock/config.js',
+    '~config': 'test/noop.js',
 };
 
 const old = Module._resolveFilename;
