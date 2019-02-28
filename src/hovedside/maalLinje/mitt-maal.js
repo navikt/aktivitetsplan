@@ -15,14 +15,12 @@ import {
 } from '../../moduler/mal/aktivitetsmal-reducer';
 import * as AppPT from '../../proptypes';
 
-function Mal({ mal }) {
+function Mal({ mal, disabled }) {
     if (!mal) {
-        return (
-            <FormattedMessage
-                tagName="div"
-                id={'aktivitetsmal.mitt-mal-deafult'}
-            />
-        );
+        const id = disabled
+            ? 'aktivitetsmal.mitt-mal-disabled'
+            : 'aktivitetsmal.mitt-mal-deafult';
+        return <FormattedMessage tagName="div" id={id} />;
     }
     return (
         <i>
@@ -40,15 +38,10 @@ class MittMaal extends Component {
 
     render() {
         const { avhengigheter, mal, underOppfolging } = this.props;
-        const url = mal ? '/mal' : '/mal/endre';
-
+        const disabled = !!mal || !underOppfolging;
+        const url = disabled ? '/mal' : '/mal/endre';
         return (
-            <Lenke
-                brukLenkestyling={false}
-                href={url}
-                className="mitt-maal"
-                disabled={underOppfolging || !mal}
-            >
+            <Lenke brukLenkestyling={false} href={url} className="mitt-maal">
                 <img
                     tabIndex="-1"
                     src={mittMalSvg}
@@ -60,7 +53,7 @@ class MittMaal extends Component {
                         <FormattedMessage id={'aktivitetsmal.mitt-mal'} />
                     </Element>
                     <Innholdslaster avhengigheter={avhengigheter}>
-                        <Mal mal={mal} />
+                        <Mal disabled={disabled} mal={mal} />
                     </Innholdslaster>
                 </div>
             </Lenke>
@@ -70,10 +63,12 @@ class MittMaal extends Component {
 
 Mal.defaultProps = {
     mal: undefined,
+    disabled: false,
 };
 
 Mal.propTypes = {
     mal: PT.string,
+    disabled: PT.bool,
 };
 
 MittMaal.defaultProps = {
