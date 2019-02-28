@@ -17,33 +17,10 @@ prometheus:
   path: /internal/metrics
 fasitResources:
   used:
-
   - alias: loadbalancer:aktivitetsplan
     resourceType: loadbalancerconfig
-
   - alias: appres.cms
     resourceType: baseurl
-
-  - alias: aktivitetsplan.onboarding.video
-    resourceType: baseurl
-    propertyMap:
-      url: PUBLIC_ONBOARDING_VIDEO_URL
-
-  - alias: veilarbaktivitetproxyAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBAKTIVITET_URL
-
-  - alias: veilarbdialogproxyAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBDIALOG_URL
-
-  - alias: feature_endpoint_sbs
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_FEATURE_ENDPOINT_URL
-
   - alias: appdynamics
     resourceType: applicationproperties
 

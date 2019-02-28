@@ -26,21 +26,6 @@ global.document = dom.window.document;
 global.document.cookie = '';
 global.window = window;
 
-window.aktivitetsplan = {
-    veilarbdialog_url: 'http://localhost:8080/veilarbdialog/api',
-    veilarbaktivitet_url: 'http://localhost:8080/veilarbaktivitet/api',
-    veilarboppfolging_url: 'http://localhost:8080/veilarboppfolging/api',
-    veilarboppgave_url: 'http://localhost:8080/veilarboppgave/api',
-    veilarbperson_url: 'http://localhost:8080/veilarbperson/api',
-    veilarbportefolje_url: 'http://localhost:8080/veilarbportefolje/api',
-    veilarbveileder_url: 'http://localhost:8080/veilarbveileder/api',
-    veilarbmalverk_url: 'http://localhost:8080/veilarbmalverk/api',
-    feature_endpoint_url: 'https://feature-t6.nais.preprod.local/feature',
-    onboarding_video_url:
-        'https://publisher.qbrick.com/Embed.aspx?mcid=C1F23FB93342C49E',
-    sone: 'FSS',
-};
-
 propagateToGlobal(window);
 
 function propagateToGlobal(window) {

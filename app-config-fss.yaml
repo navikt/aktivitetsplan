@@ -26,11 +26,6 @@ fasitResources:
   - alias: unleash-api
     resourceType: restservice
 
-  - alias: aktivitetsplan.onboarding.video
-    resourceType: baseurl
-    propertyMap:
-      url: PUBLIC_ONBOARDING_VIDEO_URL
-
   - alias: veilArbAktivitetAPI
     resourceType: restservice
     propertyMap:
