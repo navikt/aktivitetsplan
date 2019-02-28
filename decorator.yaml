@@ -1,3 +1,5 @@
+contextPath: /
+
 auth:
   enforce: true
   loginUrl: {{ VEILARBSTEPUP_OIDC_URL }}
@@ -13,3 +15,10 @@ proxy:
     baseUrl: "http://veilarbproxy"
   - contextPath: "/veilarbstepup"
     baseUrl: "http://veilarbstepup"
+
+redirect:
+  - from: /aktivitetsplan
+    to: {{ AKTIVITETSPLAN_URL }}
+  - from: /arbeidssokerregistrering
+    to: {{ ARBEIDSSOKERREGISTRERING_URL }}
+

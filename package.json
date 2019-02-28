@@ -1,25 +1,8 @@
 {
-  "name": "aktivitetsplan-felles",
+  "name": "aktivitetsplan",
   "version": "1.128.33",
-  "private": true,
-  "description": "Aktivitetsplan felles",
-  "main": "src/app.js",
-  "styles": "src/main.less",
+  "description": "Aktivitetsplan",
   "license": "MIT",
-  "files": [
-    "src/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+http://stash.devillo.no/scm/fo/aktivitetsplan-felles.git"
-  },
-  "keywords": [
-    "aktivitetsplan"
-  ],
-  "author": "",
-  "publishConfig": {
-    "registry": "https://repo.adeo.no/repository/npm-internal/"
-  },
   "scripts": {
     "test": "mocha",
     "test:watch": "mocha --watch",
@@ -42,7 +25,7 @@
     "dev:less": "nodemon -e less  --exec npm run build:less:dev",
     "build": "npm run build:tekster && npm run build:less && npm run build:js:sbs && npm run build:js:fss",
     "build:js": "webpack --optimize-minimize",
-    "build:less:dev": "node ./node_modules/less/bin/lessc --npm-import=\"prefix=~\" src/index-dev.less ./example/aktivitetsplanfelles/index-dev.css",
+    "build:less:dev": "node ./node_modules/less/bin/lessc --npm-import=\"prefix=~\" src/index-dev.less ./example/build/index-dev.css",
     "build:less": "node ./node_modules/less/bin/lessc --npm-import=\"prefix=~\" --compress src/index.less ./build/css/index.css",
     "build:tekster": "node ./build-tekster.js",
     "precommit": "lint-staged",

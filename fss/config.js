@@ -1,5 +1,3 @@
-export const API_BASE_URL = '/veilarbaktivitetsplanfs/api';
-
 export const CONTEXT_PATH = '/veilarbpersonflatefs';
 
 export const TILLAT_SET_AVTALT = true;

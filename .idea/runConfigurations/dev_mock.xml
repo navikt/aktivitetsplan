@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="dev" type="js.build_tools.npm" factoryName="npm" nameIsGenerated="true">
+  <configuration default="false" name="dev:mock" type="js.build_tools.npm" factoryName="npm" nameIsGenerated="true">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="dev" />
+      <script value="dev:mock" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

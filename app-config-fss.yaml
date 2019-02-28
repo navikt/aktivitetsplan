@@ -7,14 +7,14 @@ replicas:
 port: 8080
 healthcheck:
   liveness:
-    path: aktivitetsplan/internal/isAlive
+    path: /internal/isAlive
     initialDelay: 60
   readiness:
-    path: aktivitetsplan/internal/isReady
+    path: /internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
-  path: aktivitetsplan/internal/metrics
+  path: /internal/metrics
 fasitResources:
   used:
   - alias: loadbalancer:aktivitetsplan-fss

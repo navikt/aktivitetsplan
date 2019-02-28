@@ -103,7 +103,6 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './build/'),
         filename: 'bundle.js',
-        publicPath: '/aktivitetsplan/',
     },
     plugins: DEBUG ? PLUGINS : PRODUCTION_PLUGINS,
 };

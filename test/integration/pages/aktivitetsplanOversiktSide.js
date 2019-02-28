@@ -6,7 +6,7 @@ const aktivitetsPlanOversikt = require('../commands/aktivitetsplan-oversikt.js')
 
 module.exports = {
     url: function() {
-        return this.api.globals.baseUrl + '/aktivitetsplanfelles/';
+        return this.api.globals.baseUrl;
     },
 
     commands: [
