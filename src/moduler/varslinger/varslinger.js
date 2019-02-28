@@ -41,6 +41,7 @@ import {
     harFeature,
 } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
+import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -106,7 +107,7 @@ class Varslinger extends Component {
                     tekstId={reaktiveringsInfoTekst}
                     className="varsling"
                     lenkeTekstId="oppfolging.ikke-under-oppfolging.reaktiveres.lenke-tekst"
-                    href="https://tjenester.nav.no/arbeidssokerregistrering/start"
+                    href={arbeidssokerregistreringHref}
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
                 <HiddenIfAdvarselMedLenke
@@ -114,7 +115,7 @@ class Varslinger extends Component {
                     tekstId={'ikke.under.oppfolging.reaktivering'}
                     className="varsling"
                     lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
-                    href="https://tjenester.nav.no/arbeidssokerregistrering/start"
+                    href={arbeidssokerregistreringHref}
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
             </Container>
