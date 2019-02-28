@@ -1,7 +1,7 @@
 export const maler = [
     {
         mal: 'Jeg vil bli sjørøver',
-        endretAv: '12345678912',
+        endretAv: 'BRUKER',
         dato: new Date(),
     },
 ];
@@ -18,7 +18,7 @@ export function sisteMal() {
 export function opprettMal(update, erVeileder) {
     let nyMal = {
         mal: update.mal,
-        endretAv: erVeileder ? 'VEILEDER' : '12345678912',
+        endretAv: erVeileder ? 'VEILEDER' : 'BRUKER',
         dato: new Date(),
     };
     maler.push(nyMal);

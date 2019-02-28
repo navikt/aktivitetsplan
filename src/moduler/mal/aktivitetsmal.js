@@ -7,7 +7,6 @@ import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import * as AppPT from '../../proptypes';
 import { autobind, formaterDatoEllerTidSiden } from '../../utils';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import Identitet from '../../moduler/identitet/identitet';
 import Accordion from '../../felles-komponenter/accordion';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import hiddenIf, {
@@ -26,8 +25,14 @@ import {
     selectHarSkriveTilgang,
 } from '../oppfolging-status/oppfolging-selector';
 import { fjernMalListe, hentMalListe } from './malliste-reducer';
+import { selectErVeileder } from '../identitet/identitet-selector';
 
-const identitetMap = { BRUKER: 'bruker', VEILEDER: 'NAV' };
+const identitetMap = (erVeileder, endretAv) => {
+    if (erVeileder) {
+        return { BRUKER: 'bruker', VEILEDER: 'NAV' }[endretAv];
+    }
+    return { BRUKER: 'deg', VEILEDER: 'NAV' }[endretAv];
+};
 
 const ManglendeMalInformasjon = hiddenIf(({ historiskVisning }) => {
     if (historiskVisning) {
@@ -44,7 +49,7 @@ const ManglendeMalInformasjon = hiddenIf(({ historiskVisning }) => {
     );
 });
 
-function malListeVisning(gjeldendeMal) {
+function malListeVisning(gjeldendeMal, erVeileder) {
     return (
         <article key={gjeldendeMal.dato} className="aktivitetmal__historikk">
             <span className="aktivitetmal__historikk-skrevetav">
@@ -55,10 +60,9 @@ function malListeVisning(gjeldendeMal) {
                             : 'aktivitetsmal.slettet-av'
                     }
                 />
-                <Identitet>
-                    {identitetMap[gjeldendeMal.endretAv] ||
-                        gjeldendeMal.endretAv}
-                </Identitet>
+                <span>
+                    {identitetMap(erVeileder, gjeldendeMal.endretAv)}
+                </span>
             </span>{' '}
             {formaterDatoEllerTidSiden(gjeldendeMal.dato)}
             <Tekstomrade className="aktivitetmal__historikk-tekst">
@@ -96,6 +100,7 @@ class AktivitetsMal extends Component {
             harSkriveTilgang,
             history,
             underOppfolging,
+            erVeileder,
         } = this.props;
 
         const harMal = !!mal;
@@ -138,7 +143,9 @@ class AktivitetsMal extends Component {
                                 apen={historikkVises}
                                 onClick={this.toggleHistoriskeMal}
                             >
-                                {historiskeMal.map(m => malListeVisning(m))}
+                                {historiskeMal.map(m =>
+                                    malListeVisning(m, erVeileder)
+                                )}
                             </Accordion>
                         </div>
                     </HiddenIfDiv>
@@ -163,6 +170,7 @@ AktivitetsMal.propTypes = {
     harSkriveTilgang: PT.bool.isRequired,
     history: AppPT.history.isRequired,
     underOppfolging: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -172,6 +180,7 @@ const mapStateToProps = state => ({
     historiskVisning: selectViserHistoriskPeriode(state),
     harSkriveTilgang: selectHarSkriveTilgang(state),
     underOppfolging: selectErUnderOppfolging(state),
+    erVeileder: selectErVeileder(state),
 });
 
 const mapDispatchToProps = dispatch => ({
