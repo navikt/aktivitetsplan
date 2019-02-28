@@ -7,14 +7,14 @@ replicas:
 port: 8080
 healthcheck:
   liveness:
-    path: /internal/isAlive
+    path: aktivitetsplan/internal/isAlive
     initialDelay: 60
   readiness:
-    path: /internal/isReady
+    path: aktivitetsplan/internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
-  path: /internal/metrics
+  path: aktivitetsplan/internal/metrics
 fasitResources:
   used:
   - alias: loadbalancer:aktivitetsplan-fss
@@ -25,53 +25,6 @@ fasitResources:
 
   - alias: unleash-api
     resourceType: restservice
-
-  - alias: veilArbAktivitetAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBAKTIVITET_URL
-
-  - alias: veilArbOppfolgingAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBOPPFOLGING_URL
-
-  - alias: veilarbdialogAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBDIALOG_URL
-
-  - alias: veilarboppgave.api
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBOPPGAVE_URL
-
-  - alias: veilArbPersonAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBPERSON_URL
-
-  - alias: veilArbPortefoljeAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBPORTEFOLJE_URL
-
-  - alias: veilArbVeilederAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBVEILEDER_URL
-
-  - alias: veilarbmalverkAPI
-    resourceType: restservice
-    propertyMap:
-        url: PUBLIC_VEILARBMALVERK_URL
-
-    # nais konfigurerer ikke riktig url i fasit, bruker window.location.origin til å bygge url,
-    # men lar denne avhengigheten være for å vise avhengigheten
-  - alias: feature_endpoint
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_FEATURE_ENDPOINT_URL
 
   - alias: appdynamics
     resourceType: applicationproperties
