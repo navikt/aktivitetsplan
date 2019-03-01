@@ -1,4 +1,5 @@
 export const CONTEXT_PATH = '/veilarbpersonflatefs';
+export const FEATURE_PATH = '/aktivitetsplan';
 
 export const TILLAT_SET_AVTALT = true;
 export const VIS_INNSTILLINGER = true;
