@@ -1,5 +1,2 @@
-https://${DomainName}/aktivitetsplan/css/*
-https://${DomainName}/aktivitetsplan/vendor.bundle.js
-https://${DomainName}/aktivitetsplan/bundle.js
-https://${DomainName}/aktivitetsplan/aktivitetsplan.fss.min.js
-https://${DomainName}/aktivitetsplan/environment.js
+https://${DomainName}/aktivitetsplan/*
+https://${DomainName}/aktivitetsplan
