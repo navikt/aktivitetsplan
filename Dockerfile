@@ -18,3 +18,4 @@ ENV APPLICATION_NAME=aktivitetsplan
 COPY --from=builder /source/build /app
 
 ADD decorator.yaml /decorator.yaml
+ADD decorator-fss.yaml /decorator-fss.yaml

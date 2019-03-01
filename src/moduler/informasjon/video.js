@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { autobind } from '../../utils';
-import { ONBOARDING_VIDEO_URL } from '../../environment';
 import Accordion from '../../felles-komponenter/accordion';
 import { HtmlText } from '../../text';
+
+const ONBOARDING_VIDEO_URL =
+    'https://video.qbrick.com/play2/embed/player?accountId=763558&mediaId=74420478-00015227-993dea3a&configId=default&pageStyling=adaptive&autoplay=true&repeat=true&sharing=true';
 
 class Video extends Component {
     constructor(props) {

@@ -7,7 +7,7 @@ const URLBuilder = {
         return `https://tjenester-${env}.nav.no`;
     },
     SBSUrl(env) {
-        return this.baseUrl(env) + '/aktivitetsplan';
+        return this.baseUrl(env);
     },
 
     FSSUrl(env) {
@@ -32,8 +32,8 @@ const nightwatch_config = {
     test_settings: {
         default: {
             globals: {
-                FSSUrl: 'http://localhost:3000/aktivitetsplanfelles/',
-                SBSUrl: 'http://localhost:3000/aktivitetsplanfelles/',
+                FSSUrl: 'http://localhost:3000/',
+                SBSUrl: 'http://localhost:3000/',
                 timeout: 10000,
                 FSSBaseUrl: 'http://localhost:3000',
                 SBSBaseUrl: 'http://localhost:3000',

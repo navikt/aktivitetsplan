@@ -7,43 +7,20 @@ replicas:
 port: 8080
 healthcheck:
   liveness:
-    path: aktivitetsplan/internal/isAlive
+    path: /internal/isAlive
     initialDelay: 60
   readiness:
-    path: aktivitetsplan/internal/isReady
+    path: /internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
-  path: aktivitetsplan/internal/metrics
+  path: /internal/metrics
 fasitResources:
   used:
-
   - alias: loadbalancer:aktivitetsplan
     resourceType: loadbalancerconfig
-
   - alias: appres.cms
     resourceType: baseurl
-
-  - alias: aktivitetsplan.onboarding.video
-    resourceType: baseurl
-    propertyMap:
-      url: PUBLIC_ONBOARDING_VIDEO_URL
-
-  - alias: veilarbaktivitetproxyAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBAKTIVITET_URL
-
-  - alias: veilarbdialogproxyAPI
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_VEILARBDIALOG_URL
-
-  - alias: feature_endpoint_sbs
-    resourceType: restservice
-    propertyMap:
-      url: PUBLIC_FEATURE_ENDPOINT_URL
-
   - alias: appdynamics
     resourceType: applicationproperties
 
@@ -54,6 +31,16 @@ fasitResources:
     resourceType: baseurl
 
   - alias: veilarbstepup_oidc
+    resourceType: baseurl
+
+  # lenker
+  - alias: aktivitetsplan
+    resourceType: baseurl
+  - alias: arbeidssokerregistrering
+    resourceType: baseurl
+  - alias: dittnav.link
+    resourceType: baseurl
+  - alias: veientilarbeid
     resourceType: baseurl
 
 team: oppfolging

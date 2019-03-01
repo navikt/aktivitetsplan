@@ -43,9 +43,9 @@ module.exports = function(env) {
         entry: ['whatwg-fetch', './example/example.js'],
         devtool: isDev ? 'source-map' : false,
         output: {
-            path: path.resolve(__dirname, 'example/aktivitetsplanfelles'),
+            path: path.resolve(__dirname, 'example/build'),
             filename: 'bundle.js',
-            publicPath: '/aktivitetsplanfelles/',
+            publicPath: '/',
         },
         stats: {
             children: false,
@@ -63,14 +63,9 @@ module.exports = function(env) {
         devServer: {
             port: 3000,
             open: true,
-            contentBase: path.resolve(__dirname, 'example'),
+            contentBase: path.resolve(__dirname, 'example/build'),
             historyApiFallback: {
-                index: '/aktivitetsplanfelles/',
-            },
-            before: app => {
-                app.get('/', (req, res) =>
-                    res.redirect('/aktivitetsplanfelles/')
-                );
+                index: '/',
             },
         },
     };

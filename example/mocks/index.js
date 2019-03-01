@@ -218,7 +218,7 @@ mock.get(
 mock.post('/veilarbmalverk/api/mal', ({ body }) => hentMalverkMedType(body));
 
 //aktivitetsplan-api
-mock.get('/aktivitetsplan/api/auth', auth);
+mock.get('/api/auth', auth);
 
 ///veilarblest/api
 mock.get('/veilarblest/api/aktivitetsplan/les', () => lest);
