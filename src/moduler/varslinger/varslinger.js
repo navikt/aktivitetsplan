@@ -35,6 +35,7 @@ import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger/innstillinger-reducer
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import { hentOppfolgingsstatus } from '../oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-reducer';
+import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -98,7 +99,7 @@ class Varslinger extends Component {
                     tekstId={reaktiveringsInfoTekst}
                     className="varsling"
                     lenkeTekstId="oppfolging.ikke-under-oppfolging.reaktiveres.lenke-tekst"
-                    href="https://tjenester.nav.no/arbeidssokerregistrering/start"
+                    href={arbeidssokerregistreringHref}
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
                 <HiddenIfAdvarselMedLenke
@@ -106,7 +107,7 @@ class Varslinger extends Component {
                     tekstId={'ikke.under.oppfolging.reaktivering'}
                     className="varsling"
                     lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
-                    href="https://tjenester.nav.no/veiledearbeidssoker/mistet-jobben/registrering-arbeidssoker?sprak=nb"
+                    href={arbeidssokerregistreringHref}
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
             </Container>

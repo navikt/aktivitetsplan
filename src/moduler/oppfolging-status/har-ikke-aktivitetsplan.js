@@ -6,8 +6,7 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import PT from 'prop-types';
 import Lenke from '../../felles-komponenter/utils/lenke';
 
-const href =
-    'https://tjenester.nav.no/veiledearbeidssoker/mistet-jobben/registrering-arbeidssoker?sprak=nb';
+export const arbeidssokerregistreringHref = '/arbeidssokerregistering';
 
 function HarIkkeAktivitetsplan({ erVeileder }) {
     const advarsel = erVeileder
@@ -21,7 +20,7 @@ function HarIkkeAktivitetsplan({ erVeileder }) {
                     <FormattedMessage id={advarsel} />
                 </Normaltekst>
                 {!erVeileder &&
-                    <Lenke href={href}>
+                    <Lenke href={arbeidssokerregistreringHref}>
                         <FormattedMessage id="ikke.under.oppfolging.reaktivering.lenke" />
                         <HoyreChevron />
                     </Lenke>}
