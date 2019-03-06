@@ -20,7 +20,7 @@ function HarIkkeAktivitetsplan({ erVeileder }) {
                     <FormattedMessage id={advarsel} />
                 </Normaltekst>
                 {!erVeileder &&
-                    <Lenke href={arbeidssokerregistreringHref}>
+                    <Lenke href={arbeidssokerregistreringHref} erEksternLenke>
                         <FormattedMessage id="ikke.under.oppfolging.reaktivering.lenke" />
                         <HoyreChevron />
                     </Lenke>}
