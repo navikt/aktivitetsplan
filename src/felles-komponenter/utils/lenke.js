@@ -56,10 +56,10 @@ function Lenke({
                 ref={focusRef}
             >
                 {children}
+                <span className="eksternlenkeIkonBoks">
+                    <EksternLenkeIkon />
+                </span>
             </a>
-            <span className="eksternlenkeIkonBoks">
-                <EksternLenkeIkon />
-            </span>
         </span>
     );
 }

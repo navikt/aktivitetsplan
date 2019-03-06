@@ -47,9 +47,10 @@ function AktivitetinformasjonVisning({
                         {tittel}
                     </Sidetittel>
                     <Lenke
+                        role="button"
                         visible={tillatEndring && !arenaAktivitet}
                         href={endreAktivitetRoute(valgtAktivitet.id)}
-                        disabled={laster || underOppfolging}
+                        disabled={laster || !underOppfolging}
                     >
                         <FormattedMessage id="aktivitetvisning.endre-knapp" />
                     </Lenke>
