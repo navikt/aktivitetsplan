@@ -6,7 +6,7 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import PT from 'prop-types';
 import Lenke from '../../felles-komponenter/utils/lenke';
 
-export const arbeidssokerregistreringHref = '/arbeidssokerregistering';
+export const arbeidssokerregistreringHref = '/arbeidssokerregistrering';
 
 function HarIkkeAktivitetsplan({ erVeileder }) {
     const advarsel = erVeileder
