@@ -7,25 +7,20 @@ import { Element } from 'nav-frontend-typografi';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import mittMalSvg from './Illustrasjon_dette_gjor_du_bra.svg';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectErBruker } from '../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { selectViserInneverendePeriode } from '../../moduler/filtrering/filter/filter-selector';
 import {
     hentMal,
     selectGjeldendeMal,
     selectMalStatus,
 } from '../../moduler/mal/aktivitetsmal-reducer';
 import * as AppPT from '../../proptypes';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../moduler/privat-modus/privat-modus-selector';
 
-function Mal({ mal, privatModus }) {
-    if (!mal || privatModus) {
-        return (
-            <FormattedMessage
-                tagName="div"
-                id={'aktivitetsmal.mitt-mal-deafult'}
-            />
-        );
+function Mal({ mal, disabled }) {
+    if (!mal) {
+        const id = disabled
+            ? 'aktivitetsmal.mitt-mal-disabled'
+            : 'aktivitetsmal.mitt-mal-deafult';
+        return <FormattedMessage tagName="div" id={id} />;
     }
     return (
         <i>
@@ -42,21 +37,11 @@ class MittMaal extends Component {
     }
 
     render() {
-        const {
-            avhengigheter,
-            mal,
-            privatModus,
-            privateModusForBruker,
-        } = this.props;
-        const url = mal ? '/mal' : '/mal/endre';
-
+        const { avhengigheter, mal, underOppfolging } = this.props;
+        const disabled = !!mal || !underOppfolging;
+        const url = disabled ? '/mal' : '/mal/endre';
         return (
-            <Lenke
-                brukLenkestyling={false}
-                href={url}
-                className="mitt-maal"
-                disabled={privatModus || (privateModusForBruker && !mal)}
-            >
+            <Lenke brukLenkestyling={false} href={url} className="mitt-maal">
                 <img
                     tabIndex="-1"
                     src={mittMalSvg}
@@ -68,7 +53,7 @@ class MittMaal extends Component {
                         <FormattedMessage id={'aktivitetsmal.mitt-mal'} />
                     </Element>
                     <Innholdslaster avhengigheter={avhengigheter}>
-                        <Mal mal={mal} privatModus={privatModus} />
+                        <Mal disabled={disabled} mal={mal} />
                     </Innholdslaster>
                 </div>
             </Lenke>
@@ -78,42 +63,30 @@ class MittMaal extends Component {
 
 Mal.defaultProps = {
     mal: undefined,
-    privatModus: false,
+    disabled: false,
 };
 
 Mal.propTypes = {
     mal: PT.string,
-    privatModus: PT.bool.isRequired,
+    disabled: PT.bool,
 };
 
 MittMaal.defaultProps = {
     mal: undefined,
-    privatModus: false,
 };
 
 MittMaal.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     mal: PT.string,
     doHentMal: PT.func.isRequired,
-    privatModus: PT.bool.isRequired,
-    privateModusForBruker: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => {
-    const ikkeUnderOppfolging = !selectErUnderOppfolging(state);
-    const erIkkeBruker = !selectErBruker(state);
-    const erPrivatModus =
-        erIkkeBruker &&
-        ikkeUnderOppfolging &&
-        selectViserInneverendePeriode(state);
-
-    return {
-        avhengigheter: [selectMalStatus(state)],
-        mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
-        privatModus: erPrivatModus,
-        privateModusForBruker: erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
-    };
-};
+const mapStateToProps = state => ({
+    avhengigheter: [selectMalStatus(state)],
+    mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
+    underOppfolging: selectErUnderOppfolging(state),
+});
 
 const mapDispatchToProps = dispatch => ({
     doHentMal: () => dispatch(hentMal()),

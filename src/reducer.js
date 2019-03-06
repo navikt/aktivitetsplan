@@ -11,7 +11,6 @@ import featureReducer from './ducks/feature-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import oppgaveHistorikkReducer from './moduler/innstillinger/historikk/oppgave-historikk-reducer';
 import oppfolgingHistorikkReducer from './moduler/innstillinger/historikk/oppfolging-historikk-reducer';
-import historiskeVilkarReducer from './moduler/vilkar/historiske-vilkar';
 import identitetReducer from './moduler/identitet/identitet-reducer';
 import innstillingerReducer from './moduler/innstillinger/innstillinger-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
@@ -24,7 +23,6 @@ import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import oppfolgingstatusReducer from './moduler/oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
-import vilkarReducer from './moduler/vilkar/vilkar-reducer';
 import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import underelmenterReducer from './moduler/aktivitet/visning/underelement-for-aktivitet/underelementer-view-reducer';
@@ -44,7 +42,6 @@ const combinedReducers = combineReducers({
         bruker: brukerReducer,
         dialog: dialogReducer,
         filter: filterReducer,
-        historiskeVilkar: historiskeVilkarReducer,
         identitet: identitetReducer,
         innstillinger: innstillingerReducer,
         oppgaveHistorikk: oppgaveHistorikkReducer,
@@ -56,7 +53,6 @@ const combinedReducers = combineReducers({
         oppfolging: oppfolgingReducer,
         oppfoelgingsstatus: oppfolgingstatusReducer,
         versjoner: versjonReducer,
-        vilkar: vilkarReducer,
         feature: featureReducer,
         veilederTilgang: veilederTilgangReducer,
         malverk: malverkReducer,

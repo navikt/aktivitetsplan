@@ -7,8 +7,9 @@ import PT from 'prop-types';
 import Modal from '../../../felles-komponenter/modal/modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../../proptypes';
-import { selectPrivatModusStatus } from '../../privat-modus/privat-modus-selector';
 import { selectNavnPaMotpart } from '../../motpart/motpart-selector';
+import { selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
+import { selectIdentitetStatus } from '../../identitet/identitet-selector';
 
 function StartOppfolgingKvittering({ avhengigheter, navn, history }) {
     return (
@@ -53,7 +54,10 @@ StartOppfolgingKvittering.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    avhengigheter: selectPrivatModusStatus(state),
+    avhengigheter: [
+        selectOppfolgingStatus(state),
+        selectIdentitetStatus(state),
+    ],
     navn: selectNavnPaMotpart(state),
 });
 

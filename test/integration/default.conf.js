@@ -1,13 +1,14 @@
-const testmiljo = process.env.MILJO ? process.env.MILJO.toLowerCase() : 'q6';
+const testmiljo = process.env.MILJO ? process.env.MILJO.toLowerCase() : 'q0';
 const URLBuilder = {
     baseFSSUrl: env => {
         return `https://app-${env}.adeo.no`;
     },
     baseUrl: env => {
-        return `https://tjenester-${env}.nav.no`;
+        if (env === 'q0') return `https://aktivitetsplan-q.nav.no`;
+        else return `https://aktivitetsplan-${env}.dev-sbs.nais.io`;
     },
     SBSUrl(env) {
-        return this.baseUrl(env) + '/aktivitetsplan';
+        return this.baseUrl(env);
     },
 
     FSSUrl(env) {
@@ -32,8 +33,8 @@ const nightwatch_config = {
     test_settings: {
         default: {
             globals: {
-                FSSUrl: 'http://localhost:3000/aktivitetsplanfelles/',
-                SBSUrl: 'http://localhost:3000/aktivitetsplanfelles/',
+                FSSUrl: 'http://localhost:3000/',
+                SBSUrl: 'http://localhost:3000/',
                 timeout: 10000,
                 FSSBaseUrl: 'http://localhost:3000',
                 SBSBaseUrl: 'http://localhost:3000',

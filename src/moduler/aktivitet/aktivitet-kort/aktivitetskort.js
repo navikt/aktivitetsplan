@@ -27,7 +27,6 @@ import {
     selectIdentitetSlice,
 } from '../../../moduler/identitet/identitet-selector';
 import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 import {
     selectLestAktivitetsplan,
     selectLestStatus,
@@ -43,6 +42,7 @@ import {
 } from '../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 import AktivitetskortEndring from './aktivitetskort-endring';
+import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../../ducks/utils';
 
 const dndSpec = {
@@ -208,7 +208,7 @@ const mapStateToProps = (state, props) => {
         forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
         erFlyttbar:
             sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) &&
-            !erPrivateBrukerSomSkalSkrusAv(state),
+            selectErUnderOppfolging(state),
         harEndringerIAktivitet,
     };
 };

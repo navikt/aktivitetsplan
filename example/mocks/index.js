@@ -24,7 +24,6 @@ import aktiviteter, {
 import arena from './arena';
 import getPerson from './person';
 import { malListe, opprettMal, sisteMal } from './mal';
-import vilkar from './vilkar';
 import veilederTilgang from './veilederTilgang';
 import veiledere from './veiledere';
 import enheter from './enheter';
@@ -51,6 +50,7 @@ const defaultFailure = {
 mock.get('/aktivitetsplan/api/feature', ({ queryParams }) =>
     getFeatures(queryParams)
 );
+mock.get('/api/feature', ({ queryParams }) => getFeatures(queryParams));
 
 //veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', me);
@@ -64,8 +64,6 @@ mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
 mock.get('/veilarboppfolging/api/oppfolging', ({ queryParams }) =>
     oppfolging(queryParams)
 );
-
-mock.get('/veilarboppfolging/api/oppfolging/hentVilkaarStatusListe', vilkar);
 
 mock.get(
     '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
@@ -221,7 +219,7 @@ mock.get(
 mock.post('/veilarbmalverk/api/mal', ({ body }) => hentMalverkMedType(body));
 
 //aktivitetsplan-api
-mock.get('/aktivitetsplan/api/auth', auth);
+mock.get('/api/auth', auth);
 
 ///veilarblest/api
 mock.get('/veilarblest/api/aktivitetsplan/les', () => lest);

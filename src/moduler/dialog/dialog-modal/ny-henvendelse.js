@@ -25,8 +25,10 @@ import {
 } from '../dialog-selector';
 import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 import { visBekreftelse } from '../dialog-view-reducer';
-import { selectHarSkriveTilgang } from '../../oppfolging-status/oppfolging-selector';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
+import {
+    selectHarSkriveTilgang,
+    selectUnderOppfolging,
+} from '../../oppfolging-status/oppfolging-selector';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
@@ -43,7 +45,7 @@ function NyHenvendelseForm({
     erKnyttTilAktivitet,
     errorSummary,
     harSkriveTilgang,
-    privateModus,
+    underOppfolging,
 }) {
     return (
         <form
@@ -91,7 +93,7 @@ function NyHenvendelseForm({
             <Hovedknapp
                 type="hoved"
                 spinner={oppretter}
-                disabled={!harSkriveTilgang || oppretter || privateModus}
+                disabled={!harSkriveTilgang || oppretter || !underOppfolging}
             >
                 <FormattedMessage id="dialog.lag-ny-dialog" />
             </Hovedknapp>
@@ -121,7 +123,7 @@ NyHenvendelseForm.propTypes = {
     erKnyttTilAktivitet: PT.bool.isRequired,
     errorSummary: PT.node.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
-    privateModus: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
 const pakrevdOverskrift = rules.minLength(
@@ -178,7 +180,7 @@ const mapStateToProps = (state, props) => {
         visBrukerInfo: erBruker && selectVisBrukerInfo(state, dialogId),
         erKnyttTilAktivitet: !!aktivitetId || (dialog && !!dialog.aktivitetId),
         harSkriveTilgang: selectHarSkriveTilgang(state),
-        privateModus: erPrivateBrukerSomSkalSkrusAv(state),
+        underOppfolging: selectUnderOppfolging(state),
     };
 };
 

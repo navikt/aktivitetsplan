@@ -12,7 +12,6 @@ import {
     HiddenIfAdvarselMedLenke,
 } from './varsel-alertstriper';
 import {
-    selectVilkarMaBesvares,
     selectErUnderOppfolging,
     selectErBrukerManuell,
     selectReservasjonKRR,
@@ -36,11 +35,7 @@ import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger/innstillinger-reducer
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import { hentOppfolgingsstatus } from '../oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-reducer';
-import {
-    BRUKERVILKAR,
-    harFeature,
-} from '../../felles-komponenter/feature/feature';
-import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
+import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -74,8 +69,6 @@ class Varslinger extends Component {
             innsideAvhengigheter,
             underOppfolging,
             brukerErAktivIArena,
-            vilkarMaBesvares,
-            vilkarToggletAv,
             brukerErManuell,
             reservertIKRR,
             brukerErEskalert,
@@ -106,7 +99,17 @@ class Varslinger extends Component {
                     tekstId={reaktiveringsInfoTekst}
                     className="varsling"
                     lenkeTekstId="oppfolging.ikke-under-oppfolging.reaktiveres.lenke-tekst"
-                    href="https://tjenester.nav.no/arbeidssokerregistrering/start"
+                    href={arbeidssokerregistreringHref}
+                    erEksternLenke
+                    values={{ antalldagerIgjen: antallDagerIgjen }}
+                />
+                <HiddenIfAdvarselMedLenke
+                    hidden={underOppfolging}
+                    tekstId={'ikke.under.oppfolging.reaktivering'}
+                    className="varsling"
+                    lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
+                    href={arbeidssokerregistreringHref}
+                    erEksternLenke
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
             </Container>
@@ -124,18 +127,6 @@ class Varslinger extends Component {
                     tekstId="oppfolging.veileder.under-kvp-oppfolging.varsel"
                     className="varsling"
                 />
-                <HiddenIfVarsling
-                    hidden={
-                        reservertIKRR ||
-                        !vilkarMaBesvares ||
-                        vilkarToggletAv ||
-                        brukerErManuell ||
-                        !underOppfolging
-                    }
-                    tekstId="oppfolging.vilkar-ikke-godkjent"
-                    className="varsling"
-                />
-
                 <HiddenIfVarsling
                     hidden={!reservertIKRR}
                     tekstId="oppfolging.bruker-reservert-i-krr"
@@ -182,8 +173,6 @@ Varslinger.defaultProps = {
     erBruker: false,
     underOppfolging: false,
     brukerErAktivIArena: false,
-    vilkarMaBesvares: false,
-    vilkarToggletAv: false,
     brukerErManuell: false,
     reservertIKRR: false,
     brukerErEskalert: false,
@@ -200,8 +189,6 @@ Varslinger.propTypes = {
     innsideAvhengigheter: AppPT.avhengigheter.isRequired,
     underOppfolging: PT.bool,
     brukerErAktivIArena: PT.bool,
-    vilkarMaBesvares: PT.bool,
-    vilkarToggletAv: PT.bool,
     brukerErManuell: PT.bool,
     reservertIKRR: PT.bool,
     doHentIdentitet: PT.func.isRequired,
@@ -230,8 +217,6 @@ const mapStateToProps = state => {
         ],
         innsideAvhengigheter: [selectOppfoelgingsstatusStatus(state)],
         brukerErAktivIArena: selectErBrukerAktivIArena(state),
-        vilkarMaBesvares: selectVilkarMaBesvares(state),
-        vilkarToggletAv: harFeature(BRUKERVILKAR, selectFeatureData(state)),
         underOppfolging: selectErUnderOppfolging(state),
         brukerErManuell: selectErBrukerManuell(state),
         reservertIKRR: selectReservasjonKRR(state),

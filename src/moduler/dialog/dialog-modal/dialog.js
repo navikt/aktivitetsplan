@@ -7,13 +7,13 @@ import EndreDialog from './endre-dialog';
 import Henvendelser from './henvendelser';
 import * as AppPT from '../../../proptypes';
 import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../privat-modus/privat-modus-selector';
 import DialogLenkeTilAktivitet from './dialog-lenke-til-aktivitet';
+import { selectUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 
 export const endreDialogFormNavn = 'endre-dialog';
 export const nyHenvendelseDialogFormNavn = 'ny-henvendelse-dialog';
 
-function Dialog({ dialog, aktivitet, className, privateModus }) {
+function Dialog({ dialog, aktivitet, className, underOppfolging }) {
     const dialogId = dialog.id;
     const historisk = dialog.historisk;
     return (
@@ -24,12 +24,12 @@ function Dialog({ dialog, aktivitet, className, privateModus }) {
                     : dialog.overskrift}
             </Undertittel>
             <EndreDialog
-                hidden={historisk || privateModus}
+                hidden={historisk || !underOppfolging}
                 formNavn={`${endreDialogFormNavn}-${dialogId}`}
                 dialog={dialog}
             />
             <NyHenvendelse
-                hidden={historisk || privateModus}
+                hidden={historisk || !underOppfolging}
                 formNavn={`${nyHenvendelseDialogFormNavn}-${dialogId}`}
                 dialogId={dialogId}
                 skalHaAutofokus={false}
@@ -43,7 +43,7 @@ Dialog.propTypes = {
     className: PT.string,
     dialog: AppPT.dialog.isRequired,
     aktivitet: AppPT.aktivitet,
-    privateModus: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
 Dialog.defaultProps = {
@@ -55,7 +55,7 @@ const mapStateToProps = (state, props) => {
     const aktivitet = selectAktivitetMedId(state, props.dialog.aktivitetId);
     return {
         aktivitet,
-        privateModus: erPrivateBrukerSomSkalSkrusAv(state),
+        underOppfolging: selectUnderOppfolging(state),
     };
 };
 

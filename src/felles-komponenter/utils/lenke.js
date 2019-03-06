@@ -18,6 +18,7 @@ function Lenke({
     brukLenkestyling,
     children,
     focusRef,
+    erEksternLenke,
     onClick,
     disabled,
     ...rest
@@ -29,7 +30,7 @@ function Lenke({
             </div>
         );
     }
-    if (erInternlenke(href)) {
+    if (erInternlenke(href) && !erEksternLenke) {
         const fodselsnummer = getFodselsnummer();
         const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
 
@@ -69,6 +70,7 @@ Lenke.propTypes = {
     brukLenkestyling: PT.bool,
     className: PT.string,
     focusRef: PT.func,
+    erEksternLenke: PT.bool,
     onClick: PT.func,
     disabled: PT.bool,
 };
@@ -79,6 +81,7 @@ Lenke.defaultProps = {
     onClick: () => {},
     brukLenkestyling: true,
     disabled: false,
+    erEksternLenke: false,
 };
 
 export default visibleIfHOC(Lenke);

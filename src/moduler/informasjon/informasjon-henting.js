@@ -4,11 +4,6 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
-import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
-import {
-    BRUKERVILKAR,
-    harFeature,
-} from '../../felles-komponenter/feature/feature';
 import {
     hentLest,
     selectLestInformasjon,
@@ -21,8 +16,8 @@ import { STATUS } from '../../ducks/utils';
 
 class RedirectTilInformasjon extends Component {
     componentWillMount() {
-        const { erVeileder, vilkarToggletAv, history } = this.props;
-        if (!erVeileder && vilkarToggletAv) {
+        const { erVeileder, history } = this.props;
+        if (!erVeileder) {
             history.push('/informasjon');
         }
     }
@@ -35,7 +30,6 @@ class RedirectTilInformasjon extends Component {
 RedirectTilInformasjon.propTypes = {
     history: AppPT.history.isRequired,
     erVeileder: PT.bool.isRequired,
-    vilkarToggletAv: PT.bool.isRequired,
 };
 
 const RedirectTilInformasjonWithRouter = withRouter(RedirectTilInformasjon);
@@ -72,7 +66,6 @@ const mapStateToProps = state => ({
     lestStatus: selectLestStatus(state),
     lestInfo: selectLestInformasjon(state),
     erVeileder: selectErVeileder(state),
-    vilkarToggletAv: harFeature(BRUKERVILKAR, selectFeatureData(state)),
 });
 
 const mapDispatchToProps = dispatch => ({

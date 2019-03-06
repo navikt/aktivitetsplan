@@ -1,6 +1,6 @@
 export default {
     rettighetsgruppe: 'IYT',
-    formidlingsgruppe: 'ISERV',
+    formidlingsgruppe: 'SERV',
     servicegruppe: 'IVURD',
     oppfolgingsenhet: {
         navn: 'NAV TEST',

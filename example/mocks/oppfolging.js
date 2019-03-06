@@ -7,7 +7,6 @@ const oppfolging = {
     manuell: false,
     underOppfolging: true,
     underKvp: false,
-    vilkarMaBesvares: false,
     oppfolgingUtgang: null,
     gjeldendeEskaleringsvarsel: null,
     kanStarteOppfolging: false,
@@ -29,7 +28,7 @@ const oppfolging = {
         },
     ],
     harSkriveTilgang: true,
-    kanReaktiveres: true,
+    kanReaktiveres: false,
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
 };
 

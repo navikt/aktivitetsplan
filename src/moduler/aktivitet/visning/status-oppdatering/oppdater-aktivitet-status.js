@@ -9,7 +9,7 @@ import {
     selectAktivitetMedId,
     selectKanEndreAktivitetStatus,
 } from '../../aktivitetliste-selector';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../../privat-modus/privat-modus-selector';
+import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 
 function OppdaterAktivitetStatus({
     className,
@@ -41,7 +41,7 @@ const mapStateToProps = (state, props) => {
         valgtAktivitet,
         disableStatusEndring:
             !selectKanEndreAktivitetStatus(state, valgtAktivitet) ||
-            erPrivateBrukerSomSkalSkrusAv(state), // todo remove me
+            !selectErUnderOppfolging(state),
         initialValues: {
             aktivitetstatus: props.status,
         },

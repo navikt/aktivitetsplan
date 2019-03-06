@@ -76,6 +76,7 @@ export function AdvarselMedLenkeVarsling({
     tekstId,
     lenkeTekstId,
     href,
+    erEksternLenke,
     className,
     onClick,
     values,
@@ -83,7 +84,11 @@ export function AdvarselMedLenkeVarsling({
     return (
         <AlertStripeAdvarsel className={className}>
             <FormattedMessage id={tekstId} values={values} />&nbsp;
-            <Lenke href={href} onClick={onClick}>
+            <Lenke
+                href={href}
+                onClick={onClick}
+                erEksternLenke={erEksternLenke}
+            >
                 <FormattedMessage id={lenkeTekstId} />
             </Lenke>
         </AlertStripeAdvarsel>
@@ -94,12 +99,14 @@ AdvarselMedLenkeVarsling.defaultProps = {
     className: '',
     onClick: () => {},
     values: undefined,
+    erEksternLenke: false,
 };
 
 AdvarselMedLenkeVarsling.propTypes = {
     tekstId: PT.string.isRequired,
     lenkeTekstId: PT.string.isRequired,
     href: PT.string.isRequired,
+    erEksternLenke: PT.bool,
     className: PT.string,
     onClick: PT.func,
     values: PT.object,

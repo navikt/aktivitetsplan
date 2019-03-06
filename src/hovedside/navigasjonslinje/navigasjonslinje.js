@@ -13,14 +13,12 @@ import { hentDialog } from '../../moduler/dialog/dialog-reducer';
 import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
 import { hentArbeidsliste } from '../../moduler/arbeidsliste/arbeidsliste-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import { selectErPrivatModus } from '../../moduler/privat-modus/privat-modus-selector';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectArbeidslisteStatus } from '../../moduler/arbeidsliste/arbeidsliste-selector';
 import * as AppPT from '../../proptypes';
 import {
     selectErUnderOppfolging,
     selectOppfolgingStatus,
-    selectVilkarMaBesvares,
 } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { selectErBruker } from '../../moduler/identitet/identitet-selector';
 import {
@@ -32,11 +30,7 @@ import { selectDialoger } from '../../moduler/dialog/dialog-selector';
 import NavigasjonslinjeKnapp from './navigasjonslinje-knapp';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 import { selectTildelVeilederStatus } from '../../moduler/tildel-veileder/tildel-veileder-selector';
-import Feature, {
-    harFeature,
-    NY_LAYOUT,
-    VERKTOYLINJE,
-} from '../../felles-komponenter/feature/feature';
+import Feature, { NY_LAYOUT } from '../../felles-komponenter/feature/feature';
 
 export const NavigasjonsElement = hiddenIf(
     ({ sti, tekstId, disabled, children }) => {
@@ -91,10 +85,6 @@ class Navigasjonslinje extends Component {
     render() {
         const { avhengigheter } = this.props;
 
-        if (!this.props.harNyVerktoylinje) {
-            return null;
-        }
-
         return (
             <Feature name={NY_LAYOUT} reverse>
                 <ConfigToggle name={navigasjonslinjemenyFeature}>
@@ -130,11 +120,9 @@ Navigasjonslinje.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     kanHaDialog: PT.bool.isRequired,
     ikkeFinnesDialogerIHistoriskPeriode: PT.bool.isRequired,
-    harNyVerktoylinje: PT.bool.isRequired,
 };
 
 Navigasjonslinje.defaultProps = {
-    vilkarMaBesvares: true,
     erBruker: true,
 };
 
@@ -145,20 +133,9 @@ const mapStateToProps = state => {
         .filter(d => dialogFilter(d, state)).length;
     const underOppfolging = selectErUnderOppfolging(state);
     const erIkkeBruker = !selectErBruker(state);
-    const harNyVerktoylinje = harFeature(
-        VERKTOYLINJE,
-        selectFeatureData(state)
-    );
 
-    // det gir ikke mening å vise vilkår til ikke-brukere (typisk veiledere)
-    // hvis bruker ikke har besvart vilkår for inneværende periode
-    const ikkeTilgangTilVilkar =
-        erIkkeBruker &&
-        selectVilkarMaBesvares(state) &&
-        selectViserInneverendePeriode(state);
     return {
         antallUlesteDialoger,
-        privatModus: selectErPrivatModus(state),
         underOppfolging,
         avhengigheter: [
             selectArbeidslisteStatus(state),
@@ -166,7 +143,6 @@ const mapStateToProps = state => {
             selectOppfolgingStatus(state),
         ],
         kanHaDialog: underOppfolging || selectViserHistoriskPeriode(state),
-        ikkeTilgangTilVilkar,
         disabled:
             erIkkeBruker &&
             !underOppfolging &&
@@ -174,7 +150,6 @@ const mapStateToProps = state => {
         ikkeFinnesDialogerIHistoriskPeriode:
             dialoger.length < 1 && !selectViserInneverendePeriode(state),
         features: selectFeatureData(state),
-        harNyVerktoylinje,
     };
 };
 

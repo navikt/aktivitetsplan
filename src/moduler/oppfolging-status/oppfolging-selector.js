@@ -77,10 +77,6 @@ export function selectErBrukerManuell(state) {
     return selectOppfolgingData(state).manuell;
 }
 
-export function selectVilkarMaBesvares(state) {
-    return selectOppfolgingData(state).vilkarMaBesvares;
-}
-
 export function selectGjeldendeEskaleringsVarsel(state) {
     return selectOppfolgingData(state).gjeldendeEskaleringsvarsel;
 }
@@ -104,18 +100,12 @@ export function selectUnderOppfolging(state) {
     return selectOppfolgingData(state).underOppfolging;
 }
 
-export function selectBrukerHarAvslatt(state) {
-    return selectOppfolgingSlice(state).brukerHarAvslatt;
-}
-
 export function selectErUnderKvp(state) {
     return selectOppfolgingData(state).underKvp;
 }
 
 export function selectHarSkriveTilgang(state) {
-    const harSkriveTilgang = selectOppfolgingData(state).harSkriveTilgang;
-    return harSkriveTilgang === undefined || harSkriveTilgang;
-    // For å kunne være bakoverkompatiblem med at oppfolgingStatus ikke returnerer dene propertien.
+    return selectOppfolgingData(state).harSkriveTilgang;
 }
 
 export function selectKanReaktiveres(state) {

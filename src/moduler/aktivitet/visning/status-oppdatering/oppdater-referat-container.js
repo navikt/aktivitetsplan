@@ -75,6 +75,7 @@ OppdaterReferatContainer.propTypes = {
     erReferatPublisert: PT.bool.isRequired,
     delelinje: PT.bool,
     erVeileder: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
     publiserer: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,
     className: PT.string,
@@ -95,7 +96,8 @@ const mapStateToProps = (state, props) => {
     const erVeileder = selectErVeileder(state);
     const visReferat =
         (erVeileder || erReferatPublisert) &&
-        (harReferat || !aktivitet.historisk);
+        (harReferat || !aktivitet.historisk) &&
+        (harReferat || props.underOppfolging);
 
     return {
         publiserer:

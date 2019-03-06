@@ -18,4 +18,4 @@ ENV APPLICATION_NAME=aktivitetsplan
 COPY --from=builder /source/build /app
 
 ADD decorator.yaml /decorator.yaml
-ENV OIDC_LOGIN_URL /veilarbstepup/oidc
+ADD decorator-fss.yaml /decorator-fss.yaml

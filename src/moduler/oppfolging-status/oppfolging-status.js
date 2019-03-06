@@ -7,24 +7,16 @@ import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
 import {
-    selectBrukerHarAvslatt,
     selectErBrukerManuell,
     selectErUnderOppfolging,
+    selectOppfolgingsPerioder,
     selectOppfolgingStatus,
-    selectVilkarMaBesvares,
 } from './oppfolging-selector';
 import {
     selectErVeileder,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
-import {
-    selectFeatureData,
-    selectFeatureStatus,
-} from '../../felles-komponenter/feature/feature-selector';
-import {
-    BRUKERVILKAR,
-    harFeature,
-} from '../../felles-komponenter/feature/feature';
+import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
 import VidereSendBrukereEllerRenderChildren from './videre-send-bruker-eller-render-children';
 
 class OppfolgingStatus extends Component {
@@ -61,18 +53,15 @@ OppfolgingStatus.propTypes = {
     toggleStatus: AppPT.status.isRequired,
     doHentOppfolging: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
-    vilkarToggletAv: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     erVeileder: selectErVeileder(state),
     underOppfolging: selectErUnderOppfolging(state),
-    brukerHarAvslatt: selectBrukerHarAvslatt(state),
+    oppfolgingsPerioder: selectOppfolgingsPerioder(state),
     manuell: selectErBrukerManuell(state),
-    vilkarMaBesvares: selectVilkarMaBesvares(state),
     oppfolgingStatus: selectOppfolgingStatus(state),
     identitetStatus: selectIdentitetStatus(state),
-    vilkarToggletAv: harFeature(BRUKERVILKAR, selectFeatureData(state)),
     toggleStatus: selectFeatureStatus(state),
 });
 

@@ -7,7 +7,7 @@ import * as statuser from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import StillingEtikettForm from './stilling-etikett-form';
 import { selectAktivitetMedId } from '../../aktivitetliste-selector';
-import { erPrivateBrukerSomSkalSkrusAv } from '../../../privat-modus/privat-modus-selector';
+import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 
 function OppdaterAktivitetStatus(props) {
     const { valgtAktivitet, status } = props;
@@ -27,7 +27,9 @@ function OppdaterAktivitetStatus(props) {
             </Undertittel>
             <StillingEtikettForm
                 visible={erStillingsAktivitet}
-                disableStatusEndring={disableStatusEndring || props.privateMode}
+                disableStatusEndring={
+                    disableStatusEndring || !props.underOppfolging
+                }
                 aktivitet={valgtAktivitet}
             />
         </section>
@@ -39,7 +41,7 @@ OppdaterAktivitetStatus.propTypes = {
     paramsId: PT.string.isRequired,
     className: PT.string.isRequired,
     valgtAktivitet: AppPT.aktivitet.isRequired,
-    privateMode: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -47,7 +49,7 @@ const mapStateToProps = (state, props) => ({
     initialValues: {
         aktivitetstatus: props.status,
     },
-    privateMode: erPrivateBrukerSomSkalSkrusAv(state),
+    underOppfolging: selectErUnderOppfolging(state),
 });
 
 export default connect(mapStateToProps)(OppdaterAktivitetStatus);
