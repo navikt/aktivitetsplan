@@ -47,6 +47,7 @@ function AktivitetinformasjonVisning({
                         {tittel}
                     </Sidetittel>
                     <Lenke
+                        className="endreknapp"
                         role="button"
                         visible={tillatEndring && !arenaAktivitet}
                         href={endreAktivitetRoute(valgtAktivitet.id)}
