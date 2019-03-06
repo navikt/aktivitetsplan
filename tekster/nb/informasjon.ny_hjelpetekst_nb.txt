@@ -1,4 +1,4 @@
-<p>Aktivitetsplanen din er vektøyet du skal bruke for å komme i aktivitet og jobb. Denne blir delt med veilederen din. For at vi skal kunne følge deg opp best mulig, er det viktig at du bruker aktivitetsplanen aktivt. Du må gjennomføre de aktivitetene du avtaler med NAV i planen.</p>
+<p>Aktivitetsplanen din er verktøyet du skal bruke for å komme i aktivitet og jobb. Denne blir delt med veilederen din. For at vi skal kunne følge deg opp best mulig, er det viktig at du bruker aktivitetsplanen aktivt. Du må gjennomføre de aktivitetene du avtaler med NAV i planen.</p>
 
 <p>Du kan selv legge inn og redigere målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Du får også tilgang til en dialog der du kan kommunisere med veilederen din og diskutere aktiviteter du skal gjennomføre.</p>
 
