@@ -1,10 +1,11 @@
-const testmiljo = process.env.MILJO ? process.env.MILJO.toLowerCase() : 'q6';
+const testmiljo = process.env.MILJO ? process.env.MILJO.toLowerCase() : 'q0';
 const URLBuilder = {
     baseFSSUrl: env => {
         return `https://app-${env}.adeo.no`;
     },
     baseUrl: env => {
-        return `https://tjenester-${env}.nav.no`;
+        if (env === 'q0') return `https://aktivitetsplan-q.nav.no`;
+        else return `https://aktivitetsplan-${env}.dev-sbs.nais.io`;
     },
     SBSUrl(env) {
         return this.baseUrl(env);
