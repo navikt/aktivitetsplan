@@ -130,12 +130,6 @@ class EgenAktivitetForm extends Component {
                     </PeriodeValidering>
 
                     <Input
-                        feltNavn="lenke"
-                        disabled={erAktivitetAvtalt}
-                        labelId="egen-aktivitet-form.label.lenke"
-                        bredde="fullbredde"
-                    />
-                    <Input
                         feltNavn="hensikt"
                         disabled={erAktivitetAvtalt}
                         labelId="egen-aktivitet-form.label.hensikt"
@@ -152,6 +146,12 @@ class EgenAktivitetForm extends Component {
                         feltNavn="oppfolging"
                         disabled={erAktivitetAvtalt}
                         labelId="egen-aktivitet-form.label.oppfolging"
+                        bredde="fullbredde"
+                    />
+                    <Input
+                        feltNavn="lenke"
+                        disabled={erAktivitetAvtalt}
+                        labelId="egen-aktivitet-form.label.lenke"
                         bredde="fullbredde"
                     />
                 </div>

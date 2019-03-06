@@ -70,6 +70,36 @@ function Informasjonsfelt({
     );
 }
 
+const httpRegex = /^(https?):\/\/.*$/;
+
+function LenkeKomponent({ lenke }) {
+    return (
+        <DetaljFelt
+            key="lenke"
+            tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
+            visible={lenke != null}
+            fullbredde
+        >
+            <Lenke
+                href={
+                    lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`
+                }
+                className="detaljfelt__lenke"
+                target="_blank"
+            >
+                {lenke}
+            </Lenke>
+        </DetaljFelt>
+    );
+}
+
+LenkeKomponent.propTypes = {
+    lenke: PT.string,
+};
+LenkeKomponent.defaultProps = {
+    lenke: null,
+};
+
 Informasjonsfelt.propTypes = {
     tittel: PT.node.isRequired,
     innhold: PT.node,
@@ -152,26 +182,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
         }
     };
 
-    const httpRegex = /^(https?):\/\/.*$/;
-
-    const lenkeKomponent = () =>
-        <DetaljFelt
-            key="lenke"
-            tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
-            visible={lenke != null}
-            fullbredde={false}
-        >
-            <Lenke
-                href={
-                    lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`
-                }
-                className="detaljfelt__lenke"
-                target="_blank"
-            >
-                {lenke}
-            </Lenke>
-        </DetaljFelt>;
-
     const ledigStillingFelter = () => [
         <Informasjonsfelt
             key="fradato"
@@ -197,7 +207,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             }
             innhold={arbeidssted}
         />,
-        lenkeKomponent(),
         <Informasjonsfelt
             key="kontaktperson"
             tittel={
@@ -218,7 +227,6 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
             tittel={tilDatoTekst(aktivitetstype)}
             innhold={tilDato}
         />,
-        lenkeKomponent(),
         <Informasjonsfelt
             key="hensikt"
             tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
@@ -534,6 +542,7 @@ function Aktivitetsdetaljer({ valgtAktivitet, className }) {
                     aktivitetstype === SAMTALEREFERAT_TYPE
                 }
             />
+            <LenkeKomponent lenke={lenke} />
         </section>
     );
 }
