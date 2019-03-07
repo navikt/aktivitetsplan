@@ -116,6 +116,10 @@ export function selectInaktiveringsDato(state) {
     return selectOppfolgingData(state).inaktiveringsdato;
 }
 
+export function selectkanStarteOppfolging(state) {
+    return selectOppfolgingData(state).kanStarteOppfolging;
+}
+
 export function selectOppfolgingFeilmeldinger(state) {
     const feilMeldingsdata =
         selectOppfolgingStatus(state) === STATUS.ERROR &&

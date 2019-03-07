@@ -27,9 +27,15 @@ class VidereSendBrukereEllerRenderChildren extends Component {
             manuell,
             underOppfolging,
             oppfolgingsPerioder,
+            kanStarteOppfolging,
         } = this.props;
 
-        if (!underOppfolging && oppfolgingsPerioder.length === 0) {
+        // TODO fjern !kanStarteOppfolging når tannhjulet er flyttet ut av planen
+        if (
+            !underOppfolging &&
+            !kanStarteOppfolging &&
+            oppfolgingsPerioder.length === 0
+        ) {
             return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
         }
 
@@ -50,6 +56,7 @@ VidereSendBrukereEllerRenderChildren.defaultProps = {
     erVeileder: null,
     manuell: null,
     underOppfolging: false,
+    kanStarteOppfolging: false,
     oppfolgingsPerioder: [],
     reservasjonKRR: null,
     videreSendTilInfo: false,
@@ -60,6 +67,7 @@ VidereSendBrukereEllerRenderChildren.propTypes = {
     erVeileder: PT.bool,
     manuell: PT.bool,
     underOppfolging: PT.bool,
+    kanStarteOppfolging: PT.bool,
     oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
 };
 

@@ -9,6 +9,7 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
     selectErBrukerManuell,
     selectErUnderOppfolging,
+    selectkanStarteOppfolging,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
 } from './oppfolging-selector';
@@ -60,6 +61,7 @@ const mapStateToProps = state => ({
     underOppfolging: selectErUnderOppfolging(state),
     oppfolgingsPerioder: selectOppfolgingsPerioder(state),
     manuell: selectErBrukerManuell(state),
+    kanStarteOppfolging: selectkanStarteOppfolging(state),
     oppfolgingStatus: selectOppfolgingStatus(state),
     identitetStatus: selectIdentitetStatus(state),
     toggleStatus: selectFeatureStatus(state),
