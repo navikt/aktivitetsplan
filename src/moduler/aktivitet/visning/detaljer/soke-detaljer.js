@@ -1,29 +1,20 @@
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
-import Informasjonsfelt, {
-    HiddenIfInformasjonsfelt,
-} from '../hjelpekomponenter/Informasjonsfelt';
+import { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
-import { formaterDatoKortManed, HiddenIf } from '../../../../utils';
+import { HiddenIf } from '../../../../utils';
 import * as AppPT from '../../../../proptypes';
+import {
+    Beskrivelse,
+    FraDato,
+    TilDato,
+} from '../hjelpekomponenter/standard-felt';
 
 const SokeDetaljer = ({ aktivitet }) =>
     <HiddenIf hidden={aktivitet.type !== SOKEAVTALE_AKTIVITET_TYPE}>
         <div className="aktivitetvisning__detaljer">
-            <Informasjonsfelt
-                key="fradato"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />
-                }
-                innhold={formaterDatoKortManed(aktivitet.fraDato)}
-            />
-            <Informasjonsfelt
-                key="tildato"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />
-                }
-                innhold={formaterDatoKortManed(aktivitet.tilDato)}
-            />
+            <FraDato aktivitet={aktivitet} />
+            <TilDato aktivitet={aktivitet} />
             <HiddenIfInformasjonsfelt
                 key="antallStillinger"
                 tittel={
@@ -42,15 +33,7 @@ const SokeDetaljer = ({ aktivitet }) =>
                 hiden={!aktivitet.avtaleOppfolging}
                 innhold={aktivitet.avtaleOppfolging}
             />
-            <Informasjonsfelt
-                tittel={
-                    <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
-                }
-                innhold={aktivitet.beskrivelse}
-                beskrivelse
-                fullbredde
-                formattertTekst
-            />
+            <Beskrivelse aktivitet={aktivitet} />
         </div>
     </HiddenIf>;
 

@@ -2,6 +2,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 import {
+    formaterDatoKortManed,
     formaterDatoKortManedTid,
     formaterTid,
     HiddenIf,
@@ -11,6 +12,11 @@ import Informasjonsfelt, {
 } from '../hjelpekomponenter/Informasjonsfelt';
 import * as AppPT from '../../../../proptypes';
 import { GRUPPE_AKTIVITET_TYPE } from '../../../../constant';
+import {
+    Beskrivelse,
+    FraDato,
+    TilDato,
+} from '../hjelpekomponenter/standard-felt';
 
 const Motaplan = planListe =>
     planListe.map(mote =>
@@ -25,26 +31,21 @@ const Motaplan = planListe =>
 
 function GruppeDetaljer({ aktivitet }) {
     const { fraDato, tilDato, moeteplanListe } = aktivitet;
-    const erGruppeDatoLike = fraDato === tilDato;
+    const erGruppeDatoLike =
+        formaterDatoKortManed(fraDato) === formaterDatoKortManed(tilDato);
 
     return (
         <HiddenIf hidden={aktivitet.type !== GRUPPE_AKTIVITET_TYPE}>
             <div className="aktivitetvisning__detaljer">
-                <HiddenIfInformasjonsfelt
+                <FraDato
+                    aktivitet={aktivitet}
+                    visIkkeSatt
                     hidden={erGruppeDatoLike}
-                    key="fradato"
-                    tittel={
-                        <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />
-                    }
-                    innhold={fraDato || 'Dato ikke satt'}
                 />
-                <HiddenIfInformasjonsfelt
+                <TilDato
+                    aktivitet={aktivitet}
+                    visIkkeSatt
                     hidden={erGruppeDatoLike}
-                    key="tildato"
-                    tittel={
-                        <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />
-                    }
-                    innhold={tilDato || 'Dato ikke satt'}
                 />
                 <HiddenIfInformasjonsfelt
                     hidden={!erGruppeDatoLike}
@@ -52,7 +53,7 @@ function GruppeDetaljer({ aktivitet }) {
                     tittel={
                         <FormattedMessage id="aktivitetdetaljer.dato-tekst.gruppeaktivitet" />
                     }
-                    innhold={fraDato || 'Dato ikke satt'}
+                    innhold={formaterDatoKortManed(fraDato) || 'Dato ikke satt'}
                 />
                 <Informasjonsfelt
                     key="moteplanutenslutteklokke"
@@ -62,15 +63,7 @@ function GruppeDetaljer({ aktivitet }) {
                     beskrivelse
                     innhold={<Motaplan planListe={moeteplanListe} />}
                 />
-                <Informasjonsfelt
-                    tittel={
-                        <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
-                    }
-                    innhold={aktivitet.beskrivelse}
-                    beskrivelse
-                    fullbredde
-                    formattertTekst
-                />
+                <Beskrivelse aktivitet={aktivitet} />
             </div>
         </HiddenIf>
     );

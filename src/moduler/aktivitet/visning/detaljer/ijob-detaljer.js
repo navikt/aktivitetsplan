@@ -3,27 +3,18 @@ import React from 'react';
 import { IJOBB_AKTIVITET_TYPE } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
-import { formaterDatoKortManed, HiddenIf } from '../../../../utils';
+import { HiddenIf } from '../../../../utils';
+import {
+    Beskrivelse,
+    FraDato,
+    TilDato,
+} from '../hjelpekomponenter/standard-felt';
 
 const IJobbDetaljer = ({ aktivitet }) =>
     <HiddenIf hidden={aktivitet.type !== IJOBB_AKTIVITET_TYPE}>
         <div className="aktivitetvisning__detaljer">
-            <Informasjonsfelt
-                key="fradato"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />
-                }
-                innhold={formaterDatoKortManed(aktivitet.fraDato)}
-            />
-            <Informasjonsfelt
-                key="tildato"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />
-                }
-                innhold={
-                    formaterDatoKortManed(aktivitet.tilDato) || 'Dato ikke satt'
-                }
-            />
+            <FraDato aktivitet={aktivitet} />
+            <TilDato aktivitet={aktivitet} visIkkeSatt />
             <Informasjonsfelt
                 key="jobbstatus"
                 tittel={
@@ -49,15 +40,7 @@ const IJobbDetaljer = ({ aktivitet }) =>
                 }
                 innhold={aktivitet.arbeidstid}
             />
-            <Informasjonsfelt
-                tittel={
-                    <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
-                }
-                innhold={aktivitet.beskrivelse}
-                beskrivelse
-                fullbredde
-                formattertTekst
-            />
+            <Beskrivelse aktivitet={aktivitet} />
         </div>
     </HiddenIf>;
 

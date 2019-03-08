@@ -3,7 +3,12 @@ import React from 'react';
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import * as AppPT from '../../../../proptypes';
-import { formaterDatoKortManed, HiddenIf } from '../../../../utils';
+import { HiddenIf } from '../../../../utils';
+import {
+    Beskrivelse,
+    FraDato,
+    TilDato,
+} from '../hjelpekomponenter/standard-felt';
 
 const BehandlingsDetaljer = ({ aktivitet }) =>
     <HiddenIf hidden={BEHANDLING_AKTIVITET_TYPE !== aktivitet.type}>
@@ -22,20 +27,8 @@ const BehandlingsDetaljer = ({ aktivitet }) =>
                 }
                 innhold={aktivitet.behandlingSted}
             />
-            <Informasjonsfelt
-                key="fradato"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />
-                }
-                innhold={formaterDatoKortManed(aktivitet.fraDato)}
-            />
-            <Informasjonsfelt
-                key="tildato"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />
-                }
-                innhold={formaterDatoKortManed(aktivitet.tilDato)}
-            />
+            <FraDato aktivitet={aktivitet} />
+            <TilDato aktivitet={aktivitet} />
             <Informasjonsfelt
                 key="effekt"
                 tittel={
@@ -50,15 +43,7 @@ const BehandlingsDetaljer = ({ aktivitet }) =>
                 }
                 innhold={aktivitet.behandlingOppfolging}
             />
-            <Informasjonsfelt
-                tittel={
-                    <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
-                }
-                innhold={aktivitet.beskrivelse}
-                beskrivelse
-                fullbredde
-                formattertTekst
-            />
+            <Beskrivelse aktivitet={aktivitet} />
         </div>
     </HiddenIf>;
 

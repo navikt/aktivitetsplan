@@ -2,19 +2,23 @@ import { FormattedMessage } from 'react-intl';
 import React from 'react';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import * as AppPT from '../../../../proptypes';
-import { formaterDatoKortManed, HiddenIf } from '../../../../utils';
+import { HiddenIf } from '../../../../utils';
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import LenkeKomponent from '../hjelpekomponenter/lenkekomponent';
+import {
+    Beskrivelse,
+    FraDato,
+    TilDato,
+} from '../hjelpekomponenter/standard-felt';
 
 const StillingDetaljer = ({ aktivitet }) =>
     <HiddenIf hidden={aktivitet.type !== STILLING_AKTIVITET_TYPE}>
         <div className="aktivitetvisning__detaljer">
-            <Informasjonsfelt
-                key="fradato"
+            <FraDato
+                aktivitet={aktivitet}
                 tittel={
                     <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.stilling" />
                 }
-                innhold={formaterDatoKortManed(aktivitet.fraDato)}
             />
             <Informasjonsfelt
                 key="arbeidsgiver"
@@ -23,12 +27,11 @@ const StillingDetaljer = ({ aktivitet }) =>
                 }
                 innhold={aktivitet.arbeidsgiver}
             />
-            <Informasjonsfelt
-                key="tildato"
+            <TilDato
                 tittel={
                     <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.stilling" />
                 }
-                innhold={formaterDatoKortManed(aktivitet.tilDato)}
+                aktivitet={aktivitet}
             />
             <Informasjonsfelt
                 key="arbeidssted"
@@ -44,15 +47,7 @@ const StillingDetaljer = ({ aktivitet }) =>
                 }
                 innhold={aktivitet.kontaktperson}
             />
-            <Informasjonsfelt
-                tittel={
-                    <FormattedMessage id="aktivitetvisning.beskrivelse-label" />
-                }
-                innhold={aktivitet.beskrivelse}
-                beskrivelse
-                fullbredde
-                formattertTekst
-            />
+            <Beskrivelse aktivitet={aktivitet} />
             <LenkeKomponent lenke={aktivitet.lenke} />
         </div>
     </HiddenIf>;
