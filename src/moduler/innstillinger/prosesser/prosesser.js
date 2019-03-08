@@ -32,6 +32,7 @@ import {
     selectTilgangTilBrukersKontor,
     selectVeilederTilgangStatus,
 } from '../../../felles-komponenter/veilederTilgang/veilder-tilgang-selector';
+import RegistrerArbeidssokerProsess from '../registrer-arbeidssoker/registrer-arbeidssoker-prosess';
 
 class Prosesser extends Component {
     componentDidMount() {
@@ -51,6 +52,7 @@ class Prosesser extends Component {
             skjulSettDigital,
             skjulStartKvp,
             skjulStopKvp,
+            skjulRegistrerArbeidssoker,
         } = this.props;
         return (
             <InnstillingerModal ingenTilbakeKnapp>
@@ -69,6 +71,9 @@ class Prosesser extends Component {
                             hidden={skjulSettDigital}
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
+                        <RegistrerArbeidssokerProsess
+                            hidden={skjulRegistrerArbeidssoker}
+                        />
                         <StartKvpPeriodeProsess hidden={skjulStartKvp} />
                         <StoppKvpPeriodeProsess hidden={skjulStopKvp} />
                         <InnstillingHistorikk />
@@ -88,6 +93,7 @@ Prosesser.defaultProps = {
     skjulSettDigital: true,
     skjulStartKvp: true,
     skjulStopKvp: true,
+    skjulRegistrerArbeidssoker: true,
 };
 
 Prosesser.propTypes = {
@@ -103,6 +109,7 @@ Prosesser.propTypes = {
     skjulSettDigital: PT.bool,
     skjulStartKvp: PT.bool,
     skjulStopKvp: PT.bool,
+    skjulRegistrerArbeidssoker: PT.bool,
 };
 
 const mapStateToProps = state => ({
@@ -141,6 +148,9 @@ const mapStateToProps = state => ({
         selectErUnderKvp(state),
     skjulStopKvp:
         !selectTilgangTilBrukersKontor(state) || !selectErUnderKvp(state),
+    skjulRegistrerArbeidssoker:
+        !selectTilgangTilBrukersKontor(state) ||
+        !selectErUnderOppfolging(state),
 });
 
 const mapDispatchToProps = dispatch => ({
