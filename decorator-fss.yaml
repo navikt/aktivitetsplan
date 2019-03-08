@@ -1,1 +1,7 @@
 contextPath: /aktivitetsplan
+
+proxy:
+  - contextPath: "/arbeidssokerregistrering"
+    baseUrl: "http://arbeidssokerregistrering"
+    pingRequestPath: "/internal/isAlive"
+    validateOidcToken: false
