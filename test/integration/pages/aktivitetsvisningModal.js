@@ -12,7 +12,7 @@ module.exports = {
         btnLukk: '//button[contains(@class, "lukknapp")]',
         txtSideTittel: '//h1[@id="modal-aktivitetsvisning-header"]',
 
-        lenke: '//*[@data-testid="aktivitetdetaljer.lenke-label"]/a',
+        lenke: '//*[@data-testid="aktivitetdetaljer.lenke-label"]//a',
         txtFraDato:
             '//*[contains(@data-testid, "aktivitetdetaljer.fra-dato-tekst")]/p',
         txtTilDato:
@@ -64,12 +64,12 @@ module.exports = {
         txtBehandlingOppfolgning:
             '//*[@data-testid="aktivitetdetaljer.behandling-oppfolging-label"]/p',
 
-        btnEndre: '//a[contains(@class, "lenkeknapp lenkeknapp--hoved")]',
+        btnEndre: '//a[contains(@class, "endreknapp internlenke lenke")]',
         rdioAvtaltMedNav: '//div[@class="avtalt-container__radio"]//label',
         btnBekreftAvtaltMedNav:
             '//div[contains(@class, "avtalt-container")]/button[@type="submit"]',
         txtAvtaltMedNav:
-            '//div[contains(@class, "aktivitetvisning__underseksjon")]/div',
+            '//div[@class="aktivitetvisning__underseksjon"]//span[contains(@class, "etikett etikett--avtalt")]/span',
         btnSlett: '//div[@class="modal-footer"]/button[@type="submit"]',
         wndBekreftSletting: '//div[@class="bekreft-slett-container"]',
         btnBekreftSletting: '//button[contains(@class, "knapp--fare")]',

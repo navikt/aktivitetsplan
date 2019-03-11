@@ -2,9 +2,8 @@ import React from 'react';
 import PT from 'prop-types';
 import { Sidetittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import Lenkeknapp from '../../../../felles-komponenter/utils/lenkeknapp';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
-import { Aktivitetsdetaljer } from './aktivitetsdetaljer';
+import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import AktivitetEtikettGruppe from '../../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
@@ -13,6 +12,7 @@ import {
     IJOBB_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
+import Lenke from '../../../../felles-komponenter/utils/lenke';
 
 function visningsIngress(type) {
     if (
@@ -39,12 +39,23 @@ function AktivitetinformasjonVisning({
     return (
         <div>
             <div className="aktivitetvisning__underseksjon">
-                <Sidetittel
-                    id="modal-aktivitetsvisning-header"
-                    className="softbreak"
-                >
-                    {tittel}
-                </Sidetittel>
+                <div className="aktivitetvisning__header">
+                    <Sidetittel
+                        id="modal-aktivitetsvisning-header"
+                        className="softbreak"
+                    >
+                        {tittel}
+                    </Sidetittel>
+                    <Lenke
+                        className="endreknapp"
+                        role="button"
+                        visible={tillatEndring && !arenaAktivitet}
+                        href={endreAktivitetRoute(valgtAktivitet.id)}
+                        disabled={laster || !underOppfolging}
+                    >
+                        <FormattedMessage id="aktivitetvisning.endre-knapp" />
+                    </Lenke>
+                </div>
 
                 {visningsIngress(type)}
 
@@ -53,19 +64,7 @@ function AktivitetinformasjonVisning({
                     className="aktivitetvisning__etikett"
                 />
 
-                <Aktivitetsdetaljer
-                    className="aktivitetvisning__detaljer"
-                    valgtAktivitet={valgtAktivitet}
-                />
-
-                <Lenkeknapp
-                    visible={tillatEndring && !arenaAktivitet}
-                    type="hoved"
-                    href={endreAktivitetRoute(valgtAktivitet.id)}
-                    disabled={laster || !underOppfolging}
-                >
-                    <FormattedMessage id="aktivitetvisning.endre-knapp" />
-                </Lenkeknapp>
+                <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
             <hr className="aktivitetvisning__delelinje" />
         </div>

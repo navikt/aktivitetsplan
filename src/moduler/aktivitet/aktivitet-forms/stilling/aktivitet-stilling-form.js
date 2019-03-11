@@ -120,11 +120,6 @@ class StillingAktivitetForm extends Component {
                         </div>
                     </PeriodeValidering>
 
-                    <Input
-                        feltNavn="lenke"
-                        disabled={erAktivitetAvtalt}
-                        labelId="stilling-aktivitet-form.label.lenke"
-                    />
                     <Textarea
                         feltNavn="beskrivelse"
                         disabled={erAktivitetAvtalt}
@@ -146,6 +141,11 @@ class StillingAktivitetForm extends Component {
                         feltNavn="kontaktperson"
                         disabled={erAktivitetAvtalt}
                         labelId="stilling-aktivitet-form.label.kontaktperson"
+                    />
+                    <Input
+                        feltNavn="lenke"
+                        disabled={erAktivitetAvtalt}
+                        labelId="stilling-aktivitet-form.label.lenke"
                     />
                 </div>
                 <LagreAktivitet />
