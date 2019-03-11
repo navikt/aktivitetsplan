@@ -33,6 +33,9 @@ import {
     selectVeilederTilgangStatus,
 } from '../../../felles-komponenter/veilederTilgang/veilder-tilgang-selector';
 import RegistrerArbeidssokerProsess from '../registrer-arbeidssoker/registrer-arbeidssoker-prosess';
+import Feature, {
+    MANUELL_REGISTRERING,
+} from '../../../felles-komponenter/feature/feature';
 
 class Prosesser extends Component {
     componentDidMount() {
@@ -71,9 +74,11 @@ class Prosesser extends Component {
                             hidden={skjulSettDigital}
                         />
                         <OpprettOppgaveProsess motpart={motpart} />
-                        <RegistrerArbeidssokerProsess
-                            hidden={skjulRegistrerArbeidssoker}
-                        />
+                        <Feature name={MANUELL_REGISTRERING}>
+                            <RegistrerArbeidssokerProsess
+                                hidden={skjulRegistrerArbeidssoker}
+                            />
+                        </Feature>
                         <StartKvpPeriodeProsess hidden={skjulStartKvp} />
                         <StoppKvpPeriodeProsess hidden={skjulStopKvp} />
                         <InnstillingHistorikk />
