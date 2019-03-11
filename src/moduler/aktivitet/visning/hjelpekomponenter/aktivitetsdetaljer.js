@@ -1,6 +1,5 @@
 import React from 'react';
 import PT from 'prop-types';
-import classNames from 'classnames';
 import * as AppPT from '../../../../proptypes';
 import BehandlingsDetaljer from '../detaljer/behandlings-detaljer';
 import EgenAktivitetDetaljer from '../detaljer/egenAktivitet-detaljer';
@@ -13,10 +12,9 @@ import StillingDetaljer from '../detaljer/stilling-detaljer';
 import TiltakDetaljer from '../detaljer/tiltak-detaljer';
 import UtdanningDetaljer from '../detaljer/utdanning-detaljer';
 
-function Aktivitetsdetaljer({ valgtAktivitet, className }) {
-    const cls = clsName => classNames(clsName, 'aktivitetsdetaljer');
+export default function Aktivitetsdetaljer({ valgtAktivitet }) {
     return (
-        <section className={cls(className)}>
+        <section className="aktivitetvisning__detaljer aktivitetsdetaljer">
             <BehandlingsDetaljer aktivitet={valgtAktivitet} />
             <EgenAktivitetDetaljer aktivitet={valgtAktivitet} />
             <GruppeDetaljer aktivitet={valgtAktivitet} />
@@ -39,5 +37,3 @@ Aktivitetsdetaljer.propTypes = {
 Aktivitetsdetaljer.defaultProps = {
     className: undefined,
 };
-
-module.exports = { Aktivitetsdetaljer };
