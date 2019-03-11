@@ -12,7 +12,7 @@ import StillingDetaljer from '../detaljer/stilling-detaljer';
 import TiltakDetaljer from '../detaljer/tiltak-detaljer';
 import UtdanningDetaljer from '../detaljer/utdanning-detaljer';
 
-export default function Aktivitetsdetaljer({ valgtAktivitet }) {
+function Aktivitetsdetaljer({ valgtAktivitet }) {
     return (
         <section className="aktivitetvisning__detaljer aktivitetsdetaljer">
             <BehandlingsDetaljer aktivitet={valgtAktivitet} />
@@ -37,3 +37,5 @@ Aktivitetsdetaljer.propTypes = {
 Aktivitetsdetaljer.defaultProps = {
     className: undefined,
 };
+
+export default Aktivitetsdetaljer;
