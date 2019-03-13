@@ -42,6 +42,9 @@ fasitResources:
   - alias: veilarbstepup_oidc
     resourceType: baseurl
 
+  - alias: arbeidssokerregistrering
+    resourceType: baseurl
+
 team: oppfolging
 resources:
   limits:
