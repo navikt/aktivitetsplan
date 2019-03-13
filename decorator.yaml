@@ -25,5 +25,3 @@ redirect:
     to: {{ DITTNAV_LINK_URL }}
   - from: /veientilarbeid
     to: {{ VEIENTILARBEID_URL }}
-  - from: /jobbsokerkompetanse
-    to: {{ JOBBSOKERKOMPETANSE_URL }}
