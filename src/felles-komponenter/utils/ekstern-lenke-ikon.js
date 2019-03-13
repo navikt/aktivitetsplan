@@ -6,7 +6,7 @@ export default function EksternLenkeIkon() {
         <span className="eksternlenkeIkonBoks">
             <svg
                 className="EksternLenkeIkon"
-                height="1rem"
+                height="14px"
                 viewBox="0 0 14 14"
                 xmlns="http://www.w3.org/2000/svg"
             >
