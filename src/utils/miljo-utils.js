@@ -1,3 +1,6 @@
+// Denne filen skal kun brukes i FSS
+// TODO: Når veilederverktøy-modalen flyttes, skal denne filen fjernes
+
 export const NAIS_PREPROD_SUFFIX = 'preprod.local/';
 export const NAIS_PROD_SUFFIX = 'adeo.no/';
 
