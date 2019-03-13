@@ -8,17 +8,37 @@ import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../proptypes';
 import { selectBruker } from '../../bruker/bruker-selector';
 import { getEnhetFromUrl } from '../opprett-oppgave/opprett-oppgave-utils';
+import {
+    erITestMiljo,
+    finnMiljoStreng,
+    finnNaisDomene,
+} from '../../../utils/miljo-utils';
+
+function byggRegistreringUrl(fnr, enhet) {
+    return `https://arbeidssokerregistrering${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
+}
+
+function byggRegistreringMedVeilarbLoginUrl(fnr, enhet) {
+    return `https://veilarblogin${finnMiljoStreng()}${finnNaisDomene()}veilarblogin/api/start?url=${byggRegistreringUrl(
+        fnr,
+        enhet
+    )}`;
+}
 
 function RegistrerArbeidssokerProsess({ bruker }) {
     const fnr = bruker.fodselsnummer;
     const enhetId = getEnhetFromUrl();
+    const registreringUrl = erITestMiljo()
+        ? byggRegistreringMedVeilarbLoginUrl(fnr, enhetId)
+        : byggRegistreringUrl(fnr, enhetId);
+
     return (
         <StartProsess
             className="innstillinger__prosess"
             tittelId="innstillinger.prosess.registrer-arbeidssoker.tittel"
             knappetekstId="innstillinger.modal.prosess.start.knapp"
             onClick={() => {
-                window.location.href = `/arbeidssokerregistrering/start?fnr=${fnr}&enhetId=${enhetId}`;
+                window.location.href = registreringUrl;
             }}
         >
             <div className="blokk-xs">
