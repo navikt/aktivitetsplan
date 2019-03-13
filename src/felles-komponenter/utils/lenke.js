@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { erInternlenke } from '../../utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import EksternLenkeIkon from './ekstern-lenke-ikon';
 
 const cls = (className, lenkeType, lenkestyling) =>
     classNames(className, lenkeType, {
@@ -56,9 +55,6 @@ function Lenke({
                 ref={focusRef}
             >
                 {children}
-                <span className="eksternlenkeIkonBoks">
-                    <EksternLenkeIkon />
-                </span>
             </a>
         </span>
     );
