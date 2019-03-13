@@ -43,7 +43,7 @@ fasitResources:
   - alias: veientilarbeid
     resourceType: baseurl
 
-team: oppfolging
+team: bos
 resources:
   limits:
     cpu: 3
