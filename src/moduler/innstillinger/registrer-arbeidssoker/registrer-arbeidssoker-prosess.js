@@ -1,4 +1,5 @@
 import React from 'react';
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
@@ -8,14 +9,19 @@ import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../proptypes';
 import { selectBruker } from '../../bruker/bruker-selector';
 import { getEnhetFromUrl } from '../opprett-oppgave/opprett-oppgave-utils';
+import { selectKanReaktiveres } from '../../oppfolging-status/oppfolging-selector';
 
-function RegistrerArbeidssokerProsess({ bruker }) {
+function RegistrerArbeidssokerProsess({ bruker, kanReaktiveres }) {
     const fnr = bruker.fodselsnummer;
     const enhetId = getEnhetFromUrl();
+    const tittelId = kanReaktiveres
+        ? 'innstillinger.prosess.reaktiver-arbeidssoker.tittel'
+        : 'innstillinger.prosess.registrer-arbeidssoker.tittel';
+
     return (
         <StartProsess
             className="innstillinger__prosess"
-            tittelId="innstillinger.prosess.registrer-arbeidssoker.tittel"
+            tittelId={tittelId}
             knappetekstId="innstillinger.modal.prosess.start.knapp"
             onClick={() => {
                 window.location.href = `/arbeidssokerregistrering/start?fnr=${fnr}&enhetId=${enhetId}`;
@@ -32,10 +38,12 @@ function RegistrerArbeidssokerProsess({ bruker }) {
 
 const mapStateToProps = state => ({
     bruker: selectBruker(state),
+    kanReaktiveres: selectKanReaktiveres(state),
 });
 
 RegistrerArbeidssokerProsess.propTypes = {
     bruker: AppPT.bruker.isRequired,
+    kanReaktiveres: PT.bool.isRequired,
 };
 
 export default withRouter(
