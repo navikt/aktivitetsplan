@@ -1,1 +1,1 @@
-Registrer brukere som ikke kan benytte nivå fire i ID-porten, eller av annen årsak har behov for bistand til å registrere seg.
+Brukere som ikke har eller kan skaffe seg elektronisk ID med sikkerhetsnivå 4 (bankID, bankID på mobil, Commfides, Buypass) eller av andre årsaker ikke kan registrere seg selv.
