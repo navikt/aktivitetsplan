@@ -9,7 +9,23 @@ import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../proptypes';
 import { selectBruker } from '../../bruker/bruker-selector';
 import { getEnhetFromUrl } from '../opprett-oppgave/opprett-oppgave-utils';
+import {
+    erITestMiljo,
+    finnMiljoStreng,
+    finnNaisDomene,
+} from '../../../utils/miljo-utils';
 import { selectKanReaktiveres } from '../../oppfolging-status/oppfolging-selector';
+
+function byggRegistreringUrl(fnr, enhet) {
+    return `https://arbeidssokerregistrering${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
+}
+
+function byggRegistreringMedVeilarbLoginUrl(fnr, enhet) {
+    return `https://veilarblogin${finnMiljoStreng()}${finnNaisDomene()}veilarblogin/api/start?url=${byggRegistreringUrl(
+        fnr,
+        enhet
+    )}`;
+}
 
 function RegistrerArbeidssokerProsess({ bruker, kanReaktiveres }) {
     const fnr = bruker.fodselsnummer;
@@ -17,6 +33,9 @@ function RegistrerArbeidssokerProsess({ bruker, kanReaktiveres }) {
     const tittelId = kanReaktiveres
         ? 'innstillinger.prosess.reaktiver-arbeidssoker.tittel'
         : 'innstillinger.prosess.registrer-arbeidssoker.tittel';
+    const registreringUrl = erITestMiljo()
+        ? byggRegistreringMedVeilarbLoginUrl(fnr, enhetId)
+        : byggRegistreringUrl(fnr, enhetId);
 
     return (
         <StartProsess
@@ -24,7 +43,7 @@ function RegistrerArbeidssokerProsess({ bruker, kanReaktiveres }) {
             tittelId={tittelId}
             knappetekstId="innstillinger.modal.prosess.start.knapp"
             onClick={() => {
-                window.location.href = `/arbeidssokerregistrering/start?fnr=${fnr}&enhetId=${enhetId}`;
+                window.location.href = registreringUrl;
             }}
         >
             <div className="blokk-xs">

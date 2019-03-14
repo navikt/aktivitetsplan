@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import React from 'react';
 import DetaljFelt from './detalj-felt';
 import Lenke from '../../../../felles-komponenter/utils/lenke';
+import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
 
 const httpRegex = /^(https?):\/\/.*$/;
 
@@ -11,7 +12,7 @@ export default function LenkeKomponent({ lenke }) {
         <DetaljFelt
             key="lenke"
             tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
-            visible={lenke != null}
+            visible={lenke && lenke.trim()}
             fullbredde
         >
             <Lenke
@@ -22,6 +23,7 @@ export default function LenkeKomponent({ lenke }) {
                 target="_blank"
             >
                 {lenke}
+                <EksternLenkeIkon />
             </Lenke>
         </DetaljFelt>
     );

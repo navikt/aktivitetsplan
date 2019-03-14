@@ -45,7 +45,7 @@ fasitResources:
   - alias: arbeidssokerregistrering
     resourceType: baseurl
 
-team: oppfolging
+team: bos
 resources:
   limits:
     cpu: 3

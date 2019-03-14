@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import queryString from 'query-string';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import classNames from 'classnames';
@@ -14,81 +15,109 @@ import {
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
 
-function VisValgtFilter({
-    filterSlice,
-    doToggleAktivitetsEtikett,
-    doToggleAktivitetsStatus,
-    doToggleAktivitetsType,
-    doVelgHistoriskPeriode,
-    doToggleAktivitetAvtaltMedNav,
-    className,
-}) {
-    const setFilterValues = (filterType, filterVerdi) => {
-        switch (filterType) {
-            case 'aktivitetTyper':
-                return {
-                    tekstPath: `aktivitet.type.${filterVerdi}`,
-                    func: doToggleAktivitetsType,
-                };
-            case 'aktivitetEtiketter':
-                return {
-                    tekstPath: `aktivitet.etikett.${filterVerdi}`,
-                    func: doToggleAktivitetsEtikett,
-                };
-            case 'aktivitetStatus':
-                return {
-                    tekstPath: `aktivitet.status.${filterVerdi}`,
-                    func: doToggleAktivitetsStatus,
-                };
-            case 'aktivitetAvtaltMedNav':
-                return {
-                    tekstPath: `aktivitet.${filterVerdi}`,
-                    func: doToggleAktivitetAvtaltMedNav,
-                };
-            default:
-                return filterType;
-        }
-    };
+const fjernUrlParamFilter = () => {
+    window.history.replaceState({}, '', location.origin + location.pathname);
+};
 
-    return (
-        <div className={classNames('filtrering-label-container', className)}>
-            {Object.keys(filterSlice).map(filterKey => {
-                const filterValue = filterSlice[filterKey];
+const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
+    const paramFilter = queryString.parse(location.search).filter;
+    if (paramFilter) {
+        paramFilter.split(',').forEach(filterId => {
+            doToggleAktivitetsType(filterId.toUpperCase());
+        });
+    }
+};
 
-                if (filterKey === 'historiskPeriode') {
-                    if (!filterValue) {
-                        return null;
-                    }
-                    return (
-                        <FiltreringLabel
-                            key={filterValue}
-                            label={
-                                <PeriodeLabel historiskPeriode={filterValue} />
-                            }
-                            slettFilter={() => doVelgHistoriskPeriode(null)}
-                        />
-                    );
-                }
+class VisValgtFilter extends React.PureComponent {
+    componentDidMount() {
+        lesUrlParamFilterOgFiltrerPaaAktivitetsType(
+            this.props.doToggleAktivitetsType
+        );
+        fjernUrlParamFilter();
+    }
 
-                return Object.keys(filterSlice[filterKey])
-                    .filter(f => filterValue[f])
-                    .map(f => {
-                        const filterValues = setFilterValues(filterKey, f);
+    render() {
+        const {
+            filterSlice,
+            doToggleAktivitetsEtikett,
+            doToggleAktivitetsStatus,
+            doToggleAktivitetsType,
+            doVelgHistoriskPeriode,
+            doToggleAktivitetAvtaltMedNav,
+            className,
+        } = this.props;
+        const setFilterValues = (filterType, filterVerdi) => {
+            switch (filterType) {
+                case 'aktivitetTyper':
+                    return {
+                        tekstPath: `aktivitet.type.${filterVerdi}`,
+                        func: doToggleAktivitetsType,
+                    };
+                case 'aktivitetEtiketter':
+                    return {
+                        tekstPath: `aktivitet.etikett.${filterVerdi}`,
+                        func: doToggleAktivitetsEtikett,
+                    };
+                case 'aktivitetStatus':
+                    return {
+                        tekstPath: `aktivitet.status.${filterVerdi}`,
+                        func: doToggleAktivitetsStatus,
+                    };
+                case 'aktivitetAvtaltMedNav':
+                    return {
+                        tekstPath: `aktivitet.${filterVerdi}`,
+                        func: doToggleAktivitetAvtaltMedNav,
+                    };
+                default:
+                    return filterType;
+            }
+        };
+        return (
+            <div
+                className={classNames('filtrering-label-container', className)}
+            >
+                {Object.keys(filterSlice).map(filterKey => {
+                    const filterValue = filterSlice[filterKey];
+
+                    if (filterKey === 'historiskPeriode') {
+                        if (!filterValue) {
+                            return null;
+                        }
                         return (
                             <FiltreringLabel
-                                key={f}
+                                key={filterValue}
                                 label={
-                                    <FormattedMessage
-                                        id={filterValues.tekstPath.toLowerCase()}
+                                    <PeriodeLabel
+                                        historiskPeriode={filterValue}
                                     />
                                 }
-                                slettFilter={() => filterValues.func(f)}
+                                slettFilter={() => doVelgHistoriskPeriode(null)}
                             />
                         );
-                    });
-            })}
-        </div>
-    );
+                    }
+
+                    return Object.keys(filterSlice[filterKey])
+                        .filter(f => filterValue[f])
+                        .map(f => {
+                            const filterValues = setFilterValues(filterKey, f);
+                            return (
+                                <FiltreringLabel
+                                    key={f}
+                                    label={
+                                        <FormattedMessage
+                                            id={filterValues.tekstPath.toLowerCase()}
+                                        />
+                                    }
+                                    slettFilter={() => {
+                                        filterValues.func(f);
+                                    }}
+                                />
+                            );
+                        });
+                })}
+            </div>
+        );
+    }
 }
 
 VisValgtFilter.defaultProps = {

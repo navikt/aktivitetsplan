@@ -19,6 +19,7 @@ import {
     selectErUnderKvp,
     selectReservasjonKRR,
     selectErBrukerManuell,
+    selectKanReaktiveres,
 } from '../../oppfolging-status/oppfolging-selector';
 import {
     selectInnstillingerStatus,
@@ -155,7 +156,7 @@ const mapStateToProps = state => ({
         !selectTilgangTilBrukersKontor(state) || !selectErUnderKvp(state),
     skjulRegistrerArbeidssoker:
         !selectTilgangTilBrukersKontor(state) ||
-        !selectErUnderOppfolging(state),
+        (selectErUnderOppfolging(state) && !selectKanReaktiveres(state)),
 });
 
 const mapDispatchToProps = dispatch => ({
