@@ -1,4 +1,5 @@
 import React from 'react';
+import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
@@ -13,6 +14,7 @@ import {
     finnMiljoStreng,
     finnNaisDomene,
 } from '../../../utils/miljo-utils';
+import { selectKanReaktiveres } from '../../oppfolging-status/oppfolging-selector';
 
 function byggRegistreringUrl(fnr, enhet) {
     return `https://arbeidssokerregistrering${finnMiljoStreng()}${finnNaisDomene()}?fnr=${fnr}&enhetId=${enhet}`;
@@ -25,9 +27,12 @@ function byggRegistreringMedVeilarbLoginUrl(fnr, enhet) {
     )}`;
 }
 
-function RegistrerArbeidssokerProsess({ bruker }) {
+function RegistrerArbeidssokerProsess({ bruker, kanReaktiveres }) {
     const fnr = bruker.fodselsnummer;
     const enhetId = getEnhetFromUrl();
+    const tittelId = kanReaktiveres
+        ? 'innstillinger.prosess.reaktiver-arbeidssoker.tittel'
+        : 'innstillinger.prosess.registrer-arbeidssoker.tittel';
     const registreringUrl = erITestMiljo()
         ? byggRegistreringMedVeilarbLoginUrl(fnr, enhetId)
         : byggRegistreringUrl(fnr, enhetId);
@@ -35,7 +40,7 @@ function RegistrerArbeidssokerProsess({ bruker }) {
     return (
         <StartProsess
             className="innstillinger__prosess"
-            tittelId="innstillinger.prosess.registrer-arbeidssoker.tittel"
+            tittelId={tittelId}
             knappetekstId="innstillinger.modal.prosess.start.knapp"
             onClick={() => {
                 window.location.href = registreringUrl;
@@ -52,10 +57,12 @@ function RegistrerArbeidssokerProsess({ bruker }) {
 
 const mapStateToProps = state => ({
     bruker: selectBruker(state),
+    kanReaktiveres: selectKanReaktiveres(state),
 });
 
 RegistrerArbeidssokerProsess.propTypes = {
     bruker: AppPT.bruker.isRequired,
+    kanReaktiveres: PT.bool.isRequired,
 };
 
 export default withRouter(
