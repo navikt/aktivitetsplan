@@ -2,10 +2,8 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertittel, Element } from 'nav-frontend-typografi';
-import {
-    Aktivitetsdetaljer,
-    Informasjonsfelt,
-} from '../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
+import Aktivitetsdetaljer from '../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
+import Informasjonsfelt from '../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
 import * as AppPT from '../../proptypes';
 import AktivitetEtikettGruppe from '../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import { compareAktivitet } from '../aktivitet/aktivitet-util';
