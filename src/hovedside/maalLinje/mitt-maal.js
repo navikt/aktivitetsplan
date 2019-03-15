@@ -13,7 +13,9 @@ import {
     selectGjeldendeMal,
     selectMalStatus,
 } from '../../moduler/mal/aktivitetsmal-reducer';
+import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
+import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 
 function Mal({ mal, disabled }) {
     if (!mal) {
@@ -37,11 +39,16 @@ class MittMaal extends Component {
     }
 
     render() {
-        const { avhengigheter, mal, underOppfolging } = this.props;
+        const { avhengigheter, mal, underOppfolging, erVeileder } = this.props;
         const disabled = !!mal || !underOppfolging;
         const url = disabled ? '/mal' : '/mal/endre';
         return (
-            <Lenke brukLenkestyling={false} href={url} className="mitt-maal">
+            <Lenke
+                brukLenkestyling={false}
+                href={url}
+                className="mitt-maal"
+                onClick={() => loggMittMalKlikk(erVeileder)}
+            >
                 <img
                     tabIndex="-1"
                     src={mittMalSvg}
@@ -80,12 +87,14 @@ MittMaal.propTypes = {
     mal: PT.string,
     doHentMal: PT.func.isRequired,
     underOppfolging: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     avhengigheter: [selectMalStatus(state)],
     mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
     underOppfolging: selectErUnderOppfolging(state),
+    erVeileder: selectErVeileder(state),
 });
 
 const mapDispatchToProps = dispatch => ({

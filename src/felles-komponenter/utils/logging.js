@@ -13,6 +13,9 @@ const FORHANDSORIENTERING_LOGGEVENT_MINDRE_ENN_SYV_DAGER =
 const FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD =
     'tilltakSpesialTilltakBruker';
 
+const MITTMAL_KLIKK_LOGGEVENT = 'aktivitetsplan.mittmal.klikk';
+const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
+
 export function loggForhandsorienteringTiltak() {
     loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
         forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD,
@@ -39,4 +42,12 @@ export function loggForhandsorientering(
     return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
         forhandsorienteringType: avtaltForm,
     });
+}
+
+export function loggMittMalKlikk(veileder) {
+    loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
+}
+
+export function loggMittMalLagre(veileder) {
+    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
 }
