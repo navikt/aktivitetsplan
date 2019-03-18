@@ -22,7 +22,7 @@ const fjernUrlParamFilter = () => {
 const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
     const paramFilter = queryString.parse(location.search).filter;
     if (paramFilter) {
-        paramFilter.split(',').forEach(filterId => {
+        paramFilter.forEach(filterId => {
             doToggleAktivitetsType(filterId.toUpperCase());
         });
     }
