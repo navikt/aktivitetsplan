@@ -13,6 +13,17 @@ const FORHANDSORIENTERING_LOGGEVENT_MINDRE_ENN_SYV_DAGER =
 const FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD =
     'tilltakSpesialTilltakBruker';
 
+const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
+const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
+
+export function metrikkOpnePrintModal(veileder) {
+    loggEvent(PRINT_MODSAL_OPEN, { erVeileder: veileder });
+}
+
+export function metrikkTrykkPrintKnapp(veileder) {
+    loggEvent(TRYK_PRINT, { erVeileder: veileder });
+}
+
 export function loggForhandsorienteringTiltak() {
     loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
         forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD,
