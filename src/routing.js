@@ -49,10 +49,6 @@ const Routing = ({ location }) =>
             component={AktivitetRoutes}
         />
         <Route
-            path={getPathWithBase('/innstillinger')}
-            component={InnstillingerRoutes}
-        />
-        <Route
             path={getPathWithBase('/arbeidsliste')}
             component={ArbeidslisteContainer}
         />
@@ -67,8 +63,14 @@ Routing.propTypes = {
 };
 
 function Public({ location }) {
+    // TODO : Remove innstillinger. This is a hack
     return (
         <Switch location={location}>
+            <Route
+                path={getPathWithBase('/innstillinger')}
+                component={InnstillingerRoutes}
+            />
+
             <Route
                 path={getPathWithBase('/informasjon')}
                 component={InformasjonModal}
