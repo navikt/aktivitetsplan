@@ -10,6 +10,8 @@ import {
     selectMalStatus,
     selectGjeldendeMal,
 } from './aktivitetsmal-reducer';
+import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
+import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 
 class AktivitetmalEndre extends Component {
     componentDidMount() {
@@ -17,14 +19,17 @@ class AktivitetmalEndre extends Component {
     }
 
     render() {
-        const { mal, avhengigheter, history } = this.props;
+        const { mal, avhengigheter, history, erVeileder } = this.props;
 
         return (
             <Innholdslaster avhengigheter={avhengigheter}>
                 <section className="aktivitetmal aktivitetmal__innhold">
                     <AktivitetsmalForm
                         mal={mal}
-                        handleComplete={() => history.push('mal/')}
+                        handleComplete={() => {
+                            history.push('mal/');
+                            loggMittMalLagre(erVeileder);
+                        }}
                     />
                 </section>
             </Innholdslaster>
@@ -41,11 +46,13 @@ AktivitetmalEndre.propTypes = {
     doHentMal: PT.func.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     history: AppPT.history.isRequired,
+    erVeileder: PT.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     mal: selectGjeldendeMal(state),
     avhengigheter: [selectMalStatus(state)],
+    erVeileder: selectErVeileder(state),
 });
 
 const mapDispatchToProps = dispatch => ({
