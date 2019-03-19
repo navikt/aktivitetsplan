@@ -15,6 +15,16 @@ const FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD =
 
 const MITTMAL_KLIKK_LOGGEVENT = 'aktivitetsplan.mittmal.klikk';
 const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
+const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
+const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
+
+export function metrikkOpnePrintModal(veileder) {
+    loggEvent(PRINT_MODSAL_OPEN, { erVeileder: veileder });
+}
+
+export function metrikkTrykkPrintKnapp(veileder) {
+    loggEvent(TRYK_PRINT, { erVeileder: veileder });
+}
 
 export function loggForhandsorienteringTiltak() {
     loggEvent(FORHANDSORIENTERING_LOGGEVENT, {

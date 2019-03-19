@@ -57,6 +57,10 @@ import {
 } from '../dialog/dialog-selector';
 import DialogPrint from './dialog-print';
 import VelgPlanUtskrift from './velg-plan-utskrift';
+import {
+    metrikkOpnePrintModal,
+    metrikkTrykkPrintKnapp,
+} from '../../felles-komponenter/utils/logging';
 
 const StatusGruppePT = PT.shape({
     status: PT.string.isRequired,
@@ -251,6 +255,7 @@ class AktivitetsplanPrintModal extends Component {
     componentDidMount() {
         this.props.doHentMal();
         this.props.doHentMalListe();
+        metrikkOpnePrintModal(this.props.erVeileder);
     }
 
     render() {
@@ -261,6 +266,7 @@ class AktivitetsplanPrintModal extends Component {
             currentStep,
             goToStep,
             doResetUtskrift,
+            erVeileder,
         } = this.props;
 
         const currentStepIndex = stepOrder.indexOf(currentStep);
@@ -287,7 +293,10 @@ class AktivitetsplanPrintModal extends Component {
                         <HiddenIfHovedknapp
                             hidden={currentStep !== STEP_UTSKRIFT}
                             className="printmodal-header__printknapp"
-                            onClick={() => window.print()}
+                            onClick={() => {
+                                window.print();
+                                metrikkTrykkPrintKnapp(erVeileder);
+                            }}
                         >
                             Skriv ut
                         </HiddenIfHovedknapp>
@@ -324,11 +333,13 @@ AktivitetsplanPrintModal.propTypes = {
     currentStep: PT.string.isRequired,
     goToStep: PT.func.isRequired,
     doResetUtskrift: PT.func.isRequired,
+    erVeileder: PT.bool,
     history: AppPT.history.isRequired,
 };
 
 AktivitetsplanPrintModal.defaultProps = {
     avhengigheter: [],
+    erVeileder: null,
 };
 
 const statusRekkefolge = [
@@ -453,6 +464,7 @@ const mapStateToProps = state => {
         stepOrder,
         steps,
         currentStep,
+        erVeileder,
     };
 };
 
