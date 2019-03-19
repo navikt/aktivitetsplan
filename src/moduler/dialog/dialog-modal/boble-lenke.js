@@ -2,6 +2,8 @@ import React from 'react';
 import Lenke from 'nav-frontend-lenker';
 import * as PT from 'prop-types';
 
+const httpRegex = /^(https?):\/\/.*$/;
+
 const lenkenavnMap = {
     'https://behovsvurdering.nav.no': 'behovsvurdering',
     'https://forberede-moete.nav.no': 'møtestøtte',
@@ -17,8 +19,12 @@ function BobleLenke({ href, dialogId }) {
         ? `${href}?dialogId=${dialogId}`
         : href;
 
+    const matched = lenkeMedParams.match(httpRegex)
+        ? lenkeMedParams
+        : `http://${lenkeMedParams}`;
+
     return (
-        <Lenke target="_blank" href={lenkeMedParams}>
+        <Lenke target="_blank" href={matched}>
             {lenkeTekst}
         </Lenke>
     );
