@@ -19,15 +19,17 @@ import {
 } from '../hjelpekomponenter/standard-felt';
 
 const Motaplan = planListe =>
-    planListe.map(mote =>
-        <Normaltekst key={mote.startDato}>
-            {formaterDatoKortManedTid(mote.startDato)}
-            {formaterTid(mote.sluttDato) === '00:00'
-                ? ''
-                : ` - ${formaterTid(mote.sluttDato)}`},
-            {` ${mote.sted}`}
-        </Normaltekst>
-    );
+    <span>
+        {planListe.planListe.map(mote =>
+            <Normaltekst key={mote.startDato} tag="span">
+                {formaterDatoKortManedTid(mote.startDato)}
+                {formaterTid(mote.sluttDato) === '00:00'
+                    ? ''
+                    : ` - ${formaterTid(mote.sluttDato)}`},
+                {` ${mote.sted}`}
+            </Normaltekst>
+        )}
+    </span>;
 
 function GruppeDetaljer({ aktivitet }) {
     const { fraDato, tilDato, moeteplanListe } = aktivitet;
