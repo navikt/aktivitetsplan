@@ -8,16 +8,33 @@ import StartProsess from '../prosesser/start-prosess';
 import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import { SLETT_BEGRUNNELSE_ACTION } from '../innstillinger-reducer';
 import * as AppPT from '../../../proptypes';
+import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
+import { MANUELL_REGISTRERING } from '../../../felles-komponenter/feature/feature';
+import { getEnhetFromUrl } from '../opprett-oppgave/opprett-oppgave-utils';
+import { selectBruker } from '../../bruker/bruker-selector';
+import { lagRegistreringUrl } from '../../../utils/url-utils';
 
-function StartOppfolgingProsess({ slettBegrunnelse, history }) {
+function StartOppfolgingProsess({
+    slettBegrunnelse,
+    history,
+    manuellRegistreringPa,
+    bruker,
+}) {
     return (
         <StartProsess
             className="innstillinger__prosess"
             tittelId="innstillinger.prosess.startoppfolging.tittel"
             knappetekstId="innstillinger.modal.prosess.start.knapp"
             onClick={() => {
-                slettBegrunnelse();
-                history.push('/innstillinger/start/bekreft/');
+                if (manuellRegistreringPa) {
+                    window.location.href = lagRegistreringUrl(
+                        bruker.fodselsnummer,
+                        getEnhetFromUrl()
+                    );
+                } else {
+                    slettBegrunnelse();
+                    history.push('/innstillinger/start/bekreft/');
+                }
             }}
         >
             <div className="blokk-xs">
@@ -30,9 +47,16 @@ function StartOppfolgingProsess({ slettBegrunnelse, history }) {
 }
 
 StartOppfolgingProsess.propTypes = {
+    bruker: AppPT.bruker.isRequired,
+    manuellRegistreringPa: PT.bool.isRequired,
     slettBegrunnelse: PT.func.isRequired,
     history: AppPT.history.isRequired,
 };
+
+const mapStateToProps = state => ({
+    bruker: selectBruker(state),
+    manuellRegistreringPa: selectFeatureData(state)[MANUELL_REGISTRERING],
+});
 
 const mapDispatchToProps = dispatch => ({
     slettBegrunnelse: () => {
@@ -41,5 +65,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-    connect(null, mapDispatchToProps)(hiddenIfHoc(StartOppfolgingProsess))
+    connect(mapStateToProps, mapDispatchToProps)(
+        hiddenIfHoc(StartOppfolgingProsess)
+    )
 );
