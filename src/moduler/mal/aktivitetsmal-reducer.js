@@ -1,5 +1,4 @@
 import * as Api from '../oppfolging-status/oppfolging-api';
-import { hentMalListe } from './malliste-reducer';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectMalListe } from './aktivitetsmal-selector';
@@ -20,16 +19,6 @@ export function hentMal() {
 
 export function oppdaterMal(mal) {
     return action(() => Api.lagreMal(mal));
-}
-
-export function slettMal() {
-    return dispatch => {
-        const slettMalAction = action(() => Api.slettMal());
-        return dispatch(slettMalAction).then(data => {
-            dispatch(hentMalListe());
-            return data;
-        });
-    };
 }
 
 export function selectMalData(state) {

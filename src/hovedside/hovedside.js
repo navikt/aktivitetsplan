@@ -2,7 +2,6 @@ import React from 'react';
 import { Container } from 'nav-frontend-grid';
 import Varslinger from '../moduler/varslinger/varslinger';
 import AktivitetsTavle from './tavle/aktivitetstavle';
-import Navigasjonslinje from './navigasjonslinje/navigasjonslinje';
 import InformasjonsHenting from '../moduler/informasjon/informasjon-henting';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
@@ -22,7 +21,6 @@ function Hovedside() {
                 <ArenaFeilmelding />
                 <OppfolgingStatus>
                     <InformasjonsHenting />
-                    <Navigasjonslinje />
                     <Varslinger />
                     <Container>
                         <MitMaal />
