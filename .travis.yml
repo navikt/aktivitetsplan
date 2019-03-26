@@ -11,11 +11,13 @@ jobs:
     - stage: setup
       install:
       - npm ci
-      script: false
+      script:
+      - false
 
     - stage: tests
       name: "lint"
-      install: false
+      install:
+      - false
       script:
       - npm run lint
 
