@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'react-redux-form-validation';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
-import arbeidslisteReducer from './moduler/arbeidsliste/arbeidsliste-reducer';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reducer';
 import behandlendeEnheterReducer from './moduler/innstillinger/opprett-oppgave/hent-behandlende-enheter-reducer';
 import brukerReducer from './moduler/bruker/bruker-reducer';
@@ -18,7 +17,6 @@ import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import oppgaveReducer from './moduler/innstillinger/opprett-oppgave/opprett-oppgave-reducer';
 import oppgaveVeiledereReducer from './moduler/innstillinger/opprett-oppgave/hent-veieldere-for-oppgave-reducer';
 import veilederePaEnhetReducer from './moduler/veiledere-pa-enhet/veiledere-pa-enhet-reducer';
-import tildelVeilederReducer from './moduler/tildel-veileder/tildel-veileder-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import oppfolgingstatusReducer from './moduler/oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
@@ -36,7 +34,6 @@ const combinedReducers = combineReducers({
     form: formReducer,
     data: combineReducers({
         aktiviteter: aktiviteterReducer,
-        arbeidsliste: arbeidslisteReducer,
         arenaAktiviteter: arenaAktiviteterReducer,
         behandlendeEnheter: behandlendeEnheterReducer,
         bruker: brukerReducer,
@@ -57,7 +54,6 @@ const combinedReducers = combineReducers({
         veilederTilgang: veilederTilgangReducer,
         malverk: malverkReducer,
         veilederePaEnhet: veilederePaEnhetReducer,
-        tildelVeileder: tildelVeilederReducer,
         lest: lestReducer,
         auth: authReducer,
     }),

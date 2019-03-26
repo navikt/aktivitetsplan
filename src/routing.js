@@ -7,7 +7,6 @@ import DialogModal from './moduler/dialog/dialog-modal/dialog-modal';
 import AktivitetmalEndre from './moduler/mal/aktivitetsmal-endre';
 import Aktivitetsmal from './moduler/mal/aktivitetsmal';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
-import ArbeidslisteContainer from './moduler/arbeidsliste/arbeidsliste-container';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InnstillingerRoutes from './moduler/innstillinger/innstillinger-routes';
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
@@ -47,10 +46,6 @@ const Routing = ({ location }) =>
         <Route
             path={getPathWithBase('/aktivitet')}
             component={AktivitetRoutes}
-        />
-        <Route
-            path={getPathWithBase('/arbeidsliste')}
-            component={ArbeidslisteContainer}
         />
         <Route
             path={getPathWithBase('/utskrift')}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -13,7 +13,7 @@ import {
     selectHarSkriveTilgang,
 } from '../oppfolging-status/oppfolging-selector';
 import TallAlert from '../../felles-komponenter/tall-alert';
-import NavigasjonslinjeKnapp from '../../hovedside/navigasjonslinje/navigasjonslinje-knapp';
+import UtskriftKnapp from './utskriftknapp';
 import {
     selectDialoger,
     selectHarTilgangTilDialog,
@@ -23,6 +23,7 @@ import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if
 import Lenke from '../../felles-komponenter/utils/lenke';
 import VisValgtFilter from '../../moduler/filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
+import { hentDialog } from '../dialog/dialog-reducer';
 
 const knapplenkeCls = (className, disabled) =>
     classNames(className, {
@@ -30,74 +31,81 @@ const knapplenkeCls = (className, disabled) =>
         'knappelenke knappelenke--disabled': disabled,
     });
 
-function Verktoylinje({
-    viserHistoriskPeriode,
-    underOppfolging,
-    harSkriveTilgang,
-    antallUlesteDialoger,
-    aktivitetLaster,
-    dialogLaster,
-}) {
-    return (
-        <div className="verktoylinje">
-            <div className="verktoylinje__verktoy-container">
-                <Lenke
-                    href="/dialog"
-                    className={knapplenkeCls(
-                        'aktivitetskort__henvendelser',
-                        !dialogLaster
-                    )}
-                    disabled={!dialogLaster}
-                    aria-live="polite"
-                >
-                    <TallAlert hidden={antallUlesteDialoger <= 0}>
-                        {antallUlesteDialoger}
-                    </TallAlert>
-                    <HiddenIfDiv
-                        hidden={antallUlesteDialoger > 0}
-                        className="sr-only"
+class Verktoylinje extends Component {
+    componentDidMount() {
+        this.props.doHentDialog();
+    }
+
+    render() {
+        const {
+            viserHistoriskPeriode,
+            underOppfolging,
+            harSkriveTilgang,
+            antallUlesteDialoger,
+            aktivitetLaster,
+            dialogLaster,
+        } = this.props;
+        return (
+            <div className="verktoylinje">
+                <div className="verktoylinje__verktoy-container">
+                    <Lenke
+                        href="/dialog"
+                        className={knapplenkeCls(
+                            'aktivitetskort__henvendelser',
+                            !dialogLaster
+                        )}
+                        disabled={!dialogLaster}
+                        aria-live="polite"
                     >
-                        <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
-                    </HiddenIfDiv>
-                    <FormattedMessage id="navigasjon.dialog" />
-                </Lenke>
-                <Lenkeknapp
-                    type="big-hoved"
-                    href="/aktivitet/ny"
-                    disabled={
-                        viserHistoriskPeriode ||
-                        !underOppfolging ||
-                        !aktivitetLaster ||
-                        !harSkriveTilgang
-                    }
-                >
-                    <FormattedMessage id="nyaktivitetsknapp" />
-                </Lenkeknapp>
-            </div>
-            <div className="verktoylinje__verktoy-container">
-                <div className="indre">
-                    <Lenke href="/informasjon" className="knappelenke">
-                        <FormattedMessage id="navigasjon.informasjon" />
+                        <TallAlert hidden={antallUlesteDialoger <= 0}>
+                            {antallUlesteDialoger}
+                        </TallAlert>
+                        <HiddenIfDiv
+                            hidden={antallUlesteDialoger > 0}
+                            className="sr-only"
+                        >
+                            <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
+                        </HiddenIfDiv>
+                        <FormattedMessage id="navigasjon.dialog" />
                     </Lenke>
-                    <NavigasjonslinjeKnapp
-                        ariaLabel="utskrift.ikon.alt.tekst"
-                        lenke="/utskrift"
-                        className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
+                    <Lenkeknapp
+                        type="big-hoved"
+                        href="/aktivitet/ny"
+                        disabled={
+                            viserHistoriskPeriode ||
+                            !underOppfolging ||
+                            !aktivitetLaster ||
+                            !harSkriveTilgang
+                        }
+                    >
+                        <FormattedMessage id="nyaktivitetsknapp" />
+                    </Lenkeknapp>
+                </div>
+                <div className="verktoylinje__verktoy-container">
+                    <div className="indre">
+                        <Lenke href="/informasjon" className="knappelenke">
+                            <FormattedMessage id="navigasjon.informasjon" />
+                        </Lenke>
+                        <UtskriftKnapp
+                            ariaLabel="utskrift.ikon.alt.tekst"
+                            lenke="/utskrift"
+                            className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
+                        />
+                        <Filter className="verktoylinje__verktoy" />
+                    </div>
+                </div>
+                <div className="verktoylinje__verktoy-container">
+                    <VisValgtFilter />
+                </div>
+                <div className="verktoylinje__verktoy-container">
+                    <PeriodeFilter
+                        className="verktoylinje__verktoy"
+                        skjulInneverende={!underOppfolging}
                     />
-                    <Filter className="verktoylinje__verktoy" />
                 </div>
             </div>
-            <div className="verktoylinje__verktoy-container">
-                <VisValgtFilter />
-            </div>
-            <div className="verktoylinje__verktoy-container">
-                <PeriodeFilter
-                    className="verktoylinje__verktoy"
-                    skjulInneverende={!underOppfolging}
-                />
-            </div>
-        </div>
-    );
+        );
+    }
 }
 
 Verktoylinje.propTypes = {
@@ -108,6 +116,7 @@ Verktoylinje.propTypes = {
     dialogLaster: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
+    doHentDialog: PT.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -128,4 +137,8 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Verktoylinje);
+const mapDispatchToProps = dispatch => ({
+    doHentDialog: () => dispatch(hentDialog()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Verktoylinje);

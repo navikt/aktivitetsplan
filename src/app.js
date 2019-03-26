@@ -4,12 +4,12 @@ import { Router } from 'react-router-dom';
 import SideBanner from './moduler/sidebanner/sidebanner';
 import Provider from './provider';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
-import ConfigToggle from './felles-komponenter/feature/config-toggle';
 import createHistory from './history';
 import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
-import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
+import { VIS_SIDEBANNER, TIMEOUTBOX } from '~config'; // eslint-disable-line
 import Hovedside from './hovedside/hovedside';
 import './index.less';
+import { HiddenIf } from './utils';
 
 function App({ fnr }) {
     const history = createHistory();
@@ -30,9 +30,9 @@ function App({ fnr }) {
                                 <Hovedside />
                             </ScrollToTop>
                         </Router>
-                        <ConfigToggle name="timeoutbox">
+                        <HiddenIf hidden={TIMEOUTBOX}>
                             <Timeoutbox />
-                        </ConfigToggle>
+                        </HiddenIf>
                     </div>
                 </div>
             </Provider>
