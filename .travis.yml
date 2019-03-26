@@ -4,9 +4,9 @@ cache: npm
 before_install:
     - export TZ=Europe/Oslo
 script:
- - false
+ - true
 install:
- - false
+ - true
 
 jobs:
     include:
@@ -14,12 +14,12 @@ jobs:
       install:
       - npm ci
       script:
-      - false
+      - true
 
     - stage: tests
       name: "lint"
       install:
-      - false
+      - true
       script:
       - npm run lint
 
