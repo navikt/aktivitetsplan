@@ -1,21 +1,29 @@
 language: node_js
 node_js: "8"
 cache: npm
-script: false
 before_install:
     - export TZ=Europe/Oslo
+script: false
+install: false
 
-matrix:
+jobs:
     include:
-    - name: "lint"
+    - stage: setup
+      install:
+      - npm ci
+
+    - stage: tests
+      name: "lint"
       script:
       - npm run lint
 
-    - name: "unit test"
+    - stage: tests
+      name: "unit test"
       script:
       - npm run test
 
-    - name: "browserstack"
+    - stage: tests
+      name: "browserstack"
       script:
       - "npm run heroku-postbuild"
       - "npm-run-all -p -r start test:browserstack"
