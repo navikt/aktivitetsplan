@@ -11,13 +11,14 @@ import { VIS_SIDEBANNER } from '~config'; // eslint-disable-line
 import Hovedside from './hovedside/hovedside';
 import './index.less';
 
-const history = createHistory();
-
-window.apneVerktoyModal = () => {
-    history.push('/innstillinger');
-};
-
 function App({ fnr }) {
+    const history = createHistory();
+
+    // TODO: Remove me when instilling is gone
+    window.apneVerktoyModal = () => {
+        history.push('/innstillinger');
+    };
+
     return (
         <div className="aktivitetsplanfs">
             <Provider key={fnr}>
