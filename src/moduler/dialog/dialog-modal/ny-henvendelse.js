@@ -19,6 +19,7 @@ import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 import Checkbox from '../../../felles-komponenter/skjema/input/checkbox';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import {
+    selectAlleDialoger,
     selectDialogMedId,
     selectDialogStatus,
     selectVisBrukerInfo,
@@ -27,8 +28,11 @@ import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 import { visBekreftelse } from '../dialog-view-reducer';
 import {
     selectHarSkriveTilgang,
+    selectOppfolgingsPerioder,
     selectUnderOppfolging,
 } from '../../oppfolging-status/oppfolging-selector';
+import * as AppPT from '../../../proptypes';
+import { loggTidBruktForsteHenvendelse } from '../../../felles-komponenter/utils/logging';
 
 const OVERSKRIFT_MAKS_LENGDE = 255;
 const TEKST_MAKS_LENGDE = 5000;
@@ -110,6 +114,8 @@ function NyHenvendelseForm({
 
 NyHenvendelseForm.defaultProps = {
     skalHaAutofokus: false,
+    oppfolgingsPerioder: [],
+    dialoger: [],
 };
 
 NyHenvendelseForm.propTypes = {
@@ -124,6 +130,8 @@ NyHenvendelseForm.propTypes = {
     errorSummary: PT.node.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
+    oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
+    dialoger: PT.arrayOf(AppPT.dialog).isRequired,
 };
 
 const pakrevdOverskrift = rules.minLength(
@@ -164,6 +172,7 @@ const mapStateToProps = (state, props) => {
     const aktivitetId = props.aktivitetId;
     const dialogId = props.dialogId;
     const dialog = selectDialogMedId(state, dialogId) || {};
+    const dialoger = selectAlleDialoger(state);
     const erNyDialog = Object.keys(dialog).length === 0;
     const aktivitet = selectAktivitetMedId(state, aktivitetId) || {};
     const overskrift = aktivitet.tittel || dialog.overskrift;
@@ -181,6 +190,8 @@ const mapStateToProps = (state, props) => {
         erKnyttTilAktivitet: !!aktivitetId || (dialog && !!dialog.aktivitetId),
         harSkriveTilgang: selectHarSkriveTilgang(state),
         underOppfolging: selectUnderOppfolging(state),
+        oppfolgingsPerioder: selectOppfolgingsPerioder(state),
+        dialoger,
     };
 };
 
@@ -191,6 +202,11 @@ const mapDispatchToProps = () => ({
             dialogId: props.dialogId,
             ...dialogData,
         })(dispatch);
+
+        loggTidBruktForsteHenvendelse(
+            props.dialoger,
+            props.oppfolgingsPerioder
+        );
 
         const onComplete = props.onComplete;
         nyHenvendelsePromise.then(action => {
