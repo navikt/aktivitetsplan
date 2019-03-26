@@ -15,9 +15,11 @@ import {
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
 
+/*
 const fjernUrlParamFilter = () => {
     window.history.replaceState({}, '', location.origin + location.pathname);
 };
+*/
 
 const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
     const paramFilter = queryString.parse(location.search).filter;
@@ -37,7 +39,6 @@ class VisValgtFilter extends React.PureComponent {
         lesUrlParamFilterOgFiltrerPaaAktivitetsType(
             this.props.doToggleAktivitetsType
         );
-        fjernUrlParamFilter();
     }
 
     render() {
