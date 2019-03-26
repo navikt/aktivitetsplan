@@ -1,12 +1,12 @@
-language: node_js
-node_js: "8"
 cache: npm
-before_install:
-    - export TZ=Europe/Oslo
 
 jobs:
     include:
     - stage: setup
+      language: node_js
+      node_js: "8"
+      before_install:
+      - export TZ=Europe/Oslo
 
     - &tests
       stage: tests
