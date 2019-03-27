@@ -16,7 +16,13 @@ import {
 } from './filter/filter-reducer';
 
 const fjernUrlParamFilter = () => {
-    window.history.replaceState({}, '', location.origin + location.pathname);
+    const enhet = queryString.parse(location.search).enhet;
+    const enhetParam = enhet ? `?enhet=${enhet}` : '';
+    window.history.replaceState(
+        {},
+        '',
+        location.origin + location.pathname + enhetParam
+    );
 };
 
 const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
