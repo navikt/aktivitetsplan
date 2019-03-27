@@ -24,6 +24,38 @@
         }
     }
 
+    &__print-knapp {
+        display: inline-block;
+        background: data-uri('@{aktivitetsplanPath}/moduler/utskrift/printer.svg')
+        no-repeat center right;
+        background-size: contain;
+
+        height: 1.25rem;
+        width: 1.25rem;
+        border: 0;
+        padding: 0;
+        margin-top: 2px;
+        margin-right: 1rem;
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px @orange-focus;
+        }
+
+        &:hover {
+            background-image: data-uri(
+                '@{aktivitetsplanPath}/moduler/utskrift/printer-hover.svg'
+            );
+        }
+
+        &:active {
+            background-image: data-uri(
+                '@{aktivitetsplanPath}/moduler/utskrift/printer-active.svg'
+            );
+        }
+    }
+
+
     &__verktoy-container {
         display: flex;
         justify-content: space-between;
@@ -106,6 +138,8 @@
         }
     }
 }
+
+
 
 @media (min-width: @screen-md-min) {
     .verktoylinje {

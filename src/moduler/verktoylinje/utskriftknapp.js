@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import * as AppPT from '../../proptypes';
 
-function NavigasjonslinjeKnapp({ ariaLabel, lenke, className, history }) {
+function Utskriftknapp({ ariaLabel, lenke, className, history }) {
     return (
         <FormattedMessage id={ariaLabel}>
             {label =>
@@ -17,15 +17,15 @@ function NavigasjonslinjeKnapp({ ariaLabel, lenke, className, history }) {
     );
 }
 
-NavigasjonslinjeKnapp.defaultProps = {
+Utskriftknapp.defaultProps = {
     className: '',
 };
 
-NavigasjonslinjeKnapp.propTypes = {
+Utskriftknapp.propTypes = {
     ariaLabel: PT.string.isRequired,
     lenke: PT.string.isRequired,
     history: AppPT.history.isRequired,
     className: PT.string,
 };
 
-export default withRouter(NavigasjonslinjeKnapp);
+export default withRouter(Utskriftknapp);
