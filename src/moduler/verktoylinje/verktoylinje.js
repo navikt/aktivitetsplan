@@ -89,7 +89,7 @@ class Verktoylinje extends Component {
                         <UtskriftKnapp
                             ariaLabel="utskrift.ikon.alt.tekst"
                             lenke="/utskrift"
-                            className="navigasjonslinje-meny__knapp--print navigasjonslinje-meny__knapp"
+                            className="verktoylinje__print-knapp"
                         />
                         <Filter className="verktoylinje__verktoy" />
                     </div>
