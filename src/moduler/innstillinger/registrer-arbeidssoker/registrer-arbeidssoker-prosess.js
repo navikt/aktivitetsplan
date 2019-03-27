@@ -9,7 +9,7 @@ import hiddenIfHoc from '../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../proptypes';
 import { selectBruker } from '../../bruker/bruker-selector';
 import { getEnhetFromUrl } from '../opprett-oppgave/opprett-oppgave-utils';
-import { lagRegistreringUrl } from '../../../utils/url-utils';
+import { lagRegistreringUrl } from '../url-utils';
 import { selectKanReaktiveres } from '../../oppfolging-status/oppfolging-selector';
 
 function RegistrerArbeidssokerProsess({ bruker, kanReaktiveres }) {

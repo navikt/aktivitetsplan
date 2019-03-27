@@ -12,7 +12,7 @@ import { selectFeatureData } from '../../../felles-komponenter/feature/feature-s
 import { MANUELL_REGISTRERING } from '../../../felles-komponenter/feature/feature';
 import { getEnhetFromUrl } from '../opprett-oppgave/opprett-oppgave-utils';
 import { selectBruker } from '../../bruker/bruker-selector';
-import { lagRegistreringUrl } from '../../../utils/url-utils';
+import { lagRegistreringUrl } from '../url-utils';
 
 function StartOppfolgingProsess({
     slettBegrunnelse,
