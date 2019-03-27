@@ -155,7 +155,9 @@ const mapStateToProps = state => ({
     skjulStopKvp:
         !selectTilgangTilBrukersKontor(state) || !selectErUnderKvp(state),
     skjulRegistrerArbeidssoker:
-        selectErUnderOppfolging(state) && !selectKanReaktiveres(state),
+        (selectTilgangTilBrukersKontor(state) &&
+            selectKanStarteOppfolging(state)) || // Skjul hvis startOpplfolging blir vist
+        (selectErUnderOppfolging(state) && !selectKanReaktiveres(state)),
 });
 
 const mapDispatchToProps = dispatch => ({

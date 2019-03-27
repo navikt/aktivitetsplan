@@ -1,1 +1,1 @@
-Brukere som ikke har eller kan skaffe seg elektronisk ID med sikkerhetsnivå 4 (bankID, bankID på mobil, Commfides, Buypass) eller av andre årsaker ikke kan registrere seg selv.
+Brukere som ikke kan skaffe seg elektronisk ID (Bank ID, Bank ID på mobil, Buypass eller Commfides) eller av andre årsaker ikke kan gjøre det selv.
