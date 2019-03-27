@@ -16,12 +16,17 @@ import {
 } from './filter/filter-reducer';
 
 const fjernUrlParamFilter = () => {
-    const enhet = queryString.parse(location.search).enhet;
-    const enhetParam = enhet ? `?enhet=${enhet}` : '';
+    const params = queryString.parse(location.search);
+    delete params.filter;
+    const restParams =
+        Object.keys(params).length > 0
+            ? `?${queryString.stringify(params)}`
+            : '';
+
     window.history.replaceState(
         {},
         '',
-        location.origin + location.pathname + enhetParam
+        location.origin + location.pathname + restParams
     );
 };
 
@@ -35,6 +40,7 @@ const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
         } else {
             doToggleAktivitetsType(paramFilter.toUpperCase());
         }
+        fjernUrlParamFilter();
     }
 };
 
@@ -43,7 +49,6 @@ class VisValgtFilter extends React.PureComponent {
         lesUrlParamFilterOgFiltrerPaaAktivitetsType(
             this.props.doToggleAktivitetsType
         );
-        fjernUrlParamFilter();
     }
 
     render() {
