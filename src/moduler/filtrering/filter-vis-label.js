@@ -15,6 +15,10 @@ import {
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
 
+const fjernUrlParamFilter = () => {
+    window.history.replaceState({}, '', location.origin + location.pathname);
+};
+
 const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
     const paramFilter = queryString.parse(location.search).filter;
     if (paramFilter) {
@@ -25,6 +29,7 @@ const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
         } else {
             doToggleAktivitetsType(paramFilter.toUpperCase());
         }
+        fjernUrlParamFilter();
     }
 };
 
