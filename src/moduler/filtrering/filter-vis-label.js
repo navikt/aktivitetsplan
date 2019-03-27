@@ -18,14 +18,15 @@ import {
 const fjernUrlParamFilter = () => {
     const params = queryString.parse(location.search);
     delete params.filter;
-    const restParam =
+    const restParams =
         Object.keys(params).length > 0
             ? `?${queryString.stringify(params)}`
             : '';
+
     window.history.replaceState(
         {},
         '',
-        location.origin + location.pathname + restParam
+        location.origin + location.pathname + restParams
     );
 };
 
