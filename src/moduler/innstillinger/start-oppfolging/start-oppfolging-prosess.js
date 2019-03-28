@@ -20,6 +20,10 @@ function StartOppfolgingProsess({
     manuellRegistreringPa,
     bruker,
 }) {
+    const brodtekstId = manuellRegistreringPa
+        ? 'innstillinger.prosess.startoppfolging.tekst-manuell'
+        : 'innstillinger.prosess.startoppfolging.tekst';
+
     return (
         <StartProsess
             className="innstillinger__prosess"
@@ -39,7 +43,7 @@ function StartOppfolgingProsess({
         >
             <div className="blokk-xs">
                 <Normaltekst>
-                    <FormattedMessage id="innstillinger.prosess.startoppfolging.tekst" />
+                    <FormattedMessage id={brodtekstId} />
                 </Normaltekst>
             </div>
         </StartProsess>
