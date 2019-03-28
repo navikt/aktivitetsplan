@@ -6,7 +6,12 @@ import { selectFeatureData } from './feature-selector';
 // Remember to add you feature to 'ALL_FEATURES' which ensures the feature is looked up in unleash.
 export const NYENDRINGIAKTIVITET = 'aktivitetsplan.nyendringiaktivitet';
 export const MANUELL_REGISTRERING = 'modia.manuell_registrering';
-export const ALL_FEATURES = [NYENDRINGIAKTIVITET, MANUELL_REGISTRERING];
+export const FLYTT_ALERTSTRIPER_INSIDEN = 'visittkort_innstillinger';
+export const ALL_FEATURES = [
+    NYENDRINGIAKTIVITET,
+    MANUELL_REGISTRERING,
+    FLYTT_ALERTSTRIPER_INSIDEN,
+];
 
 export const harFeature = (name, features, reverse) =>
     features[name] === !reverse;
