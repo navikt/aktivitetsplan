@@ -36,6 +36,11 @@ import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import { hentOppfolgingsstatus } from '../oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-reducer';
 import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
+import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
+import {
+    FLYTT_ALERTSTRIPER_INSIDEN,
+    harFeature,
+} from '../../felles-komponenter/feature/feature';
 
 class Varslinger extends Component {
     componentDidMount() {
@@ -78,6 +83,7 @@ class Varslinger extends Component {
             erUnderKvp,
             kanReaktiveres,
             antallDagerIgjen,
+            harFlyttAlertStriperTilVisittKortFt,
         } = this.props;
 
         const reaktiveringsInfoTekst = this.hentInfotekstTilInaktivertBrukere();
@@ -114,8 +120,9 @@ class Varslinger extends Component {
                 />
             </Container>
         );
-
-        const visVarslingerForVeileder = (
+        // TODO FJERN HELE visVarslingerForVeileder når featuren FLYTT_ALERTSTRIPER_INSIDEN ER PÅ
+        const visVarslingerForVeileder =
+            !harFlyttAlertStriperTilVisittKortFt &&
             <Container>
                 <HiddenIfVarsling
                     hidden={underOppfolging}
@@ -155,8 +162,7 @@ class Varslinger extends Component {
                     className="varsling"
                     onClick={() => slettBegrunnelse()}
                 />
-            </Container>
-        );
+            </Container>;
 
         const soneAvhengigheter = erBruker
             ? avhengigheter
@@ -181,6 +187,7 @@ Varslinger.defaultProps = {
     erUnderKvp: false,
     kanReaktiveres: false,
     antallDagerIgjen: undefined,
+    harFlyttAlertStriperTilVisittKortFt: false,
 };
 
 Varslinger.propTypes = {
@@ -201,6 +208,7 @@ Varslinger.propTypes = {
     doHentOppfolging: PT.func.isRequired,
     kanReaktiveres: PT.bool,
     antallDagerIgjen: PT.number,
+    harFlyttAlertStriperTilVisittKortFt: PT.bool,
 };
 
 const mapStateToProps = state => {
@@ -208,7 +216,7 @@ const mapStateToProps = state => {
     const inaktiveringsdato = selectInaktiveringsDato(state);
     const dato28dagerEtterIserv = moment(inaktiveringsdato).add(28, 'day');
     const antalldagerIgjen = dato28dagerEtterIserv.diff(dagensDato, 'days');
-
+    const features = selectFeatureData(state);
     return {
         erBruker: selectErBruker(state),
         avhengigheter: [
@@ -225,6 +233,10 @@ const mapStateToProps = state => {
         erUnderKvp: selectErUnderKvp(state),
         kanReaktiveres: selectKanReaktiveres(state),
         antallDagerIgjen: antalldagerIgjen,
+        harFlyttAlertStriperTilVisittKortFt: harFeature(
+            FLYTT_ALERTSTRIPER_INSIDEN,
+            features
+        ),
     };
 };
 

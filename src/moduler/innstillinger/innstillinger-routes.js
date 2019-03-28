@@ -23,6 +23,7 @@ import StoppKvpPeriode from './stopp-kvp-periode/stopp-kvp-periode';
 import StartKvpKvittering from './start-kvp-periode/start-kvp-periode-kvittering';
 import StoppKvpKvittering from './stopp-kvp-periode/stopp-kvp-periode-kvittering';
 
+// TODO FJERN ALLT SOM HAR MED INNSTILLINGER ATT GJÖRE NÅR FLYTT_ALERTSTRIPER_INSIDEN ER PÅ
 function InnstillingerRoutes({ match }) {
     const path = match.path;
     return (
