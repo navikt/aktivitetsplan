@@ -27,6 +27,7 @@ import underelmenterReducer from './moduler/aktivitet/visning/underelement-for-a
 import authReducer from './felles-komponenter/timeoutbox/auth-reducer';
 import lestReducer from './moduler/lest/lest-reducer';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
+import informasjonModalReducer from './moduler/informasjon/Informasjon-modal-reducer';
 
 export const RESET_STORE = { type: 'store/reset' };
 
@@ -62,6 +63,7 @@ const combinedReducers = combineReducers({
         utskrift: utskriftReducer,
         underelementer: underelmenterReducer,
         visteAktiviteterMedEndringer: aktivitetViewReducer,
+        informasjon: informasjonModalReducer,
     }),
 });
 
