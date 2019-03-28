@@ -203,11 +203,6 @@ const mapDispatchToProps = () => ({
             ...dialogData,
         })(dispatch);
 
-        loggTidBruktForsteHenvendelse(
-            props.dialoger,
-            props.oppfolgingsPerioder
-        );
-
         const onComplete = props.onComplete;
         nyHenvendelsePromise.then(action => {
             const data = action.data;
@@ -238,6 +233,11 @@ const mapDispatchToProps = () => ({
                 document.getElementById(hoyreKolonneSectionId).scrollTop = 0;
             }
         });
+
+        loggTidBruktForsteHenvendelse(
+            props.dialoger,
+            props.oppfolgingsPerioder
+        );
     },
 });
 
