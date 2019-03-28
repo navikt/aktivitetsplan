@@ -64,19 +64,27 @@ export function loggMittMalLagre(veileder) {
 }
 
 export function loggTidBruktForsteHenvendelse(dialoger, oppfolgingsPerioder) {
-    if (dialoger.length === 0) {
+    const brukerHarIkkeSendtDialogTidligere =
+        dialoger.filter(
+            d =>
+                d.henvendelser.filter(h => h.avsender === 'BRUKER').length !== 0
+        ).length === 0;
+
+    if (brukerHarIkkeSendtDialogTidligere) {
         const periode = oppfolgingsPerioder.filter(p => p.sluttDato === null);
-        const startDatoPaaOppfolging =
-            periode.length > 0 && periode[0].startDato;
-        const tid = Math.ceil(
-            Math.abs(
-                new Date(startDatoPaaOppfolging).getTime() -
-                    new Date().getTime()
-            ) /
-                (1000 * 3600 * 24)
-        );
-        loggEvent(DAILOG_BRUKER_HENVENDELSE, {
-            tidBruktForsteHenvendelse: tid,
-        });
+        if (periode.length > 0) {
+            const startDatoPaaOppfolging =
+                periode.length > 0 && periode[0].startDato;
+            const tidBruktForsteHenvendelse = Math.ceil(
+                Math.abs(
+                    new Date(startDatoPaaOppfolging).getTime() -
+                        new Date().getTime()
+                ) /
+                    (1000 * 3600 * 24)
+            );
+            loggEvent(DAILOG_BRUKER_HENVENDELSE, {
+                tidBruktForsteHenvendelse,
+            });
+        }
     }
 }
