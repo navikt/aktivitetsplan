@@ -13,6 +13,9 @@ import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel'
 
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 
+
+window.appconfig = {CONTEXT_PATH: ''};
+
 describe('aktiver-digital-oppfolging', () => {
     describe('komponent', () => {
         it('Skal vise et varsel og knapp', () => {

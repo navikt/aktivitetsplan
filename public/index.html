@@ -7,16 +7,32 @@
     <title>Aktivitetsplan</title>
     <script>
         window.app = "aktivitetsplan";
-    </script>
 
-    <style>
-        #styleApp {
-            background-color: white;
-        }
-    </style>
+        // NOTE: This is bad, don't use it if you don't HAVE to
+        window.appconfig = {
+            CONTEXT_PATH: '',
+            TILLAT_SET_AVTALT: false,
+            VIS_SIDEBANNER: true,
+            FNR_I_URL: false,
+            VIS_MALER: false,
+            TIMEOUTBOX: true
+
+        };
+
+    </script>
 </head>
-<body id="styleApp">
+<body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="mainapp" class="appContainer"></div>
+    <div id="modal-a11y-wrapper">
+        <div id="mainapp" class="appContainer"></div>
+    </div>
+
 </body>
+<script>
+    function render() {
+        return NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));
+    }
+    render();
+</script>
+
 </html>

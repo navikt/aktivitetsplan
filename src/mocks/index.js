@@ -41,11 +41,6 @@ const mock = fetchMock.configure({
     middleware: fetchmockMiddleware,
 });
 
-const defaultFailure = {
-    status: 500,
-    statusText: 'Internal server error',
-};
-
 //feature-api
 mock.get('/aktivitetsplan/api/feature', ({ queryParams }) =>
     getFeatures(queryParams)

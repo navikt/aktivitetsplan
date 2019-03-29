@@ -1,4 +1,3 @@
-import { EKSEMPEL_VEILEDER } from '../config';
 
 const oppfolging = {
     fnr: null,
@@ -42,7 +41,7 @@ export function startEskalering(update) {
     oppfolging.gjeldendeEskaleringsvarsel = {
         aktorId: '1234567988888',
         avsluttetDato: null,
-        opprettetAv: EKSEMPEL_VEILEDER,
+        opprettetAv: 'Z123456',
         opprettetDato: new Date(),
         tilhorendeDialogId: parseInt(update.dialogId),
         varselId: 1,

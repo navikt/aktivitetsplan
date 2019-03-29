@@ -25,7 +25,6 @@ import {
     STATUS_FULLFOERT,
 } from '../../constant';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
-import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 
 export const selectAlleAktiviter = createSelector(
     selectAktiviteterData,
@@ -89,7 +88,7 @@ export function selectKanEndreAktivitetDetaljer(state, aktivitet) {
     return (
         selectKanEndreAktivitetStatus(state, aktivitet) &&
         type !== SAMTALEREFERAT_TYPE &&
-        (avtalt !== true || !!TILLAT_SET_AVTALT)
+        (avtalt !== true || !!window.appconfig.TILLAT_SET_AVTALT)
     );
 }
 

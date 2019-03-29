@@ -6,12 +6,24 @@ import Provider from './provider';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import createHistory from './history';
 import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
-import { VIS_SIDEBANNER, TIMEOUTBOX } from '~config'; // eslint-disable-line
 import Hovedside from './hovedside/hovedside';
 import './index.less';
 import { HiddenIf } from './utils';
 
+
 function App({ fnr }) {
+
+    // NOTE: This is bad, don't use it if you dont HAVE to.
+    window.appconfig = window.appconfig || {};
+    window.appconfig = {
+        CONTEXT_PATH: window.appconfig.CONTEXT_PATH || '/veilarbpersonflatefs',
+        TILLAT_SET_AVTALT: window.appconfig.TILLAT_SET_AVTALT || true,
+        VIS_SIDEBANNER: window.appconfig.VIS_SIDEBANNER || false,
+        FNR_I_URL: window.appconfig.VIS_SIDEBANNER || true,
+        VIS_MALER: window.appconfig.VIS_MALER || true,
+        TIMEOUTBOX: window.appconfig.TIMEOUTBOX || false
+    };
+
     const history = createHistory();
 
     // TODO: Remove me when instilling is gone
@@ -22,7 +34,7 @@ function App({ fnr }) {
     return (
         <div className="aktivitetsplanfs">
             <Provider key={fnr}>
-                <SideBanner visible={VIS_SIDEBANNER} />
+                <SideBanner visible={window.appconfig.VIS_SIDEBANNER} />
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
                         <Router history={history}>
@@ -30,7 +42,7 @@ function App({ fnr }) {
                                 <Hovedside />
                             </ScrollToTop>
                         </Router>
-                        <HiddenIf hidden={TIMEOUTBOX}>
+                        <HiddenIf hidden={window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
                         </HiddenIf>
                     </div>

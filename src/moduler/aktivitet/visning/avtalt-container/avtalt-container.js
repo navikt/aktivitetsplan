@@ -15,7 +15,6 @@ import AvtaltForm, {
 } from './avtalt-form';
 import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
-import { TILLAT_SET_AVTALT } from '~config'; // eslint-disable-line
 import { STATUS } from '../../../../ducks/utils';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { erMerEnnSyvDagerTil } from '../../../../utils';
@@ -58,7 +57,7 @@ class AvtaltContainer extends Component {
         const merEnnsyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato);
 
         if (
-            !TILLAT_SET_AVTALT ||
+            !window.appconfig.TILLAT_SET_AVTALT ||
             historisk ||
             !underOppfolging ||
             status === STATUS_FULLFOERT ||
