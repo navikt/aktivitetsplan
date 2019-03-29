@@ -2,19 +2,17 @@ contextPath: /
 
 auth:
   enforce: true
-  loginUrl: {{ VEILARBSTEPUP_OIDC_URL }}
+  loginUrl: {{ LOGINSERVICE_URL }}
 
 proxy:
-  - contextPath: "/veilarbaktivitet"
-    baseUrl: "http://veilarbproxy"
-  - contextPath: "/veilarbdialog"
-    baseUrl: "http://veilarbproxy"
-  - contextPath: "/veilarboppfolging"
-    baseUrl: "http://veilarbproxy"
-  - contextPath: "/veilarblest"
-    baseUrl: "http://veilarbproxy"
-  - contextPath: "/veilarbstepup"
-    baseUrl: "http://veilarbstepup"
+  - contextPath: /veilarbaktivitet
+    baseUrl: http://veilarbproxy
+  - contextPath: /veilarbdialog
+    baseUrl: http://veilarbproxy
+  - contextPath: /veilarboppfolging
+    baseUrl: http://veilarbproxy
+  - contextPath: /veilarblest
+    baseUrl: http://veilarbproxy
 
 redirect:
   - from: /aktivitetsplan
