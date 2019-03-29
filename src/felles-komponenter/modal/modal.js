@@ -3,12 +3,10 @@ import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import ModalHeader from './modal-header';
 import Innholdslaster from '../utils/innholdslaster';
 import * as AppPT from '../../proptypes';
 import Feilmelding from '../../moduler/feilmelding/feilmelding';
-import { informasjonErOpen } from '../../moduler/informasjon/Informasjon-modal-reducer';
 
 function Modal({
     header,
@@ -19,7 +17,6 @@ function Modal({
     minstEnAvhengighet,
     history,
     feilmeldinger,
-    automatiskInformasjonOpen,
     ...props
 }) {
     const closeFuncOrDefault = () => {
@@ -33,7 +30,7 @@ function Modal({
     return (
         <NavFrontendModal
             {...props}
-            isOpen={!automatiskInformasjonOpen}
+            isOpen
             className={classNames('aktivitet-modal', className)}
             overlayClassName="aktivitet-modal__overlay"
             portalClassName="aktivitetsplanfs aktivitet-modal-portal"
@@ -58,7 +55,6 @@ Modal.defaultProps = {
     avhengigheter: [],
     minstEnAvhengighet: false,
     feilmeldinger: [],
-    automatiskInformasjonOpen: false,
 };
 
 Modal.propTypes = {
@@ -70,11 +66,6 @@ Modal.propTypes = {
     children: PT.node.isRequired,
     avhengigheter: PT.array,
     minstEnAvhengighet: PT.bool,
-    automatiskInformasjonOpen: PT.bool,
 };
 
-const mapStateToProps = state => ({
-    automatiskInformasjonOpen: informasjonErOpen(state),
-});
-
-export default withRouter(connect(mapStateToProps)(Modal));
+export default withRouter(Modal);

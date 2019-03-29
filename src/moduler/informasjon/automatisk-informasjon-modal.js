@@ -22,7 +22,7 @@ import InformasjonsContent from './informasjons-content';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 
-function harUlestInfo({ lestInfo }) {
+function harUlestInfo(lestInfo) {
     return !lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON;
 }
 
@@ -41,6 +41,7 @@ class AutomatiskInformasjonModal extends Component {
             harLastetLest,
             aleredeAutomatiskOpned,
         } = this.props;
+
         if (!erBruker || !underOppfolging) {
             return;
         }
