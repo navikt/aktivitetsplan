@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import '../src/index.less';
 import App from '../src/app';
 import NAVSPA from './NAVSPA';
 

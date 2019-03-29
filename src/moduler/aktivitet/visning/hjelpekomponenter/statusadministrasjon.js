@@ -14,16 +14,11 @@ import {
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsorientering-arena-aktivitet';
-import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
-import {
-    FORHANDSORIENTERING,
-    harFeature,
-} from '../../../../felles-komponenter/feature/feature';
 import { selectErBrukerMedIServiceGruppeSTS } from '../../../oppfoelgingsstatus/oppfoelgingsstatus-selector';
 
 function Statusadministrasjon({
@@ -32,12 +27,10 @@ function Statusadministrasjon({
     erBruker,
     erManuellKrrKvpBruker,
     erSpecieltTilpassetInnsatsBruker,
-    features,
 }) {
     const { status, type, id } = valgtAktivitet;
 
     const skalViseForhandsorienteringsKomponent =
-        harFeature(FORHANDSORIENTERING, features) &&
         erSpecieltTilpassetInnsatsBruker &&
         !erBruker &&
         !erManuellKrrKvpBruker;
@@ -90,7 +83,6 @@ Statusadministrasjon.propTypes = {
 
 const mapStateToProps = state => ({
     erBruker: selectErBruker(state),
-    features: selectFeatureData(state),
     erManuellKrrKvpBruker:
         selectErBrukerManuell(state) ||
         selectErUnderKvp(state) ||

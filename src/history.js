@@ -9,7 +9,7 @@ function nyURLHarQueryString(url) {
 function prependBasePath(fn) {
     return url => {
         const fodselsnummer = getFodselsnummer();
-        const urlParams = nyURLHarQueryString(url) ? '' : location.search;
+        const urlParams = nyURLHarQueryString(url) ? '' : window.location.search;
         const fodselsnummerPath = `/${fodselsnummer}`;
         return fn.call(this, {
             pathname:

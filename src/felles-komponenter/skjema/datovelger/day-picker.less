@@ -33,14 +33,11 @@
     position: absolute;
     width: 2em;
     height: 2em;
-    background-repeat: no-repeat;
-    background-position: center;
     cursor: pointer;
     border: 0;
-    background-color: transparent;
-    background-image: data-uri(
-        '@{aktivitetsplanPath}/felles-komponenter/skjema/datovelger/pil-videre.svg'
-    );
+    background: transparent data-uri(
+        './pil-videre.svg'
+    ) no-repeat center;
     background-size: 1.25em 1.25em;
 
     &:focus {
@@ -51,7 +48,7 @@
     &:focus,
     &:hover {
         background-image: data-uri(
-            '@{aktivitetsplanPath}/felles-komponenter/skjema/datovelger/pil-videre--hover.svg'
+            './pil-videre--hover.svg'
         );
     }
 
@@ -229,14 +226,11 @@
             height: 100%;
             border: 0;
             border-left: 1px solid @gray-icon;
-            background-color: transparent;
             padding: 0;
             position: absolute;
-            background-image: data-uri(
-                '@{aktivitetsplanPath}/felles-komponenter/skjema/datovelger/kalender.svg'
-            );
-            background-repeat: no-repeat;
-            background-position: center center;
+            background: transparent data-uri(
+                './kalender.svg'
+            ) no-repeat center center;
             background-size: 16px 16px;
 
             &:focus {
@@ -247,13 +241,13 @@
             &:hover:not(:disabled),
             &:focus {
                 background-image: data-uri(
-                    '@{aktivitetsplanPath}/felles-komponenter/skjema/datovelger/kalender--hover.svg'
+                    './kalender--hover.svg'
                 );
             }
 
             &:active {
                 background-image: data-uri(
-                    '@{aktivitetsplanPath}/felles-komponenter/skjema/datovelger/kalender--aktiv.svg'
+                    './kalender--aktiv.svg'
                 );
             }
         }
