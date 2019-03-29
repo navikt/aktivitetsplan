@@ -64,11 +64,11 @@ export function loggMittMalLagre(veileder) {
 }
 
 export function loggTidBruktForsteHenvendelse(dialoger, oppfolgingsPerioder) {
-    const brukerHarIkkeSendtDialogTidligere = dialoger.find(a =>
+    const brukerHarSendtDialogTidligere = dialoger.find(a =>
         a.henvendelser.find(h => h.avsender === 'BRUKER')
     );
 
-    if (brukerHarIkkeSendtDialogTidligere) {
+    if (!brukerHarSendtDialogTidligere) {
         const periode = oppfolgingsPerioder.filter(p => p.sluttDato === null);
         if (periode.length > 0) {
             const startDatoPaaOppfolging = periode[0].startDato;
