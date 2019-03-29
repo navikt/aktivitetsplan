@@ -15,7 +15,8 @@
     "heroku-postbuild": "npm run build:tekster && npm run build:less:dev && npm run build:js -- --env.dev --env.mock",
     "build": "npm run build:tekster && craco build",
     "eject": "craco eject",
-    "start": "cross-env REACT_APP_MOCK=true craco start"
+    "start": "cross-env REACT_APP_MOCK=true craco start",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -116,7 +117,6 @@
     "cross-env": "4.0.0",
     "enzyme": "2.9.1",
     "express": "^4.16.3",
-    "faker": "4.1.0",
     "file-loader": "0.11.1",
     "husky": "0.13.4",
     "ignore-loader": "0.1.2",
@@ -134,6 +134,7 @@
     "react-test-renderer": "15.5.4",
     "sinon": "2.2.0",
     "sinon-chai": "2.10.0",
+    "source-map-explorer": "^1.8.0",
     "text-table": "0.2.0",
     "tree-kill": "1.2.0",
     "url-loader": "0.5.8",

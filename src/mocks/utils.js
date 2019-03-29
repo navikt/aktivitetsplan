@@ -1,10 +1,5 @@
 /*eslint:disable*/
 
-export const MOCK_CONFIG = {
-    failureRate: -1,
-    seed: 9001,
-};
-
 export function fetchmockMiddleware(request, response) {
     console.groupCollapsed(request.url);
     console.groupCollapsed('config');

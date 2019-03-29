@@ -1,10 +1,6 @@
-import { MOCK_CONFIG } from './utils';
-import faker from 'faker/locale/nb_NO';
-
-faker.seed(MOCK_CONFIG.seed);
 const kjonn = Math.random() > 0.5 ? 'K' : 'M';
-const fornavn = faker.name.firstName(kjonn === 'K' ? 1 : 0);
-const etternavn = faker.name.lastName(kjonn === 'K' ? 1 : 0);
+const fornavn = 'Test';
+const etternavn = 'Testus';
 
 export default function(fnr) {
     return {

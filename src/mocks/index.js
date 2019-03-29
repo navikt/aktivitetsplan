@@ -25,8 +25,6 @@ import arena from './arena';
 import getPerson from './person';
 import { malListe, opprettMal, sisteMal } from './mal';
 import veilederTilgang from './veilederTilgang';
-import veiledere from './veiledere';
-import enheter from './enheter';
 import getFeatures from './features';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
 import instillingsHistorikk from './innstillings-historikk';
@@ -183,27 +181,6 @@ mock.get('/veilarbaktivitetproxy/api/aktivitet', aktiviteter);
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
     getPerson(pathParams.fnr)
 );
-
-//veilarbveileder-api
-mock.get('/veilarbveileder/api/enhet/:enhetNr/veiledere', ({ pathParams }) => {
-    // 9999 er oppfolgingsenhet, som stortsett er den som skal brukes av aktivitetsplanen
-    // 0001 er oppgave-enhet,
-    // 007 er geografiskenhet, men per i dag er vi ikke interessert i denne her.
-    if (pathParams.enhetNr !== '9999' && pathParams.enhetNr !== '0001') {
-        throw new Error('Har nok spurt om feil enhet her?');
-    }
-    return veiledere;
-});
-
-//veilarboppgave-api
-mock.get('/veilarboppgave/api/enheter', ({ queryParams }) => enheter);
-
-mock.post('/veilarboppfolging/api/tilordneveileder', ({ body }) => {
-    return {
-        feilendeTilordninger: [],
-        resultat: 'OK: Veiledere tilordnet',
-    };
-});
 
 mock.get(
     '/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus',

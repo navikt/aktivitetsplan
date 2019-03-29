@@ -10,7 +10,7 @@ if (!global.Intl) {
     require('intl/locale-data/jsonp/nb.js');
 }
 
-if (process.env.REACT_APP_MOCK === 'true') {
+if (process.env.REACT_APP_MOCK === true) {
 
     // NOTE: This is bad, don't use it if you dont HAVE to
     window.appconfig = {
