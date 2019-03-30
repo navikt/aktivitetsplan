@@ -15,8 +15,9 @@ function App({ fnr }) {
 
     // NOTE: This is bad, don't use it if you dont HAVE to.
     window.appconfig = window.appconfig || {};
+    const path = window.appconfig.CONTEXT_PATH === '' ? window.appconfig.CONTEXT_PATH : '/veilarbpersonflatefs';
     window.appconfig = {
-        CONTEXT_PATH: window.appconfig.CONTEXT_PATH || '/veilarbpersonflatefs',
+        CONTEXT_PATH: path,
         TILLAT_SET_AVTALT: window.appconfig.TILLAT_SET_AVTALT || true,
         VIS_SIDEBANNER: window.appconfig.VIS_SIDEBANNER || false,
         FNR_I_URL: window.appconfig.VIS_SIDEBANNER || true,

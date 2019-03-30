@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 import React from 'react';
-import { mount } from 'enzyme';
-import { expect } from 'chai';
+import {shallow} from 'enzyme';
+
 import { IntlProvider } from 'react-intl';
 import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
@@ -9,17 +9,17 @@ import Innholdslaster from './innholdslaster';
 
 describe('innholdslaster', () => {
     it('Skal rendre spinner hvis ikke alle avhengigheter har blitt lastet og det ikke er noen feil', () => {
-        const wrapper = mount(
+        const wrapper = shallow(
             <Innholdslaster avhengigheter={[{ status: STATUS.PENDING }]}>
                 Children
             </Innholdslaster>
         );
 
-        expect(wrapper).to.have.descendants(Spinner); // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('.spinner')).toHaveLength(1)
     });
 
     it('Skal ikke rendre children hvis det har oppstått en feil på noen avhengigheter', () => {
-        const wrapper = mount(
+        const wrapper = shallow(
             <IntlProvider>
                 <Innholdslaster avhengigheter={[{ status: STATUS.ERROR }]}>
                     Children
@@ -31,7 +31,7 @@ describe('innholdslaster', () => {
     });
 
     it('Skal rendre children hvis alle avhengigheter har blitt lastet', () => {
-        const wrapper = mount(
+        const wrapper = shallow(
             <Innholdslaster avhengigheter={[{ status: STATUS.OK }]}>
                 <div className="unik-klasse" />
             </Innholdslaster>
@@ -42,7 +42,7 @@ describe('innholdslaster', () => {
 
     it('Skal rendre children som en funksjon, hvis det er en funksjon', () => {
         const renderDiv = () => <div className="div-fra-func" />;
-        const wrapper = mount(
+        const wrapper = shallow(
             <Innholdslaster avhengigheter={[{ status: STATUS.OK }]}>
                 {renderDiv}
             </Innholdslaster>
@@ -52,7 +52,7 @@ describe('innholdslaster', () => {
     });
 
     it('Skal ikke rendre children om noen av avhengighetene er ok, men andre har feilet', () => {
-        const wrapper = mount(
+        const wrapper = shallow(
             <IntlProvider>
                 <Innholdslaster
                     avhengigheter={[
@@ -69,7 +69,7 @@ describe('innholdslaster', () => {
     });
 
     it('Takler både slices og statuser', () => {
-        const wrapper = mount(
+        const wrapper = shallow(
             <IntlProvider>
                 <Innholdslaster
                     avhengigheter={[
@@ -87,7 +87,7 @@ describe('innholdslaster', () => {
     });
 
     it('Takler null og undefined', () => {
-        const wrapper = mount(
+        const wrapper = shallow(
             <IntlProvider>
                 <Innholdslaster
                     avhengigheter={[null, undefined, { status: STATUS.OK }]}
