@@ -1,58 +1,62 @@
 /* eslint-env mocha */
 import React from 'react';
-import {shallow} from 'enzyme';
+import {mount} from 'enzyme';
 
 import { IntlProvider } from 'react-intl';
-import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
 import Innholdslaster from './innholdslaster';
 
 describe('innholdslaster', () => {
     it('Skal rendre spinner hvis ikke alle avhengigheter har blitt lastet og det ikke er noen feil', () => {
-        const wrapper = shallow(
+        const wrapper = mount(
             <Innholdslaster avhengigheter={[{ status: STATUS.PENDING }]}>
-                Children
+                <div>yay</div>
             </Innholdslaster>
         );
 
-        expect(wrapper.find('.spinner')).toHaveLength(1)
+        expect(wrapper.find('.spinner')).toBeDefined();
     });
 
     it('Skal ikke rendre children hvis det har oppstått en feil på noen avhengigheter', () => {
-        const wrapper = shallow(
+        const innhold = <div>yay</div>;
+        const wrapper = mount(
             <IntlProvider>
                 <Innholdslaster avhengigheter={[{ status: STATUS.ERROR }]}>
-                    Children
+                    {innhold}
                 </Innholdslaster>
             </IntlProvider>
         );
 
-        expect(wrapper.find('Children')).to.have.lengthOf(0);
+        expect(wrapper.find(innhold)).toHaveLength(0);
     });
 
     it('Skal rendre children hvis alle avhengigheter har blitt lastet', () => {
-        const wrapper = shallow(
+        const innhold = <div>yay</div>;
+        const wrapper = mount(
             <Innholdslaster avhengigheter={[{ status: STATUS.OK }]}>
-                <div className="unik-klasse" />
+                {innhold}
             </Innholdslaster>
         );
 
-        expect(wrapper.find('div').hasClass('unik-klasse')).toEqual(true);
+        expect(wrapper.find(innhold)).toBeDefined();
     });
 
     it('Skal rendre children som en funksjon, hvis det er en funksjon', () => {
-        const renderDiv = () => <div className="div-fra-func" />;
-        const wrapper = shallow(
+        const innhold = <div>yay</div>;
+        const renderDiv = () => innhold;
+        const wrapper = mount(
             <Innholdslaster avhengigheter={[{ status: STATUS.OK }]}>
                 {renderDiv}
             </Innholdslaster>
         );
 
-        expect(wrapper.find('div').hasClass('div-fra-func')).toEqual(true);
+        expect(wrapper.find(innhold)).toBeDefined();
     });
 
     it('Skal ikke rendre children om noen av avhengighetene er ok, men andre har feilet', () => {
-        const wrapper = shallow(
+        const innhold = <div>yay</div>;
+
+        const wrapper = mount(
             <IntlProvider>
                 <Innholdslaster
                     avhengigheter={[
@@ -60,16 +64,18 @@ describe('innholdslaster', () => {
                         { status: STATUS.ERROR },
                     ]}
                 >
-                    Children
+                    {innhold}
                 </Innholdslaster>
             </IntlProvider>
         );
 
-        expect(wrapper.find('Children')).to.have.lengthOf(0);
+        expect(wrapper.find(innhold)).toHaveLength(0);
     });
 
     it('Takler både slices og statuser', () => {
-        const wrapper = shallow(
+        const innhold = <div>yay</div>;
+
+        const wrapper = mount(
             <IntlProvider>
                 <Innholdslaster
                     avhengigheter={[
@@ -78,25 +84,26 @@ describe('innholdslaster', () => {
                         { status: STATUS.OK },
                     ]}
                 >
-                    Children
+                    {innhold}
                 </Innholdslaster>
             </IntlProvider>
         );
 
-        expect(wrapper.find('Children')).to.have.lengthOf(0);
+        expect(wrapper.find(innhold)).toHaveLength(0);
     });
 
     it('Takler null og undefined', () => {
-        const wrapper = shallow(
+
+        const wrapper = mount(
             <IntlProvider>
                 <Innholdslaster
                     avhengigheter={[null, undefined, { status: STATUS.OK }]}
                 >
-                    Children
+                    <div>yay</div>
                 </Innholdslaster>
             </IntlProvider>
         );
 
-        expect(wrapper).to.have.descendants(Spinner); // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('.spinner')).toBeDefined();
     });
 });
