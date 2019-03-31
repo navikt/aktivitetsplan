@@ -101,14 +101,18 @@ describe('utils', () => {
         it('Sjekk at funksjonen returnerer et rejected promise', () => {
             expect(handterFeil(() => {}, action)(new Error('message'))).rejects.toThrow('message')
         });
-        it('Sjekk at funksjonen dispatcher parset feil', done => {
+        it('Sjekk at funksjonen dispatcher parset feil', () => {
             const dispatch = jest.fn();
             const response = {
                 status: 1234,
                 text: () => Promise.resolve('{"type":"FEILTYPE"}'),
             };
 
-            handterFeil(dispatch, action)({ response });
+            try {
+                handterFeil(dispatch, action)({response});
+            } catch (e) {
+                // ignore
+            }
             setTimeout(() => {
                 expect(dispatch.mock.calls[0][0]).toEqual({
                     data: {
@@ -118,7 +122,6 @@ describe('utils', () => {
                     },
                     type: action,
                 });
-                done();
             }, 0);
         });
         it('Sjekk at funksjonen dispatcher error message', () => {
