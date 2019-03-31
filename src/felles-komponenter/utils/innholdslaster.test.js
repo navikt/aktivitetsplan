@@ -27,7 +27,7 @@ describe('innholdslaster', () => {
             </IntlProvider>
         );
 
-        expect(wrapper.find('Children')).to.not.exist; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('Children')).to.have.lengthOf(0);
     });
 
     it('Skal rendre children hvis alle avhengigheter har blitt lastet', () => {
@@ -37,7 +37,7 @@ describe('innholdslaster', () => {
             </Innholdslaster>
         );
 
-        expect(wrapper.find('div').hasClass('unik-klasse')).to.be.true; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('div').hasClass('unik-klasse')).toEqual(true);
     });
 
     it('Skal rendre children som en funksjon, hvis det er en funksjon', () => {
@@ -48,7 +48,7 @@ describe('innholdslaster', () => {
             </Innholdslaster>
         );
 
-        expect(wrapper.find('div').hasClass('div-fra-func')).to.be.true; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('div').hasClass('div-fra-func')).toEqual(true);
     });
 
     it('Skal ikke rendre children om noen av avhengighetene er ok, men andre har feilet', () => {
@@ -65,7 +65,7 @@ describe('innholdslaster', () => {
             </IntlProvider>
         );
 
-        expect(wrapper.find('Children')).to.not.exist; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('Children')).to.have.lengthOf(0);
     });
 
     it('Takler både slices og statuser', () => {
@@ -83,7 +83,7 @@ describe('innholdslaster', () => {
             </IntlProvider>
         );
 
-        expect(wrapper.find('Children')).to.not.exist; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('Children')).to.have.lengthOf(0);
     });
 
     it('Takler null og undefined', () => {
