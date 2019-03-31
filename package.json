@@ -15,7 +15,8 @@
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
     "build": "npm run build:tekster && craco build",
     "eject": "craco eject",
-    "start": "cross-env REACT_APP_MOCK=true craco start"
+    "start": "cross-env REACT_APP_MOCK=true craco start",
+    "start:test-server": "node ./server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
