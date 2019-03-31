@@ -12,7 +12,7 @@
     "test:browserstack": "node test/integration/browserstack.runner.js -c test/integration/browserstack.conf.js -e win_chrome,ios_safari,android_chrome,win_ie,win_edge --tag browserstack",
     "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
     "build:tekster": "node ./build-tekster.js",
-    "heroku-postbuild": "npm run build:tekster && npm run build:less:dev && npm run build:js -- --env.dev --env.mock",
+    "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
     "build": "npm run build:tekster && craco build",
     "eject": "craco eject",
     "start": "cross-env REACT_APP_MOCK=true craco start"
