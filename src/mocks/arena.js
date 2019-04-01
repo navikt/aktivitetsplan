@@ -1,4 +1,4 @@
-export default [
+module.exports = [
     {
         id: 'ARENATA11',
         status: 'GJENNOMFORES',
