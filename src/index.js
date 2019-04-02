@@ -34,7 +34,8 @@ if (process.env.REACT_APP_MOCK === 'true') {
 
 function AppWrapper(props) {
     // Må settes etter at dokumentet er parset
-    ReactModal.setAppElement('#modal-a11y-wrapper');
+    const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
+    ReactModal.setAppElement(id);
 
     return <App {...props} />;
 }

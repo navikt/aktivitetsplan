@@ -23,7 +23,6 @@ function prependBasePath(fn) {
 }
 
 export default function createHistory() {
-    console.log(window.appconfig.CONTEXT_PATH)
     const routerHistory = createBrowserHistory({
         basename: window.appconfig.CONTEXT_PATH,
     });
