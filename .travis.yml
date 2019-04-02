@@ -17,4 +17,4 @@ matrix:
     - name: browserstack
       script:
       - npm run heroku-postbuild
-      - run-p -r start:test-server test:browserstack
+      - npm-run-all -p -r start test:browserstack
