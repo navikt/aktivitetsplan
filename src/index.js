@@ -1,3 +1,4 @@
+import 'react-app-polyfill/ie11'
 import React from 'react';
 import ReactModal from 'react-modal';
 import App from './app';

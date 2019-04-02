@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import React, { PropTypes as PT } from 'react';
 import { Router } from 'react-router-dom';
 import SideBanner from './moduler/sidebanner/sidebanner';

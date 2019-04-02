@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import React from 'react';
 import PT from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';

@@ -33,7 +33,6 @@ import { fetchmockMiddleware } from './utils';
 import { hentMalverkMedType } from './malverk';
 import auth from './auth';
 import lest from './lest';
-import 'whatwg-fetch';
 
 const mock = fetchMock.configure({
     enableFallback: false,
