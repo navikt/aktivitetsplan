@@ -99,7 +99,8 @@
     "redux-form": "6.7.0",
     "redux-freeze": "0.1.5",
     "redux-thunk": "2.2.0",
-    "reselect": "3.0.1"
+    "reselect": "3.0.1",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@craco/craco": "^3.6.0",
