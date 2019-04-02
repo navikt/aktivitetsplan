@@ -17,6 +17,7 @@ const MITTMAL_KLIKK_LOGGEVENT = 'aktivitetsplan.mittmal.klikk';
 const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
 const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
 const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
+const DAILOG_BRUKER_HENVENDELSE = 'dialog.bruker.henvendelse';
 
 export function metrikkOpnePrintModal(veileder) {
     loggEvent(PRINT_MODSAL_OPEN, { erVeileder: veileder });
@@ -60,4 +61,27 @@ export function loggMittMalKlikk(veileder) {
 
 export function loggMittMalLagre(veileder) {
     loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
+}
+
+export function loggTidBruktForsteHenvendelse(dialoger, oppfolgingsPerioder) {
+    const brukerHarSendtDialogTidligere = dialoger.find(a =>
+        a.henvendelser.find(h => h.avsender === 'BRUKER')
+    );
+
+    if (!brukerHarSendtDialogTidligere) {
+        const periode = oppfolgingsPerioder.filter(p => p.sluttDato === null);
+        if (periode.length > 0) {
+            const startDatoPaaOppfolging = periode[0].startDato;
+            const tidBruktForsteHenvendelse = Math.ceil(
+                Math.abs(
+                    new Date(startDatoPaaOppfolging).getTime() -
+                        new Date().getTime()
+                ) /
+                    (1000 * 3600 * 24)
+            );
+            loggEvent(DAILOG_BRUKER_HENVENDELSE, {
+                tidBruktForsteHenvendelse,
+            });
+        }
+    }
 }
