@@ -15,7 +15,7 @@ import * as AppPT from '../../proptypes';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { selectBackPath, setBackPath } from './informasjon-reducer';
 
-export const INFORMASJON_MODAL_VERSJON = 'v2';
+export const INFORMASJON_MODAL_VERSJON = 'v1';
 
 class InformasjonModal extends Component {
     componentWillMount() {
