@@ -13,13 +13,21 @@ import { selectErVeileder } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
 import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
 import { STATUS } from '../../ducks/utils';
+import { setBackPath } from './informasjon-reducer';
+
+const redirectPath = '/informasjon';
 
 class RedirectTilInformasjon extends Component {
     componentWillMount() {
-        const { erVeileder, history } = this.props;
-        if (!erVeileder) {
-            history.push('/informasjon');
+        const { erVeileder, history, location, setBack } = this.props;
+        const path = location.pathname;
+
+        if (path === redirectPath || erVeileder) {
+            return;
         }
+
+        setBack(path);
+        history.push(redirectPath);
     }
 
     render() {
@@ -30,6 +38,8 @@ class RedirectTilInformasjon extends Component {
 RedirectTilInformasjon.propTypes = {
     history: AppPT.history.isRequired,
     erVeileder: PT.bool.isRequired,
+    location: PT.shape({ pathname: PT.string.isRequired }).isRequired,
+    setBack: PT.func.isRequired,
 };
 
 const RedirectTilInformasjonWithRouter = withRouter(RedirectTilInformasjon);
@@ -40,6 +50,7 @@ class InformasjonsHenting extends Component {
             this.props.doHentLest();
         }
     }
+
     render() {
         const props = this.props;
         const videreSendTilInfo =
@@ -59,6 +70,7 @@ InformasjonsHenting.propTypes = {
     erVeileder: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     doHentLest: PT.func.isRequired,
+    setBack: PT.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -70,6 +82,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     doHentLest: () => dispatch(hentLest()),
+    setBack: path => dispatch(setBackPath(path)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
