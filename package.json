@@ -28,6 +28,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "classnames": "2.2.5",
     "history": "4.6.3",
     "inputmask-core": "2.2.0",
@@ -75,7 +76,6 @@
     "prop-types": "15.5.10",
     "query-string": "4.3.4",
     "react": "15.6.1",
-    "react-app-polyfill": "^0.2.2",
     "react-collapse": "4.0.3",
     "react-custom-scrollbars": "4.1.2",
     "react-day-picker": "5.3.0",
@@ -99,7 +99,8 @@
     "redux-form": "6.7.0",
     "redux-freeze": "0.1.5",
     "redux-thunk": "2.2.0",
-    "reselect": "3.0.1"
+    "reselect": "3.0.1",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@craco/craco": "^3.6.0",

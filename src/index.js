@@ -1,9 +1,9 @@
-import 'react-app-polyfill/ie11'
+import './polyfill'
 import React from 'react';
 import ReactModal from 'react-modal';
 import App from './app';
 import {fnrFraUrl} from "./bootstrap/fnr-provider";
-import NAVSPA from '../src/NAVSPA';
+import NAVSPA from './NAVSPA';
 
 /* eslint-disable global-require */
 if (!global.Intl) {
