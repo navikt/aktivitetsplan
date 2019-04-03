@@ -38,10 +38,18 @@ module.exports = {
     ],
     webpack: {
         configure: {
+            optimization: {
+                splitChunks: {
+                    cacheGroups: {
+                        default: false,
+                        vendors: false
+                    },
+                },
+                runtimeChunk: false
+            },
             output: {
                 path: BUILD_PATH,
                 filename: 'static/js/[name].js',
-                chunkFilename: 'static/js/[name].chunk.js',
             },
         }
     }
