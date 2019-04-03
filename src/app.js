@@ -10,18 +10,22 @@ import './index.less';
 import { HiddenIf } from './utils';
 
 
+function isValueOrGetDefault(value, defaultValue){
+    return value === undefined ? defaultValue : value;
+}
+
 function App({ fnr }) {
 
     // NOTE: This is bad, don't use it if you dont HAVE to.
     window.appconfig = window.appconfig || {};
-    const path = window.appconfig.CONTEXT_PATH === '' ? window.appconfig.CONTEXT_PATH : '/veilarbpersonflatefs';
+    const path = window.appconfig.CONTEXT_PATH === '' ? '' : '/veilarbpersonflatefs';
     window.appconfig = {
         CONTEXT_PATH: path,
-        TILLAT_SET_AVTALT: window.appconfig.TILLAT_SET_AVTALT || true,
-        VIS_SIDEBANNER: window.appconfig.VIS_SIDEBANNER || false,
-        FNR_I_URL: window.appconfig.VIS_SIDEBANNER || true,
-        VIS_MALER: window.appconfig.VIS_MALER || true,
-        TIMEOUTBOX: window.appconfig.TIMEOUTBOX || false
+        TILLAT_SET_AVTALT: isValueOrGetDefault(window.appconfig.TILLAT_SET_AVTALT, true),
+        VIS_SIDEBANNER: isValueOrGetDefault(window.appconfig.VIS_SIDEBANNER, false),
+        FNR_I_URL: isValueOrGetDefault(window.appconfig.FNR_I_URL, true),
+        VIS_MALER: isValueOrGetDefault(window.appconfig.VIS_MALER, true),
+        TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX,false)
     };
 
     const history = createHistory();
