@@ -9,11 +9,6 @@ import dialog, {
     setFerdigBehandlet,
     setVenterPaSvar,
 } from './dialog';
-import {
-    arbeidsliste,
-    fjernArbeidsliste,
-    putArbeidsliste,
-} from './arbeidsliste';
 import aktiviteter, {
     getAktivitet,
     getAktivitetVersjoner,
@@ -98,17 +93,6 @@ mock.get('/veilarboppfolgingproxy/api/oppfolging/malListe', () => malListe());
 //veilarboppgave-api
 mock.get('/veilarboppgave/api/oppgavehistorikk', []);
 
-//veilarbportefolje-api
-mock.get('/veilarbportefolje/api/arbeidsliste/:fnr', arbeidsliste);
-mock.post('/veilarbportefolje/api/arbeidsliste/:fnr', ({ body }) =>
-    putArbeidsliste(body)
-);
-mock.put('/veilarbportefolje/api/arbeidsliste/:fnr', ({ body }) =>
-    putArbeidsliste(body)
-);
-mock.delete('/veilarbportefolje/api/arbeidsliste/:fnr', () =>
-    fjernArbeidsliste()
-);
 
 //veilarbdialog-api
 mock.get('/veilarbdialog/api/dialog', dialog);
