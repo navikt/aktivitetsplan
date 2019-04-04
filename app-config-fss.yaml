@@ -29,7 +29,6 @@ fasitResources:
   - alias: appdynamics
     resourceType: applicationproperties
 
-  # TODO Remove me when using naiserator or nais support env variables directly
   # oidc med AzureAD B2C
   - alias: aad_b2c_clientid
     resourceType: credential
