@@ -90,7 +90,7 @@ export function optionsFromObjectWithIntl(keyValueMap, intl) {
     );
 }
 
-export const getEnhetFromUrl = () => queryString.parse(location.search).enhet;
+export const getEnhetFromUrl = () => queryString.parse(window.location.search).enhet;
 
 export function erValgtEnhetLikInnloggetEnhet(valgtEnhet) {
     const innloggetEnhet = getEnhetFromUrl();

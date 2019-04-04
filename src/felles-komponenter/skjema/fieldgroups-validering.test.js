@@ -1,6 +1,5 @@
 /* eslint-env mocha */
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { FieldGroupsValideringPure } from './fieldgroups-validering';
 
@@ -24,16 +23,16 @@ function lagFieldGroupsValidering(valid) {
 describe('fieldGroupsValidering', () => {
     it('Skal gi feilmelding hvis valideringen ikke er satt', () => {
         const component = lagFieldGroupsValidering(undefined);
-        expect(component.hasClass('skjema--harFeil')).to.equal(true);
+        expect(component.hasClass('skjema--harFeil')).toEqual(true);
     });
 
     it('Skal gi feilmelding hvis validering feiler', () => {
         const component = lagFieldGroupsValidering(false);
-        expect(component.hasClass('skjema--harFeil')).to.equal(true);
+        expect(component.hasClass('skjema--harFeil')).toEqual(true);
     });
 
     it('Skal ikke gi feilmelding hvis valideringen sier ok', () => {
         const component = lagFieldGroupsValidering(true);
-        expect(component.hasClass('skjema--harFeil')).to.equal(false);
+        expect(component.hasClass('skjema--harFeil')).toEqual(false);
     });
 });

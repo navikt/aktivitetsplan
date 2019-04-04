@@ -3,9 +3,8 @@ import PT from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
-import Bilde from '../../felles-komponenter/bilde/bilde';
 import Tilbakeknapp from '../utils/tilbakeknapp';
-import hengelasSvg from '../../img/hengelas.svg';
+import HengeLasIkon from './hengelas-ikon'
 import VisibleIfSpan from '../utils/visible-if-span';
 
 function ModalHeader({
@@ -38,11 +37,7 @@ function ModalHeader({
                     className="modal-header-skillestrek"
                     visible={aktivitetErLaast}
                 >
-                    <Bilde
-                        className="modal-header-bilde"
-                        src={hengelasSvg}
-                        alt={intl.formatMessage({ id: 'hengelas-icon-alt' })}
-                    />
+                    <HengeLasIkon/>
                 </VisibleIfSpan>
                 {tilbakeTekstId &&
                     <Tilbakeknapp

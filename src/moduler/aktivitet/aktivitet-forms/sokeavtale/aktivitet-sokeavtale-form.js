@@ -4,7 +4,6 @@ import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
-import { VIS_MALER } from '~config'; // eslint-disable-line
 import LagreAktivitet from '../lagre-aktivitet';
 import { formNavn } from '../aktivitet-form-utils';
 import { moment } from '../../../../utils';
@@ -100,7 +99,7 @@ class SokeAvtaleAktivitetForm extends Component {
                         pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
                     />
                     <Malverk
-                        visible={VIS_MALER}
+                        visible={window.appconfig.VIS_MALER}
                         endre={endre}
                         type="SOKEAVTALE"
                     />

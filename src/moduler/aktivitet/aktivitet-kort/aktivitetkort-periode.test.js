@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 /* eslint-disable no-unused-expressions */
 import React from 'react';
-import { expect } from 'chai';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import { MOTE_TYPE, IJOBB_AKTIVITET_TYPE } from '../../../constant';
 import { mountWithIntl } from '../../../../test/intl-enzyme-test-helper';
@@ -16,7 +15,7 @@ describe('Aktivitet-periode', () => {
         const wrapper = mountWithIntl(
             <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
         );
-        expect(wrapper.text()).to.equal('17. aug 2017');
+        expect(wrapper.text()).toEqual('17. aug 2017');
     });
 
     it('Skal vise til og fra dato hvis aktiviten er ikke ett møte med NAV', () => {
@@ -28,6 +27,6 @@ describe('Aktivitet-periode', () => {
         const wrapper = mountWithIntl(
             <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
         );
-        expect(wrapper.text()).to.equal('17. aug 2017 - 20. aug 2017');
+        expect(wrapper.text()).toEqual('17. aug 2017 - 20. aug 2017');
     });
 });

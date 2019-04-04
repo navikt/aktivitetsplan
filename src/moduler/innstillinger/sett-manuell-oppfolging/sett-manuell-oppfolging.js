@@ -44,7 +44,7 @@ function SettManuellOppfolging({
                     id: 'aktkivitet-skjema.lukk-advarsel',
                 });
                 // eslint-disable-next-line no-alert
-                if (!formIsDirty || confirm(dialogTekst)) {
+                if (!formIsDirty || window.confirm(dialogTekst)) {
                     history.push('/');
                     lukkModal();
                 }

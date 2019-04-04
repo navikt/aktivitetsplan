@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000"/>
+    <title>Aktivitetsplan</title>
+    <script>
+        window.app = "aktivitetsplan";
+
+        // NOTE: This is bad, don't use it if you don't HAVE to
+        window.appconfig = {
+            CONTEXT_PATH: '',
+            TILLAT_SET_AVTALT: false,
+            VIS_SIDEBANNER: true,
+            FNR_I_URL: false,
+            VIS_MALER: false,
+            TIMEOUTBOX: true
+        };
+
+    </script>
+</head>
+<body style="background-color: white">
+    <div id="modal-a11y-wrapper">
+        <div id="mainapp" class="appContainer"></div>
+    </div>
+</body>
+<script>
+    function render() {
+        return window.NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));
+    }
+    render();
+</script>
+
+</html>

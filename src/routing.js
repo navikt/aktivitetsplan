@@ -1,7 +1,5 @@
-import 'babel-polyfill';
 import React from 'react';
 import PT from 'prop-types';
-import { FNR_I_URL } from '~config'; //eslint-disable-line
 import { Route, Switch, withRouter } from 'react-router-dom';
 import DialogModal from './moduler/dialog/dialog-modal/dialog-modal';
 import AktivitetmalEndre from './moduler/mal/aktivitetsmal-endre';
@@ -20,7 +18,7 @@ export const avbrytAktivitetRoute = aktivitetId =>
     `/aktivitet/avbryt/${aktivitetId}`;
 
 function getPathWithBase(path) {
-    if (FNR_I_URL) {
+    if (window.appconfig.FNR_I_URL) {
         return `/:fnr${path}`;
     }
     return path;

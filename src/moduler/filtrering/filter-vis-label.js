@@ -16,7 +16,7 @@ import {
 } from './filter/filter-reducer';
 
 const fjernUrlParamFilter = () => {
-    const params = queryString.parse(location.search);
+    const params = queryString.parse(window.location.search);
     delete params.filter;
     const restParams =
         Object.keys(params).length > 0
@@ -26,12 +26,12 @@ const fjernUrlParamFilter = () => {
     window.history.replaceState(
         {},
         '',
-        location.origin + location.pathname + restParams
+        window.location.origin + window.location.pathname + restParams
     );
 };
 
 const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
-    const paramFilter = queryString.parse(location.search).filter;
+    const paramFilter = queryString.parse(window.location.search).filter;
     if (paramFilter) {
         if (Array.isArray(paramFilter)) {
             paramFilter.forEach(filterId => {

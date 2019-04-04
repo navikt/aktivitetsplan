@@ -1,5 +1,4 @@
 /* eslint-env mocha */
-import { expect } from 'chai';
 import { createActionsAndReducer } from './rest-reducer';
 
 const {
@@ -16,7 +15,7 @@ describe('rest-reducer', () => {
                 const result = reducer(undefined, {
                     type: actionTypes.PENDING,
                 });
-                expect(result).to.deep.include({ status: 'PENDING' });
+                expect(result).toHaveProperty('status', 'PENDING');
             });
             it('skal sette status til reloading når det finnes eksisterende state', () => {
                 const result = reducer(
@@ -25,7 +24,7 @@ describe('rest-reducer', () => {
                         type: actionTypes.PENDING,
                     }
                 );
-                expect(result).to.deep.equal({
+                expect(result).toEqual({
                     data: { test: 'This is fine' },
                     status: 'RELOADING',
                 });
@@ -37,7 +36,7 @@ describe('rest-reducer', () => {
                     type: actionTypes.OK,
                     data: { test: 'This is fine.' },
                 });
-                expect(result).to.deep.include({ status: 'OK' });
+                expect(result).toHaveProperty('status', 'OK');
             });
             it('skal sette status ok og overskrive data i store med eksistrende data på samme path', () => {
                 const result = reducer(
@@ -47,7 +46,7 @@ describe('rest-reducer', () => {
                         data: { test: 42 },
                     }
                 );
-                expect(result).to.deep.equal({
+                expect(result).toEqual({
                     data: { test: 42 },
                     status: 'OK',
                 });
@@ -59,7 +58,8 @@ describe('rest-reducer', () => {
                     type: actionTypes.FEILET,
                     data: { test: 42 },
                 });
-                expect(result).to.deep.include({ status: 'ERROR' });
+                expect(result).toHaveProperty('status', 'ERROR');
+
             });
             it('skal sette status feilet med eksisterende state og beholde gammel data', () => {
                 const result = reducer(
@@ -69,7 +69,7 @@ describe('rest-reducer', () => {
                         data: { test: 42 },
                     }
                 );
-                expect(result).to.deep.equal({
+                expect(result).toEqual({
                     data: { test: 'This is fine.' },
                     feil: { test: 42 },
                     status: 'ERROR',
@@ -88,8 +88,8 @@ describe('rest-reducer', () => {
                 },
             };
 
-            expect(selectData(state)).to.deep.equal('This is fine.');
-            expect(selectStatus(state)).to.equal('OK');
+            expect(selectData(state)).toEqual('This is fine.');
+            expect(selectStatus(state)).toEqual('OK');
         });
     });
 });

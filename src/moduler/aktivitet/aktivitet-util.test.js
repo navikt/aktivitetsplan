@@ -1,5 +1,4 @@
 /* eslint-env mocha */
-import { expect } from 'chai';
 import { moment } from '../../utils';
 import {
     beregnFraTil,
@@ -16,10 +15,10 @@ describe('aktivitet-util', () => {
             klokkeslett: 15,
             varighet: 15,
         });
-        expect(fraTil.fraDato).to.equal('2017-07-31T22:15:00.000Z');
-        expect(fraTil.tilDato).to.equal('2017-07-31T22:30:00.000Z');
+        expect(fraTil.fraDato).toEqual('2017-07-31T22:15:00.000Z');
+        expect(fraTil.tilDato).toEqual('2017-07-31T22:30:00.000Z');
 
-        expect(beregnFraTil({})).to.be.empty; // eslint-disable-line no-unused-expressions
+        expect(beregnFraTil({})).toEqual({});
     });
 
     it('beregnKlokkeslettVarighet', () => {
@@ -27,11 +26,11 @@ describe('aktivitet-util', () => {
             fraDato: '2017-08-01T04:00:00.000+02:00',
             tilDato: '2017-08-01T06:15:00.000+02:00',
         });
-        expect(klokkeslettVarighet.klokkeslett).to.equal(240);
-        expect(klokkeslettVarighet.varighet).to.equal(120 + 15);
-        expect(klokkeslettVarighet.dato).to.equal('2017-07-31T22:00:00.000Z');
+        expect(klokkeslettVarighet.klokkeslett).toEqual(240);
+        expect(klokkeslettVarighet.varighet).toEqual(120 + 15);
+        expect(klokkeslettVarighet.dato).toEqual('2017-07-31T22:00:00.000Z');
 
-        expect(beregnKlokkeslettVarighet({})).to.be.empty; // eslint-disable-line no-unused-expressions
+        expect(beregnKlokkeslettVarighet({})).toEqual({});
     });
 
     it('beregnFraTil + beregnKlokkeslettVarighet', () => {
@@ -49,16 +48,16 @@ describe('aktivitet-util', () => {
             )
         );
 
-        expect(fraTil.fraDato).to.equal(fraDato);
-        expect(fraTil.tilDato).to.equal(tilDato);
+        expect(fraTil.fraDato).toEqual(fraDato);
+        expect(fraTil.tilDato).toEqual(tilDato);
     });
 
     it('formatterVarighet', () => {
-        expect(formatterVarighet(90)).to.equal('1:30');
+        expect(formatterVarighet(90)).toEqual('1:30');
     });
 
     it('formatterKlokkeslett', () => {
-        expect(formatterKlokkeslett(75)).to.equal('1:15');
+        expect(formatterKlokkeslett(75)).toEqual('1:15');
     });
 
     it('skallSplitteRiktigt', () => {
@@ -76,11 +75,11 @@ describe('aktivitet-util', () => {
             listeMedAktiviteterTilDatoMindreEnnToManader,
             listeMedAktiviteterTilDatoMerEnnToManader,
         ] = splitIEldreOgNyereAktiviteter(aktiviteter);
-        expect(listeMedAktiviteterTilDatoMindreEnnToManader).to.deep.equal([
+        expect(listeMedAktiviteterTilDatoMindreEnnToManader).toEqual([
             mangladeTilDato,
             tilDatoMindreEnnToManederSiden,
         ]);
-        expect(listeMedAktiviteterTilDatoMerEnnToManader).to.deep.equal([
+        expect(listeMedAktiviteterTilDatoMerEnnToManader).toEqual([
             tilDatoMerEnnToManederSiden,
         ]);
     });

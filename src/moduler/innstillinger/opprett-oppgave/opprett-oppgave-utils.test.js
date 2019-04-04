@@ -1,5 +1,4 @@
 /* eslint-env mocha */
-import { expect } from 'chai';
 import { slettFeltFraObjekt } from './opprett-oppgave-utils';
 
 describe('opprett-oppgave-utils', () => {
@@ -7,7 +6,7 @@ describe('opprett-oppgave-utils', () => {
         const testObject = { a: 'a', b: 'b' };
         const expectedObject = { b: 'b' };
 
-        expect(slettFeltFraObjekt(testObject, 'a')).to.deep.equal(
+        expect(slettFeltFraObjekt(testObject, 'a')).toEqual(
             expectedObject
         );
     });

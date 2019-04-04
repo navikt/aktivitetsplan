@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import AktivitetFormContainer from './aktivitet-forms/aktivitet-form-container';
 import AktivitetvisningContainer from './visning/aktivitetvisning-container';
-import BekreftSlettVisningContainer from './visning/bekreft-slett-visning/bekreft-slett-visning-container';
 import EndreAktivitet from './rediger/endre-aktivitet';
 import AvbrytAktivitet from './avslutt/avbryt-aktivitet';
 import FullforAktivitet from './avslutt/fullfor-aktivitet';
@@ -21,15 +20,6 @@ function AktivitetRoutes({ match }) {
                 path={`${basePath}/vis/:id`}
                 component={props =>
                     <AktivitetvisningContainer
-                        aktivitetId={props.match.params.id}
-                        {...props}
-                    />}
-            />
-            <Route
-                exact
-                path={`${basePath}/slett/:id`}
-                component={props =>
-                    <BekreftSlettVisningContainer
                         aktivitetId={props.match.params.id}
                         {...props}
                     />}
