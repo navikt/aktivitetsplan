@@ -65,15 +65,6 @@ export const slice = PT.shape({
     data: PT.any,
 });
 
-// deprecated - slice er riktig terminologi
-export const reducer = slice;
-
-// deprecated - se over
-export const reducerArray = PT.shape({
-    status: PT.string,
-    data: PT.arrayOf(PT.object),
-});
-
 export const status = PT.oneOf(Object.keys(STATUS));
 
 export const avhengighet = PT.oneOfType([slice, status]);
@@ -156,47 +147,11 @@ export const feil = PT.shape({
     }),
 });
 
-export const innstillingHistorikk = PT.shape({
-    begrunnelse: PT.string,
-    dato: PT.string,
-    type: PT.string.isRequired,
-    opprettetAvBrukerId: PT.string,
-    opprettetAv: PT.string,
-    dialogId: PT.number,
-});
-
 export const veileder = PT.shape({
     etternavn: PT.string,
     fornavn: PT.string,
     ident: PT.string,
     navn: PT.string,
-});
-
-export const arbeidsliste = PT.shape({
-    sistEndretAv: PT.shape({
-        veilederId: PT.string,
-    }),
-    endringstidspunkt: PT.string,
-    kommentar: PT.string,
-    frist: PT.string,
-    isOppfolgendeVeileder: PT.bool,
-    harVeilederTilgang: PT.bool,
-});
-
-const enhet = PT.shape({
-    enhetId: PT.string,
-    navn: PT.string,
-});
-
-export const behandlendeEnheter = PT.shape({
-    enheter: PT.arrayOf(enhet),
-    status: PT.string,
-});
-
-export const veiledere = PT.shape({
-    veilederListe: PT.arrayOf(veileder),
-    enhet,
-    status: PT.string,
 });
 
 export const printMelding = PT.shape({

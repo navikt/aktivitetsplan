@@ -1,1 +1,0 @@
-Kontrollen på om du har slått opp flere brukere samtidig har feilet. Du kan ha ulike brukere i de vinduene du har oppe. Vær spesielt oppmerksom på at du registrerer informasjon på riktig bruker.

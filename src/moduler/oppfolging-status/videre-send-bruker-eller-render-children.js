@@ -27,13 +27,10 @@ class VidereSendBrukereEllerRenderChildren extends Component {
             manuell,
             underOppfolging,
             oppfolgingsPerioder,
-            kanStarteOppfolging,
         } = this.props;
 
-        // TODO fjern !kanStarteOppfolging når tannhjulet er flyttet ut av planen
         if (
             !underOppfolging &&
-            !kanStarteOppfolging &&
             oppfolgingsPerioder.length === 0
         ) {
             return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
