@@ -30,6 +30,8 @@ function App({ fnr }) {
 
     const history = createHistory();
 
+    window.openDialog = () => history.push('/dialog');
+
     return (
         <div className="aktivitetsplanfs">
             <Provider key={fnr}>
