@@ -6,10 +6,6 @@ before_install:
 
 matrix:
     include:
-    - name: lint
-      script:
-      - npm run lint
-
     - name: test
       script:
       - npm run test
