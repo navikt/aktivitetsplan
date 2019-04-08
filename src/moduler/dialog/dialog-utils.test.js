@@ -1,5 +1,3 @@
-/* eslint-env mocha */
-import { expect } from 'chai';
 import {
     sammenlignDialogerForBruker,
     sammenlignDialogerForVeileder,
@@ -63,7 +61,7 @@ describe('dialogsortering på innsiden', () => {
             dialoger
                 .sort(sammenlignDialogerForVeileder)
                 .every(erIdStorreEnForrige)
-        ).to.equal(true);
+        ).toEqual(true);
     });
 
     it('Skal sorte ubehandlede dialoger over behandlede', () => {
@@ -102,7 +100,7 @@ describe('dialogsortering på innsiden', () => {
             dialoger
                 .sort(sammenlignDialogerForVeileder)
                 .every(erIdStorreEnForrige)
-        ).to.equal(true);
+        ).toEqual(true);
     });
 
     it('Skal sortere uleste dialoger over leste dialoger', () => {
@@ -141,7 +139,7 @@ describe('dialogsortering på innsiden', () => {
             dialoger
                 .sort(sammenlignDialogerForVeileder)
                 .every(erIdStorreEnForrige)
-        ).to.equal(true);
+        ).toEqual(true);
     });
 
     it('Skal sortere ubehandlede over venter på svar hvis denne er ferdigbehandlet', () => {
@@ -180,7 +178,7 @@ describe('dialogsortering på innsiden', () => {
             dialoger
                 .sort(sammenlignDialogerForVeileder)
                 .every(erIdStorreEnForrige)
-        ).to.equal(true);
+        ).toEqual(true);
     });
 
     it('Skal sortere dialoger riktig for flere permutasjoner av samme dialogsett', () => {
@@ -424,7 +422,7 @@ describe('dialogsortering på innsiden', () => {
                 knuth(dialoger)
                     .sort(sammenlignDialogerForVeileder)
                     .every(erIdStorreEnForrige)
-            ).to.equal(true);
+            ).toEqual(true);
         }
     });
 });
@@ -451,6 +449,6 @@ describe('dialogsortering på utsiden', () => {
             dialoger
                 .sort(sammenlignDialogerForBruker)
                 .every(erIdStorreEnForrige)
-        ).to.equal(true);
+        ).toEqual(true);
     });
 });

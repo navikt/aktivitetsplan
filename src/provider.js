@@ -9,7 +9,7 @@ import componentize from './componentize';
 import { RESET_STORE } from './reducer';
 import createStore from './store';
 
-const store = createStore(history);
+const store = createStore(window.history);
 
 class Provider extends Component {
     constructor(props) {

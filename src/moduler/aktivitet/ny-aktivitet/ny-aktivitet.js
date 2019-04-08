@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
-import Bilde from '../../../felles-komponenter/bilde/bilde';
 import { hentIdentitet } from '../../identitet/identitet-reducer';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
-import leggTilAktivitetSvg from '../../../img/legg-til-aktivitet-illustrasjon.svg';
+import LeggTilIcon from './legg-til-ikon';
 import Modal from '../../../felles-komponenter/modal/modal';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
@@ -17,7 +16,7 @@ class NyAktivitet extends Component {
     }
 
     render() {
-        const { erVeileder, intl } = this.props;
+        const { erVeileder } = this.props;
         return (
             <Modal
                 contentLabel="ny-aktivitet-modal"
@@ -25,13 +24,7 @@ class NyAktivitet extends Component {
                 feilmeldinger={this.props.aktivitetFeilmeldinger}
             >
                 <div className="ny-aktivitet-modal__header">
-                    <Bilde
-                        className="ny-aktivitet-modal__bilde"
-                        src={leggTilAktivitetSvg}
-                        alt={intl.formatMessage({
-                            id: 'ny-aktivitet-modal.bilde.alt-tekst',
-                        })}
-                    />
+                    <LeggTilIcon/>
                     <Innholdstittel className="ny-aktivitet-tittel">
                         <FormattedMessage id="ny-aktivitet-modal.tittel" />
                     </Innholdstittel>
@@ -76,7 +69,6 @@ class NyAktivitet extends Component {
 NyAktivitet.propTypes = {
     doHentIdentitet: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
-    intl: intlShape.isRequired,
     aktivitetFeilmeldinger: PT.array.isRequired,
 };
 
@@ -89,6 +81,4 @@ const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(NyAktivitet)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitet);

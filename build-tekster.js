@@ -42,4 +42,4 @@ try {
     console.error('Kunne ikke skrive fil ', e);
 }
 
-console.log(read('./tekster/nb'));
+console.log("Tekster opprettet");

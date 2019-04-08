@@ -1,11 +1,5 @@
-/* eslint no-unused-expressions:0 */
-/* eslint-env mocha, browser */
-import chai, { expect } from 'chai';
-import sinon from 'sinon';
-import sinonchai from 'sinon-chai';
 import * as Utils from './utils';
 
-chai.use(sinonchai);
 
 describe('app utils', () => {
     describe('fn', () => {
@@ -13,9 +7,9 @@ describe('app utils', () => {
             const funksjon = () => 'en funksjon';
             const string = 'en string';
 
-            expect(Utils.fn(funksjon)()).to.equal('en funksjon');
-            expect(Utils.fn(string)()).to.equal('en string');
-            expect(Utils.fn('test')).to.be.a('function');
+            expect(Utils.fn(funksjon)()).toEqual('en funksjon');
+            expect(Utils.fn(string)()).toEqual('en string');
+            expect(typeof Utils.fn('test')).toBe('function');
         });
     });
 
@@ -24,14 +18,14 @@ describe('app utils', () => {
             const guid = Utils.guid();
             const guidParts = guid.split('-');
 
-            expect(guidParts.length).to.equal(5);
+            expect(guidParts.length).toEqual(5);
         });
 
         it('GUID skal være forskjellige', () => {
             const guid1 = Utils.guid();
             const guid2 = Utils.guid();
 
-            expect(guid1 === guid2).to.equal(false);
+            expect(guid1 === guid2).toEqual(false);
         });
     });
 
@@ -53,8 +47,8 @@ describe('app utils', () => {
 
             const mock = new Mock();
 
-            expect(mock.hasOwnProperty('fn1')).to.equal(true); // eslint-disable-line no-prototype-builtins
-            expect(mock.hasOwnProperty('fn2')).to.equal(true); // eslint-disable-line no-prototype-builtins
+            expect(mock.hasOwnProperty('fn1')).toEqual(true); // eslint-disable-line no-prototype-builtins
+            expect(mock.hasOwnProperty('fn2')).toEqual(true); // eslint-disable-line no-prototype-builtins
         });
 
         it('Skal håndertere verdier på prototypen', () => {
@@ -71,50 +65,7 @@ describe('app utils', () => {
 
             new Mock(); // eslint-disable-line no-new
 
-            expect(true).to.equal(true); // Skal ikke kaste error
-        });
-    });
-
-    describe('throttle', () => {
-        it('Skal returnere funksjon som kaller funksjonen den blir gitt', () => {
-            const spy = sinon.spy();
-            const throttledFn = Utils.throttle(spy);
-            throttledFn();
-
-            expect(spy).to.be.called;
-        });
-
-        it('Skal kunne deffinere egen threshold', () => {
-            const spy = sinon.spy();
-            const throttledFn = Utils.throttle(spy, 500);
-            throttledFn();
-
-            expect(spy).to.be.called;
-        });
-    });
-
-    describe('erDev', () => {
-        const originalWindow = window;
-        before(() => {
-            window = { location: { href: 'https://www.test.no' } }; // eslint-disable-line no-global-assign
-        });
-        after(() => {
-            window = originalWindow; // eslint-disable-line no-global-assign
-        });
-
-        it('Skal gjenkjenne at applikasjonen ikke kjøres i dev-modus', () => {
-            expect(Utils.erDev()).to.equal(false);
-        });
-
-        it('Skal gjenkjenne at applikasjonen kjøres i dev-modus', () => {
-            window = { location: { href: 'https://www.test.no/debug=true' } }; // eslint-disable-line no-global-assign
-            expect(Utils.erDev()).to.equal(true);
-
-            window = { location: { href: 'devillo.no:8282.test.no/' } }; // eslint-disable-line no-global-assign
-            expect(Utils.erDev()).to.equal(true);
-
-            window = { location: { href: 'localhost:8282.test.no/' } }; // eslint-disable-line no-global-assign
-            expect(Utils.erDev()).to.equal(true);
+            expect(true).toEqual(true); // Skal ikke kaste error
         });
     });
 
@@ -123,68 +74,42 @@ describe('app utils', () => {
             const httpsHref = 'https://www.nrk.no/';
             const httpHref = 'http://www.nrk.no/';
 
-            expect(Utils.erInternlenke(httpsHref)).to.equal(false);
-            expect(Utils.erInternlenke(httpHref)).to.equal(false);
-            expect(Utils.erInternlenke('/a/b/c')).to.equal(true);
-            expect(Utils.erInternlenke(null)).to.equal(false);
-            expect(Utils.erInternlenke(undefined)).to.equal(false);
-        });
-    });
-
-    describe('proxy', () => {
-        it('Skal kalle underliggende funksjon med riktige argumenter', () => {
-            const spy = sinon.spy();
-            const proxied = Utils.proxy(spy);
-
-            proxied('abba', 2, {});
-
-            expect(spy).to.be.calledWith('abba', 2, {});
-        });
-
-        it('Skal kjøre funkjsonene den får i riktig rekkefølge', () => {
-            const before = sinon.spy();
-            const after = sinon.spy();
-            const spy = sinon.spy();
-            const proxied = Utils.proxy(spy, { before, after });
-
-            proxied('abba');
-
-            expect(spy).to.be.calledWith('abba');
-            expect(before).to.be.calledWith('abba');
-            expect(after).to.be.calledWith('abba');
-            expect(before).to.be.calledBefore(spy);
-            expect(after).to.be.calledAfter(spy);
+            expect(Utils.erInternlenke(httpsHref)).toEqual(false);
+            expect(Utils.erInternlenke(httpHref)).toEqual(false);
+            expect(Utils.erInternlenke('/a/b/c')).toEqual(true);
+            expect(Utils.erInternlenke(null)).toEqual(false);
+            expect(Utils.erInternlenke(undefined)).toEqual(false);
         });
     });
 
     describe('dateToISODate', () => {
         it('Skal formattere korrekt', () => {
-            expect(Utils.dateToISODate(new Date(2014, 1, 14))).to.equal(
+            expect(Utils.dateToISODate(new Date(2014, 1, 14))).toEqual(
                 '2014-02-13T23:00:00.000Z'
             );
         });
 
         it('Skal ikke formattere ugyldige eller tomme datoer', () => {
-            expect(Utils.dateToISODate('14.02.2014')).to.equal('');
-            expect(Utils.dateToISODate('ugyldig')).to.equal('');
-            expect(Utils.dateToISODate('')).to.equal('');
-            expect(Utils.dateToISODate(null)).to.equal('');
-            expect(Utils.dateToISODate(undefined)).to.equal('');
+            expect(Utils.dateToISODate('14.02.2014')).toEqual('');
+            expect(Utils.dateToISODate('ugyldig')).toEqual('');
+            expect(Utils.dateToISODate('')).toEqual('');
+            expect(Utils.dateToISODate(null)).toEqual('');
+            expect(Utils.dateToISODate(undefined)).toEqual('');
         });
     });
 
     describe('datePickerToISODate', () => {
         it('Skal formattere korrekt', () => {
-            expect(Utils.datePickerToISODate('14.02.2014')).to.equal(
+            expect(Utils.datePickerToISODate('14.02.2014')).toEqual(
                 '2014-02-13T23:00:00.000Z'
             );
         });
 
         it('Skal ikke formattere ugyldige eller tomme datoer', () => {
-            expect(Utils.datePickerToISODate('ugyldig')).to.equal('');
-            expect(Utils.datePickerToISODate('')).to.equal('');
-            expect(Utils.datePickerToISODate(null)).to.equal('');
-            expect(Utils.datePickerToISODate(undefined)).to.equal('');
+            expect(Utils.datePickerToISODate('ugyldig')).toEqual('');
+            expect(Utils.datePickerToISODate('')).toEqual('');
+            expect(Utils.datePickerToISODate(null)).toEqual('');
+            expect(Utils.datePickerToISODate(undefined)).toEqual('');
         });
     });
 
@@ -192,38 +117,38 @@ describe('app utils', () => {
         it('Skal formattere korrekt', () => {
             expect(
                 Utils.ISODateToDatePicker('2014-02-13T23:00:00.000Z')
-            ).to.equal('14.02.2014');
+            ).toEqual('14.02.2014');
         });
 
         it('Skal ikke formattere ugyldige eller tomme datoer', () => {
-            expect(Utils.ISODateToDatePicker('ugyldig')).to.equal('');
-            expect(Utils.ISODateToDatePicker('')).to.equal('');
-            expect(Utils.ISODateToDatePicker(null)).to.equal('');
-            expect(Utils.ISODateToDatePicker(undefined)).to.equal('');
+            expect(Utils.ISODateToDatePicker('ugyldig')).toEqual('');
+            expect(Utils.ISODateToDatePicker('')).toEqual('');
+            expect(Utils.ISODateToDatePicker(null)).toEqual('');
+            expect(Utils.ISODateToDatePicker(undefined)).toEqual('');
         });
     });
 
     describe('erGyldigISODato', () => {
         it('Tolker ISO-datoer riktig', () => {
-            expect(Utils.erGyldigISODato('2014-02-13T23:00:00.000Z')).to.equal(
+            expect(Utils.erGyldigISODato('2014-02-13T23:00:00.000Z')).toEqual(
                 true
             );
             expect(
                 Utils.erGyldigISODato('2014-02-13T23:00:00.000+0000')
-            ).to.equal(true);
-            expect(Utils.erGyldigISODato('2014-02-13')).to.equal(true);
-            expect(Utils.erGyldigISODato('13.02.2014')).to.equal(false);
-            expect(Utils.erGyldigISODato('')).to.equal(false);
-            expect(Utils.erGyldigISODato(null)).to.equal(false);
-            expect(Utils.erGyldigISODato(undefined)).to.equal(false);
+            ).toEqual(true);
+            expect(Utils.erGyldigISODato('2014-02-13')).toEqual(true);
+            expect(Utils.erGyldigISODato('13.02.2014')).toEqual(false);
+            expect(Utils.erGyldigISODato('')).toEqual(false);
+            expect(Utils.erGyldigISODato(null)).toEqual(false);
+            expect(Utils.erGyldigISODato(undefined)).toEqual(false);
         });
     });
 
     describe('formaterDatoTid', () => {
         it('Formater datoer riktig', () => {
-            expect(Utils.formaterDatoTid(null)).to.not.exist;
-            expect(Utils.formaterDatoTid(undefined)).to.not.exist;
-            expect(Utils.formaterDatoTid('2014-02-13T14:23:21.123Z')).to.equal(
+            expect(Utils.formaterDatoTid(null)).toBeUndefined();
+            expect(Utils.formaterDatoTid(undefined)).toBeUndefined();
+            expect(Utils.formaterDatoTid('2014-02-13T14:23:21.123Z')).toEqual(
                 '13.02.2014 15:23'
             ); // NB zulu-time != paris-time
         });
@@ -231,9 +156,9 @@ describe('app utils', () => {
 
     describe('formaterDato', () => {
         it('Formater datoer riktig', () => {
-            expect(Utils.formaterDato(null)).to.not.exist;
-            expect(Utils.formaterDato(undefined)).to.not.exist;
-            expect(Utils.formaterDato('2014-02-13T14:23:21.123Z')).to.equal(
+            expect(Utils.formaterDato(null)).toBeUndefined();
+            expect(Utils.formaterDato(undefined)).toBeUndefined();
+            expect(Utils.formaterDato('2014-02-13T14:23:21.123Z')).toEqual(
                 '13. feb 2014'
             );
         });
@@ -241,29 +166,29 @@ describe('app utils', () => {
 
     describe('formaterDatoKortManed', () => {
         it('Formater datoer riktig', () => {
-            expect(Utils.formaterDatoKortManed(null)).to.not.exist;
-            expect(Utils.formaterDatoKortManed(undefined)).to.not.exist;
+            expect(Utils.formaterDatoKortManed(null)).toBeUndefined();
+            expect(Utils.formaterDatoKortManed(undefined)).toBeUndefined();
             expect(
                 Utils.formaterDatoKortManed('2014-02-13T14:23:21.123Z')
-            ).to.equal('13. feb 2014'); // NB zulu-time != paris-time
+            ).toEqual('13. feb 2014'); // NB zulu-time != paris-time
         });
     });
 
     describe('formaterDatoKortManedTid', () => {
         it('Formater datoer riktig', () => {
-            expect(Utils.formaterDatoKortManedTid(null)).to.not.exist;
-            expect(Utils.formaterDatoKortManedTid(undefined)).to.not.exist;
+            expect(Utils.formaterDatoKortManedTid(null)).toBeUndefined();
+            expect(Utils.formaterDatoKortManedTid(undefined)).toBeUndefined();
             expect(
                 Utils.formaterDatoKortManedTid('2014-02-13T14:23:21.123Z')
-            ).to.equal('13. feb 2014 kl 15:23'); // NB zulu-time != paris-time
+            ).toEqual('13. feb 2014 kl 15:23'); // NB zulu-time != paris-time
         });
     });
 
     describe('formaterTid', () => {
         it('Formater datoer riktig', () => {
-            expect(Utils.formaterTid(null)).to.not.exist;
-            expect(Utils.formaterTid(undefined)).to.not.exist;
-            expect(Utils.formaterTid('2014-02-13T14:23:21.123Z')).to.equal(
+            expect(Utils.formaterTid(null)).toBeUndefined();
+            expect(Utils.formaterTid(undefined)).toBeUndefined();
+            expect(Utils.formaterTid('2014-02-13T14:23:21.123Z')).toEqual(
                 '15:23'
             ); // NB zulu-time != paris-time
         });
@@ -276,7 +201,7 @@ describe('app utils', () => {
                     '2014-02-13T23:00:00.000Z',
                     '2014-02-13T23:00:00.000Z'
                 )
-            ).to.equal(0);
+            ).toEqual(0);
         });
 
         it('Returner > 0 hvis venstre er senere enn høyre', () => {
@@ -285,7 +210,7 @@ describe('app utils', () => {
                     '2014-02-16T23:00:00.000Z',
                     '2014-02-13T23:00:00.000Z'
                 )
-            ).to.be.above(0);
+            ).toBeGreaterThan(0);
         });
 
         it('Returner < 0 hvis venstre er tidligere enn høyre', () => {
@@ -294,46 +219,46 @@ describe('app utils', () => {
                     '2014-02-13T23:00:00.000Z',
                     '2014-02-16T23:00:00.000Z'
                 )
-            ).to.be.below(0);
+            ).toBeLessThan(0);
         });
 
         it('Fornuftig håndtering av null og undefined', () => {
             expect(
                 Utils.datoComparator('2014-02-13T23:00:00.000Z', null)
-            ).to.be.above(0);
+            ).toBeGreaterThan(0);
             expect(
                 Utils.datoComparator('2014-02-13T23:00:00.000Z', undefined)
-            ).to.be.above(0);
+            ).toBeGreaterThan(0);
 
             expect(
                 Utils.datoComparator(null, '2014-02-16T23:00:00.000Z')
-            ).to.be.below(0);
+            ).toBeLessThan(0);
             expect(
                 Utils.datoComparator(undefined, '2014-02-16T23:00:00.000Z')
-            ).to.be.below(0);
+            ).toBeLessThan(0);
         });
     });
 
     describe('storeForbokstaver', () => {
         it('Formatterer ord med stor forbokstav', () => {
-            expect(Utils.storeForbokstaver('KARI')).to.equal('Kari');
-            expect(Utils.storeForbokstaver('PER OLAV KNUTSON')).to.equal(
+            expect(Utils.storeForbokstaver('KARI')).toEqual('Kari');
+            expect(Utils.storeForbokstaver('PER OLAV KNUTSON')).toEqual(
                 'Per Olav Knutson'
             );
-            expect(Utils.storeForbokstaver('pelle parafin')).to.equal(
+            expect(Utils.storeForbokstaver('pelle parafin')).toEqual(
                 'Pelle Parafin'
             );
             expect(
                 Utils.storeForbokstaver('FORNAVN', 'MELLOMNAVN', 'ETTERNAVN')
-            ).to.equal('Fornavn Mellomnavn Etternavn');
+            ).toEqual('Fornavn Mellomnavn Etternavn');
             expect(
                 Utils.storeForbokstaver('FORNAVN', undefined, 'ETTERNAVN')
-            ).to.equal('Fornavn Etternavn');
-            expect(Utils.storeForbokstaver('', null, 'ETTERNAVN')).to.equal(
+            ).toEqual('Fornavn Etternavn');
+            expect(Utils.storeForbokstaver('', null, 'ETTERNAVN')).toEqual(
                 'Etternavn'
             );
-            expect(Utils.storeForbokstaver(null)).to.equal('');
-            expect(Utils.storeForbokstaver(undefined)).to.equal('');
+            expect(Utils.storeForbokstaver(null)).toEqual('');
+            expect(Utils.storeForbokstaver(undefined)).toEqual('');
         });
     });
 });

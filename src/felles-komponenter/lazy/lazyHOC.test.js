@@ -2,7 +2,6 @@
 import React from 'react';
 
 import { mount } from 'enzyme';
-import { expect } from 'chai';
 import lazyHOC from './lazyHOC';
 
 describe('lazy-hoc', () => {
@@ -18,12 +17,12 @@ describe('lazy-hoc', () => {
         const LazyDiv = lazyHOC(() => <div className="test" />);
         const wrapper = mount(<LazyDiv hidden={() => undefined} />);
 
-        expect(wrapper.find('div').hasClass('test')).to.be.true; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('div').hasClass('test')).toBeTruthy();
     });
 
     it('Skal rendre feilende komponent', () => {
         const LazyFeilende = lazyHOC(() => <FeilendeKompoment />);
-        expect(() => mount(<LazyFeilende />)).to.throw('Feil!'); // eslint-disable-line no-unused-expressions
+        expect(() => mount(<LazyFeilende />)).toThrow('Feil!');
     });
 
     it('Skal rendre komponent lazy', () => {
@@ -34,6 +33,6 @@ describe('lazy-hoc', () => {
         );
         const wrapper = mount(<Komp />);
 
-        expect(wrapper.find('div').hasClass('test')).to.be.true; // eslint-disable-line no-unused-expressions
+        expect(wrapper.find('div').hasClass('test')).toBeTruthy();
     });
 });

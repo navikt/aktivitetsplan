@@ -1,1 +1,0 @@
-Oppgave med tema "{oppgavetema}" og type "{oppgavetype}" opprettet.

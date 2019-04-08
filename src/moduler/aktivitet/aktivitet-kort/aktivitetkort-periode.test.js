@@ -1,10 +1,26 @@
-/* eslint-env mocha */
-/* eslint-disable no-unused-expressions */
 import React from 'react';
-import { expect } from 'chai';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import { MOTE_TYPE, IJOBB_AKTIVITET_TYPE } from '../../../constant';
-import { mountWithIntl } from '../../../../test/intl-enzyme-test-helper';
+import { IntlProvider, intlShape } from 'react-intl';
+import { mount } from 'enzyme';
+
+const intlProvider = new IntlProvider({ locale: 'no' }, {});
+const { intl } = intlProvider.getChildContext();
+
+function nodeWithIntlProp(node) {
+    return React.cloneElement(node, { intl });
+}
+
+function mountWithIntl(node, { context, childContextTypes } = {}) {
+    return mount(nodeWithIntlProp(node), {
+        context: Object.assign({}, context, { intl }),
+        childContextTypes: Object.assign(
+            {},
+            { intl: intlShape },
+            childContextTypes
+        ),
+    });
+}
 
 describe('Aktivitet-periode', () => {
     it('Skal vise kun fra dato hvis aktiviten er ett møte med NAV', () => {
@@ -16,7 +32,7 @@ describe('Aktivitet-periode', () => {
         const wrapper = mountWithIntl(
             <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
         );
-        expect(wrapper.text()).to.equal('17. aug 2017');
+        expect(wrapper.text()).toEqual('17. aug 2017');
     });
 
     it('Skal vise til og fra dato hvis aktiviten er ikke ett møte med NAV', () => {
@@ -28,6 +44,6 @@ describe('Aktivitet-periode', () => {
         const wrapper = mountWithIntl(
             <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
         );
-        expect(wrapper.text()).to.equal('17. aug 2017 - 20. aug 2017');
+        expect(wrapper.text()).toEqual('17. aug 2017 - 20. aug 2017');
     });
 });

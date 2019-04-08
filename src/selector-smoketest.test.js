@@ -1,5 +1,4 @@
 /* eslint-env mocha */
-import { expect } from 'chai';
 import * as malSelector from './moduler/mal/aktivitetsmal-selector';
 import * as oppfolgingSelector from './moduler/oppfolging-status/oppfolging-selector';
 import * as identitetSelector from './moduler/identitet/identitet-selector';
@@ -8,7 +7,6 @@ import * as brukerSelector from './moduler/bruker/bruker-selector';
 import * as arenaAktivitetSelector from './moduler/aktivitet/arena-aktivitet-selector';
 import * as aktivitetSelector from './moduler/aktivitet/aktivitet-selector';
 import * as aktivitetListeSelector from './moduler/aktivitet/aktivitetliste-selector';
-import * as innstillningerSelector from './moduler/innstillinger/innstillinger-selector';
 import * as utsktriftSelector from './moduler/utskrift/utskrift-selector';
 import * as motpartSelector from './moduler/motpart/motpart-selector';
 import reducer from './reducer';
@@ -29,7 +27,7 @@ function selectorModulTest(selectorModul) {
             });
 
             it('Skal ikke ha sideffekter', () => {
-                expect(initialStateString).to.equal(
+                expect(initialStateString).toEqual(
                     JSON.stringify(
                         reducer(undefined, {
                             type: '',
@@ -49,6 +47,5 @@ selectorModulTest(brukerSelector);
 selectorModulTest(arenaAktivitetSelector);
 selectorModulTest(aktivitetSelector);
 selectorModulTest(aktivitetListeSelector);
-selectorModulTest(innstillningerSelector);
 selectorModulTest(utsktriftSelector);
 selectorModulTest(motpartSelector);

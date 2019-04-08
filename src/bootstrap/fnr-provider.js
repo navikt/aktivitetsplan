@@ -1,18 +1,17 @@
 import { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { CONTEXT_PATH, FNR_I_URL } from '~config'; // eslint-disable-line
 import { hentBruker, setStatusOk } from '../moduler/bruker/bruker-reducer';
 
 export function fnrFraUrl() {
-    const fnrMatch = window.location.pathname.match(`${CONTEXT_PATH}/(\\d*)`);
+    const fnrMatch = window.location.pathname.match(`${window.appconfig.CONTEXT_PATH}/(\\d*)`);
     return fnrMatch && fnrMatch[1];
 }
 
 class FnrProvider extends Component {
     componentDidMount() {
         const { dispatch } = this.props;
-        if (FNR_I_URL) {
+        if (window.appconfig.FNR_I_URL) {
             // på innsiden - merk at urlen ikke alltid har et fnr!
             const fnr = fnrFraUrl();
             if (fnr) {
@@ -25,7 +24,7 @@ class FnrProvider extends Component {
     }
 
     render() {
-        return !FNR_I_URL || fnrFraUrl() ? this.props.children : null;
+        return !window.appconfig.FNR_I_URL || fnrFraUrl() ? this.props.children : null;
     }
 }
 

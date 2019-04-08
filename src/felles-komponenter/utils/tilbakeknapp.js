@@ -15,7 +15,7 @@ function Tilbakeknapp(props) {
             id: 'aktkivitet-skjema.lukk-advarsel',
         });
         // eslint-disable-next-line no-alert
-        if (!props.visConfirmDialog || confirm(dialogTekst)) {
+        if (!props.visConfirmDialog || window.confirm(dialogTekst)) {
             props.tilbakeModal();
             props.history.goBack();
         }

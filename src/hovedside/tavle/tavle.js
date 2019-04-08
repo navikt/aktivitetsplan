@@ -22,10 +22,10 @@ class Tavle extends Component {
     }
 
     visForrige() {
-        this.state.clickIndex =
-            Math.min(this.state.currentIndex, this.state.clickIndex) - 1;
-        const scrollTo = this.state.clickIndex * KOLONNEBREDDE;
+        const clickIndex =  Math.min(this.state.currentIndex, this.state.clickIndex) - 1
+        const scrollTo = clickIndex * KOLONNEBREDDE;
         this.scrollbars.scrollLeft(scrollTo);
+        this.setState({clickIndex: clickIndex});
     }
 
     visNeste() {
@@ -35,10 +35,11 @@ class Tavle extends Component {
         const nesteIndex = Math.floor(
             (clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE
         );
-        this.state.clickIndex = Math.max(nesteIndex, this.state.clickIndex) + 1;
+        const clickIndex = Math.max(nesteIndex, this.state.clickIndex) + 1;
         const scrollTo =
-            this.state.clickIndex * KOLONNEBREDDE - clientWidthWithOffset;
+            clickIndex * KOLONNEBREDDE - clientWidthWithOffset;
         this.scrollbars.scrollLeft(scrollTo);
+        this.setState({clickIndex: clickIndex});
     }
 
     updateState(values) {

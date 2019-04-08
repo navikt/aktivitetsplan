@@ -68,7 +68,7 @@ class AktivitetFormContainer extends Component {
             });
 
             // eslint-disable-next-line no-alert
-            if (!formIsDirty || confirm(dialogTekst)) {
+            if (!formIsDirty || window.confirm(dialogTekst)) {
                 history.push('/');
                 lukkModal();
             }

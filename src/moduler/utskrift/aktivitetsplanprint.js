@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel, Systemtittel } from 'nav-frontend-typografi';
-import Bilde from '../../felles-komponenter/bilde/bilde';
 import { formaterDato } from '../../utils';
 import StoreForbokstaver from '../../felles-komponenter/utils/store-forbokstaver';
 import * as AppPT from '../../proptypes';
@@ -143,7 +142,7 @@ function Print({
 
     return (
         <div className="printmodal-body">
-            <Bilde
+            <img
                 className="printmodal-body__nav-logo-print"
                 src={logoPng}
                 alt="Logo NAV"

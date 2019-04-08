@@ -1,6 +1,5 @@
 import { createBrowserHistory } from 'history';
 import { getFodselsnummer } from './bootstrap/fnr-util';
-import { CONTEXT_PATH } from '~config'; // eslint-disable-line
 
 function nyURLHarQueryString(url) {
     return url.indexOf('?') !== -1;
@@ -9,7 +8,7 @@ function nyURLHarQueryString(url) {
 function prependBasePath(fn) {
     return url => {
         const fodselsnummer = getFodselsnummer();
-        const urlParams = nyURLHarQueryString(url) ? '' : location.search;
+        const urlParams = nyURLHarQueryString(url) ? '' : window.location.search;
         const fodselsnummerPath = `/${fodselsnummer}`;
         return fn.call(this, {
             pathname:
@@ -25,7 +24,7 @@ function prependBasePath(fn) {
 
 export default function createHistory() {
     const routerHistory = createBrowserHistory({
-        basename: CONTEXT_PATH,
+        basename: window.appconfig.CONTEXT_PATH,
     });
 
     routerHistory.push = prependBasePath(routerHistory.push);

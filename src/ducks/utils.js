@@ -89,16 +89,19 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                 });
                 const errorData = JSON.parse(data);
 
-                (window.frontendlogger && window.frontendlogger.error)({
-                    message: [
-                        error.stack,
-                        `Id: ${errorData.id}`,
-                        `Type: ${errorData.type} ${errorData.detaljer
-                            ? errorData.detaljer.detaljertType
-                            : ''}`,
-                        errorData.detaljer ? errorData.detaljer.stackTrace : '',
-                    ].join('\n'),
-                });
+                if(!!window.frontendlogger){
+                    window.frontendlogger.error({
+                        message: [
+                            error.stack,
+                            `Id: ${errorData.id}`,
+                            `Type: ${errorData.type} ${errorData.detaljer
+                                ? errorData.detaljer.detaljertType
+                                : ''}`,
+                            errorData.detaljer ? errorData.detaljer.stackTrace : '',
+                        ].join('\n'),
+                    });
+                }
+
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console

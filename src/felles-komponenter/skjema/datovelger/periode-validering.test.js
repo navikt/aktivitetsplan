@@ -1,16 +1,14 @@
-/* eslint-env mocha */
-import { expect } from 'chai';
 import { validerPeriode } from './periode-validering';
 
 describe('validerPeriode', () => {
     it('Skal ikke gi feilmelding om fradato er undefined og tildato satt', () => {
         const valid = validerPeriode(undefined, new Date('2017-01-01'));
-        expect(valid).to.equal(true);
+        expect(valid).toBeTruthy();
     });
 
     it('Skal ikke gi feilmelding om tildato er undefined og fradato satt', () => {
         const valid = validerPeriode(new Date('2017-01-01'), undefined);
-        expect(valid).to.equal(true);
+        expect(valid).toBeTruthy();
     });
 
     it('Skal ikke gi feilmelding om tildato og fradato er samme dag', () => {
@@ -18,7 +16,7 @@ describe('validerPeriode', () => {
             new Date('2017-01-01'),
             new Date('2017-01-01')
         );
-        expect(valid).to.equal(true);
+        expect(valid).toBeTruthy();
     });
 
     it('Skal ikke gi feilmelding om fradato er før tildato', () => {
@@ -26,7 +24,7 @@ describe('validerPeriode', () => {
             new Date('2017-01-01'),
             new Date('2017-02-02')
         );
-        expect(valid).to.equal(true);
+        expect(valid).toBeTruthy();
     });
 
     it('Skal gi feilmelding om tildato er før fradato', () => {
@@ -34,6 +32,6 @@ describe('validerPeriode', () => {
             new Date('2017-02-02'),
             new Date('2017-01-01')
         );
-        expect(valid).to.equal(false);
+        expect(valid).toBeFalsy()
     });
 });

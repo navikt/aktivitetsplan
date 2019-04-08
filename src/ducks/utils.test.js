@@ -1,6 +1,3 @@
-/* eslint-env mocha */
-import { expect } from 'chai';
-import sinon from 'sinon';
 import {
     sjekkStatuskode,
     handterFeil,
@@ -15,43 +12,43 @@ const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = STATUS;
 describe('utils', () => {
     describe('aggregerStatus', () => {
         it('alt OK gir OK', () => {
-            expect(aggregerStatus(OK, OK, OK)).to.equal(OK);
+            expect(aggregerStatus(OK, OK, OK)).toEqual(OK);
         });
         it('RELOADING overstyrer OK', () => {
-            expect(aggregerStatus(OK, RELOADING, OK)).to.equal(RELOADING);
+            expect(aggregerStatus(OK, RELOADING, OK)).toEqual(RELOADING);
         });
         it('PENDING overstyrer OK og RELOADING', () => {
-            expect(aggregerStatus(OK, PENDING, OK)).to.equal(PENDING);
-            expect(aggregerStatus(RELOADING, PENDING, RELOADING)).to.equal(
+            expect(aggregerStatus(OK, PENDING, OK)).toEqual(PENDING);
+            expect(aggregerStatus(RELOADING, PENDING, RELOADING)).toEqual(
                 PENDING
             );
         });
         it('NOT_STARTED overstyrer OK, RELOADING og PENDING', () => {
-            expect(aggregerStatus(OK, NOT_STARTED, OK)).to.equal(NOT_STARTED);
-            expect(aggregerStatus(RELOADING, NOT_STARTED, RELOADING)).to.equal(
+            expect(aggregerStatus(OK, NOT_STARTED, OK)).toEqual(NOT_STARTED);
+            expect(aggregerStatus(RELOADING, NOT_STARTED, RELOADING)).toEqual(
                 NOT_STARTED
             );
-            expect(aggregerStatus(PENDING, NOT_STARTED, PENDING)).to.equal(
+            expect(aggregerStatus(PENDING, NOT_STARTED, PENDING)).toEqual(
                 NOT_STARTED
             );
         });
         it('ERROR overstyrer alle andre statuser', () => {
-            expect(aggregerStatus(OK, ERROR, OK)).to.deep.equal(ERROR);
-            expect(aggregerStatus(RELOADING, ERROR, RELOADING)).to.equal(ERROR);
-            expect(aggregerStatus(PENDING, ERROR, PENDING)).to.equal(ERROR);
-            expect(aggregerStatus(NOT_STARTED, ERROR, NOT_STARTED)).to.equal(
+            expect(aggregerStatus(OK, ERROR, OK)).toEqual(ERROR);
+            expect(aggregerStatus(RELOADING, ERROR, RELOADING)).toEqual(ERROR);
+            expect(aggregerStatus(PENDING, ERROR, PENDING)).toEqual(ERROR);
+            expect(aggregerStatus(NOT_STARTED, ERROR, NOT_STARTED)).toEqual(
                 ERROR
             );
         });
 
         it('ignorerer null/undefined', () => {
-            expect(aggregerStatus(OK, null, OK, undefined)).to.equal(OK);
-            expect(aggregerStatus(null, null)).to.equal(null);
-            expect(aggregerStatus(undefined, undefined)).to.equal(undefined);
+            expect(aggregerStatus(OK, null, OK, undefined)).toEqual(OK);
+            expect(aggregerStatus(null, null)).toEqual(null);
+            expect(aggregerStatus(undefined, undefined)).toEqual(undefined);
         });
 
         it('aksepterer reducere som argument', () => {
-            expect(aggregerStatus(OK, { status: ERROR }, OK)).to.equal(ERROR);
+            expect(aggregerStatus(OK, { status: ERROR }, OK)).toEqual(ERROR);
         });
     });
 
@@ -62,7 +59,7 @@ describe('utils', () => {
                 status: 200,
                 statusText: 'Status OK',
             };
-            expect(sjekkStatuskode(response)).to.deep.equal(response);
+            expect(sjekkStatuskode(response)).toEqual(response);
         });
         it('Skal returnere error når respons ikke er ok', () => {
             const response = {
@@ -70,7 +67,7 @@ describe('utils', () => {
                 status: 200,
                 statusText: 'Feilstatus',
             };
-            expect(() => sjekkStatuskode(response)).to.throw(Error);
+            expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
         it('Skal returnere error når status er over 299', () => {
             const response = {
@@ -78,7 +75,7 @@ describe('utils', () => {
                 status: 300,
                 statusText: 'Feilstatus',
             };
-            expect(() => sjekkStatuskode(response)).to.throw(Error);
+            expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
         it('Skal returnere error når status er under 200', () => {
             const response = {
@@ -86,7 +83,7 @@ describe('utils', () => {
                 status: 199,
                 statusText: 'Feilstatus',
             };
-            expect(() => sjekkStatuskode(response)).to.throw(Error);
+            expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
         it('Skal returnere error når statuskode er under 200 og ok er false', () => {
             const response = {
@@ -94,7 +91,7 @@ describe('utils', () => {
                 status: 199,
                 statusText: 'Feilstatus',
             };
-            expect(() => sjekkStatuskode(response)).to.throw(Error);
+            expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
     });
 
@@ -102,19 +99,22 @@ describe('utils', () => {
         const action = 'action';
 
         it('Sjekk at funksjonen returnerer et rejected promise', () => {
-            // eslint-disable-next-line no-unused-expressions
-            expect(handterFeil(sinon.spy(), action)(new Error('message'))).to.be
-                .rejected;
+            expect(handterFeil(() => {}, action)(new Error('message'))).rejects.toThrow('message')
         });
-        it('Sjekk at funksjonen dispatcher parset feil', done => {
-            const dispatch = sinon.spy();
+        it('Sjekk at funksjonen dispatcher parset feil', () => {
+            const dispatch = jest.fn();
             const response = {
                 status: 1234,
                 text: () => Promise.resolve('{"type":"FEILTYPE"}'),
             };
-            handterFeil(dispatch, action)({ response });
+
+            try {
+                handterFeil(dispatch, action)({response});
+            } catch (e) {
+                // ignore
+            }
             setTimeout(() => {
-                expect(dispatch).to.be.calledWith({
+                expect(dispatch.mock.calls[0][0]).toEqual({
                     data: {
                         melding: { type: 'FEILTYPE' },
                         type: action,
@@ -122,14 +122,15 @@ describe('utils', () => {
                     },
                     type: action,
                 });
-                done();
             }, 0);
         });
         it('Sjekk at funksjonen dispatcher error message', () => {
-            const dispatch = sinon.spy();
+            const dispatch = jest.fn();
             const error = new Error('message');
+
             handterFeil(dispatch, action)(error);
-            expect(dispatch).to.be.calledWith({
+
+            expect(dispatch.mock.calls[0][0]).toEqual({
                 data: { melding: error.toString(), type: action },
                 type: action,
             });
@@ -142,26 +143,26 @@ describe('utils', () => {
                 status: 200,
                 json: () => ({ testprop: 'testprop' }),
             };
-            expect(toJson(response)).to.deep.equal(response.json());
+            expect(toJson(response)).toEqual(response.json());
         });
         it('Returnerer respons ved 204', () => {
             const response = {
                 status: 204,
                 json: () => ({ testprop: 'testprop' }),
             };
-            expect(toJson(response)).to.deep.equal(response);
+            expect(toJson(response)).toEqual(response);
         });
     });
     describe('getCookie', () => {
         it('Henter ut fra cookie', () => {
             global.document.cookie =
                 'test1=detteerentest123; test2=detteerogsåentest123';
-            expect(getCookie('test1')).to.equal('detteerentest123');
+            expect(getCookie('test1')).toEqual('detteerentest123');
         });
         it('Tom streng ved ingen match', () => {
             global.document.cookie =
                 'test1=detteerentest123; test2=detteerogsåentest123';
-            expect(getCookie('test0')).to.equal('');
+            expect(getCookie('test0')).toEqual('');
         });
     });
 });

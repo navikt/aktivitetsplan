@@ -1,1 +1,0 @@
-Teknisk feil: Vær oppmerksom på at du kan ha ulike brukere oppe samtidig i forskjellige vinduer. På grunn av en feil oppfatter ikke systemet eventuelle endringer du har gjort i andre vinduer.   

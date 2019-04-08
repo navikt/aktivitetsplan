@@ -1,6 +1,4 @@
-/* eslint-env mocha */
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { DialogerPure } from './dialoger';
 
@@ -68,7 +66,7 @@ describe('<Dialoger/>', () => {
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
 
-        expect(dialogerSortert).to.deep.equal(['2', '1']);
+        expect(dialogerSortert).toEqual(['2', '1']);
     });
 
     it('Bruker skal se gjeldende eskaleringsvarsel øverst', () => {
@@ -82,7 +80,7 @@ describe('<Dialoger/>', () => {
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
 
-        expect(dialogerSortert).to.deep.equal(['2', '1']);
+        expect(dialogerSortert).toEqual(['2', '1']);
     });
 
     it('Bruker skal se sortering etter dato hvis eskalering ikke er gjeldende', () => {
@@ -96,7 +94,7 @@ describe('<Dialoger/>', () => {
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
 
-        expect(dialogerSortert).to.deep.equal(['1', '2']);
+        expect(dialogerSortert).toEqual(['1', '2']);
     });
 
     it('Veileder skal se sortering etter dato hvis eskalering ikke er gjeldende', () => {
@@ -110,7 +108,7 @@ describe('<Dialoger/>', () => {
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
 
-        expect(dialogerSortert).to.deep.equal(['1', '2']);
+        expect(dialogerSortert).toEqual(['1', '2']);
     });
 
     it('Bruker skal se dialoger som venter på begge først og så de som venter på bruker', () => {
@@ -124,7 +122,7 @@ describe('<Dialoger/>', () => {
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
 
-        expect(dialogerSortert).to.deep.equal(['3', '1', '2']);
+        expect(dialogerSortert).toEqual(['3', '1', '2']);
     });
 
     it('Veileder skal se dialoger som venter på begge først og så ikke ferdigbehandlede ', () => {
@@ -138,6 +136,6 @@ describe('<Dialoger/>', () => {
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
 
-        expect(dialogerSortert).to.deep.equal(['3', '2', '1']);
+        expect(dialogerSortert).toEqual(['3', '2', '1']);
     });
 });

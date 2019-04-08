@@ -5,7 +5,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import Lenke from '../../felles-komponenter/utils/lenke';
-import mittMalSvg from './Illustrasjon_dette_gjor_du_bra.svg';
+import MalIcon from './mal-ikon';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import {
@@ -49,12 +49,7 @@ class MittMaal extends Component {
                 className="mitt-maal"
                 onClick={() => loggMittMalKlikk(erVeileder)}
             >
-                <img
-                    tabIndex="-1"
-                    src={mittMalSvg}
-                    alt=""
-                    className="mittmal__illustrasjon"
-                />
+                <MalIcon/>
                 <div className="mittmal_content">
                     <Element className="mittmal__content-header">
                         <FormattedMessage id={'aktivitetsmal.mitt-mal'} />

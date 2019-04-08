@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import personSvg from './person.svg';
+import PersonIcon from './person-ikon'
 import { selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import Brodsmule from './brodsmule';
 
@@ -14,12 +14,7 @@ function Brodsmuler(props) {
     }
     return (
         <div className="brodsmuler">
-            <img
-                tabIndex="-1"
-                src={personSvg}
-                alt=""
-                className="brodsmuler__illustrasjon"
-            />
+            <PersonIcon/>
             <ol className="brodsmuler__list">
                 <Brodsmule tekst="Ditt NAV" path={DITTNAVN_PATH} />
                 <Brodsmule
