@@ -18,6 +18,7 @@ const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
 const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
 const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
 const DAILOG_BRUKER_HENVENDELSE = 'dialog.bruker.henvendelse';
+const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
 export function metrikkOpnePrintModal(veileder) {
     loggEvent(PRINT_MODSAL_OPEN, { erVeileder: veileder });
@@ -82,6 +83,39 @@ export function loggTidBruktForsteHenvendelse(dialoger, oppfolgingsPerioder) {
             loggEvent(DAILOG_BRUKER_HENVENDELSE, {
                 tidBruktForsteHenvendelse,
             });
+        }
+    }
+}
+
+function tidBruktFra(fraDato, tilDato) {
+    const tilD = tilDato ? new Date(tilDato).getTime() : new Date().getTime();
+    return Math.ceil(
+        Math.abs(new Date(fraDato).getTime() - tilD) / (1000 * 3600 * 24)
+    );
+}
+
+export function loggTidBruktGaaInnPaaAktivitetsplanen(lest, perioder) {
+    const periode = perioder.find(p => p.sluttDato === null);
+    if (periode) {
+        // Tid brukt fra registrert til aktivitetsplanen
+        if (lest.length === 0) {
+            const startDatoPaaOppfolging = periode.startDato;
+            loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
+                tidBruktFraRegistrert: tidBruktFra(startDatoPaaOppfolging),
+            });
+        }
+        // Tid brukt mellom gangene i aktivitetsplanen
+        if (lest.length !== 0) {
+            const lestAktivitetsplan = lest.find(
+                a => a.ressurs === 'aktivitetsplan'
+            );
+            const startDato = new Date(periode.startDato).getTime();
+            const tidspunkt = new Date(lestAktivitetsplan.tidspunkt).getTime();
+            if (startDato < tidspunkt) {
+                loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
+                    tidMellomGangene: tidBruktFra(tidspunkt),
+                });
+            }
         }
     }
 }

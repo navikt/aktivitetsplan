@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
+import {
+    selectErUnderOppfolging,
+    selectOppfolgingsPerioder,
+} from '../oppfolging-status/oppfolging-selector';
 import {
     hentLest,
     selectLestInformasjon,
@@ -13,6 +16,7 @@ import { selectErVeileder } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
 import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
 import { STATUS } from '../../ducks/utils';
+import { loggTidBruktGaaInnPaaAktivitetsplanen } from '../../felles-komponenter/utils/logging';
 import { setBackPath } from './informasjon-reducer';
 
 const redirectPath = '/informasjon';
@@ -46,8 +50,11 @@ const RedirectTilInformasjonWithRouter = withRouter(RedirectTilInformasjon);
 
 class InformasjonsHenting extends Component {
     componentWillMount() {
+        const perioder = this.props.oppfolgingsPerioder;
         if (this.props.underOppfolging) {
-            this.props.doHentLest();
+            this.props.doHentLest().then(a => {
+                loggTidBruktGaaInnPaaAktivitetsplanen(a.data, perioder);
+            });
         }
     }
 
@@ -70,6 +77,7 @@ InformasjonsHenting.propTypes = {
     erVeileder: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     doHentLest: PT.func.isRequired,
+    oppfolgingsPerioder: PT.arrayOf(PT.object).isRequired,
     setBack: PT.func.isRequired,
 };
 
@@ -78,6 +86,7 @@ const mapStateToProps = state => ({
     lestStatus: selectLestStatus(state),
     lestInfo: selectLestInformasjon(state),
     erVeileder: selectErVeileder(state),
+    oppfolgingsPeriode: selectOppfolgingsPerioder(state),
 });
 
 const mapDispatchToProps = dispatch => ({
