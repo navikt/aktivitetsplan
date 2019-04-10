@@ -127,7 +127,10 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         doMarkerDialogSomLest: () => {
             if (!dialog.lest) {
-                markerDialogSomLest(dialogId)(dispatch);
+                markerDialogSomLest(dialogId)(dispatch)
+                    .then(() => {
+                        window.dispatchEvent(new Event('aktivitetsplan.dialog.lest'));
+                    });
             }
         },
     };
