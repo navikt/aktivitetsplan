@@ -16,8 +16,8 @@ import AvtaltForm, {
 import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
-import { selectAktiviteterData } from '../../aktivitet-selector';
-import { erMerEnnSyvDagerTil } from '../../../../utils';
+import { selectAktiviteterData, selectAktivitetStatus } from '../../aktivitet-selector';
+import { erGyldigISODato, erMerEnnSyvDagerTil } from '../../../../utils';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import {
     selectErBrukerManuell,
@@ -116,7 +116,7 @@ class AvtaltContainer extends Component {
                         avtaltForm.avtaltSelect
                     );
 
-                    if (!harAvtalteAktiviteter) {
+                    if (!harAvtalteAktiviteter && erGyldigISODato(oppfolgingSiden)) {
                         metrikkTidForsteAvtalte(msSince(oppfolgingSiden));
                     }
 
@@ -177,8 +177,9 @@ AvtaltContainer.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+    aktivitetStatus: selectAktivitetStatus(state),
     harAvtalteAktiviteter: !!selectAktiviteterData(state).filter(aktivitet => aktivitet.avtalt),
-    oppfolgingSiden: selectOppfolgingsPerioder(state).filter(periode => !periode.sluttDato)[0],
+    oppfolgingSiden: selectOppfolgingsPerioder(state).filter(periode => !periode.sluttDato)[0].startDato,
     erManuellKrrKvpBruker:
         selectErBrukerManuell(state) ||
         selectErUnderKvp(state) ||
