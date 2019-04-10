@@ -86,7 +86,7 @@ const mapStateToProps = state => ({
     lestStatus: selectLestStatus(state),
     lestInfo: selectLestInformasjon(state),
     erVeileder: selectErVeileder(state),
-    oppfolgingsPeriode: selectOppfolgingsPerioder(state),
+    oppfolgingsPerioder: selectOppfolgingsPerioder(state),
 });
 
 const mapDispatchToProps = dispatch => ({
