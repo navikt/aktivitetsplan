@@ -34,6 +34,10 @@ export function loggForhandsorienteringTiltak() {
     });
 }
 
+export function metrikkTidForsteAvtalte(tid) {
+    loggEvent("aktivitetsplan.aktivitet.forste.avtalt", {tidSidenOppfolging: tid})
+}
+
 export function loggForhandsorientering(
     erManuellKrrKvpBruker,
     mindreEnSyvDagerIgen,
