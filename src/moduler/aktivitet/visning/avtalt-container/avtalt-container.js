@@ -16,16 +16,17 @@ import AvtaltForm, {
 import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
-import { selectAktiviteterData, selectAktivitetStatus } from '../../aktivitet-selector';
+import { selectAktiviteterData } from '../../aktivitet-selector';
 import { erMerEnnSyvDagerTil } from '../../../../utils';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import {
     selectErBrukerManuell,
-    selectErUnderKvp,
+    selectErUnderKvp, selectOppfolgingsPerioder,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
+import { msSince } from '../../../../utils';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -47,7 +48,8 @@ class AvtaltContainer extends Component {
             erManuellKrrKvpBruker,
             doApneDialog,
             underOppfolging,
-            aktiviteter,
+            harAvtalteAktiviteter,
+            oppfolgingSiden,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
@@ -114,14 +116,15 @@ class AvtaltContainer extends Component {
                         avtaltForm.avtaltSelect
                     );
 
-                    if (!aktiviteter.filter(aktivitet => aktivitet.avtalt)) {
-                        metrikkTidForsteAvtalte(1);
+                    if (!harAvtalteAktiviteter) {
+                        metrikkTidForsteAvtalte(msSince(oppfolgingSiden));
                     }
 
                     doSetAktivitetTilAvtalt(aktivitet);
                     document.querySelector('.aktivitet-modal').focus();
                 }}
             />
+
         );
 
         const settAvtaltTekstVerdi =
@@ -164,7 +167,8 @@ AvtaltContainer.propTypes = {
     erManuellKrrKvpBruker: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     doApneDialog: PT.func.isRequired,
-    aktiviteter: AppPT.aktiviteter,
+    harAvtalteAktiviteter: PT.bool.isRequired,
+    oppfolgingSiden: PT.string,
 };
 
 AvtaltContainer.defaultProps = {
@@ -173,8 +177,8 @@ AvtaltContainer.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    aktiviteter: selectAktiviteterData(state),
-    aktivitetStatus: selectAktivitetStatus(state),
+    harAvtalteAktiviteter: !!selectAktiviteterData(state).filter(aktivitet => aktivitet.avtalt),
+    oppfolgingSiden: selectOppfolgingsPerioder(state).filter(periode => !periode.sluttDato)[0],
     erManuellKrrKvpBruker:
         selectErBrukerManuell(state) ||
         selectErUnderKvp(state) ||

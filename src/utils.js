@@ -11,6 +11,8 @@ export function fn(value) {
     return typeof value === 'function' ? value : () => value;
 }
 
+export const msSince = date => moment().unix() - moment(date).unix();
+
 export function autobind(ctx) {
     Object.getOwnPropertyNames(ctx.constructor.prototype)
         .filter(prop => typeof ctx[prop] === 'function')
