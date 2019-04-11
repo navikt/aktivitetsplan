@@ -178,7 +178,7 @@ AvtaltContainer.defaultProps = {
 
 const mapStateToProps = state => ({
     aktivitetStatus: selectAktivitetStatus(state),
-    harAvtalteAktiviteter: !!selectAktiviteterData(state).filter(aktivitet => aktivitet.avtalt),
+    harAvtalteAktiviteter: (selectAktiviteterData(state).filter(aktivitet => aktivitet.avtalt).length !== 0),
     oppfolgingSiden: selectOppfolgingsPerioder(state).filter(periode => !periode.sluttDato)[0].startDato,
     erManuellKrrKvpBruker:
         selectErBrukerManuell(state) ||
