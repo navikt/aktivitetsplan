@@ -49,7 +49,7 @@ class AvtaltContainer extends Component {
             doApneDialog,
             underOppfolging,
             harAvtalteAktiviteter,
-            oppfolgingSiden,
+            aktivOppfolgingsPeriode,
         } = this.props;
 
         const { type, status, historisk, avtalt } = aktivitet;
@@ -116,8 +116,8 @@ class AvtaltContainer extends Component {
                         avtaltForm.avtaltSelect
                     );
 
-                    if (!harAvtalteAktiviteter && erGyldigISODato(oppfolgingSiden)) {
-                        metrikkTidForsteAvtalte(msSince(oppfolgingSiden));
+                    if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.startDato)) {
+                        metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode));
                     }
 
                     doSetAktivitetTilAvtalt(aktivitet);
@@ -168,18 +168,19 @@ AvtaltContainer.propTypes = {
     underOppfolging: PT.bool.isRequired,
     doApneDialog: PT.func.isRequired,
     harAvtalteAktiviteter: PT.bool.isRequired,
-    oppfolgingSiden: PT.string,
+    aktivOppfolgingsPeriode: AppPT.oppfolgingsPeriode,
 };
 
 AvtaltContainer.defaultProps = {
     aktivitetStatus: undefined,
     className: undefined,
+    aktivOppfolgingsPeriode: undefined,
 };
 
 const mapStateToProps = state => ({
     aktivitetStatus: selectAktivitetStatus(state),
     harAvtalteAktiviteter: (selectAktiviteterData(state).filter(aktivitet => aktivitet.avtalt).filter(a => !a.historisk).length !== 0),
-    oppfolgingSiden: selectOppfolgingsPerioder(state).filter(periode => !periode.sluttDato)[0].startDato,
+    aktivOppfolgingsPeriode: selectOppfolgingsPerioder(state).filter(periode => !periode.sluttDato)[0],
     erManuellKrrKvpBruker:
         selectErBrukerManuell(state) ||
         selectErUnderKvp(state) ||
