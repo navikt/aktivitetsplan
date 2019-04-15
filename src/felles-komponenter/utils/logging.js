@@ -98,27 +98,40 @@ function tidBruktFra(fraDato, tilDato) {
     );
 }
 
+function loggTidBruktFraRegistrert(fraDato) {
+    loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
+        tidBruktFraRegistrert: tidBruktFra(fraDato),
+    });
+}
+
 export function loggTidBruktGaaInnPaaAktivitetsplanen(lest, perioder) {
     const periode = perioder.find(p => p.sluttDato === null);
     if (periode) {
         // Tid brukt fra registrert til aktivitetsplanen
         if (lest.length === 0) {
             const startDatoPaaOppfolging = periode.startDato;
-            loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
-                tidBruktFraRegistrert: tidBruktFra(startDatoPaaOppfolging),
-            });
+            const tidVeilarbLestBleLansert = new Date('2019-02-01').getTime();
+            const tidStartOppfolging = new Date(startDatoPaaOppfolging).getTime();
+            if (tidVeilarbLestBleLansert < tidStartOppfolging) {
+                loggTidBruktFraRegistrert(startDatoPaaOppfolging);
+            }
+
         }
         // Tid brukt mellom gangene i aktivitetsplanen
         if (lest.length !== 0) {
             const lestAktivitetsplan = lest.find(
                 a => a.ressurs === 'aktivitetsplan'
             );
-            const startDato = new Date(periode.startDato).getTime();
-            const tidspunkt = new Date(lestAktivitetsplan.tidspunkt).getTime();
-            if (startDato < tidspunkt) {
-                loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
-                    tidMellomGangene: tidBruktFra(tidspunkt),
-                });
+            if (lestAktivitetsplan) {
+                const startDato = new Date(periode.startDato).getTime();
+                const tidspunkt = new Date(lestAktivitetsplan.tidspunkt).getTime();
+                if (startDato < tidspunkt) {
+                    loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
+                        tidMellomGangene: tidBruktFra(tidspunkt),
+                    });
+                } else {
+                    loggTidBruktFraRegistrert(startDato);
+                }
             }
         }
     }
