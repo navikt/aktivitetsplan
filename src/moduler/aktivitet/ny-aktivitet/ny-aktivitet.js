@@ -30,15 +30,6 @@ class NyAktivitet extends Component {
                     </Innholdstittel>
                 </div>
                 <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
-                    <Lenkepanel href="/aktivitet/ny/stilling">
-                        <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
-                    </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/mote" hidden={!erVeileder}>
-                        <FormattedMessage id="ny-aktivitet-modal.mote" />
-                    </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/egen">
-                        <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
-                    </Lenkepanel>
                     <Lenkepanel
                         href="/aktivitet/ny/sokeavtale"
                         hidden={!erVeileder}
@@ -51,14 +42,27 @@ class NyAktivitet extends Component {
                     >
                         <FormattedMessage id="ny-aktivitet-modal.medisinsk-behandling" />
                     </Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/mote" hidden={!erVeileder}>
+                        <FormattedMessage id="ny-aktivitet-modal.mote" />
+                    </Lenkepanel>
                     <Lenkepanel
                         href="/aktivitet/ny/samtalereferat"
                         hidden={!erVeileder}
+                        className="ny-aktivitet-modal__veileder-skille"
                     >
                         <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
                     </Lenkepanel>
+
+
+                    <Lenkepanel href="/aktivitet/ny/stilling">
+                        <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
+                    </Lenkepanel>
+
                     <Lenkepanel href="/aktivitet/ny/ijobb">
                         <FormattedMessage id="ny-aktivitet-modal.jobb-jeg-er-i" />
+                    </Lenkepanel>
+                    <Lenkepanel href="/aktivitet/ny/egen">
+                        <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
                     </Lenkepanel>
                 </div>
             </Modal>
