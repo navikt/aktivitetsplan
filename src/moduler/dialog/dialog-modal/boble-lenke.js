@@ -24,7 +24,7 @@ function BobleLenke({ href, dialogId }) {
         : `http://${lenkeMedParams}`;
 
     return (
-        <Lenke target="_blank" href={matched}>
+        <Lenke href={matched}>
             {lenkeTekst}
         </Lenke>
     );

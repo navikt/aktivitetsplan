@@ -20,7 +20,6 @@ export default function LenkeKomponent({ lenke }) {
                     lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`
                 }
                 className="detaljfelt__lenke"
-                target="_blank"
             >
                 {lenke}
                 <EksternLenkeIkon />
