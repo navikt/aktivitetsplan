@@ -7,7 +7,8 @@ import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
 import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
 import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
-import MitMaal from './maalLinje/mitt-maal';
+import Maal from './maal/maal';
+import FeatureToggleMaal from './featureToggleMaal/featureToggleMaal';
 import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
 
@@ -23,7 +24,8 @@ function Hovedside() {
                     <InformasjonsHenting />
                     <Varslinger />
                     <Container>
-                        <MitMaal />
+                        <Maal/>
+                        <FeatureToggleMaal/>
                         <Verktoylinje />
                     </Container>
                     <AktivitetsTavle />

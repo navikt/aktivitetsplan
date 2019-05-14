@@ -19,6 +19,7 @@ import aktiviteter, {
 import arena from './arena';
 import getPerson from './person';
 import { malListe, opprettMal, sisteMal } from './mal';
+import { fremtidigSituasjon } from './fremtidigSituasjon';
 import veilederTilgang from './veilederTilgang';
 import getFeatures from './features';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
@@ -47,6 +48,8 @@ mock.get('/veilarboppfolging/api/oppfolging/mal', () => sisteMal());
 mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }) =>
     opprettMal(body, true)
 );
+
+mock.get('/veilarbvedtakinfo/api/fremtidigsituasjon', ResponseUtils.delayed(500, fremtidigSituasjon));
 
 mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
 mock.get('/veilarboppfolging/api/oppfolging', ({ queryParams }) =>

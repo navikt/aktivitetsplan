@@ -1,4 +1,4 @@
-import { OPPFOLGING_BASE_URL } from '../../environment';
+import {OPPFOLGING_BASE_URL, VEILARBVEDTAKINFO_BASE_URL} from '../../environment';
 import {
     fetchToJson,
     postAsJson,
@@ -21,6 +21,10 @@ export function hentOppfolging() {
 
 export function hentMal() {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/mal`);
+}
+
+export function hentFremtidigSituasjon() {
+    return fetchToJson(`${VEILARBVEDTAKINFO_BASE_URL}/fremtidigsituasjon`);
 }
 
 export function hentMalListe() {
