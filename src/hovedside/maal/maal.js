@@ -21,15 +21,19 @@ import {
 import * as AppPT from '../../proptypes';
 import './maal.less';
 
+const REGISTRERINGSINFO_URL = '/registreringsinformasjon';
 function VisKnappMaal({fremtidigSituasjonTekst, mal}) {
     return (
-        <button className="typo-element lenke-knapp">
+        <a
+            href={REGISTRERINGSINFO_URL}
+            className="typo-element lenke lenke-knapp"
+        >
             {
                 (fremtidigSituasjonTekst && mal)
                     ? 'Endre'
                     : 'Legg til'
             }
-        </button>
+        </a>
     )
 }
 

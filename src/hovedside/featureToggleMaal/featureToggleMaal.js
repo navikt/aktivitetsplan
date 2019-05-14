@@ -1,36 +1,34 @@
 import React, {Component} from 'react';
 import Maal from '../maal/maal';
+import MittMaal from '../maalLinje/mitt-maal';
 import {connect} from "react-redux";
-import {harFeature, NYENDRINGIAKTIVITET} from "../../felles-komponenter/feature/feature";
+import {harFeature, NYHOVEDMAAL} from "../../felles-komponenter/feature/feature";
 import {selectFeatureData} from "../../felles-komponenter/feature/feature-selector";
 import PT from "prop-types";
 
 class FeatureToggleMaal extends Component {
     render() {
-        const { harNyEndringIAktitetFeature } = this.props;
-        console.log('props.harNyEndringIAktitetFeature', harNyEndringIAktitetFeature); // tslint:disable-line
-        return (
-            <Maal/>
-        )
+        const { visNyHovedmaal } = this.props;
+        return visNyHovedmaal ? <Maal/> : <MittMaal/>
     }
 }
 
 const mapStateToProps = (state) => {
-    const harNyEndringIAktitetFeature = harFeature(
-        NYENDRINGIAKTIVITET,
+    const visNyHovedmaal = harFeature(
+        NYHOVEDMAAL,
         selectFeatureData(state)
     );
     return {
-        harNyEndringIAktitetFeature
+        visNyHovedmaal
     }
 };
 
 FeatureToggleMaal.propTypes = {
-    harNyEndringIAktitetFeature: PT.bool,
+    visNyHovedmaal: PT.bool,
 };
 
 FeatureToggleMaal.defaultProps = {
-    harNyEndringIAktitetFeature: false,
+    visNyHovedmaal: false,
 };
 
 export default connect(mapStateToProps, null)(FeatureToggleMaal);
