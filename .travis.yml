@@ -12,4 +12,5 @@ matrix:
 
     - name: browserstack
       script:
+      - npm run build:tekster
       - npm run test:browsers
