@@ -3,7 +3,7 @@
 const os = require('os');
 const ifaces = os.networkInterfaces();
 
-function getNetworkIp() {
+exports.getNetworkIp = function () {
     return new Promise((resolve, reject) => {
         let ips;
         Object.keys(ifaces).forEach(function(ifname) {
@@ -14,8 +14,4 @@ function getNetworkIp() {
         });
         reject('Fant ikke ip');
     });
-}
-
-module.exports = {
-    getNetworkIp
 };
