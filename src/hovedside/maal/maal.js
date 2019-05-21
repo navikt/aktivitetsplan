@@ -57,7 +57,7 @@ class Maal extends Component {
             <div className="maal">
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <Element>Mål</Element>
-                    <EtikettLiten>{fremtidigSituasjonTekst ? fremtidigSituasjonTekst : ''}</EtikettLiten>
+                    <EtikettLiten className="hovedmaal">{fremtidigSituasjonTekst ? fremtidigSituasjonTekst : ''}</EtikettLiten>
                     <Normaltekst>{mal ? mal : ''}</Normaltekst>
                     <VisKnappMaal fremtidigSituasjonTekst={fremtidigSituasjonTekst} mal={mal}/>
                 </Innholdslaster>
