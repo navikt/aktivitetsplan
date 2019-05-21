@@ -42,6 +42,8 @@ fasitResources:
     resourceType: baseurl
   - alias: veientilarbeid
     resourceType: baseurl
+  - alias: registreringsinformasjon
+    resourceType: baseurl
 
 team: bos
 resources:
