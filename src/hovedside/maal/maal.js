@@ -21,7 +21,7 @@ import {
 import * as AppPT from '../../proptypes';
 import './maal.less';
 
-const REGISTRERINGSINFO_URL = '/registreringsinformasjon';
+const REGISTRERINGSINFO_URL = '/registreringsinformasjon?modus=rediger';
 function VisKnappMaal({fremtidigSituasjonTekst, mal}) {
     return (
         <a
