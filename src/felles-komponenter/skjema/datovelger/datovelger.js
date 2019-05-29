@@ -121,7 +121,6 @@ class DatoField extends Component {
                 </label>
                 <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
                     className="datovelger__inner"
-                    tabIndex=""
                     onClick={stopEvent}
                 >
                     <div className="datovelger__inputContainer">
