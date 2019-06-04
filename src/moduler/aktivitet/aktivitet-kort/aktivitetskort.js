@@ -36,11 +36,6 @@ import {
     settAktivitetSomVist,
 } from '../aktivitetview-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
-import {
-    harFeature,
-    NYENDRINGIAKTIVITET,
-} from '../../../felles-komponenter/feature/feature';
-import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 import AktivitetskortEndring from './aktivitetskort-endring';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../../ducks/utils';
@@ -186,10 +181,6 @@ const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
 );
 
 const mapStateToProps = (state, props) => {
-    const harNyEndringIAktitetFeature = harFeature(
-        NYENDRINGIAKTIVITET,
-        selectFeatureData(state)
-    );
     const lest = selectLestAktivitetsplan(state);
     const lestStatus = selectLestStatus(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
@@ -200,7 +191,6 @@ const mapStateToProps = (state, props) => {
     const me = selectIdentitetSlice(state).data;
 
     const harEndringerIAktivitet =
-        harNyEndringIAktitetFeature &&
         lestStatus === STATUS.OK &&
         erNyEndringIAktivitet(props.aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;

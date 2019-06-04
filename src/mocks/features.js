@@ -1,6 +1,12 @@
 export default function(queryParams) {
-    return queryParams.feature.reduce(
-        (acc, feature) => ({ ...acc, [feature]: true }),
-        {}
-    );
+    if (Array.isArray(queryParams)){
+        return queryParams.feature.reduce(
+            (acc, feature) => ({ ...acc, [feature]: true }),
+            {}
+        );
+    }
+    else {
+        return {[queryParams.feature]: true}
+    }
+
 }
