@@ -22,11 +22,6 @@ import KolonneFunction from './kolonne/kolonnefunction';
 import AktivitetsKort from './../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
-import {
-    harFeature,
-    NYENDRINGIAKTIVITET,
-} from '../../felles-komponenter/feature/feature';
-import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 
 export function lagAktivitetsListe(aktiviteter) {
     return aktiviteter.map(aktivitet =>
@@ -101,18 +96,10 @@ AktivitetsTavle.propTypes = {
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     reducersNotStarted: PT.bool.isRequired,
-    harNyEndringIAktitetFeature: PT.bool,
 };
 
-AktivitetsTavle.defaultProps = {
-    harNyEndringIAktitetFeature: false,
-};
 
 const mapStateToProps = state => {
-    const harNyEndringIAktitetFeature = harFeature(
-        NYENDRINGIAKTIVITET,
-        selectFeatureData(state)
-    );
 
     const statusAktiviteter = selectAktivitetStatus(state);
     const statusArenaAktiviteter = selectArenaAktivitetStatus(state);
@@ -127,7 +114,6 @@ const mapStateToProps = state => {
         erVeileder: selectErVeileder(state),
         avhengigheter,
         reducersNotStarted,
-        harNyEndringIAktitetFeature,
     };
 };
 
