@@ -40,14 +40,14 @@ const egenMalverk = [
 
 const sokeavtaleMalverk = [
     {
-        antallStillingerSokes: 5,
+        antallStillingerSokes: 20,
         avtaleOppfolging: '',
         fraDato: '2018-04-25T10:25:43.818Z',
         type: 'SOKEAVTALE',
         tittel: 'Avtale om å søke jobber',
         tilDato: '2018-07-25T10:25:43.818Z',
         beskrivelse:
-            'NAV forventer at du søker 5 stillinger hver uke i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb. Legg til hver stilling du søker i aktiviteten «En jobb jeg vil søke på».',
+            'NAV forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb. Legg til hver stilling du søker i aktiviteten «En jobb jeg vil søke på».',
         status: 'BRUKER_ER_INTERESSERT',
     },
 ];
