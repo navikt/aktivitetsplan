@@ -1,10 +1,13 @@
+import { hentFraSessionStorage, SessionStorageElement } from "./sessionstorage";
+
+const erPrivat = hentFraSessionStorage(SessionStorageElement.PRIVAT_BRUKER) === 'true';
 
 const oppfolging = {
     fnr: null,
     veilederId: null,
     reservasjonKRR: false,
     manuell: false,
-    underOppfolging: true,
+    underOppfolging: !erPrivat,
     underKvp: false,
     oppfolgingUtgang: null,
     gjeldendeEskaleringsvarsel: null,
