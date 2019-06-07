@@ -15,6 +15,7 @@ FROM docker.adeo.no:5000/pus/decorator
 #  - /environment.js-endepunktet legger public properties på window.aktivitetsplan
 #  - applikasjonen får /aktivitetsplan som contextpath i begge soner
 ENV APPLICATION_NAME=aktivitetsplan
+ENV GZIP_ENABLED=true
 COPY --from=builder /source/build /app
 
 ADD decorator.yaml /decorator.yaml
