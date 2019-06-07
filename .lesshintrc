@@ -7,5 +7,9 @@
         "allowWithClass": true
     },
     "spaceBetweenParens": false,
-    "universalSelector": false
+    "universalSelector": false,
+    "spaceAroundComma": {
+        "style": "after",
+        "allowNewline": true
+    }
 }

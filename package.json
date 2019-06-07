@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env REACT_APP_MOCK=true craco start",
-    "build:tekster": "node ./build-tekster.js",
+    "build:tekster": "node .scripts/build-tekster.js",
     "build": "npm run build:tekster && craco build",
     "test": "craco test",
     "test:coverage": "npm test -- --coverage --watchAll=false",
