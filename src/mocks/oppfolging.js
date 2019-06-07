@@ -1,4 +1,3 @@
-
 const oppfolging = {
     fnr: null,
     veilederId: null,

@@ -7,9 +7,7 @@ import {
     STATUS,
 } from './utils';
 
-const {
- OK, PENDING, ERROR, RELOADING, NOT_STARTED,
-} = STATUS;
+const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = STATUS;
 
 describe('utils', () => {
     describe('aggregerStatus', () => {
@@ -101,7 +99,9 @@ describe('utils', () => {
         const action = 'action';
 
         it('Sjekk at funksjonen returnerer et rejected promise', () => {
-            expect(handterFeil(() => {}, action)(new Error('message'))).rejects.toThrow('message');
+            expect(
+                handterFeil(() => {}, action)(new Error('message'))
+            ).rejects.toThrow('message');
         });
         it('Sjekk at funksjonen dispatcher parset feil', () => {
             const dispatch = jest.fn();
@@ -157,11 +157,13 @@ describe('utils', () => {
     });
     describe('getCookie', () => {
         it('Henter ut fra cookie', () => {
-            global.document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
+            global.document.cookie =
+                'test1=detteerentest123; test2=detteerogsåentest123';
             expect(getCookie('test1')).toEqual('detteerentest123');
         });
         it('Tom streng ved ingen match', () => {
-            global.document.cookie = 'test1=detteerentest123; test2=detteerogsåentest123';
+            global.document.cookie =
+                'test1=detteerentest123; test2=detteerogsåentest123';
             expect(getCookie('test0')).toEqual('');
         });
     });

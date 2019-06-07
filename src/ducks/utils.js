@@ -35,10 +35,10 @@ export function aggregerStatus(...reducereEllerStatuser) {
 
 export function sjekkStatuskode(response) {
     if (
-        response.status >= 200
-        && response.status < 300
-        && response.ok
-        && !response.redirected
+        response.status >= 200 &&
+        response.status < 300 &&
+        response.ok &&
+        !response.redirected
     ) {
         return response;
     }
@@ -97,7 +97,9 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                             `Type: ${errorData.type} ${errorData.detaljer
                                 ? errorData.detaljer.detaljertType
                                 : ''}`,
-                            errorData.detaljer ? errorData.detaljer.stackTrace : '',
+                            errorData.detaljer
+                                ? errorData.detaljer.stackTrace
+                                : '',
                         ].join('\n'),
                     });
                 }

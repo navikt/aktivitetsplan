@@ -49,7 +49,10 @@ mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }) =>
     opprettMal(body, true)
 );
 
-mock.get('/veilarbvedtakinfo/api/fremtidigsituasjon', ResponseUtils.delayed(500, fremtidigSituasjon));
+mock.get(
+    '/veilarbvedtakinfo/api/fremtidigsituasjon',
+    ResponseUtils.delayed(500, fremtidigSituasjon)
+);
 
 mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
 mock.get('/veilarboppfolging/api/oppfolging', ({ queryParams }) =>
@@ -95,7 +98,6 @@ mock.get('/veilarboppfolgingproxy/api/oppfolging/malListe', () => malListe());
 
 //veilarboppgave-api
 mock.get('/veilarboppgave/api/oppgavehistorikk', []);
-
 
 //veilarbdialog-api
 mock.get('/veilarbdialog/api/dialog', dialog);
