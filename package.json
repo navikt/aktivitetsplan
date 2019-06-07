@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "echo not implemented, part of the build script",
     "test": "craco test",
-    "test:coverage": "npm test -- --coverage",
+    "test:coverage": "npm test -- --coverage --watchAll=false",
     "test:e2e": "node integrationtest/local-runner.js",
     "test:browsers": "node integrationtest/saucelabs-runner.js",
     "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
