@@ -24,7 +24,8 @@ class FnrProvider extends Component {
     }
 
     render() {
-        return !window.appconfig.FNR_I_URL || fnrFraUrl() ? this.props.children : null;
+        const { children } = this.props;
+        return !window.appconfig.FNR_I_URL || fnrFraUrl() ? children : null;
     }
 }
 

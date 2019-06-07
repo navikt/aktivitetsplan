@@ -14,11 +14,9 @@ function AlertstripeListe({
 }) {
     const listeelementer = Object.entries(config)
         .filter(([, value]) => value)
-        .map(([key]) =>
-            <li key={key}>
+        .map(([key]) => <li key={key}>
                 <FormattedMessage id={key} />
-            </li>
-        );
+                        </li>);
 
     const harIngenElementer = listeelementer.length === 0;
 

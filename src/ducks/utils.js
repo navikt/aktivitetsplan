@@ -35,10 +35,10 @@ export function aggregerStatus(...reducereEllerStatuser) {
 
 export function sjekkStatuskode(response) {
     if (
-        response.status >= 200 &&
-        response.status < 300 &&
-        response.ok &&
-        !response.redirected
+        response.status >= 200
+        && response.status < 300
+        && response.ok
+        && !response.redirected
     ) {
         return response;
     }
@@ -75,7 +75,7 @@ function parseError(errorData) {
 
 export function handterFeil(dispatch, FEILET_TYPE) {
     return error => {
-        const response = error.response;
+        const { response } = error;
         if (response) {
             response.text().then(data => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
@@ -89,7 +89,7 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                 });
                 const errorData = JSON.parse(data);
 
-                if(!!window.frontendlogger){
+                if (window.frontendlogger) {
                     window.frontendlogger.error({
                         message: [
                             error.stack,
@@ -101,7 +101,6 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                         ].join('\n'),
                     });
                 }
-
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console

@@ -16,37 +16,43 @@ class Accordion extends Component {
 
     apne = e => {
         e.preventDefault();
+        const { onClick } = this.props;
+        const { apen } = this.state;
+
         this.setState({
-            apen: !this.state.apen,
+            apen: !apen,
         });
 
-        if (this.props.onClick !== undefined) {
-            this.props.onClick(e);
+        if (onClick !== undefined) {
+            onClick(e);
         }
     };
 
     render() {
+        const { apen } = this.state;
+        const { labelId, className, children } = this.props;
+
         const ChevronLink = (
             <a
                 href="/"
                 className={classNames('accordion__link', {
-                    'accordion__link-apen': this.state.apen,
+                    'accordion__link-apen': apen,
                 })}
                 onClick={this.apne}
             >
-                <FormattedMessage id={this.props.labelId} />
+                <FormattedMessage id={labelId} />
                 <NavFrontendChevron
-                    type={this.state.apen ? 'opp' : 'ned'}
+                    type={apen ? 'opp' : 'ned'}
                     className={classNames('accordion__chevron')}
                 />
             </a>
         );
 
         return (
-            <div className={this.props.className}>
-                <Collapse isOpened={this.state.apen}>
-                    <VisibleIfDiv visible={this.state.apen}>
-                        {this.props.children}
+            <div className={className}>
+                <Collapse isOpened={apen}>
+                    <VisibleIfDiv visible={apen}>
+                        {children}
                     </VisibleIfDiv>
                 </Collapse>
                 {ChevronLink}

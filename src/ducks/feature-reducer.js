@@ -1,5 +1,5 @@
-import * as Api from '../ducks/feature-api';
-import { createActionsAndReducer } from '../ducks/rest-reducer';
+import * as Api from './feature-api';
+import { createActionsAndReducer } from './rest-reducer';
 
 const { reducer, cashedAction } = createActionsAndReducer('feature');
 

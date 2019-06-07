@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import hiddenIfHOC from '../felles-komponenter/hidden-if/hidden-if';
+import hiddenIfHOC from './hidden-if/hidden-if';
 
 function TallAlert({ children }) {
     return (

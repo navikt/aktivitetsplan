@@ -22,7 +22,7 @@ function Hovedside() {
                     <InformasjonsHenting />
                     <Varslinger />
                     <div className="container">
-                        <FeatureToggleMaal/>
+                        <FeatureToggleMaal />
                         <Verktoylinje />
                     </div>
                     <AktivitetsTavle />
