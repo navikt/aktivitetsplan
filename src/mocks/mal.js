@@ -1,3 +1,5 @@
+import { erEksternBruker } from "./sessionstorage";
+
 export const maler = [
     {
         mal: 'Jeg vil bli sjørøver',
@@ -15,10 +17,10 @@ export function sisteMal() {
     return maler[maler.length - 1];
 }
 
-export function opprettMal(update, erVeileder) {
+export function opprettMal(update) {
     let nyMal = {
         mal: update.mal,
-        endretAv: erVeileder ? 'VEILEDER' : 'BRUKER',
+        endretAv: erEksternBruker() ? 'BRUKER': 'VEILEDER',
         dato: new Date(),
     };
     maler.push(nyMal);

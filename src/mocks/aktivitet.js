@@ -1,6 +1,9 @@
 import moment from 'moment';
 import { rndId } from './utils';
-import me from './me';
+import { erEksternBruker } from './sessionstorage';
+
+const eksternBruker = erEksternBruker();
+const bruker = eksternBruker? 'BRUKER' : 'NAV';
 
 const aktiviteter = [
     wrapAktivitet({
@@ -233,10 +236,11 @@ export function opprettAktivitet(aktivitet) {
     const newAktivitet = wrapAktivitet({
         id: rndId(),
         opprettetDato: new Date(),
-        lagtInnAv: me.erBruker === true ? 'BRUKER' : 'NAV',
+        lagtInnAv: bruker,
         endretDato: moment().toISOString(),
-        endretAv: me.id,
+        endretAv: null,
         versjon: '1',
+        erLestAvBruker: eksternBruker,
         ...aktivitet,
     });
     aktiviteter.push(newAktivitet);
@@ -249,8 +253,8 @@ export function oppdaterAktivitet(aktivitetId, aktivitet) {
     );
     Object.assign(oldAktivitet, aktivitet);
     oldAktivitet.endretDato = moment().toISOString();
-    oldAktivitet.endretAv = me.id;
-    oldAktivitet.lagtInnAv = me.erBruker === true ? 'BRUKER' : 'NAV';
+    oldAktivitet.endretAv = bruker;
+    oldAktivitet.lagtInnAv = bruker;
 
     return oldAktivitet;
 }
