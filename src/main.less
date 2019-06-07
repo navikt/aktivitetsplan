@@ -79,6 +79,23 @@
         word-wrap: break-word;
         display: block;
     }
+
+
+    .container {
+        margin-right: auto;
+        margin-left: auto;
+        padding-left: 8px;
+        padding-right: 8px;
+        box-sizing: border-box;
+        .clearfix();
+        @media (min-width: @screen-sm-min) {
+            width: @container-sm;
+        }
+
+        @media (min-width: @screen-md-min) {
+            width: 890px;
+        }
+    }
 }
 
 .ReactModal__Body--open {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Container } from 'nav-frontend-grid';
 import { moment } from '../../utils';
 import { hentIdentitet } from '../identitet/identitet-reducer';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
@@ -68,7 +67,7 @@ class Varslinger extends Component {
         const reaktiveringsInfoTekst = this.hentInfotekstTilInaktivertBrukere();
 
         const visVarslingerForBruker = (
-            <Container>
+            <div className="container">
                 <HiddenIfVarslingMedLenke
                     hidden={!brukerErEskalert}
                     tekstId="oppfolgning.bruker.bruker-er-eskalert"
@@ -97,7 +96,7 @@ class Varslinger extends Component {
                     erEksternLenke
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
-            </Container>
+            </div>
         );
 
         return (
