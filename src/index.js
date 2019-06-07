@@ -5,7 +5,7 @@ import App from './app';
 import NAVSPA from './NAVSPA';
 import * as ReactDOM from 'react-dom';
 import DemoDashboard from './mocks/demoDashboard'
-import { hentFraSessionStorage, SessionStorageElement } from "./mocks/sessionstorage";
+import { erEksternBruker } from "./mocks/sessionstorage";
 import { eksternBrukerConfig, veilederConfig } from "./mocks/appconfig";
 
 /* eslint-disable global-require */
@@ -16,8 +16,7 @@ if (!global.Intl) {
 
 if (process.env.REACT_APP_MOCK === 'true') {
 
-    const erEksternBruker = hentFraSessionStorage(SessionStorageElement.EKSTERN_BRUKER) === 'true';
-    if (erEksternBruker) {
+    if (erEksternBruker()) {
         window.history.replaceState('', '', `/`);
         window.appconfig = eksternBrukerConfig;
     }

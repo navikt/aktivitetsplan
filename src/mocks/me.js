@@ -1,4 +1,4 @@
-import { hentFraSessionStorage, SessionStorageElement } from "./sessionstorage";
+import { erEksternBruker } from "./sessionstorage";
 
 const eksternbruker = {
     id: '1234567890',
@@ -12,7 +12,7 @@ const veileder = {
     erBruker: false,
 };
 
-const erEksternbruker = hentFraSessionStorage(SessionStorageElement.EKSTERN_BRUKER) === 'true';
+const erEksternbruker = erEksternBruker();
 
 export default () => {
     if (erEksternbruker) return eksternbruker;

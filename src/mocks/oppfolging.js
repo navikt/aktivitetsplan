@@ -1,34 +1,34 @@
-import { hentFraSessionStorage, SessionStorageElement } from "./sessionstorage";
+import { erPrivatBruker } from "./sessionstorage";
 
-const erPrivat = hentFraSessionStorage(SessionStorageElement.PRIVAT_BRUKER) === 'true';
+const oppfPerioder = [
+    {
+        aktorId: '1234567988888',
+        veileder: null,
+        startDato: '2018-01-30T10:46:10.971+01:00',
+        sluttDato: '2018-01-31T10:46:10.971+01:00',
+        begrunnelse: null,
+    },
+    {
+        aktorId: '1234567988888',
+        veileder: null,
+        startDato: '2018-01-31T10:46:10.971+01:00',
+        sluttDato: null,
+        begrunnelse: null,
+    },
+];
 
 const oppfolging = {
     fnr: null,
     veilederId: null,
     reservasjonKRR: false,
     manuell: false,
-    underOppfolging: !erPrivat,
+    underOppfolging: !erPrivatBruker(),
     underKvp: false,
     oppfolgingUtgang: null,
     gjeldendeEskaleringsvarsel: null,
     kanStarteOppfolging: false,
     avslutningStatus: null,
-    oppfolgingsPerioder: [
-        {
-            aktorId: '1234567988888',
-            veileder: null,
-            startDato: '2018-01-30T10:46:10.971+01:00',
-            sluttDato: '2018-01-31T10:46:10.971+01:00',
-            begrunnelse: null,
-        },
-        {
-            aktorId: '1234567988888',
-            veileder: null,
-            startDato: '2018-01-31T10:46:10.971+01:00',
-            sluttDato: null,
-            begrunnelse: null,
-        },
-    ],
+    oppfolgingsPerioder: oppfPerioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',

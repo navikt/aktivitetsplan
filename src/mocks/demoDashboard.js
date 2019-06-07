@@ -1,7 +1,12 @@
 import React from 'react';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import {CheckboksPanelGruppe, RadioPanelGruppe} from 'nav-frontend-skjema';
-import { SessionStorageElement, hentFraSessionStorage, settSessionStorage } from "./sessionstorage";
+import {
+    SessionStorageElement,
+    settSessionStorage,
+    erEksternBruker,
+    erPrivatBruker
+} from "./sessionstorage";
 
 const brukertype = {
     ekstern: 'eksternbruker',
@@ -29,7 +34,7 @@ class DemoDashboard extends React.Component {
     };
 
     getBrukerType = () => {
-       if(hentFraSessionStorage(SessionStorageElement.EKSTERN_BRUKER) === 'true') {
+       if(erEksternBruker()) {
            return brukertype.ekstern;
        }
        else return brukertype.veileder;
@@ -57,7 +62,7 @@ class DemoDashboard extends React.Component {
                         {
                             label: 'Ikke under oppfølging',
                             id: SessionStorageElement.PRIVAT_BRUKER,
-                            checked: hentFraSessionStorage(SessionStorageElement.PRIVAT_BRUKER) === 'true'
+                            checked: erPrivatBruker()
                         }
                     ]}
                     onChange={this.endreTilstand}

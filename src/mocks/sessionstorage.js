@@ -13,3 +13,10 @@ export const hentFraSessionStorage = (key) => {
     return window.sessionStorage.getItem(key);
 };
 
+export const erEksternBruker = () => {
+    return hentFraSessionStorage(SessionStorageElement.EKSTERN_BRUKER) === 'true';
+};
+
+export const erPrivatBruker = () => {
+    return hentFraSessionStorage(SessionStorageElement.PRIVAT_BRUKER) === 'true';
+};
