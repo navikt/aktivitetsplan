@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from 'nav-frontend-grid';
 import Varslinger from '../moduler/varslinger/varslinger';
 import AktivitetsTavle from './tavle/aktivitetstavle';
 import InformasjonsHenting from '../moduler/informasjon/informasjon-henting';
@@ -22,10 +21,10 @@ function Hovedside() {
                 <OppfolgingStatus>
                     <InformasjonsHenting />
                     <Varslinger />
-                    <Container>
+                    <div className="container">
                         <FeatureToggleMaal/>
                         <Verktoylinje />
-                    </Container>
+                    </div>
                     <AktivitetsTavle />
                     <Routing />
                 </OppfolgingStatus>
