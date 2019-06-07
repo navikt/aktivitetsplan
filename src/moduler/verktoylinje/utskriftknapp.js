@@ -9,6 +9,7 @@ function Utskriftknapp({ ariaLabel, lenke, className, history }) {
         <FormattedMessage id={ariaLabel}>
             {label =>
                 <button
+                    type="button"
                     className={className}
                     aria-label={label}
                     onClick={() => history.push(lenke)}

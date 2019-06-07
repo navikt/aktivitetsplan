@@ -25,7 +25,7 @@ class Tavle extends Component {
         const clickIndex =  Math.min(this.state.currentIndex, this.state.clickIndex) - 1
         const scrollTo = clickIndex * KOLONNEBREDDE;
         this.scrollbars.scrollLeft(scrollTo);
-        this.setState({clickIndex: clickIndex});
+        this.setState({clickIndex});
     }
 
     visNeste() {
@@ -39,7 +39,7 @@ class Tavle extends Component {
         const scrollTo =
             clickIndex * KOLONNEBREDDE - clientWidthWithOffset;
         this.scrollbars.scrollLeft(scrollTo);
-        this.setState({clickIndex: clickIndex});
+        this.setState({clickIndex});
     }
 
     updateState(values) {

@@ -9,7 +9,7 @@ import featureReducer from './ducks/feature-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import identitetReducer from './moduler/identitet/identitet-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
-import fremtidigSituasjonReducer from '../src/hovedside/maal/fremtidigSituasjon-reducer';
+import fremtidigSituasjonReducer from "./hovedside/maal/fremtidigSituasjon-reducer";
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import veilederePaEnhetReducer from './moduler/veiledere-pa-enhet/veiledere-pa-enhet-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';

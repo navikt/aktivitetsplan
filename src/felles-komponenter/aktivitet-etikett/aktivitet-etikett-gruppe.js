@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import AktivitetEtikett from './aktivitet-etikett';
 import { AVTALT_MED_NAV } from '../../constant';
 import * as AppPT from '../../proptypes';
-import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
+import { div as HiddenIfDiv } from "../hidden-if/hidden-if";
 
 function AktivitetEtikettGruppe({ aktivitet, className }) {
     const { avtalt, etikett } = aktivitet;

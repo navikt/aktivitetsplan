@@ -19,7 +19,7 @@ import {
     STATUS_AVBRUTT,
 } from '../../constant';
 import KolonneFunction from './kolonne/kolonnefunction';
-import AktivitetsKort from './../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
+import AktivitetsKort from "../../moduler/aktivitet/aktivitet-kort/aktivitetskort";
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 

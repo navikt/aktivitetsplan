@@ -75,10 +75,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => {
-    const dialog = props.dialog;
+    const {dialog} = props;
     const dialogId = dialog.id;
-    const ferdigBehandlet = dialog.ferdigBehandlet;
-    const venterPaSvar = dialog.venterPaSvar;
+    const {ferdigBehandlet} = dialog;
+    const {venterPaSvar} = dialog;
     return {
         doHentIdentitet: () => dispatch(hentIdentitet()),
         toggleFerdigbehandlet: () =>

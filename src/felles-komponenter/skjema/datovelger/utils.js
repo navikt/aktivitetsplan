@@ -12,7 +12,7 @@ export function validerDatoField(input, intl, alternativer) {
         return intl.formatMessage({
             id: 'datepicker.feilmelding.ugyldig-dato',
         });
-    } else if (
+    } if (
         fra &&
         til &&
         (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))

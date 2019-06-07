@@ -37,7 +37,7 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
     const vistekster = window.location.search.indexOf('vistekster') !== -1;
     const aktor = erVeileder ? 'veileder' : 'bruker';
     const feilType = feil.type;
-    const melding = feil.melding;
+    const {melding} = feil;
     const unauthorized = feil.httpStatus === 401;
     const feilKategori = unauthorized
         ? UNAUTHORIZED_KATEGORI

@@ -16,13 +16,15 @@ class Provider extends Component {
         super(props);
         store.dispatch(RESET_STORE);
     }
+
     render() {
+        const {children} = this.props;
         return (
             <ReduxProvider store={store}>
                 <InitiellDataLast>
                     <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
                         <div>
-                            {this.props.children}
+                            {children}
                         </div>
                     </IntlProvider>
                 </InitiellDataLast>

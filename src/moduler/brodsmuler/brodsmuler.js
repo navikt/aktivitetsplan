@@ -14,7 +14,7 @@ function Brodsmuler(props) {
     }
     return (
         <div className="brodsmuler">
-            <PersonIcon/>
+            <PersonIcon />
             <ol className="brodsmuler__list">
                 <Brodsmule tekst="Ditt NAV" path={DITTNAVN_PATH} />
                 <Brodsmule

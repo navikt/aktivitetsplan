@@ -64,6 +64,8 @@ VidereSendBrukereEllerRenderChildren.propTypes = {
     erVeileder: PT.bool,
     manuell: PT.bool,
     underOppfolging: PT.bool,
+    reservasjonKRR: PT.bool,
+    videreSendTilInfo: PT.bool,
     kanStarteOppfolging: PT.bool,
     oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
 };

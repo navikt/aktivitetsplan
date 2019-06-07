@@ -199,7 +199,7 @@ AktivitetStatusForm.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet;
+    const {aktivitet} = props;
     const { status, avsluttetKommentar, type } = aktivitet;
     const erArenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,

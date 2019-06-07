@@ -17,11 +17,11 @@ import UtskriftKnapp from './utskriftknapp';
 import {
     selectDialoger,
     selectHarTilgangTilDialog,
-} from '../../moduler/dialog/dialog-selector';
-import { dialogFilter } from '../../moduler/filtrering/filter/filter-utils';
+} from "../dialog/dialog-selector";
+import { dialogFilter } from "../filtrering/filter/filter-utils";
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
-import VisValgtFilter from '../../moduler/filtrering/filter-vis-label';
+import VisValgtFilter from "../filtrering/filter-vis-label";
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import { hentDialog } from '../dialog/dialog-reducer';
 
@@ -33,7 +33,8 @@ const knapplenkeCls = (className, disabled) =>
 
 class Verktoylinje extends Component {
     componentDidMount() {
-        this.props.doHentDialog();
+        const {doHentDialog} = this.props;
+        doHentDialog();
     }
 
     render() {

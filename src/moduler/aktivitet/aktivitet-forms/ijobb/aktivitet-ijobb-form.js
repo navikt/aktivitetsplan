@@ -70,7 +70,7 @@ const begrensetBeskrivelseLengde = maksLengde(
 // eslint-disable-next-line react/prefer-stateless-function
 class IJobbAktivitetForm extends Component {
     render() {
-        const props = this.props;
+        const {props} = this;
         const {
             avtalt,
             currentFraDato,

@@ -43,7 +43,7 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
     return selectHistoriskeOppfolgingsPerioder(state)
         .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
         .map(periode => {
-            const sluttDato = periode.sluttDato;
+            const {sluttDato} = periode;
             const fra = nesteFra;
             nesteFra = sluttDato;
             return {

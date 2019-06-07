@@ -34,10 +34,11 @@ export function VarslingMedLenke({
 }) {
     return (
         <AlertStripeInfoSolid className={className}>
-            <FormattedMessage id={tekstId} />&nbsp;
-            <Lenke href={href} onClick={onClick}>
+            <FormattedMessage id={tekstId} />
+&nbsp;
+<Lenke href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
-            </Lenke>
+</Lenke>
         </AlertStripeInfoSolid>
     );
 }
@@ -83,14 +84,15 @@ export function AdvarselMedLenkeVarsling({
 }) {
     return (
         <AlertStripeAdvarsel className={className}>
-            <FormattedMessage id={tekstId} values={values} />&nbsp;
-            <Lenke
+            <FormattedMessage id={tekstId} values={values} />
+&nbsp;
+<Lenke
                 href={href}
                 onClick={onClick}
                 erEksternLenke={erEksternLenke}
             >
                 <FormattedMessage id={lenkeTekstId} />
-            </Lenke>
+</Lenke>
         </AlertStripeAdvarsel>
     );
 }

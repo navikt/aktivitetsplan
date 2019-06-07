@@ -36,7 +36,7 @@ VarslingBoks.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet;
+    const {aktivitet} = props;
     return {
         avhengigheter: [
             selectIdentitetStatus(state),

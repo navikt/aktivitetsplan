@@ -1,8 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import visibleIfHOC from './../../hocs/visible-if';
+import visibleIfHOC from "../../hocs/visible-if";
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
     selectMalverkData,
@@ -33,22 +36,25 @@ class Malverk extends Component {
     }
 
     componentWillUnmount() {
-        this.props.doSlettValgtMalverk();
+        const {doSlettValgtMalverk} = this.props;
+        doSlettValgtMalverk();
     }
 
     onChangeMalverk = event => {
+        const {doHentMalverkMedTittel, doSettValgtMalverk} = this.props;
         event.preventDefault();
         // event.target.value er tittel på malverk
-        const valgtMalverk = this.props.doHentMalverkMedTittel(
+        const valgtMalverk = doHentMalverkMedTittel(
             event.target.value
         );
-        this.props.doSettValgtMalverk(valgtMalverk);
+        doSettValgtMalverk(valgtMalverk);
     };
 
     render() {
         const { malverk, avhengigheter, endre } = this.props;
         const malverkOptions = Object.values(malverk).map(lagMalverkOption);
 
+        const domId = "malverk";
         return (
             !endre &&
             <div className="skjemaelement">
@@ -56,12 +62,13 @@ class Malverk extends Component {
                     avhengigheter={avhengigheter}
                     spinnerStorrelse="S"
                 >
-                    <label className="skjemaelement__label" htmlFor="malverk">
+                    <label className="skjemaelement__label" htmlFor={domId}>
                         <FormattedMessage id="aktivitet-form.label.malverk" />
                     </label>
                     <div className="selectContainer input--fullbredde">
                         <select
                             className="skjemaelement__input"
+                            id={domId}
                             name="malverk"
                             onClick={this.onChangeMalverk}
                         >
@@ -92,7 +99,7 @@ Malverk.propTypes = {
 };
 
 Malverk.defaultProps = {
-    egen: false,
+    endre: false,
     malverk: undefined,
 };
 

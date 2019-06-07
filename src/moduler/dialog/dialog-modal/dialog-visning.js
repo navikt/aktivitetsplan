@@ -39,8 +39,8 @@ class DialogVisning extends React.PureComponent {
     render() {
         const { dialog, erValgt, aktiviteter, erTabBar, history } = this.props;
 
-        const venterPaSvar = dialog.venterPaSvar;
-        const ferdigBehandlet = dialog.ferdigBehandlet;
+        const {venterPaSvar} = dialog;
+        const {ferdigBehandlet} = dialog;
 
         const dialogCls = (valgt, ulest) =>
             classNames('dialoger__dialog', {
@@ -55,7 +55,7 @@ class DialogVisning extends React.PureComponent {
         const aktivitetType = aktivitet && aktivitet.type;
         const harAktivitetType = !!aktivitetType;
 
-        const henvendelser = dialog.henvendelser;
+        const {henvendelser} = dialog;
         const harHenvendelseFraVeileder = !!henvendelser.find(
             a => a.avsender === 'VEILEDER'
         );

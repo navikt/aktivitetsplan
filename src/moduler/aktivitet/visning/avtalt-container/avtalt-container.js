@@ -133,7 +133,7 @@ class AvtaltContainer extends Component {
             (this.state.forhandsorienteringSent && 'forhandsorienteringSent') ||
             (!this.state.forhandsorienteringSent &&
                 'forhandsorienteringIkkeSent');
-        const forhandsorienteringType = this.state.forhandsorienteringType;
+        const {forhandsorienteringType} = this.state;
 
         const visAvtalt = (
             <div className={className}>

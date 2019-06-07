@@ -79,15 +79,15 @@ export const toDatePrettyPrint = dato => {
         return null;
     }
 
-    const _dato = toDate(dato);
+    const tmpDato = toDate(dato);
 
     const days =
-        _dato.getDate() < 10 ? `0${_dato.getDate()}` : `${_dato.getDate()}`;
+        tmpDato.getDate() < 10 ? `0${tmpDato.getDate()}` : `${tmpDato.getDate()}`;
     const months =
-        _dato.getMonth() + 1 < 10
-            ? `0${_dato.getMonth() + 1}`
-            : `${_dato.getMonth() + 1}`;
-    const years = _dato.getFullYear();
+        tmpDato.getMonth() + 1 < 10
+            ? `0${tmpDato.getMonth() + 1}`
+            : `${tmpDato.getMonth() + 1}`;
+    const years = tmpDato.getFullYear();
 
     return `${days}.${months}.${years}`;
 };
@@ -129,6 +129,7 @@ function formatter(dato, format) {
         const datoVerdi = moment(dato);
         return datoVerdi.isValid() ? datoVerdi.format(format) : undefined;
     }
+    return undefined;
 }
 
 export function formaterDato(dato) {
@@ -153,7 +154,7 @@ export function formaterTid(dato) {
 
 export function formaterDatoTidSiden(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? 'for ' + datoVerdi.fromNow() : undefined;
+    return datoVerdi.isValid() ? `for ${  datoVerdi.fromNow()}` : undefined;
 }
 
 function erMerEnntoDagerSiden(dato) {
@@ -181,20 +182,28 @@ export function erMerEnnToManederSiden(aktivitet) {
 
 export function formaterDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid
-        ? erMerEnntoDagerSiden(dato)
-          ? formaterDatoTidSiden(dato)
-          : formaterDatoKortManedTid(dato)
-        : undefined;
+
+    if (datoVerdi.isValid) {
+        if(erMerEnntoDagerSiden(dato)){
+            return formaterDatoTidSiden(dato)
+        } 
+            return formaterDatoKortManedTid(dato)
+        
+    }
+    return undefined;
 }
 
 export function formaterDatoEllerTidSidenUtenKlokkeslett(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid
-        ? erMerEnntoDagerSiden(dato)
-          ? formaterDatoTidSiden(dato)
-          : formaterDatoKortManed(dato)
-        : undefined;
+
+    if(datoVerdi.isValid()){
+        if(erMerEnntoDagerSiden(dato)){
+            return formaterDatoTidSiden(dato)
+        }
+            return formaterDatoKortManed(dato)
+        
+    }
+    return undefined;
 }
 
 export function datoComparator(a, b) {

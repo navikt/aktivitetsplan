@@ -15,8 +15,8 @@ function EtikettFilter({
         <FilterVisningsKomponent
             harAktiviteter={harAktivitetEtiketter}
             filter={aktivitetEtiketter}
-            filterTittel={'filter.aktivitet.etikett.tittel'}
-            filterTekst={'aktivitet.etikett.'}
+            filterTittel="filter.aktivitet.etikett.tittel"
+            filterTekst="aktivitet.etikett."
             doToggleFunction={doToggleAktivitetsEtikett}
         />
     );
@@ -32,7 +32,7 @@ const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetEtiketterFilter = selectAktivitetEtiketterFilter(state);
     const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
-        const etikett = aktivitet.etikett;
+        const {etikett} = aktivitet;
         if (etikett) {
             etiketter[etikett] = aktivitetEtiketterFilter[etikett]; // eslint-disable-line no-param-reassign
         }

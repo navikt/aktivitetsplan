@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import 'whatwg-fetch'
 
 if (!window._babelPolyfill) {

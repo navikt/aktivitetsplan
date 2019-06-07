@@ -7,7 +7,7 @@ import { hentFeature } from './ducks/feature-reducer';
 
 class InitiellDataLast extends Component {
     componentDidMount() {
-        const enhet = queryString.parse(window.location.search).enhet;
+        const {enhet} = queryString.parse(window.location.search);
         this.props.actions.hentFeature(enhet);
     }
 

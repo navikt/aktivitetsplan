@@ -49,7 +49,7 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
-import FnrProvider from './../../bootstrap/fnr-provider';
+import FnrProvider from "../../bootstrap/fnr-provider";
 import {
     selectAlleDialoger,
     selectDialogStatus,
@@ -114,7 +114,7 @@ function Print({
         <StatusGruppe gruppe={gruppe} key={gruppe.status} />
     );
 
-    const behandlendeEnhet = bruker.behandlendeEnhet;
+    const {behandlendeEnhet} = bruker;
     const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
 
     const erKvpUtskrift =
@@ -252,9 +252,11 @@ const STEP_UTSKRIFT = 'UTSKRIFT';
 
 class AktivitetsplanPrintModal extends Component {
     componentDidMount() {
-        this.props.doHentMal();
-        this.props.doHentMalListe();
-        metrikkOpnePrintModal(this.props.erVeileder);
+        const {doHentMal, doHentMalListe, erVeileder} = this.props;
+
+        doHentMal();
+        doHentMalListe();
+        metrikkOpnePrintModal(erVeileder);
     }
 
     render() {
@@ -387,7 +389,7 @@ const mapStateToProps = state => {
     const dialoger = selectAlleDialoger(state);
 
     const statusTilAktiviteter = aktiviteter.reduce((memo, aktivitet) => {
-        const status = aktivitet.status;
+        const {status} = aktivitet;
         const nesteMemo = memo;
         if (nesteMemo[status]) {
             nesteMemo[status].push(aktivitet);

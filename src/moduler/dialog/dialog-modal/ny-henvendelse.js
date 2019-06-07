@@ -17,7 +17,7 @@ import { HiddenIfAlertStripeSuksessSolid } from '../../../felles-komponenter/hid
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 import Checkbox from '../../../felles-komponenter/skjema/input/checkbox';
-import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import { selectErBruker } from "../../identitet/identitet-selector";
 import {
     selectAlleDialoger,
     selectDialogMedId,
@@ -169,8 +169,8 @@ const NyHenvendelseReduxForm = validForm({
 })(NyHenvendelseForm);
 
 const mapStateToProps = (state, props) => {
-    const aktivitetId = props.aktivitetId;
-    const dialogId = props.dialogId;
+    const {aktivitetId} = props;
+    const {dialogId} = props;
     const dialog = selectDialogMedId(state, dialogId) || {};
     const dialoger = selectAlleDialoger(state);
     const erNyDialog = Object.keys(dialog).length === 0;
@@ -203,9 +203,9 @@ const mapDispatchToProps = () => ({
             ...dialogData,
         })(dispatch);
 
-        const onComplete = props.onComplete;
+        const {onComplete} = props;
         nyHenvendelsePromise.then(action => {
-            const data = action.data;
+            const {data} = action;
             const dialogId = data.id;
             if (props.erNyDialog && !props.erBruker) {
                 const ferdigbehandlet = !dialogData.ikkeFerdigbehandlet;

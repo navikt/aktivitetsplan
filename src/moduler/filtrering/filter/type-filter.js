@@ -15,8 +15,8 @@ function TypeFilter({
         <FilterVisningsKomponent
             harAktiviteter={harAktivitetTyper}
             filter={aktivitetTyper}
-            filterTittel={'filter.aktivitet.type.tittel'}
-            filterTekst={'aktivitet.type.'}
+            filterTittel="filter.aktivitet.type.tittel"
+            filterTekst="aktivitet.type."
             doToggleFunction={doToggleAktivitetsType}
         />
     );
@@ -32,7 +32,7 @@ const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
     const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
-        const type = aktivitet.type;
+        const {type} = aktivitet;
         typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
         return typer;
     }, {});

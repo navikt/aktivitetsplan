@@ -62,7 +62,7 @@ export function aktivitetFilter(aktivitet, state) {
 
     const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.avtaltMedNav;
     const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav;
-    const avtalt = aktivitet.avtalt;
+    const {avtalt} = aktivitet;
     const aktivtAvtaltFilter = avtaltMedNavFilter ^ ikkeAvtaltMedNavFilter;
     const muligeAvtaltFiltereringer =
         (avtaltMedNavFilter && !avtalt) || (ikkeAvtaltMedNavFilter && avtalt);

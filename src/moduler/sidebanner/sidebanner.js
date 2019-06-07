@@ -11,7 +11,7 @@ function Sidebanner() {
             <div className="sidebanner-grid">
                 <Brodsmuler />
                 <div className="sidebanner">
-                    <BannerIcon/>
+                    <BannerIcon />
                     <Sidetittel className="sidebanner__tittel">
                         <FormattedMessage id="hovedside.tittel" />
                     </Sidetittel>

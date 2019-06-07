@@ -24,7 +24,7 @@ class NyAktivitet extends Component {
                 feilmeldinger={this.props.aktivitetFeilmeldinger}
             >
                 <div className="ny-aktivitet-modal__header">
-                    <LeggTilIcon/>
+                    <LeggTilIcon />
                     <Innholdstittel className="ny-aktivitet-tittel">
                         <FormattedMessage id="ny-aktivitet-modal.tittel" />
                     </Innholdstittel>

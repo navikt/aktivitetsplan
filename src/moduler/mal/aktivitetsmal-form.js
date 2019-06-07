@@ -93,7 +93,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = () => ({
     onSubmit: (newMal, dispatch, props) => {
-        const handleComplete = props.handleComplete;
+        const {handleComplete} = props;
         const newMalTrimmed = trim(newMal.mal);
         const oldMalTimmed = trim(props.mal.mal);
         if (newMalTrimmed !== oldMalTimmed) {

@@ -12,10 +12,11 @@ function AktiverDigitalOppfolgingVarsel({
 }) {
     const InformasjonContainer = () =>
         <div>
-            <FormattedMessage id="informasjon-mer" />&nbsp;
-            <Lenke href="/informasjon">
+            <FormattedMessage id="informasjon-mer" />
+&nbsp;
+<Lenke href="/informasjon">
                 <FormattedMessage id="informasjon-mer-lenke" />
-            </Lenke>
+</Lenke>
         </div>;
 
     if (!reservertIKRR && !settDigitalFeilet) {
@@ -27,7 +28,7 @@ function AktiverDigitalOppfolgingVarsel({
                 <InformasjonContainer />
             </AlertStripeInfoSolid>
         );
-    } else if (reservertIKRR && !settDigitalFeilet) {
+    } if (reservertIKRR && !settDigitalFeilet) {
         const resertvertTekst = harTrykketRefresh
             ? 'sett-digital.reservert-i-krr.fjern.reservasjon.infotekst'
             : 'sett-digital.reservert-i-krr.infotekst';
@@ -36,16 +37,17 @@ function AktiverDigitalOppfolgingVarsel({
                 {url =>
                     <AlertStripeInfoSolid className="sett-digital__varsel">
                         <div className="blokk-s">
-                            <FormattedMessage id={resertvertTekst} />&nbsp;
-                            <Lenke href={url}>
+                            <FormattedMessage id={resertvertTekst} />
+&nbsp;
+<Lenke href={url}>
                                 <FormattedMessage id="sett-digital.reservert-i-krr.lenketekst" />
-                            </Lenke>
+</Lenke>
                         </div>
                         <InformasjonContainer />
                     </AlertStripeInfoSolid>}
             </FormattedMessage>
         );
-    } else if (settDigitalFeilet) {
+    } if (settDigitalFeilet) {
         return (
             <AdvarselVarsling
                 tekstId="sett-digital.feilmelding"

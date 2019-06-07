@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { fn } from './../../utils';
+import { fn } from "../../utils";
 
 export default function hiddenIfHOC(WrappingComponent) {
     function hiddenIf({ hidden, ...props }) {

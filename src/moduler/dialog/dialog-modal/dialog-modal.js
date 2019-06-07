@@ -21,7 +21,7 @@ import Feilmelding from '../../feilmelding/feilmelding';
 import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse, { nyDialogFormNavn } from './dialog-henvendelse';
-import FnrProvider from './../../../bootstrap/fnr-provider';
+import FnrProvider from "../../../bootstrap/fnr-provider";
 import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import { endreDialogFormNavn, nyHenvendelseDialogFormNavn } from './dialog';
 import { selectErVeileder } from '../../identitet/identitet-selector';

@@ -34,7 +34,7 @@ class OppdaterReferatContainer extends Component {
     }
 
     render() {
-        const props = this.props;
+        const {props} = this;
         const {
             kanHaReferat,
             visReferat,
@@ -82,15 +82,15 @@ OppdaterReferatContainer.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet;
-    const erReferatPublisert = aktivitet.erReferatPublisert;
+    const {aktivitet} = props;
+    const {erReferatPublisert} = aktivitet;
     const aktivitetType = aktivitet.type;
     const kanHaReferat =
         (aktivitetType === MOTE_TYPE &&
             moment(aktivitet.fraDato).toISOString() < moment().toISOString()) ||
         aktivitetType === SAMTALEREFERAT_TYPE;
 
-    const referat = aktivitet.referat;
+    const {referat} = aktivitet;
     const harReferat = !!referat;
 
     const erVeileder = selectErVeileder(state);

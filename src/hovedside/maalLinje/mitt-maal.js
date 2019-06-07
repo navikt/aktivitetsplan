@@ -49,10 +49,10 @@ class MittMaal extends Component {
                 className="mitt-maal"
                 onClick={() => loggMittMalKlikk(erVeileder)}
             >
-                <MalIcon/>
+                <MalIcon />
                 <div className="mittmal_content">
                     <Element className="mittmal__content-header">
-                        <FormattedMessage id={'aktivitetsmal.mitt-mal'} />
+                        <FormattedMessage id="aktivitetsmal.mitt-mal" />
                     </Element>
                     <Innholdslaster avhengigheter={avhengigheter}>
                         <Mal disabled={disabled} mal={mal} />

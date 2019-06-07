@@ -17,7 +17,7 @@ import {
     hentMal,
     selectMalStatus,
     selectGjeldendeMal,
-} from '../../moduler/mal/aktivitetsmal-reducer';
+} from "./aktivitetsmal-reducer";
 import { selectMalListe, selectMalListeStatus } from './aktivitetsmal-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import {
@@ -63,7 +63,8 @@ function malListeVisning(gjeldendeMal, erVeileder) {
                 <span>
                     {identitetMap(erVeileder, gjeldendeMal.endretAv)}
                 </span>
-            </span>{' '}
+            </span>
+{' '}
             {formaterDatoEllerTidSiden(gjeldendeMal.dato)}
             <Tekstomrade className="aktivitetmal__historikk-tekst">
                 {gjeldendeMal.mal || ''}

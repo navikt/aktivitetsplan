@@ -59,7 +59,7 @@ class InformasjonsHenting extends Component {
     }
 
     render() {
-        const props = this.props;
+        const {props} = this;
         const videreSendTilInfo =
             props.lestStatus === STATUS.OK &&
             (!props.lestInfo ||

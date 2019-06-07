@@ -21,7 +21,7 @@ const initialState = {
 
 // Reducer
 export default function reducer(state = initialState, action) {
-    const data = action.data;
+    const {data} = action;
 
     switch (action.type) {
         case HENT_MALVERK_LISTE_OK:

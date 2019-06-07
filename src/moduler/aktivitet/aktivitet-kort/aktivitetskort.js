@@ -25,8 +25,8 @@ import {
 import {
     selectErBruker,
     selectIdentitetSlice,
-} from '../../../moduler/identitet/identitet-selector';
-import { selectForrigeAktiveAktivitetId } from '../../../moduler/aktivitet/aktivitet-selector';
+} from "../../identitet/identitet-selector";
+import { selectForrigeAktiveAktivitetId } from "../aktivitet-selector";
 import {
     selectLestAktivitetsplan,
     selectLestStatus,
@@ -103,7 +103,7 @@ class AktivitetsKort extends Component {
                                 id={`aktivitetskort.type.${type}`.toLowerCase()}
                             />
                         </Undertekst>
-                        <div className={'aktivitetskort__header'}>
+                        <div className="aktivitetskort__header">
                             <AktivitetskortEndring
                                 harEndringerIAktivitet={harEndringerIAktivitet}
                             />

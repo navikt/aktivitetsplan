@@ -6,7 +6,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import TimeoutboxNedtelling from './timeoutbox-nedtelling';
 import { hentGjenstaendeInnloggetTid } from './auth-reducer';
 import { selectExpirationTime } from './auth-selector';
-import { moment } from './../../utils';
+import { moment } from "../../utils";
 
 class Timeoutbox extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class Timeoutbox extends Component {
     }
 
     componentDidUpdate() {
-        const expirationTime = this.props.expirationTime;
+        const {expirationTime} = this.props;
         if (!this.timeout && expirationTime) {
             const expirationInMillis = this.visningsTidspunkt().diff(
                 moment(),

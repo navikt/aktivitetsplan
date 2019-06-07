@@ -11,7 +11,7 @@ const initalState = {
 
 // Reducer
 export default function reducer(state = initalState, action) {
-    const data = action.data;
+    const {data} = action;
     switch (action.type) {
         case LAGRER_PRINTMELDING:
             return {

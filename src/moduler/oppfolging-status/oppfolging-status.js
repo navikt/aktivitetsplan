@@ -21,12 +21,13 @@ import VidereSendBrukereEllerRenderChildren from './videre-send-bruker-eller-ren
 
 class OppfolgingStatus extends Component {
     componentDidMount() {
-        this.props.doHentIdentitet();
-        this.props.doHentOppfolging();
+        const {doHentIdentitet, doHentOppfolging} = this.props;
+        doHentIdentitet();
+        doHentOppfolging();
     }
 
     render() {
-        const props = this.props;
+        const {props} = this;
         return (
             <Innholdslaster
                 avhengigheter={[
@@ -42,10 +43,6 @@ class OppfolgingStatus extends Component {
         );
     }
 }
-
-OppfolgingStatus.defaultProps = {
-    lestInfo: null,
-};
 
 OppfolgingStatus.propTypes = {
     oppfolgingStatus: AppPT.status.isRequired,

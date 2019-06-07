@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Normaltekst,
     Element,
-    EtikettLiten
+    EtikettLiten,
 } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
@@ -48,7 +48,7 @@ class Maal extends Component {
             avhengigheter,
             underOppfolging,
             mal,
-            fremtidigSituasjonTekst
+            fremtidigSituasjonTekst,
         } = this.props;
         if (!underOppfolging) {
             return null;
@@ -57,9 +57,9 @@ class Maal extends Component {
             <div className="maal">
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <Element>Mål</Element>
-                    <EtikettLiten className="hovedmaal">{fremtidigSituasjonTekst ? fremtidigSituasjonTekst : ''}</EtikettLiten>
-                    <Normaltekst>{mal ? mal : ''}</Normaltekst>
-                    <VisKnappMaal fremtidigSituasjonTekst={fremtidigSituasjonTekst} mal={mal}/>
+                    <EtikettLiten className="hovedmaal">{fremtidigSituasjonTekst || ''}</EtikettLiten>
+                    <Normaltekst>{mal || ''}</Normaltekst>
+                    <VisKnappMaal fremtidigSituasjonTekst={fremtidigSituasjonTekst} mal={mal} />
                 </Innholdslaster>
             </div>
         );

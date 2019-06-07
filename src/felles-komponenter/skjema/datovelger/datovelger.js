@@ -42,7 +42,7 @@ class DatoField extends Component {
     }
 
     onFocusOut(e) {
-        const relatedTarget = e.relatedTarget;
+        const {relatedTarget} = e;
         if (relatedTarget) {
             const targetErChildnode =
                 this.container && this.container.contains(relatedTarget);
@@ -75,6 +75,7 @@ class DatoField extends Component {
             this.apne();
         }
     }
+
     apne() {
         this.setState({
             erApen: true,
@@ -103,7 +104,7 @@ class DatoField extends Component {
         } = this.props;
 
         const feil = errorMessage && errorMessage;
-        const value = input.value;
+        const {value} = input;
         const maskedInputProps = {
             ...input,
             value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value,

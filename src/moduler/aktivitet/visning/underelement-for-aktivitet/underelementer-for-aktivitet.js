@@ -60,6 +60,7 @@ class UnderelementerForAktivitet extends Component {
             }
         }
     }
+
     scrollMeIntoView() {
         if (this.me && (this.props.visHistorikk || this.props.visDialog)) {
             setTimeout(
@@ -183,7 +184,7 @@ UnderelementerForAktivitet.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet;
+    const {aktivitet} = props;
     const dialog = selectDialogForAktivitetId(state, aktivitet.id);
     const harDialog = !!dialog;
     const antallUlesteHenvendelser = harDialog

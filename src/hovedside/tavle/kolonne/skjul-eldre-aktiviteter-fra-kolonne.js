@@ -4,8 +4,8 @@ import PT from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { VisibleIfLesmerpanel } from '../../../felles-komponenter/utils/visible-if-lesmerpanel';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
-import { lagAktivitetsListe } from './../aktivitetstavle';
-import loggEvent from './../../../felles-komponenter/utils/logging';
+import { lagAktivitetsListe } from "../aktivitetstavle";
+import loggEvent from "../../../felles-komponenter/utils/logging";
 
 const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
 const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';

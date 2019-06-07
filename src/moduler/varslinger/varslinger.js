@@ -27,22 +27,23 @@ import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-akti
 
 class Varslinger extends Component {
     componentDidMount() {
-        this.props.doHentIdentitet();
-        if (this.props.erBruker) {
-            this.props.doHentOppfolging();
+        const {doHentIdentitet, doHentOppfolging, erBruker} = this.props;
+        doHentIdentitet();
+        if (erBruker) {
+            doHentOppfolging();
         }
     }
 
     hentInfotekstTilInaktivertBrukere() {
-        const antalldagerIgjen = this.props.antallDagerIgjen;
+        const {antallDagerIgjen} = this.props;
         const antallDagerIgjenMerEnn10 =
-            antalldagerIgjen <= 28 && antalldagerIgjen >= 10;
+            antallDagerIgjen <= 28 && antallDagerIgjen >= 10;
         const antallDagerIgjenMindreEnn10 =
-            antalldagerIgjen < 10 && antalldagerIgjen >= 1;
+            antallDagerIgjen < 10 && antallDagerIgjen >= 1;
 
         if (antallDagerIgjenMerEnn10) {
             return 'oppfolging.inaktivert-28-til-10-dager.reaktiveres';
-        } else if (antallDagerIgjenMindreEnn10) {
+        } if (antallDagerIgjenMindreEnn10) {
             return 'oppfolging.inaktivert-mindre-enn-10-dager.reaktiveres';
         }
         return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
@@ -89,7 +90,7 @@ class Varslinger extends Component {
                 />
                 <HiddenIfAdvarselMedLenke
                     hidden={underOppfolging}
-                    tekstId={'ikke.under.oppfolging.reaktivering'}
+                    tekstId="ikke.under.oppfolging.reaktivering"
                     className="varsling"
                     lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
                     href={arbeidssokerregistreringHref}

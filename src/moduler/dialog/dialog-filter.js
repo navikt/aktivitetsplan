@@ -12,13 +12,13 @@ import {
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import lazyHOC from '../../felles-komponenter/lazy/lazyHOC';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectIdentitetStatus } from '../../moduler/identitet/identitet-selector';
+import { selectIdentitetStatus } from "../identitet/identitet-selector";
 
 function EskaleringsFilter({ doToggleEskaleringsFilter, erFilterAktivt }) {
     return (
         <Checkbox
-            key={'dialog-filter'}
-            label={<FormattedMessage id={'dialog.eskalerings-filter'} />}
+            key="dialog-filter"
+            label={<FormattedMessage id="dialog.eskalerings-filter" />}
             onChange={doToggleEskaleringsFilter}
             checked={erFilterAktivt}
         />
