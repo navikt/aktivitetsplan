@@ -50,16 +50,19 @@ const RedirectTilInformasjonWithRouter = withRouter(RedirectTilInformasjon);
 
 class InformasjonsHenting extends Component {
     componentWillMount() {
-        const perioder = this.props.oppfolgingsPerioder;
-        if (this.props.underOppfolging) {
-            this.props.doHentLest().then(a => {
-                loggTidBruktGaaInnPaaAktivitetsplanen(a.data, perioder);
+        const { underOppfolging, oppfolgingsPerioder, doHentLest } = this.props;
+        if (underOppfolging) {
+            doHentLest().then(a => {
+                loggTidBruktGaaInnPaaAktivitetsplanen(
+                    a.data,
+                    oppfolgingsPerioder
+                );
             });
         }
     }
 
     render() {
-        const {props} = this;
+        const { props } = this;
         const videreSendTilInfo =
             props.lestStatus === STATUS.OK &&
             (!props.lestInfo ||

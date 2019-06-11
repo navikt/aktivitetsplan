@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';

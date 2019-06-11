@@ -35,7 +35,8 @@ function Mal({ mal, disabled }) {
 
 class MittMaal extends Component {
     componentDidMount() {
-        this.props.doHentMal();
+        const { doHentMal } = this.props;
+        doHentMal();
     }
 
     render() {

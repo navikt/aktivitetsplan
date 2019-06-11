@@ -31,6 +31,8 @@ export class AktiverDigitalOppfolgingPure extends Component {
             settOppfolgingFeilet,
         } = this.props;
 
+        const { harTrykketRefresh } = this.state;
+
         const ReservasjonDifiKnapp = () =>
             <HiddenIfHovedknapp
                 spinner={lasterOppfolging}
@@ -59,7 +61,7 @@ export class AktiverDigitalOppfolgingPure extends Component {
                 <AktiverDigitalOppfolgingVarsel
                     reservertIKRR={reservertIKRR}
                     settDigitalFeilet={settOppfolgingFeilet}
-                    harTrykketRefresh={this.state.harTrykketRefresh}
+                    harTrykketRefresh={harTrykketRefresh}
                 />
                 <ReservasjonDifiKnapp />
                 <AktiverDigitalOppfolgingKnapp />

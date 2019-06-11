@@ -31,8 +31,8 @@ function settFokus(element) {
 class Dropdown extends Component {
     constructor(props) {
         super(props);
-
-        this.state = { apen: this.props.apen };
+        const { apen } = this.props;
+        this.state = { apen };
 
         this.eventHandler = this.eventHandler.bind(this);
         this.apneDropdown = this.apneDropdown.bind(this);
@@ -55,15 +55,17 @@ class Dropdown extends Component {
     }
 
     lukkDropdown() {
+        const { onLukk } = this.props;
         document.body.removeEventListener('click', this.eventHandler); // eslint-disable-line no-undef
         document.body.removeEventListener('keyup', this.eventHandler); // eslint-disable-line no-undef
         this.setState({ apen: false });
         this.btn.focus();
-        this.props.onLukk();
+        onLukk();
     }
 
     toggleDropdown() {
-        if (this.state.apen) {
+        const { apen } = this.state;
+        if (apen) {
             this.lukkDropdown();
         } else {
             this.apneDropdown();

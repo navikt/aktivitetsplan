@@ -8,16 +8,23 @@ import Lenke from './lenke';
 import { TILBAKE_MODAL } from '../modal/modal-reducer';
 import * as AppPT from '../../proptypes';
 
-function Tilbakeknapp(props) {
+function Tilbakeknapp({
+    visConfirmDialog,
+    tilbakeModal,
+    history,
+    tekstId,
+    tekstValues,
+    intl,
+}) {
     function tilbake(e) {
         e.preventDefault();
-        const dialogTekst = props.intl.formatMessage({
+        const dialogTekst = intl.formatMessage({
             id: 'aktkivitet-skjema.lukk-advarsel',
         });
         // eslint-disable-next-line no-alert
-        if (!props.visConfirmDialog || window.confirm(dialogTekst)) {
-            props.tilbakeModal();
-            props.history.goBack();
+        if (!visConfirmDialog || window.confirm(dialogTekst)) {
+            tilbakeModal();
+            history.goBack();
         }
     }
 
@@ -26,10 +33,7 @@ function Tilbakeknapp(props) {
             <div className="tilbakeknapp-innhold">
                 <VenstreChevron />
                 <span className="tilbakeknapp-innhold__tekst">
-                    <FormattedMessage
-                        id={props.tekstId}
-                        values={props.tekstValues}
-                    />
+                    <FormattedMessage id={tekstId} values={tekstValues} />
                 </span>
             </div>
         </Lenke>

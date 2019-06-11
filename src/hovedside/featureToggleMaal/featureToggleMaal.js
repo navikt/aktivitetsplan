@@ -1,26 +1,23 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
-import PT from "prop-types";
+import React from 'react';
+import { connect } from 'react-redux';
+import PT from 'prop-types';
 import Maal from '../maal/maal';
 import MittMaal from '../maalLinje/mitt-maal';
-import {harFeature, NYHOVEDMAAL} from "../../felles-komponenter/feature/feature";
-import {selectFeatureData} from "../../felles-komponenter/feature/feature-selector";
+import {
+    harFeature,
+    NYHOVEDMAAL,
+} from '../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 
-class FeatureToggleMaal extends Component {
-    render() {
-        const { visNyHovedmaal } = this.props;
-        return visNyHovedmaal ? <Maal /> : <MittMaal />
-    }
+function FeatureToggleMaal({ visNyHovedmaal }) {
+    return visNyHovedmaal ? <Maal /> : <MittMaal />;
 }
 
 const mapStateToProps = state => {
-    const visNyHovedmaal = harFeature(
-        NYHOVEDMAAL,
-        selectFeatureData(state)
-    );
+    const visNyHovedmaal = harFeature(NYHOVEDMAAL, selectFeatureData(state));
     return {
         visNyHovedmaal,
-    }
+    };
 };
 
 FeatureToggleMaal.propTypes = {

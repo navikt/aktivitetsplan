@@ -6,6 +6,7 @@ import visibleIfHOC from '../../hocs/visible-if';
 function PilKnapp({ onClick, className, ...rest }) {
     return (
         <button
+            type="button"
             {...rest}
             onClick={onClick}
             className={classNames('pil-knapp', className)}

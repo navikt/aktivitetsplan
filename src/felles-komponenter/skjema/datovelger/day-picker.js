@@ -87,8 +87,9 @@ NavBar.defaultProps = {
 
 class DayPickerComponent extends Component {
     componentDidMount() {
+        const { lukk } = this.props;
         this.lukk = () => {
-            this.props.lukk();
+            lukk();
         };
 
         document.body.click(); // fjern andre datepickere
@@ -100,12 +101,14 @@ class DayPickerComponent extends Component {
     }
 
     getDateFromValue() {
-        const dato = moment(this.props.input.value);
+        const { input } = this.props;
+        const dato = moment(input.value);
         return dato.isValid() ? dato.toDate() : null;
     }
 
     getInitialMonth() {
-        return this.getDateFromValue() || this.props.tidligsteFom || new Date();
+        const { tidligsteFom } = this.props;
+        return this.getDateFromValue() || tidligsteFom || new Date();
     }
 
     selectedDays(day) {
@@ -113,7 +116,7 @@ class DayPickerComponent extends Component {
     }
 
     render() {
-        const { ariaControlledBy, onKeyUp } = this.props;
+        const { ariaControlledBy, onKeyUp, intl, onDayClick } = this.props;
         return (
             <div // eslint-disable-line jsx-a11y/no-static-element-interactions
                 className="datovelger__DayPicker"
@@ -128,10 +131,9 @@ class DayPickerComponent extends Component {
                     localeUtils={localeUtils}
                     firstDayOfWeek={1}
                     captionElement={<Caption />}
-                    navbarElement={<NavBar intl={this.props.intl} />}
+                    navbarElement={<NavBar intl={intl} />}
                     selectedDays={day => this.selectedDays(day)}
-                    onDayClick={(event, jsDato) =>
-                        this.props.onDayClick(event, jsDato)}
+                    onDayClick={(event, jsDato) => onDayClick(event, jsDato)}
                 />
             </div>
         );

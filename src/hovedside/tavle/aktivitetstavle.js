@@ -19,7 +19,7 @@ import {
     STATUS_AVBRUTT,
 } from '../../constant';
 import KolonneFunction from './kolonne/kolonnefunction';
-import AktivitetsKort from "../../moduler/aktivitet/aktivitet-kort/aktivitetskort";
+import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 
@@ -45,18 +45,25 @@ function renderFullFortAvbryt(aktiviteter) {
 
 class AktivitetsTavle extends Component {
     componentDidMount() {
-        if (this.props.reducersNotStarted) {
-            if (this.props.erVeileder) {
+        const {
+            reducersNotStarted,
+            erVeileder,
+            doHentAktiviteter,
+            doHentArenaAktiviteter,
+        } = this.props;
+        if (reducersNotStarted) {
+            if (erVeileder) {
                 doLesAktivitetsplan();
             }
-            this.props.doHentAktiviteter();
-            this.props.doHentArenaAktiviteter();
+            doHentAktiviteter();
+            doHentArenaAktiviteter();
         }
     }
 
     render() {
+        const { avhengigheter } = this.props;
         return (
-            <Innholdslaster minstEn avhengigheter={this.props.avhengigheter}>
+            <Innholdslaster minstEn avhengigheter={avhengigheter}>
                 <Tavle
                     defaultStartKolonne={1}
                     antallKolonner={3}
@@ -98,9 +105,7 @@ AktivitetsTavle.propTypes = {
     reducersNotStarted: PT.bool.isRequired,
 };
 
-
 const mapStateToProps = state => {
-
     const statusAktiviteter = selectAktivitetStatus(state);
     const statusArenaAktiviteter = selectArenaAktivitetStatus(state);
 

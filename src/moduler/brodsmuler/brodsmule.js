@@ -1,15 +1,15 @@
 import React from 'react';
 import PT from 'prop-types';
 
-function Brodsmule(props) {
-    if (!props.skalVises) {
+function Brodsmule({ skalVises, path, tekst }) {
+    if (!skalVises) {
         return null;
     }
-    const tekstEllerLink = props.path
-        ? <a href={props.path} className="lenke">
-              {`${props.tekst}`}
+    const tekstEllerLink = path
+        ? <a href={path} className="lenke">
+              {`${tekst}`}
           </a>
-        : props.tekst;
+        : tekst;
 
     return (
         <li className="brodsmuler__item typo-normal">

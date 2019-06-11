@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -42,7 +46,7 @@ class DatoField extends Component {
     }
 
     onFocusOut(e) {
-        const {relatedTarget} = e;
+        const { relatedTarget } = e;
         if (relatedTarget) {
             const targetErChildnode =
                 this.container && this.container.contains(relatedTarget);
@@ -60,16 +64,17 @@ class DatoField extends Component {
     }
 
     onDayClick(event) {
-        const { feltNavn, meta } = this.props;
+        const { feltNavn, meta, dispatch } = this.props;
         const isoDate = dateToISODate(new Date(event));
-        this.props.dispatch(change(meta.form, feltNavn, isoDate));
-        this.props.dispatch(touch(meta.form, feltNavn));
+        dispatch(change(meta.form, feltNavn, isoDate));
+        dispatch(touch(meta.form, feltNavn));
         this.lukk();
     }
 
     toggle(e) {
         e.preventDefault();
-        if (this.state.erApen) {
+        const { erApen } = this.state;
+        if (erApen) {
             this.lukk();
         } else {
             this.apne();
@@ -103,8 +108,9 @@ class DatoField extends Component {
             errorMessage,
         } = this.props;
 
+        const { erApen } = this.state;
         const feil = errorMessage && errorMessage;
-        const {value} = input;
+        const { value } = input;
         const maskedInputProps = {
             ...input,
             value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value,
@@ -141,9 +147,7 @@ class DatoField extends Component {
                         <button
                             className="js-toggle datovelger__toggleDayPicker"
                             aria-label={
-                                this.state.erApen
-                                    ? 'Skjul datovelger'
-                                    : 'Vis datovelger'
+                                erApen ? 'Skjul datovelger' : 'Vis datovelger'
                             }
                             ref={toggle => {
                                 this.toggleButton = toggle;
@@ -152,11 +156,11 @@ class DatoField extends Component {
                             disabled={disabled}
                             onKeyUp={this.onKeyUp}
                             onClick={this.toggle}
-                            aria-pressed={this.erApen}
+                            aria-pressed={erApen}
                             type="button"
                         />
                     </div>
-                    {this.state.erApen &&
+                    {erApen &&
                         <DayPickerComponent
                             {...this.props}
                             ariaControls={`toggle-${id}`}

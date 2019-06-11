@@ -12,16 +12,17 @@ import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 class NyAktivitet extends Component {
     componentDidMount() {
-        this.props.doHentIdentitet();
+        const { doHentIdentitet } = this.props;
+        doHentIdentitet();
     }
 
     render() {
-        const { erVeileder } = this.props;
+        const { erVeileder, aktivitetFeilmeldinger } = this.props;
         return (
             <Modal
                 contentLabel="ny-aktivitet-modal"
                 contentClass="ny-aktivitet-visning"
-                feilmeldinger={this.props.aktivitetFeilmeldinger}
+                feilmeldinger={aktivitetFeilmeldinger}
             >
                 <div className="ny-aktivitet-modal__header">
                     <LeggTilIcon />
@@ -52,7 +53,6 @@ class NyAktivitet extends Component {
                     >
                         <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
                     </Lenkepanel>
-
 
                     <Lenkepanel href="/aktivitet/ny/stilling">
                         <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />

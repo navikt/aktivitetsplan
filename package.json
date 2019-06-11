@@ -91,7 +91,22 @@
     "reselect": "3.0.1",
     "whatwg-fetch": "^3.0.0"
   },
-
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run prettier",
+      "eslint --fix --quiet",
+      "git add"
+    ],
+    "*.less": [
+      "lesshint --reporter ./scripts/lesshint-reporter",
+      "git add"
+    ]
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
