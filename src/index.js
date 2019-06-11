@@ -1,9 +1,12 @@
-import './polyfill'
+import './polyfill';
 import React from 'react';
 import ReactModal from 'react-modal';
+import * as ReactDOM from 'react-dom';
 import App from './app';
-import {fnrFraUrl} from "./bootstrap/fnr-provider";
 import NAVSPA from './NAVSPA';
+import DemoDashboard from './mocks/demoDashboard';
+import { erEksternBruker } from './mocks/sessionstorage';
+import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 
 /* eslint-disable global-require */
 if (!global.Intl) {
@@ -12,29 +15,27 @@ if (!global.Intl) {
 }
 
 if (process.env.REACT_APP_MOCK === 'true') {
-
-    // NOTE: This is bad, don't use it if you dont HAVE to
-    window.appconfig = {
-        CONTEXT_PATH: '',
-        TILLAT_SET_AVTALT: true,
-        VIS_SIDEBANNER: true,
-        FNR_I_URL: true,
-        VIS_MALER: true,
-    };
+    if (erEksternBruker()) {
+        window.history.replaceState('', '', `/`);
+        window.appconfig = eksternBrukerConfig;
+    } else {
+        window.history.replaceState('12345678910', '', `/12345678910`);
+        window.appconfig = veilederConfig;
+    }
 
     console.log('=========================='); // eslint-disable-line no-console
     console.log('======== MED MOCK ========'); // eslint-disable-line no-console
     console.log('=========================='); // eslint-disable-line no-console
     require('./mocks'); // eslint-disable-line global-require
 
-    if (!fnrFraUrl() && window.appconfig.FNR_I_URL) {
-        window.history.replaceState('12345678910', '', `/12345678910`);
-    }
+    ReactDOM.render(<DemoDashboard />, document.getElementById('demo'));
 }
 
 function AppWrapper(props) {
     // Må settes etter at dokumentet er parset
-    const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
+    const id = document.getElementById('pagewrapper')
+        ? '#pagewrapper'
+        : '#modal-a11y-wrapper';
     ReactModal.setAppElement(id);
 
     return <App {...props} />;
