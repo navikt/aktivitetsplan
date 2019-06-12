@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import visibleIfHOC from "../../hocs/visible-if";
+import visibleIfHOC from '../../hocs/visible-if';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
     selectMalverkData,
@@ -36,17 +36,15 @@ class Malverk extends Component {
     }
 
     componentWillUnmount() {
-        const {doSlettValgtMalverk} = this.props;
+        const { doSlettValgtMalverk } = this.props;
         doSlettValgtMalverk();
     }
 
     onChangeMalverk = event => {
-        const {doHentMalverkMedTittel, doSettValgtMalverk} = this.props;
+        const { doHentMalverkMedTittel, doSettValgtMalverk } = this.props;
         event.preventDefault();
         // event.target.value er tittel på malverk
-        const valgtMalverk = doHentMalverkMedTittel(
-            event.target.value
-        );
+        const valgtMalverk = doHentMalverkMedTittel(event.target.value);
         doSettValgtMalverk(valgtMalverk);
     };
 
@@ -54,7 +52,7 @@ class Malverk extends Component {
         const { malverk, avhengigheter, endre } = this.props;
         const malverkOptions = Object.values(malverk).map(lagMalverkOption);
 
-        const domId = "malverk";
+        const domId = 'malverk';
         return (
             !endre &&
             <div className="skjemaelement">
@@ -70,7 +68,7 @@ class Malverk extends Component {
                             className="skjemaelement__input"
                             id={domId}
                             name="malverk"
-                            onClick={this.onChangeMalverk}
+                            onChange={this.onChangeMalverk}
                         >
                             <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
                                 {text =>

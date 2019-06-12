@@ -38,7 +38,7 @@ module.exports = {
         'jsx-a11y/img-redundant-alt': 2,
         'jsx-a11y/label-has-for': 2,
         'jsx-a11y/mouse-events-have-key-events': 2,
-        'jsx-a11y/no-onchange': 2,
+        'jsx-a11y/no-onchange': 'off',
         'jsx-a11y/interactive-supports-focus': 2,
         'jsx-a11y/no-static-element-interactions': 2,
         'jsx-a11y/no-noninteractive-element-interactions': 2,
