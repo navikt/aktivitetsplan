@@ -15,11 +15,18 @@ if (!global.Intl) {
 }
 
 if (process.env.REACT_APP_MOCK === 'true') {
+    const fnr = '/12345678910';
+    const path = window.location.pathname;
+
     if (erEksternBruker()) {
-        window.history.replaceState('', '', `/`);
+        if (path.includes(fnr)) {
+            window.history.replaceState({}, '', '/');
+        }
         window.appconfig = eksternBrukerConfig;
-    } else {
-        window.history.replaceState('12345678910', '', `/12345678910`);
+    } else if (!erEksternBruker()) {
+        if (!path.includes(fnr)) {
+            window.history.replaceState({}, '', fnr);
+        }
         window.appconfig = veilederConfig;
     }
 
