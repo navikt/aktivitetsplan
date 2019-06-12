@@ -37,7 +37,7 @@ function ModalHeader({
                     className="modal-header-skillestrek"
                     visible={aktivitetErLaast}
                 >
-                    <HengeLasIkon/>
+                    <HengeLasIkon />
                 </VisibleIfSpan>
                 {tilbakeTekstId &&
                     <Tilbakeknapp

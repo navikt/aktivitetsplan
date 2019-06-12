@@ -1,0 +1,15 @@
+{
+    "fileExtensions": [".less", ".css"],
+    "zeroUnit": false,
+    "propertyOrdering": false,
+    "maxCharPerLine": { "limit": 120 },
+    "qualifyingElement": {
+        "allowWithClass": true
+    },
+    "spaceBetweenParens": false,
+    "universalSelector": false,
+    "spaceAroundComma": {
+        "style": "after",
+        "allowNewline": true
+    }
+}

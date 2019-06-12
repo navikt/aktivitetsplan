@@ -31,8 +31,8 @@ function StatusFilter({
         <FilterVisning
             harAktiviteter={harAktivitetStatus}
             filter={sortedAktivitetStatus}
-            filterTittel={'aktivitet.status'}
-            filterTekst={'aktivitet.status.'}
+            filterTittel="aktivitet.status"
+            filterTekst="aktivitet.status."
             doToggleFunction={doToggleAktivitetsStatus}
             className={className}
         />
@@ -54,7 +54,7 @@ const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
     const aktivitetStatus = aktiviteter.reduce((statusliste, aktivitet) => {
-        const status = aktivitet.status;
+        const {status} = aktivitet;
         statusliste[status] = aktivitetStatusFilter[status]; // eslint-disable-line no-param-reassign
         return statusliste;
     }, {});

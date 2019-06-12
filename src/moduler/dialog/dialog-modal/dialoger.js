@@ -14,12 +14,13 @@ import { selectGjeldendeEskaleringsVarsel } from '../../oppfolging-status/oppfol
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 class Dialoger extends React.Component {
     componentWillMount() {
+        const { gjeldendeEskaleringsvarsel, erBruker, dialoger } = this.props;
         const dialogSammenligner = dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
-            this.props.gjeldendeEskaleringsvarsel &&
-                this.props.gjeldendeEskaleringsvarsel.tilhorendeDialogId,
-            this.props.erBruker
+            gjeldendeEskaleringsvarsel &&
+                gjeldendeEskaleringsvarsel.tilhorendeDialogId,
+            erBruker
         );
-        this.dialogIderSortert = [...this.props.dialoger]
+        this.dialogIderSortert = [...dialoger]
             .sort(dialogSammenligner)
             .map(dialog => dialog.id);
     }
@@ -102,6 +103,7 @@ Dialoger.propTypes = {
     valgtDialog: AppPT.dialog,
     erBruker: PT.bool,
     gjeldendeEskaleringsvarsel: AppPT.eskaleringsvarsel,
+    avhengigheter: AppPT.avhengigheter,
 };
 
 Dialoger.defaultProps = {

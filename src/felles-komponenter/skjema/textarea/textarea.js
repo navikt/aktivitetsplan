@@ -17,7 +17,7 @@ function getTellerTekst(antallTegn, maxLength, visTellerFra) {
                 values={{ antall: `${tegnForMange}` }}
             />
         );
-    } else if (tegnIgjen <= tellerFra) {
+    } if (tegnIgjen <= tellerFra) {
         return (
             <FormattedMessage
                 id="tekstfelt.antalltegn.flere-igjen"

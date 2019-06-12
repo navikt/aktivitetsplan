@@ -5,7 +5,7 @@ export const veilederConfig = {
     VIS_SIDEBANNER: false,
     FNR_I_URL: true,
     VIS_MALER: true,
-    TIMEOUTBOX: false
+    TIMEOUTBOX: false,
 };
 
 export const eksternBrukerConfig = {
@@ -14,5 +14,5 @@ export const eksternBrukerConfig = {
     VIS_SIDEBANNER: true,
     FNR_I_URL: false,
     VIS_MALER: false,
-    TIMEOUTBOX: true
+    TIMEOUTBOX: true,
 };

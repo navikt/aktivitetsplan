@@ -3,7 +3,7 @@ import { rndId } from './utils';
 import { erEksternBruker } from './sessionstorage';
 
 const eksternBruker = erEksternBruker();
-const bruker = eksternBruker? 'BRUKER' : 'NAV';
+const bruker = eksternBruker ? 'BRUKER' : 'NAV';
 
 const aktiviteter = [
     wrapAktivitet({

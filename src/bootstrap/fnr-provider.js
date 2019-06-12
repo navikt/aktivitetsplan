@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { hentBruker, setStatusOk } from '../moduler/bruker/bruker-reducer';
 
 export function fnrFraUrl() {
-    const fnrMatch = window.location.pathname.match(`${window.appconfig.CONTEXT_PATH}/(\\d*)`);
+    const fnrMatch = window.location.pathname.match(
+        `${window.appconfig.CONTEXT_PATH}/(\\d*)`
+    );
     return fnrMatch && fnrMatch[1];
 }
 
@@ -24,7 +26,8 @@ class FnrProvider extends Component {
     }
 
     render() {
-        return !window.appconfig.FNR_I_URL || fnrFraUrl() ? this.props.children : null;
+        const { children } = this.props;
+        return !window.appconfig.FNR_I_URL || fnrFraUrl() ? children : null;
     }
 }
 

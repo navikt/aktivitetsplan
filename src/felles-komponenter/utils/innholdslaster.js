@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
 import * as AppPT from '../../proptypes';
-import HiddenIfHOC from '../../felles-komponenter/hidden-if/hidden-if';
+import HiddenIfHOC from "../hidden-if/hidden-if";
 
 const array = value => (Array.isArray(value) ? value : [value]);
 const harStatus = (...status) => element =>

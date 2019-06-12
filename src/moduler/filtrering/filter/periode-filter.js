@@ -72,7 +72,7 @@ function PeriodeFilter({
                                     />
                                 </HiddenIfDiv>
                                 {historiskePerioder.map(t => {
-                                    const id = t.id;
+                                    const {id} = t;
                                     return (
                                         <div key={id}>
                                             <Radio

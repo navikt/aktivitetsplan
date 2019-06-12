@@ -22,24 +22,25 @@ class Tavle extends Component {
     }
 
     visForrige() {
-        const clickIndex =  Math.min(this.state.currentIndex, this.state.clickIndex) - 1
-        const scrollTo = clickIndex * KOLONNEBREDDE;
+        const { currentIndex, clickIndex } = this.state;
+        const newClickIndex = Math.min(currentIndex, clickIndex) - 1;
+        const scrollTo = newClickIndex * KOLONNEBREDDE;
         this.scrollbars.scrollLeft(scrollTo);
-        this.setState({clickIndex: clickIndex});
+        this.setState({ clickIndex: newClickIndex });
     }
 
     visNeste() {
+        const { clickIndex } = this.state;
         const clientWidth = this.scrollbars.getClientWidth();
         const scrollLeft = this.scrollbars.getScrollLeft();
         const clientWidthWithOffset = clientWidth + KOLONNEMARGIN;
         const nesteIndex = Math.floor(
             (clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE
         );
-        const clickIndex = Math.max(nesteIndex, this.state.clickIndex) + 1;
-        const scrollTo =
-            clickIndex * KOLONNEBREDDE - clientWidthWithOffset;
+        const newClickIndex = Math.max(nesteIndex, clickIndex) + 1;
+        const scrollTo = newClickIndex * KOLONNEBREDDE - clientWidthWithOffset;
         this.scrollbars.scrollLeft(scrollTo);
-        this.setState({clickIndex: clickIndex});
+        this.setState({ clickIndex: newClickIndex });
     }
 
     updateState(values) {
@@ -52,6 +53,8 @@ class Tavle extends Component {
 
     render() {
         const { children, className, intl } = this.props;
+        const { venstreKnappDisabled, hoyreKnappDisabled } = this.state;
+
         const kolonner = children.map((child, index) =>
             <section
                 key={child.key || index}
@@ -64,11 +67,12 @@ class Tavle extends Component {
 
         const venstreKnapp = (
             <button
+                type="button"
                 className={classNames('tavle__scrollknapp knapp-forrige', {
-                    invisible: this.state.venstreKnappDisabled,
+                    invisible: venstreKnappDisabled,
                 })}
                 onClick={this.visForrige}
-                disabled={this.state.venstreKnappDisabled}
+                disabled={venstreKnappDisabled}
                 aria-label={intl.formatMessage({
                     id: 'aktivitetstavle.scrollknapp.forrige.label',
                 })}
@@ -77,11 +81,12 @@ class Tavle extends Component {
 
         const hoyreKnapp = (
             <button
+                type="button"
                 className={classNames('tavle__scrollknapp knapp-neste', {
-                    invisible: this.state.hoyreKnappDisabled,
+                    invisible: hoyreKnappDisabled,
                 })}
                 onClick={this.visNeste}
-                hidden={this.state.hoyreKnappDisabled}
+                hidden={hoyreKnappDisabled}
                 aria-label={intl.formatMessage({
                     id: 'aktivitetstavle.scrollknapp.neste.label',
                 })}

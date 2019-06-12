@@ -6,7 +6,7 @@ import visibleIfHOC from '../../../../hocs/visible-if';
 function AvtaltFormMindreEnnSyvDager() {
     return (
         <AlertStripeInfo>
-            <FormattedMessage id={'sett-til-avtalt-mindre-enn-syv-dager'} />
+            <FormattedMessage id="sett-til-avtalt-mindre-enn-syv-dager" />
         </AlertStripeInfo>
     );
 }

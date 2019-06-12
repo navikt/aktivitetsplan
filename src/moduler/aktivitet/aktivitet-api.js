@@ -4,7 +4,7 @@ import {
     postAsJson,
     putAsJson,
     deleteAsJson,
-} from './../../ducks/utils';
+} from "../../ducks/utils";
 
 export function hentAktivitet(aktivitetId) {
     return fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);

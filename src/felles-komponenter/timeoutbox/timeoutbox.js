@@ -6,19 +6,20 @@ import { injectIntl, intlShape } from 'react-intl';
 import TimeoutboxNedtelling from './timeoutbox-nedtelling';
 import { hentGjenstaendeInnloggetTid } from './auth-reducer';
 import { selectExpirationTime } from './auth-selector';
-import { moment } from './../../utils';
+import { moment } from '../../utils';
 
 class Timeoutbox extends Component {
     constructor(props) {
         super(props);
-        this.props.doHentGjenstaendeInnloggetTid();
+        const { doHentGjenstaendeInnloggetTid } = this.props;
+        doHentGjenstaendeInnloggetTid();
         this.state = {
             manueltLukket: false,
         };
     }
 
     componentDidUpdate() {
-        const expirationTime = this.props.expirationTime;
+        const { expirationTime } = this.props;
         if (!this.timeout && expirationTime) {
             const expirationInMillis = this.visningsTidspunkt().diff(
                 moment(),
@@ -35,19 +36,19 @@ class Timeoutbox extends Component {
     }
 
     skalViseModal() {
-        return (
-            moment().isAfter(this.visningsTidspunkt()) &&
-            !this.state.manueltLukket
-        );
+        const { manueltLukket } = this.state;
+        return moment().isAfter(this.visningsTidspunkt()) && !manueltLukket;
     }
 
     visningsTidspunkt() {
-        return moment(this.props.expirationTime).subtract(5, 'minutes');
+        const { expirationTime } = this.props;
+        return moment(expirationTime).subtract(5, 'minutes');
     }
 
     render() {
+        const { expirationTime, intl } = this.props;
         const skalVise = this.skalViseModal();
-        const utlopsTidspunkt = this.props.expirationTime;
+        const utlopsTidspunkt = expirationTime;
         if (!utlopsTidspunkt) {
             return null;
         }
@@ -63,7 +64,7 @@ class Timeoutbox extends Component {
                         manueltLukket: true,
                     });
                 }}
-                contentLabel={this.props.intl.formatMessage({
+                contentLabel={intl.formatMessage({
                     id: 'timeoutbox.aria.label',
                 })}
             >

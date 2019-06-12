@@ -3,9 +3,10 @@ import PT from 'prop-types';
 import visibleIfHOC from '../../hocs/visible-if';
 
 function VisibleIfDiv(props) {
+    const { children } = props;
     return (
         <div {...props}>
-            {props.children}
+            {children}
         </div>
     );
 }

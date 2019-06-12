@@ -20,10 +20,8 @@ class TimeoutboxNedtelling extends Component {
     }
 
     render() {
-        const sekunderIgjen = moment(this.props.utlopsTidspunkt).diff(
-            moment(),
-            'seconds'
-        );
+        const { utlopsTidspunkt } = this.props;
+        const sekunderIgjen = moment(utlopsTidspunkt).diff(moment(), 'seconds');
         const durationLeft = moment.duration(sekunderIgjen, 'seconds');
 
         if (sekunderIgjen <= 0) {

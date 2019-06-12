@@ -1,5 +1,5 @@
 export default function loggEvent(eventNavn, feltObjekt, tagObjekt) {
-    const frontendlogger = window.frontendlogger;
+    const {frontendlogger} = window;
     if (frontendlogger) {
         frontendlogger.event(eventNavn, feltObjekt || {}, tagObjekt || {});
     }

@@ -15,8 +15,8 @@ function AvtaltmedNavFilter({
         <FilterVisningsKomponent
             harAktiviteter={harAvtaltAktivitet}
             filter={avtaltAktivitet}
-            filterTittel={'filter.aktivitet.avtalt.tittel'}
-            filterTekst={'aktivitet.'}
+            filterTittel="filter.aktivitet.avtalt.tittel"
+            filterTekst="aktivitet."
             doToggleFunction={doToggleAktivitetAvtaltMedNav}
         />
     );

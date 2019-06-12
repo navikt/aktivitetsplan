@@ -17,7 +17,7 @@ import {
     hentMal,
     selectMalStatus,
     selectGjeldendeMal,
-} from '../../moduler/mal/aktivitetsmal-reducer';
+} from './aktivitetsmal-reducer';
 import { selectMalListe, selectMalListeStatus } from './aktivitetsmal-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import {
@@ -63,7 +63,8 @@ function malListeVisning(gjeldendeMal, erVeileder) {
                 <span>
                     {identitetMap(erVeileder, gjeldendeMal.endretAv)}
                 </span>
-            </span>{' '}
+            </span>
+{' '}
             {formaterDatoEllerTidSiden(gjeldendeMal.dato)}
             <Tekstomrade className="aktivitetmal__historikk-tekst">
                 {gjeldendeMal.mal || ''}
@@ -80,14 +81,16 @@ class AktivitetsMal extends Component {
     }
 
     componentDidMount() {
-        this.props.doHentMal();
-        this.props.doHentMalListe();
+        const { doHentMal, doHentMalListe } = this.props;
+        doHentMal();
+        doHentMalListe();
     }
 
     toggleHistoriskeMal = e => {
         e.preventDefault();
+        const { visHistoriskeMal } = this.state;
         this.setState({
-            visHistoriskeMal: !this.state.visHistoriskeMal,
+            visHistoriskeMal: !visHistoriskeMal,
         });
     };
 
@@ -104,7 +107,7 @@ class AktivitetsMal extends Component {
         } = this.props;
 
         const harMal = !!mal;
-        const historikkVises = this.state.visHistoriskeMal;
+        const { historikkVises } = this.state;
 
         return (
             <Innholdslaster avhengigheter={avhengigheter}>
@@ -154,10 +157,6 @@ class AktivitetsMal extends Component {
         );
     }
 }
-
-AktivitetsMal.defaultProps = {
-    mal: '',
-};
 
 AktivitetsMal.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,

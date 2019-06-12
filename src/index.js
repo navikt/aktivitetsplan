@@ -1,12 +1,12 @@
-import './polyfill'
+import './polyfill';
 import React from 'react';
 import ReactModal from 'react-modal';
+import * as ReactDOM from 'react-dom';
 import App from './app';
 import NAVSPA from './NAVSPA';
-import * as ReactDOM from 'react-dom';
-import DemoDashboard from './mocks/demoDashboard'
-import { erEksternBruker } from "./mocks/sessionstorage";
-import { eksternBrukerConfig, veilederConfig } from "./mocks/appconfig";
+import DemoDashboard from './mocks/demoDashboard';
+import { erEksternBruker } from './mocks/sessionstorage';
+import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 
 /* eslint-disable global-require */
 if (!global.Intl) {
@@ -19,16 +19,15 @@ if (process.env.REACT_APP_MOCK === 'true') {
     const path = window.location.pathname;
 
     if (erEksternBruker()) {
-        if(path.includes(fnr)) {
+        if (path.includes(fnr)) {
             window.history.replaceState({}, '', '/');
         }
         window.appconfig = eksternBrukerConfig;
-    }
-    else if(!erEksternBruker()) {
-        if(!path.includes(fnr)) {
+    } else if (!erEksternBruker()) {
+        if (!path.includes(fnr)) {
             window.history.replaceState({}, '', fnr);
         }
-        window.appconfig = veilederConfig
+        window.appconfig = veilederConfig;
     }
 
     console.log('=========================='); // eslint-disable-line no-console
@@ -36,15 +35,14 @@ if (process.env.REACT_APP_MOCK === 'true') {
     console.log('=========================='); // eslint-disable-line no-console
     require('./mocks'); // eslint-disable-line global-require
 
-    ReactDOM.render(
-        <DemoDashboard/>,
-        document.getElementById('demo')
-    );
+    ReactDOM.render(<DemoDashboard />, document.getElementById('demo'));
 }
 
 function AppWrapper(props) {
     // Må settes etter at dokumentet er parset
-    const id = document.getElementById('pagewrapper') ? '#pagewrapper' : '#modal-a11y-wrapper';
+    const id = document.getElementById('pagewrapper')
+        ? '#pagewrapper'
+        : '#modal-a11y-wrapper';
     ReactModal.setAppElement(id);
 
     return <App {...props} />;

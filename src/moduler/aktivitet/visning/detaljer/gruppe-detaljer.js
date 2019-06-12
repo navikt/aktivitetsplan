@@ -25,8 +25,9 @@ const Motaplan = planListe =>
                 {formaterDatoKortManedTid(mote.startDato)}
                 {formaterTid(mote.sluttDato) === '00:00'
                     ? ''
-                    : ` - ${formaterTid(mote.sluttDato)}`},
-                {` ${mote.sted}`}
+                    : ` - ${formaterTid(mote.sluttDato)}`}
+,
+{` ${mote.sted}`}
             </Normaltekst>
         )}
     </span>;

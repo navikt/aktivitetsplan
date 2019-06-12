@@ -99,7 +99,9 @@ describe('utils', () => {
         const action = 'action';
 
         it('Sjekk at funksjonen returnerer et rejected promise', () => {
-            expect(handterFeil(() => {}, action)(new Error('message'))).rejects.toThrow('message')
+            expect(
+                handterFeil(() => {}, action)(new Error('message'))
+            ).rejects.toThrow('message');
         });
         it('Sjekk at funksjonen dispatcher parset feil', () => {
             const dispatch = jest.fn();
@@ -109,7 +111,7 @@ describe('utils', () => {
             };
 
             try {
-                handterFeil(dispatch, action)({response});
+                handterFeil(dispatch, action)({ response });
             } catch (e) {
                 // ignore
             }

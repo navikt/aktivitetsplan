@@ -1,5 +1,5 @@
 import { rndId } from './utils';
-import { erEksternBruker } from "./sessionstorage";
+import { erEksternBruker } from './sessionstorage';
 
 const dialoger = [
     {
@@ -166,7 +166,7 @@ export function opprettDialog(update) {
     const nyHenvendelse = {
         id: rndId(),
         dialogId: dialogId,
-        avsender: erEksternBruker()? 'BRUKER':'VEILEDER',
+        avsender: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
         avsenderId: 'Z123456',
         overskrift: update.overskrift,
         tekst: update.tekst,

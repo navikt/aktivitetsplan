@@ -41,7 +41,7 @@ function OppdaterReferatForm({
                 feltNavn="referat"
                 maxLength={REFERAT_MAKS_LENGDE}
                 disabled={oppdaterer}
-                placeholderId={'referat.form.placeholder'}
+                placeholderId="referat.form.placeholder"
             />
 
             <HiddenIfHovedknapp

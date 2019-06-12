@@ -9,9 +9,12 @@ import StillingEtikettForm from './stilling-etikett-form';
 import { selectAktivitetMedId } from '../../aktivitetliste-selector';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 
-function OppdaterAktivitetStatus(props) {
-    const { valgtAktivitet, status } = props;
-
+function OppdaterAktivitetStatus({
+    valgtAktivitet,
+    status,
+    className,
+    underOppfolging,
+}) {
     const disableStatusEndring =
         valgtAktivitet.historisk ||
         status === statuser.STATUS_AVBRUTT ||
@@ -21,15 +24,13 @@ function OppdaterAktivitetStatus(props) {
         valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;
 
     return (
-        <section className={props.className}>
+        <section className={className}>
             <Undertittel>
                 <FormattedMessage id="oppdater-aktivitet-etikett.header" />
             </Undertittel>
             <StillingEtikettForm
                 visible={erStillingsAktivitet}
-                disableStatusEndring={
-                    disableStatusEndring || !props.underOppfolging
-                }
+                disableStatusEndring={disableStatusEndring || !underOppfolging}
                 aktivitet={valgtAktivitet}
             />
         </section>

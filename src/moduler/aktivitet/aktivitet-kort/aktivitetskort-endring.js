@@ -6,7 +6,7 @@ function AktivitetskortEndring({ harEndringerIAktivitet }) {
     return (
         <VisibleIfDiv
             visible={harEndringerIAktivitet}
-            className={'aktivitetskort__nyendring'}
+            className="aktivitetskort__nyendring"
         >
             <span className="aktivitetskort__nyendring-sirkel" />
         </VisibleIfDiv>

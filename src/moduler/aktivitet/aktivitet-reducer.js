@@ -15,7 +15,7 @@ function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
 }
 
 export default function reducer(state = initalState, action) {
-    const data = action.data;
+    const {data} = action;
     switch (action.type) {
         case AT.SLETT_OK:
             return {

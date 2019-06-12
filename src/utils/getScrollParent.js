@@ -3,7 +3,8 @@ function isScrollParent(parent, excludeStaticParent, overflowRegex) {
     const parentStyle = getComputedStyle(parent);
     if (excludeStaticParent && parentStyle.position === 'static') {
         return false;
-    } else if (
+    }
+    if (
         overflowRegex.test(
             parentStyle.overflow + parentStyle.overflowY + parentStyle.overflowX
         )

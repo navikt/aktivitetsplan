@@ -22,17 +22,17 @@ class ForhandsorienteringArenaAktivitet extends Component {
     }
 
     render() {
+        const { valgtAktivitet } = this.props;
+        const { forhandsorienteringSkalSendes } = this.state;
         if (
-            [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(
-                this.props.valgtAktivitet.status
-            )
+            [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(valgtAktivitet.status)
         ) {
             return null;
         }
 
         const merEnnsyvDagerTil =
-            erMerEnnSyvDagerTil(this.props.valgtAktivitet.tilDato) ||
-            !this.props.valgtAktivitet.tilDato;
+            erMerEnnSyvDagerTil(valgtAktivitet.tilDato) ||
+            !valgtAktivitet.tilDato;
 
         const AlertStripeHvisMindreEnnSyvDagerTil = () =>
             <HiddenIfAlertStripeInfoSolid hidden={merEnnsyvDagerTil}>
@@ -40,20 +40,15 @@ class ForhandsorienteringArenaAktivitet extends Component {
             </HiddenIfAlertStripeInfoSolid>;
 
         const AlertStripeVisBekreftelse = () =>
-            <HiddenIfAlertStripeSuksess
-                hidden={this.state.forhandsorienteringSkalSendes}
-            >
+            <HiddenIfAlertStripeSuksess hidden={forhandsorienteringSkalSendes}>
                 <FormattedMessage id="forhandsorienterin.arenaaktivitet.er-sendt" />
             </HiddenIfAlertStripeSuksess>;
         return (
             <div>
                 <AlertStripeHvisMindreEnnSyvDagerTil />
                 <ForhandsorienteringArenaAktivitetForm
-                    valgtAktivitet={this.props.valgtAktivitet}
-                    visible={
-                        merEnnsyvDagerTil &&
-                        this.state.forhandsorienteringSkalSendes
-                    }
+                    valgtAktivitet={valgtAktivitet}
+                    visible={merEnnsyvDagerTil && forhandsorienteringSkalSendes}
                     forhandsorienteringSendt={this.forhandsorienteringSendt}
                 />
                 <AlertStripeVisBekreftelse />

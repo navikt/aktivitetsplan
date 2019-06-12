@@ -1,26 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import PersonIcon from './person-ikon'
+import PersonIcon from './person-ikon';
 import { selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import Brodsmule from './brodsmule';
 
 const DITTNAVN_PATH = '/dittnav/';
 const VEIENTILARBEID_PATH = '/veientilarbeid/';
 
-function Brodsmuler(props) {
-    if (props.underOppfolging === undefined) {
+function Brodsmuler({ underOppfolging }) {
+    if (underOppfolging === undefined) {
         return null;
     }
     return (
         <div className="brodsmuler">
-            <PersonIcon/>
+            <PersonIcon />
             <ol className="brodsmuler__list">
                 <Brodsmule tekst="Ditt NAV" path={DITTNAVN_PATH} />
                 <Brodsmule
                     tekst="Veien til arbeid"
                     path={VEIENTILARBEID_PATH}
-                    skalVises={props.underOppfolging}
+                    skalVises={underOppfolging}
                 />
                 <Brodsmule tekst="Aktivitetsplan" />
             </ol>

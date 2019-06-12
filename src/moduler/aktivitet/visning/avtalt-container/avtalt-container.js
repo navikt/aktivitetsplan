@@ -16,17 +16,27 @@ import AvtaltForm, {
 import { oppdaterAktivitet } from '../../aktivitet-actions';
 import * as AppPT from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
-import { selectAktiviteterData, selectAktivitetStatus } from '../../aktivitet-selector';
-import { erGyldigISODato, erMerEnnSyvDagerTil } from '../../../../utils';
+import {
+    selectAktiviteterData,
+    selectAktivitetStatus,
+} from '../../aktivitet-selector';
+import {
+    erGyldigISODato,
+    erMerEnnSyvDagerTil,
+    msSince,
+} from '../../../../utils';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import {
     selectErBrukerManuell,
-    selectErUnderKvp, selectOppfolgingsPerioder,
+    selectErUnderKvp,
+    selectOppfolgingsPerioder,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
-import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
-import { msSince } from '../../../../utils';
+import {
+    loggForhandsorientering,
+    metrikkTidForsteAvtalte,
+} from '../../../../felles-komponenter/utils/logging';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -52,6 +62,12 @@ class AvtaltContainer extends Component {
             aktivOppfolgingsPeriode,
         } = this.props;
 
+        const {
+            visBekreftAvtalt,
+            forhandsorienteringSent,
+            forhandsorienteringType,
+        } = this.state;
+
         const { type, status, historisk, avtalt } = aktivitet;
 
         const lasterData = aktivitetStatus !== STATUS.OK;
@@ -73,7 +89,7 @@ class AvtaltContainer extends Component {
         const visAvtaltMedNavMindreEnnSyvDager = !avtalt && !merEnnsyvDagerTil;
 
         // Kun vis bekreftet hvis nettopp satt til avtalt.
-        if (this.state.visBekreftAvtalt === false && avtalt) {
+        if (visBekreftAvtalt === false && avtalt) {
             return null;
         }
 
@@ -116,24 +132,27 @@ class AvtaltContainer extends Component {
                         avtaltForm.avtaltSelect
                     );
 
-                    if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.startDato)) {
-                        metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode));
+                    if (
+                        !harAvtalteAktiviteter &&
+                        aktivOppfolgingsPeriode &&
+                        erGyldigISODato(aktivOppfolgingsPeriode.startDato)
+                    ) {
+                        metrikkTidForsteAvtalte(
+                            msSince(aktivOppfolgingsPeriode)
+                        );
                     }
 
                     doSetAktivitetTilAvtalt(aktivitet);
                     document.querySelector('.aktivitet-modal').focus();
                 }}
             />
-
         );
 
         const settAvtaltTekstVerdi =
             (!merEnnsyvDagerTil && 'avtaltMedNavMindreEnnSyvDager') ||
             (erManuellKrrKvpBruker && 'erManuellKrrKvpBruker') ||
-            (this.state.forhandsorienteringSent && 'forhandsorienteringSent') ||
-            (!this.state.forhandsorienteringSent &&
-                'forhandsorienteringIkkeSent');
-        const forhandsorienteringType = this.state.forhandsorienteringType;
+            (forhandsorienteringSent && 'forhandsorienteringSent') ||
+            (!forhandsorienteringSent && 'forhandsorienteringIkkeSent');
 
         const visAvtalt = (
             <div className={className}>
@@ -179,8 +198,13 @@ AvtaltContainer.defaultProps = {
 
 const mapStateToProps = state => ({
     aktivitetStatus: selectAktivitetStatus(state),
-    harAvtalteAktiviteter: (selectAktiviteterData(state).filter(aktivitet => aktivitet.avtalt).filter(a => !a.historisk).length !== 0),
-    aktivOppfolgingsPeriode: selectOppfolgingsPerioder(state).filter(periode => !periode.sluttDato)[0],
+    harAvtalteAktiviteter:
+        selectAktiviteterData(state)
+            .filter(aktivitet => aktivitet.avtalt)
+            .filter(a => !a.historisk).length !== 0,
+    aktivOppfolgingsPeriode: selectOppfolgingsPerioder(state).filter(
+        periode => !periode.sluttDato
+    )[0],
     erManuellKrrKvpBruker:
         selectErBrukerManuell(state) ||
         selectErUnderKvp(state) ||

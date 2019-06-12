@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import Text from '../../text';
-import hiddenIfHOC from '../../felles-komponenter/hidden-if/hidden-if';
+import hiddenIfHOC from "../hidden-if/hidden-if";
 import * as statuskoder from '../../constant';
 
 const cls = type => classNames('etikett', `etikett--${type}`);

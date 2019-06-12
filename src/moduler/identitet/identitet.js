@@ -6,15 +6,16 @@ import { hentIdentitet } from './identitet-reducer';
 
 class Identitet extends Component {
     componentDidMount() {
-        this.props.doHentIdentitet();
+        const { doHentIdentitet } = this.props;
+        doHentIdentitet();
     }
 
     render() {
-        const { children, ident } = this.props;
+        const { children, ident, intl } = this.props;
         return (
             <span>
                 {ident === children
-                    ? this.props.intl.formatMessage({ id: 'identitet.deg' })
+                    ? intl.formatMessage({ id: 'identitet.deg' })
                     : children}
             </span>
         );

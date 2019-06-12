@@ -9,7 +9,7 @@ function DialogPrint({ dialog }) {
         return <div />;
     }
 
-    const henvendelser = dialog.henvendelser;
+    const {henvendelser} = dialog;
     const henvendelserSynkende =
         henvendelser &&
         [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));

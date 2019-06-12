@@ -9,7 +9,7 @@ import { HtmlText } from '../../text';
 import Ekspanderbartpanel from '../../felles-komponenter/utils/ekspanderbartpanel-med-tittel-og-innhold';
 import Video from './video';
 import { selectLestInformasjon } from '../lest/lest-reducer';
-import * as Api from './../lest/lest-api';
+import * as Api from "../lest/lest-api";
 import { selectErBruker } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';

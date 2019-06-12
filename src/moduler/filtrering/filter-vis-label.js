@@ -46,9 +46,8 @@ const lesUrlParamFilterOgFiltrerPaaAktivitetsType = doToggleAktivitetsType => {
 
 class VisValgtFilter extends React.PureComponent {
     componentDidMount() {
-        lesUrlParamFilterOgFiltrerPaaAktivitetsType(
-            this.props.doToggleAktivitetsType
-        );
+        const { doToggleAktivitetsType } = this.props;
+        lesUrlParamFilterOgFiltrerPaaAktivitetsType(doToggleAktivitetsType);
     }
 
     render() {

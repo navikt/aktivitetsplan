@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { moment } from './../../../utils';
+import { moment } from "../../../utils";
 import FieldGroupsValidering from '../fieldgroups-validering';
 
 function isValidDate(dato) {

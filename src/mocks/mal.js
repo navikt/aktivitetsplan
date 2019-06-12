@@ -1,4 +1,4 @@
-import { erEksternBruker } from "./sessionstorage";
+import { erEksternBruker } from './sessionstorage';
 
 export const maler = [
     {
@@ -20,7 +20,7 @@ export function sisteMal() {
 export function opprettMal(update) {
     let nyMal = {
         mal: update.mal,
-        endretAv: erEksternBruker() ? 'BRUKER': 'VEILEDER',
+        endretAv: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
         dato: new Date(),
     };
     maler.push(nyMal);

@@ -13,7 +13,7 @@ describe('unsafe-html', () => {
 
     it('Skal inkludere klasser som passes', () => {
         const wrapper = shallow(
-            <UnsafeHtml className={'test-klasse'}>Test</UnsafeHtml>
+            <UnsafeHtml className="test-klasse">Test</UnsafeHtml>
         );
 
         expect(

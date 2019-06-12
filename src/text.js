@@ -60,6 +60,10 @@ FormattedHTMLMessageProxy.propTypes = {
     className: PT.string,
 };
 
+FormattedHTMLMessageProxy.defaultProps = {
+    className: undefined,
+};
+
 export default textHOC(FormattedMessage);
 export const HtmlText = FormattedHTMLMessageProxy;
 export const FailsafeText = textHOC(FormattedHTMLMessage, {

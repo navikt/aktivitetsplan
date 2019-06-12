@@ -1,8 +1,8 @@
 import React from 'react';
-import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
-import { MOTE_TYPE, IJOBB_AKTIVITET_TYPE } from '../../../constant';
 import { IntlProvider, intlShape } from 'react-intl';
 import { mount } from 'enzyme';
+import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
+import { MOTE_TYPE, IJOBB_AKTIVITET_TYPE } from '../../../constant';
 
 const intlProvider = new IntlProvider({ locale: 'no' }, {});
 const { intl } = intlProvider.getChildContext();

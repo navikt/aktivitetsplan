@@ -59,7 +59,6 @@ describe('rest-reducer', () => {
                     data: { test: 42 },
                 });
                 expect(result).toHaveProperty('status', 'ERROR');
-
             });
             it('skal sette status feilet med eksisterende state og beholde gammel data', () => {
                 const result = reducer(

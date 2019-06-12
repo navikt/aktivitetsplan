@@ -37,7 +37,7 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
     const vistekster = window.location.search.indexOf('vistekster') !== -1;
     const aktor = erVeileder ? 'veileder' : 'bruker';
     const feilType = feil.type;
-    const melding = feil.melding;
+    const { melding } = feil;
     const unauthorized = feil.httpStatus === 401;
     const feilKategori = unauthorized
         ? UNAUTHORIZED_KATEGORI
@@ -81,7 +81,6 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
 }
 
 FeilStripe.defaultProps = {
-    tekstIds: undefined,
     erVeileder: false,
     erArenaFeil: false,
 };
@@ -102,8 +101,9 @@ class Feilmelding extends Component {
     }
 
     toggleDetaljer = () => {
+        const { apen } = this.state;
         this.setState({
-            apen: !this.state.apen,
+            apen: !apen,
         });
     };
 
@@ -115,6 +115,8 @@ class Feilmelding extends Component {
             intl,
             erArenaFeil,
         } = this.props;
+
+        const { apen } = this.state;
 
         const alvorligsteFeil = finnHoyesteAlvorlighetsgrad(feilmeldinger);
         return (
@@ -131,10 +133,7 @@ class Feilmelding extends Component {
                 <Knappelenke onClick={this.toggleDetaljer} className="">
                     <span>Vis detaljer</span>
                 </Knappelenke>
-                <VisibleIfDiv
-                    visible={this.state.apen}
-                    className="feilmelding__detaljer"
-                >
+                <VisibleIfDiv visible={apen} className="feilmelding__detaljer">
                     {feilmeldinger.map(feilen => {
                         const id =
                             (feilen.melding && feilen.melding.id) ||

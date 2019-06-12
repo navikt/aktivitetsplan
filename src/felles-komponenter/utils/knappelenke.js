@@ -11,6 +11,7 @@ function Knappelenke({ onClick, className, ...rest }) {
 
     return (
         <button
+            type="button"
             {...rest}
             className={classNames('knappelenke', className)}
             onClick={click}

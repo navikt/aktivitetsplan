@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 import BobleTekstomrade from './boble-tekstomrade';
-import { selectErVeileder } from './../../identitet/identitet-selector';
+import { selectErVeileder } from '../../identitet/identitet-selector';
 import { formaterDatoTid, datoComparator } from '../../../utils';
 import * as AppPT from '../../../proptypes';
 import Dato from '../../../felles-komponenter/dato';
@@ -70,17 +70,19 @@ Henvendelse.defaultProps = {
 
 class Dialog extends Component {
     componentDidMount() {
-        this.props.doMarkerDialogSomLest();
+        const { doMarkerDialogSomLest } = this.props;
+        doMarkerDialogSomLest();
     }
 
     componentWillReceiveProps() {
-        this.props.doMarkerDialogSomLest();
+        const { doMarkerDialogSomLest } = this.props;
+        doMarkerDialogSomLest();
     }
 
     render() {
         const { dialog, erPaInnsiden } = this.props;
-        const henvendelser = dialog.henvendelser;
-        const lestAvBrukerTidspunkt = dialog.lestAvBrukerTidspunkt;
+        const { henvendelser } = dialog;
+        const { lestAvBrukerTidspunkt } = dialog;
         const henvendelserSynkende = [...henvendelser].sort((a, b) =>
             datoComparator(b.sendt, a.sendt)
         );
@@ -122,15 +124,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => {
-    const dialog = props.dialog;
+    const { dialog } = props;
     const dialogId = dialog.id;
     return {
         doMarkerDialogSomLest: () => {
             if (!dialog.lest) {
-                markerDialogSomLest(dialogId)(dispatch)
-                    .then(() => {
-                        window.dispatchEvent(new Event('aktivitetsplan.dialog.lest'));
-                    });
+                markerDialogSomLest(dialogId)(dispatch).then(() => {
+                    window.dispatchEvent(
+                        new Event('aktivitetsplan.dialog.lest')
+                    );
+                });
             }
         },
     };

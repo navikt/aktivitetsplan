@@ -1,9 +1,5 @@
-import React, {Component} from 'react';
-import {
-    Normaltekst,
-    Element,
-    EtikettLiten
-} from 'nav-frontend-typografi';
+import React, { Component } from 'react';
+import { Normaltekst, Element, EtikettLiten } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
@@ -22,25 +18,33 @@ import * as AppPT from '../../proptypes';
 import './maal.less';
 
 const REGISTRERINGSINFO_URL = '/registreringsinformasjon?modus=rediger';
-function VisKnappMaal({fremtidigSituasjonTekst, mal}) {
+
+function VisKnappMaal({ fremtidigSituasjonTekst, mal }) {
     return (
         <a
             href={REGISTRERINGSINFO_URL}
             className="typo-element lenke lenke-knapp"
         >
-            {
-                (fremtidigSituasjonTekst && mal)
-                    ? 'Endre'
-                    : 'Legg til'
-            }
+            {fremtidigSituasjonTekst && mal ? 'Endre' : 'Legg til'}
         </a>
-    )
+    );
 }
+
+VisKnappMaal.propTypes = {
+    fremtidigSituasjonTekst: PT.string,
+    mal: PT.string,
+};
+
+VisKnappMaal.defaultProps = {
+    mal: undefined,
+    fremtidigSituasjonTekst: undefined,
+};
 
 class Maal extends Component {
     componentDidMount() {
-        this.props.doHentMal();
-        this.props.doHentFremtidigSituasjon();
+        const { doHentMal, doHentFremtidigSituasjon } = this.props;
+        doHentMal();
+        doHentFremtidigSituasjon();
     }
 
     render() {
@@ -48,7 +52,7 @@ class Maal extends Component {
             avhengigheter,
             underOppfolging,
             mal,
-            fremtidigSituasjonTekst
+            fremtidigSituasjonTekst,
         } = this.props;
         if (!underOppfolging) {
             return null;
@@ -57,34 +61,44 @@ class Maal extends Component {
             <div className="maal">
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <Element>Mål</Element>
-                    <EtikettLiten className="hovedmaal">{fremtidigSituasjonTekst ? fremtidigSituasjonTekst : ''}</EtikettLiten>
-                    <Normaltekst>{mal ? mal : ''}</Normaltekst>
-                    <VisKnappMaal fremtidigSituasjonTekst={fremtidigSituasjonTekst} mal={mal}/>
+                    <EtikettLiten className="hovedmaal">
+                        {fremtidigSituasjonTekst || ''}
+                    </EtikettLiten>
+                    <Normaltekst>
+                        {mal || ''}
+                    </Normaltekst>
+                    <VisKnappMaal
+                        fremtidigSituasjonTekst={fremtidigSituasjonTekst}
+                        mal={mal}
+                    />
                 </Innholdslaster>
             </div>
         );
     }
 }
 
+Maal.propTypes = {
+    avhengigheter: AppPT.avhengigheter.isRequired,
+    doHentMal: PT.func.isRequired,
+    doHentFremtidigSituasjon: PT.func.isRequired,
+    underOppfolging: PT.bool.isRequired,
+    fremtidigSituasjonTekst: PT.string,
+    mal: PT.string,
+};
+
 Maal.defaultProps = {
     mal: undefined,
     fremtidigSituasjonTekst: undefined,
 };
 
-Maal.propTypes = {
-    avhengigheter: AppPT.avhengigheter.isRequired,
-    mal: PT.string,
-    fremtidigSituasjonTekst: PT.string,
-    doHentMal: PT.func.isRequired,
-    doHentFremtidigSituasjon: PT.func.isRequired,
-    underOppfolging: PT.bool.isRequired,
-};
-
 const mapStateToProps = state => ({
-        avhengigheter: [selectMalStatus(state), selectFremtidigSituasjonStatus(state)],
-        mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
-        fremtidigSituasjonTekst: selectFremtidigSituasjonData(state).tekst,
-        underOppfolging: selectErUnderOppfolging(state),
+    avhengigheter: [
+        selectMalStatus(state),
+        selectFremtidigSituasjonStatus(state),
+    ],
+    mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
+    fremtidigSituasjonTekst: selectFremtidigSituasjonData(state).tekst,
+    underOppfolging: selectErUnderOppfolging(state),
 });
 
 const mapDispatchToProps = dispatch => ({

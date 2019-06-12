@@ -35,8 +35,9 @@ class AktivitetFormContainer extends Component {
 
     // eslint-disable-next-line consistent-return
     visLukkDialog(e) {
-        if (this.props.formIsDirty) {
-            const melding = this.props.intl.formatMessage({
+        const { formIsDirty, intl } = this.props;
+        if (formIsDirty) {
+            const melding = intl.formatMessage({
                 id: 'aktkivitet-skjema.lukk-advarsel',
             });
             e.returnValue = melding;

@@ -39,14 +39,17 @@ class VersjonerForAktivitet extends Component {
     }
 
     componentWillUnmount() {
-        this.props.doFjernVersjoner();
+        const { doFjernVersjoner } = this.props;
+        doFjernVersjoner();
     }
 
     onClick() {
-        this.setState({ apen: !this.state.apen });
+        const { apen } = this.state;
+        this.setState({ apen: !apen });
     }
 
     render() {
+        const { apen } = this.state;
         const { avhengighet, versjoner, className } = this.props;
 
         const versjonerInnslag = versjoner
@@ -62,9 +65,7 @@ class VersjonerForAktivitet extends Component {
         const versjonerInnslagUnderAccordion = (
             <Accordion
                 onClick={this.onClick}
-                labelId={
-                    this.state.apen ? 'endringer.skjul' : 'endringer.vis-mer'
-                }
+                labelId={apen ? 'endringer.skjul' : 'endringer.vis-mer'}
             >
                 {versjoner
                     .slice(MAX_SIZE)

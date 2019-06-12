@@ -15,7 +15,7 @@ export const nyHenvendelseDialogFormNavn = 'ny-henvendelse-dialog';
 
 function Dialog({ dialog, aktivitet, className, underOppfolging }) {
     const dialogId = dialog.id;
-    const historisk = dialog.historisk;
+    const {historisk} = dialog;
     return (
         <div className={className}>
             <Undertittel tag="h1" className="endre-dialog__tittel">

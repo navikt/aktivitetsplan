@@ -16,13 +16,16 @@ class Video extends Component {
     }
 
     onClick() {
+        const { apen } = this.state;
         this.setState({
-            apen: !this.state.apen,
+            apen: !apen,
         });
     }
 
     render() {
-        const accordionLabelId = this.state.apen
+        const { apen } = this.state;
+
+        const accordionLabelId = apen
             ? 'informasjon.videokontent.skjul.tekst'
             : 'informasjon.videokontent.vis.tekst';
 

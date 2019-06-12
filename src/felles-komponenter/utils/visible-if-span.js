@@ -3,9 +3,10 @@ import PT from 'prop-types';
 import visibleIfHOC from '../../hocs/visible-if';
 
 function VisibleIfSpan(props) {
+    const { children } = props;
     return (
         <span {...props}>
-            {props.children}
+            {children}
         </span>
     );
 }

@@ -34,23 +34,22 @@ class OppdaterReferatContainer extends Component {
     }
 
     render() {
-        const props = this.props;
         const {
             kanHaReferat,
             visReferat,
             harReferat,
             erVeileder,
             delelinje,
-        } = props;
+        } = this.props;
 
-        const state = this.state || {};
+        const { oppdaterReferat } = this.state;
         const visOppdaterReferatForm =
-            state.oppdaterReferat || (erVeileder && !harReferat);
+            oppdaterReferat || (erVeileder && !harReferat);
 
         return (
             <HiddenIfSection hidden={!kanHaReferat || !visReferat}>
                 <OppdaterReferat
-                    {...props}
+                    {...this.props}
                     visOppdaterReferatForm={visOppdaterReferatForm}
                     startOppdaterReferat={this.startOppdaterReferat}
                     stoppOppdaterReferat={this.stoppOppdaterReferat}
@@ -67,7 +66,6 @@ class OppdaterReferatContainer extends Component {
 OppdaterReferatContainer.defaultProps = {
     className: undefined,
     delelinje: false,
-    erReferatPublisert: false,
 };
 
 OppdaterReferatContainer.propTypes = {
@@ -77,20 +75,23 @@ OppdaterReferatContainer.propTypes = {
     erVeileder: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     publiserer: PT.bool.isRequired,
+    kanHaReferat: PT.bool.isRequired,
+    visReferat: PT.bool.isRequired,
+    harReferat: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,
     className: PT.string,
 };
 
 const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet;
-    const erReferatPublisert = aktivitet.erReferatPublisert;
+    const { aktivitet } = props;
+    const { erReferatPublisert } = aktivitet;
     const aktivitetType = aktivitet.type;
     const kanHaReferat =
         (aktivitetType === MOTE_TYPE &&
             moment(aktivitet.fraDato).toISOString() < moment().toISOString()) ||
         aktivitetType === SAMTALEREFERAT_TYPE;
 
-    const referat = aktivitet.referat;
+    const { referat } = aktivitet;
     const harReferat = !!referat;
 
     const erVeileder = selectErVeileder(state);

@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import visibleIfHOC from '../../../hocs/visible-if';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
-import { selectDialogForAktivitetId } from '../../../moduler/dialog/dialog-selector';
+import { selectDialogForAktivitetId } from "../../dialog/dialog-selector";
 import AktivitetEtikettGruppe from '../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import * as AppPT from '../../../proptypes';
 
@@ -60,13 +60,13 @@ AktivitetskortTillegg.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet;
+    const {aktivitet} = props;
     const aktivitetId = aktivitet.id;
     const dialog = selectDialogForAktivitetId(state, aktivitetId);
     const henvendelser = dialog ? dialog.henvendelser : [];
     const antallHendvendelser = henvendelser.length;
     const antallUlesteHenvendelser = henvendelser.filter(h => !h.lest).length;
-    const etikett = aktivitet.etikett;
+    const {etikett} = aktivitet;
     return {
         antallHendvendelser,
         antallUlesteHenvendelser,

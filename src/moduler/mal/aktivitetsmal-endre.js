@@ -10,12 +10,13 @@ import {
     selectMalStatus,
     selectGjeldendeMal,
 } from './aktivitetsmal-reducer';
-import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
+import { selectErVeileder } from '../identitet/identitet-selector';
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 
 class AktivitetmalEndre extends Component {
     componentDidMount() {
-        this.props.doHentMal();
+        const { doHentMal } = this.props;
+        doHentMal();
     }
 
     render() {

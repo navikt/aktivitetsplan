@@ -32,7 +32,7 @@ const initalState = {
 };
 
 function nyStateMedOppdatertDialog(state, dialog) {
-    const data = state.data;
+    const {data} = state;
     const dialogIndeks = data.findIndex(d => d.id === dialog.id);
     const nyData = [...data];
     if (dialogIndeks >= 0) {
@@ -45,7 +45,7 @@ function nyStateMedOppdatertDialog(state, dialog) {
 
 // Reducer
 export default function reducer(state = initalState, action) {
-    const data = action.data;
+    const {data} = action;
     switch (action.type) {
         case OPPRETTER_HENVENDELSE:
         case OPPDATER_DIALOG:

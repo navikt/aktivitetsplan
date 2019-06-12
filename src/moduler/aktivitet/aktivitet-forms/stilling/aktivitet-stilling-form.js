@@ -74,7 +74,7 @@ const begrensetKontaktpersonLengde = maksLengde(
 // eslint-disable-next-line react/prefer-stateless-function
 class StillingAktivitetForm extends Component {
     render() {
-        const props = this.props;
+        const {props} = this;
         const {
             currentFraDato,
             currentTilDato,
