@@ -1,11 +1,15 @@
 import moment from 'moment';
 import { rndId } from './utils';
-import { erEksternBruker } from './sessionstorage';
+import {
+    erEksternBruker,
+    ingenOppfPerioder,
+    visAutomatiskeAktiviteter,
+} from './sessionstorage';
 
 const eksternBruker = erEksternBruker();
 const bruker = eksternBruker ? 'BRUKER' : 'NAV';
 
-const aktiviteter = [
+const testAktiviteter = [
     wrapAktivitet({
         id: '1',
         versjon: '693',
@@ -149,6 +153,139 @@ const aktiviteter = [
         erReferatPublisert: false,
     }),
 ];
+
+const automatiskeAktiviteter = [
+    {
+        id: '141438',
+        versjon: '199743',
+        tittel: 'Se mulighetene i arbeidsmarkedet',
+        beskrivelse:
+            'Hvilke jobber kan du ta og hvilke bransjer kan du jobbe i? Er jobbene der du bor eller andre steder i landet? Velg geografisk område og bransje og se om jobbene finnes. Hvis du mener denne aktiviteten ikke passer for deg, kan du sette den til avbrutt.',
+        lenke: 'https://mia-q.nav.no',
+        type: 'EGEN',
+        status: 'BRUKER_ER_INTERESSERT',
+        fraDato: '2019-06-13T10:00:36.255+02:00',
+        tilDato: '2019-09-13T10:00:36.255+02:00',
+        opprettetDato: '2019-06-13T10:00:36.333+02:00',
+        endretDato: '2019-06-13T10:00:36.632+02:00',
+        endretAv: 'srvveilarbdirigent',
+        historisk: false,
+        avsluttetKommentar: null,
+        avtalt: false,
+        lagtInnAv: 'NAV',
+        transaksjonsType: 'OPPRETTET',
+        malid: null,
+        etikett: null,
+        kontaktperson: null,
+        arbeidsgiver: null,
+        arbeidssted: null,
+        stillingsTittel: null,
+        hensikt: 'Bli bedre kjent med arbeidsmarkedet',
+        oppfolging: null,
+        antallStillingerSokes: null,
+        avtaleOppfolging: null,
+        jobbStatus: null,
+        ansettelsesforhold: null,
+        arbeidstid: null,
+        behandlingType: null,
+        behandlingSted: null,
+        effekt: null,
+        behandlingOppfolging: null,
+        adresse: null,
+        forberedelser: null,
+        kanal: null,
+        referat: null,
+        erReferatPublisert: false,
+    },
+    {
+        id: '141439',
+        versjon: '199744',
+        tittel: 'Oppdater CV-en og jobbprofilen',
+        beskrivelse:
+            'Når du registrerer CV-en og jobbprofilen din, kan vi følge deg opp på en god måte. Du gjør deg synlig for arbeidsgivere som leter etter nye medarbeidere. NAV samarbeider med mange arbeidsgivere og bemanningsbransjen.',
+        lenke: 'https://arbeidsplassen-q.nav.no/minside ',
+        type: 'EGEN',
+        status: 'GJENNOMFORES',
+        fraDato: '2019-06-13T10:00:36.699+02:00',
+        tilDato: '2019-06-21T10:00:36.699+02:00',
+        opprettetDato: '2019-06-13T10:00:36.722+02:00',
+        endretDato: '2019-06-13T10:00:36.742+02:00',
+        endretAv: 'srvveilarbdirigent',
+        historisk: false,
+        avsluttetKommentar: null,
+        avtalt: false,
+        lagtInnAv: 'NAV',
+        transaksjonsType: 'OPPRETTET',
+        malid: null,
+        etikett: null,
+        kontaktperson: null,
+        arbeidsgiver: null,
+        arbeidssted: null,
+        stillingsTittel: null,
+        hensikt: 'Bli synlig for arbeidsgivere',
+        oppfolging: null,
+        antallStillingerSokes: null,
+        avtaleOppfolging: null,
+        jobbStatus: null,
+        ansettelsesforhold: null,
+        arbeidstid: null,
+        behandlingType: null,
+        behandlingSted: null,
+        effekt: null,
+        behandlingOppfolging: null,
+        adresse: null,
+        forberedelser: null,
+        kanal: null,
+        referat: null,
+        erReferatPublisert: false,
+    },
+    {
+        id: '141440',
+        versjon: '199745',
+        tittel: 'Jobbsøkertips',
+        beskrivelse:
+            'Svar på noen spørsmål om hvordan du søker på jobber. Få råd og tips til søknaden, CV-en, intervjuet og hvordan du finner jobbene.',
+        lenke: 'https://jobbsokerkompetanse-q.nav.no/',
+        type: 'EGEN',
+        status: 'BRUKER_ER_INTERESSERT',
+        fraDato: '2019-06-13T10:00:36.785+02:00',
+        tilDato: '2019-06-27T10:00:36.785+02:00',
+        opprettetDato: '2019-06-13T10:00:36.81+02:00',
+        endretDato: '2019-06-13T10:00:36.988+02:00',
+        endretAv: 'srvveilarbdirigent',
+        historisk: false,
+        avsluttetKommentar: null,
+        avtalt: false,
+        lagtInnAv: 'NAV',
+        transaksjonsType: 'OPPRETTET',
+        malid: null,
+        etikett: null,
+        kontaktperson: null,
+        arbeidsgiver: null,
+        arbeidssted: null,
+        stillingsTittel: null,
+        hensikt: 'Få råd og tips når du søker jobber',
+        oppfolging: null,
+        antallStillingerSokes: null,
+        avtaleOppfolging: null,
+        jobbStatus: null,
+        ansettelsesforhold: null,
+        arbeidstid: null,
+        behandlingType: null,
+        behandlingSted: null,
+        effekt: null,
+        behandlingOppfolging: null,
+        adresse: null,
+        forberedelser: null,
+        kanal: null,
+        referat: null,
+        erReferatPublisert: false,
+    },
+];
+
+const aktiviteter = ingenOppfPerioder()
+    ? []
+    : visAutomatiskeAktiviteter() ? automatiskeAktiviteter : testAktiviteter;
 
 function valueOrNull(potentialValue) {
     if (potentialValue) {

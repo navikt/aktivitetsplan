@@ -1,11 +1,11 @@
-import { erPrivatBruker } from './sessionstorage';
+import { erPrivatBruker, ingenOppfPerioder } from './sessionstorage';
 
 const oppfPerioder = [
     {
         aktorId: '1234567988888',
         veileder: null,
-        startDato: '2018-01-30T10:46:10.971+01:00',
-        sluttDato: '2018-01-31T10:46:10.971+01:00',
+        startDato: '2017-01-30T10:46:10.971+01:00',
+        sluttDato: '2017-12-31T10:46:10.971+01:00',
         begrunnelse: null,
     },
     {
@@ -28,7 +28,7 @@ const oppfolging = {
     gjeldendeEskaleringsvarsel: null,
     kanStarteOppfolging: false,
     avslutningStatus: null,
-    oppfolgingsPerioder: oppfPerioder,
+    oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfPerioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
