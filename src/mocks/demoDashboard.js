@@ -10,6 +10,7 @@ import {
     visAutomatiskeAktiviteter,
     visArenaAktiviteter,
 } from './sessionstorage';
+import './demoDashboard.less';
 
 const brukertype = {
     ekstern: 'eksternbruker',
