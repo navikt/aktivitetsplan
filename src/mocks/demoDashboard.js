@@ -6,7 +6,11 @@ import {
     settSessionStorage,
     erEksternBruker,
     erPrivatBruker,
+    ingenOppfPerioder,
+    visAutomatiskeAktiviteter,
+    visArenaAktiviteter,
 } from './sessionstorage';
+import './demoDashboard.less';
 
 const brukertype = {
     ekstern: 'eksternbruker',
@@ -15,13 +19,12 @@ const brukertype = {
 
 class DemoDashboard extends React.Component {
     endreTilstand = e => {
-        const element = e.currentTarget;
+        const checkbox = e.currentTarget;
+        const saveInSessionStorage =
+            Object.values(SessionStorageElement).indexOf(checkbox.id) > -1;
 
-        if (element.id === SessionStorageElement.PRIVAT_BRUKER) {
-            settSessionStorage(
-                SessionStorageElement.PRIVAT_BRUKER,
-                element.checked
-            );
+        if (saveInSessionStorage) {
+            settSessionStorage(checkbox.id, checkbox.checked);
             window.location.reload();
         }
     };
@@ -63,12 +66,33 @@ class DemoDashboard extends React.Component {
                     onChange={this.endreBrukerType}
                 />
                 <CheckboksPanelGruppe
-                    legend="Tilstand"
+                    legend="Brukers tilstand"
                     checkboxes={[
                         {
                             label: 'Ikke under oppfølging',
                             id: SessionStorageElement.PRIVAT_BRUKER,
                             checked: erPrivatBruker(),
+                        },
+                        {
+                            label: 'Ingen oppfølgingsperioder',
+                            id: SessionStorageElement.INGEN_OPPF_PERIODER,
+                            checked: ingenOppfPerioder(),
+                        },
+                    ]}
+                    onChange={this.endreTilstand}
+                />
+                <CheckboksPanelGruppe
+                    legend="Aktivitet tilstand"
+                    checkboxes={[
+                        {
+                            label: 'Automatiske aktiviteter',
+                            id: SessionStorageElement.AUTOMATISKE_AKTIVITETER,
+                            checked: visAutomatiskeAktiviteter(),
+                        },
+                        {
+                            label: 'Arenaaktiviteter',
+                            id: SessionStorageElement.ARENA_AKTIVITETER,
+                            checked: visArenaAktiviteter(),
                         },
                     ]}
                     onChange={this.endreTilstand}
