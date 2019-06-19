@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Snakkeboble from 'nav-frontend-snakkeboble';
-import BobleTekstomrade from './boble-tekstomrade';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import { formaterDatoTid, datoComparator } from '../../../utils';
 import * as AppPT from '../../../proptypes';
@@ -40,6 +40,7 @@ function Henvendelse({ henvendelse, erPaInnsiden }) {
         henvendelse.avsenderId
     );
     const veileder = avsenderVeileder && henvendelse.avsenderId;
+
     return (
         <FormattedMessage
             id="dialog.henvendelse.topp"
@@ -51,9 +52,9 @@ function Henvendelse({ henvendelse, erPaInnsiden }) {
                     ikonClass={ikonCls(avsenderVeileder, false)}
                     pilHoyre={avsenderVeileder}
                 >
-                    <BobleTekstomrade dialogId={henvendelse.dialogId}>
+                    <Tekstomrade>
                         {henvendelse.tekst}
-                    </BobleTekstomrade>
+                    </Tekstomrade>
                 </Snakkeboble>}
         </FormattedMessage>
     );
