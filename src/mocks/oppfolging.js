@@ -1,4 +1,4 @@
-import { erPrivatBruker, ingenOppfPerioder } from './sessionstorage';
+import { erPrivatBruker, ingenOppfPerioder } from './demo/sessionstorage';
 
 const oppfPerioder = [
     {

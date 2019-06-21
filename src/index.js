@@ -4,9 +4,9 @@ import ReactModal from 'react-modal';
 import * as ReactDOM from 'react-dom';
 import App from './app';
 import NAVSPA from './NAVSPA';
-import { erEksternBruker } from './mocks/sessionstorage';
+import { erEksternBruker } from './mocks/demo/sessionstorage';
 import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
-import DemoBanner from './mocks/demoBanner';
+import DemoBanner from './mocks/demo/demoBanner';
 
 /* eslint-disable global-require */
 if (!global.Intl) {

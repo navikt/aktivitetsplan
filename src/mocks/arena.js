@@ -1,4 +1,4 @@
-import { visArenaAktiviteter } from './sessionstorage';
+import { visArenaAktiviteter } from './demo/sessionstorage';
 
 const arena = !visArenaAktiviteter()
     ? []

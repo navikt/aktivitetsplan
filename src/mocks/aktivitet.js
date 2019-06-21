@@ -4,7 +4,7 @@ import {
     erEksternBruker,
     ingenOppfPerioder,
     visAutomatiskeAktiviteter,
-} from './sessionstorage';
+} from './demo/sessionstorage';
 
 const eksternBruker = erEksternBruker();
 const bruker = eksternBruker ? 'BRUKER' : 'NAV';
