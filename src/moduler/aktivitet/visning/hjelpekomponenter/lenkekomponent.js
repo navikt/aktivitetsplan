@@ -12,7 +12,7 @@ export default function LenkeKomponent({ lenke }) {
         <DetaljFelt
             key="lenke"
             tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
-            visible={lenke && lenke.trim()}
+            visible={!!(lenke && lenke.trim())}
             fullbredde
         >
             <Lenke

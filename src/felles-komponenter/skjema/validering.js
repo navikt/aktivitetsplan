@@ -16,7 +16,7 @@ function pakrevdFabrikk(errorMessageId) {
         if (feltVerdi) {
             return undefined;
         }
-        return <FormattedMessage id={errorMessageId} />;
+        return <FormattedMessage id={errorMessageId} key={errorMessageId} />;
     };
 }
 
@@ -39,6 +39,7 @@ export const maksLengde = leggTilDSL((errorMessageId, maksimalLengde) =>
         maksimalLengde,
         <FormattedMessage
             id={errorMessageId}
+            key={errorMessageId}
             values={{
                 maksLengde: maksimalLengde,
                 MAKS_LENGDE: maksimalLengde,
