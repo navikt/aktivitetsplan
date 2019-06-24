@@ -116,11 +116,11 @@ class DayPickerComponent extends Component {
     }
 
     render() {
-        const { ariaControlledBy, onKeyUp, intl, onDayClick } = this.props;
+        const { ariaControls, onKeyUp, intl, onDayClick } = this.props;
         return (
             <div // eslint-disable-line jsx-a11y/no-static-element-interactions
                 className="datovelger__DayPicker"
-                aria-controlledby={ariaControlledBy} // eslint-disable-line jsx-a11y/aria-props
+                aria-controls={ariaControls} // eslint-disable-line jsx-a11y/aria-props
                 onKeyUp={e => {
                     onKeyUp(e);
                 }}
@@ -144,14 +144,14 @@ DayPickerComponent.propTypes = {
     input: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
     onKeyUp: PT.func.isRequired,
     lukk: PT.func.isRequired,
-    ariaControlledBy: PT.string,
+    ariaControls: PT.string,
     onDayClick: PT.func.isRequired,
     tidligsteFom: PT.instanceOf(Date),
     intl: intlShape.isRequired,
 };
 
 DayPickerComponent.defaultProps = {
-    ariaControlledBy: undefined,
+    ariaControls: undefined,
     tidligsteFom: undefined,
 };
 
