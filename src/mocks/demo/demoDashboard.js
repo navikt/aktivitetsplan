@@ -9,6 +9,7 @@ import {
     ingenOppfPerioder,
     visAutomatiskeAktiviteter,
     visArenaAktiviteter,
+    visTestAktiviteter,
 } from './sessionstorage';
 import './demoDashboard.less';
 
@@ -93,6 +94,11 @@ class DemoDashboard extends React.Component {
                             label: 'Arenaaktiviteter',
                             id: SessionStorageElement.ARENA_AKTIVITETER,
                             checked: visArenaAktiviteter(),
+                        },
+                        {
+                            label: 'Testaktiviteter',
+                            id: SessionStorageElement.TEST_AKTIVITETER,
+                            checked: visTestAktiviteter(),
                         },
                     ]}
                     onChange={this.endreTilstand}

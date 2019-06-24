@@ -3,6 +3,7 @@ export const SessionStorageElement = {
     EKSTERN_BRUKER: 'eksternbruker',
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
     AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
+    TEST_AKTIVITETER: 'testaktiviteter',
     ARENA_AKTIVITETER: 'arena_aktiviteter',
 };
 
@@ -37,6 +38,12 @@ export const visAutomatiskeAktiviteter = () => {
     return (
         hentFraSessionStorage(SessionStorageElement.AUTOMATISKE_AKTIVITETER) ===
         'true'
+    );
+};
+
+export const visTestAktiviteter = () => {
+    return (
+        hentFraSessionStorage(SessionStorageElement.TEST_AKTIVITETER) === 'true'
     );
 };
 
