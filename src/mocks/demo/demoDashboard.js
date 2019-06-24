@@ -12,6 +12,7 @@ import {
     visTestAktiviteter,
 } from './sessionstorage';
 import './demoDashboard.less';
+import Hurtigfilter from './hurtigfilter';
 
 const brukertype = {
     ekstern: 'eksternbruker',
@@ -48,6 +49,7 @@ class DemoDashboard extends React.Component {
         return (
             <section className="demodashboard">
                 <Innholdstittel className="blokk-s">DEMO</Innholdstittel>
+                <Hurtigfilter />
                 <RadioPanelGruppe
                     legend="Brukertype"
                     name="brukertype-rdio-panel"
