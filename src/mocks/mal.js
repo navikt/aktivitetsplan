@@ -1,4 +1,4 @@
-import { erEksternBruker } from './sessionstorage';
+import { erEksternBruker } from './demo/sessionstorage';
 
 export const maler = [
     {

@@ -4,9 +4,9 @@ import ReactModal from 'react-modal';
 import * as ReactDOM from 'react-dom';
 import App from './app';
 import NAVSPA from './NAVSPA';
-import DemoDashboard from './mocks/demoDashboard';
-import { erEksternBruker } from './mocks/sessionstorage';
+import { erEksternBruker } from './mocks/demo/sessionstorage';
 import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
+import DemoBanner from './mocks/demo/demoBanner';
 
 /* eslint-disable global-require */
 if (!global.Intl) {
@@ -35,7 +35,7 @@ if (process.env.REACT_APP_MOCK === 'true') {
     console.log('=========================='); // eslint-disable-line no-console
     require('./mocks'); // eslint-disable-line global-require
 
-    ReactDOM.render(<DemoDashboard />, document.getElementById('demo'));
+    ReactDOM.render(<DemoBanner />, document.getElementById('demo'));
 }
 
 function AppWrapper(props) {
