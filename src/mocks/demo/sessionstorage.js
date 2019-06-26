@@ -3,7 +3,9 @@ export const SessionStorageElement = {
     EKSTERN_BRUKER: 'eksternbruker',
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
     AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
+    TEST_AKTIVITETER: 'testaktiviteter',
     ARENA_AKTIVITETER: 'arena_aktiviteter',
+    TEST_DIALOGER: 'test_dialoger',
 };
 
 export const settSessionStorage = (key, value) => {
@@ -14,35 +16,25 @@ export const hentFraSessionStorage = key => {
     return window.sessionStorage.getItem(key);
 };
 
-export const erEksternBruker = () => {
-    return (
-        hentFraSessionStorage(SessionStorageElement.EKSTERN_BRUKER) === 'true'
-    );
+const erSatt = sessionStorageElement => {
+    return hentFraSessionStorage(sessionStorageElement) === 'true';
 };
 
-export const erPrivatBruker = () => {
-    return (
-        hentFraSessionStorage(SessionStorageElement.PRIVAT_BRUKER) === 'true'
-    );
-};
+export const erEksternBruker = () =>
+    erSatt(SessionStorageElement.EKSTERN_BRUKER);
 
-export const ingenOppfPerioder = () => {
-    return (
-        hentFraSessionStorage(SessionStorageElement.INGEN_OPPF_PERIODER) ===
-        'true'
-    );
-};
+export const erPrivatBruker = () => erSatt(SessionStorageElement.PRIVAT_BRUKER);
 
-export const visAutomatiskeAktiviteter = () => {
-    return (
-        hentFraSessionStorage(SessionStorageElement.AUTOMATISKE_AKTIVITETER) ===
-        'true'
-    );
-};
+export const ingenOppfPerioder = () =>
+    erSatt(SessionStorageElement.INGEN_OPPF_PERIODER);
 
-export const visArenaAktiviteter = () => {
-    return (
-        hentFraSessionStorage(SessionStorageElement.ARENA_AKTIVITETER) ===
-        'true'
-    );
-};
+export const visAutomatiskeAktiviteter = () =>
+    erSatt(SessionStorageElement.AUTOMATISKE_AKTIVITETER);
+
+export const visTestAktiviteter = () =>
+    erSatt(SessionStorageElement.TEST_AKTIVITETER);
+
+export const visArenaAktiviteter = () =>
+    erSatt(SessionStorageElement.ARENA_AKTIVITETER);
+
+export const visDialoger = () => erSatt(SessionStorageElement.TEST_DIALOGER);
