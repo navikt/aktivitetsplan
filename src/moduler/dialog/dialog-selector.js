@@ -3,7 +3,7 @@ import { moment } from '../../utils';
 import { newDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
-import { erEskaleringsDialog } from './dialog-utils';
+import { erViktigMelding } from './dialog-utils';
 import {
     selectErBruker,
     selectErVeileder,
@@ -44,7 +44,7 @@ const hentDialogerFraState = (
                 forrigeSluttDato
             )
         )
-        .filter(d => erEskaleringsDialog(d) || !esklaringsFilter);
+        .filter(d => erViktigMelding(d) || !esklaringsFilter);
 
 export const selectDialoger = createSelector(
     [
@@ -76,7 +76,7 @@ export function selectHarUbehandledeDialoger(state) {
 }
 
 export function selectHarEskaleringer(state) {
-    return selectDialoger(state).filter(erEskaleringsDialog).length > 0;
+    return selectDialoger(state).filter(erViktigMelding).length > 0;
 }
 
 export function selectVisEskaleringsFilter(state) {

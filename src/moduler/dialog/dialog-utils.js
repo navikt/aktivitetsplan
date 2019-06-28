@@ -1,12 +1,13 @@
 import { datoComparator } from '../../utils';
-import { DIALOG_ESKALERING, DIALOG_PARAGRAF8 } from '../../constant';
 
 export function sammenlignDialogerForBruker(a, b) {
     if (a.lest !== b.lest) {
         return a.lest ? 1 : -1;
-    } if (a.venterPaSvar !== b.venterPaSvar) {
+    }
+    if (a.venterPaSvar !== b.venterPaSvar) {
         return a.venterPaSvar ? -1 : 1;
-    } if (a.ferdigBehandlet !== b.ferdigBehandlet) {
+    }
+    if (a.ferdigBehandlet !== b.ferdigBehandlet) {
         return a.ferdigBehandlet ? 1 : -1;
     }
     return datoComparator(b.sisteDato, a.sisteDato);
@@ -15,9 +16,11 @@ export function sammenlignDialogerForBruker(a, b) {
 export function sammenlignDialogerForVeileder(a, b) {
     if (a.lest !== b.lest) {
         return a.lest ? 1 : -1;
-    } if (a.ferdigBehandlet !== b.ferdigBehandlet) {
+    }
+    if (a.ferdigBehandlet !== b.ferdigBehandlet) {
         return a.ferdigBehandlet ? 1 : -1;
-    } if (a.venterPaSvar !== b.venterPaSvar) {
+    }
+    if (a.venterPaSvar !== b.venterPaSvar) {
         // F17HL4-68
         return a.venterPaSvar ? -1 : 1;
     }
@@ -28,7 +31,8 @@ function dialogSammenligner(a, b, tilhorendeDialogId, erBruker) {
     if (tilhorendeDialogId !== null) {
         if (tilhorendeDialogId === parseInt(a.id, 10)) {
             return -1;
-        } if (tilhorendeDialogId === parseInt(b.id, 10)) {
+        }
+        if (tilhorendeDialogId === parseInt(b.id, 10)) {
             return 1;
         }
     }
@@ -45,10 +49,6 @@ export function dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
     return (a, b) => dialogSammenligner(a, b, tilhorendeDialogId, erBruker);
 }
 
-export function erEskaleringsDialog(dialog) {
-    return dialog.egenskaper.indexOf(DIALOG_ESKALERING) > -1;
-}
-
-export function erParagraf8Dialog(dialog) {
-    return dialog.egenskaper.indexOf(DIALOG_PARAGRAF8) > -1;
+export function erViktigMelding(dialog) {
+    return dialog.egenskaper.length > 0;
 }

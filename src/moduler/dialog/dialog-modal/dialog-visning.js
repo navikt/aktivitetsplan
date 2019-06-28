@@ -15,7 +15,7 @@ import visibleIfHOC from '../../../hocs/visible-if';
 import Dato from '../../../felles-komponenter/dato';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import Etikett from '../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett';
-import { erEskaleringsDialog, erParagraf8Dialog } from '../dialog-utils';
+import { erViktigMelding } from '../dialog-utils';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
@@ -39,8 +39,8 @@ class DialogVisning extends React.PureComponent {
     render() {
         const { dialog, erValgt, aktiviteter, erTabBar, history } = this.props;
 
-        const {venterPaSvar} = dialog;
-        const {ferdigBehandlet} = dialog;
+        const { venterPaSvar } = dialog;
+        const { ferdigBehandlet } = dialog;
 
         const dialogCls = (valgt, ulest) =>
             classNames('dialoger__dialog', {
@@ -55,13 +55,12 @@ class DialogVisning extends React.PureComponent {
         const aktivitetType = aktivitet && aktivitet.type;
         const harAktivitetType = !!aktivitetType;
 
-        const {henvendelser} = dialog;
+        const { henvendelser } = dialog;
         const harHenvendelseFraVeileder = !!henvendelser.find(
             a => a.avsender === 'VEILEDER'
         );
 
-        const erViktigMelding =
-            erEskaleringsDialog(dialog) || erParagraf8Dialog(dialog);
+        const harViktigMeldingEgenskap = erViktigMelding(dialog);
 
         const handleOnFocus = () => {
             if (!erValgt) {
@@ -107,7 +106,9 @@ class DialogVisning extends React.PureComponent {
                 </Normaltekst>
                 <HiddenIfDiv
                     hidden={
-                        !venterPaSvar && ferdigBehandlet && !erViktigMelding
+                        !venterPaSvar &&
+                        ferdigBehandlet &&
+                        !harViktigMeldingEgenskap
                     }
                     className="dialoger__dialog-etiketter"
                 >
@@ -122,7 +123,7 @@ class DialogVisning extends React.PureComponent {
                         etikett={DIALOG_IKKE_FERDIGBEHANDLET}
                     />
                     <Etikett
-                        hidden={!erViktigMelding}
+                        hidden={!harViktigMeldingEgenskap}
                         id="dialog.eskalert-melding"
                         etikett={DIALOG_ESKALERING}
                     />
