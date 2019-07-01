@@ -84,18 +84,6 @@ mock.post('/veilarboppfolging/api/oppfolging/settManuell', ({ queryParams }) =>
     })
 );
 
-//veilarboppfolgingproxy
-mock.get('/veilarboppfolgingproxy/api/oppfolging/me', me);
-mock.get('/veilarboppfolgingproxy/api/oppfolging', ({ queryParams }) =>
-    oppfolging(queryParams)
-);
-mock.get('/veilarboppfolgingproxy/api/oppfolging/mal', () => sisteMal());
-mock.post('/veilarboppfolgingproxy/api/oppfolging/mal', ({ body }) =>
-    opprettMal(body, false)
-);
-
-mock.get('/veilarboppfolgingproxy/api/oppfolging/malListe', () => malListe());
-
 //veilarboppgave-api
 mock.get('/veilarboppgave/api/oppgavehistorikk', []);
 
@@ -114,9 +102,6 @@ mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettDialog(body));
 mock.post('/veilarbdialog/api/dialog/forhandsorientering', ({ body }) =>
     opprettDialog(body)
 );
-
-//veilarbdialogproxy
-mock.get('/veilarbdialogproxy/api/dialog', dialog);
 
 // veilarbaktivitet-api
 mock.get('/veilarbaktivitet/api/aktivitet/kanaler', [
@@ -157,14 +142,6 @@ mock.put(
     '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat',
     ({ pathParams, body }) => oppdaterAktivitet(pathParams.aktivitetId, body)
 );
-
-//veilarbaktivitetproxy
-mock.get('/veilarbaktivitetproxy/api/aktivitet/arena', arena);
-mock.get(
-    '/veilarbaktivitetproxy/api/aktivitet/:aktivitetId',
-    ({ pathParams }) => getAktivitet(pathParams.aktivitetId)
-);
-mock.get('/veilarbaktivitetproxy/api/aktivitet', aktiviteter);
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
