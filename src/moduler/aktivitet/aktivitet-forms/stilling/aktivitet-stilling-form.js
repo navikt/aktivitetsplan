@@ -41,10 +41,6 @@ const pakrevdFraDato = pakrevd(
     'stilling-aktivitet-form.feilmelding.paakrevd-fradato'
 ).hvisIkke(erAvtalt);
 
-const pakrevdTilDato = pakrevd(
-    'stilling-aktivitet-form.feilmelding.paakrevd-tildato'
-);
-
 const begrensetLenkeLengde = maksLengde(
     'stilling-aktivitet-form.feilmelding.lenke-lengde',
     LENKE_MAKS_LENGDE
@@ -74,7 +70,7 @@ const begrensetKontaktpersonLengde = maksLengde(
 // eslint-disable-next-line react/prefer-stateless-function
 class StillingAktivitetForm extends Component {
     render() {
-        const {props} = this;
+        const { props } = this;
         const {
             currentFraDato,
             currentTilDato,
@@ -177,7 +173,7 @@ const StillingAktivitetReduxForm = validForm({
     validate: {
         tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
-        tilDato: [pakrevdTilDato],
+        tilDato: [],
         lenke: [begrensetLenkeLengde],
         beskrivelse: [begrensetBeskrivelseLengde],
         arbeidssted: [begrensetArbeidsstedLengde],
