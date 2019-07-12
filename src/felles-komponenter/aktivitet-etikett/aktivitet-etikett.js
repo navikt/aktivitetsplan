@@ -1,8 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
+import EtikettBase from 'nav-frontend-etiketter';
 import Text from '../../text';
-import hiddenIfHOC from "../hidden-if/hidden-if";
+import hiddenIfHOC from '../hidden-if/hidden-if';
 import * as statuskoder from '../../constant';
 
 const cls = type => classNames('etikett', `etikett--${type}`);
@@ -30,9 +31,9 @@ const setType = etikettnavn => {
 
 function AktivitetEtikett({ etikett, id }) {
     return (
-        <span key={etikett} className={cls(setType(etikett))} data-testId={id}>
+        <EtikettBase className={cls(setType(etikett))} type="fokus">
             <Text id={id} />
-        </span>
+        </EtikettBase>
     );
 }
 
