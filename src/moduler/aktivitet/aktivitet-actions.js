@@ -77,16 +77,6 @@ export function lagNyAktivitet(aktivitet) {
     });
 }
 
-export function slettAktivitet(aktivitet) {
-    return dispatch => {
-        dispatch({ type: AT.SLETT, data: aktivitet });
-
-        Api.slettAktivitet(aktivitet)
-            .then(() => dispatch({ type: AT.SLETT_OK, data: aktivitet }))
-            .catch(() => dispatch({ type: AT.SLETT_FAIL, data: aktivitet }));
-    };
-}
-
 export function settForrigeAktiveAktivitetId(id) {
     return {
         type: AT.SETT_FORRIGE_AKTIVE_AKTIVITET_ID,

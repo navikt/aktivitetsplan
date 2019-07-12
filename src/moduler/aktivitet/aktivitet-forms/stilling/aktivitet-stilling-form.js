@@ -78,7 +78,7 @@ class StillingAktivitetForm extends Component {
             errorSummary,
             avtalt,
         } = props;
-        const erAktivitetAvtalt = avtalt === true;
+        const erAktivitetAvtalt = avtalt;
         return (
             <form onSubmit={handleSubmit} autoComplete="off">
                 <div className="skjema-innlogget aktivitetskjema">

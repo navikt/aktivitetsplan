@@ -59,10 +59,7 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
             .join(' - ');
     }
     return (
-        <Normaltekst
-            className="aktivitetskort__dato"
-            id={`aktivitetskort__dato__${id}`}
-        >
+        <Normaltekst id={`aktivitetskort__dato__${id}`}>
             {periodeVisning()}
         </Normaltekst>
     );

@@ -82,7 +82,9 @@ export const toDatePrettyPrint = dato => {
     const tmpDato = toDate(dato);
 
     const days =
-        tmpDato.getDate() < 10 ? `0${tmpDato.getDate()}` : `${tmpDato.getDate()}`;
+        tmpDato.getDate() < 10
+            ? `0${tmpDato.getDate()}`
+            : `${tmpDato.getDate()}`;
     const months =
         tmpDato.getMonth() + 1 < 10
             ? `0${tmpDato.getMonth() + 1}`
@@ -154,7 +156,7 @@ export function formaterTid(dato) {
 
 export function formaterDatoTidSiden(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid() ? `for ${  datoVerdi.fromNow()}` : undefined;
+    return datoVerdi.isValid() ? `for ${datoVerdi.fromNow()}` : undefined;
 }
 
 function erMerEnntoDagerSiden(dato) {
@@ -184,11 +186,10 @@ export function formaterDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
 
     if (datoVerdi.isValid) {
-        if(erMerEnntoDagerSiden(dato)){
-            return formaterDatoTidSiden(dato)
-        } 
-            return formaterDatoKortManedTid(dato)
-        
+        if (erMerEnntoDagerSiden(dato)) {
+            return formaterDatoTidSiden(dato);
+        }
+        return formaterDatoKortManedTid(dato);
     }
     return undefined;
 }
@@ -196,12 +197,11 @@ export function formaterDatoEllerTidSiden(dato) {
 export function formaterDatoEllerTidSidenUtenKlokkeslett(dato) {
     const datoVerdi = moment(dato);
 
-    if(datoVerdi.isValid()){
-        if(erMerEnntoDagerSiden(dato)){
-            return formaterDatoTidSiden(dato)
+    if (datoVerdi.isValid()) {
+        if (erMerEnntoDagerSiden(dato)) {
+            return formaterDatoTidSiden(dato);
         }
-            return formaterDatoKortManed(dato)
-        
+        return formaterDatoKortManed(dato);
     }
     return undefined;
 }
@@ -210,24 +210,9 @@ export function datoComparator(a, b) {
     return a && b ? moment(a).diff(b) : (a ? 1 : 0) - (b ? 1 : 0);
 }
 
-function pad(number) {
-    return number < 10 ? `0${number}` : number;
-}
-
-export function toLocalDate(date) {
-    const dateObject = typeof date === 'string' ? new Date(date) : date;
-    return `${dateObject.getFullYear()}-${pad(dateObject.getMonth() + 1)}-${pad(
-        dateObject.getDate()
-    )}`;
-}
-
 export function HiddenIf({ hidden, children }) {
     if (hidden) {
         return null;
     }
     return children;
-}
-
-export function erTidspunktIPeriode(tidspunkt, fra, til) {
-    return moment(tidspunkt).isBetween(moment(fra), moment(til));
 }
