@@ -216,3 +216,11 @@ export function HiddenIf({ hidden, children }) {
     }
     return children;
 }
+
+export function getAntallDager(fraDato, tilDato) {
+    const msInDay = 1000 * 3600 * 24;
+    tilDato.setHours(0, 0, 0);
+    fraDato.setHours(0, 0, 0);
+
+    return Math.round((tilDato - fraDato) / msInDay);
+}
