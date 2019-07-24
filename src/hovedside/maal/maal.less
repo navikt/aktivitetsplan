@@ -5,23 +5,17 @@
     border-radius: 5px;
     margin-bottom: 2rem;
 
-    > div {
+
+    &__inner {
         display: flex;
         flex-direction: column;
+    }
+    .hovedmaal {
+        color: @navGra60;
+    }
 
-        .hovedmaal {
-            color: @navGra60;
-        }
-
-        .lenke-knapp {
-            align-self: flex-end;
-            color: @navBlaLighten20;
-            text-decoration: none;
-            margin: 0 1rem;
-            padding: 0;
-            border: 0;
-            background: none;
-            cursor: pointer;
-        }
+    #mal-endre-knapp {
+        align-self: flex-end;
+        border: 0;
     }
 }
