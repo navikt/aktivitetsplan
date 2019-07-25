@@ -4,7 +4,7 @@ export default class Startside {
     constructor() {
         this.side = Selector('.aktivitetsplanfs');
         this.btnDialog = Selector('[href$="/dialog"]');
-        this.btnMittMal = Selector('.maal__inner .lenke-knapp');
+        this.btnMittMal = Selector('.maal__inner .mal-endre-knapp');
         this.btnPrint = Selector('.verktoylinje__print-knapp');
         this.aktivitetsTavle = Selector('.aktivitetstavle');
         this.kolForslag = Selector(
