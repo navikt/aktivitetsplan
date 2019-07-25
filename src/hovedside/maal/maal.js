@@ -36,8 +36,7 @@ function InnerMaalInfo({ fremtidigSituasjonTekst, mal, arkivert }) {
             </Normaltekst>
             <a
                 href={REGISTRERINGSINFO_URL}
-                id="mal-endre-knapp"
-                className="typo-element lenke"
+                className="typo-element lenke mal-endre-knapp"
             >
                 {fremtidigSituasjonTekst && mal ? 'Endre' : 'Legg til'}
             </a>
