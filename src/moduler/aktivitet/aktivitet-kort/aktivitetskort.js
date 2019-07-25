@@ -25,8 +25,8 @@ import {
 import {
     selectErBruker,
     selectIdentitetSlice,
-} from "../../identitet/identitet-selector";
-import { selectForrigeAktiveAktivitetId } from "../aktivitet-selector";
+} from '../../identitet/identitet-selector';
+import { selectForrigeAktiveAktivitetId } from '../aktivitet-selector';
 import {
     selectLestAktivitetsplan,
     selectLestStatus,
@@ -97,7 +97,7 @@ class AktivitetsKort extends Component {
                         <Undertekst
                             tag="p"
                             className="aktivitetskort__type"
-                            data-testId={type}
+                            data-testid={type}
                         >
                             <FormattedMessage
                                 id={`aktivitetskort.type.${type}`.toLowerCase()}
@@ -122,7 +122,7 @@ class AktivitetsKort extends Component {
                         </div>
                         <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
                         <VisibleIfDiv
-                            data-testId="antall-stillinger"
+                            data-testid="antall-stillinger"
                             visible={
                                 type === SOKEAVTALE_AKTIVITET_TYPE &&
                                 antallStillingerSokes > 0

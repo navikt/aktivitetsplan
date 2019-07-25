@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
-import { withRouter } from 'react-router-dom';
 import * as AppPT from '../../../proptypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import {
@@ -144,4 +143,4 @@ DialogVisning.propTypes = {
     history: AppPT.history.isRequired,
 };
 
-export default withRouter(DialogVisning);
+export default DialogVisning;

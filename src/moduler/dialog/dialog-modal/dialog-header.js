@@ -32,9 +32,9 @@ function DialogHeader({
                         values={{ motpart: navnPaMotpart }}
                     >
                         {txt =>
-                            <spann>
+                            <span>
                                 {`${txt} ${fnrPaMotpartHvisBruker}`}
-                            </spann>}
+                            </span>}
                     </FormattedMessage>
                 </Element>
             </Innholdslaster>

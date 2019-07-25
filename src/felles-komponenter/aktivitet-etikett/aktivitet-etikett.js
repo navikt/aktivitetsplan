@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import Text from '../../text';
-import hiddenIfHOC from "../hidden-if/hidden-if";
+import hiddenIfHOC from '../hidden-if/hidden-if';
 import * as statuskoder from '../../constant';
 
 const cls = type => classNames('etikett', `etikett--${type}`);
@@ -30,7 +30,7 @@ const setType = etikettnavn => {
 
 function AktivitetEtikett({ etikett, id }) {
     return (
-        <span key={etikett} className={cls(setType(etikett))} data-testId={id}>
+        <span key={etikett} className={cls(setType(etikett))} data-testid={id}>
             <Text id={id} />
         </span>
     );

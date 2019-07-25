@@ -2,6 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import * as AppPT from '../../../proptypes';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { selectDialoger, selectDialogStatus } from '../dialog-selector';
@@ -26,7 +27,13 @@ class Dialoger extends React.Component {
     }
 
     render() {
-        const { dialoger, valgtDialog, className, aktiviteter } = this.props;
+        const {
+            dialoger,
+            valgtDialog,
+            className,
+            aktiviteter,
+            history,
+        } = this.props;
         const dialogerSortert = [...dialoger].sort(
             (a, b) =>
                 this.dialogIderSortert.indexOf(a.id) -
@@ -82,6 +89,7 @@ class Dialoger extends React.Component {
                             erTabBar={erTabBar(d)}
                             erValgt={d === valgtDialog}
                             aktiviteter={aktiviteter}
+                            history={history}
                         />
                     </section>
                 )}
@@ -104,6 +112,7 @@ Dialoger.propTypes = {
     erBruker: PT.bool,
     gjeldendeEskaleringsvarsel: AppPT.eskaleringsvarsel,
     avhengigheter: AppPT.avhengigheter,
+    history: AppPT.history.isRequired,
 };
 
 Dialoger.defaultProps = {
@@ -130,6 +139,6 @@ const mapStateToProps = state => ({
     erBruker: selectErBruker(state),
     gjeldendeEskaleringsvarsel: selectGjeldendeEskaleringsVarsel(state),
 });
-export default connect(mapStateToProps)(DialogerMedInnholdslaster);
+export default withRouter(connect(mapStateToProps)(DialogerMedInnholdslaster));
 
 export const DialogerPure = Dialoger;
