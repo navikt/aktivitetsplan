@@ -16,28 +16,44 @@ import {
 } from './fremtidigSituasjon-reducer';
 import * as AppPT from '../../proptypes';
 import './maal.less';
+import { selectViserHistoriskPeriode } from '../../moduler/filtrering/filter/filter-selector';
 
 const REGISTRERINGSINFO_URL = '/registreringsinformasjon?modus=rediger';
 
-function VisKnappMaal({ fremtidigSituasjonTekst, mal }) {
+function InnerMaalInfo({ fremtidigSituasjonTekst, mal, arkivert }) {
+    if (arkivert) {
+        return (
+            <EtikettLiten className="hovedmaal">Målet er arkivert</EtikettLiten>
+        );
+    }
     return (
-        <a
-            href={REGISTRERINGSINFO_URL}
-            className="typo-element lenke lenke-knapp"
-        >
-            {fremtidigSituasjonTekst && mal ? 'Endre' : 'Legg til'}
-        </a>
+        <div className="maal__inner">
+            <EtikettLiten className="hovedmaal">
+                {fremtidigSituasjonTekst || ''}
+            </EtikettLiten>
+            <Normaltekst>
+                {mal || ''}
+            </Normaltekst>
+            <a
+                href={REGISTRERINGSINFO_URL}
+                className="typo-element lenke mal-endre-knapp"
+            >
+                {fremtidigSituasjonTekst && mal ? 'Endre' : 'Legg til'}
+            </a>
+        </div>
     );
 }
 
-VisKnappMaal.propTypes = {
+InnerMaalInfo.propTypes = {
     fremtidigSituasjonTekst: PT.string,
     mal: PT.string,
+    arkivert: PT.bool,
 };
 
-VisKnappMaal.defaultProps = {
+InnerMaalInfo.defaultProps = {
     mal: undefined,
     fremtidigSituasjonTekst: undefined,
+    arkivert: false,
 };
 
 class Maal extends Component {
@@ -53,6 +69,7 @@ class Maal extends Component {
             underOppfolging,
             mal,
             fremtidigSituasjonTekst,
+            viserHistoriskPeriode,
         } = this.props;
         if (!underOppfolging) {
             return null;
@@ -61,15 +78,10 @@ class Maal extends Component {
             <div className="maal">
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <Element>Mål</Element>
-                    <EtikettLiten className="hovedmaal">
-                        {fremtidigSituasjonTekst || ''}
-                    </EtikettLiten>
-                    <Normaltekst>
-                        {mal || ''}
-                    </Normaltekst>
-                    <VisKnappMaal
+                    <InnerMaalInfo
                         fremtidigSituasjonTekst={fremtidigSituasjonTekst}
                         mal={mal}
+                        arkivert={viserHistoriskPeriode}
                     />
                 </Innholdslaster>
             </div>
@@ -84,11 +96,13 @@ Maal.propTypes = {
     underOppfolging: PT.bool.isRequired,
     fremtidigSituasjonTekst: PT.string,
     mal: PT.string,
+    viserHistoriskPeriode: PT.bool,
 };
 
 Maal.defaultProps = {
     mal: undefined,
     fremtidigSituasjonTekst: undefined,
+    viserHistoriskPeriode: false,
 };
 
 const mapStateToProps = state => ({
@@ -99,6 +113,7 @@ const mapStateToProps = state => ({
     mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
     fremtidigSituasjonTekst: selectFremtidigSituasjonData(state).tekst,
     underOppfolging: selectErUnderOppfolging(state),
+    viserHistoriskPeriode: selectViserHistoriskPeriode(state),
 });
 
 const mapDispatchToProps = dispatch => ({
