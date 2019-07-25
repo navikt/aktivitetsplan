@@ -7,13 +7,13 @@ import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
 } from '../../../constant';
-import { formaterDato } from '../../../utils';
+import { formaterDatoKortManed } from '../../../utils';
 import * as PT from '../../../proptypes';
 
 function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
     const { id, type, fraDato, tilDato } = aktivitet;
-    const formatertFraDato = formaterDato(fraDato);
-    const formatertTilDato = formaterDato(tilDato);
+    const formatertFraDato = formaterDatoKortManed(fraDato);
+    const formatertTilDato = formaterDatoKortManed(tilDato);
 
     function periodeVisning() {
         if (type === MOTE_TYPE || type === SAMTALEREFERAT_TYPE) {

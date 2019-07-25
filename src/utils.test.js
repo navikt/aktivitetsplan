@@ -153,16 +153,6 @@ describe('app utils', () => {
         });
     });
 
-    describe('formaterDato', () => {
-        it('Formater datoer riktig', () => {
-            expect(Utils.formaterDato(null)).toBeUndefined();
-            expect(Utils.formaterDato(undefined)).toBeUndefined();
-            expect(Utils.formaterDato('2014-02-13T14:23:21.123Z')).toEqual(
-                '13. feb 2014'
-            );
-        });
-    });
-
     describe('formaterDatoKortManed', () => {
         it('Formater datoer riktig', () => {
             expect(Utils.formaterDatoKortManed(null)).toBeUndefined();
@@ -259,48 +249,5 @@ describe('app utils', () => {
             expect(Utils.storeForbokstaver(null)).toEqual('');
             expect(Utils.storeForbokstaver(undefined)).toEqual('');
         });
-    });
-});
-
-describe('getAntallDager', () => {
-    test('samme fradato og tildato ', () => {
-        const now = new Date();
-
-        expect(Utils.getAntallDager(now, now)).toBe(0);
-    });
-
-    test('tildato neste dag men under 24t fram i tid', () => {
-        const now = new Date('2019-07-12T15:00:10.971+01:00');
-        const tilDato = new Date('2019-07-13T01:00:10.971+01:00');
-
-        expect(Utils.getAntallDager(now, tilDato)).toBe(1);
-    });
-
-    test('tildato neste dag og under 24t fram i tid', () => {
-        const now = new Date('2019-07-12T15:00:10.971+01:00');
-        const tilDato = new Date('2019-07-13T16:00:10.971+01:00');
-
-        expect(Utils.getAntallDager(now, tilDato)).toBe(1);
-    });
-
-    test('tildato neste dag og under 24t fram i tid', () => {
-        const now = new Date('2019-07-12T15:00:10.971+01:00');
-        const tilDato = new Date('2019-07-13T16:00:10.971+01:00');
-
-        expect(Utils.getAntallDager(now, tilDato)).toBe(1);
-    });
-
-    test('tildato flere dager fram i tid', () => {
-        const now = new Date('2019-07-12T15:00:10.971+01:00');
-        const tilDato = new Date('2019-07-24T16:00:10.971+01:00');
-
-        expect(Utils.getAntallDager(now, tilDato)).toBe(12);
-    });
-
-    test('tildato før fradato', () => {
-        const now = new Date('2019-07-12T15:00:10.971+01:00');
-        const tilDato = new Date('2019-07-10T15:00:10.971+01:00');
-
-        expect(Utils.getAntallDager(now, tilDato)).toBe(-2);
     });
 });

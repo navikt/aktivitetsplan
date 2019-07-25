@@ -134,10 +134,6 @@ function formatter(dato, format) {
     return undefined;
 }
 
-export function formaterDato(dato) {
-    return formatter(dato, 'Do MMM YYYY');
-}
-
 export function formaterDatoTid(dato) {
     return formatter(dato, 'DD.MM.YYYY HH:mm');
 }
@@ -217,10 +213,6 @@ export function HiddenIf({ hidden, children }) {
     return children;
 }
 
-export function getAntallDager(fraDato, tilDato) {
-    const msInDay = 1000 * 3600 * 24;
-    tilDato.setHours(0, 0, 0);
-    fraDato.setHours(0, 0, 0);
-
-    return Math.round((tilDato - fraDato) / msInDay);
+export function dagerTil(dato) {
+    return moment(dato).startOf('day').diff(moment().startOf('day'), 'day');
 }
