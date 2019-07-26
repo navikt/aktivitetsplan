@@ -108,8 +108,8 @@ const dialoger = [
         lest: true,
         venterPaSvar: false,
         ferdigBehandlet: true,
-        lestAvBrukerTidspunkt: null,
-        erLestAvBruker: false,
+        lestAvBrukerTidspunkt: '2018-02-27T12:48:57.097+01:00',
+        erLestAvBruker: true,
         henvendelser: [
             {
                 id: '4',
