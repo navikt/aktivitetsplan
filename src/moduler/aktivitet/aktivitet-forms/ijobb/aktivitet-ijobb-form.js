@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PT from 'prop-types';
 import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
+import { Input, Textarea } from 'nav-frontend-skjema';
 import LagreAktivitet from '../lagre-aktivitet';
 import { formNavn } from '../aktivitet-form-utils';
 import { moment } from '../../../../utils';
-import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
-import Input from '../../../../felles-komponenter/skjema/input/input';
+import { getTellerTekst } from '../../../../felles-komponenter/skjema/textarea/textareav2';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import {
     IJOBB_AKTIVITET_TYPE,
@@ -24,6 +24,8 @@ import {
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import useFormstate from '../../../../utils/formstate/use-formstate';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 
 const TITTEL_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
@@ -33,15 +35,6 @@ const ARBEIDSTID_MAKS_LENGDE = 255;
 function erAvtalt(verdi, props) {
     return !!props.avtalt;
 }
-
-const pakrevdTittel = pakrevd(
-    'ijobb-aktivitet-form.feilmelding.paakrevd-tittel'
-).hvisIkke(erAvtalt);
-
-const begrensetTittelLengde = maksLengde(
-    'ijobb-aktivitet-form.feilmelding.typeStilling-lengde',
-    TITTEL_MAKS_LENGDE
-).hvisIkke(erAvtalt);
 
 const pakrevdFraDato = pakrevd(
     'ijobb-aktivitet-form.feilmelding.paakrevd-fradato'
@@ -66,103 +59,153 @@ const begrensetBeskrivelseLengde = maksLengde(
     BESKRIVELSE_MAKS_LENGDE
 ).hvisIkke(erAvtalt);
 
-// TODO fiks i separat quickfix
-// eslint-disable-next-line react/prefer-stateless-function
-class IJobbAktivitetForm extends Component {
-    render() {
-        const {props} = this;
-        const {
-            avtalt,
-            currentFraDato,
-            currentTilDato,
-            handleSubmit,
-            errorSummary,
-        } = props;
-        const erAktivitetAvtalt = avtalt === true;
-        return (
-            <form onSubmit={handleSubmit} autoComplete="off">
-                <div className="skjema-innlogget aktivitetskjema">
-                    {errorSummary}
-
-                    <AktivitetFormHeader
-                        tittelId="ijobb-aktivitet-form.header"
-                        pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
-                        ingressType={IJOBB_AKTIVITET_TYPE}
-                    />
-
-                    <Input
-                        feltNavn="tittel"
-                        disabled={erAktivitetAvtalt}
-                        labelId="ijobb-aktivitet-form.label.overskrift"
-                    />
-
-                    <PeriodeValidering
-                        feltNavn="periodeValidering"
-                        fraDato={currentFraDato}
-                        tilDato={currentTilDato}
-                        errorMessageId="datepicker.feilmelding.ijobb.fradato-etter-frist"
-                    >
-                        <div className="dato-container">
-                            <Datovelger
-                                feltNavn="fraDato"
-                                disabled={erAktivitetAvtalt}
-                                labelId="ijobb-aktivitet-form.label.fra-dato"
-                                senesteTom={currentTilDato}
-                            />
-                            <Datovelger
-                                feltNavn="tilDato"
-                                labelId="ijobb-aktivitet-form.label.til-dato"
-                                tidligsteFom={currentFraDato}
-                            />
-                        </div>
-                    </PeriodeValidering>
-
-                    <RadioGruppe
-                        feltNavn="jobbStatus"
-                        labelId="ijobb-aktivitet-form.label.jobbStatus"
-                    >
-                        <Radio
-                            feltNavn="jobbStatus"
-                            label={
-                                <FormattedMessage id="aktivitetdetaljer.jobbStatus-HELTID" />
-                            }
-                            value={JOBB_STATUS_HELTID}
-                            id={`id--${JOBB_STATUS_HELTID}`}
-                            disabled={erAktivitetAvtalt}
-                        />
-                        <Radio
-                            feltNavn="jobbStatus"
-                            label={
-                                <FormattedMessage id="aktivitetdetaljer.jobbStatus-DELTID" />
-                            }
-                            value={JOBB_STATUS_DELTID}
-                            id={`id--${JOBB_STATUS_DELTID}`}
-                            disabled={erAktivitetAvtalt}
-                        />
-                    </RadioGruppe>
-
-                    <Input
-                        feltNavn="ansettelsesforhold"
-                        disabled={erAktivitetAvtalt}
-                        labelId="ijobb-aktivitet-form.label.ansettelsesforhold"
-                    />
-                    <Input
-                        feltNavn="arbeidstid"
-                        disabled={erAktivitetAvtalt}
-                        labelId="ijobb-aktivitet-form.label.arbeidstid"
-                    />
-                    <Textarea
-                        feltNavn="beskrivelse"
-                        disabled={erAktivitetAvtalt}
-                        labelId="ijobb-aktivitet-form.label.beskrivelse"
-                        maxLength={BESKRIVELSE_MAKS_LENGDE}
-                        visTellerFra={500}
-                    />
-                </div>
-                <LagreAktivitet />
-            </form>
-        );
+function validateTittel(value) {
+    if (value.trim().length <= 0) {
+        return 'Du må fylle ut stillingstittel';
+    } if (value.length > TITTEL_MAKS_LENGDE) {
+        return `Du må korte ned teksten til ${TITTEL_MAKS_LENGDE} tegn`;
     }
+
+    return null;
+}
+
+function validateAnsettelsesforhold(value) {
+    if (value.length > ANSETTELSESFORHOLD_MAKS_LENGDE) {
+        return `Du må korte ned teksten til ${ANSETTELSESFORHOLD_MAKS_LENGDE} tegn`;
+    }
+    return null;
+}
+
+function validateBeskrivelse(value) {
+    if (value.length > BESKRIVELSE_MAKS_LENGDE) {
+        return `Du må korte ned teksten til ${BESKRIVELSE_MAKS_LENGDE} tegn`;
+    }
+    return null;
+}
+
+const validator = useFormstate({
+    tittel: validateTittel,
+    ansettelsesforhold: validateAnsettelsesforhold,
+    arbeidstid: validateAnsettelsesforhold,
+    beskrivelse: validateBeskrivelse,
+});
+
+function feil(field) {
+    if (!field.error || !field.touched) {
+        return null;
+    }
+
+    return { feilmelding: field.error };
+}
+
+function IJobbAktivitetForm(props) {
+    const state = validator({
+        tittel: '',
+        ansettelsesforhold: '',
+        arbeidstid: '',
+        beskrivelse: '',
+    });
+
+    const { avtalt, currentFraDato, currentTilDato } = props;
+
+    const erAktivitetAvtalt = avtalt === true;
+    return (
+        <form
+            onSubmit={state.onSubmit(() => {
+                console.log('submitting');
+                return Promise.resolve();
+            })}
+            autoComplete="off"
+        >
+            <div className="aktivitetskjema">
+                <FormErrorSummary
+                    hidden={state.submittoken}
+                    errors={state.errors}
+                />
+
+                <AktivitetFormHeader
+                    tittelId="ijobb-aktivitet-form.header"
+                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    ingressType={IJOBB_AKTIVITET_TYPE}
+                />
+
+                <Input
+                    disabled={erAktivitetAvtalt}
+                    label="Stillingstittel *"
+                    {...state.fields.tittel.input}
+                    feil={feil(state.fields.tittel)}
+                />
+
+                <PeriodeValidering
+                    feltNavn="periodeValidering"
+                    fraDato={currentFraDato}
+                    tilDato={currentTilDato}
+                    errorMessageId="datepicker.feilmelding.ijobb.fradato-etter-frist"
+                >
+                    <div className="dato-container">
+                        <Datovelger
+                            feltNavn="fraDato"
+                            disabled={erAktivitetAvtalt}
+                            labelId="ijobb-aktivitet-form.label.fra-dato"
+                            senesteTom={currentTilDato}
+                        />
+                        <Datovelger
+                            feltNavn="tilDato"
+                            labelId="ijobb-aktivitet-form.label.til-dato"
+                            tidligsteFom={currentFraDato}
+                        />
+                    </div>
+                </PeriodeValidering>
+
+                <RadioGruppe
+                    feltNavn="jobbStatus"
+                    labelId="ijobb-aktivitet-form.label.jobbStatus"
+                >
+                    <Radio
+                        feltNavn="jobbStatus"
+                        label={
+                            <FormattedMessage id="aktivitetdetaljer.jobbStatus-HELTID" />
+                        }
+                        value={JOBB_STATUS_HELTID}
+                        id={`id--${JOBB_STATUS_HELTID}`}
+                        disabled={erAktivitetAvtalt}
+                    />
+                    <Radio
+                        feltNavn="jobbStatus"
+                        label={
+                            <FormattedMessage id="aktivitetdetaljer.jobbStatus-DELTID" />
+                        }
+                        value={JOBB_STATUS_DELTID}
+                        id={`id--${JOBB_STATUS_DELTID}`}
+                        disabled={erAktivitetAvtalt}
+                    />
+                </RadioGruppe>
+
+                <Input
+                    disabled={erAktivitetAvtalt}
+                    label="Arbeidsgiver"
+                    {...state.fields.ansettelsesforhold.input}
+                    feil={feil(state.fields.ansettelsesforhold)}
+                />
+                <Input
+                    disabled={erAktivitetAvtalt}
+                    label="Ansettelsesforhold (fast, midlertidig, vikariat)"
+                    {...state.fields.arbeidstid.input}
+                    feil={feil(state.fields.arbeidstid)}
+                />
+                <Textarea
+                    disabled={erAktivitetAvtalt}
+                    label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
+                    maxLength={BESKRIVELSE_MAKS_LENGDE}
+                    tellerTekst={(antallTegn, max) =>
+                        getTellerTekst(antallTegn, max, 500)}
+                    {...state.fields.beskrivelse.input}
+                    feil={feil(state.fields.beskrivelse)}
+                />
+            </div>
+            <LagreAktivitet />
+        </form>
+    );
 }
 
 IJobbAktivitetForm.propTypes = {
@@ -182,11 +225,7 @@ IJobbAktivitetForm.defaultProps = {
 
 const StillingAktivitetReduxForm = validForm({
     form: formNavn,
-    errorSummaryTitle: (
-        <FormattedMessage id="stilling-aktivitet-form.feiloppsummering-tittel" />
-    ),
     validate: {
-        tittel: [pakrevdTittel, begrensetTittelLengde],
         fraDato: [pakrevdFraDato],
         jobbStatus: [pakrevdJobbStatus],
         ansettelsesforhold: [begrensetAnsettelsesforholdLengde],
