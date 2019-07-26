@@ -1,6 +1,5 @@
 import * as Utils from './utils';
 
-
 describe('app utils', () => {
     describe('fn', () => {
         it('Skal returnere en funksjon hva en som blir gitt som input', () => {
@@ -151,16 +150,6 @@ describe('app utils', () => {
             expect(Utils.formaterDatoTid('2014-02-13T14:23:21.123Z')).toEqual(
                 '13.02.2014 15:23'
             ); // NB zulu-time != paris-time
-        });
-    });
-
-    describe('formaterDato', () => {
-        it('Formater datoer riktig', () => {
-            expect(Utils.formaterDato(null)).toBeUndefined();
-            expect(Utils.formaterDato(undefined)).toBeUndefined();
-            expect(Utils.formaterDato('2014-02-13T14:23:21.123Z')).toEqual(
-                '13. feb 2014'
-            );
         });
     });
 

@@ -32,6 +32,7 @@ const StillingDetaljer = ({ aktivitet }) =>
                     <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.stilling" />
                 }
                 aktivitet={aktivitet}
+                visIkkeSatt
             />
             <Informasjonsfelt
                 key="arbeidssted"
