@@ -21,6 +21,7 @@ import {
     STATUS_AVBRUTT,
     SAMTALEREFERAT_TYPE,
     MOTE_TYPE,
+    STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import {
     selectErBruker,
@@ -39,6 +40,7 @@ import { erNyEndringIAktivitet } from '../aktivitet-util';
 import AktivitetskortEndring from './aktivitetskort-endring';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../../ducks/utils';
+import Soknadfrist from './Soknadsfrist';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -120,7 +122,12 @@ class AktivitetsKort extends Component {
                                 {tittel}
                             </Element>
                         </div>
-                        <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
+                        {type === STILLING_AKTIVITET_TYPE
+                            ? <Soknadfrist aktivitet={aktivitet} />
+                            : <AktiviteskortPeriodeVisning
+                                  aktivitet={aktivitet}
+                              />}
+
                         <VisibleIfDiv
                             data-testid="antall-stillinger"
                             visible={

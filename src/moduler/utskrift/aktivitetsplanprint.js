@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel, Systemtittel } from 'nav-frontend-typografi';
-import { formaterDato } from '../../utils';
+import { formaterDatoKortManed } from '../../utils';
 import StoreForbokstaver from '../../felles-komponenter/utils/store-forbokstaver';
 import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
@@ -49,7 +49,7 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
-import FnrProvider from "../../bootstrap/fnr-provider";
+import FnrProvider from '../../bootstrap/fnr-provider';
 import {
     selectAlleDialoger,
     selectDialogStatus,
@@ -114,7 +114,7 @@ function Print({
         <StatusGruppe gruppe={gruppe} key={gruppe.status} />
     );
 
-    const {behandlendeEnhet} = bruker;
+    const { behandlendeEnhet } = bruker;
     const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
 
     const erKvpUtskrift =
@@ -136,8 +136,8 @@ function Print({
                     d.sisteDato >= valgtKvpPeriode.opprettetDato &&
                     d.sisteDato <= valgtKvpPeriode.avsluttetDato
             );
-        kvpPeriodeFra = formaterDato(valgtKvpPeriode.opprettetDato);
-        kvpPeriodeTil = formaterDato(valgtKvpPeriode.avsluttetDato);
+        kvpPeriodeFra = formaterDatoKortManed(valgtKvpPeriode.opprettetDato);
+        kvpPeriodeTil = formaterDatoKortManed(valgtKvpPeriode.avsluttetDato);
     }
 
     return (
@@ -161,7 +161,7 @@ function Print({
                         {enhetsNavn}
                     </HiddenIfDiv>
                     <FormattedMessage id="print.modal.utskrift.dato" />
-                    {` ${formaterDato(Date.now())}`}
+                    {` ${formaterDatoKortManed(Date.now())}`}
                     <HiddenIfDiv hidden={!fodselsnummer}>
                         <FormattedMessage id="print.modal.utskrift.fnr" />
                         {` ${fodselsnummer}`}
@@ -252,7 +252,7 @@ const STEP_UTSKRIFT = 'UTSKRIFT';
 
 class AktivitetsplanPrintModal extends Component {
     componentDidMount() {
-        const {doHentMal, doHentMalListe, erVeileder} = this.props;
+        const { doHentMal, doHentMalListe, erVeileder } = this.props;
 
         doHentMal();
         doHentMalListe();
@@ -389,7 +389,7 @@ const mapStateToProps = state => {
     const dialoger = selectAlleDialoger(state);
 
     const statusTilAktiviteter = aktiviteter.reduce((memo, aktivitet) => {
-        const {status} = aktivitet;
+        const { status } = aktivitet;
         const nesteMemo = memo;
         if (nesteMemo[status]) {
             nesteMemo[status].push(aktivitet);

@@ -7,3 +7,4 @@ npm-debug.log*
 coverage/
 src/tekster.js
 build/
+.DS_Store
