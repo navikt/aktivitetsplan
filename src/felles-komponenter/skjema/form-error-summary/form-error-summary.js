@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 
-export function Error({ name, error }) {
+function Error({ name, error }) {
     return (
         <li key={`${name}-${error}`}>
             <a href={`#${name}`}>
@@ -16,7 +16,7 @@ Error.propTypes = {
     error: PT.string.isRequired,
 };
 
-export function FormErrorSummary({ hidden, errors }) {
+function FormErrorSummary({ hidden, errors }) {
     if (hidden) {
         return null;
     }
@@ -40,6 +40,7 @@ export function FormErrorSummary({ hidden, errors }) {
 }
 
 FormErrorSummary.propTypes = {
+    hidden: PT.bool.isRequired,
     errors: PT.object.isRequired,
 };
 

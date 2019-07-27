@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { validForm } from 'react-redux-form-validation';
 import { Input, Textarea } from 'nav-frontend-skjema';
+import useFormstate from '@nutgaard/use-formstate';
 import LagreAktivitet from '../lagre-aktivitet';
 import { formNavn } from '../aktivitet-form-utils';
 import { moment } from '../../../../utils';
-import { getTellerTekst } from '../../../../felles-komponenter/skjema/textarea/textareav2';
+import getTellerTekst from '../../../../felles-komponenter/skjema/textarea/textareav2';
 import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import {
     IJOBB_AKTIVITET_TYPE,
@@ -24,7 +25,6 @@ import {
     pakrevd,
 } from '../../../../felles-komponenter/skjema/validering';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import useFormstate from '../../../../utils/formstate/use-formstate';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 
 const TITTEL_MAKS_LENGDE = 255;
@@ -62,7 +62,8 @@ const begrensetBeskrivelseLengde = maksLengde(
 function validateTittel(value) {
     if (value.trim().length <= 0) {
         return 'Du må fylle ut stillingstittel';
-    } if (value.length > TITTEL_MAKS_LENGDE) {
+    }
+    if (value.length > TITTEL_MAKS_LENGDE) {
         return `Du må korte ned teksten til ${TITTEL_MAKS_LENGDE} tegn`;
     }
 

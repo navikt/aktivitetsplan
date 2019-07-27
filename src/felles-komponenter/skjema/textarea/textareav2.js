@@ -1,7 +1,4 @@
-import React from 'react';
-import { Textarea as NavFrontendTextarea } from 'nav-frontend-skjema';
-
-export function getTellerTekst(antallTegn, maxLength, visTellerFra) {
+export default function(antallTegn, maxLength, visTellerFra) {
     const tegnIgjen = maxLength - antallTegn;
     const tegnForMange = antallTegn - maxLength;
     const tellerFra = visTellerFra || maxLength / 10;
@@ -13,15 +10,4 @@ export function getTellerTekst(antallTegn, maxLength, visTellerFra) {
         return `Du har ${tegnIgjen} tegn igjen`;
     }
     return null;
-}
-
-function InnerTextAreaComponent({ visTellerFra, ...rest }) {
-    return (
-        <NavFrontendTextarea
-            textareaClass="skjemaelement__input input--fullbredde"
-            tellerTekst={antallTegn =>
-                getTellerTekst(antallTegn, 1, visTellerFra)}
-            {...rest}
-        />
-    );
 }
