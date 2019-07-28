@@ -58,7 +58,7 @@ class AktivitetFormContainer extends Component {
         } = this.props;
 
         function onLagre(aktivitet) {
-            onLagreNyAktivitet(aktivitet).then(action =>
+            return onLagreNyAktivitet(aktivitet).then(action =>
                 history.push(aktivitetRoute(action.data.id))
             );
         }

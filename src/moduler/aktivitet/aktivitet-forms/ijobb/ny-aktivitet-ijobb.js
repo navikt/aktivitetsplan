@@ -6,7 +6,7 @@ import { IJOBB_AKTIVITET_TYPE } from '../../../../constant';
 function IJobbAktivitet({ onLagreNyAktivitet }) {
     const onLagNyAktivitetSubmit = aktivitet => {
         const nyAktivitet = { ...aktivitet, type: IJOBB_AKTIVITET_TYPE };
-        onLagreNyAktivitet(nyAktivitet);
+        return onLagreNyAktivitet(nyAktivitet);
     };
     return <IJobbAktivitetForm onSubmit={onLagNyAktivitetSubmit} />;
 }

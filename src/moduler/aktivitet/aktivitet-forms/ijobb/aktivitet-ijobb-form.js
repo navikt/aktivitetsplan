@@ -1,63 +1,25 @@
 import React from 'react';
 import PT from 'prop-types';
-import { formValueSelector, isDirty } from 'redux-form';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { validForm } from 'react-redux-form-validation';
-import { Input, Textarea } from 'nav-frontend-skjema';
+import { Input, Textarea, Radio } from 'nav-frontend-skjema';
 import useFormstate from '@nutgaard/use-formstate';
 import LagreAktivitet from '../lagre-aktivitet';
-import { formNavn } from '../aktivitet-form-utils';
 import { moment } from '../../../../utils';
 import getTellerTekst from '../../../../felles-komponenter/skjema/textarea/textareav2';
-import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import {
     IJOBB_AKTIVITET_TYPE,
     JOBB_STATUS_DELTID,
     JOBB_STATUS_HELTID,
     STATUS_PLANLAGT,
 } from '../../../../constant';
-import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
-import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import RadioGruppe from '../../../../felles-komponenter/skjema/input/radio-gruppe';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../../../felles-komponenter/skjema/validering';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import FieldGroup from '../../../../felles-komponenter/skjema/fieldgroups-valideringv2';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
 
 const TITTEL_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
 const ANSETTELSESFORHOLD_MAKS_LENGDE = 255;
-const ARBEIDSTID_MAKS_LENGDE = 255;
-
-function erAvtalt(verdi, props) {
-    return !!props.avtalt;
-}
-
-const pakrevdFraDato = pakrevd(
-    'ijobb-aktivitet-form.feilmelding.paakrevd-fradato'
-).hvisIkke(erAvtalt);
-
-const pakrevdJobbStatus = pakrevd(
-    'ijobb-aktivitet-form.feilmelding.paakrevd-jobbStatus'
-).hvisIkke(erAvtalt);
-
-const begrensetAnsettelsesforholdLengde = maksLengde(
-    'ijobb-aktivitet-form.feilmelding.ansettelsesforhold-lengde',
-    ANSETTELSESFORHOLD_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-
-const begrensetArbeidstidLengde = maksLengde(
-    'ijobb-aktivitet-form.feilmelding.arbeidstid-lengde',
-    ARBEIDSTID_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-
-const begrensetBeskrivelseLengde = maksLengde(
-    'ijobb-aktivitet-form.feilmelding.beskrivelse-lengde',
-    BESKRIVELSE_MAKS_LENGDE
-).hvisIkke(erAvtalt);
 
 function validateTittel(value) {
     if (value.trim().length <= 0) {
@@ -84,12 +46,12 @@ function validateBeskrivelse(value) {
     return null;
 }
 
-const validator = useFormstate({
-    tittel: validateTittel,
-    ansettelsesforhold: validateAnsettelsesforhold,
-    arbeidstid: validateAnsettelsesforhold,
-    beskrivelse: validateBeskrivelse,
-});
+function validateJobbstatus(value) {
+    if (value.length <= 0) {
+        return 'Du må velge heltid eller deltid';
+    }
+    return null;
+}
 
 function feil(field) {
     if (!field.error || !field.touched) {
@@ -100,24 +62,33 @@ function feil(field) {
 }
 
 function IJobbAktivitetForm(props) {
+    const { avtalt, currentFraDato, currentTilDato, onSubmit } = props;
+
+    const validator = useFormstate({
+        tittel: !avtalt && validateTittel,
+        ansettelsesforhold: validateAnsettelsesforhold,
+        arbeidstid: validateAnsettelsesforhold,
+        beskrivelse: validateBeskrivelse,
+        jobbStatus: validateJobbstatus,
+        fraDato: () => null,
+        tilDato: () => null,
+    });
+
     const state = validator({
         tittel: '',
         ansettelsesforhold: '',
         arbeidstid: '',
         beskrivelse: '',
+        jobbStatus: '',
+        fraDato: '',
+        tilDato: '',
     });
 
-    const { avtalt, currentFraDato, currentTilDato } = props;
-
     const erAktivitetAvtalt = avtalt === true;
+    console.log(state);
+
     return (
-        <form
-            onSubmit={state.onSubmit(() => {
-                console.log('submitting');
-                return Promise.resolve();
-            })}
-            autoComplete="off"
-        >
+        <form onSubmit={state.onSubmit(onSubmit)} autoComplete="off">
             <div className="aktivitetskjema">
                 <FormErrorSummary
                     hidden={state.submittoken}
@@ -137,50 +108,49 @@ function IJobbAktivitetForm(props) {
                     feil={feil(state.fields.tittel)}
                 />
 
-                <PeriodeValidering
-                    feltNavn="periodeValidering"
-                    fraDato={currentFraDato}
-                    tilDato={currentTilDato}
-                    errorMessageId="datepicker.feilmelding.ijobb.fradato-etter-frist"
+                <FieldGroup
+                    name="periodeValidering"
+                    feil={{
+                        feilmelding: 'Fra dato kan ikke være etter til dato',
+                    }}
                 >
                     <div className="dato-container">
-                        <Datovelger
-                            feltNavn="fraDato"
+                        <DatoField
+                            {...state.fields.fraDato.input}
                             disabled={erAktivitetAvtalt}
-                            labelId="ijobb-aktivitet-form.label.fra-dato"
+                            label="Fra dato"
                             senesteTom={currentTilDato}
                         />
-                        <Datovelger
-                            feltNavn="tilDato"
-                            labelId="ijobb-aktivitet-form.label.til-dato"
+                        <DatoField
+                            {...state.fields.tilDato.input}
+                            label="Til dato"
                             tidligsteFom={currentFraDato}
                         />
                     </div>
-                </PeriodeValidering>
+                </FieldGroup>
 
-                <RadioGruppe
-                    feltNavn="jobbStatus"
-                    labelId="ijobb-aktivitet-form.label.jobbStatus"
+                <FieldGroup
+                    name="jobbStatus"
+                    feil={feil(state.fields.jobbStatus)}
                 >
+                    <legend className="skjemaelement__label">
+                        Stillingsandel *
+                    </legend>
                     <Radio
-                        feltNavn="jobbStatus"
-                        label={
-                            <FormattedMessage id="aktivitetdetaljer.jobbStatus-HELTID" />
-                        }
+                        {...state.fields.jobbStatus.input}
+                        label="Heltid"
                         value={JOBB_STATUS_HELTID}
                         id={`id--${JOBB_STATUS_HELTID}`}
                         disabled={erAktivitetAvtalt}
                     />
                     <Radio
-                        feltNavn="jobbStatus"
-                        label={
-                            <FormattedMessage id="aktivitetdetaljer.jobbStatus-DELTID" />
-                        }
+                        {...state.fields.jobbStatus.input}
+                        label="Deltid"
                         value={JOBB_STATUS_DELTID}
                         id={`id--${JOBB_STATUS_DELTID}`}
                         disabled={erAktivitetAvtalt}
                     />
-                </RadioGruppe>
+                </FieldGroup>
 
                 <Input
                     disabled={erAktivitetAvtalt}
@@ -210,11 +180,9 @@ function IJobbAktivitetForm(props) {
 }
 
 IJobbAktivitetForm.propTypes = {
-    handleSubmit: PT.func.isRequired,
-    errorSummary: PT.node.isRequired,
+    onSubmit: PT.func.isRequired,
     currentFraDato: PT.instanceOf(Date),
     currentTilDato: PT.instanceOf(Date),
-    isDirty: PT.bool.isRequired,
     avtalt: PT.bool,
 };
 
@@ -224,35 +192,21 @@ IJobbAktivitetForm.defaultProps = {
     avtalt: false,
 };
 
-const StillingAktivitetReduxForm = validForm({
-    form: formNavn,
-    validate: {
-        fraDato: [pakrevdFraDato],
-        jobbStatus: [pakrevdJobbStatus],
-        ansettelsesforhold: [begrensetAnsettelsesforholdLengde],
-        arbeidstid: [begrensetArbeidstidLengde],
-        beskrivelse: [begrensetBeskrivelseLengde],
-        periodeValidering: [],
-    },
-})(IJobbAktivitetForm);
-
 // eslint-disable-next-line no-confusing-arrow
 const getDateFromField = field =>
     field == null ? null : moment(field).toDate();
 
 const mapStateToProps = (state, props) => {
-    const selector = formValueSelector(formNavn);
     const aktivitet = props.aktivitet || {};
     return {
         initialValues: {
             status: STATUS_PLANLAGT,
             ...aktivitet,
         },
-        isDirty: isDirty(formNavn)(state),
-        currentFraDato: getDateFromField(selector(state, 'fraDato')),
-        currentTilDato: getDateFromField(selector(state, 'tilDato')),
+        currentFraDato: getDateFromField(null),
+        currentTilDato: getDateFromField(null),
         avtalt: aktivitet && aktivitet.avtalt,
     };
 };
 
-export default connect(mapStateToProps)(StillingAktivitetReduxForm);
+export default connect(mapStateToProps)(IJobbAktivitetForm);
