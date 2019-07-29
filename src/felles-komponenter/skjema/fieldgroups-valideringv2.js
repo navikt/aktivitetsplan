@@ -22,7 +22,7 @@ function FieldGroup({ name, children, feil }) {
 FieldGroup.propTypes = {
     name: PT.string.isRequired,
     children: PT.node,
-    feil: PT.node,
+    feil: PT.object,
 };
 
 FieldGroup.defaultProps = {

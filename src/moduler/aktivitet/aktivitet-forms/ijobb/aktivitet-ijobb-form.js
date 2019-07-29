@@ -16,6 +16,8 @@ import AktivitetFormHeader from '../aktivitet-form-header';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import FieldGroup from '../../../../felles-komponenter/skjema/fieldgroups-valideringv2';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
+import {validerDato} from '../../../../felles-komponenter/skjema/datovelger/utils';
+import {validerPeriode} from "../../../../felles-komponenter/skjema/datovelger/periode-validering";
 
 const TITTEL_MAKS_LENGDE = 255;
 const BESKRIVELSE_MAKS_LENGDE = 5000;
@@ -53,6 +55,13 @@ function validateJobbstatus(value) {
     return null;
 }
 
+function validateFraDato(value) {
+    if (value.trim().length <= 0) {
+        return 'Du må fylle ut fra dato';
+    }
+    return null;
+}
+
 function feil(field) {
     if (!field.error || !field.touched) {
         return null;
@@ -66,33 +75,39 @@ function IJobbAktivitetForm(props) {
 
     const validator = useFormstate({
         tittel: !avtalt && validateTittel,
+        fraDato: validateFraDato,
+        tilDato: value => validerDato(value, null, currentFraDato),
         ansettelsesforhold: validateAnsettelsesforhold,
+        jobbStatus: validateJobbstatus,
         arbeidstid: validateAnsettelsesforhold,
         beskrivelse: validateBeskrivelse,
-        jobbStatus: validateJobbstatus,
-        fraDato: () => null,
-        tilDato: () => null,
     });
 
     const state = validator({
         tittel: '',
+        fraDato: '',
+        tilDato: '',
+        jobbStatus: '',
         ansettelsesforhold: '',
         arbeidstid: '',
         beskrivelse: '',
-        jobbStatus: '',
-        fraDato: '',
-        tilDato: '',
     });
 
     const erAktivitetAvtalt = avtalt === true;
     console.log(state);
+
+
+    const periodeTouched = state.fields.fraDato.touched && state.fields.tilDato.touched;
+    const isValidPeriode = !validerPeriode(state.fields.fraDato.input.value, state.fields.tilDato.input.value);
+    const periodeFeil = isValidPeriode ? 'Fra dato kan ikke være etter til dato' : null;
+    const errors = periodeFeil ? {...state.errors, ...{periodeValidering: periodeFeil}} : state.errors;
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} autoComplete="off">
             <div className="aktivitetskjema">
                 <FormErrorSummary
                     hidden={state.submittoken}
-                    errors={state.errors}
+                    errors={errors}
                 />
 
                 <AktivitetFormHeader
@@ -110,19 +125,19 @@ function IJobbAktivitetForm(props) {
 
                 <FieldGroup
                     name="periodeValidering"
-                    feil={{
-                        feilmelding: 'Fra dato kan ikke være etter til dato',
-                    }}
+                    feil={periodeTouched && periodeFeil ? {
+                        feilmelding: periodeFeil,
+                    }: null}
                 >
                     <div className="dato-container">
                         <DatoField
-                            {...state.fields.fraDato.input}
+                            {...state.fields.fraDato}
                             disabled={erAktivitetAvtalt}
-                            label="Fra dato"
+                            label="Fra dato *"
                             senesteTom={currentTilDato}
                         />
                         <DatoField
-                            {...state.fields.tilDato.input}
+                            {...state.fields.tilDato}
                             label="Til dato"
                             tidligsteFom={currentFraDato}
                         />
