@@ -38,3 +38,9 @@ export const visArenaAktiviteter = () =>
     erSatt(SessionStorageElement.ARENA_AKTIVITETER);
 
 export const visDialoger = () => erSatt(SessionStorageElement.TEST_DIALOGER);
+
+const fetureprefix = 'mock_feature__';
+export const setFeatureTogle = (name, value) =>
+    settSessionStorage(fetureprefix + name, value);
+export const fetureStatus = name =>
+    hentFraSessionStorage(fetureprefix + name) !== 'false';
