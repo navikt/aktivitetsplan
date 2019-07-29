@@ -18,49 +18,13 @@ import FieldGroup from '../../../../felles-komponenter/skjema/fieldgroups-valide
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
 import {validerDato} from '../../../../felles-komponenter/skjema/datovelger/utils';
 import {validerPeriode} from "../../../../felles-komponenter/skjema/datovelger/periode-validering";
-
-const TITTEL_MAKS_LENGDE = 255;
-const BESKRIVELSE_MAKS_LENGDE = 5000;
-const ANSETTELSESFORHOLD_MAKS_LENGDE = 255;
-
-function validateTittel(value) {
-    if (value.trim().length <= 0) {
-        return 'Du må fylle ut stillingstittel';
-    }
-    if (value.length > TITTEL_MAKS_LENGDE) {
-        return `Du må korte ned teksten til ${TITTEL_MAKS_LENGDE} tegn`;
-    }
-
-    return null;
-}
-
-function validateAnsettelsesforhold(value) {
-    if (value.length > ANSETTELSESFORHOLD_MAKS_LENGDE) {
-        return `Du må korte ned teksten til ${ANSETTELSESFORHOLD_MAKS_LENGDE} tegn`;
-    }
-    return null;
-}
-
-function validateBeskrivelse(value) {
-    if (value.length > BESKRIVELSE_MAKS_LENGDE) {
-        return `Du må korte ned teksten til ${BESKRIVELSE_MAKS_LENGDE} tegn`;
-    }
-    return null;
-}
-
-function validateJobbstatus(value) {
-    if (value.length <= 0) {
-        return 'Du må velge heltid eller deltid';
-    }
-    return null;
-}
-
-function validateFraDato(value) {
-    if (value.trim().length <= 0) {
-        return 'Du må fylle ut fra dato';
-    }
-    return null;
-}
+import {
+    validateBeskrivelse,
+    validateFeltForLangt,
+    validateFraDato,
+    validateJobbstatus,
+    validateTittel,
+} from "./validate";
 
 function feil(field) {
     if (!field.error || !field.touched) {
@@ -75,14 +39,16 @@ function IJobbAktivitetForm(props) {
 
     const validator = useFormstate({
         tittel: !avtalt && validateTittel,
-        fraDato: validateFraDato,
+        fraDato: value => (validateFraDato(value) || validerDato(value, currentTilDato, null)),
         tilDato: value => validerDato(value, null, currentFraDato),
-        ansettelsesforhold: validateAnsettelsesforhold,
+        ansettelsesforhold: validateFeltForLangt,
         jobbStatus: validateJobbstatus,
-        arbeidstid: validateAnsettelsesforhold,
+        arbeidstid: validateFeltForLangt,
         beskrivelse: validateBeskrivelse,
     });
 
+
+    // TODO inital state
     const state = validator({
         tittel: '',
         fraDato: '',
@@ -94,16 +60,20 @@ function IJobbAktivitetForm(props) {
     });
 
     const erAktivitetAvtalt = avtalt === true;
-    console.log(state);
 
 
+    // TODO Fix this
     const periodeTouched = state.fields.fraDato.touched && state.fields.tilDato.touched;
     const isValidPeriode = !validerPeriode(state.fields.fraDato.input.value, state.fields.tilDato.input.value);
     const periodeFeil = isValidPeriode ? 'Fra dato kan ikke være etter til dato' : null;
     const errors = periodeFeil ? {...state.errors, ...{periodeValidering: periodeFeil}} : state.errors;
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} autoComplete="off">
+        <form
+autoComplete="off"
+              onSubmit={state.onSubmit(values => {
+                return onSubmit({status: STATUS_PLANLAGT, ...values})}
+            )}>
             <div className="aktivitetskjema">
                 <FormErrorSummary
                     hidden={state.submittoken}
@@ -182,7 +152,7 @@ function IJobbAktivitetForm(props) {
                 <Textarea
                     disabled={erAktivitetAvtalt}
                     label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
-                    maxLength={BESKRIVELSE_MAKS_LENGDE}
+                    maxLength={5000}
                     tellerTekst={(antallTegn, max) =>
                         getTellerTekst(antallTegn, max, 500)}
                     {...state.fields.beskrivelse.input}
