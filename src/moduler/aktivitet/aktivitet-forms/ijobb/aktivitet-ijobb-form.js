@@ -1,10 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
-import { connect } from 'react-redux';
 import { Input, Textarea, Radio } from 'nav-frontend-skjema';
 import useFormstate from '@nutgaard/use-formstate';
+import * as AppPT from '../../../../proptypes';
 import LagreAktivitet from '../lagre-aktivitet';
-import { moment } from '../../../../utils';
 import getTellerTekst from '../../../../felles-komponenter/skjema/textarea/textareav2';
 import {
     IJOBB_AKTIVITET_TYPE,
@@ -37,31 +36,32 @@ function feil(field) {
 }
 
 function IJobbAktivitetForm(props) {
-    const { avtalt, currentFraDato, currentTilDato, onSubmit } = props;
+    const { onSubmit, aktivitet } = props;
+    const maybeAktivitet = aktivitet || {};
 
     const validator = useFormstate({
-        tittel: !avtalt && validateTittel,
+        tittel: validateTittel,
         fraDato: value =>
-            validateFraDato(value) || validerDato(value, currentTilDato, null),
-        tilDato: value => validerDato(value, null, currentFraDato),
+            validateFraDato(value) ||
+            validerDato(value, maybeAktivitet.tilDato, null),
+        tilDato: value => validerDato(value, null, maybeAktivitet.fraDato),
         ansettelsesforhold: validateFeltForLangt,
         jobbStatus: validateJobbstatus,
         arbeidstid: validateFeltForLangt,
         beskrivelse: validateBeskrivelse,
     });
 
-    // TODO inital state
     const state = validator({
-        tittel: '',
-        fraDato: '',
-        tilDato: '',
-        jobbStatus: '',
-        ansettelsesforhold: '',
-        arbeidstid: '',
-        beskrivelse: '',
+        tittel: maybeAktivitet.tittel || '',
+        fraDato: maybeAktivitet.fraDato || '',
+        tilDato: maybeAktivitet.tilDato || '',
+        jobbStatus: maybeAktivitet.jobbStatus || '',
+        ansettelsesforhold: maybeAktivitet.ansettelsesforhold || '',
+        arbeidstid: maybeAktivitet.arbeidstid || '',
+        beskrivelse: maybeAktivitet.beskrivelse || '',
     });
 
-    const erAktivitetAvtalt = avtalt === true;
+    const erAktivitetAvtalt = maybeAktivitet.avtalt === true;
 
     const errors = {
         ...state.errors,
@@ -100,12 +100,12 @@ function IJobbAktivitetForm(props) {
                             {...state.fields.fraDato}
                             disabled={erAktivitetAvtalt}
                             label="Fra dato *"
-                            senesteTom={currentTilDato}
+                            senesteTom={maybeAktivitet.tilDato}
                         />
                         <DatoField
                             {...state.fields.tilDato}
                             label="Til dato"
-                            tidligsteFom={currentFraDato}
+                            tidligsteFom={maybeAktivitet.fraDato}
                         />
                     </div>
                 </PeriodeValidering>
@@ -121,6 +121,10 @@ function IJobbAktivitetForm(props) {
                         {...state.fields.jobbStatus.input}
                         label="Heltid"
                         value={JOBB_STATUS_HELTID}
+                        checked={
+                            JOBB_STATUS_HELTID ===
+                            state.fields.jobbStatus.input.value
+                        }
                         id={`id--${JOBB_STATUS_HELTID}`}
                         disabled={erAktivitetAvtalt}
                     />
@@ -128,6 +132,10 @@ function IJobbAktivitetForm(props) {
                         {...state.fields.jobbStatus.input}
                         label="Deltid"
                         value={JOBB_STATUS_DELTID}
+                        checked={
+                            JOBB_STATUS_DELTID ===
+                            state.fields.jobbStatus.input.value
+                        }
                         id={`id--${JOBB_STATUS_DELTID}`}
                         disabled={erAktivitetAvtalt}
                     />
@@ -162,32 +170,11 @@ function IJobbAktivitetForm(props) {
 
 IJobbAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
-    currentFraDato: PT.instanceOf(Date),
-    currentTilDato: PT.instanceOf(Date),
-    avtalt: PT.bool,
+    aktivitet: AppPT.aktivitet,
 };
 
 IJobbAktivitetForm.defaultProps = {
-    currentFraDato: undefined,
-    currentTilDato: undefined,
-    avtalt: false,
+    aktivitet: undefined,
 };
 
-// eslint-disable-next-line no-confusing-arrow
-const getDateFromField = field =>
-    field == null ? null : moment(field).toDate();
-
-const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet || {};
-    return {
-        initialValues: {
-            status: STATUS_PLANLAGT,
-            ...aktivitet,
-        },
-        currentFraDato: getDateFromField(null),
-        currentTilDato: getDateFromField(null),
-        avtalt: aktivitet && aktivitet.avtalt,
-    };
-};
-
-export default connect(mapStateToProps)(IJobbAktivitetForm);
+export default IJobbAktivitetForm;
