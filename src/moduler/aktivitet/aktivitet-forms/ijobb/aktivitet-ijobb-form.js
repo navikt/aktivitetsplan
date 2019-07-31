@@ -1,10 +1,8 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Input, Textarea, Radio } from 'nav-frontend-skjema';
 import useFormstate from '@nutgaard/use-formstate';
 import * as AppPT from '../../../../proptypes';
 import LagreAktivitet from '../lagre-aktivitet';
-import getTellerTekst from '../../../../felles-komponenter/skjema/textarea/textareav2';
 import {
     IJOBB_AKTIVITET_TYPE,
     JOBB_STATUS_DELTID,
@@ -13,7 +11,7 @@ import {
 } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import FieldGroup from '../../../../felles-komponenter/skjema/fieldgroups-valideringv2';
+import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-valideringv2';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import {
@@ -25,15 +23,10 @@ import {
 } from './validate';
 import PeriodeValidering, {
     periodeErrors,
-} from '../../../../felles-komponenter/skjema/datovelger/periode-valideringv2';
-
-function feil(field) {
-    if (!field.error || !field.touched) {
-        return null;
-    }
-
-    return { feilmelding: field.error };
-}
+} from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
+import Input from '../../../../felles-komponenter/skjema/input-v2/input';
+import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
+import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
 
 function IJobbAktivitetForm(props) {
     const { onSubmit, aktivitet } = props;
@@ -52,13 +45,7 @@ function IJobbAktivitetForm(props) {
     });
 
     const state = validator({
-        tittel: maybeAktivitet.tittel || '',
-        fraDato: maybeAktivitet.fraDato || '',
-        tilDato: maybeAktivitet.tilDato || '',
-        jobbStatus: maybeAktivitet.jobbStatus || '',
-        ansettelsesforhold: maybeAktivitet.ansettelsesforhold || '',
-        arbeidstid: maybeAktivitet.arbeidstid || '',
-        beskrivelse: maybeAktivitet.beskrivelse || '',
+        ...maybeAktivitet,
     });
 
     const erAktivitetAvtalt = maybeAktivitet.avtalt === true;
@@ -87,8 +74,7 @@ function IJobbAktivitetForm(props) {
                 <Input
                     disabled={erAktivitetAvtalt}
                     label="Stillingstittel *"
-                    {...state.fields.tittel.input}
-                    feil={feil(state.fields.tittel)}
+                    {...state.fields.tittel}
                 />
 
                 <PeriodeValidering
@@ -97,70 +83,52 @@ function IJobbAktivitetForm(props) {
                 >
                     <div className="dato-container">
                         <DatoField
-                            {...state.fields.fraDato}
                             disabled={erAktivitetAvtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
+                            {...state.fields.fraDato}
                         />
                         <DatoField
-                            {...state.fields.tilDato}
                             label="Til dato"
                             tidligsteFom={maybeAktivitet.fraDato}
+                            {...state.fields.tilDato}
                         />
                     </div>
                 </PeriodeValidering>
 
-                <FieldGroup
-                    name="jobbStatus"
-                    feil={feil(state.fields.jobbStatus)}
-                >
+                <FieldGroup name="jobbStatus" field={state.fields.jobbStatus}>
                     <legend className="skjemaelement__label">
                         Stillingsandel *
                     </legend>
                     <Radio
-                        {...state.fields.jobbStatus.input}
                         label="Heltid"
                         value={JOBB_STATUS_HELTID}
-                        checked={
-                            JOBB_STATUS_HELTID ===
-                            state.fields.jobbStatus.input.value
-                        }
-                        id={`id--${JOBB_STATUS_HELTID}`}
                         disabled={erAktivitetAvtalt}
+                        {...state.fields.jobbStatus}
                     />
                     <Radio
-                        {...state.fields.jobbStatus.input}
                         label="Deltid"
                         value={JOBB_STATUS_DELTID}
-                        checked={
-                            JOBB_STATUS_DELTID ===
-                            state.fields.jobbStatus.input.value
-                        }
-                        id={`id--${JOBB_STATUS_DELTID}`}
                         disabled={erAktivitetAvtalt}
+                        {...state.fields.jobbStatus}
                     />
                 </FieldGroup>
 
                 <Input
                     disabled={erAktivitetAvtalt}
                     label="Arbeidsgiver"
-                    {...state.fields.ansettelsesforhold.input}
-                    feil={feil(state.fields.ansettelsesforhold)}
+                    {...state.fields.ansettelsesforhold}
                 />
                 <Input
                     disabled={erAktivitetAvtalt}
                     label="Ansettelsesforhold (fast, midlertidig, vikariat)"
-                    {...state.fields.arbeidstid.input}
-                    feil={feil(state.fields.arbeidstid)}
+                    {...state.fields.arbeidstid}
                 />
                 <Textarea
                     disabled={erAktivitetAvtalt}
                     label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
                     maxLength={5000}
-                    tellerTekst={(antallTegn, max) =>
-                        getTellerTekst(antallTegn, max, 500)}
-                    {...state.fields.beskrivelse.input}
-                    feil={feil(state.fields.beskrivelse)}
+                    {...state.fields.beskrivelse}
                 />
             </div>
             <LagreAktivitet />

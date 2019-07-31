@@ -2,7 +2,9 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 
-function FieldGroup({ name, children, feil }) {
+function FieldGroup({ name, field, children }) {
+    const { touched, error } = field;
+    const feil = touched ? error : null;
     return (
         <div id={name} className={classNames({ 'skjema--harFeil': feil })}>
             <div className={classNames({ skjema__feilomrade: feil })}>
@@ -12,7 +14,7 @@ function FieldGroup({ name, children, feil }) {
                     aria-live="assertive"
                     className="skjemaelement__feilmelding"
                 >
-                    {feil && feil.feilmelding}
+                    {feil}
                 </div>
             </div>
         </div>
@@ -21,13 +23,15 @@ function FieldGroup({ name, children, feil }) {
 
 FieldGroup.propTypes = {
     name: PT.string.isRequired,
+    field: PT.shape({
+        touched: PT.bool.isRequired,
+        error: PT.string,
+    }).isRequired,
     children: PT.node,
-    feil: PT.object,
 };
 
 FieldGroup.defaultProps = {
     children: undefined,
-    feil: null,
 };
 
 export default FieldGroup;

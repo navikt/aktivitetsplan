@@ -2,16 +2,19 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PT from 'prop-types';
 import MaskedInput from 'react-maskedinput';
 import {
     autobind,
+    datePickerToISODate,
     dateToISODate,
+    erGyldigFormattertDato,
     erGyldigISODato,
     ISODateToDatePicker,
 } from '../../../utils';
 import DayPickerComponent from './day-picker';
+import moment from 'moment';
 
 function stopEvent(event) {
     try {
@@ -19,6 +22,10 @@ function stopEvent(event) {
     } catch (e) {
         event.stopPropagation();
     }
+}
+
+function parseDato(dato) {
+    return !!dato ? moment(dato).toDate() : undefined;
 }
 
 class DatoField extends Component {
@@ -39,7 +46,7 @@ class DatoField extends Component {
     }
 
     onFocusOut(e) {
-        const {relatedTarget} = e;
+        const { relatedTarget } = e;
         if (relatedTarget) {
             const targetErChildnode =
                 this.container && this.container.contains(relatedTarget);
@@ -57,18 +64,18 @@ class DatoField extends Component {
     }
 
     onDayClick(event) {
-        const {input} = this.props;
-        const {name, onChange, onBlur} = input;
+        const { input } = this.props;
+        const { name, onChange, onBlur } = input;
         const isoDate = dateToISODate(new Date(event));
 
-        onChange({target: {name: name, value: isoDate}});
-        onBlur({target: {name: name, value: isoDate}});
+        onChange({ target: { name: name, value: isoDate } });
+        onBlur({ target: { name: name, value: isoDate } });
         this.lukk();
     }
 
     toggle(e) {
         e.preventDefault();
-        const {erApen} = this.state;
+        const { erApen } = this.state;
         if (erApen) {
             this.lukk();
         } else {
@@ -99,7 +106,7 @@ class DatoField extends Component {
             senesteTom,
             touched,
             error,
-            input
+            input,
         } = this.props;
 
         const { erApen } = this.state;
@@ -132,8 +139,8 @@ class DatoField extends Component {
                                 placeholder="dd.mm.åååå"
                                 id={id}
                                 disabled={disabled}
-                                className={`skjemaelement__input input--m datovelger__input ${
-                                    touched && error
+                                className={`skjemaelement__input input--m datovelger__input ${touched &&
+                                error
                                     ? 'skjemaelement__input--harFeil'
                                     : ''}`}
                                 {...maskedInputProps}
@@ -141,7 +148,9 @@ class DatoField extends Component {
                             <button
                                 className="js-toggle datovelger__toggleDayPicker"
                                 aria-label={
-                                    erApen ? 'Skjul datovelger' : 'Vis datovelger'
+                                    erApen
+                                        ? 'Skjul datovelger'
+                                        : 'Vis datovelger'
                                 }
                                 ref={toggle => {
                                     this.toggleButton = toggle;
@@ -155,15 +164,15 @@ class DatoField extends Component {
                             />
                         </div>
                         {erApen &&
-                        <DayPickerComponent
-                            input={input}
-                            ariaControls={`toggle-${id}`}
-                            tidligsteFom={tidligsteFom}
-                            senesteTom={senesteTom}
-                            onDayClick={this.onDayClick}
-                            onKeyUp={this.onKeyUp}
-                            lukk={this.lukk}
-                        />}
+                            <DayPickerComponent
+                                input={input}
+                                ariaControls={`toggle-${id}`}
+                                tidligsteFom={parseDato(tidligsteFom)}
+                                senesteTom={parseDato(senesteTom)}
+                                onDayClick={this.onDayClick}
+                                onKeyUp={this.onKeyUp}
+                                lukk={this.lukk}
+                            />}
                     </div>
                     <div
                         role="alert"
@@ -181,8 +190,8 @@ class DatoField extends Component {
 DatoField.propTypes = {
     label: PT.oneOfType([PT.string, PT.node]).isRequired,
     disabled: PT.bool,
-    tidligsteFom: PT.instanceOf(Date),
-    senesteTom: PT.instanceOf(Date),
+    tidligsteFom: PT.string,
+    senesteTom: PT.string,
     touched: PT.bool.isRequired,
     error: PT.string,
     input: PT.shape({
@@ -190,8 +199,8 @@ DatoField.propTypes = {
         name: PT.string.isRequired,
         value: PT.string,
         onChange: PT.func.isRequired,
-        onBlur: PT.func.isRequired
-    }).isRequired
+        onBlur: PT.func.isRequired,
+    }).isRequired,
 };
 
 DatoField.defaultProps = {

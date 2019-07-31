@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { moment } from '../../../utils';
-import FieldGroup from '../fieldgroups-valideringv2';
+import FieldGroup from './fieldgroups-valideringv2';
 
 function isValidDate(dato) {
     return dato && moment(dato).isValid();
@@ -35,19 +35,18 @@ function PeriodeValidering(props) {
     const periodeTouched = fraDato.touched && tilDato.touched;
     const periodeFeil = periodeFeltFeil(fraDato, tilDato);
 
-    const feil =
-        periodeTouched && periodeFeil ? { feilmelding: periodeFeil } : null;
+    const field = { touched: periodeTouched, error: periodeFeil };
 
     return (
-        <FieldGroup name="periodeValidering" feil={feil}>
+        <FieldGroup name="periodeValidering" field={field}>
             {children}
         </FieldGroup>
     );
 }
 
 PeriodeValidering.propTypes = {
-    fraDato: PT.object, // eslint-disable-line react/forbid-prop-types
-    tilDato: PT.object, // eslint-disable-line react/forbid-prop-types
+    fraDato: PT.object,
+    tilDato: PT.object,
     children: PT.node,
 };
 
