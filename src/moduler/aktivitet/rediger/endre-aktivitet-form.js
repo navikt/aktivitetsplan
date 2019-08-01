@@ -27,7 +27,7 @@ function EndreAktivitetForm({
 }) {
     function oppdater(aktivitetData) {
         const oppdatertAktivitet = { ...valgtAktivitet, ...aktivitetData };
-        doOppdaterAktivitet(oppdatertAktivitet).then(visAktivitet);
+        return doOppdaterAktivitet(oppdatertAktivitet).then(visAktivitet);
     }
 
     switch (valgtAktivitet.type) {
