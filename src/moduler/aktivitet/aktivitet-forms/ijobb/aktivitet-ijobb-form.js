@@ -31,24 +31,24 @@ import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
 function IJobbAktivitetForm(props) {
     const { onSubmit, aktivitet } = props;
     const maybeAktivitet = aktivitet || {};
+    const erAvtalt = maybeAktivitet.avtalt === true;
 
     const validator = useFormstate({
-        tittel: validateTittel,
-        fraDato: value =>
-            validateFraDato(value) ||
-            validerDato(value, maybeAktivitet.tilDato, null),
-        tilDato: value => validerDato(value, null, maybeAktivitet.fraDato),
-        ansettelsesforhold: validateFeltForLangt,
-        jobbStatus: validateJobbstatus,
-        arbeidstid: validateFeltForLangt,
-        beskrivelse: validateBeskrivelse,
+        tittel: val => erAvtalt || validateTittel(val),
+        fraDato: val =>
+            erAvtalt ||
+            validateFraDato(val) ||
+            validerDato(val, maybeAktivitet.tilDato, null),
+        tilDato: val => validerDato(val, null, maybeAktivitet.fraDato),
+        ansettelsesforhold: val => erAvtalt || validateFeltForLangt(val),
+        jobbStatus: val => erAvtalt || validateJobbstatus(val),
+        arbeidstid: val => erAvtalt || validateFeltForLangt(val),
+        beskrivelse: val => erAvtalt || validateBeskrivelse(val),
     });
 
     const state = validator({
         ...maybeAktivitet,
     });
-
-    const erAktivitetAvtalt = maybeAktivitet.avtalt === true;
 
     const errors = {
         ...state.errors,
@@ -72,7 +72,7 @@ function IJobbAktivitetForm(props) {
                 />
 
                 <Input
-                    disabled={erAktivitetAvtalt}
+                    disabled={erAvtalt}
                     label="Stillingstittel *"
                     {...state.fields.tittel}
                 />
@@ -83,7 +83,7 @@ function IJobbAktivitetForm(props) {
                 >
                     <div className="dato-container">
                         <DatoField
-                            disabled={erAktivitetAvtalt}
+                            disabled={erAvtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
                             {...state.fields.fraDato}
@@ -103,29 +103,29 @@ function IJobbAktivitetForm(props) {
                     <Radio
                         label="Heltid"
                         value={JOBB_STATUS_HELTID}
-                        disabled={erAktivitetAvtalt}
+                        disabled={erAvtalt}
                         {...state.fields.jobbStatus}
                     />
                     <Radio
                         label="Deltid"
                         value={JOBB_STATUS_DELTID}
-                        disabled={erAktivitetAvtalt}
+                        disabled={erAvtalt}
                         {...state.fields.jobbStatus}
                     />
                 </FieldGroup>
 
                 <Input
-                    disabled={erAktivitetAvtalt}
+                    disabled={erAvtalt}
                     label="Arbeidsgiver"
                     {...state.fields.ansettelsesforhold}
                 />
                 <Input
-                    disabled={erAktivitetAvtalt}
+                    disabled={erAvtalt}
                     label="Ansettelsesforhold (fast, midlertidig, vikariat)"
                     {...state.fields.arbeidstid}
                 />
                 <Textarea
-                    disabled={erAktivitetAvtalt}
+                    disabled={erAvtalt}
                     label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
                     maxLength={5000}
                     {...state.fields.beskrivelse}
