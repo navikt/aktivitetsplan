@@ -36,7 +36,6 @@ function Textarea({
                 getTellerTekst(antallTegn, max, visTellerFra)}
             feil={feil}
             {...inputProps}
-            value={input.value ? input.value : ''}
         />
     );
 }

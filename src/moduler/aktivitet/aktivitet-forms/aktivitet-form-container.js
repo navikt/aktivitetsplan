@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PT from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { lagNyAktivitet } from '../aktivitet-actions';
@@ -12,7 +11,6 @@ import BehandlingAktivitet from './behandling/ny-aktivitet-behandling';
 import NyMoteAktivitet from './mote/ny-mote-aktivitet';
 import NyttSamtalereferat from './samtalereferat/nytt-samtalereferat';
 import EgenAktivitet from './egen/ny-aktivitet-egen';
-import IJobbAktivitet from './ijobb/ny-aktivitet-ijobb';
 import { aktivitetRoute } from '../../../routing';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
@@ -23,107 +21,127 @@ import {
     selectAktivitetFeilmeldinger,
     selectAktivitetStatus,
 } from '../aktivitet-selector';
+import { IJOBB_AKTIVITET_TYPE } from '../../../constant';
+import IJobbAktivitetForm from './ijobb/aktivitet-ijobb-form';
 
-class AktivitetFormContainer extends Component {
-    componentDidMount() {
-        window.onbeforeunload = this.visLukkDialog.bind(this);
-    }
+const CONFIRM =
+    'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
-    componentWillUnmount() {
+function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
+    window.onbeforeunload = e => {
+        if (formIsDirty || formIsDirtyV2.current) {
+            e.returnValue = CONFIRM;
+            return CONFIRM;
+        }
+        return undefined;
+    };
+
+    return () => {
         window.onbeforeunload = null;
-    }
+    };
+}
 
-    // eslint-disable-next-line consistent-return
-    visLukkDialog(e) {
-        const { formIsDirty, intl } = this.props;
-        if (formIsDirty) {
-            const melding = intl.formatMessage({
-                id: 'aktkivitet-skjema.lukk-advarsel',
-            });
-            e.returnValue = melding;
-            return melding;
-        }
-    }
+function AktivitetFormContainer(props) {
+    const {
+        onLagreNyAktivitet,
+        lagrer,
+        formIsDirty,
+        history,
+        lukkModal,
+        match,
+        aktivitetFeilmeldinger,
+    } = props;
 
-    render() {
-        const {
-            onLagreNyAktivitet,
-            lagrer,
-            formIsDirty,
-            history,
-            intl,
-            lukkModal,
-            match,
-            aktivitetFeilmeldinger,
-        } = this.props;
+    const formIsDirtyV2 = useRef(false);
 
-        function onLagre(aktivitet) {
-            return onLagreNyAktivitet(aktivitet).then(action =>
-                history.push(aktivitetRoute(action.data.id))
-            );
-        }
+    useEffect(onBeforeLoadEffect(formIsDirty, formIsDirtyV2), [
+        formIsDirty,
+        formIsDirtyV2,
+    ]);
 
-        function onRequestClose() {
-            const dialogTekst = intl.formatMessage({
-                id: 'aktkivitet-skjema.lukk-advarsel',
-            });
-
-            // eslint-disable-next-line no-alert
-            if (!formIsDirty || window.confirm(dialogTekst)) {
-                history.push('/');
-                lukkModal();
-            }
-        }
-
-        const formProps = {
-            onLagreNyAktivitet: onLagre,
-            formIsDirty,
-            lagrer,
-        };
-
-        return (
-            <Modal
-                header={
-                    <ModalHeader
-                        visConfirmDialog={formIsDirty}
-                        tilbakeTekstId="ny-aktivitet-modal.tilbake"
-                    />
-                }
-                key="behandlingAktivitetModal"
-                onRequestClose={onRequestClose}
-                contentLabel="aktivitet-modal"
-                feilmeldinger={aktivitetFeilmeldinger}
-            >
-                <article aria-labelledby="modal-behandling-aktivitet-header">
-                    <ModalContainer>
-                        <Switch>
-                            <Route path={`${match.path}/mote`}>
-                                <NyMoteAktivitet {...formProps} />
-                            </Route>
-                            <Route path={`${match.path}/samtalereferat`}>
-                                <NyttSamtalereferat {...formProps} />
-                            </Route>
-                            <Route path={`${match.path}/stilling`}>
-                                <StillingAktivitet {...formProps} />
-                            </Route>
-                            <Route path={`${match.path}/sokeavtale`}>
-                                <SokeavtaleAktivitet {...formProps} />
-                            </Route>
-                            <Route path={`${match.path}/behandling`}>
-                                <BehandlingAktivitet {...formProps} />
-                            </Route>
-                            <Route path={`${match.path}/egen`}>
-                                <EgenAktivitet {...formProps} />
-                            </Route>
-                            <Route path={`${match.path}/ijobb`}>
-                                <IJobbAktivitet {...formProps} />
-                            </Route>
-                        </Switch>
-                    </ModalContainer>
-                </article>
-            </Modal>
+    function onLagre(aktivitet) {
+        return onLagreNyAktivitet(aktivitet).then(action =>
+            history.push(aktivitetRoute(action.data.id))
         );
     }
+
+    const onSubmitFactory = aktivitetsType => {
+        return aktivitet => {
+            const filteredAktivitet = Object.keys(
+                aktivitet
+            ).reduce((obj, key) => {
+                if (aktivitet[key].length > 0) {
+                    obj[key] = aktivitet[key]; // eslint-disable-line
+                }
+                return obj;
+            }, {});
+
+            const nyAktivitet = { ...filteredAktivitet, type: aktivitetsType };
+            return onLagreNyAktivitet(nyAktivitet).then(action =>
+                history.push(aktivitetRoute(action.data.id))
+            );
+        };
+    };
+
+    function onRequestClose() {
+        const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
+        if (!isItReallyDirty || window.confirm(CONFIRM)) {
+            history.push('/');
+            lukkModal();
+        }
+    }
+
+    const formProps = {
+        onLagreNyAktivitet: onLagre,
+        formIsDirty,
+        lagrer,
+    };
+
+    return (
+        <Modal
+            header={
+                <ModalHeader
+                    visConfirmDialog={formIsDirty}
+                    tilbakeTekstId="ny-aktivitet-modal.tilbake"
+                />
+            }
+            key="behandlingAktivitetModal"
+            onRequestClose={onRequestClose}
+            contentLabel="aktivitet-modal"
+            feilmeldinger={aktivitetFeilmeldinger}
+        >
+            <article aria-labelledby="modal-behandling-aktivitet-header">
+                <ModalContainer>
+                    <Switch>
+                        <Route path={`${match.path}/mote`}>
+                            <NyMoteAktivitet {...formProps} />
+                        </Route>
+                        <Route path={`${match.path}/samtalereferat`}>
+                            <NyttSamtalereferat {...formProps} />
+                        </Route>
+                        <Route path={`${match.path}/stilling`}>
+                            <StillingAktivitet {...formProps} />
+                        </Route>
+                        <Route path={`${match.path}/sokeavtale`}>
+                            <SokeavtaleAktivitet {...formProps} />
+                        </Route>
+                        <Route path={`${match.path}/behandling`}>
+                            <BehandlingAktivitet {...formProps} />
+                        </Route>
+                        <Route path={`${match.path}/egen`}>
+                            <EgenAktivitet {...formProps} />
+                        </Route>
+                        <Route path={`${match.path}/ijobb`}>
+                            <IJobbAktivitetForm
+                                onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)}
+                                isDirtyRef={formIsDirtyV2}
+                            />
+                        </Route>
+                    </Switch>
+                </ModalContainer>
+            </article>
+        </Modal>
+    );
 }
 
 AktivitetFormContainer.propTypes = {
@@ -133,7 +151,6 @@ AktivitetFormContainer.propTypes = {
     lukkModal: PT.func.isRequired,
     history: PT.object.isRequired,
     match: PT.object.isRequired,
-    intl: intlShape.isRequired,
     aktivitetFeilmeldinger: PT.array.isRequired,
 };
 
@@ -149,5 +166,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(AktivitetFormContainer)
+    AktivitetFormContainer
 );

@@ -29,7 +29,7 @@ import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
 import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
 
 function IJobbAktivitetForm(props) {
-    const { onSubmit, aktivitet } = props;
+    const { onSubmit, aktivitet, isDirtyRef } = props;
     const maybeAktivitet = aktivitet || {};
     const erAvtalt = maybeAktivitet.avtalt === true;
 
@@ -47,8 +47,18 @@ function IJobbAktivitetForm(props) {
     });
 
     const state = validator({
-        ...maybeAktivitet,
+        tittel: maybeAktivitet.tittel || '',
+        fraDato: maybeAktivitet.fraDato || '',
+        tilDato: maybeAktivitet.tilDato || '',
+        jobbStatus: maybeAktivitet.jobbStatus || '',
+        ansettelsesforhold: maybeAktivitet.ansettelsesforhold || '',
+        arbeidstid: maybeAktivitet.arbeidstid || '',
+        beskrivelse: maybeAktivitet.beskrivelse || '',
     });
+
+    if (isDirtyRef) {
+        isDirtyRef.current = !state.pristine;
+    }
 
     const errors = {
         ...state.errors,
@@ -139,10 +149,12 @@ function IJobbAktivitetForm(props) {
 IJobbAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
+    isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
 IJobbAktivitetForm.defaultProps = {
     aktivitet: undefined,
+    isDirtyRef: undefined,
 };
 
 export default IJobbAktivitetForm;

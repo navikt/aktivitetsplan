@@ -7,8 +7,7 @@ import { Input as NavInput } from 'nav-frontend-skjema';
 function Input({ touched, error, input, pristine, initialValue, ...rest }) {
     const feil = error && touched ? { feilmelding: error } : undefined;
     const inputProps = { ...input, ...rest };
-    const value = input.value ? input.value : '';
-    return <NavInput {...inputProps} feil={feil} value={value} />;
+    return <NavInput {...inputProps} feil={feil} />;
 }
 
 Input.propTypes = {
