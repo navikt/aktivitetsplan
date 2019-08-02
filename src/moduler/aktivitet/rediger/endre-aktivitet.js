@@ -1,7 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
 import { isDirty } from 'redux-form';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import * as AppPT from '../../../proptypes';
@@ -15,59 +14,103 @@ import { aktivitetRoute } from '../../../routing';
 import { STATUS } from '../../../ducks/utils';
 import { selectAktivitetMedId } from '../aktivitetliste-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
-import EndreAktivitetForm from './endre-aktivitet-form';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import {
+    BEHANDLING_AKTIVITET_TYPE,
+    EGEN_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
+    IJOBB_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    SOKEAVTALE_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE,
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../../constant';
+import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
+import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
+import SokeavtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
+import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-behandling-form';
+import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
+import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
+import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
+
+function getAktivitetsFormComponent(aktivitet) {
+    if (!aktivitet) {
+        return null;
+    }
+    switch (aktivitet.type) {
+        case STILLING_AKTIVITET_TYPE:
+            return StillingAktivitetForm;
+        case EGEN_AKTIVITET_TYPE:
+            return EgenAktivitetForm;
+        case SOKEAVTALE_AKTIVITET_TYPE:
+            return SokeavtaleAktivitetForm;
+        case BEHANDLING_AKTIVITET_TYPE:
+            return BehandlingAktivitetForm;
+        case MOTE_TYPE:
+            return MoteAktivitetForm;
+        case SAMTALEREFERAT_TYPE:
+            return SamtalereferatForm;
+        case IJOBB_AKTIVITET_TYPE:
+            return IJobbAktivitetForm;
+        default:
+            return null;
+    }
+}
 
 function EndreAktivitet({
     valgtAktivitet,
-    intl,
     lukkModal,
     formIsDirty,
     avhengigheter,
     history,
-    ...rest
+    doOppdaterAktivitet,
+    lagrer,
 }) {
-    function visAktivitet() {
-        history.push(aktivitetRoute(valgtAktivitet.id));
+    function oppdater(aktivitetData) {
+        const oppdatertAktivitet = { ...valgtAktivitet, ...aktivitetData };
+        return doOppdaterAktivitet(oppdatertAktivitet).then(() =>
+            history.push(aktivitetRoute(valgtAktivitet.id))
+        );
     }
+
+    const header = (
+        <ModalHeader
+            tilbakeTekstId="endre-aktivitet.tilbake"
+            visConfirmDialog={formIsDirty}
+        />
+    );
+
+    const onReqClose = () => {
+        const dialogTekst =
+            'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
+        if (!formIsDirty || window.confirm(dialogTekst)) {
+            history.push('/');
+            lukkModal();
+        }
+    };
+
+    const AktivitetForm = getAktivitetsFormComponent(valgtAktivitet);
+    const formProps = {
+        aktivitet: valgtAktivitet,
+        onSubmit: oppdater,
+        endre: true,
+        lagrer,
+    };
 
     return (
         <Modal
-            key="endreAktivitetModal"
-            header={
-                <ModalHeader
-                    tilbakeTekstId="endre-aktivitet.tilbake"
-                    visConfirmDialog={formIsDirty}
-                />
-            }
-            onRequestClose={() => {
-                const dialogTekst = intl.formatMessage({
-                    id: 'aktkivitet-skjema.lukk-advarsel',
-                });
-                // eslint-disable-next-line no-alert
-                if (!formIsDirty || window.confirm(dialogTekst)) {
-                    history.push('/');
-                    lukkModal();
-                }
-            }}
+            header={header}
+            onRequestClose={onReqClose}
             contentLabel="aktivitet-modal"
         >
-            <article
-                className="egen-aktivitet"
-                aria-labelledby="modal-egen-aktivitet-header"
-            >
+            <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>
-                        <EndreAktivitetForm
-                            valgtAktivitet={valgtAktivitet}
-                            visAktivitet={visAktivitet}
-                            {...rest}
-                        />
+                        {AktivitetForm
+                            ? <AktivitetForm {...formProps} />
+                            : null}
                     </ModalContainer>
                 </Innholdslaster>
             </article>
@@ -86,7 +129,6 @@ EndreAktivitet.propTypes = {
     aktivitetId: PT.string.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     formIsDirty: PT.bool.isRequired,
-    intl: intlShape.isRequired,
     lukkModal: PT.func.isRequired,
     history: AppPT.history.isRequired,
 };
@@ -116,6 +158,4 @@ const mapDispatchToProps = dispatch => ({
     lukkModal: () => dispatch({ type: LUKK_MODAL }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(EndreAktivitet)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(EndreAktivitet);

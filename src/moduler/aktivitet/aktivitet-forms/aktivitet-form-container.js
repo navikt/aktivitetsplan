@@ -97,20 +97,21 @@ function AktivitetFormContainer(props) {
         lagrer,
     };
 
+    const header = (
+        <ModalHeader
+            visConfirmDialog={formIsDirty}
+            tilbakeTekstId="ny-aktivitet-modal.tilbake"
+        />
+    );
+
     return (
         <Modal
-            header={
-                <ModalHeader
-                    visConfirmDialog={formIsDirty}
-                    tilbakeTekstId="ny-aktivitet-modal.tilbake"
-                />
-            }
-            key="behandlingAktivitetModal"
+            header={header}
             onRequestClose={onRequestClose}
-            contentLabel="aktivitet-modal"
+            contentLabel="ny-aktivitet-modal"
             feilmeldinger={aktivitetFeilmeldinger}
         >
-            <article aria-labelledby="modal-behandling-aktivitet-header">
+            <article>
                 <ModalContainer>
                     <Switch>
                         <Route path={`${match.path}/mote`}>
