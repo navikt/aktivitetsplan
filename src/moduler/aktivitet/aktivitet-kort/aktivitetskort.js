@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
-import { Undertekst, Element } from 'nav-frontend-typografi';
+import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import Lenke from '../../../felles-komponenter/utils/lenke';
@@ -75,7 +75,13 @@ class AktivitetsKort extends Component {
             doSettAktivitetMedEndringerSomVist,
             harEndringerIAktivitet,
         } = this.props;
-        const { id, type, tittel, antallStillingerSokes } = aktivitet;
+        const {
+            id,
+            type,
+            tittel,
+            arbeidsgiver,
+            antallStillingerSokes,
+        } = aktivitet;
 
         const ariaLabel = `aktivitetskort__header__${id} aktivitetskort__dato__${id}`;
 
@@ -122,6 +128,11 @@ class AktivitetsKort extends Component {
                                 {tittel}
                             </Element>
                         </div>
+                        {type === STILLING_AKTIVITET_TYPE &&
+                            arbeidsgiver &&
+                            <Normaltekst>
+                                {arbeidsgiver}
+                            </Normaltekst>}
                         {type === STILLING_AKTIVITET_TYPE
                             ? <Soknadfrist aktivitet={aktivitet} />
                             : <AktiviteskortPeriodeVisning
