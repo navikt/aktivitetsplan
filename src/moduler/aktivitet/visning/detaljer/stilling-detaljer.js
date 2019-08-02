@@ -20,13 +20,6 @@ const StillingDetaljer = ({ aktivitet }) =>
                     <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.stilling" />
                 }
             />
-            <Informasjonsfelt
-                key="arbeidsgiver"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.arbeidsgiver-label" />
-                }
-                innhold={aktivitet.arbeidsgiver}
-            />
             <TilDato
                 tittel={
                     <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.stilling" />
@@ -35,11 +28,11 @@ const StillingDetaljer = ({ aktivitet }) =>
                 visIkkeSatt
             />
             <Informasjonsfelt
-                key="arbeidssted"
+                key="arbeidsgiver"
                 tittel={
-                    <FormattedMessage id="aktivitetdetaljer.arbeidssted-label" />
+                    <FormattedMessage id="aktivitetdetaljer.arbeidsgiver-label" />
                 }
-                innhold={aktivitet.arbeidssted}
+                innhold={aktivitet.arbeidsgiver}
             />
             <Informasjonsfelt
                 key="kontaktperson"
@@ -47,6 +40,13 @@ const StillingDetaljer = ({ aktivitet }) =>
                     <FormattedMessage id="aktivitetdetaljer.kontaktperson-label" />
                 }
                 innhold={aktivitet.kontaktperson}
+            />
+            <Informasjonsfelt
+                key="arbeidssted"
+                tittel={
+                    <FormattedMessage id="aktivitetdetaljer.arbeidssted-label" />
+                }
+                innhold={aktivitet.arbeidssted}
             />
             <Beskrivelse aktivitet={aktivitet} />
             <LenkeKomponent lenke={aktivitet.lenke} />
