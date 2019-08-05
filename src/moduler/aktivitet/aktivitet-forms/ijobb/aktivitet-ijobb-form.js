@@ -7,7 +7,6 @@ import {
     IJOBB_AKTIVITET_TYPE,
     JOBB_STATUS_DELTID,
     JOBB_STATUS_HELTID,
-    STATUS_PLANLAGT,
 } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
@@ -66,12 +65,7 @@ function IJobbAktivitetForm(props) {
     };
 
     return (
-        <form
-            autoComplete="off"
-            onSubmit={state.onSubmit(values => {
-                return onSubmit({ status: STATUS_PLANLAGT, ...values });
-            })}
-        >
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetskjema">
                 <FormErrorSummary hidden={state.submittoken} errors={errors} />
 

@@ -4,7 +4,6 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import StillingAktivitet from './stilling/ny-aktivitet-stilling';
 import SokeavtaleAktivitet from './sokeavtale/ny-aktivitet-sokeavtale';
 import BehandlingAktivitet from './behandling/ny-aktivitet-behandling';
@@ -21,7 +20,7 @@ import {
     selectAktivitetFeilmeldinger,
     selectAktivitetStatus,
 } from '../aktivitet-selector';
-import { IJOBB_AKTIVITET_TYPE } from '../../../constant';
+import { IJOBB_AKTIVITET_TYPE, STATUS_PLANLAGT } from '../../../constant';
 import IJobbAktivitetForm from './ijobb/aktivitet-ijobb-form';
 
 const CONFIRM =
@@ -47,7 +46,6 @@ function AktivitetFormContainer(props) {
         lagrer,
         formIsDirty,
         history,
-        lukkModal,
         match,
         aktivitetFeilmeldinger,
     } = props;
@@ -76,7 +74,11 @@ function AktivitetFormContainer(props) {
                 return obj;
             }, {});
 
-            const nyAktivitet = { ...filteredAktivitet, type: aktivitetsType };
+            const nyAktivitet = {
+                ...filteredAktivitet,
+                type: aktivitetsType,
+                status: STATUS_PLANLAGT,
+            };
             return onLagreNyAktivitet(nyAktivitet).then(action =>
                 history.push(aktivitetRoute(action.data.id))
             );
@@ -87,7 +89,6 @@ function AktivitetFormContainer(props) {
         const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.push('/');
-            lukkModal();
         }
     }
 
@@ -149,7 +150,6 @@ AktivitetFormContainer.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
     formIsDirty: PT.bool.isRequired,
     lagrer: PT.bool.isRequired,
-    lukkModal: PT.func.isRequired,
     history: PT.object.isRequired,
     match: PT.object.isRequired,
     aktivitetFeilmeldinger: PT.array.isRequired,
@@ -157,7 +157,6 @@ AktivitetFormContainer.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
     onLagreNyAktivitet: aktivitet => dispatch(lagNyAktivitet(aktivitet)),
-    lukkModal: () => dispatch({ type: LUKK_MODAL }),
 });
 
 const mapStateToProps = state => ({

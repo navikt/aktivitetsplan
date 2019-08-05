@@ -1,16 +1,13 @@
 import React from 'react';
 import PT from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import Lenke from './lenke';
-import { TILBAKE_MODAL } from '../modal/modal-reducer';
 import * as AppPT from '../../proptypes';
 
 function Tilbakeknapp({
     visConfirmDialog,
-    tilbakeModal,
     history,
     tekstId,
     tekstValues,
@@ -23,7 +20,6 @@ function Tilbakeknapp({
         });
         // eslint-disable-next-line no-alert
         if (!visConfirmDialog || window.confirm(dialogTekst)) {
-            tilbakeModal();
             history.goBack();
         }
     }
@@ -48,16 +44,9 @@ Tilbakeknapp.defaultProps = {
 Tilbakeknapp.propTypes = {
     tekstId: PT.string.isRequired,
     tekstValues: PT.object, // eslint-disable-line react/forbid-prop-types
-    tilbakeModal: PT.func.isRequired,
     visConfirmDialog: PT.bool,
     intl: intlShape.isRequired,
     history: AppPT.history.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-    tilbakeModal: () => dispatch({ type: TILBAKE_MODAL }),
-});
-
-export default withRouter(
-    connect(null, mapDispatchToProps)(injectIntl(Tilbakeknapp))
-);
+export default withRouter(injectIntl(Tilbakeknapp));

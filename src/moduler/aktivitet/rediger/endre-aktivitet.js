@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
@@ -8,7 +8,6 @@ import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { formNavn } from '../aktivitet-forms/aktivitet-form-utils';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Modal from '../../../felles-komponenter/modal/modal';
-import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { aktivitetRoute } from '../../../routing';
 import { STATUS } from '../../../ducks/utils';
@@ -59,17 +58,48 @@ function getAktivitetsFormComponent(aktivitet) {
     }
 }
 
-function EndreAktivitet({
-    valgtAktivitet,
-    lukkModal,
-    formIsDirty,
-    avhengigheter,
-    history,
-    doOppdaterAktivitet,
-    lagrer,
-}) {
-    function oppdater(aktivitetData) {
-        const oppdatertAktivitet = { ...valgtAktivitet, ...aktivitetData };
+const CONFIRM =
+    'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
+
+function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
+    window.onbeforeunload = e => {
+        if (formIsDirty || formIsDirtyV2.current) {
+            e.returnValue = CONFIRM;
+            return CONFIRM;
+        }
+        return undefined;
+    };
+
+    return () => {
+        window.onbeforeunload = null;
+    };
+}
+
+function EndreAktivitet(props) {
+    const {
+        valgtAktivitet,
+        formIsDirty,
+        avhengigheter,
+        history,
+        doOppdaterAktivitet,
+        lagrer,
+    } = props;
+
+    const formIsDirtyV2 = useRef(false);
+
+    useEffect(onBeforeLoadEffect(formIsDirty, formIsDirtyV2), [
+        formIsDirty,
+        formIsDirtyV2,
+    ]);
+
+    function oppdater(aktivitet) {
+        const filteredAktivitet = Object.keys(aktivitet).reduce((obj, key) => {
+            if (aktivitet[key].length > 0) {
+                obj[key] = aktivitet[key]; // eslint-disable-line
+            }
+            return obj;
+        }, {});
+        const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet };
         return doOppdaterAktivitet(oppdatertAktivitet).then(() =>
             history.push(aktivitetRoute(valgtAktivitet.id))
         );
@@ -83,21 +113,22 @@ function EndreAktivitet({
     );
 
     const onReqClose = () => {
-        const dialogTekst =
-            'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
-        if (!formIsDirty || window.confirm(dialogTekst)) {
+        const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
+        if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.push('/');
-            lukkModal();
         }
     };
 
-    const AktivitetForm = getAktivitetsFormComponent(valgtAktivitet);
     const formProps = {
         aktivitet: valgtAktivitet,
         onSubmit: oppdater,
         endre: true,
+        isDirtyRef: formIsDirtyV2,
         lagrer,
     };
+
+    const Form = getAktivitetsFormComponent(valgtAktivitet);
+    const AktivitetForm = Form ? <Form {...formProps} /> : null;
 
     return (
         <Modal
@@ -108,9 +139,7 @@ function EndreAktivitet({
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>
-                        {AktivitetForm
-                            ? <AktivitetForm {...formProps} />
-                            : null}
+                        {AktivitetForm}
                     </ModalContainer>
                 </Innholdslaster>
             </article>
@@ -129,7 +158,6 @@ EndreAktivitet.propTypes = {
     aktivitetId: PT.string.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     formIsDirty: PT.bool.isRequired,
-    lukkModal: PT.func.isRequired,
     history: AppPT.history.isRequired,
 };
 
@@ -155,7 +183,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => ({
     doOppdaterAktivitet: aktivitet => oppdaterAktivitet(aktivitet)(dispatch),
-    lukkModal: () => dispatch({ type: LUKK_MODAL }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EndreAktivitet);

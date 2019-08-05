@@ -9,7 +9,6 @@ import Modal from '../../felles-komponenter/modal/modal';
 import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import { selectMalListeFeilmeldinger } from './aktivitetsmal-selector';
-import { LUKK_MODAL } from '../../felles-komponenter/modal/modal-reducer';
 import * as AppPT from '../../proptypes';
 import { formNavn } from './aktivitetsmal-form';
 
@@ -77,13 +76,9 @@ const mapStateToProps = state => ({
     formIsDirty: isDirty(formNavn)(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    lukkModal: () => dispatch({ type: LUKK_MODAL }),
-});
-
 const AktivitetsmalModal = compose(
     injectIntl,
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps),
     AktivitetsmalModalHOC
 );
 
