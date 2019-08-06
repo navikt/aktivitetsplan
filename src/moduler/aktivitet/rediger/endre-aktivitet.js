@@ -13,18 +13,14 @@ import { aktivitetRoute } from '../../../routing';
 import { STATUS } from '../../../ducks/utils';
 import { selectAktivitetMedId } from '../aktivitetliste-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
-import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
-    GRUPPE_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
-    TILTAK_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE,
 } from '../../../constant';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
@@ -164,21 +160,11 @@ EndreAktivitet.propTypes = {
 
 const mapStateToProps = (state, props) => {
     const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
-    const erArenaAktivitet =
-        !!valgtAktivitet &&
-        [
-            TILTAK_AKTIVITET_TYPE,
-            GRUPPE_AKTIVITET_TYPE,
-            UTDANNING_AKTIVITET_TYPE,
-        ].includes(valgtAktivitet.type);
-    const aktivitetDataStatus = erArenaAktivitet
-        ? selectArenaAktivitetStatus(state)
-        : selectAktivitetStatus(state);
     return {
         valgtAktivitet,
         avhengigheter: [valgtAktivitet ? STATUS.OK : STATUS.PENDING],
         formIsDirty: isDirty(formNavn)(state),
-        lagrer: aktivitetDataStatus !== STATUS.OK,
+        lagrer: selectAktivitetStatus !== STATUS.OK,
     };
 };
 
