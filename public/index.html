@@ -46,6 +46,15 @@
         var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
         g.type='text/javascript'; g.async=true; g.defer=true; g.src='//cdn.matomo.cloud/aktivitetsplan402.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
     })();
+
+    window.addEventListener('hashchange', function() {
+        _paq.push(['setCustomUrl', '/' + window.location.hash.substr(1)]);
+        _paq.push(['setDocumentTitle', 'My New Title']);
+        _paq.push(['trackPageView']);
+
+        var content = document.getElementById('mainapp');
+        _paq.push(['FormAnalytics::scanForForms', content]);
+    });
 </script>
 <!-- End Matomo Code -->
 
