@@ -22,6 +22,7 @@ import {
 } from '../aktivitet-selector';
 import { IJOBB_AKTIVITET_TYPE, STATUS_PLANLAGT } from '../../../constant';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
+import { removeEmptyKeysFromObject } from '../../../utils/object';
 
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -65,15 +66,7 @@ function NyAktivitetForm(props) {
 
     const onSubmitFactory = aktivitetsType => {
         return aktivitet => {
-            const filteredAktivitet = Object.keys(
-                aktivitet
-            ).reduce((obj, key) => {
-                if (aktivitet[key].length > 0) {
-                    obj[key] = aktivitet[key]; // eslint-disable-line
-                }
-                return obj;
-            }, {});
-
+            const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
             const nyAktivitet = {
                 ...filteredAktivitet,
                 type: aktivitetsType,

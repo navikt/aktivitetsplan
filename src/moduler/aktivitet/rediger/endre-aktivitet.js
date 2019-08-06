@@ -33,6 +33,7 @@ import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-beh
 import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
+import { removeEmptyKeysFromObject } from '../../../utils/object';
 
 function getAktivitetsFormComponent(aktivitet) {
     if (!aktivitet) {
@@ -61,7 +62,6 @@ function getAktivitetsFormComponent(aktivitet) {
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
-// todo, this can be refactored
 function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
     window.onbeforeunload = e => {
         if (formIsDirty || formIsDirtyV2.current) {
@@ -94,13 +94,7 @@ function EndreAktivitet(props) {
     ]);
 
     function oppdater(aktivitet) {
-        // todo refactor
-        const filteredAktivitet = Object.keys(aktivitet).reduce((obj, key) => {
-            if (aktivitet[key].length > 0) {
-                obj[key] = aktivitet[key]; // eslint-disable-line
-            }
-            return obj;
-        }, {});
+        const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
         const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet };
         return doOppdaterAktivitet(oppdatertAktivitet).then(() =>
             history.push(aktivitetRoute(valgtAktivitet.id))
