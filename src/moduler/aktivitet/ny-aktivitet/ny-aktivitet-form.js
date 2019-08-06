@@ -4,24 +4,24 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import StillingAktivitet from './stilling/ny-aktivitet-stilling';
-import SokeavtaleAktivitet from './sokeavtale/ny-aktivitet-sokeavtale';
-import BehandlingAktivitet from './behandling/ny-aktivitet-behandling';
-import NyMoteAktivitet from './mote/ny-mote-aktivitet';
-import NyttSamtalereferat from './samtalereferat/nytt-samtalereferat';
-import EgenAktivitet from './egen/ny-aktivitet-egen';
+import StillingAktivitet from '../aktivitet-forms/stilling/ny-aktivitet-stilling';
+import SokeavtaleAktivitet from '../aktivitet-forms/sokeavtale/ny-aktivitet-sokeavtale';
+import BehandlingAktivitet from '../aktivitet-forms/behandling/ny-aktivitet-behandling';
+import NyMoteAktivitet from '../aktivitet-forms/mote/ny-mote-aktivitet';
+import NyttSamtalereferat from '../aktivitet-forms/samtalereferat/nytt-samtalereferat';
+import EgenAktivitet from '../aktivitet-forms/egen/ny-aktivitet-egen';
 import { aktivitetRoute } from '../../../routing';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import { formNavn } from './aktivitet-form-utils';
+import { formNavn } from '../aktivitet-forms/aktivitet-form-utils';
 import { STATUS } from '../../../ducks/utils';
 import {
     selectAktivitetFeilmeldinger,
     selectAktivitetStatus,
 } from '../aktivitet-selector';
 import { IJOBB_AKTIVITET_TYPE, STATUS_PLANLAGT } from '../../../constant';
-import IJobbAktivitetForm from './ijobb/aktivitet-ijobb-form';
+import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -40,7 +40,7 @@ function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
     };
 }
 
-function AktivitetFormContainer(props) {
+function NyAktivitetForm(props) {
     const {
         onLagreNyAktivitet,
         lagrer,
@@ -92,18 +92,26 @@ function AktivitetFormContainer(props) {
         }
     }
 
+    const onReqBack = e => {
+        e.preventDefault();
+        const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
+        if (!isItReallyDirty || window.confirm(CONFIRM)) {
+            history.goBack();
+        }
+    };
+
+    const header = (
+        <ModalHeader
+            tilbakeTekst="Tilbake til kategorier"
+            onTilbakeClick={onReqBack}
+        />
+    );
+
     const formProps = {
         onLagreNyAktivitet: onLagre,
         formIsDirty,
         lagrer,
     };
-
-    const header = (
-        <ModalHeader
-            visConfirmDialog={formIsDirty}
-            tilbakeTekstId="ny-aktivitet-modal.tilbake"
-        />
-    );
 
     return (
         <Modal
@@ -146,7 +154,7 @@ function AktivitetFormContainer(props) {
     );
 }
 
-AktivitetFormContainer.propTypes = {
+NyAktivitetForm.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
     formIsDirty: PT.bool.isRequired,
     lagrer: PT.bool.isRequired,
@@ -165,6 +173,4 @@ const mapStateToProps = state => ({
     aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    AktivitetFormContainer
-);
+export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitetForm);

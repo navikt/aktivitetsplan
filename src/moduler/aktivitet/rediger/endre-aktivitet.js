@@ -61,6 +61,7 @@ function getAktivitetsFormComponent(aktivitet) {
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
+// todo, this can be refactored
 function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
     window.onbeforeunload = e => {
         if (formIsDirty || formIsDirtyV2.current) {
@@ -93,6 +94,7 @@ function EndreAktivitet(props) {
     ]);
 
     function oppdater(aktivitet) {
+        // todo refactor
         const filteredAktivitet = Object.keys(aktivitet).reduce((obj, key) => {
             if (aktivitet[key].length > 0) {
                 obj[key] = aktivitet[key]; // eslint-disable-line
@@ -105,19 +107,24 @@ function EndreAktivitet(props) {
         );
     }
 
-    const header = (
-        <ModalHeader
-            tilbakeTekstId="endre-aktivitet.tilbake"
-            visConfirmDialog={formIsDirty}
-        />
-    );
-
     const onReqClose = () => {
         const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.push('/');
         }
     };
+
+    const onReqBack = e => {
+        e.preventDefault();
+        const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
+        if (!isItReallyDirty || window.confirm(CONFIRM)) {
+            history.goBack();
+        }
+    };
+
+    const header = (
+        <ModalHeader tilbakeTekst="Tilbake" onTilbakeClick={onReqBack} />
+    );
 
     const formProps = {
         aktivitet: valgtAktivitet,

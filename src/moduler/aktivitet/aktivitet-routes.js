@@ -1,19 +1,23 @@
 import React from 'react';
 import PT from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import AktivitetFormContainer from './aktivitet-forms/aktivitet-form-container';
+import NyAktivitetForm from './ny-aktivitet/ny-aktivitet-form';
 import AktivitetvisningContainer from './visning/aktivitetvisning-container';
 import EndreAktivitet from './rediger/endre-aktivitet';
 import AvbrytAktivitet from './avslutt/avbryt-aktivitet';
 import FullforAktivitet from './avslutt/fullfor-aktivitet';
-import NyAktivitet from './ny-aktivitet/ny-aktivitet';
+import NyAktivitetVelger from './ny-aktivitet/ny-aktivitet';
 
 function AktivitetRoutes({ match }) {
     const basePath = match.path;
     return (
         <Switch>
-            <Route exact path={`${basePath}/ny`} component={NyAktivitet} />
-            <Route path={`${basePath}/ny`} component={AktivitetFormContainer} />
+            <Route
+                exact
+                path={`${basePath}/ny`}
+                component={NyAktivitetVelger}
+            />
+            <Route path={`${basePath}/ny`} component={NyAktivitetForm} />
 
             <Route
                 exact
