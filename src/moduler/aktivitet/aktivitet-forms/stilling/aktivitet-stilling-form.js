@@ -11,11 +11,12 @@ import {
     validateBeskrivelse,
     validateFeltForLangt,
     validateFraDato,
+    validateLenke,
     validateTittel,
 } from './validate';
 import Input from '../../../../felles-komponenter/skjema/input-v2/input';
 import PeriodeValidering, {
-    periodeErrors,
+    validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
 import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
@@ -26,17 +27,16 @@ function StillingAktivitetForm(props) {
     const erAvtalt = maybeAktivitet.avtalt === true;
 
     const validator = useFormstate({
-        tittel: val => erAvtalt || validateTittel(val),
-        fraDato: val =>
-            erAvtalt ||
-            validateFraDato(val) ||
-            validerDato(val, maybeAktivitet.tilDato, null),
+        tittel: val => validateTittel(erAvtalt, val),
+        fraDato: val => validateFraDato(erAvtalt, maybeAktivitet.tilDato, val),
         tilDato: val => validerDato(val, null, maybeAktivitet.fraDato),
-        beskrivelse: val => erAvtalt || validateBeskrivelse(val),
-        arbeidssted: val => erAvtalt || validateFeltForLangt(val),
-        arbeidsgiver: val => erAvtalt || validateFeltForLangt(val),
-        kontaktperson: val => erAvtalt || validateFeltForLangt(val),
-        lenke: val => erAvtalt || validateBeskrivelse(val),
+        beskrivelse: val => validateBeskrivelse(erAvtalt, val),
+        arbeidssted: val => validateFeltForLangt(erAvtalt, val),
+        arbeidsgiver: val => validateFeltForLangt(erAvtalt, val),
+        kontaktperson: val => validateFeltForLangt(erAvtalt, val),
+        lenke: val => validateLenke(erAvtalt, val),
+        periodeValidering: (val, values) =>
+            validerPeriodeFelt(values.fraDato, values.tilDato),
     });
 
     const state = validator({
@@ -48,21 +48,20 @@ function StillingAktivitetForm(props) {
         arbeidsgiver: maybeAktivitet.arbeidsgiver || '',
         kontaktperson: maybeAktivitet.kontaktperson || '',
         lenke: maybeAktivitet.lenke || '',
+        periodeValidering: '',
     });
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
     }
 
-    const errors = {
-        ...state.errors,
-        ...periodeErrors(state.fields.fraDato, state.fields.tilDato),
-    };
-
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetskjema">
-                <FormErrorSummary hidden={state.submittoken} errors={errors} />
+                <FormErrorSummary
+                    hidden={state.submittoken}
+                    errors={state.errors}
+                />
 
                 <AktivitetFormHeader
                     tittelId="stilling-aktivitet-form.header"
@@ -77,8 +76,7 @@ function StillingAktivitetForm(props) {
                 />
 
                 <PeriodeValidering
-                    fraDato={state.fields.fraDato}
-                    tilDato={state.fields.tilDato}
+                    valideringFelt={state.fields.periodeValidering}
                 >
                     <div className="dato-container">
                         <DatoField

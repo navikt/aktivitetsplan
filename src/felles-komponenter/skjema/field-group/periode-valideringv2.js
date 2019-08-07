@@ -16,43 +16,38 @@ export function validerPeriode(fradato, tildato) {
     return true;
 }
 
-export function periodeFeltFeil(fraDato, tilDato) {
-    const isValidPeriode = !validerPeriode(
-        fraDato.input.value,
-        tilDato.input.value
-    );
+export function validerPeriodeFelt(fraDato, tilDato) {
+    const isValidPeriode = !validerPeriode(fraDato, tilDato);
     return isValidPeriode ? 'Fra dato kan ikke være etter til dato' : null;
 }
 
-export function periodeErrors(fraDato, tilDato) {
-    const periodeFeil = periodeFeltFeil(fraDato, tilDato);
-    return periodeFeil ? { periodeValidering: periodeFeil } : {};
-}
-
 function PeriodeValidering(props) {
-    const { fraDato, tilDato, children } = props;
+    const { valideringFelt, children } = props;
 
-    const periodeTouched = fraDato.touched && tilDato.touched;
-    const periodeFeil = periodeFeltFeil(fraDato, tilDato);
-
-    const field = { touched: periodeTouched, error: periodeFeil };
+    const field = {
+        touched: !!valideringFelt.error,
+        error: valideringFelt.error,
+    };
 
     return (
-        <FieldGroup name="periodeValidering" field={field}>
+        <FieldGroup name={valideringFelt.input.name} field={field}>
             {children}
         </FieldGroup>
     );
 }
 
 PeriodeValidering.propTypes = {
-    fraDato: PT.object,
-    tilDato: PT.object,
+    valideringFelt: PT.shape({
+        name: PT.string,
+        error: PT.string,
+        input: PT.shape({
+            name: PT.string,
+        }).isRequired,
+    }).isRequired,
     children: PT.node,
 };
 
 PeriodeValidering.defaultProps = {
-    fraDato: undefined,
-    tilDato: undefined,
     children: undefined,
 };
 

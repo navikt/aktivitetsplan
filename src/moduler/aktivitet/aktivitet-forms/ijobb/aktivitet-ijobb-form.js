@@ -21,7 +21,7 @@ import {
     validateTittel,
 } from './validate';
 import PeriodeValidering, {
-    periodeErrors,
+    validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
 import Input from '../../../../felles-komponenter/skjema/input-v2/input';
 import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
@@ -33,22 +33,22 @@ function IJobbAktivitetForm(props) {
     const erAvtalt = maybeAktivitet.avtalt === true;
 
     const validator = useFormstate({
-        tittel: val => erAvtalt || validateTittel(val),
-        fraDato: val =>
-            erAvtalt ||
-            validateFraDato(val) ||
-            validerDato(val, maybeAktivitet.tilDato, null),
+        tittel: val => validateTittel(erAvtalt, val),
+        fraDato: val => validateFraDato(erAvtalt, maybeAktivitet.tilDato, val),
         tilDato: val => validerDato(val, null, maybeAktivitet.fraDato),
-        ansettelsesforhold: val => erAvtalt || validateFeltForLangt(val),
-        jobbStatus: val => erAvtalt || validateJobbstatus(val),
-        arbeidstid: val => erAvtalt || validateFeltForLangt(val),
-        beskrivelse: val => erAvtalt || validateBeskrivelse(val),
+        periodeValidering: (val, values) =>
+            validerPeriodeFelt(values.fraDato, values.tilDato),
+        ansettelsesforhold: val => validateFeltForLangt(erAvtalt, val),
+        jobbStatus: val => validateJobbstatus(erAvtalt, val),
+        arbeidstid: val => validateFeltForLangt(erAvtalt, val),
+        beskrivelse: val => validateBeskrivelse(erAvtalt, val),
     });
 
     const state = validator({
         tittel: maybeAktivitet.tittel || '',
         fraDato: maybeAktivitet.fraDato || '',
         tilDato: maybeAktivitet.tilDato || '',
+        periodeValidering: '',
         jobbStatus: maybeAktivitet.jobbStatus || '',
         ansettelsesforhold: maybeAktivitet.ansettelsesforhold || '',
         arbeidstid: maybeAktivitet.arbeidstid || '',
@@ -59,15 +59,13 @@ function IJobbAktivitetForm(props) {
         isDirtyRef.current = !state.pristine;
     }
 
-    const errors = {
-        ...state.errors,
-        ...periodeErrors(state.fields.fraDato, state.fields.tilDato),
-    };
-
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetskjema">
-                <FormErrorSummary hidden={state.submittoken} errors={errors} />
+                <FormErrorSummary
+                    hidden={state.submittoken}
+                    errors={state.errors}
+                />
 
                 <AktivitetFormHeader
                     tittelId="ijobb-aktivitet-form.header"
@@ -82,8 +80,7 @@ function IJobbAktivitetForm(props) {
                 />
 
                 <PeriodeValidering
-                    fraDato={state.fields.fraDato}
-                    tilDato={state.fields.tilDato}
+                    valideringFelt={state.fields.periodeValidering}
                 >
                     <div className="dato-container">
                         <DatoField
