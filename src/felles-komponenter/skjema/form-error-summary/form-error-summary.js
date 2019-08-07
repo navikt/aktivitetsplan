@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PT from 'prop-types';
 
 function Error({ name, error }) {
@@ -17,12 +17,25 @@ Error.propTypes = {
 };
 
 function FormErrorSummary({ hidden, errors }) {
+    const summaryRef = useRef(null);
+
+    // focus on summary ref when shown
+    useEffect(
+        () => {
+            if (!hidden) {
+                summaryRef.current.focus();
+            }
+        },
+        [hidden, summaryRef]
+    );
+
     if (hidden) {
         return null;
     }
 
     return (
         <div
+            ref={summaryRef}
             role="alert"
             aria-live="assertive"
             aria-atomic="true"
