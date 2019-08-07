@@ -4,7 +4,6 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import StillingAktivitet from '../aktivitet-forms/stilling/ny-aktivitet-stilling';
 import SokeavtaleAktivitet from '../aktivitet-forms/sokeavtale/ny-aktivitet-sokeavtale';
 import BehandlingAktivitet from '../aktivitet-forms/behandling/ny-aktivitet-behandling';
 import NyMoteAktivitet from '../aktivitet-forms/mote/ny-mote-aktivitet';
@@ -20,9 +19,14 @@ import {
     selectAktivitetFeilmeldinger,
     selectAktivitetStatus,
 } from '../aktivitet-selector';
-import { IJOBB_AKTIVITET_TYPE, STATUS_PLANLAGT } from '../../../constant';
+import {
+    IJOBB_AKTIVITET_TYPE,
+    STATUS_PLANLAGT,
+    STILLING_AKTIVITET_TYPE,
+} from '../../../constant';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
+import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -123,7 +127,12 @@ function NyAktivitetForm(props) {
                             <NyttSamtalereferat {...formProps} />
                         </Route>
                         <Route path={`${match.path}/stilling`}>
-                            <StillingAktivitet {...formProps} />
+                            <StillingAktivitetForm
+                                onSubmit={onSubmitFactory(
+                                    STILLING_AKTIVITET_TYPE
+                                )}
+                                isDirtyRef={formIsDirtyV2}
+                            />
                         </Route>
                         <Route path={`${match.path}/sokeavtale`}>
                             <SokeavtaleAktivitet {...formProps} />

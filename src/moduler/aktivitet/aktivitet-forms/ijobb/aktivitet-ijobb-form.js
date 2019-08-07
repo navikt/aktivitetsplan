@@ -132,6 +132,7 @@ function IJobbAktivitetForm(props) {
                     disabled={erAvtalt}
                     label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
                     maxLength={5000}
+                    visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
             </div>

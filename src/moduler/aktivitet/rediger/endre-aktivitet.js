@@ -152,14 +152,15 @@ EndreAktivitet.propTypes = {
     doOppdaterAktivitet: PT.func.isRequired,
     lagrer: PT.bool.isRequired,
     valgtAktivitet: AppPT.aktivitet,
-    aktivitetId: PT.string.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     formIsDirty: PT.bool.isRequired,
     history: AppPT.history.isRequired,
+    match: PT.object.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
-    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
+    const aktivitetId = props.match.params.id;
+    const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
     return {
         valgtAktivitet,
         avhengigheter: [valgtAktivitet ? STATUS.OK : STATUS.PENDING],

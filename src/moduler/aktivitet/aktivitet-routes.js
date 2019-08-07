@@ -31,11 +31,7 @@ function AktivitetRoutes({ match }) {
             <Route
                 exact
                 path={`${basePath}/endre/:id`}
-                component={props =>
-                    <EndreAktivitet
-                        aktivitetId={props.match.params.id}
-                        {...props}
-                    />}
+                component={EndreAktivitet}
             />
             <Route
                 exact
