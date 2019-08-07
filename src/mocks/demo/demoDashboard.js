@@ -10,9 +10,12 @@ import {
     visAutomatiskeAktiviteter,
     visArenaAktiviteter,
     visTestAktiviteter,
+    setFeatureTogle,
+    fetureStatus,
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
+import { ALL_FEATURES } from '../../felles-komponenter/feature/feature';
 
 const brukertype = {
     ekstern: 'eksternbruker',
@@ -20,6 +23,11 @@ const brukertype = {
 };
 
 class DemoDashboard extends React.Component {
+    setFeature = (e, name) => {
+        setFeatureTogle(name, e.currentTarget.checked);
+        window.location.reload();
+    };
+
     endreTilstand = e => {
         const checkbox = e.currentTarget;
         const saveInSessionStorage =
@@ -44,7 +52,6 @@ class DemoDashboard extends React.Component {
             return brukertype.ekstern;
         } else return brukertype.veileder;
     };
-
     render() {
         return (
             <section className="demodashboard">
@@ -104,6 +111,18 @@ class DemoDashboard extends React.Component {
                         },
                     ]}
                     onChange={this.endreTilstand}
+                />
+                <CheckboksPanelGruppe
+                    legend="Feature togles"
+                    checkboxes={ALL_FEATURES.map(name => {
+                        return {
+                            label: name,
+                            id: name,
+                            value: name,
+                            checked: fetureStatus(name),
+                        };
+                    })}
+                    onChange={this.setFeature}
                 />
             </section>
         );
