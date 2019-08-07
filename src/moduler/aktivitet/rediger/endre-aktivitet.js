@@ -59,16 +59,18 @@ const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
 function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
-    window.onbeforeunload = e => {
-        if (formIsDirty || formIsDirtyV2.current) {
-            e.returnValue = CONFIRM;
-            return CONFIRM;
-        }
-        return undefined;
-    };
-
     return () => {
-        window.onbeforeunload = null;
+        window.onbeforeunload = e => {
+            if (formIsDirty || formIsDirtyV2.current) {
+                e.returnValue = CONFIRM;
+                return CONFIRM;
+            }
+            return undefined;
+        };
+
+        return () => {
+            window.onbeforeunload = null;
+        };
     };
 }
 
