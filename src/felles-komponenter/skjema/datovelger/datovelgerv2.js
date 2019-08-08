@@ -1,6 +1,4 @@
 /* eslint-disable */
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 
 import React, { Component } from 'react';
 import PT from 'prop-types';
@@ -127,10 +125,7 @@ class DatoField extends Component {
                     <label className="skjemaelement__label" htmlFor={id}>
                         {label}
                     </label>
-                    <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
-                        className="datovelger__inner"
-                        onClick={stopEvent}
-                    >
+                    <div className="datovelger__inner" onClick={stopEvent}>
                         <div className="datovelger__inputContainer">
                             <MaskedInput
                                 type="tel"
