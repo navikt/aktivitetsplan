@@ -1,0 +1,73 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+
+executors:
+    common:
+        docker:
+            - image: circleci/node:10.15
+        working_directory: ~/aktivitetsplan
+
+jobs:
+
+    prebuild:
+        executor: common
+        steps:
+            - checkout
+            - restore_cache:
+                    keys:
+                        - v1-dependencies-{{ checksum "package-lock.json" }}
+                        - v1-dependencies-
+            - run: npm ci
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: v1-dependencies-{{ checksum "package-lock.json" }}
+            - persist_to_workspace:
+                  root: ~/aktivitetsplan
+                  paths: .
+
+    build:
+        executor: common
+
+        steps:
+            - attach_workspace:
+                at: ~/aktivitetsplan
+            - run: npm run build
+
+    unittest:
+        environment:
+            TZ: Europe/Oslo
+
+        executor: common
+
+        steps:
+            - attach_workspace:
+                at: ~/aktivitetsplan
+            - run: npm run test
+
+    browsertest:
+        executor: common
+
+        steps:
+            - attach_workspace:
+                  at: ~/aktivitetsplan
+            - run: npm run build:tekster
+            - run: npm run test:browsers
+
+workflows:
+    version: 2
+    build_and_test:
+        jobs:
+            - prebuild
+            - build:
+                requires:
+                    - prebuild
+            - unittest:
+                requires:
+                    - prebuild
+            - browsertest:
+                requires:
+                    - prebuild
