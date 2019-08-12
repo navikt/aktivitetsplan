@@ -41,11 +41,16 @@ class Malverk extends Component {
     }
 
     onChangeMalverk = event => {
-        const { doHentMalverkMedTittel, doSettValgtMalverk } = this.props;
+        const {
+            doHentMalverkMedTittel,
+            doSettValgtMalverk,
+            onChange,
+        } = this.props;
         event.preventDefault();
         // event.target.value er tittel på malverk
         const valgtMalverk = doHentMalverkMedTittel(event.target.value);
         doSettValgtMalverk(valgtMalverk);
+        onChange(valgtMalverk[0]);
     };
 
     render() {
@@ -92,6 +97,7 @@ Malverk.propTypes = {
     doHentMalverMedType: PT.func.isRequired,
     doSettValgtMalverk: PT.func.isRequired,
     doSlettValgtMalverk: PT.func.isRequired,
+    onChange: PT.func,
     endre: PT.bool,
     type: PT.string.isRequired,
 };
@@ -99,6 +105,7 @@ Malverk.propTypes = {
 Malverk.defaultProps = {
     endre: false,
     malverk: undefined,
+    onChange: () => null,
 };
 
 const mapDispatchToProps = dispatch => ({

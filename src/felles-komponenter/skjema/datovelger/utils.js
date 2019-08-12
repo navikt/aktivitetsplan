@@ -1,6 +1,5 @@
 import { toDatePrettyPrint, erGyldigISODato, moment } from '../../../utils';
 
-// eslint-disable-next-line import/prefer-default-export
 export function validerDatoField(input, intl, alternativer) {
     const { fra, til } = alternativer;
     const inputDato = moment(input);
@@ -30,4 +29,28 @@ export function validerDatoField(input, intl, alternativer) {
         );
     }
     return undefined;
+}
+
+export function validerDato(value, tidligsteFom, senesteTom) {
+    const inputDato = moment(value);
+
+    const fraDato = moment(tidligsteFom);
+    const tilDato = moment(senesteTom);
+
+    if (value && !erGyldigISODato(value)) {
+        return 'Datoen du har oppgitt er ikke en gyldig dato'
+    } if (
+        tidligsteFom &&
+        senesteTom &&
+        (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))
+    ) {
+        tilDato.add(1, 'day');
+        fraDato.subtract(1, 'day');
+
+        const prettyFra = toDatePrettyPrint(fraDato.toDate());
+        const prettyTil = toDatePrettyPrint(tilDato.toDate());
+
+        return `Datoen må være innenfor perioden ${prettyFra}-${prettyTil}`;
+    }
+    return null;
 }

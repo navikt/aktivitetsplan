@@ -13,7 +13,6 @@ import {
 } from '../aktivitetliste-selector';
 import PubliserReferat from './publiser-referat';
 import Modal from '../../../felles-komponenter/modal/modal';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { STATUS_AVBRUTT } from '../../../constant';
 import { trengerBegrunnelse } from '../aktivitet-util';
 
@@ -55,10 +54,7 @@ const AvbrytAktivitet = ({
     );
 
     return (
-        <Modal
-            header={<ModalHeader tilbakeTekstId="ny-aktivitet-modal.tilbake" />}
-            contentLabel="avbryt-aktivitet"
-        >
+        <Modal contentLabel="avbryt-aktivitet">
             <PubliserReferat
                 aktivitet={valgtAktivitet}
                 nyStatus={STATUS_AVBRUTT}

@@ -34,7 +34,6 @@ import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reduc
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-status-form';
-import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
 import { AVTALT_AKTIVITET_FORM_NAME } from './avtalt-container/avtalt-form';
 import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
 import { OPPDATER_REFERAT_FORM_NAME } from './status-oppdatering/oppdater-referat-form';
@@ -99,7 +98,6 @@ class AktivitetvisningContainer extends Component {
             history,
             intl,
             formIsDirty,
-            lukkModal,
             ...props
         } = this.props;
         return (
@@ -115,7 +113,6 @@ class AktivitetvisningContainer extends Component {
                     // eslint-disable-next-line no-alert
                     if (!formIsDirty || window.confirm(dialogTekst)) {
                         history.push('/');
-                        lukkModal();
                     }
                 }}
             >
@@ -138,7 +135,6 @@ AktivitetvisningContainer.propTypes = {
     history: AppPT.history.isRequired,
     intl: intlShape.isRequired,
     formIsDirty: PT.bool.isRequired,
-    lukkModal: PT.func.isRequired,
     underOppfolging: PT.bool.isRequired,
 };
 
@@ -196,7 +192,6 @@ const mapDispatchToProps = dispatch =>
             doSettForrigeAktiveAktivitetId: settForrigeAktiveAktivitetId,
             doFjernForrigeAktiveAktivitetId: fjernForrigeAktiveAktivitetId,
             doLukkDialogEllerHistorikk: lukkAlle,
-            lukkModal: () => dispatch({ type: LUKK_MODAL }),
         },
         dispatch
     );

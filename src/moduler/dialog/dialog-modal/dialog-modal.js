@@ -21,8 +21,7 @@ import Feilmelding from '../../feilmelding/feilmelding';
 import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse, { nyDialogFormNavn } from './dialog-henvendelse';
-import FnrProvider from "../../../bootstrap/fnr-provider";
-import { LUKK_MODAL } from '../../../felles-komponenter/modal/modal-reducer';
+import FnrProvider from '../../../bootstrap/fnr-provider';
 import { endreDialogFormNavn, nyHenvendelseDialogFormNavn } from './dialog';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import loggEvent from '../../../felles-komponenter/utils/logging';
@@ -58,7 +57,6 @@ class DialogModal extends Component {
             dialogFeilmeldinger,
             intl,
             formIsDirty,
-            lukkModal,
         } = this.props;
         const className = classNames('dialog-modal', 'aktivitet-modal', {
             'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -80,7 +78,6 @@ class DialogModal extends Component {
                     // eslint-disable-next-line no-alert
                     if (!formIsDirty || window.confirm(dialogTekst)) {
                         history.push('/');
-                        lukkModal();
                     }
                 }}
             >
@@ -143,7 +140,6 @@ DialogModal.propTypes = {
     history: AppPT.history.isRequired,
     dialogFeilmeldinger: PT.array,
     underOppfolging: PT.bool.isRequired,
-    lukkModal: PT.func.isRequired,
     intl: intlShape.isRequired,
     formIsDirty: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
@@ -178,10 +174,4 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    lukkModal: () => dispatch({ type: LUKK_MODAL }),
-});
-
-export default injectIntl(
-    connect(mapStateToProps, mapDispatchToProps)(DialogModal)
-);
+export default injectIntl(connect(mapStateToProps)(DialogModal));

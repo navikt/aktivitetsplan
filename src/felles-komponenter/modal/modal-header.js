@@ -3,17 +3,16 @@ import PT from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
-import Tilbakeknapp from '../utils/tilbakeknapp';
-import HengeLasIkon from './hengelas-ikon'
+import Tilbakeknapp from './tilbakeknapp';
+import HengeLasIkon from './hengelas-ikon';
 import VisibleIfSpan from '../utils/visible-if-span';
 
 function ModalHeader({
-    tilbakeTekstId,
+    tilbakeTekst,
     normalTekstId,
-    tilbakeTekstValues,
     normalTekstValues,
     className,
-    visConfirmDialog,
+    onTilbakeClick,
     aktivitetErLaast,
     intl,
     ...props
@@ -23,8 +22,6 @@ function ModalHeader({
             className={classNames('modal-header-wrapper', className)}
             {...props}
         >
-            {/* header til slutt for å få denne sist i tabrekkefølgen */}
-
             <header className="modal-header">
                 <span aria-live="assertive" className="sr-only">
                     {aktivitetErLaast
@@ -39,11 +36,10 @@ function ModalHeader({
                 >
                     <HengeLasIkon />
                 </VisibleIfSpan>
-                {tilbakeTekstId &&
+                {tilbakeTekst &&
                     <Tilbakeknapp
-                        tekstId={tilbakeTekstId}
-                        tekstValues={tilbakeTekstValues}
-                        visConfirmDialog={visConfirmDialog}
+                        tekst={tilbakeTekst}
+                        onClick={onTilbakeClick}
                     />}
                 {normalTekstId &&
                     <Normaltekst tag="h1">
@@ -58,22 +54,20 @@ function ModalHeader({
 }
 
 ModalHeader.propTypes = {
-    tilbakeTekstId: PT.string,
-    tilbakeTekstValues: PT.object, // eslint-disable-line react/forbid-prop-types
+    tilbakeTekst: PT.string,
     normalTekstId: PT.string,
-    normalTekstValues: PT.object, // eslint-disable-line react/forbid-prop-types
-    visConfirmDialog: PT.bool,
+    normalTekstValues: PT.object,
+    onTilbakeClick: PT.func,
     className: PT.string,
     aktivitetErLaast: PT.bool,
     intl: intlShape.isRequired,
 };
 
 ModalHeader.defaultProps = {
-    tilbakeTekstId: undefined,
-    tilbakeTekstValues: undefined,
+    tilbakeTekst: undefined,
     normalTekstId: undefined,
     normalTekstValues: undefined,
-    visConfirmDialog: false,
+    onTilbakeClick: undefined,
     className: undefined,
     aktivitetErLaast: false,
 };
