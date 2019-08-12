@@ -63,7 +63,7 @@ function IJobbAktivitetForm(props) {
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetskjema">
                 <FormErrorSummary
-                    hidden={state.submittoken}
+                    submittoken={state.submittoken}
                     errors={state.errors}
                 />
 

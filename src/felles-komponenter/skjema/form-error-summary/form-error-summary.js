@@ -16,20 +16,20 @@ Error.propTypes = {
     error: PT.string.isRequired,
 };
 
-function FormErrorSummary({ hidden, errors }) {
+function FormErrorSummary({ submittoken, errors }) {
     const summaryRef = useRef(null);
 
     // focus on summary ref when shown
     useEffect(
         () => {
-            if (!hidden) {
+            if (submittoken) {
                 summaryRef.current.focus();
             }
         },
-        [hidden, summaryRef]
+        [submittoken, summaryRef]
     );
 
-    if (hidden) {
+    if (!submittoken) {
         return null;
     }
 
@@ -53,8 +53,12 @@ function FormErrorSummary({ hidden, errors }) {
 }
 
 FormErrorSummary.propTypes = {
-    hidden: PT.bool.isRequired,
+    submittoken: PT.string,
     errors: PT.object.isRequired,
+};
+
+FormErrorSummary.defaultProps = {
+    submittoken: undefined,
 };
 
 export default FormErrorSummary;

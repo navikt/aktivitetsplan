@@ -19,7 +19,7 @@
     "heroku-serve": "serve -s build -l $PORT"
   },
   "dependencies": {
-    "@nutgaard/use-formstate": "^1.0.4",
+    "@nutgaard/use-formstate": "^2.1.0",
     "babel-polyfill": "^6.26.0",
     "classnames": "2.2.5",
     "history": "4.6.3",
