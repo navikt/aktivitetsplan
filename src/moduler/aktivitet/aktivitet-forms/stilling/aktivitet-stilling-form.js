@@ -116,18 +116,6 @@ class StillingAktivitetForm extends Component {
                         </div>
                     </PeriodeValidering>
 
-                    <Textarea
-                        feltNavn="beskrivelse"
-                        disabled={erAktivitetAvtalt}
-                        labelId="stilling-aktivitet-form.label.beskrivelse"
-                        maxLength={BESKRIVELSE_MAKS_LENGDE}
-                        visTellerFra={500}
-                    />
-                    <Input
-                        feltNavn="arbeidssted"
-                        disabled={erAktivitetAvtalt}
-                        labelId="stilling-aktivitet-form.label.arbeidssted"
-                    />
                     <Input
                         feltNavn="arbeidsgiver"
                         disabled={erAktivitetAvtalt}
@@ -137,6 +125,18 @@ class StillingAktivitetForm extends Component {
                         feltNavn="kontaktperson"
                         disabled={erAktivitetAvtalt}
                         labelId="stilling-aktivitet-form.label.kontaktperson"
+                    />
+                    <Input
+                        feltNavn="arbeidssted"
+                        disabled={erAktivitetAvtalt}
+                        labelId="stilling-aktivitet-form.label.arbeidssted"
+                    />
+                    <Textarea
+                        feltNavn="beskrivelse"
+                        disabled={erAktivitetAvtalt}
+                        labelId="stilling-aktivitet-form.label.beskrivelse"
+                        maxLength={BESKRIVELSE_MAKS_LENGDE}
+                        visTellerFra={500}
                     />
                     <Input
                         feltNavn="lenke"
