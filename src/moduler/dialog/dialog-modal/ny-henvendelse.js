@@ -210,8 +210,11 @@ const mapDispatchToProps = () => ({
                 const ferdigbehandlet = !dialogData.ikkeFerdigbehandlet;
                 const venterPaSvar = !!dialogData.venterPaSvar;
 
-                dispatch(oppdaterFerdigbehandlet(dialogId, ferdigbehandlet));
-                dispatch(oppdaterVenterPaSvar(dialogId, venterPaSvar));
+                dispatch(
+                    oppdaterFerdigbehandlet(dialogId, ferdigbehandlet)
+                ).then(() => {
+                    dispatch(oppdaterVenterPaSvar(dialogId, venterPaSvar));
+                });
             }
             props.reset();
             if (onComplete) {

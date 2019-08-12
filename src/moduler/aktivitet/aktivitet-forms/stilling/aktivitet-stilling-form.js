@@ -92,20 +92,6 @@ function StillingAktivitetForm(props) {
                         />
                     </div>
                 </PeriodeValidering>
-
-                <Textarea
-                    disabled={erAvtalt}
-                    label="Kort beskrivelse av stillingen"
-                    maxLength={5000}
-                    visTellerFra={500}
-                    {...state.fields.beskrivelse}
-                />
-
-                <Input
-                    disabled={erAvtalt}
-                    label="Arbeidssted"
-                    {...state.fields.arbeidssted}
-                />
                 <Input
                     disabled={erAvtalt}
                     label="Arbeidsgiver"
@@ -115,6 +101,18 @@ function StillingAktivitetForm(props) {
                     disabled={erAvtalt}
                     label="Kontaktperson hos arbeidsgiver"
                     {...state.fields.kontaktperson}
+                />
+                <Input
+                    disabled={erAvtalt}
+                    label="Arbeidssted"
+                    {...state.fields.arbeidssted}
+                />
+                <Textarea
+                    disabled={erAvtalt}
+                    label="Kort beskrivelse av stillingen"
+                    maxLength={5000}
+                    visTellerFra={500}
+                    {...state.fields.beskrivelse}
                 />
                 <Input
                     disabled={erAvtalt}
