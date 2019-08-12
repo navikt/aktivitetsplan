@@ -1,52 +1,61 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
-import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { formNavn } from '../aktivitet/aktivitet-forms/aktivitet-form-utils';
+import useFormstate from '@nutgaard/use-formstate';
 import * as AppPT from '../../proptypes';
-import { storeForbokstaver } from '../../utils';
-import { maksLengde } from '../../felles-komponenter/skjema/validering';
-import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
+import Textarea from '../../felles-komponenter/skjema/input-v2/textarea';
 import { hentPrintMelding } from './utskrift-selector';
 import { lagrePrintMelding } from './utskrift-duck';
 import { selectBruker } from '../bruker/bruker-selector';
+import FormErrorSummary from '../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 
-const BESKRIVELSE_MAKS_LENGDE = 2000;
+const defaultBeskrivelse =
+    'Her finner du avtalte aktiviteter med NAV som du skal gjennomføre for å nå målet ditt. ' +
+    'Gi beskjed til NAV hvis det skjer endringer i situasjonen din eller hvis du ikke kan gjennomføre en aktivitet.';
 
-const begrensetBeskrivelseLengde = maksLengde(
-    'print-melding-form.feilmelding.beskrivelse-lengde',
-    BESKRIVELSE_MAKS_LENGDE
-);
+function PrintMeldingForm(props) {
+    const { beskrivelse, lagrer, bruker, onSubmit } = props;
 
-function PrintMeldingForm({ errorSummary, handleSubmit, lagrer, bruker }) {
+    const validator = useFormstate({
+        beskrivelse: val =>
+            val.trim().length >= 2000
+                ? 'Du må korte ned teksten til 2000 tegn'
+                : null,
+    });
+
+    const state = validator({
+        beskrivelse: beskrivelse || defaultBeskrivelse,
+    });
+
     return (
-        <form onSubmit={handleSubmit} className="printmelding__form">
+        <form
+            onSubmit={state.onSubmit(onSubmit)}
+            className="printmelding__form"
+        >
             <div className="printmelding__skjema">
-                {errorSummary}
+                <FormErrorSummary
+                    submittoken={state.submittoken}
+                    errors={state.errors}
+                />
 
                 <div className="printmelding__tittel">
                     <Innholdstittel>
-                        <FormattedMessage
-                            id="print-melding-form.header"
-                            values={{
-                                FORNAVN: storeForbokstaver(bruker.fornavn),
-                            }}
-                        />
+                        {`Aktivitetsplan for ${bruker.fornavn}`}
                     </Innholdstittel>
                 </div>
 
                 <Textarea
-                    feltNavn="beskrivelse"
-                    labelId="print-melding-form.label.beskrivelse"
-                    maxLength={BESKRIVELSE_MAKS_LENGDE}
+                    label="Rediger teksten under så den passer til brukeren."
+                    maxLength={2000}
+                    visTellerFra={500}
+                    {...state.fields.beskrivelse}
                 />
             </div>
             <div className="printmelding__knapperad">
                 <Hovedknapp spinner={lagrer} disabled={lagrer}>
-                    <FormattedMessage id="print-melding-form.lagre" />
+                    Velg
                 </Hovedknapp>
             </div>
         </form>
@@ -54,37 +63,22 @@ function PrintMeldingForm({ errorSummary, handleSubmit, lagrer, bruker }) {
 }
 
 PrintMeldingForm.propTypes = {
-    handleSubmit: PT.func.isRequired,
-    errorSummary: PT.node.isRequired,
+    onSubmit: PT.func.isRequired,
     lagrer: PT.bool,
     bruker: AppPT.motpart.isRequired,
-    intl: intlShape.isRequired,
+    beskrivelse: PT.string,
 };
 
 PrintMeldingForm.defaultProps = {
     lagrer: false,
+    beskrivelse: undefined,
 };
 
-const PrintMeldingReduxForm = validForm({
-    form: formNavn,
-    errorSummaryTitle: (
-        <FormattedMessage id="print-melding-form.feiloppsummering-tittel" />
-    ),
-    validate: {
-        beskrivelse: [begrensetBeskrivelseLengde],
-    },
-})(PrintMeldingForm);
-
-const mapStateToProps = (state, props) => {
+const mapStateToProps = state => {
     const printMelding = hentPrintMelding(state);
     const bruker = selectBruker(state);
     return {
-        initialValues: {
-            beskrivelse: props.intl.formatMessage({
-                id: 'print-melding-form.beskrivelse-standardtekst',
-            }),
-            ...printMelding,
-        },
+        beskrivelse: printMelding.beskrivelse,
         bruker,
     };
 };
@@ -92,9 +86,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = dispatch => ({
     onSubmit: data => {
         dispatch(lagrePrintMelding(data));
+        return Promise.resolve();
     },
 });
 
-export default injectIntl(
-    connect(mapStateToProps, mapDispatchToProps)(PrintMeldingReduxForm)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(PrintMeldingForm);

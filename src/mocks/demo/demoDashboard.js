@@ -12,6 +12,7 @@ import {
     visTestAktiviteter,
     setFeatureTogle,
     fetureStatus,
+    erManuellBruker,
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -82,6 +83,11 @@ class DemoDashboard extends React.Component {
                             label: 'Ikke under oppfølging',
                             id: SessionStorageElement.PRIVAT_BRUKER,
                             checked: erPrivatBruker(),
+                        },
+                        {
+                            label: 'Manuell',
+                            id: SessionStorageElement.MANUELL_BRUKER,
+                            checked: erManuellBruker(),
                         },
                         {
                             label: 'Ingen oppfølgingsperioder',

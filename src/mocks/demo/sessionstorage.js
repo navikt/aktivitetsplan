@@ -1,5 +1,6 @@
 export const SessionStorageElement = {
     PRIVAT_BRUKER: 'privatbruker',
+    MANUELL_BRUKER: 'manuellbruker',
     EKSTERN_BRUKER: 'eksternbruker',
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
     AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
@@ -24,6 +25,9 @@ export const erEksternBruker = () =>
     erSatt(SessionStorageElement.EKSTERN_BRUKER);
 
 export const erPrivatBruker = () => erSatt(SessionStorageElement.PRIVAT_BRUKER);
+
+export const erManuellBruker = () =>
+    erSatt(SessionStorageElement.MANUELL_BRUKER);
 
 export const ingenOppfPerioder = () =>
     erSatt(SessionStorageElement.INGEN_OPPF_PERIODER);
