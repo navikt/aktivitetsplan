@@ -160,7 +160,7 @@ class AktivitetsMal extends Component {
 
 AktivitetsMal.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
-    mal: PT.string.isRequired,
+    mal: PT.string,
     historiskeMal: AppPT.malListe.isRequired,
     historiskVisning: PT.bool.isRequired,
     doHentMal: PT.func.isRequired,
@@ -170,6 +170,10 @@ AktivitetsMal.propTypes = {
     history: AppPT.history.isRequired,
     underOppfolging: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
+};
+
+AktivitetsMal.defaultProps = {
+    mal: undefined,
 };
 
 const mapStateToProps = state => ({

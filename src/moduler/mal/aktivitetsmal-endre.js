@@ -21,9 +21,8 @@ class AktivitetmalEndre extends Component {
 
     render() {
         const { mal, avhengigheter, history, erVeileder } = this.props;
-
         return (
-            <Innholdslaster avhengigheter={avhengigheter}>
+            <Innholdslaster avhengigheter={avhengigheter} alleOK>
                 <section className="aktivitetmal aktivitetmal__innhold">
                     <AktivitetsmalForm
                         mal={mal}
