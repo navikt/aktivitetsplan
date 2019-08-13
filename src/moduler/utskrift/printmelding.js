@@ -17,9 +17,7 @@ const defaultBeskrivelse =
 
 const validator = useFormstate({
     beskrivelse: val =>
-        val.trim().length > 2000
-            ? 'Du må korte ned teksten til 2000 tegn'
-            : null,
+        val.length > 2000 ? 'Du må korte ned teksten til 2000 tegn' : null,
 });
 
 function PrintMeldingForm(props) {
