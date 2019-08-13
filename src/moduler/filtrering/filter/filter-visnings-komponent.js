@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import loggEvent from '../../../felles-komponenter/utils/logging';
 
 const filterClassNames = className => classNames(className, 'filter');
 
@@ -13,6 +14,7 @@ function FilterVisningsKomponent({
     filter,
     filterTittel,
     filterTekst,
+    metrikkNavn,
     doToggleFunction,
     className,
 }) {
@@ -32,7 +34,12 @@ function FilterVisningsKomponent({
                             id={filterTekst + nokkel.toLowerCase()}
                         />
                     }
-                    onChange={() => doToggleFunction(nokkel)}
+                    onChange={() => {
+                        if (!filter[nokkel] && metrikkNavn) {
+                            loggEvent(metrikkNavn, { filter: nokkel });
+                        }
+                        doToggleFunction(nokkel);
+                    }}
                     checked={filter[nokkel]}
                 />
             )}
@@ -50,6 +57,7 @@ FilterVisningsKomponent.propTypes = {
     filterTittel: PT.string.isRequired,
     filterTekst: PT.string.isRequired,
     doToggleFunction: PT.func.isRequired,
+    metrikkNavn: PT.string.isRequired,
     className: PT.string,
 };
 

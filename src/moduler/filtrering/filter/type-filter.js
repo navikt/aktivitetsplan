@@ -5,6 +5,7 @@ import { toggleAktivitetsType } from './filter-reducer';
 import { selectAktivitetTyperFilter } from './filter-selector';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import FilterVisningsKomponent from './filter-visnings-komponent';
+import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 function TypeFilter({
     harAktivitetTyper,
@@ -17,6 +18,7 @@ function TypeFilter({
             filter={aktivitetTyper}
             filterTittel="filter.aktivitet.type.tittel"
             filterTekst="aktivitet.type."
+            metrikkNavn={AKTIVITESTYPE_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsType}
         />
     );
@@ -32,7 +34,7 @@ const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
     const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
-        const {type} = aktivitet;
+        const { type } = aktivitet;
         typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
         return typer;
     }, {});

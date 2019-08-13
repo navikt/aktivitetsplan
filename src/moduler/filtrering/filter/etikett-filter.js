@@ -5,6 +5,7 @@ import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import FilterVisningsKomponent from './filter-visnings-komponent';
+import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 function EtikettFilter({
     harAktivitetEtiketter,
@@ -17,6 +18,7 @@ function EtikettFilter({
             filter={aktivitetEtiketter}
             filterTittel="filter.aktivitet.etikett.tittel"
             filterTekst="aktivitet.etikett."
+            metrikkNavn={TILSTAND_FILTER_METRIKK}
             doToggleFunction={doToggleAktivitetsEtikett}
         />
     );
@@ -32,7 +34,7 @@ const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetEtiketterFilter = selectAktivitetEtiketterFilter(state);
     const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
-        const {etikett} = aktivitet;
+        const { etikett } = aktivitet;
         if (etikett) {
             etiketter[etikett] = aktivitetEtiketterFilter[etikett]; // eslint-disable-line no-param-reassign
         }

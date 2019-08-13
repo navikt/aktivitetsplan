@@ -15,6 +15,9 @@ import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
+import loggEvent, {
+    OPNE_AKTIVITETFILTER,
+} from '../../felles-komponenter/utils/logging';
 
 const filterClassNames = classes => classNames(classes, 'filter');
 
@@ -57,6 +60,9 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                             name="filter"
                             knappeTekst={tittel}
                             className="dropdown--alignright"
+                            onOpen={() => {
+                                loggEvent(OPNE_AKTIVITETFILTER);
+                            }}
                         >
                             <div className="filter__container">
                                 <AvtaltMedNavFilter />

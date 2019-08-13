@@ -35,6 +35,7 @@ import {
 import StatusRadio from './status-radio';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { selectArenaAktivitetStatus } from '../../arena-aktivitet-selector';
+import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
 
 export const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
 const BEGRUNNELSE_FELT_NAME = 'begrunnelse';
@@ -199,7 +200,7 @@ AktivitetStatusForm.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-    const {aktivitet} = props;
+    const { aktivitet } = props;
     const { status, avsluttetKommentar, type } = aktivitet;
     const erArenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
@@ -236,6 +237,11 @@ const mapDispatchToProps = () => ({
                 untouch(AKTIVITET_STATUS_FORM_NAME, BEGRUNNELSE_FELT_NAME)
             );
         });
+        flyttetAktivitetMetrikk(
+            'submit',
+            props.aktivitet,
+            values.aktivitetstatus
+        );
     },
 });
 

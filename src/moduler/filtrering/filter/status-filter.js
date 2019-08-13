@@ -12,6 +12,7 @@ import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
 } from '../../../constant';
+import { STATUS_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 const filtreringsRekkefolge = [
     STATUS_BRUKER_ER_INTRESSERT,
@@ -33,6 +34,7 @@ function StatusFilter({
             filter={sortedAktivitetStatus}
             filterTittel="aktivitet.status"
             filterTekst="aktivitet.status."
+            metrikkNavn={STATUS_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsStatus}
             className={className}
         />
@@ -54,7 +56,7 @@ const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
     const aktivitetStatus = aktiviteter.reduce((statusliste, aktivitet) => {
-        const {status} = aktivitet;
+        const { status } = aktivitet;
         statusliste[status] = aktivitetStatusFilter[status]; // eslint-disable-line no-param-reassign
         return statusliste;
     }, {});

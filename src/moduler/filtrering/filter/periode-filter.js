@@ -13,6 +13,10 @@ import { selectHistoriskPeriode } from './filter-selector';
 import { selectSorterteHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
 import { velgHistoriskPeriode } from './filter-reducer';
 import Dropdown from '../../../felles-komponenter/dropdown/dropdown';
+import loggEvent, {
+    LIST_HISTORISK_PERIODE,
+    VIS_HISTORISK_PERIODE,
+} from '../../../felles-komponenter/utils/logging';
 
 export function PeriodeLabel({ historiskPeriode }) {
     return (
@@ -53,7 +57,11 @@ function PeriodeFilter({
         >
             <FormattedMessage id="periode-filter.tittel">
                 {tittel =>
-                    <Dropdown name="periode-filter" knappeTekst={tittel}>
+                    <Dropdown
+                        name="periode-filter"
+                        knappeTekst={tittel}
+                        onOpen={() => loggEvent(LIST_HISTORISK_PERIODE)}
+                    >
                         <div className="filter__container">
                             <div className="filter">
                                 <Undertittel className="filter__tittel">
@@ -72,7 +80,7 @@ function PeriodeFilter({
                                     />
                                 </HiddenIfDiv>
                                 {historiskePerioder.map(t => {
-                                    const {id} = t;
+                                    const { id } = t;
                                     return (
                                         <div key={id}>
                                             <Radio
@@ -83,8 +91,12 @@ function PeriodeFilter({
                                                     />
                                                 }
                                                 name={id}
-                                                onChange={() =>
-                                                    doVelgHistoriskPeriode(t)}
+                                                onChange={() => {
+                                                    doVelgHistoriskPeriode(t);
+                                                    loggEvent(
+                                                        VIS_HISTORISK_PERIODE
+                                                    );
+                                                }}
                                                 checked={
                                                     !!historiskPeriode &&
                                                     historiskPeriode.id === id
