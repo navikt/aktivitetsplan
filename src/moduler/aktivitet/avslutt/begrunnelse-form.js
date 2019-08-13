@@ -1,0 +1,66 @@
+import React from 'react';
+import PT from 'prop-types';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import useFormstate from '@nutgaard/use-formstate';
+import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
+import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Textarea from '../../../felles-komponenter/skjema/input-v2/textarea';
+
+const begrunnelseValidator = val => {
+    if (val.trim().length === 0) {
+        return 'Du må fylle ut en begrunnelse';
+    }
+    if (val.length > 255) {
+        return 'Du må korte ned teksten til 255 tegn';
+    }
+
+    return null;
+};
+
+const validator = useFormstate({
+    begrunnelse: begrunnelseValidator,
+});
+
+function BegrunnelseForm(props) {
+    const { beskrivelseLabel, headerTekst, lagrer, onSubmit } = props;
+    const state = validator({ begrunnelse: '' });
+
+    return (
+        <form onSubmit={state.onSubmit(onSubmit)}>
+            <div className="aktivitetvisning__underseksjon">
+                <ModalContainer>
+                    <FormErrorSummary
+                        errors={state.errors}
+                        submittoken={state.submittoken}
+                    />
+                    <Innholdstittel>
+                        {headerTekst}
+                    </Innholdstittel>
+                    <Textarea
+                        label={beskrivelseLabel}
+                        maxLength={255}
+                        visTellerFra={255}
+                        disabled={lagrer}
+                        {...state.fields.begrunnelse}
+                    />
+                </ModalContainer>
+            </div>
+            <ModalFooter>
+                <Hovedknapp spinner={lagrer} mini autoDisableVedSpinner>
+                    Lagre
+                </Hovedknapp>
+            </ModalFooter>
+        </form>
+    );
+}
+
+BegrunnelseForm.propTypes = {
+    headerTekst: PT.string.isRequired,
+    beskrivelseLabel: PT.string.isRequired,
+    lagrer: PT.bool.isRequired,
+    onSubmit: PT.func.isRequired,
+};
+
+export default BegrunnelseForm;

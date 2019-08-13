@@ -1,9 +1,8 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../../proptypes';
-import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
+import BegrunnelseAktivitet from './begrunnelse-form';
 import VisAdvarsel from './vis-advarsel';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
@@ -16,6 +15,12 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import { STATUS_AVBRUTT } from '../../../constant';
 import { trengerBegrunnelse } from '../aktivitet-util';
 
+const headerTekst = 'Avbrutt aktivitet';
+const beskrivelseLabel =
+    'Skriv en kort begrunnelse under om hvorfor du avbrøt aktiviteten. ' +
+    'Når du lagrer blir aktiviteten låst, og du kan ikke lenger redigere innholdet. Etter at du har lagret, ' +
+    'må du gi beskjed til  veilederen din ved å starte en dialog her i aktivitetsplanen.';
+
 const AvbrytAktivitet = ({
     lagrer,
     valgtAktivitet,
@@ -24,22 +29,22 @@ const AvbrytAktivitet = ({
 }) => {
     const begrunnelse = (
         <BegrunnelseAktivitet
-            aktivitet={valgtAktivitet}
-            headerTekst={
-                <FormattedMessage id="opprett-begrunnelse.avbrutt.header" />
-            }
-            beskrivelseTekstId="opprett-begrunnelse.avbrutt.melding"
+            headerTekst={headerTekst}
+            beskrivelseLabel={beskrivelseLabel}
             lagrer={lagrer}
             onSubmit={beskrivelseForm => {
-                lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
                 history.replace('/');
+                return lagreBegrunnelse(
+                    valgtAktivitet,
+                    beskrivelseForm.begrunnelse
+                );
             }}
         />
     );
 
     const advarsel = (
         <VisAdvarsel
-            headerTekst={<FormattedMessage id="advarsel.avbrutt.header" />}
+            headerTekst={headerTekst}
             onSubmit={() => {
                 lagreBegrunnelse(valgtAktivitet, null);
                 history.replace('/');
@@ -66,11 +71,11 @@ const AvbrytAktivitet = ({
 };
 
 AvbrytAktivitet.propTypes = {
-    aktivitetId: PT.string.isRequired,
     valgtAktivitet: AppPT.aktivitet.isRequired,
     lagrer: PT.bool.isRequired,
     lagreBegrunnelse: PT.func.isRequired,
     history: AppPT.history.isRequired,
+    match: PT.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -79,7 +84,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state, props) => {
-    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
+    const aktivitetId = props.match.params.id;
+    const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
     return {
         valgtAktivitet: valgtAktivitet || {},
         lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,
