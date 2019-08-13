@@ -1,4 +1,8 @@
-import { erPrivatBruker, ingenOppfPerioder } from './demo/sessionstorage';
+import {
+    erManuellBruker,
+    erPrivatBruker,
+    ingenOppfPerioder,
+} from './demo/sessionstorage';
 
 const oppfPerioder = [
     {
@@ -21,7 +25,7 @@ const oppfolging = {
     fnr: null,
     veilederId: null,
     reservasjonKRR: false,
-    manuell: false,
+    manuell: erManuellBruker(),
     underOppfolging: !erPrivatBruker(),
     underKvp: false,
     oppfolgingUtgang: null,

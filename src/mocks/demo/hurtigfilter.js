@@ -10,6 +10,7 @@ const hurtigfilterType = [
         avskrudd: [
             SessionStorageElement.INGEN_OPPF_PERIODER,
             SessionStorageElement.PRIVAT_BRUKER,
+            SessionStorageElement.MANUELL_BRUKER,
             SessionStorageElement.ARENA_AKTIVITETER,
             SessionStorageElement.TEST_AKTIVITETER,
         ],
