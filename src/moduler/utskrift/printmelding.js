@@ -15,15 +15,15 @@ const defaultBeskrivelse =
     'Her finner du avtalte aktiviteter med NAV som du skal gjennomføre for å nå målet ditt. ' +
     'Gi beskjed til NAV hvis det skjer endringer i situasjonen din eller hvis du ikke kan gjennomføre en aktivitet.';
 
+const validator = useFormstate({
+    beskrivelse: val =>
+        val.trim().length > 2000
+            ? 'Du må korte ned teksten til 2000 tegn'
+            : null,
+});
+
 function PrintMeldingForm(props) {
     const { beskrivelse, lagrer, bruker, onSubmit } = props;
-
-    const validator = useFormstate({
-        beskrivelse: val =>
-            val.trim().length > 2000
-                ? 'Du må korte ned teksten til 2000 tegn'
-                : null,
-    });
 
     const state = validator({
         beskrivelse: beskrivelse || defaultBeskrivelse,
