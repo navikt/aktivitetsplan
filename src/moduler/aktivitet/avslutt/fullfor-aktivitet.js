@@ -1,9 +1,8 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../../proptypes';
-import BegrunnelseAktivitet from './begrunnelse-for-ferdig-avtalt-aktivitet';
+import BegrunnelseAktivitet from './begrunnelse-form';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
 import VisAdvarsel from './vis-advarsel';
@@ -16,29 +15,28 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 
+const headerTekst = 'Fullført aktivitet';
+const beskrivelseTekst =
+    'Skriv en kort kommentar om hvordan det har gått, eller noe NAV bør kjenne til. ' +
+    'Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.';
+
 const FullforAktivitet = ({
     valgtAktivitet,
     lagrer,
     doAvsluttOppfolging,
     history,
 }) => {
-    const headerTekst = (
-        <FormattedMessage id="opprett-begrunnelse.fullfoert.header" />
-    );
-    const beskrivelseTekstId = 'opprett-begrunnelse.fullfoert.melding';
-
     const begrunnelse = (
         <BegrunnelseAktivitet
-            aktivitet={valgtAktivitet}
             headerTekst={headerTekst}
-            beskrivelseTekstId={beskrivelseTekstId}
+            beskrivelseLabel={beskrivelseTekst}
             lagrer={lagrer}
             onSubmit={beskrivelseForm => {
-                doAvsluttOppfolging(
+                history.replace('/');
+                return doAvsluttOppfolging(
                     valgtAktivitet,
                     beskrivelseForm.begrunnelse
                 );
-                history.replace('/');
             }}
         />
     );
@@ -67,11 +65,11 @@ const FullforAktivitet = ({
 };
 
 FullforAktivitet.propTypes = {
-    aktivitetId: PT.string.isRequired,
     valgtAktivitet: AppPT.aktivitet.isRequired,
     lagrer: PT.bool.isRequired,
     doAvsluttOppfolging: PT.func.isRequired,
     history: AppPT.history.isRequired,
+    match: PT.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -80,7 +78,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state, props) => {
-    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
+    const aktivitetId = props.match.params.id;
+    const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
     return {
         valgtAktivitet: valgtAktivitet || {},
         lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,

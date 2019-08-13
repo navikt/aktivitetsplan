@@ -36,20 +36,12 @@ function AktivitetRoutes({ match }) {
             <Route
                 exact
                 path={`${basePath}/avbryt/:id`}
-                component={props =>
-                    <AvbrytAktivitet
-                        aktivitetId={props.match.params.id}
-                        {...props}
-                    />}
+                component={AvbrytAktivitet}
             />
             <Route
                 exact
                 path={`${basePath}/fullfor/:id`}
-                component={props =>
-                    <FullforAktivitet
-                        aktivitetId={props.match.params.id}
-                        {...props}
-                    />}
+                component={FullforAktivitet}
             />
         </Switch>
     );
