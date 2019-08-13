@@ -14,7 +14,7 @@ import {
 } from '../../../../constant';
 import Lenke from '../../../../felles-komponenter/utils/lenke';
 import loggEvent, {
-    OPNE_ENDRE_AKTIVITET,
+    APNE_ENDRE_AKTIVITET,
 } from '../../../../felles-komponenter/utils/logging';
 
 function visningsIngress(type) {
@@ -54,7 +54,7 @@ function AktivitetinformasjonVisning({
                         role="button"
                         visible={tillatEndring && !arenaAktivitet}
                         href={endreAktivitetRoute(valgtAktivitet.id)}
-                        onClick={() => loggEvent(OPNE_ENDRE_AKTIVITET)}
+                        onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
                         disabled={laster || !underOppfolging}
                     >
                         <FormattedMessage id="aktivitetvisning.endre-knapp" />

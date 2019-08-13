@@ -27,7 +27,7 @@ import {
     selectVisHistorikk,
 } from './underelementer-view-selector';
 import loggEvent, {
-    OPNE_AKTIVITET_HISTORIK,
+    APNE_AKTIVITET_HISTORIK,
 } from '../../../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 
@@ -62,7 +62,7 @@ class UnderelementerForAktivitet extends Component {
             }
         }
         if (visHistorikk !== prevProps.visHistorikk) {
-            loggEvent(OPNE_AKTIVITET_HISTORIK);
+            loggEvent(APNE_AKTIVITET_HISTORIK);
         }
     }
 

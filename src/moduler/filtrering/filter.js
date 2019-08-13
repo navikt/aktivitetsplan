@@ -60,7 +60,7 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                             name="filter"
                             knappeTekst={tittel}
                             className="dropdown--alignright"
-                            onOpne={() => {
+                            onOpen={() => {
                                 loggEvent(OPNE_AKTIVITETFILTER);
                             }}
                         >

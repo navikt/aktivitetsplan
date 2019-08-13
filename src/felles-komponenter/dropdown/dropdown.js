@@ -49,11 +49,11 @@ class Dropdown extends Component {
     }
 
     apneDropdown() {
-        const { onOpne } = this.props;
+        const { onOpen } = this.props;
         document.body.addEventListener('click', this.eventHandler); // eslint-disable-line no-undef
         document.body.addEventListener('keyup', this.eventHandler); // eslint-disable-line no-undef
         this.setState({ apen: true });
-        onOpne();
+        onOpen();
     }
 
     lukkDropdown() {
@@ -130,13 +130,13 @@ Dropdown.propTypes = {
     children: PT.oneOfType([PT.node, PT.arrayOf(PT.node)]).isRequired,
     className: PT.string,
     onLukk: PT.func,
-    onOpne: PT.func,
+    onOpen: PT.func,
 };
 Dropdown.defaultProps = {
     apen: false,
     className: null,
     onLukk: () => {},
-    onOpne: () => {},
+    onOpen: () => {},
 };
 
 export default Dropdown;

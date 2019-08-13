@@ -60,7 +60,7 @@ function PeriodeFilter({
                     <Dropdown
                         name="periode-filter"
                         knappeTekst={tittel}
-                        onOpne={() => loggEvent(LIST_HISTORISK_PERIODE)}
+                        onOpen={() => loggEvent(LIST_HISTORISK_PERIODE)}
                     >
                         <div className="filter__container">
                             <div className="filter">

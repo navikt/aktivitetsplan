@@ -5,6 +5,7 @@ import { selectAktivitetAvtaltMedNavFilter } from './filter-selector';
 import FilterVisningsKomponent from './filter-visnings-komponent';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetAvtaltMedNav } from './filter-reducer';
+import { AVTALT_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 function AvtaltmedNavFilter({
     harAvtaltAktivitet,
@@ -17,7 +18,7 @@ function AvtaltmedNavFilter({
             filter={avtaltAktivitet}
             filterTittel="filter.aktivitet.avtalt.tittel"
             filterTekst="aktivitet."
-            metrikkNavn="AvtaltmedNavFilter"
+            metrikkNavn={AVTALT_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetAvtaltMedNav}
         />
     );

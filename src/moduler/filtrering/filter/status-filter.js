@@ -12,6 +12,7 @@ import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
 } from '../../../constant';
+import { STATUS_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 const filtreringsRekkefolge = [
     STATUS_BRUKER_ER_INTRESSERT,
@@ -33,7 +34,7 @@ function StatusFilter({
             filter={sortedAktivitetStatus}
             filterTittel="aktivitet.status"
             filterTekst="aktivitet.status."
-            metrikkNavn="statusfilter"
+            metrikkNavn={STATUS_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsStatus}
             className={className}
         />

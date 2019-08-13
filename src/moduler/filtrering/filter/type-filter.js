@@ -5,6 +5,7 @@ import { toggleAktivitetsType } from './filter-reducer';
 import { selectAktivitetTyperFilter } from './filter-selector';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import FilterVisningsKomponent from './filter-visnings-komponent';
+import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 function TypeFilter({
     harAktivitetTyper,
@@ -17,7 +18,7 @@ function TypeFilter({
             filter={aktivitetTyper}
             filterTittel="filter.aktivitet.type.tittel"
             filterTekst="aktivitet.type."
-            metrikkNavn="typefilter"
+            metrikkNavn={AKTIVITESTYPE_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsType}
         />
     );

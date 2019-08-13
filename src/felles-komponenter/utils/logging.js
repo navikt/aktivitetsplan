@@ -23,14 +23,22 @@ const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 export const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
 export const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
 
-export const OPNE_DIALOG = 'aktivitesplan.dialog.trykk';
-export const OPNE_NY_AKTIVITET = 'aktivitesplan.nyAktivitet.trykk';
-export const OPNE_OM_TJENESTEN = 'aktivitesplan.omTjenesten.trykk';
-export const OPNE_ENDRE_AKTIVITET = 'aktivitesplan.endreAktivitet.trykk';
+export const APNE_DIALOG = 'aktivitesplan.dialog.trykk';
+export const APNE_NY_AKTIVITET = 'aktivitesplan.nyAktivitet.trykk';
+export const APNE_OM_TJENESTEN = 'aktivitesplan.omTjenesten.trykk';
+export const APNE_ENDRE_AKTIVITET = 'aktivitesplan.endreAktivitet.trykk';
 export const OPNE_AKTIVITETFILTER = 'aktivitesplan.aktivitetfilter.opne';
-export const OPNE_AKTIVITET_HISTORIK = 'aktivitesplan.aktivitethistorik';
+export const APNE_AKTIVITET_HISTORIK = 'aktivitesplan.aktivitethistorikk';
 export const VIS_HISTORISK_PERIODE = 'aktivitesplan.vis.historisk';
 export const LIST_HISTORISK_PERIODE = 'aktivitesplan.list.historisk';
+
+const filterBase = 'aktivitesplan.filter.';
+export const AKTIVITESTYPE_FILER_METRIKK = `${filterBase  }aktivitestype`;
+export const STATUS_FILER_METRIKK = `${filterBase  }status`;
+export const AVTALT_FILER_METRIKK = `${filterBase  }avtalt`;
+export const TILSTAND_FILTER_METRIKK = `${filterBase  }Tilstand`;
+
+const AKTIVITET_FLYTTET = 'aktivitesplan.aktivitet.flyttet';
 
 export function loggForhandsorienteringTiltak() {
     loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
@@ -45,7 +53,7 @@ export function metrikkTidForsteAvtalte(tid) {
 }
 
 export function flyttetAktivitetMetrikk(flytteMetode, aktivitet, nyStatus) {
-    loggEvent('aktivitesplan.altiitet.flyttet', {
+    loggEvent(AKTIVITET_FLYTTET, {
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,
         aktivitetType: aktivitet.type,

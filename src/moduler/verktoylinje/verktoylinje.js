@@ -24,9 +24,9 @@ import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import { hentDialog } from '../dialog/dialog-reducer';
 import loggEvent, {
-    OPNE_DIALOG,
-    OPNE_NY_AKTIVITET,
-    OPNE_OM_TJENESTEN,
+    APNE_DIALOG,
+    APNE_NY_AKTIVITET,
+    APNE_OM_TJENESTEN,
 } from '../../felles-komponenter/utils/logging';
 
 const knapplenkeCls = (className, disabled) =>
@@ -60,7 +60,7 @@ class Verktoylinje extends Component {
                             !dialogLaster
                         )}
                         disabled={!dialogLaster}
-                        onClick={() => loggEvent(OPNE_DIALOG)}
+                        onClick={() => loggEvent(APNE_DIALOG)}
                         aria-live="polite"
                     >
                         <TallAlert hidden={antallUlesteDialoger <= 0}>
@@ -83,7 +83,7 @@ class Verktoylinje extends Component {
                             !aktivitetLaster ||
                             !harSkriveTilgang
                         }
-                        onClick={() => loggEvent(OPNE_NY_AKTIVITET)}
+                        onClick={() => loggEvent(APNE_NY_AKTIVITET)}
                     >
                         <FormattedMessage id="nyaktivitetsknapp" />
                     </Lenkeknapp>
@@ -93,7 +93,7 @@ class Verktoylinje extends Component {
                         <Lenke
                             href="/informasjon"
                             className="knappelenke"
-                            onClick={() => loggEvent(OPNE_OM_TJENESTEN)}
+                            onClick={() => loggEvent(APNE_OM_TJENESTEN)}
                         >
                             <FormattedMessage id="navigasjon.informasjon" />
                         </Lenke>

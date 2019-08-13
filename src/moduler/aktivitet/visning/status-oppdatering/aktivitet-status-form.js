@@ -238,7 +238,7 @@ const mapDispatchToProps = () => ({
             );
         });
         flyttetAktivitetMetrikk(
-            'submitt',
+            'submit',
             props.aktivitet,
             values.aktivitetstatus
         );
