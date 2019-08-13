@@ -33,6 +33,7 @@ function StatusFilter({
             filter={sortedAktivitetStatus}
             filterTittel="aktivitet.status"
             filterTekst="aktivitet.status."
+            metrikkNavn="statusfilter"
             doToggleFunction={doToggleAktivitetsStatus}
             className={className}
         />
@@ -54,7 +55,7 @@ const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
     const aktivitetStatus = aktiviteter.reduce((statusliste, aktivitet) => {
-        const {status} = aktivitet;
+        const { status } = aktivitet;
         statusliste[status] = aktivitetStatusFilter[status]; // eslint-disable-line no-param-reassign
         return statusliste;
     }, {});

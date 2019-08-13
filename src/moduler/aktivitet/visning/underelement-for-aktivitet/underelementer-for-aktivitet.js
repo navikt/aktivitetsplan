@@ -26,7 +26,9 @@ import {
     selectVisDialog,
     selectVisHistorikk,
 } from './underelementer-view-selector';
-import loggEvent from '../../../../felles-komponenter/utils/logging';
+import loggEvent, {
+    OPNE_AKTIVITET_HISTORIK,
+} from '../../../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 
 const LOGGING_ANTALLBRUKERE = 'aktivitetskort.antallBrukere.dialog';
@@ -53,11 +55,14 @@ class UnderelementerForAktivitet extends Component {
 
     componentDidUpdate(prevProps) {
         this.scrollMeIntoView();
-        const { visDialog, erVeileder } = this.props;
+        const { visHistorikk, visDialog, erVeileder } = this.props;
         if (visDialog !== prevProps.visDialog) {
             if (visDialog) {
                 loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
             }
+        }
+        if (visHistorikk !== prevProps.visHistorikk) {
+            loggEvent(OPNE_AKTIVITET_HISTORIK);
         }
     }
 

@@ -56,9 +56,9 @@ import {
 } from '../dialog/dialog-selector';
 import DialogPrint from './dialog-print';
 import VelgPlanUtskrift from './velg-plan-utskrift';
-import {
-    metrikkOpnePrintModal,
-    metrikkTrykkPrintKnapp,
+import loggEvent, {
+    PRINT_MODSAL_OPEN,
+    TRYK_PRINT,
 } from '../../felles-komponenter/utils/logging';
 
 const StatusGruppePT = PT.shape({
@@ -252,11 +252,11 @@ const STEP_UTSKRIFT = 'UTSKRIFT';
 
 class AktivitetsplanPrintModal extends Component {
     componentDidMount() {
-        const { doHentMal, doHentMalListe, erVeileder } = this.props;
+        const { doHentMal, doHentMalListe } = this.props;
 
         doHentMal();
         doHentMalListe();
-        metrikkOpnePrintModal(erVeileder);
+        loggEvent(PRINT_MODSAL_OPEN);
     }
 
     render() {
@@ -267,7 +267,6 @@ class AktivitetsplanPrintModal extends Component {
             currentStep,
             goToStep,
             doResetUtskrift,
-            erVeileder,
         } = this.props;
 
         const currentStepIndex = stepOrder.indexOf(currentStep);
@@ -296,7 +295,7 @@ class AktivitetsplanPrintModal extends Component {
                             className="printmodal-header__printknapp"
                             onClick={() => {
                                 window.print();
-                                metrikkTrykkPrintKnapp(erVeileder);
+                                loggEvent(TRYK_PRINT);
                             }}
                         >
                             Skriv ut

@@ -17,6 +17,7 @@ function TypeFilter({
             filter={aktivitetTyper}
             filterTittel="filter.aktivitet.type.tittel"
             filterTekst="aktivitet.type."
+            metrikkNavn="typefilter"
             doToggleFunction={doToggleAktivitetsType}
         />
     );
@@ -32,7 +33,7 @@ const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetTyperFilter = selectAktivitetTyperFilter(state);
     const aktivitetTyper = aktiviteter.reduce((typer, aktivitet) => {
-        const {type} = aktivitet;
+        const { type } = aktivitet;
         typer[type] = aktivitetTyperFilter[type]; // eslint-disable-line no-param-reassign
         return typer;
     }, {});

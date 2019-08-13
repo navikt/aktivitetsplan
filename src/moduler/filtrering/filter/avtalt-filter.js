@@ -17,6 +17,7 @@ function AvtaltmedNavFilter({
             filter={avtaltAktivitet}
             filterTittel="filter.aktivitet.avtalt.tittel"
             filterTekst="aktivitet."
+            metrikkNavn="AvtaltmedNavFilter"
             doToggleFunction={doToggleAktivitetAvtaltMedNav}
         />
     );

@@ -8,6 +8,7 @@ import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
 import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
 import * as AppPT from '../../../proptypes';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
+import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {
@@ -18,6 +19,7 @@ const mottaAktivitetsKort = {
         const aktivitet = monitor.getItem();
         // utsett håndteringen til droppet er fullført. Unngår f.eks. F17HL3-144
         setTimeout(() => {
+            flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {
                 history.push(fullforAktivitetRoute(aktivitet.id));
             } else if (status === STATUS_AVBRUTT) {

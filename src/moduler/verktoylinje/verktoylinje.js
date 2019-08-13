@@ -7,7 +7,6 @@ import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { selectErVeileder } from '../identitet/identitet-selector';
 import {
     selectErUnderOppfolging,
     selectHarSkriveTilgang,
@@ -17,13 +16,18 @@ import UtskriftKnapp from './utskriftknapp';
 import {
     selectDialoger,
     selectHarTilgangTilDialog,
-} from "../dialog/dialog-selector";
-import { dialogFilter } from "../filtrering/filter/filter-utils";
+} from '../dialog/dialog-selector';
+import { dialogFilter } from '../filtrering/filter/filter-utils';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
-import VisValgtFilter from "../filtrering/filter-vis-label";
+import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import { hentDialog } from '../dialog/dialog-reducer';
+import loggEvent, {
+    OPNE_DIALOG,
+    OPNE_NY_AKTIVITET,
+    OPNE_OM_TJENESTEN,
+} from '../../felles-komponenter/utils/logging';
 
 const knapplenkeCls = (className, disabled) =>
     classNames(className, {
@@ -33,7 +37,7 @@ const knapplenkeCls = (className, disabled) =>
 
 class Verktoylinje extends Component {
     componentDidMount() {
-        const {doHentDialog} = this.props;
+        const { doHentDialog } = this.props;
         doHentDialog();
     }
 
@@ -56,6 +60,7 @@ class Verktoylinje extends Component {
                             !dialogLaster
                         )}
                         disabled={!dialogLaster}
+                        onClick={() => loggEvent(OPNE_DIALOG)}
                         aria-live="polite"
                     >
                         <TallAlert hidden={antallUlesteDialoger <= 0}>
@@ -78,13 +83,18 @@ class Verktoylinje extends Component {
                             !aktivitetLaster ||
                             !harSkriveTilgang
                         }
+                        onClick={() => loggEvent(OPNE_NY_AKTIVITET)}
                     >
                         <FormattedMessage id="nyaktivitetsknapp" />
                     </Lenkeknapp>
                 </div>
                 <div className="verktoylinje__verktoy-container">
                     <div className="indre">
-                        <Lenke href="/informasjon" className="knappelenke">
+                        <Lenke
+                            href="/informasjon"
+                            className="knappelenke"
+                            onClick={() => loggEvent(OPNE_OM_TJENESTEN)}
+                        >
                             <FormattedMessage id="navigasjon.informasjon" />
                         </Lenke>
                         <UtskriftKnapp
@@ -112,7 +122,6 @@ class Verktoylinje extends Component {
 Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
-    erVeileder: PT.bool.isRequired,
     aktivitetLaster: PT.bool.isRequired,
     dialogLaster: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
@@ -130,7 +139,6 @@ const mapStateToProps = state => {
     return {
         viserHistoriskPeriode: historiskPeriode,
         underOppfolging,
-        erVeileder: selectErVeileder(state),
         harSkriveTilgang: selectHarSkriveTilgang(state),
         antallUlesteDialoger: dialoger,
         aktivitetLaster: selectHarTilgangTilAktiviteter(state),

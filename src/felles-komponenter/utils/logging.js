@@ -1,5 +1,5 @@
 export default function loggEvent(eventNavn, feltObjekt, tagObjekt) {
-    const {frontendlogger} = window;
+    const { frontendlogger } = window;
     if (frontendlogger) {
         frontendlogger.event(eventNavn, feltObjekt || {}, tagObjekt || {});
     }
@@ -15,18 +15,20 @@ const FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD =
 
 const MITTMAL_KLIKK_LOGGEVENT = 'aktivitetsplan.mittmal.klikk';
 const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
-const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
-const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
 const DAILOG_BRUKER_HENVENDELSE = 'dialog.bruker.henvendelse';
 const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
-export function metrikkOpnePrintModal(veileder) {
-    loggEvent(PRINT_MODSAL_OPEN, { erVeileder: veileder });
-}
+export const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
+export const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
 
-export function metrikkTrykkPrintKnapp(veileder) {
-    loggEvent(TRYK_PRINT, { erVeileder: veileder });
-}
+export const OPNE_DIALOG = 'aktivitesplan.dialog.trykk';
+export const OPNE_NY_AKTIVITET = 'aktivitesplan.nyAktivitet.trykk';
+export const OPNE_OM_TJENESTEN = 'aktivitesplan.omTjenesten.trykk';
+export const OPNE_ENDRE_AKTIVITET = 'aktivitesplan.endreAktivitet.trykk';
+export const OPNE_AKTIVITETFILTER = 'aktivitesplan.aktivitetfilter.opne';
+export const OPNE_AKTIVITET_HISTORIK = 'aktivitesplan.aktivitethistorik';
+export const VIS_HISTORISK_PERIODE = 'aktivitesplan.vis.historisk';
+export const LIST_HISTORISK_PERIODE = 'aktivitesplan.list.historisk';
 
 export function loggForhandsorienteringTiltak() {
     loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
@@ -35,7 +37,18 @@ export function loggForhandsorienteringTiltak() {
 }
 
 export function metrikkTidForsteAvtalte(tid) {
-    loggEvent("aktivitetsplan.aktivitet.forste.avtalt", {tidSidenOppfolging: tid})
+    loggEvent('aktivitetsplan.aktivitet.forste.avtalt', {
+        tidSidenOppfolging: tid,
+    });
+}
+
+export function flyttetAktivitetMetrikk(flytteMetode, aktivitet, nyStatus) {
+    loggEvent('aktivitesplan.altiitet.flyttet', {
+        fraStatus: aktivitet.status,
+        tilStatus: nyStatus,
+        aktivitetType: aktivitet.type,
+        flytteMetode,
+    });
 }
 
 export function loggForhandsorientering(
@@ -111,11 +124,12 @@ export function loggTidBruktGaaInnPaaAktivitetsplanen(lest, perioder) {
         if (lest.length === 0) {
             const startDatoPaaOppfolging = periode.startDato;
             const tidVeilarbLestBleLansert = new Date('2019-02-01').getTime();
-            const tidStartOppfolging = new Date(startDatoPaaOppfolging).getTime();
+            const tidStartOppfolging = new Date(
+                startDatoPaaOppfolging
+            ).getTime();
             if (tidVeilarbLestBleLansert < tidStartOppfolging) {
                 loggTidBruktFraRegistrert(startDatoPaaOppfolging);
             }
-
         }
         // Tid brukt mellom gangene i aktivitetsplanen
         if (lest.length !== 0) {
@@ -124,7 +138,9 @@ export function loggTidBruktGaaInnPaaAktivitetsplanen(lest, perioder) {
             );
             if (lestAktivitetsplan) {
                 const startDato = new Date(periode.startDato).getTime();
-                const tidspunkt = new Date(lestAktivitetsplan.tidspunkt).getTime();
+                const tidspunkt = new Date(
+                    lestAktivitetsplan.tidspunkt
+                ).getTime();
                 if (startDato < tidspunkt) {
                     loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
                         tidMellomGangene: tidBruktFra(tidspunkt),
