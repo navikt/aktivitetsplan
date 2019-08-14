@@ -18,9 +18,9 @@ const validator = useFormstate({
 function AktivitetsmalForm(props) {
     const { oppdaterer, onSubmit, history, underOppfolging, mal } = props;
 
-    const inital = mal ? mal.mal || '' : '';
+    const initial = mal ? mal.mal || '' : '';
     const state = validator({
-        mal: inital,
+        mal: initial,
     });
 
     return (
