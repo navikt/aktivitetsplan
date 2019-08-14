@@ -10,13 +10,6 @@ import * as AppPT from '../../proptypes';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import Textarea from '../../felles-komponenter/skjema/input-v2/textarea';
 
-const text = underOppfolging => {
-    if (underOppfolging) {
-        return 'Når du og NAV er enige om målet ditt, kan vi samarbeide om aktuelle aktiviteter.';
-    }
-    return 'Legg inn hva slags arbeidsoppgaver og stillinger du ser etter';
-};
-
 const validator = useFormstate({
     mal: val =>
         val.length > 500 ? 'Du må korte ned teksten til 500 tegn' : null,
@@ -33,7 +26,7 @@ function AktivitetsmalForm(props) {
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <Textarea
-                label={text(underOppfolging)}
+                label="Når du og NAV er enige om målet ditt, kan vi samarbeide om aktuelle aktiviteter."
                 maxLength={500}
                 {...state.fields.mal}
             />
