@@ -11,7 +11,8 @@ export function validerDatoField(input, intl, alternativer) {
         return intl.formatMessage({
             id: 'datepicker.feilmelding.ugyldig-dato',
         });
-    } if (
+    }
+    if (
         fra &&
         til &&
         (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))
@@ -32,14 +33,16 @@ export function validerDatoField(input, intl, alternativer) {
 }
 
 export function validerDato(value, tidligsteFom, senesteTom) {
+    if (!erGyldigISODato(value)) {
+        return 'Datoen du har oppgitt er ikke en gyldig dato';
+    }
+
     const inputDato = moment(value);
 
     const fraDato = moment(tidligsteFom);
     const tilDato = moment(senesteTom);
 
-    if (value && !erGyldigISODato(value)) {
-        return 'Datoen du har oppgitt er ikke en gyldig dato'
-    } if (
+    if (
         tidligsteFom &&
         senesteTom &&
         (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))
