@@ -66,11 +66,12 @@ class OppdaterReferatContainer extends Component {
 OppdaterReferatContainer.defaultProps = {
     className: undefined,
     delelinje: false,
+    erReferatPublisert: false,
 };
 
 OppdaterReferatContainer.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    erReferatPublisert: PT.bool.isRequired,
+    erReferatPublisert: PT.bool,
     delelinje: PT.bool,
     erVeileder: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,

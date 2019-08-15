@@ -19,21 +19,17 @@ import {
     selectErUnderKvp,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
-import { selectErBrukerMedIServiceGruppeSTS } from '../../../oppfoelgingsstatus/oppfoelgingsstatus-selector';
 
 function Statusadministrasjon({
     valgtAktivitet,
     arenaAktivitet,
     erBruker,
     erManuellKrrKvpBruker,
-    erSpecieltTilpassetInnsatsBruker,
 }) {
     const { status, type, id } = valgtAktivitet;
 
     const skalViseForhandsorienteringsKomponent =
-        erSpecieltTilpassetInnsatsBruker &&
-        !erBruker &&
-        !erManuellKrrKvpBruker;
+        !erBruker && !erManuellKrrKvpBruker;
 
     const visAdministreresAvVeileder = (
         <div className="aktivitetvisning__underseksjon">
@@ -87,7 +83,6 @@ const mapStateToProps = state => ({
         selectErBrukerManuell(state) ||
         selectErUnderKvp(state) ||
         selectReservasjonKRR(state),
-    erSpecieltTilpassetInnsatsBruker: selectErBrukerMedIServiceGruppeSTS(state),
 });
 
 export default connect(mapStateToProps)(Statusadministrasjon);
