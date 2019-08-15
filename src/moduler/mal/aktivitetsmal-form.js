@@ -1,109 +1,83 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { validForm, rules } from 'react-redux-form-validation';
 import { withRouter } from 'react-router-dom';
-import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
-import { autobind } from '../../utils';
+import useFormstate from '@nutgaard/use-formstate';
 import { STATUS } from '../../ducks/utils';
 import { oppdaterMal, selectMalStatus } from './aktivitetsmal-reducer';
 import * as AppPT from '../../proptypes';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
+import Textarea from '../../felles-komponenter/skjema/input-v2/textarea';
 
-const MALTEKST_MAKSLENGDE = 500;
+const validator = useFormstate({
+    mal: val =>
+        val.length > 500 ? 'Du må korte ned teksten til 500 tegn' : null,
+});
 
-function trim(str) {
-    return str ? str.trim() : '';
+function AktivitetsmalForm(props) {
+    const { oppdaterer, onSubmit, history, underOppfolging, mal } = props;
+
+    const initial = mal ? mal.mal || '' : '';
+    const state = validator({
+        mal: initial,
+    });
+
+    return (
+        <form onSubmit={state.onSubmit(onSubmit)}>
+            <Textarea
+                label="Når du og NAV er enige om målet ditt, kan vi samarbeide om aktuelle aktiviteter."
+                maxLength={500}
+                {...state.fields.mal}
+            />
+            <Hovedknapp
+                className="aktivitetmal__redigering--knapp"
+                spinner={oppdaterer}
+                disabled={oppdaterer || !underOppfolging}
+            >
+                Lagre
+            </Hovedknapp>
+            <Knapp
+                onClick={() => history.push('/')}
+                disabled={oppdaterer}
+                htmlType="button"
+            >
+                Avbryt
+            </Knapp>
+        </form>
+    );
 }
-
-export const formNavn = 'aktivitetsmal-form';
-
-class AktivitetsmalForm extends Component {
-    constructor(props) {
-        super(props);
-        autobind(this);
-    }
-
-    render() {
-        const {
-            oppdaterer,
-            handleSubmit,
-            history,
-            underOppfolging,
-        } = this.props;
-        return (
-            <form onSubmit={handleSubmit}>
-                <Textarea
-                    feltNavn="mal"
-                    labelId="aktivitetsmal.tekst.label"
-                    maxLength={MALTEKST_MAKSLENGDE}
-                    textareaRef={textarea => {
-                        this.textarea = textarea;
-                    }}
-                />
-                <Hovedknapp
-                    className="aktivitetmal__redigering--knapp"
-                    spinner={oppdaterer}
-                    disabled={oppdaterer || !underOppfolging}
-                >
-                    <FormattedMessage id="aktivitetsmal.lagre" />
-                </Hovedknapp>
-                <Knapp
-                    onClick={() => history.push('/')}
-                    disabled={oppdaterer}
-                    htmlType="button"
-                >
-                    <FormattedMessage id="aktivitetsmal.avbryt" />
-                </Knapp>
-            </form>
-        );
-    }
-}
-
-const forLangMaltekst = rules.maxLength(
-    MALTEKST_MAKSLENGDE,
-    <FormattedMessage
-        id="aktivitetsmal.tekst.makslengde.feilmelding"
-        values={{ antall_tegn: MALTEKST_MAKSLENGDE }}
-    />
-);
 
 AktivitetsmalForm.propTypes = {
     oppdaterer: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
-    handleSubmit: PT.func.isRequired,
+    onSubmit: PT.func.isRequired,
+    mal: PT.object,
     handleComplete: PT.func.isRequired,
     history: AppPT.history.isRequired,
 };
 
-const AktivitetsmalReduxForm = validForm({
-    form: formNavn,
-    validate: {
-        mal: [forLangMaltekst],
-    },
-})(AktivitetsmalForm);
+AktivitetsmalForm.defaultProps = {
+    mal: undefined,
+};
 
-const mapStateToProps = (state, props) => ({
-    initialValues: { mal: props.mal.mal },
+const mapStateToProps = state => ({
     oppdaterer: selectMalStatus(state) === STATUS.RELOADING,
     underOppfolging: selectErUnderOppfolging(state),
 });
 
-const mapDispatchToProps = () => ({
-    onSubmit: (newMal, dispatch, props) => {
-        const {handleComplete} = props;
-        const newMalTrimmed = trim(newMal.mal);
-        const oldMalTimmed = trim(props.mal.mal);
-        if (newMalTrimmed !== oldMalTimmed) {
-            dispatch(oppdaterMal({ mal: newMalTrimmed })).then(handleComplete);
+const mapDispatchToProps = (dispatch, props) => ({
+    onSubmit: data => {
+        const { handleComplete } = props;
+        if (data.mal !== props.mal) {
+            dispatch(oppdaterMal({ mal: data.mal })).then(handleComplete);
         } else {
             handleComplete();
         }
+        return Promise.resolve();
     },
 });
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(AktivitetsmalReduxForm)
+    connect(mapStateToProps, mapDispatchToProps)(AktivitetsmalForm)
 );

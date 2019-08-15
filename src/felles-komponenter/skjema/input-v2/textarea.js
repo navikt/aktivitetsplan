@@ -6,7 +6,7 @@ import { Textarea as NavTextArea } from 'nav-frontend-skjema';
 function getTellerTekst(antallTegn, maxLength, visTellerFra) {
     const tegnIgjen = maxLength - antallTegn;
     const tegnForMange = antallTegn - maxLength;
-    const tellerFra = visTellerFra || maxLength / 10;
+    const tellerFra = visTellerFra || maxLength;
 
     if (tegnForMange > 0) {
         return `Du har ${tegnForMange} tegn for mye`;
