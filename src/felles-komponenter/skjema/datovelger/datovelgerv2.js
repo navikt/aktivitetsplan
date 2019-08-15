@@ -22,8 +22,12 @@ function stopEvent(event) {
     }
 }
 
-function parseDato(dato) {
+function getValidDateOrNothing(dato) {
     return !!dato ? moment(dato).toDate() : undefined;
+}
+
+function parseInputDate(dato) {
+    return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
 }
 
 class DatoField extends Component {
@@ -114,6 +118,11 @@ class DatoField extends Component {
             value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value,
         };
 
+        const onChange = event => {
+            event.target.value = parseInputDate(event.target.value);
+            input.onChange(event);
+        };
+
         return (
             <div>
                 <div
@@ -139,6 +148,7 @@ class DatoField extends Component {
                                     ? 'skjemaelement__input--harFeil'
                                     : ''}`}
                                 {...maskedInputProps}
+                                onChange={onChange}
                             />
                             <button
                                 className="js-toggle datovelger__toggleDayPicker"
@@ -162,8 +172,10 @@ class DatoField extends Component {
                             <DayPickerComponent
                                 input={input}
                                 ariaControls={`toggle-${id}`}
-                                tidligsteFom={parseDato(tidligsteFom)}
-                                senesteTom={parseDato(senesteTom)}
+                                tidligsteFom={getValidDateOrNothing(
+                                    tidligsteFom
+                                )}
+                                senesteTom={getValidDateOrNothing(senesteTom)}
                                 onDayClick={this.onDayClick}
                                 onKeyUp={this.onKeyUp}
                                 lukk={this.lukk}

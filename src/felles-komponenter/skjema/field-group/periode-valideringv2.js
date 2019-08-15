@@ -1,14 +1,10 @@
 import React from 'react';
 import PT from 'prop-types';
-import { moment } from '../../../utils';
+import { erGyldigISODato, moment } from '../../../utils';
 import FieldGroup from './fieldgroups-valideringv2';
 
-function isValidDate(dato) {
-    return dato && moment(dato).isValid();
-}
-
 export function validerPeriode(fradato, tildato) {
-    if (isValidDate(fradato) && isValidDate(tildato)) {
+    if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {
         const momentTilDato = moment(tildato).startOf('day');
         const momentFraDato = moment(fradato).startOf('day');
         return momentTilDato.isSameOrAfter(momentFraDato);
