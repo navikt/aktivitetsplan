@@ -33,6 +33,10 @@ export function validerDatoField(input, intl, alternativer) {
 }
 
 export function validerDato(value, tidligsteFom, senesteTom) {
+    if (!value || value.trim().length === 0) {
+        return null;
+    }
+
     if (!erGyldigISODato(value)) {
         return 'Datoen du har oppgitt er ikke en gyldig dato';
     }
