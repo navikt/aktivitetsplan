@@ -24,12 +24,13 @@ function Statusadministrasjon({
     valgtAktivitet,
     arenaAktivitet,
     erBruker,
-    erManuellKrrKvpBruker,
+    erManuellKrrKvpBruker, // eslint-disable-line
 }) {
     const { status, type, id } = valgtAktivitet;
 
-    const skalViseForhandsorienteringsKomponent =
-        !erBruker && !erManuellKrrKvpBruker;
+    // TODO add back when used
+    const skalViseForhandsorienteringsKomponent = false;
+    // !erBruker && !erManuellKrrKvpBruker;
 
     const visAdministreresAvVeileder = (
         <div className="aktivitetvisning__underseksjon">
