@@ -1,7 +1,7 @@
 export default {
     rettighetsgruppe: 'IYT',
     formidlingsgruppe: 'SERV',
-    servicegruppe: 'IVURD',
+    servicegruppe: 'BATT',
     oppfolgingsenhet: {
         navn: 'NAV TEST',
         enhetId: '9999',
