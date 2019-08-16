@@ -1,9 +1,8 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { validForm, rules } from 'react-redux-form-validation';
-import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import useFormstate from '@nutgaard/use-formstate';
 import { moment } from '../../../utils';
 import { hoyreKolonneSectionId, STATUS } from '../../../ducks/utils';
 import {
@@ -11,12 +10,9 @@ import {
     oppdaterFerdigbehandlet,
     oppdaterVenterPaSvar,
 } from '../dialog-reducer';
-import Textarea from '../../../felles-komponenter/skjema/textarea/textarea';
-import Input from '../../../felles-komponenter/skjema/input/input';
 import { HiddenIfAlertStripeSuksessSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
-import Checkbox from '../../../felles-komponenter/skjema/input/checkbox';
 import { selectErBruker } from '../../identitet/identitet-selector';
 import {
     selectAlleDialoger,
@@ -33,80 +29,134 @@ import {
 } from '../../oppfolging-status/oppfolging-selector';
 import * as AppPT from '../../../proptypes';
 import { loggTidBruktForsteHenvendelse } from '../../../felles-komponenter/utils/logging';
+import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Checkbox from '../../../felles-komponenter/skjema/input-v2/checkbox';
+import Input from '../../../felles-komponenter/skjema/input-v2/input';
+import Textarea from '../../../felles-komponenter/skjema/input-v2/textarea';
 
-const OVERSKRIFT_MAKS_LENGDE = 255;
-const TEKST_MAKS_LENGDE = 5000;
-const BESKRIVELSE_MAKS_LENGDE = 5000;
+function label(erBruker, aktivitet) {
+    if (!erBruker) {
+        return 'Skriv en melding til brukeren';
+    }
+    if (erBruker && aktivitet) {
+        return 'Skriv en melding til NAV-kontoret ditt om denne aktiviteten';
+    }
+    return 'Skriv en melding til NAV-kontoret ditt om arbeid og oppfølging';
+}
 
-function NyHenvendelseForm({
-    handleSubmit,
-    harEksisterendeOverskrift,
-    erNyDialog,
-    oppretter,
-    visBrukerInfo,
-    erBruker,
-    skalHaAutofokus,
-    erKnyttTilAktivitet,
-    errorSummary,
-    harSkriveTilgang,
-    underOppfolging,
-}) {
+function validateOverskrift(val) {
+    if (val.trim().length === 0) {
+        return 'Du må fylle ut en melding';
+    }
+    if (val.legend > 255) {
+        return 'Du må korte ned teksten til 255 tegn';
+    }
+
+    return null;
+}
+
+function validateTekst(val) {
+    if (val.trim().length === 0) {
+        return 'Du må fylle ut en melding';
+    }
+    if (val.legend > 5000) {
+        return 'Du må korte ned teksten til 5000 tegn';
+    }
+
+    return null;
+}
+
+function NyHenvendelseForm(props) {
+    const {
+        onSubmit,
+        harEksisterendeOverskrift,
+        erNyDialog,
+        oppretter,
+        visBrukerInfo,
+        erBruker,
+        skalHaAutofokus,
+        erKnyttTilAktivitet,
+        harSkriveTilgang,
+        underOppfolging,
+    } = props;
+
+    const validator = useFormstate({
+        overskrift: val => (erNyDialog ? validateOverskrift(val) : null),
+        tekst: validateTekst,
+        ikkeFerdigbehandlet: () => null,
+        venterPaSvar: () => null,
+    });
+
+    const initial = {
+        overskrift: '',
+        tekst: '',
+        ikkeFerdigbehandlet: '',
+        venterPaSvar: '',
+    };
+
+    const state = validator(initial);
+
     return (
         <form
-            onSubmit={handleSubmit}
+            onSubmit={state.onSubmit(data => {
+                state.reinitialize(initial);
+                return onSubmit(data, props);
+            })}
             className="ny-henvendelse-form"
             autoComplete="off"
         >
-            {errorSummary}
+            <FormErrorSummary
+                errors={state.errors}
+                submittoken={state.submittoken}
+            />
             <VisibleIfDiv
                 visible={erNyDialog && !erBruker}
                 className="endre-dialog__sjekkbokser"
             >
                 <Checkbox
                     className="endre-dialog__sjekkboks"
-                    labelId="dialog.ikke-ferdigbehandlet"
-                    feltNavn="ikkeFerdigbehandlet"
+                    label="Venter på svar fra NAV"
                     disabled={!harSkriveTilgang}
+                    {...state.fields.ikkeFerdigbehandlet}
                 />
                 <Checkbox
                     className="endre-dialog__sjekkboks"
-                    labelId="dialog.venter-pa-svar"
-                    feltNavn="venterPaSvar"
+                    label="Venter på svar fra bruker"
                     disabled={!harSkriveTilgang}
+                    {...state.fields.venterPaSvar}
                 />
             </VisibleIfDiv>
 
             {harEksisterendeOverskrift ||
                 <Input
-                    feltNavn="overskrift"
-                    labelId="dialog.overskrift-label"
+                    label="Tema"
                     disabled={!harSkriveTilgang || oppretter}
                     autoFocus
+                    {...state.fields.overskrift}
                 />}
             <Textarea
-                labelId={`dialog.tekst-label${erKnyttTilAktivitet
-                    ? '-aktivitet'
-                    : '-generell'}`}
-                feltNavn="tekst"
+                label={label(erBruker, erKnyttTilAktivitet)}
                 placeholder="Skriv her"
-                maxLength={BESKRIVELSE_MAKS_LENGDE}
+                maxLength={5000}
                 disabled={!harSkriveTilgang || oppretter}
                 visTellerFra={1000}
                 autoFocus={harEksisterendeOverskrift && skalHaAutofokus}
+                {...state.fields.tekst}
             />
             <Hovedknapp
                 type="hoved"
                 spinner={oppretter}
                 disabled={!harSkriveTilgang || oppretter || !underOppfolging}
             >
-                <FormattedMessage id="dialog.lag-ny-dialog" />
+                Send
             </Hovedknapp>
 
             <HiddenIfAlertStripeSuksessSolid
                 style={{ marginTop: '1rem' }}
                 hidden={!visBrukerInfo}
             >
-                <FormattedMessage id="dialog.info-til-bruker" />
+                Henvendelsen er sendt. Du kan forvente svar i løpet av noen
+                dager.
             </HiddenIfAlertStripeSuksessSolid>
         </form>
     );
@@ -118,7 +168,7 @@ NyHenvendelseForm.defaultProps = {
 };
 
 NyHenvendelseForm.propTypes = {
-    handleSubmit: PT.func.isRequired,
+    onSubmit: PT.func.isRequired,
     harEksisterendeOverskrift: PT.bool.isRequired,
     oppretter: PT.bool.isRequired,
     erNyDialog: PT.bool.isRequired,
@@ -126,46 +176,11 @@ NyHenvendelseForm.propTypes = {
     visBrukerInfo: PT.bool.isRequired,
     skalHaAutofokus: PT.bool,
     erKnyttTilAktivitet: PT.bool.isRequired,
-    errorSummary: PT.node.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
 };
-
-const pakrevdOverskrift = rules.minLength(
-    0,
-    <FormattedMessage id="dialog.ny-henvendelse.overskrift.mangler.feilmelding" />
-);
-const pakrevdTekst = rules.minLength(
-    0,
-    <FormattedMessage id="dialog.ny-henvendelse.tekst.mangler.feilmelding" />
-);
-
-const begrensetTittelLengde = rules.maxLength(
-    OVERSKRIFT_MAKS_LENGDE,
-    <FormattedMessage
-        id="dialog.ny-henvendelse.overskrift.for-lang.feilmelding"
-        values={{ antall_tegn: OVERSKRIFT_MAKS_LENGDE }}
-    />
-);
-const begrensetTekstLengde = rules.maxLength(
-    TEKST_MAKS_LENGDE,
-    <FormattedMessage
-        id="dialog.ny-henvendelse.tekst.for-lang.feilmelding"
-        values={{ antall_tegn: TEKST_MAKS_LENGDE }}
-    />
-);
-
-const NyHenvendelseReduxForm = validForm({
-    errorSummaryTitle: (
-        <FormattedMessage id="dialog.ny-henvendelse.feiloppsummering-tittel" />
-    ),
-    validate: {
-        overskrift: [pakrevdOverskrift, begrensetTittelLengde],
-        tekst: [pakrevdTekst, begrensetTekstLengde],
-    },
-})(NyHenvendelseForm);
 
 const mapStateToProps = (state, props) => {
     const { aktivitetId } = props;
@@ -194,8 +209,8 @@ const mapStateToProps = (state, props) => {
     };
 };
 
-const mapDispatchToProps = () => ({
-    onSubmit: (dialogData, dispatch, props) => {
+const mapDispatchToProps = dispatch => ({
+    onSubmit: (dialogData, props) => {
         const nyHenvendelsePromise = nyHenvendelse({
             aktivitetId: props.aktivitetId,
             dialogId: props.dialogId,
@@ -216,7 +231,7 @@ const mapDispatchToProps = () => ({
                     dispatch(oppdaterVenterPaSvar(dialogId, venterPaSvar));
                 });
             }
-            props.reset();
+
             if (onComplete) {
                 onComplete(data);
             }
@@ -240,23 +255,11 @@ const mapDispatchToProps = () => ({
             props.dialoger,
             props.oppfolgingsPerioder
         );
+
+        return Promise.resolve();
     },
 });
 
-const NyHenvendelseReduxFormConnected = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NyHenvendelseReduxForm);
-
-function DynamiskNyHenvendelseReduxFormConnected(props) {
-    // TODO setter key=formNavn for å tvinge unmount/mount hvis denne endrer seg.
-    // Dette burde kanskje kommet ut av boksen fra 'react-redux-form-validation' ?
-    const { formNavn } = props;
-    return <NyHenvendelseReduxFormConnected key={formNavn} {...props} />;
-}
-
-DynamiskNyHenvendelseReduxFormConnected.propTypes = {
-    formNavn: PT.string.isRequired,
-};
-
-export default hiddenIf(DynamiskNyHenvendelseReduxFormConnected);
+export default hiddenIf(
+    connect(mapStateToProps, mapDispatchToProps)(NyHenvendelseForm)
+);
