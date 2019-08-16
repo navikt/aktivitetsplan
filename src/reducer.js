@@ -9,22 +9,18 @@ import featureReducer from './ducks/feature-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import identitetReducer from './moduler/identitet/identitet-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
-import fremtidigSituasjonReducer from "./hovedside/maal/fremtidigSituasjon-reducer";
+import fremtidigSituasjonReducer from './hovedside/maal/fremtidigSituasjon-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
-import veilederePaEnhetReducer from './moduler/veiledere-pa-enhet/veiledere-pa-enhet-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import oppfolgingstatusReducer from './moduler/oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
-import veilederTilgangReducer from './felles-komponenter/veilederTilgang/veileder-tilgang-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import underelmenterReducer from './moduler/aktivitet/visning/underelement-for-aktivitet/underelementer-view-reducer';
 import authReducer from './felles-komponenter/timeoutbox/auth-reducer';
 import lestReducer from './moduler/lest/lest-reducer';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
 import informasjonReducer from './moduler/informasjon/informasjon-reducer';
-
-export const RESET_STORE = { type: 'store/reset' };
 
 const combinedReducers = combineReducers({
     form: formReducer,
@@ -42,9 +38,7 @@ const combinedReducers = combineReducers({
         oppfoelgingsstatus: oppfolgingstatusReducer,
         versjoner: versjonReducer,
         feature: featureReducer,
-        veilederTilgang: veilederTilgangReducer,
         malverk: malverkReducer,
-        veilederePaEnhet: veilederePaEnhetReducer,
         lest: lestReducer,
         auth: authReducer,
     }),
@@ -58,8 +52,5 @@ const combinedReducers = combineReducers({
 });
 
 export default function(state, action) {
-    if (action.type === RESET_STORE.type) {
-        return combinedReducers(undefined, action);
-    }
     return combinedReducers(state, action);
 }
