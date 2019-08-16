@@ -28,6 +28,7 @@ import {
 } from './underelementer-view-selector';
 import loggEvent, {
     APNE_AKTIVITET_HISTORIK,
+    OPNE_DIALOG_I_AKTIVITET_METRIKK,
 } from '../../../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 
@@ -92,6 +93,11 @@ class UnderelementerForAktivitet extends Component {
             dialogFeilmeldinger,
         } = this.props;
 
+        const tolgeDialog = () => {
+            doToggleDialog();
+            loggEvent(OPNE_DIALOG_I_AKTIVITET_METRIKK);
+        };
+
         const aktivitetId = aktivitet.id;
         const cls = classes => classNames('underelementer-aktivitet', classes);
         const dialogknappCls = dialogAktiv =>
@@ -111,7 +117,7 @@ class UnderelementerForAktivitet extends Component {
                         hidden={!kanSeDialog}
                         value={DIALOG}
                         className={dialogknappCls(visDialog)}
-                        onClick={doToggleDialog}
+                        onClick={tolgeDialog}
                         aria-pressed={visDialog}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
