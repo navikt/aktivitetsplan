@@ -1,47 +1,70 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { validForm } from 'react-redux-form-validation';
 import { Knapp } from 'nav-frontend-knapper';
+import useFormstate from '@nutgaard/use-formstate';
+import { Undertittel } from 'nav-frontend-typografi';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { STATUS } from '../../../../ducks/utils';
-import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
-import hiddenIf from '../../../../felles-komponenter/hidden-if/hidden-if';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../../../felles-komponenter/skjema/validering';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/hidden-if-knapper';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
+import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import * as AppPT from '../../../../proptypes';
 
-const REFERAT_MAKS_LENGDE = 5000;
-export const OPPDATER_REFERAT_FORM_NAME = 'oppdater-referat';
+function validate(val) {
+    if (val.trim().length === 0) {
+        return 'Du må fylle ut samtalereferat';
+    }
+    if (val.length > 5000) {
+        return 'Du må korte ned teksten til 5000 tegn';
+    }
+    return null;
+}
 
-function OppdaterReferatForm({
-    errorSummary,
-    handleSubmit,
-    oppdaterer,
-    erReferatPublisert,
-    dispatchPubliserReferat,
-}) {
-    function oppdaterOgPubliser(e) {
-        e.preventDefault();
-        handleSubmit(e).then(response => {
+const validator = useFormstate({
+    referat: validate,
+});
+
+const label = <Undertittel>Samtalereferat</Undertittel>;
+
+function OppdaterReferatForm(props) {
+    const {
+        onSubmit,
+        aktivitet,
+        oppdaterer,
+        erReferatPublisert,
+        dispatchPubliserReferat,
+    } = props;
+
+    const state = validator({
+        referat: aktivitet.referat || '',
+    });
+
+    const oppdaterOgPubliser = state.onSubmit(values => {
+        return onSubmit(values).then(response => {
             if (response.data) {
                 dispatchPubliserReferat(response.data);
             }
         });
-    }
+    });
 
     return (
-        <form onSubmit={handleSubmit}>
-            {errorSummary}
+        <form
+            onSubmit={state.onSubmit(onSubmit)}
+            className="oppdater-referat aktivitetvisning__underseksjon"
+        >
+            <FormErrorSummary
+                errors={state.errors}
+                submittoken={state.submittoken}
+            />
             <Textarea
-                feltNavn="referat"
-                maxLength={REFERAT_MAKS_LENGDE}
+                label={label}
                 disabled={oppdaterer}
-                placeholderId="referat.form.placeholder"
+                maxLength={5000}
+                visTellerFra={500}
+                placeholder="Skriv samtalereferatet her"
+                {...state.fields.referat}
             />
 
             <HiddenIfHovedknapp
@@ -50,43 +73,28 @@ function OppdaterReferatForm({
                 hidden={erReferatPublisert}
                 onClick={oppdaterOgPubliser}
             >
-                <FormattedMessage id="referat.form.publiser" />
+                Del
             </HiddenIfHovedknapp>
 
             <Knapp spinner={oppdaterer} disabled={oppdaterer}>
-                <FormattedMessage id="referat.form.lagre" />
+                Lagre
             </Knapp>
         </form>
     );
 }
 
 OppdaterReferatForm.propTypes = {
-    handleSubmit: PT.func.isRequired,
+    onSubmit: PT.func.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired,
     erReferatPublisert: PT.bool.isRequired,
     oppdaterer: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,
-    errorSummary: PT.node.isRequired,
+    onFerdig: PT.func.isRequired,
 };
 
-const NyHenvendelseReduxForm = validForm({
-    errorSummaryTitle: (
-        <FormattedMessage id="referat.form.feiloppsummering-tittel" />
-    ),
-    validate: {
-        referat: [
-            pakrevd('referat.form.pakrevd-referat'),
-            maksLengde('referat.form.referat-lengde', REFERAT_MAKS_LENGDE),
-        ],
-    },
-})(OppdaterReferatForm);
-
 const mapStateToProps = (state, props) => {
-    const { referat, erReferatPublisert } = props.aktivitet;
+    const { erReferatPublisert } = props.aktivitet;
     return {
-        form: OPPDATER_REFERAT_FORM_NAME,
-        initialValues: {
-            referat,
-        },
         oppdaterer:
             selectAktivitetStatus(state) ===
             (STATUS.PENDING || STATUS.RELOADING),
@@ -110,6 +118,6 @@ const mapDispatchToProps = (dispatch, props) => ({
     },
 });
 
-export default hiddenIf(
-    connect(mapStateToProps, mapDispatchToProps)(NyHenvendelseReduxForm)
+export default connect(mapStateToProps, mapDispatchToProps)(
+    OppdaterReferatForm
 );

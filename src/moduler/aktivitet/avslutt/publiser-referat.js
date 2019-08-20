@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
-import OppdaterReferatContainer from '../visning/status-oppdatering/oppdater-referat-container';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import * as AppPT from '../../../proptypes';
 
@@ -16,7 +15,6 @@ function PubliserReferat({ aktivitet, nyStatus, children }) {
                         id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`}
                     />
                 </AlertStripeInfoSolid>
-                <OppdaterReferatContainer aktivitet={aktivitet} />
             </ModalContainer>
         );
     }

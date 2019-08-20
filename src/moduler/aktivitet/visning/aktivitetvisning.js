@@ -13,7 +13,7 @@ import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import VarslingBoks from './hjelpekomponenter/varsling-boks';
 import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
-import OppdaterReferatContainer from './status-oppdatering/oppdater-referat-container';
+import ReferatContainer from './referat/referat-container';
 import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 import { trengerBegrunnelse } from '../aktivitet-util';
 
@@ -61,10 +61,9 @@ function Aktivitetvisning({
                     className="aktivitetvisning__underseksjon"
                 />
 
-                <OppdaterReferatContainer
+                <ReferatContainer
                     aktivitet={aktivitet}
                     underOppfolging={underOppfolging}
-                    className="aktivitetvisning__underseksjon"
                     delelinje
                 />
 

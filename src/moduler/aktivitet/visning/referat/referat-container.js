@@ -8,13 +8,13 @@ import {
     section as HiddenIfSection,
     hr as HiddenIfHr,
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
-import OppdaterReferat from './oppdater-referat';
+import ReferatSeksjon from './referat-seksjon';
 import { publiserReferat } from '../../aktivitet-actions';
 import { moment, autobind } from '../../../../utils';
 import { STATUS } from '../../../../ducks/utils';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 
-class OppdaterReferatContainer extends Component {
+class ReferatContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -48,7 +48,7 @@ class OppdaterReferatContainer extends Component {
 
         return (
             <HiddenIfSection hidden={!kanHaReferat || !visReferat}>
-                <OppdaterReferat
+                <ReferatSeksjon
                     {...this.props}
                     visOppdaterReferatForm={visOppdaterReferatForm}
                     startOppdaterReferat={this.startOppdaterReferat}
@@ -63,13 +63,13 @@ class OppdaterReferatContainer extends Component {
     }
 }
 
-OppdaterReferatContainer.defaultProps = {
+ReferatContainer.defaultProps = {
     className: undefined,
     delelinje: false,
     erReferatPublisert: false,
 };
 
-OppdaterReferatContainer.propTypes = {
+ReferatContainer.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     erReferatPublisert: PT.bool,
     delelinje: PT.bool,
@@ -119,6 +119,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(publiserReferat(ownProps.aktivitet)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    OppdaterReferatContainer
-);
+export default connect(mapStateToProps, mapDispatchToProps)(ReferatContainer);
