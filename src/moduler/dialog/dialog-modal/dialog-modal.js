@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import { isDirty } from 'redux-form';
 import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
 import * as AppPT from '../../../proptypes';
@@ -20,9 +19,8 @@ import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-sele
 import Feilmelding from '../../feilmelding/feilmelding';
 import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
-import DialogHenvendelse, { nyDialogFormNavn } from './dialog-henvendelse';
+import DialogHenvendelse from './dialog-henvendelse';
 import FnrProvider from '../../../bootstrap/fnr-provider';
-import { endreDialogFormNavn, nyHenvendelseDialogFormNavn } from './dialog';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import { selectUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
@@ -52,11 +50,8 @@ class DialogModal extends Component {
             harNyDialog,
             harValgtDialog,
             historiskVisning,
-            history,
             underOppfolging,
             dialogFeilmeldinger,
-            intl,
-            formIsDirty,
         } = this.props;
         const className = classNames('dialog-modal', 'aktivitet-modal', {
             'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -71,15 +66,7 @@ class DialogModal extends Component {
                 contentLabel="dialog-modal"
                 overlayClassName="aktivitet-modal__overlay"
                 portalClassName="aktivitetsplanfs aktivitet-modal-portal"
-                onRequestClose={() => {
-                    const dialogTekst = intl.formatMessage({
-                        id: 'aktkivitet-skjema.lukk-advarsel',
-                    });
-                    // eslint-disable-next-line no-alert
-                    if (!formIsDirty || window.confirm(dialogTekst)) {
-                        history.push('/');
-                    }
-                }}
+                onRequestClose={() => null}
             >
                 <DialogHeader
                     harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
@@ -166,10 +153,6 @@ const mapStateToProps = (state, props) => {
             selectTilpasseDialogModalHistoriskVisning(state),
         underOppfolging: selectUnderOppfolging(state),
         dialogFeilmeldinger: selectDialogFeilmeldinger(state),
-        formIsDirty:
-            isDirty(nyDialogFormNavn)(state) ||
-            isDirty(`${endreDialogFormNavn}-${id}`)(state) ||
-            isDirty(`${nyHenvendelseDialogFormNavn}-${id}`)(state),
         erVeileder: selectErVeileder(state),
     };
 };
