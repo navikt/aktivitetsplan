@@ -36,7 +36,6 @@ import { selectAktivitetStatus } from '../aktivitet-selector';
 import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-status-form';
 import { AVTALT_AKTIVITET_FORM_NAME } from './avtalt-container/avtalt-form';
 import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
-import { OPPDATER_REFERAT_FORM_NAME } from './status-oppdatering/oppdater-referat-form';
 import {
     NY_HENVENDELSE_AKTIVITET_FORM_NAME,
     DIALOG_AKTIVITET_FORM_NAME,
@@ -174,7 +173,6 @@ const mapStateToProps = (state, props) => {
             isDirty(AKTIVITET_STATUS_FORM_NAME)(state) ||
             isDirty(AVTALT_AKTIVITET_FORM_NAME)(state) ||
             isDirty(STILLING_ETIKETT_FORM_NAME)(state) ||
-            isDirty(OPPDATER_REFERAT_FORM_NAME)(state) ||
             isDirty(
                 `${NY_HENVENDELSE_AKTIVITET_FORM_NAME}-${props.aktivitetId}`
             )(state) ||

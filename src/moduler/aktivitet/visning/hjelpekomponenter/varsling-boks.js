@@ -16,11 +16,18 @@ import {
     selectIdentitetStatus,
 } from '../../../identitet/identitet-selector';
 
-function VarslingBoks({ avhengigheter, visVarselOmManglendeDialog, ...rest }) {
+function VarslingBoks({
+    avhengigheter,
+    visVarselOmManglendeDialog,
+    className,
+}) {
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
             <Innholdslaster avhengigheter={avhengigheter}>
-                <HiddenIfDiv {...rest} hidden={!visVarselOmManglendeDialog}>
+                <HiddenIfDiv
+                    className={className}
+                    hidden={!visVarselOmManglendeDialog}
+                >
                     <AlertStripeStopp className="varsling-boks" role="alert">
                         <FormattedMessage id="mote.varsling.forhandsorientering" />
                     </AlertStripeStopp>
@@ -33,10 +40,11 @@ function VarslingBoks({ avhengigheter, visVarselOmManglendeDialog, ...rest }) {
 VarslingBoks.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     visVarselOmManglendeDialog: PT.bool.isRequired,
+    className: PT.string.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
-    const {aktivitet} = props;
+    const { aktivitet } = props;
     return {
         avhengigheter: [
             selectIdentitetStatus(state),
