@@ -1,5 +1,4 @@
 # Aktivitetsplan 
-[![Build Status](https://travis-ci.org/navikt/aktivitetsplan.svg?branch=master)](https://travis-ci.org/navikt/aktivitetsplan)
 
 Aktivitetsplan er et verktøy for veiledere og brukere av NAV som skal synliggjøre hvilke aktiviteter og tiltak som skal
 gjennomføres for at en bruker skal oppnå sine mål. Her kan brukere opprette aktiviteter som å delta på kurs, søke 
