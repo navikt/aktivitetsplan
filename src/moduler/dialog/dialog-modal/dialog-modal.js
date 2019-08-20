@@ -52,6 +52,7 @@ class DialogModal extends Component {
             historiskVisning,
             underOppfolging,
             dialogFeilmeldinger,
+            history,
         } = this.props;
         const className = classNames('dialog-modal', 'aktivitet-modal', {
             'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
@@ -66,7 +67,7 @@ class DialogModal extends Component {
                 contentLabel="dialog-modal"
                 overlayClassName="aktivitet-modal__overlay"
                 portalClassName="aktivitetsplanfs aktivitet-modal-portal"
-                onRequestClose={() => null}
+                onRequestClose={() => history.push('/')}
             >
                 <DialogHeader
                     harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
