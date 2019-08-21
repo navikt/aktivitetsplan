@@ -20,6 +20,7 @@ import PeriodeValidering, {
 } from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
 import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import { todayFormatedString } from '../../../../utils';
 
 function StillingAktivitetForm(props) {
     const { onSubmit, isDirtyRef, aktivitet } = props;
@@ -41,7 +42,7 @@ function StillingAktivitetForm(props) {
 
     const state = validator({
         tittel: maybeAktivitet.tittel || '',
-        fraDato: maybeAktivitet.fraDato || '',
+        fraDato: maybeAktivitet.fraDato || todayFormatedString(),
         tilDato: maybeAktivitet.tilDato || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
         arbeidssted: maybeAktivitet.arbeidssted || '',
