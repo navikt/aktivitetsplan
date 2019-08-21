@@ -36,10 +36,6 @@ import { selectAktivitetStatus } from '../aktivitet-selector';
 import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-status-form';
 import { AVTALT_AKTIVITET_FORM_NAME } from './avtalt-container/avtalt-form';
 import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
-import {
-    NY_HENVENDELSE_AKTIVITET_FORM_NAME,
-    DIALOG_AKTIVITET_FORM_NAME,
-} from './underelement-for-aktivitet/underelementer-for-aktivitet';
 
 function aktivitetvisningHeader(valgtAktivitet) {
     if (!valgtAktivitet) {
@@ -172,13 +168,7 @@ const mapStateToProps = (state, props) => {
         formIsDirty:
             isDirty(AKTIVITET_STATUS_FORM_NAME)(state) ||
             isDirty(AVTALT_AKTIVITET_FORM_NAME)(state) ||
-            isDirty(STILLING_ETIKETT_FORM_NAME)(state) ||
-            isDirty(
-                `${NY_HENVENDELSE_AKTIVITET_FORM_NAME}-${props.aktivitetId}`
-            )(state) ||
-            isDirty(`${DIALOG_AKTIVITET_FORM_NAME}-${props.aktivitetId}`)(
-                state
-            ),
+            isDirty(STILLING_ETIKETT_FORM_NAME)(state),
     };
 };
 

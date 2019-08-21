@@ -44,9 +44,6 @@ function loggingAntallBrukere(typeEvent, hvem) {
 const DIALOG = 'dialog';
 const HISTORIKK = 'historikk';
 
-export const DIALOG_AKTIVITET_FORM_NAME = 'dialog-aktivitet';
-export const NY_HENVENDELSE_AKTIVITET_FORM_NAME = 'ny-henvendelse-aktivitet';
-
 class UnderelementerForAktivitet extends Component {
     constructor() {
         super();
@@ -154,13 +151,8 @@ class UnderelementerForAktivitet extends Component {
                     id={underelementId}
                 >
                     <Feilmelding feilmeldinger={dialogFeilmeldinger} />
-                    <EndreDialog
-                        hidden={!kanEndreDialog}
-                        formNavn={`${DIALOG_AKTIVITET_FORM_NAME}-${aktivitetId}`}
-                        dialog={dialog}
-                    />
+                    <EndreDialog hidden={!kanEndreDialog} dialog={dialog} />
                     <NyHenvendelse
-                        formNavn={`${NY_HENVENDELSE_AKTIVITET_FORM_NAME}-${aktivitetId}`}
                         dialogId={dialog && dialog.id}
                         hidden={!kanOppretteNyHenvendelse}
                         aktivitetId={aktivitetId}

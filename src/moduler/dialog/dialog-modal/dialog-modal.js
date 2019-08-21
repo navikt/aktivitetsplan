@@ -129,7 +129,6 @@ DialogModal.propTypes = {
     dialogFeilmeldinger: PT.array,
     underOppfolging: PT.bool.isRequired,
     intl: intlShape.isRequired,
-    formIsDirty: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
 };
 const mapStateToProps = (state, props) => {
