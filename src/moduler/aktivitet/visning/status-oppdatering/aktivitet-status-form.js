@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -97,7 +97,10 @@ function AktivitetStatusForm(props) {
     });
 
     const dirty = useContext(DirtyContext);
-    dirty.setIsDirty(!state.pristine);
+    useEffect(() => dirty.setFormIsDirty('status', !state.pristine), [
+        dirty.setFormIsDirty,
+        state.pristine,
+    ]); //eslint-disable-line
 
     const status = state.fields.aktivitetstatus.input.value;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
