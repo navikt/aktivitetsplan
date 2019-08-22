@@ -29,7 +29,6 @@ import { STATUS } from '../../../ducks/utils';
 import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
-import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-status-form';
 import { AVTALT_AKTIVITET_FORM_NAME } from './avtalt-container/avtalt-form';
 import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
 import { DirtyProvider } from '../../context/dirty-context';
@@ -125,7 +124,6 @@ const mapStateToProps = (state, props) => {
         laster,
         underOppfolging: selectErUnderOppfolging(state),
         formIsDirty:
-            isDirty(AKTIVITET_STATUS_FORM_NAME)(state) ||
             isDirty(AVTALT_AKTIVITET_FORM_NAME)(state) ||
             isDirty(STILLING_ETIKETT_FORM_NAME)(state),
     };
