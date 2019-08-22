@@ -22,11 +22,7 @@ function AktivitetRoutes({ match }) {
             <Route
                 exact
                 path={`${basePath}/vis/:id`}
-                component={props =>
-                    <AktivitetvisningContainer
-                        aktivitetId={props.match.params.id}
-                        {...props}
-                    />}
+                component={AktivitetvisningContainer}
             />
             <Route
                 exact
