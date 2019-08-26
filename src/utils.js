@@ -94,8 +94,8 @@ export const toDatePrettyPrint = dato => {
     return `${days}.${months}.${years}`;
 };
 
-export const todayFormatedString = () => {
-    return moment().format('DD.MM.YYYY');
+export const todayIsoString = () => {
+    return moment().startOf('day').toISOString();
 };
 
 export const datePickerToISODate = dato => {
