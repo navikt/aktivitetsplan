@@ -13,8 +13,6 @@ import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
 import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
 
-export const STILLING_ETIKETT_FORM_NAME = 'stilling-etikett-form';
-
 const validator = useFormstate({
     etikettstatus: () => {},
 });
@@ -27,10 +25,11 @@ function StillingEtikettForm(props) {
     });
 
     const dirty = useContext(DirtyContext);
+    // eslint-disable-next-line
     useEffect(() => dirty.setFormIsDirty('etikett', !state.pristine), [
         dirty.setFormIsDirty,
         state.pristine,
-    ]); //eslint-disable-line
+    ]);
 
     return (
         <form

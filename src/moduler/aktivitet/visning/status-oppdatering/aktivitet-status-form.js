@@ -97,10 +97,11 @@ function AktivitetStatusForm(props) {
     });
 
     const dirty = useContext(DirtyContext);
+    // eslint-disable-next-line
     useEffect(() => dirty.setFormIsDirty('status', !state.pristine), [
         dirty.setFormIsDirty,
         state.pristine,
-    ]); //eslint-disable-line
+    ]);
 
     const status = state.fields.aktivitetstatus.input.value;
     const lasterData = aktivitetDataStatus !== STATUS.OK;

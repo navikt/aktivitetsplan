@@ -144,6 +144,7 @@ class AvtaltContainer extends Component {
 
                     doSetAktivitetTilAvtalt(aktivitet);
                     document.querySelector('.aktivitet-modal').focus();
+                    return Promise.resolve();
                 }}
             />
         );

@@ -44,10 +44,11 @@ function OppdaterReferatForm(props) {
 
     const dirty = useContext(DirtyContext);
 
+    // eslint-disable-next-line
     useEffect(() => dirty.setFormIsDirty('referat', !state.pristine), [
         dirty.setFormIsDirty,
         state.pristine,
-    ]); //eslint-disable-line
+    ]);
 
     const oppdaterOgPubliser = state.onSubmit(values => {
         return onSubmit(values).then(response => {

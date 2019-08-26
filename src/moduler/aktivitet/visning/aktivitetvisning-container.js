@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { isDirty } from 'redux-form';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
 import PT from 'prop-types';
 import {
     hentAktivitet,
@@ -29,8 +27,6 @@ import { STATUS } from '../../../ducks/utils';
 import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
-import { AVTALT_AKTIVITET_FORM_NAME } from './avtalt-container/avtalt-form';
-import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
 import { DirtyProvider } from '../../context/dirty-context';
 import AktivitetvisningModal from './aktivitetvisning-modal';
 
@@ -85,8 +81,6 @@ AktivitetvisningContainer.propTypes = {
     doLukkDialogEllerHistorikk: PT.func.isRequired,
     history: AppPT.history.isRequired,
     match: PT.object.isRequired,
-    intl: intlShape.isRequired,
-    formIsDirty: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
 };
 
@@ -123,9 +117,6 @@ const mapStateToProps = (state, props) => {
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
         laster,
         underOppfolging: selectErUnderOppfolging(state),
-        formIsDirty:
-            isDirty(AVTALT_AKTIVITET_FORM_NAME)(state) ||
-            isDirty(STILLING_ETIKETT_FORM_NAME)(state),
     };
 };
 
@@ -141,6 +132,6 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-export default injectIntl(
-    connect(mapStateToProps, mapDispatchToProps)(AktivitetvisningContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(
+    AktivitetvisningContainer
 );
