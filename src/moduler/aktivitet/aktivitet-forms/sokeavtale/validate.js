@@ -25,7 +25,7 @@ export function validateAntallStillinger(avtalt, value) {
         return null;
     }
 
-    if (!value || value.length <= 0) {
+    if (value.length === 0) {
         return 'Du må fylle ut antall søknader i perioden';
     }
 
@@ -39,7 +39,7 @@ export function validateFraDato(avtalt, tilDato, value) {
     if (avtalt) {
         return null;
     }
-    if (!value || value.trim().length <= 0) {
+    if (value.trim().length === 0) {
         return 'Du må fylle ut fra dato';
     }
     return validerDato(value, tilDato, null);
@@ -49,7 +49,7 @@ export function validateTilDato(avtalt, fraDato, value) {
     if (avtalt) {
         return null;
     }
-    if (!value || value.trim().length <= 0) {
+    if (value.trim().length === 0) {
         return 'Du må fylle ut fra dato';
     }
     return validerDato(value, null, fraDato);
