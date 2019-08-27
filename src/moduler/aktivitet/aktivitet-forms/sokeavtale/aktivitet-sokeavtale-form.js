@@ -33,12 +33,12 @@ export default function SokeAvtaleAktivitetForm(props) {
             validateFraDato(erAktivitetAvtalt, maybeAktivitet.tilDato, val),
         tilDato: val =>
             validateTilDato(erAktivitetAvtalt, maybeAktivitet.fraDato, val),
+        periodeValidering: (val, values) =>
+            validerPeriodeFelt(values.fraDato, values.tilDato),
         antallStillingerSokes: val =>
             validateAntallStillinger(erAktivitetAvtalt, val),
         avtaleOppfolging: val => validateOppfolging(erAktivitetAvtalt, val),
         beskrivelse: val => validateBeskrivelse(erAktivitetAvtalt, val),
-        periodeValidering: (val, values) =>
-            validerPeriodeFelt(values.fraDato, values.tilDato),
     });
 
     const defaultFormValues = {
