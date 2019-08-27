@@ -4,9 +4,7 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import BehandlingAktivitet from '../aktivitet-forms/behandling/ny-aktivitet-behandling';
 import NyMoteAktivitet from '../aktivitet-forms/mote/ny-mote-aktivitet';
-import NyttSamtalereferat from '../aktivitet-forms/samtalereferat/nytt-samtalereferat';
 import { aktivitetRoute } from '../../../routing';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
@@ -18,8 +16,10 @@ import {
     selectAktivitetStatus,
 } from '../aktivitet-selector';
 import {
+    BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
+    SAMTALEREFERAT_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_PLANLAGT,
     STILLING_AKTIVITET_TYPE,
@@ -28,6 +28,8 @@ import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
+import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
+import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-behandling-form';
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
 
 const CONFIRM =
@@ -76,9 +78,9 @@ function NyAktivitetForm(props) {
         return aktivitet => {
             const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
             const nyAktivitet = {
-                ...filteredAktivitet,
-                type: aktivitetsType,
                 status: STATUS_PLANLAGT,
+                type: aktivitetsType,
+                ...filteredAktivitet,
             };
             return onLagreNyAktivitet(nyAktivitet).then(action =>
                 history.push(aktivitetRoute(action.data.id))
@@ -128,7 +130,10 @@ function NyAktivitetForm(props) {
                             <NyMoteAktivitet {...formProps} />
                         </Route>
                         <Route path={`${match.path}/samtalereferat`}>
-                            <NyttSamtalereferat {...formProps} />
+                            <SamtalereferatForm
+                                onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)}
+                                isDirtyRef={formIsDirtyV2}
+                            />
                         </Route>
                         <Route path={`${match.path}/stilling`}>
                             <StillingAktivitetForm
@@ -147,7 +152,12 @@ function NyAktivitetForm(props) {
                             />
                         </Route>
                         <Route path={`${match.path}/behandling`}>
-                            <BehandlingAktivitet {...formProps} />
+                            <BehandlingAktivitetForm
+                                onSubmit={onSubmitFactory(
+                                    BEHANDLING_AKTIVITET_TYPE
+                                )}
+                                isDirtyRef={formIsDirtyV2}
+                            />
                         </Route>
                         <Route path={`${match.path}/egen`}>
                             <EgenAktivitetForm

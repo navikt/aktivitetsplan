@@ -1,214 +1,140 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PT from 'prop-types';
-import { formValueSelector, isDirty } from 'redux-form';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { validForm } from 'react-redux-form-validation';
-import { moment } from '../../../../utils';
-import { formNavn } from '../aktivitet-form-utils';
-import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import {
-    BEHANDLING_AKTIVITET_TYPE,
-    STATUS_PLANLAGT,
-} from '../../../../constant';
-import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../../../felles-komponenter/skjema/validering';
+import useFormstate from '@nutgaard/use-formstate';
+import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import * as AppPT from '../../../../proptypes';
+import PeriodeValidering, {
+    validerPeriodeFelt,
+} from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
+import Input from '../../../../felles-komponenter/skjema/input-v2/input';
+import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import {
+    validateBehandlingSted,
+    validateBehandlingType,
+    validateBeskrivelse,
+    validateFeltForLangt,
+    validateFraDato,
+    validateTilDato,
+} from './validate';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
 
-const EFFEKT_MAKS_LENGDE = 255;
-const OPPFOLGING_MAKS_LENGDE = 255;
-const BESKRIVELSE_MAKS_LENGDE = 5000;
-const BEHANDLINGS_TYPE_MAKS_LENGDE = 255;
-const BEHANDLINGS_STED_MAKS_LENGDE = 255;
+function BehandlingAktivitetForm(props) {
+    const { onSubmit, aktivitet, isDirtyRef } = props;
 
-function erAvtalt(verdi, props) {
-    return !!props.avtalt;
-}
+    const maybeAktivitet = aktivitet || {};
+    const erAvtalt = maybeAktivitet.avtalt === true;
 
-const pakrevdFraDato = pakrevd(
-    'behandling-aktivitet-form.feilmelding.paakrevd-fradato'
-).hvisIkke(erAvtalt);
+    const validator = useFormstate({
+        tittel: () => {},
+        behandlingType: val => validateBehandlingType(erAvtalt, val),
+        behandlingSted: val => validateBehandlingSted(erAvtalt, val),
+        fraDato: val => validateFraDato(erAvtalt, maybeAktivitet.tilDato, val),
+        tilDato: val => validateTilDato(maybeAktivitet.fraDato, val),
+        effekt: val => validateFeltForLangt(erAvtalt, val),
+        beskrivelse: val => validateBeskrivelse(erAvtalt, val),
+        behandlingOppfolging: val => validateFeltForLangt(erAvtalt, val),
+        periodeValidering: (val, values) =>
+            validerPeriodeFelt(values.fraDato, values.tilDato),
+    });
 
-const pakrevdTilDato = pakrevd(
-    'behandling-aktivitet-form.feilmelding.paakrevd-tildato'
-);
+    const state = validator({
+        tittel: maybeAktivitet.tittel || 'Medisinsk behandling',
+        behandlingType: maybeAktivitet.behandlingType || '',
+        behandlingSted: maybeAktivitet.behandlingSted || '',
+        periodeValidering: '',
+        fraDato: maybeAktivitet.fraDato || '',
+        tilDato: maybeAktivitet.tilDato || '',
+        effekt: maybeAktivitet.effekt || '',
+        beskrivelse: maybeAktivitet.beskrivelse || '',
+        behandlingOppfolging: maybeAktivitet.behandlingOppfolging || '',
+    });
 
-const pakrevdBehandlingType = pakrevd(
-    'behandling-aktivitet-form.feilmelding.paakrevd-behandling-type'
-).hvisIkke(erAvtalt);
-
-const begrensetBehandlingType = maksLengde(
-    'behandling-aktivitet-form.feilmelding.behandling-type-lengde',
-    BEHANDLINGS_TYPE_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-
-const pakrevdBehandlingSted = pakrevd(
-    'behandling-aktivitet-form.feilmelding.paakrevd-behandling-sted'
-).hvisIkke(erAvtalt);
-
-const begrensetBehandlingSted = maksLengde(
-    'behandling-aktivitet-form.feilmelding.behandling-sted-lengde',
-    BEHANDLINGS_STED_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-
-const begrensetEffektLengde = maksLengde(
-    'behandling-aktivitet-form.feilmelding.effekt-lengde',
-    EFFEKT_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-const begrensetBehandlingOppfolgingLengde = maksLengde(
-    'behandling-aktivitet-form.feilmelding.oppfolging-lengde',
-    OPPFOLGING_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-const begrensetBeskrivelseLengde = maksLengde(
-    'behandling-aktivitet-form.feilmelding.beskrivelse-lengde',
-    BESKRIVELSE_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-
-// TODO fiks i separat quickfix
-// eslint-disable-next-line react/prefer-stateless-function
-class BehandlingAktivitetForm extends Component {
-    render() {
-        const {
-            handleSubmit,
-            errorSummary,
-            currentFraDato,
-            currentTilDato,
-            avtalt,
-        } = this.props;
-        const erAktivitetAvtalt = avtalt === true;
-        return (
-            <form
-                onSubmit={handleSubmit}
-                noValidate="noValidate"
-                autoComplete="off"
-            >
-                <div className="skjema-innlogget aktivitetskjema">
-                    {errorSummary}
-
-                    <AktivitetFormHeader
-                        tittelId="behandling-aktivitet-form.header"
-                        pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
-                        ingressType={BEHANDLING_AKTIVITET_TYPE}
-                    />
-
-                    <Input
-                        feltNavn="behandlingType"
-                        disabled={erAktivitetAvtalt}
-                        labelId="behandling-aktivitet-form.label.behandling-type"
-                        bredde="fullbredde"
-                    />
-                    <Input
-                        feltNavn="behandlingSted"
-                        disabled={erAktivitetAvtalt}
-                        labelId="behandling-aktivitet-form.label.behandling-sted"
-                        bredde="fullbredde"
-                    />
-
-                    <PeriodeValidering
-                        feltNavn="periodeValidering"
-                        fraDato={currentFraDato}
-                        tilDato={currentTilDato}
-                        errorMessageId="datepicker.feilmelding.egen.fradato-etter-frist"
-                    >
-                        <div className="dato-container">
-                            <Datovelger
-                                feltNavn="fraDato"
-                                disabled={erAktivitetAvtalt}
-                                labelId="behandling-aktivitet-form.label.fra-dato"
-                                senesteTom={currentTilDato}
-                            />
-                            <Datovelger
-                                feltNavn="tilDato"
-                                labelId="behandling-aktivitet-form.label.til-dato"
-                                tidligsteFom={currentFraDato}
-                            />
-                        </div>
-                    </PeriodeValidering>
-
-                    <Input
-                        feltNavn="effekt"
-                        disabled={erAktivitetAvtalt}
-                        labelId="behandling-aktivitet-form.label.effekt"
-                        bredde="fullbredde"
-                    />
-                    <Textarea
-                        feltNavn="beskrivelse"
-                        disabled={erAktivitetAvtalt}
-                        labelId="behandling-aktivitet-form.label.beskrivelse"
-                        maxLength={BESKRIVELSE_MAKS_LENGDE}
-                        visTellerFra={500}
-                    />
-                    <Input
-                        feltNavn="behandlingOppfolging"
-                        disabled={erAktivitetAvtalt}
-                        labelId="behandling-aktivitet-form.label.avtale-oppfolging"
-                        bredde="fullbredde"
-                    />
-                </div>
-                <LagreAktivitet />
-            </form>
-        );
+    if (isDirtyRef) {
+        isDirtyRef.current = !state.pristine;
     }
-}
 
-BehandlingAktivitetForm.propTypes = {
-    handleSubmit: PT.func,
-    errorSummary: PT.node.isRequired,
-    currentFraDato: PT.instanceOf(Date),
-    currentTilDato: PT.instanceOf(Date),
-    avtalt: PT.bool,
-    isDirty: PT.bool.isRequired,
-};
+    return (
+        <form
+            onSubmit={state.onSubmit(onSubmit)}
+            noValidate="noValidate"
+            autoComplete="off"
+        >
+            <div className="aktivitetskjema">
+                <FormErrorSummary
+                    errors={state.errors}
+                    submittoken={state.submittoken}
+                />
+
+                <AktivitetFormHeader
+                    tittelId="behandling-aktivitet-form.header"
+                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    ingressType={BEHANDLING_AKTIVITET_TYPE}
+                />
+
+                <Input
+                    disabled={erAvtalt}
+                    label="Type behandling *"
+                    {...state.fields.behandlingType}
+                />
+                <Input
+                    disabled={erAvtalt}
+                    label="Behandlingssted *"
+                    {...state.fields.behandlingSted}
+                />
+
+                <PeriodeValidering
+                    valideringFelt={state.fields.periodeValidering}
+                >
+                    <div className="dato-container">
+                        <DatoField
+                            disabled={erAvtalt}
+                            label="Fra dato *"
+                            senesteTom={maybeAktivitet.tilDato}
+                            {...state.fields.fraDato}
+                        />
+                        <DatoField
+                            label="Til dato *"
+                            tidligsteFom={maybeAktivitet.fraDato}
+                            {...state.fields.tilDato}
+                        />
+                    </div>
+                </PeriodeValidering>
+
+                <Input
+                    disabled={erAvtalt}
+                    label="Mål for behandlingen"
+                    {...state.fields.effekt}
+                />
+                <Textarea
+                    disabled={erAvtalt}
+                    label="Kort beskrivelse av behandlingen"
+                    maxLength={5000}
+                    visTellerFra={500}
+                    {...state.fields.beskrivelse}
+                />
+                <Input
+                    disabled={erAvtalt}
+                    label="Oppfølging fra NAV"
+                    {...state.fields.behandlingOppfolging}
+                />
+            </div>
+            <LagreAktivitet />
+        </form>
+    );
+}
 
 BehandlingAktivitetForm.defaultProps = {
-    handleSubmit: undefined,
-    currentFraDato: undefined,
-    currentTilDato: undefined,
-    avtalt: false,
+    aktivitet: undefined,
+    isDirtyRef: undefined,
 };
 
-const BehandlingAktivitetReduxForm = validForm({
-    form: formNavn,
-    errorSummaryTitle: (
-        <FormattedMessage id="sokeavtale-aktivitet-form.feiloppsummering-tittel" />
-    ),
-    validate: {
-        behandlingType: [pakrevdBehandlingType, begrensetBehandlingType],
-        behandlingSted: [pakrevdBehandlingSted, begrensetBehandlingSted],
-        fraDato: [pakrevdFraDato],
-        tilDato: [pakrevdTilDato],
-        effekt: [begrensetEffektLengde],
-        beskrivelse: [begrensetBeskrivelseLengde],
-        behandlingOppfolging: [begrensetBehandlingOppfolgingLengde],
-        periodeValidering: [],
-    },
-})(BehandlingAktivitetForm);
-
-const mapStateToProps = (state, props) => {
-    const selector = formValueSelector(formNavn);
-    const aktivitet = props.aktivitet || {};
-    return {
-        initialValues: {
-            status: STATUS_PLANLAGT,
-            tittel: props.defaultTittel,
-            avtalt: false,
-            ...aktivitet,
-        },
-        currentFraDato: selector(state, 'fraDato')
-            ? moment(selector(state, 'fraDato')).toDate()
-            : undefined,
-        currentTilDato: selector(state, 'tilDato')
-            ? moment(selector(state, 'tilDato')).toDate()
-            : undefined,
-        isDirty: isDirty(formNavn)(state),
-        avtalt: aktivitet && aktivitet.avtalt,
-    };
+BehandlingAktivitetForm.propTypes = {
+    onSubmit: PT.func.isRequired,
+    aktivitet: AppPT.aktivitet,
+    isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
-export default connect(mapStateToProps)(BehandlingAktivitetReduxForm);
+export default BehandlingAktivitetForm;
