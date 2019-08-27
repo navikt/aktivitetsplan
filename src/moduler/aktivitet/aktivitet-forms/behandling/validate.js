@@ -4,7 +4,7 @@ export function validateBehandlingType(avtalt, value) {
     if (avtalt) {
         return null;
     }
-    if (!value || value.trim().length <= 0) {
+    if (!value || value.trim().length === 0) {
         return 'Du må fylle ut type behandling';
     }
     if (value.length > 255) {
@@ -17,7 +17,7 @@ export function validateBehandlingSted(avtalt, value) {
     if (avtalt) {
         return null;
     }
-    if (!value || value.trim().length <= 0) {
+    if (!value || value.trim().length === 0) {
         return 'Du må fylle ut behandlingssted';
     }
     if (value.length > 255) {
@@ -41,14 +41,14 @@ export function validateFraDato(avtalt, tilDato, value) {
     if (avtalt) {
         return null;
     }
-    if (!value || value.trim().length <= 0) {
+    if (!value || value.trim().length === 0) {
         return 'Du må fylle ut fra dato';
     }
     return validerDato(value, tilDato, null);
 }
 
 export function validateTilDato(fraDato, value) {
-    if (!value || value.trim().length <= 0) {
+    if (!value || value.trim().length === 0) {
         return (
             'Du må fylle ut til dato. Hvis du ikke vet når behandlingen avsluttes, ' +
             'kan du legge inn en foreløpig til dato.'

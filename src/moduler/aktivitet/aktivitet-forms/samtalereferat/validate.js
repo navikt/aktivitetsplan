@@ -1,7 +1,7 @@
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 
 export function validateTittel(value) {
-    if (!value || value.trim().length <= 0) {
+    if (!value || value.trim().length === 0) {
         return 'Du må fylle ut tema for samtalen';
     }
     if (value.length > 255) {
@@ -29,7 +29,7 @@ export function validateKanal(value) {
 }
 
 export function validateFraDato(value) {
-    if (!value || value.trim().length <= 0) {
+    if (!value || value.trim().length === 0) {
         return 'Du må fylle ut dato for samtalen';
     }
     return validerDato(value, null, null);
