@@ -112,7 +112,7 @@ SamtalereferatForm.defaultProps = {
 
 SamtalereferatForm.propTypes = {
     onSubmit: PT.func.isRequired,
-    isDirtyRef: PT.object,
+    isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
 export default SamtalereferatForm;
