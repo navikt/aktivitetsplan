@@ -4,7 +4,6 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { isDirty } from 'redux-form';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import SokeavtaleAktivitet from '../aktivitet-forms/sokeavtale/ny-aktivitet-sokeavtale';
 import BehandlingAktivitet from '../aktivitet-forms/behandling/ny-aktivitet-behandling';
 import NyMoteAktivitet from '../aktivitet-forms/mote/ny-mote-aktivitet';
 import NyttSamtalereferat from '../aktivitet-forms/samtalereferat/nytt-samtalereferat';
@@ -21,6 +20,7 @@ import {
 import {
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
+    SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_PLANLAGT,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
@@ -28,6 +28,7 @@ import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
+import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
 
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -138,7 +139,12 @@ function NyAktivitetForm(props) {
                             />
                         </Route>
                         <Route path={`${match.path}/sokeavtale`}>
-                            <SokeavtaleAktivitet {...formProps} />
+                            <SokeAvtaleAktivitetForm
+                                onSubmit={onSubmitFactory(
+                                    SOKEAVTALE_AKTIVITET_TYPE
+                                )}
+                                isDirtyRef={formIsDirtyV2}
+                            />
                         </Route>
                         <Route path={`${match.path}/behandling`}>
                             <BehandlingAktivitet {...formProps} />
