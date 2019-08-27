@@ -28,9 +28,9 @@ import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { selectArenaAktivitetStatus } from '../../arena-aktivitet-selector';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-valideringv2';
-import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-validering';
+import Radio from '../../../../felles-komponenter/skjema/input/radio';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import { DirtyContext } from '../../../context/dirty-context';
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);

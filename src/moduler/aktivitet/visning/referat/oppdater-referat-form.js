@@ -8,7 +8,7 @@ import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { STATUS } from '../../../../ducks/utils';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/hidden-if-knapper';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';

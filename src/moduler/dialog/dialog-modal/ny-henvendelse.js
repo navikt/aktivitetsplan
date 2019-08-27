@@ -30,9 +30,9 @@ import {
 import * as AppPT from '../../../proptypes';
 import { loggTidBruktForsteHenvendelse } from '../../../felles-komponenter/utils/logging';
 import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Checkbox from '../../../felles-komponenter/skjema/input-v2/checkbox';
-import Input from '../../../felles-komponenter/skjema/input-v2/input';
-import Textarea from '../../../felles-komponenter/skjema/input-v2/textarea';
+import Checkbox from '../../../felles-komponenter/skjema/input/checkbox';
+import Input from '../../../felles-komponenter/skjema/input/input';
+import Textarea from '../../../felles-komponenter/skjema/input/textarea';
 
 function label(erBruker, aktivitet) {
     if (!erBruker) {

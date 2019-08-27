@@ -5,7 +5,7 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
 import * as AppPT from '../../proptypes';
-import Textarea from '../../felles-komponenter/skjema/input-v2/textarea';
+import Textarea from '../../felles-komponenter/skjema/input/textarea';
 import { hentPrintMelding } from './utskrift-selector';
 import { lagrePrintMelding } from './utskrift-duck';
 import { selectBruker } from '../bruker/bruker-selector';

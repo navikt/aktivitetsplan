@@ -9,7 +9,7 @@ import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { STATUS } from '../../../../ducks/utils';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
-import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
+import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
 

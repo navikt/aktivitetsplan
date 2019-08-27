@@ -1,77 +1,42 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import PT from 'prop-types';
-import { submit } from 'redux-form';
 import { Checkbox as NavCheckbox } from 'nav-frontend-skjema';
-import { CustomField } from 'react-redux-form-validation';
-import { FormattedMessage } from 'react-intl';
 
-function InnerCheckboxComponent({
-    input,
-    meta,
-    labelId,
-    errorMessage,
-    submitOnChange,
-    ...rest
-}) {
-    const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
+// pristine isn't used, but we don't want to pass it to input
+function Checkbox({ touched, error, input, pristine, initialValue, ...rest }) {
+    const inputProps = { ...input, ...rest };
+    const [toggel, setToggel] = useState(initialValue === 'true');
 
-    function onChange(...args) {
-        if (submitOnChange) {
-            setTimeout(() => meta.dispatch(submit(meta.form)), 0);
-        }
-        return input.onChange && input.onChange.apply(this, args);
-    }
+    const toggelOnChange = event => {
+        event.target.value = toggel ? 'false' : 'true'; // eslint-disable-line no-param-reassign
+        input.onChange(event);
+        setToggel(!toggel);
+    };
 
+    const feil = error && touched ? { feilmelding: error } : undefined;
     return (
         <NavCheckbox
-            label={<FormattedMessage id={labelId} />}
+            {...inputProps}
+            checked={input.value === 'true'}
             feil={feil}
-            checked={input.value}
-            {...rest}
-            {...input}
-            onChange={onChange}
-        />
-    );
-}
-
-InnerCheckboxComponent.propTypes = {
-    labelId: PT.string.isRequired,
-    errorMessage: PT.arrayOf(
-        PT.oneOfType([PT.string, PT.instanceOf(FormattedMessage)])
-    ),
-    submitOnChange: PT.bool,
-
-    input: PT.object, // eslint-disable-line react/forbid-prop-types
-    meta: PT.object, // eslint-disable-line react/forbid-prop-types
-};
-
-InnerCheckboxComponent.defaultProps = {
-    errorMessage: undefined,
-    submitOnChange: false,
-
-    // Vil alltid bli overskrevet av CustomField
-    input: {},
-    meta: {},
-};
-
-function Checkbox({ feltNavn, className, ...rest }) {
-    return (
-        <CustomField
-            name={feltNavn}
-            className={className}
-            errorClass="skjemaelement--harFeil"
-            customComponent={<InnerCheckboxComponent {...rest} />}
+            onChange={toggelOnChange}
         />
     );
 }
 
 Checkbox.propTypes = {
-    feltNavn: PT.string.isRequired,
-    className: PT.string,
+    initialValue: PT.string,
+    pristine: PT.bool,
+    touched: PT.bool.isRequired,
+    error: PT.string,
+    input: PT.object.isRequired,
 };
 
 Checkbox.defaultProps = {
-    className: undefined,
+    initialValue: undefined,
+    pristine: undefined,
+    error: undefined,
 };
 
 export default Checkbox;

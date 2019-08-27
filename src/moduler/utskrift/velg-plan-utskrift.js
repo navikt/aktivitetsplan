@@ -12,7 +12,7 @@ import useFormstate from '@nutgaard/use-formstate';
 import { velgPrintType } from './utskrift-duck';
 import { selectKvpPeriodeForValgteOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { datoComparator, formaterDatoKortManed } from '../../utils';
-import Radio from '../../felles-komponenter/skjema/input-v2/radio';
+import Radio from '../../felles-komponenter/skjema/input/radio';
 
 function UtskriftValg({ tittelId, tekstId }) {
     return (

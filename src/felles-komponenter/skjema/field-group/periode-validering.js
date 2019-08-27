@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { erGyldigISODato, moment } from '../../../utils';
-import FieldGroup from './fieldgroups-valideringv2';
+import FieldGroup from './fieldgroups-validering';
 
 export function validerPeriode(fradato, tildato) {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {

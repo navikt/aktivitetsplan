@@ -1,24 +1,18 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable */
 
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { CustomField } from 'react-redux-form-validation';
-import { connect } from 'react-redux';
-import { change, touch } from 'redux-form';
 import MaskedInput from 'react-maskedinput';
 import {
     autobind,
+    datePickerToISODate,
     dateToISODate,
+    erGyldigFormattertDato,
     erGyldigISODato,
     ISODateToDatePicker,
-    datePickerToISODate,
-    erGyldigFormattertDato,
 } from '../../../utils';
-import { validerDatoField } from './utils';
 import DayPickerComponent from './day-picker';
+import moment from 'moment';
 
 function stopEvent(event) {
     try {
@@ -26,6 +20,14 @@ function stopEvent(event) {
     } catch (e) {
         event.stopPropagation();
     }
+}
+
+function getValidDateOrNothing(dato) {
+    return !!dato ? moment(dato).toDate() : undefined;
+}
+
+function parseInputDate(dato) {
+    return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
 }
 
 class DatoField extends Component {
@@ -64,10 +66,12 @@ class DatoField extends Component {
     }
 
     onDayClick(event) {
-        const { feltNavn, meta, dispatch } = this.props;
+        const { input } = this.props;
+        const { name, onChange, onBlur } = input;
         const isoDate = dateToISODate(new Date(event));
-        dispatch(change(meta.form, feltNavn, isoDate));
-        dispatch(touch(meta.form, feltNavn));
+
+        onChange({ target: { name: name, value: isoDate } });
+        onBlur({ target: { name: name, value: isoDate } });
         this.lukk();
     }
 
@@ -98,85 +102,92 @@ class DatoField extends Component {
 
     render() {
         const {
-            meta,
-            input,
-            id,
             label,
             disabled,
             tidligsteFom,
             senesteTom,
-            errorMessage,
+            touched,
+            error,
+            input,
         } = this.props;
 
         const { erApen } = this.state;
-        const feil = errorMessage && errorMessage;
-        const { value } = input;
+        const { value, id } = input;
         const maskedInputProps = {
             ...input,
             value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value,
         };
 
+        const onChange = event => {
+            event.target.value = parseInputDate(event.target.value);
+            input.onChange(event);
+        };
+
         return (
-            <div
-                className="datovelger skjemaelement"
-                ref={container => {
-                    this.container = container;
-                }}
-            >
-                <label className="skjemaelement__label" htmlFor={id}>
-                    {label}
-                </label>
-                <div // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role
-                    className="datovelger__inner"
-                    onClick={stopEvent}
-                >
-                    <div className="datovelger__inputContainer">
-                        <MaskedInput
-                            type="tel"
-                            mask="11.11.1111"
-                            autoComplete="off"
-                            placeholder="dd.mm.åååå"
-                            id={id}
-                            disabled={disabled}
-                            className={`skjemaelement__input input--m datovelger__input ${meta.touched &&
-                            meta.error
-                                ? 'skjemaelement__input--harFeil'
-                                : ''}`}
-                            {...maskedInputProps}
-                        />
-                        <button
-                            className="js-toggle datovelger__toggleDayPicker"
-                            aria-label={
-                                erApen ? 'Skjul datovelger' : 'Vis datovelger'
-                            }
-                            ref={toggle => {
-                                this.toggleButton = toggle;
-                            }}
-                            id={`toggle-${id}`}
-                            disabled={disabled}
-                            onKeyUp={this.onKeyUp}
-                            onClick={this.toggle}
-                            aria-pressed={erApen}
-                            type="button"
-                        />
-                    </div>
-                    {erApen &&
-                        <DayPickerComponent
-                            {...this.props}
-                            ariaControls={`toggle-${id}`}
-                            tidligsteFom={tidligsteFom}
-                            senesteTom={senesteTom}
-                            onDayClick={this.onDayClick}
-                            onKeyUp={this.onKeyUp}
-                            lukk={this.lukk}
-                        />}
-                </div>
+            <div>
                 <div
-                    role="alert"
-                    aria-live="assertive"
-                    className="skjemaelement__feilmelding"
+                    className="datovelger skjemaelement"
+                    ref={container => {
+                        this.container = container;
+                    }}
                 >
-                    {feil}
+                    <label className="skjemaelement__label" htmlFor={id}>
+                        {label}
+                    </label>
+                    <div className="datovelger__inner" onClick={stopEvent}>
+                        <div className="datovelger__inputContainer">
+                            <MaskedInput
+                                type="tel"
+                                mask="11.11.1111"
+                                autoComplete="off"
+                                placeholder="dd.mm.åååå"
+                                id={id}
+                                disabled={disabled}
+                                className={`skjemaelement__input input--m datovelger__input ${touched &&
+                                error
+                                    ? 'skjemaelement__input--harFeil'
+                                    : ''}`}
+                                {...maskedInputProps}
+                                onChange={onChange}
+                            />
+                            <button
+                                className="js-toggle datovelger__toggleDayPicker"
+                                aria-label={
+                                    erApen
+                                        ? 'Skjul datovelger'
+                                        : 'Vis datovelger'
+                                }
+                                ref={toggle => {
+                                    this.toggleButton = toggle;
+                                }}
+                                id={`toggle-${id}`}
+                                disabled={disabled}
+                                onKeyUp={this.onKeyUp}
+                                onClick={this.toggle}
+                                aria-pressed={erApen}
+                                type="button"
+                            />
+                        </div>
+                        {erApen &&
+                            <DayPickerComponent
+                                input={input}
+                                ariaControls={`toggle-${id}`}
+                                tidligsteFom={getValidDateOrNothing(
+                                    tidligsteFom
+                                )}
+                                senesteTom={getValidDateOrNothing(senesteTom)}
+                                onDayClick={this.onDayClick}
+                                onKeyUp={this.onKeyUp}
+                                lukk={this.lukk}
+                            />}
+                    </div>
+                    <div
+                        role="alert"
+                        aria-live="assertive"
+                        className="skjemaelement__feilmelding"
+                    >
+                        {error && touched ? error : null}
+                    </div>
                 </div>
             </div>
         );
@@ -184,66 +195,26 @@ class DatoField extends Component {
 }
 
 DatoField.propTypes = {
-    meta: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    id: PT.string.isRequired,
-    feltNavn: PT.string.isRequired,
     label: PT.oneOfType([PT.string, PT.node]).isRequired,
-    input: PT.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    dispatch: PT.func.isRequired, // eslint-disable-line react/no-unused-prop-types
     disabled: PT.bool,
-    tidligsteFom: PT.instanceOf(Date),
-    senesteTom: PT.instanceOf(Date),
-    errorMessage: PT.oneOfType([PT.arrayOf(PT.node), PT.node]),
+    tidligsteFom: PT.string,
+    senesteTom: PT.string,
+    touched: PT.bool.isRequired,
+    error: PT.string,
+    input: PT.shape({
+        id: PT.string.isRequired,
+        name: PT.string.isRequired,
+        value: PT.string,
+        onChange: PT.func.isRequired,
+        onBlur: PT.func.isRequired,
+    }).isRequired,
 };
 
 DatoField.defaultProps = {
     disabled: false,
     tidligsteFom: undefined,
     senesteTom: undefined,
-    errorMessage: undefined,
+    error: undefined,
 };
 
-function parseDato(dato) {
-    return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
-}
-
-const ConnectedDatoField = connect()(DatoField);
-
-function Datovelger(props) {
-    const { feltNavn, labelId, tidligsteFom, senesteTom, intl } = props;
-
-    const datoFelt = (
-        <ConnectedDatoField
-            label={<FormattedMessage id={labelId} />}
-            {...props}
-        />
-    );
-    return (
-        <CustomField
-            name={feltNavn}
-            parse={parseDato}
-            errorClass="skjemaelement--harFeil"
-            customComponent={datoFelt}
-            validate={value =>
-                validerDatoField(value, intl, {
-                    fra: tidligsteFom,
-                    til: senesteTom,
-                })}
-        />
-    );
-}
-
-Datovelger.propTypes = {
-    feltNavn: PT.string.isRequired,
-    labelId: PT.string.isRequired,
-    tidligsteFom: PT.instanceOf(Date),
-    senesteTom: PT.instanceOf(Date),
-    intl: intlShape.isRequired,
-};
-
-Datovelger.defaultProps = {
-    tidligsteFom: undefined,
-    senesteTom: undefined,
-};
-
-export default injectIntl(Datovelger);
+export default DatoField;

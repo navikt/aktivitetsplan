@@ -2,14 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { isDirty } from 'redux-form';
 import { lagNyAktivitet } from '../aktivitet-actions';
 import NyMoteAktivitet from '../aktivitet-forms/mote/ny-mote-aktivitet';
 import { aktivitetRoute } from '../../../routing';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import { formNavn } from '../aktivitet-forms/aktivitet-form-utils';
 import { STATUS } from '../../../ducks/utils';
 import {
     selectAktivitetFeilmeldinger,
@@ -35,10 +33,10 @@ import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sok
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
-function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
+function onBeforeLoadEffect(isDirty) {
     return () => {
         window.onbeforeunload = e => {
-            if (formIsDirty || formIsDirtyV2.current) {
+            if (isDirty.current) {
                 e.returnValue = CONFIRM;
                 return CONFIRM;
             }
@@ -55,18 +53,13 @@ function NyAktivitetForm(props) {
     const {
         onLagreNyAktivitet,
         lagrer,
-        formIsDirty,
         history,
         match,
         aktivitetFeilmeldinger,
     } = props;
 
-    const formIsDirtyV2 = useRef(false);
-
-    useEffect(onBeforeLoadEffect(formIsDirty, formIsDirtyV2), [
-        formIsDirty,
-        formIsDirtyV2,
-    ]);
+    const isDirty = useRef(false);
+    useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
 
     function onLagre(aktivitet) {
         return onLagreNyAktivitet(aktivitet).then(action =>
@@ -89,7 +82,7 @@ function NyAktivitetForm(props) {
     };
 
     function onRequestClose() {
-        const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
+        const isItReallyDirty = isDirty.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.push('/');
         }
@@ -97,7 +90,7 @@ function NyAktivitetForm(props) {
 
     const onReqBack = e => {
         e.preventDefault();
-        const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
+        const isItReallyDirty = isDirty.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.goBack();
         }
@@ -112,7 +105,7 @@ function NyAktivitetForm(props) {
 
     const formProps = {
         onLagreNyAktivitet: onLagre,
-        formIsDirty,
+        isDirty,
         lagrer,
     };
 
@@ -132,7 +125,7 @@ function NyAktivitetForm(props) {
                         <Route path={`${match.path}/samtalereferat`}>
                             <SamtalereferatForm
                                 onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/stilling`}>
@@ -140,7 +133,7 @@ function NyAktivitetForm(props) {
                                 onSubmit={onSubmitFactory(
                                     STILLING_AKTIVITET_TYPE
                                 )}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/sokeavtale`}>
@@ -148,7 +141,7 @@ function NyAktivitetForm(props) {
                                 onSubmit={onSubmitFactory(
                                     SOKEAVTALE_AKTIVITET_TYPE
                                 )}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/behandling`}>
@@ -156,19 +149,19 @@ function NyAktivitetForm(props) {
                                 onSubmit={onSubmitFactory(
                                     BEHANDLING_AKTIVITET_TYPE
                                 )}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/egen`}>
                             <EgenAktivitetForm
                                 onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/ijobb`}>
                             <IJobbAktivitetForm
                                 onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                     </Switch>
@@ -180,7 +173,6 @@ function NyAktivitetForm(props) {
 
 NyAktivitetForm.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
-    formIsDirty: PT.bool.isRequired,
     lagrer: PT.bool.isRequired,
     history: PT.object.isRequired,
     match: PT.object.isRequired,
@@ -193,7 +185,6 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
     lagrer: selectAktivitetStatus(state) !== STATUS.OK,
-    formIsDirty: isDirty(formNavn)(state),
     aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
 });
 
