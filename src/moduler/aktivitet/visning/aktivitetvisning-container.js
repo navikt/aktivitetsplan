@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { isDirty } from 'redux-form';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
 import PT from 'prop-types';
 import {
     hentAktivitet,
@@ -20,11 +18,7 @@ import {
     selectErUnderOppfolging,
     selectOppfolgingStatus,
 } from '../../oppfolging-status/oppfolging-selector';
-import Modal from '../../../felles-komponenter/modal/modal';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import {
-    STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
     UTDANNING_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     TILTAK_AKTIVITET_TYPE,
@@ -33,35 +27,8 @@ import { STATUS } from '../../../ducks/utils';
 import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
-import { AKTIVITET_STATUS_FORM_NAME } from './status-oppdatering/aktivitet-status-form';
-import { AVTALT_AKTIVITET_FORM_NAME } from './avtalt-container/avtalt-form';
-import { STILLING_ETIKETT_FORM_NAME } from './etikett-oppdatering/stilling-etikett-form';
-import {
-    NY_HENVENDELSE_AKTIVITET_FORM_NAME,
-    DIALOG_AKTIVITET_FORM_NAME,
-} from './underelement-for-aktivitet/underelementer-for-aktivitet';
-
-function aktivitetvisningHeader(valgtAktivitet) {
-    if (!valgtAktivitet) {
-        return null;
-    }
-
-    const aktivitetErLaast =
-        valgtAktivitet.status === STATUS_FULLFOERT ||
-        valgtAktivitet.status === STATUS_AVBRUTT;
-
-    return (
-        <ModalHeader
-            normalTekstId="aktivitetvisning.header"
-            normalTekstValues={{
-                status: valgtAktivitet.status,
-                type: valgtAktivitet.type,
-            }}
-            aria-labelledby="modal-aktivitetsvisning-header"
-            aktivitetErLaast={aktivitetErLaast}
-        />
-    );
-}
+import { DirtyProvider } from '../../context/dirty-context';
+import AktivitetvisningModal from './aktivitetvisning-modal';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
@@ -91,38 +58,19 @@ class AktivitetvisningContainer extends Component {
     }
 
     render() {
-        const {
-            avhengigheter,
-            valgtAktivitet,
-            history,
-            intl,
-            formIsDirty,
-            ...props
-        } = this.props;
+        const { valgtAktivitet, ...props } = this.props;
+
         return (
-            <Modal
-                contentLabel="aktivitetsvisning-modal"
-                contentClass="aktivitetsvisning"
-                avhengigheter={avhengigheter}
-                header={aktivitetvisningHeader(valgtAktivitet)}
-                onRequestClose={() => {
-                    const dialogTekst = intl.formatMessage({
-                        id: 'aktkivitet-skjema.lukk-advarsel',
-                    });
-                    // eslint-disable-next-line no-alert
-                    if (!formIsDirty || window.confirm(dialogTekst)) {
-                        history.push('/');
-                    }
-                }}
-            >
-                <Aktivitetvisning aktivitet={valgtAktivitet} {...props} />
-            </Modal>
+            <DirtyProvider>
+                <AktivitetvisningModal aktivitet={valgtAktivitet} {...props}>
+                    <Aktivitetvisning aktivitet={valgtAktivitet} {...props} />
+                </AktivitetvisningModal>
+            </DirtyProvider>
         );
     }
 }
 
 AktivitetvisningContainer.propTypes = {
-    aktivitetId: PT.string.isRequired,
     valgtAktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
     laster: PT.bool.isRequired,
@@ -132,8 +80,7 @@ AktivitetvisningContainer.propTypes = {
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
     doLukkDialogEllerHistorikk: PT.func.isRequired,
     history: AppPT.history.isRequired,
-    intl: intlShape.isRequired,
-    formIsDirty: PT.bool.isRequired,
+    match: PT.object.isRequired,
     underOppfolging: PT.bool.isRequired,
 };
 
@@ -142,7 +89,8 @@ AktivitetvisningContainer.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
+    const aktivitetId = props.match.params.id;
+    const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
 
     const erArenaAktivitet =
         !!valgtAktivitet &&
@@ -169,16 +117,6 @@ const mapStateToProps = (state, props) => {
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
         laster,
         underOppfolging: selectErUnderOppfolging(state),
-        formIsDirty:
-            isDirty(AKTIVITET_STATUS_FORM_NAME)(state) ||
-            isDirty(AVTALT_AKTIVITET_FORM_NAME)(state) ||
-            isDirty(STILLING_ETIKETT_FORM_NAME)(state) ||
-            isDirty(
-                `${NY_HENVENDELSE_AKTIVITET_FORM_NAME}-${props.aktivitetId}`
-            )(state) ||
-            isDirty(`${DIALOG_AKTIVITET_FORM_NAME}-${props.aktivitetId}`)(
-                state
-            ),
     };
 };
 
@@ -194,6 +132,6 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-export default injectIntl(
-    connect(mapStateToProps, mapDispatchToProps)(AktivitetvisningContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(
+    AktivitetvisningContainer
 );

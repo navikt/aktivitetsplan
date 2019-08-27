@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { Knapp } from 'nav-frontend-knapper';
@@ -11,6 +11,7 @@ import { selectAktivitetStatus } from '../../aktivitet-selector';
 import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import * as AppPT from '../../../../proptypes';
+import { DirtyContext } from '../../../context/dirty-context';
 
 function validate(val) {
     if (val.trim().length === 0) {
@@ -40,6 +41,14 @@ function OppdaterReferatForm(props) {
     const state = validator({
         referat: aktivitet.referat || '',
     });
+
+    const dirty = useContext(DirtyContext);
+
+    // eslint-disable-next-line
+    useEffect(() => dirty.setFormIsDirty('referat', !state.pristine), [
+        dirty.setFormIsDirty,
+        state.pristine,
+    ]);
 
     const oppdaterOgPubliser = state.onSubmit(values => {
         return onSubmit(values).then(response => {

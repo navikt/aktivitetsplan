@@ -1,90 +1,119 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import PT from 'prop-types';
-import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
-import { validForm } from 'react-redux-form-validation';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
-import { HjelpetekstOver } from 'nav-frontend-hjelpetekst';
+import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { HjelpetekstHoyre, HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import classNames from 'classnames';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../../../felles-komponenter/skjema/validering';
-import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
+import useFormstate from '@nutgaard/use-formstate';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import AvtaltFormBrukerUnderOppfolgning from './avtalt-form-bruker-under-oppfolgning';
 import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
 import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
+import { DirtyContext } from '../../../context/dirty-context';
+import Checkbox from '../../../../felles-komponenter/skjema/input-v2/checkbox';
+import Select from '../../../../felles-komponenter/skjema/input-v2/select';
+import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 export const IKKE_SEND_FORHANDSORIENTERING = 'ikke_send_forhandsorientering';
 
-export const FORHANDSORIENTERING_MAKS_LENGDE = 500;
-export const begrensetForhandsorienteringLengde = maksLengde(
-    'sett-avtalt-forhandsorientering-lengde',
-    FORHANDSORIENTERING_MAKS_LENGDE
-);
-export const pakrevdForhandsorienteringLengde = pakrevd(
-    'sett-avtalt-forhandsorientering-paakrevd'
-);
+function validateForhandsorienter(val, values) {
+    if (values.avtaltSelect !== SEND_PARAGRAF_11_9) {
+        return null;
+    }
 
-function AvtaltForm({
-    handleSubmit,
-    className,
-    oppdaterer,
-    lasterData,
-    currentAvtaltSelect,
-    currentAvtaltCheckbox,
-    erManuellKrrKvpBruker,
-    visAvtaltMedNavMindreEnnSyvDager,
-}) {
+    if (val.trim().length === 0) {
+        return 'Tekst til brukeren er påkrevd';
+    }
+    if (val.length > 500) {
+        return 'Du må korte ned teksten til 500 tegn';
+    }
+
+    return null;
+}
+
+const avtaltTekst =
+    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ' +
+    'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
+    'ber vi deg ta kontakt med veilederen din så snart som mulig.';
+const avtaltTekst119 =
+    'Du kan få redusert utbetaling av arbeidsavklaringspenger med én stønadsdag hvis du lar være å ' +
+    '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. Dette går ' +
+    'fram av folketrygdloven § 11-9.';
+
+const validator = useFormstate({
+    avtaltCheckbox: () => {},
+    avtaltSelect: () => {},
+    avtaltText119: validateForhandsorienter,
+    avtaltText: () => {},
+});
+
+function AvtaltForm(props) {
+    const {
+        onSubmit,
+        className,
+        oppdaterer,
+        lasterData,
+        erManuellKrrKvpBruker,
+        visAvtaltMedNavMindreEnnSyvDager,
+    } = props;
+
+    const state = validator({
+        avtaltCheckbox: 'false',
+        avtaltSelect: SEND_FORHANDSORIENTERING,
+        avtaltText119: avtaltTekst119,
+        avtaltText: avtaltTekst,
+    });
+
+    const dirty = useContext(DirtyContext);
+
+    useEffect(
+        () => {
+            dirty.setFormIsDirty('avtalt', !state.pristine);
+            return () => dirty.setFormIsDirty('avtalt', false);
+        },
+        [dirty.setFormIsDirty, state.pristine] // eslint-disable-line
+    );
+
+    const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
+    const avtaltSelect = state.fields.avtaltSelect.input.value;
+
+    const kanSendeForhandsvarsel =
+        !erManuellKrrKvpBruker && !visAvtaltMedNavMindreEnnSyvDager;
+
     return (
         <form
-            onSubmit={handleSubmit}
+            onSubmit={state.onSubmit(onSubmit)}
             noValidate="noValidate"
             autoComplete="off"
             className={className}
         >
             <Undertittel>
-                <FormattedMessage id="sett-avtalt.header" />
+                {'Merk aktiviteten som "Avtalt med NAV"'}
             </Undertittel>
             <div className="avtalt-container__radio">
                 <Checkbox
-                    labelId="sett-avtalt.label"
-                    name="avtalt"
-                    feltNavn="avtaltCheckbox"
+                    label="Avtalt med NAV"
                     disabled={lasterData}
+                    {...state.fields.avtaltCheckbox}
                 />
-                <HjelpetekstOver>
-                    <FormattedMessage id="sett-avtalt.hjelpetekst" />
+                <HjelpetekstOver id="hjelp">
+                    {
+                        'Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt med NAV"'
+                    }
                 </HjelpetekstOver>
             </div>
             <VisibleIfDiv
                 className={classNames({
-                    'avtalt-container__innhold':
-                        !erManuellKrrKvpBruker &&
-                        !visAvtaltMedNavMindreEnnSyvDager,
+                    'avtalt-container__innhold': kanSendeForhandsvarsel,
                     'avtalt-container__alertstripe':
                         erManuellKrrKvpBruker ||
                         visAvtaltMedNavMindreEnnSyvDager,
                 })}
-                visible={currentAvtaltCheckbox}
+                visible={avtalt}
             >
                 <AvtaltStripeKRRKvpManuellBruker
                     visible={erManuellKrrKvpBruker}
-                />
-                <AvtaltFormBrukerUnderOppfolgning
-                    visible={
-                        !erManuellKrrKvpBruker &&
-                        !visAvtaltMedNavMindreEnnSyvDager
-                    }
-                    currentAvtaltSelect={currentAvtaltSelect}
-                    forhandsorienteringMaksLengde={
-                        FORHANDSORIENTERING_MAKS_LENGDE
-                    }
                 />
                 <AvtaltFormMindreEnnSyvDager
                     visible={
@@ -92,17 +121,74 @@ function AvtaltForm({
                         visAvtaltMedNavMindreEnnSyvDager
                     }
                 />
+                <VisibleIfDiv visible={kanSendeForhandsvarsel}>
+                    <Select
+                        label="Velg type forhåndsorientering"
+                        disabled={oppdaterer}
+                        noBlankOption
+                        {...state.fields.avtaltSelect}
+                    >
+                        <option value={SEND_FORHANDSORIENTERING}>
+                            Send forhåndsorientering (standard melding)
+                        </option>
+                        <option value={SEND_PARAGRAF_11_9}>
+                            Send forhåndsorientering for §11-9 (AAP)
+                        </option>
+                        <option value={IKKE_SEND_FORHANDSORIENTERING}>
+                            Ikke send forhåndsorientering
+                        </option>
+                    </Select>
+                    <VisibleIfDiv
+                        visible={avtaltSelect !== IKKE_SEND_FORHANDSORIENTERING}
+                    >
+                        <VisibleIfDiv
+                            visible={avtaltSelect === SEND_FORHANDSORIENTERING}
+                        >
+                            <Normaltekst className="blokk-xs">
+                                Det er viktig at du gjennomfører denne
+                                aktiviteten med NAV. Gjør du ikke det, kan det
+                                medføre at stønaden du mottar fra NAV bortfaller
+                                for en periode eller stanses. Hvis du ikke kan
+                                gjennomføre aktiviteten, ber vi deg ta kontakt
+                                med veilederen din så snart som mulig.
+                            </Normaltekst>
+                        </VisibleIfDiv>
+                        <VisibleIfDiv
+                            visible={avtaltSelect === SEND_PARAGRAF_11_9}
+                        >
+                            <Textarea
+                                label={
+                                    <div>
+                                        <EtikettLiten className="avtalt-tekst-etikett">
+                                            Tekst til brukeren
+                                        </EtikettLiten>
+                                        <HjelpetekstHoyre id="brukerinfo">
+                                            Brukeren får en SMS eller e-post via
+                                            kontaktinformasjon som brukeren selv
+                                            har registrert i det offentlige
+                                            kontaktregisteret. Brukeren får
+                                            beskjed om en viktig oppgave og det
+                                            lenkes til dialog. Beskjeden sendes
+                                            gjennom Altinn etter en halv time.
+                                            Sender du flere
+                                            forhåndsorienteringer innen en halv
+                                            time så blir det kun sendt én SMS
+                                            eller e-post.
+                                        </HjelpetekstHoyre>
+                                    </div>
+                                }
+                                maxLength={500}
+                                disabled={oppdaterer}
+                                {...state.fields.avtaltText119}
+                            />
+                        </VisibleIfDiv>
+                    </VisibleIfDiv>
+                </VisibleIfDiv>
                 <Knapp spinner={oppdaterer} disabled={lasterData}>
-                    <FormattedMessage
-                        id="sett-til-avtalt.bekreft-knapp"
-                        values={{
-                            ikkeSend:
-                                currentAvtaltSelect ===
-                                    IKKE_SEND_FORHANDSORIENTERING ||
-                                erManuellKrrKvpBruker ||
-                                visAvtaltMedNavMindreEnnSyvDager,
-                        }}
-                    />
+                    {avtaltSelect === IKKE_SEND_FORHANDSORIENTERING ||
+                    !kanSendeForhandsvarsel
+                        ? 'Bekreft'
+                        : 'Bekreft og send'}
                 </Knapp>
             </VisibleIfDiv>
         </form>
@@ -110,51 +196,17 @@ function AvtaltForm({
 }
 
 AvtaltForm.propTypes = {
-    handleSubmit: PT.func,
+    onSubmit: PT.func,
     className: PT.string,
     oppdaterer: PT.bool.isRequired,
     lasterData: PT.bool.isRequired,
-    currentAvtaltSelect: PT.string,
-    currentAvtaltCheckbox: PT.bool,
     erManuellKrrKvpBruker: PT.bool.isRequired,
     visAvtaltMedNavMindreEnnSyvDager: PT.bool.isRequired,
 };
 
 AvtaltForm.defaultProps = {
-    handleSubmit: undefined,
+    onSubmit: undefined,
     className: undefined,
-    currentAvtaltSelect: SEND_FORHANDSORIENTERING,
-    currentAvtaltCheckbox: false,
 };
 
-export const AVTALT_AKTIVITET_FORM_NAME = 'avtalt-aktivitet-form';
-const AvtaltReduxForm = validForm({
-    form: AVTALT_AKTIVITET_FORM_NAME,
-    enableReinitialize: false,
-    validate: {
-        avtaltText119: [
-            begrensetForhandsorienteringLengde,
-            pakrevdForhandsorienteringLengde,
-        ],
-    },
-})(AvtaltForm);
-
-const mapStateToProps = (state, props) => {
-    const selector = formValueSelector(AVTALT_AKTIVITET_FORM_NAME);
-    return {
-        initialValues: {
-            avtaltSelect: SEND_FORHANDSORIENTERING,
-            avtaltText119: props.intl.formatMessage({
-                id: 'sett-avtalt-paragraf-11-9-tekst',
-            }),
-            avtaltText: props.intl.formatMessage({
-                id: 'sett-avtalt-forhandsorientering-tekst',
-            }),
-            avtaltCheckbox: false,
-        },
-        currentAvtaltSelect: selector(state, 'avtaltSelect'),
-        currentAvtaltCheckbox: selector(state, 'avtaltCheckbox'),
-    };
-};
-
-export default injectIntl(connect(mapStateToProps)(AvtaltReduxForm));
+export default AvtaltForm;

@@ -2,9 +2,9 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 
-function FieldGroup({ name, field, children }) {
+function FieldGroup({ name, field, alwaysValidate, children }) {
     const { touched, error } = field;
-    const feil = touched ? error : null;
+    const feil = touched || alwaysValidate ? error : null;
     return (
         <div id={name} className={classNames({ 'skjema--harFeil': feil })}>
             <div className={classNames({ skjema__feilomrade: feil })}>
@@ -23,6 +23,7 @@ function FieldGroup({ name, field, children }) {
 
 FieldGroup.propTypes = {
     name: PT.string.isRequired,
+    alwaysValidate: PT.bool,
     field: PT.shape({
         touched: PT.bool.isRequired,
         error: PT.string,
@@ -32,6 +33,7 @@ FieldGroup.propTypes = {
 
 FieldGroup.defaultProps = {
     children: undefined,
+    alwaysValidate: false,
 };
 
 export default FieldGroup;

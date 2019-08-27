@@ -1,76 +1,83 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { formValueSelector, reduxForm } from 'redux-form';
+import useFormstate from '@nutgaard/use-formstate';
 import * as konstanter from '../../../../constant';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { STATUS } from '../../../../ducks/utils';
-import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
+import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
+import * as AppPT from '../../../../proptypes';
+import { DirtyContext } from '../../../context/dirty-context';
 
-export const STILLING_ETIKETT_FORM_NAME = 'stilling-etikett-form';
+const validator = useFormstate({
+    etikettstatus: () => {},
+});
 
 function StillingEtikettForm(props) {
-    const { aktivitetDataStatus, disabled, dirty, handleSubmit } = props;
-    const lasterData = aktivitetDataStatus !== STATUS.OK;
+    const { aktivitet, disabled, onSubmit } = props;
+
+    const state = validator({
+        etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT,
+    });
+
+    const dirty = useContext(DirtyContext);
+    // eslint-disable-next-line
+    useEffect(() => dirty.setFormIsDirty('etikett', !state.pristine), [
+        dirty.setFormIsDirty,
+        state.pristine,
+    ]);
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            onSubmit={state.onSubmit(data => {
+                state.reinitialize(data);
+                return onSubmit(data);
+            })}
+        >
             <div className="row">
                 <div className="col col-xs-4">
                     <Radio
-                        feltNavn="etikettstatus"
-                        label={<FormattedMessage id="etikett.INGEN_VALGT" />}
+                        label="Ingen"
                         value={konstanter.INGEN_VALGT}
-                        id={`id--${konstanter.INGEN_VALGT}`}
                         disabled={disabled}
+                        {...state.fields.etikettstatus}
                     />
                     <Radio
-                        feltNavn="etikettstatus"
-                        label={<FormattedMessage id="etikett.SOKNAD_SENDT" />}
+                        label="Søknaden er sendt"
                         value={konstanter.SOKNAD_SENDT}
-                        id={`id--${konstanter.SOKNAD_SENDT}`}
                         disabled={disabled}
+                        {...state.fields.etikettstatus}
                     />
                 </div>
                 <div className="col col-xs-4">
                     <Radio
-                        feltNavn="etikettstatus"
-                        label={
-                            <FormattedMessage id="etikett.INNKALT_TIL_INTERVJU" />
-                        }
+                        label="Innkalt til intervju"
                         value={konstanter.INNKALT_TIL_INTERVJU}
-                        id={`id--${konstanter.INNKALT_TIL_INTERVJU}`}
                         disabled={disabled}
+                        {...state.fields.etikettstatus}
                     />
                     <Radio
-                        feltNavn="etikettstatus"
-                        label={<FormattedMessage id="etikett.AVSLAG" />}
+                        label="Fått avslag"
                         value={konstanter.AVSLAG}
-                        id={`id--${konstanter.AVSLAG}`}
                         disabled={disabled}
+                        {...state.fields.etikettstatus}
                     />
                 </div>
                 <div className="col col-xs-4">
                     <Radio
-                        feltNavn="etikettstatus"
-                        label={<FormattedMessage id="etikett.JOBBTILBUD" />}
+                        label="Fått jobbtilbud"
                         value={konstanter.JOBBTILBUD}
-                        id={`id--${konstanter.JOBBTILBUD}`}
                         disabled={disabled}
+                        {...state.fields.etikettstatus}
                     />
                 </div>
             </div>
-            <VisibleIfDiv visible={dirty}>
-                <Hovedknapp
-                    spinner={lasterData}
-                    autoDisableVedSpinner
-                    className="oppdater-status"
-                    disabled={disabled}
-                >
+            <VisibleIfDiv visible={!state.pristine}>
+                <Hovedknapp className="oppdater-status" disabled={disabled}>
                     <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
                 </Hovedknapp>
             </VisibleIfDiv>
@@ -78,21 +85,16 @@ function StillingEtikettForm(props) {
     );
 }
 
-const StillingEtikettReduxForm = reduxForm({
-    form: STILLING_ETIKETT_FORM_NAME,
-    enableReinitialize: true,
-})(StillingEtikettForm);
-
 StillingEtikettForm.defaultProps = {
     aktivitetDataStatus: STATUS.NOT_STARTED,
 };
 
 StillingEtikettForm.propTypes = {
     aktivitetDataStatus: PT.string,
+    aktivitet: AppPT.aktivitet.isRequired,
     disableStatusEndring: PT.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
     disabled: PT.bool.isRequired,
-    dirty: PT.bool.isRequired,
-    handleSubmit: PT.func.isRequired,
+    onSubmit: PT.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
@@ -101,28 +103,21 @@ const mapStateToProps = (state, props) => {
         aktivitetDataStatus,
         disabled:
             aktivitetDataStatus !== STATUS.OK || props.disableStatusEndring,
-        valgtEtikettStatus: formValueSelector(STILLING_ETIKETT_FORM_NAME)(
-            state,
-            'etikettstatus'
-        ),
-        initialValues: {
-            etikettstatus: props.aktivitet.etikett || konstanter.INGEN_VALGT,
-        },
     };
 };
 
-const mapDispatchToProps = () => ({
-    onSubmit: (values, dispatch, props) => {
+const mapDispatchToProps = (dispatch, props) => ({
+    onSubmit: values => {
         const nyEtikett =
             values.etikettstatus === konstanter.INGEN_VALGT
                 ? null
                 : values.etikettstatus;
-        dispatch(
+        return dispatch(
             oppdaterAktivitetEtikett({ ...props.aktivitet, etikett: nyEtikett })
         ).then(() => document.querySelector('.aktivitet-modal').focus());
     },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    StillingEtikettReduxForm
+    StillingEtikettForm
 );

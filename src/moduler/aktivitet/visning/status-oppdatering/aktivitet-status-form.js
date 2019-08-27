@@ -1,22 +1,14 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { formValueSelector, untouch } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
-import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
-import FieldGroupsValidering from '../../../../felles-komponenter/skjema/fieldgroups-validering';
+import useFormstate from '@nutgaard/use-formstate';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { STATUS } from '../../../../ducks/utils';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import visibleIf from '../../../../hocs/visible-if';
-import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../../../felles-komponenter/skjema/validering';
 import {
     manglerPubliseringAvSamtaleReferat,
     trengerBegrunnelse,
@@ -32,14 +24,14 @@ import {
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import StatusRadio from './status-radio';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import { selectArenaAktivitetStatus } from '../../arena-aktivitet-selector';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
-
-export const AKTIVITET_STATUS_FORM_NAME = 'aktivitet-status-form';
-const BEGRUNNELSE_FELT_NAME = 'begrunnelse';
-const MAKS_LENGDE = 255;
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-valideringv2';
+import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
+import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import { DirtyContext } from '../../../context/dirty-context';
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);
 
@@ -47,97 +39,153 @@ function statusKreverInformasjonMelding(status) {
     return status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
 }
 
-function kanOppdatereStatus(props) {
-    const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(
-        props.valgtAktivitetStatus
-    );
+function label(status) {
+    if (status === STATUS_FULLFOERT) {
+        return 'Skriv en kort kommentar om hvordan det har gått med aktiviteten, eller noe NAV bør kjenne til.';
+    }
+    return 'Skriv en kort begrunnelse om hvorfor du avbrøt aktiviteten. Etter at du har trykket på "Bekreft", må du gi beskjed til veilederen din ved å starte en dialog her i aktivitetsplanen.';
+}
+
+function kanOppdatereStatus(aktivitet, values) {
+    const status = values.aktivitetstatus;
+    const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
     const ferdigOgManglerPubliseringAvSamtaleReferat =
         ferdigStatus &&
-        manglerPubliseringAvSamtaleReferat(
-            props.aktivitet || {},
-            props.valgtAktivitetStatus
-        );
+        manglerPubliseringAvSamtaleReferat(aktivitet || {}, status);
 
-    return !ferdigOgManglerPubliseringAvSamtaleReferat;
+    if (ferdigOgManglerPubliseringAvSamtaleReferat) {
+        return 'Samtalereferatet må deles før du kan sette aktiviteten til denne statusen';
+    }
+
+    return null;
+}
+
+function validateBegrunnelse(value, values, aktivitet) {
+    const status = values.aktivitetstatus;
+    if (
+        trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type) &&
+        value.trim().length === 0
+    ) {
+        return 'Du må fylle ut en begrunnelse';
+    }
+    if (value.length > 255) {
+        return 'Du må korte ned teksten til 255 tegn';
+    }
+    return null;
 }
 
 function AktivitetStatusForm(props) {
     const {
         aktivitet,
-        dirty,
-        handleSubmit,
+        onSubmit,
         aktivitetDataStatus,
-        valgtAktivitetStatus,
         disableStatusEndring,
-        errorSummary,
     } = props;
+
+    const validator = useFormstate({
+        aktivitetstatus: () => {},
+        begrunnelse: (val, values) =>
+            validateBegrunnelse(val, values, aktivitet),
+        statusValidering: (val, values) =>
+            kanOppdatereStatus(aktivitet, values),
+    });
+
+    const state = validator({
+        aktivitetstatus: aktivitet.status || '',
+        begrunnelse: aktivitet.avsluttetBegrunnelse || '',
+        statusValidering: '',
+    });
+
+    const dirty = useContext(DirtyContext);
+    // eslint-disable-next-line
+    useEffect(() => dirty.setFormIsDirty('status', !state.pristine), [
+        dirty.setFormIsDirty,
+        state.pristine,
+    ]);
+
+    const status = state.fields.aktivitetstatus.input.value;
     const lasterData = aktivitetDataStatus !== STATUS.OK;
-    const visAdvarsel = statusKreverInformasjonMelding(valgtAktivitetStatus);
+    const visAdvarsel = statusKreverInformasjonMelding(status);
     const visBegrunnelseFelt = trengerBegrunnelse(
         aktivitet.avtalt,
-        valgtAktivitetStatus,
+        status,
         aktivitet.type
     );
+
     const disabled = disableStatusEndring || lasterData;
 
     return (
-        <form onSubmit={handleSubmit}>
-            {errorSummary}
-            <FieldGroupsValidering
-                feltNavn="statusValidering"
-                errorMessageId="referat.validering.ikke-publisert"
-                validate={() => kanOppdatereStatus(props)}
+        <form
+            onSubmit={state.onSubmit(data => {
+                state.reinitialize(data);
+                return onSubmit(data);
+            })}
+        >
+            <FormErrorSummary
+                errors={state.errors}
+                submittoken={state.submittoken}
+            />
+            <FieldGroup
+                name="statusValidering"
+                alwaysValidate
+                field={state.fields.statusValidering}
             >
                 <div className="row">
                     <div className="col col-xs-4">
-                        <StatusRadio
-                            status={STATUS_BRUKER_ER_INTRESSERT}
+                        <Radio
+                            label="Forslag"
+                            value={STATUS_BRUKER_ER_INTRESSERT}
                             disabled={disabled}
+                            {...state.fields.aktivitetstatus}
                         />
-                        <StatusRadio
-                            status={STATUS_PLANLAGT}
+                        <Radio
+                            label="Planlegger"
+                            value={STATUS_PLANLAGT}
                             disabled={disabled}
-                        />
-                    </div>
-                    <div className="col col-xs-4">
-                        <StatusRadio
-                            status={STATUS_GJENNOMFOERT}
-                            disabled={disabled}
-                        />
-                        <StatusRadio
-                            status={STATUS_FULLFOERT}
-                            disabled={disabled}
+                            {...state.fields.aktivitetstatus}
                         />
                     </div>
                     <div className="col col-xs-4">
-                        <StatusRadio
-                            status={STATUS_AVBRUTT}
+                        <Radio
+                            label="Gjennomfører"
+                            value={STATUS_GJENNOMFOERT}
                             disabled={disabled}
+                            {...state.fields.aktivitetstatus}
+                        />
+                        <Radio
+                            label="Fullført"
+                            value={STATUS_FULLFOERT}
+                            disabled={disabled}
+                            {...state.fields.aktivitetstatus}
+                        />
+                    </div>
+                    <div className="col col-xs-4">
+                        <Radio
+                            label="Avbrutt"
+                            value={STATUS_AVBRUTT}
+                            disabled={disabled}
+                            {...state.fields.aktivitetstatus}
                         />
                     </div>
                 </div>
-            </FieldGroupsValidering>
+            </FieldGroup>
 
-            <VisibleIfDiv className="status-alert" visible={dirty}>
+            <VisibleIfDiv className="status-alert" visible={!state.pristine}>
                 <VisibleAlertStripeSuksessSolid
                     visible={visAdvarsel}
                     role="alert"
                 >
-                    <FormattedMessage id="aktivitetstatus.oppdater-status-advarsel" />
+                    {
+                        'Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre innholdet.'
+                    }
                 </VisibleAlertStripeSuksessSolid>
 
                 <VisibleIfDiv visible={visBegrunnelseFelt}>
                     <Textarea
-                        labelId={
-                            <FormattedMessage
-                                id="aktivitetstatus.oppdater-status-begrunnelse"
-                                values={{ valgtAktivitetStatus }}
-                            />
-                        }
-                        feltNavn={BEGRUNNELSE_FELT_NAME}
-                        name="begrunnelse-aktivitet"
-                        maxLength={MAKS_LENGDE}
+                        label={label(status)}
+                        maxLength={255}
                         disabled={lasterData}
+                        {...state.fields.begrunnelse}
                     />
                 </VisibleIfDiv>
 
@@ -147,42 +195,12 @@ function AktivitetStatusForm(props) {
                     className="oppdater-status"
                     disabled={disabled}
                 >
-                    <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
+                    Bekreft
                 </Hovedknapp>
             </VisibleIfDiv>
         </form>
     );
 }
-
-const ikkeForLangBegrunnelse = maksLengde(
-    'opprett-begrunnelse.melding.feilmelding.for-lang',
-    MAKS_LENGDE
-);
-const harBegrunnelse = pakrevd(
-    'opprett-begrunnelse.melding.feilmelding.for-kort'
-);
-
-const harBegrunnelseHvisAvtaltOgPakrevdForStatus = (begrunnelse, props) =>
-    trengerBegrunnelse(
-        props.aktivitet.avtalt,
-        props.values.aktivitetstatus,
-        props.aktivitet.type
-    ) && harBegrunnelse(begrunnelse, props);
-
-const OppdaterReduxForm = validForm({
-    form: AKTIVITET_STATUS_FORM_NAME,
-    enableReinitialize: true,
-    errorSummaryTitle: (
-        <FormattedMessage id="aktivitetstatus.form.feiloppsummering-tittel" />
-    ),
-    validate: {
-        begrunnelse: [
-            ikkeForLangBegrunnelse,
-            harBegrunnelseHvisAvtaltOgPakrevdForStatus,
-        ],
-        statusValidering: [],
-    },
-})(AktivitetStatusForm);
 
 AktivitetStatusForm.defaultProps = {
     valgtAktivitetStatus: INGEN_VALGT,
@@ -191,41 +209,34 @@ AktivitetStatusForm.defaultProps = {
 
 AktivitetStatusForm.propTypes = {
     disableStatusEndring: PT.bool.isRequired,
-    handleSubmit: PT.func.isRequired,
-    dirty: PT.bool.isRequired,
+    onSubmit: PT.func.isRequired,
     valgtAktivitetStatus: PT.string,
     aktivitet: aktivitetPT.isRequired,
     aktivitetDataStatus: PT.string,
-    errorSummary: PT.node.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
-    const { aktivitet } = props;
-    const { status, avsluttetKommentar, type } = aktivitet;
     const erArenaAktivitet = [
         TILTAK_AKTIVITET_TYPE,
         GRUPPE_AKTIVITET_TYPE,
         UTDANNING_AKTIVITET_TYPE,
-    ].includes(type);
+    ].includes(props.aktivitet.type);
     const aktivitetDataStatus = erArenaAktivitet
         ? selectArenaAktivitetStatus(state)
         : selectAktivitetStatus(state);
     return {
         aktivitetDataStatus,
-        valgtAktivitetStatus: formValueSelector(AKTIVITET_STATUS_FORM_NAME)(
-            state,
-            'aktivitetstatus'
-        ),
-        initialValues: {
-            begrunnelse: avsluttetKommentar,
-            aktivitetstatus: status,
-        },
     };
 };
 
-const mapDispatchToProps = () => ({
-    onSubmit: (values, dispatch, props) => {
-        dispatch(
+const mapDispatchToProps = (dispatch, props) => ({
+    onSubmit: values => {
+        flyttetAktivitetMetrikk(
+            'submit',
+            props.aktivitet,
+            values.aktivitetstatus
+        );
+        return dispatch(
             flyttAktivitetMedBegrunnelse(
                 props.aktivitet,
                 values.aktivitetstatus,
@@ -233,16 +244,10 @@ const mapDispatchToProps = () => ({
             )
         ).then(() => {
             document.querySelector('.aktivitet-modal').focus();
-            dispatch(
-                untouch(AKTIVITET_STATUS_FORM_NAME, BEGRUNNELSE_FELT_NAME)
-            );
         });
-        flyttetAktivitetMetrikk(
-            'submit',
-            props.aktivitet,
-            values.aktivitetstatus
-        );
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    AktivitetStatusForm
+);

@@ -68,6 +68,7 @@ function validateTekst(val) {
 
 function NyHenvendelseForm(props) {
     const {
+        overskrift,
         onSubmit,
         harEksisterendeOverskrift,
         erNyDialog,
@@ -88,7 +89,7 @@ function NyHenvendelseForm(props) {
     });
 
     const initial = {
-        overskrift: '',
+        overskrift: overskrift || '',
         tekst: '',
         ikkeFerdigbehandlet: '',
         venterPaSvar: '',
@@ -165,9 +166,11 @@ function NyHenvendelseForm(props) {
 NyHenvendelseForm.defaultProps = {
     skalHaAutofokus: false,
     oppfolgingsPerioder: [],
+    overskrift: undefined,
 };
 
 NyHenvendelseForm.propTypes = {
+    overskrift: PT.string,
     onSubmit: PT.func.isRequired,
     harEksisterendeOverskrift: PT.bool.isRequired,
     oppretter: PT.bool.isRequired,
@@ -192,8 +195,7 @@ const mapStateToProps = (state, props) => {
     const overskrift = aktivitet.tittel || dialog.overskrift;
     const erBruker = selectErBruker(state);
     return {
-        form: props.formNavn,
-        initialValues: { overskrift },
+        overskrift,
         harEksisterendeOverskrift: !!overskrift,
         erNyDialog,
         oppretter:
