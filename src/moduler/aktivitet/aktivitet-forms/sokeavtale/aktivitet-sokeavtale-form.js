@@ -1,224 +1,138 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PT from 'prop-types';
-import { formValueSelector, isDirty } from 'redux-form';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { validForm } from 'react-redux-form-validation';
-import LagreAktivitet from '../lagre-aktivitet';
-import { formNavn } from '../aktivitet-form-utils';
-import { moment } from '../../../../utils';
-import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import {
-    SOKEAVTALE_AKTIVITET_TYPE,
-    STATUS_PLANLAGT,
-} from '../../../../constant';
-import PeriodeValidering from '../../../../felles-komponenter/skjema/datovelger/periode-validering';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../../../felles-komponenter/skjema/validering';
+import useFormstate from '@nutgaard/use-formstate';
+import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import { selectValgtMalverkSlice } from '../../../malverk/malverk-selector';
+import Input from '../../../../felles-komponenter/skjema/input-v2/input';
+import PeriodeValidering, {
+    validerPeriodeFelt,
+} from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
+import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';
+import {
+    validateAntallStillinger,
+    validateBeskrivelse,
+    validateFraDato,
+    validateOppfolging,
+    validateTilDato,
+} from './validate';
+import LagreAktivitet from '../lagre-aktivitet';
 
-function erAvtalt(verdi, props) {
-    return !!props.avtalt;
-}
+export default function SokeAvtaleAktivitetForm(props) {
+    const { onSubmit, aktivitet, isDirtyRef, endre } = props;
 
-const OPPFOLGING_MAKS_LENGDE = 255;
-const BESKRIVELSE_MAKS_LENGDE = 5000;
-const MAKS_SOKNADER = 100000;
+    const maybeAktivitet = aktivitet || {};
+    const erAktivitetAvtalt = maybeAktivitet.avtalt === true;
 
-const pakrevdFraDato = pakrevd(
-    'sokeavtale-aktivitet-form.feilmelding.paakrevd-fradato'
-).hvisIkke(erAvtalt);
+    const validator = useFormstate({
+        tittel: () => null,
+        fraDato: val =>
+            validateFraDato(erAktivitetAvtalt, maybeAktivitet.tilDato, val),
+        tilDato: val =>
+            validateTilDato(erAktivitetAvtalt, maybeAktivitet.fraDato, val),
+        antallStillingerSokes: val =>
+            validateAntallStillinger(erAktivitetAvtalt, val),
+        avtaleOppfolging: val => validateOppfolging(erAktivitetAvtalt, val),
+        beskrivelse: val => validateBeskrivelse(erAktivitetAvtalt, val),
+        periodeValidering: (val, values) =>
+            validerPeriodeFelt(values.fraDato, values.tilDato),
+    });
 
-const pakrevdTilDato = pakrevd(
-    'sokeavtale-aktivitet-form.feilmelding.paakrevd-tildato'
-);
+    const defaultFormValues = {
+        tittel: maybeAktivitet.tittel || 'Avtale om å søke jobber',
+        fraDato: maybeAktivitet.fraDato || '',
+        tilDato: maybeAktivitet.tilDato || '',
+        antallStillingerSokes: maybeAktivitet.antallStillingerSokes || '',
+        avtaleOppfolging: maybeAktivitet.avtaleOppfolging || '',
+        beskrivelse: maybeAktivitet.beskrivelse || '',
+        periodeValidering: '',
+    };
 
-// eslint-disable-next-line no-confusing-arrow
-const pakrevdAntall = (value, props) =>
-    (value && value.toString().length > 0) || erAvtalt(value, props)
-        ? undefined
-        : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.paakrevd-antall" />;
+    const state = validator(defaultFormValues);
 
-// eslint-disable-next-line no-confusing-arrow
-const numericAntall = (value, props) =>
-    (value && /^[0-9]+$/.test(value)) || erAvtalt(value, props)
-        ? undefined
-        : <FormattedMessage id="sokeavtale-aktivitet-form.feilmelding.numerisk-antall" />;
-
-// eslint-disable-next-line no-confusing-arrow
-const begrensetAntallSoknader = (value, props) =>
-    (value && value < MAKS_SOKNADER) || erAvtalt(value, props)
-        ? undefined
-        : <FormattedMessage
-              id="sokeavtale-aktivitet-form.feilmelding.soknad-antall"
-              values={{ MAKS_LENGDE: MAKS_SOKNADER }}
-          />;
-
-const begrensetAvtaleOppfolgingLengde = maksLengde(
-    'sokeavtale-aktivitet-form.feilmelding.oppfolging-lengde',
-    OPPFOLGING_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-
-const begrensetBeskrivelseLengde = maksLengde(
-    'sokeavtale-aktivitet-form.feilmelding.beskrivelse-lengde',
-    BESKRIVELSE_MAKS_LENGDE
-).hvisIkke(erAvtalt);
-
-// TODO fiks i separat quickfix
-// eslint-disable-next-line react/prefer-stateless-function
-class SokeAvtaleAktivitetForm extends Component {
-    render() {
-        const {
-            handleSubmit,
-            errorSummary,
-            currentFraDato,
-            currentTilDato,
-            avtalt,
-            endre,
-        } = this.props;
-
-        const erAktivitetAvtalt = avtalt === true;
-
-        return (
-            <form
-                onSubmit={handleSubmit}
-                noValidate="noValidate"
-                autoComplete="off"
-            >
-                <div className="skjema-innlogget aktivitetskjema">
-                    {errorSummary}
-                    <AktivitetFormHeader
-                        tittelId="sokeavtale-aktivitet-form.header"
-                        ingressType={SOKEAVTALE_AKTIVITET_TYPE}
-                        pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
-                    />
-                    <Malverk
-                        visible={window.appconfig.VIS_MALER}
-                        endre={endre}
-                        type="SOKEAVTALE"
-                    />
-                    <Input
-                        feltNavn="tittel"
-                        disabled
-                        className="hidden"
-                        labelId="sokeavtale-aktivitet-form.label.overskrift"
-                        bredde="fullbredde"
-                    />
-
-                    <PeriodeValidering
-                        feltNavn="periodeValidering"
-                        fraDato={currentFraDato}
-                        tilDato={currentTilDato}
-                        errorMessageId="datepicker.feilmelding.egen.fradato-etter-frist"
-                    >
-                        <div className="dato-container">
-                            <Datovelger
-                                feltNavn="fraDato"
-                                disabled={erAktivitetAvtalt}
-                                labelId="sokeavtale-aktivitet-form.label.fra-dato"
-                                senesteTom={currentTilDato}
-                            />
-                            <Datovelger
-                                feltNavn="tilDato"
-                                labelId="sokeavtale-aktivitet-form.label.til-dato"
-                                tidligsteFom={currentFraDato}
-                            />
-                        </div>
-                    </PeriodeValidering>
-
-                    <Input
-                        feltNavn="antallStillingerSokes"
-                        disabled={erAktivitetAvtalt}
-                        labelId="sokeavtale-aktivitet-form.label.antall"
-                        bredde="S"
-                    />
-                    <Textarea
-                        feltNavn="avtaleOppfolging"
-                        disabled={erAktivitetAvtalt}
-                        labelId="sokeavtale-aktivitet-form.label.avtale-oppfolging"
-                        maxLength={OPPFOLGING_MAKS_LENGDE}
-                        visTellerFra={500}
-                    />
-                    <Textarea
-                        feltNavn="beskrivelse"
-                        disabled={erAktivitetAvtalt}
-                        labelId="sokeavtale-aktivitet-form.label.beskrivelse"
-                        maxLength={BESKRIVELSE_MAKS_LENGDE}
-                        visTellerFra={500}
-                    />
-                </div>
-                <LagreAktivitet />
-            </form>
-        );
+    if (isDirtyRef) {
+        isDirtyRef.current = !state.pristine;
     }
+
+    const reinitalize = newInitalValues => {
+        state.reinitialize({ ...defaultFormValues, ...newInitalValues });
+    };
+
+    return (
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
+            <div className="skjema-innlogget aktivitetskjema">
+                <FormErrorSummary
+                    submittoken={state.submittoken}
+                    errors={state.errors}
+                />
+
+                <AktivitetFormHeader
+                    tittelId="sokeavtale-aktivitet-form.header"
+                    ingressType={SOKEAVTALE_AKTIVITET_TYPE}
+                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                />
+
+                <Malverk
+                    visible={window.appconfig.VIS_MALER}
+                    endre={endre}
+                    onChange={reinitalize}
+                    type="SOKEAVTALE"
+                />
+
+                <PeriodeValidering
+                    valideringFelt={state.fields.periodeValidering}
+                >
+                    <div className="dato-container">
+                        <DatoField
+                            label="Fra dato *"
+                            senesteTom={maybeAktivitet.tilDato}
+                            {...state.fields.fraDato}
+                        />
+                        <DatoField
+                            label="Til dato *"
+                            tidligsteFom={maybeAktivitet.fraDato}
+                            {...state.fields.tilDato}
+                        />
+                    </div>
+                </PeriodeValidering>
+
+                <Input
+                    label="Antall søknader i perioden *"
+                    bredde="S"
+                    {...state.fields.antallStillingerSokes}
+                />
+                <Textarea
+                    disabled={erAktivitetAvtalt}
+                    label="Oppfølging fra NAV"
+                    maxLength={255}
+                    visTellerFra={5000}
+                    {...state.fields.avtaleOppfolging}
+                />
+                <Textarea
+                    disabled={erAktivitetAvtalt}
+                    label="Beskrivelse"
+                    maxLength={5000}
+                    visTellerFra={500}
+                    {...state.fields.beskrivelse}
+                />
+            </div>
+            <LagreAktivitet />
+        </form>
+    );
 }
 
 SokeAvtaleAktivitetForm.propTypes = {
-    handleSubmit: PT.func,
-    errorSummary: PT.node.isRequired,
-    currentFraDato: PT.instanceOf(Date),
-    currentTilDato: PT.instanceOf(Date),
-    avtalt: PT.bool,
-    isDirty: PT.bool.isRequired,
+    aktivitet: AppPT.aktivitet,
+    onSubmit: PT.func.isRequired,
+    isDirtyRef: PT.shape({ current: PT.bool }),
     endre: PT.bool,
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
-    handleSubmit: undefined,
-    currentFraDato: undefined,
-    currentTilDato: undefined,
-    avtalt: false,
+    aktivitet: undefined,
+    isDirtyRef: undefined,
     endre: false,
 };
-
-const SokeavtaleAktivitetReduxForm = validForm({
-    form: formNavn,
-    errorSummaryTitle: (
-        <FormattedMessage id="sokeavtale-aktivitet-form.feiloppsummering-tittel" />
-    ),
-    enableReinitialize: true,
-    validate: {
-        fraDato: [pakrevdFraDato],
-        tilDato: [pakrevdTilDato],
-        antallStillingerSokes: [
-            pakrevdAntall,
-            numericAntall,
-            begrensetAntallSoknader,
-        ],
-        beskrivelse: [begrensetBeskrivelseLengde],
-        avtaleOppfolging: [begrensetAvtaleOppfolgingLengde],
-        periodeValidering: [],
-    },
-})(SokeAvtaleAktivitetForm);
-
-const mapStateToProps = (state, props) => {
-    const selector = formValueSelector(formNavn);
-    const valgtMalverk = selectValgtMalverkSlice(state);
-    const aktivitet = props.endre
-        ? props.aktivitet
-        : valgtMalverk || props.aktivitet || {};
-    return {
-        initialValues: {
-            status: STATUS_PLANLAGT,
-            tittel: props.defaultTittel,
-            avtalt: false,
-            ...aktivitet,
-        },
-        currentFraDato: selector(state, 'fraDato')
-            ? moment(selector(state, 'fraDato')).toDate()
-            : undefined,
-        currentTilDato: selector(state, 'tilDato')
-            ? moment(selector(state, 'tilDato')).toDate()
-            : undefined,
-        isDirty: isDirty(formNavn)(state),
-        avtalt: aktivitet && aktivitet.avtalt,
-    };
-};
-
-export default connect(mapStateToProps)(SokeavtaleAktivitetReduxForm);
