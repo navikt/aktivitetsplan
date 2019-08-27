@@ -67,11 +67,13 @@ function AvtaltForm(props) {
 
     const dirty = useContext(DirtyContext);
 
-    // eslint-disable-next-line
-    useEffect(() => dirty.setFormIsDirty('avtalt', !state.pristine), [
-        dirty.setFormIsDirty,
-        state.pristine,
-    ]);
+    useEffect(
+        () => {
+            dirty.setFormIsDirty('avtalt', !state.pristine);
+            return () => dirty.setFormIsDirty('avtalt', false);
+        },
+        [dirty.setFormIsDirty, state.pristine] // eslint-disable-line
+    );
 
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
     const avtaltSelect = state.fields.avtaltSelect.input.value;
