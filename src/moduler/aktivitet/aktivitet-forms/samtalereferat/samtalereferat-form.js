@@ -1,62 +1,73 @@
 import React from 'react';
 import PT from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { validForm } from 'react-redux-form-validation';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { formNavn } from '../aktivitet-form-utils';
-import VelgKanal from '../velg-kanal';
-import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import useFormstate from '@nutgaard/use-formstate';
 import {
     SAMTALEREFERAT_TYPE,
     STATUS_GJENNOMFOERT,
     TELEFON_KANAL,
 } from '../../../../constant';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../../../felles-komponenter/skjema/validering';
-import { dateToISODate } from '../../../../utils';
+import { todayIsoString } from '../../../../utils';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import Input from '../../../../felles-komponenter/skjema/input-v2/input';
+import VelgKanal from '../velg-kanalv2';
+import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
+import {
+    validateFraDato,
+    validateKanal,
+    validateReferat,
+    validateTittel,
+} from './validate';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 
-const TITTEL_MAKS_LENGDE = 255;
-const REFERAT_MAKS_LENGDE = 5000;
+const validator = useFormstate({
+    tittel: validateTittel,
+    fraDato: validateFraDato,
+    kanal: validateKanal,
+    referat: validateReferat,
+});
 
-const pakrevdTittel = pakrevd('samtalereferat-form.feilmelding.pakrevd-tittel');
-const begrensetTittelLengde = maksLengde(
-    'samtalereferat-form.feilmelding.tittel-lengde',
-    TITTEL_MAKS_LENGDE
-);
-const pakrevdFraDato = pakrevd('samtalereferat-form.feilmelding.pakrevd-dato');
-const begrensetReferatLengde = maksLengde(
-    'samtalereferat-form.feilmelding.referat-lengde',
-    REFERAT_MAKS_LENGDE
-);
-const pakrevdKanal = pakrevd('samtalereferat-form.feilmelding.pakrevd-kanal');
+function SamtalereferatForm(props) {
+    const { onSubmit, isDirtyRef } = props;
 
-const pakrevdReferat = pakrevd(
-    'samtalereferat-form.feilmelding.pakrevd-referat'
-);
+    const state = validator({
+        tittel: '',
+        fraDato: todayIsoString(),
+        kanal: TELEFON_KANAL,
+        referat: '',
+    });
 
-function MoteAktivitetForm({
-    handleSubmit,
-    errorSummary,
-    lagrer,
-    dispatch,
-    change,
-}) {
-    function lagreOgDel(e) {
-        e.preventDefault();
-        dispatch(change('erReferatPublisert', true));
-        setTimeout(() => handleSubmit(e));
+    if (isDirtyRef) {
+        isDirtyRef.current = !state.pristine;
     }
 
+    const lagreOgDel = state.onSubmit(values => {
+        const newValues = {
+            ...values,
+            status: STATUS_GJENNOMFOERT,
+            erReferatPublisert: true,
+            avtalt: true,
+        };
+        return onSubmit(newValues);
+    });
+
     return (
-        <form onSubmit={handleSubmit} autoComplete="off">
-            <div className="skjema-innlogget aktivitetskjema">
-                {errorSummary}
+        <form
+            autoComplete="off"
+            onSubmit={state.onSubmit(data => {
+                return onSubmit({
+                    ...data,
+                    status: STATUS_GJENNOMFOERT,
+                    avtalt: true,
+                });
+            })}
+        >
+            <div className="aktivitetskjema">
+                <FormErrorSummary
+                    submittoken={state.submittoken}
+                    errors={state.errors}
+                />
 
                 <AktivitetFormHeader
                     tittelId="samtalereferat-form.header"
@@ -64,75 +75,44 @@ function MoteAktivitetForm({
                     ingressType={SAMTALEREFERAT_TYPE}
                 />
 
-                <Input
-                    feltNavn="tittel"
-                    labelId="samtalereferat-form.label.overskrift"
-                    bredde="fullbredde"
-                />
+                <Input label="Tema for samtalen *" {...state.fields.tittel} />
 
-                <Datovelger
-                    feltNavn="fraDato"
-                    labelId="samtalereferat-form.label.dato"
-                />
+                <DatoField label="Dato *" {...state.fields.fraDato} />
 
-                <VelgKanal labelId="samtalereferat-form.label.kanal" />
+                <VelgKanal label="Møteform *" {...state.fields.kanal} />
 
                 <Textarea
-                    feltNavn="referat"
-                    labelId="samtalereferat-form.label.referat"
-                    placeholderId="samtalereferat-form.placeholder.referat"
-                    maxLength={REFERAT_MAKS_LENGDE}
+                    label="Samtalereferat *"
+                    placeholder="Skriv her"
+                    maxLength={5000}
+                    visTellerFra={500}
+                    {...state.fields.referat}
                 />
             </div>
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp
-                    spinner={lagrer}
-                    disabled={lagrer}
+                    spinner={state.submitting}
+                    autoDisableVedSpinner
                     onClick={lagreOgDel}
                     className="samtalereferat-form__lagre-og-publiser"
                 >
-                    <FormattedMessage id="aktivitet-form.lagre-og-publiser" />
+                    Lagre og del
                 </Hovedknapp>
-                <Knapp spinner={lagrer} disabled={lagrer}>
-                    <FormattedMessage id="aktivitet-form.lagre" />
+                <Knapp spinner={state.submitting} autoDisableVedSpinner>
+                    Lagre
                 </Knapp>
             </div>
         </form>
     );
 }
 
-MoteAktivitetForm.propTypes = {
-    handleSubmit: PT.func.isRequired,
-    dispatch: PT.func.isRequired,
-    change: PT.func.isRequired,
-    errorSummary: PT.node.isRequired,
-    lagrer: PT.bool.isRequired,
+SamtalereferatForm.defaultProps = {
+    isDirtyRef: undefined,
 };
 
-const MoteAktivitetReduxForm = validForm({
-    form: formNavn,
-    errorSummaryTitle: (
-        <FormattedMessage id="samtalereferat-form.feiloppsummering-tittel" />
-    ),
-    validate: {
-        tittel: [pakrevdTittel, begrensetTittelLengde],
-        fraDato: [pakrevdFraDato],
-        kanal: [pakrevdKanal],
-        referat: [pakrevdReferat, begrensetReferatLengde],
-    },
-})(MoteAktivitetForm);
-
-const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet || {};
-    return {
-        initialValues: {
-            status: STATUS_GJENNOMFOERT,
-            fraDato: dateToISODate(new Date()),
-            avtalt: true,
-            kanal: TELEFON_KANAL,
-            ...aktivitet,
-        },
-    };
+SamtalereferatForm.propTypes = {
+    onSubmit: PT.func.isRequired,
+    isDirtyRef: PT.object,
 };
 
-export default connect(mapStateToProps)(MoteAktivitetReduxForm);
+export default SamtalereferatForm;

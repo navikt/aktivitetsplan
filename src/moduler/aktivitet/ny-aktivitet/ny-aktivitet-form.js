@@ -7,7 +7,6 @@ import { lagNyAktivitet } from '../aktivitet-actions';
 import SokeavtaleAktivitet from '../aktivitet-forms/sokeavtale/ny-aktivitet-sokeavtale';
 import BehandlingAktivitet from '../aktivitet-forms/behandling/ny-aktivitet-behandling';
 import NyMoteAktivitet from '../aktivitet-forms/mote/ny-mote-aktivitet';
-import NyttSamtalereferat from '../aktivitet-forms/samtalereferat/nytt-samtalereferat';
 import { aktivitetRoute } from '../../../routing';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
@@ -21,6 +20,7 @@ import {
 import {
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
+    SAMTALEREFERAT_TYPE,
     STATUS_PLANLAGT,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
@@ -28,6 +28,7 @@ import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
+import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
 
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
@@ -75,9 +76,9 @@ function NyAktivitetForm(props) {
         return aktivitet => {
             const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
             const nyAktivitet = {
-                ...filteredAktivitet,
-                type: aktivitetsType,
                 status: STATUS_PLANLAGT,
+                type: aktivitetsType,
+                ...filteredAktivitet,
             };
             return onLagreNyAktivitet(nyAktivitet).then(action =>
                 history.push(aktivitetRoute(action.data.id))
@@ -127,7 +128,10 @@ function NyAktivitetForm(props) {
                             <NyMoteAktivitet {...formProps} />
                         </Route>
                         <Route path={`${match.path}/samtalereferat`}>
-                            <NyttSamtalereferat {...formProps} />
+                            <SamtalereferatForm
+                                onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)}
+                                isDirtyRef={formIsDirtyV2}
+                            />
                         </Route>
                         <Route path={`${match.path}/stilling`}>
                             <StillingAktivitetForm
