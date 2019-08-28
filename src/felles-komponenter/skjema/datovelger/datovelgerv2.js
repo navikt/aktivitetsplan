@@ -119,8 +119,11 @@ class DatoField extends Component {
         };
 
         const onChange = event => {
-            event.target.value = parseInputDate(event.target.value);
-            input.onChange(event);
+            const newValue = parseInputDate(event.target.value);
+            const customEvent = {
+                target: { name: event.target.name, value: newValue },
+            };
+            input.onChange(customEvent);
         };
 
         return (

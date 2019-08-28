@@ -9,8 +9,11 @@ function Checkbox({ touched, error, input, pristine, initialValue, ...rest }) {
     const [toggel, setToggel] = useState(initialValue === 'true');
 
     const toggelOnChange = event => {
-        event.target.value = toggel ? 'false' : 'true'; // eslint-disable-line no-param-reassign
-        input.onChange(event);
+        const newValue = toggel ? 'false' : 'true';
+        const customEvent = {
+            target: { name: event.target.name, value: newValue },
+        };
+        input.onChange(customEvent);
         setToggel(!toggel);
     };
 
