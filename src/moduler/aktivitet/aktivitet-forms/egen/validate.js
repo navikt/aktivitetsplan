@@ -5,7 +5,7 @@ export function validateTittel(avtalt, value) {
         return null;
     }
     if (!value || value.trim().length <= 0) {
-        return 'Du må fylle ut stillingstittel';
+        return 'Du må fylle ut navn på aktiviteten';
     }
     if (value.length > 255) {
         return `Du må korte ned teksten til 255 tegn`;

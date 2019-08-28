@@ -1,23 +1,10 @@
 import React from 'react';
 import PT from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { validForm } from 'react-redux-form-validation';
-import { formNavn } from '../aktivitet-form-utils';
-import {
-    maksLengde,
-    pakrevd,
-} from '../../../../felles-komponenter/skjema/validering';
-import Textarea from '../../../../felles-komponenter/skjema/textarea/textarea';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Select from '../../../../felles-komponenter/skjema/input/select';
-import Datovelger from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import VelgKanal from '../velg-kanal';
-import {
-    MOTE_TYPE,
-    OPPMOTE_KANAL,
-    STATUS_PLANLAGT,
-} from '../../../../constant';
+import useFormstate from '@nutgaard/use-formstate';
+import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import Input from '../../../../felles-komponenter/skjema/input-v2/input';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
+import { MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
 import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
@@ -26,60 +13,28 @@ import {
 } from '../../aktivitet-util';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import {
+    validateAdresse,
+    validateForberedelser,
+    validateFraDato,
+    validateHensikt,
+    validateTittel,
+    HENSIKT_MAKS_LENGDE,
+    FORBEREDELSER_MAKS_LENGDE,
+    validateKlokkeslett,
+    validateVarighet,
+    validateKanal,
+} from './validate';
 
-const TITTEL_MAKS_LENGDE = 255;
-const ADRESSE_MAKS_LENGDE = 255;
-const BESKRIVELSE_MAKS_LENGDE = 5000;
-const FORBEREDELSER_MAKS_LENGDE = 500;
-
-function erAvtaltFunc(verdi, props) {
-    return !!props.avtalt;
-}
-
-const pakrevdTittel = pakrevd(
-    'mote-aktivitet-form.feilmelding.pakrevd-tittel'
-).hvisIkke(erAvtaltFunc);
-
-const begrensetTittelLengde = maksLengde(
-    'mote-aktivitet-form.feilmelding.tittel-lengde',
-    TITTEL_MAKS_LENGDE
-).hvisIkke(erAvtaltFunc);
-
-const pakrevdFraDato = pakrevd('mote-aktivitet-form.feilmelding.pakrevd-dato');
-
-const pakrevdVarighet = pakrevd(
-    'mote-aktivitet-form.feilmelding.pakrevd-varighet'
-);
-const pakrevdKlokkeslett = pakrevd(
-    'mote-aktivitet-form.feilmelding.pakrevd-klokkeslett'
-);
-const pakrevdKanal = pakrevd(
-    'mote-aktivitet-form.feilmelding.pakrevd-kanal'
-).hvisIkke(erAvtaltFunc);
-
-const pakrevdAdresse = pakrevd(
-    'mote-aktivitet-form.feilmelding.pakrevd-adresse'
-);
-
-const begrensetAdresseLengde = maksLengde(
-    'mote-aktivitet-form.feilmelding.adresse-lengde',
-    ADRESSE_MAKS_LENGDE
-).hvisIkke(erAvtaltFunc);
-
-const begrensetBeskrivelseLengde = maksLengde(
-    'mote-aktivitet-form.feilmelding.beskrivelse-lengde',
-    BESKRIVELSE_MAKS_LENGDE
-).hvisIkke(erAvtaltFunc);
-
-const begrensetForberedelserLengde = maksLengde(
-    'mote-aktivitet-form.feilmelding.forberedelser-lengde',
-    FORBEREDELSER_MAKS_LENGDE
-).hvisIkke(erAvtaltFunc);
+import * as AppPT from '../../../../proptypes';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Select from '../../../../felles-komponenter/skjema/input-v2/select';
+import VelgKanal from '../velg-kanalv2';
 
 const tidspunkter = Array.from(new Array(53)).map((noValue, index) => {
     const minutter = index * 15 + 7 * 60;
     return (
-        <option key={minutter} value={minutter} dir="rtl">
+        <option key={minutter} value={minutter}>
             {formatterKlokkeslett(minutter)}
         </option>
     );
@@ -94,11 +49,54 @@ const varigheter = Array.from(new Array(24)).map((noValue, index) => {
     );
 });
 
-function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit }) {
+const defaultBeskrivelse =
+    'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
+
+function MoteAktivitetForm(props) {
+    const { aktivitet, isDirtyRef, onSubmit, endre } = props;
+    const maybeAktivitet = aktivitet || {};
+    const erAvtalt = maybeAktivitet.avtalt === true;
+    const dato = beregnKlokkeslettVarighet(maybeAktivitet);
+    const beskrivelse = maybeAktivitet.beskrivelse || '';
+
+    const validator = useFormstate({
+        tittel: val => validateTittel(erAvtalt, val),
+        dato: val => validateFraDato(erAvtalt, maybeAktivitet.fraDato, val),
+        klokkeslett: val => validateKlokkeslett(erAvtalt, val),
+        varighet: val => validateVarighet(erAvtalt, val),
+        kanal: val => validateKanal(erAvtalt, val),
+        adresse: val => validateAdresse(erAvtalt, val),
+        beskrivelse: val => validateHensikt(erAvtalt, val),
+        forberedelser: val => validateForberedelser(erAvtalt, val),
+    });
+
+    const state = validator({
+        tittel: maybeAktivitet.tittel || '',
+        dato: maybeAktivitet.fraDato || '',
+        klokkeslett: dato.klokkeslett ? dato.klokkeslett.toString() : '',
+        varighet: dato.varighet ? dato.varighet.toString() : '',
+        kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
+        adresse: maybeAktivitet.adresse || '',
+        beskrivelse: endre ? beskrivelse : defaultBeskrivelse,
+        forberedelser: maybeAktivitet.forberedelser || '',
+    });
+
+    if (isDirtyRef) {
+        isDirtyRef.current = !state.pristine;
+    }
+
     return (
-        <form onSubmit={handleSubmit} autoComplete="off">
+        <form
+            onSubmit={state.onSubmit(x =>
+                onSubmit({ ...x, ...beregnFraTil(x) })
+            )}
+            autoComplete="off"
+        >
             <div className="skjema-innlogget aktivitetskjema">
-                {errorSummary}
+                <FormErrorSummary
+                    submittoken={state.submittoken}
+                    errors={state.errors}
+                />
 
                 <AktivitetFormHeader
                     tittelId="mote-aktivitet-form.header"
@@ -107,56 +105,50 @@ function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit }) {
                 />
 
                 <Input
-                    feltNavn="tittel"
                     disabled={erAvtalt}
-                    labelId="mote-aktivitet-form.label.overskrift"
-                    bredde="fullbredde"
+                    label="Tema for møtet *"
+                    {...state.fields.tittel}
                 />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    <Datovelger
-                        feltNavn="dato"
-                        labelId="mote-aktivitet-form.label.dato"
-                    />
-
+                    <DatoField label="Dato *" {...state.fields.dato} />
                     <Select
-                        feltNavn="klokkeslett"
-                        labelId="mote-aktivitet-form.label.klokkeslett"
                         bredde="xs"
+                        label="Klokkeslett *"
+                        {...state.fields.klokkeslett}
                     >
                         {tidspunkter}
                     </Select>
 
                     <Select
-                        feltNavn="varighet"
-                        labelId="mote-aktivitet-form.label.varighet"
                         bredde="xs"
+                        label="Varighet *"
+                        {...state.fields.varighet}
                     >
                         {varigheter}
                     </Select>
                 </div>
-
                 <VelgKanal
                     disabled={erAvtalt}
-                    labelId="mote-aktivitet-form.label.kanal"
+                    label="Møteform *"
+                    {...state.fields.kanal}
                 />
 
                 <Input
-                    feltNavn="adresse"
-                    labelId="mote-aktivitet-form.label.adresse"
-                    bredde="fullbredde"
+                    label="Møtested eller annen praktisk informasjon *"
+                    {...state.fields.adresse}
                 />
                 <Textarea
-                    feltNavn="beskrivelse"
                     disabled={erAvtalt}
-                    labelId="mote-aktivitet-form.label.bakgrunn"
-                    maxLength={BESKRIVELSE_MAKS_LENGDE}
+                    label="Hensikt med møtet"
+                    maxLength={HENSIKT_MAKS_LENGDE}
+                    {...state.fields.beskrivelse}
                 />
                 <Textarea
-                    feltNavn="forberedelser"
                     disabled={erAvtalt}
-                    labelId="mote-aktivitet-form.label.forberedelser"
+                    label="Forberedelser til møtet"
                     maxLength={FORBEREDELSER_MAKS_LENGDE}
+                    {...state.fields.forberedelser}
                 />
             </div>
             <LagreAktivitet />
@@ -165,53 +157,16 @@ function MoteAktivitetForm({ erAvtalt, errorSummary, handleSubmit }) {
 }
 
 MoteAktivitetForm.propTypes = {
-    handleSubmit: PT.func.isRequired,
-    errorSummary: PT.node.isRequired,
-    lagrer: PT.bool.isRequired,
-    erAvtalt: PT.bool,
+    onSubmit: PT.func.isRequired,
+    isDirtyRef: PT.shape({ current: PT.bool }),
+    aktivitet: AppPT.aktivitet,
+    endre: PT.bool,
 };
 
 MoteAktivitetForm.defaultProps = {
-    erAvtalt: false,
+    aktivitet: undefined,
+    isDirtyRef: false,
+    endre: false,
 };
 
-const MoteAktivitetReduxForm = validForm({
-    form: formNavn,
-    errorSummaryTitle: (
-        <FormattedMessage id="mote-aktivitet-form.feiloppsummering-tittel" />
-    ),
-    validate: {
-        tittel: [pakrevdTittel, begrensetTittelLengde],
-        dato: [pakrevdFraDato],
-        varighet: [pakrevdVarighet],
-        kanal: [pakrevdKanal],
-        klokkeslett: [pakrevdKlokkeslett],
-        adresse: [pakrevdAdresse, begrensetAdresseLengde],
-        beskrivelse: [begrensetBeskrivelseLengde],
-        forberedelser: [begrensetForberedelserLengde],
-    },
-})(MoteAktivitetForm);
-
-const mapStateToProps = (state, props) => {
-    const aktivitet = props.aktivitet || {};
-    return {
-        initialValues: {
-            status: STATUS_PLANLAGT,
-            beskrivelse: props.intl.formatMessage({
-                id: 'mote-aktivitet-form.standardtekst.beskrivelse',
-            }),
-            kanal: OPPMOTE_KANAL,
-            ...aktivitet,
-            ...beregnKlokkeslettVarighet(aktivitet),
-        },
-        erAvtalt: aktivitet && aktivitet.avtalt === true,
-        ...props,
-        onSubmit: data =>
-            props.onSubmit({
-                ...data,
-                ...beregnFraTil(data),
-            }),
-    };
-};
-
-export default injectIntl(connect(mapStateToProps)(MoteAktivitetReduxForm));
+export default MoteAktivitetForm;
