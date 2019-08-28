@@ -23,7 +23,6 @@
     "babel-polyfill": "^6.26.0",
     "classnames": "2.2.5",
     "history": "4.6.3",
-    "inputmask-core": "2.2.0",
     "intl": "1.2.5",
     "lodash.throttle": "4.1.1",
     "moment": "2.22.1",
