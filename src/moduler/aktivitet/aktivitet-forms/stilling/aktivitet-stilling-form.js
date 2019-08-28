@@ -65,8 +65,7 @@ function StillingAktivitetForm(props) {
                 />
 
                 <AktivitetFormHeader
-                    tittelId="stilling-aktivitet-form.header"
-                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    tittel="En jobb jeg vil søke på"
                     ingressType={STILLING_AKTIVITET_TYPE}
                 />
 

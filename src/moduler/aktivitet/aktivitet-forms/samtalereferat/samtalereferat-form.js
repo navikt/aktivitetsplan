@@ -70,8 +70,7 @@ function SamtalereferatForm(props) {
                 />
 
                 <AktivitetFormHeader
-                    tittelId="samtalereferat-form.header"
-                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    tittel="Samtalereferat"
                     ingressType={SAMTALEREFERAT_TYPE}
                 />
 

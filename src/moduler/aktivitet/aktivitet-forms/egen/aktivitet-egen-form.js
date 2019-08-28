@@ -69,8 +69,7 @@ function EgenAktivitetForm(props) {
                 />
 
                 <AktivitetFormHeader
-                    tittelId="egen-aktivitet-form.header"
-                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    tittel="Jobbrettet egenaktivitet"
                     ingressType={EGEN_AKTIVITET_TYPE}
                 />
 

@@ -68,8 +68,7 @@ function IJobbAktivitetForm(props) {
                 />
 
                 <AktivitetFormHeader
-                    tittelId="ijobb-aktivitet-form.header"
-                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    tittel="Jobb jeg har nå"
                     ingressType={IJOBB_AKTIVITET_TYPE}
                 />
 

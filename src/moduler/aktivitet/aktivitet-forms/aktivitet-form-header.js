@@ -1,31 +1,29 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
 import AktivitetIngress from '../visning/aktivitetingress/aktivitetingress';
 import * as AppPT from '../../../proptypes';
 
-function AktivitetFormHeader({ tittelId, ingressType, pakrevdInfoId }) {
+function AktivitetFormHeader({ tittel, ingressType }) {
     return (
         <div className="aktivitetskjema__header">
             <Sidetittel className="skjema-header__tittel">
-                <FormattedMessage id={tittelId} />
+                {tittel}
             </Sidetittel>
             <AktivitetIngress
                 type={ingressType}
                 className="skjema-header__ingress"
             />
             <Undertekst className="skjema-header__pakrevd-info">
-                <FormattedMessage id={pakrevdInfoId} />
+                * må fylles ut
             </Undertekst>
         </div>
     );
 }
 
 AktivitetFormHeader.propTypes = {
-    tittelId: PT.string.isRequired,
+    tittel: PT.string.isRequired,
     ingressType: AppPT.aktivitettype.isRequired,
-    pakrevdInfoId: PT.string.isRequired,
 };
 
 export default AktivitetFormHeader;
