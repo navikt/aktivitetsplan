@@ -1,11 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { isDirty } from 'redux-form';
 import { oppdaterAktivitet } from '../aktivitet-actions';
 import * as AppPT from '../../../proptypes';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import { formNavn } from '../aktivitet-forms/aktivitet-form-utils';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Modal from '../../../felles-komponenter/modal/modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
@@ -58,10 +56,10 @@ function getAktivitetsFormComponent(aktivitet) {
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
-function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
+function onBeforeLoadEffect(isDirty) {
     return () => {
         window.onbeforeunload = e => {
-            if (formIsDirty || formIsDirtyV2.current) {
+            if (isDirty.current) {
                 e.returnValue = CONFIRM;
                 return CONFIRM;
             }
@@ -77,19 +75,14 @@ function onBeforeLoadEffect(formIsDirty, formIsDirtyV2) {
 function EndreAktivitet(props) {
     const {
         valgtAktivitet,
-        formIsDirty,
         avhengigheter,
         history,
         doOppdaterAktivitet,
         lagrer,
     } = props;
 
-    const formIsDirtyV2 = useRef(false);
-
-    useEffect(onBeforeLoadEffect(formIsDirty, formIsDirtyV2), [
-        formIsDirty,
-        formIsDirtyV2,
-    ]);
+    const isDirty = useRef(false);
+    useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
 
     function oppdater(aktivitet) {
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
@@ -100,16 +93,14 @@ function EndreAktivitet(props) {
     }
 
     const onReqClose = () => {
-        const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
-        if (!isItReallyDirty || window.confirm(CONFIRM)) {
+        if (!isDirty.current || window.confirm(CONFIRM)) {
             history.push('/');
         }
     };
 
     const onReqBack = e => {
         e.preventDefault();
-        const isItReallyDirty = formIsDirty || formIsDirtyV2.current;
-        if (!isItReallyDirty || window.confirm(CONFIRM)) {
+        if (!isDirty.current || window.confirm(CONFIRM)) {
             history.goBack();
         }
     };
@@ -122,7 +113,7 @@ function EndreAktivitet(props) {
         aktivitet: valgtAktivitet,
         onSubmit: oppdater,
         endre: true,
-        isDirtyRef: formIsDirtyV2,
+        isDirtyRef: isDirty,
         lagrer,
     };
 
@@ -155,7 +146,6 @@ EndreAktivitet.propTypes = {
     lagrer: PT.bool.isRequired,
     valgtAktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
-    formIsDirty: PT.bool.isRequired,
     history: AppPT.history.isRequired,
     match: PT.object.isRequired,
 };
@@ -166,7 +156,6 @@ const mapStateToProps = (state, props) => {
     return {
         valgtAktivitet,
         avhengigheter: [valgtAktivitet ? STATUS.OK : STATUS.PENDING],
-        formIsDirty: isDirty(formNavn)(state),
         lagrer: selectAktivitetStatus !== STATUS.OK,
     };
 };

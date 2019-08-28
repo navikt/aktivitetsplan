@@ -3,12 +3,12 @@ import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import Input from '../../../../felles-komponenter/skjema/input-v2/input';
+import Input from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
     validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+} from '../../../../felles-komponenter/skjema/field-group/periode-validering';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';

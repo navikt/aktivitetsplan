@@ -9,9 +9,9 @@ import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
 import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
 import { DirtyContext } from '../../../context/dirty-context';
-import Checkbox from '../../../../felles-komponenter/skjema/input-v2/checkbox';
-import Select from '../../../../felles-komponenter/skjema/input-v2/select';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
+import Select from '../../../../felles-komponenter/skjema/input/select';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';

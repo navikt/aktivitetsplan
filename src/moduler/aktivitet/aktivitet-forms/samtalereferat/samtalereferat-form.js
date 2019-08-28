@@ -9,10 +9,10 @@ import {
 } from '../../../../constant';
 import { todayIsoString } from '../../../../utils';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import Input from '../../../../felles-komponenter/skjema/input-v2/input';
-import VelgKanal from '../velg-kanalv2';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
+import Input from '../../../../felles-komponenter/skjema/input/input';
+import VelgKanal from '../velg-kanal';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import {
     validateFraDato,
     validateKanal,

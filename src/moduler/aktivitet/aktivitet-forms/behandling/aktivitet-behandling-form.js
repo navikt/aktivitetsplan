@@ -7,9 +7,9 @@ import AktivitetFormHeader from '../aktivitet-form-header';
 import * as AppPT from '../../../../proptypes';
 import PeriodeValidering, {
     validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
-import Input from '../../../../felles-komponenter/skjema/input-v2/input';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+} from '../../../../felles-komponenter/skjema/field-group/periode-validering';
+import Input from '../../../../felles-komponenter/skjema/input/input';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import {
     validateBehandlingSted,
     validateBehandlingType,
@@ -19,7 +19,7 @@ import {
     validateTilDato,
 } from './validate';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 
 function BehandlingAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;

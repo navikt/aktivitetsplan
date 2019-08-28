@@ -1,85 +1,45 @@
-/* eslint-disable prefer-rest-params */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import PT from 'prop-types';
 import { Select as NavSelect } from 'nav-frontend-skjema';
-import { CustomField } from 'react-redux-form-validation';
-import { FormattedMessage } from 'react-intl';
 
-function InnerInputComponent({
+// pristine and initialValue isn't used, but we don't want to pass it to input
+function Select({
+    touched,
+    error,
     input,
-    labelId,
-    children,
+    pristine,
+    initialValue,
     noBlankOption,
-    blankOptionParameters,
-    errorMessage,
-    meta, // eslint-disable-line no-unused-vars
+    children,
     ...rest
 }) {
-    const feil = errorMessage ? { feilmelding: errorMessage[0] } : undefined;
-    const inputProps = {
-        ...input,
-        ...rest,
-        onChange() {
-            if (rest.onChange) {
-                rest.onChange.apply(this, arguments);
-            }
-            return input.onChange.apply(this, arguments);
-        },
-    };
+    const feil = error && touched ? { feilmelding: error } : undefined;
+    const inputProps = { ...input, ...rest };
 
     return (
-        <NavSelect
-            label={<FormattedMessage id={labelId} />}
-            feil={feil}
-            {...inputProps}
-        >
-            {!noBlankOption && <option {...blankOptionParameters} />}
+        <NavSelect feil={feil} {...inputProps}>
+            {!noBlankOption && <option />}
             {children}
         </NavSelect>
     );
 }
 
-InnerInputComponent.defaultProps = {
-    input: undefined,
-    errorMessage: undefined,
-    meta: undefined,
-    noBlankOption: false,
-    blankOptionParameters: {},
-};
-
-InnerInputComponent.propTypes = {
-    labelId: PT.string.isRequired,
-    children: PT.node.isRequired,
-    input: PT.object, // eslint-disable-line react/forbid-prop-types
-    errorMessage: PT.arrayOf(
-        PT.oneOfType([PT.string, PT.instanceOf(FormattedMessage)])
-    ),
-    meta: PT.object, // eslint-disable-line react/forbid-prop-types
-    noBlankOption: PT.bool,
-    blankOptionParameters: PT.object,
-};
-
-function Select({ id, feltNavn, className, ...rest }) {
-    return (
-        <CustomField
-            name={feltNavn}
-            errorClass="skjemaelement--harFeil"
-            className={className}
-            id={id}
-            customComponent={<InnerInputComponent {...rest} />}
-        />
-    );
-}
-
 Select.defaultProps = {
-    className: '',
-    id: undefined,
+    initialValue: undefined,
+    pristine: undefined,
+    error: undefined,
+    noBlankOption: false,
 };
 
 Select.propTypes = {
-    feltNavn: PT.string.isRequired,
-    id: PT.string,
-    className: PT.string,
+    initialValue: PT.string,
+    pristine: PT.bool,
+    noBlankOption: PT.bool,
+    children: PT.node.isRequired,
+    touched: PT.bool.isRequired,
+    error: PT.string,
+    input: PT.object.isRequired,
 };
 
 export default Select;

@@ -10,8 +10,8 @@ import {
 } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-valideringv2';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
+import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-validering';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import {
     validateBeskrivelse,
@@ -22,10 +22,10 @@ import {
 } from './validate';
 import PeriodeValidering, {
     validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
-import Input from '../../../../felles-komponenter/skjema/input-v2/input';
-import Radio from '../../../../felles-komponenter/skjema/input-v2/radio';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+} from '../../../../felles-komponenter/skjema/field-group/periode-validering';
+import Input from '../../../../felles-komponenter/skjema/input/input';
+import Radio from '../../../../felles-komponenter/skjema/input/radio';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 
 function IJobbAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;

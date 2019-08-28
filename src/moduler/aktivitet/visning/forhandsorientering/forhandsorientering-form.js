@@ -12,8 +12,8 @@ import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import { STATUS } from '../../../../ducks/utils';
 import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
-import Checkbox from '../../../../felles-komponenter/skjema/input-v2/checkbox';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 
 const label = (
     <div className="forhandsorientering-arena-aktivitet">

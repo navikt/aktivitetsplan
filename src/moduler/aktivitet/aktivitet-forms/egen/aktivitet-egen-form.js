@@ -14,12 +14,12 @@ import {
     validateTilDato,
     validateTittel,
 } from './validate';
-import Input from '../../../../felles-komponenter/skjema/input-v2/input';
+import Input from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
     validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/periode-valideringv2';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
+} from '../../../../felles-komponenter/skjema/field-group/periode-validering';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 
 function EgenAktivitetForm(props) {

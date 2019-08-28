@@ -8,7 +8,7 @@ import { STATUS } from '../../ducks/utils';
 import { oppdaterMal, selectMalStatus } from './aktivitetsmal-reducer';
 import * as AppPT from '../../proptypes';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
-import Textarea from '../../felles-komponenter/skjema/input-v2/textarea';
+import Textarea from '../../felles-komponenter/skjema/input/textarea';
 
 const validator = useFormstate({
     mal: val =>

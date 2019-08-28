@@ -40,3 +40,4 @@ export const JOBB_STATUS_DELTID = 'DELTID';
 
 export const TELEFON_KANAL = 'TELEFON';
 export const OPPMOTE_KANAL = 'OPPMOTE';
+export const INTERNET_KANAL = 'INTERNETT';
