@@ -108,17 +108,17 @@ function BehandlingAktivitetForm(props) {
                     label="Mål for behandlingen"
                     {...state.fields.effekt}
                 />
+                <Input
+                    disabled={erAvtalt}
+                    label="Oppfølging fra NAV"
+                    {...state.fields.behandlingOppfolging}
+                />
                 <Textarea
                     disabled={erAvtalt}
                     label="Kort beskrivelse av behandlingen"
                     maxLength={5000}
                     visTellerFra={500}
                     {...state.fields.beskrivelse}
-                />
-                <Input
-                    disabled={erAvtalt}
-                    label="Oppfølging fra NAV"
-                    {...state.fields.behandlingOppfolging}
                 />
             </div>
             <LagreAktivitet />
