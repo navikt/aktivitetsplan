@@ -1,9 +1,9 @@
 import React from 'react';
 import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
-import Textarea from '../../../../felles-komponenter/skjema/input-v2/textarea';
-import Input from '../../../../felles-komponenter/skjema/input-v2/input';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelgerv2';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Input from '../../../../felles-komponenter/skjema/input/input';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
 import {
     beregnFraTil,
@@ -28,8 +28,8 @@ import {
 
 import * as AppPT from '../../../../proptypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Select from '../../../../felles-komponenter/skjema/input-v2/select';
-import VelgKanal from '../velg-kanalv2';
+import Select from '../../../../felles-komponenter/skjema/input/select';
+import VelgKanal from '../velg-kanal';
 
 const tidspunkter = Array.from(new Array(53)).map((noValue, index) => {
     const minutter = index * 15 + 7 * 60;

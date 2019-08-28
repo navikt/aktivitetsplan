@@ -30,10 +30,10 @@ import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
-function onBeforeLoadEffect(formIsDirtyV2) {
+function onBeforeLoadEffect(isDirty) {
     return () => {
         window.onbeforeunload = e => {
-            if (formIsDirtyV2.current) {
+            if (isDirty.current) {
                 e.returnValue = CONFIRM;
                 return CONFIRM;
             }
@@ -54,9 +54,8 @@ function NyAktivitetForm(props) {
         aktivitetFeilmeldinger,
     } = props;
 
-    const formIsDirtyV2 = useRef(false);
-
-    useEffect(onBeforeLoadEffect(formIsDirtyV2), [formIsDirtyV2]);
+    const isDirty = useRef(false);
+    useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
 
     const onSubmitFactory = aktivitetsType => {
         return aktivitet => {
@@ -73,7 +72,7 @@ function NyAktivitetForm(props) {
     };
 
     function onRequestClose() {
-        const isItReallyDirty = formIsDirtyV2.current;
+        const isItReallyDirty = isDirty.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.push('/');
         }
@@ -81,7 +80,7 @@ function NyAktivitetForm(props) {
 
     const onReqBack = e => {
         e.preventDefault();
-        const isItReallyDirty = formIsDirtyV2.current;
+        const isItReallyDirty = isDirty.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
             history.goBack();
         }
@@ -107,13 +106,13 @@ function NyAktivitetForm(props) {
                         <Route path={`${match.path}/mote`}>
                             <MoteAktivitetForm
                                 onSubmit={onSubmitFactory(MOTE_TYPE)}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/samtalereferat`}>
                             <SamtalereferatForm
                                 onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/stilling`}>
@@ -121,7 +120,7 @@ function NyAktivitetForm(props) {
                                 onSubmit={onSubmitFactory(
                                     STILLING_AKTIVITET_TYPE
                                 )}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/sokeavtale`}>
@@ -129,7 +128,7 @@ function NyAktivitetForm(props) {
                                 onSubmit={onSubmitFactory(
                                     SOKEAVTALE_AKTIVITET_TYPE
                                 )}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/behandling`}>
@@ -137,19 +136,19 @@ function NyAktivitetForm(props) {
                                 onSubmit={onSubmitFactory(
                                     BEHANDLING_AKTIVITET_TYPE
                                 )}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/egen`}>
                             <EgenAktivitetForm
                                 onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/ijobb`}>
                             <IJobbAktivitetForm
                                 onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)}
-                                isDirtyRef={formIsDirtyV2}
+                                isDirtyRef={isDirty}
                             />
                         </Route>
                     </Switch>

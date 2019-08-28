@@ -1,8 +1,22 @@
 @import '../../../variables';
 @import '../../../felles-komponenter/skjema/datovelger/day-picker';
-@import '../../../felles-komponenter/skjema/fieldgroups-validering';
-@import 'mote/mote-aktivitet-form';
-@import 'samtalereferat/samtalereferat-form';
+@import '../../../felles-komponenter/skjema/field-group/fieldgroups-validering';
+
+.mote-aktivitet-form {
+    &__velg-mote-klokkeslett {
+        display: flex;
+        justify-content: space-between;
+
+        .input--xs {
+            width: 85px;
+        }
+    }
+}
+
+.samtalereferat-form__lagre-og-publiser {
+    margin-right: 1rem;
+}
+
 
 .skjema-header__tittel {
     margin: 1.2rem 0;

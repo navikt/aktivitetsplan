@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'react-redux-form-validation';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';
 import arenaAktiviteterReducer from './moduler/aktivitet/arena-aktiviteter-reducer';
 import brukerReducer from './moduler/bruker/bruker-reducer';
@@ -23,7 +22,6 @@ import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
 import informasjonReducer from './moduler/informasjon/informasjon-reducer';
 
 const combinedReducers = combineReducers({
-    form: formReducer,
     data: combineReducers({
         aktiviteter: aktiviteterReducer,
         arenaAktiviteter: arenaAktiviteterReducer,
