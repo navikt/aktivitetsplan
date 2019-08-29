@@ -82,7 +82,7 @@ function NyAktivitetForm(props) {
         e.preventDefault();
         const isItReallyDirty = isDirty.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
-            history.goBack();
+            history.push('/aktivitet/ny');
         }
     };
 

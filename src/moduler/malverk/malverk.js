@@ -66,7 +66,7 @@ class Malverk extends Component {
                     spinnerStorrelse="S"
                 >
                     <label className="skjemaelement__label" htmlFor={domId}>
-                        <FormattedMessage id="aktivitet-form.label.malverk" />
+                        Ferdig utfylt aktivitet
                     </label>
                     <div className="selectContainer input--fullbredde">
                         <select
