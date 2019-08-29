@@ -1,6 +1,5 @@
 import React from 'react';
 import { Sidetittel } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import BannerIcon from './banner-icon';
 import visibleIf from '../../hocs/visible-if';
 import Brodsmuler from '../brodsmuler/brodsmuler';
@@ -13,7 +12,7 @@ function Sidebanner() {
                 <div className="sidebanner">
                     <BannerIcon />
                     <Sidetittel className="sidebanner__tittel">
-                        <FormattedMessage id="hovedside.tittel" />
+                        Aktivitetsplan
                     </Sidetittel>
                 </div>
             </div>

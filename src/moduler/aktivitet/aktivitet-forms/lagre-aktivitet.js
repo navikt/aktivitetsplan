@@ -1,6 +1,5 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 import { selectAktivitetStatus } from '../aktivitet-selector';
@@ -11,7 +10,7 @@ function LagreAktivitet({ venter, underOppfolging }) {
     return (
         <div className="aktivitetskjema__lagre-knapp">
             <Hovedknapp spinner={venter} disabled={venter || !underOppfolging}>
-                <FormattedMessage id="aktivitet-form.lagre" />
+                Lagre
             </Hovedknapp>
         </div>
     );

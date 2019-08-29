@@ -69,8 +69,7 @@ function BehandlingAktivitetForm(props) {
                 />
 
                 <AktivitetFormHeader
-                    tittelId="behandling-aktivitet-form.header"
-                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    tittel="Medisinsk behandling"
                     ingressType={BEHANDLING_AKTIVITET_TYPE}
                 />
 

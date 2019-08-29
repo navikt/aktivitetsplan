@@ -70,9 +70,8 @@ export default function SokeAvtaleAktivitetForm(props) {
                 />
 
                 <AktivitetFormHeader
-                    tittelId="sokeavtale-aktivitet-form.header"
+                    tittel="Avtale om å søke jobber"
                     ingressType={SOKEAVTALE_AKTIVITET_TYPE}
-                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
                 />
 
                 <Malverk

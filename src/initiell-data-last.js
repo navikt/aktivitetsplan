@@ -2,14 +2,26 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import queryString from 'query-string';
 import { hentFeature } from './ducks/feature-reducer';
+
+function getEnhetFromURL() {
+    const queryString = window.location.search;
+    const pairs = (queryString[0] === '?'
+        ? queryString.substr(1)
+        : queryString).split('&');
+    const maybeEnhet = pairs.find(val => val.startsWith('enhet='));
+    if (maybeEnhet) {
+        const enhet = maybeEnhet.substring(6);
+        return enhet === '' ? undefined : enhet;
+    }
+
+    return undefined;
+}
 
 class InitiellDataLast extends Component {
     componentDidMount() {
         const { actions } = this.props;
-        const { enhet } = queryString.parse(window.location.search);
-        actions.hentFeature(enhet);
+        actions.hentFeature(getEnhetFromURL());
     }
 
     render() {

@@ -99,8 +99,7 @@ function MoteAktivitetForm(props) {
                 />
 
                 <AktivitetFormHeader
-                    tittelId="mote-aktivitet-form.header"
-                    pakrevdInfoId="aktivitet-form.pakrevd-felt-info"
+                    tittel="Møte med NAV"
                     ingressType={MOTE_TYPE}
                 />
 
