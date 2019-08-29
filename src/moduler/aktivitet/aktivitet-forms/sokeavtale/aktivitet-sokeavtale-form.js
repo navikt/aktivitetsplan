@@ -1,9 +1,10 @@
 import React from 'react';
 import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
+import { connect } from 'react-redux';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import Input from '../../../../felles-komponenter/skjema/input/input';
+import { HidenIfInput } from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
@@ -14,15 +15,41 @@ import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';
 import {
     validateAntallStillinger,
+    validateAntallStillingerIUken,
     validateBeskrivelse,
     validateFraDato,
     validateOppfolging,
     validateTilDato,
 } from './validate';
 import LagreAktivitet from '../lagre-aktivitet';
+import {
+    harFeature,
+    STILLINGER_I_UKEN,
+} from '../../../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
 
-export default function SokeAvtaleAktivitetForm(props) {
-    const { onSubmit, aktivitet, isDirtyRef, endre } = props;
+function antallStillingerSokes(brukeStillingerIuken, maybeAktivitet) {
+    if (brukeStillingerIuken) {
+        return '';
+    }
+    return maybeAktivitet.antallStillingerSokes || '';
+}
+
+function antallStillingerIUken(brukeStillingerIuken, maybeAktivitet) {
+    if (!brukeStillingerIuken) {
+        return '';
+    }
+    return maybeAktivitet.antallStillingerIUken || '';
+}
+
+function SokeAvtaleAktivitetForm(props) {
+    const {
+        onSubmit,
+        aktivitet,
+        isDirtyRef,
+        endre,
+        brukeStillingerIUken,
+    } = props;
 
     const maybeAktivitet = aktivitet || {};
     const erAktivitetAvtalt = maybeAktivitet.avtalt === true;
@@ -35,8 +62,18 @@ export default function SokeAvtaleAktivitetForm(props) {
             validateTilDato(erAktivitetAvtalt, maybeAktivitet.fraDato, val),
         periodeValidering: (val, values) =>
             validerPeriodeFelt(values.fraDato, values.tilDato),
+        antallStillingerIUken: val =>
+            validateAntallStillingerIUken(
+                erAktivitetAvtalt,
+                val,
+                brukeStillingerIUken
+            ),
         antallStillingerSokes: val =>
-            validateAntallStillinger(erAktivitetAvtalt, val),
+            validateAntallStillinger(
+                erAktivitetAvtalt,
+                val,
+                brukeStillingerIUken
+            ),
         avtaleOppfolging: val => validateOppfolging(erAktivitetAvtalt, val),
         beskrivelse: val => validateBeskrivelse(erAktivitetAvtalt, val),
     });
@@ -45,7 +82,14 @@ export default function SokeAvtaleAktivitetForm(props) {
         tittel: maybeAktivitet.tittel || 'Avtale om å søke jobber',
         fraDato: maybeAktivitet.fraDato || '',
         tilDato: maybeAktivitet.tilDato || '',
-        antallStillingerSokes: maybeAktivitet.antallStillingerSokes || '',
+        antallStillingerSokes: antallStillingerSokes(
+            brukeStillingerIUken,
+            maybeAktivitet
+        ),
+        antallStillingerIUken: antallStillingerIUken(
+            brukeStillingerIUken,
+            maybeAktivitet
+        ),
         avtaleOppfolging: maybeAktivitet.avtaleOppfolging || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
         periodeValidering: '',
@@ -99,10 +143,20 @@ export default function SokeAvtaleAktivitetForm(props) {
                     </div>
                 </PeriodeValidering>
 
-                <Input
+                <HidenIfInput
+                    hidden={brukeStillingerIUken}
+                    disabled={erAktivitetAvtalt}
                     label="Antall søknader i perioden *"
                     bredde="S"
                     {...state.fields.antallStillingerSokes}
+                />
+
+                <HidenIfInput
+                    hidden={!brukeStillingerIUken}
+                    disabled={erAktivitetAvtalt}
+                    label="Antall søknader i uken *"
+                    bredde="S"
+                    {...state.fields.antallStillingerIUken}
                 />
                 <Textarea
                     disabled={erAktivitetAvtalt}
@@ -129,10 +183,24 @@ SokeAvtaleAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     isDirtyRef: PT.shape({ current: PT.bool }),
     endre: PT.bool,
+    brukeStillingerIUken: PT.bool,
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: undefined,
     endre: false,
+    brukeStillingerIUken: false,
 };
+
+const mapStateToProps = state => {
+    const brukeStillingerIUken = harFeature(
+        STILLINGER_I_UKEN,
+        selectFeatureData(state)
+    );
+    return {
+        brukeStillingerIUken,
+    };
+};
+
+export default connect(mapStateToProps)(SokeAvtaleAktivitetForm);

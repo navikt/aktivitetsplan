@@ -20,13 +20,32 @@ export function validateOppfolging(avtalt, value) {
     return null;
 }
 
-export function validateAntallStillinger(avtalt, value) {
-    if (avtalt) {
+export function validateAntallStillinger(avtalt, value, brukeStillingerIUken) {
+    if (avtalt || brukeStillingerIUken) {
         return null;
     }
 
     if (value.length === 0) {
         return 'Du må fylle ut antall søknader i perioden';
+    }
+
+    if (!Number.isInteger(Number(value))) {
+        return 'Antall må være et heltall';
+    }
+    return null;
+}
+
+export function validateAntallStillingerIUken(
+    avtalt,
+    value,
+    brukeStillingerIUken
+) {
+    if (avtalt || !brukeStillingerIUken) {
+        return null;
+    }
+
+    if (value.length === 0) {
+        return 'Du må fylle ut antall søknader i uken';
     }
 
     if (!Number.isInteger(Number(value))) {
