@@ -17,11 +17,21 @@ const SokeDetaljer = ({ aktivitet }) =>
             <TilDato aktivitet={aktivitet} />
             <HiddenIfInformasjonsfelt
                 key="antallStillinger"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.antall-label" />
-                }
+                tittel="Antall søknader i perioden"
                 innhold={`${aktivitet.antallStillingerSokes}`}
-                hidden={aktivitet.antallStillingerSokes < 1}
+                hidden={
+                    !aktivitet.antallStillingerSokes ||
+                    aktivitet.antallStillingerSokes < 1
+                }
+            />
+            <HiddenIfInformasjonsfelt
+                key="antallStillingerIUken"
+                tittel="Antall søknader i uken"
+                innhold={`${aktivitet.antallStillingerIUken}`}
+                hidden={
+                    !aktivitet.antallStillingerIUken ||
+                    aktivitet.antallStillingerIUken < 1
+                }
             />
             <HiddenIfInformasjonsfelt
                 key="avtaleOppfolging"
