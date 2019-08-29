@@ -6,12 +6,19 @@ import {
     GRUPPE_AKTIVITET_TYPE,
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
+    STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import { formaterDatoKortManed } from '../../../utils';
 import * as PT from '../../../proptypes';
+import Soknadfrist from './Soknadsfrist';
 
 function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
     const { id, type, fraDato, tilDato } = aktivitet;
+
+    if (type === STILLING_AKTIVITET_TYPE) {
+        return <Soknadfrist aktivitet={aktivitet} />;
+    }
+
     const formatertFraDato = formaterDatoKortManed(fraDato);
     const formatertTilDato = formaterDatoKortManed(tilDato);
 
