@@ -127,7 +127,7 @@
     "prettier": "^1.5.2",
     "react-test-renderer": "^16.8.6",
     "serve": "^11.0.1",
-    "testcafe": "^1.1.4",
+    "testcafe": "^1.4.2",
     "testcafe-browser-provider-saucelabs": "^1.7.0",
     "tree-kill": "1.2.0",
     "ua-parser-js": "^0.7.19",
