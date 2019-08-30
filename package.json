@@ -123,7 +123,6 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^2.4.0",
-    "less-plugin-npm-import": "^2.1.0",
     "lesshint": "^6.3.7",
     "lint-staged": "^8.2.0",
     "prettier": "^1.5.2",
