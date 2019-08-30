@@ -124,7 +124,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^2.4.0",
     "lesshint": "^6.3.7",
-    "lint-staged": "^8.2.0",
+    "lint-staged": "^9.2.5",
     "prettier": "^1.5.2",
     "serve": "^11.1.0",
     "testcafe": "^1.4.2",
