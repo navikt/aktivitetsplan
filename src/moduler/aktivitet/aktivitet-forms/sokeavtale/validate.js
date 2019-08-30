@@ -20,13 +20,9 @@ export function validateOppfolging(avtalt, value) {
     return null;
 }
 
-export function validateAntallStillinger(avtalt, value, brukeStillingerIUken) {
-    if (avtalt || brukeStillingerIUken) {
+export function validateAntallStillinger(avtalt, value) {
+    if (avtalt || !value) {
         return null;
-    }
-
-    if (value.length === 0) {
-        return 'Du må fylle ut antall søknader i perioden';
     }
 
     if (!Number.isInteger(Number(value))) {
@@ -38,9 +34,9 @@ export function validateAntallStillinger(avtalt, value, brukeStillingerIUken) {
 export function validateAntallStillingerIUken(
     avtalt,
     value,
-    brukeStillingerIUken
+    antallStillingerSokes
 ) {
-    if (avtalt || !brukeStillingerIUken) {
+    if (avtalt || !!antallStillingerSokes) {
         return null;
     }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
-import { connect } from 'react-redux';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import { HidenIfInput } from '../../../../felles-komponenter/skjema/input/input';
@@ -22,34 +21,9 @@ import {
     validateTilDato,
 } from './validate';
 import LagreAktivitet from '../lagre-aktivitet';
-import {
-    harFeature,
-    STILLINGER_I_UKEN,
-} from '../../../../felles-komponenter/feature/feature';
-import { selectFeatureData } from '../../../../felles-komponenter/feature/feature-selector';
-
-function antallStillingerSokes(brukeStillingerIuken, maybeAktivitet) {
-    if (brukeStillingerIuken) {
-        return '';
-    }
-    return maybeAktivitet.antallStillingerSokes || '';
-}
-
-function antallStillingerIUken(brukeStillingerIuken, maybeAktivitet) {
-    if (!brukeStillingerIuken) {
-        return '';
-    }
-    return maybeAktivitet.antallStillingerIUken || '';
-}
 
 function SokeAvtaleAktivitetForm(props) {
-    const {
-        onSubmit,
-        aktivitet,
-        isDirtyRef,
-        endre,
-        brukeStillingerIUken,
-    } = props;
+    const { onSubmit, aktivitet, isDirtyRef, endre } = props;
 
     const maybeAktivitet = aktivitet || {};
     const erAktivitetAvtalt = maybeAktivitet.avtalt === true;
@@ -62,18 +36,14 @@ function SokeAvtaleAktivitetForm(props) {
             validateTilDato(erAktivitetAvtalt, maybeAktivitet.fraDato, val),
         periodeValidering: (val, values) =>
             validerPeriodeFelt(values.fraDato, values.tilDato),
-        antallStillingerIUken: val =>
+        antallStillingerIUken: (val, values) =>
             validateAntallStillingerIUken(
                 erAktivitetAvtalt,
                 val,
-                brukeStillingerIUken
+                values.antallStillingerSokes
             ),
         antallStillingerSokes: val =>
-            validateAntallStillinger(
-                erAktivitetAvtalt,
-                val,
-                brukeStillingerIUken
-            ),
+            validateAntallStillinger(erAktivitetAvtalt, val),
         avtaleOppfolging: val => validateOppfolging(erAktivitetAvtalt, val),
         beskrivelse: val => validateBeskrivelse(erAktivitetAvtalt, val),
     });
@@ -82,14 +52,8 @@ function SokeAvtaleAktivitetForm(props) {
         tittel: maybeAktivitet.tittel || 'Avtale om å søke jobber',
         fraDato: maybeAktivitet.fraDato || '',
         tilDato: maybeAktivitet.tilDato || '',
-        antallStillingerSokes: antallStillingerSokes(
-            brukeStillingerIUken,
-            maybeAktivitet
-        ),
-        antallStillingerIUken: antallStillingerIUken(
-            brukeStillingerIUken,
-            maybeAktivitet
-        ),
+        antallStillingerSokes: maybeAktivitet.antallStillingerSokes || '',
+        antallStillingerIUken: maybeAktivitet.antallStillingerIUken || '',
         avtaleOppfolging: maybeAktivitet.avtaleOppfolging || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
         periodeValidering: '',
@@ -104,6 +68,9 @@ function SokeAvtaleAktivitetForm(props) {
     const reinitalize = newInitalValues => {
         state.reinitialize({ ...defaultFormValues, ...newInitalValues });
     };
+
+    const brukeStillingerIUken = !state.fields.antallStillingerSokes
+        .initialValue;
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
@@ -182,24 +149,12 @@ SokeAvtaleAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     isDirtyRef: PT.shape({ current: PT.bool }),
     endre: PT.bool,
-    brukeStillingerIUken: PT.bool,
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: undefined,
     endre: false,
-    brukeStillingerIUken: false,
 };
 
-const mapStateToProps = state => {
-    const brukeStillingerIUken = harFeature(
-        STILLINGER_I_UKEN,
-        selectFeatureData(state)
-    );
-    return {
-        brukeStillingerIUken,
-    };
-};
-
-export default connect(mapStateToProps)(SokeAvtaleAktivitetForm);
+export default SokeAvtaleAktivitetForm;
