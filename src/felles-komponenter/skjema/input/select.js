@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/control-has-associated-label */
+
 import React from 'react';
 import PT from 'prop-types';
 import { Select as NavSelect } from 'nav-frontend-skjema';

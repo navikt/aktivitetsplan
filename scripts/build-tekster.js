@@ -31,7 +31,7 @@ function read(dir) {
 }
 
 function createJson(katalog) {
-    return `/* eslint-disable max-len */\nexport default { 'nb': { ${read(
+    return `/* eslint-disable */\nexport default { 'nb': { ${read(
         katalog
     )}\n } };`;
 }
@@ -42,4 +42,4 @@ try {
     console.error('Kunne ikke skrive fil ', e);
 }
 
-console.log("Tekster opprettet");
+console.log('Tekster opprettet');

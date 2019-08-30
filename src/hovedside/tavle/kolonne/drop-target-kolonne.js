@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { withRouter } from 'react-router-dom';
 import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
-import { fullforAktivitetRoute, avbrytAktivitetRoute } from '../../../routing';
 import * as AppPT from '../../../proptypes';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
+import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
 
 const mottaAktivitetsKort = {
     canDrop(props, monitor) {

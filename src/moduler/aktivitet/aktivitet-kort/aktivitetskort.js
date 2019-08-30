@@ -10,7 +10,6 @@ import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import Lenke from '../../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
-import { aktivitetRoute } from '../../../routing';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import {
     TILTAK_AKTIVITET_TYPE,
@@ -41,6 +40,7 @@ import AktivitetskortEndring from './aktivitetskort-endring';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../../ducks/utils';
 import Soknadfrist from './Soknadsfrist';
+import { aktivitetRoute } from '../../../routes';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {

@@ -3,6 +3,7 @@ export default function loggEvent(eventNavn, feltObjekt, tagObjekt) {
     if (frontendlogger) {
         frontendlogger.event(eventNavn, feltObjekt || {}, tagObjekt || {});
     } else {
+        // eslint-disable-next-line
         console.log(eventNavn, { feltObjekt, tagObjekt });
     }
 }

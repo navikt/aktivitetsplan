@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import { aktivitetRoute } from '../../../routing';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
@@ -26,6 +25,7 @@ import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat
 import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-behandling-form';
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
 import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
+import { aktivitetRoute } from '../../../routes';
 
 const CONFIRM =
     'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';

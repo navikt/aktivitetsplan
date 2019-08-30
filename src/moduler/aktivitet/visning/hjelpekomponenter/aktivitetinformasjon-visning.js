@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import AktivitetEtikettGruppe from '../../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
-import { endreAktivitetRoute } from '../../../../routing';
 import * as AppPT from '../../../../proptypes';
 import {
     EGEN_AKTIVITET_TYPE,
@@ -16,6 +15,7 @@ import Lenke from '../../../../felles-komponenter/utils/lenke';
 import loggEvent, {
     APNE_ENDRE_AKTIVITET,
 } from '../../../../felles-komponenter/utils/logging';
+import { endreAktivitetRoute } from '../../../../routes';
 
 function visningsIngress(type) {
     if (
