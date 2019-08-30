@@ -84,7 +84,7 @@
     "redux": "3.6.0",
     "redux-freeze": "0.1.5",
     "redux-thunk": "2.2.0",
-    "reselect": "3.0.1",
+    "reselect": "^4.0.0",
     "whatwg-fetch": "^3.0.0"
   },
   "husky": {
