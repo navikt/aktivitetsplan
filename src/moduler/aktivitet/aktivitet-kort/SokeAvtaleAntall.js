@@ -11,17 +11,11 @@ export default function SokeAvtaleAntall({ aktivitet }) {
 
     return (
         <div>
-            <VisibleIfDiv
-                data-testid="antall-stillinger"
-                visible={antallStillingerSokes > 0}
-            >
+            <VisibleIfDiv visible={antallStillingerSokes > 0}>
                 Antall søknader i perioden &nbsp;
                 {antallStillingerSokes}
             </VisibleIfDiv>
-            <VisibleIfDiv
-                data-testid="antall-stillinger"
-                visible={antallStillingerIUken > 0}
-            >
+            <VisibleIfDiv visible={antallStillingerIUken > 0}>
                 Antall søknader i uken &nbsp;
                 {antallStillingerIUken}
             </VisibleIfDiv>

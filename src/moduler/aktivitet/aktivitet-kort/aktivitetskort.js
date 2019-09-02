@@ -35,8 +35,10 @@ import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-sele
 import { STATUS } from '../../../ducks/utils';
 import SokeAvtaleAntall from './SokeAvtaleAntall';
 import Arbeidsgiver from './Stilling';
-import { Titel, AktivitetType } from './AktivitetType';
+
+import AktivitetType from './AktivitetType';
 import { aktivitetRoute } from '../../../routing';
+import Aktivitetskorttittel from './AktivitetKortTitel';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -93,7 +95,7 @@ class AktivitetsKort extends Component {
                 >
                     <article aria-labelledby={ariaLabel}>
                         <AktivitetType type={type} />
-                        <Titel
+                        <Aktivitetskorttittel
                             aktivitet={aktivitet}
                             harEndringerIAktivitet={harEndringerIAktivitet}
                             isDragging={isDragging}
