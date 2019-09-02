@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import Input from '../../../../felles-komponenter/skjema/input/input';
+import { HidenIfInput } from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
@@ -14,6 +14,7 @@ import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';
 import {
     validateAntallStillinger,
+    validateAntallStillingerIUken,
     validateBeskrivelse,
     validateFraDato,
     validateOppfolging,
@@ -35,6 +36,12 @@ export default function SokeAvtaleAktivitetForm(props) {
             validateTilDato(erAktivitetAvtalt, maybeAktivitet.fraDato, val),
         periodeValidering: (val, values) =>
             validerPeriodeFelt(values.fraDato, values.tilDato),
+        antallStillingerIUken: (val, values) =>
+            validateAntallStillingerIUken(
+                erAktivitetAvtalt,
+                val,
+                values.antallStillingerSokes
+            ),
         antallStillingerSokes: val =>
             validateAntallStillinger(erAktivitetAvtalt, val),
         avtaleOppfolging: val => validateOppfolging(erAktivitetAvtalt, val),
@@ -46,6 +53,7 @@ export default function SokeAvtaleAktivitetForm(props) {
         fraDato: maybeAktivitet.fraDato || '',
         tilDato: maybeAktivitet.tilDato || '',
         antallStillingerSokes: maybeAktivitet.antallStillingerSokes || '',
+        antallStillingerIUken: maybeAktivitet.antallStillingerIUken || '',
         avtaleOppfolging: maybeAktivitet.avtaleOppfolging || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
         periodeValidering: '',
@@ -60,6 +68,9 @@ export default function SokeAvtaleAktivitetForm(props) {
     const reinitalize = newInitalValues => {
         state.reinitialize({ ...defaultFormValues, ...newInitalValues });
     };
+
+    const brukeStillingerIUken = !state.fields.antallStillingerSokes
+        .initialValue;
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
@@ -98,10 +109,20 @@ export default function SokeAvtaleAktivitetForm(props) {
                     </div>
                 </PeriodeValidering>
 
-                <Input
+                <HidenIfInput
+                    hidden={brukeStillingerIUken}
+                    disabled={erAktivitetAvtalt}
                     label="Antall søknader i perioden *"
                     bredde="S"
                     {...state.fields.antallStillingerSokes}
+                />
+
+                <HidenIfInput
+                    hidden={!brukeStillingerIUken}
+                    disabled={erAktivitetAvtalt}
+                    label="Antall søknader i uken *"
+                    bredde="S"
+                    {...state.fields.antallStillingerIUken}
                 />
                 <Textarea
                     disabled={erAktivitetAvtalt}

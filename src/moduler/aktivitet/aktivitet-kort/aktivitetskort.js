@@ -4,23 +4,18 @@ import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
-import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import Lenke from '../../../felles-komponenter/utils/lenke';
 import * as AppPT from '../../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
-    SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
     SAMTALEREFERAT_TYPE,
     MOTE_TYPE,
-    STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import {
     selectErBruker,
@@ -36,10 +31,12 @@ import {
     settAktivitetSomVist,
 } from '../aktivitetview-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
-import AktivitetskortEndring from './aktivitetskort-endring';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../../ducks/utils';
-import Soknadfrist from './Soknadsfrist';
+import SokeAvtaleAntall from './SokeAvtaleAntall';
+import Arbeidsgiver from './Stilling';
+import AktivitetType from './AktivitetType';
+import Aktivitetskorttittel from './AktivitetKortTitel';
 import { aktivitetRoute } from '../../../routes';
 
 const dndSpec = {
@@ -75,13 +72,7 @@ class AktivitetsKort extends Component {
             doSettAktivitetMedEndringerSomVist,
             harEndringerIAktivitet,
         } = this.props;
-        const {
-            id,
-            type,
-            tittel,
-            arbeidsgiver,
-            antallStillingerSokes,
-        } = aktivitet;
+        const { id, type } = aktivitet;
 
         const ariaLabel = `aktivitetskort__header__${id} aktivitetskort__dato__${id}`;
 
@@ -102,54 +93,15 @@ class AktivitetsKort extends Component {
                         doSettAktivitetMedEndringerSomVist(aktivitet)}
                 >
                     <article aria-labelledby={ariaLabel}>
-                        <Undertekst
-                            tag="p"
-                            className="aktivitetskort__type"
-                            data-testid={type}
-                        >
-                            <FormattedMessage
-                                id={`aktivitetskort.type.${type}`.toLowerCase()}
-                            />
-                        </Undertekst>
-                        <div className="aktivitetskort__header">
-                            <AktivitetskortEndring
-                                harEndringerIAktivitet={harEndringerIAktivitet}
-                            />
-                            <Element
-                                tag="h1"
-                                id={`aktivitetskort__header__${id}`}
-                                className={classNames(
-                                    'aktivitetskort__tittel softbreak',
-                                    {
-                                        'aktivitetskort__tittel--drag': isDragging,
-                                    }
-                                )}
-                            >
-                                {tittel}
-                            </Element>
-                        </div>
-                        {type === STILLING_AKTIVITET_TYPE &&
-                            arbeidsgiver &&
-                            <Normaltekst>
-                                {arbeidsgiver}
-                            </Normaltekst>}
-                        {type === STILLING_AKTIVITET_TYPE
-                            ? <Soknadfrist aktivitet={aktivitet} />
-                            : <AktiviteskortPeriodeVisning
-                                  aktivitet={aktivitet}
-                              />}
-
-                        <VisibleIfDiv
-                            data-testid="antall-stillinger"
-                            visible={
-                                type === SOKEAVTALE_AKTIVITET_TYPE &&
-                                antallStillingerSokes > 0
-                            }
-                        >
-                            <FormattedMessage id="aktivitetskort.antall-label" />
-                            &nbsp;
-                            {antallStillingerSokes}
-                        </VisibleIfDiv>
+                        <AktivitetType type={type} />
+                        <Aktivitetskorttittel
+                            aktivitet={aktivitet}
+                            harEndringerIAktivitet={harEndringerIAktivitet}
+                            isDragging={isDragging}
+                        />
+                        <Arbeidsgiver aktivitet={aktivitet} />
+                        <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
+                        <SokeAvtaleAntall aktivitet={aktivitet} />
                         <AktivitetskortTillegg aktivitet={aktivitet} />
                     </article>
                 </Lenke>
