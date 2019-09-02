@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
 import { VisibleIfLesmerpanel } from '../../../felles-komponenter/utils/visible-if-lesmerpanel';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
 import loggEvent from '../../../felles-komponenter/utils/logging';
@@ -23,16 +22,9 @@ function lagAktivitetsListe(aktiviteter) {
 
 function SkjulEldreAktiviteter({
     aktiviteteterTilDatoMerEnnToManederSiden,
-    intl,
     erVeileder,
 }) {
     const visible = aktiviteteterTilDatoMerEnnToManederSiden.length > 0;
-    const apneTekst = intl.formatMessage({
-        id: 'vis-eldre-aktiviteter-apnetekst',
-    });
-    const lukkTekst = intl.formatMessage({
-        id: 'vis-eldre-aktiviteter-lukktekst',
-    });
     return (
         <VisibleIfLesmerpanel
             visible={visible}
@@ -49,8 +41,8 @@ function SkjulEldreAktiviteter({
                     LOGGING_SKJULELDREAKTIVITETER,
                     { erVeileder }
                 )}
-            apneTekst={apneTekst}
-            lukkTekst={lukkTekst}
+            apneTekst="Vis kort eldre enn en måned"
+            lukkTekst="Skjul kort eldre enn en måned"
         >
             {lagAktivitetsListe(aktiviteteterTilDatoMerEnnToManederSiden)}
         </VisibleIfLesmerpanel>
@@ -64,7 +56,6 @@ const mapStateToProps = state => ({
 SkjulEldreAktiviteter.propTypes = {
     aktiviteteterTilDatoMerEnnToManederSiden: PT.arrayOf(PT.object).isRequired,
     erVeileder: PT.bool.isRequired,
-    intl: intlShape.isRequired,
 };
 
-export default injectIntl(connect(mapStateToProps)(SkjulEldreAktiviteter));
+export default connect(mapStateToProps)(SkjulEldreAktiviteter);
