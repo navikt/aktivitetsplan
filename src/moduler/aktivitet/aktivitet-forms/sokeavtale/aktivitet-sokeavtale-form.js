@@ -22,7 +22,7 @@ import {
 } from './validate';
 import LagreAktivitet from '../lagre-aktivitet';
 
-function SokeAvtaleAktivitetForm(props) {
+export default function SokeAvtaleAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
 
     const maybeAktivitet = aktivitet || {};
@@ -156,5 +156,3 @@ SokeAvtaleAktivitetForm.defaultProps = {
     isDirtyRef: undefined,
     endre: false,
 };
-
-export default SokeAvtaleAktivitetForm;
