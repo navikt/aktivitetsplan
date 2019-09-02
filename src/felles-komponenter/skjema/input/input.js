@@ -2,6 +2,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { Input as NavInput } from 'nav-frontend-skjema';
+import hiddenIfHOC from '../../hidden-if/hidden-if';
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Input({ touched, error, input, pristine, initialValue, ...rest }) {
@@ -25,3 +26,4 @@ Input.defaultProps = {
 };
 
 export default Input;
+export const HidenIfInput = hiddenIfHOC(Input);
