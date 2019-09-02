@@ -1,5 +1,5 @@
 import 'moment-duration-format';
-import { erMerEnnToManederSiden, moment } from '../../utils';
+import { erMerEnnEnManederSiden, moment } from '../../utils';
 import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
@@ -10,7 +10,8 @@ import {
 export function compareAktivitet(a, b) {
     if (b.avtalt && !a.avtalt) {
         return 1;
-    } if (!b.avtalt && a.avtalt) {
+    }
+    if (!b.avtalt && a.avtalt) {
         return -1;
     }
     if (a.opprettetDato !== null && b.opprettetDato === null) {
@@ -53,8 +54,8 @@ export function erNyEndringIAktivitet(aktivitet, lestInformasjon, me) {
 }
 
 export function beregnKlokkeslettVarighet(aktivitet) {
-    const {fraDato} = aktivitet;
-    const {tilDato} = aktivitet;
+    const { fraDato } = aktivitet;
+    const { tilDato } = aktivitet;
     if (fraDato && tilDato) {
         const fraMoment = moment(fraDato);
         const tilMoment = moment(tilDato);
@@ -70,9 +71,9 @@ export function beregnKlokkeslettVarighet(aktivitet) {
 }
 
 export function beregnFraTil(data) {
-    const {dato} = data;
-    const {klokkeslett} = data;
-    const {varighet} = data;
+    const { dato } = data;
+    const { klokkeslett } = data;
+    const { varighet } = data;
     if (dato && klokkeslett && varighet) {
         const fraDato = moment(dato)
             .startOf('day')
@@ -149,8 +150,8 @@ export function sorterAktiviteter(aktiviteter, status) {
         .sort(compareAktivitet);
 }
 
-function tilDatoEllerFraDatoerMindreEnnToManederSiden(aktivitet) {
-    return !erMerEnnToManederSiden(aktivitet);
+function tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet) {
+    return !erMerEnnEnManederSiden(aktivitet);
 }
 
 export function splitIEldreOgNyereAktiviteter(aktiviteter) {
@@ -162,7 +163,7 @@ export function splitIEldreOgNyereAktiviteter(aktiviteter) {
             ],
             aktivitet
         ) => {
-            if (tilDatoEllerFraDatoerMindreEnnToManederSiden(aktivitet)) {
+            if (tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet)) {
                 return [
                     [
                         ...listeMedAktiviteterTilDatoMindreEnnToManader,
