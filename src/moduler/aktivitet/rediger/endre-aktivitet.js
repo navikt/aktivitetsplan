@@ -7,7 +7,6 @@ import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import Modal from '../../../felles-komponenter/modal/modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import { aktivitetRoute } from '../../../routing';
 import { STATUS } from '../../../ducks/utils';
 import { selectAktivitetMedId } from '../aktivitetliste-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
@@ -28,6 +27,7 @@ import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
+import { aktivitetRoute } from '../../../routes';
 
 function getAktivitetsFormComponent(aktivitet) {
     if (!aktivitet) {

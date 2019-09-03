@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { VisibleIfLesmerpanel } from '../../../felles-komponenter/utils/visible-if-lesmerpanel';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
-import { lagAktivitetsListe } from '../aktivitetstavle';
 import loggEvent from '../../../felles-komponenter/utils/logging';
+import AktivitetsKort from '../../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 
 const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
 const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';
@@ -12,6 +12,12 @@ const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';
 // eslint-disable-next-line no-unused-vars
 function loggingAvSkjulEldreAktiviteter(event, typeEvent, hvem) {
     loggEvent(typeEvent, hvem);
+}
+
+function lagAktivitetsListe(aktiviteter) {
+    return aktiviteter.map(aktivitet =>
+        <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
+    );
 }
 
 function SkjulEldreAktiviteter({

@@ -6,6 +6,7 @@ import Collapse from 'react-collapse';
 import classNames from 'classnames';
 import VisibleIfDiv from './utils/visible-if-div';
 
+// TODO: Remove this and use Lesmerpanel i nav-frontend
 class Accordion extends Component {
     constructor(props) {
         super(props);
