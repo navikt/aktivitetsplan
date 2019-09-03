@@ -66,7 +66,7 @@ function StillingAktivitetForm(props) {
 
                 <AktivitetFormHeader
                     tittel="En jobb jeg vil søke på"
-                    ingressType={STILLING_AKTIVITET_TYPE}
+                    aktivitetsType={STILLING_AKTIVITET_TYPE}
                 />
 
                 <Input

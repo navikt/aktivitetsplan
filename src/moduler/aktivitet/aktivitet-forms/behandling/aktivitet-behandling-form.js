@@ -70,7 +70,7 @@ function BehandlingAktivitetForm(props) {
 
                 <AktivitetFormHeader
                     tittel="Medisinsk behandling"
-                    ingressType={BEHANDLING_AKTIVITET_TYPE}
+                    aktivitetsType={BEHANDLING_AKTIVITET_TYPE}
                 />
 
                 <Input

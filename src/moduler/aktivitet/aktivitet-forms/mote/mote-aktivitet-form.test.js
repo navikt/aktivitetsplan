@@ -1,16 +1,12 @@
 import React from 'react';
-import { IntlProvider } from 'react-intl';
 import { mount, shallow } from 'enzyme';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import MoteAktivitetForm, { defaultBeskrivelse } from './mote-aktivitet-form';
-import { STATUS } from '../../../../ducks/utils';
 
 const initialState = {
     data: {
-        identitet: { data: { erVeileder: false }, status: STATUS.OK },
         oppfolging: { data: { underOppfolging: true } },
-        status: STATUS.OK,
         aktiviteter: [],
     },
 };
@@ -22,9 +18,7 @@ const dirtyRef = { current: false };
 function mountWithIntl(node) {
     return mount(
         <ReduxProvider store={store}>
-            <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
-                {node}
-            </IntlProvider>
+            {node}
         </ReduxProvider>
     );
 }

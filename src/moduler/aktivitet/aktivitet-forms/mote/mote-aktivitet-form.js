@@ -100,7 +100,7 @@ function MoteAktivitetForm(props) {
 
                 <AktivitetFormHeader
                     tittel="Møte med NAV"
-                    ingressType={MOTE_TYPE}
+                    aktivitetsType={MOTE_TYPE}
                 />
 
                 <Input
