@@ -8,14 +8,6 @@ import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
 
-export const aktivitetRoute = aktivitetId => `/aktivitet/vis/${aktivitetId}`;
-export const endreAktivitetRoute = aktivitetId =>
-    `/aktivitet/endre/${aktivitetId}`;
-export const fullforAktivitetRoute = aktivitetId =>
-    `/aktivitet/fullfor/${aktivitetId}`;
-export const avbrytAktivitetRoute = aktivitetId =>
-    `/aktivitet/avbryt/${aktivitetId}`;
-
 function getPathWithBase(path) {
     if (window.appconfig.FNR_I_URL) {
         return `/:fnr${path}`;

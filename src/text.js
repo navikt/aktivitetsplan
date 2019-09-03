@@ -25,6 +25,7 @@ const mapStateToProps = state => ({
 // TODO: remove this
 function textHOC(Component, props) {
     const { visChildrenVedFeil } = props || {};
+
     // eslint-disable-next-line react/prop-types
     function Text({ id, children, avhengigheter, ...rest }) {
         return (

@@ -112,7 +112,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => ({
     onSubmit: data => {
-        console.log(data);
         return sendForhandsorientering({
             aktivitetId: props.valgtAktivitet.id,
             tekst: data.text,
