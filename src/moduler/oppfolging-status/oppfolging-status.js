@@ -7,13 +7,16 @@ import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
 import {
+    selectAktorId,
     selectErBrukerManuell,
     selectErUnderOppfolging,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
+    selectServicegruppe,
 } from './oppfolging-selector';
 import {
     selectErVeileder,
+    selectIdentitetId,
     selectIdentitetStatus,
 } from '../identitet/identitet-selector';
 import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
@@ -21,13 +24,13 @@ import VidereSendBrukereEllerRenderChildren from './videre-send-bruker-eller-ren
 
 class OppfolgingStatus extends Component {
     componentDidMount() {
-        const {doHentIdentitet, doHentOppfolging} = this.props;
+        const { doHentIdentitet, doHentOppfolging } = this.props;
         doHentIdentitet();
         doHentOppfolging();
     }
 
     render() {
-        const {props} = this;
+        const { props } = this;
         return (
             <Innholdslaster
                 avhengigheter={[
@@ -50,16 +53,25 @@ OppfolgingStatus.propTypes = {
     toggleStatus: AppPT.status.isRequired,
     doHentOppfolging: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
+    sevicegruppe: PT.string,
+};
+
+OppfolgingStatus.defaultProps = {
+    sevicegruppe: null,
 };
 
 const mapStateToProps = state => ({
+    oppfolgingStatus: selectOppfolgingStatus(state),
+    identitetStatus: selectIdentitetStatus(state),
+    toggleStatus: selectFeatureStatus(state),
+    // for children
     erVeileder: selectErVeileder(state),
     underOppfolging: selectErUnderOppfolging(state),
     oppfolgingsPerioder: selectOppfolgingsPerioder(state),
     manuell: selectErBrukerManuell(state),
-    oppfolgingStatus: selectOppfolgingStatus(state),
-    identitetStatus: selectIdentitetStatus(state),
-    toggleStatus: selectFeatureStatus(state),
+    servicegruppe: selectServicegruppe(state),
+    aktorId: selectAktorId(state),
+    ident: selectIdentitetId(state),
 });
 
 const mapDispatchToProps = dispatch => ({

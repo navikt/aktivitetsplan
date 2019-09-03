@@ -11,7 +11,6 @@ import malListeReducer from './moduler/mal/malliste-reducer';
 import fremtidigSituasjonReducer from './hovedside/maal/fremtidigSituasjon-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
-import oppfolgingstatusReducer from './moduler/oppfoelgingsstatus/oppfoelgingsstatus-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
@@ -33,7 +32,6 @@ const combinedReducers = combineReducers({
         fremtidigSituasjon: fremtidigSituasjonReducer,
         malListe: malListeReducer,
         oppfolging: oppfolgingReducer,
-        oppfoelgingsstatus: oppfolgingstatusReducer,
         versjoner: versjonReducer,
         feature: featureReducer,
         malverk: malverkReducer,

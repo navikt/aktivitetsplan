@@ -20,6 +20,10 @@ export function selectOppfolgingStatus(state) {
 export const selectReservasjonKRR = state =>
     selectOppfolgingData(state).reservasjonKRR;
 
+export function selectServicegruppe(state) {
+    return selectOppfolgingData(state).servicegruppe;
+}
+
 export function selectOppfolgingsPerioder(state) {
     return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
@@ -43,7 +47,7 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
     return selectHistoriskeOppfolgingsPerioder(state)
         .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
         .map(periode => {
-            const {sluttDato} = periode;
+            const { sluttDato } = periode;
             const fra = nesteFra;
             nesteFra = sluttDato;
             return {
@@ -75,6 +79,10 @@ export function selectOppfolgingUtgang(state) {
 
 export function selectErBrukerManuell(state) {
     return selectOppfolgingData(state).manuell;
+}
+
+export function selectAktorId(state) {
+    return selectOppfolgingData(state).aktorId;
 }
 
 export function selectGjeldendeEskaleringsVarsel(state) {
