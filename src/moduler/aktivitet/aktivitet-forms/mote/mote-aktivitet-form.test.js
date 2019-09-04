@@ -1,8 +1,9 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { Provider as ReduxProvider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { createStore } from 'redux';
 import MoteAktivitetForm, { defaultBeskrivelse } from './mote-aktivitet-form';
+import reducer from '../../../../reducer';
 
 const initialState = {
     data: {
@@ -11,9 +12,8 @@ const initialState = {
     },
 };
 
-const mockStore = configureStore();
-const store = mockStore(initialState);
 const dirtyRef = { current: false };
+const store = createStore(reducer, initialState);
 
 function mountWithIntl(node) {
     return mount(
