@@ -23,7 +23,7 @@ import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskor
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 
-export function lagAktivitetsListe(aktiviteter) {
+function lagAktivitetsListe(aktiviteter) {
     return aktiviteter.map(aktivitet =>
         <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
     );

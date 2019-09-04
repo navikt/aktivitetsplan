@@ -13,7 +13,7 @@ export function hentFeature(enhet) {
         (features && enhet && `${features}&enhet=${enhet}`) || features;
     return fetchToJson(
         `${window.appconfig.CONTEXT_PATH}/api/feature${featuresWithEnhet}`
-    ).catch(e => console.log(e));
+    );
 }
 
 export default {};

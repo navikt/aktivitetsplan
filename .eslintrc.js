@@ -1,6 +1,10 @@
 module.exports = {
     extends: ['react-app', 'airbnb', 'prettier'],
     rules: {
+        'import/no-cycle': 'off',
+        'max-classes-per-file': 'off',
+        'react/jsx-props-no-spreading': 'off',
+        'no-alert': 'off',
         indent: 'off',
         'space-before-function-paren': 'off',
         'react/jsx-indent-props': 'off',

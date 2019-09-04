@@ -81,7 +81,13 @@ InformasjonsHenting.propTypes = {
     underOppfolging: PT.bool.isRequired,
     doHentLest: PT.func.isRequired,
     oppfolgingsPerioder: PT.arrayOf(PT.object).isRequired,
+    lestStatus: AppPT.status.isRequired,
+    lestInfo: AppPT.lest,
     setBack: PT.func.isRequired,
+};
+
+InformasjonsHenting.defaultProps = {
+    lestInfo: undefined,
 };
 
 const mapStateToProps = state => ({

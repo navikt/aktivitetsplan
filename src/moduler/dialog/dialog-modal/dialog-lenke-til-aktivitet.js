@@ -3,12 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import Knappelenke from '../../../felles-komponenter/utils/knappelenke';
-import { aktivitetRoute } from '../../../routing';
 import * as AppPT from '../../../proptypes';
 
 function DialogLenkeTilAktivitet({ aktivitet, history }) {
     return (
-        <Knappelenke onClick={() => history.push(aktivitetRoute(aktivitet.id))}>
+        <Knappelenke
+            onClick={() => history.push(`/aktivitet/vis/${aktivitet.id}`)}
+        >
             <FormattedMessage
                 id="dialog.modal.til-aktiviteten"
                 values={{ tittel: aktivitet.tittel }}

@@ -13,12 +13,11 @@ function nodeWithIntlProp(node) {
 
 function mountWithIntl(node, { context, childContextTypes } = {}) {
     return mount(nodeWithIntlProp(node), {
-        context: Object.assign({}, context, { intl }),
-        childContextTypes: Object.assign(
-            {},
-            { intl: intlShape },
-            childContextTypes
-        ),
+        context: { ...context, intl },
+        childContextTypes: {
+            intl: intlShape,
+            ...childContextTypes,
+        },
     });
 }
 

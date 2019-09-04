@@ -35,10 +35,9 @@ import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-sele
 import { STATUS } from '../../../ducks/utils';
 import SokeAvtaleAntall from './SokeAvtaleAntall';
 import Arbeidsgiver from './Stilling';
-
 import AktivitetType from './AktivitetType';
-import { aktivitetRoute } from '../../../routing';
 import Aktivitetskorttittel from './AktivitetKortTitel';
+import { aktivitetRoute } from '../../../routes';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
