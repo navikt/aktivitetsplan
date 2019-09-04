@@ -47,11 +47,7 @@ function Statusadministrasjon({
     const visOppdaterStatusContainer = (
         <div>
             <VisibleIfDiv visible={type === STILLING_AKTIVITET_TYPE}>
-                <OppdaterAktivitetEtikett
-                    status={status}
-                    paramsId={id}
-                    className="aktivitetvisning__underseksjon"
-                />
+                <OppdaterAktivitetEtikett valgtAktivitet={valgtAktivitet} />
                 <hr className="aktivitetvisning__delelinje" />
             </VisibleIfDiv>
             <OppdaterAktivitetStatus
