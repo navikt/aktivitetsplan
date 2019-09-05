@@ -70,7 +70,7 @@ function EgenAktivitetForm(props) {
 
                 <AktivitetFormHeader
                     tittel="Jobbrettet egenaktivitet"
-                    ingressType={EGEN_AKTIVITET_TYPE}
+                    aktivitetsType={EGEN_AKTIVITET_TYPE}
                 />
 
                 <Malverk

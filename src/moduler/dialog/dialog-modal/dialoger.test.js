@@ -62,6 +62,11 @@ describe('<Dialoger/>', () => {
                 aktiviteter={[]}
                 erBruker={false}
                 gjeldendeEskaleringsvarsel={gjeldendeVarsel}
+                history={{
+                    goBack: () => null,
+                    push: () => null,
+                    replace: () => null,
+                }}
             />
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
@@ -76,6 +81,11 @@ describe('<Dialoger/>', () => {
                 aktiviteter={[]}
                 erBruker
                 gjeldendeEskaleringsvarsel={gjeldendeVarsel}
+                history={{
+                    goBack: () => null,
+                    push: () => null,
+                    replace: () => null,
+                }}
             />
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
@@ -90,6 +100,11 @@ describe('<Dialoger/>', () => {
                 aktiviteter={[]}
                 erBruker
                 gjeldendeEskaleringsvarsel={null}
+                history={{
+                    goBack: () => null,
+                    push: () => null,
+                    replace: () => null,
+                }}
             />
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
@@ -104,6 +119,11 @@ describe('<Dialoger/>', () => {
                 aktiviteter={[]}
                 erBruker={false}
                 gjeldendeEskaleringsvarsel={null}
+                history={{
+                    goBack: () => null,
+                    push: () => null,
+                    replace: () => null,
+                }}
             />
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
@@ -118,6 +138,11 @@ describe('<Dialoger/>', () => {
                 aktiviteter={[]}
                 erBruker
                 gjeldendeEskaleringsvarsel={null}
+                history={{
+                    goBack: () => null,
+                    push: () => null,
+                    replace: () => null,
+                }}
             />
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;
@@ -132,6 +157,11 @@ describe('<Dialoger/>', () => {
                 aktiviteter={[]}
                 erBruker={false}
                 gjeldendeEskaleringsvarsel={null}
+                history={{
+                    goBack: () => null,
+                    push: () => null,
+                    replace: () => null,
+                }}
             />
         );
         const dialogerSortert = wrapper.instance().dialogIderSortert;

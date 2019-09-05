@@ -2,7 +2,7 @@ import React from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { injectIntl, intlShape } from 'react-intl';
 import PT from 'prop-types';
-import { HtmlText } from '../../text';
+import HtmlText from '../../htmlText';
 
 function EkspanderbartpanelMedTittelOgInnhold({
     tittelId,

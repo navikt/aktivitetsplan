@@ -71,7 +71,7 @@ function SamtalereferatForm(props) {
 
                 <AktivitetFormHeader
                     tittel="Samtalereferat"
-                    ingressType={SAMTALEREFERAT_TYPE}
+                    aktivitetsType={SAMTALEREFERAT_TYPE}
                 />
 
                 <Input label="Tema for samtalen *" {...state.fields.tittel} />

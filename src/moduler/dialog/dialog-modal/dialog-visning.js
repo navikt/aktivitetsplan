@@ -113,17 +113,14 @@ class DialogVisning extends React.PureComponent {
                 >
                     <Etikett
                         hidden={!venterPaSvar}
-                        id="dialog.venter-pa-svar-etikett"
                         etikett={DIALOG_MA_BESVARES}
                     />
                     <Etikett
                         hidden={ferdigBehandlet}
-                        id="dialog.ikke-ferdigbehandlet"
                         etikett={DIALOG_IKKE_FERDIGBEHANDLET}
                     />
                     <Etikett
                         hidden={!harViktigMeldingEgenskap}
-                        id="dialog.eskalert-melding"
                         etikett={DIALOG_ESKALERING}
                     />
                 </HiddenIfDiv>

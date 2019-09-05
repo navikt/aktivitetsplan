@@ -35,6 +35,33 @@ const mock = fetchMock.configure({
     middleware: fetchmockMiddleware,
 });
 
+const noContent = ResponseUtils.statusCode(204);
+const unauthorized = ResponseUtils.combine(
+    ResponseUtils.statusCode(401),
+    ResponseUtils.json({
+        id: '1170c6534ed5eca272d527cd30c6a455',
+        type: 'UKJENT',
+        detaljer: {
+            detaljertType: 'javax.ws.rs.Unauthorized',
+            feilMelding: 'HTTP 401 Unauthorized',
+            stackTrace: 'javax.ws.rs.Unauthorized:HTTP 401 Unauthorized\r\n\t',
+        },
+    })
+);
+const internalServerError = ResponseUtils.combine(
+    ResponseUtils.statusCode(500),
+    ResponseUtils.json({
+        id: '9170c6534ed5eca272d527cd30c6a458',
+        type: 'UKJENT',
+        detaljer: {
+            detaljertType: 'javax.ws.rs.InternalServerErrorException',
+            feilMelding: 'HTTP 500 Internal Server Error',
+            stackTrace:
+                'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t',
+        },
+    })
+);
+
 //feature-api
 mock.get('/aktivitetsplan/api/feature', ({ queryParams }) =>
     getFeatures(queryParams)
