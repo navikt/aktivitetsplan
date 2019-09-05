@@ -41,8 +41,8 @@ function SkjulEldreAktiviteter({
                     LOGGING_SKJULELDREAKTIVITETER,
                     { erVeileder }
                 )}
-            apneTekst="Vis kort eldre enn en måned"
-            lukkTekst="Skjul kort eldre enn en måned"
+            apneTekst="Vis kort eldre enn 1 måned"
+            lukkTekst="Skjul kort eldre enn 1 måned"
         >
             {lagAktivitetsListe(aktiviteteterTilDatoMerEnnToManederSiden)}
         </VisibleIfLesmerpanel>

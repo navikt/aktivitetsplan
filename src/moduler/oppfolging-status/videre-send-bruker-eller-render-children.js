@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
+import shajs from 'sha.js';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 import * as AppPT from '../../proptypes';
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
@@ -14,10 +15,33 @@ function loggingAntallBrukere(typeEvent, hvem) {
     }
 }
 
+function hash(string) {
+    return string ? shajs('sha256').update(string).digest('hex') : null;
+}
+
 class VidereSendBrukereEllerRenderChildren extends Component {
     componentDidMount() {
-        const { erVeileder } = this.props;
-        loggingAntallBrukere(LOGGING_ANTALLBRUKERE, { erVeileder });
+        const {
+            erVeileder,
+            servicegruppe,
+            underOppfolging,
+            ident,
+            aktorId,
+        } = this.props;
+        const hashetAktorID = hash(aktorId);
+        const veileder = erVeileder && hash(ident);
+        const bruker =
+            erVeileder || underOppfolging
+                ? hashetAktorID
+                : 'IKKE_UNDER_OPPFOLGING';
+
+        loggingAntallBrukere(LOGGING_ANTALLBRUKERE, {
+            erVeileder,
+            servicegruppe,
+            underOppfolging,
+            veileder,
+            bruker,
+        });
     }
 
     render() {
@@ -29,10 +53,7 @@ class VidereSendBrukereEllerRenderChildren extends Component {
             oppfolgingsPerioder,
         } = this.props;
 
-        if (
-            !underOppfolging &&
-            oppfolgingsPerioder.length === 0
-        ) {
+        if (!underOppfolging && oppfolgingsPerioder.length === 0) {
             return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
         }
 
@@ -57,6 +78,9 @@ VidereSendBrukereEllerRenderChildren.defaultProps = {
     oppfolgingsPerioder: [],
     reservasjonKRR: null,
     videreSendTilInfo: false,
+    servicegruppe: null,
+    ident: null,
+    aktorId: null,
 };
 
 VidereSendBrukereEllerRenderChildren.propTypes = {
@@ -68,6 +92,9 @@ VidereSendBrukereEllerRenderChildren.propTypes = {
     videreSendTilInfo: PT.bool,
     kanStarteOppfolging: PT.bool,
     oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
+    servicegruppe: PT.string,
+    ident: PT.string,
+    aktorId: PT.string,
 };
 
 export default VidereSendBrukereEllerRenderChildren;
