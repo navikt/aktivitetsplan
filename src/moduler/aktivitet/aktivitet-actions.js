@@ -77,13 +77,6 @@ export function lagNyAktivitet(aktivitet) {
     });
 }
 
-export function settForrigeAktiveAktivitetId(id) {
-    return {
-        type: AT.SETT_FORRIGE_AKTIVE_AKTIVITET_ID,
-        id,
-    };
-}
-
 export function fjernForrigeAktiveAktivitetId() {
     return {
         type: AT.FJERN_FORRIGE_AKTIVE_AKTIVITET_ID,

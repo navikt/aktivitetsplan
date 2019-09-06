@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PT from 'prop-types';
 import {
     hentAktivitet,
-    settForrigeAktiveAktivitetId,
     fjernForrigeAktiveAktivitetId,
 } from '../aktivitet-actions';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
@@ -51,9 +50,12 @@ class AktivitetvisningContainer extends Component {
     }
 
     componentWillUnmount() {
-        const { valgtAktivitet, doSettForrigeAktiveAktivitetId } = this.props;
-        if (valgtAktivitet) {
-            doSettForrigeAktiveAktivitetId(valgtAktivitet.id);
+        const { valgtAktivitet } = this.props;
+        const aktivitetskort = document.querySelector(
+            `#aktivitetskort_${valgtAktivitet.id}`
+        );
+        if (valgtAktivitet && aktivitetskort) {
+            aktivitetskort.focus();
         }
     }
 
@@ -76,7 +78,6 @@ AktivitetvisningContainer.propTypes = {
     laster: PT.bool.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
-    doSettForrigeAktiveAktivitetId: PT.func.isRequired,
     doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
     doLukkDialogEllerHistorikk: PT.func.isRequired,
     history: AppPT.history.isRequired,
@@ -125,7 +126,6 @@ const mapDispatchToProps = dispatch =>
         {
             doHentAktivitet: hentAktivitet,
             doHentArenaAktiviteter: hentArenaAktiviteter,
-            doSettForrigeAktiveAktivitetId: settForrigeAktiveAktivitetId,
             doFjernForrigeAktiveAktivitetId: fjernForrigeAktiveAktivitetId,
             doLukkDialogEllerHistorikk: lukkAlle,
         },
