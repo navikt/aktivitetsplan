@@ -82,7 +82,7 @@ export default function SokeAvtaleAktivitetForm(props) {
 
                 <AktivitetFormHeader
                     tittel="Avtale om å søke jobber"
-                    ingressType={SOKEAVTALE_AKTIVITET_TYPE}
+                    aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE}
                 />
 
                 <Malverk

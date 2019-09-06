@@ -49,6 +49,7 @@ const oppfPerioder = [
 
 const oppfolging = {
     fnr: null,
+    aktorId: '1234567988888',
     veilederId: null,
     reservasjonKRR: false,
     manuell: erManuellBruker(),
@@ -61,6 +62,7 @@ const oppfolging = {
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfPerioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
+    servicegruppe: 'IVURD',
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
 };
 

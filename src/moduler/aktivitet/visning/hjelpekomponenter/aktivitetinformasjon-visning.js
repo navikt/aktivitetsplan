@@ -29,7 +29,7 @@ function visningsIngress(type) {
         return null;
     }
 
-    return <AktivitetIngress type={type} />;
+    return <AktivitetIngress aktivitetsType={type} />;
 }
 
 function AktivitetinformasjonVisning({

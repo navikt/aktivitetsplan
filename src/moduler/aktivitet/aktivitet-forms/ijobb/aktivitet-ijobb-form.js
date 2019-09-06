@@ -69,7 +69,7 @@ function IJobbAktivitetForm(props) {
 
                 <AktivitetFormHeader
                     tittel="Jobb jeg har nå"
-                    ingressType={IJOBB_AKTIVITET_TYPE}
+                    aktivitetsType={IJOBB_AKTIVITET_TYPE}
                 />
 
                 <Input

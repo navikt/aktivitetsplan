@@ -7,14 +7,10 @@ import { div as HiddenIfDiv } from '../hidden-if/hidden-if';
 
 // TODO refactor this
 function AktivitetEtikettGruppe({ aktivitet, className }) {
-    const { avtalt } = aktivitet;
+    const { avtalt, etikett } = aktivitet;
     return (
-        <HiddenIfDiv hidden={!avtalt} className={className}>
-            <AktivitetEtikett
-                hidden={!avtalt}
-                etikett={AVTALT_MED_NAV}
-                id={AVTALT_MED_NAV}
-            />
+        <HiddenIfDiv hidden={!avtalt && !etikett} className={className}>
+            <AktivitetEtikett hidden={!avtalt} etikett={AVTALT_MED_NAV} />
         </HiddenIfDiv>
     );
 }

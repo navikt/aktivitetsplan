@@ -49,7 +49,7 @@ const varigheter = Array.from(new Array(24)).map((noValue, index) => {
     );
 });
 
-const defaultBeskrivelse =
+export const defaultBeskrivelse =
     'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
 function MoteAktivitetForm(props) {
@@ -100,7 +100,7 @@ function MoteAktivitetForm(props) {
 
                 <AktivitetFormHeader
                     tittel="Møte med NAV"
-                    ingressType={MOTE_TYPE}
+                    aktivitetsType={MOTE_TYPE}
                 />
 
                 <Input
