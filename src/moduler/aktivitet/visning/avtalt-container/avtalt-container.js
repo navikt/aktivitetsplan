@@ -37,6 +37,7 @@ import {
     loggForhandsorientering,
     metrikkTidForsteAvtalte,
 } from '../../../../felles-komponenter/utils/logging';
+import DeleLinje from '../delelinje/delelinje';
 
 class AvtaltContainer extends Component {
     constructor(props) {
@@ -172,7 +173,7 @@ class AvtaltContainer extends Component {
         return (
             <div>
                 {aktivitet.avtalt ? visAvtalt : avtaltInnholdForhandsvarsel}
-                <hr className="aktivitetvisning__delelinje" />
+                <DeleLinje />
             </div>
         );
     }

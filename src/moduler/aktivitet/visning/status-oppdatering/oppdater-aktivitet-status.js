@@ -1,51 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Undertittel } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import * as AppPT from '../../../../proptypes';
 import AktivitetStatusForm from './aktivitet-status-form';
-import {
-    selectAktivitetMedId,
-    selectKanEndreAktivitetStatus,
-} from '../../aktivitetliste-selector';
+import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
+import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
+import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
+import EndreLinje from '../endre-linje/endre-linje';
+import StatusVisning from './status-visning';
+import Underseksjon from '../underseksjon/underseksjon';
 
-function OppdaterAktivitetStatus({
-    className,
-    valgtAktivitet,
-    disableStatusEndring,
-}) {
+function OppdaterAktivitetStatus(props) {
+    const { aktivitet, disableStatusEndring, lagreStatusEndringer } = props;
+
+    const [endring, setEndring] = useState(false);
+
+    const onSubmit = val =>
+        lagreStatusEndringer(val).then(() => {
+            setEndring(false);
+            document.querySelector('.aktivitet-modal').focus();
+        });
+
+    const visning = <StatusVisning status={aktivitet.status} />;
+    const form = (
+        <AktivitetStatusForm
+            disabled={disableStatusEndring}
+            onSubmit={onSubmit}
+            aktivitet={aktivitet}
+        />
+    );
+
     return (
-        <section className={className}>
-            <Undertittel>
-                <FormattedMessage id="oppdater-aktivitet-status.header" />
-            </Undertittel>
-            <AktivitetStatusForm
-                disableStatusEndring={disableStatusEndring}
-                aktivitet={valgtAktivitet}
+        <Underseksjon>
+            <EndreLinje
+                tittel="Hva er status på aktiviteten?"
+                endring={endring}
+                setEndring={setEndring}
+                visning={visning}
+                form={form}
             />
-        </section>
+        </Underseksjon>
     );
 }
 
 OppdaterAktivitetStatus.propTypes = {
-    className: PT.string.isRequired,
-    valgtAktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired,
     disableStatusEndring: PT.bool.isRequired,
+    lagreStatusEndringer: PT.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
-    const valgtAktivitet = selectAktivitetMedId(state, props.aktivitetId);
     return {
-        valgtAktivitet,
         disableStatusEndring:
-            !selectKanEndreAktivitetStatus(state, valgtAktivitet) ||
+            !selectKanEndreAktivitetStatus(state, props.aktivitet) ||
             !selectErUnderOppfolging(state),
-        initialValues: {
-            aktivitetstatus: props.status,
-        },
     };
 };
 
-export default connect(mapStateToProps, null)(OppdaterAktivitetStatus);
+const mapDispatchToProps = (dispatch, props) => ({
+    lagreStatusEndringer: values => {
+        flyttetAktivitetMetrikk(
+            'submit',
+            props.aktivitet,
+            values.aktivitetstatus
+        );
+        return dispatch(
+            flyttAktivitetMedBegrunnelse(
+                props.aktivitet,
+                values.aktivitetstatus,
+                values.begrunnelse
+            )
+        );
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+    OppdaterAktivitetStatus
+);

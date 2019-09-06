@@ -19,14 +19,11 @@ import {
     selectErUnderKvp,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
+import DeleLinje from '../delelinje/delelinje';
 
-function Statusadministrasjon({
-    valgtAktivitet,
-    arenaAktivitet,
-    erBruker,
-    erManuellKrrKvpBruker, // eslint-disable-line
-}) {
-    const { status, type, id } = valgtAktivitet;
+function Statusadministrasjon(props) {
+    const { aktivitet, arenaAktivitet, erBruker } = props;
+    const { type } = aktivitet;
 
     // TODO add back when used
     const skalViseForhandsorienteringsKomponent = false;
@@ -39,7 +36,7 @@ function Statusadministrasjon({
             </AlertStripeInfo>
             <ForhandsorienteringArenaAktivitet
                 visible={skalViseForhandsorienteringsKomponent}
-                valgtAktivitet={valgtAktivitet}
+                aktivitet={aktivitet}
             />
         </div>
     );
@@ -47,15 +44,11 @@ function Statusadministrasjon({
     const visOppdaterStatusContainer = (
         <div>
             <VisibleIfDiv visible={type === STILLING_AKTIVITET_TYPE}>
-                <OppdaterAktivitetEtikett valgtAktivitet={valgtAktivitet} />
-                <hr className="aktivitetvisning__delelinje" />
+                <OppdaterAktivitetEtikett aktivitet={aktivitet} />
+                <DeleLinje />
             </VisibleIfDiv>
-            <OppdaterAktivitetStatus
-                status={status}
-                aktivitetId={id}
-                className="aktivitetvisning__underseksjon"
-            />
-            <hr className="aktivitetvisning__delelinje" />
+            <OppdaterAktivitetStatus aktivitet={aktivitet} />
+            <DeleLinje />
         </div>
     );
 
@@ -69,7 +62,7 @@ function Statusadministrasjon({
 }
 
 Statusadministrasjon.propTypes = {
-    valgtAktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired,
     arenaAktivitet: PT.bool.isRequired,
     erBruker: PT.bool.isRequired,
 };

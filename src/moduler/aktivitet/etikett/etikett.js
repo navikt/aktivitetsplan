@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import EtikettBase from 'nav-frontend-etiketter';
 import * as statuskoder from '../../../constant';
 import styles from './etikett.module.less';
-import visibleIfHOC from '../../../hocs/visible-if';
 
 const getType = etikettnavn => {
     switch (etikettnavn) {
@@ -14,7 +13,7 @@ const getType = etikettnavn => {
         case statuskoder.AVSLAG:
             return 'info';
         default:
-            return null;
+            return 'info';
     }
 };
 
@@ -29,16 +28,12 @@ const getText = etikettnavn => {
         case statuskoder.AVSLAG:
             return 'Fått avslag';
         default:
-            return null;
+            return 'Har ikke startet';
     }
 };
 
 function Etikett({ etikett }) {
     const type = getType(etikett);
-
-    if (!type) {
-        return null;
-    }
 
     return (
         <EtikettBase type={type} className={styles.etikett}>
@@ -55,4 +50,4 @@ Etikett.propTypes = {
     etikett: PT.string,
 };
 
-export default visibleIfHOC(Etikett);
+export default Etikett;

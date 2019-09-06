@@ -16,6 +16,7 @@ import loggEvent, {
     APNE_ENDRE_AKTIVITET,
 } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
+import DeleLinje from '../delelinje/delelinje';
 
 function visningsIngress(type) {
     if (
@@ -70,7 +71,7 @@ function AktivitetinformasjonVisning({
 
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            <hr className="aktivitetvisning__delelinje" />
+            <DeleLinje />
         </div>
     );
 }

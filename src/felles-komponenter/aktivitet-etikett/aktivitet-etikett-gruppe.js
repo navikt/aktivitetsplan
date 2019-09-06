@@ -3,22 +3,17 @@ import PT from 'prop-types';
 import AktivitetEtikett from './aktivitet-etikett';
 import { AVTALT_MED_NAV } from '../../constant';
 import * as AppPT from '../../proptypes';
-import { div as HiddenIfDiv } from "../hidden-if/hidden-if";
+import { div as HiddenIfDiv } from '../hidden-if/hidden-if';
 
+// TODO refactor this
 function AktivitetEtikettGruppe({ aktivitet, className }) {
-    const { avtalt, etikett } = aktivitet;
+    const { avtalt } = aktivitet;
     return (
-        <HiddenIfDiv hidden={!avtalt && !etikett} className={className}>
+        <HiddenIfDiv hidden={!avtalt} className={className}>
             <AktivitetEtikett
                 hidden={!avtalt}
                 etikett={AVTALT_MED_NAV}
                 id={AVTALT_MED_NAV}
-            />
-
-            <AktivitetEtikett
-                hidden={!etikett}
-                etikett={etikett}
-                id={`etikett.${etikett}`}
             />
         </HiddenIfDiv>
     );

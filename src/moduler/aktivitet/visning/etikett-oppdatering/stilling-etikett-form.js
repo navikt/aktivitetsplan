@@ -30,7 +30,7 @@ function StillingEtikettForm(props) {
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <Radio
-                label="Ingen"
+                label="Har ikke startet"
                 value={konstanter.INGEN_VALGT}
                 disabled={disable}
                 {...state.fields.etikettstatus}
@@ -42,20 +42,20 @@ function StillingEtikettForm(props) {
                 {...state.fields.etikettstatus}
             />
             <Radio
-                label="Innkalt til intervju"
+                label="Skal på intervju"
                 value={konstanter.INNKALT_TIL_INTERVJU}
-                disabled={disable}
-                {...state.fields.etikettstatus}
-            />
-            <Radio
-                label="Fått avslag"
-                value={konstanter.AVSLAG}
                 disabled={disable}
                 {...state.fields.etikettstatus}
             />
             <Radio
                 label="Fått jobbtilbud"
                 value={konstanter.JOBBTILBUD}
+                disabled={disable}
+                {...state.fields.etikettstatus}
+            />
+            <Radio
+                label="Fått avslag"
+                value={konstanter.AVSLAG}
                 disabled={disable}
                 {...state.fields.etikettstatus}
             />

@@ -64,11 +64,10 @@ function Aktivitetvisning({
                 <ReferatContainer
                     aktivitet={aktivitet}
                     underOppfolging={underOppfolging}
-                    delelinje
                 />
 
                 <Statusadministrasjon
-                    valgtAktivitet={aktivitet}
+                    aktivitet={aktivitet}
                     arenaAktivitet={arenaAktivitet}
                 />
 
