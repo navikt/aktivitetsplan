@@ -61,6 +61,10 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => ({
     lagreStatusEndringer: values => {
+        if (values.aktivitetstatus === props.aktivitet.status) {
+            return Promise.resolve();
+        }
+
         flyttetAktivitetMetrikk(
             'submit',
             props.aktivitet,

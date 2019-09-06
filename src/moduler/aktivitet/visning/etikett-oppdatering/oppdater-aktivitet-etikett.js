@@ -60,6 +60,10 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
     lagreEtikett: ({ etikettstatus }) => {
+        if (etikettstatus === props.aktivitet.etikett) {
+            return Promise.resolve();
+        }
+
         const nyEtikett =
             etikettstatus === statuser.INGEN_VALGT ? null : etikettstatus;
         return dispatch(
