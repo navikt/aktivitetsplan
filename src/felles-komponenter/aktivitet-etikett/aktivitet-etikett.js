@@ -12,10 +12,25 @@ const cls = type => classNames('etikett', `etikett--${type}`);
 
 const getType = (etikettnavn, erVeileder) => {
     switch (etikettnavn) {
+        case statuskoder.SOKNAD_SENDT:
+            return {
+                stylingKlasse: 'suksess',
+                tekst: 'Søknaden er sendt',
+            };
+        case statuskoder.JOBBTILBUD:
+            return {
+                stylingKlasse: 'suksess',
+                tekst: 'Fått jobbtilbud',
+            };
         case statuskoder.DIALOG_IKKE_FERDIGBEHANDLET:
             return {
                 stylingKlasse: 'ikkebehandlet',
                 tekst: 'Venter på svar fra NAV',
+            };
+        case statuskoder.INNKALT_TIL_INTERVJU:
+            return {
+                stylingKlasse: 'suksess',
+                tekst: 'Skal på intervju',
             };
         case statuskoder.DIALOG_ESKALERING:
             return {
@@ -28,6 +43,11 @@ const getType = (etikettnavn, erVeileder) => {
                 tekst: erVeileder
                     ? 'Venter på svar fra bruker'
                     : 'NAV venter på svar fra deg',
+            };
+        case statuskoder.AVSLAG:
+            return {
+                stylingKlasse: 'info',
+                tekst: 'Fått avslag',
             };
         case statuskoder.AVTALT_MED_NAV:
             return {
@@ -44,7 +64,7 @@ const getType = (etikettnavn, erVeileder) => {
 function AktivitetEtikett({ etikett, erVeileder }) {
     const etikettData = getType(etikett, erVeileder);
     return (
-        <EtikettBase className={cls(etikettData.stylingKlasse)} type="fokus">
+        <EtikettBase className={cls(etikettData.stylingKlasse)}>
             <Tekstomrade>
                 {etikettData.tekst}
             </Tekstomrade>

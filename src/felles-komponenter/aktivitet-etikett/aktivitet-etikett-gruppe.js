@@ -5,12 +5,12 @@ import { AVTALT_MED_NAV } from '../../constant';
 import * as AppPT from '../../proptypes';
 import { div as HiddenIfDiv } from '../hidden-if/hidden-if';
 
-// TODO refactor this
 function AktivitetEtikettGruppe({ aktivitet, className }) {
     const { avtalt, etikett } = aktivitet;
     return (
         <HiddenIfDiv hidden={!avtalt && !etikett} className={className}>
             <AktivitetEtikett hidden={!avtalt} etikett={AVTALT_MED_NAV} />
+            <AktivitetEtikett hidden={!etikett} etikett={etikett} />
         </HiddenIfDiv>
     );
 }
