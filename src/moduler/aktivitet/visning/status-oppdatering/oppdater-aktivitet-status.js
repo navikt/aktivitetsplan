@@ -10,10 +10,10 @@ import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
 import StatusVisning from './status-visning';
 import Underseksjon from '../underseksjon/underseksjon';
+import { selectLasterAktivitetData } from '../../aktivitet-selector';
 
 function OppdaterAktivitetStatus(props) {
     const { aktivitet, disableStatusEndring, lagreStatusEndringer } = props;
-
     const [endring, setEndring] = useState(false);
 
     const onSubmit = val =>
@@ -53,6 +53,7 @@ OppdaterAktivitetStatus.propTypes = {
 const mapStateToProps = (state, props) => {
     return {
         disableStatusEndring:
+            selectLasterAktivitetData(state) ||
             !selectKanEndreAktivitetStatus(state, props.aktivitet) ||
             !selectErUnderOppfolging(state),
     };

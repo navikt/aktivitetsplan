@@ -20,6 +20,10 @@ export function selectHarTilgangTilAktiviteter(state) {
     return selectAktivitetStatus(state) === STATUS.OK;
 }
 
+export function selectLasterAktivitetData(state) {
+    return selectAktivitetStatus(state) !== STATUS.OK;
+}
+
 export const selectAktivitetFeilmeldinger = state => {
     const feilMeldingsdata =
         selectAktivitetStatus(state) === STATUS.ERROR &&

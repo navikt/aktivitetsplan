@@ -9,17 +9,12 @@ import Etikett from '../../etikett/etikett';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
 import Underseksjon from '../underseksjon/underseksjon';
+import { selectLasterAktivitetData } from '../../aktivitet-selector';
+import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
 
-// TODO do i need aktivitet status ?
 function OppdaterAktivitetEtikett(props) {
-    const { aktivitet, underOppfolging, lagreEtikett } = props;
-
+    const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
     const [endring, setEndring] = useState(false);
-
-    const disableStatusEndring =
-        aktivitet.historisk ||
-        aktivitet.status === statuser.STATUS_AVBRUTT ||
-        aktivitet.status === statuser.STATUS_FULLFOERT;
 
     const visning = <Etikett etikett={aktivitet.etikett} />;
 
@@ -31,7 +26,7 @@ function OppdaterAktivitetEtikett(props) {
 
     const form = (
         <StillingEtikettForm
-            disabled={disableStatusEndring || !underOppfolging}
+            disabled={disableEtikettEndringer}
             aktivitet={aktivitet}
             onSubmit={onSubmit}
         />
@@ -52,12 +47,15 @@ function OppdaterAktivitetEtikett(props) {
 
 OppdaterAktivitetEtikett.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    underOppfolging: PT.bool.isRequired,
+    disableEtikettEndringer: PT.bool.isRequired,
     lagreEtikett: PT.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-    underOppfolging: selectErUnderOppfolging(state),
+const mapStateToProps = (state, props) => ({
+    disableEtikettEndringer:
+        selectLasterAktivitetData(state) ||
+        !selectKanEndreAktivitetStatus(state, props.aktivitet) ||
+        !selectErUnderOppfolging(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
