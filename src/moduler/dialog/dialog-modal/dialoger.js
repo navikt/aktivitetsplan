@@ -33,6 +33,7 @@ class Dialoger extends React.Component {
             className,
             aktiviteter,
             history,
+            erBruker,
         } = this.props;
         const dialogerSortert = [...dialoger].sort(
             (a, b) =>
@@ -86,6 +87,7 @@ class Dialoger extends React.Component {
                         <DialogVisning
                             ref={ref => (dialogRefs[d.id] = ref)}
                             dialog={d}
+                            erBruker={erBruker}
                             erTabBar={erTabBar(d)}
                             erValgt={d === valgtDialog}
                             aktiviteter={aktiviteter}

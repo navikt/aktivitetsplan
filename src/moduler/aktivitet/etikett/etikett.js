@@ -1,19 +1,20 @@
 import React from 'react';
 import PT from 'prop-types';
-import EtikettBase from 'nav-frontend-etiketter';
+import classNames from 'classnames';
 import * as statuskoder from '../../../constant';
+import visibleIfHOC from '../../../hocs/visible-if';
 import styles from './etikett.module.less';
+import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
 
-const getType = etikettnavn => {
+const getCls = etikettnavn => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
         case statuskoder.INNKALT_TIL_INTERVJU:
         case statuskoder.JOBBTILBUD:
-            return 'suksess';
+            return styles.etikettSuksess;
         case statuskoder.AVSLAG:
-            return 'info';
         default:
-            return 'info';
+            return styles.etikettInfo;
     }
 };
 
@@ -32,11 +33,11 @@ const getText = etikettnavn => {
     }
 };
 
-function Etikett({ etikett }) {
-    const type = getType(etikett);
+function Etikett({ etikett, className }) {
+    const cls = getCls(etikett);
 
     return (
-        <EtikettBase type={type} className={styles.etikett}>
+        <EtikettBase className={classNames(cls, className)}>
             {getText(etikett)}
         </EtikettBase>
     );
@@ -44,10 +45,12 @@ function Etikett({ etikett }) {
 
 Etikett.defaultProps = {
     etikett: undefined,
+    className: undefined,
 };
 
 Etikett.propTypes = {
     etikett: PT.string,
+    className: PT.string,
 };
 
-export default Etikett;
+export default visibleIfHOC(Etikett);
