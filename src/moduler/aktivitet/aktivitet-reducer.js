@@ -15,7 +15,7 @@ function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
 }
 
 export default function reducer(state = initalState, action) {
-    const {data} = action;
+    const { data } = action;
     switch (action.type) {
         case AT.SLETT_OK:
             return {
@@ -68,8 +68,6 @@ export default function reducer(state = initalState, action) {
             return { ...state, status: STATUS.ERROR, feil: data };
         case AT.SETT_FORRIGE_AKTIVE_AKTIVITET_ID:
             return { ...state, forrigeAktiveAktivitetId: action.id };
-        case AT.FJERN_FORRIGE_AKTIVE_AKTIVITET_ID:
-            return { ...state, forrigeAktiveAktivitetId: undefined };
         default:
             return state;
     }

@@ -32,5 +32,3 @@ export const SLETT_OK = 'aktivitet/slett/ok';
 export const SLETT_FAIL = 'aktivitet/slett/fail';
 
 export const SETT_FORRIGE_AKTIVE_AKTIVITET_ID = 'aktivitet/forrigeaktive/sett';
-export const FJERN_FORRIGE_AKTIVE_AKTIVITET_ID =
-    'aktivitet/forrigeaktive/fjern';

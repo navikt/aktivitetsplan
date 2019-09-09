@@ -67,7 +67,7 @@ class AktivitetsKort extends Component {
         const aktivitetsKort = (
             <div>
                 <Lenke
-                    id={`aktivitetskort_${aktivitet.id}`}
+                    id={`aktivitetskort-${aktivitet.id}`}
                     href={aktivitetRoute(id)}
                     draggable={erFlyttbar}
                     className={classNames('aktivitetskort', {
