@@ -40,7 +40,7 @@ const egenMalverk = [
 
 const sokeavtaleMalverk = [
     {
-        antallStillingerSokes: 20,
+        antallStillingerIUken: 5,
         avtaleOppfolging: '',
         fraDato: '2018-04-25T10:25:43.818Z',
         type: 'SOKEAVTALE',
