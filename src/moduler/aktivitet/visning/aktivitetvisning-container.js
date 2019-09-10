@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import {
-    hentAktivitet,
-    settForrigeAktiveAktivitetId,
-    fjernForrigeAktiveAktivitetId,
-} from '../aktivitet-actions';
+import { hentAktivitet } from '../aktivitet-actions';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
@@ -36,7 +32,6 @@ class AktivitetvisningContainer extends Component {
             valgtAktivitet,
             doHentAktivitet,
             doHentArenaAktiviteter,
-            doFjernForrigeAktiveAktivitetId,
             doLukkDialogEllerHistorikk,
         } = this.props;
         if (valgtAktivitet) {
@@ -46,14 +41,16 @@ class AktivitetvisningContainer extends Component {
                 doHentAktivitet(valgtAktivitet.id);
             }
         }
-        doFjernForrigeAktiveAktivitetId();
         doLukkDialogEllerHistorikk();
     }
 
     componentWillUnmount() {
-        const { valgtAktivitet, doSettForrigeAktiveAktivitetId } = this.props;
-        if (valgtAktivitet) {
-            doSettForrigeAktiveAktivitetId(valgtAktivitet.id);
+        const { valgtAktivitet } = this.props;
+        const aktivitetskort = document.querySelector(
+            `#aktivitetskort-${valgtAktivitet.id}`
+        );
+        if (valgtAktivitet && aktivitetskort) {
+            aktivitetskort.focus();
         }
     }
 
@@ -76,8 +73,6 @@ AktivitetvisningContainer.propTypes = {
     laster: PT.bool.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
-    doSettForrigeAktiveAktivitetId: PT.func.isRequired,
-    doFjernForrigeAktiveAktivitetId: PT.func.isRequired,
     doLukkDialogEllerHistorikk: PT.func.isRequired,
     history: AppPT.history.isRequired,
     match: PT.object.isRequired,
@@ -125,8 +120,6 @@ const mapDispatchToProps = dispatch =>
         {
             doHentAktivitet: hentAktivitet,
             doHentArenaAktiviteter: hentArenaAktiviteter,
-            doSettForrigeAktiveAktivitetId: settForrigeAktiveAktivitetId,
-            doFjernForrigeAktiveAktivitetId: fjernForrigeAktiveAktivitetId,
             doLukkDialogEllerHistorikk: lukkAlle,
         },
         dispatch

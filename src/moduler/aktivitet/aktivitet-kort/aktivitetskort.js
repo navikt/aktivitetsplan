@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { findDOMNode } from 'react-dom';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
@@ -21,7 +20,6 @@ import {
     selectErBruker,
     selectIdentitetSlice,
 } from '../../identitet/identitet-selector';
-import { selectForrigeAktiveAktivitetId } from '../aktivitet-selector';
 import {
     selectLestAktivitetsplan,
     selectLestStatus,
@@ -53,16 +51,6 @@ function collect(connector, monitor) {
 }
 
 class AktivitetsKort extends Component {
-    componentDidUpdate() {
-        const { forrigeAktiveAktivitetId, aktivitet } = this.props;
-        if (
-            forrigeAktiveAktivitetId &&
-            forrigeAktiveAktivitetId === aktivitet.id
-        ) {
-            findDOMNode(this.aktivitetskortSomSkalFaFokusNarLukkes).focus(); // eslint-disable-line react/no-find-dom-node
-        }
-    }
-
     render() {
         const {
             aktivitet,
@@ -79,6 +67,7 @@ class AktivitetsKort extends Component {
         const aktivitetsKort = (
             <div>
                 <Lenke
+                    id={`aktivitetskort-${aktivitet.id}`}
                     href={aktivitetRoute(id)}
                     draggable={erFlyttbar}
                     className={classNames('aktivitetskort', {
@@ -86,9 +75,6 @@ class AktivitetsKort extends Component {
                         'aktivitetskort--drag': isDragging,
                     })}
                     brukLenkestyling={false}
-                    focusRef={aktivitetskort => {
-                        this.aktivitetskortSomSkalFaFokusNarLukkes = aktivitetskort;
-                    }}
                     onClick={() =>
                         doSettAktivitetMedEndringerSomVist(aktivitet)}
                 >
@@ -135,14 +121,12 @@ AktivitetsKort.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     isDragging: PT.bool.isRequired,
     connectDragSource: PT.func.isRequired,
-    forrigeAktiveAktivitetId: PT.string,
     erFlyttbar: PT.bool.isRequired,
     doSettAktivitetMedEndringerSomVist: PT.func.isRequired,
     harEndringerIAktivitet: PT.bool,
 };
 
 AktivitetsKort.defaultProps = {
-    forrigeAktiveAktivitetId: undefined,
     harEndringerIAktivitet: false,
 };
 
@@ -165,7 +149,6 @@ const mapStateToProps = (state, props) => {
         erNyEndringIAktivitet(props.aktivitet, lest, me) &&
         aktivitetHarIkkeBlittVist;
     return {
-        forrigeAktiveAktivitetId: selectForrigeAktiveAktivitetId(state),
         erFlyttbar:
             sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) &&
             selectErUnderOppfolging(state),

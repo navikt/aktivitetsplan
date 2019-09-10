@@ -49,7 +49,7 @@ RedirectTilInformasjon.propTypes = {
 const RedirectTilInformasjonWithRouter = withRouter(RedirectTilInformasjon);
 
 class InformasjonsHenting extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { underOppfolging, oppfolgingsPerioder, doHentLest } = this.props;
         if (underOppfolging) {
             doHentLest().then(a => {
