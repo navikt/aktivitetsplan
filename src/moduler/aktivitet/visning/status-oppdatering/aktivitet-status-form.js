@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -82,7 +83,6 @@ function AktivitetStatusForm(props) {
     });
 
     const dirty = useContext(DirtyContext);
-    // eslint-disable-next-line
     useEffect(
         () => {
             dirty.setFormIsDirty('status', !state.pristine);
