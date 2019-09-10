@@ -14,7 +14,9 @@ function EndreLinje(props) {
                 <EtikettLiten className={styles.endreLinjeTittel}>
                     {tittel}
                 </EtikettLiten>
-                {endring ? null : visning}
+                <div className={styles.endreLinjeVisning}>
+                    {endring ? null : visning}
+                </div>
                 <Knappelenke
                     className={styles.endreLinjeKnapp}
                     onClick={() => setEndring(!endring)}

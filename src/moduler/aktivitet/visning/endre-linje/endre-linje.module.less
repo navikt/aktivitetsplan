@@ -1,6 +1,16 @@
-.endreLinje{
+.endreLinje {
     display: flex;
     align-items: baseline;
+    @media all and (max-width: 440px) {
+        flex-wrap: wrap;
+    }
+}
+
+.endreLinjeVisning {
+    @media all and (max-width: 440px) {
+        width: 100%;
+        order: 3;
+    }
 }
 
 .endreLinjeTittel{
