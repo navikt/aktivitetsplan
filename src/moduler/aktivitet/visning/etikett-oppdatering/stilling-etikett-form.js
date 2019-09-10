@@ -20,10 +20,15 @@ function StillingEtikettForm(props) {
 
     const dirty = useContext(DirtyContext);
     // eslint-disable-next-line
-    useEffect(() => dirty.setFormIsDirty('etikett', !state.pristine), [
-        dirty.setFormIsDirty,
-        state.pristine,
-    ]);
+    useEffect(
+        () => {
+            dirty.setFormIsDirty('etikett', !state.pristine);
+            return () => {
+                dirty.setFormIsDirty('etikett', false);
+            };
+        },
+        [dirty.setFormIsDirty, state.pristine]
+    );
 
     const disable = state.submitting || disabled;
 

@@ -83,10 +83,15 @@ function AktivitetStatusForm(props) {
 
     const dirty = useContext(DirtyContext);
     // eslint-disable-next-line
-    useEffect(() => dirty.setFormIsDirty('status', !state.pristine), [
-        dirty.setFormIsDirty,
-        state.pristine,
-    ]);
+    useEffect(
+        () => {
+            dirty.setFormIsDirty('status', !state.pristine);
+            return () => {
+                dirty.setFormIsDirty('status', false);
+            };
+        },
+        [dirty.setFormIsDirty, state.pristine]
+    );
 
     const status = state.fields.aktivitetstatus.input.value;
     const visAdvarsel = statusKreverInformasjonMelding(status);
