@@ -4,19 +4,41 @@ import shajs from 'sha.js';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 import * as AppPT from '../../proptypes';
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
-import loggEvent from '../../felles-komponenter/utils/logging';
-
-const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallBrukere';
-
-function loggingAntallBrukere(typeEvent, hvem) {
-    const { erVeileder } = hvem;
-    if (erVeileder !== undefined && erVeileder !== null) {
-        loggEvent(typeEvent, hvem);
-    }
-}
+import loggEvent, {
+    LOGGING_ANTALLBRUKERE,
+} from '../../felles-komponenter/utils/logging';
 
 function hash(string) {
     return string ? shajs('sha256').update(string).digest('hex') : null;
+}
+
+function loggingAntallBrukere(
+    erVeileder,
+    servicegruppe,
+    underOppfolging,
+    ident,
+    aktorId
+) {
+    const hashetAktorID = hash(aktorId);
+    const veileder = erVeileder && hash(ident);
+    const bruker =
+        erVeileder || underOppfolging ? hashetAktorID : 'IKKE_UNDER_OPPFOLGING';
+
+    if (erVeileder !== undefined && erVeileder !== null) {
+        loggEvent(
+            LOGGING_ANTALLBRUKERE,
+            {
+                erVeileder,
+                underOppfolging,
+                veileder,
+                bruker,
+            },
+            {
+                servicegruppe,
+                veiledertag: veileder,
+            }
+        );
+    }
 }
 
 class VidereSendBrukereEllerRenderChildren extends Component {
@@ -28,20 +50,14 @@ class VidereSendBrukereEllerRenderChildren extends Component {
             ident,
             aktorId,
         } = this.props;
-        const hashetAktorID = hash(aktorId);
-        const veileder = erVeileder && hash(ident);
-        const bruker =
-            erVeileder || underOppfolging
-                ? hashetAktorID
-                : 'IKKE_UNDER_OPPFOLGING';
 
-        loggingAntallBrukere(LOGGING_ANTALLBRUKERE, {
+        loggingAntallBrukere(
             erVeileder,
             servicegruppe,
             underOppfolging,
-            veileder,
-            bruker,
-        });
+            ident,
+            aktorId
+        );
     }
 
     render() {

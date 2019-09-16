@@ -10,16 +10,19 @@ export const SessionStorageElement = {
 };
 
 export const settSessionStorage = (key, value) => {
-    window.sessionStorage.setItem(key, value);
+    window.localStorage.setItem(key, value);
 };
 
 export const hentFraSessionStorage = key => {
-    return window.sessionStorage.getItem(key);
+    return window.localStorage.getItem(key);
 };
 
 const erSatt = sessionStorageElement => {
     return hentFraSessionStorage(sessionStorageElement) === 'true';
 };
+
+const erSkrudAv = sessionStorageElement =>
+    hentFraSessionStorage(sessionStorageElement) === 'false';
 
 export const erEksternBruker = () =>
     erSatt(SessionStorageElement.EKSTERN_BRUKER);
@@ -36,7 +39,7 @@ export const visAutomatiskeAktiviteter = () =>
     erSatt(SessionStorageElement.AUTOMATISKE_AKTIVITETER);
 
 export const visTestAktiviteter = () =>
-    erSatt(SessionStorageElement.TEST_AKTIVITETER);
+    !erSkrudAv(SessionStorageElement.TEST_AKTIVITETER);
 
 export const visArenaAktiviteter = () =>
     erSatt(SessionStorageElement.ARENA_AKTIVITETER);
