@@ -42,13 +42,18 @@ function OppdaterReferatForm(props) {
         referat: aktivitet.referat || '',
     });
 
-    const dirty = useContext(DirtyContext);
+    const { setFormIsDirty } = useContext(DirtyContext);
 
-    // eslint-disable-next-line
-    useEffect(() => dirty.setFormIsDirty('referat', !state.pristine), [
-        dirty.setFormIsDirty,
-        state.pristine,
-    ]);
+    useEffect(
+        () => {
+            setFormIsDirty('referat', !state.pristine);
+
+            return function cleanup() {
+                setFormIsDirty('referat', false);
+            };
+        },
+        [setFormIsDirty, state.pristine]
+    );
 
     const oppdaterOgPubliser = state.onSubmit(values => {
         return onSubmit(values).then(response => {
