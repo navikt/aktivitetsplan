@@ -35,7 +35,7 @@ function OppdaterAktivitetEtikett(props) {
     return (
         <Underseksjon>
             <EndreLinje
-                tittel="Hva er status i søknadsprossen?"
+                tittel="Hvor langt har du kommet i søknadsprosessen?"
                 form={form}
                 endring={endring}
                 setEndring={setEndring}

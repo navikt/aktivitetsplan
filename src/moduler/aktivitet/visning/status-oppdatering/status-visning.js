@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
@@ -29,9 +29,9 @@ function getStatusText(status) {
 function StatusVisning(props) {
     const { status } = props;
     return (
-        <Normaltekst>
+        <Element>
             {getStatusText(status)}
-        </Normaltekst>
+        </Element>
     );
 }
 

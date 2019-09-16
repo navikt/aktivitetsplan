@@ -55,10 +55,14 @@ function AktivitetPrint({ aktivitet, dialog, intl }) {
 
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
             <AktivitetReferat aktivitet={aktivitet} />
-            <AvtaltMarkering visible={aktivitet.avtalt} />
+            <AvtaltMarkering
+                visible={aktivitet.avtalt}
+                className="etikett-print"
+            />
             <Etikett
                 visible={!!aktivitet.etikett}
                 etikett={aktivitet.etikett}
+                className="etikett-print"
             />
             <DialogPrint dialog={dialog} />
         </div>

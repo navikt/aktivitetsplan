@@ -21,7 +21,7 @@ const getCls = etikettnavn => {
 const getText = etikettnavn => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
-            return 'Søknaden er sendt';
+            return 'Sendt søknad';
         case statuskoder.INNKALT_TIL_INTERVJU:
             return 'Skal på intervju';
         case statuskoder.JOBBTILBUD:
@@ -29,7 +29,7 @@ const getText = etikettnavn => {
         case statuskoder.AVSLAG:
             return 'Fått avslag';
         default:
-            return 'Har ikke startet';
+            return 'Ikke startet';
     }
 };
 

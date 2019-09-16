@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { UnmountClosed } from 'react-collapse';
 import Knappelenke from '../../../../felles-komponenter/utils/knappelenke';
 import styles from './endre-linje.module.less';
@@ -10,22 +10,33 @@ function EndreLinje(props) {
 
     return (
         <div>
-            <div className={styles.endreLinje}>
-                <EtikettLiten className={styles.endreLinjeTittel}>
-                    {tittel}
-                </EtikettLiten>
-                <div className={styles.endreLinjeVisning}>
-                    {endring ? null : visning}
+            <div className={styles.endreContainer}>
+                <div className={styles.endreVisning}>
+                    <Normaltekst className={styles.endreTittel}>
+                        {tittel}
+                    </Normaltekst>
+                    <div>
+                        {endring ? null : visning}
+                    </div>
                 </div>
                 <Knappelenke
-                    className={styles.endreLinjeKnapp}
+                    className={styles.endreKnapp}
                     onClick={() => setEndring(!endring)}
                 >
-                    {endring ? 'Avbryt' : 'Endre'}
+                    <div className={styles.endreKnappInnhold}>
+                        {endring ? 'Avbryt' : 'Endre'}
+                    </div>
+                    <div
+                        className={
+                            endring
+                                ? styles.endreIndikasjonLukket
+                                : styles.endreIndikasjonApen
+                        }
+                    />
                 </Knappelenke>
             </div>
             <UnmountClosed isOpened={endring}>
-                <div className={styles.endreInnhold}>
+                <div className={styles.endreForm}>
                     {form}
                 </div>
             </UnmountClosed>

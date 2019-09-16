@@ -1,27 +1,46 @@
-.endreLinje {
+@import (reference) '~nav-frontend-chevron-style/src/mixins';
+@import (reference) '~nav-frontend-core';
+
+.endreVisning {
     display: flex;
     align-items: baseline;
-    @media all and (max-width: 440px) {
+    @media all and (max-width: 465px) {
         flex-wrap: wrap;
     }
 }
 
-.endreLinjeVisning {
-    @media all and (max-width: 440px) {
-        width: 100%;
-        order: 3;
-    }
-}
-
-.endreLinjeTittel{
+.endreTittel{
     padding-right: 1rem;
 }
 
-.endreLinjeKnapp{
-    margin-left: auto
+.endreContainer {
+    display: flex;
+    align-items: baseline;
 }
 
-.endreInnhold{
+.endreForm{
     padding-top: 1rem;
+}
+
+.endreKnapp{
+    margin-left: auto;
+    white-space: nowrap;
+    &:hover {
+        border-bottom: 1px solid @navGra40 !important;
+    }
+}
+
+.endreKnappInnhold{
+    display: inline-block;
+    padding-right: 2px;
+}
+
+.endreIndikasjonApen{
+    .chevron-mixin();
+    .chevron-orientasjon-mixin(ned);
+}
+.endreIndikasjonLukket{
+    .chevron-mixin();
+    .chevron-orientasjon-mixin(opp);
 }
 
