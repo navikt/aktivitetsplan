@@ -35,8 +35,8 @@ const getText = (etikettnavn, erBruker) => {
 
 function Etikett({ etikett, erBruker }) {
     return (
-        <EtikettBase type="fokus" className={getCls(etikett, erBruker)}>
-            {getText(etikett)}
+        <EtikettBase type="fokus" className={getCls(etikett)}>
+            {getText(etikett, erBruker)}
         </EtikettBase>
     );
 }
