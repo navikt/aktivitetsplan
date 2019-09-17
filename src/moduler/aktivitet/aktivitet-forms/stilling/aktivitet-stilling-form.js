@@ -22,25 +22,36 @@ import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelg
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import { todayIsoString } from '../../../../utils';
 
+function erAvtalt(aktivitet) {
+    return aktivitet.avtalt === true;
+}
+
+const validator = useFormstate({
+    tittel: (val, values, aktivitet) =>
+        validateTittel(erAvtalt(aktivitet), val),
+    fraDato: (val, values, aktivitet) =>
+        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) =>
+        validerDato(val, null, aktivitet.fraDato),
+    beskrivelse: (val, values, aktivitet) =>
+        validateBeskrivelse(erAvtalt(aktivitet), val),
+    arbeidssted: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    arbeidsgiver: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    kontaktperson: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
+    periodeValidering: (val, values) =>
+        validerPeriodeFelt(values.fraDato, values.tilDato),
+});
+
 function StillingAktivitetForm(props) {
     const { onSubmit, isDirtyRef, aktivitet } = props;
     const maybeAktivitet = aktivitet || {};
-    const erAvtalt = maybeAktivitet.avtalt === true;
+    const avtalt = maybeAktivitet.avtalt === true;
 
-    const validator = useFormstate({
-        tittel: val => validateTittel(erAvtalt, val),
-        fraDato: val => validateFraDato(erAvtalt, maybeAktivitet.tilDato, val),
-        tilDato: val => validerDato(val, null, maybeAktivitet.fraDato),
-        beskrivelse: val => validateBeskrivelse(erAvtalt, val),
-        arbeidssted: val => validateFeltForLangt(erAvtalt, val),
-        arbeidsgiver: val => validateFeltForLangt(erAvtalt, val),
-        kontaktperson: val => validateFeltForLangt(erAvtalt, val),
-        lenke: val => validateLenke(erAvtalt, val),
-        periodeValidering: (val, values) =>
-            validerPeriodeFelt(values.fraDato, values.tilDato),
-    });
-
-    const state = validator({
+    const initalValues = {
         tittel: maybeAktivitet.tittel || '',
         fraDato: maybeAktivitet.fraDato || todayIsoString(),
         tilDato: maybeAktivitet.tilDato || '',
@@ -50,7 +61,9 @@ function StillingAktivitetForm(props) {
         kontaktperson: maybeAktivitet.kontaktperson || '',
         lenke: maybeAktivitet.lenke || '',
         periodeValidering: '',
-    });
+    };
+
+    const state = validator(initalValues, aktivitet);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -70,7 +83,7 @@ function StillingAktivitetForm(props) {
                 />
 
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Stillingstittel *"
                     {...state.fields.tittel}
                 />
@@ -80,7 +93,7 @@ function StillingAktivitetForm(props) {
                 >
                     <div className="dato-container">
                         <DatoField
-                            disabled={erAvtalt}
+                            disabled={avtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
                             {...state.fields.fraDato}
@@ -93,29 +106,29 @@ function StillingAktivitetForm(props) {
                     </div>
                 </PeriodeValidering>
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Arbeidsgiver"
                     {...state.fields.arbeidsgiver}
                 />
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Kontaktperson hos arbeidsgiver"
                     {...state.fields.kontaktperson}
                 />
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Arbeidssted"
                     {...state.fields.arbeidssted}
                 />
                 <Textarea
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Kort beskrivelse av stillingen"
                     maxLength={5000}
                     visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Lenke til stillingsannonse"
                     {...state.fields.lenke}
                 />

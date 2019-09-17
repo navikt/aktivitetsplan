@@ -1,14 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
 import * as konstanter from '../../../../constant';
-import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
-import { STATUS } from '../../../../ducks/utils';
-import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { selectAktivitetStatus } from '../../aktivitet-selector';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
@@ -24,100 +18,71 @@ function StillingEtikettForm(props) {
         etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT,
     });
 
-    const dirty = useContext(DirtyContext);
-    // eslint-disable-next-line
-    useEffect(() => dirty.setFormIsDirty('etikett', !state.pristine), [
-        dirty.setFormIsDirty,
-        state.pristine,
-    ]);
+    const { setFormIsDirty } = useContext(DirtyContext);
+    useEffect(
+        () => {
+            setFormIsDirty('etikett', !state.pristine);
+            return () => {
+                setFormIsDirty('etikett', false);
+            };
+        },
+        [setFormIsDirty, state.pristine]
+    );
+
+    const disable = state.submitting || disabled;
 
     return (
-        <form
-            onSubmit={state.onSubmit(data => {
-                state.reinitialize(data);
-                return onSubmit(data);
-            })}
-        >
-            <div className="row">
-                <div className="col col-xs-4">
-                    <Radio
-                        label="Ingen"
-                        value={konstanter.INGEN_VALGT}
-                        disabled={disabled}
-                        {...state.fields.etikettstatus}
-                    />
-                    <Radio
-                        label="Søknaden er sendt"
-                        value={konstanter.SOKNAD_SENDT}
-                        disabled={disabled}
-                        {...state.fields.etikettstatus}
-                    />
-                </div>
-                <div className="col col-xs-4">
-                    <Radio
-                        label="Innkalt til intervju"
-                        value={konstanter.INNKALT_TIL_INTERVJU}
-                        disabled={disabled}
-                        {...state.fields.etikettstatus}
-                    />
-                    <Radio
-                        label="Fått avslag"
-                        value={konstanter.AVSLAG}
-                        disabled={disabled}
-                        {...state.fields.etikettstatus}
-                    />
-                </div>
-                <div className="col col-xs-4">
-                    <Radio
-                        label="Fått jobbtilbud"
-                        value={konstanter.JOBBTILBUD}
-                        disabled={disabled}
-                        {...state.fields.etikettstatus}
-                    />
-                </div>
-            </div>
-            <VisibleIfDiv visible={!state.pristine}>
-                <Hovedknapp className="oppdater-status" disabled={disabled}>
-                    <FormattedMessage id="aktivitetstatus.bekreft-knapp" />
-                </Hovedknapp>
-            </VisibleIfDiv>
+        <form onSubmit={state.onSubmit(onSubmit)}>
+            <Radio
+                label="Ikke startet"
+                value={konstanter.INGEN_VALGT}
+                disabled={disable}
+                {...state.fields.etikettstatus}
+            />
+            <Radio
+                label="Sendt søknad"
+                value={konstanter.SOKNAD_SENDT}
+                disabled={disable}
+                {...state.fields.etikettstatus}
+            />
+            <Radio
+                label="Skal på intervju"
+                value={konstanter.INNKALT_TIL_INTERVJU}
+                disabled={disable}
+                {...state.fields.etikettstatus}
+            />
+            <Radio
+                label="Fått jobbtilbud"
+                value={konstanter.JOBBTILBUD}
+                disabled={disable}
+                {...state.fields.etikettstatus}
+            />
+            <Radio
+                label="Fått avslag"
+                value={konstanter.AVSLAG}
+                disabled={disable}
+                {...state.fields.etikettstatus}
+            />
+            <Hovedknapp
+                className="oppdater-status"
+                disabled={disable}
+                spinner={state.submitting}
+                autoDisableVedSpinner
+            >
+                Lagre
+            </Hovedknapp>
         </form>
     );
 }
 
 StillingEtikettForm.defaultProps = {
-    aktivitetDataStatus: STATUS.NOT_STARTED,
+    disabled: true,
 };
 
 StillingEtikettForm.propTypes = {
-    aktivitetDataStatus: PT.string,
     aktivitet: AppPT.aktivitet.isRequired,
-    disableStatusEndring: PT.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
-    disabled: PT.bool.isRequired,
     onSubmit: PT.func.isRequired,
+    disabled: PT.bool,
 };
 
-const mapStateToProps = (state, props) => {
-    const aktivitetDataStatus = selectAktivitetStatus(state);
-    return {
-        aktivitetDataStatus,
-        disabled:
-            aktivitetDataStatus !== STATUS.OK || props.disableStatusEndring,
-    };
-};
-
-const mapDispatchToProps = (dispatch, props) => ({
-    onSubmit: values => {
-        const nyEtikett =
-            values.etikettstatus === konstanter.INGEN_VALGT
-                ? null
-                : values.etikettstatus;
-        return dispatch(
-            oppdaterAktivitetEtikett({ ...props.aktivitet, etikett: nyEtikett })
-        ).then(() => document.querySelector('.aktivitet-modal').focus());
-    },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-    StillingEtikettForm
-);
+export default StillingEtikettForm;

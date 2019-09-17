@@ -13,8 +13,8 @@ import {
 import visibleIfHOC from '../../../hocs/visible-if';
 import Dato from '../../../felles-komponenter/dato';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
-import Etikett from '../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett';
 import { erViktigMelding } from '../dialog-utils';
+import Etikett from '../etikett/etikett';
 
 const Markering = visibleIfHOC(props =>
     <div className="dialoger__markering" {...props} />
@@ -36,7 +36,14 @@ const Info = visibleIfHOC(({ slash, className, children }) =>
 // eslint-disable-next-line react/prefer-stateless-function
 class DialogVisning extends React.PureComponent {
     render() {
-        const { dialog, erValgt, aktiviteter, erTabBar, history } = this.props;
+        const {
+            dialog,
+            erValgt,
+            aktiviteter,
+            erTabBar,
+            history,
+            erBruker,
+        } = this.props;
 
         const { venterPaSvar } = dialog;
         const { ferdigBehandlet } = dialog;
@@ -112,15 +119,16 @@ class DialogVisning extends React.PureComponent {
                     className="dialoger__dialog-etiketter"
                 >
                     <Etikett
-                        hidden={!venterPaSvar}
+                        visible={venterPaSvar}
                         etikett={DIALOG_MA_BESVARES}
+                        erBruker={erBruker}
                     />
                     <Etikett
-                        hidden={ferdigBehandlet}
+                        visible={!ferdigBehandlet}
                         etikett={DIALOG_IKKE_FERDIGBEHANDLET}
                     />
                     <Etikett
-                        hidden={!harViktigMeldingEgenskap}
+                        visible={harViktigMeldingEgenskap}
                         etikett={DIALOG_ESKALERING}
                     />
                 </HiddenIfDiv>
@@ -132,7 +140,12 @@ class DialogVisning extends React.PureComponent {
     }
 }
 
+DialogVisning.defaultProps = {
+    erBruker: false,
+};
+
 DialogVisning.propTypes = {
+    erBruker: PT.bool,
     dialog: AppPT.dialog.isRequired,
     erValgt: PT.bool.isRequired,
     erTabBar: PT.bool.isRequired,

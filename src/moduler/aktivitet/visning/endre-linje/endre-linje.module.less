@@ -1,0 +1,46 @@
+@import (reference) '~nav-frontend-chevron-style/src/mixins';
+@import (reference) '~nav-frontend-core';
+
+.endreVisning {
+    display: flex;
+    align-items: baseline;
+    @media all and (max-width: 465px) {
+        flex-wrap: wrap;
+    }
+}
+
+.endreTittel{
+    padding-right: 1rem;
+}
+
+.endreContainer {
+    display: flex;
+    align-items: baseline;
+}
+
+.endreForm{
+    padding-top: 1rem;
+}
+
+.endreKnapp{
+    margin-left: auto;
+    white-space: nowrap;
+    &:hover {
+        border-bottom: 1px solid @navGra40 !important;
+    }
+}
+
+.endreKnappInnhold{
+    display: inline-block;
+    padding-right: 2px;
+}
+
+.endreIndikasjonApen{
+    .chevron-mixin();
+    .chevron-orientasjon-mixin(ned);
+}
+.endreIndikasjonLukket{
+    .chevron-mixin();
+    .chevron-orientasjon-mixin(opp);
+}
+

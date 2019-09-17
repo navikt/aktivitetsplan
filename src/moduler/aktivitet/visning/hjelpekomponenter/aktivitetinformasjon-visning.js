@@ -4,7 +4,6 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
-import AktivitetEtikettGruppe from '../../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import * as AppPT from '../../../../proptypes';
 import {
     EGEN_AKTIVITET_TYPE,
@@ -16,6 +15,8 @@ import loggEvent, {
     APNE_ENDRE_AKTIVITET,
 } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
+import DeleLinje from '../delelinje/delelinje';
+import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 
 function visningsIngress(type) {
     if (
@@ -60,17 +61,14 @@ function AktivitetinformasjonVisning({
                         <FormattedMessage id="aktivitetvisning.endre-knapp" />
                     </Lenke>
                 </div>
-
                 {visningsIngress(type)}
-
-                <AktivitetEtikettGruppe
-                    aktivitet={valgtAktivitet}
+                <AvtaltMarkering
+                    visible={valgtAktivitet.avtalt}
                     className="aktivitetvisning__etikett"
                 />
-
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            <hr className="aktivitetvisning__delelinje" />
+            <DeleLinje />
         </div>
     );
 }

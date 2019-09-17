@@ -22,17 +22,14 @@ class ForhandsorienteringArenaAktivitet extends Component {
     }
 
     render() {
-        const { valgtAktivitet } = this.props;
+        const { aktivitet } = this.props;
         const { forhandsorienteringSkalSendes } = this.state;
-        if (
-            [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(valgtAktivitet.status)
-        ) {
+        if ([STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status)) {
             return null;
         }
 
         const merEnnsyvDagerTil =
-            erMerEnnSyvDagerTil(valgtAktivitet.tilDato) ||
-            !valgtAktivitet.tilDato;
+            erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
 
         const AlertStripeHvisMindreEnnSyvDagerTil = () =>
             <HiddenIfAlertStripeInfoSolid hidden={merEnnsyvDagerTil}>
@@ -47,7 +44,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
             <div>
                 <AlertStripeHvisMindreEnnSyvDagerTil />
                 <ForhandsorienteringArenaAktivitetForm
-                    valgtAktivitet={valgtAktivitet}
+                    valgtAktivitet={aktivitet}
                     visible={merEnnsyvDagerTil && forhandsorienteringSkalSendes}
                     forhandsorienteringSendt={this.forhandsorienteringSendt}
                 />
@@ -58,7 +55,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
 }
 
 ForhandsorienteringArenaAktivitet.propTypes = {
-    valgtAktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired,
 };
 
 export default visibleIfHOC(ForhandsorienteringArenaAktivitet);

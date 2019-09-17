@@ -4,15 +4,13 @@ import { connect } from 'react-redux';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
-import {
-    section as HiddenIfSection,
-    hr as HiddenIfHr,
-} from '../../../../felles-komponenter/hidden-if/hidden-if';
+import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import ReferatSeksjon from './referat-seksjon';
 import { publiserReferat } from '../../aktivitet-actions';
 import { moment, autobind } from '../../../../utils';
 import { STATUS } from '../../../../ducks/utils';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
+import DeleLinje from '../delelinje/delelinje';
 
 class ReferatContainer extends Component {
     constructor(props) {
@@ -34,13 +32,7 @@ class ReferatContainer extends Component {
     }
 
     render() {
-        const {
-            kanHaReferat,
-            visReferat,
-            harReferat,
-            erVeileder,
-            delelinje,
-        } = this.props;
+        const { kanHaReferat, visReferat, harReferat, erVeileder } = this.props;
 
         const { oppdaterReferat } = this.state;
         const visOppdaterReferatForm =
@@ -54,10 +46,7 @@ class ReferatContainer extends Component {
                     startOppdaterReferat={this.startOppdaterReferat}
                     stoppOppdaterReferat={this.stoppOppdaterReferat}
                 />
-                <HiddenIfHr
-                    hidden={!delelinje}
-                    className="aktivitetvisning__delelinje"
-                />
+                <DeleLinje />
             </HiddenIfSection>
         );
     }
@@ -65,14 +54,12 @@ class ReferatContainer extends Component {
 
 ReferatContainer.defaultProps = {
     className: undefined,
-    delelinje: false,
     erReferatPublisert: false,
 };
 
 ReferatContainer.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     erReferatPublisert: PT.bool,
-    delelinje: PT.bool,
     erVeileder: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     publiserer: PT.bool.isRequired,

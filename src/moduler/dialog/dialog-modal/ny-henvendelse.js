@@ -66,6 +66,14 @@ function validateTekst(val) {
     return null;
 }
 
+const validator = useFormstate({
+    overskrift: (val, values, props) =>
+        props.erNyDialog ? validateOverskrift(val) : null,
+    tekst: validateTekst,
+    ikkeFerdigbehandlet: () => null,
+    venterPaSvar: () => null,
+});
+
 function NyHenvendelseForm(props) {
     const {
         overskrift,
@@ -81,13 +89,6 @@ function NyHenvendelseForm(props) {
         underOppfolging,
     } = props;
 
-    const validator = useFormstate({
-        overskrift: val => (erNyDialog ? validateOverskrift(val) : null),
-        tekst: validateTekst,
-        ikkeFerdigbehandlet: () => null,
-        venterPaSvar: () => null,
-    });
-
     const initial = {
         overskrift: overskrift || '',
         tekst: '',
@@ -95,7 +96,7 @@ function NyHenvendelseForm(props) {
         venterPaSvar: '',
     };
 
-    const state = validator(initial);
+    const state = validator(initial, props);
 
     return (
         <form

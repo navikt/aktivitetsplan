@@ -21,26 +21,37 @@ import {
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 
+function erAvtalt(aktivitet) {
+    return aktivitet.avtalt === true;
+}
+
+const validator = useFormstate({
+    tittel: () => {},
+    behandlingType: (val, values, aktivitet) =>
+        validateBehandlingType(erAvtalt(aktivitet), val),
+    behandlingSted: (val, values, aktivitet) =>
+        validateBehandlingSted(erAvtalt(aktivitet), val),
+    fraDato: (val, values, aktivitet) =>
+        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) =>
+        validateTilDato(aktivitet.fraDato, val),
+    effekt: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) =>
+        validateBeskrivelse(erAvtalt(aktivitet), val),
+    behandlingOppfolging: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    periodeValidering: (val, values) =>
+        validerPeriodeFelt(values.fraDato, values.tilDato),
+});
+
 function BehandlingAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;
 
     const maybeAktivitet = aktivitet || {};
-    const erAvtalt = maybeAktivitet.avtalt === true;
+    const avtalt = maybeAktivitet.avtalt === true;
 
-    const validator = useFormstate({
-        tittel: () => {},
-        behandlingType: val => validateBehandlingType(erAvtalt, val),
-        behandlingSted: val => validateBehandlingSted(erAvtalt, val),
-        fraDato: val => validateFraDato(erAvtalt, maybeAktivitet.tilDato, val),
-        tilDato: val => validateTilDato(maybeAktivitet.fraDato, val),
-        effekt: val => validateFeltForLangt(erAvtalt, val),
-        beskrivelse: val => validateBeskrivelse(erAvtalt, val),
-        behandlingOppfolging: val => validateFeltForLangt(erAvtalt, val),
-        periodeValidering: (val, values) =>
-            validerPeriodeFelt(values.fraDato, values.tilDato),
-    });
-
-    const state = validator({
+    const initalValues = {
         tittel: maybeAktivitet.tittel || 'Medisinsk behandling',
         behandlingType: maybeAktivitet.behandlingType || '',
         behandlingSted: maybeAktivitet.behandlingSted || '',
@@ -50,7 +61,9 @@ function BehandlingAktivitetForm(props) {
         effekt: maybeAktivitet.effekt || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
         behandlingOppfolging: maybeAktivitet.behandlingOppfolging || '',
-    });
+    };
+
+    const state = validator(initalValues, aktivitet);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -74,12 +87,12 @@ function BehandlingAktivitetForm(props) {
                 />
 
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Type behandling *"
                     {...state.fields.behandlingType}
                 />
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Behandlingssted *"
                     {...state.fields.behandlingSted}
                 />
@@ -89,7 +102,7 @@ function BehandlingAktivitetForm(props) {
                 >
                     <div className="dato-container">
                         <DatoField
-                            disabled={erAvtalt}
+                            disabled={avtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
                             {...state.fields.fraDato}
@@ -103,17 +116,17 @@ function BehandlingAktivitetForm(props) {
                 </PeriodeValidering>
 
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Mål for behandlingen"
                     {...state.fields.effekt}
                 />
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Oppfølging fra NAV"
                     {...state.fields.behandlingOppfolging}
                 />
                 <Textarea
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Kort beskrivelse av behandlingen"
                     maxLength={5000}
                     visTellerFra={500}

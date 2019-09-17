@@ -5,10 +5,11 @@ import { Undertittel, Element } from 'nav-frontend-typografi';
 import Aktivitetsdetaljer from '../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import Informasjonsfelt from '../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
 import * as AppPT from '../../proptypes';
-import AktivitetEtikettGruppe from '../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
 import { compareAktivitet } from '../aktivitet/aktivitet-util';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import DialogPrint from './dialog-print';
+import Etikett from '../aktivitet/etikett/etikett';
+import AvtaltMarkering from '../aktivitet/avtalt-markering/avtalt-markering';
 
 function AktivitetReferat({ aktivitet }) {
     const { referat, erReferatPublisert } = aktivitet;
@@ -54,10 +55,14 @@ function AktivitetPrint({ aktivitet, dialog, intl }) {
 
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
             <AktivitetReferat aktivitet={aktivitet} />
-
-            <AktivitetEtikettGruppe
-                aktivitet={aktivitet}
-                className="printmodal-body__aktivitetvisning--etikett"
+            <AvtaltMarkering
+                visible={aktivitet.avtalt}
+                className="etikett-print"
+            />
+            <Etikett
+                visible={!!aktivitet.etikett}
+                etikett={aktivitet.etikett}
+                className="etikett-print"
             />
             <DialogPrint dialog={dialog} />
         </div>

@@ -1,56 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Undertittel } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import * as statuser from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import StillingEtikettForm from './stilling-etikett-form';
-import { selectAktivitetMedId } from '../../aktivitetliste-selector';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
+import Etikett from '../../etikett/etikett';
+import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
+import EndreLinje from '../endre-linje/endre-linje';
+import Underseksjon from '../underseksjon/underseksjon';
+import { selectLasterAktivitetData } from '../../aktivitet-selector';
+import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
 
-function OppdaterAktivitetStatus({
-    valgtAktivitet,
-    status,
-    className,
-    underOppfolging,
-}) {
-    const disableStatusEndring =
-        valgtAktivitet.historisk ||
-        status === statuser.STATUS_AVBRUTT ||
-        status === statuser.STATUS_FULLFOERT;
+function OppdaterAktivitetEtikett(props) {
+    const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
+    const [endring, setEndring] = useState(false);
 
-    const erStillingsAktivitet =
-        valgtAktivitet.type === statuser.STILLING_AKTIVITET_TYPE;
+    const visning = <Etikett etikett={aktivitet.etikett} />;
+
+    const onSubmit = val =>
+        lagreEtikett(val).then(() => {
+            setEndring(false);
+            document.querySelector('.aktivitet-modal').focus();
+        });
+
+    const form = (
+        <StillingEtikettForm
+            disabled={disableEtikettEndringer}
+            aktivitet={aktivitet}
+            onSubmit={onSubmit}
+        />
+    );
 
     return (
-        <section className={className}>
-            <Undertittel>
-                <FormattedMessage id="oppdater-aktivitet-etikett.header" />
-            </Undertittel>
-            <StillingEtikettForm
-                visible={erStillingsAktivitet}
-                disableStatusEndring={disableStatusEndring || !underOppfolging}
-                aktivitet={valgtAktivitet}
+        <Underseksjon>
+            <EndreLinje
+                tittel="Hvor langt har du kommet i søknadsprosessen?"
+                form={form}
+                endring={endring}
+                setEndring={setEndring}
+                visning={visning}
             />
-        </section>
+        </Underseksjon>
     );
 }
 
-OppdaterAktivitetStatus.propTypes = {
-    status: PT.string.isRequired,
-    paramsId: PT.string.isRequired,
-    className: PT.string.isRequired,
-    valgtAktivitet: AppPT.aktivitet.isRequired,
-    underOppfolging: PT.bool.isRequired,
+OppdaterAktivitetEtikett.propTypes = {
+    aktivitet: AppPT.aktivitet.isRequired,
+    disableEtikettEndringer: PT.bool.isRequired,
+    lagreEtikett: PT.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
-    valgtAktivitet: selectAktivitetMedId(state, props.paramsId),
-    initialValues: {
-        aktivitetstatus: props.status,
-    },
-    underOppfolging: selectErUnderOppfolging(state),
+    disableEtikettEndringer:
+        selectLasterAktivitetData(state) ||
+        !selectKanEndreAktivitetStatus(state, props.aktivitet) ||
+        !selectErUnderOppfolging(state),
 });
 
-export default connect(mapStateToProps)(OppdaterAktivitetStatus);
+const mapDispatchToProps = (dispatch, props) => ({
+    lagreEtikett: ({ etikettstatus }) => {
+        if (etikettstatus === props.aktivitet.etikett) {
+            return Promise.resolve();
+        }
+
+        const nyEtikett =
+            etikettstatus === statuser.INGEN_VALGT ? null : etikettstatus;
+        return dispatch(
+            oppdaterAktivitetEtikett({
+                ...props.aktivitet,
+                etikett: nyEtikett,
+            })
+        );
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+    OppdaterAktivitetEtikett
+);

@@ -5,9 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import visibleIfHOC from '../../../hocs/visible-if';
 import TallAlert from '../../../felles-komponenter/tall-alert';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
-import { selectDialogForAktivitetId } from "../../dialog/dialog-selector";
-import AktivitetEtikettGruppe from '../../../felles-komponenter/aktivitet-etikett/aktivitet-etikett-gruppe';
+import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import * as AppPT from '../../../proptypes';
+import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
+import Etikett from '../etikett/etikett';
 
 function AktivitetskortTillegg({
     antallHendvendelser,
@@ -37,10 +38,14 @@ function AktivitetskortTillegg({
                 </HiddenIfDiv>
             </HiddenIfDiv>
 
-            <AktivitetEtikettGruppe
-                aktivitet={aktivitet}
-                className="aktivitetskort__etiketter"
-            />
+            <div className="aktivitetskort__etiketter">
+                <AvtaltMarkering visible={aktivitet.avtalt} />
+                <Etikett
+                    visible={!!aktivitet.etikett}
+                    etikett={aktivitet.etikett}
+                    className="aktivitetskort__etikett"
+                />
+            </div>
         </HiddenIfDiv>
     );
 }
@@ -60,13 +65,13 @@ AktivitetskortTillegg.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-    const {aktivitet} = props;
+    const { aktivitet } = props;
     const aktivitetId = aktivitet.id;
     const dialog = selectDialogForAktivitetId(state, aktivitetId);
     const henvendelser = dialog ? dialog.henvendelser : [];
     const antallHendvendelser = henvendelser.length;
     const antallUlesteHenvendelser = henvendelser.filter(h => !h.lest).length;
-    const {etikett} = aktivitet;
+    const { etikett } = aktivitet;
     return {
         antallHendvendelser,
         antallUlesteHenvendelser,

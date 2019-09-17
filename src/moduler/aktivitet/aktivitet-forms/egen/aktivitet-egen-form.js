@@ -22,25 +22,35 @@ import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelg
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 
+function erAvtalt(aktivitet) {
+    return aktivitet.avtalt === true;
+}
+
+const validator = useFormstate({
+    tittel: (val, values, aktivitet) =>
+        validateTittel(erAvtalt(aktivitet), val),
+    fraDato: (val, values, aktivitet) =>
+        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) =>
+        validateTilDato(aktivitet.fraDato, val),
+    periodeValidering: (val, values) =>
+        validerPeriodeFelt(values.fraDato, values.tilDato),
+    hensikt: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) =>
+        validateBeskrivelse(erAvtalt(aktivitet), val),
+    oppfolging: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
+});
+
 function EgenAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
     const maybeAktivitet = aktivitet || {};
 
-    const erAvtalt = maybeAktivitet.avtalt === true;
+    const avtalt = maybeAktivitet.avtalt === true;
 
-    const validator = useFormstate({
-        tittel: val => validateTittel(erAvtalt, val),
-        fraDato: val => validateFraDato(erAvtalt, maybeAktivitet.tilDato, val),
-        tilDato: val => validateTilDato(maybeAktivitet.fraDato, val),
-        periodeValidering: (val, values) =>
-            validerPeriodeFelt(values.fraDato, values.tilDato),
-        hensikt: val => validateFeltForLangt(erAvtalt, val),
-        beskrivelse: val => validateBeskrivelse(erAvtalt, val),
-        oppfolging: val => validateFeltForLangt(erAvtalt, val),
-        lenke: val => validateLenke(erAvtalt, val),
-    });
-
-    const defaultFormValues = {
+    const initalValues = {
         tittel: maybeAktivitet.tittel || '',
         fraDato: maybeAktivitet.fraDato || '',
         tilDato: maybeAktivitet.tilDato || '',
@@ -51,14 +61,14 @@ function EgenAktivitetForm(props) {
         lenke: maybeAktivitet.lenke || '',
     };
 
-    const state = validator(defaultFormValues);
+    const state = validator(initalValues, aktivitet);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
     }
 
     const reinitalize = newInitalValues =>
-        state.reinitialize({ ...defaultFormValues, ...newInitalValues });
+        state.reinitialize({ ...initalValues, ...newInitalValues });
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
@@ -81,7 +91,7 @@ function EgenAktivitetForm(props) {
                 />
 
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Navn på aktiviteten *"
                     {...state.fields.tittel}
                 />
@@ -91,7 +101,7 @@ function EgenAktivitetForm(props) {
                 >
                     <div className="dato-container">
                         <DatoField
-                            disabled={erAvtalt}
+                            disabled={avtalt}
                             label="Fra dato *"
                             {...state.fields.fraDato}
                         />
@@ -103,24 +113,24 @@ function EgenAktivitetForm(props) {
                 </PeriodeValidering>
 
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Mål med aktiviteten"
                     {...state.fields.hensikt}
                 />
                 <Textarea
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Kort beskrivelse av aktiviteten"
                     maxLength={5000}
                     visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Min huskeliste for denne aktiviteten"
                     {...state.fields.oppfolging}
                 />
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Lenke til en aktuell nettside"
                     {...state.fields.lenke}
                 />

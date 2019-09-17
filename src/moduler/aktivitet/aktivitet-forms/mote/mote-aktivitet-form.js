@@ -31,6 +31,10 @@ import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-s
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import VelgKanal from '../velg-kanal';
 
+function erAvtalt(aktivitet) {
+    return aktivitet.avtalt === true;
+}
+
 const tidspunkter = Array.from(new Array(53)).map((noValue, index) => {
     const minutter = index * 15 + 7 * 60;
     return (
@@ -52,25 +56,32 @@ const varigheter = Array.from(new Array(24)).map((noValue, index) => {
 export const defaultBeskrivelse =
     'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
+const validator = useFormstate({
+    tittel: (val, values, aktivitet) =>
+        validateTittel(erAvtalt(aktivitet), val),
+    dato: (val, values, aktivitet) =>
+        validateFraDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
+    klokkeslett: (val, values, aktivitet) =>
+        validateKlokkeslett(erAvtalt(aktivitet), val),
+    varighet: (val, values, aktivitet) =>
+        validateVarighet(erAvtalt(aktivitet), val),
+    kanal: (val, values, aktivitet) => validateKanal(erAvtalt(aktivitet), val),
+    adresse: (val, values, aktivitet) =>
+        validateAdresse(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) =>
+        validateHensikt(erAvtalt(aktivitet), val),
+    forberedelser: (val, values, aktivitet) =>
+        validateForberedelser(erAvtalt(aktivitet), val),
+});
+
 function MoteAktivitetForm(props) {
     const { aktivitet, isDirtyRef, onSubmit, endre } = props;
     const maybeAktivitet = aktivitet || {};
-    const erAvtalt = maybeAktivitet.avtalt === true;
+    const avtalt = maybeAktivitet.avtalt === true;
     const dato = beregnKlokkeslettVarighet(maybeAktivitet);
     const beskrivelse = maybeAktivitet.beskrivelse || '';
 
-    const validator = useFormstate({
-        tittel: val => validateTittel(erAvtalt, val),
-        dato: val => validateFraDato(erAvtalt, maybeAktivitet.fraDato, val),
-        klokkeslett: val => validateKlokkeslett(erAvtalt, val),
-        varighet: val => validateVarighet(erAvtalt, val),
-        kanal: val => validateKanal(erAvtalt, val),
-        adresse: val => validateAdresse(erAvtalt, val),
-        beskrivelse: val => validateHensikt(erAvtalt, val),
-        forberedelser: val => validateForberedelser(erAvtalt, val),
-    });
-
-    const state = validator({
+    const initalValue = {
         tittel: maybeAktivitet.tittel || '',
         dato: maybeAktivitet.fraDato || '',
         klokkeslett: dato.klokkeslett ? dato.klokkeslett.toString() : '',
@@ -79,7 +90,9 @@ function MoteAktivitetForm(props) {
         adresse: maybeAktivitet.adresse || '',
         beskrivelse: endre ? beskrivelse : defaultBeskrivelse,
         forberedelser: maybeAktivitet.forberedelser || '',
-    });
+    };
+
+    const state = validator(initalValue, aktivitet);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -104,7 +117,7 @@ function MoteAktivitetForm(props) {
                 />
 
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Tema for møtet *"
                     {...state.fields.tittel}
                 />
@@ -128,7 +141,7 @@ function MoteAktivitetForm(props) {
                     </Select>
                 </div>
                 <VelgKanal
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Møteform *"
                     {...state.fields.kanal}
                 />
@@ -138,13 +151,13 @@ function MoteAktivitetForm(props) {
                     {...state.fields.adresse}
                 />
                 <Textarea
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Hensikt med møtet"
                     maxLength={HENSIKT_MAKS_LENGDE}
                     {...state.fields.beskrivelse}
                 />
                 <Textarea
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Forberedelser til møtet"
                     maxLength={FORBEREDELSER_MAKS_LENGDE}
                     {...state.fields.forberedelser}
