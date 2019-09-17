@@ -27,24 +27,35 @@ import Input from '../../../../felles-komponenter/skjema/input/input';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 
+function erAvtalt(aktivitet) {
+    return aktivitet.avtalt === true;
+}
+
+const validator = useFormstate({
+    tittel: (val, values, aktivitet) =>
+        validateTittel(erAvtalt(aktivitet), val),
+    fraDato: (val, values, aktivitet) =>
+        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) =>
+        validerDato(val, null, aktivitet.fraDato),
+    periodeValidering: (val, values) =>
+        validerPeriodeFelt(values.fraDato, values.tilDato),
+    ansettelsesforhold: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    jobbStatus: (val, values, aktivitet) =>
+        validateJobbstatus(erAvtalt(aktivitet), val),
+    arbeidstid: (val, values, aktivitet) =>
+        validateFeltForLangt(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) =>
+        validateBeskrivelse(erAvtalt(aktivitet), val),
+});
+
 function IJobbAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;
     const maybeAktivitet = aktivitet || {};
-    const erAvtalt = maybeAktivitet.avtalt === true;
+    const avtalt = maybeAktivitet.avtalt === true;
 
-    const validator = useFormstate({
-        tittel: val => validateTittel(erAvtalt, val),
-        fraDato: val => validateFraDato(erAvtalt, maybeAktivitet.tilDato, val),
-        tilDato: val => validerDato(val, null, maybeAktivitet.fraDato),
-        periodeValidering: (val, values) =>
-            validerPeriodeFelt(values.fraDato, values.tilDato),
-        ansettelsesforhold: val => validateFeltForLangt(erAvtalt, val),
-        jobbStatus: val => validateJobbstatus(erAvtalt, val),
-        arbeidstid: val => validateFeltForLangt(erAvtalt, val),
-        beskrivelse: val => validateBeskrivelse(erAvtalt, val),
-    });
-
-    const state = validator({
+    const initalValues = {
         tittel: maybeAktivitet.tittel || '',
         fraDato: maybeAktivitet.fraDato || '',
         tilDato: maybeAktivitet.tilDato || '',
@@ -53,7 +64,9 @@ function IJobbAktivitetForm(props) {
         ansettelsesforhold: maybeAktivitet.ansettelsesforhold || '',
         arbeidstid: maybeAktivitet.arbeidstid || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
-    });
+    };
+
+    const state = validator(initalValues, aktivitet);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -73,7 +86,7 @@ function IJobbAktivitetForm(props) {
                 />
 
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Stillingstittel *"
                     {...state.fields.tittel}
                 />
@@ -83,7 +96,7 @@ function IJobbAktivitetForm(props) {
                 >
                     <div className="dato-container">
                         <DatoField
-                            disabled={erAvtalt}
+                            disabled={avtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
                             {...state.fields.fraDato}
@@ -103,29 +116,29 @@ function IJobbAktivitetForm(props) {
                     <Radio
                         label="Heltid"
                         value={JOBB_STATUS_HELTID}
-                        disabled={erAvtalt}
+                        disabled={avtalt}
                         {...state.fields.jobbStatus}
                     />
                     <Radio
                         label="Deltid"
                         value={JOBB_STATUS_DELTID}
-                        disabled={erAvtalt}
+                        disabled={avtalt}
                         {...state.fields.jobbStatus}
                     />
                 </FieldGroup>
 
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Arbeidsgiver"
                     {...state.fields.ansettelsesforhold}
                 />
                 <Input
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Ansettelsesforhold (fast, midlertidig, vikariat)"
                     {...state.fields.arbeidstid}
                 />
                 <Textarea
-                    disabled={erAvtalt}
+                    disabled={avtalt}
                     label="Kort beskrivelse av arbeidstid (dag, kveld, helg, stillingsprosent) og arbeidsoppgaver"
                     maxLength={5000}
                     visTellerFra={500}

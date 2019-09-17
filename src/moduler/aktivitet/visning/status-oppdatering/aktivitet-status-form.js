@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -65,32 +64,34 @@ function validateBegrunnelse(value, values, aktivitet) {
     return null;
 }
 
+const validator = useFormstate({
+    aktivitetstatus: () => {},
+    begrunnelse: (val, values, aktivitet) =>
+        validateBegrunnelse(val, values, aktivitet),
+    statusValidering: (val, values, aktivitet) =>
+        kanOppdatereStatus(aktivitet, values),
+});
+
 function AktivitetStatusForm(props) {
     const { aktivitet, onSubmit, disabled } = props;
 
-    const validator = useFormstate({
-        aktivitetstatus: () => {},
-        begrunnelse: (val, values) =>
-            validateBegrunnelse(val, values, aktivitet),
-        statusValidering: (val, values) =>
-            kanOppdatereStatus(aktivitet, values),
-    });
-
-    const state = validator({
+    const initalValue = {
         aktivitetstatus: aktivitet.status || '',
         begrunnelse: aktivitet.avsluttetBegrunnelse || '',
         statusValidering: '',
-    });
+    };
 
-    const dirty = useContext(DirtyContext);
+    const state = validator(initalValue, aktivitet);
+
+    const { setFormIsDirty } = useContext(DirtyContext);
     useEffect(
         () => {
-            dirty.setFormIsDirty('status', !state.pristine);
+            setFormIsDirty('status', !state.pristine);
             return () => {
-                dirty.setFormIsDirty('status', false);
+                setFormIsDirty('status', false);
             };
         },
-        [dirty.setFormIsDirty, state.pristine]
+        [setFormIsDirty, state.pristine]
     );
 
     const status = state.fields.aktivitetstatus.input.value;

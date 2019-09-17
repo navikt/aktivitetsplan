@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -19,15 +18,15 @@ function StillingEtikettForm(props) {
         etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT,
     });
 
-    const dirty = useContext(DirtyContext);
+    const { setFormIsDirty } = useContext(DirtyContext);
     useEffect(
         () => {
-            dirty.setFormIsDirty('etikett', !state.pristine);
+            setFormIsDirty('etikett', !state.pristine);
             return () => {
-                dirty.setFormIsDirty('etikett', false);
+                setFormIsDirty('etikett', false);
             };
         },
-        [dirty.setFormIsDirty, state.pristine]
+        [setFormIsDirty, state.pristine]
     );
 
     const disable = state.submitting || disabled;

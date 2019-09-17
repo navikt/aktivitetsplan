@@ -22,33 +22,39 @@ import {
 } from './validate';
 import LagreAktivitet from '../lagre-aktivitet';
 
+function erAvtalt(aktivitet) {
+    return aktivitet.avtalt === true;
+}
+
+const validator = useFormstate({
+    tittel: () => null,
+    fraDato: (val, values, aktivitet) =>
+        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) =>
+        validateTilDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
+    periodeValidering: (val, values) =>
+        validerPeriodeFelt(values.fraDato, values.tilDato),
+    antallStillingerIUken: (val, values, aktivitet) =>
+        validateAntallStillingerIUken(
+            erAvtalt(aktivitet),
+            val,
+            values.antallStillingerSokes
+        ),
+    antallStillingerSokes: (val, values, aktivitet) =>
+        validateAntallStillinger(erAvtalt(aktivitet), val),
+    avtaleOppfolging: (val, values, aktivitet) =>
+        validateOppfolging(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) =>
+        validateBeskrivelse(erAvtalt(aktivitet), val),
+});
+
 export default function SokeAvtaleAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
 
     const maybeAktivitet = aktivitet || {};
-    const erAktivitetAvtalt = maybeAktivitet.avtalt === true;
+    const avtalt = maybeAktivitet.avtalt === true;
 
-    const validator = useFormstate({
-        tittel: () => null,
-        fraDato: val =>
-            validateFraDato(erAktivitetAvtalt, maybeAktivitet.tilDato, val),
-        tilDato: val =>
-            validateTilDato(erAktivitetAvtalt, maybeAktivitet.fraDato, val),
-        periodeValidering: (val, values) =>
-            validerPeriodeFelt(values.fraDato, values.tilDato),
-        antallStillingerIUken: (val, values) =>
-            validateAntallStillingerIUken(
-                erAktivitetAvtalt,
-                val,
-                values.antallStillingerSokes
-            ),
-        antallStillingerSokes: val =>
-            validateAntallStillinger(erAktivitetAvtalt, val),
-        avtaleOppfolging: val => validateOppfolging(erAktivitetAvtalt, val),
-        beskrivelse: val => validateBeskrivelse(erAktivitetAvtalt, val),
-    });
-
-    const defaultFormValues = {
+    const initalValues = {
         tittel: maybeAktivitet.tittel || 'Avtale om å søke jobber',
         fraDato: maybeAktivitet.fraDato || '',
         tilDato: maybeAktivitet.tilDato || '',
@@ -59,14 +65,14 @@ export default function SokeAvtaleAktivitetForm(props) {
         periodeValidering: '',
     };
 
-    const state = validator(defaultFormValues);
+    const state = validator(initalValues, aktivitet);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
     }
 
     const reinitalize = newInitalValues => {
-        state.reinitialize({ ...defaultFormValues, ...newInitalValues });
+        state.reinitialize({ ...initalValues, ...newInitalValues });
     };
 
     const brukeStillingerIUken = !state.fields.antallStillingerSokes
@@ -111,7 +117,7 @@ export default function SokeAvtaleAktivitetForm(props) {
 
                 <HidenIfInput
                     hidden={brukeStillingerIUken}
-                    disabled={erAktivitetAvtalt}
+                    disabled={avtalt}
                     label="Antall søknader i perioden *"
                     bredde="S"
                     {...state.fields.antallStillingerSokes}
@@ -119,20 +125,20 @@ export default function SokeAvtaleAktivitetForm(props) {
 
                 <HidenIfInput
                     hidden={!brukeStillingerIUken}
-                    disabled={erAktivitetAvtalt}
+                    disabled={avtalt}
                     label="Antall søknader i uken *"
                     bredde="S"
                     {...state.fields.antallStillingerIUken}
                 />
                 <Textarea
-                    disabled={erAktivitetAvtalt}
+                    disabled={avtalt}
                     label="Oppfølging fra NAV"
                     maxLength={255}
                     visTellerFra={5000}
                     {...state.fields.avtaleOppfolging}
                 />
                 <Textarea
-                    disabled={erAktivitetAvtalt}
+                    disabled={avtalt}
                     label="Beskrivelse"
                     maxLength={5000}
                     visTellerFra={500}
