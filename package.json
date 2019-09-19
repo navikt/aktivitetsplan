@@ -14,7 +14,8 @@
     "lint:less": "lesshint --reporter ./scripts/lesshint-reporter src/",
     "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
-    "heroku-serve": "serve -s build -l $PORT"
+    "heroku-serve": "serve -s build -l $PORT",
+    "lint": "echo \"Not implemented\""
   },
   "dependencies": {
     "@nutgaard/use-formstate": "^2.2.0-beta.3",
