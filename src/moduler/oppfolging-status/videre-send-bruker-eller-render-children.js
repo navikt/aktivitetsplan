@@ -35,7 +35,6 @@ function loggingAntallBrukere(
             },
             {
                 servicegruppe,
-                veiledertag: veileder,
             }
         );
     }
