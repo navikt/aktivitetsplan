@@ -11,8 +11,6 @@
     "test:coverage": "npm test -- --coverage --watchAll=false",
     "test:e2e": "node integrationtest/local-runner.js",
     "test:browsers": "node integrationtest/saucelabs-runner.js",
-    "lint": "npm run lint:js && npm run lint:less",
-    "lint:js": "eslint src --ext .js,.jsx --fix --quiet",
     "lint:less": "lesshint --reporter ./scripts/lesshint-reporter src/",
     "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
@@ -20,6 +18,10 @@
   },
   "dependencies": {
     "@nutgaard/use-formstate": "^2.2.0-beta.3",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.5",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
     "babel-polyfill": "^6.26.0",
     "classnames": "2.2.5",
     "history": "4.6.3",
@@ -83,6 +85,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "sha.js": "^2.4.11",
+    "typescript": "^3.6.3",
     "whatwg-fetch": "^3.0.0"
   },
   "husky": {
@@ -93,7 +96,6 @@
   "lint-staged": {
     "*.js": [
       "npm run prettier",
-      "eslint --fix --quiet",
       "git add"
     ],
     "*.less": [
@@ -101,25 +103,25 @@
       "git add"
     ]
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 10",
-    "not op_mini all"
-  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not ie <= 10",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
     "@craco/craco": "5.4.0",
     "craco-less": "1.12.0",
     "cross-env": "^5.2.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^3.0.4",
     "lesshint": "^6.3.7",
     "lint-staged": "^9.2.5",
@@ -133,5 +135,8 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/navikt/aktivitetsplan.git"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }

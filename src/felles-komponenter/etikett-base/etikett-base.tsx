@@ -1,10 +1,12 @@
 import React from 'react';
-import PT from 'prop-types';
 import classNames from 'classnames';
 import { Normaltekst } from 'nav-frontend-typografi';
 import styles from './etikett.module.less';
 
-function EtikettBase(props) {
+interface Props {
+    className?: string;
+    children: React.ReactNode
+} function EtikettBase(props: Props) {
     const { className, children } = props;
     return (
         <div className={classNames(styles.etikett, className)}>
@@ -14,14 +16,5 @@ function EtikettBase(props) {
         </div>
     );
 }
-
-EtikettBase.defaultProps = {
-    className: undefined,
-};
-
-EtikettBase.propTypes = {
-    className: PT.string,
-    children: PT.node.isRequired,
-};
 
 export default EtikettBase;
