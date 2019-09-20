@@ -4,7 +4,7 @@ orbs:
 
 jobs:
     - bygg_og_deploy_fss:
-          <<: *pus/bygg-og-deploy-frontend-ref
+          <<: *bygg-og-deploy-frontend-ref
           cluster: dev-fss
 
 
