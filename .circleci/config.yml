@@ -1,10 +1,10 @@
 version: 2.1
 orbs:
-    pus: navikt/pus-orb@0.0.19
+    pus: navikt/pus-orb@0.0.20
 
 jobs:
     - bygg_og_deploy_fss:
-          <<: *pus/bygg-og-deploy-frontent-ref
+          <<: *pus/bygg-og-deploy-frontend-ref
           cluster: dev-fss
 
 
