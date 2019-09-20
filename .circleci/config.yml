@@ -1,28 +1,40 @@
 version: 2.1
 orbs:
-    pus: navikt/pus-orb@0.0.21
+    pus: navikt/pus-orb@0.0.22
 
 workflows:
     version: 2
     commit:
         jobs:
             - pus/test-frontend:
-                  context: pus
-                  filters:
-                      branches:
-                          ignore: master
-            - pus/bygg-og-deploy-frontend:
-                  name: deploy1
+                  - name: test
+
+            - pus/bygg_frontend:
+                  requires:
+                      - test
+                  name: build
                   context: pus
                   cluster: dev-fss
                   filters:
                       branches:
                           only: master
 
-            - pus/bygg-og-deploy-frontend:
-                  name: deploy2
+            - pus/deploy-latest:
+                  requires:
+                      - build
+                  name: deploy1
                   context: pus
                   cluster: dev-sbs
+                  filters:
+                      branches:
+                          only: master
+
+            - pus/deploy-latest:
+                  requires:
+                      - build
+                  name: deploy2
+                  context: pus
+                  cluster: dev-fss
                   filters:
                       branches:
                           only: master
@@ -34,6 +46,7 @@ workflows:
                   filters:
                       branches:
                           only: master
+
             - pus/deploy-latest:
                   requires:
                       - prodsett
@@ -43,3 +56,14 @@ workflows:
                   filters:
                       branches:
                           only: master
+
+            - pus/deploy-latest:
+                  requires:
+                      - prodsett
+                  context: pus
+                  cluster: prod-sbs
+                  filepath: ./nais.yaml
+                  filters:
+                      branches:
+                          only: master
+
