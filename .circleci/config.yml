@@ -2,12 +2,6 @@ version: 2.1
 orbs:
     pus: navikt/pus-orb@0.0.20
 
-jobs:
-    - bygg_og_deploy_fss:
-          <<: *bygg-og-deploy-frontend-ref
-          cluster: dev-fss
-
-
 workflows:
     version: 2
     commit:
@@ -17,14 +11,22 @@ workflows:
                   filters:
                       branches:
                           ignore: master
-            - bygg_og_deploy_fss:
+            - pus/bygg-og-deploy-frontend:
                   context: pus
+                  cluster: dev-fss
+                  filters:
+                      branches:
+                          only: master
+
+            - pus/bygg-og-deploy-frontend:
+                  context: pus
+                  cluster: dev-sbs
                   filters:
                       branches:
                           only: master
             - prodsett:
                   requires:
-                      - pus/deploy-frontend
+                      - pus/bygg-og-deploy-frontend
                   type: approval
                   filters:
                       branches:
