@@ -7,7 +7,7 @@ workflows:
     commit:
         jobs:
             - pus/test-frontend:
-                  - name: test
+                  name: test
 
             - pus/bygg_frontend:
                   requires:
