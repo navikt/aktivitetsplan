@@ -1,36 +1,40 @@
 version: 2.1
+orbs:
+    pus: navikt/pus-orb@0.0.19
+
 jobs:
-    loadsay:
-        machine: true
-        steps:
-            - run: echo "hi"
+    - bygg_og_deploy_fss:
+          <<: *pus/bygg-og-deploy-frontent-ref
+          cluster: dev-fss
 
-    sayhello: &sayhello_ref
-        machine: true
-        steps:
-            - run: echo "hello"
-
-    SayHelloChad:
-        <<: *sayhello_ref
-        steps:
-            - run: echo "blee"
-
-    saygoodbye:
-        machine: true
-        steps:
-            - run: echo "bye"
 
 workflows:
     version: 2
-    build:
+    commit:
         jobs:
-            - loadsay
-            - sayhello:
+            - pus/test-frontend:
+                  context: pus
+                  filters:
+                      branches:
+                          ignore: master
+            - bygg_og_deploy_fss:
+                  context: pus
+                  filters:
+                      branches:
+                          only: master
+            - prodsett:
                   requires:
-                      - loadsay
-
-            - SayHelloChad
-
-            - saygoodbye:
+                      - pus/deploy-frontend
+                  type: approval
+                  filters:
+                      branches:
+                          only: master
+            - pus/deploy-latest:
                   requires:
-                      - SayHelloChad
+                      - prodsett
+                  context: pus
+                  cluster: prod-fss
+                  filepath: ./nais.yaml
+                  filters:
+                      branches:
+                          only: master
