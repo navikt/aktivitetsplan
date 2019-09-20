@@ -9,7 +9,7 @@ workflows:
             - pus/test-frontend:
                   name: test
 
-            - pus/bygg_frontend:
+            - pus/bygg-frontend:
                   requires:
                       - test
                   name: build
