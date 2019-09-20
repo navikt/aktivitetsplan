@@ -12,6 +12,7 @@ workflows:
                       branches:
                           ignore: master
             - pus/bygg-og-deploy-frontend:
+                  name: deploy1
                   context: pus
                   cluster: dev-fss
                   filters:
@@ -19,6 +20,7 @@ workflows:
                           only: master
 
             - pus/bygg-og-deploy-frontend:
+                  name: deploy2
                   context: pus
                   cluster: dev-sbs
                   filters:
@@ -26,7 +28,8 @@ workflows:
                           only: master
             - prodsett:
                   requires:
-                      - pus/bygg-og-deploy-frontend
+                      - deploy1
+                      - deploy2
                   type: approval
                   filters:
                       branches:
