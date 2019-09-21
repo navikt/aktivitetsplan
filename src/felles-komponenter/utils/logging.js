@@ -20,7 +20,7 @@ const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
 const DAILOG_BRUKER_HENVENDELSE = 'dialog.bruker.henvendelse';
 const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
-export const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallBrukere.v3';
+export const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallSluttBrukere';
 export const ANTALL_VEILEDERE = 'aktivitetsplan.antallVeiledere';
 export const LOGG_BRUKER_IKKE_OPPFOLGING = 'aktivitetsplan.antallBrukerIkkeOppfolging';
 export const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
