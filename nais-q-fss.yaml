@@ -35,6 +35,6 @@ spec:
     - OIDC_REDIRECT_URL
     - UNLEASH_API_URL
     - name: DISABLE_PROXY
-      value: true
+      value: "true"
     - name: DISABLE_DECORATOR
-      value: true
+      value: "true"
