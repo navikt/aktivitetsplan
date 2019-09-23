@@ -5,7 +5,7 @@ FROM navikt/pus-decorator
 #  - applikasjonen får /aktivitetsplan som contextpath i begge soner
 ENV APPLICATION_NAME=aktivitetsplan
 ENV GZIP_ENABLED=true
-COPY /source/build /app
+COPY /build /app
 
 ADD decorator.yaml /decorator.yaml
 ADD decorator-fss.yaml /decorator-fss.yaml
