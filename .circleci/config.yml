@@ -12,6 +12,7 @@ workflows:
             - pus/bygg-frontend:
                   requires:
                       - test
+                  context: pus
                   name: build
                   filters:
                       branches:
