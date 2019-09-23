@@ -1,0 +1,41 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+    name: aktivitetsplan
+    namespace: {{namespace}}
+    cluster:
+        - dev-fss
+    labels:
+        team: dab
+spec:
+    image: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan:{{version}}
+    port: 8080
+    liveness:
+        path: aktivitetsplan/internal/isAlive
+        initialDelay: 60
+    readiness:
+        path: aktivitetsplan/internal/selftest
+        initialDelay: 60
+    replicas:
+        min: 2
+        max: 4
+        cpuThresholdPercentage: 50
+    ingresses:
+        - https://aktivitetsplan-{{namespace}}.nais.preprod.local
+        - https://app-{{namespace}}.adeo.no/aktivitetsplan
+    vault:
+        enabled: true
+    env:
+        - ISSO_JWKS_URL
+        - ISSO_HOST_URL
+        - ISSO_ISSUER_URL
+        - ISSO_ISALIVE_URL
+        - VEILARBLOGIN_REDIRECT_URL_URL
+        - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
+        - OIDC_REDIRECT_URL
+        - UNLEASH_API_URL
+        - name: DISABLE_PROXY
+          value: true
+        - name: DISABLE_DECORATOR
+          value: true
+
