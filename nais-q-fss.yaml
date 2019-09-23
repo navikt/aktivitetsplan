@@ -20,6 +20,9 @@ spec:
     min: 2
     max: 4
     cpuThresholdPercentage: 50
+  prometheus:
+    enabled: true
+    path: aktivitetsplan/internal/metrics
   ingresses:
     - https://aktivitetsplan-{{namespace}}.nais.preprod.local
     - https://app-{{namespace}}.adeo.no/aktivitetsplan
