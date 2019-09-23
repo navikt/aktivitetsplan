@@ -35,6 +35,8 @@ spec:
         - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
         - OIDC_REDIRECT_URL
         - UNLEASH_API_URL
+        - name: VEILARBSTEPUP_OIDC_URL
+          value: "https://veilarbstepup.nav.no/veilarbstepup/oidc"
         - name: DISABLE_PROXY
           value: "true"
         - name: DISABLE_DECORATOR
