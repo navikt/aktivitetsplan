@@ -35,6 +35,14 @@ spec:
         - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
         - OIDC_REDIRECT_URL
         - UNLEASH_API_URL
+        - name: DITTNAV_LINK_URL
+          value: "https://tjenester.nav.no/dittnav/"
+        - name: VEIENTILARBEID_URL
+          value: "https://veientilarbeid.nav.no"
+        - name: AKTIVITETSPLAN_URL
+          value: "https://aktivitetsplan.nav.no"
+        - name: REGISTRERINGSINFORMASJON_URL
+          value: "https://registreringsinformasjon-q.nav.no"
         - name: VEILARBSTEPUP_OIDC_URL
           value: "https://veilarbstepup.nav.no/veilarbstepup/oidc"
         - name: DISABLE_PROXY
