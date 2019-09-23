@@ -6,7 +6,7 @@ metadata:
     cluster:
         - prod-fss
     labels:
-        team: dab
+        team: pto
 spec:
     image: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan:{{version}}
     port: 8080
