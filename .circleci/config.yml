@@ -1,73 +1,49 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2.1
-
-executors:
-    common:
-        docker:
-            - image: circleci/node:10.15
-        working_directory: ~/aktivitetsplan
-
-jobs:
-
-    prebuild:
-        executor: common
-        steps:
-            - checkout
-            - restore_cache:
-                    keys:
-                        - v1-dependencies-{{ checksum "package-lock.json" }}
-                        - v1-dependencies-
-            - run: npm ci
-            - save_cache:
-                  paths:
-                      - node_modules
-                  key: v1-dependencies-{{ checksum "package-lock.json" }}
-            - persist_to_workspace:
-                  root: ~/aktivitetsplan
-                  paths: .
-
-    build:
-        executor: common
-
-        steps:
-            - attach_workspace:
-                at: ~/aktivitetsplan
-            - run: npm run build
-
-    unittest:
-        environment:
-            TZ: Europe/Oslo
-
-        executor: common
-
-        steps:
-            - attach_workspace:
-                at: ~/aktivitetsplan
-            - run: npm run test
-
-    browsertest:
-        executor: common
-
-        steps:
-            - attach_workspace:
-                  at: ~/aktivitetsplan
-            - run: npm run build:tekster
-            - run: npm run test:browsers
+orbs:
+    pus: navikt/pus-orb@0.0.22
 
 workflows:
     version: 2
-    build_and_test:
+    commit:
         jobs:
-            - prebuild
-            - build:
-                requires:
-                    - prebuild
-            - unittest:
-                requires:
-                    - prebuild
-            - browsertest:
-                requires:
-                    - prebuild
+            - pus/test-frontend:
+                  name: test
+
+            - pus/bygg-frontend:
+                  requires:
+                      - test
+                  name: build
+                  context: pus
+                  cluster: dev-fss
+                  filters:
+                      branches:
+                          only: master
+
+            - pus/deploy-latest:
+                  requires:
+                      - build
+                  name: deploy2
+                  context: pus
+                  cluster: dev-fss
+                  filters:
+                      branches:
+                          only: master
+            - prodsett:
+                  requires:
+                      - deploy2
+                  type: approval
+                  filters:
+                      branches:
+                          only: master
+
+            - pus/deploy-latest:
+                  requires:
+                      - prodsett
+                  context: pus
+                  cluster: prod-fss
+                  filepath: ./nais.yaml
+                  filters:
+                      branches:
+                          only: master
+
+
