@@ -41,6 +41,8 @@ spec:
       value: "https://tjenester-{{namespace}}.nav.no/dittnav/"
     - name: AKTIVITETSPLAN_URL
       value: "https://aktivitetsplan-q.nav.no"
+    - name: ARBEIDSSOKERREGISTRERING_URL
+      value: "https://arbeidssokerregistrering-q.nav.no/"
     - name: REGISTRERINGSINFORMASJON_URL
       value: "https://registreringsinformasjon-q.nav.no"
     - name: VEILARBSTEPUP_OIDC_URL
