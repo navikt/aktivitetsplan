@@ -13,8 +13,6 @@ workflows:
                   requires:
                       - test
                   name: build
-                  context: pus
-                  cluster: dev-fss
                   filters:
                       branches:
                           only: master
