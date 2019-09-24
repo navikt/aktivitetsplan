@@ -28,6 +28,7 @@ spec:
     - https://app-{{namespace}}.adeo.no/aktivitetsplan
   vault:
     enabled: true
+  webproxy: true
   env:
     - ISSO_JWKS_URL
     - ISSO_HOST_URL
