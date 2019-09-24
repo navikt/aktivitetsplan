@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import Lenke from '../../felles-komponenter/utils/lenke';
 
@@ -13,41 +13,46 @@ function AktiverDigitalOppfolgingVarsel({
     const InformasjonContainer = () =>
         <div>
             <FormattedMessage id="informasjon-mer" />
-&nbsp;
-<Lenke href="/informasjon">
+            &nbsp;
+            <Lenke href="/informasjon">
                 <FormattedMessage id="informasjon-mer-lenke" />
-</Lenke>
+            </Lenke>
         </div>;
 
     if (!reservertIKRR && !settDigitalFeilet) {
         return (
-            <AlertStripeInfoSolid className="sett-digital__varsel">
+            <AlertStripe type="advarsel" className="sett-digital__varsel">
                 <div>
                     <FormattedMessage id="sett-digital.manuell-oppfolging.infotekst" />
                 </div>
                 <InformasjonContainer />
-            </AlertStripeInfoSolid>
+            </AlertStripe>
         );
-    } if (reservertIKRR && !settDigitalFeilet) {
+    }
+    if (reservertIKRR && !settDigitalFeilet) {
         const resertvertTekst = harTrykketRefresh
             ? 'sett-digital.reservert-i-krr.fjern.reservasjon.infotekst'
             : 'sett-digital.reservert-i-krr.infotekst';
         return (
             <FormattedMessage id="sett-digital.reservert-i-krr.url-lenke">
                 {url =>
-                    <AlertStripeInfoSolid className="sett-digital__varsel">
+                    <AlertStripe
+                        type="advarsel"
+                        className="sett-digital__varsel"
+                    >
                         <div className="blokk-s">
                             <FormattedMessage id={resertvertTekst} />
-&nbsp;
-<Lenke href={url}>
+                            &nbsp;
+                            <Lenke href={url}>
                                 <FormattedMessage id="sett-digital.reservert-i-krr.lenketekst" />
-</Lenke>
+                            </Lenke>
                         </div>
                         <InformasjonContainer />
-                    </AlertStripeInfoSolid>}
+                    </AlertStripe>}
             </FormattedMessage>
         );
-    } if (settDigitalFeilet) {
+    }
+    if (settDigitalFeilet) {
         return (
             <AdvarselVarsling
                 tekstId="sett-digital.feilmelding"

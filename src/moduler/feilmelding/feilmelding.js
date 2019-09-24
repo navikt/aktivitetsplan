@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl, intlShape } from 'react-intl';
-import {
-    AlertStripeInfo,
-    AlertStripeInfoSolid,
-    AlertStripeNavAnsatt,
-} from 'nav-frontend-alertstriper';
+import { AlertStripeInfo, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import FeilmeldingDetaljer from './feilmelding-detaljer';
 import {
     FINNES_IKKE_KATEGORI,
@@ -25,10 +21,10 @@ import * as AppPT from '../../proptypes';
 import FailsafeText from '../../failsafeText';
 
 const stripeTyper = {
-    [UKJENT_KATEGORI]: AlertStripeNavAnsatt,
-    [FINNES_IKKE_KATEGORI]: AlertStripeNavAnsatt,
-    [UNAUTHORIZED_KATEGORI]: AlertStripeNavAnsatt,
-    [INGEN_TILGANG_KATEGORI]: AlertStripeInfoSolid,
+    [UKJENT_KATEGORI]: AlertStripeFeil,
+    [FINNES_IKKE_KATEGORI]: AlertStripeFeil,
+    [UNAUTHORIZED_KATEGORI]: AlertStripeFeil,
+    [INGEN_TILGANG_KATEGORI]: AlertStripeInfo,
     [UGYLDIG_REQUEST_KATEGORI]: AlertStripeInfo,
     [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo,
 };

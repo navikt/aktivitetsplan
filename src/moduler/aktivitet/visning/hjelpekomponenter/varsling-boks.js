@@ -1,7 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { AlertStripeStopp } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import {
@@ -28,9 +28,9 @@ function VarslingBoks({
                     className={className}
                     hidden={!visVarselOmManglendeDialog}
                 >
-                    <AlertStripeStopp className="varsling-boks" role="alert">
+                    <AlertStripe type="advarsel">
                         <FormattedMessage id="mote.varsling.forhandsorientering" />
-                    </AlertStripeStopp>
+                    </AlertStripe>
                 </HiddenIfDiv>
             </Innholdslaster>
         </HiddenIfDiv>

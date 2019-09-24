@@ -3,16 +3,16 @@ import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
     AlertStripeAdvarsel,
-    AlertStripeInfoSolid,
+    AlertStripeInfo,
 } from 'nav-frontend-alertstriper';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 
 export function Varsling({ tekstId, className }) {
     return (
-        <AlertStripeInfoSolid className={className}>
+        <AlertStripeInfo className={className}>
             <FormattedMessage id={tekstId} />
-        </AlertStripeInfoSolid>
+        </AlertStripeInfo>
     );
 }
 
@@ -33,13 +33,13 @@ export function VarslingMedLenke({
     onClick,
 }) {
     return (
-        <AlertStripeInfoSolid className={className}>
+        <AlertStripeAdvarsel className={className}>
             <FormattedMessage id={tekstId} />
-&nbsp;
-<Lenke href={href} onClick={onClick}>
+            &nbsp;
+            <Lenke href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
-</Lenke>
-        </AlertStripeInfoSolid>
+            </Lenke>
+        </AlertStripeAdvarsel>
     );
 }
 
@@ -85,14 +85,14 @@ export function AdvarselMedLenkeVarsling({
     return (
         <AlertStripeAdvarsel className={className}>
             <FormattedMessage id={tekstId} values={values} />
-&nbsp;
-<Lenke
+            &nbsp;
+            <Lenke
                 href={href}
                 onClick={onClick}
                 erEksternLenke={erEksternLenke}
             >
                 <FormattedMessage id={lenkeTekstId} />
-</Lenke>
+            </Lenke>
         </AlertStripeAdvarsel>
     );
 }
@@ -114,7 +114,5 @@ AdvarselMedLenkeVarsling.propTypes = {
     values: PT.object,
 };
 
-export const HiddenIfVarsling = hiddenIf(Varsling);
 export const HiddenIfVarslingMedLenke = hiddenIf(VarslingMedLenke);
-export const HiddenIfAdvarselVarsling = hiddenIf(AdvarselVarsling);
 export const HiddenIfAdvarselMedLenke = hiddenIf(AdvarselMedLenkeVarsling);

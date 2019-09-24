@@ -3,15 +3,12 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import * as AppPT from '../../proptypes';
 import { autobind, formaterDatoEllerTidSiden } from '../../utils';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import Accordion from '../../felles-komponenter/accordion';
 import AktivitetsmalModal from './aktivitetsmal-modal';
-import hiddenIf, {
-    div as HiddenIfDiv,
-} from '../../felles-komponenter/hidden-if/hidden-if';
+import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import {
     hentMal,
@@ -33,21 +30,6 @@ const identitetMap = (erVeileder, endretAv) => {
     }
     return { BRUKER: 'deg', VEILEDER: 'NAV' }[endretAv];
 };
-
-const ManglendeMalInformasjon = hiddenIf(({ historiskVisning }) => {
-    if (historiskVisning) {
-        return (
-            <AlertStripeInfoSolid>
-                <FormattedMessage id="aktivitetsmal.mangler-historisk-mal" />
-            </AlertStripeInfoSolid>
-        );
-    }
-    return (
-        <p>
-            <FormattedMessage id="aktivitetsmal.opprett-mal-tekst" />
-        </p>
-    );
-});
 
 function malListeVisning(gjeldendeMal, erVeileder) {
     return (
@@ -113,10 +95,6 @@ class AktivitetsMal extends Component {
             <Innholdslaster avhengigheter={avhengigheter}>
                 <section className="aktivitetmal">
                     <div className="aktivitetmal__innhold">
-                        <ManglendeMalInformasjon
-                            hidden={harMal}
-                            historiskVisning={historiskVisning}
-                        />
                         <Tekstomrade className="aktivitetmal__tekst">
                             {mal || ''}
                         </Tekstomrade>
