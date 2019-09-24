@@ -4,11 +4,7 @@ function isScrollParent(parent, excludeStaticParent, overflowRegex) {
     if (excludeStaticParent && parentStyle.position === 'static') {
         return false;
     }
-    if (
-        overflowRegex.test(
-            parentStyle.overflow + parentStyle.overflowY + parentStyle.overflowX
-        )
-    ) {
+    if (overflowRegex.test(parentStyle.overflow + parentStyle.overflowY + parentStyle.overflowX)) {
         return true;
     }
 
@@ -18,9 +14,7 @@ function isScrollParent(parent, excludeStaticParent, overflowRegex) {
 export default function getScrollParent(element, includeHidden) {
     const style = getComputedStyle(element);
     const excludeStaticParent = style.position === 'absolute';
-    const overflowRegex = includeHidden
-        ? /(auto|scroll|hidden)/
-        : /(auto|scroll)/;
+    const overflowRegex = includeHidden ? /(auto|scroll|hidden)/ : /(auto|scroll)/;
 
     if (style.position === 'fixed') {
         return document.body;
@@ -28,10 +22,7 @@ export default function getScrollParent(element, includeHidden) {
 
     let parent = element.parentElement;
 
-    while (
-        !!parent &&
-        !isScrollParent(parent, excludeStaticParent, overflowRegex)
-    ) {
+    while (!!parent && !isScrollParent(parent, excludeStaticParent, overflowRegex)) {
         parent = parent.parentElement;
     }
     return !parent ? document.body : parent;

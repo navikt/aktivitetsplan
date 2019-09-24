@@ -9,25 +9,18 @@ export function validerDatoField(input, intl, alternativer) {
 
     if (input && !erGyldigISODato(input)) {
         return intl.formatMessage({
-            id: 'datepicker.feilmelding.ugyldig-dato',
+            id: 'datepicker.feilmelding.ugyldig-dato'
         });
     }
-    if (
-        fra &&
-        til &&
-        (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))
-    ) {
+    if (fra && til && (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))) {
         tilDato.add(1, 'day');
         fraDato.subtract(1, 'day');
 
         const msgValues = {
             fradato: toDatePrettyPrint(fraDato.toDate()),
-            tildato: toDatePrettyPrint(tilDato.toDate()),
+            tildato: toDatePrettyPrint(tilDato.toDate())
         };
-        return intl.formatMessage(
-            { id: 'datepicker.feilmelding.innenfor-periode' },
-            msgValues
-        );
+        return intl.formatMessage({ id: 'datepicker.feilmelding.innenfor-periode' }, msgValues);
     }
     return undefined;
 }
@@ -46,11 +39,7 @@ export function validerDato(value, tidligsteFom, senesteTom) {
     const fraDato = moment(tidligsteFom);
     const tilDato = moment(senesteTom);
 
-    if (
-        tidligsteFom &&
-        senesteTom &&
-        (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))
-    ) {
+    if (tidligsteFom && senesteTom && (inputDato.isAfter(tilDato, 'day') || fraDato.isAfter(inputDato, 'day'))) {
         tilDato.add(1, 'day');
         fraDato.subtract(1, 'day');
 

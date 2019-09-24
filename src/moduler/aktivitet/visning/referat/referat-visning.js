@@ -16,7 +16,7 @@ function ReferatVisning(props) {
         publiserer,
         erReferatPublisert,
         startOppdaterReferat,
-        underOppfolging,
+        underOppfolging
     } = props;
 
     const aktivitetStatus = aktivitet.status;
@@ -24,22 +24,12 @@ function ReferatVisning(props) {
     return (
         <div className="oppdater-referat aktivitetvisning__underseksjon">
             <Undertittel>Samtalereferat</Undertittel>
-            <Tekstomrade className="oppdater-referat__referat">
-                {referat}
-            </Tekstomrade>
+            <Tekstomrade className="oppdater-referat__referat">{referat}</Tekstomrade>
             <HiddenIfDiv
-                hidden={
-                    !erVeileder ||
-                    aktivitetStatus === STATUS_FULLFOERT ||
-                    aktivitetStatus === STATUS_AVBRUTT
-                }
+                hidden={!erVeileder || aktivitetStatus === STATUS_FULLFOERT || aktivitetStatus === STATUS_AVBRUTT}
             >
                 <HiddenIfDiv hidden={erHistorisk || !underOppfolging}>
-                    <Hovedknapp
-                        onClick={dispatchPubliserReferat}
-                        spinner={publiserer}
-                        disabled={erReferatPublisert}
-                    >
+                    <Hovedknapp onClick={dispatchPubliserReferat} spinner={publiserer} disabled={erReferatPublisert}>
                         Del
                     </Hovedknapp>
                     <Knapp onClick={startOppdaterReferat}>Oppdater</Knapp>
@@ -57,6 +47,6 @@ ReferatVisning.propTypes = {
     dispatchPubliserReferat: PT.func.isRequired,
     publiserer: PT.bool.isRequired,
     erReferatPublisert: PT.bool.isRequired,
-    startOppdaterReferat: PT.func.isRequired,
+    startOppdaterReferat: PT.func.isRequired
 };
 export default ReferatVisning;

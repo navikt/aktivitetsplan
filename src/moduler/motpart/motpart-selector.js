@@ -24,11 +24,7 @@ export const selectNavnPaMotpart = createSelector(
     selectMotpartData,
     selectErVeileder,
     (motpart, erVeileder) => {
-        const navn = storeForbokstaver(
-            motpart.fornavn,
-            motpart.mellomnavn,
-            motpart.etternavn
-        );
+        const navn = storeForbokstaver(motpart.fornavn, motpart.mellomnavn, motpart.etternavn);
         return erVeileder ? navn : 'NAV';
     }
 );

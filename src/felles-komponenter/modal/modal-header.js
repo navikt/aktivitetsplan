@@ -18,36 +18,24 @@ function ModalHeader({
     ...props
 }) {
     return (
-        <div
-            className={classNames('modal-header-wrapper', className)}
-            {...props}
-        >
+        <div className={classNames('modal-header-wrapper', className)} {...props}>
             <header className="modal-header">
                 <span aria-live="assertive" className="sr-only">
                     {aktivitetErLaast
                         ? intl.formatMessage({
-                              id: 'aktivitetsmodal.kan.ikke.redigeres',
+                              id: 'aktivitetsmodal.kan.ikke.redigeres'
                           })
                         : ''}
                 </span>
-                <VisibleIfSpan
-                    className="modal-header-skillestrek"
-                    visible={aktivitetErLaast}
-                >
+                <VisibleIfSpan className="modal-header-skillestrek" visible={aktivitetErLaast}>
                     <HengeLasIkon />
                 </VisibleIfSpan>
-                {tilbakeTekst &&
-                    <Tilbakeknapp
-                        tekst={tilbakeTekst}
-                        onClick={onTilbakeClick}
-                    />}
-                {normalTekstId &&
+                {tilbakeTekst && <Tilbakeknapp tekst={tilbakeTekst} onClick={onTilbakeClick} />}
+                {normalTekstId && (
                     <Normaltekst tag="h1">
-                        <FormattedMessage
-                            id={normalTekstId}
-                            values={normalTekstValues}
-                        />
-                    </Normaltekst>}
+                        <FormattedMessage id={normalTekstId} values={normalTekstValues} />
+                    </Normaltekst>
+                )}
             </header>
         </div>
     );
@@ -60,7 +48,7 @@ ModalHeader.propTypes = {
     onTilbakeClick: PT.func,
     className: PT.string,
     aktivitetErLaast: PT.bool,
-    intl: intlShape.isRequired,
+    intl: intlShape.isRequired
 };
 
 ModalHeader.defaultProps = {
@@ -69,7 +57,7 @@ ModalHeader.defaultProps = {
     normalTekstValues: undefined,
     onTilbakeClick: undefined,
     className: undefined,
-    aktivitetErLaast: false,
+    aktivitetErLaast: false
 };
 
 export default injectIntl(ModalHeader);

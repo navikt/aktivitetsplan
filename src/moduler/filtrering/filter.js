@@ -7,17 +7,12 @@ import * as AppPT from '../../proptypes';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
-import {
-    selectAktivitetListeStatus,
-    selectAktiviterForAktuellePerioden,
-} from '../aktivitet/aktivitetliste-selector';
+import { selectAktivitetListeStatus, selectAktiviterForAktuellePerioden } from '../aktivitet/aktivitetliste-selector';
 import TypeFilter from './filter/type-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
-import loggEvent, {
-    OPNE_AKTIVITETFILTER,
-} from '../../felles-komponenter/utils/logging';
+import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 
 const filterClassNames = classes => classNames(classes, 'filter');
 
@@ -37,7 +32,7 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
             muligeStatus: new Set(),
             muligeTyper: new Set(),
             muligeEtiketter: new Set(),
-            muligeAvtalt: new Set(),
+            muligeAvtalt: new Set()
         }
     );
 
@@ -50,12 +45,9 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
 function Filter({ avhengigheter, harAktivitet, className }) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
-            <VisibleIfDiv
-                className={filterClassNames(className)}
-                visible={harAktivitet}
-            >
+            <VisibleIfDiv className={filterClassNames(className)} visible={harAktivitet}>
                 <FormattedMessage id="filter.tittel">
-                    {tittel =>
+                    {tittel => (
                         <Dropdown
                             name="filter"
                             knappeTekst={tittel}
@@ -70,7 +62,8 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                                 <StatusFilter />
                                 <TypeFilter />
                             </div>
-                        </Dropdown>}
+                        </Dropdown>
+                    )}
                 </FormattedMessage>
             </VisibleIfDiv>
         </Innholdslaster>
@@ -80,22 +73,20 @@ function Filter({ avhengigheter, harAktivitet, className }) {
 Filter.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     harAktivitet: PT.bool,
-    className: PT.string,
+    className: PT.string
 };
 
 Filter.defaultProps = {
     harAktivitet: true,
-    className: '',
+    className: ''
 };
 
 const mapStateToProps = state => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
-    const harAktivitet =
-        aktiviteter.length > 1 &&
-        sjekkAttFinnesFilteringsAlternativ(aktiviteter);
+    const harAktivitet = aktiviteter.length > 1 && sjekkAttFinnesFilteringsAlternativ(aktiviteter);
     return {
         avhengigheter: [selectAktivitetListeStatus(state)],
-        harAktivitet,
+        harAktivitet
     };
 };
 

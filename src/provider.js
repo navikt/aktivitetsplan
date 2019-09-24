@@ -17,9 +17,7 @@ class Provider extends Component {
             <ReduxProvider store={store}>
                 <InitiellDataLast>
                     <IntlProvider defaultLocale="nb" locale="nb" messages={{}}>
-                        <div>
-                            {children}
-                        </div>
+                        <div>{children}</div>
                     </IntlProvider>
                 </InitiellDataLast>
             </ReduxProvider>
@@ -28,7 +26,7 @@ class Provider extends Component {
 }
 
 Provider.propTypes = {
-    children: PT.node.isRequired,
+    children: PT.node.isRequired
 };
 
 export default DragDropContext(HTML5Backend)(Provider);

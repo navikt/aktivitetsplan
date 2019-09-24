@@ -2,12 +2,7 @@ import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { injectIntl, intlShape } from 'react-intl';
 
-import {
-    GRUPPE_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
-    STILLING_AKTIVITET_TYPE,
-} from '../../../constant';
+import { GRUPPE_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_AKTIVITET_TYPE } from '../../../constant';
 import { formaterDatoKortManed } from '../../../utils';
 import * as PT from '../../../proptypes';
 import Soknadfrist from './Soknadsfrist';
@@ -27,23 +22,19 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
             return formatertFraDato;
         }
 
-        if (
-            type === GRUPPE_AKTIVITET_TYPE &&
-            formatertTilDato &&
-            formatertFraDato === formatertTilDato
-        ) {
+        if (type === GRUPPE_AKTIVITET_TYPE && formatertTilDato && formatertFraDato === formatertTilDato) {
             return formatertFraDato;
         }
 
         if (!fraDato && tilDato) {
             const tilDatoValues = {
                 label: 'TIL',
-                DATO: formatertTilDato,
+                DATO: formatertTilDato
             };
 
             return intl.formatMessage(
                 {
-                    id: 'aktivitetkort.dato_label',
+                    id: 'aktivitetkort.dato_label'
                 },
                 tilDatoValues
             );
@@ -52,29 +43,20 @@ function AktiviteskortPeriodeVisning({ aktivitet, intl }) {
         if (!tilDato && fraDato) {
             const fraDatoValues = {
                 label: 'FRA',
-                DATO: formatertFraDato,
+                DATO: formatertFraDato
             };
 
-            return intl.formatMessage(
-                { id: 'aktivitetkort.dato_label' },
-                fraDatoValues
-            );
+            return intl.formatMessage({ id: 'aktivitetkort.dato_label' }, fraDatoValues);
         }
 
-        return [formatertFraDato, formatertTilDato]
-            .filter(dato => dato)
-            .join(' - ');
+        return [formatertFraDato, formatertTilDato].filter(dato => dato).join(' - ');
     }
-    return (
-        <Normaltekst id={`aktivitetskort__dato__${id}`}>
-            {periodeVisning()}
-        </Normaltekst>
-    );
+    return <Normaltekst id={`aktivitetskort__dato__${id}`}>{periodeVisning()}</Normaltekst>;
 }
 
 AktiviteskortPeriodeVisning.propTypes = {
     aktivitet: PT.aktivitet.isRequired,
-    intl: intlShape.isRequired,
+    intl: intlShape.isRequired
 };
 
 export default injectIntl(AktiviteskortPeriodeVisning);

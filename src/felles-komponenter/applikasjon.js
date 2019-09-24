@@ -2,19 +2,15 @@ import React from 'react';
 import PT from 'prop-types';
 
 function Applikasjon({ children }) {
-    return (
-        <div className="aktivitetsplan">
-            {children}
-        </div>
-    );
+    return <div className="aktivitetsplan">{children}</div>;
 }
 
 Applikasjon.propTypes = {
-    children: PT.node,
+    children: PT.node
 };
 
 Applikasjon.defaultProps = {
-    children: undefined,
+    children: undefined
 };
 
 export default Applikasjon;

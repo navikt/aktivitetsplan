@@ -5,49 +5,29 @@ import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import * as AppPT from '../../../../proptypes';
-import {
-    EGEN_AKTIVITET_TYPE,
-    IJOBB_AKTIVITET_TYPE,
-    STILLING_AKTIVITET_TYPE,
-} from '../../../../constant';
+import { EGEN_AKTIVITET_TYPE, IJOBB_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import Lenke from '../../../../felles-komponenter/utils/lenke';
-import loggEvent, {
-    APNE_ENDRE_AKTIVITET,
-} from '../../../../felles-komponenter/utils/logging';
+import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import DeleLinje from '../delelinje/delelinje';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 
 function visningsIngress(type) {
-    if (
-        [
-            EGEN_AKTIVITET_TYPE,
-            IJOBB_AKTIVITET_TYPE,
-            STILLING_AKTIVITET_TYPE,
-        ].includes(type)
-    ) {
+    if ([EGEN_AKTIVITET_TYPE, IJOBB_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE].includes(type)) {
         return null;
     }
 
     return <AktivitetIngress aktivitetsType={type} />;
 }
 
-function AktivitetinformasjonVisning({
-    valgtAktivitet,
-    tillatEndring,
-    laster,
-    underOppfolging,
-}) {
+function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
     const { tittel, type, arenaAktivitet } = valgtAktivitet;
 
     return (
         <div>
             <div className="aktivitetvisning__underseksjon">
                 <div className="aktivitetvisning__header">
-                    <Sidetittel
-                        id="modal-aktivitetsvisning-header"
-                        className="softbreak"
-                    >
+                    <Sidetittel id="modal-aktivitetsvisning-header" className="softbreak">
                         {tittel}
                     </Sidetittel>
                     <Lenke
@@ -62,10 +42,7 @@ function AktivitetinformasjonVisning({
                     </Lenke>
                 </div>
                 {visningsIngress(type)}
-                <AvtaltMarkering
-                    visible={valgtAktivitet.avtalt}
-                    className="aktivitetvisning__etikett"
-                />
+                <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
             <DeleLinje />
@@ -77,7 +54,7 @@ AktivitetinformasjonVisning.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     tillatEndring: PT.bool.isRequired,
     laster: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired
 };
 
 export default AktivitetinformasjonVisning;

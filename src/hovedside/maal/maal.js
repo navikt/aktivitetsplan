@@ -4,15 +4,11 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import {
-    hentMal,
-    selectGjeldendeMal,
-    selectMalStatus,
-} from '../../moduler/mal/aktivitetsmal-reducer';
+import { hentMal, selectGjeldendeMal, selectMalStatus } from '../../moduler/mal/aktivitetsmal-reducer';
 import {
     hentFremtidigSituasjon,
     selectFremtidigSituasjonData,
-    selectFremtidigSituasjonStatus,
+    selectFremtidigSituasjonStatus
 } from './fremtidigSituasjon-reducer';
 import * as AppPT from '../../proptypes';
 import './maal.less';
@@ -22,22 +18,13 @@ const REGISTRERINGSINFO_URL = '/registreringsinformasjon?modus=rediger';
 
 function InnerMaalInfo({ fremtidigSituasjonTekst, mal, arkivert }) {
     if (arkivert) {
-        return (
-            <EtikettLiten className="hovedmaal">Målet er arkivert</EtikettLiten>
-        );
+        return <EtikettLiten className="hovedmaal">Målet er arkivert</EtikettLiten>;
     }
     return (
         <div className="maal__inner">
-            <EtikettLiten className="hovedmaal">
-                {fremtidigSituasjonTekst || ''}
-            </EtikettLiten>
-            <Normaltekst>
-                {mal || ''}
-            </Normaltekst>
-            <a
-                href={REGISTRERINGSINFO_URL}
-                className="typo-element lenke mal-endre-knapp"
-            >
+            <EtikettLiten className="hovedmaal">{fremtidigSituasjonTekst || ''}</EtikettLiten>
+            <Normaltekst>{mal || ''}</Normaltekst>
+            <a href={REGISTRERINGSINFO_URL} className="typo-element lenke mal-endre-knapp">
                 {fremtidigSituasjonTekst && mal ? 'Endre' : 'Legg til'}
             </a>
         </div>
@@ -47,13 +34,13 @@ function InnerMaalInfo({ fremtidigSituasjonTekst, mal, arkivert }) {
 InnerMaalInfo.propTypes = {
     fremtidigSituasjonTekst: PT.string,
     mal: PT.string,
-    arkivert: PT.bool,
+    arkivert: PT.bool
 };
 
 InnerMaalInfo.defaultProps = {
     mal: undefined,
     fremtidigSituasjonTekst: undefined,
-    arkivert: false,
+    arkivert: false
 };
 
 class Maal extends Component {
@@ -64,13 +51,7 @@ class Maal extends Component {
     }
 
     render() {
-        const {
-            avhengigheter,
-            underOppfolging,
-            mal,
-            fremtidigSituasjonTekst,
-            viserHistoriskPeriode,
-        } = this.props;
+        const { avhengigheter, underOppfolging, mal, fremtidigSituasjonTekst, viserHistoriskPeriode } = this.props;
         if (!underOppfolging) {
             return null;
         }
@@ -96,29 +77,29 @@ Maal.propTypes = {
     underOppfolging: PT.bool.isRequired,
     fremtidigSituasjonTekst: PT.string,
     mal: PT.string,
-    viserHistoriskPeriode: PT.bool,
+    viserHistoriskPeriode: PT.bool
 };
 
 Maal.defaultProps = {
     mal: undefined,
     fremtidigSituasjonTekst: undefined,
-    viserHistoriskPeriode: false,
+    viserHistoriskPeriode: false
 };
 
 const mapStateToProps = state => ({
-    avhengigheter: [
-        selectMalStatus(state),
-        selectFremtidigSituasjonStatus(state),
-    ],
+    avhengigheter: [selectMalStatus(state), selectFremtidigSituasjonStatus(state)],
     mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
     fremtidigSituasjonTekst: selectFremtidigSituasjonData(state).tekst,
     underOppfolging: selectErUnderOppfolging(state),
-    viserHistoriskPeriode: selectViserHistoriskPeriode(state),
+    viserHistoriskPeriode: selectViserHistoriskPeriode(state)
 });
 
 const mapDispatchToProps = dispatch => ({
     doHentMal: () => dispatch(hentMal()),
-    doHentFremtidigSituasjon: () => dispatch(hentFremtidigSituasjon()),
+    doHentFremtidigSituasjon: () => dispatch(hentFremtidigSituasjon())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Maal);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Maal);

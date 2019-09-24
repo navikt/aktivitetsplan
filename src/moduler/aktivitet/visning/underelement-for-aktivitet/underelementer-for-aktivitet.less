@@ -1,10 +1,7 @@
 @import '../../../../variables';
 
 .underelement-knapp(@image) {
-    background: data-uri(
-            './@{image}'
-        )
-        no-repeat left;
+    background: data-uri('./@{image}') no-repeat left;
     background-size: 1rem;
     background-position-x: 1rem;
 }
@@ -105,8 +102,7 @@
     }
 }
 
-.underelementer-aktivitet__dialog-knapp:focus
-    + .underelementer-aktivitet__historikk-knapp {
+.underelementer-aktivitet__dialog-knapp:focus + .underelementer-aktivitet__historikk-knapp {
     border-left: 0;
     padding-left: ~'calc(2.5rem - 6px)';
     margin-left: 3px;

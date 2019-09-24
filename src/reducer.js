@@ -36,15 +36,15 @@ const combinedReducers = combineReducers({
         feature: featureReducer,
         malverk: malverkReducer,
         lest: lestReducer,
-        auth: authReducer,
+        auth: authReducer
     }),
     view: combineReducers({
         dialog: dialogViewReducer,
         utskrift: utskriftReducer,
         underelementer: underelmenterReducer,
         visteAktiviteterMedEndringer: aktivitetViewReducer,
-        informasjon: informasjonReducer,
-    }),
+        informasjon: informasjonReducer
+    })
 });
 
 export default function(state, action) {

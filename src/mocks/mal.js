@@ -4,8 +4,8 @@ export const maler = [
     {
         mal: 'Jeg vil bli sjørøver',
         endretAv: 'BRUKER',
-        dato: new Date(),
-    },
+        dato: new Date()
+    }
 ];
 
 export function malListe() {
@@ -21,7 +21,7 @@ export function opprettMal(update) {
     let nyMal = {
         mal: update.mal,
         endretAv: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
-        dato: new Date(),
+        dato: new Date()
     };
     maler.push(nyMal);
     return nyMal;

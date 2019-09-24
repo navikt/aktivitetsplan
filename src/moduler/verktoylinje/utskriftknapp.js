@@ -7,26 +7,22 @@ import * as AppPT from '../../proptypes';
 function Utskriftknapp({ ariaLabel, lenke, className, history }) {
     return (
         <FormattedMessage id={ariaLabel}>
-            {label =>
-                <button
-                    type="button"
-                    className={className}
-                    aria-label={label}
-                    onClick={() => history.push(lenke)}
-                />}
+            {label => (
+                <button type="button" className={className} aria-label={label} onClick={() => history.push(lenke)} />
+            )}
         </FormattedMessage>
     );
 }
 
 Utskriftknapp.defaultProps = {
-    className: '',
+    className: ''
 };
 
 Utskriftknapp.propTypes = {
     ariaLabel: PT.string.isRequired,
     lenke: PT.string.isRequired,
     history: AppPT.history.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
 export default withRouter(Utskriftknapp);

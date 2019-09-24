@@ -7,11 +7,7 @@ import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlis
 import FilterVisningsKomponent from './filter-visnings-komponent';
 import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
-function EtikettFilter({
-    harAktivitetEtiketter,
-    aktivitetEtiketter,
-    doToggleAktivitetsEtikett,
-}) {
+function EtikettFilter({ harAktivitetEtiketter, aktivitetEtiketter, doToggleAktivitetsEtikett }) {
     return (
         <FilterVisningsKomponent
             harAktiviteter={harAktivitetEtiketter}
@@ -27,7 +23,7 @@ function EtikettFilter({
 EtikettFilter.propTypes = {
     harAktivitetEtiketter: PT.bool.isRequired,
     aktivitetEtiketter: PT.object.isRequired,
-    doToggleAktivitetsEtikett: PT.func.isRequired,
+    doToggleAktivitetsEtikett: PT.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -43,13 +39,15 @@ const mapStateToProps = state => {
 
     return {
         aktivitetEtiketter,
-        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length >= 1,
+        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length >= 1
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    doToggleAktivitetsEtikett: aktivitetsType =>
-        dispatch(toggleAktivitetsEtikett(aktivitetsType)),
+    doToggleAktivitetsEtikett: aktivitetsType => dispatch(toggleAktivitetsEtikett(aktivitetsType))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EtikettFilter);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(EtikettFilter);

@@ -15,7 +15,7 @@ import {
     SAMTALEREFERAT_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_PLANLAGT,
-    STILLING_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE
 } from '../../../constant';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
@@ -27,8 +27,7 @@ import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sok
 import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
 import { aktivitetRoute } from '../../../routes';
 
-const CONFIRM =
-    'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
+const CONFIRM = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
 function onBeforeLoadEffect(isDirty) {
     return () => {
@@ -47,12 +46,7 @@ function onBeforeLoadEffect(isDirty) {
 }
 
 function NyAktivitetForm(props) {
-    const {
-        onLagreNyAktivitet,
-        history,
-        match,
-        aktivitetFeilmeldinger,
-    } = props;
+    const { onLagreNyAktivitet, history, match, aktivitetFeilmeldinger } = props;
 
     const isDirty = useRef(false);
     useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
@@ -63,11 +57,9 @@ function NyAktivitetForm(props) {
             const nyAktivitet = {
                 status: STATUS_PLANLAGT,
                 type: aktivitetsType,
-                ...filteredAktivitet,
+                ...filteredAktivitet
             };
-            return onLagreNyAktivitet(nyAktivitet).then(action =>
-                history.push(aktivitetRoute(action.data.id))
-            );
+            return onLagreNyAktivitet(nyAktivitet).then(action => history.push(aktivitetRoute(action.data.id)));
         };
     };
 
@@ -86,12 +78,7 @@ function NyAktivitetForm(props) {
         }
     };
 
-    const header = (
-        <ModalHeader
-            tilbakeTekst="Tilbake til kategorier"
-            onTilbakeClick={onReqBack}
-        />
-    );
+    const header = <ModalHeader tilbakeTekst="Tilbake til kategorier" onTilbakeClick={onReqBack} />;
 
     return (
         <Modal
@@ -104,52 +91,34 @@ function NyAktivitetForm(props) {
                 <ModalContainer>
                     <Switch>
                         <Route path={`${match.path}/mote`}>
-                            <MoteAktivitetForm
-                                onSubmit={onSubmitFactory(MOTE_TYPE)}
-                                isDirtyRef={isDirty}
-                            />
+                            <MoteAktivitetForm onSubmit={onSubmitFactory(MOTE_TYPE)} isDirtyRef={isDirty} />
                         </Route>
                         <Route path={`${match.path}/samtalereferat`}>
-                            <SamtalereferatForm
-                                onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)}
-                                isDirtyRef={isDirty}
-                            />
+                            <SamtalereferatForm onSubmit={onSubmitFactory(SAMTALEREFERAT_TYPE)} isDirtyRef={isDirty} />
                         </Route>
                         <Route path={`${match.path}/stilling`}>
                             <StillingAktivitetForm
-                                onSubmit={onSubmitFactory(
-                                    STILLING_AKTIVITET_TYPE
-                                )}
+                                onSubmit={onSubmitFactory(STILLING_AKTIVITET_TYPE)}
                                 isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/sokeavtale`}>
                             <SokeAvtaleAktivitetForm
-                                onSubmit={onSubmitFactory(
-                                    SOKEAVTALE_AKTIVITET_TYPE
-                                )}
+                                onSubmit={onSubmitFactory(SOKEAVTALE_AKTIVITET_TYPE)}
                                 isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/behandling`}>
                             <BehandlingAktivitetForm
-                                onSubmit={onSubmitFactory(
-                                    BEHANDLING_AKTIVITET_TYPE
-                                )}
+                                onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
                                 isDirtyRef={isDirty}
                             />
                         </Route>
                         <Route path={`${match.path}/egen`}>
-                            <EgenAktivitetForm
-                                onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)}
-                                isDirtyRef={isDirty}
-                            />
+                            <EgenAktivitetForm onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
                         </Route>
                         <Route path={`${match.path}/ijobb`}>
-                            <IJobbAktivitetForm
-                                onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)}
-                                isDirtyRef={isDirty}
-                            />
+                            <IJobbAktivitetForm onSubmit={onSubmitFactory(IJOBB_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
                         </Route>
                     </Switch>
                 </ModalContainer>
@@ -162,15 +131,18 @@ NyAktivitetForm.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
     history: PT.object.isRequired,
     match: PT.object.isRequired,
-    aktivitetFeilmeldinger: PT.array.isRequired,
+    aktivitetFeilmeldinger: PT.array.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-    onLagreNyAktivitet: aktivitet => dispatch(lagNyAktivitet(aktivitet)),
+    onLagreNyAktivitet: aktivitet => dispatch(lagNyAktivitet(aktivitet))
 });
 
 const mapStateToProps = state => ({
-    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
+    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitetForm);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NyAktivitetForm);

@@ -3,19 +3,15 @@ import PT from 'prop-types';
 import visibleIfHOC from '../../hocs/visible-if';
 
 function ModalFooter({ children }) {
-    return (
-        <div className="modal-footer">
-            {children}
-        </div>
-    );
+    return <div className="modal-footer">{children}</div>;
 }
 
 ModalFooter.propTypes = {
-    children: PT.node,
+    children: PT.node
 };
 
 ModalFooter.defaultProps = {
-    children: undefined,
+    children: undefined
 };
 
 export default visibleIfHOC(ModalFooter);

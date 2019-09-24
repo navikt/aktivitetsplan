@@ -6,11 +6,11 @@ export const STATUS = {
     PENDING: 'PENDING',
     OK: 'OK',
     RELOADING: 'RELOADING',
-    ERROR: 'ERROR',
+    ERROR: 'ERROR'
 };
 
 const DEFAULT_CONFIG = {
-    credentials: 'same-origin',
+    credentials: 'same-origin'
 };
 
 const statusPrioritet = {
@@ -18,7 +18,7 @@ const statusPrioritet = {
     NOT_STARTED: 4,
     PENDING: 3,
     RELOADING: 2,
-    OK: 1,
+    OK: 1
 };
 
 export const hoyreKolonneSectionId = 'dialog-modal__hoyre-kolonne';
@@ -27,19 +27,12 @@ export function aggregerStatus(...reducereEllerStatuser) {
     return reducereEllerStatuser.reduce((a, b) => {
         const aStatus = a && (a.status || a);
         const bStatus = b && (b.status || b);
-        return (statusPrioritet[aStatus] || 0) > (statusPrioritet[bStatus] || 0)
-            ? aStatus
-            : bStatus;
+        return (statusPrioritet[aStatus] || 0) > (statusPrioritet[bStatus] || 0) ? aStatus : bStatus;
     });
 }
 
 export function sjekkStatuskode(response) {
-    if (
-        response.status >= 200 &&
-        response.status < 300 &&
-        response.ok &&
-        !response.redirected
-    ) {
+    if (response.status >= 200 && response.status < 300 && response.ok && !response.redirected) {
         return response;
     }
     const error = new Error(response.statusText || response.type);
@@ -84,8 +77,8 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                     data: {
                         type: FEILET_TYPE,
                         httpStatus: response.status,
-                        melding: parseError(data),
-                    },
+                        melding: parseError(data)
+                    }
                 });
                 const errorData = JSON.parse(data);
 
@@ -94,13 +87,9 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                         message: [
                             error.stack,
                             `Id: ${errorData.id}`,
-                            `Type: ${errorData.type} ${errorData.detaljer
-                                ? errorData.detaljer.detaljertType
-                                : ''}`,
-                            errorData.detaljer
-                                ? errorData.detaljer.stackTrace
-                                : '',
-                        ].join('\n'),
+                            `Type: ${errorData.type} ${errorData.detaljer ? errorData.detaljer.detaljertType : ''}`,
+                            errorData.detaljer ? errorData.detaljer.stackTrace : ''
+                        ].join('\n')
                     });
                 }
             });
@@ -110,8 +99,8 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                 type: FEILET_TYPE,
                 data: {
                     type: FEILET_TYPE,
-                    melding: error.toString(),
-                },
+                    melding: error.toString()
+                }
             });
         }
         return Promise.reject(error);
@@ -127,7 +116,7 @@ export const getCookie = name => {
 const defaultHeaders = {
     'Content-Type': 'application/json',
     NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
-    'Nav-Consumer-Id': 'aktivitetsplan',
+    'Nav-Consumer-Id': 'aktivitetsplan'
 };
 
 export function fetchToJson(url, config = { headers: defaultHeaders }) {
@@ -136,9 +125,7 @@ export function fetchToJson(url, config = { headers: defaultHeaders }) {
     const fodselsnummer = getFodselsnummer();
     let fetchUrl = url;
     if (fodselsnummer) {
-        fetchUrl = `${url}${url.indexOf('?') >= 0
-            ? '&'
-            : '?'}fnr=${fodselsnummer}`;
+        fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fodselsnummer}`;
     }
 
     return fetch(fetchUrl, configMedCredentials)

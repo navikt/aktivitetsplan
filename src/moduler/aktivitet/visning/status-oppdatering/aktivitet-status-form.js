@@ -6,16 +6,13 @@ import useFormstate from '@nutgaard/use-formstate';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import visibleIf from '../../../../hocs/visible-if';
-import {
-    manglerPubliseringAvSamtaleReferat,
-    trengerBegrunnelse,
-} from '../../aktivitet-util';
+import { manglerPubliseringAvSamtaleReferat, trengerBegrunnelse } from '../../aktivitet-util';
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
+    STATUS_PLANLAGT
 } from '../../../../constant';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-validering';
@@ -40,8 +37,7 @@ function kanOppdatereStatus(aktivitet, values) {
     const status = values.aktivitetstatus;
     const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
     const ferdigOgManglerPubliseringAvSamtaleReferat =
-        ferdigStatus &&
-        manglerPubliseringAvSamtaleReferat(aktivitet || {}, status);
+        ferdigStatus && manglerPubliseringAvSamtaleReferat(aktivitet || {}, status);
 
     if (ferdigOgManglerPubliseringAvSamtaleReferat) {
         return 'Samtalereferatet må deles før du kan sette aktiviteten til denne statusen';
@@ -52,10 +48,7 @@ function kanOppdatereStatus(aktivitet, values) {
 
 function validateBegrunnelse(value, values, aktivitet) {
     const status = values.aktivitetstatus;
-    if (
-        trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type) &&
-        value.trim().length === 0
-    ) {
+    if (trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type) && value.trim().length === 0) {
         return 'Du må fylle ut en begrunnelse';
     }
     if (value.length > 255) {
@@ -66,10 +59,8 @@ function validateBegrunnelse(value, values, aktivitet) {
 
 const validator = useFormstate({
     aktivitetstatus: () => {},
-    begrunnelse: (val, values, aktivitet) =>
-        validateBegrunnelse(val, values, aktivitet),
-    statusValidering: (val, values, aktivitet) =>
-        kanOppdatereStatus(aktivitet, values),
+    begrunnelse: (val, values, aktivitet) => validateBegrunnelse(val, values, aktivitet),
+    statusValidering: (val, values, aktivitet) => kanOppdatereStatus(aktivitet, values)
 });
 
 function AktivitetStatusForm(props) {
@@ -78,41 +69,27 @@ function AktivitetStatusForm(props) {
     const initalValue = {
         aktivitetstatus: aktivitet.status || '',
         begrunnelse: aktivitet.avsluttetBegrunnelse || '',
-        statusValidering: '',
+        statusValidering: ''
     };
 
     const state = validator(initalValue, aktivitet);
 
     const { setFormIsDirty } = useContext(DirtyContext);
-    useEffect(
-        () => {
-            setFormIsDirty('status', !state.pristine);
-            return () => {
-                setFormIsDirty('status', false);
-            };
-        },
-        [setFormIsDirty, state.pristine]
-    );
+    useEffect(() => {
+        setFormIsDirty('status', !state.pristine);
+        return () => {
+            setFormIsDirty('status', false);
+        };
+    }, [setFormIsDirty, state.pristine]);
 
     const status = state.fields.aktivitetstatus.input.value;
     const visAdvarsel = statusKreverInformasjonMelding(status);
-    const visBegrunnelseFelt = trengerBegrunnelse(
-        aktivitet.avtalt,
-        status,
-        aktivitet.type
-    );
+    const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <FormErrorSummary
-                errors={state.errors}
-                submittoken={state.submittoken}
-            />
-            <FieldGroup
-                name="statusValidering"
-                alwaysValidate
-                field={state.fields.statusValidering}
-            >
+            <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
+            <FieldGroup name="statusValidering" alwaysValidate field={state.fields.statusValidering}>
                 <Radio
                     label="Forslag"
                     value={STATUS_BRUKER_ER_INTRESSERT}
@@ -137,31 +114,18 @@ function AktivitetStatusForm(props) {
                     disabled={disabled}
                     {...state.fields.aktivitetstatus}
                 />
-                <Radio
-                    label="Avbrutt"
-                    value={STATUS_AVBRUTT}
-                    disabled={disabled}
-                    {...state.fields.aktivitetstatus}
-                />
+                <Radio label="Avbrutt" value={STATUS_AVBRUTT} disabled={disabled} {...state.fields.aktivitetstatus} />
             </FieldGroup>
 
             <VisibleIfDiv className="status-alert" visible={!state.pristine}>
-                <VisibleAlertStripeSuksessSolid
-                    visible={visAdvarsel}
-                    role="alert"
-                >
+                <VisibleAlertStripeSuksessSolid visible={visAdvarsel} role="alert">
                     {
                         'Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre innholdet.'
                     }
                 </VisibleAlertStripeSuksessSolid>
 
                 <VisibleIfDiv visible={visBegrunnelseFelt}>
-                    <Textarea
-                        label={label(status)}
-                        maxLength={255}
-                        disabled={disabled}
-                        {...state.fields.begrunnelse}
-                    />
+                    <Textarea label={label(status)} maxLength={255} disabled={disabled} {...state.fields.begrunnelse} />
                 </VisibleIfDiv>
             </VisibleIfDiv>
 
@@ -180,7 +144,7 @@ function AktivitetStatusForm(props) {
 AktivitetStatusForm.propTypes = {
     disabled: PT.bool.isRequired,
     onSubmit: PT.func.isRequired,
-    aktivitet: aktivitetPT.isRequired,
+    aktivitet: aktivitetPT.isRequired
 };
 
 export default AktivitetStatusForm;

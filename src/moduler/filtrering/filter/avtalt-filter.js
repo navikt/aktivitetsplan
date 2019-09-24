@@ -7,11 +7,7 @@ import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlis
 import { toggleAktivitetAvtaltMedNav } from './filter-reducer';
 import { AVTALT_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
-function AvtaltmedNavFilter({
-    harAvtaltAktivitet,
-    avtaltAktivitet,
-    doToggleAktivitetAvtaltMedNav,
-}) {
+function AvtaltmedNavFilter({ harAvtaltAktivitet, avtaltAktivitet, doToggleAktivitetAvtaltMedNav }) {
     return (
         <FilterVisningsKomponent
             harAktiviteter={harAvtaltAktivitet}
@@ -27,7 +23,7 @@ function AvtaltmedNavFilter({
 AvtaltmedNavFilter.propTypes = {
     harAvtaltAktivitet: PT.bool.isRequired,
     avtaltAktivitet: PT.object.isRequired,
-    doToggleAktivitetAvtaltMedNav: PT.func.isRequired,
+    doToggleAktivitetAvtaltMedNav: PT.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -38,18 +34,20 @@ const mapStateToProps = state => {
     const avtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
     const avtaltAktivitet = {
         avtaltMedNav: avtaltMedNavFilter.avtaltMedNav,
-        ikkeAvtaltMedNav: avtaltMedNavFilter.ikkeAvtaltMedNav,
+        ikkeAvtaltMedNav: avtaltMedNavFilter.ikkeAvtaltMedNav
     };
 
     return {
         avtaltAktivitet,
-        harAvtaltAktivitet,
+        harAvtaltAktivitet
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    doToggleAktivitetAvtaltMedNav: aktivitetsStatus =>
-        dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus)),
+    doToggleAktivitetAvtaltMedNav: aktivitetsStatus => dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AvtaltmedNavFilter);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AvtaltmedNavFilter);

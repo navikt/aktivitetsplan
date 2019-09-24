@@ -16,32 +16,23 @@ const defaultBeskrivelse =
     'Gi beskjed til NAV hvis det skjer endringer i situasjonen din eller hvis du ikke kan gjennomføre en aktivitet.';
 
 const validator = useFormstate({
-    beskrivelse: val =>
-        val.length > 2000 ? 'Du må korte ned teksten til 2000 tegn' : null,
+    beskrivelse: val => (val.length > 2000 ? 'Du må korte ned teksten til 2000 tegn' : null)
 });
 
 function PrintMeldingForm(props) {
     const { beskrivelse, lagrer, bruker, onSubmit } = props;
 
     const state = validator({
-        beskrivelse: beskrivelse || defaultBeskrivelse,
+        beskrivelse: beskrivelse || defaultBeskrivelse
     });
 
     return (
-        <form
-            onSubmit={state.onSubmit(onSubmit)}
-            className="printmelding__form"
-        >
+        <form onSubmit={state.onSubmit(onSubmit)} className="printmelding__form">
             <div className="printmelding__skjema">
-                <FormErrorSummary
-                    submittoken={state.submittoken}
-                    errors={state.errors}
-                />
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
                 <div className="printmelding__tittel">
-                    <Innholdstittel>
-                        {`Aktivitetsplan for ${bruker.fornavn}`}
-                    </Innholdstittel>
+                    <Innholdstittel>{`Aktivitetsplan for ${bruker.fornavn}`}</Innholdstittel>
                 </div>
 
                 <Textarea
@@ -64,12 +55,12 @@ PrintMeldingForm.propTypes = {
     onSubmit: PT.func.isRequired,
     lagrer: PT.bool,
     bruker: AppPT.motpart.isRequired,
-    beskrivelse: PT.string,
+    beskrivelse: PT.string
 };
 
 PrintMeldingForm.defaultProps = {
     lagrer: false,
-    beskrivelse: undefined,
+    beskrivelse: undefined
 };
 
 const mapStateToProps = state => {
@@ -77,7 +68,7 @@ const mapStateToProps = state => {
     const bruker = selectBruker(state);
     return {
         beskrivelse: printMelding.beskrivelse,
-        bruker,
+        bruker
     };
 };
 
@@ -85,7 +76,10 @@ const mapDispatchToProps = dispatch => ({
     onSubmit: data => {
         dispatch(lagrePrintMelding(data));
         return Promise.resolve();
-    },
+    }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrintMeldingForm);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PrintMeldingForm);

@@ -16,10 +16,7 @@ function keys(local) {
 }
 
 function IntlProvider({ children, locale, ...props }) {
-    const tekst =
-        window.location.href.indexOf('vistekster=true') >= 0
-            ? keys(locale)
-            : tekster[locale];
+    const tekst = window.location.href.indexOf('vistekster=true') >= 0 ? keys(locale) : tekster[locale];
     return (
         <Provider {...props} locale={locale} messages={tekst || {}}>
             {children}
@@ -29,7 +26,7 @@ function IntlProvider({ children, locale, ...props }) {
 
 IntlProvider.propTypes = {
     children: PT.node.isRequired,
-    locale: PT.string.isRequired,
+    locale: PT.string.isRequired
 };
 
 export default IntlProvider;

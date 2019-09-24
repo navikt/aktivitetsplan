@@ -16,7 +16,7 @@ class Tavle extends Component {
             currentIndex: 0,
             clickIndex: 0,
             venstreKnappDisabled: true,
-            hoyreKnappDisabled: false,
+            hoyreKnappDisabled: false
         };
         autobind(this);
     }
@@ -34,9 +34,7 @@ class Tavle extends Component {
         const clientWidth = this.scrollbars.getClientWidth();
         const scrollLeft = this.scrollbars.getScrollLeft();
         const clientWidthWithOffset = clientWidth + KOLONNEMARGIN;
-        const nesteIndex = Math.floor(
-            (clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE
-        );
+        const nesteIndex = Math.floor((clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE);
         const newClickIndex = Math.max(nesteIndex, clickIndex) + 1;
         const scrollTo = newClickIndex * KOLONNEBREDDE - clientWidthWithOffset;
         this.scrollbars.scrollLeft(scrollTo);
@@ -47,7 +45,7 @@ class Tavle extends Component {
         this.setState({
             currentIndex: Math.ceil(values.scrollLeft / KOLONNEBREDDE),
             venstreKnappDisabled: values.left === 0,
-            hoyreKnappDisabled: values.left >= 0.99,
+            hoyreKnappDisabled: values.left >= 0.99
         });
     }
 
@@ -55,7 +53,7 @@ class Tavle extends Component {
         const { children, className, intl } = this.props;
         const { venstreKnappDisabled, hoyreKnappDisabled } = this.state;
 
-        const kolonner = children.map((child, index) =>
+        const kolonner = children.map((child, index) => (
             <section
                 key={child.key || index}
                 className="tavle-kolonne"
@@ -63,18 +61,18 @@ class Tavle extends Component {
             >
                 {child}
             </section>
-        );
+        ));
 
         const venstreKnapp = (
             <button
                 type="button"
                 className={classNames('tavle__scrollknapp knapp-forrige', {
-                    invisible: venstreKnappDisabled,
+                    invisible: venstreKnappDisabled
                 })}
                 onClick={this.visForrige}
                 disabled={venstreKnappDisabled}
                 aria-label={intl.formatMessage({
-                    id: 'aktivitetstavle.scrollknapp.forrige.label',
+                    id: 'aktivitetstavle.scrollknapp.forrige.label'
                 })}
             />
         );
@@ -83,12 +81,12 @@ class Tavle extends Component {
             <button
                 type="button"
                 className={classNames('tavle__scrollknapp knapp-neste', {
-                    invisible: hoyreKnappDisabled,
+                    invisible: hoyreKnappDisabled
                 })}
                 onClick={this.visNeste}
                 hidden={hoyreKnappDisabled}
                 aria-label={intl.formatMessage({
-                    id: 'aktivitetstavle.scrollknapp.neste.label',
+                    id: 'aktivitetstavle.scrollknapp.neste.label'
                 })}
             />
         );
@@ -106,9 +104,7 @@ class Tavle extends Component {
                         this.scrollbars = scrollbars;
                     }}
                 >
-                    <div className="kolonner">
-                        {kolonner}
-                    </div>
+                    <div className="kolonner">{kolonner}</div>
                 </SprettendeScrollbars>
                 {hoyreKnapp}
             </section>
@@ -119,11 +115,11 @@ class Tavle extends Component {
 Tavle.propTypes = {
     className: PT.string,
     children: PT.arrayOf(PT.element).isRequired,
-    intl: intlShape.isRequired,
+    intl: intlShape.isRequired
 };
 
 Tavle.defaultProps = {
-    className: '',
+    className: ''
 };
 
 export default injectIntl(Tavle);

@@ -6,10 +6,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { hentIdentitet } from '../../identitet/identitet-reducer';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectErVeileder } from '../../identitet/identitet-selector';
-import {
-    oppdaterFerdigbehandlet,
-    oppdaterVenterPaSvar,
-} from '../dialog-reducer';
+import { oppdaterFerdigbehandlet, oppdaterVenterPaSvar } from '../dialog-reducer';
 import { selectHarSkriveTilgang } from '../../oppfolging-status/oppfolging-selector';
 import { selectDialogStatus } from '../dialog-selector';
 import { STATUS } from '../../../ducks/utils';
@@ -28,7 +25,7 @@ class EndreDialogStatus extends Component {
             toggleFerdigbehandlet,
             toggleVentePaSvar,
             harSkriveTilgang,
-            oppdatererDialog,
+            oppdatererDialog
         } = this.props;
         if (!kanEndreDialog) {
             return <div />;
@@ -37,9 +34,7 @@ class EndreDialogStatus extends Component {
             <div className="endre-dialog__sjekkbokser">
                 <Checkbox
                     className="endre-dialog__sjekkboks"
-                    label={
-                        <FormattedMessage id="dialog.ikke-ferdigbehandlet" />
-                    }
+                    label={<FormattedMessage id="dialog.ikke-ferdigbehandlet" />}
                     onChange={toggleFerdigbehandlet}
                     checked={!ferdigBehandlet}
                     disabled={!harSkriveTilgang || oppdatererDialog}
@@ -64,15 +59,13 @@ EndreDialogStatus.propTypes = {
     venterPaSvar: PT.bool.isRequired,
     ferdigBehandlet: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
-    oppdatererDialog: PT.bool.isRequired,
+    oppdatererDialog: PT.bool.isRequired
 };
 
 const mapStateToProps = state => ({
     kanEndreDialog: selectErVeileder(state),
     harSkriveTilgang: selectHarSkriveTilgang(state),
-    oppdatererDialog:
-        selectDialogStatus(state) !== STATUS.OK &&
-        selectDialogStatus(state) !== STATUS.ERROR,
+    oppdatererDialog: selectDialogStatus(state) !== STATUS.OK && selectDialogStatus(state) !== STATUS.ERROR
 });
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -82,16 +75,17 @@ const mapDispatchToProps = (dispatch, props) => {
     const { venterPaSvar } = dialog;
     return {
         doHentIdentitet: () => dispatch(hentIdentitet()),
-        toggleFerdigbehandlet: () =>
-            dispatch(oppdaterFerdigbehandlet(dialogId, !ferdigBehandlet)),
-        toggleVentePaSvar: () =>
-            dispatch(oppdaterVenterPaSvar(dialogId, !venterPaSvar)),
+        toggleFerdigbehandlet: () => dispatch(oppdaterFerdigbehandlet(dialogId, !ferdigBehandlet)),
+        toggleVentePaSvar: () => dispatch(oppdaterVenterPaSvar(dialogId, !venterPaSvar)),
 
         venterPaSvar,
-        ferdigBehandlet,
+        ferdigBehandlet
     };
 };
 
 export default hiddenIf(
-    connect(mapStateToProps, mapDispatchToProps)(EndreDialogStatus)
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(EndreDialogStatus)
 );

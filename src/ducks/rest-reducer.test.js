@@ -1,19 +1,14 @@
 /* eslint-env mocha */
 import { createActionsAndReducer } from './rest-reducer';
 
-const {
-    reducer,
-    actionTypes,
-    selectData,
-    selectStatus,
-} = createActionsAndReducer('test');
+const { reducer, actionTypes, selectData, selectStatus } = createActionsAndReducer('test');
 
 describe('rest-reducer', () => {
     describe('reducer metode', () => {
         describe('med action type pending', () => {
             it('skal sette status til pending når type er pending', () => {
                 const result = reducer(undefined, {
-                    type: actionTypes.PENDING,
+                    type: actionTypes.PENDING
                 });
                 expect(result).toHaveProperty('status', 'PENDING');
             });
@@ -21,12 +16,12 @@ describe('rest-reducer', () => {
                 const result = reducer(
                     { data: { test: 'This is fine' }, status: 'OK' },
                     {
-                        type: actionTypes.PENDING,
+                        type: actionTypes.PENDING
                     }
                 );
                 expect(result).toEqual({
                     data: { test: 'This is fine' },
-                    status: 'RELOADING',
+                    status: 'RELOADING'
                 });
             });
         });
@@ -34,7 +29,7 @@ describe('rest-reducer', () => {
             it('skal sette status ok med tom store', () => {
                 const result = reducer(undefined, {
                     type: actionTypes.OK,
-                    data: { test: 'This is fine.' },
+                    data: { test: 'This is fine.' }
                 });
                 expect(result).toHaveProperty('status', 'OK');
             });
@@ -43,12 +38,12 @@ describe('rest-reducer', () => {
                     { data: { test: 'This is fine.' }, status: 'OK' },
                     {
                         type: actionTypes.OK,
-                        data: { test: 42 },
+                        data: { test: 42 }
                     }
                 );
                 expect(result).toEqual({
                     data: { test: 42 },
-                    status: 'OK',
+                    status: 'OK'
                 });
             });
         });
@@ -56,7 +51,7 @@ describe('rest-reducer', () => {
             it('skal sette status feilet', () => {
                 const result = reducer(undefined, {
                     type: actionTypes.FEILET,
-                    data: { test: 42 },
+                    data: { test: 42 }
                 });
                 expect(result).toHaveProperty('status', 'ERROR');
             });
@@ -65,13 +60,13 @@ describe('rest-reducer', () => {
                     { data: { test: 'This is fine.' }, status: 'OK' },
                     {
                         type: actionTypes.FEILET,
-                        data: { test: 42 },
+                        data: { test: 42 }
                     }
                 );
                 expect(result).toEqual({
                     data: { test: 'This is fine.' },
                     feil: { test: 42 },
-                    status: 'ERROR',
+                    status: 'ERROR'
                 });
             });
         });
@@ -82,9 +77,9 @@ describe('rest-reducer', () => {
                 data: {
                     test: {
                         data: 'This is fine.',
-                        status: 'OK',
-                    },
-                },
+                        status: 'OK'
+                    }
+                }
             };
 
             expect(selectData(state)).toEqual('This is fine.');

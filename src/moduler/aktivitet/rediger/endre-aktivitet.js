@@ -17,7 +17,7 @@ import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
-    STILLING_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE
 } from '../../../constant';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
@@ -53,8 +53,7 @@ function getAktivitetsFormComponent(aktivitet) {
     }
 }
 
-const CONFIRM =
-    'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
+const CONFIRM = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
 function onBeforeLoadEffect(isDirty) {
     return () => {
@@ -73,13 +72,7 @@ function onBeforeLoadEffect(isDirty) {
 }
 
 function EndreAktivitet(props) {
-    const {
-        valgtAktivitet,
-        avhengigheter,
-        history,
-        doOppdaterAktivitet,
-        lagrer,
-    } = props;
+    const { valgtAktivitet, avhengigheter, history, doOppdaterAktivitet, lagrer } = props;
 
     const isDirty = useRef(false);
     useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
@@ -87,9 +80,7 @@ function EndreAktivitet(props) {
     function oppdater(aktivitet) {
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
         const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet };
-        return doOppdaterAktivitet(oppdatertAktivitet).then(() =>
-            history.push(aktivitetRoute(valgtAktivitet.id))
-        );
+        return doOppdaterAktivitet(oppdatertAktivitet).then(() => history.push(aktivitetRoute(valgtAktivitet.id)));
     }
 
     const onReqClose = () => {
@@ -105,32 +96,24 @@ function EndreAktivitet(props) {
         }
     };
 
-    const header = (
-        <ModalHeader tilbakeTekst="Tilbake" onTilbakeClick={onReqBack} />
-    );
+    const header = <ModalHeader tilbakeTekst="Tilbake" onTilbakeClick={onReqBack} />;
 
     const formProps = {
         aktivitet: valgtAktivitet,
         onSubmit: oppdater,
         endre: true,
         isDirtyRef: isDirty,
-        lagrer,
+        lagrer
     };
 
     const Form = getAktivitetsFormComponent(valgtAktivitet);
     const AktivitetForm = Form ? <Form {...formProps} /> : null;
 
     return (
-        <Modal
-            header={header}
-            onRequestClose={onReqClose}
-            contentLabel="aktivitet-modal"
-        >
+        <Modal header={header} onRequestClose={onReqClose} contentLabel="aktivitet-modal">
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
-                    <ModalContainer>
-                        {AktivitetForm}
-                    </ModalContainer>
+                    <ModalContainer>{AktivitetForm}</ModalContainer>
                 </Innholdslaster>
             </article>
         </Modal>
@@ -138,7 +121,7 @@ function EndreAktivitet(props) {
 }
 
 EndreAktivitet.defaultProps = {
-    valgtAktivitet: undefined,
+    valgtAktivitet: undefined
 };
 
 EndreAktivitet.propTypes = {
@@ -147,7 +130,7 @@ EndreAktivitet.propTypes = {
     valgtAktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
     history: AppPT.history.isRequired,
-    match: PT.object.isRequired,
+    match: PT.object.isRequired
 };
 
 const mapStateToProps = (state, props) => {
@@ -156,12 +139,15 @@ const mapStateToProps = (state, props) => {
     return {
         valgtAktivitet,
         avhengigheter: [valgtAktivitet ? STATUS.OK : STATUS.PENDING],
-        lagrer: selectAktivitetStatus !== STATUS.OK,
+        lagrer: selectAktivitetStatus !== STATUS.OK
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    doOppdaterAktivitet: aktivitet => oppdaterAktivitet(aktivitet)(dispatch),
+    doOppdaterAktivitet: aktivitet => oppdaterAktivitet(aktivitet)(dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EndreAktivitet);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(EndreAktivitet);

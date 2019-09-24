@@ -16,13 +16,13 @@ Input.propTypes = {
     pristine: PT.bool,
     touched: PT.bool.isRequired,
     error: PT.string,
-    input: PT.object.isRequired,
+    input: PT.object.isRequired
 };
 
 Input.defaultProps = {
     initialValue: undefined,
     pristine: undefined,
-    error: undefined,
+    error: undefined
 };
 
 export default Input;

@@ -1,10 +1,6 @@
 import React from 'react';
 import Select from '../../../felles-komponenter/skjema/input/select';
-import {
-    INTERNET_KANAL,
-    OPPMOTE_KANAL,
-    TELEFON_KANAL,
-} from '../../../constant';
+import { INTERNET_KANAL, OPPMOTE_KANAL, TELEFON_KANAL } from '../../../constant';
 
 function VelgKanal(props) {
     return (

@@ -21,13 +21,13 @@ class ReferatContainer extends Component {
 
     startOppdaterReferat() {
         this.setState({
-            oppdaterReferat: true,
+            oppdaterReferat: true
         });
     }
 
     stoppOppdaterReferat() {
         this.setState({
-            oppdaterReferat: false,
+            oppdaterReferat: false
         });
     }
 
@@ -35,8 +35,7 @@ class ReferatContainer extends Component {
         const { kanHaReferat, visReferat, harReferat, erVeileder } = this.props;
 
         const { oppdaterReferat } = this.state;
-        const visOppdaterReferatForm =
-            oppdaterReferat || (erVeileder && !harReferat);
+        const visOppdaterReferatForm = oppdaterReferat || (erVeileder && !harReferat);
 
         return (
             <HiddenIfSection hidden={!kanHaReferat || !visReferat}>
@@ -54,7 +53,7 @@ class ReferatContainer extends Component {
 
 ReferatContainer.defaultProps = {
     className: undefined,
-    erReferatPublisert: false,
+    erReferatPublisert: false
 };
 
 ReferatContainer.propTypes = {
@@ -67,7 +66,7 @@ ReferatContainer.propTypes = {
     visReferat: PT.bool.isRequired,
     harReferat: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
 const mapStateToProps = (state, props) => {
@@ -75,8 +74,7 @@ const mapStateToProps = (state, props) => {
     const { erReferatPublisert } = aktivitet;
     const aktivitetType = aktivitet.type;
     const kanHaReferat =
-        (aktivitetType === MOTE_TYPE &&
-            moment(aktivitet.fraDato).toISOString() < moment().toISOString()) ||
+        (aktivitetType === MOTE_TYPE && moment(aktivitet.fraDato).toISOString() < moment().toISOString()) ||
         aktivitetType === SAMTALEREFERAT_TYPE;
 
     const { referat } = aktivitet;
@@ -89,21 +87,21 @@ const mapStateToProps = (state, props) => {
         (harReferat || props.underOppfolging);
 
     return {
-        publiserer:
-            selectAktivitetStatus(state) ===
-            (STATUS.PENDING || STATUS.RELOADING),
+        publiserer: selectAktivitetStatus(state) === (STATUS.PENDING || STATUS.RELOADING),
         erVeileder,
         erReferatPublisert,
         kanHaReferat,
         visReferat,
         referat,
-        harReferat,
+        harReferat
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    dispatchPubliserReferat: () =>
-        dispatch(publiserReferat(ownProps.aktivitet)),
+    dispatchPubliserReferat: () => dispatch(publiserReferat(ownProps.aktivitet))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReferatContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ReferatContainer);

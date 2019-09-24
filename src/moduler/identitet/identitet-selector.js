@@ -21,8 +21,6 @@ export function selectIdentitetId(state) {
 }
 
 export function selectIdentitetFeilMelding(state) {
-    const feilMeldingsdata =
-        selectIdentitetStatus(state) === STATUS.ERROR &&
-        selectIdentitetSlice(state).feil;
+    const feilMeldingsdata = selectIdentitetStatus(state) === STATUS.ERROR && selectIdentitetSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 }

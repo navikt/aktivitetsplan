@@ -15,13 +15,11 @@ export const nyHenvendelseDialogFormNavn = 'ny-henvendelse-dialog';
 
 function Dialog({ dialog, aktivitet, className, underOppfolging }) {
     const dialogId = dialog.id;
-    const {historisk} = dialog;
+    const { historisk } = dialog;
     return (
         <div className={className}>
             <Undertittel tag="h1" className="endre-dialog__tittel">
-                {aktivitet
-                    ? <DialogLenkeTilAktivitet aktivitet={aktivitet} />
-                    : dialog.overskrift}
+                {aktivitet ? <DialogLenkeTilAktivitet aktivitet={aktivitet} /> : dialog.overskrift}
             </Undertittel>
             <EndreDialog
                 hidden={historisk || !underOppfolging}
@@ -43,19 +41,19 @@ Dialog.propTypes = {
     className: PT.string,
     dialog: AppPT.dialog.isRequired,
     aktivitet: AppPT.aktivitet,
-    underOppfolging: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired
 };
 
 Dialog.defaultProps = {
     className: undefined,
-    aktivitet: undefined,
+    aktivitet: undefined
 };
 
 const mapStateToProps = (state, props) => {
     const aktivitet = selectAktivitetMedId(state, props.dialog.aktivitetId);
     return {
         aktivitet,
-        underOppfolging: selectUnderOppfolging(state),
+        underOppfolging: selectUnderOppfolging(state)
     };
 };
 

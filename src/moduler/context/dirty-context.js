@@ -3,7 +3,7 @@ import PT from 'prop-types';
 
 export const DirtyContext = React.createContext({
     isDirty: false,
-    setFormIsDirty: () => {},
+    setFormIsDirty: () => {}
 });
 
 function isFormsDirty(forms) {
@@ -25,17 +25,10 @@ export function DirtyProvider({ children }) {
         [setDirtyForms, setIsDirty]
     );
 
-    const value = useMemo(() => ({ isDirty, setFormIsDirty }), [
-        isDirty,
-        setFormIsDirty,
-    ]);
-    return (
-        <DirtyContext.Provider value={value}>
-            {children}
-        </DirtyContext.Provider>
-    );
+    const value = useMemo(() => ({ isDirty, setFormIsDirty }), [isDirty, setFormIsDirty]);
+    return <DirtyContext.Provider value={value}>{children}</DirtyContext.Provider>;
 }
 
 DirtyProvider.propTypes = {
-    children: PT.object.isRequired,
+    children: PT.object.isRequired
 };

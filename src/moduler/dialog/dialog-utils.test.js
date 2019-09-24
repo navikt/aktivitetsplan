@@ -1,7 +1,4 @@
-import {
-    sammenlignDialogerForBruker,
-    sammenlignDialogerForVeileder,
-} from './dialog-utils';
+import { sammenlignDialogerForBruker, sammenlignDialogerForVeileder } from './dialog-utils';
 
 function knuth(array) {
     let currentIndex = array.length;
@@ -32,36 +29,32 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-07-19T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '4',
                 sisteDato: '2017-07-16T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '3',
                 sisteDato: '2017-07-17T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '2',
                 sisteDato: '2017-07-18T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
+                ferdigBehandlet: false
+            }
         ];
 
-        expect(
-            dialoger
-                .sort(sammenlignDialogerForVeileder)
-                .every(erIdStorreEnForrige)
-        ).toEqual(true);
+        expect(dialoger.sort(sammenlignDialogerForVeileder).every(erIdStorreEnForrige)).toEqual(true);
     });
 
     it('Skal sorte ubehandlede dialoger over behandlede', () => {
@@ -71,36 +64,32 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-07-19T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '2',
                 sisteDato: '2017-07-16T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '3',
                 sisteDato: '2017-07-17T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '1',
                 sisteDato: '2017-07-18T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
+                ferdigBehandlet: false
+            }
         ];
 
-        expect(
-            dialoger
-                .sort(sammenlignDialogerForVeileder)
-                .every(erIdStorreEnForrige)
-        ).toEqual(true);
+        expect(dialoger.sort(sammenlignDialogerForVeileder).every(erIdStorreEnForrige)).toEqual(true);
     });
 
     it('Skal sortere uleste dialoger over leste dialoger', () => {
@@ -110,36 +99,32 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-07-16T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '2',
                 sisteDato: '2017-07-19T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '1',
                 sisteDato: '2017-07-18T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '3',
                 sisteDato: '2017-07-17T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
+                ferdigBehandlet: false
+            }
         ];
 
-        expect(
-            dialoger
-                .sort(sammenlignDialogerForVeileder)
-                .every(erIdStorreEnForrige)
-        ).toEqual(true);
+        expect(dialoger.sort(sammenlignDialogerForVeileder).every(erIdStorreEnForrige)).toEqual(true);
     });
 
     it('Skal sortere ubehandlede over venter på svar hvis denne er ferdigbehandlet', () => {
@@ -149,36 +134,32 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-07-16T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '2',
                 sisteDato: '2017-07-19T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '1',
                 sisteDato: '2017-07-18T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '3',
                 sisteDato: '2017-07-17T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
-            },
+                ferdigBehandlet: true
+            }
         ];
 
-        expect(
-            dialoger
-                .sort(sammenlignDialogerForVeileder)
-                .every(erIdStorreEnForrige)
-        ).toEqual(true);
+        expect(dialoger.sort(sammenlignDialogerForVeileder).every(erIdStorreEnForrige)).toEqual(true);
     });
 
     it('Skal sortere dialoger riktig for flere permutasjoner av samme dialogsett', () => {
@@ -189,28 +170,28 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-08-17T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '02',
                 sisteDato: '2017-08-09T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '03',
                 sisteDato: '2017-07-17T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '04',
                 sisteDato: '2017-07-09T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             // false - false - false
             {
@@ -218,28 +199,28 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-08-19T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '06',
                 sisteDato: '2017-08-11T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '07',
                 sisteDato: '2017-07-19T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '08',
                 sisteDato: '2017-07-11T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             // false - true - true
             {
@@ -247,28 +228,28 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-08-13T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '10',
                 sisteDato: '2017-08-05T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '11',
                 sisteDato: '2017-07-13T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '12',
                 sisteDato: '2017-07-05T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             // false - false - true
             {
@@ -276,28 +257,28 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-08-15T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '14',
                 sisteDato: '2017-08-07T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '15',
                 sisteDato: '2017-07-15T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '16',
                 sisteDato: '2017-07-07T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             // true - true - false
             {
@@ -305,28 +286,28 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-08-16T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: true,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '18',
                 sisteDato: '2017-08-08T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: true,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '19',
                 sisteDato: '2017-07-16T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: true,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '20',
                 sisteDato: '2017-07-08T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: true,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             // true - false - false
             {
@@ -334,28 +315,28 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-08-18T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '22',
                 sisteDato: '2017-08-10T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '23',
                 sisteDato: '2017-07-18T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '24',
                 sisteDato: '2017-07-10T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             // true - true - true
             {
@@ -363,28 +344,28 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-08-12T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '26',
                 sisteDato: '2017-08-04T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '27',
                 sisteDato: '2017-07-12T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '28',
                 sisteDato: '2017-07-04T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: true,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             // true - false - true
             {
@@ -392,29 +373,29 @@ describe('dialogsortering på innsiden', () => {
                 sisteDato: '2017-08-14T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '30',
                 sisteDato: '2017-08-06T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '31',
                 sisteDato: '2017-07-14T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
+                ferdigBehandlet: true
             },
             {
                 id: '32',
                 sisteDato: '2017-07-06T14:09:59.334+02:00',
                 lest: true,
                 venterPaSvar: false,
-                ferdigBehandlet: true,
-            },
+                ferdigBehandlet: true
+            }
         ];
 
         for (let i = 0; i <= 100; i += 1) {
@@ -435,20 +416,16 @@ describe('dialogsortering på utsiden', () => {
                 sisteDato: '2017-07-19T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
+                ferdigBehandlet: false
             },
             {
                 id: '2',
                 sisteDato: '2017-07-18T14:09:59.334+02:00',
                 lest: false,
                 venterPaSvar: false,
-                ferdigBehandlet: false,
-            },
+                ferdigBehandlet: false
+            }
         ];
-        expect(
-            dialoger
-                .sort(sammenlignDialogerForBruker)
-                .every(erIdStorreEnForrige)
-        ).toEqual(true);
+        expect(dialoger.sort(sammenlignDialogerForBruker).every(erIdStorreEnForrige)).toEqual(true);
     });
 });

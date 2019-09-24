@@ -16,8 +16,8 @@ function mountWithIntl(node, { context, childContextTypes } = {}) {
         context: { ...context, intl },
         childContextTypes: {
             intl: intlShape,
-            ...childContextTypes,
-        },
+            ...childContextTypes
+        }
     });
 }
 
@@ -26,11 +26,9 @@ describe('Aktivitet-periode', () => {
         const aktivitet = {
             fraDato: '2017-08-17',
             tilDato: '2017-08-20',
-            type: MOTE_TYPE,
+            type: MOTE_TYPE
         };
-        const wrapper = mountWithIntl(
-            <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
-        );
+        const wrapper = mountWithIntl(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
         expect(wrapper.text()).toEqual('17. aug 2017');
     });
 
@@ -38,11 +36,9 @@ describe('Aktivitet-periode', () => {
         const aktivitet = {
             fraDato: '2017-08-17',
             tilDato: '2017-08-20',
-            type: IJOBB_AKTIVITET_TYPE,
+            type: IJOBB_AKTIVITET_TYPE
         };
-        const wrapper = mountWithIntl(
-            <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
-        );
+        const wrapper = mountWithIntl(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
         expect(wrapper.text()).toEqual('17. aug 2017 - 20. aug 2017');
     });
 });

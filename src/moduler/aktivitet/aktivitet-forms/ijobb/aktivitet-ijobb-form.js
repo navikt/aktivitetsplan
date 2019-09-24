@@ -3,11 +3,7 @@ import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
 import * as AppPT from '../../../../proptypes';
 import LagreAktivitet from '../lagre-aktivitet';
-import {
-    IJOBB_AKTIVITET_TYPE,
-    JOBB_STATUS_DELTID,
-    JOBB_STATUS_HELTID,
-} from '../../../../constant';
+import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-validering';
@@ -18,10 +14,10 @@ import {
     validateFeltForLangt,
     validateFraDato,
     validateJobbstatus,
-    validateTittel,
+    validateTittel
 } from './validate';
 import PeriodeValidering, {
-    validerPeriodeFelt,
+    validerPeriodeFelt
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
@@ -32,22 +28,14 @@ function erAvtalt(aktivitet) {
 }
 
 const validator = useFormstate({
-    tittel: (val, values, aktivitet) =>
-        validateTittel(erAvtalt(aktivitet), val),
-    fraDato: (val, values, aktivitet) =>
-        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) =>
-        validerDato(val, null, aktivitet.fraDato),
-    periodeValidering: (val, values) =>
-        validerPeriodeFelt(values.fraDato, values.tilDato),
-    ansettelsesforhold: (val, values, aktivitet) =>
-        validateFeltForLangt(erAvtalt(aktivitet), val),
-    jobbStatus: (val, values, aktivitet) =>
-        validateJobbstatus(erAvtalt(aktivitet), val),
-    arbeidstid: (val, values, aktivitet) =>
-        validateFeltForLangt(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) =>
-        validateBeskrivelse(erAvtalt(aktivitet), val),
+    tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) => validerDato(val, null, aktivitet.fraDato),
+    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
+    ansettelsesforhold: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+    jobbStatus: (val, values, aktivitet) => validateJobbstatus(erAvtalt(aktivitet), val),
+    arbeidstid: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val)
 });
 
 function IJobbAktivitetForm(props) {
@@ -63,7 +51,7 @@ function IJobbAktivitetForm(props) {
         jobbStatus: maybeAktivitet.jobbStatus || '',
         ansettelsesforhold: maybeAktivitet.ansettelsesforhold || '',
         arbeidstid: maybeAktivitet.arbeidstid || '',
-        beskrivelse: maybeAktivitet.beskrivelse || '',
+        beskrivelse: maybeAktivitet.beskrivelse || ''
     };
 
     const state = validator(initalValues, aktivitet);
@@ -75,25 +63,13 @@ function IJobbAktivitetForm(props) {
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetskjema">
-                <FormErrorSummary
-                    submittoken={state.submittoken}
-                    errors={state.errors}
-                />
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
-                <AktivitetFormHeader
-                    tittel="Jobb jeg har nå"
-                    aktivitetsType={IJOBB_AKTIVITET_TYPE}
-                />
+                <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
 
-                <Input
-                    disabled={avtalt}
-                    label="Stillingstittel *"
-                    {...state.fields.tittel}
-                />
+                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
 
-                <PeriodeValidering
-                    valideringFelt={state.fields.periodeValidering}
-                >
+                <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
                         <DatoField
                             disabled={avtalt}
@@ -101,37 +77,17 @@ function IJobbAktivitetForm(props) {
                             senesteTom={maybeAktivitet.tilDato}
                             {...state.fields.fraDato}
                         />
-                        <DatoField
-                            label="Til dato"
-                            tidligsteFom={maybeAktivitet.fraDato}
-                            {...state.fields.tilDato}
-                        />
+                        <DatoField label="Til dato" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
                     </div>
                 </PeriodeValidering>
 
                 <FieldGroup name="jobbStatus" field={state.fields.jobbStatus}>
-                    <legend className="skjemaelement__label">
-                        Stillingsandel *
-                    </legend>
-                    <Radio
-                        label="Heltid"
-                        value={JOBB_STATUS_HELTID}
-                        disabled={avtalt}
-                        {...state.fields.jobbStatus}
-                    />
-                    <Radio
-                        label="Deltid"
-                        value={JOBB_STATUS_DELTID}
-                        disabled={avtalt}
-                        {...state.fields.jobbStatus}
-                    />
+                    <legend className="skjemaelement__label">Stillingsandel *</legend>
+                    <Radio label="Heltid" value={JOBB_STATUS_HELTID} disabled={avtalt} {...state.fields.jobbStatus} />
+                    <Radio label="Deltid" value={JOBB_STATUS_DELTID} disabled={avtalt} {...state.fields.jobbStatus} />
                 </FieldGroup>
 
-                <Input
-                    disabled={avtalt}
-                    label="Arbeidsgiver"
-                    {...state.fields.ansettelsesforhold}
-                />
+                <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.ansettelsesforhold} />
                 <Input
                     disabled={avtalt}
                     label="Ansettelsesforhold (fast, midlertidig, vikariat)"
@@ -153,12 +109,12 @@ function IJobbAktivitetForm(props) {
 IJobbAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
-    isDirtyRef: PT.shape({ current: PT.bool }),
+    isDirtyRef: PT.shape({ current: PT.bool })
 };
 
 IJobbAktivitetForm.defaultProps = {
     aktivitet: undefined,
-    isDirtyRef: undefined,
+    isDirtyRef: undefined
 };
 
 export default IJobbAktivitetForm;

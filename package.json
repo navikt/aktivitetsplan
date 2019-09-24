@@ -11,7 +11,6 @@
     "test:coverage": "npm test -- --coverage --watchAll=false",
     "test:e2e": "node integrationtest/local-runner.js",
     "test:browsers": "node integrationtest/saucelabs-runner.js",
-    "prettier": "prettier --write --single-quote --trailing-comma es5 --tab-width 4 src/**/*.js src/**/*.less",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
     "heroku-serve": "serve -s build -l $PORT",
     "lint": "echo \"Not implemented\""
@@ -94,8 +93,8 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "npm run prettier",
+    "*.{js,ts,tsx,json,less,css,md}": [
+      "prettier --write",
       "git add"
     ]
   },
@@ -120,7 +119,7 @@
     "enzyme-adapter-react-16": "^1.14.0",
     "husky": "^3.0.4",
     "lint-staged": "^9.2.5",
-    "prettier": "^1.5.2",
+    "prettier": "^1.18.2",
     "serve": "^11.1.0",
     "testcafe": "^1.4.2",
     "testcafe-browser-provider-saucelabs": "^1.7.0",

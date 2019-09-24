@@ -5,56 +5,43 @@ import * as AppPT from '../../../../proptypes';
 import { HiddenIf } from '../../../../utils';
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import LenkeKomponent from '../hjelpekomponenter/lenkekomponent';
-import {
-    Beskrivelse,
-    FraDato,
-    TilDato,
-} from '../hjelpekomponenter/standard-felt';
+import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const StillingDetaljer = ({ aktivitet }) =>
+const StillingDetaljer = ({ aktivitet }) => (
     <HiddenIf hidden={aktivitet.type !== STILLING_AKTIVITET_TYPE}>
         <div className="aktivitetvisning__detaljer">
             <FraDato
                 aktivitet={aktivitet}
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.stilling" />
-                }
+                tittel={<FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.stilling" />}
             />
             <TilDato
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.stilling" />
-                }
+                tittel={<FormattedMessage id="aktivitetdetaljer.til-dato-tekst.stilling" />}
                 aktivitet={aktivitet}
                 visIkkeSatt
             />
             <Informasjonsfelt
                 key="arbeidsgiver"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.arbeidsgiver-label" />
-                }
+                tittel={<FormattedMessage id="aktivitetdetaljer.arbeidsgiver-label" />}
                 innhold={aktivitet.arbeidsgiver}
             />
             <Informasjonsfelt
                 key="kontaktperson"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.kontaktperson-label" />
-                }
+                tittel={<FormattedMessage id="aktivitetdetaljer.kontaktperson-label" />}
                 innhold={aktivitet.kontaktperson}
             />
             <Informasjonsfelt
                 key="arbeidssted"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.arbeidssted-label" />
-                }
+                tittel={<FormattedMessage id="aktivitetdetaljer.arbeidssted-label" />}
                 innhold={aktivitet.arbeidssted}
             />
             <Beskrivelse aktivitet={aktivitet} />
             <LenkeKomponent lenke={aktivitet.lenke} />
         </div>
-    </HiddenIf>;
+    </HiddenIf>
+);
 
 StillingDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };
 
 export default StillingDetaljer;

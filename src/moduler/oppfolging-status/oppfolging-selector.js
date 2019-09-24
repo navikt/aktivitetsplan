@@ -17,8 +17,7 @@ export function selectVeilederId(state) {
 export function selectOppfolgingStatus(state) {
     return selectOppfolgingSlice(state).status;
 }
-export const selectReservasjonKRR = state =>
-    selectOppfolgingData(state).reservasjonKRR;
+export const selectReservasjonKRR = state => selectOppfolgingData(state).reservasjonKRR;
 
 export function selectServicegruppe(state) {
     return selectOppfolgingData(state).servicegruppe;
@@ -54,7 +53,7 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
                 id: sluttDato,
                 fra,
                 til: sluttDato,
-                vistFra: periode.startDato,
+                vistFra: periode.startDato
             };
         })
         .reverse();
@@ -63,9 +62,7 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
 export function selectKvpPeriodeForValgteOppfolging(state) {
     const valgtOppfolging = state.data.filter.historiskPeriode;
     const valgtOppfolgingId = valgtOppfolging && valgtOppfolging.id;
-    const oppfolging = selectOppfolgingsPerioder(state).find(
-        p => p.sluttDato === valgtOppfolgingId
-    );
+    const oppfolging = selectOppfolgingsPerioder(state).find(p => p.sluttDato === valgtOppfolgingId);
     return oppfolging && oppfolging.kvpPerioder;
 }
 
@@ -129,8 +126,6 @@ export function selectkanStarteOppfolging(state) {
 }
 
 export function selectOppfolgingFeilmeldinger(state) {
-    const feilMeldingsdata =
-        selectOppfolgingStatus(state) === STATUS.ERROR &&
-        selectOppfolgingSlice(state).feil;
+    const feilMeldingsdata = selectOppfolgingStatus(state) === STATUS.ERROR && selectOppfolgingSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 }

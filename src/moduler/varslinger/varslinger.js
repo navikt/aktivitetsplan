@@ -5,29 +5,23 @@ import { moment } from '../../utils';
 import { hentIdentitet } from '../identitet/identitet-reducer';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import * as AppPT from '../../proptypes';
-import {
-    HiddenIfVarslingMedLenke,
-    HiddenIfAdvarselMedLenke,
-} from './varsel-alertstriper';
+import { HiddenIfVarslingMedLenke, HiddenIfAdvarselMedLenke } from './varsel-alertstriper';
 import {
     selectErUnderOppfolging,
     selectTilHorendeDialogId,
     selectErEskalert,
     selectOppfolgingStatus,
     selectInaktiveringsDato,
-    selectKanReaktiveres,
+    selectKanReaktiveres
 } from '../oppfolging-status/oppfolging-selector';
-import {
-    selectErBruker,
-    selectIdentitetStatus,
-} from '../identitet/identitet-selector';
+import { selectErBruker, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { hentOppfolging } from '../oppfolging-status/oppfolging-reducer';
 import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
 
 class Varslinger extends Component {
     componentDidMount() {
-        const {doHentIdentitet, doHentOppfolging, erBruker} = this.props;
+        const { doHentIdentitet, doHentOppfolging, erBruker } = this.props;
         doHentIdentitet();
         if (erBruker) {
             doHentOppfolging();
@@ -35,15 +29,14 @@ class Varslinger extends Component {
     }
 
     hentInfotekstTilInaktivertBrukere() {
-        const {antallDagerIgjen} = this.props;
-        const antallDagerIgjenMerEnn10 =
-            antallDagerIgjen <= 28 && antallDagerIgjen >= 10;
-        const antallDagerIgjenMindreEnn10 =
-            antallDagerIgjen < 10 && antallDagerIgjen >= 1;
+        const { antallDagerIgjen } = this.props;
+        const antallDagerIgjenMerEnn10 = antallDagerIgjen <= 28 && antallDagerIgjen >= 10;
+        const antallDagerIgjenMindreEnn10 = antallDagerIgjen < 10 && antallDagerIgjen >= 1;
 
         if (antallDagerIgjenMerEnn10) {
             return 'oppfolging.inaktivert-28-til-10-dager.reaktiveres';
-        } if (antallDagerIgjenMindreEnn10) {
+        }
+        if (antallDagerIgjenMindreEnn10) {
             return 'oppfolging.inaktivert-mindre-enn-10-dager.reaktiveres';
         }
         return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
@@ -58,10 +51,10 @@ class Varslinger extends Component {
             tilhorendeDialogId,
             doVelgNavarendePeriode,
             kanReaktiveres,
-            antallDagerIgjen,
+            antallDagerIgjen
         } = this.props;
 
-        if(!erBruker){
+        if (!erBruker) {
             return null;
         }
 
@@ -100,11 +93,7 @@ class Varslinger extends Component {
             </div>
         );
 
-        return (
-            <Innholdslaster avhengigheter={avhengigheter}>
-                {visVarslingerForBruker}
-            </Innholdslaster>
-        );
+        return <Innholdslaster avhengigheter={avhengigheter}>{visVarslingerForBruker}</Innholdslaster>;
     }
 }
 
@@ -114,7 +103,7 @@ Varslinger.defaultProps = {
     brukerErEskalert: false,
     tilhorendeDialogId: undefined,
     kanReaktiveres: false,
-    antallDagerIgjen: undefined,
+    antallDagerIgjen: undefined
 };
 
 Varslinger.propTypes = {
@@ -127,7 +116,7 @@ Varslinger.propTypes = {
     tilhorendeDialogId: PT.number,
     doHentOppfolging: PT.func.isRequired,
     kanReaktiveres: PT.bool,
-    antallDagerIgjen: PT.number,
+    antallDagerIgjen: PT.number
 };
 
 const mapStateToProps = state => {
@@ -138,22 +127,22 @@ const mapStateToProps = state => {
 
     return {
         erBruker: selectErBruker(state),
-        avhengigheter: [
-            selectOppfolgingStatus(state),
-            selectIdentitetStatus(state),
-        ],
+        avhengigheter: [selectOppfolgingStatus(state), selectIdentitetStatus(state)],
         underOppfolging: selectErUnderOppfolging(state),
         brukerErEskalert: selectErEskalert(state),
         tilhorendeDialogId: selectTilHorendeDialogId(state),
         kanReaktiveres: selectKanReaktiveres(state),
-        antallDagerIgjen: antalldagerIgjen,
+        antallDagerIgjen: antalldagerIgjen
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     doHentIdentitet: () => dispatch(hentIdentitet()),
     doVelgNavarendePeriode: () => dispatch(velgHistoriskPeriode(null)),
-    doHentOppfolging: () => dispatch(hentOppfolging()),
+    doHentOppfolging: () => dispatch(hentOppfolging())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Varslinger);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Varslinger);

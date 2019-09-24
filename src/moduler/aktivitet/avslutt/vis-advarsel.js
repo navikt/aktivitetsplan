@@ -10,12 +10,9 @@ function VisAdvarsel({ onSubmit, headerTekst }) {
     return (
         <div>
             <ModalContainer className="aktivitetvisning__underseksjon">
-                <Innholdstittel>
-                    {headerTekst}
-                </Innholdstittel>
+                <Innholdstittel>{headerTekst}</Innholdstittel>
                 <AlertStripeInfoSolid>
-                    Når du lagrer, blir aktiviteten låst og du kan ikke lenger
-                    endre innholdet.
+                    Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.
                 </AlertStripeInfoSolid>
             </ModalContainer>
             <ModalFooter>
@@ -29,7 +26,7 @@ function VisAdvarsel({ onSubmit, headerTekst }) {
 
 VisAdvarsel.propTypes = {
     headerTekst: PT.string.isRequired,
-    onSubmit: PT.func.isRequired,
+    onSubmit: PT.func.isRequired
 };
 
 export default VisAdvarsel;

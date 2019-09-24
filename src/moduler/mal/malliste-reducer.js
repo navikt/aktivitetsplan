@@ -8,7 +8,7 @@ export const LISTE_FJERN = 'malListe/FJERN';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
-    data: [],
+    data: []
 };
 
 // Reducer
@@ -22,7 +22,7 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                data: action.data,
+                data: action.data
             };
         case LISTE_FJERN:
             return { ...state, status: STATUS.OK, data: [] };
@@ -35,7 +35,7 @@ export function hentMalListe() {
     return doThenDispatch(() => Api.hentMalListe(), {
         OK: LISTE_OK,
         FEILET: LISTE_FEILET,
-        PENDING: LISTE_PENDING,
+        PENDING: LISTE_PENDING
     });
 }
 

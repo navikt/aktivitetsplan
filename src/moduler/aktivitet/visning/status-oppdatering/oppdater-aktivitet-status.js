@@ -23,13 +23,7 @@ function OppdaterAktivitetStatus(props) {
         });
 
     const visning = <StatusVisning status={aktivitet.status} />;
-    const form = (
-        <AktivitetStatusForm
-            disabled={disableStatusEndring}
-            onSubmit={onSubmit}
-            aktivitet={aktivitet}
-        />
-    );
+    const form = <AktivitetStatusForm disabled={disableStatusEndring} onSubmit={onSubmit} aktivitet={aktivitet} />;
 
     return (
         <Underseksjon>
@@ -47,7 +41,7 @@ function OppdaterAktivitetStatus(props) {
 OppdaterAktivitetStatus.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     disableStatusEndring: PT.bool.isRequired,
-    lagreStatusEndringer: PT.func.isRequired,
+    lagreStatusEndringer: PT.func.isRequired
 };
 
 const mapStateToProps = (state, props) => {
@@ -55,7 +49,7 @@ const mapStateToProps = (state, props) => {
         disableStatusEndring:
             selectLasterAktivitetData(state) ||
             !selectKanEndreAktivitetStatus(state, props.aktivitet) ||
-            !selectErUnderOppfolging(state),
+            !selectErUnderOppfolging(state)
     };
 };
 
@@ -65,21 +59,12 @@ const mapDispatchToProps = (dispatch, props) => ({
             return Promise.resolve();
         }
 
-        flyttetAktivitetMetrikk(
-            'submit',
-            props.aktivitet,
-            values.aktivitetstatus
-        );
-        return dispatch(
-            flyttAktivitetMedBegrunnelse(
-                props.aktivitet,
-                values.aktivitetstatus,
-                values.begrunnelse
-            )
-        );
-    },
+        flyttetAktivitetMetrikk('submit', props.aktivitet, values.aktivitetstatus);
+        return dispatch(flyttAktivitetMedBegrunnelse(props.aktivitet, values.aktivitetstatus, values.begrunnelse));
+    }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    OppdaterAktivitetStatus
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(OppdaterAktivitetStatus);

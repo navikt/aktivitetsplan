@@ -18,22 +18,13 @@ function getTellerTekst(antallTegn, maxLength, visTellerFra) {
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
-function Textarea({
-    touched,
-    error,
-    input,
-    pristine,
-    initialValue,
-    visTellerFra,
-    ...rest
-}) {
+function Textarea({ touched, error, input, pristine, initialValue, visTellerFra, ...rest }) {
     const feil = error && touched ? { feilmelding: error } : undefined;
     const inputProps = { ...input, ...rest };
 
     return (
         <NavTextArea
-            tellerTekst={(antallTegn, max) =>
-                getTellerTekst(antallTegn, max, visTellerFra)}
+            tellerTekst={(antallTegn, max) => getTellerTekst(antallTegn, max, visTellerFra)}
             feil={feil}
             {...inputProps}
         />
@@ -47,14 +38,14 @@ Textarea.propTypes = {
     error: PT.string,
     input: PT.object.isRequired,
     visTellerFra: PT.number,
-    maxLength: PT.number.isRequired,
+    maxLength: PT.number.isRequired
 };
 
 Textarea.defaultProps = {
     initialValue: undefined,
     pristine: undefined,
     error: undefined,
-    visTellerFra: undefined,
+    visTellerFra: undefined
 };
 
 export default Textarea;

@@ -14,17 +14,14 @@ class Timeoutbox extends Component {
         const { doHentGjenstaendeInnloggetTid } = this.props;
         doHentGjenstaendeInnloggetTid();
         this.state = {
-            manueltLukket: false,
+            manueltLukket: false
         };
     }
 
     componentDidUpdate() {
         const { expirationTime } = this.props;
         if (!this.timeout && expirationTime) {
-            const expirationInMillis = this.visningsTidspunkt().diff(
-                moment(),
-                'ms'
-            );
+            const expirationInMillis = this.visningsTidspunkt().diff(moment(), 'ms');
             this.timeout = setTimeout(() => {
                 this.forceUpdate();
             }, expirationInMillis + 100);
@@ -61,11 +58,11 @@ class Timeoutbox extends Component {
                 portalClassName="aktivitetsplanfs timeout-modal-portal"
                 onRequestClose={() => {
                     this.setState({
-                        manueltLukket: true,
+                        manueltLukket: true
                     });
                 }}
                 contentLabel={intl.formatMessage({
-                    id: 'timeoutbox.aria.label',
+                    id: 'timeoutbox.aria.label'
                 })}
             >
                 <TimeoutboxNedtelling utlopsTidspunkt={utlopsTidspunkt} />
@@ -77,22 +74,22 @@ class Timeoutbox extends Component {
 Timeoutbox.propTypes = {
     intl: intlShape.isRequired,
     doHentGjenstaendeInnloggetTid: PT.func.isRequired,
-    expirationTime: PT.string,
+    expirationTime: PT.string
 };
 
 Timeoutbox.defaultProps = {
-    expirationTime: null,
+    expirationTime: null
 };
 
 const mapStateToProps = state => ({
-    expirationTime: selectExpirationTime(state),
+    expirationTime: selectExpirationTime(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    doHentGjenstaendeInnloggetTid: () =>
-        dispatch(hentGjenstaendeInnloggetTid()),
+    doHentGjenstaendeInnloggetTid: () => dispatch(hentGjenstaendeInnloggetTid())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    injectIntl(Timeoutbox)
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(injectIntl(Timeoutbox));

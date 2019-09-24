@@ -4,14 +4,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import PT from 'prop-types';
 import HtmlText from '../../htmlText';
 
-function EkspanderbartpanelMedTittelOgInnhold({
-    tittelId,
-    htmlTextId,
-    intl,
-    ...rest
-}) {
+function EkspanderbartpanelMedTittelOgInnhold({ tittelId, htmlTextId, intl, ...rest }) {
     const tittel = intl.formatMessage({
-        id: tittelId,
+        id: tittelId
     });
 
     return (
@@ -24,7 +19,7 @@ function EkspanderbartpanelMedTittelOgInnhold({
 EkspanderbartpanelMedTittelOgInnhold.propTypes = {
     tittelId: PT.string.isRequired,
     htmlTextId: PT.string.isRequired,
-    intl: intlShape.isRequired,
+    intl: intlShape.isRequired
 };
 
 export default injectIntl(EkspanderbartpanelMedTittelOgInnhold);

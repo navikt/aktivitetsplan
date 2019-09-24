@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import PT from 'prop-types';
 import Maal from '../maal/maal';
 import MittMaal from '../maalLinje/mitt-maal';
-import {
-    harFeature,
-    NYHOVEDMAAL,
-} from '../../felles-komponenter/feature/feature';
+import { harFeature, NYHOVEDMAAL } from '../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
 
 function FeatureToggleMaal({ visNyHovedmaal }) {
@@ -16,16 +13,19 @@ function FeatureToggleMaal({ visNyHovedmaal }) {
 const mapStateToProps = state => {
     const visNyHovedmaal = harFeature(NYHOVEDMAAL, selectFeatureData(state));
     return {
-        visNyHovedmaal,
+        visNyHovedmaal
     };
 };
 
 FeatureToggleMaal.propTypes = {
-    visNyHovedmaal: PT.bool,
+    visNyHovedmaal: PT.bool
 };
 
 FeatureToggleMaal.defaultProps = {
-    visNyHovedmaal: false,
+    visNyHovedmaal: false
 };
 
-export default connect(mapStateToProps, null)(FeatureToggleMaal);
+export default connect(
+    mapStateToProps,
+    null
+)(FeatureToggleMaal);

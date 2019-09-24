@@ -6,13 +6,11 @@ import React from 'react';
 export default function AktivitetType({ type }) {
     return (
         <Undertekst tag="p" className="aktivitetskort__type" data-testid={type}>
-            <FormattedMessage
-                id={`aktivitetskort.type.${type}`.toLowerCase()}
-            />
+            <FormattedMessage id={`aktivitetskort.type.${type}`.toLowerCase()} />
         </Undertekst>
     );
 }
 
 AktivitetType.propTypes = {
-    type: PT.string.isRequired,
+    type: PT.string.isRequired
 };

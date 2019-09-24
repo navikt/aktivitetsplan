@@ -7,13 +7,8 @@ import * as AppPT from '../../../proptypes';
 
 function DialogLenkeTilAktivitet({ aktivitet, history }) {
     return (
-        <Knappelenke
-            onClick={() => history.push(`/aktivitet/vis/${aktivitet.id}`)}
-        >
-            <FormattedMessage
-                id="dialog.modal.til-aktiviteten"
-                values={{ tittel: aktivitet.tittel }}
-            />
+        <Knappelenke onClick={() => history.push(`/aktivitet/vis/${aktivitet.id}`)}>
+            <FormattedMessage id="dialog.modal.til-aktiviteten" values={{ tittel: aktivitet.tittel }} />
             <HoyreChevron />
         </Knappelenke>
     );
@@ -21,7 +16,7 @@ function DialogLenkeTilAktivitet({ aktivitet, history }) {
 
 DialogLenkeTilAktivitet.propTypes = {
     history: AppPT.history.isRequired,
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };
 
 export default withRouter(DialogLenkeTilAktivitet);

@@ -8,26 +8,12 @@ import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 const cls = (className, lenkeType, lenkestyling) =>
     classNames(className, lenkeType, {
-        lenke: lenkestyling,
+        lenke: lenkestyling
     });
 
-function Lenke({
-    href,
-    className,
-    brukLenkestyling,
-    children,
-    focusRef,
-    erEksternLenke,
-    onClick,
-    disabled,
-    ...rest
-}) {
+function Lenke({ href, className, brukLenkestyling, children, focusRef, erEksternLenke, onClick, disabled, ...rest }) {
     if (disabled) {
-        return (
-            <div className={cls(className, null, false)}>
-                {children}
-            </div>
-        );
+        return <div className={cls(className, null, false)}>{children}</div>;
     }
     if (erInternlenke(href) && !erEksternLenke) {
         const fodselsnummer = getFodselsnummer();
@@ -48,12 +34,7 @@ function Lenke({
 
     return (
         <span>
-            <a
-                {...rest}
-                href={href}
-                className={cls(className, 'eksternlenke', brukLenkestyling)}
-                ref={focusRef}
-            >
+            <a {...rest} href={href} className={cls(className, 'eksternlenke', brukLenkestyling)} ref={focusRef}>
                 {children}
             </a>
         </span>
@@ -68,7 +49,7 @@ Lenke.propTypes = {
     focusRef: PT.func,
     erEksternLenke: PT.bool,
     onClick: PT.func,
-    disabled: PT.bool,
+    disabled: PT.bool
 };
 
 Lenke.defaultProps = {
@@ -77,7 +58,7 @@ Lenke.defaultProps = {
     onClick: () => {},
     brukLenkestyling: true,
     disabled: false,
-    erEksternLenke: false,
+    erEksternLenke: false
 };
 
 export default visibleIfHOC(Lenke);

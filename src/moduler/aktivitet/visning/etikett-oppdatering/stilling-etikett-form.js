@@ -8,26 +8,23 @@ import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
 
 const validator = useFormstate({
-    etikettstatus: () => {},
+    etikettstatus: () => {}
 });
 
 function StillingEtikettForm(props) {
     const { aktivitet, disabled, onSubmit } = props;
 
     const state = validator({
-        etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT,
+        etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT
     });
 
     const { setFormIsDirty } = useContext(DirtyContext);
-    useEffect(
-        () => {
-            setFormIsDirty('etikett', !state.pristine);
-            return () => {
-                setFormIsDirty('etikett', false);
-            };
-        },
-        [setFormIsDirty, state.pristine]
-    );
+    useEffect(() => {
+        setFormIsDirty('etikett', !state.pristine);
+        return () => {
+            setFormIsDirty('etikett', false);
+        };
+    }, [setFormIsDirty, state.pristine]);
 
     const disable = state.submitting || disabled;
 
@@ -57,18 +54,8 @@ function StillingEtikettForm(props) {
                 disabled={disable}
                 {...state.fields.etikettstatus}
             />
-            <Radio
-                label="Fått avslag"
-                value={konstanter.AVSLAG}
-                disabled={disable}
-                {...state.fields.etikettstatus}
-            />
-            <Hovedknapp
-                className="oppdater-status"
-                disabled={disable}
-                spinner={state.submitting}
-                autoDisableVedSpinner
-            >
+            <Radio label="Fått avslag" value={konstanter.AVSLAG} disabled={disable} {...state.fields.etikettstatus} />
+            <Hovedknapp className="oppdater-status" disabled={disable} spinner={state.submitting} autoDisableVedSpinner>
                 Lagre
             </Hovedknapp>
         </form>
@@ -76,13 +63,13 @@ function StillingEtikettForm(props) {
 }
 
 StillingEtikettForm.defaultProps = {
-    disabled: true,
+    disabled: true
 };
 
 StillingEtikettForm.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     onSubmit: PT.func.isRequired,
-    disabled: PT.bool,
+    disabled: PT.bool
 };
 
 export default StillingEtikettForm;
