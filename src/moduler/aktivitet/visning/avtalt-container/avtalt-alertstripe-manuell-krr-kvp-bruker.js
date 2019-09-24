@@ -7,21 +7,21 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
-    selectReservasjonKRR,
+    selectReservasjonKRR
 } from '../../../oppfolging-status/oppfolging-selector';
 import visibleIfHOC from '../../../../hocs/visible-if';
 
 function AvtaltStripeKRRKvpManuellBruker({ brukerUtenAktivitesPlan }) {
-    const brukerUtenAktivitetsPlanSelectValue = Object.entries(
-        brukerUtenAktivitesPlan
-    ).find(([key, value]) => value)[0]; // eslint-disable-line no-unused-vars
+    const brukerUtenAktivitetsPlanSelectValue = Object.entries(brukerUtenAktivitesPlan).find(
+        ([key, value]) => value
+    )[0]; // eslint-disable-line no-unused-vars
     return (
         <div>
             <AlertStripeInfo>
                 <FormattedMessage
                     id="sett-avtalt-forhandsrientering-bruker-uten-aktivitesplan"
                     values={{
-                        brukerUtenAktivitesplan: brukerUtenAktivitetsPlanSelectValue,
+                        brukerUtenAktivitesplan: brukerUtenAktivitetsPlanSelectValue
                     }}
                 />
             </AlertStripeInfo>
@@ -30,17 +30,15 @@ function AvtaltStripeKRRKvpManuellBruker({ brukerUtenAktivitesPlan }) {
 }
 
 AvtaltStripeKRRKvpManuellBruker.propTypes = {
-    brukerUtenAktivitesPlan: PT.objectOf(PT.bool).isRequired,
+    brukerUtenAktivitesPlan: PT.objectOf(PT.bool).isRequired
 };
 
 const mapStateToProps = state => ({
     brukerUtenAktivitesPlan: {
         brukerErManuell: selectErBrukerManuell(state),
         brukerErUnderKvp: selectErUnderKvp(state),
-        brukerErIReservasjonKRR: selectReservasjonKRR(state),
-    },
+        brukerErIReservasjonKRR: selectReservasjonKRR(state)
+    }
 });
 
-export default visibleIfHOC(
-    connect(mapStateToProps)(AvtaltStripeKRRKvpManuellBruker)
-);
+export default visibleIfHOC(connect(mapStateToProps)(AvtaltStripeKRRKvpManuellBruker));

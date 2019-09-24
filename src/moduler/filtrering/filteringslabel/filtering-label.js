@@ -10,9 +10,7 @@ function FiltreringLabel({ label, slettFilter }) {
             className="filtreringlabel typo-undertekst"
             onClick={slettFilter}
         >
-            <span className="filtreringlabel__label">
-                {label}
-            </span>
+            <span className="filtreringlabel__label">{label}</span>
             <FilterIkon />
         </button>
     );
@@ -20,7 +18,7 @@ function FiltreringLabel({ label, slettFilter }) {
 
 FiltreringLabel.propTypes = {
     label: PT.object.isRequired,
-    slettFilter: PT.func.isRequired,
+    slettFilter: PT.func.isRequired
 };
 
 export default FiltreringLabel;

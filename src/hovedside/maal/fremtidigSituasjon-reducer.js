@@ -1,9 +1,7 @@
 import * as Api from '../../moduler/oppfolging-status/oppfolging-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 
-const { reducer, selectData, selectStatus, action } = createActionsAndReducer(
-    'fremtidigSituasjon'
-);
+const { reducer, selectData, selectStatus, action } = createActionsAndReducer('fremtidigSituasjon');
 
 export default reducer;
 

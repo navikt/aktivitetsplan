@@ -2,30 +2,21 @@ import React from 'react';
 import PT from 'prop-types';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
-import {
-    SAMTALEREFERAT_TYPE,
-    STATUS_GJENNOMFOERT,
-    TELEFON_KANAL,
-} from '../../../../constant';
+import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
 import { todayIsoString } from '../../../../utils';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import VelgKanal from '../velg-kanal';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import {
-    validateFraDato,
-    validateKanal,
-    validateReferat,
-    validateTittel,
-} from './validate';
+import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 
 const validator = useFormstate({
     tittel: validateTittel,
     fraDato: validateFraDato,
     kanal: validateKanal,
-    referat: validateReferat,
+    referat: validateReferat
 });
 
 function SamtalereferatForm(props) {
@@ -35,7 +26,7 @@ function SamtalereferatForm(props) {
         tittel: '',
         fraDato: todayIsoString(),
         kanal: TELEFON_KANAL,
-        referat: '',
+        referat: ''
     });
 
     if (isDirtyRef) {
@@ -47,7 +38,7 @@ function SamtalereferatForm(props) {
             ...values,
             status: STATUS_GJENNOMFOERT,
             erReferatPublisert: true,
-            avtalt: true,
+            avtalt: true
         };
         return onSubmit(newValues);
     });
@@ -59,20 +50,14 @@ function SamtalereferatForm(props) {
                 return onSubmit({
                     ...data,
                     status: STATUS_GJENNOMFOERT,
-                    avtalt: true,
+                    avtalt: true
                 });
             })}
         >
             <div className="aktivitetskjema">
-                <FormErrorSummary
-                    submittoken={state.submittoken}
-                    errors={state.errors}
-                />
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
-                <AktivitetFormHeader
-                    tittel="Samtalereferat"
-                    aktivitetsType={SAMTALEREFERAT_TYPE}
-                />
+                <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
                 <Input label="Tema for samtalen *" {...state.fields.tittel} />
 
@@ -106,12 +91,12 @@ function SamtalereferatForm(props) {
 }
 
 SamtalereferatForm.defaultProps = {
-    isDirtyRef: undefined,
+    isDirtyRef: undefined
 };
 
 SamtalereferatForm.propTypes = {
     onSubmit: PT.func.isRequired,
-    isDirtyRef: PT.shape({ current: PT.bool }),
+    isDirtyRef: PT.shape({ current: PT.bool })
 };
 
 export default SamtalereferatForm;

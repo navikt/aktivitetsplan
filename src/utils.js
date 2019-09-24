@@ -23,7 +23,9 @@ export function autobind(ctx) {
 }
 
 function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString().substring(1);
+    return Math.floor((1 + Math.random()) * 0x10000)
+        .toString()
+        .substring(1);
 }
 
 export function guid() {
@@ -35,9 +37,7 @@ export function getDisplayName(WrappedComponent) {
 }
 
 export function erInternlenke(href) {
-    return (
-        !!href && !href.startsWith('http://') && !href.startsWith('https://')
-    );
+    return !!href && !href.startsWith('http://') && !href.startsWith('https://');
 }
 
 export function storeForbokstaver(...tekster) {
@@ -54,11 +54,7 @@ export const erGyldigISODato = isoDato => {
 };
 
 export const erGyldigFormattertDato = formattertDato => {
-    return !!(
-        formattertDato &&
-        formattertDato.length === 10 &&
-        moment(formattertDato, 'DD.MM.YYYY', true).isValid()
-    );
+    return !!(formattertDato && formattertDato.length === 10 && moment(formattertDato, 'DD.MM.YYYY', true).isValid());
 };
 
 const erLocalDate = dato => {
@@ -69,9 +65,7 @@ export const toDate = dato => {
     if (typeof dato === 'undefined' || dato === null) {
         return null;
     }
-    return erLocalDate(dato)
-        ? new Date(dato.year, dato.monthValue - 1, dato.dayOfMonth)
-        : new Date(dato);
+    return erLocalDate(dato) ? new Date(dato.year, dato.monthValue - 1, dato.dayOfMonth) : new Date(dato);
 };
 
 export const toDatePrettyPrint = dato => {
@@ -81,21 +75,17 @@ export const toDatePrettyPrint = dato => {
 
     const tmpDato = toDate(dato);
 
-    const days =
-        tmpDato.getDate() < 10
-            ? `0${tmpDato.getDate()}`
-            : `${tmpDato.getDate()}`;
-    const months =
-        tmpDato.getMonth() + 1 < 10
-            ? `0${tmpDato.getMonth() + 1}`
-            : `${tmpDato.getMonth() + 1}`;
+    const days = tmpDato.getDate() < 10 ? `0${tmpDato.getDate()}` : `${tmpDato.getDate()}`;
+    const months = tmpDato.getMonth() + 1 < 10 ? `0${tmpDato.getMonth() + 1}` : `${tmpDato.getMonth() + 1}`;
     const years = tmpDato.getFullYear();
 
     return `${days}.${months}.${years}`;
 };
 
 export const todayIsoString = () => {
-    return moment().startOf('day').toISOString();
+    return moment()
+        .startOf('day')
+        .toISOString();
 };
 
 export const datePickerToISODate = dato => {
@@ -114,20 +104,7 @@ export const ISODateToDatePicker = dato => {
 };
 
 moment.updateLocale('nb', {
-    monthsShort: [
-        'jan',
-        'feb',
-        'mar',
-        'apr',
-        'mai',
-        'jun',
-        'jul',
-        'aug',
-        'sep',
-        'okt',
-        'nov',
-        'des',
-    ],
+    monthsShort: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des']
 });
 
 function formatter(dato, format) {
@@ -162,23 +139,36 @@ export function formaterDatoTidSiden(dato) {
 function erMerEnntoDagerSiden(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
-        ? datoVerdi.isAfter(moment().subtract(2, 'days').startOf('day'), 'd')
+        ? datoVerdi.isAfter(
+              moment()
+                  .subtract(2, 'days')
+                  .startOf('day'),
+              'd'
+          )
         : false;
 }
 
 export function erMerEnnSyvDagerTil(dato) {
     const datoVerdi = moment(dato);
     return datoVerdi.isValid
-        ? datoVerdi.isAfter(moment().add(7, 'days').startOf('day'), 'd')
+        ? datoVerdi.isAfter(
+              moment()
+                  .add(7, 'days')
+                  .startOf('day'),
+              'd'
+          )
         : false;
 }
 
 export function erMerEnnEnManederSiden(aktivitet) {
-    const datoVerdi = aktivitet.tilDato
-        ? moment(aktivitet.tilDato)
-        : moment(aktivitet.fraDato);
+    const datoVerdi = aktivitet.tilDato ? moment(aktivitet.tilDato) : moment(aktivitet.fraDato);
     return datoVerdi.isValid
-        ? datoVerdi.isBefore(moment().subtract(1, 'month').startOf('day'), 'd')
+        ? datoVerdi.isBefore(
+              moment()
+                  .subtract(1, 'month')
+                  .startOf('day'),
+              'd'
+          )
         : false;
 }
 
@@ -218,5 +208,7 @@ export function HiddenIf({ hidden, children }) {
 }
 
 export function dagerTil(dato) {
-    return moment(dato).startOf('day').diff(moment().startOf('day'), 'day');
+    return moment(dato)
+        .startOf('day')
+        .diff(moment().startOf('day'), 'day');
 }

@@ -5,7 +5,7 @@ import {
     beregnKlokkeslettVarighet,
     formatterKlokkeslett,
     formatterVarighet,
-    splitIEldreOgNyereAktiviteter,
+    splitIEldreOgNyereAktiviteter
 } from './aktivitet-util';
 
 describe('aktivitet-util', () => {
@@ -13,7 +13,7 @@ describe('aktivitet-util', () => {
         const fraTil = beregnFraTil({
             dato: '2017-08-01T00:00:00.000+02:00',
             klokkeslett: 15,
-            varighet: 15,
+            varighet: 15
         });
         expect(fraTil.fraDato).toEqual('2017-07-31T22:15:00.000Z');
         expect(fraTil.tilDato).toEqual('2017-07-31T22:30:00.000Z');
@@ -24,7 +24,7 @@ describe('aktivitet-util', () => {
     it('beregnKlokkeslettVarighet', () => {
         const klokkeslettVarighet = beregnKlokkeslettVarighet({
             fraDato: '2017-08-01T04:00:00.000+02:00',
-            tilDato: '2017-08-01T06:15:00.000+02:00',
+            tilDato: '2017-08-01T06:15:00.000+02:00'
         });
         expect(klokkeslettVarighet.klokkeslett).toEqual(240);
         expect(klokkeslettVarighet.varighet).toEqual(120 + 15);
@@ -42,7 +42,7 @@ describe('aktivitet-util', () => {
                 beregnFraTil(
                     beregnKlokkeslettVarighet({
                         fraDato,
-                        tilDato,
+                        tilDato
                     })
                 )
             )
@@ -63,24 +63,17 @@ describe('aktivitet-util', () => {
     it('skallSplitteRiktigt', () => {
         const mangladeTilDato = [{ tilDato: null }];
         const tilDatoMerEnnToManederSiden = {
-            tilDato: moment().subtract(3, 'month').format(),
+            tilDato: moment()
+                .subtract(3, 'month')
+                .format()
         };
         const tilDatoMindreEnnToManederSiden = { tilDato: moment().format() };
-        const aktiviteter = [
-            mangladeTilDato,
-            tilDatoMerEnnToManederSiden,
-            tilDatoMindreEnnToManederSiden,
-        ];
+        const aktiviteter = [mangladeTilDato, tilDatoMerEnnToManederSiden, tilDatoMindreEnnToManederSiden];
         const [
             listeMedAktiviteterTilDatoMindreEnnToManader,
-            listeMedAktiviteterTilDatoMerEnnToManader,
+            listeMedAktiviteterTilDatoMerEnnToManader
         ] = splitIEldreOgNyereAktiviteter(aktiviteter);
-        expect(listeMedAktiviteterTilDatoMindreEnnToManader).toEqual([
-            mangladeTilDato,
-            tilDatoMindreEnnToManederSiden,
-        ]);
-        expect(listeMedAktiviteterTilDatoMerEnnToManader).toEqual([
-            tilDatoMerEnnToManederSiden,
-        ]);
+        expect(listeMedAktiviteterTilDatoMindreEnnToManader).toEqual([mangladeTilDato, tilDatoMindreEnnToManederSiden]);
+        expect(listeMedAktiviteterTilDatoMerEnnToManader).toEqual([tilDatoMerEnnToManederSiden]);
     });
 });

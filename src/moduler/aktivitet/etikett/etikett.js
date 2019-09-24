@@ -36,21 +36,17 @@ const getText = etikettnavn => {
 function Etikett({ etikett, className }) {
     const cls = getCls(etikett);
 
-    return (
-        <EtikettBase className={classNames(cls, className)}>
-            {getText(etikett)}
-        </EtikettBase>
-    );
+    return <EtikettBase className={classNames(cls, className)}>{getText(etikett)}</EtikettBase>;
 }
 
 Etikett.defaultProps = {
     etikett: undefined,
-    className: undefined,
+    className: undefined
 };
 
 Etikett.propTypes = {
     etikett: PT.string,
-    className: PT.string,
+    className: PT.string
 };
 
 export default visibleIfHOC(Etikett);

@@ -15,12 +15,7 @@ export default function LenkeKomponent({ lenke }) {
             visible={!!(lenke && lenke.trim())}
             fullbredde
         >
-            <Lenke
-                href={
-                    lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`
-                }
-                className="detaljfelt__lenke"
-            >
+            <Lenke href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`} className="detaljfelt__lenke">
                 {lenke}
                 <EksternLenkeIkon />
             </Lenke>
@@ -29,8 +24,8 @@ export default function LenkeKomponent({ lenke }) {
 }
 
 LenkeKomponent.propTypes = {
-    lenke: PT.string,
+    lenke: PT.string
 };
 LenkeKomponent.defaultProps = {
-    lenke: null,
+    lenke: null
 };

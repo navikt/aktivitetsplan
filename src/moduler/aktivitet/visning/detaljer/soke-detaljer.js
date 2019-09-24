@@ -4,13 +4,9 @@ import { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt'
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import { HiddenIf } from '../../../../utils';
 import * as AppPT from '../../../../proptypes';
-import {
-    Beskrivelse,
-    FraDato,
-    TilDato,
-} from '../hjelpekomponenter/standard-felt';
+import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const SokeDetaljer = ({ aktivitet }) =>
+const SokeDetaljer = ({ aktivitet }) => (
     <HiddenIf hidden={aktivitet.type !== SOKEAVTALE_AKTIVITET_TYPE}>
         <div className="aktivitetvisning__detaljer">
             <FraDato aktivitet={aktivitet} />
@@ -19,25 +15,17 @@ const SokeDetaljer = ({ aktivitet }) =>
                 key="antallStillinger"
                 tittel="Antall søknader i perioden"
                 innhold={`${aktivitet.antallStillingerSokes}`}
-                hidden={
-                    !aktivitet.antallStillingerSokes ||
-                    aktivitet.antallStillingerSokes < 1
-                }
+                hidden={!aktivitet.antallStillingerSokes || aktivitet.antallStillingerSokes < 1}
             />
             <HiddenIfInformasjonsfelt
                 key="antallStillingerIUken"
                 tittel="Antall søknader i uken"
                 innhold={`${aktivitet.antallStillingerIUken}`}
-                hidden={
-                    !aktivitet.antallStillingerIUken ||
-                    aktivitet.antallStillingerIUken < 1
-                }
+                hidden={!aktivitet.antallStillingerIUken || aktivitet.antallStillingerIUken < 1}
             />
             <HiddenIfInformasjonsfelt
                 key="avtaleOppfolging"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />
-                }
+                tittel={<FormattedMessage id="aktivitetdetaljer.avtale-oppfolging-label" />}
                 beskrivelse
                 formattertTekst
                 hiden={!aktivitet.avtaleOppfolging}
@@ -45,10 +33,11 @@ const SokeDetaljer = ({ aktivitet }) =>
             />
             <Beskrivelse aktivitet={aktivitet} />
         </div>
-    </HiddenIf>;
+    </HiddenIf>
+);
 
 SokeDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };
 
 export default SokeDetaljer;

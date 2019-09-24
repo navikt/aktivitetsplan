@@ -6,10 +6,7 @@ import BegrunnelseAktivitet from './begrunnelse-form';
 import VisAdvarsel from './vis-advarsel';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { STATUS } from '../../../ducks/utils';
-import {
-    selectAktivitetListeStatus,
-    selectAktivitetMedId,
-} from '../aktivitetliste-selector';
+import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetliste-selector';
 import PubliserReferat from './publiser-referat';
 import Modal from '../../../felles-komponenter/modal/modal';
 import { STATUS_AVBRUTT } from '../../../constant';
@@ -21,12 +18,7 @@ const beskrivelseLabel =
     'Når du lagrer blir aktiviteten låst, og du kan ikke lenger redigere innholdet. Etter at du har lagret, ' +
     'må du gi beskjed til  veilederen din ved å starte en dialog her i aktivitetsplanen.';
 
-const AvbrytAktivitet = ({
-    lagrer,
-    valgtAktivitet,
-    lagreBegrunnelse,
-    history,
-}) => {
+const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse, history }) => {
     const begrunnelse = (
         <BegrunnelseAktivitet
             headerTekst={headerTekst}
@@ -34,10 +26,7 @@ const AvbrytAktivitet = ({
             lagrer={lagrer}
             onSubmit={beskrivelseForm => {
                 history.replace('/');
-                return lagreBegrunnelse(
-                    valgtAktivitet,
-                    beskrivelseForm.begrunnelse
-                );
+                return lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
         />
     );
@@ -52,18 +41,11 @@ const AvbrytAktivitet = ({
         />
     );
 
-    const maaBegrunnes = trengerBegrunnelse(
-        valgtAktivitet.avtalt,
-        STATUS_AVBRUTT,
-        valgtAktivitet.type
-    );
+    const maaBegrunnes = trengerBegrunnelse(valgtAktivitet.avtalt, STATUS_AVBRUTT, valgtAktivitet.type);
 
     return (
         <Modal contentLabel="avbryt-aktivitet">
-            <PubliserReferat
-                aktivitet={valgtAktivitet}
-                nyStatus={STATUS_AVBRUTT}
-            >
+            <PubliserReferat aktivitet={valgtAktivitet} nyStatus={STATUS_AVBRUTT}>
                 {maaBegrunnes ? begrunnelse : advarsel}
             </PubliserReferat>
         </Modal>
@@ -75,12 +57,11 @@ AvbrytAktivitet.propTypes = {
     lagrer: PT.bool.isRequired,
     lagreBegrunnelse: PT.func.isRequired,
     history: AppPT.history.isRequired,
-    match: PT.object.isRequired,
+    match: PT.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-    lagreBegrunnelse: (aktivitet, begrunnelse) =>
-        dispatch(avbrytAktivitet(aktivitet, begrunnelse)),
+    lagreBegrunnelse: (aktivitet, begrunnelse) => dispatch(avbrytAktivitet(aktivitet, begrunnelse))
 });
 
 const mapStateToProps = (state, props) => {
@@ -88,8 +69,11 @@ const mapStateToProps = (state, props) => {
     const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
     return {
         valgtAktivitet: valgtAktivitet || {},
-        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,
+        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AvbrytAktivitet);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AvbrytAktivitet);

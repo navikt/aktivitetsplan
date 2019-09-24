@@ -10,7 +10,7 @@ export const cls = (className, props, ...args) =>
         'panel-stablet': props.stablet,
         'panel-fremhevet': props.fremhevet,
         'panel-negativ': props.negativ,
-        'panel-komprimert': props.komprimert,
+        'panel-komprimert': props.komprimert
     });
 
 function PanelBase({ className, children, ...props }) {
@@ -31,7 +31,7 @@ PanelBase.propTypes = {
     stablet: PT.bool,
     fremhevet: PT.bool,
     negativ: PT.bool,
-    komprimert: PT.bool,
+    komprimert: PT.bool
 };
 
 PanelBase.defaultProps = {
@@ -43,7 +43,7 @@ PanelBase.defaultProps = {
     stablet: false,
     fremhevet: false,
     negativ: false,
-    komprimert: false,
+    komprimert: false
 };
 
 export default PanelBase;

@@ -7,7 +7,7 @@ import {
     toggleAktivitetsEtikett,
     toggleAktivitetsStatus,
     toggleAktivitetsType,
-    velgHistoriskPeriode,
+    velgHistoriskPeriode
 } from './filter/filter-reducer';
 import FiltreringLabel from './filteringslabel/filtering-label';
 import { PeriodeLabel } from './filter/periode-filter';
@@ -20,29 +20,29 @@ function FilterGruppe({
     doToggleAktivitetsStatus,
     doToggleAktivitetsType,
     doVelgHistoriskPeriode,
-    doToggleAktivitetAvtaltMedNav,
+    doToggleAktivitetAvtaltMedNav
 }) {
     const setFilterValues = (filterType, filterVerdi) => {
         switch (filterType) {
             case 'aktivitetTyper':
                 return {
                     tekstPath: `aktivitet.type.${filterVerdi}`,
-                    func: doToggleAktivitetsType,
+                    func: doToggleAktivitetsType
                 };
             case 'aktivitetEtiketter':
                 return {
                     tekstPath: `aktivitet.etikett.${filterVerdi}`,
-                    func: doToggleAktivitetsEtikett,
+                    func: doToggleAktivitetsEtikett
                 };
             case 'aktivitetStatus':
                 return {
                     tekstPath: `aktivitet.status.${filterVerdi}`,
-                    func: doToggleAktivitetsStatus,
+                    func: doToggleAktivitetsStatus
                 };
             case 'aktivitetAvtaltMedNav':
                 return {
                     tekstPath: `aktivitet.${filterVerdi}`,
-                    func: doToggleAktivitetAvtaltMedNav,
+                    func: doToggleAktivitetAvtaltMedNav
                 };
             default:
                 return filterType;
@@ -51,10 +51,7 @@ function FilterGruppe({
 
     if (filterKey === 'historiskPeriode') {
         return (
-            <VisibleIfDiv
-                visible={!!filterValue}
-                className="filtrering-label-container"
-            >
+            <VisibleIfDiv visible={!!filterValue} className="filtrering-label-container">
                 <FiltreringLabel
                     key={filterValue}
                     label={<PeriodeLabel historiskPeriode={filterValue} />}
@@ -65,27 +62,25 @@ function FilterGruppe({
     }
     return (
         <div className="filtrering-label-container">
-            {Object.keys(filterValue).filter(f => filterValue[f]).map(f => {
-                const filterValues = setFilterValues(filterKey, f);
-                return (
-                    <FiltreringLabel
-                        key={f}
-                        label={
-                            <FormattedMessage
-                                id={filterValues.tekstPath.toLowerCase()}
-                            />
-                        }
-                        slettFilter={() => filterValues.func(f)}
-                    />
-                );
-            })}
+            {Object.keys(filterValue)
+                .filter(f => filterValue[f])
+                .map(f => {
+                    const filterValues = setFilterValues(filterKey, f);
+                    return (
+                        <FiltreringLabel
+                            key={f}
+                            label={<FormattedMessage id={filterValues.tekstPath.toLowerCase()} />}
+                            slettFilter={() => filterValues.func(f)}
+                        />
+                    );
+                })}
         </div>
     );
 }
 
 FilterGruppe.defaultProps = {
     filterKey: '',
-    filterValue: null,
+    filterValue: null
 };
 
 FilterGruppe.propTypes = {
@@ -95,20 +90,18 @@ FilterGruppe.propTypes = {
     doToggleAktivitetsStatus: PT.func.isRequired,
     doToggleAktivitetsType: PT.func.isRequired,
     doVelgHistoriskPeriode: PT.func.isRequired,
-    doToggleAktivitetAvtaltMedNav: PT.func.isRequired,
+    doToggleAktivitetAvtaltMedNav: PT.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-    doToggleAktivitetsEtikett: aktivitetsEtikett =>
-        dispatch(toggleAktivitetsEtikett(aktivitetsEtikett)),
-    doToggleAktivitetsStatus: aktivitetsStatus =>
-        dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
-    doToggleAktivitetsType: aktivitetsType =>
-        dispatch(toggleAktivitetsType(aktivitetsType)),
-    doVelgHistoriskPeriode: historiskPeriode =>
-        dispatch(velgHistoriskPeriode(historiskPeriode)),
-    doToggleAktivitetAvtaltMedNav: aktivitetsStatus =>
-        dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus)),
+    doToggleAktivitetsEtikett: aktivitetsEtikett => dispatch(toggleAktivitetsEtikett(aktivitetsEtikett)),
+    doToggleAktivitetsStatus: aktivitetsStatus => dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
+    doToggleAktivitetsType: aktivitetsType => dispatch(toggleAktivitetsType(aktivitetsType)),
+    doVelgHistoriskPeriode: historiskPeriode => dispatch(velgHistoriskPeriode(historiskPeriode)),
+    doToggleAktivitetAvtaltMedNav: aktivitetsStatus => dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus))
 });
 
-export default connect(null, mapDispatchToProps)(FilterGruppe);
+export default connect(
+    null,
+    mapDispatchToProps
+)(FilterGruppe);

@@ -9,7 +9,7 @@ const dialogerEskalering = [
         overskrift: '',
         venterPaSvar: false,
         ferdigBehandlet: false,
-        henvendelser: [],
+        henvendelser: []
     },
     {
         // venter på nav
@@ -18,8 +18,8 @@ const dialogerEskalering = [
         venterPaSvar: false,
         ferdigBehandlet: false,
         egenskaper: ['ESKALERINGSVARSEL'],
-        henvendelser: [],
-    },
+        henvendelser: []
+    }
 ];
 
 const dialogerVenterPaNoen = [
@@ -29,7 +29,7 @@ const dialogerVenterPaNoen = [
         overskrift: '',
         venterPaSvar: true,
         ferdigBehandlet: true,
-        henvendelser: [],
+        henvendelser: []
     },
     {
         // venter på nav
@@ -37,7 +37,7 @@ const dialogerVenterPaNoen = [
         overskrift: '',
         venterPaSvar: false,
         ferdigBehandlet: false,
-        henvendelser: [],
+        henvendelser: []
     },
     {
         // venter på begge
@@ -46,12 +46,12 @@ const dialogerVenterPaNoen = [
         sisteDato: '2017-07-01T14:09:59.334+02:00',
         venterPaSvar: true,
         ferdigBehandlet: false,
-        henvendelser: [],
-    },
+        henvendelser: []
+    }
 ];
 
 const gjeldendeVarsel = {
-    tilhorendeDialogId: 2,
+    tilhorendeDialogId: 2
 };
 
 describe('<Dialoger/>', () => {
@@ -65,7 +65,7 @@ describe('<Dialoger/>', () => {
                 history={{
                     goBack: () => null,
                     push: () => null,
-                    replace: () => null,
+                    replace: () => null
                 }}
             />
         );
@@ -84,7 +84,7 @@ describe('<Dialoger/>', () => {
                 history={{
                     goBack: () => null,
                     push: () => null,
-                    replace: () => null,
+                    replace: () => null
                 }}
             />
         );
@@ -103,7 +103,7 @@ describe('<Dialoger/>', () => {
                 history={{
                     goBack: () => null,
                     push: () => null,
-                    replace: () => null,
+                    replace: () => null
                 }}
             />
         );
@@ -122,7 +122,7 @@ describe('<Dialoger/>', () => {
                 history={{
                     goBack: () => null,
                     push: () => null,
-                    replace: () => null,
+                    replace: () => null
                 }}
             />
         );
@@ -141,7 +141,7 @@ describe('<Dialoger/>', () => {
                 history={{
                     goBack: () => null,
                     push: () => null,
-                    replace: () => null,
+                    replace: () => null
                 }}
             />
         );
@@ -160,7 +160,7 @@ describe('<Dialoger/>', () => {
                 history={{
                     goBack: () => null,
                     push: () => null,
-                    replace: () => null,
+                    replace: () => null
                 }}
             />
         );

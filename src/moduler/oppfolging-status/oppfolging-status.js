@@ -12,13 +12,9 @@ import {
     selectErUnderOppfolging,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
-    selectServicegruppe,
+    selectServicegruppe
 } from './oppfolging-selector';
-import {
-    selectErVeileder,
-    selectIdentitetId,
-    selectIdentitetStatus,
-} from '../identitet/identitet-selector';
+import { selectErVeileder, selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
 import VidereSendBrukereEllerRenderChildren from './videre-send-bruker-eller-render-children';
 
@@ -32,13 +28,7 @@ class OppfolgingStatus extends Component {
     render() {
         const { props } = this;
         return (
-            <Innholdslaster
-                avhengigheter={[
-                    props.oppfolgingStatus,
-                    props.identitetStatus,
-                    props.toggleStatus,
-                ]}
-            >
+            <Innholdslaster avhengigheter={[props.oppfolgingStatus, props.identitetStatus, props.toggleStatus]}>
                 <div className="fullbredde">
                     <VidereSendBrukereEllerRenderChildren {...props} />
                 </div>
@@ -53,11 +43,11 @@ OppfolgingStatus.propTypes = {
     toggleStatus: AppPT.status.isRequired,
     doHentOppfolging: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
-    sevicegruppe: PT.string,
+    sevicegruppe: PT.string
 };
 
 OppfolgingStatus.defaultProps = {
-    sevicegruppe: null,
+    sevicegruppe: null
 };
 
 const mapStateToProps = state => ({
@@ -71,12 +61,15 @@ const mapStateToProps = state => ({
     manuell: selectErBrukerManuell(state),
     servicegruppe: selectServicegruppe(state),
     aktorId: selectAktorId(state),
-    ident: selectIdentitetId(state),
+    ident: selectIdentitetId(state)
 });
 
 const mapDispatchToProps = dispatch => ({
     doHentOppfolging: () => dispatch(hentOppfolging()),
-    doHentIdentitet: () => dispatch(hentIdentitet()),
+    doHentIdentitet: () => dispatch(hentIdentitet())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OppfolgingStatus);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(OppfolgingStatus);

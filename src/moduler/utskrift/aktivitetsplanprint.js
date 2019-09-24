@@ -7,10 +7,7 @@ import { formaterDatoKortManed } from '../../utils';
 import StoreForbokstaver from '../../felles-komponenter/utils/store-forbokstaver';
 import * as AppPT from '../../proptypes';
 import Modal from '../../felles-komponenter/modal/modal';
-import {
-    selectAktivitetListe,
-    selectAktivitetListeStatus,
-} from '../aktivitet/aktivitetliste-selector';
+import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetliste-selector';
 import logoPng from './logo.png';
 import StatusGruppe from './statusgruppe';
 import PrintMelding from './printmelding';
@@ -19,7 +16,7 @@ import {
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT,
+    STATUS_PLANLAGT
 } from '../../constant';
 import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
 import {
@@ -27,73 +24,51 @@ import {
     selectCurrentStepUtskrift,
     selectKanHaPrintMeldingForm,
     selectKanVelgePlanType,
-    selectUtskriftPlanType,
+    selectUtskriftPlanType
 } from './utskrift-selector';
 import { goToStepUtskrift, resetUtskrift } from './utskrift-duck';
-import {
-    hentMal,
-    selectGjeldendeMal,
-    selectMalStatus,
-} from '../mal/aktivitetsmal-reducer';
+import { hentMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { hentMalListe } from '../mal/malliste-reducer';
-import {
-    section as HiddenIfSection,
-    div as HiddenIfDiv,
-} from '../../felles-komponenter/hidden-if/hidden-if';
+import { section as HiddenIfSection, div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus,
+    selectOppfolgingStatus
 } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import FnrProvider from '../../bootstrap/fnr-provider';
-import {
-    selectAlleDialoger,
-    selectDialogStatus,
-} from '../dialog/dialog-selector';
+import { selectAlleDialoger, selectDialogStatus } from '../dialog/dialog-selector';
 import DialogPrint from './dialog-print';
 import VelgPlanUtskrift from './velg-plan-utskrift';
-import loggEvent, {
-    PRINT_MODSAL_OPEN,
-    TRYK_PRINT,
-} from '../../felles-komponenter/utils/logging';
+import loggEvent, { PRINT_MODSAL_OPEN, TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 
 const StatusGruppePT = PT.shape({
     status: PT.string.isRequired,
     aktiviteter: AppPT.aktiviteter,
-    dialoger: PT.arrayOf(AppPT.dialog),
+    dialoger: PT.arrayOf(AppPT.dialog)
 });
 
 function Adresse({ bruker }) {
     const { bostedsadresse } = bruker;
-    const strukturertAdresse =
-        bostedsadresse && bostedsadresse.strukturertAdresse;
+    const strukturertAdresse = bostedsadresse && bostedsadresse.strukturertAdresse;
     const gateadresse = strukturertAdresse && strukturertAdresse.Gateadresse;
     if (!gateadresse) {
         return <div />;
     }
-    const {
-        gatenavn,
-        poststed,
-        husbokstav,
-        husnummer,
-        postnummer,
-    } = gateadresse;
+    const { gatenavn, poststed, husbokstav, husnummer, postnummer } = gateadresse;
     return (
         <div>
-            <StoreForbokstaver tag="div">
-                {`${gatenavn} ${husnummer} ${husbokstav || ''}`}
-            </StoreForbokstaver>
+            <StoreForbokstaver tag="div">{`${gatenavn} ${husnummer} ${husbokstav || ''}`}</StoreForbokstaver>
             <StoreForbokstaver tag="div">{`${postnummer} ${poststed}`}</StoreForbokstaver>
         </div>
     );
 }
 
 Adresse.propTypes = {
-    bruker: AppPT.bruker.isRequired,
+    bruker: AppPT.bruker.isRequired
 };
 
 function Print({
@@ -105,36 +80,29 @@ function Print({
     dialoger,
     utskriftPlanType,
     valgtKvpPeriode,
-    erManuell,
+    erManuell
 }) {
     const { fodselsnummer, fornavn, etternavn } = bruker;
     const { beskrivelse } = printMelding;
 
-    const statusGrupper = grupper.map(gruppe =>
-        <StatusGruppe gruppe={gruppe} key={gruppe.status} />
-    );
+    const statusGrupper = grupper.map(gruppe => <StatusGruppe gruppe={gruppe} key={gruppe.status} />);
 
     const { behandlendeEnhet } = bruker;
     const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
 
     const erKvpUtskrift =
-        utskriftPlanType !== undefined &&
-        utskriftPlanType !== 'helePlanen' &&
-        utskriftPlanType !== 'aktivitetsplan';
+        utskriftPlanType !== undefined && utskriftPlanType !== 'helePlanen' && utskriftPlanType !== 'aktivitetsplan';
 
     let dialogerUtenAktivitet;
     let filtrerteDialoger;
     let kvpPeriodeFra;
     let kvpPeriodeTil;
     if (erKvpUtskrift) {
-        dialogerUtenAktivitet =
-            dialoger && dialoger.filter(d => d.aktivitetId === null);
+        dialogerUtenAktivitet = dialoger && dialoger.filter(d => d.aktivitetId === null);
         filtrerteDialoger =
             dialogerUtenAktivitet &&
             dialogerUtenAktivitet.filter(
-                d =>
-                    d.sisteDato >= valgtKvpPeriode.opprettetDato &&
-                    d.sisteDato <= valgtKvpPeriode.avsluttetDato
+                d => d.sisteDato >= valgtKvpPeriode.opprettetDato && d.sisteDato <= valgtKvpPeriode.avsluttetDato
             );
         kvpPeriodeFra = formaterDatoKortManed(valgtKvpPeriode.opprettetDato);
         kvpPeriodeTil = formaterDatoKortManed(valgtKvpPeriode.avsluttetDato);
@@ -142,24 +110,16 @@ function Print({
 
     return (
         <div className="printmodal-body">
-            <img
-                className="printmodal-body__nav-logo-print"
-                src={logoPng}
-                alt="Logo NAV"
-            />
+            <img className="printmodal-body__nav-logo-print" src={logoPng} alt="Logo NAV" />
             <div className="printmodal-body__adresse-dato">
                 <div className="printmodal-body__adresse">
                     <HiddenIfDiv hidden={!erVeileder}>
-                        <StoreForbokstaver>
-                            {`${fornavn} ${etternavn}`}
-                        </StoreForbokstaver>
+                        <StoreForbokstaver>{`${fornavn} ${etternavn}`}</StoreForbokstaver>
                         <Adresse bruker={bruker} />
                     </HiddenIfDiv>
                 </div>
                 <div className="printmodal-body__dato">
-                    <HiddenIfDiv hidden={!erVeileder}>
-                        {enhetsNavn}
-                    </HiddenIfDiv>
+                    <HiddenIfDiv hidden={!erVeileder}>{enhetsNavn}</HiddenIfDiv>
                     <FormattedMessage id="print.modal.utskrift.dato" />
                     {` ${formaterDatoKortManed(Date.now())}`}
                     <HiddenIfDiv hidden={!fodselsnummer}>
@@ -176,50 +136,25 @@ function Print({
                         />
                     </HiddenIfDiv>
                     <HiddenIfDiv hidden={!erKvpUtskrift}>
-                        <FormattedMessage
-                            id="print.manuellbruker.eller.niva4"
-                            values={{ erManuell }}
-                        />
+                        <FormattedMessage id="print.manuellbruker.eller.niva4" values={{ erManuell }} />
                     </HiddenIfDiv>
                 </div>
             </div>
-            <Systemtittel
-                tag="h1"
-                className="printmodal-body__utskrift--overskrift"
-            >
+            <Systemtittel tag="h1" className="printmodal-body__utskrift--overskrift">
                 <FormattedMessage id="hovedside.tittel" />
             </Systemtittel>
-            <HiddenIfSection
-                hidden={!printMelding}
-                className="printmodal-body__visprintmelding"
-            >
-                <p>
-                    {beskrivelse}
-                </p>
+            <HiddenIfSection hidden={!printMelding} className="printmodal-body__visprintmelding">
+                <p>{beskrivelse}</p>
             </HiddenIfSection>
-            <HiddenIfSection
-                hidden={!mittMal || !mittMal.mal}
-                className="printmodal-body__vismittmal"
-            >
-                <Undertittel
-                    tag="h1"
-                    className="printmodal-body__vismittmal--overskrift"
-                >
+            <HiddenIfSection hidden={!mittMal || !mittMal.mal} className="printmodal-body__vismittmal">
+                <Undertittel tag="h1" className="printmodal-body__vismittmal--overskrift">
                     <FormattedMessage id="aktivitetsmal.mitt-mal" />
                 </Undertittel>
-                <p>
-                    {mittMal && mittMal.mal}
-                </p>
+                <p>{mittMal && mittMal.mal}</p>
             </HiddenIfSection>
             {statusGrupper}
-            <HiddenIfSection
-                hidden={!erKvpUtskrift || !filtrerteDialoger}
-                className="printmodal-body__statusgrupper"
-            >
-                {filtrerteDialoger &&
-                    filtrerteDialoger.map(d =>
-                        <DialogPrint key={d.dialogId} dialog={d} />
-                    )}
+            <HiddenIfSection hidden={!erKvpUtskrift || !filtrerteDialoger} className="printmodal-body__statusgrupper">
+                {filtrerteDialoger && filtrerteDialoger.map(d => <DialogPrint key={d.dialogId} dialog={d} />)}
             </HiddenIfSection>
         </div>
     );
@@ -234,7 +169,7 @@ Print.propTypes = {
     dialoger: PT.arrayOf(AppPT.dialog).isRequired,
     utskriftPlanType: PT.string,
     valgtKvpPeriode: PT.object,
-    erManuell: PT.bool,
+    erManuell: PT.bool
 };
 
 Print.defaultProps = {
@@ -243,7 +178,7 @@ Print.defaultProps = {
     erVeileder: false,
     utskriftPlanType: 'helePlanen',
     valgtKvpPeriode: undefined,
-    erManuell: false,
+    erManuell: false
 };
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
@@ -260,14 +195,7 @@ class AktivitetsplanPrintModal extends Component {
     }
 
     render() {
-        const {
-            avhengigheter,
-            stepOrder,
-            steps,
-            currentStep,
-            goToStep,
-            doResetUtskrift,
-        } = this.props;
+        const { avhengigheter, stepOrder, steps, currentStep, goToStep, doResetUtskrift } = this.props;
 
         const currentStepIndex = stepOrder.indexOf(currentStep);
 
@@ -284,10 +212,7 @@ class AktivitetsplanPrintModal extends Component {
                         >
                             <div className="tilbakeknapp-innhold">
                                 <i className="nav-frontend-chevron chevronboks chevron--venstre" />
-                                <FormattedMessage
-                                    id="print.modal.tilbake"
-                                    className="tilbakeknapp-innhold__tekst"
-                                />
+                                <FormattedMessage id="print.modal.tilbake" className="tilbakeknapp-innhold__tekst" />
                             </div>
                         </Knappelenke>
                         <HiddenIfHovedknapp
@@ -314,9 +239,7 @@ class AktivitetsplanPrintModal extends Component {
                         header={header}
                         onRequestClose={doResetUtskrift}
                     >
-                        <Innholdslaster avhengigheter={avhengigheter}>
-                            {steps[currentStep]}
-                        </Innholdslaster>
+                        <Innholdslaster avhengigheter={avhengigheter}>{steps[currentStep]}</Innholdslaster>
                     </Modal>
                 </FnrProvider>
             </section>
@@ -334,12 +257,12 @@ AktivitetsplanPrintModal.propTypes = {
     goToStep: PT.func.isRequired,
     doResetUtskrift: PT.func.isRequired,
     erVeileder: PT.bool,
-    history: AppPT.history.isRequired,
+    history: AppPT.history.isRequired
 };
 
 AktivitetsplanPrintModal.defaultProps = {
     avhengigheter: [],
-    erVeileder: null,
+    erVeileder: null
 };
 
 const statusRekkefolge = [
@@ -347,7 +270,7 @@ const statusRekkefolge = [
     STATUS_PLANLAGT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
+    STATUS_AVBRUTT
 ];
 
 const mapStateToProps = state => {
@@ -355,11 +278,8 @@ const mapStateToProps = state => {
 
     const utskriftPlanType = selectUtskriftPlanType(state);
     const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
-    const valgtKvpPeriode =
-        kvpPerioder &&
-        kvpPerioder.find(periode => periode.opprettetDato === utskriftPlanType);
-    const valgtKvpPeriodeId =
-        (valgtKvpPeriode && valgtKvpPeriode.opprettetDato) || '';
+    const valgtKvpPeriode = kvpPerioder && kvpPerioder.find(periode => periode.opprettetDato === utskriftPlanType);
+    const valgtKvpPeriodeId = (valgtKvpPeriode && valgtKvpPeriode.opprettetDato) || '';
 
     switch (utskriftPlanType) {
         case 'helePlanen':
@@ -367,18 +287,13 @@ const mapStateToProps = state => {
             break;
         case 'aktivitetsplan':
             aktiviteter = selectAktivitetListe(state).filter(a =>
-                kvpPerioder.every(
-                    kvp =>
-                        a.opprettetDato < kvp.opprettetDato ||
-                        a.opprettetDato > kvp.avsluttetDato
-                )
+                kvpPerioder.every(kvp => a.opprettetDato < kvp.opprettetDato || a.opprettetDato > kvp.avsluttetDato)
             );
             break;
         case valgtKvpPeriodeId:
             aktiviteter = selectAktivitetListe(state).filter(
                 a =>
-                    a.opprettetDato >= valgtKvpPeriode.opprettetDato &&
-                    a.opprettetDato <= valgtKvpPeriode.avsluttetDato
+                    a.opprettetDato >= valgtKvpPeriode.opprettetDato && a.opprettetDato <= valgtKvpPeriode.avsluttetDato
             );
             break;
         default:
@@ -399,18 +314,14 @@ const mapStateToProps = state => {
     }, {});
 
     const skjulDialoger =
-        utskriftPlanType === undefined ||
-        utskriftPlanType === 'helePlanen' ||
-        utskriftPlanType === 'aktivitetsplan';
+        utskriftPlanType === undefined || utskriftPlanType === 'helePlanen' || utskriftPlanType === 'aktivitetsplan';
 
     const sorterteStatusGrupper = Object.keys(statusTilAktiviteter)
-        .sort(
-            (a, b) => statusRekkefolge.indexOf(a) - statusRekkefolge.indexOf(b)
-        )
+        .sort((a, b) => statusRekkefolge.indexOf(a) - statusRekkefolge.indexOf(b))
         .map(status => ({
             status,
             aktiviteter: statusTilAktiviteter[status],
-            dialoger: skjulDialoger ? [] : dialoger,
+            dialoger: skjulDialoger ? [] : dialoger
         }));
 
     const bruker = selectBruker(state);
@@ -459,12 +370,12 @@ const mapStateToProps = state => {
             selectOppfolgingStatus(state),
             selectAktivitetListeStatus(state),
             selectBrukerStatus(state),
-            selectDialogStatus(state),
+            selectDialogStatus(state)
         ],
         stepOrder,
         steps,
         currentStep,
-        erVeileder,
+        erVeileder
     };
 };
 
@@ -476,10 +387,11 @@ function mapDispatchToProps(dispatch, props) {
             props.history.push('/');
         },
         doHentMal: () => dispatch(hentMal()),
-        doHentMalListe: () => dispatch(hentMalListe()),
+        doHentMalListe: () => dispatch(hentMalListe())
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    AktivitetsplanPrintModal
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AktivitetsplanPrintModal);

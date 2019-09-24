@@ -9,13 +9,9 @@ export default function Arbeidsgiver({ aktivitet }) {
         return null;
     }
 
-    return (
-        <Normaltekst>
-            {arbeidsgiver}
-        </Normaltekst>
-    );
+    return <Normaltekst>{arbeidsgiver}</Normaltekst>;
 }
 
 Arbeidsgiver.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };

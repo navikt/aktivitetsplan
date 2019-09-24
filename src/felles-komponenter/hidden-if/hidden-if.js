@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { fn } from "../../utils";
+import { fn } from '../../utils';
 
 export default function hiddenIfHOC(WrappingComponent) {
     function hiddenIf({ hidden, ...props }) {
@@ -11,19 +11,17 @@ export default function hiddenIfHOC(WrappingComponent) {
     }
 
     hiddenIf.defaultProps = {
-        hidden: false,
+        hidden: false
     };
     hiddenIf.propTypes = {
-        hidden: PT.oneOfType([PT.bool, PT.func]),
+        hidden: PT.oneOfType([PT.bool, PT.func])
     };
 
     return hiddenIf;
 }
 
 function hoc(type) {
-    return hiddenIfHOC(props =>
-        React.createElement(type, props, props.children)
-    );
+    return hiddenIfHOC(props => React.createElement(type, props, props.children));
 }
 
 export const div = hoc('div');

@@ -1,10 +1,7 @@
 import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-    AlertStripeAdvarsel,
-    AlertStripeInfoSolid,
-} from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 
@@ -17,35 +14,29 @@ export function Varsling({ tekstId, className }) {
 }
 
 Varsling.defaultProps = {
-    className: '',
+    className: ''
 };
 
 Varsling.propTypes = {
     tekstId: PT.string.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
-export function VarslingMedLenke({
-    tekstId,
-    lenkeTekstId,
-    href,
-    className,
-    onClick,
-}) {
+export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className, onClick }) {
     return (
         <AlertStripeInfoSolid className={className}>
             <FormattedMessage id={tekstId} />
-&nbsp;
-<Lenke href={href} onClick={onClick}>
+            &nbsp;
+            <Lenke href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
-</Lenke>
+            </Lenke>
         </AlertStripeInfoSolid>
     );
 }
 
 VarslingMedLenke.defaultProps = {
     className: '',
-    onClick: () => {},
+    onClick: () => {}
 };
 
 VarslingMedLenke.propTypes = {
@@ -53,7 +44,7 @@ VarslingMedLenke.propTypes = {
     lenkeTekstId: PT.string.isRequired,
     href: PT.string.isRequired,
     className: PT.string,
-    onClick: PT.func,
+    onClick: PT.func
 };
 
 export function AdvarselVarsling({ tekstId, className }) {
@@ -65,34 +56,22 @@ export function AdvarselVarsling({ tekstId, className }) {
 }
 
 AdvarselVarsling.defaultProps = {
-    className: '',
+    className: ''
 };
 
 AdvarselVarsling.propTypes = {
     tekstId: PT.string.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
-export function AdvarselMedLenkeVarsling({
-    tekstId,
-    lenkeTekstId,
-    href,
-    erEksternLenke,
-    className,
-    onClick,
-    values,
-}) {
+export function AdvarselMedLenkeVarsling({ tekstId, lenkeTekstId, href, erEksternLenke, className, onClick, values }) {
     return (
         <AlertStripeAdvarsel className={className}>
             <FormattedMessage id={tekstId} values={values} />
-&nbsp;
-<Lenke
-                href={href}
-                onClick={onClick}
-                erEksternLenke={erEksternLenke}
-            >
+            &nbsp;
+            <Lenke href={href} onClick={onClick} erEksternLenke={erEksternLenke}>
                 <FormattedMessage id={lenkeTekstId} />
-</Lenke>
+            </Lenke>
         </AlertStripeAdvarsel>
     );
 }
@@ -101,7 +80,7 @@ AdvarselMedLenkeVarsling.defaultProps = {
     className: '',
     onClick: () => {},
     values: undefined,
-    erEksternLenke: false,
+    erEksternLenke: false
 };
 
 AdvarselMedLenkeVarsling.propTypes = {
@@ -111,7 +90,7 @@ AdvarselMedLenkeVarsling.propTypes = {
     erEksternLenke: PT.bool,
     className: PT.string,
     onClick: PT.func,
-    values: PT.object,
+    values: PT.object
 };
 
 export const HiddenIfVarsling = hiddenIf(Varsling);

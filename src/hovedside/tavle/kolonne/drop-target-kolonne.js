@@ -28,25 +28,20 @@ const mottaAktivitetsKort = {
                 doFlyttAktivitet(aktivitet, status);
             }
         });
-    },
+    }
 };
 
 function collect(theConnect, monitor) {
     return {
         drag: monitor.isOver(),
-        connectDropTarget: theConnect.dropTarget(),
+        connectDropTarget: theConnect.dropTarget()
     };
 }
 
 function DropTargetKolonne({ connectDropTarget, drag, children }) {
     return connectDropTarget(
         <div className="aktivitetstavle__kolonne-wrapper">
-            <div
-                className={classNames(
-                    'aktivitetstavle__kolonne',
-                    drag && 'aktivitetstavle__kolonne--drag'
-                )}
-            >
+            <div className={classNames('aktivitetstavle__kolonne', drag && 'aktivitetstavle__kolonne--drag')}>
                 {children}
             </div>
         </div>
@@ -57,18 +52,16 @@ DropTargetKolonne.propTypes = {
     status: PT.string.isRequired,
     doFlyttAktivitet: PT.func.isRequired,
     history: AppPT.history.isRequired,
-    children: PT.node,
+    children: PT.node
 };
 
 const mapDispatchToProps = dispatch => ({
-    doFlyttAktivitet: (aktivitet, status) =>
-        flyttAktivitet(aktivitet, status)(dispatch),
+    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
 });
 
 export default withRouter(
-    connect(null, mapDispatchToProps)(
-        DropTarget('AktivitetsKort', mottaAktivitetsKort, collect)(
-            DropTargetKolonne
-        )
-    )
+    connect(
+        null,
+        mapDispatchToProps
+    )(DropTarget('AktivitetsKort', mottaAktivitetsKort, collect)(DropTargetKolonne))
 );

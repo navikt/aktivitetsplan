@@ -12,7 +12,7 @@ import {
     visTestAktiviteter,
     setFeatureTogle,
     fetureStatus,
-    erManuellBruker,
+    erManuellBruker
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -20,7 +20,7 @@ import { ALL_FEATURES } from '../../felles-komponenter/feature/feature';
 
 const brukertype = {
     ekstern: 'eksternbruker',
-    veileder: 'veilederbruker',
+    veileder: 'veilederbruker'
 };
 
 class DemoDashboard extends React.Component {
@@ -31,8 +31,7 @@ class DemoDashboard extends React.Component {
 
     endreTilstand = e => {
         const checkbox = e.currentTarget;
-        const saveInSessionStorage =
-            Object.values(SessionStorageElement).indexOf(checkbox.id) > -1;
+        const saveInSessionStorage = Object.values(SessionStorageElement).indexOf(checkbox.id) > -1;
 
         if (saveInSessionStorage) {
             settSessionStorage(checkbox.id, checkbox.checked);
@@ -65,13 +64,13 @@ class DemoDashboard extends React.Component {
                         {
                             label: 'Veileder',
                             id: brukertype.veileder,
-                            value: brukertype.veileder,
+                            value: brukertype.veileder
                         },
                         {
                             label: 'Eksternbruker',
                             id: brukertype.ekstern,
-                            value: brukertype.ekstern,
-                        },
+                            value: brukertype.ekstern
+                        }
                     ]}
                     checked={this.getBrukerType()}
                     onChange={this.endreBrukerType}
@@ -82,18 +81,18 @@ class DemoDashboard extends React.Component {
                         {
                             label: 'Ikke under oppfølging',
                             id: SessionStorageElement.PRIVAT_BRUKER,
-                            checked: erPrivatBruker(),
+                            checked: erPrivatBruker()
                         },
                         {
                             label: 'Manuell',
                             id: SessionStorageElement.MANUELL_BRUKER,
-                            checked: erManuellBruker(),
+                            checked: erManuellBruker()
                         },
                         {
                             label: 'Ingen oppfølgingsperioder',
                             id: SessionStorageElement.INGEN_OPPF_PERIODER,
-                            checked: ingenOppfPerioder(),
-                        },
+                            checked: ingenOppfPerioder()
+                        }
                     ]}
                     onChange={this.endreTilstand}
                 />
@@ -103,18 +102,18 @@ class DemoDashboard extends React.Component {
                         {
                             label: 'Automatiske aktiviteter',
                             id: SessionStorageElement.AUTOMATISKE_AKTIVITETER,
-                            checked: visAutomatiskeAktiviteter(),
+                            checked: visAutomatiskeAktiviteter()
                         },
                         {
                             label: 'Arenaaktiviteter',
                             id: SessionStorageElement.ARENA_AKTIVITETER,
-                            checked: visArenaAktiviteter(),
+                            checked: visArenaAktiviteter()
                         },
                         {
                             label: 'Testaktiviteter',
                             id: SessionStorageElement.TEST_AKTIVITETER,
-                            checked: visTestAktiviteter(),
-                        },
+                            checked: visTestAktiviteter()
+                        }
                     ]}
                     onChange={this.endreTilstand}
                 />
@@ -125,7 +124,7 @@ class DemoDashboard extends React.Component {
                             label: name,
                             id: name,
                             value: name,
-                            checked: fetureStatus(name),
+                            checked: fetureStatus(name)
                         };
                     })}
                     onChange={this.setFeature}

@@ -11,16 +11,14 @@ function header(valgtAktivitet) {
         return null;
     }
 
-    const aktivitetErLaast =
-        valgtAktivitet.status === STATUS_FULLFOERT ||
-        valgtAktivitet.status === STATUS_AVBRUTT;
+    const aktivitetErLaast = valgtAktivitet.status === STATUS_FULLFOERT || valgtAktivitet.status === STATUS_AVBRUTT;
 
     return (
         <ModalHeader
             normalTekstId="aktivitetvisning.header"
             normalTekstValues={{
                 status: valgtAktivitet.status,
-                type: valgtAktivitet.type,
+                type: valgtAktivitet.type
             }}
             aria-labelledby="modal-aktivitetsvisning-header"
             aktivitetErLaast={aktivitetErLaast}
@@ -28,8 +26,7 @@ function header(valgtAktivitet) {
     );
 }
 
-const DIALOG_TEKST =
-    'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
+const DIALOG_TEKST = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
 function AktivitetvisningModal(props) {
     const { aktivitet, avhengigheter, history, children } = props;
@@ -54,14 +51,14 @@ function AktivitetvisningModal(props) {
 }
 
 AktivitetvisningModal.defaultProps = {
-    aktivitet: undefined,
+    aktivitet: undefined
 };
 
 AktivitetvisningModal.propTypes = {
     aktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
     history: AppPT.history.isRequired,
-    children: PT.object.isRequired,
+    children: PT.object.isRequired
 };
 
 export default AktivitetvisningModal;

@@ -4,15 +4,11 @@ import styles from './underseksjon.module.less';
 
 function Underseksjon(props) {
     const { children } = props;
-    return (
-        <section className={styles.underseksjon}>
-            {children}
-        </section>
-    );
+    return <section className={styles.underseksjon}>{children}</section>;
 }
 
 Underseksjon.propTypes = {
-    children: PT.node.isRequired,
+    children: PT.node.isRequired
 };
 
 export default Underseksjon;

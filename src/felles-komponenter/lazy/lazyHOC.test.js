@@ -26,11 +26,11 @@ describe('lazy-hoc', () => {
     });
 
     it('Skal rendre komponent lazy', () => {
-        const Komp = lazyHOC(() =>
+        const Komp = lazyHOC(() => (
             <UtenBarn className="test">
                 <FeilendeKompoment />
             </UtenBarn>
-        );
+        ));
         const wrapper = mount(<Komp />);
 
         expect(wrapper.find('div').hasClass('test')).toBeTruthy();

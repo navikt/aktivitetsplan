@@ -1,11 +1,6 @@
 import 'moment-duration-format';
 import { erMerEnnEnManederSiden, moment } from '../../utils';
-import {
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
-    STATUS_AVBRUTT,
-    STATUS_FULLFOERT,
-} from '../../constant';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 
 export function compareAktivitet(a, b) {
     if (b.avtalt && !a.avtalt) {
@@ -26,9 +21,7 @@ export function compareAktivitet(a, b) {
 export function erNyEndringIAktivitet(aktivitet, lestInformasjon, me) {
     const sisteEndringVarFraMeg =
         (aktivitet.lagtInnAv === 'BRUKER' && me.erBruker) ||
-        (aktivitet.lagtInnAv === 'NAV' &&
-            me.erVeileder &&
-            aktivitet.endretAv === me.id);
+        (aktivitet.lagtInnAv === 'NAV' && me.erVeileder && aktivitet.endretAv === me.id);
 
     if (sisteEndringVarFraMeg) {
         return false;
@@ -38,9 +31,7 @@ export function erNyEndringIAktivitet(aktivitet, lestInformasjon, me) {
         return true;
     }
 
-    const endretDatoAktivietetMoment = moment(
-        aktivitet.endretDato || aktivitet.opprettetDato
-    );
+    const endretDatoAktivietetMoment = moment(aktivitet.endretDato || aktivitet.opprettetDato);
 
     if (endretDatoAktivietetMoment && moment(lestInformasjon.tidspunkt)) {
         // arenaAktiviteter kan ha opprettetDato som ligger fram i tiden, derfor må
@@ -64,7 +55,7 @@ export function beregnKlokkeslettVarighet(aktivitet) {
         return {
             dato: fraMoment.startOf('day').toISOString(),
             klokkeslett,
-            varighet,
+            varighet
         };
     }
     return {};
@@ -79,10 +70,12 @@ export function beregnFraTil(data) {
             .startOf('day')
             .minute(klokkeslett)
             .toISOString();
-        const tilDato = moment(fraDato).add(varighet, 'minutes').toISOString();
+        const tilDato = moment(fraDato)
+            .add(varighet, 'minutes')
+            .toISOString();
         return {
             fraDato,
-            tilDato,
+            tilDato
         };
     }
     return {};
@@ -108,8 +101,7 @@ export function manglerPubliseringAvSamtaleReferat(aktivitet, status) {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
-        (moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) &&
-            status !== STATUS_AVBRUTT) ||
+        (moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) && status !== STATUS_AVBRUTT) ||
         samtalreferatManglerPublisering(type, erReferatPublisert)
     );
 }
@@ -124,10 +116,7 @@ function erAvtaltOgAvbrutt(erAvtalt, status) {
 
 function erFullfoertUtenReferat(erAvtalt, status, aktivitetType) {
     return (
-        erAvtalt &&
-        status === STATUS_FULLFOERT &&
-        aktivitetType !== SAMTALEREFERAT_TYPE &&
-        aktivitetType !== MOTE_TYPE
+        erAvtalt && status === STATUS_FULLFOERT && aktivitetType !== SAMTALEREFERAT_TYPE && aktivitetType !== MOTE_TYPE
     );
 }
 
@@ -156,25 +145,16 @@ function tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet) {
 
 export function splitIEldreOgNyereAktiviteter(aktiviteter) {
     return aktiviteter.reduce(
-        (
-            [
-                listeMedAktiviteterTilDatoMindreEnnToManader,
-                listeMedAktiviteterTilDatoMerEnnToManader,
-            ],
-            aktivitet
-        ) => {
+        ([listeMedAktiviteterTilDatoMindreEnnToManader, listeMedAktiviteterTilDatoMerEnnToManader], aktivitet) => {
             if (tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet)) {
                 return [
-                    [
-                        ...listeMedAktiviteterTilDatoMindreEnnToManader,
-                        aktivitet,
-                    ],
-                    listeMedAktiviteterTilDatoMerEnnToManader,
+                    [...listeMedAktiviteterTilDatoMindreEnnToManader, aktivitet],
+                    listeMedAktiviteterTilDatoMerEnnToManader
                 ];
             }
             return [
                 listeMedAktiviteterTilDatoMindreEnnToManader,
-                [...listeMedAktiviteterTilDatoMerEnnToManader, aktivitet],
+                [...listeMedAktiviteterTilDatoMerEnnToManader, aktivitet]
             ];
         },
         [[], []]

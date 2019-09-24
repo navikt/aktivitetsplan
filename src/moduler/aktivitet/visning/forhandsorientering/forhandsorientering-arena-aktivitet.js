@@ -5,7 +5,7 @@ import * as AppPT from '../../../../proptypes';
 import ForhandsorienteringArenaAktivitetForm from './forhandsorientering-form';
 import {
     HiddenIfAlertStripeInfoSolid,
-    HiddenIfAlertStripeSuksess,
+    HiddenIfAlertStripeSuksess
 } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import visibleIfHOC from '../../../../hocs/visible-if';
@@ -28,18 +28,19 @@ class ForhandsorienteringArenaAktivitet extends Component {
             return null;
         }
 
-        const merEnnsyvDagerTil =
-            erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
+        const merEnnsyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
 
-        const AlertStripeHvisMindreEnnSyvDagerTil = () =>
+        const AlertStripeHvisMindreEnnSyvDagerTil = () => (
             <HiddenIfAlertStripeInfoSolid hidden={merEnnsyvDagerTil}>
                 <FormattedMessage id="forhandsorientering.arenaaktivitet.mindre-enn-syv-dager" />
-            </HiddenIfAlertStripeInfoSolid>;
+            </HiddenIfAlertStripeInfoSolid>
+        );
 
-        const AlertStripeVisBekreftelse = () =>
+        const AlertStripeVisBekreftelse = () => (
             <HiddenIfAlertStripeSuksess hidden={forhandsorienteringSkalSendes}>
                 <FormattedMessage id="forhandsorienterin.arenaaktivitet.er-sendt" />
-            </HiddenIfAlertStripeSuksess>;
+            </HiddenIfAlertStripeSuksess>
+        );
         return (
             <div>
                 <AlertStripeHvisMindreEnnSyvDagerTil />
@@ -55,7 +56,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
 }
 
 ForhandsorienteringArenaAktivitet.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };
 
 export default visibleIfHOC(ForhandsorienteringArenaAktivitet);

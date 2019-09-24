@@ -38,10 +38,7 @@ function Modal({
         >
             {header}
             <Feilmelding feilmeldinger={feilmeldinger} />
-            <Innholdslaster
-                minstEn={minstEnAvhengighet}
-                avhengigheter={avhengigheter}
-            >
+            <Innholdslaster minstEn={minstEnAvhengighet} avhengigheter={avhengigheter}>
                 {children}
             </Innholdslaster>
         </NavFrontendModal>
@@ -54,7 +51,7 @@ Modal.defaultProps = {
     header: <ModalHeader />,
     avhengigheter: [],
     minstEnAvhengighet: false,
-    feilmeldinger: [],
+    feilmeldinger: []
 };
 
 Modal.propTypes = {
@@ -65,7 +62,7 @@ Modal.propTypes = {
     feilmeldinger: PT.array,
     children: PT.node.isRequired,
     avhengigheter: PT.array,
-    minstEnAvhengighet: PT.bool,
+    minstEnAvhengighet: PT.bool
 };
 
 export default withRouter(Modal);

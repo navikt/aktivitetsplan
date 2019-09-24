@@ -7,32 +7,22 @@ import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import {
-    selectErUnderOppfolging,
-    selectHarSkriveTilgang,
-} from '../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import TallAlert from '../../felles-komponenter/tall-alert';
 import UtskriftKnapp from './utskriftknapp';
-import {
-    selectDialoger,
-    selectHarTilgangTilDialog,
-} from '../dialog/dialog-selector';
+import { selectDialoger, selectHarTilgangTilDialog } from '../dialog/dialog-selector';
 import { dialogFilter } from '../filtrering/filter/filter-utils';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from '../../felles-komponenter/utils/lenke';
 import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import { hentDialog } from '../dialog/dialog-reducer';
-import loggEvent, {
-    APNE_DIALOG,
-    APNE_NY_AKTIVITET,
-    APNE_OM_TJENESTEN,
-} from '../../felles-komponenter/utils/logging';
+import loggEvent, { APNE_DIALOG, APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 
 const knapplenkeCls = (className, disabled) =>
     classNames(className, {
         knappelenke: !disabled,
-        'knappelenke knappelenke--disabled': disabled,
+        'knappelenke knappelenke--disabled': disabled
     });
 
 class Verktoylinje extends Component {
@@ -48,28 +38,20 @@ class Verktoylinje extends Component {
             harSkriveTilgang,
             antallUlesteDialoger,
             aktivitetLaster,
-            dialogLaster,
+            dialogLaster
         } = this.props;
         return (
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy-container">
                     <Lenke
                         href="/dialog"
-                        className={knapplenkeCls(
-                            'aktivitetskort__henvendelser',
-                            !dialogLaster
-                        )}
+                        className={knapplenkeCls('aktivitetskort__henvendelser', !dialogLaster)}
                         disabled={!dialogLaster}
                         onClick={() => loggEvent(APNE_DIALOG)}
                         aria-live="polite"
                     >
-                        <TallAlert hidden={antallUlesteDialoger <= 0}>
-                            {antallUlesteDialoger}
-                        </TallAlert>
-                        <HiddenIfDiv
-                            hidden={antallUlesteDialoger > 0}
-                            className="sr-only"
-                        >
+                        <TallAlert hidden={antallUlesteDialoger <= 0}>{antallUlesteDialoger}</TallAlert>
+                        <HiddenIfDiv hidden={antallUlesteDialoger > 0} className="sr-only">
                             <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
                         </HiddenIfDiv>
                         <FormattedMessage id="navigasjon.dialog" />
@@ -77,12 +59,7 @@ class Verktoylinje extends Component {
                     <Lenkeknapp
                         type="big-hoved"
                         href="/aktivitet/ny"
-                        disabled={
-                            viserHistoriskPeriode ||
-                            !underOppfolging ||
-                            !aktivitetLaster ||
-                            !harSkriveTilgang
-                        }
+                        disabled={viserHistoriskPeriode || !underOppfolging || !aktivitetLaster || !harSkriveTilgang}
                         onClick={() => loggEvent(APNE_NY_AKTIVITET)}
                     >
                         <FormattedMessage id="nyaktivitetsknapp" />
@@ -90,11 +67,7 @@ class Verktoylinje extends Component {
                 </div>
                 <div className="verktoylinje__verktoy-container">
                     <div className="indre">
-                        <Lenke
-                            href="/informasjon"
-                            className="knappelenke"
-                            onClick={() => loggEvent(APNE_OM_TJENESTEN)}
-                        >
+                        <Lenke href="/informasjon" className="knappelenke" onClick={() => loggEvent(APNE_OM_TJENESTEN)}>
                             <FormattedMessage id="navigasjon.informasjon" />
                         </Lenke>
                         <UtskriftKnapp
@@ -109,10 +82,7 @@ class Verktoylinje extends Component {
                     <VisValgtFilter />
                 </div>
                 <div className="verktoylinje__verktoy-container">
-                    <PeriodeFilter
-                        className="verktoylinje__verktoy"
-                        skjulInneverende={!underOppfolging}
-                    />
+                    <PeriodeFilter className="verktoylinje__verktoy" skjulInneverende={!underOppfolging} />
                 </div>
             </div>
         );
@@ -126,7 +96,7 @@ Verktoylinje.propTypes = {
     dialogLaster: PT.bool.isRequired,
     harSkriveTilgang: PT.bool.isRequired,
     antallUlesteDialoger: PT.number.isRequired,
-    doHentDialog: PT.func.isRequired,
+    doHentDialog: PT.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -142,12 +112,15 @@ const mapStateToProps = state => {
         harSkriveTilgang: selectHarSkriveTilgang(state),
         antallUlesteDialoger: dialoger,
         aktivitetLaster: selectHarTilgangTilAktiviteter(state),
-        dialogLaster: selectHarTilgangTilDialog(state),
+        dialogLaster: selectHarTilgangTilDialog(state)
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    doHentDialog: () => dispatch(hentDialog()),
+    doHentDialog: () => dispatch(hentDialog())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Verktoylinje);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Verktoylinje);

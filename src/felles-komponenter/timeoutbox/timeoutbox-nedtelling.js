@@ -39,25 +39,18 @@ class TimeoutboxNedtelling extends Component {
                                 id="timeoutbox.innhold.nedtelling"
                                 values={{
                                     tid: durationLeft.format('mm:ss', {
-                                        trim: false,
-                                    }),
+                                        trim: false
+                                    })
                                 }}
                             />
                         </Normaltekst>
                     </div>
                 </ModalContainer>
                 <ModalFooter>
-                    <Hovedknapp
-                        className="modal-footer__knapp"
-                        onClick={() => window.location.reload()}
-                    >
+                    <Hovedknapp className="modal-footer__knapp" onClick={() => window.location.reload()}>
                         <FormattedMessage id="timeoutbox.knapp.last_pa_nytt" />
                     </Hovedknapp>
-                    <Knapp
-                        className="modal-footer__knapp"
-                        onClick={() =>
-                            document.querySelector('#logout').click()}
-                    >
+                    <Knapp className="modal-footer__knapp" onClick={() => document.querySelector('#logout').click()}>
                         <FormattedMessage id="timeoutbox.knapp.loggut" />
                     </Knapp>
                 </ModalFooter>
@@ -67,7 +60,7 @@ class TimeoutboxNedtelling extends Component {
 }
 
 TimeoutboxNedtelling.propTypes = {
-    utlopsTidspunkt: PT.string.isRequired,
+    utlopsTidspunkt: PT.string.isRequired
 };
 
 export default TimeoutboxNedtelling;

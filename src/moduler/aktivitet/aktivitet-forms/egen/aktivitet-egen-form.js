@@ -12,11 +12,11 @@ import {
     validateFraDato,
     validateLenke,
     validateTilDato,
-    validateTittel,
+    validateTittel
 } from './validate';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
-    validerPeriodeFelt,
+    validerPeriodeFelt
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
@@ -27,21 +27,14 @@ function erAvtalt(aktivitet) {
 }
 
 const validator = useFormstate({
-    tittel: (val, values, aktivitet) =>
-        validateTittel(erAvtalt(aktivitet), val),
-    fraDato: (val, values, aktivitet) =>
-        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) =>
-        validateTilDato(aktivitet.fraDato, val),
-    periodeValidering: (val, values) =>
-        validerPeriodeFelt(values.fraDato, values.tilDato),
-    hensikt: (val, values, aktivitet) =>
-        validateFeltForLangt(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) =>
-        validateBeskrivelse(erAvtalt(aktivitet), val),
-    oppfolging: (val, values, aktivitet) =>
-        validateFeltForLangt(erAvtalt(aktivitet), val),
-    lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
+    tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
+    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
+    hensikt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+    oppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+    lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val)
 });
 
 function EgenAktivitetForm(props) {
@@ -58,7 +51,7 @@ function EgenAktivitetForm(props) {
         hensikt: maybeAktivitet.hensikt || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
         oppfolging: maybeAktivitet.oppfolging || '',
-        lenke: maybeAktivitet.lenke || '',
+        lenke: maybeAktivitet.lenke || ''
     };
 
     const state = validator(initalValues, aktivitet);
@@ -67,56 +60,27 @@ function EgenAktivitetForm(props) {
         isDirtyRef.current = !state.pristine;
     }
 
-    const reinitalize = newInitalValues =>
-        state.reinitialize({ ...initalValues, ...newInitalValues });
+    const reinitalize = newInitalValues => state.reinitialize({ ...initalValues, ...newInitalValues });
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetskjema">
-                <FormErrorSummary
-                    submittoken={state.submittoken}
-                    errors={state.errors}
-                />
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
-                <AktivitetFormHeader
-                    tittel="Jobbrettet egenaktivitet"
-                    aktivitetsType={EGEN_AKTIVITET_TYPE}
-                />
+                <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
 
-                <Malverk
-                    visible={window.appconfig.VIS_MALER}
-                    endre={endre}
-                    onChange={reinitalize}
-                    type="EGEN"
-                />
+                <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="EGEN" />
 
-                <Input
-                    disabled={avtalt}
-                    label="Navn på aktiviteten *"
-                    {...state.fields.tittel}
-                />
+                <Input disabled={avtalt} label="Navn på aktiviteten *" {...state.fields.tittel} />
 
-                <PeriodeValidering
-                    valideringFelt={state.fields.periodeValidering}
-                >
+                <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        <DatoField
-                            disabled={avtalt}
-                            label="Fra dato *"
-                            {...state.fields.fraDato}
-                        />
-                        <DatoField
-                            label="Til dato *"
-                            {...state.fields.tilDato}
-                        />
+                        <DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} />
+                        <DatoField label="Til dato *" {...state.fields.tilDato} />
                     </div>
                 </PeriodeValidering>
 
-                <Input
-                    disabled={avtalt}
-                    label="Mål med aktiviteten"
-                    {...state.fields.hensikt}
-                />
+                <Input disabled={avtalt} label="Mål med aktiviteten" {...state.fields.hensikt} />
                 <Textarea
                     disabled={avtalt}
                     label="Kort beskrivelse av aktiviteten"
@@ -124,16 +88,8 @@ function EgenAktivitetForm(props) {
                     visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
-                <Input
-                    disabled={avtalt}
-                    label="Min huskeliste for denne aktiviteten"
-                    {...state.fields.oppfolging}
-                />
-                <Input
-                    disabled={avtalt}
-                    label="Lenke til en aktuell nettside"
-                    {...state.fields.lenke}
-                />
+                <Input disabled={avtalt} label="Min huskeliste for denne aktiviteten" {...state.fields.oppfolging} />
+                <Input disabled={avtalt} label="Lenke til en aktuell nettside" {...state.fields.lenke} />
             </div>
             <LagreAktivitet />
         </form>
@@ -144,13 +100,13 @@ EgenAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
     isDirtyRef: PT.shape({ current: PT.bool }),
-    endre: PT.bool,
+    endre: PT.bool
 };
 
 EgenAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: undefined,
-    endre: false,
+    endre: false
 };
 
 export default EgenAktivitetForm;

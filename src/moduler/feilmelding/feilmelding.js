@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl, intlShape } from 'react-intl';
-import {
-    AlertStripeInfo,
-    AlertStripeInfoSolid,
-    AlertStripeNavAnsatt,
-} from 'nav-frontend-alertstriper';
+import { AlertStripeInfo, AlertStripeInfoSolid, AlertStripeNavAnsatt } from 'nav-frontend-alertstriper';
 import FeilmeldingDetaljer from './feilmelding-detaljer';
 import {
     FINNES_IKKE_KATEGORI,
@@ -17,7 +13,7 @@ import {
     UGYLDIG_REQUEST_KATEGORI,
     UKJENT_KATEGORI,
     UNAUTHORIZED_KATEGORI,
-    VERSJONSKONFLIKT_KATEGORI,
+    VERSJONSKONFLIKT_KATEGORI
 } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
@@ -30,7 +26,7 @@ const stripeTyper = {
     [UNAUTHORIZED_KATEGORI]: AlertStripeNavAnsatt,
     [INGEN_TILGANG_KATEGORI]: AlertStripeInfoSolid,
     [UGYLDIG_REQUEST_KATEGORI]: AlertStripeInfo,
-    [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo,
+    [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo
 };
 
 function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
@@ -39,11 +35,8 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
     const feilType = feil.type;
     const { melding } = feil;
     const unauthorized = feil.httpStatus === 401;
-    const feilKategori = unauthorized
-        ? UNAUTHORIZED_KATEGORI
-        : (melding && melding.type) || UKJENT_KATEGORI;
-    const Stripe =
-        (erArenaFeil && AlertStripeInfo) || stripeTyper[feilKategori];
+    const feilKategori = unauthorized ? UNAUTHORIZED_KATEGORI : (melding && melding.type) || UKJENT_KATEGORI;
+    const Stripe = (erArenaFeil && AlertStripeInfo) || stripeTyper[feilKategori];
     const typeNr = KATEGORI_RANGERING[feilKategori] || 1;
 
     const feilKeys = parseFeil(
@@ -54,9 +47,7 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
             .join('-')
             .toLowerCase()
     );
-    const mostSpesificKey = feilKeys.find(
-        key => intl.formatMessage({ id: key, defaultMessage: key }) !== key
-    );
+    const mostSpesificKey = feilKeys.find(key => intl.formatMessage({ id: key, defaultMessage: key }) !== key);
 
     return (
         <Stripe>
@@ -65,20 +56,12 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
                     feilKeys.map(tekstId => {
                         let tekst = intl.formatMessage({
                             id: tekstId,
-                            defaultMessage: tekstId,
+                            defaultMessage: tekstId
                         });
                         if (tekst === tekstId) tekst = `[${tekst}]`;
-                        return (
-                            <div key={tekstId}>
-                                {tekst}
-                            </div>
-                        );
+                        return <div key={tekstId}>{tekst}</div>;
                     })}
-                <FailsafeText
-                    id={mostSpesificKey}
-                    hidden={vistekster}
-                    visTekstVedFeil
-                />
+                <FailsafeText id={mostSpesificKey} hidden={vistekster} visTekstVedFeil />
             </div>
         </Stripe>
     );
@@ -86,66 +69,48 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
 
 FeilStripe.defaultProps = {
     erVeileder: false,
-    erArenaFeil: false,
+    erArenaFeil: false
 };
 
 FeilStripe.propTypes = {
     feil: AppPT.feil.isRequired,
     erVeileder: PT.bool,
     intl: intlShape.isRequired,
-    erArenaFeil: PT.bool,
+    erArenaFeil: PT.bool
 };
 
 class Feilmelding extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            apen: false,
+            apen: false
         };
     }
 
     toggleDetaljer = () => {
         const { apen } = this.state;
         this.setState({
-            apen: !apen,
+            apen: !apen
         });
     };
 
     render() {
-        const {
-            feilmeldinger,
-            className,
-            erVeileder,
-            intl,
-            erArenaFeil,
-        } = this.props;
+        const { feilmeldinger, className, erVeileder, intl, erArenaFeil } = this.props;
 
         const { apen } = this.state;
 
         const alvorligsteFeil = finnHoyesteAlvorlighetsgrad(feilmeldinger);
         return (
-            <VisibleIfDiv
-                visible={feilmeldinger.length > 0}
-                className={classNames(className, 'feilmelding')}
-            >
-                <FeilStripe
-                    feil={alvorligsteFeil}
-                    erVeileder={erVeileder}
-                    intl={intl}
-                    erArenaFeil={erArenaFeil}
-                />
+            <VisibleIfDiv visible={feilmeldinger.length > 0} className={classNames(className, 'feilmelding')}>
+                <FeilStripe feil={alvorligsteFeil} erVeileder={erVeileder} intl={intl} erArenaFeil={erArenaFeil} />
                 <Knappelenke onClick={this.toggleDetaljer} className="">
                     <span>Vis detaljer</span>
                 </Knappelenke>
                 <VisibleIfDiv visible={apen} className="feilmelding__detaljer">
                     {feilmeldinger.map(feilen => {
-                        const id =
-                            (feilen.melding && feilen.melding.id) ||
-                            feilen.type;
+                        const id = (feilen.melding && feilen.melding.id) || feilen.type;
                         const action = feilen.type;
-                        const rest =
-                            (feilen.melding && feilen.melding.detaljer) ||
-                            feilen.melding;
+                        const rest = (feilen.melding && feilen.melding.detaljer) || feilen.melding;
                         return (
                             <FeilmeldingDetaljer
                                 key={id}
@@ -166,7 +131,7 @@ Feilmelding.defaultProps = {
     feilmeldinger: [],
     className: undefined,
     erVeileder: false,
-    erArenaFeil: false,
+    erArenaFeil: false
 };
 
 Feilmelding.propTypes = {
@@ -174,7 +139,7 @@ Feilmelding.propTypes = {
     feilmeldinger: PT.array,
     erVeileder: PT.bool,
     erArenaFeil: PT.bool,
-    className: PT.string,
+    className: PT.string
 };
 
 export default injectIntl(Feilmelding);

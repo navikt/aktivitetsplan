@@ -3,13 +3,7 @@ import { createActionsAndReducer } from '../../ducks/rest-reducer';
 import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
 import { selectMalListe } from './aktivitetsmal-selector';
 
-const {
-    reducer,
-    action,
-    selectStatus,
-    selectData,
-    selectSlice,
-} = createActionsAndReducer('mal');
+const { reducer, action, selectStatus, selectData, selectSlice } = createActionsAndReducer('mal');
 
 export default reducer;
 
@@ -34,7 +28,5 @@ export function selectMalStatus(state) {
 }
 
 export function selectGjeldendeMal(state) {
-    return selectViserInneverendePeriode(state)
-        ? selectMalData(state)
-        : selectMalListe(state)[0];
+    return selectViserInneverendePeriode(state) ? selectMalData(state) : selectMalListe(state)[0];
 }

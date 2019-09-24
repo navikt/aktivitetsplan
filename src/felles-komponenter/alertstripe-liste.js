@@ -4,29 +4,19 @@ import { FormattedMessage } from 'react-intl';
 import Listevisning from './listevisning';
 import { HiddenIfAlertStripeInfoSolid } from './hidden-if/hidden-if-alertstriper';
 
-function AlertstripeListe({
-    config,
-    hidden,
-    nopadding,
-    nobullets,
-    children,
-    ...props
-}) {
+function AlertstripeListe({ config, hidden, nopadding, nobullets, children, ...props }) {
     const listeelementer = Object.entries(config)
         .filter(([, value]) => value)
-        .map(([key]) =>
+        .map(([key]) => (
             <li key={key}>
                 <FormattedMessage id={key} />
             </li>
-        );
+        ));
 
     const harIngenElementer = listeelementer.length === 0;
 
     return (
-        <HiddenIfAlertStripeInfoSolid
-            hidden={hidden || harIngenElementer}
-            {...props}
-        >
+        <HiddenIfAlertStripeInfoSolid hidden={hidden || harIngenElementer} {...props}>
             {children}
             <Listevisning nopadding={nopadding} nobullets={nobullets}>
                 {listeelementer}
@@ -40,13 +30,13 @@ AlertstripeListe.propTypes = {
     hidden: PT.bool,
     nopadding: PT.bool,
     nobullets: PT.bool,
-    config: PT.object.isRequired,
+    config: PT.object.isRequired
 };
 AlertstripeListe.defaultProps = {
     children: null,
     nopadding: true,
     nobullets: true,
-    hidden: false,
+    hidden: false
 };
 
 export default AlertstripeListe;

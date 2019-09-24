@@ -5,49 +5,32 @@ import * as AppPT from '../../../../proptypes';
 import { HiddenIf } from '../../../../utils';
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 import LenkeKomponent from '../hjelpekomponenter/lenkekomponent';
-import {
-    Beskrivelse,
-    FraDato,
-    TilDato,
-} from '../hjelpekomponenter/standard-felt';
+import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const EgenAktivitetDetaljer = ({ aktivitet }) =>
+const EgenAktivitetDetaljer = ({ aktivitet }) => (
     <HiddenIf hidden={aktivitet.type !== EGEN_AKTIVITET_TYPE}>
         <div className="aktivitetvisning__detaljer">
-            <FraDato
-                aktivitet={aktivitet}
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.egen" />
-                }
-            />
-            <TilDato
-                aktivitet={aktivitet}
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.egen" />
-                }
-            />
+            <FraDato aktivitet={aktivitet} tittel={<FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.egen" />} />
+            <TilDato aktivitet={aktivitet} tittel={<FormattedMessage id="aktivitetdetaljer.til-dato-tekst.egen" />} />
             <Informasjonsfelt
                 key="hensikt"
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.hensikt-label" />
-                }
+                tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
                 innhold={aktivitet.hensikt}
             />
             <Informasjonsfelt
                 key="oppfolging"
                 fullbredde
-                tittel={
-                    <FormattedMessage id="aktivitetdetaljer.oppfolging-label" />
-                }
+                tittel={<FormattedMessage id="aktivitetdetaljer.oppfolging-label" />}
                 innhold={aktivitet.oppfolging}
             />
             <Beskrivelse aktivitet={aktivitet} />
             <LenkeKomponent lenke={aktivitet.lenke} />
         </div>
-    </HiddenIf>;
+    </HiddenIf>
+);
 
 EgenAktivitetDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };
 
 export default EgenAktivitetDetaljer;

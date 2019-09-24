@@ -5,15 +5,11 @@ import { injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames';
 import NavFrontendModal from 'nav-frontend-modal';
 import * as AppPT from '../../../proptypes';
-import {
-    selectFnrPaMotpartHvisBruker,
-    selectMotpartStatus,
-    selectNavnPaMotpart,
-} from '../../motpart/motpart-selector';
+import { selectFnrPaMotpartHvisBruker, selectMotpartStatus, selectNavnPaMotpart } from '../../motpart/motpart-selector';
 import {
     selectTilpasseDialogModalHistoriskVisning,
     selectDialogMedId,
-    selectDialogFeilmeldinger,
+    selectDialogFeilmeldinger
 } from '../dialog-selector';
 import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import Feilmelding from '../../feilmelding/feilmelding';
@@ -35,7 +31,7 @@ class DialogModal extends Component {
     componentDidMount() {
         const { erVeileder } = this.props;
         loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, {
-            erVeileder,
+            erVeileder
         });
     }
 
@@ -52,11 +48,11 @@ class DialogModal extends Component {
             historiskVisning,
             underOppfolging,
             dialogFeilmeldinger,
-            history,
+            history
         } = this.props;
         const className = classNames('dialog-modal', 'aktivitet-modal', {
             'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
-            'dialog-modal--historisk-visning': tilpasseStorrelseHistoriskVisning,
+            'dialog-modal--historisk-visning': tilpasseStorrelseHistoriskVisning
         });
 
         return (
@@ -77,17 +73,12 @@ class DialogModal extends Component {
                 />
                 <FnrProvider>
                     <div className="dialog-modal__wrapper">
-                        <Feilmelding
-                            className="feilmelding--systemfeil"
-                            feilmeldinger={dialogFeilmeldinger}
-                        />
+                        <Feilmelding className="feilmelding--systemfeil" feilmeldinger={dialogFeilmeldinger} />
                         <div className="dialog-modal__innhold">
                             <DialogOversikt
                                 valgtDialog={valgtDialog}
                                 harNyDialog={harNyDialog}
-                                harNyDialogEllerValgtDialog={
-                                    harNyDialogEllerValgtDialog
-                                }
+                                harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
                                 historiskVisning={historiskVisning}
                                 underOppfolging={underOppfolging}
                             />
@@ -95,9 +86,7 @@ class DialogModal extends Component {
                                 valgtDialog={valgtDialog}
                                 harNyDialog={harNyDialog}
                                 harValgtDialog={harValgtDialog}
-                                harNyDialogEllerValgtDialog={
-                                    harNyDialogEllerValgtDialog
-                                }
+                                harNyDialogEllerValgtDialog={harNyDialogEllerValgtDialog}
                             />
                         </div>
                     </div>
@@ -112,7 +101,7 @@ DialogModal.defaultProps = {
     fnrPaMotpartHvisBruker: null,
     valgtDialog: null,
     harNyDialog: null,
-    dialogFeilmeldinger: [],
+    dialogFeilmeldinger: []
 };
 
 DialogModal.propTypes = {
@@ -129,7 +118,7 @@ DialogModal.propTypes = {
     dialogFeilmeldinger: PT.array,
     underOppfolging: PT.bool.isRequired,
     intl: intlShape.isRequired,
-    erVeileder: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired
 };
 const mapStateToProps = (state, props) => {
     const { match } = props;
@@ -148,12 +137,10 @@ const mapStateToProps = (state, props) => {
         navnPaMotpart: selectNavnPaMotpart(state),
         fnrPaMotpartHvisBruker,
         historiskVisning,
-        tilpasseStorrelseHistoriskVisning:
-            historiskVisning &&
-            selectTilpasseDialogModalHistoriskVisning(state),
+        tilpasseStorrelseHistoriskVisning: historiskVisning && selectTilpasseDialogModalHistoriskVisning(state),
         underOppfolging: selectUnderOppfolging(state),
         dialogFeilmeldinger: selectDialogFeilmeldinger(state),
-        erVeileder: selectErVeileder(state),
+        erVeileder: selectErVeileder(state)
     };
 };
 

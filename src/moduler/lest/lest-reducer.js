@@ -2,13 +2,7 @@ import * as Api from './lest-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 import { STATUS } from '../../ducks/utils';
 
-const {
-    reducer,
-    action,
-    selectSlice,
-    selectData,
-    selectStatus,
-} = createActionsAndReducer('lest', 'lest', []);
+const { reducer, action, selectSlice, selectData, selectStatus } = createActionsAndReducer('lest', 'lest', []);
 
 export function hentLest() {
     return action(Api.hentSisteLest);
@@ -35,8 +29,7 @@ export function selectLestStatus(state) {
 }
 
 export function selectLestFeilMelding(state) {
-    const feilMeldingsdata =
-        selectLestStatus(state) === STATUS.ERROR && selectSlice(state).feil;
+    const feilMeldingsdata = selectLestStatus(state) === STATUS.ERROR && selectSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 }
 

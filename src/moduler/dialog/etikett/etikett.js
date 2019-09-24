@@ -23,9 +23,7 @@ const getText = (etikettnavn, erBruker) => {
         case statuskoder.DIALOG_IKKE_FERDIGBEHANDLET:
             return 'Venter på svar fra NAV';
         case statuskoder.DIALOG_MA_BESVARES:
-            return erBruker
-                ? 'NAV venter på svar fra deg'
-                : 'Venter på svar fra bruker';
+            return erBruker ? 'NAV venter på svar fra deg' : 'Venter på svar fra bruker';
         case statuskoder.DIALOG_ESKALERING:
             return 'Viktig melding';
         default:
@@ -43,12 +41,12 @@ function Etikett({ etikett, erBruker }) {
 
 Etikett.defaultProps = {
     etikett: undefined,
-    erBruker: false,
+    erBruker: false
 };
 
 Etikett.propTypes = {
     etikett: PT.string,
-    erBruker: PT.bool,
+    erBruker: PT.bool
 };
 
 export default visibleIfHOC(Etikett);

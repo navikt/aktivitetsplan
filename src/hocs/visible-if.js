@@ -12,10 +12,10 @@ export default function visibleIfHOC(WrappingComponent) {
     }
 
     visibleIf.defaultProps = {
-        visible: true,
+        visible: true
     };
     visibleIf.propTypes = {
-        visible: PT.oneOfType([PT.bool, PT.func]),
+        visible: PT.oneOfType([PT.bool, PT.func])
     };
 
     return visibleIf;

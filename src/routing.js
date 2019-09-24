@@ -15,50 +15,31 @@ function getPathWithBase(path) {
     return path;
 }
 
-const Routing = ({ location }) =>
+const Routing = ({ location }) => (
     <Switch location={location}>
         <Route exact path={getPathWithBase('/mal')} component={Aktivitetsmal} />
-        <Route
-            path={getPathWithBase('/mal/endre')}
-            component={AktivitetmalEndre}
-        />
-        <Route
-            exact
-            path={getPathWithBase('/dialog')}
-            component={DialogModal}
-        />
-        <Route
-            exact
-            path={getPathWithBase('/dialog/:id')}
-            component={DialogModal}
-        />
-        <Route
-            path={getPathWithBase('/aktivitet')}
-            component={AktivitetRoutes}
-        />
-        <Route
-            path={getPathWithBase('/utskrift')}
-            component={AktivitetsplanPrint}
-        />
-    </Switch>;
+        <Route path={getPathWithBase('/mal/endre')} component={AktivitetmalEndre} />
+        <Route exact path={getPathWithBase('/dialog')} component={DialogModal} />
+        <Route exact path={getPathWithBase('/dialog/:id')} component={DialogModal} />
+        <Route path={getPathWithBase('/aktivitet')} component={AktivitetRoutes} />
+        <Route path={getPathWithBase('/utskrift')} component={AktivitetsplanPrint} />
+    </Switch>
+);
 
 Routing.propTypes = {
-    location: PT.object.isRequired,
+    location: PT.object.isRequired
 };
 
 function Public({ location }) {
     return (
         <Switch location={location}>
-            <Route
-                path={getPathWithBase('/informasjon')}
-                component={InformasjonModal}
-            />
+            <Route path={getPathWithBase('/informasjon')} component={InformasjonModal} />
         </Switch>
     );
 }
 
 Public.propTypes = {
-    location: PT.object.isRequired,
+    location: PT.object.isRequired
 };
 
 export const PublicRouting = withRouter(Public);

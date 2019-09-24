@@ -11,9 +11,7 @@ function Sidebanner() {
                 <Brodsmuler />
                 <div className="sidebanner">
                     <BannerIcon />
-                    <Sidetittel className="sidebanner__tittel">
-                        Aktivitetsplan
-                    </Sidetittel>
+                    <Sidetittel className="sidebanner__tittel">Aktivitetsplan</Sidetittel>
                 </div>
             </div>
         </div>

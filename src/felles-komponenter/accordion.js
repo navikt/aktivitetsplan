@@ -11,7 +11,7 @@ class Accordion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            apen: props.apen,
+            apen: props.apen
         };
     }
 
@@ -21,7 +21,7 @@ class Accordion extends Component {
         const { apen } = this.state;
 
         this.setState({
-            apen: !apen,
+            apen: !apen
         });
 
         if (onClick !== undefined) {
@@ -37,24 +37,19 @@ class Accordion extends Component {
             <a
                 href="/"
                 className={classNames('accordion__link', {
-                    'accordion__link-apen': apen,
+                    'accordion__link-apen': apen
                 })}
                 onClick={this.apne}
             >
                 <FormattedMessage id={labelId} />
-                <NavFrontendChevron
-                    type={apen ? 'opp' : 'ned'}
-                    className={classNames('accordion__chevron')}
-                />
+                <NavFrontendChevron type={apen ? 'opp' : 'ned'} className={classNames('accordion__chevron')} />
             </a>
         );
 
         return (
             <div className={className}>
                 <Collapse isOpened={apen}>
-                    <VisibleIfDiv visible={apen}>
-                        {children}
-                    </VisibleIfDiv>
+                    <VisibleIfDiv visible={apen}>{children}</VisibleIfDiv>
                 </Collapse>
                 {ChevronLink}
             </div>
@@ -66,7 +61,7 @@ Accordion.defaultProps = {
     onClick: () => {},
     apen: false,
     children: null,
-    className: '',
+    className: ''
 };
 
 Accordion.propTypes = {
@@ -74,7 +69,7 @@ Accordion.propTypes = {
     onClick: PT.func,
     apen: PT.bool,
     children: PT.oneOfType([PT.node, PT.arrayOf(PT.node)]),
-    className: PT.string,
+    className: PT.string
 };
 
 export default Accordion;

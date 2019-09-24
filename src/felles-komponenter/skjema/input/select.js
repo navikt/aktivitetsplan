@@ -6,16 +6,7 @@ import PT from 'prop-types';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
-function Select({
-    touched,
-    error,
-    input,
-    pristine,
-    initialValue,
-    noBlankOption,
-    children,
-    ...rest
-}) {
+function Select({ touched, error, input, pristine, initialValue, noBlankOption, children, ...rest }) {
     const feil = error && touched ? { feilmelding: error } : undefined;
     const inputProps = { ...input, ...rest };
 
@@ -31,7 +22,7 @@ Select.defaultProps = {
     initialValue: undefined,
     pristine: undefined,
     error: undefined,
-    noBlankOption: false,
+    noBlankOption: false
 };
 
 Select.propTypes = {
@@ -41,7 +32,7 @@ Select.propTypes = {
     children: PT.node.isRequired,
     touched: PT.bool.isRequired,
     error: PT.string,
-    input: PT.object.isRequired,
+    input: PT.object.isRequired
 };
 
 export default Select;

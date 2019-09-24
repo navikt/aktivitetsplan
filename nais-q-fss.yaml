@@ -1,8 +1,8 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
 metadata:
   name: aktivitetsplan
-  namespace: {{namespace}}
+  namespace: { { namespace } }
   cluster:
     - dev-fss
   labels:
@@ -36,18 +36,18 @@ spec:
     - OIDC_REDIRECT_URL
     - UNLEASH_API_URL
     - name: VEIENTILARBEID_URL
-      value: "https://veientilarbeid-q.nav.no"
+      value: 'https://veientilarbeid-q.nav.no'
     - name: DITTNAV_LINK_URL
-      value: "https://tjenester-{{namespace}}.nav.no/dittnav/"
+      value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
     - name: AKTIVITETSPLAN_URL
-      value: "https://aktivitetsplan-q.nav.no"
+      value: 'https://aktivitetsplan-q.nav.no'
     - name: ARBEIDSSOKERREGISTRERING_URL
-      value: "https://arbeidssokerregistrering-q.nav.no/"
+      value: 'https://arbeidssokerregistrering-q.nav.no/'
     - name: REGISTRERINGSINFORMASJON_URL
-      value: "https://registreringsinformasjon-q.nav.no"
+      value: 'https://registreringsinformasjon-q.nav.no'
     - name: VEILARBSTEPUP_OIDC_URL
-      value: "https://veilarbstepup-q.nav.no/veilarbstepup/oidc"
+      value: 'https://veilarbstepup-q.nav.no/veilarbstepup/oidc'
     - name: DISABLE_PROXY
-      value: "true"
+      value: 'true'
     - name: DISABLE_DECORATOR
-      value: "true"
+      value: 'true'

@@ -24,13 +24,7 @@ function OppdaterAktivitetEtikett(props) {
             document.querySelector('.aktivitet-modal').focus();
         });
 
-    const form = (
-        <StillingEtikettForm
-            disabled={disableEtikettEndringer}
-            aktivitet={aktivitet}
-            onSubmit={onSubmit}
-        />
-    );
+    const form = <StillingEtikettForm disabled={disableEtikettEndringer} aktivitet={aktivitet} onSubmit={onSubmit} />;
 
     return (
         <Underseksjon>
@@ -48,14 +42,14 @@ function OppdaterAktivitetEtikett(props) {
 OppdaterAktivitetEtikett.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     disableEtikettEndringer: PT.bool.isRequired,
-    lagreEtikett: PT.func.isRequired,
+    lagreEtikett: PT.func.isRequired
 };
 
 const mapStateToProps = (state, props) => ({
     disableEtikettEndringer:
         selectLasterAktivitetData(state) ||
         !selectKanEndreAktivitetStatus(state, props.aktivitet) ||
-        !selectErUnderOppfolging(state),
+        !selectErUnderOppfolging(state)
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
@@ -64,17 +58,17 @@ const mapDispatchToProps = (dispatch, props) => ({
             return Promise.resolve();
         }
 
-        const nyEtikett =
-            etikettstatus === statuser.INGEN_VALGT ? null : etikettstatus;
+        const nyEtikett = etikettstatus === statuser.INGEN_VALGT ? null : etikettstatus;
         return dispatch(
             oppdaterAktivitetEtikett({
                 ...props.aktivitet,
-                etikett: nyEtikett,
+                etikett: nyEtikett
             })
         );
-    },
+    }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    OppdaterAktivitetEtikett
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(OppdaterAktivitetEtikett);

@@ -1,10 +1,5 @@
 import { AKTIVITET_BASE_URL } from '../../environment';
-import {
-    fetchToJson,
-    postAsJson,
-    putAsJson,
-    deleteAsJson,
-} from "../../ducks/utils";
+import { fetchToJson, postAsJson, putAsJson, deleteAsJson } from '../../ducks/utils';
 
 export function hentAktivitet(aktivitetId) {
     return fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);
@@ -18,24 +13,15 @@ export function lagNyAktivitet(aktivitet) {
     return postAsJson(`${AKTIVITET_BASE_URL}/aktivitet/ny`, aktivitet);
 }
 export function oppdaterAktivitet(aktivitet) {
-    return putAsJson(
-        `${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`,
-        aktivitet
-    );
+    return putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 }
 
 export function oppdaterAktivitetStatus(aktivitet) {
-    return putAsJson(
-        `${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/status`,
-        aktivitet
-    );
+    return putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
 }
 
 export function oppdaterAktivitetEtikett(aktivitet) {
-    return putAsJson(
-        `${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/etikett`,
-        aktivitet
-    );
+    return putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/etikett`, aktivitet);
 }
 
 export function slettAktivitet(aktivitet) {
@@ -47,17 +33,11 @@ export function hentKanaler() {
 }
 
 export function publiserReferat(aktivitet) {
-    return putAsJson(
-        `${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat/publiser`,
-        aktivitet
-    );
+    return putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat/publiser`, aktivitet);
 }
 
 export function oppdaterReferat(aktivitet) {
-    return putAsJson(
-        `${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`,
-        aktivitet
-    );
+    return putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`, aktivitet);
 }
 
 export function hentArenaAktiviteter() {
@@ -65,7 +45,5 @@ export function hentArenaAktiviteter() {
 }
 
 export function hentVersjonerTilAktivitet(aktivitet) {
-    return fetchToJson(
-        `${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`
-    );
+    return fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
 }

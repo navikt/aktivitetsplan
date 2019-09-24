@@ -8,25 +8,19 @@ import reducer from '../../../../reducer';
 const initialState = {
     data: {
         oppfolging: { data: { underOppfolging: true } },
-        aktiviteter: [],
-    },
+        aktiviteter: []
+    }
 };
 
 const dirtyRef = { current: false };
 const store = createStore(reducer, initialState);
 
 function mountWithIntl(node) {
-    return mount(
-        <ReduxProvider store={store}>
-            {node}
-        </ReduxProvider>
-    );
+    return mount(<ReduxProvider store={store}>{node}</ReduxProvider>);
 }
 describe('MoteAktivitetForm', () => {
     it('Skal vise error summary når man submitter uten å oppgi påkrevde verdier', () => {
-        const wrapper = mountWithIntl(
-            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} />
-        );
+        const wrapper = mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} />);
 
         expect(wrapper.find('Error').length).toEqual(0);
 
@@ -51,7 +45,7 @@ describe('MoteAktivitetForm', () => {
             kanal: 'OPPMOTE',
             beskrivelse: 'jfioew',
             forberedelser: 'jfioewjfe',
-            erAvtalt: false,
+            erAvtalt: false
         };
         const wrapper = mountWithIntl(
             <MoteAktivitetForm
@@ -71,71 +65,37 @@ describe('MoteAktivitetForm', () => {
             opprettetDato: '2019-08-31T05:00:00.000Z',
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
-            adresse: 'Slottet',
+            adresse: 'Slottet'
         };
         const wrapper = shallow(
-            <MoteAktivitetForm
-                onSubmit={() => null}
-                isDirtyRef={dirtyRef}
-                aktivitet={aktivitet}
-            />
+            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />
         );
 
-        expect(
-            wrapper.find('Input[label="Tema for møtet *"]').prop('initialValue')
-        ).toEqual(aktivitet.tittel);
-        expect(wrapper.find('DatoField').prop('initialValue')).toEqual(
-            aktivitet.fraDato
+        expect(wrapper.find('Input[label="Tema for møtet *"]').prop('initialValue')).toEqual(aktivitet.tittel);
+        expect(wrapper.find('DatoField').prop('initialValue')).toEqual(aktivitet.fraDato);
+        expect(wrapper.find('Select[label="Klokkeslett *"]').prop('initialValue')).toEqual('420');
+        expect(wrapper.find('Select[label="Varighet *"]').prop('initialValue')).toEqual('60');
+        expect(wrapper.find('Input[label="Møtested eller annen praktisk informasjon *"]').prop('initialValue')).toEqual(
+            aktivitet.adresse
         );
-        expect(
-            wrapper.find('Select[label="Klokkeslett *"]').prop('initialValue')
-        ).toEqual('420');
-        expect(
-            wrapper.find('Select[label="Varighet *"]').prop('initialValue')
-        ).toEqual('60');
-        expect(
-            wrapper
-                .find(
-                    'Input[label="Møtested eller annen praktisk informasjon *"]'
-                )
-                .prop('initialValue')
-        ).toEqual(aktivitet.adresse);
     });
 
     it('Skal populere beskrivelse(hensikt) med defaultverdi', () => {
         const aktivitet = undefined;
         const wrapper = shallow(
-            <MoteAktivitetForm
-                onSubmit={() => null}
-                isDirtyRef={dirtyRef}
-                aktivitet={aktivitet}
-                endre={false}
-            />
+            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre={false} />
         );
 
-        expect(
-            wrapper
-                .find('Textarea[label="Hensikt med møtet"]')
-                .prop('initialValue')
-        ).toEqual(defaultBeskrivelse);
+        expect(wrapper.find('Textarea[label="Hensikt med møtet"]').prop('initialValue')).toEqual(defaultBeskrivelse);
     });
 
     it('Skal ikke populere beskrivelse(hensikt) med defaultverdi når man endrer', () => {
         const aktivitet = undefined;
         const wrapper = shallow(
-            <MoteAktivitetForm
-                onSubmit={() => null}
-                isDirtyRef={dirtyRef}
-                aktivitet={aktivitet}
-                endre
-            />
+            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre />
         );
 
-        expect(
-            wrapper
-                .find('Textarea[label="Hensikt med møtet"]')
-                .prop('initialValue')
-        ).toEqual('');
+        expect(wrapper.find('Textarea[label="Hensikt med møtet"]').prop('initialValue')).toEqual('');
     });
 
     it('Skal være disablede felter ved endring av aktivitet', () => {
@@ -145,41 +105,20 @@ describe('MoteAktivitetForm', () => {
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
             adresse: 'Slottet',
-            avtalt: true,
+            avtalt: true
         };
         const wrapper = shallow(
-            <MoteAktivitetForm
-                onSubmit={() => null}
-                isDirtyRef={dirtyRef}
-                aktivitet={aktivitet}
-                endre
-            />
+            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre />
         );
-        expect(
-            wrapper.find('Input[label="Tema for møtet *"]').prop('disabled')
-        ).toBeTruthy();
+        expect(wrapper.find('Input[label="Tema for møtet *"]').prop('disabled')).toBeTruthy();
         expect(wrapper.find('DatoField').prop('disabled')).not.toBeTruthy();
-        expect(
-            wrapper.find('Select[label="Klokkeslett *"]').prop('disabled')
-        ).not.toBeTruthy();
-        expect(
-            wrapper.find('Select[label="Varighet *"]').prop('disabled')
-        ).not.toBeTruthy();
+        expect(wrapper.find('Select[label="Klokkeslett *"]').prop('disabled')).not.toBeTruthy();
+        expect(wrapper.find('Select[label="Varighet *"]').prop('disabled')).not.toBeTruthy();
         expect(wrapper.find('VelgKanal').prop('disabled')).toBeTruthy();
         expect(
-            wrapper
-                .find(
-                    'Input[label="Møtested eller annen praktisk informasjon *"]'
-                )
-                .prop('disabled')
+            wrapper.find('Input[label="Møtested eller annen praktisk informasjon *"]').prop('disabled')
         ).not.toBeTruthy();
-        expect(
-            wrapper.find('Textarea[label="Hensikt med møtet"]').prop('disabled')
-        ).toBeTruthy();
-        expect(
-            wrapper
-                .find('Textarea[label="Forberedelser til møtet"]')
-                .prop('disabled')
-        ).toBeTruthy();
+        expect(wrapper.find('Textarea[label="Hensikt med møtet"]').prop('disabled')).toBeTruthy();
+        expect(wrapper.find('Textarea[label="Forberedelser til møtet"]').prop('disabled')).toBeTruthy();
     });
 });

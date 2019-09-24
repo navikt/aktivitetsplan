@@ -8,7 +8,7 @@ import aktiviteter, {
     getAktivitetVersjoner,
     oppdaterAktivitet,
     opprettAktivitet,
-    publiserReferat,
+    publiserReferat
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
@@ -26,7 +26,7 @@ import lest from './lest';
 
 const mock = fetchMock.configure({
     enableFallback: false,
-    middleware: fetchmockMiddleware,
+    middleware: fetchmockMiddleware
 });
 
 const noContent = ResponseUtils.statusCode(204);
@@ -38,8 +38,8 @@ const unauthorized = ResponseUtils.combine(
         detaljer: {
             detaljertType: 'javax.ws.rs.Unauthorized',
             feilMelding: 'HTTP 401 Unauthorized',
-            stackTrace: 'javax.ws.rs.Unauthorized:HTTP 401 Unauthorized\r\n\t',
-        },
+            stackTrace: 'javax.ws.rs.Unauthorized:HTTP 401 Unauthorized\r\n\t'
+        }
     })
 );
 const internalServerError = ResponseUtils.combine(
@@ -50,8 +50,8 @@ const internalServerError = ResponseUtils.combine(
         detaljer: {
             detaljertType: 'javax.ws.rs.InternalServerErrorException',
             feilMelding: 'HTTP 500 Internal Server Error',
-            stackTrace: 'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t',
-        },
+            stackTrace: 'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t'
+        }
     })
 );
 

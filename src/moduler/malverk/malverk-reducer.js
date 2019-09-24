@@ -16,12 +16,12 @@ export const SLETT_VALGT_MALVERK = 'malverk/slett_valgt_malverk';
 const initialState = {
     data: [],
     status: STATUS.NOT_STARTED,
-    valgtMalverk: {},
+    valgtMalverk: {}
 };
 
 // Reducer
 export default function reducer(state = initialState, action) {
-    const {data} = action;
+    const { data } = action;
 
     switch (action.type) {
         case HENT_MALVERK_LISTE_OK:
@@ -29,29 +29,26 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                data,
+                data
             };
         case HENT_MALVERK_LISTE_FEILET:
         case HENT_MALVERK_MED_TYPE_FEILET:
             return {
                 ...state,
                 status: STATUS.ERROR,
-                feil: data,
+                feil: data
             };
         case HENT_MALVERK_LISTE_PENDING:
         case HENT_MALVERK_MED_TYPE_PENDING:
             return {
                 ...state,
-                status:
-                    state.status === STATUS.NOT_STARTED
-                        ? STATUS.PENDING
-                        : STATUS.RELOADING,
+                status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING
             };
         case SETT_VALGT_MALVERK:
         case SLETT_VALGT_MALVERK:
             return {
                 ...state,
-                valgtMalverk: data,
+                valgtMalverk: data
             };
         default:
             return state;
@@ -64,20 +61,20 @@ export function hentMalverkMedType(type) {
     return doThenDispatch(() => API.hentMalverkMedType(type), {
         OK: HENT_MALVERK_MED_TYPE_OK,
         FEILET: HENT_MALVERK_MED_TYPE_FEILET,
-        PENDING: HENT_MALVERK_MED_TYPE_PENDING,
+        PENDING: HENT_MALVERK_MED_TYPE_PENDING
     });
 }
 
 export function settValgtMalverk(mal) {
     return {
         type: SETT_VALGT_MALVERK,
-        data: mal[0],
+        data: mal[0]
     };
 }
 
 export function slettValgtMalverk() {
     return {
         type: SLETT_VALGT_MALVERK,
-        data: {},
+        data: {}
     };
 }

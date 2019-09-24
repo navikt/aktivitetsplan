@@ -9,21 +9,19 @@ function Tilbakeknapp(props) {
         <Lenke href="/" onClick={onClick} className="tilbakeknapp">
             <div className="tilbakeknapp-innhold">
                 <VenstreChevron />
-                <span className="tilbakeknapp-innhold__tekst">
-                    {tekst}
-                </span>
+                <span className="tilbakeknapp-innhold__tekst">{tekst}</span>
             </div>
         </Lenke>
     );
 }
 
 Tilbakeknapp.defaultProps = {
-    onClick: undefined,
+    onClick: undefined
 };
 
 Tilbakeknapp.propTypes = {
     tekst: PT.string.isRequired,
-    onClick: PT.func,
+    onClick: PT.func
 };
 
 export default Tilbakeknapp;

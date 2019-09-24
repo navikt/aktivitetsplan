@@ -6,20 +6,21 @@ export default function HtmlText(props) {
     const { id, className, ...restValues } = props;
     return (
         <FormattedHTMLMessage id={id} values={restValues}>
-            {content =>
+            {content => (
                 <div
                     className={className}
                     dangerouslySetInnerHTML={{ __html: content }} // eslint-disable-line react/no-danger
-                />}
+                />
+            )}
         </FormattedHTMLMessage>
     );
 }
 
 HtmlText.propTypes = {
     id: PT.string.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
 HtmlText.defaultProps = {
-    className: undefined,
+    className: undefined
 };

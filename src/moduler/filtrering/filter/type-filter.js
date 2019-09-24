@@ -7,11 +7,7 @@ import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlis
 import FilterVisningsKomponent from './filter-visnings-komponent';
 import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
-function TypeFilter({
-    harAktivitetTyper,
-    aktivitetTyper,
-    doToggleAktivitetsType,
-}) {
+function TypeFilter({ harAktivitetTyper, aktivitetTyper, doToggleAktivitetsType }) {
     return (
         <FilterVisningsKomponent
             harAktiviteter={harAktivitetTyper}
@@ -27,7 +23,7 @@ function TypeFilter({
 TypeFilter.propTypes = {
     harAktivitetTyper: PT.bool.isRequired,
     aktivitetTyper: PT.object.isRequired,
-    doToggleAktivitetsType: PT.func.isRequired,
+    doToggleAktivitetsType: PT.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -41,13 +37,15 @@ const mapStateToProps = state => {
 
     return {
         aktivitetTyper,
-        harAktivitetTyper: Object.keys(aktivitetTyper).length > 1,
+        harAktivitetTyper: Object.keys(aktivitetTyper).length > 1
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    doToggleAktivitetsType: aktivitetsType =>
-        dispatch(toggleAktivitetsType(aktivitetsType)),
+    doToggleAktivitetsType: aktivitetsType => dispatch(toggleAktivitetsType(aktivitetsType))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TypeFilter);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TypeFilter);
