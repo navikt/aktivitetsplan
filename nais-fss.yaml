@@ -26,6 +26,8 @@ spec:
   ingresses:
     - https://aktivitetsplan-{{namespace}}.nais.adeo.no
     - https://app.adeo.no/aktivitetsplan
+  vault:
+    enabled: true
   env:
     - ISSO_JWKS_URL
     - ISSO_HOST_URL
