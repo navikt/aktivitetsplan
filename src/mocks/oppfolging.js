@@ -1,4 +1,6 @@
 import {
+    erEskalertBruker,
+    erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
     ingenOppfPerioder,
@@ -51,12 +53,16 @@ const oppfolging = {
     fnr: null,
     aktorId: '1234567988888',
     veilederId: null,
-    reservasjonKRR: false,
+    reservasjonKRR: erKRRBruker(),
     manuell: erManuellBruker(),
     underOppfolging: !erPrivatBruker(),
     underKvp: false,
     oppfolgingUtgang: null,
-    gjeldendeEskaleringsvarsel: null,
+    gjeldendeEskaleringsvarsel: erEskalertBruker()
+        ? {
+              tilhorendeDialogId: 2,
+          }
+        : null,
     kanStarteOppfolging: false,
     avslutningStatus: null,
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfPerioder,

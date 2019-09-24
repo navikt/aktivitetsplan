@@ -29,6 +29,7 @@ import { fetchmockMiddleware } from './utils';
 import { hentMalverkMedType } from './malverk';
 import auth from './auth';
 import lest from './lest';
+import { oppfFeilet } from './demo/sessionstorage';
 
 const mock = fetchMock.configure({
     enableFallback: false,
@@ -82,8 +83,12 @@ mock.get(
 );
 
 mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
-mock.get('/veilarboppfolging/api/oppfolging', ({ queryParams }) =>
-    oppfolging(queryParams)
+
+mock.get(
+    '/veilarboppfolging/api/oppfolging',
+    oppfFeilet()
+        ? internalServerError
+        : ({ queryParams }) => oppfolging(queryParams)
 );
 
 mock.get(

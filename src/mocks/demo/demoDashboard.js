@@ -13,6 +13,9 @@ import {
     setFeatureTogle,
     fetureStatus,
     erManuellBruker,
+    erKRRBruker,
+    erEskalertBruker,
+    oppfFeilet,
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -90,9 +93,24 @@ class DemoDashboard extends React.Component {
                             checked: erManuellBruker(),
                         },
                         {
+                            label: 'KRR',
+                            id: SessionStorageElement.KRR_BRUKER,
+                            checked: erKRRBruker(),
+                        },
+                        {
                             label: 'Ingen oppfølgingsperioder',
                             id: SessionStorageElement.INGEN_OPPF_PERIODER,
                             checked: ingenOppfPerioder(),
+                        },
+                        {
+                            label: 'Eskaleringsvarsel',
+                            id: SessionStorageElement.ESKALERT_BRUKER,
+                            checked: erEskalertBruker(),
+                        },
+                        {
+                            label: 'Oppfølging feiler',
+                            id: SessionStorageElement.OPPF_FEILET,
+                            checked: oppfFeilet(),
                         },
                     ]}
                     onChange={this.endreTilstand}
