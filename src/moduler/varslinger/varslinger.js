@@ -78,7 +78,6 @@ class Varslinger extends Component {
                     className="varsling"
                     lenkeTekstId="oppfolging.ikke-under-oppfolging.reaktiveres.lenke-tekst"
                     href={arbeidssokerregistreringHref}
-                    erEksternLenke
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
                 <HiddenIfAdvarselMedLenke
@@ -87,7 +86,6 @@ class Varslinger extends Component {
                     className="varsling"
                     lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
                     href={arbeidssokerregistreringHref}
-                    erEksternLenke
                     values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
             </div>

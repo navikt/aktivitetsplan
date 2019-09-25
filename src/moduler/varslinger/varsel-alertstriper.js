@@ -2,8 +2,9 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import Lenke from '../../felles-komponenter/utils/lenke';
+import InternLenke from '../../felles-komponenter/utils/internLenke';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
+import Lenke from 'nav-frontend-lenker';
 
 export function Varsling({ tekstId, className }) {
     return (
@@ -27,9 +28,9 @@ export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className, onCli
         <AlertStripeAdvarsel className={className}>
             <FormattedMessage id={tekstId} />
             &nbsp;
-            <Lenke href={href} onClick={onClick}>
+            <InternLenke href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
-            </Lenke>
+            </InternLenke>
         </AlertStripeAdvarsel>
     );
 }
@@ -64,12 +65,12 @@ AdvarselVarsling.propTypes = {
     className: PT.string
 };
 
-export function AdvarselMedLenkeVarsling({ tekstId, lenkeTekstId, href, erEksternLenke, className, onClick, values }) {
+export function AdvarselMedLenkeVarsling({ tekstId, lenkeTekstId, href, className, onClick, values }) {
     return (
         <AlertStripeAdvarsel className={className}>
             <FormattedMessage id={tekstId} values={values} />
             &nbsp;
-            <Lenke href={href} onClick={onClick} erEksternLenke={erEksternLenke}>
+            <Lenke href={href} onClick={onClick}>
                 <FormattedMessage id={lenkeTekstId} />
             </Lenke>
         </AlertStripeAdvarsel>

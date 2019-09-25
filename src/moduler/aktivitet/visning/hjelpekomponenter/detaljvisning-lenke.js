@@ -2,12 +2,12 @@ import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import React from 'react';
 import DetaljFelt from './detalj-felt';
-import Lenke from '../../../../felles-komponenter/utils/lenke';
+import InternLenke from '../../../../felles-komponenter/utils/internLenke';
 import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
 
 const httpRegex = /^(https?):\/\/.*$/;
 
-export default function LenkeKomponent({ lenke }) {
+export default function DetaljvisningLenke({ lenke }) {
     return (
         <DetaljFelt
             key="lenke"
@@ -15,17 +15,20 @@ export default function LenkeKomponent({ lenke }) {
             visible={!!(lenke && lenke.trim())}
             fullbredde
         >
-            <Lenke href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`} className="detaljfelt__lenke">
+            <InternLenke
+                href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
+                className="detaljfelt__lenke"
+            >
                 {lenke}
                 <EksternLenkeIkon />
-            </Lenke>
+            </InternLenke>
         </DetaljFelt>
     );
 }
 
-LenkeKomponent.propTypes = {
+DetaljvisningLenke.propTypes = {
     lenke: PT.string
 };
-LenkeKomponent.defaultProps = {
+DetaljvisningLenke.defaultProps = {
     lenke: null
 };

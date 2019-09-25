@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { FormattedMessage } from 'react-intl';
 import { Element, EtikettLiten } from 'nav-frontend-typografi';
-import Lenke from '../../felles-komponenter/utils/lenke';
+import InternLenke from '../../felles-komponenter/utils/internLenke';
 import MalIcon from './mal-ikon';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
@@ -51,12 +51,7 @@ class MittMaal extends Component {
         }
 
         return (
-            <Lenke
-                brukLenkestyling={false}
-                href={url}
-                className="mitt-maal"
-                onClick={() => loggMittMalKlikk(erVeileder)}
-            >
+            <InternLenke skipStyling href={url} className="mitt-maal" onClick={() => loggMittMalKlikk(erVeileder)}>
                 <MalIcon />
                 <div className="mittmal_content">
                     <Element className="mittmal__content-header">
@@ -66,7 +61,7 @@ class MittMaal extends Component {
                         <Mal disabled={disabled} mal={mal} />
                     </Innholdslaster>
                 </div>
-            </Lenke>
+            </InternLenke>
         );
     }
 }

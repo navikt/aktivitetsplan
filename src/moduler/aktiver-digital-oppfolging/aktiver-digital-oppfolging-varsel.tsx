@@ -3,13 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
-import Lenke from '../../felles-komponenter/utils/lenke';
+import InternLenke from '../../felles-komponenter/utils/internLenke';
 
 function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harTrykketRefresh }) {
     const InformasjonContainer = () => (
         <div>
-            Se video om &nbsp;
-            <Lenke href="/informasjon">aktivitetsplanen</Lenke>
+            Se video om&nbsp;
+            <InternLenke href="/informasjon">aktivitetsplanen</InternLenke>
         </div>
     );
 
@@ -34,9 +34,9 @@ function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harT
                         <div className="blokk-s">
                             <FormattedMessage id={resertvertTekst} />
                             &nbsp;
-                            <Lenke href={url}>
+                            <InternLenke href={url}>
                                 <FormattedMessage id="sett-digital.reservert-i-krr.lenketekst" />
-                            </Lenke>
+                            </InternLenke>
                         </div>
                         <InformasjonContainer />
                     </AlertStripe>

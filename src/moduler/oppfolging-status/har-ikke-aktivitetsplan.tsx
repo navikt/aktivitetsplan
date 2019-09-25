@@ -3,13 +3,12 @@ import { FormattedMessage } from 'react-intl';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import PT from 'prop-types';
-import Lenke from '../../felles-komponenter/utils/lenke';
+import Lenke from 'nav-frontend-lenker';
 
 export const arbeidssokerregistreringHref = '/arbeidssokerregistrering';
 
-function HarIkkeAktivitetsplan({ erVeileder }) {
-    const advarsel = erVeileder
+function HarIkkeAktivitetsplan(props: { erVeileder: boolean }) {
+    const advarsel = props.erVeileder
         ? 'har.ikke.aktivitetsplan.advarsel.veileder'
         : 'har.ikke.aktivitetsplan.advarsel.bruker';
 
@@ -19,8 +18,8 @@ function HarIkkeAktivitetsplan({ erVeileder }) {
                 <Normaltekst>
                     <FormattedMessage id={advarsel} />
                 </Normaltekst>
-                {!erVeileder && (
-                    <Lenke href={arbeidssokerregistreringHref} erEksternLenke>
+                {!props.erVeileder && (
+                    <Lenke href={arbeidssokerregistreringHref}>
                         <FormattedMessage id="ikke.under.oppfolging.reaktivering.lenke" />
                         <HoyreChevron />
                     </Lenke>
@@ -29,9 +28,5 @@ function HarIkkeAktivitetsplan({ erVeileder }) {
         </div>
     );
 }
-
-HarIkkeAktivitetsplan.propTypes = {
-    erVeileder: PT.bool.isRequired
-};
 
 export default HarIkkeAktivitetsplan;
