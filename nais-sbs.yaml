@@ -24,8 +24,8 @@ spec:
     enabled: true
     path: aktivitetsplan/internal/metrics
   ingresses:
-    - https://aktivitetsplan.nais.adeo.no
-    - https://app.adeo.no/aktivitetsplan
+    - https://aktivitetsplan.nais.orea.no
+    - https://aktivitetsplan.nav.no
   vault:
     enabled: true
   webproxy: true
@@ -48,10 +48,6 @@ spec:
     - name: ARBEIDSSOKERREGISTRERING_URL
       value: 'https://arbeidssokerregistrering.nav.no/'
     - name: REGISTRERINGSINFORMASJON_URL
-      value: 'https://registreringsinformasjon-q.nav.no'
+      value: 'https://registreringsinformasjon.nav.no'
     - name: VEILARBSTEPUP_OIDC_URL
       value: 'https://veilarbstepup.nav.no/veilarbstepup/oidc'
-    - name: DISABLE_PROXY
-      value: 'true'
-    - name: DISABLE_DECORATOR
-      value: 'true'
