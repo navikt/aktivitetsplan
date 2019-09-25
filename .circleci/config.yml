@@ -21,6 +21,17 @@ workflows:
             - pus/deploy-latest:
                   requires:
                       - build
+                  name: deploy1
+                  context: pus
+                  cluster: dev-sbs
+                  filepath: ./nais-q-sbs.yaml
+                  filters:
+                      branches:
+                          only: master
+
+            - pus/deploy-latest:
+                  requires:
+                      - build
                   name: deploy2
                   context: pus
                   cluster: dev-fss
@@ -30,6 +41,7 @@ workflows:
                           only: master
             - prodsett:
                   requires:
+                      - deploy1
                       - deploy2
                   type: approval
                   filters:
