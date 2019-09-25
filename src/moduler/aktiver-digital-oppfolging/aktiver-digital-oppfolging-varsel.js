@@ -5,16 +5,13 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import Lenke from '../../felles-komponenter/utils/lenke';
 
-function AktiverDigitalOppfolgingVarsel({
-    reservertIKRR,
-    settDigitalFeilet,
-    harTrykketRefresh,
-}) {
-    const InformasjonContainer = () =>
+function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harTrykketRefresh }) {
+    const InformasjonContainer = () => (
         <div>
             Se video om &nbsp;
             <Lenke href="/informasjon">aktivitetsplanen</Lenke>
-        </div>;
+        </div>
+    );
 
     if (!reservertIKRR && !settDigitalFeilet) {
         return (
@@ -32,11 +29,8 @@ function AktiverDigitalOppfolgingVarsel({
             : 'sett-digital.reservert-i-krr.infotekst';
         return (
             <FormattedMessage id="sett-digital.reservert-i-krr.url-lenke">
-                {url =>
-                    <AlertStripe
-                        type="advarsel"
-                        className="sett-digital__varsel"
-                    >
+                {url => (
+                    <AlertStripe type="advarsel" className="sett-digital__varsel">
                         <div className="blokk-s">
                             <FormattedMessage id={resertvertTekst} />
                             &nbsp;
@@ -45,24 +39,20 @@ function AktiverDigitalOppfolgingVarsel({
                             </Lenke>
                         </div>
                         <InformasjonContainer />
-                    </AlertStripe>}
+                    </AlertStripe>
+                )}
             </FormattedMessage>
         );
     }
     if (settDigitalFeilet) {
-        return (
-            <AdvarselVarsling
-                tekstId="sett-digital.feilmelding"
-                className="sett-digital__varsel"
-            />
-        );
+        return <AdvarselVarsling tekstId="sett-digital.feilmelding" className="sett-digital__varsel" />;
     }
 }
 
 AktiverDigitalOppfolgingVarsel.propTypes = {
     reservertIKRR: PT.bool.isRequired,
     settDigitalFeilet: PT.bool.isRequired,
-    harTrykketRefresh: PT.bool.isRequired,
+    harTrykketRefresh: PT.bool.isRequired
 };
 
 export default AktiverDigitalOppfolgingVarsel;

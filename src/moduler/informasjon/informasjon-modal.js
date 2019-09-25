@@ -21,11 +21,7 @@ class InformasjonModal extends Component {
     componentWillMount() {
         const { erBruker, underOppfolging, lestInfo } = this.props;
 
-        if (
-            erBruker &&
-            underOppfolging &&
-            (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)
-        ) {
+        if (erBruker && underOppfolging && (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)) {
             Api.lesInformasjon(INFORMASJON_MODAL_VERSJON);
         }
     }
@@ -46,10 +42,7 @@ class InformasjonModal extends Component {
                     <Innholdstittel>
                         <FormattedMessage id="informasjon.ny_tittel" />
                     </Innholdstittel>
-                    <HtmlText
-                        className="mellomrom"
-                        id="informasjon.ny_hjelpetekst"
-                    />
+                    <HtmlText className="mellomrom" id="informasjon.ny_hjelpetekst" />
                     <Video />
                     <Ekspanderbartpanel
                         tittelId="informasjon.tittel.seksjon.bruk"
@@ -82,7 +75,7 @@ class InformasjonModal extends Component {
 
 InformasjonModal.defaultProps = {
     lestInfo: null,
-    backPath: '/',
+    backPath: '/'
 };
 
 InformasjonModal.propTypes = {
@@ -91,18 +84,21 @@ InformasjonModal.propTypes = {
     lestInfo: AppPT.lest,
     resetBackPath: PT.func.isRequired,
     backPath: PT.string,
-    history: AppPT.history.isRequired,
+    history: AppPT.history.isRequired
 };
 
 const mapStateToProps = state => ({
     lestInfo: selectLestInformasjon(state),
     erBruker: selectErBruker(state),
     underOppfolging: selectErUnderOppfolging(state),
-    backPath: selectBackPath(state),
+    backPath: selectBackPath(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    resetBackPath: () => dispatch(setBackPath('/')),
+    resetBackPath: () => dispatch(setBackPath('/'))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(InformasjonModal);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(InformasjonModal);

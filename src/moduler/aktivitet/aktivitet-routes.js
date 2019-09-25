@@ -12,39 +12,19 @@ function AktivitetRoutes({ match }) {
     const basePath = match.path;
     return (
         <Switch>
-            <Route
-                exact
-                path={`${basePath}/ny`}
-                component={NyAktivitetVelger}
-            />
+            <Route exact path={`${basePath}/ny`} component={NyAktivitetVelger} />
             <Route path={`${basePath}/ny`} component={NyAktivitetForm} />
 
-            <Route
-                exact
-                path={`${basePath}/vis/:id`}
-                component={AktivitetvisningContainer}
-            />
-            <Route
-                exact
-                path={`${basePath}/endre/:id`}
-                component={EndreAktivitet}
-            />
-            <Route
-                exact
-                path={`${basePath}/avbryt/:id`}
-                component={AvbrytAktivitet}
-            />
-            <Route
-                exact
-                path={`${basePath}/fullfor/:id`}
-                component={FullforAktivitet}
-            />
+            <Route exact path={`${basePath}/vis/:id`} component={AktivitetvisningContainer} />
+            <Route exact path={`${basePath}/endre/:id`} component={EndreAktivitet} />
+            <Route exact path={`${basePath}/avbryt/:id`} component={AvbrytAktivitet} />
+            <Route exact path={`${basePath}/fullfor/:id`} component={FullforAktivitet} />
         </Switch>
     );
 }
 
 AktivitetRoutes.propTypes = {
-    match: PT.object.isRequired,
+    match: PT.object.isRequired
 };
 
 export default AktivitetRoutes;

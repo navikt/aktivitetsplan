@@ -2,30 +2,30 @@ contextPath: /
 
 auth:
   enforce: true
-  loginUrl: {{ VEILARBSTEPUP_OIDC_URL }}
+  loginUrl: {{VEILARBSTEPUP_OIDC_URL}}
 
 proxy:
-  - contextPath: "/veilarbaktivitet"
-    baseUrl: "http://veilarbproxy"
-  - contextPath: "/veilarbdialog"
-    baseUrl: "http://veilarbproxy"
-  - contextPath: "/veilarboppfolging"
-    baseUrl: "http://veilarbproxy"
-  - contextPath: "/veilarblest"
-    baseUrl: "http://veilarbproxy"
-  - contextPath: "/veilarbstepup"
-    baseUrl: "http://veilarbstepup"
-  - contextPath: "/veilarbvedtakinfo"
-    baseUrl: "http://veilarbproxy"
+  - contextPath: '/veilarbaktivitet'
+    baseUrl: 'http://veilarbproxy'
+  - contextPath: '/veilarbdialog'
+    baseUrl: 'http://veilarbproxy'
+  - contextPath: '/veilarboppfolging'
+    baseUrl: 'http://veilarbproxy'
+  - contextPath: '/veilarblest'
+    baseUrl: 'http://veilarbproxy'
+  - contextPath: '/veilarbstepup'
+    baseUrl: 'http://veilarbstepup'
+  - contextPath: '/veilarbvedtakinfo'
+    baseUrl: 'http://veilarbproxy'
 
 redirect:
   - from: /aktivitetsplan
-    to: {{ AKTIVITETSPLAN_URL }}
+    to: {{AKTIVITETSPLAN_URL}}
   - from: /arbeidssokerregistrering
-    to: {{ ARBEIDSSOKERREGISTRERING_URL }}
+    to: {{ARBEIDSSOKERREGISTRERING_URL}}
   - from: /registreringsinformasjon
-    to: {{ REGISTRERINGSINFORMASJON_URL }}
+    to: {{REGISTRERINGSINFORMASJON_URL}}
   - from: /dittnav
-    to: {{ DITTNAV_LINK_URL }}
+    to: {{DITTNAV_LINK_URL}}
   - from: /veientilarbeid
-    to: {{ VEIENTILARBEID_URL }}
+    to: {{VEIENTILARBEID_URL}}

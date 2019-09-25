@@ -14,20 +14,11 @@ import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
     SAMTALEREFERAT_TYPE,
-    MOTE_TYPE,
+    MOTE_TYPE
 } from '../../../constant';
-import {
-    selectErBruker,
-    selectIdentitetSlice,
-} from '../../identitet/identitet-selector';
-import {
-    selectLestAktivitetsplan,
-    selectLestStatus,
-} from '../../lest/lest-reducer';
-import {
-    selectAktiviteterSomHarBlittVist,
-    settAktivitetSomVist,
-} from '../aktivitetview-reducer';
+import { selectErBruker, selectIdentitetSlice } from '../../identitet/identitet-selector';
+import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
+import { selectAktiviteterSomHarBlittVist, settAktivitetSomVist } from '../aktivitetview-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../../ducks/utils';
@@ -40,13 +31,13 @@ import { aktivitetRoute } from '../../../routes';
 const dndSpec = {
     beginDrag({ aktivitet }) {
         return aktivitet;
-    },
+    }
 };
 
 function collect(connector, monitor) {
     return {
         connectDragSource: connector.dragSource(),
-        isDragging: monitor.isDragging(),
+        isDragging: monitor.isDragging()
     };
 }
 
@@ -58,7 +49,7 @@ class AktivitetsKort extends Component {
             connectDragSource,
             erFlyttbar,
             doSettAktivitetMedEndringerSomVist,
-            harEndringerIAktivitet,
+            harEndringerIAktivitet
         } = this.props;
         const { id, type } = aktivitet;
 
@@ -72,11 +63,10 @@ class AktivitetsKort extends Component {
                     draggable={erFlyttbar}
                     className={classNames('aktivitetskort', {
                         'aktivitetskort--flyttbar': erFlyttbar,
-                        'aktivitetskort--drag': isDragging,
+                        'aktivitetskort--drag': isDragging
                     })}
                     brukLenkestyling={false}
-                    onClick={() =>
-                        doSettAktivitetMedEndringerSomVist(aktivitet)}
+                    onClick={() => doSettAktivitetMedEndringerSomVist(aktivitet)}
                 >
                     <article aria-labelledby={ariaLabel}>
                         <AktivitetType type={type} />
@@ -100,21 +90,10 @@ class AktivitetsKort extends Component {
 
 function sjekkErFlyttbar(aktivitet, erBruker) {
     const { type, status, nesteStatus, historisk } = aktivitet;
-    const erArenaAktivitet = [
-        TILTAK_AKTIVITET_TYPE,
-        GRUPPE_AKTIVITET_TYPE,
-        UTDANNING_AKTIVITET_TYPE,
-    ].includes(type);
+    const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
     const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
-    const brukerKanOppdater =
-        [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
-    return (
-        !nesteStatus &&
-        !historisk &&
-        !erFerdig &&
-        !erArenaAktivitet &&
-        !brukerKanOppdater
-    );
+    const brukerKanOppdater = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
+    return !nesteStatus && !historisk && !erFerdig && !erArenaAktivitet && !brukerKanOppdater;
 }
 
 AktivitetsKort.propTypes = {
@@ -123,16 +102,14 @@ AktivitetsKort.propTypes = {
     connectDragSource: PT.func.isRequired,
     erFlyttbar: PT.bool.isRequired,
     doSettAktivitetMedEndringerSomVist: PT.func.isRequired,
-    harEndringerIAktivitet: PT.bool,
+    harEndringerIAktivitet: PT.bool
 };
 
 AktivitetsKort.defaultProps = {
-    harEndringerIAktivitet: false,
+    harEndringerIAktivitet: false
 };
 
-const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(
-    AktivitetsKort
-);
+const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(AktivitetsKort);
 
 const mapStateToProps = (state, props) => {
     const lest = selectLestAktivitetsplan(state);
@@ -145,22 +122,18 @@ const mapStateToProps = (state, props) => {
     const me = selectIdentitetSlice(state).data;
 
     const harEndringerIAktivitet =
-        lestStatus === STATUS.OK &&
-        erNyEndringIAktivitet(props.aktivitet, lest, me) &&
-        aktivitetHarIkkeBlittVist;
+        lestStatus === STATUS.OK && erNyEndringIAktivitet(props.aktivitet, lest, me) && aktivitetHarIkkeBlittVist;
     return {
-        erFlyttbar:
-            sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) &&
-            selectErUnderOppfolging(state),
-        harEndringerIAktivitet,
+        erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) && selectErUnderOppfolging(state),
+        harEndringerIAktivitet
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    doSettAktivitetMedEndringerSomVist: aktivitet =>
-        dispatch(settAktivitetSomVist(aktivitet)),
+    doSettAktivitetMedEndringerSomVist: aktivitet => dispatch(settAktivitetSomVist(aktivitet))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    dragbartAktivitetskort
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(dragbartAktivitetskort);

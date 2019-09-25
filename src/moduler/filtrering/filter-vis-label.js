@@ -11,7 +11,7 @@ import {
     toggleAktivitetsEtikett,
     toggleAktivitetsStatus,
     toggleAktivitetsType,
-    velgHistoriskPeriode,
+    velgHistoriskPeriode
 } from './filter/filter-reducer';
 
 function VisValgtFilter(props) {
@@ -22,29 +22,29 @@ function VisValgtFilter(props) {
         doToggleAktivitetsType,
         doVelgHistoriskPeriode,
         doToggleAktivitetAvtaltMedNav,
-        className,
+        className
     } = props;
     const setFilterValues = (filterType, filterVerdi) => {
         switch (filterType) {
             case 'aktivitetTyper':
                 return {
                     tekstPath: `aktivitet.type.${filterVerdi}`,
-                    func: doToggleAktivitetsType,
+                    func: doToggleAktivitetsType
                 };
             case 'aktivitetEtiketter':
                 return {
                     tekstPath: `aktivitet.etikett.${filterVerdi}`,
-                    func: doToggleAktivitetsEtikett,
+                    func: doToggleAktivitetsEtikett
                 };
             case 'aktivitetStatus':
                 return {
                     tekstPath: `aktivitet.status.${filterVerdi}`,
-                    func: doToggleAktivitetsStatus,
+                    func: doToggleAktivitetsStatus
                 };
             case 'aktivitetAvtaltMedNav':
                 return {
                     tekstPath: `aktivitet.${filterVerdi}`,
-                    func: doToggleAktivitetAvtaltMedNav,
+                    func: doToggleAktivitetAvtaltMedNav
                 };
             default:
                 return filterType;
@@ -62,9 +62,7 @@ function VisValgtFilter(props) {
                     return (
                         <FiltreringLabel
                             key={filterValue}
-                            label={
-                                <PeriodeLabel historiskPeriode={filterValue} />
-                            }
+                            label={<PeriodeLabel historiskPeriode={filterValue} />}
                             slettFilter={() => doVelgHistoriskPeriode(null)}
                         />
                     );
@@ -77,11 +75,7 @@ function VisValgtFilter(props) {
                         return (
                             <FiltreringLabel
                                 key={f}
-                                label={
-                                    <FormattedMessage
-                                        id={filterValues.tekstPath.toLowerCase()}
-                                    />
-                                }
+                                label={<FormattedMessage id={filterValues.tekstPath.toLowerCase()} />}
                                 slettFilter={() => {
                                     filterValues.func(f);
                                 }}
@@ -94,7 +88,7 @@ function VisValgtFilter(props) {
 }
 
 VisValgtFilter.defaultProps = {
-    className: '',
+    className: ''
 };
 
 VisValgtFilter.propTypes = {
@@ -104,24 +98,22 @@ VisValgtFilter.propTypes = {
     doToggleAktivitetsType: PT.func.isRequired,
     doVelgHistoriskPeriode: PT.func.isRequired,
     doToggleAktivitetAvtaltMedNav: PT.func.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
 const mapStateToProps = state => ({
-    filterSlice: selectFilterSlice(state),
+    filterSlice: selectFilterSlice(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    doToggleAktivitetsEtikett: aktivitetsEtikett =>
-        dispatch(toggleAktivitetsEtikett(aktivitetsEtikett)),
-    doToggleAktivitetsStatus: aktivitetsStatus =>
-        dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
-    doToggleAktivitetsType: aktivitetsType =>
-        dispatch(toggleAktivitetsType(aktivitetsType)),
-    doVelgHistoriskPeriode: historiskPeriode =>
-        dispatch(velgHistoriskPeriode(historiskPeriode)),
-    doToggleAktivitetAvtaltMedNav: aktivitetsStatus =>
-        dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus)),
+    doToggleAktivitetsEtikett: aktivitetsEtikett => dispatch(toggleAktivitetsEtikett(aktivitetsEtikett)),
+    doToggleAktivitetsStatus: aktivitetsStatus => dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
+    doToggleAktivitetsType: aktivitetsType => dispatch(toggleAktivitetsType(aktivitetsType)),
+    doVelgHistoriskPeriode: historiskPeriode => dispatch(velgHistoriskPeriode(historiskPeriode)),
+    doToggleAktivitetAvtaltMedNav: aktivitetsStatus => dispatch(toggleAktivitetAvtaltMedNav(aktivitetsStatus))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VisValgtFilter);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(VisValgtFilter);

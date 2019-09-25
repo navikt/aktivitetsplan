@@ -14,94 +14,62 @@ import AvtaltMarkering from '../aktivitet/avtalt-markering/avtalt-markering';
 function AktivitetReferat({ aktivitet }) {
     const { referat, erReferatPublisert } = aktivitet;
     const harReferat = !!referat;
-    const visReferat =
-        erReferatPublisert && (harReferat || !aktivitet.historisk);
+    const visReferat = erReferatPublisert && (harReferat || !aktivitet.historisk);
 
     return (
-        <HiddenIfDiv
-            hidden={!visReferat}
-            className="printmodal-body__aktivitetreferat"
-        >
-            <Informasjonsfelt
-                key="referat"
-                tittel={<FormattedMessage id="referat.header" />}
-                innhold={referat}
-            />
+        <HiddenIfDiv hidden={!visReferat} className="printmodal-body__aktivitetreferat">
+            <Informasjonsfelt key="referat" tittel={<FormattedMessage id="referat.header" />} innhold={referat} />
         </HiddenIfDiv>
     );
 }
 
 AktivitetReferat.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };
 
 function AktivitetPrint({ aktivitet, dialog, intl }) {
     const { id, type, tittel } = aktivitet;
     const aktivitetType = intl.formatMessage({
-        id: `aktivitetskort.type.${type}`.toLowerCase(),
+        id: `aktivitetskort.type.${type}`.toLowerCase()
     });
     return (
         <div key={id} className="printmodal-body__statusgruppe">
-            <p className="printmodal-body__statusgruppe--type">
-                {aktivitetType}
-            </p>
+            <p className="printmodal-body__statusgruppe--type">{aktivitetType}</p>
 
-            <Element
-                tag="h2"
-                className="printmodal-body__statusgruppe--overskrift"
-            >
+            <Element tag="h2" className="printmodal-body__statusgruppe--overskrift">
                 {tittel}
             </Element>
 
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
             <AktivitetReferat aktivitet={aktivitet} />
-            <AvtaltMarkering
-                visible={aktivitet.avtalt}
-                className="etikett-print"
-            />
-            <Etikett
-                visible={!!aktivitet.etikett}
-                etikett={aktivitet.etikett}
-                className="etikett-print"
-            />
+            <AvtaltMarkering visible={aktivitet.avtalt} className="etikett-print" />
+            <Etikett visible={!!aktivitet.etikett} etikett={aktivitet.etikett} className="etikett-print" />
             <DialogPrint dialog={dialog} />
         </div>
     );
 }
 
 AktivitetPrint.defaultProps = {
-    dialog: null,
+    dialog: null
 };
 
 AktivitetPrint.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     dialog: AppPT.dialog,
-    intl: intlShape.isRequired,
+    intl: intlShape.isRequired
 };
 
 function StatusGruppe({ gruppe, intl }) {
     const { status, aktiviteter, dialoger } = gruppe;
     return (
         <section className="printmodal-body__statusgrupper">
-            <Undertittel
-                tag="h1"
-                className="printmodal-body__statusgruppe--overskrift"
-            >
-                <FormattedMessage
-                    id={`aktivitetstavle.print.${status.toLowerCase()}`}
-                />
+            <Undertittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+                <FormattedMessage id={`aktivitetstavle.print.${status.toLowerCase()}`} />
             </Undertittel>
             {aktiviteter.sort(compareAktivitet).map(aktivitet => {
-                const dialogForAktivitet = dialoger.find(
-                    d => d.aktivitetId === aktivitet.id
-                );
+                const dialogForAktivitet = dialoger.find(d => d.aktivitetId === aktivitet.id);
                 return (
-                    <AktivitetPrint
-                        aktivitet={aktivitet}
-                        key={aktivitet.id}
-                        intl={intl}
-                        dialog={dialogForAktivitet}
-                    />
+                    <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} intl={intl} dialog={dialogForAktivitet} />
                 );
             })}
         </section>
@@ -112,13 +80,13 @@ StatusGruppe.propTypes = {
     gruppe: PT.shape({
         status: PT.string.isRequired,
         aktiviteter: AppPT.aktiviteter.isRequired,
-        dialoger: PT.arrayOf(AppPT.dialog),
+        dialoger: PT.arrayOf(AppPT.dialog)
     }),
-    intl: intlShape.isRequired,
+    intl: intlShape.isRequired
 };
 
 StatusGruppe.defaultProps = {
-    gruppe: null,
+    gruppe: null
 };
 
 export default injectIntl(StatusGruppe);

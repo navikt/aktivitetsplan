@@ -7,16 +7,10 @@ import AktivitetFormHeader from '../aktivitet-form-header';
 import * as AppPT from '../../../../proptypes';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import {
-    validateBeskrivelse,
-    validateFeltForLangt,
-    validateFraDato,
-    validateLenke,
-    validateTittel,
-} from './validate';
+import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke, validateTittel } from './validate';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
-    validerPeriodeFelt,
+    validerPeriodeFelt
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
@@ -27,23 +21,15 @@ function erAvtalt(aktivitet) {
 }
 
 const validator = useFormstate({
-    tittel: (val, values, aktivitet) =>
-        validateTittel(erAvtalt(aktivitet), val),
-    fraDato: (val, values, aktivitet) =>
-        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) =>
-        validerDato(val, null, aktivitet.fraDato),
-    beskrivelse: (val, values, aktivitet) =>
-        validateBeskrivelse(erAvtalt(aktivitet), val),
-    arbeidssted: (val, values, aktivitet) =>
-        validateFeltForLangt(erAvtalt(aktivitet), val),
-    arbeidsgiver: (val, values, aktivitet) =>
-        validateFeltForLangt(erAvtalt(aktivitet), val),
-    kontaktperson: (val, values, aktivitet) =>
-        validateFeltForLangt(erAvtalt(aktivitet), val),
+    tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) => validerDato(val, null, aktivitet.fraDato),
+    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+    arbeidssted: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+    arbeidsgiver: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+    kontaktperson: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
     lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
-    periodeValidering: (val, values) =>
-        validerPeriodeFelt(values.fraDato, values.tilDato),
+    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato)
 });
 
 function StillingAktivitetForm(props) {
@@ -60,7 +46,7 @@ function StillingAktivitetForm(props) {
         arbeidsgiver: maybeAktivitet.arbeidsgiver || '',
         kontaktperson: maybeAktivitet.kontaktperson || '',
         lenke: maybeAktivitet.lenke || '',
-        periodeValidering: '',
+        periodeValidering: ''
     };
 
     const state = validator(initalValues, aktivitet);
@@ -72,25 +58,13 @@ function StillingAktivitetForm(props) {
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetskjema">
-                <FormErrorSummary
-                    submittoken={state.submittoken}
-                    errors={state.errors}
-                />
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
-                <AktivitetFormHeader
-                    tittel="En jobb jeg vil søke på"
-                    aktivitetsType={STILLING_AKTIVITET_TYPE}
-                />
+                <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
 
-                <Input
-                    disabled={avtalt}
-                    label="Stillingstittel *"
-                    {...state.fields.tittel}
-                />
+                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
 
-                <PeriodeValidering
-                    valideringFelt={state.fields.periodeValidering}
-                >
+                <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
                         <DatoField
                             disabled={avtalt}
@@ -98,28 +72,12 @@ function StillingAktivitetForm(props) {
                             senesteTom={maybeAktivitet.tilDato}
                             {...state.fields.fraDato}
                         />
-                        <DatoField
-                            label="Frist"
-                            tidligsteFom={maybeAktivitet.fraDato}
-                            {...state.fields.tilDato}
-                        />
+                        <DatoField label="Frist" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
                     </div>
                 </PeriodeValidering>
-                <Input
-                    disabled={avtalt}
-                    label="Arbeidsgiver"
-                    {...state.fields.arbeidsgiver}
-                />
-                <Input
-                    disabled={avtalt}
-                    label="Kontaktperson hos arbeidsgiver"
-                    {...state.fields.kontaktperson}
-                />
-                <Input
-                    disabled={avtalt}
-                    label="Arbeidssted"
-                    {...state.fields.arbeidssted}
-                />
+                <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.arbeidsgiver} />
+                <Input disabled={avtalt} label="Kontaktperson hos arbeidsgiver" {...state.fields.kontaktperson} />
+                <Input disabled={avtalt} label="Arbeidssted" {...state.fields.arbeidssted} />
                 <Textarea
                     disabled={avtalt}
                     label="Kort beskrivelse av stillingen"
@@ -127,11 +85,7 @@ function StillingAktivitetForm(props) {
                     visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
-                <Input
-                    disabled={avtalt}
-                    label="Lenke til stillingsannonse"
-                    {...state.fields.lenke}
-                />
+                <Input disabled={avtalt} label="Lenke til stillingsannonse" {...state.fields.lenke} />
             </div>
             <LagreAktivitet />
         </form>
@@ -141,12 +95,12 @@ function StillingAktivitetForm(props) {
 StillingAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
-    isDirtyRef: PT.shape({ current: PT.bool }),
+    isDirtyRef: PT.shape({ current: PT.bool })
 };
 
 StillingAktivitetForm.defaultProps = {
     aktivitet: undefined,
-    isDirtyRef: undefined,
+    isDirtyRef: undefined
 };
 
 export default StillingAktivitetForm;

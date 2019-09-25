@@ -21,18 +21,17 @@ export const ESKALERINGS_FILTER_TYPE = 'dialog/eskalering';
 export const ESKALERINGS_FILTER = { type: ESKALERINGS_FILTER_TYPE };
 
 export const SEND_FORHANDSORIENTERING_OK = 'dialog/forhandsorientering/ok';
-export const SEND_FORHANDSORIENTERING_FEILET =
-    'dialog/forhandsorientering/fail';
+export const SEND_FORHANDSORIENTERING_FEILET = 'dialog/forhandsorientering/fail';
 export const SEND_FORHANDSORIENTERING = 'dialog/forhandsorientering';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
-    esklaringsFilter: false,
+    esklaringsFilter: false
 };
 
 function nyStateMedOppdatertDialog(state, dialog) {
-    const {data} = state;
+    const { data } = state;
     const dialogIndeks = data.findIndex(d => d.id === dialog.id);
     const nyData = [...data];
     if (dialogIndeks >= 0) {
@@ -45,7 +44,7 @@ function nyStateMedOppdatertDialog(state, dialog) {
 
 // Reducer
 export default function reducer(state = initalState, action) {
-    const {data} = action;
+    const { data } = action;
     switch (action.type) {
         case OPPRETTER_HENVENDELSE:
         case OPPDATER_DIALOG:
@@ -54,12 +53,12 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                data,
+                data
             };
         case ESKALERINGS_FILTER_TYPE:
             return {
                 ...state,
-                esklaringsFilter: !state.esklaringsFilter,
+                esklaringsFilter: !state.esklaringsFilter
             };
         case HENTING_FEILET:
         case OPPRETT_HENVENDELSE_FEILET:
@@ -82,7 +81,7 @@ export function hentDialog() {
     return doThenDispatch(() => Api.hentDialog(), {
         OK: HENTET,
         FEILET: HENTING_FEILET,
-        PENDING: HENTER,
+        PENDING: HENTER
     });
 }
 
@@ -90,7 +89,7 @@ export function nyHenvendelse(henvendelse) {
     return doThenDispatch(() => Api.nyHenvendelse(henvendelse), {
         OK: OPPRETTET_HENVENDELSE,
         FEILET: OPPRETT_HENVENDELSE_FEILET,
-        PENDING: OPPRETTER_HENVENDELSE,
+        PENDING: OPPRETTER_HENVENDELSE
     });
 }
 
@@ -98,36 +97,30 @@ export function markerDialogSomLest(dialogId) {
     return doThenDispatch(() => Api.markerDialogSomLest(dialogId), {
         OK: DIALOG_LEST_OK,
         FEILET: DIALOG_LEST_FEILET,
-        PENDING: DIALOG_LEST,
+        PENDING: DIALOG_LEST
     });
 }
 
 export function oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet) {
-    return doThenDispatch(
-        () => Api.oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet),
-        {
-            OK: OPPDATER_DIALOG_OK,
-            FEILET: OPPDATER_DIALOG_FEILET,
-            PENDING: OPPDATER_DIALOG,
-        }
-    );
+    return doThenDispatch(() => Api.oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet), {
+        OK: OPPDATER_DIALOG_OK,
+        FEILET: OPPDATER_DIALOG_FEILET,
+        PENDING: OPPDATER_DIALOG
+    });
 }
 
 export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
-    return doThenDispatch(
-        () => Api.oppdaterVenterPaSvar(dialogId, venterPaSvar),
-        {
-            OK: OPPDATER_DIALOG_OK,
-            FEILET: OPPDATER_DIALOG_FEILET,
-            PENDING: OPPDATER_DIALOG,
-        }
-    );
+    return doThenDispatch(() => Api.oppdaterVenterPaSvar(dialogId, venterPaSvar), {
+        OK: OPPDATER_DIALOG_OK,
+        FEILET: OPPDATER_DIALOG_FEILET,
+        PENDING: OPPDATER_DIALOG
+    });
 }
 
 export function sendForhandsorientering(henvendelse) {
     return doThenDispatch(() => Api.sendForhandsorientering(henvendelse), {
         OK: SEND_FORHANDSORIENTERING_OK,
         FEILET: SEND_FORHANDSORIENTERING_FEILET,
-        PENDING: SEND_FORHANDSORIENTERING,
+        PENDING: SEND_FORHANDSORIENTERING
     });
 }

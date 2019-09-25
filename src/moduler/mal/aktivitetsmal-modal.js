@@ -26,11 +26,11 @@ function MalModal({ malFeilMeldinger, children, history }) {
 MalModal.propTypes = {
     malFeilMeldinger: PT.array,
     children: PT.node.isRequired,
-    history: AppPT.history.isRequired,
+    history: AppPT.history.isRequired
 };
 
 MalModal.defaultProps = {
-    malFeilMeldinger: [],
+    malFeilMeldinger: []
 };
 
 function AktivitetsmalModalHOC(Component) {
@@ -39,9 +39,7 @@ function AktivitetsmalModalHOC(Component) {
             <div>
                 <MalModal {...props}>
                     <ModalContainer>
-                        <Innholdstittel className="aktivitetmal__header">
-                            Mitt mål
-                        </Innholdstittel>
+                        <Innholdstittel className="aktivitetmal__header">Mitt mål</Innholdstittel>
                         <Component {...props} />
                     </ModalContainer>
                 </MalModal>
@@ -51,8 +49,7 @@ function AktivitetsmalModalHOC(Component) {
 }
 
 const mapStateToProps = state => ({
-    malFeilMeldinger: selectMalListeFeilmeldinger(state),
+    malFeilMeldinger: selectMalListeFeilmeldinger(state)
 });
 
-export default component =>
-    connect(mapStateToProps)(AktivitetsmalModalHOC(component));
+export default component => connect(mapStateToProps)(AktivitetsmalModalHOC(component));

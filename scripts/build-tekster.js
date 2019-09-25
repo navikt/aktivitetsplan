@@ -31,9 +31,7 @@ function read(dir) {
 }
 
 function createJson(katalog) {
-    return `/* eslint-disable */\nexport default { 'nb': { ${read(
-        katalog
-    )}\n } };`;
+    return `/* eslint-disable */\nexport default { 'nb': { ${read(katalog)}\n } };`;
 }
 
 try {

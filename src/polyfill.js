@@ -1,8 +1,7 @@
 /* eslint-disable */
 
-import 'whatwg-fetch'
+import 'whatwg-fetch';
 
 if (!window._babelPolyfill) {
-    require('babel-polyfill')
+    require('babel-polyfill');
 }
-

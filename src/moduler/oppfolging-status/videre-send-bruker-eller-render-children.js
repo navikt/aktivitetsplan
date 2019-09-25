@@ -4,25 +4,20 @@ import shajs from 'sha.js';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 import * as AppPT from '../../proptypes';
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
-import loggEvent, {
-    LOGGING_ANTALLBRUKERE,
-} from '../../felles-komponenter/utils/logging';
+import loggEvent, { LOGGING_ANTALLBRUKERE } from '../../felles-komponenter/utils/logging';
 
 function hash(string) {
-    return string ? shajs('sha256').update(string).digest('hex') : null;
+    return string
+        ? shajs('sha256')
+              .update(string)
+              .digest('hex')
+        : null;
 }
 
-function loggingAntallBrukere(
-    erVeileder,
-    servicegruppe,
-    underOppfolging,
-    ident,
-    aktorId
-) {
+function loggingAntallBrukere(erVeileder, servicegruppe, underOppfolging, ident, aktorId) {
     const hashetAktorID = hash(aktorId);
     const veileder = erVeileder && hash(ident);
-    const bruker =
-        erVeileder || underOppfolging ? hashetAktorID : 'IKKE_UNDER_OPPFOLGING';
+    const bruker = erVeileder || underOppfolging ? hashetAktorID : 'IKKE_UNDER_OPPFOLGING';
 
     if (erVeileder !== undefined && erVeileder !== null) {
         loggEvent(
@@ -31,11 +26,10 @@ function loggingAntallBrukere(
                 erVeileder,
                 underOppfolging,
                 veileder,
-                bruker,
+                bruker
             },
             {
-                servicegruppe,
-                veiledertag: veileder,
+                servicegruppe
             }
         );
     }
@@ -43,31 +37,13 @@ function loggingAntallBrukere(
 
 class VidereSendBrukereEllerRenderChildren extends Component {
     componentDidMount() {
-        const {
-            erVeileder,
-            servicegruppe,
-            underOppfolging,
-            ident,
-            aktorId,
-        } = this.props;
+        const { erVeileder, servicegruppe, underOppfolging, ident, aktorId } = this.props;
 
-        loggingAntallBrukere(
-            erVeileder,
-            servicegruppe,
-            underOppfolging,
-            ident,
-            aktorId
-        );
+        loggingAntallBrukere(erVeileder, servicegruppe, underOppfolging, ident, aktorId);
     }
 
     render() {
-        const {
-            children,
-            erVeileder,
-            manuell,
-            underOppfolging,
-            oppfolgingsPerioder,
-        } = this.props;
+        const { children, erVeileder, manuell, underOppfolging, oppfolgingsPerioder } = this.props;
 
         if (!underOppfolging && oppfolgingsPerioder.length === 0) {
             return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
@@ -77,11 +53,7 @@ class VidereSendBrukereEllerRenderChildren extends Component {
             return <AktiverDigitalOppfolging />;
         }
 
-        return (
-            <div>
-                {children}
-            </div>
-        );
+        return <div>{children}</div>;
     }
 }
 
@@ -96,7 +68,7 @@ VidereSendBrukereEllerRenderChildren.defaultProps = {
     videreSendTilInfo: false,
     servicegruppe: null,
     ident: null,
-    aktorId: null,
+    aktorId: null
 };
 
 VidereSendBrukereEllerRenderChildren.propTypes = {
@@ -110,7 +82,7 @@ VidereSendBrukereEllerRenderChildren.propTypes = {
     oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
     servicegruppe: PT.string,
     ident: PT.string,
-    aktorId: PT.string,
+    aktorId: PT.string
 };
 
 export default VidereSendBrukereEllerRenderChildren;

@@ -14,20 +14,13 @@ export function markerDialogSomLest(dialogId) {
 }
 
 export function oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet) {
-    return putAsJson(
-        `${DIALOG_BASE_URL}/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}`
-    );
+    return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/ferdigbehandlet/${erFerdigbehandlet}`);
 }
 
 export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
-    return putAsJson(
-        `${DIALOG_BASE_URL}/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}`
-    );
+    return putAsJson(`${DIALOG_BASE_URL}/dialog/${dialogId}/venter_pa_svar/${venterPaSvar}`);
 }
 
 export function sendForhandsorientering(henvendelse) {
-    return postAsJson(
-        `${DIALOG_BASE_URL}/dialog/forhandsorientering`,
-        henvendelse
-    );
+    return postAsJson(`${DIALOG_BASE_URL}/dialog/forhandsorientering`, henvendelse);
 }

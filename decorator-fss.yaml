@@ -1,5 +1,1 @@
 contextPath: /aktivitetsplan
-
-redirect:
-  - from: /arbeidssokerregistrering
-    to: {{ ARBEIDSSOKERREGISTRERING_URL }}

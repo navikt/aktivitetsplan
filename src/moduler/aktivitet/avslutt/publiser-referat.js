@@ -11,9 +11,7 @@ function PubliserReferat({ aktivitet, nyStatus, children }) {
         return (
             <ModalContainer className="publiser-referat">
                 <AlertStripe type="feil">
-                    <FormattedMessage
-                        id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`}
-                    />
+                    <FormattedMessage id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`} />
                 </AlertStripe>
             </ModalContainer>
         );
@@ -24,11 +22,11 @@ function PubliserReferat({ aktivitet, nyStatus, children }) {
 PubliserReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     nyStatus: PT.string,
-    children: PT.node.isRequired,
+    children: PT.node.isRequired
 };
 
 PubliserReferat.defaultProps = {
-    nyStatus: undefined,
+    nyStatus: undefined
 };
 
 export default PubliserReferat;

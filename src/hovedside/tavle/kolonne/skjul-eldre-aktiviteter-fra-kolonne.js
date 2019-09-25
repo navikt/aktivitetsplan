@@ -15,32 +15,17 @@ function loggingAvSkjulEldreAktiviteter(event, typeEvent, hvem) {
 }
 
 function lagAktivitetsListe(aktiviteter) {
-    return aktiviteter.map(aktivitet =>
-        <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
-    );
+    return aktiviteter.map(aktivitet => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />);
 }
 
-function SkjulEldreAktiviteter({
-    aktiviteteterTilDatoMerEnnToManederSiden,
-    erVeileder,
-}) {
+function SkjulEldreAktiviteter({ aktiviteteterTilDatoMerEnnToManederSiden, erVeileder }) {
     const visible = aktiviteteterTilDatoMerEnnToManederSiden.length > 0;
     return (
         <VisibleIfLesmerpanel
             visible={visible}
             className="aktivitetstavle__kolonne-lesmerpanel"
-            onOpen={event =>
-                loggingAvSkjulEldreAktiviteter(
-                    event,
-                    LOGGING_VISELDREAKITIVITETER,
-                    { erVeileder }
-                )}
-            onClose={event =>
-                loggingAvSkjulEldreAktiviteter(
-                    event,
-                    LOGGING_SKJULELDREAKTIVITETER,
-                    { erVeileder }
-                )}
+            onOpen={event => loggingAvSkjulEldreAktiviteter(event, LOGGING_VISELDREAKITIVITETER, { erVeileder })}
+            onClose={event => loggingAvSkjulEldreAktiviteter(event, LOGGING_SKJULELDREAKTIVITETER, { erVeileder })}
             apneTekst="Vis kort eldre enn 1 måned"
             lukkTekst="Skjul kort eldre enn 1 måned"
         >
@@ -50,12 +35,12 @@ function SkjulEldreAktiviteter({
 }
 
 const mapStateToProps = state => ({
-    erVeileder: selectErVeileder(state),
+    erVeileder: selectErVeileder(state)
 });
 
 SkjulEldreAktiviteter.propTypes = {
     aktiviteteterTilDatoMerEnnToManederSiden: PT.arrayOf(PT.object).isRequired,
-    erVeileder: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired
 };
 
 export default connect(mapStateToProps)(SkjulEldreAktiviteter);

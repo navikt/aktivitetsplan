@@ -37,15 +37,10 @@ function dialogSammenligner(a, b, tilhorendeDialogId, erBruker) {
         }
     }
 
-    return erBruker
-        ? sammenlignDialogerForBruker(a, b)
-        : sammenlignDialogerForVeileder(a, b);
+    return erBruker ? sammenlignDialogerForBruker(a, b) : sammenlignDialogerForVeileder(a, b);
 }
 
-export function dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
-    tilhorendeDialogId,
-    erBruker
-) {
+export function dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(tilhorendeDialogId, erBruker) {
     return (a, b) => dialogSammenligner(a, b, tilhorendeDialogId, erBruker);
 }
 

@@ -31,11 +31,7 @@ export function validateAntallStillinger(avtalt, value) {
     return null;
 }
 
-export function validateAntallStillingerIUken(
-    avtalt,
-    value,
-    antallStillingerSokes
-) {
+export function validateAntallStillingerIUken(avtalt, value, antallStillingerSokes) {
     if (avtalt || !!antallStillingerSokes) {
         return null;
     }

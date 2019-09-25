@@ -12,57 +12,60 @@ const formatertDato = (dato, visIkkeSatt) => {
     return formaterDatoKortManed(dato);
 };
 
-export const FraDato = ({ aktivitet, tittel, visIkkeSatt, hidden }) =>
+export const FraDato = ({ aktivitet, tittel, visIkkeSatt, hidden }) => (
     <HiddenIfInformasjonsfelt
         key="fradato"
         tittel={tittel}
         innhold={formatertDato(aktivitet.fraDato, visIkkeSatt)}
         hidden={hidden}
-    />;
+    />
+);
 
 FraDato.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     tittel: PT.node,
     visIkkeSatt: PT.bool,
-    hidden: PT.bool,
+    hidden: PT.bool
 };
 
 FraDato.defaultProps = {
     tittel: <FormattedMessage id="aktivitetdetaljer.fra-dato-tekst.default" />,
     visIkkeSatt: false,
-    hidden: false,
+    hidden: false
 };
 
-export const TilDato = ({ aktivitet, tittel, visIkkeSatt, hidden }) =>
+export const TilDato = ({ aktivitet, tittel, visIkkeSatt, hidden }) => (
     <HiddenIfInformasjonsfelt
         key="tildato"
         tittel={tittel}
         innhold={formatertDato(aktivitet.tilDato, visIkkeSatt)}
         hidden={hidden}
-    />;
+    />
+);
 
 TilDato.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     tittel: PT.node,
     visIkkeSatt: PT.bool,
-    hidden: PT.bool,
+    hidden: PT.bool
 };
 
 TilDato.defaultProps = {
     tittel: <FormattedMessage id="aktivitetdetaljer.til-dato-tekst.default" />,
     visIkkeSatt: false,
-    hidden: false,
+    hidden: false
 };
 
-export const Beskrivelse = ({ aktivitet }) =>
+export const Beskrivelse = ({ aktivitet }) => (
     <Informasjonsfelt
         tittel={<FormattedMessage id="aktivitetvisning.beskrivelse-label" />}
         innhold={aktivitet.beskrivelse}
         beskrivelse
         fullbredde
         formattertTekst
-    />;
+    />
+);
 
 Beskrivelse.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };

@@ -5,27 +5,18 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
 import { moment } from '../../../utils';
 import { hoyreKolonneSectionId, STATUS } from '../../../ducks/utils';
-import {
-    nyHenvendelse,
-    oppdaterFerdigbehandlet,
-    oppdaterVenterPaSvar,
-} from '../dialog-reducer';
+import { nyHenvendelse, oppdaterFerdigbehandlet, oppdaterVenterPaSvar } from '../dialog-reducer';
 import { HiddenIfAlertStripeSuksessSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectErBruker } from '../../identitet/identitet-selector';
-import {
-    selectAlleDialoger,
-    selectDialogMedId,
-    selectDialogStatus,
-    selectVisBrukerInfo,
-} from '../dialog-selector';
+import { selectAlleDialoger, selectDialogMedId, selectDialogStatus, selectVisBrukerInfo } from '../dialog-selector';
 import { selectAktivitetMedId } from '../../aktivitet/aktivitetliste-selector';
 import { visBekreftelse } from '../dialog-view-reducer';
 import {
     selectHarSkriveTilgang,
     selectOppfolgingsPerioder,
-    selectUnderOppfolging,
+    selectUnderOppfolging
 } from '../../oppfolging-status/oppfolging-selector';
 import * as AppPT from '../../../proptypes';
 import { loggTidBruktForsteHenvendelse } from '../../../felles-komponenter/utils/logging';
@@ -67,11 +58,10 @@ function validateTekst(val) {
 }
 
 const validator = useFormstate({
-    overskrift: (val, values, props) =>
-        props.erNyDialog ? validateOverskrift(val) : null,
+    overskrift: (val, values, props) => (props.erNyDialog ? validateOverskrift(val) : null),
     tekst: validateTekst,
     ikkeFerdigbehandlet: () => null,
-    venterPaSvar: () => null,
+    venterPaSvar: () => null
 });
 
 function NyHenvendelseForm(props) {
@@ -86,14 +76,14 @@ function NyHenvendelseForm(props) {
         skalHaAutofokus,
         erKnyttTilAktivitet,
         harSkriveTilgang,
-        underOppfolging,
+        underOppfolging
     } = props;
 
     const initial = {
         overskrift: overskrift || '',
         tekst: '',
         ikkeFerdigbehandlet: '',
-        venterPaSvar: '',
+        venterPaSvar: ''
     };
 
     const state = validator(initial, props);
@@ -107,14 +97,8 @@ function NyHenvendelseForm(props) {
             className="ny-henvendelse-form"
             autoComplete="off"
         >
-            <FormErrorSummary
-                errors={state.errors}
-                submittoken={state.submittoken}
-            />
-            <VisibleIfDiv
-                visible={erNyDialog && !erBruker}
-                className="endre-dialog__sjekkbokser"
-            >
+            <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
+            <VisibleIfDiv visible={erNyDialog && !erBruker} className="endre-dialog__sjekkbokser">
                 <Checkbox
                     className="endre-dialog__sjekkboks"
                     label="Venter på svar fra NAV"
@@ -129,13 +113,9 @@ function NyHenvendelseForm(props) {
                 />
             </VisibleIfDiv>
 
-            {harEksisterendeOverskrift ||
-                <Input
-                    label="Tema"
-                    disabled={!harSkriveTilgang || oppretter}
-                    autoFocus
-                    {...state.fields.overskrift}
-                />}
+            {harEksisterendeOverskrift || (
+                <Input label="Tema" disabled={!harSkriveTilgang || oppretter} autoFocus {...state.fields.overskrift} />
+            )}
             <Textarea
                 label={label(erBruker, erKnyttTilAktivitet)}
                 placeholder="Skriv her"
@@ -145,20 +125,12 @@ function NyHenvendelseForm(props) {
                 autoFocus={harEksisterendeOverskrift && skalHaAutofokus}
                 {...state.fields.tekst}
             />
-            <Hovedknapp
-                type="hoved"
-                spinner={oppretter}
-                disabled={!harSkriveTilgang || oppretter || !underOppfolging}
-            >
+            <Hovedknapp type="hoved" spinner={oppretter} disabled={!harSkriveTilgang || oppretter || !underOppfolging}>
                 Send
             </Hovedknapp>
 
-            <HiddenIfAlertStripeSuksessSolid
-                style={{ marginTop: '1rem' }}
-                hidden={!visBrukerInfo}
-            >
-                Henvendelsen er sendt. Du kan forvente svar i løpet av noen
-                dager.
+            <HiddenIfAlertStripeSuksessSolid style={{ marginTop: '1rem' }} hidden={!visBrukerInfo}>
+                Henvendelsen er sendt. Du kan forvente svar i løpet av noen dager.
             </HiddenIfAlertStripeSuksessSolid>
         </form>
     );
@@ -167,7 +139,7 @@ function NyHenvendelseForm(props) {
 NyHenvendelseForm.defaultProps = {
     skalHaAutofokus: false,
     oppfolgingsPerioder: [],
-    overskrift: undefined,
+    overskrift: undefined
 };
 
 NyHenvendelseForm.propTypes = {
@@ -183,7 +155,7 @@ NyHenvendelseForm.propTypes = {
     harSkriveTilgang: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     oppfolgingsPerioder: PT.arrayOf(AppPT.oppfolgingsPeriode),
-    dialoger: PT.arrayOf(AppPT.dialog).isRequired,
+    dialoger: PT.arrayOf(AppPT.dialog).isRequired
 };
 
 const mapStateToProps = (state, props) => {
@@ -199,16 +171,14 @@ const mapStateToProps = (state, props) => {
         overskrift,
         harEksisterendeOverskrift: !!overskrift,
         erNyDialog,
-        oppretter:
-            selectDialogStatus(state) !== STATUS.OK &&
-            selectDialogStatus(state) !== STATUS.ERROR,
+        oppretter: selectDialogStatus(state) !== STATUS.OK && selectDialogStatus(state) !== STATUS.ERROR,
         erBruker,
         visBrukerInfo: erBruker && selectVisBrukerInfo(state, dialogId),
         erKnyttTilAktivitet: !!aktivitetId || (dialog && !!dialog.aktivitetId),
         harSkriveTilgang: selectHarSkriveTilgang(state),
         underOppfolging: selectUnderOppfolging(state),
         oppfolgingsPerioder: selectOppfolgingsPerioder(state),
-        dialoger,
+        dialoger
     };
 };
 
@@ -217,7 +187,7 @@ const mapDispatchToProps = dispatch => ({
         const nyHenvendelsePromise = nyHenvendelse({
             aktivitetId: props.aktivitetId,
             dialogId: props.dialogId,
-            ...dialogData,
+            ...dialogData
         })(dispatch);
 
         const { onComplete } = props;
@@ -228,9 +198,7 @@ const mapDispatchToProps = dispatch => ({
                 const ferdigbehandlet = !dialogData.ikkeFerdigbehandlet;
                 const venterPaSvar = !!dialogData.venterPaSvar;
 
-                dispatch(
-                    oppdaterFerdigbehandlet(dialogId, ferdigbehandlet)
-                ).then(() => {
+                dispatch(oppdaterFerdigbehandlet(dialogId, ferdigbehandlet)).then(() => {
                     dispatch(oppdaterVenterPaSvar(dialogId, venterPaSvar));
                 });
             }
@@ -240,29 +208,32 @@ const mapDispatchToProps = dispatch => ({
             }
 
             dispatch(
-                visBekreftelse(dialogId, moment().add(5, 'seconds').format())
+                visBekreftelse(
+                    dialogId,
+                    moment()
+                        .add(5, 'seconds')
+                        .format()
+                )
             );
 
             // hvis man sender en veldig lang henvendelse, ønsker vi å bevare fokus på formen
             if (props.scrollElementId) {
-                const scrollElement = document.getElementById(
-                    props.scrollElementId
-                );
+                const scrollElement = document.getElementById(props.scrollElementId);
                 scrollElement.scrollIntoView();
             } else {
                 document.getElementById(hoyreKolonneSectionId).scrollTop = 0;
             }
         });
 
-        loggTidBruktForsteHenvendelse(
-            props.dialoger,
-            props.oppfolgingsPerioder
-        );
+        loggTidBruktForsteHenvendelse(props.dialoger, props.oppfolgingsPerioder);
 
         return Promise.resolve();
-    },
+    }
 });
 
 export default hiddenIf(
-    connect(mapStateToProps, mapDispatchToProps)(NyHenvendelseForm)
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(NyHenvendelseForm)
 );

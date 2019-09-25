@@ -1,20 +1,14 @@
+/* eslint-disable */
+
 import me from './me';
-import oppfolging, {
-    avslutningStatus,
-    startEskalering,
-    stoppEskalering,
-} from './oppfolging';
-import dialog, {
-    opprettDialog,
-    setFerdigBehandlet,
-    setVenterPaSvar,
-} from './dialog';
+import oppfolging, { avslutningStatus, startEskalering, stoppEskalering } from './oppfolging';
+import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import aktiviteter, {
     getAktivitet,
     getAktivitetVersjoner,
     oppdaterAktivitet,
     opprettAktivitet,
-    publiserReferat,
+    publiserReferat
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
@@ -33,7 +27,7 @@ import { oppfFeilet } from './demo/sessionstorage';
 
 const mock = fetchMock.configure({
     enableFallback: false,
-    middleware: fetchmockMiddleware,
+    middleware: fetchmockMiddleware
 });
 
 const noContent = ResponseUtils.statusCode(204);
@@ -45,8 +39,8 @@ const unauthorized = ResponseUtils.combine(
         detaljer: {
             detaljertType: 'javax.ws.rs.Unauthorized',
             feilMelding: 'HTTP 401 Unauthorized',
-            stackTrace: 'javax.ws.rs.Unauthorized:HTTP 401 Unauthorized\r\n\t',
-        },
+            stackTrace: 'javax.ws.rs.Unauthorized:HTTP 401 Unauthorized\r\n\t'
+        }
     })
 );
 const internalServerError = ResponseUtils.combine(
@@ -57,58 +51,37 @@ const internalServerError = ResponseUtils.combine(
         detaljer: {
             detaljertType: 'javax.ws.rs.InternalServerErrorException',
             feilMelding: 'HTTP 500 Internal Server Error',
-            stackTrace:
-                'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t',
-        },
+            stackTrace: 'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t'
+        }
     })
 );
 
 //feature-api
-mock.get('/aktivitetsplan/api/feature', ({ queryParams }) =>
-    getFeatures(queryParams)
-);
+mock.get('/aktivitetsplan/api/feature', ({ queryParams }) => getFeatures(queryParams));
 mock.get('/api/feature', ({ queryParams }) => getFeatures(queryParams));
 
 //veilarboppfolging-api
 mock.get('/veilarboppfolging/api/oppfolging/me', me);
 
 mock.get('/veilarboppfolging/api/oppfolging/mal', () => sisteMal());
-mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }) =>
-    opprettMal(body, true)
-);
+mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }) => opprettMal(body, true));
 
-mock.get(
-    '/veilarbvedtakinfo/api/fremtidigsituasjon',
-    ResponseUtils.delayed(500, fremtidigSituasjon)
-);
+mock.get('/veilarbvedtakinfo/api/fremtidigsituasjon', ResponseUtils.delayed(500, fremtidigSituasjon));
 
 mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
 
 mock.get(
     '/veilarboppfolging/api/oppfolging',
-    oppfFeilet()
-        ? internalServerError
-        : ({ queryParams }) => oppfolging(queryParams)
+    oppfFeilet() ? internalServerError : ({ queryParams }) => oppfolging(queryParams)
 );
 
-mock.get(
-    '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
-    instillingsHistorikk
-);
+mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', instillingsHistorikk);
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', veilederTilgang);
-mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', ({ body }) =>
-    avslutningStatus(body)
-);
-mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }) =>
-    startEskalering(body)
-);
+mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', ({ body }) => avslutningStatus(body));
+mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }) => startEskalering(body));
 
-mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }) =>
-    stoppEskalering(body)
-);
-mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () =>
-    ResponseUtils.statusCode(200)
-);
+mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }) => stoppEskalering(body));
+mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () => ResponseUtils.statusCode(200));
 mock.post('/veilarboppfolging/api/oppfolging/settManuell', ({ queryParams }) =>
     oppfolging(queryParams, res => {
         res.manuell = true;
@@ -122,68 +95,45 @@ mock.get('/veilarboppgave/api/oppgavehistorikk', []);
 //veilarbdialog-api
 mock.get('/veilarbdialog/api/dialog', dialog);
 
-mock.put(
-    '/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool',
-    ({ pathParams }) => setVenterPaSvar(pathParams.dialogId, pathParams.bool)
+mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }) =>
+    setVenterPaSvar(pathParams.dialogId, pathParams.bool)
 );
-mock.put(
-    '/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool',
-    ({ pathParams }) => setFerdigBehandlet(pathParams.dialogId, pathParams.bool)
+mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathParams }) =>
+    setFerdigBehandlet(pathParams.dialogId, pathParams.bool)
 );
 mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettDialog(body));
-mock.post('/veilarbdialog/api/dialog/forhandsorientering', ({ body }) =>
-    opprettDialog(body)
-);
+mock.post('/veilarbdialog/api/dialog/forhandsorientering', ({ body }) => opprettDialog(body));
 
 // veilarbaktivitet-api
-mock.get('/veilarbaktivitet/api/aktivitet/kanaler', [
-    'INTERNETT',
-    'OPPMOTE',
-    'TELEFON',
-]);
+mock.get('/veilarbaktivitet/api/aktivitet/kanaler', ['INTERNETT', 'OPPMOTE', 'TELEFON']);
 mock.get('/veilarbaktivitet/api/aktivitet/arena', arena);
-mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }) =>
-    getAktivitet(pathParams.aktivitetId)
-);
+mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }) => getAktivitet(pathParams.aktivitetId));
 mock.get('/veilarbaktivitet/api/aktivitet', aktiviteter);
 
-mock.post('/veilarbaktivitet/api/aktivitet/ny', ({ body }) =>
-    opprettAktivitet(body)
+mock.post('/veilarbaktivitet/api/aktivitet/ny', ({ body }) => opprettAktivitet(body));
+mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner', ({ pathParams }) =>
+    getAktivitetVersjoner(pathParams.aktivitetId)
 );
-mock.get(
-    '/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner',
-    ({ pathParams }) => getAktivitetVersjoner(pathParams.aktivitetId)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams, body }) =>
+    oppdaterAktivitet(pathParams.aktivitetId, body)
 );
-mock.put(
-    '/veilarbaktivitet/api/aktivitet/:aktivitetId',
-    ({ pathParams, body }) => oppdaterAktivitet(pathParams.aktivitetId, body)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/status', ({ pathParams, body }) =>
+    oppdaterAktivitet(pathParams.aktivitetId, body)
 );
-mock.put(
-    '/veilarbaktivitet/api/aktivitet/:aktivitetId/status',
-    ({ pathParams, body }) => oppdaterAktivitet(pathParams.aktivitetId, body)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett', ({ pathParams, body }) =>
+    oppdaterAktivitet(pathParams.aktivitetId, body)
 );
-mock.put(
-    '/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett',
-    ({ pathParams, body }) => oppdaterAktivitet(pathParams.aktivitetId, body)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser', ({ pathParams }) =>
+    publiserReferat(pathParams.aktivitetId)
 );
-mock.put(
-    '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser',
-    ({ pathParams }) => publiserReferat(pathParams.aktivitetId)
-);
-mock.put(
-    '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat',
-    ({ pathParams, body }) => oppdaterAktivitet(pathParams.aktivitetId, body)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', ({ pathParams, body }) =>
+    oppdaterAktivitet(pathParams.aktivitetId, body)
 );
 
 //veilarbperson-api
-mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) =>
-    getPerson(pathParams.fnr)
-);
+mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) => getPerson(pathParams.fnr));
 
-mock.get(
-    '/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus',
-    oppfoelgingsstatus
-);
+mock.get('/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus', oppfoelgingsstatus);
 
 //veilarbmalverk-api
 mock.post('/veilarbmalverk/api/mal', ({ body }) => hentMalverkMedType(body));

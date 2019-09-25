@@ -14,7 +14,6 @@ export function selectArenaAktivitetStatus(state) {
 
 export const selectArenaFeilmeldinger = state => {
     const feilMeldingsdata =
-        selectArenaAktivitetStatus(state) === STATUS.ERROR &&
-        selectArenaAktiviteterSlice(state).feil;
+        selectArenaAktivitetStatus(state) === STATUS.ERROR && selectArenaAktiviteterSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 };

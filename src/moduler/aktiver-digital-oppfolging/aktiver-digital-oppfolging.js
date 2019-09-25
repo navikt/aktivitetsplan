@@ -2,15 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
-import {
-    hentOppfolging,
-    settDigital,
-} from '../oppfolging-status/oppfolging-reducer';
+import { hentOppfolging, settDigital } from '../oppfolging-status/oppfolging-reducer';
 import { STATUS } from '../../ducks/utils';
-import {
-    selectOppfolgingStatus,
-    selectReservasjonKRR,
-} from '../oppfolging-status/oppfolging-selector';
+import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel';
 
@@ -18,22 +12,16 @@ export class AktiverDigitalOppfolgingPure extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            harTrykketRefresh: false,
+            harTrykketRefresh: false
         };
     }
 
     render() {
-        const {
-            reservertIKRR,
-            doSettDigital,
-            doHentOppfolging,
-            lasterOppfolging,
-            settOppfolgingFeilet,
-        } = this.props;
+        const { reservertIKRR, doSettDigital, doHentOppfolging, lasterOppfolging, settOppfolgingFeilet } = this.props;
 
         const { harTrykketRefresh } = this.state;
 
-        const ReservasjonDifiKnapp = () =>
+        const ReservasjonDifiKnapp = () => (
             <HiddenIfHovedknapp
                 spinner={lasterOppfolging}
                 disabled={lasterOppfolging}
@@ -44,9 +32,10 @@ export class AktiverDigitalOppfolgingPure extends Component {
                 }}
             >
                 <FormattedMessage id="sett-digital.manuell-oppfolging.reservasjon-difi-knapp" />
-            </HiddenIfHovedknapp>;
+            </HiddenIfHovedknapp>
+        );
 
-        const AktiverDigitalOppfolgingKnapp = () =>
+        const AktiverDigitalOppfolgingKnapp = () => (
             <HiddenIfHovedknapp
                 disabled={lasterOppfolging}
                 hidden={reservertIKRR}
@@ -54,7 +43,8 @@ export class AktiverDigitalOppfolgingPure extends Component {
                 autoDisableVedSpinner
             >
                 <FormattedMessage id="sett-digital.manuell-oppfolging.aktiver-digital-knapp" />
-            </HiddenIfHovedknapp>;
+            </HiddenIfHovedknapp>
+        );
 
         return (
             <div className="sett-digital">
@@ -75,7 +65,7 @@ AktiverDigitalOppfolgingPure.propTypes = {
     lasterOppfolging: PT.bool.isRequired,
     settOppfolgingFeilet: PT.bool.isRequired,
     doSettDigital: PT.func.isRequired,
-    doHentOppfolging: PT.func.isRequired,
+    doHentOppfolging: PT.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -83,22 +73,21 @@ const mapStateToProps = state => {
 
     const settOppfolgingFeilet = oppfolgingStatus === STATUS.ERROR;
 
-    const lasterOppfolging =
-        oppfolgingStatus === STATUS.PENDING ||
-        oppfolgingStatus === STATUS.RELOADING;
+    const lasterOppfolging = oppfolgingStatus === STATUS.PENDING || oppfolgingStatus === STATUS.RELOADING;
 
     return {
         reservertIKRR: selectReservasjonKRR(state),
         settOppfolgingFeilet,
-        lasterOppfolging,
+        lasterOppfolging
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     doSettDigital: () => dispatch(settDigital()),
-    doHentOppfolging: () => dispatch(hentOppfolging()),
+    doHentOppfolging: () => dispatch(hentOppfolging())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    AktiverDigitalOppfolgingPure
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AktiverDigitalOppfolgingPure);

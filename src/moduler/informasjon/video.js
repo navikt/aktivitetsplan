@@ -10,7 +10,7 @@ class Video extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            apen: false,
+            apen: false
         };
         autobind(this);
     }
@@ -18,16 +18,14 @@ class Video extends Component {
     onClick() {
         const { apen } = this.state;
         this.setState({
-            apen: !apen,
+            apen: !apen
         });
     }
 
     render() {
         const { apen } = this.state;
 
-        const accordionLabelId = apen
-            ? 'informasjon.videokontent.skjul.tekst'
-            : 'informasjon.videokontent.vis.tekst';
+        const accordionLabelId = apen ? 'informasjon.videokontent.skjul.tekst' : 'informasjon.videokontent.vis.tekst';
 
         return (
             <div>
@@ -38,15 +36,8 @@ class Video extends Component {
                     src={ONBOARDING_VIDEO_URL}
                     className="video-player"
                 />
-                <Accordion
-                    className="videotekst-accordion"
-                    labelId={accordionLabelId}
-                    onClick={this.onClick}
-                >
-                    <HtmlText
-                        className="mellomrom"
-                        id="informasjon.videokontent.text"
-                    />
+                <Accordion className="videotekst-accordion" labelId={accordionLabelId} onClick={this.onClick}>
+                    <HtmlText className="mellomrom" id="informasjon.videokontent.text" />
                 </Accordion>
             </div>
         );

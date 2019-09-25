@@ -21,8 +21,6 @@ export function selectLasterAktivitetData(state) {
 }
 
 export const selectAktivitetFeilmeldinger = state => {
-    const feilMeldingsdata =
-        selectAktivitetStatus(state) === STATUS.ERROR &&
-        selectAktiviteterSlice(state).feil;
+    const feilMeldingsdata = selectAktivitetStatus(state) === STATUS.ERROR && selectAktiviteterSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 };

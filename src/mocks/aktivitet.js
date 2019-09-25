@@ -1,10 +1,6 @@
 import moment from 'moment';
 import { rndId } from './utils';
-import {
-    erEksternBruker,
-    visTestAktiviteter,
-    visAutomatiskeAktiviteter,
-} from './demo/sessionstorage';
+import { erEksternBruker, visTestAktiviteter, visAutomatiskeAktiviteter } from './demo/sessionstorage';
 
 const eksternBruker = erEksternBruker();
 const bruker = eksternBruker ? 'BRUKER' : 'NAV';
@@ -32,7 +28,7 @@ const testAktiviteter = !visTestAktiviteter()
               arbeidssted: 'Karibien',
               lagtInnAv: 'NAV',
               transaksjonsType: 'AVTALT',
-              erReferatPublisert: false,
+              erReferatPublisert: false
           }),
           wrapAktivitet({
               id: '2',
@@ -55,14 +51,13 @@ const testAktiviteter = !visTestAktiviteter()
               kontaktperson: 'Sabeltann',
               arbeidsgiver: 'Sabeltann',
               arbeidssted: 'Karibien',
-              erReferatPublisert: false,
+              erReferatPublisert: false
           }),
           wrapAktivitet({
               id: '5',
               versjon: '2410',
               tittel: 'Ta et webkurs',
-              beskrivelse:
-                  'Jeg skal bli awesome i html. Sjørøvere trenger å være awesome i html',
+              beskrivelse: 'Jeg skal bli awesome i html. Sjørøvere trenger å være awesome i html',
               lenke: 'www.nav.no',
               type: 'EGEN',
               status: 'BRUKER_ER_INTERESSERT',
@@ -76,14 +71,13 @@ const testAktiviteter = !visTestAktiviteter()
               transaksjonsType: 'STATUS_ENDRET',
               hensikt: 'Lære meg HTML',
               oppfolging: 'Bli en bedre sjørøver',
-              erReferatPublisert: false,
+              erReferatPublisert: false
           }),
           wrapAktivitet({
               id: '6871',
               versjon: '9389',
               tittel: 'Beste møtet ever',
-              beskrivelse:
-                  'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
+              beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
               lenke: null,
               type: 'MOTE',
               status: 'PLANLAGT',
@@ -114,14 +108,13 @@ const testAktiviteter = !visTestAktiviteter()
               effekt: null,
               behandlingOppfolging: null,
               kanal: 'TELEFON',
-              erReferatPublisert: false,
+              erReferatPublisert: false
           }),
           wrapAktivitet({
               id: '10',
               versjon: '200',
               tittel: 'Gamelt Beste møtet ever',
-              beskrivelse:
-                  'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
+              beskrivelse: 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.',
               lenke: null,
               type: 'MOTE',
               status: 'PLANLAGT',
@@ -152,7 +145,7 @@ const testAktiviteter = !visTestAktiviteter()
               effekt: null,
               behandlingOppfolging: null,
               kanal: 'TELEFON',
-              erReferatPublisert: false,
+              erReferatPublisert: false
           }),
           wrapAktivitet({
               id: '1550',
@@ -191,8 +184,8 @@ const testAktiviteter = !visTestAktiviteter()
               effekt: null,
               behandlingOppfolging: null,
               kanal: null,
-              erReferatPublisert: false,
-          }),
+              erReferatPublisert: false
+          })
       ];
 
 const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
@@ -238,7 +231,7 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               forberedelser: null,
               kanal: null,
               referat: null,
-              erReferatPublisert: false,
+              erReferatPublisert: false
           },
           {
               id: '141439',
@@ -280,7 +273,7 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               forberedelser: null,
               kanal: null,
               referat: null,
-              erReferatPublisert: false,
+              erReferatPublisert: false
           },
           {
               id: '141440',
@@ -322,8 +315,8 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               forberedelser: null,
               kanal: null,
               referat: null,
-              erReferatPublisert: false,
-          },
+              erReferatPublisert: false
+          }
       ];
 
 const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter);
@@ -389,7 +382,7 @@ function wrapAktivitet(aktivitet) {
         forberedelser: valueOrNull(aktivitet.forberedelser),
         kanal: valueOrNull(aktivitet.kanal),
         referat: valueOrNull(aktivitet.referat),
-        erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert),
+        erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert)
     };
 }
 
@@ -406,8 +399,8 @@ export function getAktivitetVersjoner(aktivitetId) {
             endretDato: '2017-02-26T15:51:44.85+01:00',
             versjon: '2',
             lagtInnAv: 'BRUKER',
-            transaksjonsType: 'OPPRETTET',
-        },
+            transaksjonsType: 'OPPRETTET'
+        }
     ];
 }
 
@@ -420,16 +413,14 @@ export function opprettAktivitet(aktivitet) {
         endretAv: null,
         versjon: '1',
         erLestAvBruker: eksternBruker,
-        ...aktivitet,
+        ...aktivitet
     });
     aktiviteter.push(newAktivitet);
     return newAktivitet;
 }
 
 export function oppdaterAktivitet(aktivitetId, aktivitet) {
-    const oldAktivitet = aktiviteter.find(
-        akivitet => akivitet.id === aktivitetId
-    );
+    const oldAktivitet = aktiviteter.find(akivitet => akivitet.id === aktivitetId);
     Object.assign(oldAktivitet, aktivitet);
     oldAktivitet.endretDato = moment().toISOString();
     oldAktivitet.endretAv = bruker;
@@ -439,12 +430,10 @@ export function oppdaterAktivitet(aktivitetId, aktivitet) {
 }
 
 export function publiserReferat(aktivitetId) {
-    const oldAktivitet = aktiviteter.find(
-        akivitet => akivitet.id === aktivitetId
-    );
+    const oldAktivitet = aktiviteter.find(akivitet => akivitet.id === aktivitetId);
     return { ...oldAktivitet, erReferatPublisert: true };
 }
 
 export default {
-    aktiviteter,
+    aktiviteter
 };

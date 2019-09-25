@@ -10,17 +10,10 @@ import Accordion from '../../felles-komponenter/accordion';
 import AktivitetsmalModal from './aktivitetsmal-modal';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
-import {
-    hentMal,
-    selectMalStatus,
-    selectGjeldendeMal,
-} from './aktivitetsmal-reducer';
+import { hentMal, selectMalStatus, selectGjeldendeMal } from './aktivitetsmal-reducer';
 import { selectMalListe, selectMalListeStatus } from './aktivitetsmal-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import {
-    selectErUnderOppfolging,
-    selectHarSkriveTilgang,
-} from '../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { fjernMalListe, hentMalListe } from './malliste-reducer';
 import { selectErVeileder } from '../identitet/identitet-selector';
 
@@ -35,22 +28,11 @@ function malListeVisning(gjeldendeMal, erVeileder) {
     return (
         <article key={gjeldendeMal.dato} className="aktivitetmal__historikk">
             <span className="aktivitetmal__historikk-skrevetav">
-                <FormattedMessage
-                    id={
-                        gjeldendeMal.mal
-                            ? 'aktivitetsmal.skrevet-av'
-                            : 'aktivitetsmal.slettet-av'
-                    }
-                />
-                <span>
-                    {identitetMap(erVeileder, gjeldendeMal.endretAv)}
-                </span>
-            </span>
-{' '}
+                <FormattedMessage id={gjeldendeMal.mal ? 'aktivitetsmal.skrevet-av' : 'aktivitetsmal.slettet-av'} />
+                <span>{identitetMap(erVeileder, gjeldendeMal.endretAv)}</span>
+            </span>{' '}
             {formaterDatoEllerTidSiden(gjeldendeMal.dato)}
-            <Tekstomrade className="aktivitetmal__historikk-tekst">
-                {gjeldendeMal.mal || ''}
-            </Tekstomrade>
+            <Tekstomrade className="aktivitetmal__historikk-tekst">{gjeldendeMal.mal || ''}</Tekstomrade>
         </article>
     );
 }
@@ -72,7 +54,7 @@ class AktivitetsMal extends Component {
         e.preventDefault();
         const { visHistoriskeMal } = this.state;
         this.setState({
-            visHistoriskeMal: !visHistoriskeMal,
+            visHistoriskeMal: !visHistoriskeMal
         });
     };
 
@@ -85,7 +67,7 @@ class AktivitetsMal extends Component {
             harSkriveTilgang,
             history,
             underOppfolging,
-            erVeileder,
+            erVeileder
         } = this.props;
 
         const harMal = !!mal;
@@ -95,38 +77,25 @@ class AktivitetsMal extends Component {
             <Innholdslaster avhengigheter={avhengigheter}>
                 <section className="aktivitetmal">
                     <div className="aktivitetmal__innhold">
-                        <Tekstomrade className="aktivitetmal__tekst">
-                            {mal || ''}
-                        </Tekstomrade>
+                        <Tekstomrade className="aktivitetmal__tekst">{mal || ''}</Tekstomrade>
+                        <Tekstomrade className="aktivitetmal__tekst">{mal || ''}</Tekstomrade>
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
                             hidden={historiskVisning}
                             disabled={!harSkriveTilgang || !underOppfolging}
                         >
-                            <FormattedMessage
-                                id={
-                                    harMal
-                                        ? 'aktivitetsmal.rediger'
-                                        : 'aktivitetsmal.opprett'
-                                }
-                            />
+                            <FormattedMessage id={harMal ? 'aktivitetsmal.rediger' : 'aktivitetsmal.opprett'} />
                         </HiddenIfHovedknapp>
                     </div>
                     <HiddenIfDiv hidden={historiskeMal.length === 0}>
                         <hr className="aktivitetmal__delelinje" />
                         <div className="aktivitetmal__footer">
                             <Accordion
-                                labelId={
-                                    historikkVises
-                                        ? 'aktivitetsmal.skjul'
-                                        : 'aktivitetsmal.vis'
-                                }
+                                labelId={historikkVises ? 'aktivitetsmal.skjul' : 'aktivitetsmal.vis'}
                                 apen={historikkVises}
                                 onClick={this.toggleHistoriskeMal}
                             >
-                                {historiskeMal.map(m =>
-                                    malListeVisning(m, erVeileder)
-                                )}
+                                {historiskeMal.map(m => malListeVisning(m, erVeileder))}
                             </Accordion>
                         </div>
                     </HiddenIfDiv>
@@ -147,11 +116,11 @@ AktivitetsMal.propTypes = {
     harSkriveTilgang: PT.bool.isRequired,
     history: AppPT.history.isRequired,
     underOppfolging: PT.bool.isRequired,
-    erVeileder: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired
 };
 
 AktivitetsMal.defaultProps = {
-    mal: undefined,
+    mal: undefined
 };
 
 const mapStateToProps = state => ({
@@ -161,15 +130,18 @@ const mapStateToProps = state => ({
     historiskVisning: selectViserHistoriskPeriode(state),
     harSkriveTilgang: selectHarSkriveTilgang(state),
     underOppfolging: selectErUnderOppfolging(state),
-    erVeileder: selectErVeileder(state),
+    erVeileder: selectErVeileder(state)
 });
 
 const mapDispatchToProps = dispatch => ({
     doHentMal: () => dispatch(hentMal()),
     doHentMalListe: () => dispatch(hentMalListe()),
-    doFjernMalListe: () => dispatch(fjernMalListe()),
+    doFjernMalListe: () => dispatch(fjernMalListe())
 });
 
 export default AktivitetsmalModal(
-    connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal)
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(AktivitetsMal)
 );

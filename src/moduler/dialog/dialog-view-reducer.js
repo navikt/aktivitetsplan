@@ -2,17 +2,17 @@
 export const BEKREFTELSE = 'dialog-view/bekreftelse';
 
 const initalState = {
-    data: {},
+    data: {}
 };
 
 // Reducer
 export default function reducer(state = initalState, action) {
-    const {data} = action;
+    const { data } = action;
     switch (action.type) {
         case BEKREFTELSE:
             return {
                 ...state,
-                data,
+                data
             };
         default:
             return state;
@@ -25,7 +25,7 @@ export function visBekreftelse(dialogId, utlopTidspunkt) {
         type: BEKREFTELSE,
         data: {
             dialogId,
-            utlopTidspunkt,
-        },
+            utlopTidspunkt
+        }
     };
 }

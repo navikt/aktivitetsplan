@@ -9,18 +9,12 @@ import { selectOppfolgingStatus } from './moduler/oppfolging-status/oppfolging-s
 import { selectIdentitetStatus } from './moduler/identitet/identitet-selector';
 
 const mapStateToProps = state => ({
-    avhengigheter: [
-        selectOppfolgingStatus(state),
-        selectIdentitetStatus(state),
-    ],
+    avhengigheter: [selectOppfolgingStatus(state), selectIdentitetStatus(state)]
 });
 
 function FailsafeText({ id, avhengigheter, visTekstVedFeil, ...rest }) {
     return (
-        <Innholdslaster
-            avhengigheter={avhengigheter}
-            visChildrenVedFeil={visTekstVedFeil}
-        >
+        <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil={visTekstVedFeil}>
             <FormattedHTMLMessage id={id} values={rest} />
         </Innholdslaster>
     );
@@ -29,11 +23,11 @@ function FailsafeText({ id, avhengigheter, visTekstVedFeil, ...rest }) {
 FailsafeText.propTypes = {
     id: AppPT.string.isRequired,
     avhengigheter: AppPT.array.isRequired,
-    visTekstVedFeil: AppPT.bool,
+    visTekstVedFeil: AppPT.bool
 };
 
 FailsafeText.defaultProps = {
-    visTekstVedFeil: false,
+    visTekstVedFeil: false
 };
 
 export default hiddenIf(connect(mapStateToProps)(FailsafeText));

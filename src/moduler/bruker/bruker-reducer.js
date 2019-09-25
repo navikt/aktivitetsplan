@@ -1,9 +1,7 @@
 import * as Api from '../motpart/motpart-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 
-const { reducer, cashedAction, actionTypes } = createActionsAndReducer(
-    'bruker'
-);
+const { reducer, cashedAction, actionTypes } = createActionsAndReducer('bruker');
 
 export default reducer;
 
@@ -13,6 +11,6 @@ export function hentBruker(fnr) {
 
 export function setStatusOk() {
     return {
-        type: actionTypes.OK,
+        type: actionTypes.OK
     };
 }

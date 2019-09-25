@@ -5,12 +5,7 @@ import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
-import {
-    beregnFraTil,
-    beregnKlokkeslettVarighet,
-    formatterKlokkeslett,
-    formatterVarighet,
-} from '../../aktivitet-util';
+import { beregnFraTil, beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import {
@@ -23,7 +18,7 @@ import {
     FORBEREDELSER_MAKS_LENGDE,
     validateKlokkeslett,
     validateVarighet,
-    validateKanal,
+    validateKanal
 } from './validate';
 
 import * as AppPT from '../../../../proptypes';
@@ -53,25 +48,17 @@ const varigheter = Array.from(new Array(24)).map((noValue, index) => {
     );
 });
 
-export const defaultBeskrivelse =
-    'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
+export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
 const validator = useFormstate({
-    tittel: (val, values, aktivitet) =>
-        validateTittel(erAvtalt(aktivitet), val),
-    dato: (val, values, aktivitet) =>
-        validateFraDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
-    klokkeslett: (val, values, aktivitet) =>
-        validateKlokkeslett(erAvtalt(aktivitet), val),
-    varighet: (val, values, aktivitet) =>
-        validateVarighet(erAvtalt(aktivitet), val),
+    tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+    dato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
+    klokkeslett: (val, values, aktivitet) => validateKlokkeslett(erAvtalt(aktivitet), val),
+    varighet: (val, values, aktivitet) => validateVarighet(erAvtalt(aktivitet), val),
     kanal: (val, values, aktivitet) => validateKanal(erAvtalt(aktivitet), val),
-    adresse: (val, values, aktivitet) =>
-        validateAdresse(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) =>
-        validateHensikt(erAvtalt(aktivitet), val),
-    forberedelser: (val, values, aktivitet) =>
-        validateForberedelser(erAvtalt(aktivitet), val),
+    adresse: (val, values, aktivitet) => validateAdresse(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) => validateHensikt(erAvtalt(aktivitet), val),
+    forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val)
 });
 
 function MoteAktivitetForm(props) {
@@ -89,7 +76,7 @@ function MoteAktivitetForm(props) {
         kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
         adresse: maybeAktivitet.adresse || '',
         beskrivelse: endre ? beskrivelse : defaultBeskrivelse,
-        forberedelser: maybeAktivitet.forberedelser || '',
+        forberedelser: maybeAktivitet.forberedelser || ''
     };
 
     const state = validator(initalValue, aktivitet);
@@ -99,57 +86,27 @@ function MoteAktivitetForm(props) {
     }
 
     return (
-        <form
-            onSubmit={state.onSubmit(x =>
-                onSubmit({ ...x, ...beregnFraTil(x) })
-            )}
-            autoComplete="off"
-        >
+        <form onSubmit={state.onSubmit(x => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
             <div className="skjema-innlogget aktivitetskjema">
-                <FormErrorSummary
-                    submittoken={state.submittoken}
-                    errors={state.errors}
-                />
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
-                <AktivitetFormHeader
-                    tittel="Møte med NAV"
-                    aktivitetsType={MOTE_TYPE}
-                />
+                <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
 
-                <Input
-                    disabled={avtalt}
-                    label="Tema for møtet *"
-                    {...state.fields.tittel}
-                />
+                <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
                     <DatoField label="Dato *" {...state.fields.dato} />
-                    <Select
-                        bredde="xs"
-                        label="Klokkeslett *"
-                        {...state.fields.klokkeslett}
-                    >
+                    <Select bredde="xs" label="Klokkeslett *" {...state.fields.klokkeslett}>
                         {tidspunkter}
                     </Select>
 
-                    <Select
-                        bredde="xs"
-                        label="Varighet *"
-                        {...state.fields.varighet}
-                    >
+                    <Select bredde="xs" label="Varighet *" {...state.fields.varighet}>
                         {varigheter}
                     </Select>
                 </div>
-                <VelgKanal
-                    disabled={avtalt}
-                    label="Møteform *"
-                    {...state.fields.kanal}
-                />
+                <VelgKanal disabled={avtalt} label="Møteform *" {...state.fields.kanal} />
 
-                <Input
-                    label="Møtested eller annen praktisk informasjon *"
-                    {...state.fields.adresse}
-                />
+                <Input label="Møtested eller annen praktisk informasjon *" {...state.fields.adresse} />
                 <Textarea
                     disabled={avtalt}
                     label="Hensikt med møtet"
@@ -172,13 +129,13 @@ MoteAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     isDirtyRef: PT.shape({ current: PT.bool }),
     aktivitet: AppPT.aktivitet,
-    endre: PT.bool,
+    endre: PT.bool
 };
 
 MoteAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: false,
-    endre: false,
+    endre: false
 };
 
 export default MoteAktivitetForm;

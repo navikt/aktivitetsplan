@@ -13,31 +13,24 @@ import { selectHistoriskPeriode } from './filter-selector';
 import { selectSorterteHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
 import { velgHistoriskPeriode } from './filter-reducer';
 import Dropdown from '../../../felles-komponenter/dropdown/dropdown';
-import loggEvent, {
-    LIST_HISTORISK_PERIODE,
-    VIS_HISTORISK_PERIODE,
-} from '../../../felles-komponenter/utils/logging';
+import loggEvent, { LIST_HISTORISK_PERIODE, VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 
 export function PeriodeLabel({ historiskPeriode }) {
     return (
         <div>
-            <Dato>
-                {historiskPeriode.vistFra}
-            </Dato>
+            <Dato>{historiskPeriode.vistFra}</Dato>
             <span> - </span>
-            <Dato>
-                {historiskPeriode.til}
-            </Dato>
+            <Dato>{historiskPeriode.til}</Dato>
         </div>
     );
 }
 
 PeriodeLabel.defaultProps = {
-    historiskPeriode: null,
+    historiskPeriode: null
 };
 
 PeriodeLabel.propTypes = {
-    historiskPeriode: AppPT.oppfolgingsPeriode,
+    historiskPeriode: AppPT.oppfolgingsPeriode
 };
 
 const periodeFilterCls = classes => classNames(classes);
@@ -48,15 +41,12 @@ function PeriodeFilter({
     historiskePerioder,
     doVelgHistoriskPeriode,
     className,
-    skjulInneverende,
+    skjulInneverende
 }) {
     return (
-        <VisibleIfDiv
-            className={periodeFilterCls(className)}
-            visible={harHistoriskePerioder}
-        >
+        <VisibleIfDiv className={periodeFilterCls(className)} visible={harHistoriskePerioder}>
             <FormattedMessage id="periode-filter.tittel">
-                {tittel =>
+                {tittel => (
                     <Dropdown
                         name="periode-filter"
                         knappeTekst={tittel}
@@ -70,12 +60,9 @@ function PeriodeFilter({
                                 <HiddenIfDiv hidden={skjulInneverende}>
                                     <Radio
                                         className="filter__radio--periode"
-                                        label={
-                                            <FormattedMessage id="filter.periode.inneverende" />
-                                        }
+                                        label={<FormattedMessage id="filter.periode.inneverende" />}
                                         name="inneverende"
-                                        onChange={() =>
-                                            doVelgHistoriskPeriode(null)}
+                                        onChange={() => doVelgHistoriskPeriode(null)}
                                         checked={!historiskPeriode}
                                     />
                                 </HiddenIfDiv>
@@ -85,29 +72,21 @@ function PeriodeFilter({
                                         <div key={id}>
                                             <Radio
                                                 className="filter__radio--periode"
-                                                label={
-                                                    <PeriodeLabel
-                                                        historiskPeriode={t}
-                                                    />
-                                                }
+                                                label={<PeriodeLabel historiskPeriode={t} />}
                                                 name={id}
                                                 onChange={() => {
                                                     doVelgHistoriskPeriode(t);
-                                                    loggEvent(
-                                                        VIS_HISTORISK_PERIODE
-                                                    );
+                                                    loggEvent(VIS_HISTORISK_PERIODE);
                                                 }}
-                                                checked={
-                                                    !!historiskPeriode &&
-                                                    historiskPeriode.id === id
-                                                }
+                                                checked={!!historiskPeriode && historiskPeriode.id === id}
                                             />
                                         </div>
                                     );
                                 })}
                             </div>
                         </div>
-                    </Dropdown>}
+                    </Dropdown>
+                )}
             </FormattedMessage>
         </VisibleIfDiv>
     );
@@ -119,28 +98,28 @@ PeriodeFilter.propTypes = {
     historiskPeriode: AppPT.oppfolgingsPeriode,
     doVelgHistoriskPeriode: PT.func.isRequired,
     className: PT.string,
-    skjulInneverende: PT.bool.isRequired,
+    skjulInneverende: PT.bool.isRequired
 };
 
 PeriodeFilter.defaultProps = {
     historiskPeriode: null,
-    className: '',
+    className: ''
 };
 
 const mapStateToProps = state => {
-    const historiskePerioder = selectSorterteHistoriskeOppfolgingsPerioder(
-        state
-    );
+    const historiskePerioder = selectSorterteHistoriskeOppfolgingsPerioder(state);
     return {
         historiskePerioder,
         historiskPeriode: selectHistoriskPeriode(state),
-        harHistoriskePerioder: historiskePerioder.length > 0,
+        harHistoriskePerioder: historiskePerioder.length > 0
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    doVelgHistoriskPeriode: aktivitetsType =>
-        dispatch(velgHistoriskPeriode(aktivitetsType)),
+    doVelgHistoriskPeriode: aktivitetsType => dispatch(velgHistoriskPeriode(aktivitetsType))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PeriodeFilter);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PeriodeFilter);

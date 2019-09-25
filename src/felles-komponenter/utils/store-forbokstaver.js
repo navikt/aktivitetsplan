@@ -8,11 +8,11 @@ function StoreForbokstaver({ tag, children, ...props }) {
 
 StoreForbokstaver.propTypes = {
     tag: PT.string,
-    children: PT.string.isRequired,
+    children: PT.string.isRequired
 };
 
 StoreForbokstaver.defaultProps = {
-    tag: 'span',
+    tag: 'span'
 };
 
 export default StoreForbokstaver;

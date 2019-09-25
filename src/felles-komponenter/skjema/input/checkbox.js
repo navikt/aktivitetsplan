@@ -11,21 +11,14 @@ function Checkbox({ touched, error, input, pristine, initialValue, ...rest }) {
     const toggelOnChange = event => {
         const newValue = toggel ? 'false' : 'true';
         const customEvent = {
-            target: { name: event.target.name, value: newValue },
+            target: { name: event.target.name, value: newValue }
         };
         input.onChange(customEvent);
         setToggel(!toggel);
     };
 
     const feil = error && touched ? { feilmelding: error } : undefined;
-    return (
-        <NavCheckbox
-            {...inputProps}
-            checked={input.value === 'true'}
-            feil={feil}
-            onChange={toggelOnChange}
-        />
-    );
+    return <NavCheckbox {...inputProps} checked={input.value === 'true'} feil={feil} onChange={toggelOnChange} />;
 }
 
 Checkbox.propTypes = {
@@ -33,13 +26,13 @@ Checkbox.propTypes = {
     pristine: PT.bool,
     touched: PT.bool.isRequired,
     error: PT.string,
-    input: PT.object.isRequired,
+    input: PT.object.isRequired
 };
 
 Checkbox.defaultProps = {
     initialValue: undefined,
     pristine: undefined,
-    error: undefined,
+    error: undefined
 };
 
 export default Checkbox;

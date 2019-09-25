@@ -19,10 +19,7 @@ function TimeoutboxLoggetUt() {
                 </div>
             </ModalContainer>
             <ModalFooter>
-                <Hovedknapp
-                    className="modal-footer__knapp"
-                    onClick={() => window.location.reload()}
-                >
+                <Hovedknapp className="modal-footer__knapp" onClick={() => window.location.reload()}>
                     <FormattedMessage id="timeoutbox.knapp.last_pa_nytt" />
                 </Hovedknapp>
             </ModalFooter>

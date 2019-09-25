@@ -6,8 +6,7 @@ import reducer from './reducer';
 
 /* eslint-disable no-underscore-dangle */
 function getStoreCompose() {
-    const composeEnhancers =
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
     return composeEnhancers(applyMiddleware(thunkMiddleware, freeze));
 }

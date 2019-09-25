@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import React from 'react';
-import {mount} from 'enzyme';
+import { mount } from 'enzyme';
 
 import { IntlProvider } from 'react-intl';
 import { STATUS } from '../../ducks/utils';
@@ -21,9 +21,7 @@ describe('innholdslaster', () => {
         const innhold = <div>yay</div>;
         const wrapper = mount(
             <IntlProvider>
-                <Innholdslaster avhengigheter={[{ status: STATUS.ERROR }]}>
-                    {innhold}
-                </Innholdslaster>
+                <Innholdslaster avhengigheter={[{ status: STATUS.ERROR }]}>{innhold}</Innholdslaster>
             </IntlProvider>
         );
 
@@ -32,11 +30,7 @@ describe('innholdslaster', () => {
 
     it('Skal rendre children hvis alle avhengigheter har blitt lastet', () => {
         const innhold = <div>yay</div>;
-        const wrapper = mount(
-            <Innholdslaster avhengigheter={[{ status: STATUS.OK }]}>
-                {innhold}
-            </Innholdslaster>
-        );
+        const wrapper = mount(<Innholdslaster avhengigheter={[{ status: STATUS.OK }]}>{innhold}</Innholdslaster>);
 
         expect(wrapper.find(innhold)).toBeDefined();
     });
@@ -44,11 +38,7 @@ describe('innholdslaster', () => {
     it('Skal rendre children som en funksjon, hvis det er en funksjon', () => {
         const innhold = <div>yay</div>;
         const renderDiv = () => innhold;
-        const wrapper = mount(
-            <Innholdslaster avhengigheter={[{ status: STATUS.OK }]}>
-                {renderDiv}
-            </Innholdslaster>
-        );
+        const wrapper = mount(<Innholdslaster avhengigheter={[{ status: STATUS.OK }]}>{renderDiv}</Innholdslaster>);
 
         expect(wrapper.find(innhold)).toBeDefined();
     });
@@ -58,12 +48,7 @@ describe('innholdslaster', () => {
 
         const wrapper = mount(
             <IntlProvider>
-                <Innholdslaster
-                    avhengigheter={[
-                        { status: STATUS.OK },
-                        { status: STATUS.ERROR },
-                    ]}
-                >
+                <Innholdslaster avhengigheter={[{ status: STATUS.OK }, { status: STATUS.ERROR }]}>
                     {innhold}
                 </Innholdslaster>
             </IntlProvider>
@@ -77,13 +62,7 @@ describe('innholdslaster', () => {
 
         const wrapper = mount(
             <IntlProvider>
-                <Innholdslaster
-                    avhengigheter={[
-                        { status: STATUS.OK },
-                        STATUS.ERROR,
-                        { status: STATUS.OK },
-                    ]}
-                >
+                <Innholdslaster avhengigheter={[{ status: STATUS.OK }, STATUS.ERROR, { status: STATUS.OK }]}>
                     {innhold}
                 </Innholdslaster>
             </IntlProvider>
@@ -93,12 +72,9 @@ describe('innholdslaster', () => {
     });
 
     it('Takler null og undefined', () => {
-
         const wrapper = mount(
             <IntlProvider>
-                <Innholdslaster
-                    avhengigheter={[null, undefined, { status: STATUS.OK }]}
-                >
+                <Innholdslaster avhengigheter={[null, undefined, { status: STATUS.OK }]}>
                     <div>yay</div>
                 </Innholdslaster>
             </IntlProvider>

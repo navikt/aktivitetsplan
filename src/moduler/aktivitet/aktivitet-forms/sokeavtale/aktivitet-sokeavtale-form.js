@@ -5,7 +5,7 @@ import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import { HidenIfInput } from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
-    validerPeriodeFelt,
+    validerPeriodeFelt
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
@@ -18,7 +18,7 @@ import {
     validateBeskrivelse,
     validateFraDato,
     validateOppfolging,
-    validateTilDato,
+    validateTilDato
 } from './validate';
 import LagreAktivitet from '../lagre-aktivitet';
 
@@ -28,24 +28,14 @@ function erAvtalt(aktivitet) {
 
 const validator = useFormstate({
     tittel: () => null,
-    fraDato: (val, values, aktivitet) =>
-        validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) =>
-        validateTilDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
-    periodeValidering: (val, values) =>
-        validerPeriodeFelt(values.fraDato, values.tilDato),
+    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+    tilDato: (val, values, aktivitet) => validateTilDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
+    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
     antallStillingerIUken: (val, values, aktivitet) =>
-        validateAntallStillingerIUken(
-            erAvtalt(aktivitet),
-            val,
-            values.antallStillingerSokes
-        ),
-    antallStillingerSokes: (val, values, aktivitet) =>
-        validateAntallStillinger(erAvtalt(aktivitet), val),
-    avtaleOppfolging: (val, values, aktivitet) =>
-        validateOppfolging(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) =>
-        validateBeskrivelse(erAvtalt(aktivitet), val),
+        validateAntallStillingerIUken(erAvtalt(aktivitet), val, values.antallStillingerSokes),
+    antallStillingerSokes: (val, values, aktivitet) => validateAntallStillinger(erAvtalt(aktivitet), val),
+    avtaleOppfolging: (val, values, aktivitet) => validateOppfolging(erAvtalt(aktivitet), val),
+    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val)
 });
 
 export default function SokeAvtaleAktivitetForm(props) {
@@ -62,7 +52,7 @@ export default function SokeAvtaleAktivitetForm(props) {
         antallStillingerIUken: maybeAktivitet.antallStillingerIUken || '',
         avtaleOppfolging: maybeAktivitet.avtaleOppfolging || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
-        periodeValidering: '',
+        periodeValidering: ''
     };
 
     const state = validator(initalValues, aktivitet);
@@ -75,43 +65,21 @@ export default function SokeAvtaleAktivitetForm(props) {
         state.reinitialize({ ...initalValues, ...newInitalValues });
     };
 
-    const brukeStillingerIUken = !state.fields.antallStillingerSokes
-        .initialValue;
+    const brukeStillingerIUken = !state.fields.antallStillingerSokes.initialValue;
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
             <div className="skjema-innlogget aktivitetskjema">
-                <FormErrorSummary
-                    submittoken={state.submittoken}
-                    errors={state.errors}
-                />
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
-                <AktivitetFormHeader
-                    tittel="Avtale om å søke jobber"
-                    aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE}
-                />
+                <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
 
-                <Malverk
-                    visible={window.appconfig.VIS_MALER}
-                    endre={endre}
-                    onChange={reinitalize}
-                    type="SOKEAVTALE"
-                />
+                <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="SOKEAVTALE" />
 
-                <PeriodeValidering
-                    valideringFelt={state.fields.periodeValidering}
-                >
+                <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        <DatoField
-                            label="Fra dato *"
-                            senesteTom={maybeAktivitet.tilDato}
-                            {...state.fields.fraDato}
-                        />
-                        <DatoField
-                            label="Til dato *"
-                            tidligsteFom={maybeAktivitet.fraDato}
-                            {...state.fields.tilDato}
-                        />
+                        <DatoField label="Fra dato *" senesteTom={maybeAktivitet.tilDato} {...state.fields.fraDato} />
+                        <DatoField label="Til dato *" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
                     </div>
                 </PeriodeValidering>
 
@@ -154,11 +122,11 @@ SokeAvtaleAktivitetForm.propTypes = {
     aktivitet: AppPT.aktivitet,
     onSubmit: PT.func.isRequired,
     isDirtyRef: PT.shape({ current: PT.bool }),
-    endre: PT.bool,
+    endre: PT.bool
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: undefined,
-    endre: false,
+    endre: false
 };

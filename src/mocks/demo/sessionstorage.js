@@ -9,7 +9,7 @@ export const SessionStorageElement = {
     AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
     TEST_AKTIVITETER: 'testaktiviteter',
     ARENA_AKTIVITETER: 'arena_aktiviteter',
-    TEST_DIALOGER: 'test_dialoger',
+    TEST_DIALOGER: 'test_dialoger'
 };
 
 export const settSessionStorage = (key, value) => {
@@ -24,40 +24,30 @@ const erSatt = sessionStorageElement => {
     return hentFraSessionStorage(sessionStorageElement) === 'true';
 };
 
-const erSkrudAv = sessionStorageElement =>
-    hentFraSessionStorage(sessionStorageElement) === 'false';
+const erSkrudAv = sessionStorageElement => hentFraSessionStorage(sessionStorageElement) === 'false';
 
-export const erEksternBruker = () =>
-    erSatt(SessionStorageElement.EKSTERN_BRUKER);
+export const erEksternBruker = () => erSatt(SessionStorageElement.EKSTERN_BRUKER);
 
 export const erPrivatBruker = () => erSatt(SessionStorageElement.PRIVAT_BRUKER);
 
-export const erManuellBruker = () =>
-    erSatt(SessionStorageElement.MANUELL_BRUKER);
+export const erManuellBruker = () => erSatt(SessionStorageElement.MANUELL_BRUKER);
 
 export const erKRRBruker = () => erSatt(SessionStorageElement.KRR_BRUKER);
 
-export const erEskalertBruker = () =>
-    erSatt(SessionStorageElement.ESKALERT_BRUKER);
+export const erEskalertBruker = () => erSatt(SessionStorageElement.ESKALERT_BRUKER);
 
-export const ingenOppfPerioder = () =>
-    erSatt(SessionStorageElement.INGEN_OPPF_PERIODER);
+export const ingenOppfPerioder = () => erSatt(SessionStorageElement.INGEN_OPPF_PERIODER);
 
-export const visAutomatiskeAktiviteter = () =>
-    erSatt(SessionStorageElement.AUTOMATISKE_AKTIVITETER);
+export const visAutomatiskeAktiviteter = () => erSatt(SessionStorageElement.AUTOMATISKE_AKTIVITETER);
 
-export const visTestAktiviteter = () =>
-    !erSkrudAv(SessionStorageElement.TEST_AKTIVITETER);
+export const visTestAktiviteter = () => !erSkrudAv(SessionStorageElement.TEST_AKTIVITETER);
 
-export const visArenaAktiviteter = () =>
-    erSatt(SessionStorageElement.ARENA_AKTIVITETER);
+export const visArenaAktiviteter = () => erSatt(SessionStorageElement.ARENA_AKTIVITETER);
 
 export const visDialoger = () => erSatt(SessionStorageElement.TEST_DIALOGER);
 
 export const oppfFeilet = () => erSatt(SessionStorageElement.OPPF_FEILET);
 
 const fetureprefix = 'mock_feature__';
-export const setFeatureTogle = (name, value) =>
-    settSessionStorage(fetureprefix + name, value);
-export const fetureStatus = name =>
-    hentFraSessionStorage(fetureprefix + name) !== 'false';
+export const setFeatureTogle = (name, value) => settSessionStorage(fetureprefix + name, value);
+export const fetureStatus = name => hentFraSessionStorage(fetureprefix + name) !== 'false';

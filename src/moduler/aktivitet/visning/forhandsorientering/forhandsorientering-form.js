@@ -17,16 +17,12 @@ import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 
 const label = (
     <div className="forhandsorientering-arena-aktivitet">
-        <EtikettLiten className="avtalt-tekst-etikett">
-            Tekst til brukeren
-        </EtikettLiten>
+        <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
         <HjelpetekstHoyre>
-            Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren
-            selv har registrert i det offentlige kontaktregisteret. Brukeren får
-            beskjed om en viktig oppgave og det lenkes til dialog. Beskjeden
-            sendes gjennom Altinn etter en halv time. Sender du flere
-            forhåndsorienteringer innen en halv time så blir det kun sendt én
-            SMS eller e-post.
+            Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det offentlige
+            kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog. Beskjeden sendes
+            gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv time så blir det kun
+            sendt én SMS eller e-post.
         </HjelpetekstHoyre>
     </div>
 );
@@ -49,7 +45,7 @@ function validate(val) {
 
 const validator = useFormstate({
     text: validate,
-    checked: () => null,
+    checked: () => null
 });
 
 function ForhandsorieteringsForm(props) {
@@ -57,7 +53,7 @@ function ForhandsorieteringsForm(props) {
 
     const state = validator({
         text: initalValue,
-        checked: '',
+        checked: ''
     });
 
     if (!visible) {
@@ -68,9 +64,7 @@ function ForhandsorieteringsForm(props) {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <Undertittel>
-                {'Tiltaket er automatisk merket "Avtalt med NAV"'}
-            </Undertittel>
+            <Undertittel>{'Tiltaket er automatisk merket "Avtalt med NAV"'}</Undertittel>
 
             <Checkbox
                 label="Send forhåndsorientering for §11-9 (AAP)"
@@ -78,11 +72,7 @@ function ForhandsorieteringsForm(props) {
                 {...state.fields.checked}
             />
             <VisibleIfDiv visible={state.fields.checked.input.value === 'true'}>
-                <Textarea
-                    label={label}
-                    maxLength={500}
-                    {...state.fields.text}
-                />
+                <Textarea label={label} maxLength={500} {...state.fields.text} />
                 <Knapp spinner={lasterData} autoDisableVedSpinner>
                     Bekreft og send
                 </Knapp>
@@ -97,16 +87,16 @@ ForhandsorieteringsForm.propTypes = {
     dialogStatus: AppPT.status.isRequired,
     onSubmit: PT.func.isRequired,
     forhandsorienteringSendt: PT.func.isRequired,
-    skalSendeForhandsorientering: PT.bool,
+    skalSendeForhandsorientering: PT.bool
 };
 
 ForhandsorieteringsForm.defaultProps = {
-    skalSendeForhandsorientering: false,
+    skalSendeForhandsorientering: false
 };
 
 const mapStateToProps = state => {
     return {
-        dialogStatus: selectDialogStatus(state),
+        dialogStatus: selectDialogStatus(state)
     };
 };
 
@@ -115,16 +105,17 @@ const mapDispatchToProps = (dispatch, props) => ({
         return sendForhandsorientering({
             aktivitetId: props.valgtAktivitet.id,
             tekst: data.text,
-            overskrift: props.valgtAktivitet.tittel,
+            overskrift: props.valgtAktivitet.tittel
         })(dispatch).then(() => {
             dispatch(apneDialog());
             props.forhandsorienteringSendt();
             loggForhandsorienteringTiltak();
             document.querySelector('.aktivitet-modal').focus();
         });
-    },
+    }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    ForhandsorieteringsForm
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ForhandsorieteringsForm);

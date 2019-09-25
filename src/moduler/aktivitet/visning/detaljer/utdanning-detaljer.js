@@ -2,23 +2,20 @@ import React from 'react';
 import * as AppPT from '../../../../proptypes';
 import { HiddenIf } from '../../../../utils';
 import { UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
-import {
-    Beskrivelse,
-    FraDato,
-    TilDato,
-} from '../hjelpekomponenter/standard-felt';
+import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const UtdanningDetaljer = ({ aktivitet }) =>
+const UtdanningDetaljer = ({ aktivitet }) => (
     <HiddenIf hidden={aktivitet.type !== UTDANNING_AKTIVITET_TYPE}>
         <div className="aktivitetvisning__detaljer">
             <FraDato aktivitet={aktivitet} visIkkeSatt />
             <TilDato aktivitet={aktivitet} visIkkeSatt />
             <Beskrivelse aktivitet={aktivitet} />
         </div>
-    </HiddenIf>;
+    </HiddenIf>
+);
 
 UtdanningDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };
 
 export default UtdanningDetaljer;

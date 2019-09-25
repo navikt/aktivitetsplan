@@ -12,19 +12,17 @@ function prependBasePath(fn) {
         const fodselsnummerPath = `/${fodselsnummer}`;
         return fn.call(this, {
             pathname:
-                (fodselsnummer && !url.startsWith(fodselsnummerPath)
-                    ? fodselsnummerPath
-                    : '') +
+                (fodselsnummer && !url.startsWith(fodselsnummerPath) ? fodselsnummerPath : '') +
                 (url.startsWith('/') ? '' : '/') +
                 url,
-            search: urlParams,
+            search: urlParams
         });
     };
 }
 
 export default function createHistory() {
     const routerHistory = createBrowserHistory({
-        basename: window.appconfig.CONTEXT_PATH,
+        basename: window.appconfig.CONTEXT_PATH
     });
 
     routerHistory.push = prependBasePath(routerHistory.push);

@@ -1,10 +1,5 @@
-import {OPPFOLGING_BASE_URL, VEILARBVEDTAKINFO_BASE_URL} from '../../environment';
-import {
-    fetchToJson,
-    postAsJson,
-    deleteAsJson,
-    getCookie,
-} from '../../ducks/utils';
+import { OPPFOLGING_BASE_URL, VEILARBVEDTAKINFO_BASE_URL } from '../../environment';
+import { fetchToJson, postAsJson, deleteAsJson, getCookie } from '../../ducks/utils';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 export function hentIdentitet() {
@@ -46,13 +41,13 @@ export function startOppfolging() {
 export function startEskalering(dialogId, begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startEskalering/`, {
         dialogId,
-        begrunnelse,
+        begrunnelse
     });
 }
 
 export function stoppEskalering(begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppEskalering/`, {
-        begrunnelse,
+        begrunnelse
     });
 }
 
@@ -63,33 +58,33 @@ export function kanAvslutte() {
 export function avsluttOppfolging(begrunnelse, veilederId) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/avsluttOppfolging`, {
         begrunnelse,
-        veilederId,
+        veilederId
     });
 }
 
 export function settManuellOppfolging(begrunnelse, veilederId) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settManuell`, {
         begrunnelse,
-        veilederId,
+        veilederId
     });
 }
 
 export function settDigitalOppfolging(begrunnelse, veilederId) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/settDigital`, {
         begrunnelse,
-        veilederId,
+        veilederId
     });
 }
 
 export function startKvpOppfolging(begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/startKvp`, {
-        begrunnelse,
+        begrunnelse
     });
 }
 
 export function stoppKvpOppfolging(begrunnelse) {
     return postAsJson(`${OPPFOLGING_BASE_URL}/oppfolging/stoppKvp`, {
-        begrunnelse,
+        begrunnelse
     });
 }
 
@@ -105,7 +100,7 @@ export function doLesAktivitetsplan() {
         credentials: 'include',
         headers: new Headers({
             'Content-Type': 'application/json',
-            NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
-        }),
+            NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION') // eslint-disable-line quote-props
+        })
     });
 }

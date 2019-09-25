@@ -19,18 +19,19 @@ function HarIkkeAktivitetsplan({ erVeileder }) {
                 <Normaltekst>
                     <FormattedMessage id={advarsel} />
                 </Normaltekst>
-                {!erVeileder &&
+                {!erVeileder && (
                     <Lenke href={arbeidssokerregistreringHref} erEksternLenke>
                         <FormattedMessage id="ikke.under.oppfolging.reaktivering.lenke" />
                         <HoyreChevron />
-                    </Lenke>}
+                    </Lenke>
+                )}
             </AlertStripeAdvarsel>
         </div>
     );
 }
 
 HarIkkeAktivitetsplan.propTypes = {
-    erVeileder: PT.bool.isRequired,
+    erVeileder: PT.bool.isRequired
 };
 
 export default HarIkkeAktivitetsplan;
