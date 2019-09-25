@@ -12,11 +12,8 @@ function AktiverDigitalOppfolgingVarsel({
 }) {
     const InformasjonContainer = () =>
         <div>
-            <FormattedMessage id="informasjon-mer" />
-            &nbsp;
-            <Lenke href="/informasjon">
-                <FormattedMessage id="informasjon-mer-lenke" />
-            </Lenke>
+            Se video om &nbsp;
+            <Lenke href="/informasjon">aktivitetsplanen</Lenke>
         </div>;
 
     if (!reservertIKRR && !settDigitalFeilet) {

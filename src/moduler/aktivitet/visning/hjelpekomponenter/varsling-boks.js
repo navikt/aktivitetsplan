@@ -2,7 +2,6 @@ import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { FormattedMessage } from 'react-intl';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import {
     selectDialogForAktivitetId,
@@ -29,7 +28,9 @@ function VarslingBoks({
                     hidden={!visVarselOmManglendeDialog}
                 >
                     <AlertStripe type="advarsel">
-                        <FormattedMessage id="mote.varsling.forhandsorientering" />
+                        Brukeren får ikke automatisk informasjon om møtet. Send
+                        en dialog eller forhåndsorientering for at brukeren skal
+                        få beskjed.
                     </AlertStripe>
                 </HiddenIfDiv>
             </Innholdslaster>
