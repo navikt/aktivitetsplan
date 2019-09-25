@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 
@@ -11,9 +11,9 @@ function VisAdvarsel({ onSubmit, headerTekst }) {
         <div>
             <ModalContainer className="aktivitetvisning__underseksjon">
                 <Innholdstittel>{headerTekst}</Innholdstittel>
-                <AlertStripeInfoSolid>
+                <AlertStripe type="advarsel">
                     Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.
-                </AlertStripeInfoSolid>
+                </AlertStripe>
             </ModalContainer>
             <ModalFooter>
                 <Hovedknapp htmlType="button" onClick={onSubmit}>

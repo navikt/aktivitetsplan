@@ -1,1 +1,1 @@
-Hvis du ikke setter aktiviteten til "Avtalt med NAV" eller velger "Ikke send forhåndsorientering", så må du sende en dialog eller varsel for at brukeren skal få beskjed om møtet
+Brukeren får ikke automatisk informasjon om møtet. Send en dialog eller forhåndsorientering for at brukeren skal få beskjed.

@@ -1,29 +1,26 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import Lenke from '../../felles-komponenter/utils/lenke';
 
 function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harTrykketRefresh }) {
     const InformasjonContainer = () => (
         <div>
-            <FormattedMessage id="informasjon-mer" />
-            &nbsp;
-            <Lenke href="/informasjon">
-                <FormattedMessage id="informasjon-mer-lenke" />
-            </Lenke>
+            Se video om &nbsp;
+            <Lenke href="/informasjon">aktivitetsplanen</Lenke>
         </div>
     );
 
     if (!reservertIKRR && !settDigitalFeilet) {
         return (
-            <AlertStripeInfoSolid className="sett-digital__varsel">
+            <AlertStripe type="advarsel" className="sett-digital__varsel">
                 <div>
                     <FormattedMessage id="sett-digital.manuell-oppfolging.infotekst" />
                 </div>
                 <InformasjonContainer />
-            </AlertStripeInfoSolid>
+            </AlertStripe>
         );
     }
     if (reservertIKRR && !settDigitalFeilet) {
@@ -33,7 +30,7 @@ function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harT
         return (
             <FormattedMessage id="sett-digital.reservert-i-krr.url-lenke">
                 {url => (
-                    <AlertStripeInfoSolid className="sett-digital__varsel">
+                    <AlertStripe type="advarsel" className="sett-digital__varsel">
                         <div className="blokk-s">
                             <FormattedMessage id={resertvertTekst} />
                             &nbsp;
@@ -42,7 +39,7 @@ function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harT
                             </Lenke>
                         </div>
                         <InformasjonContainer />
-                    </AlertStripeInfoSolid>
+                    </AlertStripe>
                 )}
             </FormattedMessage>
         );

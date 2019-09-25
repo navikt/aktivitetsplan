@@ -23,6 +23,7 @@ import { fetchmockMiddleware } from './utils';
 import { hentMalverkMedType } from './malverk';
 import auth from './auth';
 import lest from './lest';
+import { oppfFeilet } from './demo/sessionstorage';
 
 const mock = fetchMock.configure({
     enableFallback: false,
@@ -68,7 +69,11 @@ mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }) => opprettMal(body
 mock.get('/veilarbvedtakinfo/api/fremtidigsituasjon', ResponseUtils.delayed(500, fremtidigSituasjon));
 
 mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
-mock.get('/veilarboppfolging/api/oppfolging', ({ queryParams }) => oppfolging(queryParams));
+
+mock.get(
+    '/veilarboppfolging/api/oppfolging',
+    oppfFeilet() ? internalServerError : ({ queryParams }) => oppfolging(queryParams)
+);
 
 mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', instillingsHistorikk);
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', veilederTilgang);

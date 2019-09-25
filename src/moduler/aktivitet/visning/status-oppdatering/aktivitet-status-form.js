@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import useFormstate from '@nutgaard/use-formstate';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
@@ -20,7 +20,7 @@ import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import { DirtyContext } from '../../../context/dirty-context';
 
-const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripeInfoSolid);
+const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripe);
 
 function statusKreverInformasjonMelding(status) {
     return status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
