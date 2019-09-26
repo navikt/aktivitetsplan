@@ -3,8 +3,7 @@ kind: 'Application'
 metadata:
   name: aktivitetsplan
   namespace: {{namespace}}
-  cluster:
-    - dev-sbs
+  cluster: dev-sbs
   labels:
     team: pto
 spec:
@@ -36,7 +35,6 @@ spec:
     - VEILARBLOGIN_REDIRECT_URL_URL
     - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
     - OIDC_REDIRECT_URL
-    - UNLEASH_API_URL
     - AAD_B2C_DISCOVERY_URL
     - name: VEIENTILARBEID_URL
       value: 'https://veientilarbeid-q.nav.no'

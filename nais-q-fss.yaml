@@ -1,10 +1,9 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: aktivitetsplan
+  name: aktivitetsplan-fss
   namespace: {{namespace}}
-  cluster:
-    - dev-fss
+  cluster: prod-fss
   labels:
     team: pto
 spec:
@@ -37,7 +36,6 @@ spec:
     - VEILARBLOGIN_REDIRECT_URL_URL
     - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
     - OIDC_REDIRECT_URL
-    - UNLEASH_API_URL
     - AAD_B2C_DISCOVERY_URL
     - name: VEIENTILARBEID_URL
       value: 'https://veientilarbeid-q.nav.no'
