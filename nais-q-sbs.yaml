@@ -28,6 +28,7 @@ spec:
     enabled: true
   webproxy: true
   env:
+    - APPRES_CMS_URL
     - ISSO_JWKS_URL
     - ISSO_HOST_URL
     - ISSO_ISSUER_URL
