@@ -11,10 +11,10 @@ spec:
   port: 8080
   liveness:
     path: aktivitetsplan/internal/isAlive
-    initialDelay: 60
+    initialDelay: 20
   readiness:
     path: aktivitetsplan/internal/selftest
-    initialDelay: 60
+    initialDelay: 20
   replicas:
     min: 2
     max: 4
