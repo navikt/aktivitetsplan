@@ -53,3 +53,5 @@ spec:
       value: 'true'
     - name: DISABLE_DECORATOR
       value: 'true'
+    - name: CONFIGURATION_LOCATION
+      value: '/decorator-fss.yaml'
