@@ -78,7 +78,6 @@ class AktivitetsMal extends Component {
                 <section className="aktivitetmal">
                     <div className="aktivitetmal__innhold">
                         <Tekstomrade className="aktivitetmal__tekst">{mal || ''}</Tekstomrade>
-                        <Tekstomrade className="aktivitetmal__tekst">{mal || ''}</Tekstomrade>
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
                             hidden={historiskVisning}
