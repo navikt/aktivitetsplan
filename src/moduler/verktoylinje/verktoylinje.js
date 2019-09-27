@@ -57,7 +57,7 @@ class Verktoylinje extends Component {
                         <FormattedMessage id="navigasjon.dialog" />
                     </InternLenke>
                     <Lenkeknapp
-                        type="big-hoved"
+                        type="hoved"
                         href="/aktivitet/ny"
                         disabled={viserHistoriskPeriode || !underOppfolging || !aktivitetLaster || !harSkriveTilgang}
                         onClick={() => loggEvent(APNE_NY_AKTIVITET)}

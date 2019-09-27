@@ -4,7 +4,7 @@ import InternLenke from './utils/internLenke';
 import hiddenIf from './hidden-if/hidden-if';
 
 function LenkeUtenStyling(props) {
-    return <InternLenke {...props} skipStyling />;
+    return <InternLenke {...props} skipLenkeStyling />;
 }
 
 function Lenkepanel(props) {

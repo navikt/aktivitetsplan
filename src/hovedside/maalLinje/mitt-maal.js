@@ -51,7 +51,7 @@ class MittMaal extends Component {
         }
 
         return (
-            <InternLenke skipStyling href={url} className="mitt-maal" onClick={() => loggMittMalKlikk(erVeileder)}>
+            <InternLenke skipLenkeStyling href={url} className="mitt-maal" onClick={() => loggMittMalKlikk(erVeileder)}>
                 <MalIcon />
                 <div className="mittmal_content">
                     <Element className="mittmal__content-header">

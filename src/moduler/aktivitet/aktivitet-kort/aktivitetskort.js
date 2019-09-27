@@ -66,7 +66,7 @@ class AktivitetsKort extends Component {
                         'aktivitetskort--drag': isDragging
                     })}
                     onClick={() => doSettAktivitetMedEndringerSomVist(aktivitet)}
-                    skipStyling
+                    skipLenkeStyling
                 >
                     <article aria-labelledby={ariaLabel}>
                         <AktivitetType type={type} />
