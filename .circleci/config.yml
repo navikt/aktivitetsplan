@@ -53,8 +53,8 @@ workflows:
                   requires:
                       - prodsett
                   context: pus
-                  cluster: prod-fss
-                  filepath: ./nais-fss.yaml
+                  cluster: prod-sbs
+                  filepath: ./nais-sbs.yaml
                   filters:
                       branches:
                           only: master
