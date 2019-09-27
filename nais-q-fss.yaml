@@ -37,6 +37,7 @@ spec:
     - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
     - OIDC_REDIRECT_URL
     - AAD_B2C_DISCOVERY_URL
+    - UNLEASH_API_URL
     - name: VEIENTILARBEID_URL
       value: 'https://veientilarbeid-q.nav.no'
     - name: DITTNAV_LINK_URL
