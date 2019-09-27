@@ -2,7 +2,12 @@ import React from 'react';
 import { VenstreChevron } from 'nav-frontend-chevron';
 import InternLenke from '../utils/internLenke';
 
-export default function Tilbakeknapp(props) {
+interface TilbakeknappType {
+    tekst: string;
+    onClick: () => void;
+}
+
+export default function Tilbakeknapp(props: TilbakeknappType) {
     const { tekst, onClick } = props;
     return (
         <InternLenke href="/" onClick={onClick} className="tilbakeknapp">

@@ -1,11 +1,16 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import PT from 'prop-types';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import InternLenke from '../../felles-komponenter/utils/internLenke';
 
-function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harTrykketRefresh }) {
+interface PropTypes {
+    reservertIKRR: boolean;
+    settDigitalFeilet: boolean;
+    harTrykketRefresh: boolean;
+}
+function AktiverDigitalOppfolgingVarsel(props: PropTypes) {
+    const { reservertIKRR, settDigitalFeilet, harTrykketRefresh } = props;
     const InformasjonContainer = () => (
         <div>
             Se video om&nbsp;
@@ -48,11 +53,5 @@ function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harT
         return <AdvarselVarsling tekstId="sett-digital.feilmelding" className="sett-digital__varsel" />;
     }
 }
-
-AktiverDigitalOppfolgingVarsel.propTypes = {
-    reservertIKRR: PT.bool.isRequired,
-    settDigitalFeilet: PT.bool.isRequired,
-    harTrykketRefresh: PT.bool.isRequired
-};
 
 export default AktiverDigitalOppfolgingVarsel;

@@ -7,8 +7,13 @@ import Lenke from 'nav-frontend-lenker';
 
 export const arbeidssokerregistreringHref = '/arbeidssokerregistrering';
 
-function HarIkkeAktivitetsplan(props: { erVeileder: boolean }) {
-    const advarsel = props.erVeileder
+interface PropTypes {
+    erVeileder: boolean;
+}
+
+function HarIkkeAktivitetsplan(props: PropTypes) {
+    const { erVeileder } = props;
+    const advarsel = erVeileder
         ? 'har.ikke.aktivitetsplan.advarsel.veileder'
         : 'har.ikke.aktivitetsplan.advarsel.bruker';
 
@@ -18,7 +23,7 @@ function HarIkkeAktivitetsplan(props: { erVeileder: boolean }) {
                 <Normaltekst>
                     <FormattedMessage id={advarsel} />
                 </Normaltekst>
-                {!props.erVeileder && (
+                {!erVeileder && (
                     <Lenke href={arbeidssokerregistreringHref}>
                         <FormattedMessage id="ikke.under.oppfolging.reaktivering.lenke" />
                         <HoyreChevron />

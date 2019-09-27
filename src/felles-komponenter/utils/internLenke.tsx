@@ -18,17 +18,13 @@ interface InternLenkeProps {
 }
 
 export default function InternLenke(props: InternLenkeProps) {
+    const { href, className, skipLenkeStyling, children, onClick, role } = props;
     const fodselsnummer = getFodselsnummer();
-    const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + props.href;
+    const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
 
     return (
-        <Link
-            to={internHref}
-            className={cls(props.className, !props.skipLenkeStyling)}
-            onClick={props.onClick}
-            role={props.role}
-        >
-            {props.children}
+        <Link to={internHref} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
+            {children}
         </Link>
     );
 }

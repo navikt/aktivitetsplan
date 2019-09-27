@@ -11,18 +11,19 @@ interface LenkeknappProps {
 }
 
 export default function Lenkeknapp(props: LenkeknappProps) {
-    const lenkeknappClassNames = `knapp knapp--${props.type}`;
-    if (props.disabled) {
-        return <Knapp onClick={props.onClick} className={lenkeknappClassNames} disabled children={props.children} />;
+    const { href, disabled, type, onClick, children } = props;
+    const lenkeknappClassNames = `knapp knapp--${type}`;
+    if (disabled) {
+        return <Knapp onClick={onClick} className={lenkeknappClassNames} disabled children={children} />;
     }
 
     return (
         <InternLenke
             role="button"
-            onClick={props.onClick}
+            onClick={onClick}
             className={lenkeknappClassNames}
-            href={props.href}
-            children={props.children}
+            href={href}
+            children={children}
             skipLenkeStyling
         />
     );
