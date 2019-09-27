@@ -2,7 +2,7 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: aktivitetsplan-fss
-  namespace: {{namespace}}
+  namespace: default
   cluster: prod-fss
   labels:
     team: pto
