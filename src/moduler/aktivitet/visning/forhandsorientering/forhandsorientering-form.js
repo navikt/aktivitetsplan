@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
-import { EtikettLiten, Undertittel } from 'nav-frontend-typografi';
+import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import { HjelpetekstHoyre } from 'nav-frontend-hjelpetekst';
 import useFormstate from '@nutgaard/use-formstate';
@@ -14,6 +14,10 @@ import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-re
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
+import Select from '../../../../felles-komponenter/skjema/input/select';
+
+export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
+export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 
 const label = (
     <div className="forhandsorientering-arena-aktivitet">
@@ -27,10 +31,15 @@ const label = (
     </div>
 );
 
-const initalValue =
+const avtaltTekst =
+    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ' +
+    'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
+    'ber vi deg ta kontakt med veilederen din så snart som mulig.';
+
+const avtaltTekst119 =
     'Du kan få redusert utbetaling av arbeidsavklaringspenger med én stønadsdag hvis du lar være å ' +
-    '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. ' +
-    'Dette går fram av folketrygdloven § 11-9.';
+    '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. Dette går ' +
+    'fram av folketrygdloven § 11-9.';
 
 function validate(val) {
     if (val.trim().length === 0) {
@@ -45,14 +54,16 @@ function validate(val) {
 
 const validator = useFormstate({
     text: validate,
-    checked: () => null
+    checked: () => null,
+    avtaltSelect: () => null
 });
 
 function ForhandsorieteringsForm(props) {
     const { visible, dialogStatus, onSubmit } = props;
 
     const state = validator({
-        text: initalValue,
+        text: avtaltTekst119,
+        avtaltSelect: SEND_FORHANDSORIENTERING,
         checked: ''
     });
 
@@ -61,18 +72,32 @@ function ForhandsorieteringsForm(props) {
     }
 
     const lasterData = dialogStatus !== STATUS.OK;
+    const avtaltSelect = state.fields.avtaltSelect.input.value;
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
             <Undertittel>{'Tiltaket er automatisk merket "Avtalt med NAV"'}</Undertittel>
 
-            <Checkbox
-                label="Send forhåndsorientering for §11-9 (AAP)"
-                disabled={lasterData}
-                {...state.fields.checked}
-            />
+            <Checkbox label="Send forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
+
             <VisibleIfDiv visible={state.fields.checked.input.value === 'true'}>
-                <Textarea label={label} maxLength={500} {...state.fields.text} />
+                <Select
+                    label="Velg type forhåndsorientering"
+                    disabled={lasterData}
+                    noBlankOption
+                    {...state.fields.avtaltSelect}
+                >
+                    <option value={SEND_FORHANDSORIENTERING}>Send forhåndsorientering (standard melding)</option>
+                    <option value={SEND_PARAGRAF_11_9}>Send forhåndsorientering for §11-9 (AAP)</option>
+                </Select>
+                <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
+                    <Normaltekst className="blokk-xs">{avtaltTekst}</Normaltekst>
+                </VisibleIfDiv>
+
+                <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>
+                    <Textarea label={label} maxLength={500} {...state.fields.text} />
+                </VisibleIfDiv>
+
                 <Knapp spinner={lasterData} autoDisableVedSpinner>
                     Bekreft og send
                 </Knapp>
@@ -86,12 +111,7 @@ ForhandsorieteringsForm.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     dialogStatus: AppPT.status.isRequired,
     onSubmit: PT.func.isRequired,
-    forhandsorienteringSendt: PT.func.isRequired,
-    skalSendeForhandsorientering: PT.bool
-};
-
-ForhandsorieteringsForm.defaultProps = {
-    skalSendeForhandsorientering: false
+    forhandsorienteringSendt: PT.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -102,9 +122,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => ({
     onSubmit: data => {
+        const text = data.avtaltSelect === SEND_FORHANDSORIENTERING ? avtaltTekst : data.text;
         return sendForhandsorientering({
             aktivitetId: props.valgtAktivitet.id,
-            tekst: data.text,
+            tekst: text,
             overskrift: props.valgtAktivitet.tittel
         })(dispatch).then(() => {
             dispatch(apneDialog());
