@@ -7,5 +7,4 @@ ENV APPLICATION_NAME=aktivitetsplan
 ENV GZIP_ENABLED=true
 COPY /build /app
 
-ADD decorator.yaml /decorator.yaml
-ADD decorator-fss.yaml /decorator-fss.yaml
+ADD decorator-fss.yaml /decorator.yaml
