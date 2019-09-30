@@ -30,6 +30,7 @@ workflows:
 
             - pus/deploy-latest:
                   requires:
+                      - test
                       - build
                   name: dev-fss-deploy
                   context: pus
