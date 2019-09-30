@@ -23,7 +23,6 @@ spec:
     enabled: true
     path: aktivitetsplan/internal/metrics
   ingresses:
-    - https://aktivitetsplan.nais.orea.no
     - https://aktivitetsplan.nav.no
     - https://tjenester.nav.no/aktivitetsplan
   vault:
