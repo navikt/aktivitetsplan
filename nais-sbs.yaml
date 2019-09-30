@@ -43,6 +43,5 @@ spec:
     - ARBEIDSSOKERREGISTRERING_URL
     - REGISTRERINGSINFORMASJON_URL
     - VEILARBSTEPUP_OIDC_URL
-    - DITTNAV_LINK_URL
     - name: DITTNAV_LINK_URL
       value: 'https://tjenester.nav.no/dittnav/'
