@@ -10,8 +10,6 @@ workflows:
                   name: test
 
             - pus/bygg-frontend:
-                  requires:
-                      - test
                   context: pus
                   name: build
                   filters:
@@ -20,6 +18,7 @@ workflows:
 
             - pus/deploy-latest:
                   requires:
+                      - test
                       - build
                   name: dev-sbs-deploy
                   context: pus
