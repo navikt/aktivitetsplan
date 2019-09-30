@@ -38,15 +38,10 @@ spec:
     - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
     - OIDC_REDIRECT_URL
     - AAD_B2C_DISCOVERY_URL
-    - name: DITTNAV_LINK_URL
+    - VEIENTILARBEID_URL
+    - AKTIVITETSPLAN_URL
+    - ARBEIDSSOKERREGISTRERING_URL
+    - REGISTRERINGSINFORMASJON_URL
+    - VEILARBSTEPUP_OIDC_URL
+    - DITTNAV_LINK_URL
       value: 'https://tjenester.nav.no/dittnav/'
-    - name: VEIENTILARBEID_URL
-      value: 'https://veientilarbeid.nav.no'
-    - name: AKTIVITETSPLAN_URL
-      value: 'https://aktivitetsplan.nav.no'
-    - name: ARBEIDSSOKERREGISTRERING_URL
-      value: 'https://arbeidssokerregistrering.nav.no/'
-    - name: REGISTRERINGSINFORMASJON_URL
-      value: 'https://registreringsinformasjon.nav.no'
-    - name: VEILARBSTEPUP_OIDC_URL
-      value: 'https://veilarbstepup.nav.no/veilarbstepup/oidc'
