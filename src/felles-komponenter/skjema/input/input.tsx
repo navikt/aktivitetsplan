@@ -11,6 +11,7 @@ interface Props {
     initialValue?: string;
 }
 
+// pristine and initialValue isn't used, but we don't want to pass it to input
 function Input(props: Props & NavFrontendInputProps) {
     const { touched, error, input, pristine, initialValue, ...rest } = props;
     const feil = error && touched ? { feilmelding: error } : undefined;
@@ -19,4 +20,4 @@ function Input(props: Props & NavFrontendInputProps) {
 }
 
 export default Input;
-export const HidenIfInput = hiddenIfHOC(Input);
+export const HiddenIfInput = hiddenIfHOC(Input);
