@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { autobind, erMerEnnSyvDagerTil } from '../../../../utils';
 import * as AppPT from '../../../../proptypes';
 import ForhandsorienteringArenaAktivitetForm from './forhandsorientering-form';
@@ -32,13 +31,13 @@ class ForhandsorienteringArenaAktivitet extends Component {
 
         const AlertStripeHvisMindreEnnSyvDagerTil = () => (
             <HiddenIfAlertStripeInfoSolid hidden={merEnnsyvDagerTil}>
-                <FormattedMessage id="forhandsorientering.arenaaktivitet.mindre-enn-syv-dager" />
+                Du kan ikke sende forhåndsorientering fordi sluttdatoen er satt til mindre enn 7 dager fram i tid.
             </HiddenIfAlertStripeInfoSolid>
         );
 
         const AlertStripeVisBekreftelse = () => (
             <HiddenIfAlertStripeSuksess hidden={forhandsorienteringSkalSendes}>
-                <FormattedMessage id="forhandsorienterin.arenaaktivitet.er-sendt" />
+                Forhåndsorientering er sendt.
             </HiddenIfAlertStripeSuksess>
         );
         return (
