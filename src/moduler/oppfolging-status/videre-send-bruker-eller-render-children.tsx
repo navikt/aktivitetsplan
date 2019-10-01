@@ -3,9 +3,7 @@ import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digi
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
 import { loggAntalVeiledere, loggingAntallBrukere, } from '../../felles-komponenter/utils/logging';
 
-
-
-type VidereSendBrukereEllerRenderChildrenProps = {
+interface VidereSendBrukereEllerRenderChildrenProps {
         children: React.ReactNode,
         erVeileder: boolean,
         manuell: boolean,

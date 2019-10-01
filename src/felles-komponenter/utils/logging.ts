@@ -1,7 +1,12 @@
 import shajs from 'sha.js';
+import {Dialog, Lest, OppfolgingsPeriode} from "../../types";
 
-export default function loggEvent(eventNavn, feltObjekt, tagObjekt) {
-    const { frontendlogger } = window;
+interface Frontendlogger {
+    event: (name: string, fields: object, tags: object) => void;
+}
+
+export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
+    const frontendlogger: Frontendlogger = (window as any).frontendlogger;
     if (frontendlogger) {
         frontendlogger.event(eventNavn, feltObjekt || {}, tagObjekt || {});
     } else {
@@ -44,7 +49,7 @@ export const TILSTAND_FILTER_METRIKK = `${filterBase}Tilstand`;
 
 const AKTIVITET_FLYTTET = 'aktivitetsplan.aktivitet.flyttet';
 
-function hash(string) {
+function hash(string?: string): string {
     return string
         ? shajs('sha256')
               .update(string)
@@ -52,20 +57,20 @@ function hash(string) {
         : null;
 }
 
-export function loggAntalVeiledere(servicegruppe, underOppfolging, ident, aktorId) {
+export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boolean, ident: string, aktorId?: string) {
     const fields = {
         underOppfolging,
         veileder: hash(ident),
         bruker: hash(aktorId),
     };
-    loggEvent(ANTALL_VEILEDERE, fields, servicegruppe);
+    loggEvent(ANTALL_VEILEDERE, fields, {servicegruppe});
 }
 
-export function loggingAntallBrukere(servicegruppe, underOppfolging, aktorId) {
+export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boolean, aktorId: string) {
     if (!underOppfolging) {
-        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, underOppfolging, servicegruppe);
+        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, {servicegruppe});
     } else {
-        loggEvent(LOGGING_ANTALLBRUKERE, hash(aktorId), servicegruppe);
+        loggEvent(LOGGING_ANTALLBRUKERE, {bruker: hash(aktorId)}, {servicegruppe});
     }
 }
 
@@ -75,13 +80,13 @@ export function loggForhandsorienteringTiltak() {
     });
 }
 
-export function metrikkTidForsteAvtalte(tid) {
+export function metrikkTidForsteAvtalte(tid: number) {
     loggEvent('aktivitetsplan.aktivitet.forste.avtalt', {
-        tidSidenOppfolging: tid,
-    });
+    tidSidenOppfolging: tid,
+});
 }
 
-export function flyttetAktivitetMetrikk(flytteMetode, aktivitet, nyStatus) {
+export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet, nyStatus: string) {
     loggEvent(AKTIVITET_FLYTTET, {
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,
@@ -90,7 +95,7 @@ export function flyttetAktivitetMetrikk(flytteMetode, aktivitet, nyStatus) {
     });
 }
 
-export function loggForhandsorientering(erManuellKrrKvpBruker, mindreEnSyvDagerIgen, avtaltForm) {
+export function loggForhandsorientering(erManuellKrrKvpBruker: boolean, mindreEnSyvDagerIgen: boolean, avtaltForm: string) {
     if (erManuellKrrKvpBruker) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
             forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_KRR_KVP_MANUELL,
@@ -108,15 +113,15 @@ export function loggForhandsorientering(erManuellKrrKvpBruker, mindreEnSyvDagerI
     });
 }
 
-export function loggMittMalKlikk(veileder) {
+export function loggMittMalKlikk(veileder: boolean) {
     loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
 }
 
-export function loggMittMalLagre(veileder) {
+export function loggMittMalLagre(veileder: boolean) {
     loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
 }
 
-export function loggTidBruktForsteHenvendelse(dialoger, oppfolgingsPerioder) {
+export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgingsPerioder: Array<OppfolgingsPeriode>) {
     const brukerHarSendtDialogTidligere = dialoger.find(a => a.henvendelser.find(h => h.avsender === 'BRUKER'));
 
     if (!brukerHarSendtDialogTidligere) {
@@ -133,18 +138,18 @@ export function loggTidBruktForsteHenvendelse(dialoger, oppfolgingsPerioder) {
     }
 }
 
-function tidBruktFra(fraDato, tilDato) {
+function tidBruktFra(fraDato: number | string, tilDato?: number | string) {
     const tilD = tilDato ? new Date(tilDato).getTime() : new Date().getTime();
     return Math.ceil(Math.abs(new Date(fraDato).getTime() - tilD) / (1000 * 3600 * 24));
 }
 
-function loggTidBruktFraRegistrert(fraDato) {
+function loggTidBruktFraRegistrert(fraDato: number | string) {
     loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
         tidBruktFraRegistrert: tidBruktFra(fraDato),
     });
 }
 
-export function loggTidBruktGaaInnPaaAktivitetsplanen(lest, perioder) {
+export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Array<Lest>, perioder: Array<OppfolgingsPeriode>) {
     const periode = perioder.find(p => p.sluttDato === null);
     if (periode) {
         // Tid brukt fra registrert til aktivitetsplanen
