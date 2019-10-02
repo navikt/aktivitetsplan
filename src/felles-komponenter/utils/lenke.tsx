@@ -1,20 +1,33 @@
 import React from 'react';
-import PT from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { erInternlenke } from '../../utils';
 import visibleIfHOC from '../../hocs/visible-if';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
-const cls = (className, lenkeType, lenkestyling) =>
+const cls = (className?: string, lenkeType?: string, lenkestyling?: boolean) =>
     classNames(className, lenkeType, {
         lenke: lenkestyling
     });
 
-function Lenke({ href, className, brukLenkestyling, children, focusRef, erEksternLenke, onClick, disabled, ...rest }) {
+interface Props {
+    href: string;
+    children: React.ReactNode;
+    className?: string;
+    brukLenkestyling?: boolean;
+    focusRef?: () => void;
+    erEksternLenke?: boolean;
+    onClick?: () => void;
+    disabled?: boolean;
+}
+
+function Lenke(props: Props) {
+    const { href, className, brukLenkestyling, children, focusRef, erEksternLenke, onClick, disabled, ...rest } = props;
+
     if (disabled) {
-        return <div className={cls(className, null, false)}>{children}</div>;
+        return <div className={cls(className, undefined, false)}>{children}</div>;
     }
+
     if (erInternlenke(href) && !erEksternLenke) {
         const fodselsnummer = getFodselsnummer();
         const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
@@ -40,17 +53,6 @@ function Lenke({ href, className, brukLenkestyling, children, focusRef, erEkster
         </span>
     );
 }
-
-Lenke.propTypes = {
-    href: PT.string.isRequired,
-    children: PT.node.isRequired,
-    brukLenkestyling: PT.bool,
-    className: PT.string,
-    focusRef: PT.func,
-    erEksternLenke: PT.bool,
-    onClick: PT.func,
-    disabled: PT.bool
-};
 
 Lenke.defaultProps = {
     className: undefined,
