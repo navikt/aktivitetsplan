@@ -16,24 +16,13 @@ function AktivitetskortTillegg({
     aktivitet,
     erAvtalt,
     harEtikett,
-    harDialog,
+    harDialog
 }) {
     return (
-        <HiddenIfDiv
-            hidden={!(erAvtalt || harEtikett || harDialog)}
-            className="aktivitetskort__ikon-blokk"
-        >
-            <HiddenIfDiv
-                hidden={antallHendvendelser <= 0}
-                className="aktivitetskort__henvendelser"
-            >
-                <TallAlert hidden={antallUlesteHenvendelser <= 0}>
-                    {antallUlesteHenvendelser}
-                </TallAlert>
-                <HiddenIfDiv
-                    hidden={antallUlesteHenvendelser > 0}
-                    className="sr-only"
-                >
+        <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)} className="aktivitetskort__ikon-blokk">
+            <HiddenIfDiv hidden={antallHendvendelser <= 0} className="aktivitetskort__henvendelser">
+                <TallAlert hidden={antallUlesteHenvendelser <= 0}>{antallUlesteHenvendelser}</TallAlert>
+                <HiddenIfDiv hidden={antallUlesteHenvendelser > 0} className="sr-only">
                     <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
                 </HiddenIfDiv>
             </HiddenIfDiv>
@@ -51,7 +40,7 @@ function AktivitetskortTillegg({
 }
 
 AktivitetskortTillegg.defaultProps = {
-    etikett: undefined,
+    etikett: undefined
 };
 
 AktivitetskortTillegg.propTypes = {
@@ -61,7 +50,7 @@ AktivitetskortTillegg.propTypes = {
     erAvtalt: PT.bool.isRequired,
     harDialog: PT.bool.isRequired,
     harEtikett: PT.bool.isRequired,
-    etikett: PT.string,
+    etikett: PT.string
 };
 
 const mapStateToProps = (state, props) => {
@@ -78,10 +67,13 @@ const mapStateToProps = (state, props) => {
         erAvtalt: aktivitet.avtalt,
         harDialog: antallHendvendelser > 0,
         harEtikett: !!etikett,
-        aktivitet,
+        aktivitet
     };
 };
 
 export default visibleIfHOC(
-    connect(mapStateToProps, null)(AktivitetskortTillegg)
+    connect(
+        mapStateToProps,
+        null
+    )(AktivitetskortTillegg)
 );

@@ -6,7 +6,7 @@ export const LUKK_ALLE = 'underlementer-view/lukk-alle';
 
 const initalState = {
     visDialog: false,
-    visHistorikk: false,
+    visHistorikk: false
 };
 
 // Reducer
@@ -15,17 +15,17 @@ export default function reducer(state = initalState, action) {
         case TOGGLE_DIALOG:
             return {
                 visDialog: !state.visDialog,
-                visHistorikk: false,
+                visHistorikk: false
             };
         case TOGGLE_HISTORIKK:
             return {
                 visDialog: false,
-                visHistorikk: !state.visHistorikk,
+                visHistorikk: !state.visHistorikk
             };
         case APNE_DIALOG:
             return {
                 visDialog: true,
-                visHistorikk: false,
+                visHistorikk: false
             };
         case LUKK_ALLE:
             return initalState;
@@ -37,24 +37,24 @@ export default function reducer(state = initalState, action) {
 // Action creator
 export function toggleDialog() {
     return {
-        type: TOGGLE_DIALOG,
+        type: TOGGLE_DIALOG
     };
 }
 
 export function toggleHistorikk() {
     return {
-        type: TOGGLE_HISTORIKK,
+        type: TOGGLE_HISTORIKK
     };
 }
 
 export function apneDialog() {
     return {
-        type: APNE_DIALOG,
+        type: APNE_DIALOG
     };
 }
 
 export function lukkAlle() {
     return {
-        type: LUKK_ALLE,
+        type: LUKK_ALLE
     };
 }

@@ -7,7 +7,7 @@ class DemoBanner extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalIsOpen: this.props.modalIsOpen,
+            modalIsOpen: this.props.modalIsOpen
         };
     }
 
@@ -23,11 +23,7 @@ class DemoBanner extends React.Component {
         return (
             <div>
                 <DemoIkon onClick={this.openModal} />
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onRequestClose={this.closeModal}
-                    closeButton={true}
-                >
+                <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal} closeButton={true}>
                     <DemoDashboard />
                 </Modal>
             </div>

@@ -45,7 +45,7 @@ const validator = useFormstate({
     avtaltCheckbox: () => {},
     avtaltSelect: () => {},
     avtaltText119: validateForhandsorienter,
-    avtaltText: () => {},
+    avtaltText: () => {}
 });
 
 function AvtaltForm(props) {
@@ -55,48 +55,33 @@ function AvtaltForm(props) {
         oppdaterer,
         lasterData,
         erManuellKrrKvpBruker,
-        visAvtaltMedNavMindreEnnSyvDager,
+        visAvtaltMedNavMindreEnnSyvDager
     } = props;
 
     const state = validator({
         avtaltCheckbox: 'false',
         avtaltSelect: SEND_FORHANDSORIENTERING,
         avtaltText119: avtaltTekst119,
-        avtaltText: avtaltTekst,
+        avtaltText: avtaltTekst
     });
 
-    const dirty = useContext(DirtyContext);
+    const { setFormIsDirty } = useContext(DirtyContext);
 
-    useEffect(
-        () => {
-            dirty.setFormIsDirty('avtalt', !state.pristine);
-            return () => dirty.setFormIsDirty('avtalt', false);
-        },
-        [dirty.setFormIsDirty, state.pristine] // eslint-disable-line
-    );
+    useEffect(() => {
+        setFormIsDirty('avtalt', !state.pristine);
+        return () => setFormIsDirty('avtalt', false);
+    }, [setFormIsDirty, state.pristine]);
 
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
     const avtaltSelect = state.fields.avtaltSelect.input.value;
 
-    const kanSendeForhandsvarsel =
-        !erManuellKrrKvpBruker && !visAvtaltMedNavMindreEnnSyvDager;
+    const kanSendeForhandsvarsel = !erManuellKrrKvpBruker && !visAvtaltMedNavMindreEnnSyvDager;
 
     return (
-        <form
-            onSubmit={state.onSubmit(onSubmit)}
-            noValidate="noValidate"
-            autoComplete="off"
-            className={className}
-        >
-            <Undertittel>
-                {'Merk aktiviteten som "Avtalt med NAV"'}
-            </Undertittel>
+        <form onSubmit={state.onSubmit(onSubmit)} noValidate="noValidate" autoComplete="off" className={className}>
+            <Undertittel>{'Merk aktiviteten som "Avtalt med NAV"'}</Undertittel>
             <div className="avtalt-container__radio">
-                <Checkbox
-                    label="Avtalt med NAV"
-                    disabled={lasterData}
-                    {...state.fields.avtaltCheckbox}
-                />
+                <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
                 <HjelpetekstOver id="hjelp">
                     {
                         'Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt med NAV"'
@@ -106,21 +91,12 @@ function AvtaltForm(props) {
             <VisibleIfDiv
                 className={classNames({
                     'avtalt-container__innhold': kanSendeForhandsvarsel,
-                    'avtalt-container__alertstripe':
-                        erManuellKrrKvpBruker ||
-                        visAvtaltMedNavMindreEnnSyvDager,
+                    'avtalt-container__alertstripe': erManuellKrrKvpBruker || visAvtaltMedNavMindreEnnSyvDager
                 })}
                 visible={avtalt}
             >
-                <AvtaltStripeKRRKvpManuellBruker
-                    visible={erManuellKrrKvpBruker}
-                />
-                <AvtaltFormMindreEnnSyvDager
-                    visible={
-                        !erManuellKrrKvpBruker &&
-                        visAvtaltMedNavMindreEnnSyvDager
-                    }
-                />
+                <AvtaltStripeKRRKvpManuellBruker visible={erManuellKrrKvpBruker} />
+                <AvtaltFormMindreEnnSyvDager visible={!erManuellKrrKvpBruker && visAvtaltMedNavMindreEnnSyvDager} />
                 <VisibleIfDiv visible={kanSendeForhandsvarsel}>
                     <Select
                         label="Velg type forhåndsorientering"
@@ -128,52 +104,30 @@ function AvtaltForm(props) {
                         noBlankOption
                         {...state.fields.avtaltSelect}
                     >
-                        <option value={SEND_FORHANDSORIENTERING}>
-                            Send forhåndsorientering (standard melding)
-                        </option>
-                        <option value={SEND_PARAGRAF_11_9}>
-                            Send forhåndsorientering for §11-9 (AAP)
-                        </option>
-                        <option value={IKKE_SEND_FORHANDSORIENTERING}>
-                            Ikke send forhåndsorientering
-                        </option>
+                        <option value={SEND_FORHANDSORIENTERING}>Send forhåndsorientering (standard melding)</option>
+                        <option value={SEND_PARAGRAF_11_9}>Send forhåndsorientering for §11-9 (AAP)</option>
+                        <option value={IKKE_SEND_FORHANDSORIENTERING}>Ikke send forhåndsorientering</option>
                     </Select>
-                    <VisibleIfDiv
-                        visible={avtaltSelect !== IKKE_SEND_FORHANDSORIENTERING}
-                    >
-                        <VisibleIfDiv
-                            visible={avtaltSelect === SEND_FORHANDSORIENTERING}
-                        >
+                    <VisibleIfDiv visible={avtaltSelect !== IKKE_SEND_FORHANDSORIENTERING}>
+                        <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
                             <Normaltekst className="blokk-xs">
-                                Det er viktig at du gjennomfører denne
-                                aktiviteten med NAV. Gjør du ikke det, kan det
-                                medføre at stønaden du mottar fra NAV bortfaller
-                                for en periode eller stanses. Hvis du ikke kan
-                                gjennomføre aktiviteten, ber vi deg ta kontakt
-                                med veilederen din så snart som mulig.
+                                Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det
+                                medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du
+                                ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som
+                                mulig.
                             </Normaltekst>
                         </VisibleIfDiv>
-                        <VisibleIfDiv
-                            visible={avtaltSelect === SEND_PARAGRAF_11_9}
-                        >
+                        <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>
                             <Textarea
                                 label={
                                     <div>
-                                        <EtikettLiten className="avtalt-tekst-etikett">
-                                            Tekst til brukeren
-                                        </EtikettLiten>
+                                        <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
                                         <HjelpetekstHoyre id="brukerinfo">
-                                            Brukeren får en SMS eller e-post via
-                                            kontaktinformasjon som brukeren selv
-                                            har registrert i det offentlige
-                                            kontaktregisteret. Brukeren får
-                                            beskjed om en viktig oppgave og det
-                                            lenkes til dialog. Beskjeden sendes
-                                            gjennom Altinn etter en halv time.
-                                            Sender du flere
-                                            forhåndsorienteringer innen en halv
-                                            time så blir det kun sendt én SMS
-                                            eller e-post.
+                                            Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv
+                                            har registrert i det offentlige kontaktregisteret. Brukeren får beskjed om
+                                            en viktig oppgave og det lenkes til dialog. Beskjeden sendes gjennom Altinn
+                                            etter en halv time. Sender du flere forhåndsorienteringer innen en halv time
+                                            så blir det kun sendt én SMS eller e-post.
                                         </HjelpetekstHoyre>
                                     </div>
                                 }
@@ -185,8 +139,7 @@ function AvtaltForm(props) {
                     </VisibleIfDiv>
                 </VisibleIfDiv>
                 <Knapp spinner={oppdaterer} disabled={lasterData}>
-                    {avtaltSelect === IKKE_SEND_FORHANDSORIENTERING ||
-                    !kanSendeForhandsvarsel
+                    {avtaltSelect === IKKE_SEND_FORHANDSORIENTERING || !kanSendeForhandsvarsel
                         ? 'Bekreft'
                         : 'Bekreft og send'}
                 </Knapp>
@@ -201,12 +154,12 @@ AvtaltForm.propTypes = {
     oppdaterer: PT.bool.isRequired,
     lasterData: PT.bool.isRequired,
     erManuellKrrKvpBruker: PT.bool.isRequired,
-    visAvtaltMedNavMindreEnnSyvDager: PT.bool.isRequired,
+    visAvtaltMedNavMindreEnnSyvDager: PT.bool.isRequired
 };
 
 AvtaltForm.defaultProps = {
     onSubmit: undefined,
-    className: undefined,
+    className: undefined
 };
 
 export default AvtaltForm;

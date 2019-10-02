@@ -7,17 +7,9 @@ import PT from 'prop-types';
 import { connect } from 'react-redux';
 import visibleIfHOC from '../../hocs/visible-if';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import {
-    selectMalverkData,
-    selectMalverkMedTittel,
-    selectMalverkStatus,
-} from './malverk-selector';
+import { selectMalverkData, selectMalverkMedTittel, selectMalverkStatus } from './malverk-selector';
 import * as AppPT from '../../proptypes';
-import {
-    hentMalverkMedType,
-    settValgtMalverk,
-    slettValgtMalverk,
-} from './malverk-reducer';
+import { hentMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-reducer';
 
 function lagMalverkOption(mal) {
     return (
@@ -41,11 +33,7 @@ class Malverk extends Component {
     }
 
     onChangeMalverk = event => {
-        const {
-            doHentMalverkMedTittel,
-            doSettValgtMalverk,
-            onChange,
-        } = this.props;
+        const { doHentMalverkMedTittel, doSettValgtMalverk, onChange } = this.props;
         event.preventDefault();
         // event.target.value er tittel på malverk
         const valgtMalverk = doHentMalverkMedTittel(event.target.value);
@@ -59,33 +47,28 @@ class Malverk extends Component {
 
         const domId = 'malverk';
         return (
-            !endre &&
-            <div className="skjemaelement">
-                <Innholdslaster
-                    avhengigheter={avhengigheter}
-                    spinnerStorrelse="S"
-                >
-                    <label className="skjemaelement__label" htmlFor={domId}>
-                        Ferdig utfylt aktivitet
-                    </label>
-                    <div className="selectContainer input--fullbredde">
-                        <select
-                            className="skjemaelement__input"
-                            id={domId}
-                            name="malverk"
-                            onChange={this.onChangeMalverk}
-                        >
-                            <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
-                                {text =>
-                                    <option value="ingen">
-                                        {text}
-                                    </option>}
-                            </FormattedMessage>
-                            {malverkOptions}
-                        </select>
-                    </div>
-                </Innholdslaster>
-            </div>
+            !endre && (
+                <div className="skjemaelement">
+                    <Innholdslaster avhengigheter={avhengigheter} spinnerStorrelse="S">
+                        <label className="skjemaelement__label" htmlFor={domId}>
+                            Ferdig utfylt aktivitet
+                        </label>
+                        <div className="selectContainer input--fullbredde">
+                            <select
+                                className="skjemaelement__input"
+                                id={domId}
+                                name="malverk"
+                                onChange={this.onChangeMalverk}
+                            >
+                                <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
+                                    {text => <option value="ingen">{text}</option>}
+                                </FormattedMessage>
+                                {malverkOptions}
+                            </select>
+                        </div>
+                    </Innholdslaster>
+                </div>
+            )
         );
     }
 }
@@ -99,13 +82,13 @@ Malverk.propTypes = {
     doSlettValgtMalverk: PT.func.isRequired,
     onChange: PT.func,
     endre: PT.bool,
-    type: PT.string.isRequired,
+    type: PT.string.isRequired
 };
 
 Malverk.defaultProps = {
     endre: false,
     malverk: undefined,
-    onChange: () => null,
+    onChange: () => null
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -117,15 +100,18 @@ const mapDispatchToProps = dispatch => ({
     },
     doSlettValgtMalverk: () => {
         dispatch(slettValgtMalverk());
-    },
+    }
 });
 
 const mapStateToProps = state => ({
     malverk: selectMalverkData(state),
     avhengigheter: [selectMalverkStatus(state)],
-    doHentMalverkMedTittel: tittel => selectMalverkMedTittel(state, tittel),
+    doHentMalverkMedTittel: tittel => selectMalverkMedTittel(state, tittel)
 });
 
 export default visibleIfHOC(
-    connect(mapStateToProps, mapDispatchToProps)(Malverk)
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(Malverk)
 );

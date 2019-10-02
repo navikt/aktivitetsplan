@@ -9,23 +9,16 @@ function Knappelenke({ onClick, className, ...rest }) {
         onClick(e);
     }
 
-    return (
-        <button
-            type="button"
-            {...rest}
-            className={classNames('knappelenke', className)}
-            onClick={click}
-        />
-    );
+    return <button type="button" {...rest} className={classNames('knappelenke', className)} onClick={click} />;
 }
 
 Knappelenke.propTypes = {
     onClick: PT.func.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
 Knappelenke.defaultProps = {
-    className: undefined,
+    className: undefined
 };
 
 export default visibleIfHOC(Knappelenke);

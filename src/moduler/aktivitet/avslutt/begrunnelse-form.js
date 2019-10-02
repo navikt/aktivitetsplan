@@ -20,7 +20,7 @@ const begrunnelseValidator = val => {
 };
 
 const validator = useFormstate({
-    begrunnelse: begrunnelseValidator,
+    begrunnelse: begrunnelseValidator
 });
 
 function BegrunnelseForm(props) {
@@ -31,13 +31,8 @@ function BegrunnelseForm(props) {
         <form onSubmit={state.onSubmit(onSubmit)}>
             <div className="aktivitetvisning__underseksjon">
                 <ModalContainer>
-                    <FormErrorSummary
-                        errors={state.errors}
-                        submittoken={state.submittoken}
-                    />
-                    <Innholdstittel>
-                        {headerTekst}
-                    </Innholdstittel>
+                    <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
+                    <Innholdstittel>{headerTekst}</Innholdstittel>
                     <Textarea
                         label={beskrivelseLabel}
                         maxLength={255}
@@ -60,7 +55,7 @@ BegrunnelseForm.propTypes = {
     headerTekst: PT.string.isRequired,
     beskrivelseLabel: PT.string.isRequired,
     lagrer: PT.bool.isRequired,
-    onSubmit: PT.func.isRequired,
+    onSubmit: PT.func.isRequired
 };
 
 export default BegrunnelseForm;

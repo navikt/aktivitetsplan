@@ -1,7 +1,9 @@
 import {
+    erEskalertBruker,
+    erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
-    ingenOppfPerioder,
+    ingenOppfPerioder
 } from './demo/sessionstorage';
 
 const oppfPerioder = [
@@ -22,7 +24,7 @@ const oppfPerioder = [
                 avsluttetAV: 'ZOO',
                 avsluttetDato: '2017-12-01T10:46:10.971+01:00',
                 avsluttetBegrunnelse: 'vet ikke',
-                avsluttetKodeverkbruker: 'NAV',
+                avsluttetKodeverkbruker: 'NAV'
             },
             {
                 aktorId: '1234567988888',
@@ -34,36 +36,40 @@ const oppfPerioder = [
                 avsluttetAV: 'ZOO',
                 avsluttetDato: '2017-12-02T10:46:10.971+01:00',
                 avsluttetBegrunnelse: 'vet ikke',
-                avsluttetKodeverkbruker: 'NAV',
-            },
-        ],
+                avsluttetKodeverkbruker: 'NAV'
+            }
+        ]
     },
     {
         aktorId: '1234567988888',
         veileder: null,
         startDato: '2018-01-31T10:46:10.971+01:00',
         sluttDato: null,
-        begrunnelse: null,
-    },
+        begrunnelse: null
+    }
 ];
 
 const oppfolging = {
     fnr: null,
     aktorId: '1234567988888',
     veilederId: null,
-    reservasjonKRR: false,
+    reservasjonKRR: erKRRBruker(),
     manuell: erManuellBruker(),
     underOppfolging: !erPrivatBruker(),
     underKvp: false,
     oppfolgingUtgang: null,
-    gjeldendeEskaleringsvarsel: null,
+    gjeldendeEskaleringsvarsel: erEskalertBruker()
+        ? {
+              tilhorendeDialogId: 2
+          }
+        : null,
     kanStarteOppfolging: false,
     avslutningStatus: null,
     oppfolgingsPerioder: ingenOppfPerioder() ? [] : oppfPerioder,
     harSkriveTilgang: true,
     kanReaktiveres: false,
     servicegruppe: 'IVURD',
-    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
+    inaktiveringsdato: '2018-08-31T10:46:10.971+01:00'
 };
 
 export default function(queryParams, changeFn = ob => ob) {
@@ -79,7 +85,7 @@ export function startEskalering(update) {
         opprettetAv: 'Z123456',
         opprettetDato: new Date(),
         tilhorendeDialogId: parseInt(update.dialogId),
-        varselId: 1,
+        varselId: 1
     };
     return {};
 }
@@ -96,7 +102,7 @@ export function avslutningStatus(update) {
         harYtelser: true,
         harTiltak: true,
         underKvp: false,
-        inaktiveringsDato: '2018-06-05T00:00:00+02:00',
+        inaktiveringsDato: '2018-06-05T00:00:00+02:00'
     };
     return oppfolging;
 }

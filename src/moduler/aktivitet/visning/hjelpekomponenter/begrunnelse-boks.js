@@ -8,21 +8,19 @@ function BegrunnelseBoks({ begrunnelse, className }) {
     return (
         <div className={className}>
             <AlertStripeInfo>
-                <Normaltekst className="tekst">
-                    {begrunnelse}
-                </Normaltekst>
+                <Normaltekst className="tekst">{begrunnelse}</Normaltekst>
             </AlertStripeInfo>
         </div>
     );
 }
 
 BegrunnelseBoks.defaultProps = {
-    className: '',
+    className: ''
 };
 
 BegrunnelseBoks.propTypes = {
     begrunnelse: PT.string.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
 export default visibleIfHOC(BegrunnelseBoks);

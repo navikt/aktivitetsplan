@@ -10,7 +10,7 @@ import {
     STATUS_PLANLAGT,
     STATUS_GJENNOMFOERT,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
+    STATUS_AVBRUTT
 } from '../../../constant';
 import { STATUS_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
@@ -19,15 +19,10 @@ const filtreringsRekkefolge = [
     STATUS_PLANLAGT,
     STATUS_GJENNOMFOERT,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
+    STATUS_AVBRUTT
 ];
 
-function StatusFilter({
-    harAktivitetStatus,
-    sortedAktivitetStatus,
-    doToggleAktivitetsStatus,
-    className,
-}) {
+function StatusFilter({ harAktivitetStatus, sortedAktivitetStatus, doToggleAktivitetsStatus, className }) {
     return (
         <FilterVisning
             harAktiviteter={harAktivitetStatus}
@@ -42,14 +37,14 @@ function StatusFilter({
 }
 
 StatusFilter.defaultProps = {
-    className: '',
+    className: ''
 };
 
 StatusFilter.propTypes = {
     harAktivitetStatus: PT.bool.isRequired,
     sortedAktivitetStatus: PT.object.isRequired,
     doToggleAktivitetsStatus: PT.func.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
 const mapStateToProps = state => {
@@ -61,27 +56,25 @@ const mapStateToProps = state => {
         return statusliste;
     }, {});
     const sortedAktivitetStatus = Object.keys(aktivitetStatus)
-        .sort(
-            (a, b) =>
-                filtreringsRekkefolge.indexOf(a) -
-                filtreringsRekkefolge.indexOf(b)
-        )
+        .sort((a, b) => filtreringsRekkefolge.indexOf(a) - filtreringsRekkefolge.indexOf(b))
         .reduce(
             (sortertStatusFilter, item) => ({
                 ...sortertStatusFilter,
-                [item]: aktivitetStatus[item],
+                [item]: aktivitetStatus[item]
             }),
             {}
         );
     return {
         sortedAktivitetStatus,
-        harAktivitetStatus: Object.keys(sortedAktivitetStatus).length > 1,
+        harAktivitetStatus: Object.keys(sortedAktivitetStatus).length > 1
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    doToggleAktivitetsStatus: aktivitetsStatus =>
-        dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
+    doToggleAktivitetsStatus: aktivitetsStatus => dispatch(toggleAktivitetsStatus(aktivitetsStatus))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StatusFilter);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(StatusFilter);

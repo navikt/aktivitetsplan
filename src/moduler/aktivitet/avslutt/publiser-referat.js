@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { AlertStripeInfoSolid } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
 import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
@@ -10,11 +10,9 @@ function PubliserReferat({ aktivitet, nyStatus, children }) {
     if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {
         return (
             <ModalContainer className="publiser-referat">
-                <AlertStripeInfoSolid className="publiser-referat__info">
-                    <FormattedMessage
-                        id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`}
-                    />
-                </AlertStripeInfoSolid>
+                <AlertStripe type="feil">
+                    <FormattedMessage id={`aktivitetstatus.mangler-publisering-av-samtalereferat.${aktivitet.type}`} />
+                </AlertStripe>
             </ModalContainer>
         );
     }
@@ -24,11 +22,11 @@ function PubliserReferat({ aktivitet, nyStatus, children }) {
 PubliserReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     nyStatus: PT.string,
-    children: PT.node.isRequired,
+    children: PT.node.isRequired
 };
 
 PubliserReferat.defaultProps = {
-    nyStatus: undefined,
+    nyStatus: undefined
 };
 
 export default PubliserReferat;

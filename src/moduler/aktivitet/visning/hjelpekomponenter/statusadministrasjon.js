@@ -6,38 +6,29 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import * as AppPT from '../../../../proptypes';
 import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
 import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-etikett';
-import {
-    STILLING_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
-} from '../../../../constant';
+import { STILLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsorientering-arena-aktivitet';
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
-    selectReservasjonKRR,
+    selectReservasjonKRR
 } from '../../../oppfolging-status/oppfolging-selector';
 import DeleLinje from '../delelinje/delelinje';
 
 function Statusadministrasjon(props) {
-    const { aktivitet, arenaAktivitet, erBruker } = props;
+    const { aktivitet, arenaAktivitet, erBruker, erManuellKrrKvpBruker } = props;
     const { type } = aktivitet;
 
-    // TODO add back when used
-    const skalViseForhandsorienteringsKomponent = false;
-    // !erBruker && !erManuellKrrKvpBruker;
+    const skalViseForhandsorienteringsKomponent = !erBruker && !erManuellKrrKvpBruker;
 
     const visAdministreresAvVeileder = (
         <div className="aktivitetvisning__underseksjon">
             <AlertStripeInfo className="aktivitetvisning__alert">
                 <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
             </AlertStripeInfo>
-            <ForhandsorienteringArenaAktivitet
-                visible={skalViseForhandsorienteringsKomponent}
-                aktivitet={aktivitet}
-            />
+            <ForhandsorienteringArenaAktivitet visible={skalViseForhandsorienteringsKomponent} aktivitet={aktivitet} />
         </div>
     );
 
@@ -56,23 +47,19 @@ function Statusadministrasjon(props) {
         return null;
     }
 
-    return arenaAktivitet
-        ? visAdministreresAvVeileder
-        : visOppdaterStatusContainer;
+    return arenaAktivitet ? visAdministreresAvVeileder : visOppdaterStatusContainer;
 }
 
 Statusadministrasjon.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     arenaAktivitet: PT.bool.isRequired,
     erBruker: PT.bool.isRequired,
+    erManuellKrrKvpBruker: PT.bool.isRequired
 };
 
 const mapStateToProps = state => ({
     erBruker: selectErBruker(state),
-    erManuellKrrKvpBruker:
-        selectErBrukerManuell(state) ||
-        selectErUnderKvp(state) ||
-        selectReservasjonKRR(state),
+    erManuellKrrKvpBruker: selectErBrukerManuell(state) || selectErUnderKvp(state) || selectReservasjonKRR(state)
 });
 
 export default connect(mapStateToProps)(Statusadministrasjon);

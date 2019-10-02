@@ -12,23 +12,17 @@ import EndreDialog from '../../../dialog/dialog-modal/endre-dialog';
 import {
     div as HiddenIfDiv,
     span as HiddenIfSpan,
-    button as HiddenIfButton,
+    button as HiddenIfButton
 } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import {
-    selectDialogFeilmeldinger,
-    selectDialogForAktivitetId,
-} from '../../../dialog/dialog-selector';
+import { selectDialogFeilmeldinger, selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import getScrollParent from '../../../../utils/getScrollParent';
 import { toggleDialog, toggleHistorikk } from './underelementer-view-reducer';
 import Feilmelding from '../../../feilmelding/feilmelding';
-import {
-    selectVisDialog,
-    selectVisHistorikk,
-} from './underelementer-view-selector';
+import { selectVisDialog, selectVisHistorikk } from './underelementer-view-selector';
 import loggEvent, {
     APNE_AKTIVITET_HISTORIK,
-    OPNE_DIALOG_I_AKTIVITET_METRIKK,
+    OPNE_DIALOG_I_AKTIVITET_METRIKK
 } from '../../../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 
@@ -67,10 +61,7 @@ class UnderelementerForAktivitet extends Component {
     scrollMeIntoView() {
         const { visHistorikk, visDialog } = this.props;
         if (this.me && (visHistorikk || visDialog)) {
-            setTimeout(
-                () => (getScrollParent(this.me).scrollTop = this.me.offsetTop),
-                0
-            );
+            setTimeout(() => (getScrollParent(this.me).scrollTop = this.me.offsetTop), 0);
         }
     }
 
@@ -87,7 +78,7 @@ class UnderelementerForAktivitet extends Component {
             doToggleHistorikk,
             visDialog,
             visHistorikk,
-            dialogFeilmeldinger,
+            dialogFeilmeldinger
         } = this.props;
 
         const tolgeDialog = () => {
@@ -99,12 +90,12 @@ class UnderelementerForAktivitet extends Component {
         const cls = classes => classNames('underelementer-aktivitet', classes);
         const dialogknappCls = dialogAktiv =>
             classNames('underelementer-aktivitet__dialog-knapp', {
-                'underelementer-aktivitet__dialog-knapp--aktiv': dialogAktiv,
+                'underelementer-aktivitet__dialog-knapp--aktiv': dialogAktiv
             });
 
         const historikknappCls = historikkAktiv =>
             classNames('underelementer-aktivitet__historikk-knapp', {
-                'underelementer-aktivitet__historikk-knapp--aktiv': historikkAktiv,
+                'underelementer-aktivitet__historikk-knapp--aktiv': historikkAktiv
             });
         const underelementId = `underelementer-aktivitet__dialogvisning-${aktivitetId}`;
         return (
@@ -118,12 +109,7 @@ class UnderelementerForAktivitet extends Component {
                         aria-pressed={visDialog}
                     >
                         <FormattedMessage id="aktivitetvisning.dialog-knapp" />
-                        <HiddenIfSpan
-                            hidden={
-                                !kanSeDialog || antallUlesteHenvendelser <= 0
-                            }
-                            className="tall-alert"
-                        >
+                        <HiddenIfSpan hidden={!kanSeDialog || antallUlesteHenvendelser <= 0} className="tall-alert">
                             {antallUlesteHenvendelser}
                         </HiddenIfSpan>
                     </HiddenIfButton>
@@ -178,30 +164,27 @@ UnderelementerForAktivitet.propTypes = {
     visDialog: PT.bool.isRequired,
     visHistorikk: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
-    dialogFeilmeldinger: PT.array,
+    dialogFeilmeldinger: PT.array
 };
 
 UnderelementerForAktivitet.defaultProps = {
     className: '',
     dialog: undefined,
-    dialogFeilmeldinger: [],
+    dialogFeilmeldinger: []
 };
 
 const mapStateToProps = (state, props) => {
     const { aktivitet } = props;
     const dialog = selectDialogForAktivitetId(state, aktivitet.id);
     const harDialog = !!dialog;
-    const antallUlesteHenvendelser = harDialog
-        ? dialog.henvendelser.filter(h => !h.lest).length
-        : 0;
+    const antallUlesteHenvendelser = harDialog ? dialog.henvendelser.filter(h => !h.lest).length : 0;
 
     const historiskAktivitet = aktivitet.historisk;
     const historiskDialog = harDialog && dialog.historisk;
     const underOppfolging = selectErUnderOppfolging(state);
 
     const kanSeDialog = underOppfolging || (historiskAktivitet && harDialog);
-    const kanOppretteNyHenvendelse =
-        kanSeDialog && !(historiskDialog || historiskAktivitet);
+    const kanOppretteNyHenvendelse = kanSeDialog && !(historiskDialog || historiskAktivitet);
     const kanEndreDialog = kanOppretteNyHenvendelse && harDialog;
     return {
         dialog,
@@ -212,15 +195,16 @@ const mapStateToProps = (state, props) => {
         visDialog: selectVisDialog(state),
         visHistorikk: selectVisHistorikk(state),
         dialogFeilmeldinger: selectDialogFeilmeldinger(state),
-        erVeileder: selectErVeileder(state),
+        erVeileder: selectErVeileder(state)
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     doToggleDialog: () => dispatch(toggleDialog()),
-    doToggleHistorikk: () => dispatch(toggleHistorikk()),
+    doToggleHistorikk: () => dispatch(toggleHistorikk())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    UnderelementerForAktivitet
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UnderelementerForAktivitet);

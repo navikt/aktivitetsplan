@@ -6,9 +6,7 @@ import { hentFeature } from './ducks/feature-reducer';
 
 function getEnhetFromURL() {
     const queryString = window.location.search;
-    const pairs = (queryString[0] === '?'
-        ? queryString.substr(1)
-        : queryString).split('&');
+    const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
     const maybeEnhet = pairs.find(val => val.startsWith('enhet='));
     if (maybeEnhet) {
         const enhet = maybeEnhet.substring(6);
@@ -26,26 +24,25 @@ class InitiellDataLast extends Component {
 
     render() {
         const { children } = this.props;
-        return (
-            <div>
-                {children}
-            </div>
-        );
+        return <div>{children}</div>;
     }
 }
 
 InitiellDataLast.propTypes = {
     children: PT.node.isRequired,
-    actions: PT.objectOf(PT.func).isRequired,
+    actions: PT.objectOf(PT.func).isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(
         {
-            hentFeature,
+            hentFeature
         },
         dispatch
-    ),
+    )
 });
 
-export default connect(null, mapDispatchToProps)(InitiellDataLast);
+export default connect(
+    null,
+    mapDispatchToProps
+)(InitiellDataLast);

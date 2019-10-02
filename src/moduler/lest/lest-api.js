@@ -7,7 +7,5 @@ export function hentSisteLest() {
 }
 
 export function lesInformasjon(versjon) {
-    return putAsJson(
-        `${VEILARBLEST_BASE_URL}/informasjon/les?versjon=${versjon}`
-    );
+    return putAsJson(`${VEILARBLEST_BASE_URL}/informasjon/les?versjon=${versjon}`);
 }

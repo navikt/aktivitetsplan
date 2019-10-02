@@ -8,11 +8,7 @@ import Lenke from '../../felles-komponenter/utils/lenke';
 import MalIcon from './mal-ikon';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import {
-    hentMal,
-    selectGjeldendeMal,
-    selectMalStatus,
-} from '../../moduler/mal/aktivitetsmal-reducer';
+import { hentMal, selectGjeldendeMal, selectMalStatus } from '../../moduler/mal/aktivitetsmal-reducer';
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
@@ -20,16 +16,12 @@ import { selectViserHistoriskPeriode } from '../../moduler/filtrering/filter/fil
 
 function Mal({ mal, disabled }) {
     if (!mal) {
-        const id = disabled
-            ? 'aktivitetsmal.mitt-mal-disabled'
-            : 'aktivitetsmal.mitt-mal-deafult';
+        const id = disabled ? 'aktivitetsmal.mitt-mal-disabled' : 'aktivitetsmal.mitt-mal-deafult';
         return <FormattedMessage tagName="div" id={id} />;
     }
     return (
         <i>
-            <Tekstomrade>
-                {`"${mal}"`}
-            </Tekstomrade>
+            <Tekstomrade>{`"${mal}"`}</Tekstomrade>
         </i>
     );
 }
@@ -42,13 +34,7 @@ class MittMaal extends Component {
     }
 
     render() {
-        const {
-            avhengigheter,
-            mal,
-            underOppfolging,
-            erVeileder,
-            viserHistoriskPeriode,
-        } = this.props;
+        const { avhengigheter, mal, underOppfolging, erVeileder, viserHistoriskPeriode } = this.props;
         const disabled = !!mal || !underOppfolging;
         const url = disabled ? '/mal' : '/mal/endre';
 
@@ -57,12 +43,8 @@ class MittMaal extends Component {
                 <div className="mitt-maal">
                     <MalIcon />
                     <div className="mittmal_content">
-                        <Element className="mittmal__content-header">
-                            Mitt mål
-                        </Element>
-                        <EtikettLiten className="hovedmaal">
-                            Målet er arkivert
-                        </EtikettLiten>
+                        <Element className="mittmal__content-header">Mitt mål</Element>
+                        <EtikettLiten className="hovedmaal">Målet er arkivert</EtikettLiten>
                     </div>
                 </div>
             );
@@ -91,17 +73,17 @@ class MittMaal extends Component {
 
 Mal.defaultProps = {
     mal: undefined,
-    disabled: false,
+    disabled: false
 };
 
 Mal.propTypes = {
     mal: PT.string,
-    disabled: PT.bool,
+    disabled: PT.bool
 };
 
 MittMaal.defaultProps = {
     mal: undefined,
-    viserHistoriskPeriode: false,
+    viserHistoriskPeriode: false
 };
 
 MittMaal.propTypes = {
@@ -110,7 +92,7 @@ MittMaal.propTypes = {
     doHentMal: PT.func.isRequired,
     underOppfolging: PT.bool.isRequired,
     erVeileder: PT.bool.isRequired,
-    viserHistoriskPeriode: PT.bool,
+    viserHistoriskPeriode: PT.bool
 };
 
 const mapStateToProps = state => ({
@@ -118,11 +100,14 @@ const mapStateToProps = state => ({
     mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
     underOppfolging: selectErUnderOppfolging(state),
     erVeileder: selectErVeileder(state),
-    viserHistoriskPeriode: selectViserHistoriskPeriode(state),
+    viserHistoriskPeriode: selectViserHistoriskPeriode(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    doHentMal: () => dispatch(hentMal()),
+    doHentMal: () => dispatch(hentMal())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MittMaal);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MittMaal);

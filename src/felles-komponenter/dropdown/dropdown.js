@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 const btnCls = (erApen, className) =>
     classNames('dropdown', className, {
-        'dropdown--apen': erApen,
+        'dropdown--apen': erApen
     });
 
 function isChildOf(parent, element) {
@@ -130,13 +130,13 @@ Dropdown.propTypes = {
     children: PT.oneOfType([PT.node, PT.arrayOf(PT.node)]).isRequired,
     className: PT.string,
     onLukk: PT.func,
-    onOpen: PT.func,
+    onOpen: PT.func
 };
 Dropdown.defaultProps = {
     apen: false,
     className: null,
     onLukk: () => {},
-    onOpen: () => {},
+    onOpen: () => {}
 };
 
 export default Dropdown;

@@ -16,24 +16,17 @@ function FilterVisningsKomponent({
     filterTekst,
     metrikkNavn,
     doToggleFunction,
-    className,
+    className
 }) {
     return (
-        <VisibleIfDiv
-            visible={harAktiviteter}
-            className={filterClassNames(className)}
-        >
+        <VisibleIfDiv visible={harAktiviteter} className={filterClassNames(className)}>
             <Undertittel className="filter__tittel">
                 <FormattedMessage id={filterTittel} />
             </Undertittel>
-            {Object.keys(filter).map(nokkel =>
+            {Object.keys(filter).map(nokkel => (
                 <Checkbox
                     key={nokkel}
-                    label={
-                        <FormattedMessage
-                            id={filterTekst + nokkel.toLowerCase()}
-                        />
-                    }
+                    label={<FormattedMessage id={filterTekst + nokkel.toLowerCase()} />}
                     onChange={() => {
                         if (!filter[nokkel] && metrikkNavn) {
                             loggEvent(metrikkNavn, { filter: nokkel });
@@ -42,13 +35,13 @@ function FilterVisningsKomponent({
                     }}
                     checked={filter[nokkel]}
                 />
-            )}
+            ))}
         </VisibleIfDiv>
     );
 }
 
 FilterVisningsKomponent.defaultProps = {
-    className: '',
+    className: ''
 };
 
 FilterVisningsKomponent.propTypes = {
@@ -58,7 +51,7 @@ FilterVisningsKomponent.propTypes = {
     filterTekst: PT.string.isRequired,
     doToggleFunction: PT.func.isRequired,
     metrikkNavn: PT.string.isRequired,
-    className: PT.string,
+    className: PT.string
 };
 
 export default FilterVisningsKomponent;

@@ -17,35 +17,21 @@ class Dialoger extends React.Component {
     componentWillMount() {
         const { gjeldendeEskaleringsvarsel, erBruker, dialoger } = this.props;
         const dialogSammenligner = dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
-            gjeldendeEskaleringsvarsel &&
-                gjeldendeEskaleringsvarsel.tilhorendeDialogId,
+            gjeldendeEskaleringsvarsel && gjeldendeEskaleringsvarsel.tilhorendeDialogId,
             erBruker
         );
-        this.dialogIderSortert = [...dialoger]
-            .sort(dialogSammenligner)
-            .map(dialog => dialog.id);
+        this.dialogIderSortert = [...dialoger].sort(dialogSammenligner).map(dialog => dialog.id);
     }
 
     render() {
-        const {
-            dialoger,
-            valgtDialog,
-            className,
-            aktiviteter,
-            history,
-            erBruker,
-        } = this.props;
+        const { dialoger, valgtDialog, className, aktiviteter, history, erBruker } = this.props;
         const dialogerSortert = [...dialoger].sort(
-            (a, b) =>
-                this.dialogIderSortert.indexOf(a.id) -
-                this.dialogIderSortert.indexOf(b.id)
+            (a, b) => this.dialogIderSortert.indexOf(a.id) - this.dialogIderSortert.indexOf(b.id)
         );
 
         const erTabBar = dialog =>
-            dialog === valgtDialog ||
-            (valgtDialog === null && dialog.id === dialogerSortert[0].id);
-        const valgtDialogIndex =
-            valgtDialog !== null ? dialogerSortert.indexOf(valgtDialog) : 0;
+            dialog === valgtDialog || (valgtDialog === null && dialog.id === dialogerSortert[0].id);
+        const valgtDialogIndex = valgtDialog !== null ? dialogerSortert.indexOf(valgtDialog) : 0;
         const dialogRefs = {};
 
         const byttTilNyDialog = id => {
@@ -82,7 +68,7 @@ class Dialoger extends React.Component {
 
         return (
             <div className={className} onKeyDown={dialogPiling}>
-                {dialogerSortert.map(d =>
+                {dialogerSortert.map(d => (
                     <section className="dialoger__dialog--section" key={d.id}>
                         <DialogVisning
                             ref={ref => (dialogRefs[d.id] = ref)}
@@ -94,7 +80,7 @@ class Dialoger extends React.Component {
                             history={history}
                         />
                     </section>
-                )}
+                ))}
             </div>
         );
     }
@@ -103,7 +89,7 @@ class Dialoger extends React.Component {
 Dialoger.defaultProps = {
     gjeldendeEskaleringsvarsel: undefined,
     erBruker: undefined,
-    avhengigheter: undefined,
+    avhengigheter: undefined
 };
 
 Dialoger.propTypes = {
@@ -114,12 +100,12 @@ Dialoger.propTypes = {
     erBruker: PT.bool,
     gjeldendeEskaleringsvarsel: AppPT.eskaleringsvarsel,
     avhengigheter: AppPT.avhengigheter,
-    history: AppPT.history.isRequired,
+    history: AppPT.history.isRequired
 };
 
 Dialoger.defaultProps = {
     className: undefined,
-    valgtDialog: undefined,
+    valgtDialog: undefined
 };
 
 function DialogerMedInnholdslaster({ avhengighet, ...props }) {
@@ -131,7 +117,7 @@ function DialogerMedInnholdslaster({ avhengighet, ...props }) {
 }
 
 DialogerMedInnholdslaster.propTypes = {
-    avhengighet: AppPT.avhengighet.isRequired,
+    avhengighet: AppPT.avhengighet.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -139,7 +125,7 @@ const mapStateToProps = state => ({
     dialoger: selectDialoger(state),
     aktiviteter: selectAlleAktiviter(state),
     erBruker: selectErBruker(state),
-    gjeldendeEskaleringsvarsel: selectGjeldendeEskaleringsVarsel(state),
+    gjeldendeEskaleringsvarsel: selectGjeldendeEskaleringsVarsel(state)
 });
 export default withRouter(connect(mapStateToProps)(DialogerMedInnholdslaster));
 

@@ -15,22 +15,15 @@ function DialogOversikt({
     harNyDialogEllerValgtDialog,
     historiskVisning,
     history,
-    underOppfolging,
+    underOppfolging
 }) {
-    const className = classNames(
-        'dialog-modal__kolonne',
-        'dialog-modal__kolonne--dialoger',
-        {
-            'dialog-modal__kolonne--dialoger-valgt-dialog': harNyDialogEllerValgtDialog,
-        }
-    );
+    const className = classNames('dialog-modal__kolonne', 'dialog-modal__kolonne--dialoger', {
+        'dialog-modal__kolonne--dialoger-valgt-dialog': harNyDialogEllerValgtDialog
+    });
 
     return (
         <div className={className}>
-            <HideableSection
-                className="dialog-modal__ny-dialog"
-                hidden={historiskVisning || !underOppfolging}
-            >
+            <HideableSection className="dialog-modal__ny-dialog" hidden={historiskVisning || !underOppfolging}>
                 <Knappelenke
                     onClick={() => history.push('/dialog/ny')}
                     disabled={harNyDialog}
@@ -40,10 +33,7 @@ function DialogOversikt({
                 </Knappelenke>
                 <DialogFilter />
             </HideableSection>
-            <Dialoger
-                className="dialog-modal__dialoger"
-                valgtDialog={valgtDialog}
-            />
+            <Dialoger className="dialog-modal__dialoger" valgtDialog={valgtDialog} />
         </div>
     );
 }
@@ -54,11 +44,11 @@ DialogOversikt.propTypes = {
     harNyDialogEllerValgtDialog: PT.bool.isRequired,
     historiskVisning: PT.bool.isRequired,
     history: AppPT.history.isRequired,
-    underOppfolging: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired
 };
 
 DialogOversikt.defaultProps = {
-    valgtDialog: undefined,
+    valgtDialog: undefined
 };
 
 export default withRouter(DialogOversikt);

@@ -6,19 +6,9 @@ import { hentAktivitet } from '../aktivitet-actions';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './aktivitetvisning';
 import * as AppPT from '../../../proptypes';
-import {
-    selectAktivitetMedId,
-    selectKanEndreAktivitetDetaljer,
-} from '../aktivitetliste-selector';
-import {
-    selectErUnderOppfolging,
-    selectOppfolgingStatus,
-} from '../../oppfolging-status/oppfolging-selector';
-import {
-    UTDANNING_AKTIVITET_TYPE,
-    GRUPPE_AKTIVITET_TYPE,
-    TILTAK_AKTIVITET_TYPE,
-} from '../../../constant';
+import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetliste-selector';
+import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
+import { UTDANNING_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
 import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
@@ -28,12 +18,7 @@ import AktivitetvisningModal from './aktivitetvisning-modal';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
-        const {
-            valgtAktivitet,
-            doHentAktivitet,
-            doHentArenaAktiviteter,
-            doLukkDialogEllerHistorikk,
-        } = this.props;
+        const { valgtAktivitet, doHentAktivitet, doHentArenaAktiviteter, doLukkDialogEllerHistorikk } = this.props;
         if (valgtAktivitet) {
             if (valgtAktivitet.arenaAktivitet) {
                 doHentArenaAktiviteter();
@@ -46,9 +31,7 @@ class AktivitetvisningContainer extends Component {
 
     componentWillUnmount() {
         const { valgtAktivitet } = this.props;
-        const aktivitetskort = document.querySelector(
-            `#aktivitetskort-${valgtAktivitet.id}`
-        );
+        const aktivitetskort = document.querySelector(`#aktivitetskort-${valgtAktivitet.id}`);
         if (valgtAktivitet && aktivitetskort) {
             aktivitetskort.focus();
         }
@@ -76,11 +59,11 @@ AktivitetvisningContainer.propTypes = {
     doLukkDialogEllerHistorikk: PT.func.isRequired,
     history: AppPT.history.isRequired,
     match: PT.object.isRequired,
-    underOppfolging: PT.bool.isRequired,
+    underOppfolging: PT.bool.isRequired
 };
 
 AktivitetvisningContainer.defaultProps = {
-    valgtAktivitet: undefined,
+    valgtAktivitet: undefined
 };
 
 const mapStateToProps = (state, props) => {
@@ -89,14 +72,8 @@ const mapStateToProps = (state, props) => {
 
     const erArenaAktivitet =
         !!valgtAktivitet &&
-        [
-            TILTAK_AKTIVITET_TYPE,
-            GRUPPE_AKTIVITET_TYPE,
-            UTDANNING_AKTIVITET_TYPE,
-        ].includes(valgtAktivitet.type);
-    const aktivitetDataStatus = erArenaAktivitet
-        ? selectArenaAktivitetStatus(state)
-        : selectAktivitetStatus(state);
+        [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(valgtAktivitet.type);
+    const aktivitetDataStatus = erArenaAktivitet ? selectArenaAktivitetStatus(state) : selectAktivitetStatus(state);
 
     const laster = aktivitetDataStatus !== STATUS.OK;
 
@@ -106,12 +83,12 @@ const mapStateToProps = (state, props) => {
             // merk at vi egentlig avhenger av både vanlige aktiviteter og arena-aktiviteter
             // MEN: vi ønsker å rendre med en gang vi har riktig aktivitet tilgjengelig, slik
             // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena
-            valgtAktivitet ? STATUS.OK : STATUS.PENDING,
+            valgtAktivitet ? STATUS.OK : STATUS.PENDING
         ],
         valgtAktivitet,
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
         laster,
-        underOppfolging: selectErUnderOppfolging(state),
+        underOppfolging: selectErUnderOppfolging(state)
     };
 };
 
@@ -120,11 +97,12 @@ const mapDispatchToProps = dispatch =>
         {
             doHentAktivitet: hentAktivitet,
             doHentArenaAktiviteter: hentArenaAktiviteter,
-            doLukkDialogEllerHistorikk: lukkAlle,
+            doLukkDialogEllerHistorikk: lukkAlle
         },
         dispatch
     );
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    AktivitetvisningContainer
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AktivitetvisningContainer);

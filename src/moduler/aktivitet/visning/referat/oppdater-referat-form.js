@@ -24,36 +24,27 @@ function validate(val) {
 }
 
 const validator = useFormstate({
-    referat: validate,
+    referat: validate
 });
 
 const label = <Undertittel>Samtalereferat</Undertittel>;
 
 function OppdaterReferatForm(props) {
-    const {
-        onSubmit,
-        aktivitet,
-        oppdaterer,
-        erReferatPublisert,
-        dispatchPubliserReferat,
-    } = props;
+    const { onSubmit, aktivitet, oppdaterer, erReferatPublisert, dispatchPubliserReferat } = props;
 
     const state = validator({
-        referat: aktivitet.referat || '',
+        referat: aktivitet.referat || ''
     });
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
-    useEffect(
-        () => {
-            setFormIsDirty('referat', !state.pristine);
+    useEffect(() => {
+        setFormIsDirty('referat', !state.pristine);
 
-            return function cleanup() {
-                setFormIsDirty('referat', false);
-            };
-        },
-        [setFormIsDirty, state.pristine]
-    );
+        return function cleanup() {
+            setFormIsDirty('referat', false);
+        };
+    }, [setFormIsDirty, state.pristine]);
 
     const oppdaterOgPubliser = state.onSubmit(values => {
         return onSubmit(values).then(response => {
@@ -64,14 +55,8 @@ function OppdaterReferatForm(props) {
     });
 
     return (
-        <form
-            onSubmit={state.onSubmit(onSubmit)}
-            className="oppdater-referat aktivitetvisning__underseksjon"
-        >
-            <FormErrorSummary
-                errors={state.errors}
-                submittoken={state.submittoken}
-            />
+        <form onSubmit={state.onSubmit(onSubmit)} className="oppdater-referat aktivitetvisning__underseksjon">
+            <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
             <Textarea
                 label={label}
                 disabled={oppdaterer}
@@ -103,16 +88,14 @@ OppdaterReferatForm.propTypes = {
     erReferatPublisert: PT.bool.isRequired,
     oppdaterer: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,
-    onFerdig: PT.func.isRequired,
+    onFerdig: PT.func.isRequired
 };
 
 const mapStateToProps = (state, props) => {
     const { erReferatPublisert } = props.aktivitet;
     return {
-        oppdaterer:
-            selectAktivitetStatus(state) ===
-            (STATUS.PENDING || STATUS.RELOADING),
-        erReferatPublisert,
+        oppdaterer: selectAktivitetStatus(state) === (STATUS.PENDING || STATUS.RELOADING),
+        erReferatPublisert
     };
 };
 
@@ -121,17 +104,16 @@ const mapDispatchToProps = (dispatch, props) => ({
     onSubmit: referatData => {
         const aktivitetMedOppdatertReferat = {
             ...props.aktivitet,
-            ...referatData,
+            ...referatData
         };
-        return dispatch(
-            oppdaterReferat(aktivitetMedOppdatertReferat)
-        ).then(res => {
+        return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then(res => {
             props.onFerdig();
             return res;
         });
-    },
+    }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    OppdaterReferatForm
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(OppdaterReferatForm);

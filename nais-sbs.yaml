@@ -1,0 +1,47 @@
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
+metadata:
+  name: aktivitetsplan
+  namespace: default
+  cluster: prod-sbs
+  labels:
+    team: pto
+spec:
+  image: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan:{{version}}
+  port: 8080
+  liveness:
+    path: aktivitetsplan/internal/isAlive
+    initialDelay: 60
+  readiness:
+    path: aktivitetsplan/internal/selftest
+    initialDelay: 60
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  prometheus:
+    enabled: true
+    path: aktivitetsplan/internal/metrics
+  ingresses:
+    - https://aktivitetsplan.nav.no
+    - https://tjenester.nav.no/aktivitetsplan
+  vault:
+    enabled: true
+  webproxy: true
+  env:
+    - APPRES_CMS_URL
+    - ISSO_JWKS_URL
+    - ISSO_HOST_URL
+    - ISSO_ISSUER_URL
+    - ISSO_ISALIVE_URL
+    - VEILARBLOGIN_REDIRECT_URL_URL
+    - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
+    - OIDC_REDIRECT_URL
+    - AAD_B2C_DISCOVERY_URL
+    - VEIENTILARBEID_URL
+    - AKTIVITETSPLAN_URL
+    - ARBEIDSSOKERREGISTRERING_URL
+    - REGISTRERINGSINFORMASJON_URL
+    - VEILARBSTEPUP_OIDC_URL
+    - name: DITTNAV_LINK_URL
+      value: 'https://tjenester.nav.no/dittnav/'

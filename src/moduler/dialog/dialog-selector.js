@@ -4,10 +4,7 @@ import { newDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
 import { erViktigMelding } from './dialog-utils';
-import {
-    selectErBruker,
-    selectErVeileder,
-} from '../identitet/identitet-selector';
+import { selectErBruker, selectErVeileder } from '../identitet/identitet-selector';
 import { STATUS } from '../../ducks/utils';
 
 function selectDialogSlice(state) {
@@ -30,29 +27,13 @@ export function selectAlleDialoger(state) {
     return selectDialogSlice(state).data;
 }
 
-const hentDialogerFraState = (
-    dialoger,
-    esklaringsFilter,
-    historiskPeriode,
-    forrigeSluttDato
-) =>
+const hentDialogerFraState = (dialoger, esklaringsFilter, historiskPeriode, forrigeSluttDato) =>
     dialoger.data
-        .filter(d =>
-            newDatoErIPeriode(
-                d.opprettetDato,
-                historiskPeriode,
-                forrigeSluttDato
-            )
-        )
+        .filter(d => newDatoErIPeriode(d.opprettetDato, historiskPeriode, forrigeSluttDato))
         .filter(d => erViktigMelding(d) || !esklaringsFilter);
 
 export const selectDialoger = createSelector(
-    [
-        selectDialogSlice,
-        selectEskaleringsFilter,
-        selectHistoriskPeriode,
-        selectForrigeHistoriskeSluttDato,
-    ],
+    [selectDialogSlice, selectEskaleringsFilter, selectHistoriskPeriode, selectForrigeHistoriskeSluttDato],
     hentDialogerFraState
 );
 
@@ -67,11 +48,8 @@ export function selectDialogForAktivitetId(state, aktivitetId) {
 export function selectHarUbehandledeDialoger(state) {
     const data = selectDialoger(state);
     return (
-        data.filter(
-            dialog =>
-                dialog.historisk === false &&
-                (dialog.ferdigBehandlet === false || dialog.venterPaSvar)
-        ).length > 0
+        data.filter(dialog => dialog.historisk === false && (dialog.ferdigBehandlet === false || dialog.venterPaSvar))
+            .length > 0
     );
 }
 
@@ -84,19 +62,12 @@ export function selectVisEskaleringsFilter(state) {
 }
 
 export function selectTilpasseDialogModalHistoriskVisning(state) {
-    return (
-        selectErVeileder(state) ||
-        (!selectHarEskaleringer(state) && selectErBruker(state))
-    );
+    return selectErVeileder(state) || (!selectHarEskaleringer(state) && selectErBruker(state));
 }
 
 export function selectVisBrukerInfo(state, dialogId_) {
     const { dialogId, utlopTidspunkt } = selectDialogViewSlice(state).data;
-    return (
-        !!utlopTidspunkt &&
-        moment(utlopTidspunkt).isAfter(moment()) &&
-        dialogId === dialogId_
-    );
+    return !!utlopTidspunkt && moment(utlopTidspunkt).isAfter(moment()) && dialogId === dialogId_;
 }
 
 export function selectHarTilgangTilDialog(state) {
@@ -104,8 +75,6 @@ export function selectHarTilgangTilDialog(state) {
 }
 
 export const selectDialogFeilmeldinger = state => {
-    const feilMeldingsdata =
-        selectDialogStatus(state) === STATUS.ERROR &&
-        selectDialogSlice(state).feil;
+    const feilMeldingsdata = selectDialogStatus(state) === STATUS.ERROR && selectDialogSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 };

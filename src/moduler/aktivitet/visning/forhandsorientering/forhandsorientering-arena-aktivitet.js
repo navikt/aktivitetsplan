@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { autobind, erMerEnnSyvDagerTil } from '../../../../utils';
 import * as AppPT from '../../../../proptypes';
 import ForhandsorienteringArenaAktivitetForm from './forhandsorientering-form';
 import {
     HiddenIfAlertStripeInfoSolid,
-    HiddenIfAlertStripeSuksess,
+    HiddenIfAlertStripeSuksess
 } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import visibleIfHOC from '../../../../hocs/visible-if';
@@ -28,18 +27,19 @@ class ForhandsorienteringArenaAktivitet extends Component {
             return null;
         }
 
-        const merEnnsyvDagerTil =
-            erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
+        const merEnnsyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
 
-        const AlertStripeHvisMindreEnnSyvDagerTil = () =>
+        const AlertStripeHvisMindreEnnSyvDagerTil = () => (
             <HiddenIfAlertStripeInfoSolid hidden={merEnnsyvDagerTil}>
-                <FormattedMessage id="forhandsorientering.arenaaktivitet.mindre-enn-syv-dager" />
-            </HiddenIfAlertStripeInfoSolid>;
+                Du kan ikke sende forhåndsorientering fordi sluttdatoen er satt til mindre enn 7 dager fram i tid.
+            </HiddenIfAlertStripeInfoSolid>
+        );
 
-        const AlertStripeVisBekreftelse = () =>
+        const AlertStripeVisBekreftelse = () => (
             <HiddenIfAlertStripeSuksess hidden={forhandsorienteringSkalSendes}>
-                <FormattedMessage id="forhandsorienterin.arenaaktivitet.er-sendt" />
-            </HiddenIfAlertStripeSuksess>;
+                Forhåndsorientering er sendt.
+            </HiddenIfAlertStripeSuksess>
+        );
         return (
             <div>
                 <AlertStripeHvisMindreEnnSyvDagerTil />
@@ -55,7 +55,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
 }
 
 ForhandsorienteringArenaAktivitet.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired
 };
 
 export default visibleIfHOC(ForhandsorienteringArenaAktivitet);

@@ -11,8 +11,7 @@ import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selecto
 import Textarea from '../../felles-komponenter/skjema/input/textarea';
 
 const validator = useFormstate({
-    mal: val =>
-        val.length > 500 ? 'Du må korte ned teksten til 500 tegn' : null,
+    mal: val => (val.length > 500 ? 'Du må korte ned teksten til 500 tegn' : null)
 });
 
 function AktivitetsmalForm(props) {
@@ -20,7 +19,7 @@ function AktivitetsmalForm(props) {
 
     const initial = mal ? mal.mal || '' : '';
     const state = validator({
-        mal: initial,
+        mal: initial
     });
 
     return (
@@ -37,11 +36,7 @@ function AktivitetsmalForm(props) {
             >
                 Lagre
             </Hovedknapp>
-            <Knapp
-                onClick={() => history.push('/')}
-                disabled={oppdaterer}
-                htmlType="button"
-            >
+            <Knapp onClick={() => history.push('/')} disabled={oppdaterer} htmlType="button">
                 Avbryt
             </Knapp>
         </form>
@@ -54,16 +49,16 @@ AktivitetsmalForm.propTypes = {
     onSubmit: PT.func.isRequired,
     mal: PT.object,
     handleComplete: PT.func.isRequired,
-    history: AppPT.history.isRequired,
+    history: AppPT.history.isRequired
 };
 
 AktivitetsmalForm.defaultProps = {
-    mal: undefined,
+    mal: undefined
 };
 
 const mapStateToProps = state => ({
     oppdaterer: selectMalStatus(state) === STATUS.RELOADING,
-    underOppfolging: selectErUnderOppfolging(state),
+    underOppfolging: selectErUnderOppfolging(state)
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
@@ -75,9 +70,12 @@ const mapDispatchToProps = (dispatch, props) => ({
             handleComplete();
         }
         return Promise.resolve();
-    },
+    }
 });
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(AktivitetsmalForm)
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(AktivitetsmalForm)
 );

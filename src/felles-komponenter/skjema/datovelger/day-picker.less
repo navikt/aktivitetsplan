@@ -35,9 +35,7 @@
     height: 2em;
     cursor: pointer;
     border: 0;
-    background: transparent data-uri(
-        './pil-videre.svg'
-    ) no-repeat center;
+    background: transparent data-uri('./pil-videre.svg') no-repeat center;
     background-size: 1.25em 1.25em;
 
     &:focus {
@@ -47,9 +45,7 @@
 
     &:focus,
     &:hover {
-        background-image: data-uri(
-            './pil-videre--hover.svg'
-        );
+        background-image: data-uri('./pil-videre--hover.svg');
     }
 
     &--prev {
@@ -228,9 +224,7 @@
             border-left: 1px solid @gray-icon;
             padding: 0;
             position: absolute;
-            background: transparent data-uri(
-                './kalender.svg'
-            ) no-repeat center center;
+            background: transparent data-uri('./kalender.svg') no-repeat center center;
             background-size: 16px 16px;
 
             &:focus {
@@ -240,15 +234,11 @@
 
             &:hover:not(:disabled),
             &:focus {
-                background-image: data-uri(
-                    './kalender--hover.svg'
-                );
+                background-image: data-uri('./kalender--hover.svg');
             }
 
             &:active {
-                background-image: data-uri(
-                    './kalender--aktiv.svg'
-                );
+                background-image: data-uri('./kalender--aktiv.svg');
             }
         }
     }

@@ -1,10 +1,5 @@
 import * as Api from '../aktivitet-api';
-import {
-    OPPDATER_OK,
-    FLYTT_OK,
-    OPPDATER_REFERAT_OK,
-    PUBLISER_REFERAT_OK,
-} from '../aktivitet-action-types';
+import { OPPDATER_OK, FLYTT_OK, OPPDATER_REFERAT_OK, PUBLISER_REFERAT_OK } from '../aktivitet-action-types';
 import { doThenDispatch, STATUS } from '../../../ducks/utils';
 
 // Actions
@@ -16,7 +11,7 @@ export const FJERN = 'versjoner/fjern';
 
 const initalState = {
     status: STATUS.NOT_STARTED,
-    data: [],
+    data: []
 };
 
 // Reducer
@@ -25,10 +20,7 @@ export default function reducer(state = initalState, action) {
         case PENDING:
             return {
                 ...state,
-                status:
-                    state.status === STATUS.NOT_STARTED
-                        ? STATUS.PENDING
-                        : STATUS.RELOADING,
+                status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING
             };
         case FEILET:
             return { ...state, status: STATUS.ERROR, feil: action.data };
@@ -54,7 +46,7 @@ export function hentVersjonerForAktivtet(aktivitet) {
     return doThenDispatch(() => Api.hentVersjonerTilAktivitet(aktivitet), {
         OK,
         FEILET,
-        PENDING,
+        PENDING
     });
 }
 

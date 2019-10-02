@@ -8,12 +8,7 @@ function ReferatSeksjon(props) {
     const { aktivitet, visOppdaterReferatForm, stoppOppdaterReferat } = props;
 
     if (visOppdaterReferatForm) {
-        return (
-            <OppdaterReferatForm
-                aktivitet={aktivitet}
-                onFerdig={stoppOppdaterReferat}
-            />
-        );
+        return <OppdaterReferatForm aktivitet={aktivitet} onFerdig={stoppOppdaterReferat} />;
     }
 
     return <ReferatVisning {...props} />;
@@ -29,11 +24,11 @@ ReferatSeksjon.propTypes = {
     publiserer: PT.bool.isRequired,
     erReferatPublisert: PT.bool.isRequired,
     startOppdaterReferat: PT.func.isRequired,
-    stoppOppdaterReferat: PT.func.isRequired,
+    stoppOppdaterReferat: PT.func.isRequired
 };
 
 ReferatSeksjon.defaultProps = {
-    referat: undefined,
+    referat: undefined
 };
 
 export default ReferatSeksjon;

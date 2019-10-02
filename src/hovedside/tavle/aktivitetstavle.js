@@ -16,7 +16,7 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
+    STATUS_AVBRUTT
 } from '../../constant';
 import KolonneFunction from './kolonne/kolonnefunction';
 import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
@@ -24,33 +24,22 @@ import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 
 function lagAktivitetsListe(aktiviteter) {
-    return aktiviteter.map(aktivitet =>
-        <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />
-    );
+    return aktiviteter.map(aktivitet => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />);
 }
 
 function renderFullFortAvbryt(aktiviteter) {
-    const [nyereAktiviteter, eldreAktiviteter] = splitIEldreOgNyereAktiviteter(
-        aktiviteter
-    );
+    const [nyereAktiviteter, eldreAktiviteter] = splitIEldreOgNyereAktiviteter(aktiviteter);
     return (
         <div>
             {lagAktivitetsListe(nyereAktiviteter)}
-            <SkjulEldreAktiviteter
-                aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter}
-            />
+            <SkjulEldreAktiviteter aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter} />
         </div>
     );
 }
 
 class AktivitetsTavle extends Component {
     componentDidMount() {
-        const {
-            reducersNotStarted,
-            erVeileder,
-            doHentAktiviteter,
-            doHentArenaAktiviteter,
-        } = this.props;
+        const { reducersNotStarted, erVeileder, doHentAktiviteter, doHentArenaAktiviteter } = this.props;
         if (reducersNotStarted) {
             if (erVeileder) {
                 doLesAktivitetsplan();
@@ -64,32 +53,17 @@ class AktivitetsTavle extends Component {
         const { avhengigheter } = this.props;
         return (
             <Innholdslaster minstEn avhengigheter={avhengigheter}>
-                <Tavle
-                    defaultStartKolonne={1}
-                    antallKolonner={3}
-                    className="aktivitetstavle"
-                >
-                    <KolonneFunction
-                        status={STATUS_BRUKER_ER_INTRESSERT}
-                        render={lagAktivitetsListe}
-                    />
-                    <KolonneFunction
-                        status={STATUS_PLANLAGT}
-                        render={lagAktivitetsListe}
-                    />
-                    <KolonneFunction
-                        status={STATUS_GJENNOMFOERT}
-                        render={lagAktivitetsListe}
-                    />
+                <Tavle defaultStartKolonne={1} antallKolonner={3} className="aktivitetstavle">
+                    <KolonneFunction status={STATUS_BRUKER_ER_INTRESSERT} render={lagAktivitetsListe} />
+                    <KolonneFunction status={STATUS_PLANLAGT} render={lagAktivitetsListe} />
+                    <KolonneFunction status={STATUS_GJENNOMFOERT} render={lagAktivitetsListe} />
                     <KolonneFunction
                         status={STATUS_FULLFOERT}
-                        render={aktiviteter =>
-                            renderFullFortAvbryt(aktiviteter)}
+                        render={aktiviteter => renderFullFortAvbryt(aktiviteter)}
                     />
                     <KolonneFunction
                         status={STATUS_AVBRUTT}
-                        render={aktiviteter =>
-                            renderFullFortAvbryt(aktiviteter)}
+                        render={aktiviteter => renderFullFortAvbryt(aktiviteter)}
                     />
                 </Tavle>
             </Innholdslaster>
@@ -102,7 +76,7 @@ AktivitetsTavle.propTypes = {
     doHentArenaAktiviteter: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
-    reducersNotStarted: PT.bool.isRequired,
+    reducersNotStarted: PT.bool.isRequired
 };
 
 const mapStateToProps = state => {
@@ -110,21 +84,23 @@ const mapStateToProps = state => {
     const statusArenaAktiviteter = selectArenaAktivitetStatus(state);
 
     const reducersNotStarted =
-        statusAktiviteter === STATUS.NOT_STARTED &&
-        statusArenaAktiviteter === STATUS.NOT_STARTED;
+        statusAktiviteter === STATUS.NOT_STARTED && statusArenaAktiviteter === STATUS.NOT_STARTED;
 
     const avhengigheter = [statusAktiviteter, statusArenaAktiviteter];
 
     return {
         erVeileder: selectErVeileder(state),
         avhengigheter,
-        reducersNotStarted,
+        reducersNotStarted
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     doHentAktiviteter: () => hentAktiviteter()(dispatch),
-    doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch),
+    doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsTavle);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AktivitetsTavle);

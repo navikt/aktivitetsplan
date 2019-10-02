@@ -7,34 +7,23 @@ import PilKnapp from '../../../felles-komponenter/utils/pil-knapp';
 import * as AppPT from '../../../proptypes';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 
-function DialogHeader({
-    harNyDialogEllerValgtDialog,
-    motpartStatus,
-    navnPaMotpart,
-    fnrPaMotpartHvisBruker,
-    history,
-}) {
+function DialogHeader({ harNyDialogEllerValgtDialog, motpartStatus, navnPaMotpart, fnrPaMotpartHvisBruker, history }) {
     return (
         <div className="dialog-modal__header">
             <FormattedMessage id="dialog.modal.tilbake">
-                {label =>
+                {label => (
                     <PilKnapp
                         visible={harNyDialogEllerValgtDialog}
                         className="dialog-modal__tilbake-knapp"
                         onClick={() => history.push('/dialog')}
                         aria-label={label}
-                    />}
+                    />
+                )}
             </FormattedMessage>
             <Innholdslaster avhengigheter={motpartStatus} spinnerStorrelse="M">
                 <Element className="dialog-modal__tittel" tag="h1">
-                    <FormattedMessage
-                        id="dialog.tittel"
-                        values={{ motpart: navnPaMotpart }}
-                    >
-                        {txt =>
-                            <span>
-                                {`${txt} ${fnrPaMotpartHvisBruker}`}
-                            </span>}
+                    <FormattedMessage id="dialog.tittel" values={{ motpart: navnPaMotpart }}>
+                        {txt => <span>{`${txt} ${fnrPaMotpartHvisBruker}`}</span>}
                     </FormattedMessage>
                 </Element>
             </Innholdslaster>
@@ -44,7 +33,7 @@ function DialogHeader({
 
 DialogHeader.defaultProps = {
     navnPaMotpart: null,
-    fnrPaMotpartHvisBruker: null,
+    fnrPaMotpartHvisBruker: null
 };
 
 DialogHeader.propTypes = {
@@ -52,7 +41,7 @@ DialogHeader.propTypes = {
     motpartStatus: AppPT.avhengighet.isRequired,
     fnrPaMotpartHvisBruker: PT.string,
     navnPaMotpart: PT.string,
-    history: AppPT.history.isRequired,
+    history: AppPT.history.isRequired
 };
 
 export default withRouter(DialogHeader);

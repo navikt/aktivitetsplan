@@ -4,24 +4,9 @@ import PT from 'prop-types';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
-function Radio({
-    value,
-    touched,
-    error,
-    input,
-    pristine,
-    initialValue,
-    ...rest
-}) {
+function Radio({ value, touched, error, input, pristine, initialValue, ...rest }) {
     const inputProps = { ...input, ...rest };
-    return (
-        <NavRadio
-            {...inputProps}
-            value={value}
-            checked={value === input.value}
-            id={`id--${value}`}
-        />
-    );
+    return <NavRadio {...inputProps} value={value} checked={value === input.value} id={`id--${value}`} />;
 }
 
 Radio.propTypes = {
@@ -30,13 +15,13 @@ Radio.propTypes = {
     pristine: PT.bool,
     touched: PT.bool.isRequired,
     error: PT.string,
-    input: PT.object.isRequired,
+    input: PT.object.isRequired
 };
 
 Radio.defaultProps = {
     initialValue: undefined,
     pristine: undefined,
-    error: undefined,
+    error: undefined
 };
 
 export default Radio;

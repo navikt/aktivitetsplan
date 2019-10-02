@@ -12,10 +12,10 @@ const hurtigfilterType = [
             SessionStorageElement.PRIVAT_BRUKER,
             SessionStorageElement.MANUELL_BRUKER,
             SessionStorageElement.ARENA_AKTIVITETER,
-            SessionStorageElement.TEST_AKTIVITETER,
+            SessionStorageElement.TEST_AKTIVITETER
         ],
-        paskrudd: [SessionStorageElement.AUTOMATISKE_AKTIVITETER],
-    },
+        paskrudd: [SessionStorageElement.AUTOMATISKE_AKTIVITETER]
+    }
 ];
 
 class Hurtigfilter extends React.Component {
@@ -28,11 +28,11 @@ class Hurtigfilter extends React.Component {
     };
 
     filterValg = () => {
-        return hurtigfilterType.map(x =>
+        return hurtigfilterType.map(x => (
             <option value={x.id} key={x.id}>
                 {x.name}
             </option>
-        );
+        ));
     };
 
     render() {
@@ -42,9 +42,7 @@ class Hurtigfilter extends React.Component {
                 <Select
                     label=""
                     onChange={e => {
-                        const valgtFilter = hurtigfilterType.find(
-                            x => x.id === e.target.value
-                        );
+                        const valgtFilter = hurtigfilterType.find(x => x.id === e.target.value);
                         this.markerValg(valgtFilter.paskrudd);
                         this.skruAvValg(valgtFilter.avskrudd);
                         window.location.reload();

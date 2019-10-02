@@ -4,7 +4,7 @@ import {
     selectAktivitetTyperFilter,
     selectHistoriskPeriode,
     selectAktivitetStatusFilter,
-    selectAktivitetAvtaltMedNavFilter,
+    selectAktivitetAvtaltMedNavFilter
 } from './filter-selector';
 
 function erAktivtFilter(filterData) {
@@ -17,8 +17,7 @@ export function datoErIPeriode(dato, state) {
     if (historiskPeriode) {
         return dato >= historiskPeriode.fra && dato <= historiskPeriode.til;
     }
-    const historiskeOppfolgingsPerioder =
-        selectHistoriskeOppfolgingsPerioder(state) || [];
+    const historiskeOppfolgingsPerioder = selectHistoriskeOppfolgingsPerioder(state) || [];
 
     const forrigeSluttDato = historiskeOppfolgingsPerioder
         .map(p => p.sluttDato)
@@ -36,10 +35,7 @@ export function newDatoErIPeriode(dato, historiskPeriode, forrigeSluttDato) {
 
 export function aktivitetFilter(aktivitet, state) {
     const aktivitetTypeFilter = selectAktivitetTyperFilter(state);
-    if (
-        erAktivtFilter(aktivitetTypeFilter) &&
-        !aktivitetTypeFilter[aktivitet.type]
-    ) {
+    if (erAktivtFilter(aktivitetTypeFilter) && !aktivitetTypeFilter[aktivitet.type]) {
         return false;
     }
 
@@ -49,23 +45,17 @@ export function aktivitetFilter(aktivitet, state) {
     }
 
     const aktivitetStatusFilter = selectAktivitetStatusFilter(state);
-    if (
-        erAktivtFilter(aktivitetStatusFilter) &&
-        !aktivitetStatusFilter[aktivitet.status]
-    ) {
+    if (erAktivtFilter(aktivitetStatusFilter) && !aktivitetStatusFilter[aktivitet.status]) {
         return false;
     }
 
-    const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(
-        state
-    );
+    const aktivitetAvtaltMedNavFilter = selectAktivitetAvtaltMedNavFilter(state);
 
     const avtaltMedNavFilter = aktivitetAvtaltMedNavFilter.avtaltMedNav;
     const ikkeAvtaltMedNavFilter = aktivitetAvtaltMedNavFilter.ikkeAvtaltMedNav;
-    const {avtalt} = aktivitet;
+    const { avtalt } = aktivitet;
     const aktivtAvtaltFilter = avtaltMedNavFilter ^ ikkeAvtaltMedNavFilter;
-    const muligeAvtaltFiltereringer =
-        (avtaltMedNavFilter && !avtalt) || (ikkeAvtaltMedNavFilter && avtalt);
+    const muligeAvtaltFiltereringer = (avtaltMedNavFilter && !avtalt) || (ikkeAvtaltMedNavFilter && avtalt);
 
     return !(aktivtAvtaltFilter && muligeAvtaltFiltereringer);
 }

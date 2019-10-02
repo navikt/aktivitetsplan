@@ -5,8 +5,9 @@ import styles from './etikett.module.less';
 
 interface Props {
     className?: string;
-    children: React.ReactNode
-} function EtikettBase(props: Props) {
+    children: React.ReactNode;
+}
+function EtikettBase(props: Props) {
     const { className, children } = props;
     return (
         <div className={classNames(styles.etikett, className)}>

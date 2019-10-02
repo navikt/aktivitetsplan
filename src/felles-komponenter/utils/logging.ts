@@ -1,5 +1,5 @@
 import shajs from 'sha.js';
-import {Dialog, Lest, OppfolgingsPeriode} from "../../types";
+import { Dialog, Lest, OppfolgingsPeriode } from '../../types';
 
 interface Frontendlogger {
     event: (name: string, fields: object, tags: object) => void;
@@ -61,29 +61,29 @@ export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boole
     const fields = {
         underOppfolging,
         veileder: hash(ident),
-        bruker: hash(aktorId),
+        bruker: hash(aktorId)
     };
-    loggEvent(ANTALL_VEILEDERE, fields, {servicegruppe});
+    loggEvent(ANTALL_VEILEDERE, fields, { servicegruppe });
 }
 
 export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boolean, aktorId: string) {
     if (!underOppfolging) {
-        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, {servicegruppe});
+        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, { servicegruppe });
     } else {
-        loggEvent(LOGGING_ANTALLBRUKERE, {bruker: hash(aktorId)}, {servicegruppe});
+        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId) }, { servicegruppe });
     }
 }
 
 export function loggForhandsorienteringTiltak() {
     loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-        forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD,
+        forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD
     });
 }
 
 export function metrikkTidForsteAvtalte(tid: number) {
     loggEvent('aktivitetsplan.aktivitet.forste.avtalt', {
-    tidSidenOppfolging: tid,
-});
+        tidSidenOppfolging: tid
+    });
 }
 
 export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet, nyStatus: string) {
@@ -91,25 +91,29 @@ export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet, nyStatu
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,
         aktivitetType: aktivitet.type,
-        flytteMetode,
+        flytteMetode
     });
 }
 
-export function loggForhandsorientering(erManuellKrrKvpBruker: boolean, mindreEnSyvDagerIgen: boolean, avtaltForm: string) {
+export function loggForhandsorientering(
+    erManuellKrrKvpBruker: boolean,
+    mindreEnSyvDagerIgen: boolean,
+    avtaltForm: string
+) {
     if (erManuellKrrKvpBruker) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-            forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_KRR_KVP_MANUELL,
+            forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_KRR_KVP_MANUELL
         });
     }
 
     if (mindreEnSyvDagerIgen) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-            forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_MINDRE_ENN_SYV_DAGER,
+            forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_MINDRE_ENN_SYV_DAGER
         });
     }
 
     return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-        forhandsorienteringType: avtaltForm,
+        forhandsorienteringType: avtaltForm
     });
 }
 
@@ -132,7 +136,7 @@ export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgin
                 Math.abs(new Date(startDatoPaaOppfolging).getTime() - new Date().getTime()) / (1000 * 3600 * 24)
             );
             loggEvent(DAILOG_BRUKER_HENVENDELSE, {
-                tidBruktForsteHenvendelse,
+                tidBruktForsteHenvendelse
             });
         }
     }
@@ -145,7 +149,7 @@ function tidBruktFra(fraDato: number | string, tilDato?: number | string) {
 
 function loggTidBruktFraRegistrert(fraDato: number | string) {
     loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
-        tidBruktFraRegistrert: tidBruktFra(fraDato),
+        tidBruktFraRegistrert: tidBruktFra(fraDato)
     });
 }
 
@@ -169,7 +173,7 @@ export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Array<Lest>, periode
                 const tidspunkt = new Date(lestAktivitetsplan.tidspunkt).getTime();
                 if (startDato < tidspunkt) {
                     loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
-                        tidMellomGangene: tidBruktFra(tidspunkt),
+                        tidMellomGangene: tidBruktFra(tidspunkt)
                     });
                 } else {
                     loggTidBruktFraRegistrert(startDato);

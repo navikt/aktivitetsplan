@@ -22,7 +22,7 @@ function PeriodeValidering(props) {
 
     const field = {
         touched: !!valideringFelt.error,
-        error: valideringFelt.error,
+        error: valideringFelt.error
     };
 
     return (
@@ -37,14 +37,14 @@ PeriodeValidering.propTypes = {
         name: PT.string,
         error: PT.string,
         input: PT.shape({
-            name: PT.string,
-        }).isRequired,
+            name: PT.string
+        }).isRequired
     }).isRequired,
-    children: PT.node,
+    children: PT.node
 };
 
 PeriodeValidering.defaultProps = {
-    children: undefined,
+    children: undefined
 };
 
 export default PeriodeValidering;
