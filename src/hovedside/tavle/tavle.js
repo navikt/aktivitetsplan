@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
-import { injectIntl, intlShape } from 'react-intl';
 import SprettendeScrollbars from './sprettende-scrollbars';
 import { autobind } from '../../utils';
 
@@ -50,7 +49,7 @@ class Tavle extends Component {
     }
 
     render() {
-        const { children, className, intl } = this.props;
+        const { children, className } = this.props;
         const { venstreKnappDisabled, hoyreKnappDisabled } = this.state;
 
         const kolonner = children.map((child, index) => (
@@ -71,9 +70,7 @@ class Tavle extends Component {
                 })}
                 onClick={this.visForrige}
                 disabled={venstreKnappDisabled}
-                aria-label={intl.formatMessage({
-                    id: 'aktivitetstavle.scrollknapp.forrige.label'
-                })}
+                aria-label="Flytt visning en kolonne til venstre"
             />
         );
 
@@ -85,9 +82,7 @@ class Tavle extends Component {
                 })}
                 onClick={this.visNeste}
                 hidden={hoyreKnappDisabled}
-                aria-label={intl.formatMessage({
-                    id: 'aktivitetstavle.scrollknapp.neste.label'
-                })}
+                aria-label="Flytt visning en kolonne til høyre"
             />
         );
 
@@ -114,12 +109,11 @@ class Tavle extends Component {
 
 Tavle.propTypes = {
     className: PT.string,
-    children: PT.arrayOf(PT.element).isRequired,
-    intl: intlShape.isRequired
+    children: PT.arrayOf(PT.element).isRequired
 };
 
 Tavle.defaultProps = {
     className: ''
 };
 
-export default injectIntl(Tavle);
+export default Tavle;

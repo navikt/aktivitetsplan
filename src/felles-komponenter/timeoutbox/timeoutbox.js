@@ -43,7 +43,7 @@ class Timeoutbox extends Component {
     }
 
     render() {
-        const { expirationTime, intl } = this.props;
+        const { expirationTime } = this.props;
         const skalVise = this.skalViseModal();
         const utlopsTidspunkt = expirationTime;
         if (!utlopsTidspunkt) {
@@ -61,9 +61,7 @@ class Timeoutbox extends Component {
                         manueltLukket: true
                     });
                 }}
-                contentLabel={intl.formatMessage({
-                    id: 'timeoutbox.aria.label'
-                })}
+                contentLabel="Advarsel om utlogging"
             >
                 <TimeoutboxNedtelling utlopsTidspunkt={utlopsTidspunkt} />
             </NavFrontendModal>

@@ -1,6 +1,5 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import Aktivitetsdetaljer from '../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import Informasjonsfelt from '../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
@@ -18,7 +17,7 @@ function AktivitetReferat({ aktivitet }) {
 
     return (
         <HiddenIfDiv hidden={!visReferat} className="printmodal-body__aktivitetreferat">
-            <Informasjonsfelt key="referat" tittel={<FormattedMessage id="referat.header" />} innhold={referat} />
+            <Informasjonsfelt key="referat" tittel="Samtalereferat" innhold={referat} />
         </HiddenIfDiv>
     );
 }
@@ -27,11 +26,30 @@ AktivitetReferat.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired
 };
 
-function AktivitetPrint({ aktivitet, dialog, intl }) {
+const typeMap = {
+    EGEN: 'Jobbrettet egenaktivitet',
+    STILLING: 'Stilling',
+    TILTAKSAKTIVITET: 'Tiltak gjennom NAV',
+    GRUPPEAKTIVITET: 'Gruppeaktivitet',
+    UTDANNINGSAKTIVITET: 'Utdanning',
+    SOKEAVTALE: 'Jobbsøking',
+    IJOBB: 'Jobb jeg har nå',
+    BEHANDLING: 'Behandling',
+    MOTE: 'Møte med NAV',
+    SAMTALEREFERAT: 'Samtalereferat'
+};
+
+const statusMap = {
+    PLANLAGT: 'Planlagte aktiviteter',
+    BRUKER_ER_INTERESSERT: 'Forslag til aktiviteter',
+    GJENNOMFORES: 'Aktiviteter jeg gjennomfører nå',
+    FULLFORT: 'Fullførte aktiviteter',
+    AVBRUTT: 'Avbrutt'
+};
+
+function AktivitetPrint({ aktivitet, dialog }) {
     const { id, type, tittel } = aktivitet;
-    const aktivitetType = intl.formatMessage({
-        id: `aktivitetskort.type.${type}`.toLowerCase()
-    });
+    const aktivitetType = typeMap[type];
     return (
         <div key={id} className="printmodal-body__statusgruppe">
             <p className="printmodal-body__statusgruppe--type">{aktivitetType}</p>
@@ -55,22 +73,19 @@ AktivitetPrint.defaultProps = {
 
 AktivitetPrint.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    dialog: AppPT.dialog,
-    intl: intlShape.isRequired
+    dialog: AppPT.dialog
 };
 
-function StatusGruppe({ gruppe, intl }) {
+function StatusGruppe({ gruppe }) {
     const { status, aktiviteter, dialoger } = gruppe;
     return (
         <section className="printmodal-body__statusgrupper">
             <Undertittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
-                <FormattedMessage id={`aktivitetstavle.print.${status.toLowerCase()}`} />
+                {statusMap[status]}
             </Undertittel>
             {aktiviteter.sort(compareAktivitet).map(aktivitet => {
                 const dialogForAktivitet = dialoger.find(d => d.aktivitetId === aktivitet.id);
-                return (
-                    <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} intl={intl} dialog={dialogForAktivitet} />
-                );
+                return <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} dialog={dialogForAktivitet} />;
             })}
         </section>
     );
@@ -81,12 +96,11 @@ StatusGruppe.propTypes = {
         status: PT.string.isRequired,
         aktiviteter: AppPT.aktiviteter.isRequired,
         dialoger: PT.arrayOf(AppPT.dialog)
-    }),
-    intl: intlShape.isRequired
+    })
 };
 
 StatusGruppe.defaultProps = {
     gruppe: null
 };
 
-export default injectIntl(StatusGruppe);
+export default StatusGruppe;
