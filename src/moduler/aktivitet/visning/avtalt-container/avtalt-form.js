@@ -48,6 +48,20 @@ const validator = useFormstate({
     avtaltText: () => {}
 });
 
+function InfoHeader() {
+    return (
+        <div>
+            <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
+            <HjelpetekstHoyre id="brukerinfo">
+                Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
+                offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
+                Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv
+                time så blir det kun sendt én SMS eller e-post.
+            </HjelpetekstHoyre>
+        </div>
+    );
+}
+
 function AvtaltForm(props) {
     const {
         onSubmit,
@@ -110,6 +124,7 @@ function AvtaltForm(props) {
                     </Select>
                     <VisibleIfDiv visible={avtaltSelect !== IKKE_SEND_FORHANDSORIENTERING}>
                         <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
+                            <InfoHeader />
                             <Normaltekst className="blokk-xs">
                                 Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det
                                 medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du
@@ -119,18 +134,7 @@ function AvtaltForm(props) {
                         </VisibleIfDiv>
                         <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>
                             <Textarea
-                                label={
-                                    <div>
-                                        <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
-                                        <HjelpetekstHoyre id="brukerinfo">
-                                            Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv
-                                            har registrert i det offentlige kontaktregisteret. Brukeren får beskjed om
-                                            en viktig oppgave og det lenkes til dialog. Beskjeden sendes gjennom Altinn
-                                            etter en halv time. Sender du flere forhåndsorienteringer innen en halv time
-                                            så blir det kun sendt én SMS eller e-post.
-                                        </HjelpetekstHoyre>
-                                    </div>
-                                }
+                                label={<InfoHeader />}
                                 maxLength={500}
                                 disabled={oppdaterer}
                                 {...state.fields.avtaltText119}
