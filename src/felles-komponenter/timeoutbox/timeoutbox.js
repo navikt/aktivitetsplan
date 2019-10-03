@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
-import { injectIntl, intlShape } from 'react-intl';
 import TimeoutboxNedtelling from './timeoutbox-nedtelling';
 import { hentGjenstaendeInnloggetTid } from './auth-reducer';
 import { selectExpirationTime } from './auth-selector';
@@ -70,7 +69,6 @@ class Timeoutbox extends Component {
 }
 
 Timeoutbox.propTypes = {
-    intl: intlShape.isRequired,
     doHentGjenstaendeInnloggetTid: PT.func.isRequired,
     expirationTime: PT.string
 };
@@ -90,4 +88,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(injectIntl(Timeoutbox));
+)(Timeoutbox);
