@@ -8,7 +8,6 @@ import featureReducer from './ducks/feature-reducer';
 import filterReducer from './moduler/filtrering/filter/filter-reducer';
 import identitetReducer from './moduler/identitet/identitet-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
-import fremtidigSituasjonReducer from './hovedside/maal/fremtidigSituasjon-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import utskriftReducer from './moduler/utskrift/utskrift-duck';
@@ -29,7 +28,6 @@ const combinedReducers = combineReducers({
         filter: filterReducer,
         identitet: identitetReducer,
         mal: malReducer,
-        fremtidigSituasjon: fremtidigSituasjonReducer,
         malListe: malListeReducer,
         oppfolging: oppfolgingReducer,
         versjoner: versjonReducer,

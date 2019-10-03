@@ -2,6 +2,11 @@ import { erEksternBruker } from './demo/sessionstorage';
 
 export const maler = [
     {
+        mal: 'Jeg vil bli stor og sterk',
+        endretAv: 'BRUKER',
+        dato: '2017-12-31T09:46:10.971+01:00'
+    },
+    {
         mal: 'Jeg vil bli sjørøver',
         endretAv: 'BRUKER',
         dato: new Date()
