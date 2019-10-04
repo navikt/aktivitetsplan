@@ -1,7 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
@@ -10,29 +9,25 @@ import { selectKvpPeriodeForValgteOppfolging } from '../oppfolging-status/oppfol
 import { datoComparator, formaterDatoKortManed } from '../../utils';
 import Radio from '../../felles-komponenter/skjema/input/radio';
 
-function UtskriftValg({ tittelId, tekstId }) {
+function UtskriftValg({ tittel, tekst }) {
     return (
         <div>
-            <Undertittel>
-                <FormattedMessage id={tittelId} />
-            </Undertittel>
-            <Normaltekst>
-                <FormattedMessage id={tekstId} />
-            </Normaltekst>
+            <Undertittel>{tittel}</Undertittel>
+            <Normaltekst>{tekst}</Normaltekst>
         </div>
     );
 }
 
 UtskriftValg.propTypes = {
-    tittelId: PT.string.isRequired,
-    tekstId: PT.string.isRequired
+    tittel: PT.string.isRequired,
+    tekst: PT.string.isRequired
 };
 
 function KvpPlanValg({ kvpPeriode, field }) {
     return (
         <Radio
             id={kvpPeriode.opprettetDato}
-            label={<UtskriftValg tittelId="print.kvp-plan" tekstId="print.kvp-plan.beskrivelse" />}
+            label={<UtskriftValg tittel="KVP-perioden" tekst="Du skriver ut innholdet i KVP-perioden" />}
             value={kvpPeriode.opprettetDato}
             disabled={!kvpPeriode.avsluttetDato}
             {...field}
@@ -48,7 +43,7 @@ KvpPlanValg.propTypes = {
 function KvpPlanListeValg({ kvpPerioder, field }) {
     return (
         <div className="kvp-plan-valg">
-            <UtskriftValg tittelId="print.kvp-plan" tekstId="print.kvp-plan.beskrivelse" />
+            <UtskriftValg tittel="KVP-perioden" tekst="Du skriver ut innholdet i KVP-perioden" />
             {kvpPerioder &&
                 kvpPerioder.map(kvp => (
                     <Radio
@@ -98,14 +93,22 @@ function VelgPlanUtskriftForm(props) {
 
                 <div>
                     <Radio
-                        label={<UtskriftValg tittelId="print.hele.plan" tekstId="print.hele.plan.beskrivelse" />}
+                        label={
+                            <UtskriftValg
+                                tittel="Hele oppfølgingsperioden"
+                                tekst="Du skriver ut alt innholdet du ser i aktivitetsplan, også KVP-perioden"
+                            />
+                        }
                         value="helePlanen"
                         id="id--helePlanen"
                         {...state.fields.utskriftPlanType}
                     />
                     <Radio
                         label={
-                            <UtskriftValg tittelId="print.aktivitetsplan" tekstId="print.aktivitetsplan.beskrivelse" />
+                            <UtskriftValg
+                                tittel="Oppfølgingsperioden uten KVP-perioden"
+                                tekst="Du skriver ut alt innholdet du ser i aktivitetsplan, uten om KVP-perioden"
+                            />
                         }
                         value="aktivitetsplan"
                         id="id--aktivitetsplan"

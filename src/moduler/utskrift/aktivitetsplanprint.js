@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { Undertittel, Systemtittel } from 'nav-frontend-typografi';
 import { formaterDatoKortManed } from '../../utils';
 import StoreForbokstaver from '../../felles-komponenter/utils/store-forbokstaver';
@@ -120,35 +119,25 @@ function Print({
                 </div>
                 <div className="printmodal-body__dato">
                     <HiddenIfDiv hidden={!erVeileder}>{enhetsNavn}</HiddenIfDiv>
-                    <FormattedMessage id="print.modal.utskrift.dato" />
+                    Dato
                     {` ${formaterDatoKortManed(Date.now())}`}
-                    <HiddenIfDiv hidden={!fodselsnummer}>
-                        <FormattedMessage id="print.modal.utskrift.fnr" />
-                        {` ${fodselsnummer}`}
-                    </HiddenIfDiv>
+                    <HiddenIfDiv hidden={!fodselsnummer}>{`Fødselsnummer: ${fodselsnummer}`}</HiddenIfDiv>
+                    <HiddenIfDiv hidden={!erKvpUtskrift}>Modia Arbeidsrettet Oppfølging</HiddenIfDiv>
+                    <HiddenIfDiv hidden={!erKvpUtskrift}>{`Periode: ${kvpPeriodeFra} - ${kvpPeriodeTil}`}</HiddenIfDiv>
                     <HiddenIfDiv hidden={!erKvpUtskrift}>
-                        <FormattedMessage id="print.modia.oppfolging" />
-                    </HiddenIfDiv>
-                    <HiddenIfDiv hidden={!erKvpUtskrift}>
-                        <FormattedMessage
-                            id="print.oppfolgingperiode"
-                            values={{ fra: kvpPeriodeFra, til: kvpPeriodeTil }}
-                        />
-                    </HiddenIfDiv>
-                    <HiddenIfDiv hidden={!erKvpUtskrift}>
-                        <FormattedMessage id="print.manuellbruker.eller.niva4" values={{ erManuell }} />
+                        {erManuell ? 'Manuell bruker' : 'Pålogget nivå 4'}
                     </HiddenIfDiv>
                 </div>
             </div>
             <Systemtittel tag="h1" className="printmodal-body__utskrift--overskrift">
-                <FormattedMessage id="hovedside.tittel" />
+                Aktivitetsplan
             </Systemtittel>
             <HiddenIfSection hidden={!printMelding} className="printmodal-body__visprintmelding">
                 <p>{beskrivelse}</p>
             </HiddenIfSection>
             <HiddenIfSection hidden={!mittMal || !mittMal.mal} className="printmodal-body__vismittmal">
                 <Undertittel tag="h1" className="printmodal-body__vismittmal--overskrift">
-                    <FormattedMessage id="aktivitetsmal.mitt-mal" />
+                    Mitt mål
                 </Undertittel>
                 <p>{mittMal && mittMal.mal}</p>
             </HiddenIfSection>
@@ -212,7 +201,7 @@ class AktivitetsplanPrintModal extends Component {
                         >
                             <div className="tilbakeknapp-innhold">
                                 <i className="nav-frontend-chevron chevronboks chevron--venstre" />
-                                <FormattedMessage id="print.modal.tilbake" className="tilbakeknapp-innhold__tekst" />
+                                <div className="tilbakeknapp-innhold__tekst">Tilbake</div>
                             </div>
                         </Knappelenke>
                         <HiddenIfHovedknapp
