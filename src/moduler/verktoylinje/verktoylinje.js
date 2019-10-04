@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
@@ -52,9 +51,9 @@ class Verktoylinje extends Component {
                     >
                         <TallAlert hidden={antallUlesteDialoger <= 0}>{antallUlesteDialoger}</TallAlert>
                         <HiddenIfDiv hidden={antallUlesteDialoger > 0} className="sr-only">
-                            <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
+                            Aktiviteten har en dialog
                         </HiddenIfDiv>
-                        <FormattedMessage id="navigasjon.dialog" />
+                        Dialog
                     </Lenke>
                     <Lenkeknapp
                         type="big-hoved"
@@ -69,13 +68,9 @@ class Verktoylinje extends Component {
                 <div className="verktoylinje__verktoy-container">
                     <div className="indre">
                         <Lenke href="/informasjon" className="knappelenke" onClick={() => loggEvent(APNE_OM_TJENESTEN)}>
-                            <FormattedMessage id="navigasjon.informasjon" />
+                            Om tjenesten
                         </Lenke>
-                        <UtskriftKnapp
-                            ariaLabel="utskrift.ikon.alt.tekst"
-                            lenke="/utskrift"
-                            className="verktoylinje__print-knapp"
-                        />
+                        <UtskriftKnapp lenke="/utskrift" className="verktoylinje__print-knapp" />
                         <Filter className="verktoylinje__verktoy" />
                     </div>
                 </div>
