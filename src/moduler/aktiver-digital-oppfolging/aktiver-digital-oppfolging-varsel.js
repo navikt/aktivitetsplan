@@ -45,7 +45,7 @@ function AktiverDigitalOppfolgingVarsel({ reservertIKRR, settDigitalFeilet, harT
         );
     }
     if (settDigitalFeilet) {
-        return <AdvarselVarsling tekstId="sett-digital.feilmelding" className="sett-digital__varsel" />;
+        return <AdvarselVarsling tekst="Feilet. Prøv igjen sennere!" className="sett-digital__varsel" />;
     }
 }
 

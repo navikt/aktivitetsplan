@@ -34,12 +34,12 @@ class Varslinger extends Component {
         const antallDagerIgjenMindreEnn10 = antallDagerIgjen < 10 && antallDagerIgjen >= 1;
 
         if (antallDagerIgjenMerEnn10) {
-            return 'oppfolging.inaktivert-28-til-10-dager.reaktiveres';
+            return 'Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.';
         }
         if (antallDagerIgjenMindreEnn10) {
-            return 'oppfolging.inaktivert-mindre-enn-10-dager.reaktiveres';
+            return `Du er ikke lenger registrert hos NAV. Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert. Om ${antallDagerIgjen} dager vil denne aktivitetsplanen bli avsluttet.`;
         }
-        return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
+        return 'Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Tidligere plan". Hvis du fortsatt skal motta ytelser og få oppfølging fra NAV må du være registrert.';
     }
 
     render() {
@@ -50,8 +50,7 @@ class Varslinger extends Component {
             brukerErEskalert,
             tilhorendeDialogId,
             doVelgNavarendePeriode,
-            kanReaktiveres,
-            antallDagerIgjen
+            kanReaktiveres
         } = this.props;
 
         if (!erBruker) {
@@ -64,8 +63,8 @@ class Varslinger extends Component {
             <div className="container">
                 <HiddenIfVarslingMedLenke
                     hidden={!brukerErEskalert}
-                    tekstId="oppfolgning.bruker.bruker-er-eskalert"
-                    lenkeTekstId="oppfolgning.bruker.bruker-er-eskalert.lenke-tekst"
+                    tekst="Se viktig oppgave fra NAV som du må gjøre."
+                    lenkeTekst="Les meldingen"
                     href={`/dialog/${tilhorendeDialogId}`}
                     className="varsling"
                     onClick={() => {
@@ -74,21 +73,19 @@ class Varslinger extends Component {
                 />
                 <HiddenIfAdvarselMedLenke
                     hidden={!kanReaktiveres}
-                    tekstId={reaktiveringsInfoTekst}
+                    tekst={reaktiveringsInfoTekst}
                     className="varsling"
-                    lenkeTekstId="oppfolging.ikke-under-oppfolging.reaktiveres.lenke-tekst"
+                    lenkeTekst="Gå til registrering"
                     href={arbeidssokerregistreringHref}
                     erEksternLenke
-                    values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
                 <HiddenIfAdvarselMedLenke
                     hidden={underOppfolging}
-                    tekstId="ikke.under.oppfolging.reaktivering"
+                    tekst='Du er ikke lenger registrert hos NAV og din tidligere aktivitetsplan er lagt under "Mine tidligere planer". Hvis du fortsatt skal motta ytelser, få oppfølging fra NAV og bruke aktivitetsplanen må du være registrert.'
                     className="varsling"
-                    lenkeTekstId="ikke.under.oppfolging.reaktivering.lenke"
+                    lenkeTekst="Register deg hos NAV"
                     href={arbeidssokerregistreringHref}
                     erEksternLenke
-                    values={{ antalldagerIgjen: antallDagerIgjen }}
                 />
             </div>
         );
