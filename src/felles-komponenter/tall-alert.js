@@ -1,15 +1,19 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import hiddenIfHOC from './hidden-if/hidden-if';
+
+function getText(antall) {
+    if (antall === 1) {
+        return 'Du har 1 ulest melding';
+    }
+    return `Du har ${antall} uleste meldinger`;
+}
 
 function TallAlert({ children }) {
     return (
         <span className="tall-alert">
             <span aria-hidden="true">{children}</span>
-            <span className="sr-only">
-                <FormattedMessage id="tall-alert.antall.skjermleser" values={{ ULESTE_MELDINGER: children }} />
-            </span>
+            <span className="sr-only">{getText(children)}</span>
         </span>
     );
 }
