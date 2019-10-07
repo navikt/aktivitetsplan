@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { hentIdentitet } from './identitet-reducer';
 
