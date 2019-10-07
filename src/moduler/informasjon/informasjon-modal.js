@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
@@ -38,9 +37,7 @@ class InformasjonModal extends Component {
                 }}
             >
                 <ModalContainer className="informasjon-modal-container">
-                    <Innholdstittel>
-                        <FormattedMessage id="informasjon.ny_tittel" />
-                    </Innholdstittel>
+                    <Innholdstittel>Hva er aktivitetsplanen?</Innholdstittel>
                     <p>
                         Aktivitetsplanen din er verktøyet du skal bruke for å komme i aktivitet og jobb. Denne blir delt
                         med veilederen din. For at vi skal kunne følge deg opp best mulig, er det viktig at du bruker
