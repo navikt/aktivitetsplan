@@ -1,6 +1,5 @@
 import React from 'react';
 import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { HjelpetekstUnderVenstre } from 'nav-frontend-hjelpetekst';
 import {
     STATUS_AVBRUTT,
@@ -12,24 +11,29 @@ import {
 
 const hjelpetekster = {
     [STATUS_BRUKER_ER_INTRESSERT]: {
-        tittelId: 'aktivitetstavle.brukerErInteressert.info',
-        innholdId: 'hjelpetekst.aktivitet.er.interessert'
+        tittel: 'Informasjon om statusen Forslag',
+        innhold:
+            'Legg til en aktivitet du tror du kommer til å gjøre her. Dra aktiviteten til Planlegger når du har bestemt deg for å gjøre aktiviteten.'
     },
     [STATUS_PLANLAGT]: {
-        tittelId: 'aktivitetstavle.planlagt.info',
-        innholdId: 'hjelpetekst.aktivitet.planlagt'
+        tittel: 'Informasjon om statusen Planlegger',
+        innhold:
+            'Legg til en aktivitet som du faktisk planlegger å gjøre her. Når du starter aktiviteten, drar du den til Gjennomfører.'
     },
     [STATUS_GJENNOMFOERT]: {
-        tittelId: 'aktivitetstavle.gjennomfoert.info',
-        innholdId: 'hjelpetekst.aktivitet.gjennomfoert'
+        tittel: 'Informasjon om statusen Gjennomfører',
+        innhold:
+            'Dra aktiviteter hit som du gjennomfører nå. Har du søkt på en stilling og venter på et svar, kan du vente med å dra aktiviteten til Fullført til du har fått svaret.'
     },
     [STATUS_FULLFOERT]: {
-        tittelId: 'aktivitetstavle.fullfoert.info',
-        innholdId: 'hjelpetekst.aktivitet.fullfoert'
+        tittel: 'Informasjon om statusen Fullført',
+        innhold:
+            'Dra aktiviteter som du er ferdig med hit. Flytter du en aktivitet til Fullført, blir den låst og kan ikke redigeres. Hvis du angrer, kan du opprette en ny tilsvarende aktivitet.'
     },
     [STATUS_AVBRUTT]: {
-        tittelId: 'aktivitetstavle.avbrutt.info',
-        innholdId: 'hjelpetekst.aktivitet.avbrutt'
+        tittel: 'Informasjon om statusen Avbrutt',
+        innhold:
+            'Dra aktiviteter hit som du avbryter eller ikke begynner på. Flytter du en aktivitet til Avbrutt, blir den låst og kan ikke redigeres. Hvis du angrer, kan du opprette en tilsvarende ny aktivitet.'
     }
 };
 
@@ -39,15 +43,11 @@ function AktivitetsplanHjelpetekst({ status }) {
         return null;
     }
 
-    const { tittelId, innholdId } = config;
+    const { tittel, innhold } = config;
     return (
-        <FormattedMessage id={tittelId}>
-            {tittel => (
-                <HjelpetekstUnderVenstre id={tittelId} tittel={tittel}>
-                    <FormattedMessage id={innholdId} />
-                </HjelpetekstUnderVenstre>
-            )}
-        </FormattedMessage>
+        <HjelpetekstUnderVenstre id={status} tittel={tittel}>
+            {innhold}
+        </HjelpetekstUnderVenstre>
     );
 }
 
