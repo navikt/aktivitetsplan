@@ -23,8 +23,8 @@ redirect:
     to: {{AKTIVITETSPLAN_URL}}
   - from: /arbeidssokerregistrering
     to: {{ARBEIDSSOKERREGISTRERING_URL}}
-  - from: /registreringsinformasjon
-    to: {{REGISTRERINGSINFORMASJON_URL}}
+  - from: /dineopplysninger
+    to: {{DINEOPPLYSNINGER_URL}}
   - from: /dittnav
     to: {{DITTNAV_LINK_URL}}
   - from: /veientilarbeid

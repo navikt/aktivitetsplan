@@ -41,7 +41,7 @@ spec:
     - VEIENTILARBEID_URL
     - AKTIVITETSPLAN_URL
     - ARBEIDSSOKERREGISTRERING_URL
-    - REGISTRERINGSINFORMASJON_URL
+    - DINEOPPLYSNINGER_URL
     - VEILARBSTEPUP_OIDC_URL
     - name: DITTNAV_LINK_URL
       value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
