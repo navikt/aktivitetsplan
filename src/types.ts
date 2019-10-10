@@ -13,6 +13,8 @@ export type aktivitetType =
     | 'SAMTALEREFERAT';
 //aktivitetStatusd efinisjonen bor også i .\const som STATUS_*
 export type aktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
+
+export type etikett = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
 export interface Lest {
     tidspunkt: string;
     verdi?: string;
@@ -21,18 +23,23 @@ export interface Lest {
 
 export interface Aktivitet {
     //denne er ikke komplett
+    id: string;
     tittel?: string;
     fraDato?: string;
     tilDato?: string;
-    opprettetDato?: string;
+    opprettetDato: string;
     endretDato?: string;
-    status?: aktivitetStatus;
-    type?: aktivitetType;
+    status: aktivitetStatus;
+    type: aktivitetType;
+    etikett?: etikett;
     historisk?: boolean;
     lagtInnAv?: string;
     detaljer?: object;
     beskrivelse?: string;
     avtalt?: boolean;
+
+    referat?: string;
+    erReferatPublisert?: boolean;
 }
 
 export interface OppfolgingsPeriode {
@@ -45,11 +52,11 @@ export interface OppfolgingsPeriode {
 }
 
 export interface Dialog {
-    id: string;
+    dialogId: string;
     overskrift: string;
     aktivitetId?: string;
     lest?: boolean;
-    sisteDato?: string;
+    sisteDato: string;
     sisteTekst?: string;
     erLestAvBruker?: boolean;
     venterPaSvar?: boolean;
@@ -65,4 +72,45 @@ interface Henvendelse {
     avsenderId?: string;
     sendt: string;
     lest: boolean;
+}
+
+interface BehandlendeEnhet {
+    navn?: string;
+}
+
+export interface Bruker {
+    fodselsnummer?: string;
+    fornavn?: string;
+    mellomnavn?: string;
+    etternavn?: string;
+    sammensattNavn?: string;
+    behandlendeEnhet?: BehandlendeEnhet;
+    bostedsadresse?: Bostedsadresse;
+}
+
+interface Bostedsadresse {
+    strukturertAdresse?: StrukturertAdresse;
+}
+
+interface StrukturertAdresse {
+    Gateadresse: GateAdresse;
+}
+
+export interface Mal {
+    mal: string;
+    endretAv: string;
+    dato: string;
+}
+
+export interface KvpPeriode {
+    opprettetDato: string;
+    avsluttetDato?: string;
+}
+
+interface GateAdresse {
+    gatenavn?: string;
+    poststed?: string;
+    husbokstav?: string;
+    husnummer?: string;
+    postnummer?: string;
 }

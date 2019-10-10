@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import { Select as NavSelect, SelectProps } from 'nav-frontend-skjema';
+import { FieldState } from '@nutgaard/use-formstate';
 
 interface Props {
     initialValue?: string;
@@ -9,7 +10,7 @@ interface Props {
     children: React.ReactNode;
     touched: boolean;
     error?: string;
-    input: object;
+    input: FieldState['input'];
 }
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Select(props: Props & SelectProps) {

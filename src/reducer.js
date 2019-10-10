@@ -10,7 +10,6 @@ import identitetReducer from './moduler/identitet/identitet-reducer';
 import malListeReducer from './moduler/mal/malliste-reducer';
 import malReducer from './moduler/mal/aktivitetsmal-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
-import utskriftReducer from './moduler/utskrift/utskrift-duck';
 import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-versjoner-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import underelmenterReducer from './moduler/aktivitet/visning/underelement-for-aktivitet/underelementer-view-reducer';
@@ -38,7 +37,6 @@ const combinedReducers = combineReducers({
     }),
     view: combineReducers({
         dialog: dialogViewReducer,
-        utskrift: utskriftReducer,
         underelementer: underelmenterReducer,
         visteAktiviteterMedEndringer: aktivitetViewReducer,
         informasjon: informasjonReducer
