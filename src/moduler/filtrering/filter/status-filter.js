@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { selectAktivitetStatusFilter } from './filter-selector';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetsStatus } from './filter-reducer';
-import FilterVisning from './filter-visnings-komponent';
+import FilterVisning from './filter-visning';
 import {
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_PLANLAGT,
@@ -27,7 +27,7 @@ function StatusFilter({ harAktivitetStatus, sortedAktivitetStatus, doToggleAktiv
         <FilterVisning
             harAktiviteter={harAktivitetStatus}
             filter={sortedAktivitetStatus}
-            filterTittel="aktivitet.status"
+            filterTittel="Status"
             filterTekst="aktivitet.status."
             metrikkNavn={STATUS_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsStatus}
