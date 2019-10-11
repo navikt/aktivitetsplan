@@ -11,6 +11,7 @@ import EndreLinje from '../endre-linje/endre-linje';
 import StatusVisning from './status-visning';
 import Underseksjon from '../underseksjon/underseksjon';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 
 function OppdaterAktivitetStatus(props) {
     const { aktivitet, disableStatusEndring, lagreStatusEndringer } = props;
@@ -25,6 +26,8 @@ function OppdaterAktivitetStatus(props) {
     const visning = <StatusVisning status={aktivitet.status} />;
     const form = <AktivitetStatusForm disabled={disableStatusEndring} onSubmit={onSubmit} aktivitet={aktivitet} />;
 
+    const kanEndre = aktivitet.status !== STATUS_FULLFOERT && aktivitet.status !== STATUS_AVBRUTT;
+
     return (
         <Underseksjon>
             <EndreLinje
@@ -33,6 +36,7 @@ function OppdaterAktivitetStatus(props) {
                 setEndring={setEndring}
                 visning={visning}
                 form={form}
+                kanEndre={kanEndre}
             />
         </Underseksjon>
     );
