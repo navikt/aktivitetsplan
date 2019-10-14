@@ -19,6 +19,7 @@ import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldg
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import { DirtyContext } from '../../../context/dirty-context';
+import { ReactComponent as Lock } from '../../aktivitet-kort/lock.svg';
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripe);
 
@@ -109,7 +110,12 @@ function AktivitetStatusForm(props) {
                     {...state.fields.aktivitetstatus}
                 />
                 <Radio
-                    label="Fullført"
+                    label={
+                        <span>
+                            Fullført <Lock />
+                        </span>
+                    }
+                    titel="aktiviteten blir låst vis du setter den til fulført"
                     value={STATUS_FULLFOERT}
                     disabled={disabled}
                     {...state.fields.aktivitetstatus}

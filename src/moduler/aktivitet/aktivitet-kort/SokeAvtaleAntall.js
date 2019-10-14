@@ -24,5 +24,6 @@ export default function SokeAvtaleAntall({ aktivitet }) {
 }
 
 SokeAvtaleAntall.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
+    alleAktiviteter: AppPT.aktiviteter.isRequired
 };
