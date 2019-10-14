@@ -9,12 +9,15 @@ import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
 const getCls = etikettnavn => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
+            return styles.soknadSendt;
         case statuskoder.INNKALT_TIL_INTERVJU:
+            return styles.inkaltTilIntervju;
         case statuskoder.JOBBTILBUD:
-            return styles.etikettSuksess;
+            return styles.jobbtilbud;
         case statuskoder.AVSLAG:
+            return styles.avslag;
         default:
-            return styles.etikettInfo;
+            return styles.ikkeStartet;
     }
 };
 
@@ -25,7 +28,7 @@ const getText = etikettnavn => {
         case statuskoder.INNKALT_TIL_INTERVJU:
             return 'Skal på intervju';
         case statuskoder.JOBBTILBUD:
-            return 'Fått jobbtilbud';
+            return 'Fått jobbtilbud 🎉';
         case statuskoder.AVSLAG:
             return 'Fått avslag';
         default:
