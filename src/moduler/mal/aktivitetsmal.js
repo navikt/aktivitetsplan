@@ -77,14 +77,15 @@ class AktivitetsMal extends Component {
             <Innholdslaster avhengigheter={avhengigheter}>
                 <section className="aktivitetmal">
                     <div className="aktivitetmal__innhold">
-                        <Tekstomrade className="aktivitetmal__tekst">{mal || ''}</Tekstomrade>
-                        <Tekstomrade className="aktivitetmal__tekst">{mal || ''}</Tekstomrade>
+                        <Tekstomrade className="aktivitetmal__tekst">
+                            {mal || 'Det ble ikke skrevet mål i denne perioden'}
+                        </Tekstomrade>
                         <HiddenIfHovedknapp
                             onClick={() => history.push('mal/endre')}
                             hidden={historiskVisning}
                             disabled={!harSkriveTilgang || !underOppfolging}
                         >
-                            <FormattedMessage id={harMal ? 'aktivitetsmal.rediger' : 'aktivitetsmal.opprett'} />
+                            {harMal ? 'Rediger' : 'Opprett ditt mål'}
                         </HiddenIfHovedknapp>
                     </div>
                     <HiddenIfDiv hidden={historiskeMal.length === 0}>

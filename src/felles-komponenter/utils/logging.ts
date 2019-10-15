@@ -1,5 +1,12 @@
-export default function loggEvent(eventNavn, feltObjekt, tagObjekt) {
-    const { frontendlogger } = window;
+import shajs from 'sha.js';
+import { Aktivitet, aktivitetStatus, Dialog, Lest, OppfolgingsPeriode } from '../../types';
+
+interface Frontendlogger {
+    event: (name: string, fields: object, tags: object) => void;
+}
+
+export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObjekt?: object) {
+    const frontendlogger: Frontendlogger = (window as any).frontendlogger;
     if (frontendlogger) {
         frontendlogger.event(eventNavn, feltObjekt || {}, tagObjekt || {});
     } else {
@@ -18,7 +25,9 @@ const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
 const DAILOG_BRUKER_HENVENDELSE = 'dialog.bruker.henvendelse';
 const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
-export const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallBrukere.v2';
+export const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallSluttBrukere';
+export const ANTALL_VEILEDERE = 'aktivitetsplan.antallVeiledere';
+export const LOGG_BRUKER_IKKE_OPPFOLGING = 'aktivitetsplan.antallBrukerIkkeOppfolging';
 export const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
 export const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
 
@@ -40,19 +49,44 @@ export const TILSTAND_FILTER_METRIKK = `${filterBase}Tilstand`;
 
 const AKTIVITET_FLYTTET = 'aktivitetsplan.aktivitet.flyttet';
 
+function hash(string?: string): string {
+    return string
+        ? shajs('sha256')
+              .update(string)
+              .digest('hex')
+        : null;
+}
+
+export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boolean, ident: string, aktorId?: string) {
+    const fields = {
+        underOppfolging,
+        veileder: hash(ident),
+        bruker: hash(aktorId)
+    };
+    loggEvent(ANTALL_VEILEDERE, fields, { servicegruppe });
+}
+
+export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boolean, aktorId: string) {
+    if (!underOppfolging) {
+        loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, { servicegruppe });
+    } else {
+        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId) }, { servicegruppe });
+    }
+}
+
 export function loggForhandsorienteringTiltak() {
     loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
         forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD
     });
 }
 
-export function metrikkTidForsteAvtalte(tid) {
+export function metrikkTidForsteAvtalte(tid: number) {
     loggEvent('aktivitetsplan.aktivitet.forste.avtalt', {
         tidSidenOppfolging: tid
     });
 }
 
-export function flyttetAktivitetMetrikk(flytteMetode, aktivitet, nyStatus) {
+export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivitet, nyStatus: aktivitetStatus) {
     loggEvent(AKTIVITET_FLYTTET, {
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,
@@ -61,7 +95,11 @@ export function flyttetAktivitetMetrikk(flytteMetode, aktivitet, nyStatus) {
     });
 }
 
-export function loggForhandsorientering(erManuellKrrKvpBruker, mindreEnSyvDagerIgen, avtaltForm) {
+export function loggForhandsorientering(
+    erManuellKrrKvpBruker: boolean,
+    mindreEnSyvDagerIgen: boolean,
+    avtaltForm: string
+) {
     if (erManuellKrrKvpBruker) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
             forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_KRR_KVP_MANUELL
@@ -79,15 +117,15 @@ export function loggForhandsorientering(erManuellKrrKvpBruker, mindreEnSyvDagerI
     });
 }
 
-export function loggMittMalKlikk(veileder) {
+export function loggMittMalKlikk(veileder: boolean) {
     loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
 }
 
-export function loggMittMalLagre(veileder) {
+export function loggMittMalLagre(veileder: boolean) {
     loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
 }
 
-export function loggTidBruktForsteHenvendelse(dialoger, oppfolgingsPerioder) {
+export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgingsPerioder: Array<OppfolgingsPeriode>) {
     const brukerHarSendtDialogTidligere = dialoger.find(a => a.henvendelser.find(h => h.avsender === 'BRUKER'));
 
     if (!brukerHarSendtDialogTidligere) {
@@ -104,18 +142,18 @@ export function loggTidBruktForsteHenvendelse(dialoger, oppfolgingsPerioder) {
     }
 }
 
-function tidBruktFra(fraDato, tilDato) {
+function tidBruktFra(fraDato: number | string, tilDato?: number | string) {
     const tilD = tilDato ? new Date(tilDato).getTime() : new Date().getTime();
     return Math.ceil(Math.abs(new Date(fraDato).getTime() - tilD) / (1000 * 3600 * 24));
 }
 
-function loggTidBruktFraRegistrert(fraDato) {
+function loggTidBruktFraRegistrert(fraDato: number | string) {
     loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
         tidBruktFraRegistrert: tidBruktFra(fraDato)
     });
 }
 
-export function loggTidBruktGaaInnPaaAktivitetsplanen(lest, perioder) {
+export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Array<Lest>, perioder: Array<OppfolgingsPeriode>) {
     const periode = perioder.find(p => p.sluttDato === null);
     if (periode) {
         // Tid brukt fra registrert til aktivitetsplanen

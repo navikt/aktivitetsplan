@@ -43,7 +43,7 @@ function BegrunnelseForm(props) {
                 </ModalContainer>
             </div>
             <ModalFooter>
-                <Hovedknapp spinner={lagrer} mini autoDisableVedSpinner>
+                <Hovedknapp spinner={lagrer} autoDisableVedSpinner>
                     Lagre
                 </Hovedknapp>
             </ModalFooter>

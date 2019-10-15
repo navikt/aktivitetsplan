@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-import PT from 'prop-types';
 import { Textarea as NavTextArea } from 'nav-frontend-skjema';
 
-function getTellerTekst(antallTegn, maxLength, visTellerFra) {
+function getTellerTekst(antallTegn: number, maxLength: number, visTellerFra?: number) {
     const tegnIgjen = maxLength - antallTegn;
     const tegnForMange = antallTegn - maxLength;
     const tellerFra = visTellerFra || maxLength;
@@ -17,8 +15,25 @@ function getTellerTekst(antallTegn, maxLength, visTellerFra) {
     return null;
 }
 
+interface Input {
+    value: string;
+    onChange: (a) => void;
+}
+
+interface Props {
+    initialValue?: string;
+    pristine?: boolean;
+    touched: boolean;
+    error?: string;
+    input: Input;
+    visTellerFra?: number;
+    maxLength: number;
+    label: any;
+}
+
 // pristine and initialValue isn't used, but we don't want to pass it to input
-function Textarea({ touched, error, input, pristine, initialValue, visTellerFra, ...rest }) {
+function Textarea(props: Props) {
+    const { touched, error, input, pristine, initialValue, visTellerFra, ...rest } = props;
     const feil = error && touched ? { feilmelding: error } : undefined;
     const inputProps = { ...input, ...rest };
 
@@ -30,22 +45,5 @@ function Textarea({ touched, error, input, pristine, initialValue, visTellerFra,
         />
     );
 }
-
-Textarea.propTypes = {
-    initialValue: PT.string,
-    pristine: PT.bool,
-    touched: PT.bool.isRequired,
-    error: PT.string,
-    input: PT.object.isRequired,
-    visTellerFra: PT.number,
-    maxLength: PT.number.isRequired
-};
-
-Textarea.defaultProps = {
-    initialValue: undefined,
-    pristine: undefined,
-    error: undefined,
-    visTellerFra: undefined
-};
 
 export default Textarea;

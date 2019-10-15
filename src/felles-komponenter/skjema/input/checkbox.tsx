@@ -1,10 +1,21 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import PT from 'prop-types';
-import { Checkbox as NavCheckbox } from 'nav-frontend-skjema';
+import { Checkbox as NavCheckbox, CheckboxProps } from 'nav-frontend-skjema';
+interface Input {
+    value?: string;
+    onChange: (a) => void;
+}
 
+interface Props {
+    initialValue?: string;
+    pristine?: boolean;
+    touched: boolean;
+    error?: string;
+    input: Input;
+}
 // pristine isn't used, but we don't want to pass it to input
-function Checkbox({ touched, error, input, pristine, initialValue, ...rest }) {
+function Checkbox(props: Props & CheckboxProps) {
+    const { touched, error, input, pristine, initialValue, ...rest } = props;
+
     const inputProps = { ...input, ...rest };
     const [toggel, setToggel] = useState(initialValue === 'true');
 
@@ -20,19 +31,5 @@ function Checkbox({ touched, error, input, pristine, initialValue, ...rest }) {
     const feil = error && touched ? { feilmelding: error } : undefined;
     return <NavCheckbox {...inputProps} checked={input.value === 'true'} feil={feil} onChange={toggelOnChange} />;
 }
-
-Checkbox.propTypes = {
-    initialValue: PT.string,
-    pristine: PT.bool,
-    touched: PT.bool.isRequired,
-    error: PT.string,
-    input: PT.object.isRequired
-};
-
-Checkbox.defaultProps = {
-    initialValue: undefined,
-    pristine: undefined,
-    error: undefined
-};
 
 export default Checkbox;

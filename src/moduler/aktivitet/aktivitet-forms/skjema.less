@@ -10,6 +10,9 @@
         .input--xs {
             width: 85px;
         }
+        @media (max-width: 460px) {
+            flex-direction: column;
+        }
     }
 }
 
@@ -84,14 +87,14 @@
 
         &:focus {
             outline: none;
-            background-color: @orange-focus;
+            background-color: @fokus-farge;
             color: @navMorkGra;
-            border-bottom: 1px solid @orange-focus;
+            border-bottom: 1px solid @fokus-farge;
         }
     }
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 0 3px @orange-focus;
+        box-shadow: 0 0 0 3px @fokus-farge;
     }
 }

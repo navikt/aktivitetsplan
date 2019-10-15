@@ -59,10 +59,11 @@ class Verktoylinje extends Component {
                     <Lenkeknapp
                         type="hoved"
                         href="/aktivitet/ny"
-                        disabled={viserHistoriskPeriode || !underOppfolging || !aktivitetLaster || !harSkriveTilgang}
+                        disabled={!aktivitetLaster}
+                        visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
                         onClick={() => loggEvent(APNE_NY_AKTIVITET)}
                     >
-                        <FormattedMessage id="nyaktivitetsknapp" />
+                        Legg til aktivitet
                     </Lenkeknapp>
                 </div>
                 <div className="verktoylinje__verktoy-container">

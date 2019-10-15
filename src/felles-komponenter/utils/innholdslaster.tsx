@@ -1,8 +1,6 @@
 import React from 'react';
-import PT from 'prop-types';
 import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
-import * as AppPT from '../../proptypes';
 import HiddenIfHOC from '../hidden-if/hidden-if';
 
 const array = value => (Array.isArray(value) ? value : [value]);
@@ -15,16 +13,27 @@ const alleErOK = avhengigheter => avhengigheter && array(avhengigheter).every(ha
 
 const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
-function Innholdslaster({
-    avhengigheter,
-    spinnerStorrelse,
-    className,
-    children,
-    minstEn,
-    visChildrenVedFeil,
-    alleOK,
-    ...rest
-}) {
+interface Props {
+    avhengigheter: string[] | object[];
+    children: React.ReactNode;
+    spinnerStorrelse?: string;
+    className?: string;
+    minstEn?: boolean;
+    visChildrenVedFeil?: boolean;
+    alleOK?: boolean;
+}
+
+function Innholdslaster(props: Props) {
+    const {
+        avhengigheter,
+        spinnerStorrelse,
+        className,
+        children,
+        minstEn,
+        visChildrenVedFeil,
+        alleOK,
+        ...rest
+    } = props;
     const visChildren = alleOK
         ? alleErOK(avhengigheter)
         : alleLastet(avhengigheter) ||
@@ -50,16 +59,6 @@ Innholdslaster.defaultProps = {
     minstEn: false,
     visChildrenVedFeil: false,
     alleOK: false
-};
-
-Innholdslaster.propTypes = {
-    avhengigheter: PT.oneOfType([AppPT.avhengighet, AppPT.avhengigheter]).isRequired,
-    children: PT.oneOfType([PT.node, PT.func]).isRequired,
-    className: PT.string,
-    spinnerStorrelse: PT.string,
-    minstEn: PT.bool,
-    visChildrenVedFeil: PT.bool,
-    alleOK: PT.bool
 };
 
 export default Innholdslaster;

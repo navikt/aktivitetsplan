@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import { HidenIfInput } from '../../../../felles-komponenter/skjema/input/input';
+import { HiddenIfInput } from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
     validerPeriodeFelt
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
@@ -83,7 +83,7 @@ export default function SokeAvtaleAktivitetForm(props) {
                     </div>
                 </PeriodeValidering>
 
-                <HidenIfInput
+                <HiddenIfInput
                     hidden={brukeStillingerIUken}
                     disabled={avtalt}
                     label="Antall søknader i perioden *"
@@ -91,7 +91,7 @@ export default function SokeAvtaleAktivitetForm(props) {
                     {...state.fields.antallStillingerSokes}
                 />
 
-                <HidenIfInput
+                <HiddenIfInput
                     hidden={!brukeStillingerIUken}
                     disabled={avtalt}
                     label="Antall søknader i uken *"

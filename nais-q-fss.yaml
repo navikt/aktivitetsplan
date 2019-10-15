@@ -1,10 +1,9 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: aktivitetsplan
+  name: aktivitetsplan-fss
   namespace: {{namespace}}
-  cluster:
-    - dev-fss
+  cluster: dev-fss
   labels:
     team: pto
 spec:
@@ -12,10 +11,10 @@ spec:
   port: 8080
   liveness:
     path: aktivitetsplan/internal/isAlive
-    initialDelay: 60
+    initialDelay: 20
   readiness:
     path: aktivitetsplan/internal/selftest
-    initialDelay: 60
+    initialDelay: 20
   replicas:
     min: 2
     max: 4
@@ -37,21 +36,11 @@ spec:
     - VEILARBLOGIN_REDIRECT_URL_URL
     - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
     - OIDC_REDIRECT_URL
-    - UNLEASH_API_URL
     - AAD_B2C_DISCOVERY_URL
-    - name: VEIENTILARBEID_URL
-      value: 'https://veientilarbeid-q.nav.no'
-    - name: DITTNAV_LINK_URL
-      value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
-    - name: AKTIVITETSPLAN_URL
-      value: 'https://aktivitetsplan-q.nav.no'
-    - name: ARBEIDSSOKERREGISTRERING_URL
-      value: 'https://arbeidssokerregistrering-q.nav.no/'
-    - name: REGISTRERINGSINFORMASJON_URL
-      value: 'https://registreringsinformasjon-q.nav.no'
-    - name: VEILARBSTEPUP_OIDC_URL
-      value: 'https://veilarbstepup-q.nav.no/veilarbstepup/oidc'
+    - UNLEASH_API_URL
     - name: DISABLE_PROXY
       value: 'true'
     - name: DISABLE_DECORATOR
       value: 'true'
+    - name: CONFIGURATION_LOCATION
+      value: '/decorator-fss.yaml'

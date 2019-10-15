@@ -7,6 +7,7 @@ import ModalHeader from '../../felles-komponenter/modal/modal-header';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import { selectMalListeFeilmeldinger } from './aktivitetsmal-selector';
 import * as AppPT from '../../proptypes';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 
 function MalModal({ malFeilMeldinger, children, history }) {
     return (
@@ -26,7 +27,8 @@ function MalModal({ malFeilMeldinger, children, history }) {
 MalModal.propTypes = {
     malFeilMeldinger: PT.array,
     children: PT.node.isRequired,
-    history: AppPT.history.isRequired
+    history: AppPT.history.isRequired,
+    viserHistoriskPeriode: PT.bool.isRequired
 };
 
 MalModal.defaultProps = {
@@ -35,11 +37,14 @@ MalModal.defaultProps = {
 
 function AktivitetsmalModalHOC(Component) {
     return function inner(props) {
+        const { viserHistoriskPeriode } = props;
         return (
             <div>
                 <MalModal {...props}>
                     <ModalContainer>
-                        <Innholdstittel className="aktivitetmal__header">Mitt mål</Innholdstittel>
+                        <Innholdstittel className="aktivitetmal__header">
+                            {viserHistoriskPeriode ? 'Mål fra en tidligere periode' : 'Mitt mål'}
+                        </Innholdstittel>
                         <Component {...props} />
                     </ModalContainer>
                 </MalModal>
@@ -49,7 +54,8 @@ function AktivitetsmalModalHOC(Component) {
 }
 
 const mapStateToProps = state => ({
-    malFeilMeldinger: selectMalListeFeilmeldinger(state)
+    malFeilMeldinger: selectMalListeFeilmeldinger(state),
+    viserHistoriskPeriode: selectViserHistoriskPeriode(state)
 });
 
 export default component => connect(mapStateToProps)(AktivitetsmalModalHOC(component));

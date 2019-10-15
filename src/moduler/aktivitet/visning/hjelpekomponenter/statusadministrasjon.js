@@ -18,12 +18,10 @@ import {
 import DeleLinje from '../delelinje/delelinje';
 
 function Statusadministrasjon(props) {
-    const { aktivitet, arenaAktivitet, erBruker } = props;
+    const { aktivitet, arenaAktivitet, erBruker, erManuellKrrKvpBruker } = props;
     const { type } = aktivitet;
 
-    // TODO add back when used
-    const skalViseForhandsorienteringsKomponent = false;
-    // !erBruker && !erManuellKrrKvpBruker;
+    const skalViseForhandsorienteringsKomponent = !erBruker && !erManuellKrrKvpBruker;
 
     const visAdministreresAvVeileder = (
         <div className="aktivitetvisning__underseksjon">
@@ -55,7 +53,8 @@ function Statusadministrasjon(props) {
 Statusadministrasjon.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     arenaAktivitet: PT.bool.isRequired,
-    erBruker: PT.bool.isRequired
+    erBruker: PT.bool.isRequired,
+    erManuellKrrKvpBruker: PT.bool.isRequired
 };
 
 const mapStateToProps = state => ({

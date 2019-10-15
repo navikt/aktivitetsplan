@@ -3,7 +3,7 @@ import PT from 'prop-types';
 
 export const DirtyContext = React.createContext({
     isDirty: false,
-    setFormIsDirty: () => {}
+    setFormIsDirty: (name: string, dirty: boolean) => {}
 });
 
 function isFormsDirty(forms) {

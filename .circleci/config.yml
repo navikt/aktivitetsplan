@@ -10,8 +10,6 @@ workflows:
                   name: test
 
             - pus/bygg-frontend:
-                  requires:
-                      - test
                   context: pus
                   name: build
                   filters:
@@ -20,8 +18,21 @@ workflows:
 
             - pus/deploy-latest:
                   requires:
+                      - test
                       - build
-                  name: deploy2
+                  name: dev-sbs-deploy
+                  context: pus
+                  cluster: dev-sbs
+                  filepath: ./nais-q-sbs.yaml
+                  filters:
+                      branches:
+                          only: master
+
+            - pus/deploy-latest:
+                  requires:
+                      - test
+                      - build
+                  name: dev-fss-deploy
                   context: pus
                   cluster: dev-fss
                   filepath: ./nais-q-fss.yaml
@@ -30,13 +41,26 @@ workflows:
                           only: master
             - prodsett:
                   requires:
-                      - deploy2
+                      - dev-sbs-deploy
+                      - dev-fss-deploy
                   type: approval
                   filters:
                       branches:
                           only: master
 
             - pus/deploy-latest:
+                  name: prod-sbs-deploy
+                  requires:
+                      - prodsett
+                  context: pus
+                  cluster: prod-sbs
+                  filepath: ./nais-sbs.yaml
+                  filters:
+                      branches:
+                          only: master
+
+            - pus/deploy-latest:
+                  name: prod-fss-deploy
                   requires:
                       - prodsett
                   context: pus

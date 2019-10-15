@@ -118,7 +118,7 @@ function AktivitetStatusForm(props) {
             </FieldGroup>
 
             <VisibleIfDiv className="status-alert" visible={!state.pristine}>
-                <VisibleAlertStripeSuksessSolid visible={visAdvarsel} role="alert">
+                <VisibleAlertStripeSuksessSolid visible={visAdvarsel} type="advarsel">
                     {
                         'Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre innholdet.'
                     }

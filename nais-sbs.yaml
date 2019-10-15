@@ -1,9 +1,9 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: aktivitetsplan-fss
+  name: aktivitetsplan
   namespace: default
-  cluster: prod-fss
+  cluster: prod-sbs
   labels:
     team: pto
 spec:
@@ -23,12 +23,13 @@ spec:
     enabled: true
     path: aktivitetsplan/internal/metrics
   ingresses:
-    - https://aktivitetsplan.nais.adeo.no
-    - https://app.adeo.no/aktivitetsplan
+    - https://aktivitetsplan.nav.no
+    - https://tjenester.nav.no/aktivitetsplan
   vault:
     enabled: true
   webproxy: true
   env:
+    - APPRES_CMS_URL
     - ISSO_JWKS_URL
     - ISSO_HOST_URL
     - ISSO_ISSUER_URL
@@ -37,10 +38,9 @@ spec:
     - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
     - OIDC_REDIRECT_URL
     - AAD_B2C_DISCOVERY_URL
-    - UNLEASH_API_URL
-    - name: DISABLE_PROXY
-      value: 'true'
-    - name: DISABLE_DECORATOR
-      value: 'true'
-    - name: CONFIGURATION_LOCATION
-      value: '/decorator-fss.yaml'
+    - VEIENTILARBEID_URL
+    - AKTIVITETSPLAN_URL
+    - ARBEIDSSOKERREGISTRERING_URL
+    - VEILARBSTEPUP_OIDC_URL
+    - name: DITTNAV_LINK_URL
+      value: 'https://tjenester.nav.no/dittnav/'
