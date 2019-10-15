@@ -29,10 +29,10 @@ const typeMap = {
     SAMTALEREFERAT: 'Samtalereferat'
 };
 
-function AktivitetReferat({ aktivitet }) {
-    const { referat, erReferatPublisert } = aktivitet;
+function AktivitetReferat(props: AktivitetProps) {
+    const { referat, erReferatPublisert, historisk } = props.aktivitet;
     const harReferat = !!referat;
-    const visReferat = erReferatPublisert && (harReferat || !aktivitet.historisk);
+    const visReferat = erReferatPublisert && (harReferat || !historisk);
 
     return (
         <HiddenIfDiv hidden={!visReferat} className="printmodal-body__aktivitetreferat">

@@ -52,7 +52,7 @@ export interface OppfolgingsPeriode {
 }
 
 export interface Dialog {
-    dialogId: string;
+    id: string;
     overskrift: string;
     aktivitetId?: string;
     lest?: boolean;
@@ -61,11 +61,12 @@ export interface Dialog {
     erLestAvBruker?: boolean;
     venterPaSvar?: boolean;
     ferdigBehandlet?: boolean;
-    henvendelser: Array<Henvendelse>;
+    henvendelser?: Array<Henvendelse>;
     egenskaper?: Array<string>;
 }
 
 interface Henvendelse {
+    id: string;
     dialogId: string;
     tekst: string;
     avsender: brukertype;

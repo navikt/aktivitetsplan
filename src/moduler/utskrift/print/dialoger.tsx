@@ -4,13 +4,19 @@ import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 import { datoComparator, formaterDatoKortManed } from '../../../utils';
 import { Dialog } from '../../../types';
 
-export function DialogPrint({ dialog }) {
+interface DialogProps {
+    dialog?: Dialog;
+}
+
+export function DialogPrint(props: DialogProps) {
+    const { dialog } = props;
+
     if (!dialog) {
         return <div />;
     }
 
     const { henvendelser } = dialog;
-    const henvendelserSynkende = henvendelser && [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));
+    const henvendelserSynkende = henvendelser && henvendelser.sort((a, b) => datoComparator(b.sendt, a.sendt));
 
     const overskrift = dialog.aktivitetId === null ? dialog.overskrift : 'Dialog';
 

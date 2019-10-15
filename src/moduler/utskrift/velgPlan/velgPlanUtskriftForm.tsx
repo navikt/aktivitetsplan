@@ -12,7 +12,7 @@ const validator = useFormstate({
 });
 
 interface VelgPlanUtskriftFormProps {
-    onSubmit: (string) => void;
+    onSubmit: (string) => Promise<any>;
     hidden?: boolean;
     kvpPerioder?: KvpPeriode[];
 }
@@ -26,13 +26,8 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
 
     const state = validator(initial);
 
-    const submit = stuff => {
-        onSubmit(stuff.utskriftPlanType);
-        return new Promise(resolve => resolve('donde'));
-    };
-
     return (
-        <form onSubmit={state.onSubmit(submit)} className="printmelding__form" hidden={hidden}>
+        <form onSubmit={state.onSubmit(onSubmit)} className="printmelding__form" hidden={hidden}>
             <div className="printmelding__skjema">
                 <div className="printmelding__tittel">
                     <Innholdstittel>Velg hva du ønsker å skrive ut</Innholdstittel>

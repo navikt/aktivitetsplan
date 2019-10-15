@@ -12,14 +12,13 @@ interface Props {
 
 function ModalHeader(props: Props) {
     const { avhengigheter, tilbake, kanSkriveUt } = props;
-    const onTilbake = tilbake ? tilbake : () => {};
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <header className="modal-header">
                 <div className="printmodal-header">
                     <Knappelenke
                         className="tilbakeknapp printmodal-header__tilbakeknapp"
-                        onClick={() => onTilbake()}
+                        onClick={tilbake}
                         role="link"
                         tabIndex="0"
                         hidden={!tilbake}

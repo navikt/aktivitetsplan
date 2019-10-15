@@ -5,7 +5,7 @@ import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/a
 import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
 import { hentMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { hentMalListe } from '../mal/malliste-reducer';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
@@ -34,7 +34,7 @@ function getSteps(kanHaPrintValg, kanHaPrintMelding) {
 interface Props {
     doHentMal: () => void;
     doHentMalListe: () => void;
-    avhengigheter: string[] | object[];
+    avhengigheter: InnholdslasterProps['avhengigheter'];
     doResetUtskrift: () => void;
     bruker: Bruker;
     kvpPerioder?: KvpPeriode[];
@@ -45,7 +45,7 @@ interface Props {
     erManuell?: boolean;
 }
 
-function AktivitetsplanPrintModal(props: Props) {
+function AktivitetsplanPrint(props: Props) {
     const {
         doHentMal,
         doHentMalListe,
@@ -75,6 +75,7 @@ function AktivitetsplanPrintModal(props: Props) {
         return string => {
             func(string);
             setStepIndex(stepIndex + 1);
+            return Promise.resolve();
         };
     };
 
@@ -172,4 +173,4 @@ function mapDispatchToProps(dispatch, props) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AktivitetsplanPrintModal);
+)(AktivitetsplanPrint);

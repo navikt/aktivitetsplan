@@ -16,7 +16,7 @@ const validator = useFormstate({
 
 interface Props {
     bruker: Bruker;
-    onSubmit: (string) => void;
+    onSubmit: (string) => Promise<any>;
     hidden?: boolean;
 }
 
@@ -29,11 +29,11 @@ function PrintMeldingForm(props: Props) {
 
     const submit = stuff => {
         onSubmit(stuff.beskrivelse);
-        return new Promise(resolve => resolve('donde'));
+        return Promise.resolve();
     };
 
     return (
-        <form onSubmit={state.onSubmit(submit)} className="printmelding__form" hidden={hidden}>
+        <form onSubmit={state.onSubmit(onSubmit)} className="printmelding__form" hidden={hidden}>
             <div className="printmelding__skjema">
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
