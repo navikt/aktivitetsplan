@@ -1,6 +1,6 @@
 export type brukertype = 'VEILEDER' | 'BRUKER';
 //aktivitetType definisjonen bor også i .\const som *_AKTIVITET_TYPE finens det noen smartere måte å gjøre dette på?
-export type aktivitetType =
+export type AktivitetType =
     | 'EGEN'
     | 'STILLING'
     | 'TILTAKSAKTIVITET'
@@ -12,7 +12,7 @@ export type aktivitetType =
     | 'MOTE'
     | 'SAMTALEREFERAT';
 //aktivitetStatusd efinisjonen bor også i .\const som STATUS_*
-export type aktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
+export type AktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
 export interface Lest {
     tidspunkt: string;
     verdi?: string;
@@ -26,13 +26,16 @@ export interface Aktivitet {
     tilDato?: string;
     opprettetDato?: string;
     endretDato?: string;
-    status?: aktivitetStatus;
-    type?: aktivitetType;
+    status?: AktivitetStatus;
+    type?: AktivitetType;
     historisk?: boolean;
     lagtInnAv?: string;
     detaljer?: object;
+    endretAv: string;
     beskrivelse?: string;
     avtalt?: boolean;
+    erReferatPublisert?: boolean;
+    nesteStatus?: AktivitetStatus;
 }
 
 export interface OppfolgingsPeriode {
@@ -65,4 +68,10 @@ interface Henvendelse {
     avsenderId?: string;
     sendt: string;
     lest: boolean;
+}
+
+export interface Me {
+    erBruker: boolean;
+    erVeileder: boolean;
+    id: string;
 }

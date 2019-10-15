@@ -1,5 +1,5 @@
 import shajs from 'sha.js';
-import { Aktivitet, aktivitetStatus, Dialog, Lest, OppfolgingsPeriode } from '../../types';
+import { Aktivitet, AktivitetStatus, Dialog, Lest, OppfolgingsPeriode } from '../../types';
 
 interface Frontendlogger {
     event: (name: string, fields: object, tags: object) => void;
@@ -86,7 +86,7 @@ export function metrikkTidForsteAvtalte(tid: number) {
     });
 }
 
-export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivitet, nyStatus: aktivitetStatus) {
+export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivitet, nyStatus: AktivitetStatus) {
     loggEvent(AKTIVITET_FLYTTET, {
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,
