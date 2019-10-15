@@ -18,6 +18,9 @@ export function compareAktivitet(a, b) {
     if (a.fraDato === null && b.fraDato === null) {
         return 0;
     }
+    if (b.fraDato.localeCompare(a.fraDato) === 0) {
+        return b.opprettetDato.localeCompare(a.opprettetDato);
+    }
 
     return b.fraDato.localeCompare(a.fraDato);
 }
