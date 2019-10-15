@@ -13,7 +13,7 @@ import UtskriftKnapp from './utskriftknapp';
 import { selectDialoger, selectHarTilgangTilDialog } from '../dialog/dialog-selector';
 import { dialogFilter } from '../filtrering/filter/filter-utils';
 import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
-import Lenke from '../../felles-komponenter/utils/lenke';
+import InternLenke from '../../felles-komponenter/utils/internLenke';
 import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import { hentDialog } from '../dialog/dialog-reducer';
@@ -43,7 +43,7 @@ class Verktoylinje extends Component {
         return (
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy-container">
-                    <Lenke
+                    <InternLenke
                         href="/dialog"
                         className={knapplenkeCls('aktivitetskort__henvendelser', !dialogLaster)}
                         disabled={!dialogLaster}
@@ -55,9 +55,9 @@ class Verktoylinje extends Component {
                             <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
                         </HiddenIfDiv>
                         <FormattedMessage id="navigasjon.dialog" />
-                    </Lenke>
+                    </InternLenke>
                     <Lenkeknapp
-                        type="big-hoved"
+                        type="hoved"
                         href="/aktivitet/ny"
                         disabled={!aktivitetLaster}
                         visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
@@ -68,9 +68,13 @@ class Verktoylinje extends Component {
                 </div>
                 <div className="verktoylinje__verktoy-container">
                     <div className="indre">
-                        <Lenke href="/informasjon" className="knappelenke" onClick={() => loggEvent(APNE_OM_TJENESTEN)}>
+                        <InternLenke
+                            href="/informasjon"
+                            className="knappelenke"
+                            onClick={() => loggEvent(APNE_OM_TJENESTEN)}
+                        >
                             <FormattedMessage id="navigasjon.informasjon" />
-                        </Lenke>
+                        </InternLenke>
                         <UtskriftKnapp
                             ariaLabel="utskrift.ikon.alt.tekst"
                             lenke="/utskrift"

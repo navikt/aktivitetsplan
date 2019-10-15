@@ -4,7 +4,7 @@ import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import * as AppPT from '../../../../proptypes';
 import { HiddenIf } from '../../../../utils';
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import LenkeKomponent from '../hjelpekomponenter/lenkekomponent';
+import DetaljvisningLenke from '../hjelpekomponenter/detaljvisning-lenke';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
 const StillingDetaljer = ({ aktivitet }) => (
@@ -35,7 +35,7 @@ const StillingDetaljer = ({ aktivitet }) => (
                 innhold={aktivitet.arbeidssted}
             />
             <Beskrivelse aktivitet={aktivitet} />
-            <LenkeKomponent lenke={aktivitet.lenke} />
+            <DetaljvisningLenke lenke={aktivitet.lenke} />
         </div>
     </HiddenIf>
 );

@@ -2,12 +2,12 @@ import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import React from 'react';
 import DetaljFelt from './detalj-felt';
-import Lenke from '../../../../felles-komponenter/utils/lenke';
 import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
+import Lenke from 'nav-frontend-lenker';
 
 const httpRegex = /^(https?):\/\/.*$/;
 
-export default function LenkeKomponent({ lenke }) {
+export default function DetaljvisningLenke({ lenke }) {
     return (
         <DetaljFelt
             key="lenke"
@@ -23,9 +23,9 @@ export default function LenkeKomponent({ lenke }) {
     );
 }
 
-LenkeKomponent.propTypes = {
+DetaljvisningLenke.propTypes = {
     lenke: PT.string
 };
-LenkeKomponent.defaultProps = {
+DetaljvisningLenke.defaultProps = {
     lenke: null
 };

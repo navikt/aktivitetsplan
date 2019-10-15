@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { DragSource } from 'react-dnd';
 import classNames from 'classnames';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
-import Lenke from '../../../felles-komponenter/utils/lenke';
+import InternLenke from '../../../felles-komponenter/utils/internLenke';
 import * as AppPT from '../../../proptypes';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import {
@@ -57,7 +57,7 @@ class AktivitetsKort extends Component {
 
         const aktivitetsKort = (
             <div>
-                <Lenke
+                <InternLenke
                     id={`aktivitetskort-${aktivitet.id}`}
                     href={aktivitetRoute(id)}
                     draggable={erFlyttbar}
@@ -65,8 +65,8 @@ class AktivitetsKort extends Component {
                         'aktivitetskort--flyttbar': erFlyttbar,
                         'aktivitetskort--drag': isDragging
                     })}
-                    brukLenkestyling={false}
                     onClick={() => doSettAktivitetMedEndringerSomVist(aktivitet)}
+                    skipLenkeStyling
                 >
                     <article aria-labelledby={ariaLabel}>
                         <AktivitetType type={type} />
@@ -80,7 +80,7 @@ class AktivitetsKort extends Component {
                         <SokeAvtaleAntall aktivitet={aktivitet} />
                         <AktivitetskortTillegg aktivitet={aktivitet} />
                     </article>
-                </Lenke>
+                </InternLenke>
             </div>
         );
 
