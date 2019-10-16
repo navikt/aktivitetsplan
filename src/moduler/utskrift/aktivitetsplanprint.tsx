@@ -72,7 +72,7 @@ function AktivitetsplanPrint(props: Props) {
 
     const back = stepIndex > 0 ? () => setStepIndex(stepIndex - 1) : undefined;
     const next = func => {
-        return string => {
+        return (string: string): Promise<any> => {
             func(string);
             setStepIndex(stepIndex + 1);
             return Promise.resolve();
