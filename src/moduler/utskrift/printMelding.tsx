@@ -27,13 +27,12 @@ function PrintMeldingForm(props: Props) {
         beskrivelse: defaultBeskrivelse
     });
 
-    const submit = stuff => {
-        onSubmit(stuff.beskrivelse);
-        return Promise.resolve();
+    const submit = (form: { beskrivelse: string }) => {
+        return onSubmit(form.beskrivelse);
     };
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} className="printmelding__form" hidden={hidden}>
+        <form onSubmit={state.onSubmit(submit)} className="printmelding__form" hidden={hidden}>
             <div className="printmelding__skjema">
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
