@@ -115,7 +115,7 @@ function Print(props: Props) {
                 </div>
             </div>
             <Systemtittel tag="h1" className="printmodal-body__utskrift--overskrift">
-                "Aktivitetsplan"
+                Aktivitetsplan
             </Systemtittel>
             <HiddenIfSection hidden={!printMelding} className="printmodal-body__visprintmelding">
                 <p>{printMelding}</p>
