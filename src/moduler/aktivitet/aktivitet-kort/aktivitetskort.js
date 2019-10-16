@@ -27,6 +27,9 @@ import Arbeidsgiver from './Stilling';
 import AktivitetType from './AktivitetType';
 import Aktivitetskorttittel from './AktivitetKortTitel';
 import { aktivitetRoute } from '../../../routes';
+import { selectAktivitetListe } from '../aktivitetliste-selector';
+import { ReactComponent as Lock } from './lock.svg';
+import Tooltip from '../../../felles-komponenter/tooltip';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -49,7 +52,8 @@ class AktivitetsKort extends Component {
             connectDragSource,
             erFlyttbar,
             doSettAktivitetMedEndringerSomVist,
-            harEndringerIAktivitet
+            harEndringerIAktivitet,
+            alleAktiviteter
         } = this.props;
         const { id, type } = aktivitet;
 
@@ -69,7 +73,12 @@ class AktivitetsKort extends Component {
                     skipLenkeStyling
                 >
                     <article aria-labelledby={ariaLabel}>
-                        <AktivitetType type={type} />
+                        <div className="aktivitetkort__hode">
+                            <AktivitetType type={type} />
+                            <Tooltip tooltip="Aktiviteten kan ikke flyttes" hidden={erFlyttbar}>
+                                <Lock aria-hidden="true" />
+                            </Tooltip>
+                        </div>
                         <Aktivitetskorttittel
                             aktivitet={aktivitet}
                             harEndringerIAktivitet={harEndringerIAktivitet}
@@ -77,7 +86,7 @@ class AktivitetsKort extends Component {
                         />
                         <Arbeidsgiver aktivitet={aktivitet} />
                         <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
-                        <SokeAvtaleAntall aktivitet={aktivitet} />
+                        <SokeAvtaleAntall aktivitet={aktivitet} alleAktiviteter={alleAktiviteter} />
                         <AktivitetskortTillegg aktivitet={aktivitet} />
                     </article>
                 </InternLenke>
@@ -115,6 +124,7 @@ const mapStateToProps = (state, props) => {
     const lest = selectLestAktivitetsplan(state);
     const lestStatus = selectLestStatus(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
+    const alleAktiviteter = selectAktivitetListe(state);
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
         aktivitet => aktivitet.id === props.aktivitet.id
     );
@@ -125,7 +135,8 @@ const mapStateToProps = (state, props) => {
         lestStatus === STATUS.OK && erNyEndringIAktivitet(props.aktivitet, lest, me) && aktivitetHarIkkeBlittVist;
     return {
         erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) && selectErUnderOppfolging(state),
-        harEndringerIAktivitet
+        harEndringerIAktivitet,
+        alleAktiviteter
     };
 };
 

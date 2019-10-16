@@ -13,7 +13,7 @@ const alleErOK = avhengigheter => avhengigheter && array(avhengigheter).every(ha
 
 const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
-interface Props {
+export interface InnholdslasterProps {
     avhengigheter: string[] | object[];
     children: React.ReactNode;
     spinnerStorrelse?: string;
@@ -23,7 +23,7 @@ interface Props {
     alleOK?: boolean;
 }
 
-function Innholdslaster(props: Props) {
+function Innholdslaster(props: InnholdslasterProps) {
     const {
         avhengigheter,
         spinnerStorrelse,

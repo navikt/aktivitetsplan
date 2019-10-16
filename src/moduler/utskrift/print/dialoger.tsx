@@ -1,21 +1,27 @@
 import React from 'react';
-import PT from 'prop-types';
 import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
-import { datoComparator, formaterDatoKortManed } from '../../utils';
 
-function DialogPrint({ dialog }) {
+import { datoComparator, formaterDatoKortManed } from '../../../utils';
+import { Dialog } from '../../../types';
+
+interface DialogProps {
+    dialog?: Dialog;
+}
+
+export function DialogPrint(props: DialogProps) {
+    const { dialog } = props;
+
     if (!dialog) {
         return <div />;
     }
 
     const { henvendelser } = dialog;
-    const henvendelserSynkende = henvendelser && [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));
+    const henvendelserSynkende = henvendelser && henvendelser.sort((a, b) => datoComparator(b.sendt, a.sendt));
 
     const overskrift = dialog.aktivitetId === null ? dialog.overskrift : 'Dialog';
 
     return (
-        <HiddenIfDiv hidden={!henvendelserSynkende} className="printmodal-body__dialog">
+        <div hidden={!henvendelserSynkende} className="printmodal-body__dialog">
             <Element tag="h2" className="printmodal-body__statusgruppe--overskrift">
                 {overskrift}
             </Element>
@@ -30,16 +36,27 @@ function DialogPrint({ dialog }) {
                         <Normaltekst>{h.tekst}</Normaltekst>
                     </div>
                 ))}
-        </HiddenIfDiv>
+        </div>
     );
 }
 
-DialogPrint.propTypes = {
-    dialog: PT.object
-};
+interface DialogerUtenAktivitetProps {
+    dialoger?: Dialog[];
+}
 
-DialogPrint.defaultProps = {
-    dialog: undefined
-};
+export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
+    const { dialoger } = props;
+    const dialogerUtenAktivitet = dialoger && dialoger.filter(a => a.aktivitetId === null);
 
-export default DialogPrint;
+    if (!dialogerUtenAktivitet) {
+        return null;
+    }
+
+    return (
+        <section className="printmodal-body__statusgrupper">
+            {dialogerUtenAktivitet.map(d => (
+                <DialogPrint dialog={d} />
+            ))}
+        </section>
+    );
+}

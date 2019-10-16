@@ -172,6 +172,18 @@ export function erMerEnnEnManederSiden(aktivitet) {
         : false;
 }
 
+export function erMindreEnFjortenDagerSiden(dato) {
+    const datoVerdi = moment(dato);
+    return datoVerdi.isValid
+        ? datoVerdi.isAfter(
+              moment()
+                  .subtract(14, 'day')
+                  .startOf('day'),
+              'd'
+          )
+        : false;
+}
+
 export function formaterDatoEllerTidSiden(dato) {
     const datoVerdi = moment(dato);
 

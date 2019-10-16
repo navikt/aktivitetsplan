@@ -16,7 +16,7 @@
     "lint": "echo \"Not implemented\""
   },
   "dependencies": {
-    "@nutgaard/use-formstate": "^2.2.0-beta.3",
+    "@nutgaard/use-formstate": "^2.2.1",
     "@types/classnames": "^2.2.9",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",

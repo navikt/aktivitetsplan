@@ -2,11 +2,12 @@
 import React from 'react';
 import { Input as NavInput, NavFrontendInputProps } from 'nav-frontend-skjema';
 import hiddenIfHOC from '../../hidden-if/hidden-if';
+import { FieldState } from '@nutgaard/use-formstate';
 
 interface Props {
     touched: boolean;
     error?: string;
-    input: object;
+    input: FieldState['input'];
     pristine?: boolean;
     initialValue?: string;
 }

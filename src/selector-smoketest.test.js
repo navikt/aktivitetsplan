@@ -7,7 +7,6 @@ import * as brukerSelector from './moduler/bruker/bruker-selector';
 import * as arenaAktivitetSelector from './moduler/aktivitet/arena-aktivitet-selector';
 import * as aktivitetSelector from './moduler/aktivitet/aktivitet-selector';
 import * as aktivitetListeSelector from './moduler/aktivitet/aktivitetliste-selector';
-import * as utsktriftSelector from './moduler/utskrift/utskrift-selector';
 import * as motpartSelector from './moduler/motpart/motpart-selector';
 import reducer from './reducer';
 
@@ -47,5 +46,4 @@ selectorModulTest(brukerSelector);
 selectorModulTest(arenaAktivitetSelector);
 selectorModulTest(aktivitetSelector);
 selectorModulTest(aktivitetListeSelector);
-selectorModulTest(utsktriftSelector);
 selectorModulTest(motpartSelector);
