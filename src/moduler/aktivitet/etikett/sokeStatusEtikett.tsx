@@ -1,12 +1,11 @@
 import React from 'react';
-import PT from 'prop-types';
 import classNames from 'classnames';
 import * as statuskoder from '../../../constant';
-import visibleIfHOC from '../../../hocs/visible-if';
 import styles from './etikett.module.less';
-import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
+import EtikettBase, { EtikettBaseProps } from '../../../felles-komponenter/etikett-base/etikett-base';
+import { StillingsStatus } from '../../../types';
 
-const getCls = etikettnavn => {
+const getCls = (etikettnavn?: StillingsStatus): string => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
             return styles.soknadSendt;
@@ -16,12 +15,14 @@ const getCls = etikettnavn => {
             return styles.jobbtilbud;
         case statuskoder.AVSLAG:
             return styles.avslag;
-        default:
+        case statuskoder.INGEN_VALGT:
+        case undefined:
+        case null:
             return styles.ikkeStartet;
     }
 };
 
-const getText = etikettnavn => {
+const getText = (etikettnavn?: StillingsStatus): string => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
             return 'Sendt søknad';
@@ -31,25 +32,25 @@ const getText = etikettnavn => {
             return 'Fått jobbtilbud 🎉';
         case statuskoder.AVSLAG:
             return 'Fått avslag';
-        default:
+        case statuskoder.INGEN_VALGT:
+        case undefined:
+        case null:
             return 'Ikke startet';
     }
 };
 
-function Etikett({ etikett, className }) {
+type Props = Omit<EtikettBaseProps, 'children'> & { etikett?: StillingsStatus };
+
+function SokeStatusEtikett(props: Props) {
+    const { etikett, className, ...rest } = props;
+
     const cls = getCls(etikett);
 
-    return <EtikettBase className={classNames(cls, className)}>{getText(etikett)}</EtikettBase>;
+    return (
+        <EtikettBase className={classNames(cls, className)} {...rest}>
+            {getText(etikett)}
+        </EtikettBase>
+    );
 }
 
-Etikett.defaultProps = {
-    etikett: undefined,
-    className: undefined
-};
-
-Etikett.propTypes = {
-    etikett: PT.string,
-    className: PT.string
-};
-
-export default visibleIfHOC(Etikett);
+export default SokeStatusEtikett;

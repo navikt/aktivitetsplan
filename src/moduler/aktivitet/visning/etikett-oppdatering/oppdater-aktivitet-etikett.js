@@ -5,7 +5,7 @@ import * as statuser from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import StillingEtikettForm from './stilling-etikett-form';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import Etikett from '../../etikett/etikett';
+import SokeStatusEtikett from '../../etikett/sokeStatusEtikett';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
 import Underseksjon from '../underseksjon/underseksjon';
@@ -15,8 +15,6 @@ import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
 function OppdaterAktivitetEtikett(props) {
     const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
     const [endring, setEndring] = useState(false);
-
-    const visning = <Etikett etikett={aktivitet.etikett} />;
 
     const onSubmit = val =>
         lagreEtikett(val).then(() => {
@@ -33,7 +31,7 @@ function OppdaterAktivitetEtikett(props) {
                 form={form}
                 endring={endring}
                 setEndring={setEndring}
-                visning={visning}
+                visning={<SokeStatusEtikett etikett={aktivitet.etikett} />}
             />
         </Underseksjon>
     );
