@@ -21,6 +21,12 @@ a.mitt-maal {
     display: flex;
 
     margin-bottom: 1rem;
+
+    //TODO: Bør slettes så fort vi har ny versjon av dekoratøren som ikke overstyrer fokusfarge
+    &:focus {
+        background-color: #cde7d8;
+    }
+
     .hovedmaal {
         color: @navGra60;
     }
