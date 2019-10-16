@@ -25,7 +25,7 @@ const getText = etikettnavn => {
         case statuskoder.INNKALT_TIL_INTERVJU:
             return 'Skal på intervju';
         case statuskoder.JOBBTILBUD:
-            return 'Fått jobbtilbud 🎉';
+            return 'Fått jobbtilbud';
         case statuskoder.AVSLAG:
             return 'Fått avslag';
         default:
