@@ -1,24 +1,31 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import PT from 'prop-types';
-import Lenke from '../../felles-komponenter/utils/lenke';
+import Lenke from 'nav-frontend-lenker';
 
 export const arbeidssokerregistreringHref = '/arbeidssokerregistrering';
 
-function HarIkkeAktivitetsplan({ erVeileder }) {
+interface PropTypes {
+    erVeileder: boolean;
+}
+
+function HarIkkeAktivitetsplan(props: PropTypes) {
+    const { erVeileder } = props;
     const advarsel = erVeileder
-        ? 'Denne brukeren er ikke registrert.'
-        : 'Du må være registrert hos NAV for å bruke aktivitetsplanen.';
+        ? 'har.ikke.aktivitetsplan.advarsel.veileder'
+        : 'har.ikke.aktivitetsplan.advarsel.bruker';
 
     return (
         <div className="har-ikke-aktivitetsplan-container">
             <AlertStripeAdvarsel>
-                <Normaltekst>{advarsel}</Normaltekst>
+                <Normaltekst>
+                    <FormattedMessage id={advarsel} />
+                </Normaltekst>
                 {!erVeileder && (
-                    <Lenke href={arbeidssokerregistreringHref} erEksternLenke>
-                        Register deg hos NAV
+                    <Lenke href={arbeidssokerregistreringHref}>
+                        <FormattedMessage id="ikke.under.oppfolging.reaktivering.lenke" />
                         <HoyreChevron />
                     </Lenke>
                 )}
@@ -26,9 +33,5 @@ function HarIkkeAktivitetsplan({ erVeileder }) {
         </div>
     );
 }
-
-HarIkkeAktivitetsplan.propTypes = {
-    erVeileder: PT.bool.isRequired
-};
 
 export default HarIkkeAktivitetsplan;

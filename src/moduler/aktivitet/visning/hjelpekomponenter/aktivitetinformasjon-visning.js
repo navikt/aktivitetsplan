@@ -6,7 +6,7 @@ import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import * as AppPT from '../../../../proptypes';
 import { EGEN_AKTIVITET_TYPE, IJOBB_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import Lenke from '../../../../felles-komponenter/utils/lenke';
+import InternLenke from '../../../../felles-komponenter/utils/internLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import DeleLinje from '../delelinje/delelinje';
@@ -30,16 +30,16 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                     <Sidetittel id="modal-aktivitetsvisning-header" className="softbreak">
                         {tittel}
                     </Sidetittel>
-                    <Lenke
+                    <InternLenke
                         className="endreknapp"
                         role="button"
-                        visible={tillatEndring && !arenaAktivitet}
+                        hidden={!tillatEndring || arenaAktivitet}
                         href={endreAktivitetRoute(valgtAktivitet.id)}
                         onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
                         disabled={laster || !underOppfolging}
                     >
                         <FormattedMessage id="aktivitetvisning.endre-knapp" />
-                    </Lenke>
+                    </InternLenke>
                 </div>
                 {visningsIngress(type)}
                 <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />

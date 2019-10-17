@@ -42,7 +42,7 @@ export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showN
             />
             <button
                 tabIndex="0"
-                aria-label="Forrige måned"
+                aria-label="Neste måned"
                 className={`${className} DayPicker-NavButton--next`}
                 disabled={!showNextButton}
                 type="button"

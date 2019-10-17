@@ -1,41 +1,20 @@
 import React, { Component } from 'react';
-import { autobind } from '../../utils';
-import Accordion from '../../felles-komponenter/accordion';
+import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import styles from './video.module.less';
 
 const ONBOARDING_VIDEO_URL =
     'https://video.qbrick.com/play2/embed/player?accountId=763558&mediaId=74420478-00015227-993dea3a&configId=default&pageStyling=adaptive&autoplay=true&repeat=true&sharing=true';
 
-class Video extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            apen: false
-        };
-        autobind(this);
-    }
-
-    onClick() {
-        const { apen } = this.state;
-        this.setState({
-            apen: !apen
-        });
-    }
-
+export default class Video extends Component {
     render() {
-        const { apen } = this.state;
-
-        const accordionLabelId = apen ? 'informasjon.videokontent.skjul.tekst' : 'informasjon.videokontent.vis.tekst';
-
         return (
             <div>
-                <iframe
-                    title="onboarding-video"
-                    frameBorder="0"
-                    scrolling="no"
-                    src={ONBOARDING_VIDEO_URL}
-                    className="video-player"
-                />
-                <Accordion className="videotekst-accordion" labelId={accordionLabelId} onClick={this.onClick}>
+                <iframe title="onboarding-video" src={ONBOARDING_VIDEO_URL} className={styles.videoPlayer} />
+                <Lesmerpanel
+                    apneTekst="Vis tekst for video"
+                    lukkTekst="Skjul teksten for videoen"
+                    className={styles.lesMerPanel}
+                >
                     <ul>
                         <li>
                             For at du skal holde oversikt og vite hva som forventes av deg, og kunne samarbeide med
@@ -59,10 +38,8 @@ class Video extends Component {
                         <li>Målet er at du skal få en jobb på den måten som passer best for deg og din situasjon.</li>
                         <li>Lykke til!</li>
                     </ul>
-                </Accordion>
+                </Lesmerpanel>
             </div>
         );
     }
 }
-
-export default Video;

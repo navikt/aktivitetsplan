@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Element } from 'nav-frontend-typografi';
-import Lenke from '../../felles-komponenter/utils/lenke';
+import InternLenke from '../../felles-komponenter/utils/internLenke';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentMal, selectGjeldendeMal, selectMalStatus } from '../../moduler/mal/aktivitetsmal-reducer';
@@ -56,7 +56,7 @@ function MittMaal() {
     const url = disabled ? '/mal' : '/mal/endre';
 
     return (
-        <Lenke brukLenkestyling={false} href={url} className="mitt-maal" onClick={() => loggMittMalKlikk(erVeileder)}>
+        <InternLenke skipLenkeStyling href={url} className="mitt-maal" onClick={() => loggMittMalKlikk(erVeileder)}>
             <MalIcon />
             <div className="mittmal_content">
                 <Element className="mittmal__content-header">Mitt mål</Element>
@@ -64,7 +64,7 @@ function MittMaal() {
                     <MalText disabled={!underOppfolging || viserHistoriskPeriode} mal={mal} />
                 </Innholdslaster>
             </div>
-        </Lenke>
+        </InternLenke>
     );
 }
 

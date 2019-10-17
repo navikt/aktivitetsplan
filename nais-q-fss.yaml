@@ -3,7 +3,7 @@ kind: 'Application'
 metadata:
   name: aktivitetsplan-fss
   namespace: {{namespace}}
-  cluster: prod-fss
+  cluster: dev-fss
   labels:
     team: pto
 spec:

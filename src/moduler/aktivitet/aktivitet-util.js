@@ -9,13 +9,20 @@ export function compareAktivitet(a, b) {
     if (!b.avtalt && a.avtalt) {
         return -1;
     }
-    if (a.opprettetDato !== null && b.opprettetDato === null) {
+    if (a.fraDato !== null && b.fraDato === null) {
         return -1;
     }
-    if (a.opprettetDato === null && b.opprettetDato !== null) {
+    if (a.fraDato === null && b.fraDato !== null) {
         return 1;
     }
-    return b.opprettetDato.localeCompare(a.opprettetDato);
+    if (a.fraDato === null && b.fraDato === null) {
+        return 0;
+    }
+    if (b.fraDato.localeCompare(a.fraDato) === 0) {
+        return b.opprettetDato.localeCompare(a.opprettetDato);
+    }
+
+    return b.fraDato.localeCompare(a.fraDato);
 }
 
 export function erNyEndringIAktivitet(aktivitet, lestInformasjon, me) {

@@ -1,10 +1,9 @@
 import React, { useEffect, useContext } from 'react';
-import PT from 'prop-types';
 import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { HjelpetekstHoyre, HjelpetekstOver } from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import classNames from 'classnames';
-import useFormstate from '@nutgaard/use-formstate';
+import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
 import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
@@ -17,9 +16,9 @@ export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 export const IKKE_SEND_FORHANDSORIENTERING = 'ikke_send_forhandsorientering';
 
-function validateForhandsorienter(val, values) {
+function validateForhandsorienter(val, values): string | undefined {
     if (values.avtaltSelect !== SEND_PARAGRAF_11_9) {
-        return null;
+        return undefined;
     }
 
     if (val.trim().length === 0) {
@@ -29,7 +28,10 @@ function validateForhandsorienter(val, values) {
         return 'Du må korte ned teksten til 500 tegn';
     }
 
-    return null;
+    return undefined;
+}
+function noValidate(): undefined {
+    return undefined;
 }
 
 const avtaltTekst =
@@ -42,13 +44,36 @@ const avtaltTekst119 =
     'fram av folketrygdloven § 11-9.';
 
 const validator = useFormstate({
-    avtaltCheckbox: () => {},
-    avtaltSelect: () => {},
+    avtaltCheckbox: noValidate,
+    avtaltSelect: noValidate,
     avtaltText119: validateForhandsorienter,
-    avtaltText: () => {}
+    avtaltText: noValidate
 });
 
-function AvtaltForm(props) {
+function InfoHeader() {
+    return (
+        <div>
+            <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
+            <HjelpetekstHoyre id="brukerinfo">
+                Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
+                offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
+                Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv
+                time så blir det kun sendt én SMS eller e-post.
+            </HjelpetekstHoyre>
+        </div>
+    );
+}
+
+interface Props {
+    onSubmit: SubmitHandler<any>;
+    className?: string;
+    oppdaterer: boolean;
+    lasterData: boolean;
+    erManuellKrrKvpBruker: boolean;
+    visAvtaltMedNavMindreEnnSyvDager: boolean;
+}
+
+function AvtaltForm(props: Props) {
     const {
         onSubmit,
         className,
@@ -76,9 +101,8 @@ function AvtaltForm(props) {
     const avtaltSelect = state.fields.avtaltSelect.input.value;
 
     const kanSendeForhandsvarsel = !erManuellKrrKvpBruker && !visAvtaltMedNavMindreEnnSyvDager;
-
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} noValidate="noValidate" autoComplete="off" className={className}>
+        <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
             <Undertittel>{'Merk aktiviteten som "Avtalt med NAV"'}</Undertittel>
             <div className="avtalt-container__radio">
                 <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
@@ -110,6 +134,7 @@ function AvtaltForm(props) {
                     </Select>
                     <VisibleIfDiv visible={avtaltSelect !== IKKE_SEND_FORHANDSORIENTERING}>
                         <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
+                            <InfoHeader />
                             <Normaltekst className="blokk-xs">
                                 Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det
                                 medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du
@@ -118,23 +143,7 @@ function AvtaltForm(props) {
                             </Normaltekst>
                         </VisibleIfDiv>
                         <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>
-                            <Textarea
-                                label={
-                                    <div>
-                                        <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
-                                        <HjelpetekstHoyre id="brukerinfo">
-                                            Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv
-                                            har registrert i det offentlige kontaktregisteret. Brukeren får beskjed om
-                                            en viktig oppgave og det lenkes til dialog. Beskjeden sendes gjennom Altinn
-                                            etter en halv time. Sender du flere forhåndsorienteringer innen en halv time
-                                            så blir det kun sendt én SMS eller e-post.
-                                        </HjelpetekstHoyre>
-                                    </div>
-                                }
-                                maxLength={500}
-                                disabled={oppdaterer}
-                                {...state.fields.avtaltText119}
-                            />
+                            <Textarea label={<InfoHeader />} maxLength={500} {...state.fields.avtaltText119} />
                         </VisibleIfDiv>
                     </VisibleIfDiv>
                 </VisibleIfDiv>
@@ -147,19 +156,5 @@ function AvtaltForm(props) {
         </form>
     );
 }
-
-AvtaltForm.propTypes = {
-    onSubmit: PT.func,
-    className: PT.string,
-    oppdaterer: PT.bool.isRequired,
-    lasterData: PT.bool.isRequired,
-    erManuellKrrKvpBruker: PT.bool.isRequired,
-    visAvtaltMedNavMindreEnnSyvDager: PT.bool.isRequired
-};
-
-AvtaltForm.defaultProps = {
-    onSubmit: undefined,
-    className: undefined
-};
 
 export default AvtaltForm;

@@ -126,7 +126,9 @@ export function loggMittMalLagre(veileder: boolean) {
 }
 
 export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgingsPerioder: Array<OppfolgingsPeriode>) {
-    const brukerHarSendtDialogTidligere = dialoger.find(a => a.henvendelser.find(h => h.avsender === 'BRUKER'));
+    const brukerHarSendtDialogTidligere = dialoger.find(
+        a => a.henvendelser && a.henvendelser.find(h => h.avsender === 'BRUKER')
+    );
 
     if (!brukerHarSendtDialogTidligere) {
         const periode = oppfolgingsPerioder.filter(p => p.sluttDato === null);
