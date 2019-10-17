@@ -15,13 +15,15 @@ interface InternLenkeProps {
     children?: ReactNode;
     onClick?: () => void;
     role?: string;
+    hidden?: boolean;
 }
 
 export default function InternLenke(props: InternLenkeProps) {
-    const { href, className, skipLenkeStyling, children, onClick, role } = props;
+    const { href, className, skipLenkeStyling, children, onClick, role, hidden } = props;
     const fodselsnummer = getFodselsnummer();
     const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
 
+    if (hidden) return null;
     return (
         <Link to={internHref} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
             {children}
