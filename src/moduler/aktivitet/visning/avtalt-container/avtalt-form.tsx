@@ -16,7 +16,7 @@ export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 export const IKKE_SEND_FORHANDSORIENTERING = 'ikke_send_forhandsorientering';
 
-function validateForhandsorienter(val, values): string | undefined {
+function validateForhandsorienter(val: string, values: { avtaltSelect?: string }): string | undefined {
     if (values.avtaltSelect !== SEND_PARAGRAF_11_9) {
         return undefined;
     }

@@ -117,7 +117,7 @@ function Print(props: Props) {
             <Systemtittel tag="h1" className="printmodal-body__utskrift--overskrift">
                 Aktivitetsplan
             </Systemtittel>
-            <HiddenIfSection hidden={!printMelding} className="printmodal-body__visprintmelding">
+            <HiddenIfSection hidden={printMelding === ''} className="printmodal-body__visprintmelding">
                 <p>{printMelding}</p>
             </HiddenIfSection>
             <MalPrint mittMal={mittMal} />

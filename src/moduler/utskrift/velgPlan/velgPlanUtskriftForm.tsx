@@ -12,7 +12,7 @@ const validator = useFormstate({
 });
 
 interface VelgPlanUtskriftFormProps {
-    onSubmit: (string) => Promise<any>;
+    onSubmit: (string: string) => Promise<any>;
     hidden?: boolean;
     kvpPerioder?: KvpPeriode[];
 }

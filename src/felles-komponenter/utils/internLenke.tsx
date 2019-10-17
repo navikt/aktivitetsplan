@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
-const cls = (className, brukLenkestyling) =>
+const cls = (className?: string, brukLenkestyling?: boolean) =>
     classNames(className, {
         lenke: brukLenkestyling
     });

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { Checkbox as NavCheckbox, CheckboxProps } from 'nav-frontend-skjema';
-interface Input {
-    value?: string;
-    onChange: (a) => void;
-}
+import { FieldState } from '@nutgaard/use-formstate';
 
 interface Props {
     initialValue?: string;
     pristine?: boolean;
     touched: boolean;
     error?: string;
-    input: Input;
+    input: FieldState['input'];
 }
 // pristine isn't used, but we don't want to pass it to input
 function Checkbox(props: Props & CheckboxProps) {
@@ -19,9 +16,9 @@ function Checkbox(props: Props & CheckboxProps) {
     const inputProps = { ...input, ...rest };
     const [toggel, setToggel] = useState(initialValue === 'true');
 
-    const toggelOnChange = event => {
+    const toggelOnChange = (event: any) => {
         const newValue = toggel ? 'false' : 'true';
-        const customEvent = {
+        const customEvent: any = {
             target: { name: event.target.name, value: newValue }
         };
         input.onChange(customEvent);

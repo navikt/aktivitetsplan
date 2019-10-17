@@ -25,10 +25,19 @@ const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
 const STEP_UTSKRIFT = 'UTSKRIFT';
 
-function getSteps(kanHaPrintValg, kanHaPrintMelding) {
-    return [kanHaPrintValg ? STEP_VELG_PLAN : null, kanHaPrintMelding ? STEP_MELDING_FORM : null, STEP_UTSKRIFT].filter(
-        v => v !== null
-    );
+function getSteps(kanHaPrintValg?: boolean, kanHaPrintMelding?: boolean): string[] {
+    const steps = [];
+
+    if (kanHaPrintValg) {
+        steps.push(STEP_VELG_PLAN);
+    }
+
+    if (kanHaPrintMelding) {
+        steps.push(STEP_MELDING_FORM);
+    }
+
+    steps.push(STEP_UTSKRIFT);
+    return steps;
 }
 
 interface Props {
@@ -44,6 +53,8 @@ interface Props {
     aktiviteter?: Aktivitet[];
     erManuell?: boolean;
 }
+
+type mabyString = string | undefined;
 
 function AktivitetsplanPrint(props: Props) {
     const {
@@ -67,11 +78,15 @@ function AktivitetsplanPrint(props: Props) {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const [stepIndex, setStepIndex] = useState(0);
-    const [printMelding, setPrintMelding] = useState(undefined);
-    const [utskriftform, setUtskriftform] = useState(undefined);
+    const [printMelding, setPrintMelding] = useState('');
+    const [utskriftform, setUtskriftform] = useState('helePlanen');
 
     const back = stepIndex > 0 ? () => setStepIndex(stepIndex - 1) : undefined;
-    const next = func => {
+
+    type a = (value: string) => void;
+    type b = (value: string) => Promise<any>;
+
+    const next = (func: a): b => {
         return (string: string): Promise<any> => {
             func(string);
             setStepIndex(stepIndex + 1);
@@ -132,7 +147,7 @@ function AktivitetsplanPrint(props: Props) {
     );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
     const aktiviteter = selectAktivitetListe(state);
     const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
     const dialoger = selectAlleDialoger(state);
@@ -160,7 +175,7 @@ const mapStateToProps = state => {
     };
 };
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch: any, props: any) {
     return {
         doResetUtskrift: () => {
             props.history.push('/');
