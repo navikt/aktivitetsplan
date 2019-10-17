@@ -6,7 +6,7 @@ import Knappelenke from '../../../../felles-komponenter/utils/knappelenke';
 import styles from './endre-linje.module.less';
 
 function EndreLinje(props) {
-    const { tittel, form, visning, endring, setEndring } = props;
+    const { tittel, form, visning, endring, setEndring, kanEndre } = props;
 
     return (
         <div>
@@ -15,7 +15,7 @@ function EndreLinje(props) {
                     <Normaltekst className={styles.endreTittel}>{tittel}</Normaltekst>
                     <div>{endring ? null : visning}</div>
                 </div>
-                <Knappelenke className={styles.endreKnapp} onClick={() => setEndring(!endring)}>
+                <Knappelenke visible={kanEndre} className={styles.endreKnapp} onClick={() => setEndring(!endring)}>
                     <div className={styles.endreKnappInnhold}>{endring ? 'Avbryt' : 'Endre'}</div>
                     <div className={endring ? styles.endreIndikasjonLukket : styles.endreIndikasjonApen} />
                 </Knappelenke>
@@ -32,7 +32,12 @@ EndreLinje.propTypes = {
     form: PT.node.isRequired,
     visning: PT.node.isRequired,
     endring: PT.bool.isRequired,
-    setEndring: PT.func.isRequired
+    setEndring: PT.func.isRequired,
+    kanEndre: PT.bool
+};
+
+EndreLinje.defaultProps = {
+    kanEndre: true
 };
 
 export default EndreLinje;
