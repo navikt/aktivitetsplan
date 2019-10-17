@@ -23,7 +23,10 @@ export default function InternLenke(props: InternLenkeProps) {
     const fodselsnummer = getFodselsnummer();
     const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
 
-    if (hidden) return null;
+    if (hidden) {
+        return null;
+    }
+
     return (
         <Link to={internHref} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
             {children}
