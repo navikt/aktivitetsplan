@@ -17,7 +17,7 @@ function getTellerTekst(antallTegn: number, maxLength: number, visTellerFra?: nu
 
 interface Input {
     value: string;
-    onChange: (a) => void;
+    onChange: (a: any) => void;
 }
 
 interface Props {
