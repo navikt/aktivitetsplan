@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Radio } from 'nav-frontend-skjema';
 import PT from 'prop-types';
@@ -45,49 +44,43 @@ function PeriodeFilter({
 }) {
     return (
         <VisibleIfDiv className={periodeFilterCls(className)} visible={harHistoriskePerioder}>
-            <FormattedMessage id="periode-filter.tittel">
-                {tittel => (
-                    <Dropdown
-                        name="periode-filter"
-                        knappeTekst={tittel}
-                        onOpen={() => loggEvent(LIST_HISTORISK_PERIODE)}
-                    >
-                        <div className="filter__container">
-                            <div className="filter">
-                                <Undertittel className="filter__tittel">
-                                    <FormattedMessage id="filter.periode.tittel" />
-                                </Undertittel>
-                                <HiddenIfDiv hidden={skjulInneverende}>
+            <Dropdown
+                name="periode-filter"
+                knappeTekst="Mine tidligere planer"
+                onOpen={() => loggEvent(LIST_HISTORISK_PERIODE)}
+            >
+                <div className="filter__container">
+                    <div className="filter">
+                        <Undertittel className="filter__tittel">Velg periode</Undertittel>
+                        <HiddenIfDiv hidden={skjulInneverende}>
+                            <Radio
+                                className="filter__radio--periode"
+                                label="Nåværende periode"
+                                name="inneverende"
+                                onChange={() => doVelgHistoriskPeriode(null)}
+                                checked={!historiskPeriode}
+                            />
+                        </HiddenIfDiv>
+                        {historiskePerioder.map(t => {
+                            const { id } = t;
+                            return (
+                                <div key={id}>
                                     <Radio
                                         className="filter__radio--periode"
-                                        label={<FormattedMessage id="filter.periode.inneverende" />}
-                                        name="inneverende"
-                                        onChange={() => doVelgHistoriskPeriode(null)}
-                                        checked={!historiskPeriode}
+                                        label={<PeriodeLabel historiskPeriode={t} />}
+                                        name={id}
+                                        onChange={() => {
+                                            doVelgHistoriskPeriode(t);
+                                            loggEvent(VIS_HISTORISK_PERIODE);
+                                        }}
+                                        checked={!!historiskPeriode && historiskPeriode.id === id}
                                     />
-                                </HiddenIfDiv>
-                                {historiskePerioder.map(t => {
-                                    const { id } = t;
-                                    return (
-                                        <div key={id}>
-                                            <Radio
-                                                className="filter__radio--periode"
-                                                label={<PeriodeLabel historiskPeriode={t} />}
-                                                name={id}
-                                                onChange={() => {
-                                                    doVelgHistoriskPeriode(t);
-                                                    loggEvent(VIS_HISTORISK_PERIODE);
-                                                }}
-                                                checked={!!historiskPeriode && historiskPeriode.id === id}
-                                            />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </Dropdown>
-                )}
-            </FormattedMessage>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </Dropdown>
         </VisibleIfDiv>
     );
 }

@@ -1,7 +1,7 @@
 /* eslint-env browser */
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import { FormattedDate, injectIntl, intlShape } from 'react-intl';
+import { FormattedDate } from 'react-intl';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import { moment } from '../../../utils';
@@ -25,15 +25,13 @@ Caption.defaultProps = {
     date: undefined
 };
 
-export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showNextButton, intl }) => {
+export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showNextButton }) => {
     const className = 'DayPicker-NavButton';
     return (
         <div role="toolbar">
             <button
                 tabIndex="0"
-                aria-label={intl.formatMessage({
-                    id: 'datepicker.forrige-maaned'
-                })}
+                aria-label="Forrige måned"
                 className={`${className} DayPicker-NavButton--prev`}
                 disabled={!showPreviousButton}
                 type="button"
@@ -44,9 +42,7 @@ export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showN
             />
             <button
                 tabIndex="0"
-                aria-label={intl.formatMessage({
-                    id: 'datepicker.neste-maaned'
-                })}
+                aria-label="Neste måned"
                 className={`${className} DayPicker-NavButton--next`}
                 disabled={!showNextButton}
                 type="button"
@@ -63,8 +59,7 @@ NavBar.propTypes = {
     onNextClick: PT.func,
     onPreviousClick: PT.func,
     showPreviousButton: PT.bool,
-    showNextButton: PT.bool,
-    intl: intlShape.isRequired
+    showNextButton: PT.bool
 };
 
 NavBar.defaultProps = {
@@ -105,7 +100,7 @@ class DayPickerComponent extends Component {
     }
 
     render() {
-        const { ariaControls, onKeyUp, intl, onDayClick } = this.props;
+        const { ariaControls, onKeyUp, onDayClick } = this.props;
         return (
             <div // eslint-disable-line jsx-a11y/no-static-element-interactions
                 className="datovelger__DayPicker"
@@ -120,7 +115,7 @@ class DayPickerComponent extends Component {
                     localeUtils={localeUtils}
                     firstDayOfWeek={1}
                     captionElement={<Caption />}
-                    navbarElement={<NavBar intl={intl} />}
+                    navbarElement={<NavBar />}
                     selectedDays={day => this.selectedDays(day)}
                     onDayClick={(event, jsDato) => onDayClick(event, jsDato)}
                 />
@@ -135,8 +130,7 @@ DayPickerComponent.propTypes = {
     lukk: PT.func.isRequired,
     ariaControls: PT.string,
     onDayClick: PT.func.isRequired,
-    tidligsteFom: PT.instanceOf(Date),
-    intl: intlShape.isRequired
+    tidligsteFom: PT.instanceOf(Date)
 };
 
 DayPickerComponent.defaultProps = {
@@ -144,4 +138,4 @@ DayPickerComponent.defaultProps = {
     tidligsteFom: undefined
 };
 
-export default injectIntl(DayPickerComponent);
+export default DayPickerComponent;

@@ -50,7 +50,7 @@ function AktiverDigitalOppfolgingVarsel(props: PropTypes) {
         );
     }
     if (settDigitalFeilet) {
-        return <AdvarselVarsling tekstId="sett-digital.feilmelding" className="sett-digital__varsel" />;
+        return <AdvarselVarsling tekst="Feilet. Prøv igjen senere!" className="sett-digital__varsel" />;
     }
 }
 

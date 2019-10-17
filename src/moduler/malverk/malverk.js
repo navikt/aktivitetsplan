@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/label-has-for */
 
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import visibleIfHOC from '../../hocs/visible-if';
@@ -60,9 +59,7 @@ class Malverk extends Component {
                                 name="malverk"
                                 onChange={this.onChangeMalverk}
                             >
-                                <FormattedMessage id="aktivitet.form.ingen.utfylt.aktivitet.valgt">
-                                    {text => <option value="ingen">{text}</option>}
-                                </FormattedMessage>
+                                <option value="ingen">Ingen ferdig utfylt aktivitet valgt</option>
                                 {malverkOptions}
                             </select>
                         </div>

@@ -30,7 +30,6 @@ const stripeTyper = {
 };
 
 function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
-    const vistekster = window.location.search.indexOf('vistekster') !== -1;
     const aktor = erVeileder ? 'veileder' : 'bruker';
     const feilType = feil.type;
     const { melding } = feil;
@@ -52,16 +51,7 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
     return (
         <Stripe>
             <div>
-                {vistekster &&
-                    feilKeys.map(tekstId => {
-                        let tekst = intl.formatMessage({
-                            id: tekstId,
-                            defaultMessage: tekstId
-                        });
-                        if (tekst === tekstId) tekst = `[${tekst}]`;
-                        return <div key={tekstId}>{tekst}</div>;
-                    })}
-                <FailsafeText id={mostSpesificKey} hidden={vistekster} visTekstVedFeil />
+                <FailsafeText id={mostSpesificKey} visTekstVedFeil />
             </div>
         </Stripe>
     );
