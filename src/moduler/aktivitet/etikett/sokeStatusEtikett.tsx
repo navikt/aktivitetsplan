@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import * as statuskoder from '../../../constant';
 import styles from './etikett.module.less';
-import EtikettBase, { EtikettBaseProps } from '../../../felles-komponenter/etikett-base/etikett-base';
+import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
 import { StillingsStatus } from '../../../types';
 
 const getCls = (etikettnavn?: StillingsStatus): string => {
@@ -39,15 +39,19 @@ const getText = (etikettnavn?: StillingsStatus): string => {
     }
 };
 
-type Props = Omit<EtikettBaseProps, 'children'> & { etikett?: StillingsStatus };
+export interface Props {
+    etikett?: StillingsStatus;
+    className?: string;
+    hidden?: boolean;
+}
 
 function SokeStatusEtikett(props: Props) {
-    const { etikett, className, ...rest } = props;
+    const { etikett, className, hidden } = props;
 
     const cls = getCls(etikett);
 
     return (
-        <EtikettBase className={classNames(cls, className)} {...rest}>
+        <EtikettBase className={classNames(cls, className)} hidden={hidden}>
             {getText(etikett)}
         </EtikettBase>
     );
