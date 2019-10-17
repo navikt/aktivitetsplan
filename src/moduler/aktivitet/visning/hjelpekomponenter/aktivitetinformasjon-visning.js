@@ -33,7 +33,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                     <InternLenke
                         className="endreknapp"
                         role="button"
-                        visible={tillatEndring && !arenaAktivitet}
+                        hidden={!tillatEndring || arenaAktivitet}
                         href={endreAktivitetRoute(valgtAktivitet.id)}
                         onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
                         disabled={laster || !underOppfolging}
