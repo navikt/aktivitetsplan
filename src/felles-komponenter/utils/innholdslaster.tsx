@@ -15,7 +15,7 @@ const alleErOK = (avhengigheter: string[]): boolean => avhengigheter.every(harSt
 
 const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
-type Avhengighet = Status | { status?: Status };
+type Avhengighet = Status | { status?: Status } | null | undefined;
 export interface InnholdslasterProps {
     avhengigheter?: Avhengighet[] | Avhengighet;
     children: React.ReactNode;
@@ -35,7 +35,7 @@ function toStatus(avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] {
     }
 
     return asArray(avhengiheter)
-        .map(element => (typeof element === 'string' ? element : element.status))
+        .map(element => (!element || typeof element === 'string' ? element : element.status))
         .map(element => (element ? element : 'NOT_SETT'));
 }
 
