@@ -5,7 +5,6 @@ import * as statuser from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import StillingEtikettForm from './stilling-etikett-form';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import Etikett from '../../etikett/etikett';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
 import Underseksjon from '../underseksjon/underseksjon';
@@ -13,12 +12,11 @@ import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
 import { STATUS_FULLFOERT } from '../../../../constant';
 import { STATUS_AVBRUTT } from '../../../../constant';
+import SokeStatusEtikett from '../../etikett/sokeStatusEtikett';
 
 function OppdaterAktivitetEtikett(props) {
     const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
     const [endring, setEndring] = useState(false);
-
-    const visning = <Etikett etikett={aktivitet.etikett} />;
 
     const onSubmit = val =>
         lagreEtikett(val).then(() => {
@@ -36,7 +34,7 @@ function OppdaterAktivitetEtikett(props) {
                 form={form}
                 endring={endring}
                 setEndring={setEndring}
-                visning={visning}
+                visning={<SokeStatusEtikett etikett={aktivitet.etikett} />}
                 kanEndre={kanEndre}
             />
         </Underseksjon>
