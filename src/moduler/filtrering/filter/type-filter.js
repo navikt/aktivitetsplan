@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toggleAktivitetsType } from './filter-reducer';
 import { selectAktivitetTyperFilter } from './filter-selector';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
-import FilterVisningsKomponent from './filter-visnings-komponent';
+import FilterVisningsKomponent from './filter-visning';
 import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 function TypeFilter({ harAktivitetTyper, aktivitetTyper, doToggleAktivitetsType }) {
@@ -12,7 +12,7 @@ function TypeFilter({ harAktivitetTyper, aktivitetTyper, doToggleAktivitetsType 
         <FilterVisningsKomponent
             harAktiviteter={harAktivitetTyper}
             filter={aktivitetTyper}
-            filterTittel="filter.aktivitet.type.tittel"
+            filterTittel="Aktivitetstype"
             filterTekst="aktivitet.type."
             metrikkNavn={AKTIVITESTYPE_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsType}

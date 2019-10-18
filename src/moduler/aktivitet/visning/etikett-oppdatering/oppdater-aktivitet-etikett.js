@@ -11,6 +11,8 @@ import EndreLinje from '../endre-linje/endre-linje';
 import Underseksjon from '../underseksjon/underseksjon';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
+import { STATUS_FULLFOERT } from '../../../../constant';
+import { STATUS_AVBRUTT } from '../../../../constant';
 
 function OppdaterAktivitetEtikett(props) {
     const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
@@ -25,6 +27,7 @@ function OppdaterAktivitetEtikett(props) {
         });
 
     const form = <StillingEtikettForm disabled={disableEtikettEndringer} aktivitet={aktivitet} onSubmit={onSubmit} />;
+    const kanEndre = aktivitet.status !== STATUS_FULLFOERT && aktivitet.status !== STATUS_AVBRUTT;
 
     return (
         <Underseksjon>
@@ -34,6 +37,7 @@ function OppdaterAktivitetEtikett(props) {
                 endring={endring}
                 setEndring={setEndring}
                 visning={visning}
+                kanEndre={kanEndre}
             />
         </Underseksjon>
     );
