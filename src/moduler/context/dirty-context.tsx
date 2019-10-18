@@ -6,11 +6,15 @@ export const DirtyContext = React.createContext({
     setFormIsDirty: (name: string, dirty: boolean) => {}
 });
 
-function isFormsDirty(forms) {
+function isFormsDirty(forms: { [key: string]: boolean | undefined }) {
     return Object.values(forms).some(value => value === true);
 }
 
-export function DirtyProvider({ children }) {
+interface Children {
+    children: React.ReactNode;
+}
+
+export function DirtyProvider(props: Children) {
     const [isDirty, setIsDirty] = useState(false);
     const [, setDirtyForms] = useState({});
 
@@ -26,7 +30,7 @@ export function DirtyProvider({ children }) {
     );
 
     const value = useMemo(() => ({ isDirty, setFormIsDirty }), [isDirty, setFormIsDirty]);
-    return <DirtyContext.Provider value={value}>{children}</DirtyContext.Provider>;
+    return <DirtyContext.Provider value={value}>{props.children}</DirtyContext.Provider>;
 }
 
 DirtyProvider.propTypes = {

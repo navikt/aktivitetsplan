@@ -16,7 +16,7 @@ const validator = useFormstate({
 
 interface Props {
     bruker: Bruker;
-    onSubmit: (string) => Promise<any>;
+    onSubmit: (value: string) => Promise<any>;
     hidden?: boolean;
 }
 

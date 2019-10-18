@@ -49,12 +49,12 @@ export const TILSTAND_FILTER_METRIKK = `${filterBase}Tilstand`;
 
 const AKTIVITET_FLYTTET = 'aktivitetsplan.aktivitet.flyttet';
 
-function hash(string?: string): string {
+function hash(string?: string): string | undefined {
     return string
         ? shajs('sha256')
               .update(string)
               .digest('hex')
-        : null;
+        : undefined;
 }
 
 export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boolean, ident: string, aktorId?: string) {

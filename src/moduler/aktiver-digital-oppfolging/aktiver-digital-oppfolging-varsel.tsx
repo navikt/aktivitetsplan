@@ -9,6 +9,7 @@ interface PropTypes {
     settDigitalFeilet: boolean;
     harTrykketRefresh: boolean;
 }
+
 function AktiverDigitalOppfolgingVarsel(props: PropTypes) {
     const { reservertIKRR, settDigitalFeilet, harTrykketRefresh } = props;
     const InformasjonContainer = () => (
@@ -33,24 +34,20 @@ function AktiverDigitalOppfolgingVarsel(props: PropTypes) {
             ? 'sett-digital.reservert-i-krr.fjern.reservasjon.infotekst'
             : 'sett-digital.reservert-i-krr.infotekst';
         return (
-            <FormattedMessage id="sett-digital.reservert-i-krr.url-lenke">
-                {url => (
-                    <AlertStripe type="advarsel" className="sett-digital__varsel">
-                        <div className="blokk-s">
-                            <FormattedMessage id={resertvertTekst} />
-                            &nbsp;
-                            <InternLenke href={url}>
-                                <FormattedMessage id="sett-digital.reservert-i-krr.lenketekst" />
-                            </InternLenke>
-                        </div>
-                        <InformasjonContainer />
-                    </AlertStripe>
-                )}
-            </FormattedMessage>
+            <AlertStripe type="advarsel" className="sett-digital__varsel">
+                <div className="blokk-s">
+                    <FormattedMessage id={resertvertTekst} />
+                    &nbsp;
+                    <InternLenke href={'https://www.norge.no/nn/reservasjon'}>
+                        <FormattedMessage id="sett-digital.reservert-i-krr.lenketekst" />
+                    </InternLenke>
+                </div>
+                <InformasjonContainer />
+            </AlertStripe>
         );
     }
     if (settDigitalFeilet) {
-        return <AdvarselVarsling tekstId="sett-digital.feilmelding" className="sett-digital__varsel" />;
+        return <AdvarselVarsling tekst="Feilet. Prøv igjen senere!" className="sett-digital__varsel" />;
     }
 }
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import * as AppPT from '../../proptypes';
 import { autobind, formaterDatoEllerTidSiden } from '../../utils';
@@ -28,7 +27,7 @@ function malListeVisning(gjeldendeMal, erVeileder) {
     return (
         <article key={gjeldendeMal.dato} className="aktivitetmal__historikk">
             <span className="aktivitetmal__historikk-skrevetav">
-                <FormattedMessage id={gjeldendeMal.mal ? 'aktivitetsmal.skrevet-av' : 'aktivitetsmal.slettet-av'} />
+                {gjeldendeMal.mal ? 'Skrevet av' : 'Mål slettet av'}
                 <span>{identitetMap(erVeileder, gjeldendeMal.endretAv)}</span>
             </span>{' '}
             {formaterDatoEllerTidSiden(gjeldendeMal.dato)}

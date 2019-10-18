@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
-import { FormattedMessage } from 'react-intl';
 import ModalContainer from '../modal/modal-container';
 import ModalFooter from '../modal/modal-footer';
 import { moment } from '../../utils';
@@ -27,31 +26,26 @@ class TimeoutboxNedtelling extends Component {
         if (sekunderIgjen <= 0) {
             return <TimeoutboxLoggetUt />;
         }
+
+        const tid = durationLeft.format('mm:ss', { trim: false });
         return (
             <div>
                 <ModalContainer>
                     <div className="varselmodal">
                         <Innholdstittel className="blokk-s" tag="h1">
-                            <FormattedMessage id="timeoutbox.tittel" />
+                            Obs!
                         </Innholdstittel>
                         <Normaltekst className="blokk-xxs">
-                            <FormattedMessage
-                                id="timeoutbox.innhold.nedtelling"
-                                values={{
-                                    tid: durationLeft.format('mm:ss', {
-                                        trim: false
-                                    })
-                                }}
-                            />
+                            {`Din sesjon vil utløpe om ${tid} minutter. Dersom du ikke laster siden på nytt, vil du bli logget ut. Ta vare på alt ulagret arbeid. For å laste siden på nytt, vennligst trykk "Last siden på nytt".`}
                         </Normaltekst>
                     </div>
                 </ModalContainer>
                 <ModalFooter>
                     <Hovedknapp className="modal-footer__knapp" onClick={() => window.location.reload()}>
-                        <FormattedMessage id="timeoutbox.knapp.last_pa_nytt" />
+                        Last siden på nytt
                     </Hovedknapp>
                     <Knapp className="modal-footer__knapp" onClick={() => document.querySelector('#logout').click()}>
-                        <FormattedMessage id="timeoutbox.knapp.loggut" />
+                        Logg ut
                     </Knapp>
                 </ModalFooter>
             </div>
