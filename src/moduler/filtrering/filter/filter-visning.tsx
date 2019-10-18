@@ -6,28 +6,28 @@ import classNames from 'classnames';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import loggEvent from '../../../felles-komponenter/utils/logging';
 
-const filterClassNames = className => classNames(className, 'filter');
+type FilterType = { [key: string]: boolean | undefined };
 
-interface AvtaltFilterType {
+interface AvtaltFilterType extends FilterType {
     avtaltMedNav: boolean;
     ikkeAvtaltMedNav: boolean;
 }
 
-interface StatusFilterType {
+interface StatusFilterType extends FilterType {
     BRUKER_ER_INTERESSERT: boolean;
     FULLFORT: boolean;
     GJENNOMFORES: boolean;
     PLANLAGT: boolean;
 }
 
-interface AktiviteFilterType {
+interface AktiviteFilterType extends FilterType {
     EGEN: boolean;
     MOTE: boolean;
     SOKEAVTALE: boolean;
     STILLING: boolean;
 }
 
-export interface EtikettType {
+export interface EtikettType extends FilterType {
     SOKNAD_SENDT: boolean;
     INNKALT_TIL_INTERVJU: boolean;
     JOBBTILBUD: boolean;
@@ -44,11 +44,11 @@ interface FilterVisningTypes {
     className?: string;
 }
 
-//TODO: Refaktorer. Filter er ikke bare et objekt hvor den boolske verdien bestemmer om filteret er påskrudd eller ikke, det sier også noe om selve filtercheckboksen skal vises eller ikke(ved at noen av propertiene kan mangle fra objektet).
+//TODO: Refaktorer. Filter er ikke bare et objekt hvor den boolske verdien bestemmer om filteret er påskrudd eller ikke, det sier også noe om selve filtercheckboksen skal vises eller ikke(ved FilterTypet noen FilterTypev propertiene kan mangle fra objektet).
 function FilterVisning(props: FilterVisningTypes) {
     const { harAktiviteter, filter, filterTittel, filterTekst, metrikkNavn, doToggleFunction, className } = props;
     return (
-        <VisibleIfDiv visible={harAktiviteter} className={filterClassNames(className)}>
+        <VisibleIfDiv visible={harAktiviteter} className={classNames(className, 'filter')}>
             <Undertittel className="filter__tittel">{filterTittel}</Undertittel>
             {Object.keys(filter).map(nokkel => {
                 return (

@@ -103,9 +103,14 @@ function Aktiviteter(props: Props) {
         return null;
     }
 
-    const gruperteAktiviteter = aktiviteter.reduce((map, a) => {
-        map[a.status] ? map[a.status].push(a) : (map[a.status] = [a]);
-        return map;
+    const gruperteAktiviteter = aktiviteter.reduce((acc: { [key: string]: Aktivitet[] | undefined }, a: Aktivitet) => {
+        const status = acc[a.status];
+        if (status) {
+            status.push(a);
+        } else {
+            acc[a.status] = [a];
+        }
+        return acc;
     }, {});
 
     return (
