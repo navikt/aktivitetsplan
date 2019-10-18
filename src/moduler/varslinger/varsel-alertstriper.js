@@ -48,12 +48,8 @@ VarslingMedLenke.propTypes = {
     onClick: PT.func
 };
 
-export function AdvarselVarsling({ tekstId, className }) {
-    return (
-        <AlertStripeAdvarsel className={className}>
-            <FormattedMessage id={tekstId} />
-        </AlertStripeAdvarsel>
-    );
+export function AdvarselVarsling({ tekst, className }) {
+    return <AlertStripeAdvarsel className={className}>{tekst}</AlertStripeAdvarsel>;
 }
 
 AdvarselVarsling.defaultProps = {
@@ -61,7 +57,7 @@ AdvarselVarsling.defaultProps = {
 };
 
 AdvarselVarsling.propTypes = {
-    tekstId: PT.string.isRequired,
+    tekst: PT.string.isRequired,
     className: PT.string
 };
 

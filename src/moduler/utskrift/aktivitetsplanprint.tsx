@@ -54,8 +54,6 @@ interface Props {
     erManuell?: boolean;
 }
 
-type mabyString = string | undefined;
-
 function AktivitetsplanPrint(props: Props) {
     const {
         doHentMal,
@@ -83,22 +81,22 @@ function AktivitetsplanPrint(props: Props) {
 
     const back = stepIndex > 0 ? () => setStepIndex(stepIndex - 1) : undefined;
 
-    type a = (value: string) => void;
-    type b = (value: string) => Promise<any>;
+    const next = () => setStepIndex(stepIndex + 1);
 
-    const next = (func: a): b => {
-        return (string: string): Promise<any> => {
-            func(string);
-            setStepIndex(stepIndex + 1);
-            return Promise.resolve();
-        };
+    const printMeldingSubmit = (printmelding: string) => {
+        setPrintMelding(printmelding);
+        next();
+        return Promise.resolve();
+    };
+
+    const velgPlanSubmint = (plantype: string) => {
+        setUtskriftform(plantype);
+        next();
+        return Promise.resolve();
     };
 
     const kanHaPrintValg = kvpPerioder && kvpPerioder.length > 0 && erVeileder;
     const kanHaPrintMelding = erManuell && erVeileder;
-
-    const printMeldingSubmit = next(setPrintMelding);
-    const velgPlanSubmint = next(setUtskriftform);
 
     const steps = getSteps(kanHaPrintValg, kanHaPrintMelding);
 

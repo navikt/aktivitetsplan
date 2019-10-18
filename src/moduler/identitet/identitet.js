@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { hentIdentitet } from './identitet-reducer';
 
@@ -11,15 +10,14 @@ class Identitet extends Component {
     }
 
     render() {
-        const { children, ident, intl } = this.props;
-        return <span>{ident === children ? intl.formatMessage({ id: 'identitet.deg' }) : children}</span>;
+        const { children, ident } = this.props;
+        return <span>{ident === children ? 'deg' : children}</span>;
     }
 }
 
 Identitet.propTypes = {
     ident: PT.string,
     children: PT.string,
-    intl: intlShape.isRequired,
     doHentIdentitet: PT.func.isRequired
 };
 
@@ -42,4 +40,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(injectIntl(Identitet));
+)(Identitet);

@@ -3,33 +3,40 @@ import Spinner from 'nav-frontend-spinner';
 import { STATUS } from '../../ducks/utils';
 import HiddenIfHOC from '../hidden-if/hidden-if';
 
-const array = (value: any) => (Array.isArray(value) ? value : [value]);
+function asArray<T>(value: T | T[]): T[] {
+    return Array.isArray(value) ? value : [value];
+}
+const harStatus = (...status: string[]) => (element: string): boolean => asArray(status).includes(element);
 
-const harStatus = (...status: string[]) => {
-    return (element: string | { status?: string }) =>
-        element && array(status).includes(typeof element === 'string' ? element : element.status);
-};
-
-const noenHarFeil = (avhengigheter?: Avhengigheter): boolean =>
-    !!avhengigheter && array(avhengigheter).some(harStatus(STATUS.ERROR));
-const minstEnErOK = (avhengigheter?: Avhengigheter): boolean =>
-    !!avhengigheter && array(avhengigheter).some(harStatus(STATUS.OK));
-const alleLastet = (avhengigheter?: Avhengigheter): boolean =>
-    !!avhengigheter && array(avhengigheter).every(harStatus(STATUS.OK, STATUS.RELOADING));
-const alleErOK = (avhengigheter?: Avhengigheter): boolean =>
-    !!avhengigheter && array(avhengigheter).every(harStatus(STATUS.OK));
+const noenHarFeil = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.ERROR));
+const minstEnErOK = (avhengigheter: string[]): boolean => avhengigheter.some(harStatus(STATUS.OK));
+const alleLastet = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(STATUS.OK, STATUS.RELOADING));
+const alleErOK = (avhengigheter: string[]): boolean => avhengigheter.every(harStatus(STATUS.OK));
 
 const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
-type Avhengigheter = string[] | object[];
+type Avhengighet = Status | { status?: Status } | null | undefined;
 export interface InnholdslasterProps {
-    avhengigheter: Avhengigheter;
+    avhengigheter?: Avhengighet[] | Avhengighet;
     children: React.ReactNode;
     spinnerStorrelse?: string;
     className?: string;
     minstEn?: boolean;
     visChildrenVedFeil?: boolean;
     alleOK?: boolean;
+}
+
+type Status = 'NOT_STARTED' | 'PENDING' | 'OK' | 'RELOADING' | 'ERROR';
+type InternStatus = Status | 'NOT_SETT';
+
+function toStatus(avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] {
+    if (!avhengiheter) {
+        return [];
+    }
+
+    return asArray(avhengiheter)
+        .map(element => (!element || typeof element === 'string' ? element : element.status))
+        .map(element => (element ? element : 'NOT_SETT'));
 }
 
 function Innholdslaster(props: InnholdslasterProps) {
@@ -43,11 +50,12 @@ function Innholdslaster(props: InnholdslasterProps) {
         alleOK,
         ...rest
     } = props;
+
+    const statuser = toStatus(avhengigheter);
+
     const visChildren = alleOK
-        ? alleErOK(avhengigheter)
-        : alleLastet(avhengigheter) ||
-          (minstEn && minstEnErOK(avhengigheter)) ||
-          (visChildrenVedFeil && noenHarFeil(avhengigheter));
+        ? alleErOK(statuser)
+        : alleLastet(statuser) || (minstEn && minstEnErOK(statuser)) || (visChildrenVedFeil && noenHarFeil(statuser));
 
     if (visChildren) {
         if (typeof children === 'function') {
@@ -59,7 +67,7 @@ function Innholdslaster(props: InnholdslasterProps) {
         return children;
     }
 
-    return <HiddenIfSpinner hidden={noenHarFeil(avhengigheter)} className={className} type={spinnerStorrelse} />;
+    return <HiddenIfSpinner hidden={noenHarFeil(statuser)} className={className} type={spinnerStorrelse} />;
 }
 
 Innholdslaster.defaultProps = {

@@ -6,6 +6,27 @@ import { DirtyContext } from '../../context/dirty-context';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 
+const statusMap = {
+    PLANLAGT: 'Planlegger',
+    BRUKER_ER_INTERESSERT: 'Forslag',
+    GJENNOMFORES: 'Gjennomfører',
+    FULLFORT: 'Fullført',
+    AVBRUTT: 'Avbrutt'
+};
+
+const typeMap = {
+    EGEN: 'Jobbrettet egenaktivitet',
+    STILLING: 'Stilling',
+    TILTAKSAKTIVITET: 'Tiltak gjennom NAV',
+    GRUPPEAKTIVITET: 'Gruppeaktivitet',
+    UTDANNINGSAKTIVITET: 'Utdanning',
+    SOKEAVTALE: 'Jobbsøking',
+    IJOBB: 'Jobb jeg har nå',
+    BEHANDLING: 'Behandling',
+    MOTE: 'Møte med NAV',
+    SAMTALEREFERAT: 'Samtalereferat'
+};
+
 function header(valgtAktivitet) {
     if (!valgtAktivitet) {
         return null;
@@ -15,11 +36,7 @@ function header(valgtAktivitet) {
 
     return (
         <ModalHeader
-            normalTekstId="aktivitetvisning.header"
-            normalTekstValues={{
-                status: valgtAktivitet.status,
-                type: valgtAktivitet.type
-            }}
+            headerTekst={`${statusMap[valgtAktivitet.status]} / ${typeMap[valgtAktivitet.type]}`}
             aria-labelledby="modal-aktivitetsvisning-header"
             aktivitetErLaast={aktivitetErLaast}
         />
