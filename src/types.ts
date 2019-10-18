@@ -28,8 +28,8 @@ export interface Aktivitet {
     tilDato?: string;
     opprettetDato: string;
     endretDato?: string;
-    status?: AktivitetStatus;
-    type?: AktivitetType;
+    status: AktivitetStatus;
+    type: AktivitetType;
     etikett?: etikett;
     historisk?: boolean;
     lagtInnAv?: string;
