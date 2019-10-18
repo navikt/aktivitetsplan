@@ -6,15 +6,15 @@ export const DirtyContext = React.createContext({
     setFormIsDirty: (name: string, dirty: boolean) => {}
 });
 
-function isFormsDirty(forms: { [key: string]: boolean | undefined | null }) {
+function isFormsDirty(forms: { [key: string]: boolean | undefined }) {
     return Object.values(forms).some(value => value === true);
 }
 
-interface Props {
+interface Children {
     children: React.ReactNode;
 }
 
-export function DirtyProvider(props: Props) {
+export function DirtyProvider(props: Children) {
     const [isDirty, setIsDirty] = useState(false);
     const [, setDirtyForms] = useState({});
 

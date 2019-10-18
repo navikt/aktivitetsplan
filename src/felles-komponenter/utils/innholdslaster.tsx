@@ -17,7 +17,7 @@ const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
 type Avhengighet = Status | { status?: Status };
 export interface InnholdslasterProps {
-    avhengigheter?: Avhengighet[];
+    avhengigheter?: Avhengighet[] | Avhengighet;
     children: React.ReactNode;
     spinnerStorrelse?: string;
     className?: string;
@@ -29,11 +29,12 @@ export interface InnholdslasterProps {
 type Status = 'NOT_STARTED' | 'PENDING' | 'OK' | 'RELOADING' | 'ERROR';
 type InternStatus = Status | 'NOT_SETT';
 
-function toStatus(avhengiheter?: Avhengighet[]): InternStatus[] {
+function toStatus(avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] {
     if (!avhengiheter) {
         return [];
     }
-    return avhengiheter
+
+    return asArray(avhengiheter)
         .map(element => (typeof element === 'string' ? element : element.status))
         .map(element => (element ? element : 'NOT_SETT'));
 }
