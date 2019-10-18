@@ -28,7 +28,7 @@ function lagAktivitetsListe(aktiviteter) {
 }
 
 function renderFullFortAvbryt(aktiviteter) {
-    const [nyereAktiviteter, eldreAktiviteter] = splitIEldreOgNyereAktiviteter(aktiviteter);
+    const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(aktiviteter);
     return (
         <div>
             {lagAktivitetsListe(nyereAktiviteter)}

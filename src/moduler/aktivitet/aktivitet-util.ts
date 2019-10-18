@@ -1,31 +1,41 @@
 import 'moment-duration-format';
 import { erMerEnnEnManederSiden, moment } from '../../utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import { Aktivitet, AktivitetStatus, AktivitetType, Lest, Me } from '../../types';
+import { DurationInputArg1 } from 'moment';
 
-export function compareAktivitet(a, b) {
+function compareUndefindedOrNull(a: any, b: any): number {
+    if (a != null && b == null) {
+        return -1;
+    }
+    if (a == null && b != null) {
+        return 1;
+    }
+
+    return 0;
+}
+
+function samenlingDato(a?: string, b?: string): number {
+    if (!a || !b) {
+        return compareUndefindedOrNull(a, b);
+    }
+
+    return b.localeCompare(a);
+}
+
+export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
     if (b.avtalt && !a.avtalt) {
         return 1;
     }
     if (!b.avtalt && a.avtalt) {
         return -1;
     }
-    if (a.fraDato !== null && b.fraDato === null) {
-        return -1;
-    }
-    if (a.fraDato === null && b.fraDato !== null) {
-        return 1;
-    }
-    if (a.fraDato === null && b.fraDato === null) {
-        return 0;
-    }
-    if (b.fraDato.localeCompare(a.fraDato) === 0) {
-        return b.opprettetDato.localeCompare(a.opprettetDato);
-    }
+    const fradato = samenlingDato(b.fraDato, a.fraDato);
 
-    return b.fraDato.localeCompare(a.fraDato);
+    return fradato === 0 ? samenlingDato(b.opprettetDato, a.opprettetDato) : fradato;
 }
 
-export function erNyEndringIAktivitet(aktivitet, lestInformasjon, me) {
+export function erNyEndringIAktivitet(aktivitet: Aktivitet, lestInformasjon: Lest, me: Me): boolean {
     const sisteEndringVarFraMeg =
         (aktivitet.lagtInnAv === 'BRUKER' && me.erBruker) ||
         (aktivitet.lagtInnAv === 'NAV' && me.erVeileder && aktivitet.endretAv === me.id);
@@ -51,7 +61,13 @@ export function erNyEndringIAktivitet(aktivitet, lestInformasjon, me) {
     return false;
 }
 
-export function beregnKlokkeslettVarighet(aktivitet) {
+interface MoteTid {
+    dato?: string;
+    klokkeslett?: number;
+    varighet?: number;
+}
+
+export function beregnKlokkeslettVarighet(aktivitet: Aktivitet): MoteTid {
     const { fraDato } = aktivitet;
     const { tilDato } = aktivitet;
     if (fraDato && tilDato) {
@@ -68,14 +84,26 @@ export function beregnKlokkeslettVarighet(aktivitet) {
     return {};
 }
 
-export function beregnFraTil(data) {
-    const { dato } = data;
-    const { klokkeslett } = data;
-    const { varighet } = data;
-    if (dato && klokkeslett && varighet) {
+interface Data {
+    dato?: string;
+    klokkeslett?: string;
+    varighet?: string;
+}
+
+interface FraTil {
+    fraDato?: string;
+    tilDato?: string;
+}
+
+export function beregnFraTil(data: Data): FraTil {
+    const { dato, klokkeslett, varighet } = data;
+
+    const numberKlokkeslett = Number(klokkeslett);
+
+    if (dato && varighet && !isNaN(numberKlokkeslett)) {
         const fraDato = moment(dato)
             .startOf('day')
-            .minute(klokkeslett)
+            .minute(numberKlokkeslett)
             .toISOString();
         const tilDato = moment(fraDato)
             .add(varighet, 'minutes')
@@ -88,23 +116,23 @@ export function beregnFraTil(data) {
     return {};
 }
 
-export function formatterVarighet(varighet) {
+export function formatterVarighet(varighet: DurationInputArg1): string {
     return moment.duration(varighet, 'minutes').format('h:mm', { trim: false });
 }
 
-export function formatterKlokkeslett(klokkeslett) {
+export function formatterKlokkeslett(klokkeslett: DurationInputArg1): string {
     return formatterVarighet(klokkeslett);
 }
 
-function moteManglerPubliseringAvSamtalereferat(type, erReferatPublisert) {
+function moteManglerPubliseringAvSamtalereferat(type: AktivitetType, erReferatPublisert?: boolean): boolean {
     return type === MOTE_TYPE && !erReferatPublisert;
 }
 
-function samtalreferatManglerPublisering(type, erReferatPublisert) {
+function samtalreferatManglerPublisering(type: AktivitetType, erReferatPublisert?: boolean) {
     return type === SAMTALEREFERAT_TYPE && !erReferatPublisert;
 }
 
-export function manglerPubliseringAvSamtaleReferat(aktivitet, status) {
+export function manglerPubliseringAvSamtaleReferat(aktivitet: Aktivitet, status: AktivitetStatus) {
     const { type, erReferatPublisert } = aktivitet;
     return (
         !type ||
@@ -113,21 +141,21 @@ export function manglerPubliseringAvSamtaleReferat(aktivitet, status) {
     );
 }
 
-function erMoteOgAvbrutt(status, aktivitetType) {
+function erMoteOgAvbrutt(status: AktivitetStatus, aktivitetType: AktivitetType): boolean {
     return status === STATUS_AVBRUTT && aktivitetType === MOTE_TYPE;
 }
 
-function erAvtaltOgAvbrutt(erAvtalt, status) {
+function erAvtaltOgAvbrutt(erAvtalt: boolean, status: AktivitetStatus): boolean {
     return erAvtalt && status === STATUS_AVBRUTT;
 }
 
-function erFullfoertUtenReferat(erAvtalt, status, aktivitetType) {
+function erFullfoertUtenReferat(erAvtalt: boolean, status: AktivitetStatus, aktivitetType: AktivitetType) {
     return (
         erAvtalt && status === STATUS_FULLFOERT && aktivitetType !== SAMTALEREFERAT_TYPE && aktivitetType !== MOTE_TYPE
     );
 }
 
-export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
+export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, aktivitetType: AktivitetType) {
     return (
         erAvtaltOgAvbrutt(erAvtalt, status) ||
         erFullfoertUtenReferat(erAvtalt, status, aktivitetType) ||
@@ -135,7 +163,7 @@ export function trengerBegrunnelse(erAvtalt, status, aktivitetType) {
     );
 }
 
-export function sorterAktiviteter(aktiviteter, status) {
+export function sorterAktiviteter(aktiviteter: Aktivitet[], status: AktivitetStatus): Aktivitet[] {
     return aktiviteter
         .filter(a => {
             if (a.nesteStatus) {
@@ -146,24 +174,26 @@ export function sorterAktiviteter(aktiviteter, status) {
         .sort(compareAktivitet);
 }
 
-function tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet) {
+function tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet: Aktivitet): boolean {
     return !erMerEnnEnManederSiden(aktivitet);
 }
 
-export function splitIEldreOgNyereAktiviteter(aktiviteter) {
-    return aktiviteter.reduce(
-        ([listeMedAktiviteterTilDatoMindreEnnToManader, listeMedAktiviteterTilDatoMerEnnToManader], aktivitet) => {
+interface GamleNyeAktiviteter {
+    nyereAktiviteter: Aktivitet[];
+    eldreAktiviteter: Aktivitet[];
+}
+
+export function splitIEldreOgNyereAktiviteter(aktiviteter: Aktivitet[]): GamleNyeAktiviteter {
+    return aktiviteter.reduce<GamleNyeAktiviteter>(
+        (gamleNyeAktiviter, aktivitet) => {
             if (tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet)) {
-                return [
-                    [...listeMedAktiviteterTilDatoMindreEnnToManader, aktivitet],
-                    listeMedAktiviteterTilDatoMerEnnToManader
-                ];
+                gamleNyeAktiviter.nyereAktiviteter.push(aktivitet);
+                return gamleNyeAktiviter;
             }
-            return [
-                listeMedAktiviteterTilDatoMindreEnnToManader,
-                [...listeMedAktiviteterTilDatoMerEnnToManader, aktivitet]
-            ];
+
+            gamleNyeAktiviter.eldreAktiviteter.push(aktivitet);
+            return gamleNyeAktiviter;
         },
-        [[], []]
+        { nyereAktiviteter: [], eldreAktiviteter: [] }
     );
 }

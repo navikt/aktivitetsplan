@@ -69,11 +69,8 @@ describe('aktivitet-util', () => {
         };
         const tilDatoMindreEnnToManederSiden = { tilDato: moment().format() };
         const aktiviteter = [mangladeTilDato, tilDatoMerEnnToManederSiden, tilDatoMindreEnnToManederSiden];
-        const [
-            listeMedAktiviteterTilDatoMindreEnnToManader,
-            listeMedAktiviteterTilDatoMerEnnToManader
-        ] = splitIEldreOgNyereAktiviteter(aktiviteter);
-        expect(listeMedAktiviteterTilDatoMindreEnnToManader).toEqual([mangladeTilDato, tilDatoMindreEnnToManederSiden]);
-        expect(listeMedAktiviteterTilDatoMerEnnToManader).toEqual([tilDatoMerEnnToManederSiden]);
+        const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(aktiviteter);
+        expect(nyereAktiviteter).toEqual([mangladeTilDato, tilDatoMindreEnnToManederSiden]);
+        expect(eldreAktiviteter).toEqual([tilDatoMerEnnToManederSiden]);
     });
 });
