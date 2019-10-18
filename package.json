@@ -16,7 +16,7 @@
     "lint": "echo \"Not implemented\""
   },
   "dependencies": {
-    "@nutgaard/use-formstate": "^2.2.0-beta.3",
+    "@nutgaard/use-formstate": "^2.2.1",
     "@types/classnames": "^2.2.9",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",
@@ -35,8 +35,8 @@
     "nav-frontend-chevron": "1.0.10",
     "nav-frontend-chevron-style": "0.3.5",
     "nav-frontend-core": "4.0.10",
-    "nav-frontend-ekspanderbartpanel": "1.0.13",
-    "nav-frontend-ekspanderbartpanel-style": "0.3.13",
+    "nav-frontend-ekspanderbartpanel": "1.0.32",
+    "nav-frontend-ekspanderbartpanel-style": "0.3.21",
     "nav-frontend-hjelpetekst": "1.0.40",
     "nav-frontend-hjelpetekst-style": "0.3.30",
     "nav-frontend-ikoner-assets": "^1.0.2",
