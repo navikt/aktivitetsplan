@@ -13,7 +13,7 @@ import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden
 import Informasjonsfelt from '../../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
 import Aktivitetsdetaljer from '../../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import AvtaltMarkering from '../../aktivitet/avtalt-markering/avtalt-markering';
-import Etikett from '../../aktivitet/etikett/etikett';
+import SokeStatusEtikett from '../../aktivitet/etikett/sokeStatusEtikett';
 import { DialogPrint } from './dialoger';
 
 const typeMap = {
@@ -61,7 +61,7 @@ function AktivitetPrint(props: AktivitetProps) {
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
             <AktivitetReferat aktivitet={aktivitet} />
             <AvtaltMarkering visible={aktivitet.avtalt} className="etikett-print" />
-            <Etikett visible={!!aktivitet.etikett} etikett={aktivitet.etikett} className="etikett-print" />
+            <SokeStatusEtikett hidden={!aktivitet.etikett} etikett={aktivitet.etikett} className="etikett-print" />
             <DialogPrint dialog={dialog} />
         </div>
     );

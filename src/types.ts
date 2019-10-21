@@ -13,7 +13,7 @@ export type AktivitetType =
     | 'SAMTALEREFERAT';
 //aktivitetStatusd efinisjonen bor også i .\const som STATUS_*
 export type AktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
-export type etikett = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
+export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
 export interface Lest {
     tidspunkt: string;
     verdi?: string;
@@ -30,7 +30,7 @@ export interface Aktivitet {
     endretDato?: string;
     status: AktivitetStatus;
     type: AktivitetType;
-    etikett?: etikett;
+    etikett?: StillingsStatus;
     historisk?: boolean;
     lagtInnAv?: string;
     detaljer?: object;

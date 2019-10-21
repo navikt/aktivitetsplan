@@ -8,7 +8,7 @@ import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import * as AppPT from '../../../proptypes';
 import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
-import Etikett from '../etikett/etikett';
+import SokeStatusEtikett from '../etikett/sokeStatusEtikett';
 
 function AktivitetskortTillegg({
     antallHendvendelser,
@@ -29,8 +29,8 @@ function AktivitetskortTillegg({
 
             <div className="aktivitetskort__etiketter">
                 <AvtaltMarkering visible={aktivitet.avtalt} />
-                <Etikett
-                    visible={!!aktivitet.etikett}
+                <SokeStatusEtikett
+                    hidden={!aktivitet.etikett}
                     etikett={aktivitet.etikett}
                     className="aktivitetskort__etikett"
                 />
