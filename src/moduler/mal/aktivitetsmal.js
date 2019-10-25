@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import PT from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import * as AppPT from '../../proptypes';
-import { autobind, formaterDatoEllerTidSiden } from '../../utils';
+import { formaterDatoEllerTidSiden } from '../../utils';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import Accordion from '../../felles-komponenter/accordion';
-import AktivitetsmalModal from './aktivitetsmal-modal';
-import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
+import Accordion from '../../felles-komponenter/accordion/accordion';
+import { MalModal } from './aktivitetsmal-modal';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import { hentMal, selectMalStatus, selectGjeldendeMal } from './aktivitetsmal-reducer';
 import { selectMalListe, selectMalListeStatus } from './aktivitetsmal-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { fjernMalListe, hentMalListe } from './malliste-reducer';
+import { hentMalListe } from './malliste-reducer';
 import { selectErVeileder } from '../identitet/identitet-selector';
+import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
+import './aktivitetsmal.less';
+import AktivitetsmalForm from './aktivitetsmal-form';
+import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 
 const identitetMap = (erVeileder, endretAv) => {
     if (erVeileder) {
@@ -27,121 +28,115 @@ function malListeVisning(gjeldendeMal, erVeileder) {
     return (
         <article key={gjeldendeMal.dato} className="aktivitetmal__historikk">
             <span className="aktivitetmal__historikk-skrevetav">
-                {gjeldendeMal.mal ? 'Skrevet av' : 'Mål slettet av'}
+                {gjeldendeMal.mal ? 'Skrevet av ' : 'Mål slettet av '}
                 <span>{identitetMap(erVeileder, gjeldendeMal.endretAv)}</span>
-            </span>{' '}
-            {formaterDatoEllerTidSiden(gjeldendeMal.dato)}
+            </span>
+            {` ${formaterDatoEllerTidSiden(gjeldendeMal.dato)}`}
             <Tekstomrade className="aktivitetmal__historikk-tekst">{gjeldendeMal.mal || ''}</Tekstomrade>
         </article>
     );
 }
 
-class AktivitetsMal extends Component {
-    constructor(props) {
-        super(props);
-        autobind(this);
-        this.state = {};
-    }
+function Malvisning({ onClick }) {
+    const malData = useSelector(selectGjeldendeMal, shallowEqual);
+    const historiskeMal = useSelector(selectMalListe, shallowEqual);
+    const historiskVisning = useSelector(selectViserHistoriskPeriode, shallowEqual);
+    const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
+    const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
 
-    componentDidMount() {
-        const { doHentMal, doHentMalListe } = this.props;
-        doHentMal();
-        doHentMalListe();
-    }
+    const mal = malData && malData.mal;
+    const malText = historiskVisning && historiskeMal.length === 0 ? 'Det ble ikke skrevet mål i denne perioden' : mal;
 
-    toggleHistoriskeMal = e => {
-        e.preventDefault();
-        const { visHistoriskeMal } = this.state;
-        this.setState({
-            visHistoriskeMal: !visHistoriskeMal
-        });
-    };
-
-    render() {
-        const {
-            avhengigheter,
-            mal,
-            historiskeMal,
-            historiskVisning,
-            harSkriveTilgang,
-            history,
-            underOppfolging,
-            erVeileder
-        } = this.props;
-
-        const harMal = !!mal;
-        const { historikkVises } = this.state;
-
-        return (
-            <Innholdslaster avhengigheter={avhengigheter}>
-                <section className="aktivitetmal">
-                    <div className="aktivitetmal__innhold">
-                        <Tekstomrade className="aktivitetmal__tekst">
-                            {mal || 'Det ble ikke skrevet mål i denne perioden'}
-                        </Tekstomrade>
-                        <HiddenIfHovedknapp
-                            onClick={() => history.push('mal/endre')}
-                            hidden={historiskVisning}
-                            disabled={!harSkriveTilgang || !underOppfolging}
-                        >
-                            {harMal ? 'Rediger' : 'Opprett ditt mål'}
-                        </HiddenIfHovedknapp>
-                    </div>
-                    <HiddenIfDiv hidden={historiskeMal.length === 0}>
-                        <hr className="aktivitetmal__delelinje" />
-                        <div className="aktivitetmal__footer">
-                            <Accordion
-                                labelId={historikkVises ? 'aktivitetsmal.skjul' : 'aktivitetsmal.vis'}
-                                apen={historikkVises}
-                                onClick={this.toggleHistoriskeMal}
-                            >
-                                {historiskeMal.map(m => malListeVisning(m, erVeileder))}
-                            </Accordion>
-                        </div>
-                    </HiddenIfDiv>
-                </section>
-            </Innholdslaster>
-        );
-    }
+    return (
+        <div className="aktivitetmal__innhold">
+            <Tekstomrade className="aktivitetmal__tekst">{malText}</Tekstomrade>
+            <HiddenIfHovedknapp
+                onClick={onClick}
+                hidden={historiskVisning}
+                disabled={!harSkriveTilgang || !underOppfolging}
+            >
+                Rediger
+            </HiddenIfHovedknapp>
+        </div>
+    );
 }
 
-AktivitetsMal.propTypes = {
-    avhengigheter: AppPT.avhengigheter.isRequired,
-    mal: PT.string,
-    historiskeMal: AppPT.malListe.isRequired,
-    historiskVisning: PT.bool.isRequired,
-    doHentMal: PT.func.isRequired,
-    doHentMalListe: PT.func.isRequired,
-    doFjernMalListe: PT.func.isRequired,
-    harSkriveTilgang: PT.bool.isRequired,
-    history: AppPT.history.isRequired,
-    underOppfolging: PT.bool.isRequired,
-    erVeileder: PT.bool.isRequired
-};
+function MalHistorikk() {
+    const historiskeMal = useSelector(selectMalListe, shallowEqual);
+    const erVeileder = useSelector(selectErVeileder, shallowEqual);
 
-AktivitetsMal.defaultProps = {
-    mal: undefined
-};
+    if (historiskeMal.length === 0) {
+        return null;
+    }
 
-const mapStateToProps = state => ({
-    avhengigheter: [selectMalStatus(state), selectMalListeStatus(state)],
-    mal: selectGjeldendeMal(state) && selectGjeldendeMal(state).mal,
-    historiskeMal: selectMalListe(state),
-    historiskVisning: selectViserHistoriskPeriode(state),
-    harSkriveTilgang: selectHarSkriveTilgang(state),
-    underOppfolging: selectErUnderOppfolging(state),
-    erVeileder: selectErVeileder(state)
-});
+    return (
+        <>
+            <hr className="aktivitetmal__delelinje" />
+            <div className="aktivitetmal__footer">
+                <Accordion openText="Skjul tidligere lagrede mål" closeText="Vis tidligere lagrede mål">
+                    {historiskeMal.map(m => malListeVisning(m, erVeileder))}
+                </Accordion>
+            </div>
+        </>
+    );
+}
 
-const mapDispatchToProps = dispatch => ({
-    doHentMal: () => dispatch(hentMal()),
-    doHentMalListe: () => dispatch(hentMalListe()),
-    doFjernMalListe: () => dispatch(fjernMalListe())
-});
+function MalContainer() {
+    const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
+    const malData = useSelector(selectGjeldendeMal, shallowEqual);
+    const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
+    const erVeileder = useSelector(selectErVeileder, shallowEqual);
 
-export default AktivitetsmalModal(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(AktivitetsMal)
-);
+    const mal = malData && malData.mal;
+
+    const [edit, setEdit] = useState(!viserHistoriskPeriode && !mal && underOppfolging);
+
+    if (edit) {
+        return (
+            <AktivitetsmalForm
+                mal={mal}
+                handleComplete={() => {
+                    setEdit(false);
+                    loggMittMalLagre(erVeileder);
+                }}
+            />
+        );
+    }
+
+    return <Malvisning onClick={() => setEdit(true)} />;
+}
+
+function AktivitetsMal() {
+    const malStatus = useSelector(selectMalStatus, shallowEqual);
+    const malListeStatus = useSelector(selectMalListeStatus, shallowEqual);
+    const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(hentMal());
+        dispatch(hentMalListe());
+    }, [dispatch]);
+
+    const avhengigheter = [malStatus, malListeStatus];
+
+    return (
+        <MalModal>
+            <Innholdstittel className="aktivitetmal__header">
+                {viserHistoriskPeriode ? 'Ditt mål fra en tidligere periode' : 'Ditt mål'}
+            </Innholdstittel>
+            <Undertekst className="aktivitetmal__sub-header">
+                Beskriv målet ditt, gjerne både kortsiktige og langsiktige mål og hva slags arbeidsoppgaver du ønsker
+                deg.
+            </Undertekst>
+            <Innholdslaster avhengigheter={avhengigheter} alleOK>
+                <section className="aktivitetmal">
+                    <MalContainer />
+                    <MalHistorikk />
+                </section>
+            </Innholdslaster>
+        </MalModal>
+    );
+}
+
+export default AktivitetsMal;

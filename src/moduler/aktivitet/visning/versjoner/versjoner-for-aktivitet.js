@@ -6,7 +6,7 @@ import * as AppPT from '../../../../proptypes';
 import visibleIfHOC from '../../../../hocs/visible-if';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
-import Accordion from '../../../../felles-komponenter/accordion';
+import Accordion from '../../../../felles-komponenter/accordion/accordion';
 import { autobind } from '../../../../utils';
 import VersjonInnslag from './versjoninnslag';
 import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
@@ -16,9 +16,6 @@ const MAX_SIZE = 10;
 class VersjonerForAktivitet extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            apen: false
-        };
         autobind(this);
     }
 
@@ -33,13 +30,7 @@ class VersjonerForAktivitet extends Component {
         doFjernVersjoner();
     }
 
-    onClick() {
-        const { apen } = this.state;
-        this.setState({ apen: !apen });
-    }
-
     render() {
-        const { apen } = this.state;
         const { avhengighet, versjoner, className } = this.props;
 
         const versjonerInnslag = versjoner
@@ -49,7 +40,7 @@ class VersjonerForAktivitet extends Component {
             ));
 
         const versjonerInnslagUnderAccordion = (
-            <Accordion onClick={this.onClick} labelId={apen ? 'endringer.skjul' : 'endringer.vis-mer'}>
+            <Accordion openText="Vis mer" closeText="Vis mer">
                 {versjoner.slice(MAX_SIZE).map((versjon, index) => (
                     <VersjonInnslag key={versjon.endretDato} versjon={versjon} prevVersjon={versjoner[index + 1]} />
                 ))}

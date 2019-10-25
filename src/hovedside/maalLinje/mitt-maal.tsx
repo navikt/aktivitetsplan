@@ -52,11 +52,8 @@ function MittMaal() {
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
 
-    const disabled = !!mal || !underOppfolging || viserHistoriskPeriode;
-    const url = disabled ? '/mal' : '/mal/endre';
-
     return (
-        <InternLenke skipLenkeStyling href={url} className="mitt-maal" onClick={() => loggMittMalKlikk(erVeileder)}>
+        <InternLenke skipLenkeStyling href="/mal" className="mitt-maal" onClick={() => loggMittMalKlikk(erVeileder)}>
             <MalIcon />
             <div className="mittmal_content">
                 <Element className="mittmal__content-header">Mitt mål</Element>
