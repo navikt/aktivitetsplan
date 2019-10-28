@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import DialogModal from './moduler/dialog/dialog-modal/dialog-modal';
-import Aktivitetsmal from './moduler/mal/aktivitetsmal';
+import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
