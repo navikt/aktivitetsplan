@@ -8,64 +8,44 @@ workflows:
         jobs:
             - pus/test-frontend:
                   name: test
-
-            - pus/bygg-frontend:
                   context: pus
-                  name: build
-                  filters:
-                      branches:
-                          only: master
-
-            - pus/deploy-latest:
+            - pus/bygg-og-deploy-frontend:
+                  name: deploy-dev-fss
                   requires:
                       - test
-                      - build
-                  name: dev-sbs-deploy
-                  context: pus
-                  cluster: dev-sbs
-                  filepath: ./nais-q-sbs.yaml
-                  filters:
-                      branches:
-                          only: master
-
-            - pus/deploy-latest:
-                  requires:
-                      - test
-                      - build
-                  name: dev-fss-deploy
                   context: pus
                   cluster: dev-fss
                   filepath: ./nais-q-fss.yaml
                   filters:
                       branches:
-                          only: master
-            - prodsett:
+                          only: dev
+            - pus/bygg-og-deploy-frontend:
+                  name: deploy-sbs-fss
                   requires:
-                      - dev-sbs-deploy
-                      - dev-fss-deploy
-                  type: approval
-                  filters:
-                      branches:
-                          only: master
-
-            - pus/deploy-latest:
-                  name: prod-sbs-deploy
-                  requires:
-                      - prodsett
+                      - test
                   context: pus
-                  cluster: prod-sbs
-                  filepath: ./nais-sbs.yaml
+                  cluster: dev-sbs
+                  filepath: ./nais-q-sbs.yaml
                   filters:
                       branches:
-                          only: master
-
-            - pus/deploy-latest:
-                  name: prod-fss-deploy
+                          only: dev
+            - pus/bygg-og-deploy-frontend:
+                  name: deploy-prod-fss
                   requires:
-                      - prodsett
+                      - test
                   context: pus
                   cluster: prod-fss
                   filepath: ./nais-fss.yaml
+                  filters:
+                      branches:
+                          only: master
+            - pus/deploy-latest:
+                  name: deploy-prod-sbs
+                  requires:
+                      - test
+                  context: pus
+                  cluster: prod-sbs
+                  filepath: ./nais-sbs.yaml
                   filters:
                       branches:
                           only: master
