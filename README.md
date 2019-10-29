@@ -19,12 +19,6 @@ Kjør `npm run build` for å bygge både innside og utside.
 For å starte et utviklingsmiljø som kjører kontinuerlig bygg kan man kjøre `npm run dev:mock` for innside og
 `npm run dev:mock:utside` for utside.
 
-### Kodestil
-
-For å sørge for at man følger en fast kodestil bruker vi eslint og prettier. Eslint
-sjekker opp om vi følger et definert regelsett, mens prettier sørger for at koden
-følger en bestemt formatering.
-
 ### Kontakt og spørsmål
 
 Opprett en issue i GitHub for eventuelle spørsmål.
