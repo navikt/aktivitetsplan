@@ -26,7 +26,7 @@ workflows:
                   filepath: ./nais-q-sbs.yaml
                   filters:
                       branches:
-                          only: master
+                          only: dev
             - pus/bygg-og-deploy-frontend:
                   requires:
                       - test
