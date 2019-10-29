@@ -9,7 +9,6 @@ import { hentMal, selectGjeldendeMal, selectMalStatus } from '../../moduler/mal/
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import { selectViserHistoriskPeriode } from '../../moduler/filtrering/filter/filter-selector';
-import { ReactComponent as MalIcon } from './mal-icon.svg';
 import './mitt-maal.less';
 
 interface MalTextProps {
@@ -30,11 +29,7 @@ function MalText(props: MalTextProps) {
         );
     }
 
-    return (
-        <i>
-            <Tekstomrade>{`"${props.mal}"`}</Tekstomrade>
-        </i>
-    );
+    return <Tekstomrade>{props.mal}</Tekstomrade>;
 }
 
 function MittMaal() {
@@ -54,10 +49,9 @@ function MittMaal() {
 
     return (
         <InternLenke skipLenkeStyling href="/mal" className="mitt-maal" onClick={() => loggMittMalKlikk(erVeileder)}>
-            <MalIcon />
+            <Element className="mittmal_header">Ditt mål</Element>
             <div className="mittmal_content">
-                <Element className="mittmal__content-header">Mitt mål</Element>
-                <Innholdslaster avhengigheter={avhengigheter}>
+                <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
                     <MalText disabled={!underOppfolging || viserHistoriskPeriode} mal={mal} />
                 </Innholdslaster>
             </div>

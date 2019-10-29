@@ -18,7 +18,6 @@ a.mitt-maal {
 
     background-color: @navGronnLighten80;
     color: @navMorkGra;
-    display: flex;
 
     margin-bottom: 1rem;
 
@@ -26,34 +25,36 @@ a.mitt-maal {
     &:focus {
         background-color: #cde7d8;
     }
-
-    .hovedmaal {
-        color: @navGra60;
-    }
 }
 
-.mittmal__illustrasjon {
-    display: none;
+.mittmal_header {
+    margin: 0 1rem 0 1rem;
+    color: @navGra60;
 }
 
 .mittmal_content {
-    color: @navMorkGra;
     margin: 0 1rem 0 1rem;
 }
 
 @media (min-width: @screen-md-min) {
     .mitt-maal {
         margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        min-height: 5rem;
     }
 
-    .mittmal__illustrasjon {
-        width: 6rem;
-        height: 6rem;
-        display: inline;
+    .mittmal_header {
+        margin-left: 2rem;
+        width: 20%;
+    }
+
+    .mittmal_spinner {
+        margin: 0 !important;
     }
 
     .mittmal_content {
-        color: @navMorkGra;
+        width: 70%;
         margin: 0 0 0 1.5rem;
     }
 }
