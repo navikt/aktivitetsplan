@@ -9,7 +9,8 @@ export const SessionStorageElement = {
     AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
     TEST_AKTIVITETER: 'testaktiviteter',
     ARENA_AKTIVITETER: 'arena_aktiviteter',
-    TEST_DIALOGER: 'test_dialoger'
+    TEST_DIALOGER: 'test_dialoger',
+    INGEN_MAL: 'ingen_mal'
 };
 
 export const settSessionStorage = (key, value) => {
@@ -51,3 +52,5 @@ export const oppfFeilet = () => erSatt(SessionStorageElement.OPPF_FEILET);
 const fetureprefix = 'mock_feature__';
 export const setFeatureTogle = (name, value) => settSessionStorage(fetureprefix + name, value);
 export const fetureStatus = name => hentFraSessionStorage(fetureprefix + name) !== 'false';
+
+export const ingenMal = () => erSatt(SessionStorageElement.INGEN_MAL);
