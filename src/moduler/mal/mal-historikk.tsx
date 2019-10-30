@@ -5,7 +5,7 @@ import { selectErVeileder } from '../identitet/identitet-selector';
 import { Mal } from '../../types';
 import { formaterDatoEllerTidSiden } from '../../utils';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import Accordion from '../../felles-komponenter/accordion/accordion';
+import Lesmerpanel from 'nav-frontend-lesmerpanel';
 
 const identitetMap = (erVeileder: boolean, endretAv: string) => {
     if (erVeileder) {
@@ -39,9 +39,9 @@ function MalHistorikk() {
         <>
             <hr className="aktivitetmal__delelinje" />
             <div className="aktivitetmal__footer">
-                <Accordion openText="Skjul tidligere lagrede mål" closeText="Vis tidligere lagrede mål">
+                <Lesmerpanel className="" lukkTekst="Skjul tidligere lagrede mål" apneTekst="Vis tidligere lagrede mål">
                     {historiskeMal.map((m: Mal) => malListeVisning(m, erVeileder))}
-                </Accordion>
+                </Lesmerpanel>
             </div>
         </>
     );

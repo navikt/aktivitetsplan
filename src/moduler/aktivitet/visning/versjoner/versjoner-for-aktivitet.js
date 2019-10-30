@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
+import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import { connect } from 'react-redux';
 import { hentVersjonerForAktivtet, fjernVersjoner } from '../../aktivitet-versjoner/aktivitet-versjoner-reducer';
 import * as AppPT from '../../../../proptypes';
 import visibleIfHOC from '../../../../hocs/visible-if';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
-import Accordion from '../../../../felles-komponenter/accordion/accordion';
 import { autobind } from '../../../../utils';
 import VersjonInnslag from './versjoninnslag';
 import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
@@ -40,11 +40,11 @@ class VersjonerForAktivitet extends Component {
             ));
 
         const versjonerInnslagUnderAccordion = (
-            <Accordion openText="Vis mer" closeText="Vis mer">
+            <Lesmerpanel className="" apneTekst="Vis mer" lukkTekst="Vis mer">
                 {versjoner.slice(MAX_SIZE).map((versjon, index) => (
                     <VersjonInnslag key={versjon.endretDato} versjon={versjon} prevVersjon={versjoner[index + 1]} />
                 ))}
-            </Accordion>
+            </Lesmerpanel>
         );
 
         return (
