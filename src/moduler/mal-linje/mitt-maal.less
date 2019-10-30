@@ -25,6 +25,13 @@ a.mitt-maal {
     &:focus {
         background-color: #cde7d8;
     }
+
+    &.empty {
+        background-color: @white;
+        border-style: dashed;
+        border-color: @navGra60;
+        border-width: 2px;
+    }
 }
 
 .mittmal_header {
@@ -34,6 +41,10 @@ a.mitt-maal {
 
 .mittmal_content {
     margin: 0 1rem 0 1rem;
+}
+
+.mittmal_callToAction {
+    padding: 1rem 0 0 0;
 }
 
 @media (min-width: @screen-md-min) {
@@ -49,12 +60,15 @@ a.mitt-maal {
         width: 20%;
     }
 
-    .mittmal_spinner {
-        margin: 0 !important;
-    }
-
     .mittmal_content {
         width: 70%;
         margin: 0 0 0 1.5rem;
+    }
+
+    .mittmal_callToAction {
+        padding: 0 0 0 6rem;
+    }
+    .mittmal_knapp {
+        margin-left: 1.5rem;
     }
 }

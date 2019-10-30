@@ -1,6 +1,6 @@
-import { erEksternBruker } from './demo/sessionstorage';
+import { erEksternBruker, ingenMal } from './demo/sessionstorage';
 
-export const maler = [
+let maler = [
     {
         mal: 'Jeg vil bli stor og sterk',
         endretAv: 'BRUKER',
@@ -12,6 +12,8 @@ export const maler = [
         dato: new Date()
     }
 ];
+
+maler = ingenMal() ? [] : maler;
 
 export function malListe() {
     return maler;

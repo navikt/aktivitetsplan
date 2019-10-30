@@ -117,12 +117,13 @@ export function loggForhandsorientering(
     });
 }
 
-export function loggMittMalKlikk(veileder: boolean) {
-    loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
+// TODO fjern ab og harMal på disse i fremtiden
+export function loggMittMalKlikk(veileder: boolean, ab: boolean, harMal: boolean) {
+    loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder, ab: ab, harMal: harMal });
 }
 
-export function loggMittMalLagre(veileder: boolean) {
-    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
+export function loggMittMalLagre(veileder: boolean, ab: boolean, harMal: boolean) {
+    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder, ab: ab, harMal: harMal });
 }
 
 export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgingsPerioder: Array<OppfolgingsPeriode>) {
