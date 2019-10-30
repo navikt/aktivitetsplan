@@ -6,7 +6,7 @@ import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
 import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
 import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
-import Maal from './maalLinje/mitt-maal';
+import Maal from '../moduler/mal-linje/mitt-maal';
 import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
 
