@@ -80,11 +80,14 @@ function MittMaal() {
     const abTest = harFeature(ABMAL, features);
     const cls = classNames('mitt-maal', { empty: !mal && abTest });
 
-    //todo: spinner, unleash, innhold
-
     return (
         <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
-            <InternLenke skipLenkeStyling href="/mal" className={cls} onClick={() => loggMittMalKlikk(erVeileder)}>
+            <InternLenke
+                skipLenkeStyling
+                href="/mal"
+                className={cls}
+                onClick={() => loggMittMalKlikk(erVeileder, abTest, !!mal)}
+            >
                 <Element className="mittmal_header">Ditt mål</Element>
                 <div className="mittmal_content">
                     <MalContent disabled={!underOppfolging || viserHistoriskPeriode} abTest={abTest} mal={mal} />
