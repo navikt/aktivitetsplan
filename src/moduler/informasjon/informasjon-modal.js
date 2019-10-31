@@ -20,7 +20,7 @@ import { OkonomiskStotte } from './okonomiskStottePanel';
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 
 class InformasjonModal extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { erBruker, underOppfolging, lestInfo } = this.props;
 
         if (erBruker && underOppfolging && (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)) {
@@ -44,7 +44,7 @@ class InformasjonModal extends Component {
                     <Innholdstittel className={styles.innholdsTittel}>Hva er aktivitetsplanen?</Innholdstittel>
                     <Tekstomrade>
                         {`Aktivitetsplanen din er verktøyet du skal bruke for å komme i aktivitet og jobb. Denne blir delt med veilederen din. For at vi skal kunne følge deg opp best mulig, er det viktig at du bruker aktivitetsplanen aktivt. Du må gjennomføre de aktivitetene du avtaler med NAV i planen.
-                        
+
                         Du kan selv legge inn og redigere målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Du får også tilgang til en dialog der du kan kommunisere med veilederen din og diskutere aktiviteter du skal gjennomføre.`}
                     </Tekstomrade>
                     <Video />

@@ -15,7 +15,7 @@ import { setBackPath } from './informasjon-reducer';
 const redirectPath = '/informasjon';
 
 class RedirectTilInformasjon extends Component {
-    componentWillMount() {
+    componentDidMount() {
         const { erVeileder, history, location, setBack } = this.props;
         const path = location.pathname;
 

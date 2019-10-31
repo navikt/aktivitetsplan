@@ -19,7 +19,7 @@ class VersjonerForAktivitet extends Component {
         autobind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { doFjernVersjoner, doHentVersjonerForAktivitet, aktivitet } = this.props;
         doFjernVersjoner();
         doHentVersjonerForAktivitet(aktivitet);
