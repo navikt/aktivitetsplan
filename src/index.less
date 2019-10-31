@@ -4,6 +4,12 @@
 
 @import '~nav-frontend-core/less/core';
 
+// todo fjern dette når expanderbart panel oppgraderes
+// https://github.com/navikt/nav-frontend-moduler/pull/571
+.ReactCollapse--collapse {
+    transition: height 500ms;
+}
+
 .aktivitetsplanfs {
     @import './vendors';
     @import './felles-komponenter/modal/modal';
