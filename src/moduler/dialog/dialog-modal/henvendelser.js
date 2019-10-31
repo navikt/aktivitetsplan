@@ -61,11 +61,6 @@ class Dialog extends Component {
         doMarkerDialogSomLest();
     }
 
-    componentWillReceiveProps() {
-        const { doMarkerDialogSomLest } = this.props;
-        doMarkerDialogSomLest();
-    }
-
     render() {
         const { dialog, erPaInnsiden } = this.props;
         const { henvendelser } = dialog;
