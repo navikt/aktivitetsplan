@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
@@ -55,32 +55,25 @@ Henvendelse.defaultProps = {
     henvendelse: undefined
 };
 
-class Dialog extends Component {
-    componentDidMount() {
-        const { doMarkerDialogSomLest } = this.props;
-        doMarkerDialogSomLest();
-    }
+function Dialog(props) {
+    const { dialog, erPaInnsiden, doMarkerDialogSomLest } = props;
 
-    render() {
-        const { dialog, erPaInnsiden } = this.props;
-        const { henvendelser } = dialog;
-        const { lestAvBrukerTidspunkt } = dialog;
-        const henvendelserSynkende = [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));
-        const sisteHenvendelseLestAvBruker =
-            lestAvBrukerTidspunkt &&
-            henvendelserSynkende.find(h => datoComparator(lestAvBrukerTidspunkt, h.sendt) >= 0);
+    console.log(dialog);
+    useEffect(() => doMarkerDialogSomLest());
 
-        const henvendelseKomponenter = henvendelserSynkende.map(h => (
-            <div key={h.id}>
-                <LestAvBruker
-                    visible={h === sisteHenvendelseLestAvBruker}
-                    lestAvBrukerTidspunkt={lestAvBrukerTidspunkt}
-                />
-                <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} erPaInnsiden={erPaInnsiden} />
-            </div>
-        ));
-        return <div className="dialog-henvendelser">{henvendelseKomponenter}</div>;
-    }
+    const { henvendelser } = dialog;
+    const { lestAvBrukerTidspunkt } = dialog;
+    const henvendelserSynkende = [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));
+    const sisteHenvendelseLestAvBruker =
+        lestAvBrukerTidspunkt && henvendelserSynkende.find(h => datoComparator(lestAvBrukerTidspunkt, h.sendt) >= 0);
+
+    const henvendelseKomponenter = henvendelserSynkende.map(h => (
+        <div key={h.id}>
+            <LestAvBruker visible={h === sisteHenvendelseLestAvBruker} lestAvBrukerTidspunkt={lestAvBrukerTidspunkt} />
+            <Henvendelse key={`${h.dialogId}-${h.sendt}`} henvendelse={h} erPaInnsiden={erPaInnsiden} />
+        </div>
+    ));
+    return <div className="dialog-henvendelser">{henvendelseKomponenter}</div>;
 }
 
 Dialog.propTypes = {
@@ -98,6 +91,7 @@ const mapDispatchToProps = (dispatch, props) => {
     const dialogId = dialog.id;
     return {
         doMarkerDialogSomLest: () => {
+            console.log('test1');
             if (!dialog.lest) {
                 markerDialogSomLest(dialogId)(dispatch).then(() => {
                     window.dispatchEvent(new Event('aktivitetsplan.dialog.lest'));
