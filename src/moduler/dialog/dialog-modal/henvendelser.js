@@ -91,7 +91,6 @@ const mapDispatchToProps = (dispatch, props) => {
     const dialogId = dialog.id;
     return {
         doMarkerDialogSomLest: () => {
-            console.log('test1');
             if (!dialog.lest) {
                 markerDialogSomLest(dialogId)(dispatch).then(() => {
                     window.dispatchEvent(new Event('aktivitetsplan.dialog.lest'));
