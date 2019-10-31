@@ -12,78 +12,71 @@ import { selectErBruker } from '../../identitet/identitet-selector';
 import { dialogSammenlingnerMedTilhorendeDialogIdOgErBruker } from '../dialog-utils';
 import { selectGjeldendeEskaleringsVarsel } from '../../oppfolging-status/oppfolging-selector';
 
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-class Dialoger extends React.Component {
-    componentWillMount() {
-        const { gjeldendeEskaleringsvarsel, erBruker, dialoger } = this.props;
-        const dialogSammenligner = dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
-            gjeldendeEskaleringsvarsel && gjeldendeEskaleringsvarsel.tilhorendeDialogId,
-            erBruker
-        );
-        this.dialogIderSortert = [...dialoger].sort(dialogSammenligner).map(dialog => dialog.id);
-    }
+function Dialoger(props) {
+    const { gjeldendeEskaleringsvarsel, dialoger, valgtDialog, className, aktiviteter, history, erBruker } = props;
+    const dialogSammenligner = dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
+        gjeldendeEskaleringsvarsel && gjeldendeEskaleringsvarsel.tilhorendeDialogId,
+        erBruker
+    );
+    const dialogIderSortert = [...dialoger].sort(dialogSammenligner).map(dialog => dialog.id);
 
-    render() {
-        const { dialoger, valgtDialog, className, aktiviteter, history, erBruker } = this.props;
-        const dialogerSortert = [...dialoger].sort(
-            (a, b) => this.dialogIderSortert.indexOf(a.id) - this.dialogIderSortert.indexOf(b.id)
-        );
+    const dialogerSortert = [...dialoger].sort(
+        (a, b) => dialogIderSortert.indexOf(a.id) - dialogIderSortert.indexOf(b.id)
+    );
 
-        const erTabBar = dialog =>
-            dialog === valgtDialog || (valgtDialog === null && dialog.id === dialogerSortert[0].id);
-        const valgtDialogIndex = valgtDialog !== null ? dialogerSortert.indexOf(valgtDialog) : 0;
-        const dialogRefs = {};
+    const erTabBar = dialog => dialog === valgtDialog || (valgtDialog === null && dialog.id === dialogerSortert[0].id);
+    const valgtDialogIndex = valgtDialog !== null ? dialogerSortert.indexOf(valgtDialog) : 0;
+    const dialogRefs = {};
 
-        const byttTilNyDialog = id => {
-            // eslint-disable-next-line react/no-find-dom-node
-            findDOMNode(dialogRefs[id]).focus();
-        };
+    const byttTilNyDialog = id => {
+        // eslint-disable-next-line react/no-find-dom-node
+        findDOMNode(dialogRefs[id]).focus();
+    };
 
-        const fokusForrigeDialog = () => {
-            const nydialogId = dialogerSortert[valgtDialogIndex - 1].id;
-            byttTilNyDialog(nydialogId);
-        };
+    const fokusForrigeDialog = () => {
+        const nydialogId = dialogerSortert[valgtDialogIndex - 1].id;
+        byttTilNyDialog(nydialogId);
+    };
 
-        const fokusNesteDialog = () => {
-            const nydialogId = dialogerSortert[valgtDialogIndex + 1].id;
-            byttTilNyDialog(nydialogId);
-        };
+    const fokusNesteDialog = () => {
+        const nydialogId = dialogerSortert[valgtDialogIndex + 1].id;
+        byttTilNyDialog(nydialogId);
+    };
 
-        const dialogPiling = e => {
-            switch (e.which) {
-                case 38: // pil opp
-                    if (valgtDialogIndex > 0) {
-                        fokusForrigeDialog();
-                    }
-                    break;
-                case 40: // pil ned
-                    if (valgtDialogIndex < dialoger.length - 1) {
-                        fokusNesteDialog();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        };
+    const dialogPiling = e => {
+        switch (e.which) {
+            case 38: // pil opp
+                if (valgtDialogIndex > 0) {
+                    fokusForrigeDialog();
+                }
+                break;
+            case 40: // pil ned
+                if (valgtDialogIndex < dialoger.length - 1) {
+                    fokusNesteDialog();
+                }
+                break;
+            default:
+                break;
+        }
+    };
 
-        return (
-            <div className={className} onKeyDown={dialogPiling}>
-                {dialogerSortert.map(d => (
-                    <section className="dialoger__dialog--section" key={d.id}>
-                        <DialogVisning
-                            ref={ref => (dialogRefs[d.id] = ref)}
-                            dialog={d}
-                            erBruker={erBruker}
-                            erTabBar={erTabBar(d)}
-                            erValgt={d === valgtDialog}
-                            aktiviteter={aktiviteter}
-                            history={history}
-                        />
-                    </section>
-                ))}
-            </div>
-        );
-    }
+    return (
+        <div className={className} onKeyDown={dialogPiling}>
+            {dialogerSortert.map(d => (
+                <section className="dialoger__dialog--section" key={d.id}>
+                    <DialogVisning
+                        ref={ref => (dialogRefs[d.id] = ref)}
+                        dialog={d}
+                        erBruker={erBruker}
+                        erTabBar={erTabBar(d)}
+                        erValgt={d === valgtDialog}
+                        aktiviteter={aktiviteter}
+                        history={history}
+                    />
+                </section>
+            ))}
+        </div>
+    );
 }
 
 Dialoger.defaultProps = {
