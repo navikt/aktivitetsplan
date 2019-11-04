@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-    pus: navikt/pus-orb@0.0.33
+    pus: navikt/pus-orb@0.0.37
 
 workflows:
     version: 2
@@ -10,32 +10,20 @@ workflows:
                   name: test
                   context: pus
             - pus/bygg-og-deploy-frontend:
-                  name: deploy-dev-fss
+                  name: deploy-dev
                   requires:
                       - test
                   context: pus
-                  cluster: dev-fss
-                  filepath: ./nais-q-fss.yaml
+                  filepath: ./nais-q-fss.yaml,./nais-q-sbs.yaml
                   filters:
                       branches:
                           only: dev
             - pus/bygg-og-deploy-frontend:
-                  name: deploy-sbs-fss
+                  name: deploy-prod
                   requires:
                       - test
                   context: pus
-                  cluster: dev-sbs
-                  filepath: ./nais-q-sbs.yaml
-                  filters:
-                      branches:
-                          only: dev
-            - pus/bygg-og-deploy-frontend:
-                  name: deploy-prod-fss
-                  requires:
-                      - test
-                  context: pus
-                  cluster: prod-fss
-                  filepath: ./nais-fss.yaml
+                  filepath: ./nais-fss.yaml,./nais-sbs.yaml
                   filters:
                       branches:
                           only: master
@@ -44,7 +32,6 @@ workflows:
                   requires:
                       - test
                   context: pus
-                  cluster: prod-sbs
                   filepath: ./nais-sbs.yaml
                   filters:
                       branches:
