@@ -2,7 +2,7 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: aktivitetsplan
-  namespace: {{namespace}}
+  namespace: q0
   cluster: dev-sbs
   labels:
     team: pto
@@ -23,8 +23,9 @@ spec:
     enabled: true
     path: aktivitetsplan/internal/metrics
   ingresses:
-    - https://aktivitetsplan-{{namespace}}.nais.oera-q.local
-    - https://aktivitetsplan-{{namespace}}.dev-sbs.nais.io
+    - https://aktivitetsplan-q.nav.no
+    - https://aktivitetsplan-q0.nais.oera-q.local
+    - https://aktivitetsplan-q0.dev-sbs.nais.io
   vault:
     enabled: true
   webproxy: true
@@ -43,4 +44,4 @@ spec:
     - ARBEIDSSOKERREGISTRERING_URL
     - VEILARBSTEPUP_OIDC_URL
     - name: DITTNAV_LINK_URL
-      value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
+      value: 'https://tjenester-q0.nav.no/dittnav/'
