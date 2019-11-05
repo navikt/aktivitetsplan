@@ -127,8 +127,8 @@ export function loggMittMalLagre(veileder: boolean, ab: boolean, harMal: boolean
     loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder, ab: ab, harMal: harMal });
 }
 
-export function loggMittMalAb(ident: string, veileder: boolean, ab: boolean) {
-    loggEvent(MITTMAL_VISNING_LOGGEVENT, { bruker: hash(ident) }, { erVeileder: veileder, ab: ab });
+export function loggMittMalAb(ident: string, veileder: boolean, ab: boolean, harMal: boolean) {
+    loggEvent(MITTMAL_VISNING_LOGGEVENT, { bruker: hash(ident) }, { erVeileder: veileder, ab: ab, harMal: harMal });
 }
 
 export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgingsPerioder: Array<OppfolgingsPeriode>) {

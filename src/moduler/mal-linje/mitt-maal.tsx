@@ -40,11 +40,18 @@ function MalText(props: MalTextProps) {
 interface MalContentProps {
     disabled: boolean;
     abTest: boolean;
+    erVeileder: boolean;
+    ident: string;
     mal?: string;
 }
 
 function MalContent(props: MalContentProps) {
-    const { disabled, abTest, mal } = props;
+    const { disabled, abTest, ident, erVeileder, mal } = props;
+
+    //todo remove this when ab test is done
+    useEffect(() => {
+        loggMittMalAb(ident, erVeileder, abTest, !!mal);
+    }, [ident, erVeileder, abTest, mal]);
 
     if (!mal && abTest && !disabled) {
         return (
@@ -64,6 +71,10 @@ function MalContent(props: MalContentProps) {
 function MittMaal() {
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(hentMal());
+    }, [dispatch]);
+
     const avhengigheter = useSelector(selectMalStatus, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal: string | undefined = malData && malData.mal;
@@ -75,12 +86,6 @@ function MittMaal() {
     const features = useSelector(selectFeatureData);
 
     const abTest = harFeature(ABMAL, features);
-
-    useEffect(() => {
-        dispatch(hentMal());
-        //todo remove this when ab test is done
-        loggMittMalAb(ident, erVeileder, abTest);
-    }, [dispatch, ident, erVeileder, abTest]);
 
     const disabled = !underOppfolging || viserHistoriskPeriode;
     const cls = classNames('mitt-maal', { empty: !mal && abTest && !disabled });
@@ -95,7 +100,7 @@ function MittMaal() {
             >
                 <Element id="mittmal_header">DITT MÅL</Element>
                 <div className="mittmal_content">
-                    <MalContent disabled={disabled} abTest={abTest} mal={mal} />
+                    <MalContent disabled={disabled} abTest={abTest} ident={ident} erVeileder={erVeileder} mal={mal} />
                 </div>
             </InternLenke>
         </Innholdslaster>
