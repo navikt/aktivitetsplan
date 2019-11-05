@@ -8,8 +8,8 @@ import InternLenke from '../../felles-komponenter/utils/internLenke';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentMal, selectGjeldendeMal, selectMalStatus } from '../../moduler/mal/aktivitetsmal-reducer';
-import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
-import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
+import { selectErVeileder, selectIdentitetId } from '../../moduler/identitet/identitet-selector';
+import { loggMittMalAb, loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import { selectViserHistoriskPeriode } from '../../moduler/filtrering/filter/filter-selector';
 import './mitt-maal.less';
 import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
@@ -64,20 +64,24 @@ function MalContent(props: MalContentProps) {
 function MittMaal() {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(hentMal());
-    }, [dispatch]);
-
     const avhengigheter = useSelector(selectMalStatus, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const mal: string | undefined = malData && malData.mal;
 
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
+    const ident = useSelector(selectIdentitetId, shallowEqual);
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const features = useSelector(selectFeatureData);
 
     const abTest = harFeature(ABMAL, features);
+
+    useEffect(() => {
+        dispatch(hentMal());
+        //todo remove this when ab test is done
+        loggMittMalAb(ident, erVeileder, abTest);
+    }, [dispatch, ident, erVeileder, abTest]);
+
     const disabled = !underOppfolging || viserHistoriskPeriode;
     const cls = classNames('mitt-maal', { empty: !mal && abTest && !disabled });
 
