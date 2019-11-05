@@ -27,12 +27,3 @@ workflows:
                   filters:
                       branches:
                           only: master
-            - pus/deploy-latest:
-                  name: deploy-prod-sbs
-                  requires:
-                      - test
-                  context: pus
-                  filepath: ./nais-sbs.yaml
-                  filters:
-                      branches:
-                          only: master
