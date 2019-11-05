@@ -46,7 +46,7 @@ interface MalContentProps {
 function MalContent(props: MalContentProps) {
     const { disabled, abTest, mal } = props;
 
-    if (!mal && abTest) {
+    if (!mal && abTest && !disabled) {
         return (
             <div className="mittmal_callToAction">
                 <Element>Hva er målet ditt fremover?</Element>
@@ -78,7 +78,8 @@ function MittMaal() {
     const features = useSelector(selectFeatureData);
 
     const abTest = harFeature(ABMAL, features);
-    const cls = classNames('mitt-maal', { empty: !mal && abTest });
+    const disabled = !underOppfolging || viserHistoriskPeriode;
+    const cls = classNames('mitt-maal', { empty: !mal && abTest && !disabled });
 
     return (
         <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
@@ -88,9 +89,9 @@ function MittMaal() {
                 className={cls}
                 onClick={() => loggMittMalKlikk(erVeileder, abTest, !!mal)}
             >
-                <Element className="mittmal_header">Ditt mål</Element>
+                <Element id="mittmal_header">DITT MÅL</Element>
                 <div className="mittmal_content">
-                    <MalContent disabled={!underOppfolging || viserHistoriskPeriode} abTest={abTest} mal={mal} />
+                    <MalContent disabled={disabled} abTest={abTest} mal={mal} />
                 </div>
             </InternLenke>
         </Innholdslaster>

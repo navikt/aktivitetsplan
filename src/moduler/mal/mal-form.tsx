@@ -8,7 +8,7 @@ import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatc
 
 function validateMal(val: string) {
     if (val.length === 0) {
-        return 'Du må fylle ut målet ditt';
+        return 'Feltet må fylles ut';
     }
     if (val.length > 500) return 'Du må korte ned teksten til 500 tegn';
 

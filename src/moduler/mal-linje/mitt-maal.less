@@ -5,14 +5,16 @@ a.mitt-maal {
     .panel-focushover-mixin();
     z-index: 0;
 
-    &:hover .mittmal__content-header {
+    &:hover #mittmal_header {
         text-decoration: underline;
-        color: @navDypBla;
+        color: @navBla;
     }
 }
 
 .mitt-maal {
-    .panel-mixin();
+    display: block;
+    border-radius: @border-radius-base;
+    padding: 1rem 1rem 0.75rem 1rem;
 
     text-decoration: none;
 
@@ -31,10 +33,14 @@ a.mitt-maal {
         border-style: dashed;
         border-color: @navGra60;
         border-width: 2px;
+        &:hover,
+        &--hover {
+            box-shadow: @grayIcon 0 0 5px 0;
+        }
     }
 }
 
-.mittmal_header {
+#mittmal_header {
     margin: 0 1rem 0 1rem;
     color: @navGra60;
 }
@@ -55,7 +61,7 @@ a.mitt-maal {
         min-height: 5rem;
     }
 
-    .mittmal_header {
+    #mittmal_header {
         margin-left: 2rem;
         width: 20%;
     }
