@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
+import classNames from 'classnames';
 import InternLenke from './internLenke';
 import visibleIfHOC from '../../hocs/visible-if';
 
@@ -8,12 +9,13 @@ interface LenkeknappProps {
     disabled: boolean;
     type: string;
     onClick: () => void;
+    className?: string;
     children: ReactNode;
 }
 
 function Lenkeknapp(props: LenkeknappProps) {
-    const { href, disabled, type, onClick, children } = props;
-    const lenkeknappClassNames = `knapp knapp--${type}`;
+    const { href, disabled, type, onClick, className, children } = props;
+    const lenkeknappClassNames = classNames(`knapp knapp--${type}`, className);
     if (disabled) {
         return <Knapp onClick={onClick} className={lenkeknappClassNames} disabled children={children} />;
     }

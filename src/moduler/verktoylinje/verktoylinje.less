@@ -24,39 +24,15 @@
         }
     }
 
-    &__print-knapp {
-        display: inline-block;
-        background: data-uri('../utskrift/ikoner/printer.svg') no-repeat center right;
-        background-size: contain;
-
-        height: 1.25rem;
-        width: 1.25rem;
-        border: 0;
-        padding: 0;
-        margin-top: 2px;
-        margin-right: 1rem;
-
-        &:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px @fokus-farge;
-        }
-
-        &:hover {
-            background-image: data-uri('../utskrift/ikoner/printer-hover.svg');
-        }
-
-        &:active {
-            background-image: data-uri('../utskrift/ikoner/printer-active.svg');
-        }
-    }
-
     &__verktoy-container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
         align-items: center;
 
-        &:first-child {
+        &:nth-child(1) {
+            align-items: flex-start;
+            justify-content: flex-start;
             .knappelenke {
                 span {
                     border: 0;
@@ -113,7 +89,7 @@
             position: relative;
             padding: 0.6rem 1rem 0.9rem 1.5rem;
             background-position-y: 1rem;
-            top: -0.5rem;
+            top: -0.1rem;
 
             > span:last-child {
                 text-transform: uppercase;
@@ -124,10 +100,6 @@
 
         .lenkeknapp {
             width: 100%;
-            margin-bottom: 0.5rem;
-        }
-
-        .navigasjonslinje-meny__knapp--print {
             margin-bottom: 0.5rem;
         }
     }
@@ -193,5 +165,18 @@
                 margin-top: 1px;
             }
         }
+    }
+}
+
+@media (max-width: 360px) {
+    .utskrift-lenke {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .ny-aktivitet-lenke {
+        width: 100%;
+        margin-bottom: 5px;
     }
 }
