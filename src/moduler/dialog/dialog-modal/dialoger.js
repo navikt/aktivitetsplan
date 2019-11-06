@@ -12,19 +12,24 @@ import { selectErBruker } from '../../identitet/identitet-selector';
 import { dialogSammenlingnerMedTilhorendeDialogIdOgErBruker } from '../dialog-utils';
 import { selectGjeldendeEskaleringsVarsel } from '../../oppfolging-status/oppfolging-selector';
 
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 class Dialoger extends React.Component {
-    componentWillMount() {
-        const { gjeldendeEskaleringsvarsel, erBruker, dialoger } = this.props;
+    render() {
+        const {
+            gjeldendeEskaleringsvarsel,
+            dialoger,
+            valgtDialog,
+            className,
+            aktiviteter,
+            history,
+            erBruker
+        } = this.props;
+
         const dialogSammenligner = dialogSammenlingnerMedTilhorendeDialogIdOgErBruker(
             gjeldendeEskaleringsvarsel && gjeldendeEskaleringsvarsel.tilhorendeDialogId,
             erBruker
         );
         this.dialogIderSortert = [...dialoger].sort(dialogSammenligner).map(dialog => dialog.id);
-    }
 
-    render() {
-        const { dialoger, valgtDialog, className, aktiviteter, history, erBruker } = this.props;
         const dialogerSortert = [...dialoger].sort(
             (a, b) => this.dialogIderSortert.indexOf(a.id) - this.dialogIderSortert.indexOf(b.id)
         );

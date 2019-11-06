@@ -15,7 +15,8 @@ import {
     erManuellBruker,
     erKRRBruker,
     erEskalertBruker,
-    oppfFeilet
+    oppfFeilet,
+    ingenMal
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -146,6 +147,17 @@ class DemoDashboard extends React.Component {
                         };
                     })}
                     onChange={this.setFeature}
+                />
+                <CheckboksPanelGruppe
+                    legend="Mål tilstand"
+                    checkboxes={[
+                        {
+                            label: 'Ingen mål',
+                            id: SessionStorageElement.INGEN_MAL,
+                            checked: ingenMal()
+                        }
+                    ]}
+                    onChange={this.endreTilstand}
                 />
             </section>
         );

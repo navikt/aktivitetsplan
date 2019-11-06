@@ -8,7 +8,7 @@ import { moment } from '../../utils';
 import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
 
 class TimeoutboxNedtelling extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.rerender = setInterval(() => {
             this.forceUpdate();
         }, 1000);
