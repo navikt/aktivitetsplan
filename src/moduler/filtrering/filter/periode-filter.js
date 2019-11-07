@@ -46,7 +46,7 @@ function PeriodeFilter({
         <VisibleIfDiv className={periodeFilterCls(className)} visible={harHistoriskePerioder}>
             <Dropdown
                 name="periode-filter"
-                knappeTekst="Mine tidligere planer"
+                knappeTekst="Tidligere planer"
                 onOpen={() => loggEvent(LIST_HISTORISK_PERIODE)}
             >
                 <div className="filter__container">

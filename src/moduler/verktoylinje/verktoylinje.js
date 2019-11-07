@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
@@ -9,10 +8,8 @@ import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import TallAlert from '../../felles-komponenter/tall-alert';
-import UtskriftKnapp from './utskriftknapp';
 import { selectDialoger, selectHarTilgangTilDialog } from '../dialog/dialog-selector';
 import { dialogFilter } from '../filtrering/filter/filter-utils';
-import { div as HiddenIfDiv } from '../../felles-komponenter/hidden-if/hidden-if';
 import InternLenke from '../../felles-komponenter/utils/internLenke';
 import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
@@ -51,14 +48,12 @@ class Verktoylinje extends Component {
                         aria-live="polite"
                     >
                         <TallAlert hidden={antallUlesteDialoger <= 0}>{antallUlesteDialoger}</TallAlert>
-                        <HiddenIfDiv hidden={antallUlesteDialoger > 0} className="sr-only">
-                            <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
-                        </HiddenIfDiv>
-                        <FormattedMessage id="navigasjon.dialog" />
+                        <span>Dialog</span>
                     </InternLenke>
                     <Lenkeknapp
                         type="hoved"
                         href="/aktivitet/ny"
+                        className="ny-aktivitet-lenke"
                         disabled={!aktivitetLaster}
                         visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
                         onClick={() => loggEvent(APNE_NY_AKTIVITET)}
@@ -73,13 +68,11 @@ class Verktoylinje extends Component {
                             className="knappelenke"
                             onClick={() => loggEvent(APNE_OM_TJENESTEN)}
                         >
-                            <FormattedMessage id="navigasjon.informasjon" />
+                            <span>Om aktivitetsplanen</span>
                         </InternLenke>
-                        <UtskriftKnapp
-                            ariaLabel="utskrift.ikon.alt.tekst"
-                            lenke="/utskrift"
-                            className="verktoylinje__print-knapp"
-                        />
+                        <InternLenke href="/utskrift" className="knappelenke utskrift-lenke">
+                            <span>Skriv ut</span>
+                        </InternLenke>
                         <Filter className="verktoylinje__verktoy" />
                     </div>
                 </div>

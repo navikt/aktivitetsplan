@@ -26,6 +26,7 @@ import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-beh
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
 import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
 import { aktivitetRoute } from '../../../routes';
+import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 
 const CONFIRM = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
@@ -46,7 +47,7 @@ function onBeforeLoadEffect(isDirty) {
 }
 
 function NyAktivitetForm(props) {
-    const { onLagreNyAktivitet, history, match, aktivitetFeilmeldinger } = props;
+    const { onLagreNyAktivitet, history, match, aktivitetFeilmeldinger, underOppfolging } = props;
 
     const isDirty = useRef(false);
     useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
@@ -79,6 +80,10 @@ function NyAktivitetForm(props) {
     };
 
     const header = <ModalHeader tilbakeTekst="Tilbake til kategorier" onTilbakeClick={onReqBack} />;
+
+    if (!underOppfolging) {
+        return null;
+    }
 
     return (
         <Modal
@@ -139,7 +144,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state)
+    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
+    underOppfolging: selectErUnderOppfolging(state)
 });
 
 export default connect(
