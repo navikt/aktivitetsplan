@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { HjelpetekstUnderVenstre } from 'nav-frontend-hjelpetekst';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
@@ -45,9 +45,9 @@ function AktivitetsplanHjelpetekst({ status }) {
 
     const { tittel, innhold } = config;
     return (
-        <HjelpetekstUnderVenstre id={status} tittel={tittel}>
-            {innhold}
-        </HjelpetekstUnderVenstre>
+        <Hjelpetekst type="under-hoyre" id={status} tittel={tittel}>
+            <div className="max-width-300">{innhold}</div>
+        </Hjelpetekst>
     );
 }
 
