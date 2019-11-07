@@ -68,10 +68,10 @@ class Verktoylinje extends Component {
                             className="knappelenke"
                             onClick={() => loggEvent(APNE_OM_TJENESTEN)}
                         >
-                            Om aktivitetsplanen
+                            <span>Om aktivitetsplanen</span>
                         </InternLenke>
                         <InternLenke href="/utskrift" className="knappelenke utskrift-lenke">
-                            Skriv ut
+                            <span>Skriv ut</span>
                         </InternLenke>
                         <Filter className="verktoylinje__verktoy" />
                     </div>
