@@ -3,7 +3,7 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
 export function BrukePlanenPanel() {
     return (
-        <Ekspanderbartpanel tittel="Slik bruker du planen">
+        <Ekspanderbartpanel tittel="Slik bruker du planen" tittelProps="undertittel">
             <p>
                 Det første du bør gjøre er å bestemme deg for hva som er målet ditt. Tenk over hvilke jobber du kan
                 trives i og som du tror passer for deg. Når du har definert et mål, kan du vurdere hvilke aktiviteter

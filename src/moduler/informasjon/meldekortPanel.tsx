@@ -4,7 +4,7 @@ import Lenke from 'nav-frontend-lenker';
 
 export function MeldekortPanel() {
     return (
-        <Ekspanderbartpanel tittel="Meldekort">
+        <Ekspanderbartpanel tittel="Meldekort" tittelProps="undertittel">
             <p>
                 Hvis du får dagpenger, tiltakspenger eller er arbeidssøker, skal du oppgi tiltak, kurs eller utdanning
                 på meldekortet. Aktivitetsplanen din kan inneholde flere avtalte aktiviteter enn det meldekortet spør
