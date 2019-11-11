@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
-import { HjelpetekstHoyre } from 'nav-frontend-hjelpetekst';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import useFormstate from '@nutgaard/use-formstate';
 import { selectDialogStatus } from '../../../dialog/dialog-selector';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
@@ -22,12 +22,14 @@ export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 const label = (
     <div className="forhandsorientering-arena-aktivitet">
         <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
-        <HjelpetekstHoyre>
-            Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det offentlige
-            kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog. Beskjeden sendes
-            gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv time så blir det kun
-            sendt én SMS eller e-post.
-        </HjelpetekstHoyre>
+        <Hjelpetekst>
+            <div className="max-width-300">
+                Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
+                offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
+                Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv
+                time så blir det kun sendt én SMS eller e-post.
+            </div>
+        </Hjelpetekst>
     </div>
 );
 

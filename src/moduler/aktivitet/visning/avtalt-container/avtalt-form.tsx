@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { HjelpetekstHoyre, HjelpetekstOver } from 'nav-frontend-hjelpetekst';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import classNames from 'classnames';
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
@@ -54,12 +54,14 @@ function InfoHeader() {
     return (
         <div>
             <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
-            <HjelpetekstHoyre id="brukerinfo">
-                Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
-                offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
-                Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv
-                time så blir det kun sendt én SMS eller e-post.
-            </HjelpetekstHoyre>
+            <Hjelpetekst>
+                <div className="max-width-300">
+                    Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
+                    offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
+                    Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en
+                    halv time så blir det kun sendt én SMS eller e-post.
+                </div>
+            </Hjelpetekst>
         </div>
     );
 }
@@ -106,11 +108,12 @@ function AvtaltForm(props: Props) {
             <Undertittel>{'Merk aktiviteten som "Avtalt med NAV"'}</Undertittel>
             <div className="avtalt-container__radio">
                 <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
-                <HjelpetekstOver id="hjelp">
-                    {
-                        'Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt med NAV"'
-                    }
-                </HjelpetekstOver>
+                <Hjelpetekst id="hjelp">
+                    <div className="max-width-300">
+                        Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt med
+                        NAV"
+                    </div>
+                </Hjelpetekst>
             </div>
             <VisibleIfDiv
                 className={classNames({

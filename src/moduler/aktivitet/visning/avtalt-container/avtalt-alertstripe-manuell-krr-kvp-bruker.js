@@ -1,6 +1,5 @@
 import React from 'react';
-import PT from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
@@ -11,10 +10,16 @@ import {
 } from '../../../oppfolging-status/oppfolging-selector';
 import visibleIfHOC from '../../../../hocs/visible-if';
 
-function AvtaltStripeKRRKvpManuellBruker({ brukerUtenAktivitesPlan }) {
+function AvtaltStripeKRRKvpManuellBruker() {
+    const brukerUtenAktivitesPlan = {
+        brukerErManuell: useSelector(selectErBrukerManuell, shallowEqual),
+        brukerErUnderKvp: useSelector(selectErUnderKvp, shallowEqual),
+        brukerErIReservasjonKRR: useSelector(selectReservasjonKRR, shallowEqual)
+    };
+
     const brukerUtenAktivitetsPlanSelectValue = Object.entries(brukerUtenAktivitesPlan).find(
         ([key, value]) => value
-    )[0]; // eslint-disable-line no-unused-vars
+    )[0];
     return (
         <div>
             <AlertStripeInfo>
@@ -29,16 +34,4 @@ function AvtaltStripeKRRKvpManuellBruker({ brukerUtenAktivitesPlan }) {
     );
 }
 
-AvtaltStripeKRRKvpManuellBruker.propTypes = {
-    brukerUtenAktivitesPlan: PT.objectOf(PT.bool).isRequired
-};
-
-const mapStateToProps = state => ({
-    brukerUtenAktivitesPlan: {
-        brukerErManuell: selectErBrukerManuell(state),
-        brukerErUnderKvp: selectErUnderKvp(state),
-        brukerErIReservasjonKRR: selectReservasjonKRR(state)
-    }
-});
-
-export default visibleIfHOC(connect(mapStateToProps)(AvtaltStripeKRRKvpManuellBruker));
+export default visibleIfHOC(AvtaltStripeKRRKvpManuellBruker);
