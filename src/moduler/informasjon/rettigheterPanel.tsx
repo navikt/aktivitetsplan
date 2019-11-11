@@ -4,7 +4,7 @@ import Lenke from 'nav-frontend-lenker';
 
 export function RettigheterPanel() {
     return (
-        <Ekspanderbartpanel tittel="Rettigheter og personvern">
+        <Ekspanderbartpanel tittel="Rettigheter og personvern" tittelProps="undertittel">
             <p>
                 Når du henvender deg til NAV fordi du trenger hjelp til å komme i jobb, skal NAV vurdere behovet ditt
                 for hjelp.
