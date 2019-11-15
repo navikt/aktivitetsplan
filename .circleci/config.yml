@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-    pus: navikt/pus-orb@0.0.37
+    pus: navikt/pus-orb@0.0.41
 
 workflows:
     version: 2

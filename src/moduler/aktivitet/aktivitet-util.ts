@@ -30,9 +30,9 @@ export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
     if (!b.avtalt && a.avtalt) {
         return -1;
     }
-    const fradato = samenlingDato(b.fraDato, a.fraDato);
+    const fradato = samenlingDato(a.fraDato, b.fraDato);
 
-    return fradato === 0 ? samenlingDato(b.opprettetDato, a.opprettetDato) : fradato;
+    return fradato === 0 ? samenlingDato(a.opprettetDato, b.opprettetDato) : fradato;
 }
 
 export function erNyEndringIAktivitet(aktivitet: Aktivitet, lestInformasjon: Lest, me: Me): boolean {
