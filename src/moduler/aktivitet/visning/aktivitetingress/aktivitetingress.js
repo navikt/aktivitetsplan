@@ -11,7 +11,7 @@ const aktivitetingress = {
         'eller lage oversikt over personer som kan være nyttig å kontakte når du er på jakt etter jobb.',
     gruppeaktivitet: 'Her ser du informasjon om en gruppeaktivitet NAV har meldt deg på',
     ijobb:
-        'Her kan du notere ned en deltidsjobb eller midlertidig stiling du har nå. Da kan vi følge deg opp bedre. Husk å føre opp de timene du har jobbet på meldekortet.',
+        'Her kan du notere ned en deltidsjobb eller midlertidig stilling du har nå. Da kan vi følge deg opp bedre. Hvis du sender inn meldekort, husk å føre opp de timene du har jobbet.',
     mote: 'NAV ønsker et møte med deg. Du må gi beskjed så raskt som mulig hvis tidspunktet ikke passer.',
     samtalereferat: 'Her finner du referat fra en samtale du har hatt med NAV.',
     sokeavtale:
