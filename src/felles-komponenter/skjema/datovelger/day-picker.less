@@ -199,12 +199,17 @@
     &__DayPicker {
         display: none;
 
-        .DayPicker-Day--selected {
-            border-radius: 0;
-        }
-
-        .DayPicker-Day--today {
-            color: black;
+        .DayPicker-Day {
+            &:focus {
+                border: 3px solid @fokus-farge;
+                background-color: @white;
+            }
+            &--selected {
+                border-radius: 0;
+            }
+            &--today {
+                color: black;
+            }
         }
     }
 }
