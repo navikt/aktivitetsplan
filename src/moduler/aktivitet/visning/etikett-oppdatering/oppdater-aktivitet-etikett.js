@@ -7,7 +7,6 @@ import StillingEtikettForm from './stilling-etikett-form';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
-import Underseksjon from '../underseksjon/underseksjon';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
 import { STATUS_FULLFOERT } from '../../../../constant';
@@ -28,16 +27,14 @@ function OppdaterAktivitetEtikett(props) {
     const kanEndre = aktivitet.status !== STATUS_FULLFOERT && aktivitet.status !== STATUS_AVBRUTT;
 
     return (
-        <Underseksjon>
-            <EndreLinje
-                tittel="Hvor langt har du kommet i søknadsprosessen?"
-                form={form}
-                endring={endring}
-                setEndring={setEndring}
-                visning={<SokeStatusEtikett etikett={aktivitet.etikett} />}
-                kanEndre={kanEndre}
-            />
-        </Underseksjon>
+        <EndreLinje
+            tittel="Hvor langt har du kommet i søknadsprosessen?"
+            form={form}
+            endring={endring}
+            setEndring={setEndring}
+            visning={<SokeStatusEtikett etikett={aktivitet.etikett} />}
+            kanEndre={kanEndre}
+        />
     );
 }
 

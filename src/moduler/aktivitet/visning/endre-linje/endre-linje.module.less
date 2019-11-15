@@ -16,18 +16,45 @@
 .endreContainer {
     display: flex;
     align-items: baseline;
+    width: 100%;
+    height: 100%;
+
+    padding: 1rem;
+    color: #3e3832;
+    border: none;
+    background: @navLysGra;
+    text-align: left;
+
+    @media (min-width: @screen-md-min) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px @fokusFarge;
+        outline: none;
+    }
+
+    &:hover {
+        text-decoration: underline;
+        .endreKnappInnhold {
+            text-decoration: underline;
+        }
+    }
 }
 
 .endreForm {
-    padding-top: 1rem;
+    padding: 1rem 1rem;
+
+    @media (min-width: @screen-md-min) {
+        padding: 1rem 2rem;
+    }
 }
 
 .endreKnapp {
     margin-left: auto;
     white-space: nowrap;
-    &:hover {
-        border-bottom: 1px solid @navGra40 !important;
-    }
+    color: @navBla;
 }
 
 .endreKnappInnhold {
@@ -39,6 +66,7 @@
     .chevron-mixin();
     .chevron-orientasjon-mixin(ned);
 }
+
 .endreIndikasjonLukket {
     .chevron-mixin();
     .chevron-orientasjon-mixin(opp);
