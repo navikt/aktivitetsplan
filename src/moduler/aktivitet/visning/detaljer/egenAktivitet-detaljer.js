@@ -14,6 +14,7 @@ const EgenAktivitetDetaljer = ({ aktivitet }) => (
             <TilDato aktivitet={aktivitet} tittel={<FormattedMessage id="aktivitetdetaljer.til-dato-tekst.egen" />} />
             <Informasjonsfelt
                 key="hensikt"
+                fullbredde
                 tittel={<FormattedMessage id="aktivitetdetaljer.hensikt-label" />}
                 innhold={aktivitet.hensikt}
             />
