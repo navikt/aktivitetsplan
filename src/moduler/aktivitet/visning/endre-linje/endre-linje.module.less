@@ -36,10 +36,12 @@
         outline: none;
     }
 
-    &:hover {
-        text-decoration: underline;
-        .endreKnappInnhold {
+    @media (pointer: fine) {
+        &:hover {
             text-decoration: underline;
+            .endreKnappInnhold {
+                text-decoration: underline;
+            }
         }
     }
 }
