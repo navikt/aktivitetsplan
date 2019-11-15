@@ -5,7 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import * as AppPT from '../../../../proptypes';
-import { EGEN_AKTIVITET_TYPE, IJOBB_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE } from '../../../../constant';
+import {
+    BEHANDLING_AKTIVITET_TYPE,
+    EGEN_AKTIVITET_TYPE,
+    IJOBB_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE
+} from '../../../../constant';
 import InternLenke from '../../../../felles-komponenter/utils/internLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
@@ -13,7 +18,9 @@ import DeleLinje from '../delelinje/delelinje';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 
 function visningsIngress(type) {
-    if ([EGEN_AKTIVITET_TYPE, IJOBB_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE].includes(type)) {
+    if (
+        [EGEN_AKTIVITET_TYPE, IJOBB_AKTIVITET_TYPE, STILLING_AKTIVITET_TYPE, BEHANDLING_AKTIVITET_TYPE].includes(type)
+    ) {
         return null;
     }
 

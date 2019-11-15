@@ -6,18 +6,21 @@ Aktivitetsplan er et verktøy for veiledere og brukere av NAV som skal synliggj�
 gjennomføres for at en bruker skal oppnå sine mål. Her kan brukere opprette aktiviteter som å delta på kurs, søke
 på en bestemt jobb eller motta behandling. Bruker har også mulighet til å kommunisere direkte med sin veileder via en dialogløsning.
 
-Dette prosjektet benytter seg av felleskomponenter fra [nav-frontend-moduler](https://github.com/navikt/nav-frontend-moduler).
+Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/create-react-app).
 
-### Hvordan bygge
+### Komme i gang
 
-Løsningen består av en versjon tilpasset for sluttbruker (utside) samt en versjon tilpasset veiledere på NAV (innside).
+```sh
+# Installere avhengigheter
+npm i
 
-Kjør `npm run build` for å bygge både innside og utside.
+# Bygge produksjons kode
+npm build
 
-### Utviklingsmilø
+# Lokal utvikling
+npm start
 
-For å starte et utviklingsmiljø som kjører kontinuerlig bygg kan man kjøre `npm run dev:mock` for innside og
-`npm run dev:mock:utside` for utside.
+```
 
 ### Kontakt og spørsmål
 
