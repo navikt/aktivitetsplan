@@ -9,6 +9,7 @@ const cls = (className?: string, brukLenkestyling?: boolean) =>
     });
 
 interface InternLenkeProps {
+    id?: string;
     href: string;
     className?: string;
     skipLenkeStyling?: boolean;
@@ -19,7 +20,7 @@ interface InternLenkeProps {
 }
 
 export default function InternLenke(props: InternLenkeProps) {
-    const { href, className, skipLenkeStyling, children, onClick, role, hidden } = props;
+    const { id, href, className, skipLenkeStyling, children, onClick, role, hidden } = props;
     const fodselsnummer = getFodselsnummer();
     const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
 
@@ -28,7 +29,7 @@ export default function InternLenke(props: InternLenkeProps) {
     }
 
     return (
-        <Link to={internHref} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
+        <Link id={id} to={internHref} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
             {children}
         </Link>
     );
