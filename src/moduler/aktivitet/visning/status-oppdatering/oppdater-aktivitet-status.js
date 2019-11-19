@@ -9,7 +9,6 @@ import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/lo
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
 import StatusVisning from './status-visning';
-import Underseksjon from '../underseksjon/underseksjon';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 
@@ -29,16 +28,14 @@ function OppdaterAktivitetStatus(props) {
     const kanEndre = aktivitet.status !== STATUS_FULLFOERT && aktivitet.status !== STATUS_AVBRUTT;
 
     return (
-        <Underseksjon>
-            <EndreLinje
-                tittel="Hva er status på aktiviteten?"
-                endring={endring}
-                setEndring={setEndring}
-                visning={visning}
-                form={form}
-                kanEndre={kanEndre}
-            />
-        </Underseksjon>
+        <EndreLinje
+            tittel="Hva er status på aktiviteten?"
+            endring={endring}
+            setEndring={setEndring}
+            visning={visning}
+            form={form}
+            kanEndre={kanEndre}
+        />
     );
 }
 
