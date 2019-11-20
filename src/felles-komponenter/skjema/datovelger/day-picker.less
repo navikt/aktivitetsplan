@@ -200,12 +200,13 @@
         display: none;
 
         .DayPicker-Day {
+            border-radius: 0;
+
             &:focus:not(.DayPicker-Day--selected) {
                 box-shadow: 0 0 0 3px @fokus-farge;
                 background-color: @white;
             }
             &--selected {
-                border-radius: 0;
                 &:focus {
                     box-shadow: 0 0 0 3px @fokus-farge;
                 }
