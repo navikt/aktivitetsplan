@@ -105,7 +105,7 @@ class AvtaltContainer extends Component {
                         aktivOppfolgingsPeriode &&
                         erGyldigISODato(aktivOppfolgingsPeriode.startDato)
                     ) {
-                        metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode));
+                        metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode.startDato));
                     }
 
                     doSetAktivitetTilAvtalt(aktivitet);
