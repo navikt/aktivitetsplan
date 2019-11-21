@@ -8,7 +8,6 @@ import { guid } from 'nav-frontend-js-utils';
 
 function moveElementIntoView(id) {
     // moves the element into view after the react-collapse animation is finished
-    console.log(id);
     setTimeout(() => {
         document.querySelector(`#${id}`).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 400);
