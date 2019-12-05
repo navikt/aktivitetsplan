@@ -185,7 +185,7 @@ const dialoger = [
                 avsenderId: 'Z123456',
                 sendt: '2017-02-17T11:52:20.535+01:00',
                 lest: true,
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist2?\n'
+                tekst: 'Fortsat ikke hørt noe. Har du forlist?\n'
             }
         ],
         egenskaper: []
