@@ -58,7 +58,6 @@ Henvendelse.defaultProps = {
 function Dialog(props) {
     const { dialog, erPaInnsiden, doMarkerDialogSomLest } = props;
 
-    console.log(dialog);
     useEffect(() => doMarkerDialogSomLest());
 
     const { henvendelser } = dialog;
