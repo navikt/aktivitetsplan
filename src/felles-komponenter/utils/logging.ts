@@ -82,7 +82,7 @@ export function loggForhandsorienteringTiltak() {
 }
 
 export function metrikkTidForsteAvtalte(tid: number) {
-    loggEvent('aktivitetsplan.aktivitet.forste.avtalt', {
+    loggEvent('aktivitetsplan.aktivitet.forste.avtalt.v2', {
         tidSidenOppfolging: tid
     });
 }
