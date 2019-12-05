@@ -154,6 +154,41 @@ const dialoger = [
             }
         ],
         egenskaper: []
+    },
+    {
+        id: '2',
+        aktivitetId: '10',
+        overskrift: 'Du har fått et varsel fra NAV',
+        sisteTekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n',
+        sisteDato: '2017-02-17T12:52:20.615+01:00',
+        opprettetDato: '2017-02-17T11:52:20.535+01:00',
+        historisk: false,
+        lest: true,
+        venterPaSvar: true,
+        ferdigBehandlet: true,
+        lestAvBrukerTidspunkt: null,
+        erLestAvBruker: false,
+        henvendelser: [
+            {
+                id: '3',
+                dialogId: '2',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2017-02-17T11:52:20.535+01:00',
+                lest: true,
+                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+            },
+            {
+                id: '3',
+                dialogId: '2',
+                avsender: 'VEILEDER',
+                avsenderId: 'Z123456',
+                sendt: '2017-02-17T11:52:20.535+01:00',
+                lest: true,
+                tekst: 'Fortsat ikke hørt noe. Har du forlist?\n'
+            }
+        ],
+        egenskaper: []
     }
 ];
 
