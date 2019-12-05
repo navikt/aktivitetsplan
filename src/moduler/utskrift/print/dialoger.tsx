@@ -16,7 +16,7 @@ export function DialogPrint(props: DialogProps) {
     }
 
     const { henvendelser } = dialog;
-    const henvendelserSynkende = henvendelser && henvendelser.sort((a, b) => datoComparator(b.sendt, a.sendt));
+    const henvendelserSynkende = henvendelser && [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));
 
     const overskrift = dialog.aktivitetId === null ? dialog.overskrift : 'Dialog';
 
