@@ -22,7 +22,6 @@ const FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD = 'tilltakSpesialTi
 
 const MITTMAL_KLIKK_LOGGEVENT = 'aktivitetsplan.mittmal.klikk';
 const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
-const MITTMAL_VISNING_LOGGEVENT = 'aktivitetsplan.mittmal.visning';
 const DAILOG_BRUKER_HENVENDELSE = 'dialog.bruker.henvendelse';
 const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
@@ -118,17 +117,12 @@ export function loggForhandsorientering(
     });
 }
 
-// TODO fjern ab og harMal på disse i fremtiden
-export function loggMittMalKlikk(veileder: boolean, ab: boolean, harMal: boolean) {
-    loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder, ab: ab, harMal: harMal });
+export function loggMittMalKlikk(veileder: boolean) {
+    loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
 }
 
-export function loggMittMalLagre(veileder: boolean, ab: boolean, harMal: boolean) {
-    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder, ab: ab, harMal: harMal });
-}
-
-export function loggMittMalAb(ident: string, veileder: boolean, ab: boolean, harMal: boolean) {
-    loggEvent(MITTMAL_VISNING_LOGGEVENT, { bruker: hash(ident) }, { erVeileder: veileder, ab: ab, harMal: harMal });
+export function loggMittMalLagre(veileder: boolean) {
+    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
 }
 
 export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgingsPerioder: Array<OppfolgingsPeriode>) {
