@@ -8,12 +8,10 @@ import InternLenke from '../../felles-komponenter/utils/internLenke';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentMal, selectGjeldendeMal, selectMalStatus } from '../../moduler/mal/aktivitetsmal-reducer';
-import { selectErVeileder, selectIdentitetId } from '../../moduler/identitet/identitet-selector';
-import { loggMittMalAb, loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
+import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
+import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import { selectViserHistoriskPeriode } from '../../moduler/filtrering/filter/filter-selector';
 import './mitt-maal.less';
-import { selectFeatureData } from '../../felles-komponenter/feature/feature-selector';
-import { ABMAL, harFeature } from '../../felles-komponenter/feature/feature';
 import { ReactComponent as Pluss } from './pluss.svg';
 
 interface MalTextProps {
@@ -38,22 +36,14 @@ function MalText(props: MalTextProps) {
 }
 
 interface MalContentProps {
-    disabled: boolean;
-    abTest: boolean;
-    erVeileder: boolean;
-    ident: string;
     mal?: string;
+    disabled: boolean;
 }
 
 function MalContent(props: MalContentProps) {
-    const { disabled, abTest, ident, erVeileder, mal } = props;
+    const { disabled, mal } = props;
 
-    //todo remove this when ab test is done
-    useEffect(() => {
-        loggMittMalAb(ident, erVeileder, abTest, !!mal);
-    }, [ident, erVeileder, abTest, mal]);
-
-    if (!mal && abTest && !disabled) {
+    if (!mal && !disabled) {
         return (
             <div className="mittmal_callToAction">
                 <Element>Hva er målet ditt fremover?</Element>
@@ -80,27 +70,18 @@ function MittMaal() {
     const mal: string | undefined = malData && malData.mal;
 
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
-    const ident = useSelector(selectIdentitetId, shallowEqual);
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
-    const features = useSelector(selectFeatureData);
-
-    const abTest = harFeature(ABMAL, features);
 
     const disabled = !underOppfolging || viserHistoriskPeriode;
-    const cls = classNames('mitt-maal', { empty: !mal && abTest && !disabled });
+    const cls = classNames('mitt-maal', { empty: !mal && !disabled });
 
     return (
         <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
-            <InternLenke
-                skipLenkeStyling
-                href="/mal"
-                className={cls}
-                onClick={() => loggMittMalKlikk(erVeileder, abTest, !!mal)}
-            >
+            <InternLenke skipLenkeStyling href="/mal" className={cls} onClick={() => loggMittMalKlikk(erVeileder)}>
                 <Element id="mittmal_header">DITT MÅL</Element>
                 <div className="mittmal_content">
-                    <MalContent disabled={disabled} abTest={abTest} ident={ident} erVeileder={erVeileder} mal={mal} />
+                    <MalContent disabled={disabled} mal={mal} />
                 </div>
             </InternLenke>
         </Innholdslaster>

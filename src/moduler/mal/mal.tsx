@@ -31,8 +31,11 @@ function Mal() {
                 {viserHistoriskPeriode ? 'Ditt mål fra en tidligere periode' : 'Ditt mål'}
             </Innholdstittel>
             <Undertekst className="aktivitetmal__sub-header">
-                Beskriv målet ditt, gjerne både kortsiktige og langsiktige mål og hva slags arbeidsoppgaver du ønsker
-                deg.
+                Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
+                <ul>
+                    <li>Hva er målet på kort sikt? Hva er målet på lengre sikt?</li>
+                    <li>Hva slags arbeidsoppgaver ønsker du deg?</li>
+                </ul>
             </Undertekst>
             <Innholdslaster avhengigheter={avhengigheter} alleOK>
                 <section className="aktivitetmal">
