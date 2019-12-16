@@ -20,6 +20,7 @@ function ArenaFeilmelding({ aktivitetStatus, arenaStatus, arenaFeilmeldinger }) 
         </div>
     );
 
+    // eslint-disable-next-line
     if (erArenaFeil) {
         return (
             <Feilmelding
@@ -30,6 +31,7 @@ function ArenaFeilmelding({ aktivitetStatus, arenaStatus, arenaFeilmeldinger }) 
             />
         );
     }
+    // eslint-disable-next-line
     return null;
 }
 ArenaFeilmelding.defaultProps = {
