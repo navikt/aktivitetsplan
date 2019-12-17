@@ -5,9 +5,22 @@ import { selectArenaAktivitetStatus, selectArenaFeilmeldinger } from '../aktivit
 import { STATUS } from '../../ducks/utils';
 import Feilmelding from './feilmelding';
 import { selectAktivitetStatus } from '../aktivitet/aktivitet-selector';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 function ArenaFeilmelding({ aktivitetStatus, arenaStatus, arenaFeilmeldinger }) {
     const erArenaFeil = aktivitetStatus === STATUS.OK && arenaStatus === STATUS.ERROR;
+
+    //TODO: SLETT!!
+    return (
+        <div className="container" style={{ marginBottom: '20px' }}>
+            <AlertStripe type="info">
+                Aktivitetsplanen og dialogen vil være ustabil fra 27. desember til 2. januar på grunn av vedlikehold. Vi
+                beklager ulempene.
+            </AlertStripe>
+        </div>
+    );
+
+    // eslint-disable-next-line
     if (erArenaFeil) {
         return (
             <Feilmelding
@@ -18,6 +31,7 @@ function ArenaFeilmelding({ aktivitetStatus, arenaStatus, arenaFeilmeldinger }) 
             />
         );
     }
+    // eslint-disable-next-line
     return null;
 }
 ArenaFeilmelding.defaultProps = {
