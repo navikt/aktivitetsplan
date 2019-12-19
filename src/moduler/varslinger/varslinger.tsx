@@ -18,7 +18,7 @@ function Varslinger() {
     useEffect(() => {
         dispatch(hentIdentitet());
         dispatch(hentOppfolging());
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [dispatch]);
 
     const child = erBruker ? <BrukerVarslinger /> : <VeilederVarsel />;
 
