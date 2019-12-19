@@ -1,7 +1,10 @@
 import { shallowEqual, useSelector } from 'react-redux';
 import React from 'react';
-import { selectGjeldendeEskaleringsVarsel, selectTilHorendeDialogId } from '../oppfolging-status/oppfolging-selector';
-import { erEskalertBruker } from '../../mocks/demo/sessionstorage';
+import {
+    selectErEskalert,
+    selectGjeldendeEskaleringsVarsel,
+    selectTilHorendeDialogId
+} from '../oppfolging-status/oppfolging-selector';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
@@ -12,7 +15,7 @@ import InternLenke from '../../felles-komponenter/utils/internLenke';
 
 function VeilederVarsel() {
     const dispatch = useReduxDispatch();
-    const erEskalert = useSelector(erEskalertBruker);
+    const erEskalert = useSelector(selectErEskalert);
     const dialogId = useSelector(selectTilHorendeDialogId);
     const eskaleringsVarsel = useSelector(selectGjeldendeEskaleringsVarsel, shallowEqual);
     const doVelgNavarendePeriode = () => dispatch(velgHistoriskPeriode(null));
