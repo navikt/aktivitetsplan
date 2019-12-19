@@ -121,3 +121,14 @@ interface GateAdresse {
     husnummer?: string;
     postnummer?: string;
 }
+
+type StringOrNull = string | null;
+
+export interface Eskaleringsvarsel {
+    varselId: string;
+    aktorId: string;
+    opprettetAv: string;
+    opprettetDato: string;
+    avsluttetDato: StringOrNull;
+    tilhorendeDialogId: string;
+}
