@@ -7,7 +7,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan:{{version}}
+  image: {{image}}
   port: 8080
   liveness:
     path: aktivitetsplan/internal/isAlive
@@ -30,18 +30,7 @@ spec:
     enabled: true
   webproxy: true
   env:
-    - APPRES_CMS_URL
-    - ISSO_JWKS_URL
-    - ISSO_HOST_URL
-    - ISSO_ISSUER_URL
-    - ISSO_ISALIVE_URL
-    - VEILARBLOGIN_REDIRECT_URL_URL
-    - VEILARBLOGIN_REDIRECT_URL_DESCRIPTION
-    - OIDC_REDIRECT_URL
-    - AAD_B2C_DISCOVERY_URL
-    - VEIENTILARBEID_URL
-    - AKTIVITETSPLAN_URL
-    - ARBEIDSSOKERREGISTRERING_URL
-    - VEILARBSTEPUP_OIDC_URL
     - name: DITTNAV_LINK_URL
       value: 'https://tjenester-q0.nav.no/dittnav/'
+  envFrom:
+    - configmap: pto-config
