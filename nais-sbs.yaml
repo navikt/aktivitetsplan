@@ -29,6 +29,7 @@ spec:
     enabled: true
   webproxy: true
   env:
+    - name: DITTNAV_LINK_URL
       value: 'https://tjenester.nav.no/dittnav/'
   envFrom:
     - configmap: pto-config

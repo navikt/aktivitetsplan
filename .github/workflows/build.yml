@@ -28,7 +28,7 @@ jobs:
       - run: npm run build
 
       - name: Build and publish Docker image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'  || github.ref == 'refs/heads/gh-actions'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -37,7 +37,7 @@ jobs:
           docker push ${IMAGE}
 
       - name: deply q0 fss
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/gh-actions'
+        if: github.ref == 'refs/heads/dev'
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-fss
@@ -45,7 +45,7 @@ jobs:
           VAR: namespace=q0
 
       - name: deply q0 sbs
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/gh-actions'
+        if: github.ref == 'refs/heads/dev'
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
