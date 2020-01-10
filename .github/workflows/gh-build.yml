@@ -1,4 +1,9 @@
 name: Github Page
+
+env:
+  TZ: Europe/Amsterdam
+  CI: true
+
 on:
   push:
     branches:
