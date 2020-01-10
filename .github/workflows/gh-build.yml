@@ -1,0 +1,23 @@
+name: CI
+on: [push]
+jobs:
+  deploy-gh-pages:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+          with:
+            node-version: 12
+      - name: Install dependencies
+        run: npm ci
+      - name: build
+        run: npm run heroku-postbuild
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_BRANCH: dev # The branch the action should deploy from.
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build # The folder the action should deploy.
