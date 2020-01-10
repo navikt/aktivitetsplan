@@ -26,8 +26,7 @@ jobs:
 
       - name: Add homepage
         run: |
-          sed -i 's/license/homepage/' package.json
-          sed -i 's/MIT/aktivitetsplan/' package.json
+          sed - i's/"license": "MIT"/"homepage": "\/aktivitetsplan"/' package.json
 
       - name: Build application
         run: npm run heroku-postbuild
