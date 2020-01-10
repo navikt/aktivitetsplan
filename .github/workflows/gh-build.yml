@@ -24,6 +24,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Add homepage
+        run: |
+          sed -i 's/license/homepage/' package.json
+          sed -i 's/MIT/aktivitetsplan/' package.json
+
       - name: Build application
         run: npm run heroku-postbuild
 
