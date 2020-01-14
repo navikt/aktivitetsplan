@@ -1,6 +1,6 @@
 // NOTE: This is bad, don't use it if you don't HAVE to
 export const veilederConfig = {
-    CONTEXT_PATH: '/aktivitetsplan',
+    CONTEXT_PATH: '',
     TILLAT_SET_AVTALT: true,
     VIS_SIDEBANNER: false,
     FNR_I_URL: true,
@@ -9,7 +9,7 @@ export const veilederConfig = {
 };
 
 export const eksternBrukerConfig = {
-    CONTEXT_PATH: '/aktivitetsplan',
+    CONTEXT_PATH: '',
     TILLAT_SET_AVTALT: false,
     VIS_SIDEBANNER: true,
     FNR_I_URL: false,

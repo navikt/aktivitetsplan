@@ -16,17 +16,16 @@ if (!global.Intl) {
 
 if (process.env.REACT_APP_MOCK === 'true') {
     const fnr = '/12345678910';
-    const prefixPath = '/aktivitetsplan';
     const path = window.location.pathname;
 
     if (erEksternBruker()) {
-        if (path.includes(fnr) || !path.includes(prefixPath)) {
-            window.history.replaceState({}, '', prefixPath);
+        if (path.includes(fnr)) {
+            window.history.replaceState({}, '', '/');
         }
         window.appconfig = eksternBrukerConfig;
     } else if (!erEksternBruker()) {
-        if (!path.includes(fnr) || !path.includes(prefixPath)) {
-            window.history.replaceState({}, '', `${prefixPath}${fnr}`);
+        if (!path.includes(fnr)) {
+            window.history.replaceState({}, '', fnr);
         }
         window.appconfig = veilederConfig;
     }
