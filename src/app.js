@@ -9,6 +9,7 @@ import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
 import Hovedside from './hovedside/hovedside';
 import './index.less';
 import { HiddenIf } from './utils';
+import { useEventListener } from './felles-komponenter/hooks/useEventListner';
 
 function isValueOrGetDefault(value, defaultValue) {
     return value === undefined ? defaultValue : value;
@@ -30,6 +31,13 @@ function App({ fnr }) {
     const history = createHistory();
 
     window.openDialog = () => history.push('/dialog');
+
+    useEventListener('visAktivitetsplan', event => {
+        const aktivitetId = event.detail;
+        if (aktivitetId) {
+            history.replace('aktivitet/vis/' + aktivitetId);
+        }
+    });
 
     return (
         <div className="aktivitetsplanfs">
