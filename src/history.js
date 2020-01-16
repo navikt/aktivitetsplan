@@ -25,6 +25,7 @@ export default function createHistory() {
         basename: window.appconfig.CONTEXT_PATH
     });
 
+    routerHistory.replace(window.location.pathname);
     routerHistory.push = prependBasePath(routerHistory.push);
     routerHistory.replace = prependBasePath(routerHistory.replace);
     return routerHistory;
