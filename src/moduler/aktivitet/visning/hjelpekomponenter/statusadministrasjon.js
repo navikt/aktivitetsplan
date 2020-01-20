@@ -6,7 +6,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import * as AppPT from '../../../../proptypes';
 import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
 import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-etikett';
-import { STILLING_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsorientering-arena-aktivitet';
@@ -24,12 +24,18 @@ function Statusadministrasjon(props) {
     const skalViseForhandsorienteringsKomponent = !erBruker && !erManuellKrrKvpBruker;
 
     const visAdministreresAvVeileder = (
-        <div className="aktivitetvisning__underseksjon">
-            <AlertStripeInfo className="aktivitetvisning__alert">
-                <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
-            </AlertStripeInfo>
-            <ForhandsorienteringArenaAktivitet visible={skalViseForhandsorienteringsKomponent} aktivitet={aktivitet} />
-        </div>
+        <>
+            <div className="aktivitetvisning__underseksjon">
+                <AlertStripeInfo className="aktivitetvisning__alert">
+                    <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
+                </AlertStripeInfo>
+                <ForhandsorienteringArenaAktivitet
+                    visible={skalViseForhandsorienteringsKomponent}
+                    aktivitet={aktivitet}
+                />
+            </div>
+            <DeleLinje hidden={!skalViseForhandsorienteringsKomponent} />
+        </>
     );
 
     const visOppdaterStatusContainer = (
