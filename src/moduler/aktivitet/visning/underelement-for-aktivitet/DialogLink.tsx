@@ -78,7 +78,7 @@ export default function DialogLink(props: Props) {
             <section className="aktivitetvisning__underseksjon">
                 <LenkepanelBase
                     href={dialogLenke(aktivitetId, dialog)}
-                    onClick={() => bytteFlate(aktivitetId, erVeileder, dialog)}
+                    onClick={bytteFlate(aktivitetId, erVeileder, dialog)}
                     border
                     className={styles.svg}
                 >
