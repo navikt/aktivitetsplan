@@ -1,0 +1,42 @@
+@import (reference) '~nav-frontend-core/less/core';
+
+.spaceBetwheen {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.underelement-knapp(@image) {
+    background: data-uri('./@{image}') no-repeat left;
+    background-size: 1.75rem;
+    background-position-x: 1rem;
+}
+
+.uleste {
+    margin-left: 1.3rem;
+    margin-top: -0.6rem;
+    position: absolute;
+    display: inline-block;
+    background-color: @navRod;
+    color: white;
+    border-radius: 0.5rem;
+    height: 0.7rem;
+    width: 0.7rem;
+    vertical-align: top;
+
+    &:hover {
+        background-color: @navRodDarken20;
+    }
+}
+
+.svg {
+    .underelement-knapp('dialog-regular.svg');
+
+    &:hover {
+        .underelement-knapp('dialog-hover.svg');
+    }
+}
+
+.margin {
+    margin-left: 2.5rem;
+}
