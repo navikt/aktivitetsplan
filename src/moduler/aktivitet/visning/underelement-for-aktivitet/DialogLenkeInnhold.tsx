@@ -21,13 +21,13 @@ function Message(props: MessagProps) {
 
 const melding_er = (antall: number) => (antall > 1 ? 'meldinger' : 'melding');
 
-interface TeksProps {
+interface DailogLenkeInnholdProps {
     henvendelser: number;
     uleste: number;
     erVeileder: boolean;
 }
 
-const DailogLenkeInnhold = (props: TeksProps) => {
+const DailogLenkeInnhold = (props: DailogLenkeInnholdProps) => {
     const { henvendelser, uleste, erVeileder } = props;
     if (!henvendelser) {
         const underteks = erVeileder ? undefined : 'til veilederen din';

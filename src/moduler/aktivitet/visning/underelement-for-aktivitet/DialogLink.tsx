@@ -28,7 +28,10 @@ const dialogLenke = (aktiviteId: string, dialog?: Dialog) => {
 };
 
 //TODO fiks for eksternbruker
-const a = (aktiviteId: string, dialog?: Dialog) => (event: any) => {
+const bytteFlate = (aktiviteId: string, erVeileder: boolean, dialog?: Dialog) => (event: any) => {
+    if (!erVeileder) {
+        return;
+    }
     event.preventDefault();
     window.history.pushState('', 'Dialog', dialogLenke(aktiviteId, dialog));
     window.dispatchEvent(
@@ -75,7 +78,7 @@ export default function DialogLink(props: Props) {
             <section className="aktivitetvisning__underseksjon">
                 <LenkepanelBase
                     href={dialogLenke(aktivitetId, dialog)}
-                    onClick={a(aktivitetId, dialog)}
+                    onClick={bytteFlate(aktivitetId, erVeileder, dialog)}
                     border
                     className={styles.svg}
                 >
