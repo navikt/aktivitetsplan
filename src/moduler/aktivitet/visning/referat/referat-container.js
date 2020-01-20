@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import ReferatSeksjon from './referat-seksjon';
 import { publiserReferat } from '../../aktivitet-actions';
-import { moment, autobind } from '../../../../utils';
+import { autobind, moment } from '../../../../utils';
 import { STATUS } from '../../../../ducks/utils';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import DeleLinje from '../delelinje/delelinje';
+import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 
 class ReferatContainer extends Component {
     constructor(props) {
@@ -57,15 +57,7 @@ ReferatContainer.defaultProps = {
 };
 
 ReferatContainer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
-    erReferatPublisert: PT.bool,
-    erVeileder: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired,
-    publiserer: PT.bool.isRequired,
-    kanHaReferat: PT.bool.isRequired,
-    visReferat: PT.bool.isRequired,
-    harReferat: PT.bool.isRequired,
-    dispatchPubliserReferat: PT.func.isRequired,
+    aktivitet: PT.object.isRequired,
     className: PT.string
 };
 
@@ -81,10 +73,9 @@ const mapStateToProps = (state, props) => {
     const harReferat = !!referat;
 
     const erVeileder = selectErVeileder(state);
+    const underOppfolging = selectUnderOppfolging(state);
     const visReferat =
-        (erVeileder || erReferatPublisert) &&
-        (harReferat || !aktivitet.historisk) &&
-        (harReferat || props.underOppfolging);
+        (erVeileder || erReferatPublisert) && (harReferat || !aktivitet.historisk) && (harReferat || underOppfolging);
 
     return {
         publiserer: selectAktivitetStatus(state) === (STATUS.PENDING || STATUS.RELOADING),

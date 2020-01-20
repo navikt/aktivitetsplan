@@ -7,8 +7,8 @@ interface Props {
     apneTekst: string;
     lukkTekst: string;
     hidden?: boolean;
-    onOpen: () => void;
-    onClose: () => void;
+    onOpen?: () => void;
+    onClose?: () => void;
     children: React.ReactNode;
 }
 
@@ -16,9 +16,9 @@ export default function InvertedLestMer(props: Props) {
     const [vis, setVis] = useState(false);
     const toggle = () => {
         if (vis) {
-            props.onClose();
+            props.onClose && props.onClose();
         } else {
-            props.onOpen();
+            props.onOpen && props.onOpen();
         }
         setVis(!vis);
     };

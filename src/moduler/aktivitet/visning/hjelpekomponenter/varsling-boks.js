@@ -9,7 +9,7 @@ import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster'
 import { MOTE_TYPE } from '../../../../constant';
 import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/identitet-selector';
 
-function VarslingBoks({ avhengigheter, visVarselOmManglendeDialog, className }) {
+function VarslingBoks({ className, avhengigheter, visVarselOmManglendeDialog }) {
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
             <Innholdslaster avhengigheter={avhengigheter}>
@@ -25,8 +25,7 @@ function VarslingBoks({ avhengigheter, visVarselOmManglendeDialog, className }) 
 }
 
 VarslingBoks.propTypes = {
-    avhengigheter: AppPT.avhengigheter.isRequired,
-    visVarselOmManglendeDialog: PT.bool.isRequired,
+    aktivitet: AppPT.aktivitet.isRequired,
     className: PT.string.isRequired
 };
 

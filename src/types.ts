@@ -30,6 +30,7 @@ export interface Aktivitet {
     endretDato?: string;
     status: AktivitetStatus;
     type: AktivitetType;
+    avsluttetKommentar?: string;
     etikett?: StillingsStatus;
     historisk?: boolean;
     lagtInnAv?: string;

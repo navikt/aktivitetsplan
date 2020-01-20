@@ -78,8 +78,13 @@ class UnderelementerForAktivitet extends Component {
             doToggleHistorikk,
             visDialog,
             visHistorikk,
-            dialogFeilmeldinger
+            dialogFeilmeldinger,
+            hidden
         } = this.props;
+
+        if (hidden) {
+            return null;
+        }
 
         const tolgeDialog = () => {
             doToggleDialog();
@@ -153,24 +158,15 @@ class UnderelementerForAktivitet extends Component {
 
 UnderelementerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    dialog: AppPT.dialog,
-    antallUlesteHenvendelser: PT.number.isRequired,
-    kanSeDialog: PT.bool.isRequired,
-    kanOppretteNyHenvendelse: PT.bool.isRequired,
-    kanEndreDialog: PT.bool.isRequired,
     className: PT.string,
-    doToggleDialog: PT.func.isRequired,
-    doToggleHistorikk: PT.func.isRequired,
-    visDialog: PT.bool.isRequired,
-    visHistorikk: PT.bool.isRequired,
-    erVeileder: PT.bool.isRequired,
-    dialogFeilmeldinger: PT.array
+    hidden: PT.bool
 };
 
 UnderelementerForAktivitet.defaultProps = {
     className: '',
     dialog: undefined,
-    dialogFeilmeldinger: []
+    dialogFeilmeldinger: [],
+    hidden: false
 };
 
 const mapStateToProps = (state, props) => {
