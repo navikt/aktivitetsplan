@@ -25,7 +25,7 @@ const dialogLenke = (aktiviteId: string, dialog?: Dialog) => {
     if (dialog) {
         return `/veilarbpersonflatefs/${fnr}/${dialog.id}`;
     }
-    return `/veilarbpersonflatefs/${fnr}/ny?aktiviteId=${aktiviteId}`;
+    return `/veilarbpersonflatefs/${fnr}/ny?aktivitetId=${aktiviteId}`;
 };
 
 const byttFlate = (event: MouseEvent, aktiviteId: string, erVeileder: boolean, dialog?: Dialog) => {
