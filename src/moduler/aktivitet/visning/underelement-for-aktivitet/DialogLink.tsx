@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
 import { useSelector } from 'react-redux';
 import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
@@ -9,6 +9,7 @@ import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { selectErBrukerManuell, selectReservasjonKRR } from '../../../oppfolging-status/oppfolging-selector';
 import DeleLinje from '../delelinje/delelinje';
 import DailogLenkeInnhold from './DialogLenkeInnhold';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -27,8 +28,7 @@ const dialogLenke = (aktiviteId: string, dialog?: Dialog) => {
     return `/veilarbpersonflatefs/${fnr}/ny?aktiviteId=${aktiviteId}`;
 };
 
-//TODO fiks for eksternbruker
-const bytteFlate = (aktiviteId: string, erVeileder: boolean, dialog?: Dialog) => (event: any) => {
+const byttFlate = (event: MouseEvent, aktiviteId: string, erVeileder: boolean, dialog?: Dialog) => {
     if (!erVeileder) {
         return;
     }
@@ -51,13 +51,14 @@ function UlestMarkering(props: { hidden: boolean }) {
     return <div className={styles.uleste} />;
 }
 
-export default function DialogLink(props: Props) {
+function DialogLink(props: Props) {
     const { aktivitet, hidden, skulDelelingje } = props;
     const aktivitetId = aktivitet.id;
     const dialog: Dialog | undefined = useSelector(createSelector(aktivitetId));
     const erVeileder: boolean = !!useSelector(selectErVeileder);
     const manuellBruker: boolean = useSelector(selectErBrukerManuell);
     const reservertKrr = useSelector(selectReservasjonKRR);
+    const history = useHistory();
 
     const skulVisIkkeDialog = manuellBruker || aktivitet.historisk || reservertKrr;
 
@@ -69,6 +70,11 @@ export default function DialogLink(props: Props) {
         return null;
     }
 
+    const onClick = (event: MouseEvent) => {
+        history.replace('/');
+        byttFlate(event, aktivitetId, erVeileder, dialog);
+    };
+
     const henvendelser = dialog && dialog.henvendelser ? dialog.henvendelser : [];
     const antallHenvendelser = henvendelser.length;
     const uleste = henvendelser.filter(h => !h.lest).length;
@@ -76,12 +82,7 @@ export default function DialogLink(props: Props) {
     return (
         <>
             <section className="aktivitetvisning__underseksjon">
-                <LenkepanelBase
-                    href={dialogLenke(aktivitetId, dialog)}
-                    onClick={bytteFlate(aktivitetId, erVeileder, dialog)}
-                    border
-                    className={styles.svg}
-                >
+                <LenkepanelBase href={dialogLenke(aktivitetId, dialog)} onClick={onClick} border className={styles.svg}>
                     <UlestMarkering hidden={!uleste} />
                     <div className={styles.margin + ' lenkepanel__heading'}>
                         <DailogLenkeInnhold henvendelser={antallHenvendelser} uleste={uleste} erVeileder={erVeileder} />
@@ -92,3 +93,5 @@ export default function DialogLink(props: Props) {
         </>
     );
 }
+
+export default DialogLink;
