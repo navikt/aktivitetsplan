@@ -12,7 +12,7 @@ import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
 import ReferatContainer from './referat/referat-container';
 import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 import { trengerBegrunnelse } from '../aktivitet-util';
-import DialogLink from './underelement-for-aktivitet/DialogLink';
+import DialogLink from './underelement-for-aktivitet/dialog/DialogLink';
 import { useSelector } from 'react-redux';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 import { harFeature, VIS_NY_DIALOG } from '../../../felles-komponenter/feature/feature';

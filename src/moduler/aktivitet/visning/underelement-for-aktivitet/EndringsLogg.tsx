@@ -1,7 +1,7 @@
 import React from 'react';
-import InvertedLestMer from '../../../../hovedside/tavle/kolonne/InvertedLesmer';
 import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
 import { Aktivitet } from '../../../../types';
+import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/ekspanderbar-linje';
 
 interface Props {
     hidden?: boolean;
@@ -17,14 +17,12 @@ export default function EndringsLogg(props: Props) {
     }
 
     return (
-        <section className="aktivitetvisning__underseksjon">
-            <InvertedLestMer apneTekst="Vis historikk" lukkTekst="Skjul historikk">
-                <VersjonerForAktivitet
-                    visible={true}
-                    aktivitet={aktivitet}
-                    className="underelementer-aktivitet__historikkvisning"
-                />
-            </InvertedLestMer>
-        </section>
+        <EkspanderbarLinje tittel="Historikk" kanToogle aapneTekst="Vis" lukkeTekst="Skjul">
+            <VersjonerForAktivitet
+                visible={true}
+                aktivitet={aktivitet}
+                className="underelementer-aktivitet__historikkvisning"
+            />
+        </EkspanderbarLinje>
     );
 }
