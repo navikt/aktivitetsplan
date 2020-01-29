@@ -1,15 +1,16 @@
 import React, { MouseEvent } from 'react';
-import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
 import { useSelector } from 'react-redux';
-import { selectDialogForAktivitetId } from '../../../dialog/dialog-selector';
-import { Aktivitet, Dialog } from '../../../../types';
-import styles from './underelementer.module.less';
-import { fnrFraUrl } from '../../../../bootstrap/fnr-provider';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
-import { selectErBrukerManuell, selectReservasjonKRR } from '../../../oppfolging-status/oppfolging-selector';
-import DeleLinje from '../delelinje/delelinje';
+import { selectDialogForAktivitetId } from '../../../../dialog/dialog-selector';
+import { Aktivitet, Dialog } from '../../../../../types';
+import styles from './dialog-lenke.module.less';
+import { fnrFraUrl } from '../../../../../bootstrap/fnr-provider';
+import { selectErVeileder } from '../../../../identitet/identitet-selector';
+import { selectErBrukerManuell, selectReservasjonKRR } from '../../../../oppfolging-status/oppfolging-selector';
+import DeleLinje from '../../delelinje/delelinje';
 import DailogLenkeInnhold from './DialogLenkeInnhold';
 import { useHistory } from 'react-router-dom';
+import { HoyreChevron } from 'nav-frontend-chevron';
+import DialogIkon from './DialogIkon';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -44,11 +45,13 @@ const byttFlate = (event: MouseEvent, aktiviteId: string, erVeileder: boolean, d
     );
 };
 
-function UlestMarkering(props: { hidden: boolean }) {
-    if (props.hidden) {
-        return null;
-    }
-    return <div className={styles.uleste} />;
+function DialogPil(props: { antallUleste: number }) {
+    return (
+        <div className={styles.dialogPil} aria-hidden>
+            <DialogIkon antallUleste={props.antallUleste} />
+            <HoyreChevron />
+        </div>
+    );
 }
 
 function DialogLink(props: Props) {
@@ -81,14 +84,11 @@ function DialogLink(props: Props) {
 
     return (
         <>
-            <section className="aktivitetvisning__underseksjon">
-                <LenkepanelBase href={dialogLenke(aktivitetId, dialog)} onClick={onClick} border className={styles.svg}>
-                    <UlestMarkering hidden={!uleste} />
-                    <div className={styles.margin + ' lenkepanel__heading'}>
-                        <DailogLenkeInnhold henvendelser={antallHenvendelser} uleste={uleste} erVeileder={erVeileder} />
-                    </div>
-                </LenkepanelBase>
-            </section>
+            <a href={dialogLenke(aktivitetId, dialog)} onClick={onClick} className={styles.dialogLinke}>
+                <DailogLenkeInnhold henvendelser={antallHenvendelser} uleste={uleste} erVeileder={erVeileder} />
+                <DialogPil antallUleste={uleste} />
+            </a>
+
             <DeleLinje hidden={skulDelelingje} />
         </>
     );
