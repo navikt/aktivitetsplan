@@ -12,12 +12,10 @@ import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
 import ReferatContainer from './referat/referat-container';
 import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 import { trengerBegrunnelse } from '../aktivitet-util';
-import DialogLink from './underelement-for-aktivitet/dialog/DialogLink';
-import { useSelector } from 'react-redux';
-import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
-import { harFeature, VIS_NY_DIALOG } from '../../../felles-komponenter/feature/feature';
+import { useHarFeature, VIS_NY_DIALOG } from '../../../felles-komponenter/feature/feature';
 import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
 import { Aktivitet } from '../../../types';
+import DialogLenke from './underelement-for-aktivitet/dialog/DialogLenke';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -29,8 +27,7 @@ interface Props {
 function Aktivitetvisning(props: Props) {
     const { aktivitet, tillatEndring, laster, underOppfolging } = props;
 
-    const features = useSelector(selectFeatureData);
-    const nyDialog = harFeature(VIS_NY_DIALOG, features);
+    const nyDialog = useHarFeature(VIS_NY_DIALOG);
     const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(
         aktivitet.type
     );
@@ -70,7 +67,7 @@ function Aktivitetvisning(props: Props) {
                     hidden={nyDialog}
                     className="aktivitetvisning__underseksjon"
                 />
-                <DialogLink aktivitet={aktivitet} hidden={!nyDialog} skulDelelingje={arenaAktivitet} />
+                <DialogLenke aktivitet={aktivitet} hidden={!nyDialog} skulDelelingje={arenaAktivitet} />
                 <EndringsLogg aktivitet={aktivitet} hidden={!nyDialog || arenaAktivitet} />
             </ModalContainer>
         </div>
