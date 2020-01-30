@@ -41,7 +41,7 @@ const DailogLenkeInnhold = (props: DailogLenkeInnholdProps) => {
         return <Message titel={titel} undertekst={meldinger} />;
     }
 
-    return <Message titel={`Se ${henvendelser} ${melding_er(henvendelser)} om denne aktiviteten`} />;
+    return <Message titel={`Se ${henvendelser} ${melding_er(henvendelser)} om aktiviteten`} />;
 };
 
 export default DailogLenkeInnhold;
