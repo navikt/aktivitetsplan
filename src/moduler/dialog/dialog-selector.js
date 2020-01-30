@@ -41,6 +41,10 @@ export function selectDialogMedId(state, dialogId) {
     return selectDialoger(state).find(d => d.id === dialogId);
 }
 
+export function createSelectDialogForAktivitetId(aktivitetId) {
+    return state => selectDialogForAktivitetId(state, aktivitetId);
+}
+
 export function selectDialogForAktivitetId(state, aktivitetId) {
     return selectAlleDialoger(state).find(d => d.aktivitetId === aktivitetId);
 }
