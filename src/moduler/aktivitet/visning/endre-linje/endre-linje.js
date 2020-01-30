@@ -20,7 +20,7 @@ function EndreLinje(props) {
     const unique = useMemo(() => 'a' + guid(), []);
 
     return (
-        <section className={styles.underseksjon}>
+        <section>
             <button
                 onClick={() => {
                     setEndring(!endring);

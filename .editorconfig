@@ -13,6 +13,9 @@ spaces_around_operators = true
 [*.yaml]
 indent_size = 2
 
+[*.yml]
+indent_size = 2
+
 [*.json]
 indent_size = 2
 

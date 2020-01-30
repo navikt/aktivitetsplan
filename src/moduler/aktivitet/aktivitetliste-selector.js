@@ -26,7 +26,7 @@ export function selectAktivitetListe(state) {
 }
 
 export function selectAktivitetMedId(state, aktivitetId) {
-    return selectAktivitetListe(state).find(aktivitet => aktivitet.id === aktivitetId);
+    return selectAlleAktiviter(state).find(aktivitet => aktivitet.id === aktivitetId);
 }
 
 export function selectAktivitetListeSlice(state) {
