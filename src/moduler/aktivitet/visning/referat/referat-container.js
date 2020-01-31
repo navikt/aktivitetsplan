@@ -79,6 +79,7 @@ const mapStateToProps = (state, props) => {
 
     return {
         publiserer: selectAktivitetStatus(state) === (STATUS.PENDING || STATUS.RELOADING),
+        underOppfolging,
         erVeileder,
         erReferatPublisert,
         kanHaReferat,
