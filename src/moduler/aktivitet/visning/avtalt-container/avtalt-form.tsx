@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
@@ -43,6 +43,15 @@ const avtaltTekst119 =
     '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. Dette går ' +
     'fram av folketrygdloven § 11-9.';
 
+interface SubmitProps {
+    avtaltCheckbox: string;
+    avtaltSelect: string;
+    avtaltText119: string;
+    avtaltText: string;
+}
+
+export type Handler = SubmitHandler<SubmitProps>;
+
 const validator = useFormstate({
     avtaltCheckbox: noValidate,
     avtaltSelect: noValidate,
@@ -67,7 +76,7 @@ function InfoHeader() {
 }
 
 interface Props {
-    onSubmit: SubmitHandler<any>;
+    onSubmit: Handler;
     className?: string;
     oppdaterer: boolean;
     lasterData: boolean;
