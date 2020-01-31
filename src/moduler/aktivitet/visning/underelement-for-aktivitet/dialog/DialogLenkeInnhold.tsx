@@ -37,8 +37,7 @@ const DailogLenkeInnhold = (props: DailogLenkeInnholdProps) => {
 
     if (uleste) {
         const titel = uleste === 1 ? '1 ulest melding' : `${uleste} uleste meldinger`;
-        const meldinger = `Totalt ${henvendelser} ${melding_er(henvendelser)} om aktiviteten`;
-        return <Message titel={titel} undertekst={meldinger} />;
+        return <Message titel={titel} />;
     }
 
     return <Message titel={`Se ${henvendelser} ${melding_er(henvendelser)} om aktiviteten`} />;

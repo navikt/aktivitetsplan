@@ -13,7 +13,7 @@ function DialogIkonUtenUleste() {
 
 function DialogIkonMedUleste(props: Props) {
     const antall = props.antallUleste;
-    const xPos = antall > 9 ? 22 : 26.8;
+    const xPos = antall > 9 ? 23 : 26.8;
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32">
