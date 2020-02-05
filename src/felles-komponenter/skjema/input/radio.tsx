@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
-import { FieldState } from '@nutgaard/use-formstate';
+import { FieldStateInput } from './utils';
 
 interface RadioProps {
     id?: string;
@@ -13,7 +13,7 @@ interface RadioProps {
     pristine?: boolean;
     touched: boolean;
     error?: string;
-    input: FieldState['input'];
+    input: FieldStateInput;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input

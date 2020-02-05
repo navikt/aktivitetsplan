@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Checkbox as NavCheckbox, CheckboxProps } from 'nav-frontend-skjema';
-import { FieldState } from '@nutgaard/use-formstate';
+import { FieldStateInput } from './utils';
 
 interface Props {
     initialValue?: string;
     pristine?: boolean;
     touched: boolean;
     error?: string;
-    input: FieldState['input'];
+    input: FieldStateInput;
 }
 // pristine isn't used, but we don't want to pass it to input
 function Checkbox(props: Props & CheckboxProps) {
