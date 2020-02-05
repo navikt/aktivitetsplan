@@ -11,12 +11,12 @@ import { selectErBruker } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { selectBackPath, setBackPath } from './informasjon-reducer';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import styles from './informasjon-modal.module.less';
-import { MeldekortPanel } from './meldekortPanel';
 import { RettigheterPanel } from './rettigheterPanel';
 import { BrukePlanenPanel } from './brukePlanenPanel';
 import { OkonomiskStotte } from './okonomiskStottePanel';
+import Lenke from 'nav-frontend-lenker';
+
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 
 class InformasjonModal extends Component {
@@ -42,15 +42,17 @@ class InformasjonModal extends Component {
             >
                 <ModalContainer className="informasjon-modal-container">
                     <Innholdstittel className={styles.innholdsTittel}>Hva er aktivitetsplanen?</Innholdstittel>
-                    <Tekstomrade>
-                        {`Aktivitetsplanen din er verktøyet du skal bruke for å komme i aktivitet og jobb. Denne blir delt med veilederen din. For at vi skal kunne følge deg opp best mulig, er det viktig at du bruker aktivitetsplanen aktivt. Du må gjennomføre de aktivitetene du avtaler med NAV i planen.
-
-                        Du kan selv legge inn og redigere målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Du får også tilgang til en dialog der du kan kommunisere med veilederen din og diskutere aktiviteter du skal gjennomføre.`}
-                    </Tekstomrade>
+                    <p>
+                        Aktivitetsplanen hjelper deg med å holde oversikt over det du gjør for å komme i jobb eller
+                        aktivitet. Hold planen oppdatert, slik at veilederen din kan følge deg opp best mulig.
+                    </p>
+                    <p>
+                        I planen kan du legge inn målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Du
+                        kan kommunisere med veilederen din om aktivitetene i <Lenke href="./dialog">dialogen</Lenke>.
+                    </p>
                     <Video />
                     <BrukePlanenPanel />
                     <OkonomiskStotte />
-                    <MeldekortPanel />
                     <RettigheterPanel />
                 </ModalContainer>
             </Modal>
@@ -83,7 +85,4 @@ const mapDispatchToProps = dispatch => ({
     resetBackPath: () => dispatch(setBackPath('/'))
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(InformasjonModal);
+export default connect(mapStateToProps, mapDispatchToProps)(InformasjonModal);

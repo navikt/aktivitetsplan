@@ -3,31 +3,34 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
 export function BrukePlanenPanel() {
     return (
-        <Ekspanderbartpanel tittel="Slik bruker du planen" tittelProps="undertittel">
+        <Ekspanderbartpanel tittel="Slik bruker du aktivitetsplanen" tittelProps="undertittel">
             <p>
-                Det første du bør gjøre er å bestemme deg for hva som er målet ditt. Tenk over hvilke jobber du kan
-                trives i og som du tror passer for deg. Når du har definert et mål, kan du vurdere hvilke aktiviteter
-                som må til for at du skal nå dette målet. Eksempler på aktiviteter kan være å søke jobber, kortere kurs
-                og arbeidstrening. Aktivitetsplanen skal hjelpe deg med å strukturere og holde oversikt over
-                aktivitetene dine.
+                Bestem deg først for hva som er målet ditt. Du kan endre dette senere. Vurder så hvilke aktiviteter du
+                ønsker å gjøre for å nå målet, for eksempel å søke jobber, gjennomføre et kurs eller arbeidstrening.
             </p>
             <p>
-                Aktivitetsplanen er delt inn i fem kolonner med statusene forslag, planlegger, gjennomfører, fullført og
-                avbrutt. Du flytter en aktivitet fra en kolonne til en annen ved å dra og slippe aktiviteten, eller ved
-                å velge status inne i aktiviteten. På denne måten viser du fremdriften i aktivitetene du skal
-                gjennomføre.
+                I aktivitetsplanen kan du og veilederen din samarbeide om hva som skal til for at du skal komme i
+                aktivitet eller jobb. Du og veilederen din ser den samme planen.
             </p>
+            <h4>Avtalt med NAV</h4>
             <p>
-                Du kan selv legge inn aktiviteter i planen. NAV kan også foreslå aktiviteter for deg som du selv velger
-                om du vil gjennomføre. I tillegg kan veilederen din legge til aktiviteter som du er forpliktet til å
-                gjennomføre. Disse aktivitetene vil ha en blå etikett som heter «Avtalt med NAV». Du kan ikke gjøre
-                endringer i slike aktiviteter. Hvis du er uenig i at en aktivitet er merket som avtalt, kan du skrive i
-                dialogen og forklare hvorfor du er uenig.
+                Når du har avtalt å gjennomføre en aktivitet med veilederen din, vil veilederen merke den «Avtalt med
+                NAV». Du må gjennomføre slike aktiviteter. Hvis du ikke følger opp avtalte aktiviteter, kan du risikere
+                å miste pengestøtte fra NAV.
             </p>
+            <h4>Flytte på en aktivitet</h4>
             <p>
-                Noen ganger vil aktivitetene være merket med en blå prikk. Det betyr at veilederen din har gjort en
-                endring.
+                Aktivitetsplanen har fem kolonner med statusene forslag, planlegger, gjennomfører, fullført og avbrutt.
+                Statusen på aktiviteten viser til hvor langt du har kommet i gjennomføringen. Du kan oppdatere statusen
+                inne i aktiviteten, for eksempel fra «gjennomfører» til «fullført».
             </p>
+            <h4>Blå prikk</h4>
+            <p>
+                Hvis du ser at en aktivitet er merket med blå prikk, er det veilederen din som har gjort noe nytt siden
+                sist du var inne i aktiviteten.
+            </p>
+            <h4>Tidligere planer</h4>
+            <p>Hvis du har vært registrert hos NAV før, kan du se aktivitetsplanen fra denne perioden.</p>
         </Ekspanderbartpanel>
     );
 }
