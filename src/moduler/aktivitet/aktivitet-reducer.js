@@ -1,5 +1,6 @@
 import * as AT from './aktivitet-action-types';
 import { STATUS } from '../../ducks/utils';
+import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 
 const initalState = {
     data: [],
@@ -17,16 +18,11 @@ function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
 export default function reducer(state = initalState, action) {
     const { data } = action;
     switch (action.type) {
-        case AT.SLETT_OK:
-            return {
-                ...state,
-                status: STATUS.OK,
-                data: state.data.filter(a => a.id !== data.id)
-            };
         case AT.OPPDATER_OK:
         case AT.FLYTT_OK:
         case AT.OPPDATER_REFERAT_OK:
         case AT.PUBLISER_REFERAT_OK:
+            widowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, data);
         case AT.HENTET:
             return { ...state, status: STATUS.OK, data: data.aktiviteter };
@@ -37,18 +33,17 @@ export default function reducer(state = initalState, action) {
                 data: state.data.filter(aktivitet => aktivitet.id !== data.id).concat(data)
             };
         case AT.OPPRETTET:
+            widowEvent(UpdateTypes.Aktivitet);
             return { ...state, status: STATUS.OK, data: [...state.data, data] };
         case AT.FLYTTER:
             return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.RELOADING }, data.aktivitet, {
                 nesteStatus: data.status
             });
-        case AT.SLETT:
         case AT.OPPDATER:
         case AT.OPPRETT:
             return { ...state, status: STATUS.RELOADING };
         case AT.FLYTT_FAIL:
             return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.ERROR, feil: data }, data.aktivitet);
-        case AT.SLETT_FAIL:
         case AT.HENTING_FEILET:
         case AT.HENT_AKTIVITET_FEILET:
         case AT.OPPDATER_FEILET:

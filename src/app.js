@@ -10,6 +10,7 @@ import Hovedside from './hovedside/hovedside';
 import './index.less';
 import { HiddenIf } from './utils';
 import { useEventListener } from './felles-komponenter/hooks/useEventListner';
+import { UppdateEventHandler } from './utils/UpdateHandler';
 
 function isValueOrGetDefault(value, defaultValue) {
     return value === undefined ? defaultValue : value;
@@ -55,6 +56,7 @@ function App({ fnr }) {
                         </HiddenIf>
                     </div>
                 </div>
+                <UppdateEventHandler />
             </Provider>
         </div>
     );

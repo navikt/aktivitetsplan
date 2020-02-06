@@ -27,8 +27,4 @@ export const OPPDATER = 'aktivitet/oppdater';
 export const OPPDATER_OK = 'aktivitet/oppdater/ok';
 export const OPPDATER_FEILET = 'aktivitet/oppdater/fail';
 
-export const SLETT = 'aktivitet/slett';
-export const SLETT_OK = 'aktivitet/slett/ok';
-export const SLETT_FAIL = 'aktivitet/slett/fail';
-
 export const SETT_FORRIGE_AKTIVE_AKTIVITET_ID = 'aktivitet/forrigeaktive/sett';
