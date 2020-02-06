@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import Modal from '../../felles-komponenter/modal/modal';
@@ -42,14 +42,14 @@ class InformasjonModal extends Component {
             >
                 <ModalContainer className="informasjon-modal-container">
                     <Innholdstittel className={styles.innholdsTittel}>Hva er aktivitetsplanen?</Innholdstittel>
-                    <p>
+                    <Normaltekst>
                         Aktivitetsplanen hjelper deg med å holde oversikt over det du gjør for å komme i jobb eller
                         aktivitet. Hold planen oppdatert, slik at veilederen din kan følge deg opp best mulig.
-                    </p>
-                    <p>
+                    </Normaltekst>
+                    <Normaltekst>
                         I planen kan du legge inn målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Du
                         kan kommunisere med veilederen din om aktivitetene i <Lenke href="./dialog">dialogen</Lenke>.
-                    </p>
+                    </Normaltekst>
                     <Video />
                     <BrukePlanenPanel />
                     <OkonomiskStotte />
