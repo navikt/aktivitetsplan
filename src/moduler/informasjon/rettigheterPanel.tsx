@@ -20,11 +20,11 @@ export function RettigheterPanel() {
                 aktivitetsplanen skrevet ut på papir.
             </Normaltekst>
             <Element className={styles.element}>Deling og lagring</Element>
-            <Normaltekst>
+            <Normaltekst className={styles.avsnitt}>
                 Opplysningene i aktivitetsplanen blir ikke delt med andre offentlige etater, med mindre de har rett til
                 å hente slike opplysninger.
             </Normaltekst>
-            <Normaltekst>
+            <Normaltekst className={styles.avsnitt}>
                 Opplysningene i aktivitetsplanen din blir lagret og oppbevart etter arkivloven. Aktiviteter og meldinger
                 i dialogen kan ikke slettes når de først er opprettet.
             </Normaltekst>

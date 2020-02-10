@@ -6,7 +6,7 @@ import styles from './informasjon-modal.module.less';
 export function BrukePlanenPanel() {
     return (
         <Ekspanderbartpanel tittel="Slik bruker du aktivitetsplanen" tittelProps="undertittel">
-            <Normaltekst>
+            <Normaltekst className={styles.avsnitt}>
                 Bestem deg først for hva som er målet ditt. Du kan endre dette senere. Vurder så hvilke aktiviteter du
                 ønsker å gjøre for å nå målet, for eksempel å søke jobber, gjennomføre et kurs eller arbeidstrening.
             </Normaltekst>

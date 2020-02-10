@@ -42,7 +42,7 @@ class InformasjonModal extends Component {
             >
                 <ModalContainer className="informasjon-modal-container">
                     <Innholdstittel className={styles.innholdsTittel}>Hva er aktivitetsplanen?</Innholdstittel>
-                    <Normaltekst>
+                    <Normaltekst className={styles.avsnitt}>
                         Aktivitetsplanen hjelper deg med å holde oversikt over det du gjør for å komme i jobb eller
                         aktivitet. Hold planen oppdatert, slik at veilederen din kan følge deg opp best mulig.
                     </Normaltekst>
