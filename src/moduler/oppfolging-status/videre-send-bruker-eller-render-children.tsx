@@ -26,11 +26,14 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
         aktorId,
         children,
         manuell,
-        oppfolgingsPerioder
+        oppfolgingsPerioder,
+        reservasjonKRR
     } = props;
 
+    const ikkeDigitalOppfolging = reservasjonKRR || manuell;
+
     useEffect(() => {
-        if (erVeileder === undefined && erVeileder === null) {
+        if (erVeileder === undefined || erVeileder === null) {
             return;
         }
 
@@ -45,7 +48,7 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
     }
 
-    if (!erVeileder && manuell) {
+    if (!erVeileder && ikkeDigitalOppfolging) {
         return <AktiverDigitalOppfolging />;
     }
 
