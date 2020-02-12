@@ -1,5 +1,6 @@
 import * as Api from './oppfolging-api';
-import { STATUS, doThenDispatch } from '../../ducks/utils';
+import { doThenDispatch, STATUS } from '../../ducks/utils';
+import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 
 // Actions
 export const OK = 'oppfolging/OK';
@@ -18,8 +19,14 @@ const initalState = {
 // Reducer
 export default function reducer(state = initalState, action) {
     switch (action.type) {
-        case OK:
         case SETT_DIGITAL_OK:
+            widowEvent(UpdateTypes.Oppfolging);
+            return {
+                ...state,
+                status: STATUS.OK,
+                data: action.data
+            };
+        case OK:
             return {
                 ...state,
                 status: STATUS.OK,

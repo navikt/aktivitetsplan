@@ -1,5 +1,6 @@
 import * as Api from './dialog-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
+import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 
 // Actions
 export const HENTER = 'dialog/hent';
@@ -70,6 +71,7 @@ export default function reducer(state = initalState, action) {
         case DIALOG_LEST_OK:
         case OPPDATER_DIALOG_OK:
         case SEND_FORHANDSORIENTERING_OK:
+            widowEvent(UpdateTypes.Dialog);
             return nyStateMedOppdatertDialog(state, data);
         default:
             return state;
