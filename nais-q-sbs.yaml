@@ -32,7 +32,7 @@ spec:
   env:
     - name: DITTNAV_LINK_URL
       value: 'https://tjenester-q0.nav.no/dittnav/'
-    - name: APP_ENVIRONMENT_NAME
+    - name: miljø
       value: 'q0'
   envFrom:
     - configmap: pto-config
