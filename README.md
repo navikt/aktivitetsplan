@@ -1,5 +1,3 @@
-[![CircleCI](https://circleci.com/gh/navikt/aktivitetsplan.svg?style=svg)](https://circleci.com/gh/navikt/aktivitetsplan)
-
 # Aktivitetsplan
 
 Aktivitetsplan er et verktøy for veiledere og brukere av NAV som skal synliggjøre hvilke aktiviteter og tiltak som skal
