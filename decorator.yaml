@@ -27,3 +27,5 @@ redirect:
     to: {{DITTNAV_LINK_URL}}
   - from: /veientilarbeid
     to: {{VEIENTILARBEID_URL}}
+  - from: /arbeidsrettet-dialog
+    to: {{ARBEIDSRETTET_DIALOG_URL}}

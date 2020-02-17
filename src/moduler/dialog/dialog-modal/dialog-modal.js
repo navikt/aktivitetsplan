@@ -17,9 +17,11 @@ import DialogHeader from './dialog-header';
 import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse from './dialog-henvendelse';
 import FnrProvider from '../../../bootstrap/fnr-provider';
-import { selectErVeileder } from '../../identitet/identitet-selector';
+import { selectErBruker, selectErVeileder } from '../../identitet/identitet-selector';
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import { selectUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
+import { harNyDialogToggel } from '../../../felles-komponenter/feature/feature';
+import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 
 const LOGGING_ANTALLBRUKERE_DIALOG = 'aktivitetsplan.antallBrukere.dialog';
 
@@ -29,7 +31,12 @@ function loggingAntallBrukereDialog(typeEvent, hvem) {
 
 class DialogModal extends Component {
     componentDidMount() {
-        const { erVeileder } = this.props;
+        const { erVeileder, nyDialogToggel, history } = this.props;
+
+        if (nyDialogToggel) {
+            history.push('/arbeidsrettet-dialog');
+        }
+
         loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, {
             erVeileder
         });
@@ -118,7 +125,8 @@ DialogModal.propTypes = {
     dialogFeilmeldinger: PT.array,
     underOppfolging: PT.bool.isRequired,
     intl: intlShape.isRequired,
-    erVeileder: PT.bool.isRequired
+    erVeileder: PT.bool.isRequired,
+    nyDialogToggel: PT.bool.isRequired
 };
 const mapStateToProps = (state, props) => {
     const { match } = props;
@@ -128,10 +136,12 @@ const mapStateToProps = (state, props) => {
     const harValgtDialog = !!valgtDialog;
     const historiskVisning = selectViserHistoriskPeriode(state);
     const fnrPaMotpartHvisBruker = selectFnrPaMotpartHvisBruker(state);
+    const nyDialogToggel = harNyDialogToggel(selectFeatureData(state), selectErBruker(state));
     return {
         harNyDialog,
         valgtDialog,
         harValgtDialog,
+        nyDialogToggel,
         harNyDialogEllerValgtDialog: harNyDialog || harValgtDialog,
         motpartStatus: selectMotpartStatus(state),
         navnPaMotpart: selectNavnPaMotpart(state),

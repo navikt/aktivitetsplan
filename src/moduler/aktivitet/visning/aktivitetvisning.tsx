@@ -12,7 +12,7 @@ import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
 import ReferatContainer from './referat/referat-container';
 import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 import { trengerBegrunnelse } from '../aktivitet-util';
-import { useHarFeature, VIS_NY_DIALOG } from '../../../felles-komponenter/feature/feature';
+import { useHarNyDialog } from '../../../felles-komponenter/feature/feature';
 import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
 import { Aktivitet } from '../../../types';
 import DialogLenke from './underelement-for-aktivitet/dialog/DialogLenke';
@@ -27,7 +27,7 @@ interface Props {
 function Aktivitetvisning(props: Props) {
     const { aktivitet, tillatEndring, laster, underOppfolging } = props;
 
-    const nyDialog = useHarFeature(VIS_NY_DIALOG);
+    const nyDialog = useHarNyDialog();
     const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(
         aktivitet.type
     );
