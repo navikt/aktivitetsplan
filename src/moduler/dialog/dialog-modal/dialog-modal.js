@@ -31,10 +31,10 @@ function loggingAntallBrukereDialog(typeEvent, hvem) {
 
 class DialogModal extends Component {
     componentDidMount() {
-        const { erVeileder, nyDialogToggel, history } = this.props;
+        const { erVeileder, nyDialogToggel } = this.props;
 
         if (nyDialogToggel) {
-            history.push('/arbeidsrettet-dialog');
+            window.location.replace('/arbeidsrettet-dialog');
         }
 
         loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, {
@@ -55,12 +55,17 @@ class DialogModal extends Component {
             historiskVisning,
             underOppfolging,
             dialogFeilmeldinger,
-            history
+            history,
+            nyDialogToggel
         } = this.props;
         const className = classNames('dialog-modal', 'aktivitet-modal', {
             'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
             'dialog-modal--historisk-visning': tilpasseStorrelseHistoriskVisning
         });
+
+        if (nyDialogToggel) {
+            return null;
+        }
 
         return (
             <NavFrontendModal
