@@ -30,6 +30,8 @@ spec:
     enabled: true
   webproxy: true
   env:
+    - name: APP_ENVIRONMENT_NAME
+      value: 'q0'
     - name: DITTNAV_LINK_URL
       value: 'https://tjenester-q0.nav.no/dittnav/'
   envFrom:
