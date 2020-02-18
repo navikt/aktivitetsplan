@@ -4,24 +4,30 @@ import { fnrFraUrl } from '../../bootstrap/fnr-provider';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { useHistory } from 'react-router-dom';
 
-//TODO fiks for eksternbruker
-const dialogLenke = (aktiviteId?: string, dialogId?: string) => {
-    const fnr = fnrFraUrl();
+export const dialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
+    if (erVeileder) {
+        const fnr = fnrFraUrl();
+        if (dialogId) {
+            return `/veilarbpersonflatefs/${fnr}/${dialogId}`;
+        }
+        if (aktiviteId) {
+            return `/veilarbpersonflatefs/${fnr}/ny?aktivitetId=${aktiviteId}`;
+        }
+        return `/veilarbpersonflatefs/${fnr}`;
+    }
+
     if (dialogId) {
-        return `/veilarbpersonflatefs/${fnr}/${dialogId}`;
+        return `/arbeidsrettet-dialog/${dialogId}`;
     }
     if (aktiviteId) {
-        return `/veilarbpersonflatefs/${fnr}/ny?aktivitetId=${aktiviteId}`;
+        return `/arbeidsrettet-dialog/ny?aktivitetId=${aktiviteId}`;
     }
-    return `/veilarbpersonflatefs/${fnr}/ny`;
+    return `/arbeidsrettet-dialog`;
 };
 
-const byttFlate = (event: MouseEvent, erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
-    if (!erVeileder) {
-        return;
-    }
+const byttFlate = (event: MouseEvent, aktiviteId?: string, dialogId?: string) => {
     event.preventDefault();
-    window.history.pushState('', 'Dialog', dialogLenke(aktiviteId, dialogId));
+    window.history.pushState('', 'Dialog', dialogLenke(true, aktiviteId, dialogId));
     window.dispatchEvent(
         new CustomEvent('visDialog', {
             detail: {
@@ -46,8 +52,10 @@ function LenkeTilDialog(props: Props) {
     const erVeileder = useSelector(selectErVeileder);
 
     const onClick = (event: MouseEvent) => {
-        history.replace('/');
-        byttFlate(event, erVeileder, aktivitetId, dialogId);
+        if (erVeileder) {
+            history.replace('/');
+            byttFlate(event, aktivitetId, dialogId);
+        }
     };
 
     if (hidden) {
@@ -55,7 +63,7 @@ function LenkeTilDialog(props: Props) {
     }
 
     return (
-        <a href={dialogLenke(aktivitetId, dialogId)} onClick={onClick} className={className}>
+        <a href={dialogLenke(erVeileder, aktivitetId, dialogId)} onClick={onClick} className={className}>
             {children}
         </a>
     );

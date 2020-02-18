@@ -22,6 +22,7 @@ import loggEvent from '../../../felles-komponenter/utils/logging';
 import { selectUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { harNyDialogToggel } from '../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
+import { dialogLenke } from '../DialogLink';
 
 const LOGGING_ANTALLBRUKERE_DIALOG = 'aktivitetsplan.antallBrukere.dialog';
 
@@ -31,10 +32,13 @@ function loggingAntallBrukereDialog(typeEvent, hvem) {
 
 class DialogModal extends Component {
     componentDidMount() {
-        const { erVeileder, nyDialogToggel } = this.props;
+        const { erVeileder, valgtDialog, nyDialogToggel } = this.props;
 
         if (nyDialogToggel) {
-            window.location.replace('/arbeidsrettet-dialog');
+            if (!erVeileder) {
+                const url = dialogLenke(erVeileder, undefined, valgtDialog);
+                window.location.replace(url);
+            }
         }
 
         loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, {
@@ -56,14 +60,15 @@ class DialogModal extends Component {
             underOppfolging,
             dialogFeilmeldinger,
             history,
-            nyDialogToggel
+            nyDialogToggel,
+            erVeileder
         } = this.props;
         const className = classNames('dialog-modal', 'aktivitet-modal', {
             'dialog-modal--full-bredde': harNyDialogEllerValgtDialog,
             'dialog-modal--historisk-visning': tilpasseStorrelseHistoriskVisning
         });
 
-        if (nyDialogToggel) {
+        if (nyDialogToggel && !erVeileder) {
             return null;
         }
 
