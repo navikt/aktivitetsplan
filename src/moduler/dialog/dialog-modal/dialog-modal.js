@@ -39,11 +39,11 @@ class DialogModal extends Component {
                 const url = dialogLenke(erVeileder, undefined, valgtDialog);
                 window.location.replace(url);
             }
+        } else {
+            loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, {
+                erVeileder
+            });
         }
-
-        loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, {
-            erVeileder
-        });
     }
 
     render() {
