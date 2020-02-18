@@ -43,15 +43,17 @@ interface Props {
     dialogId?: string;
     aktivitetId?: string;
     hidden?: boolean;
+    onClick?: () => void;
     children: React.ReactNode;
 }
 
 function LenkeTilDialog(props: Props) {
-    const { className, dialogId, aktivitetId, hidden, children } = props;
+    const { className, dialogId, aktivitetId, hidden, onClick, children } = props;
     const history = useHistory();
     const erVeileder = useSelector(selectErVeileder);
 
-    const onClick = (event: MouseEvent) => {
+    const internalOnClick = (event: MouseEvent) => {
+        onClick && onClick();
         if (erVeileder) {
             history.replace('/');
             byttFlate(event, aktivitetId, dialogId);
@@ -63,7 +65,7 @@ function LenkeTilDialog(props: Props) {
     }
 
     return (
-        <a href={dialogLenke(erVeileder, aktivitetId, dialogId)} onClick={onClick} className={className}>
+        <a href={dialogLenke(erVeileder, aktivitetId, dialogId)} onClick={internalOnClick} className={className}>
             {children}
         </a>
     );

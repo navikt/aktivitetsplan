@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import TallAlert from '../../felles-komponenter/tall-alert';
 import { selectDialoger, selectHarTilgangTilDialog } from '../dialog/dialog-selector';
 import { dialogFilter } from '../filtrering/filter/filter-utils';
 import InternLenke from '../../felles-komponenter/utils/internLenke';
 import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import { hentDialog } from '../dialog/dialog-reducer';
-import loggEvent, { APNE_DIALOG, APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
-
-const knapplenkeCls = (className, disabled) =>
-    classNames(className, {
-        knappelenke: !disabled,
-        'knappelenke knappelenke--disabled': disabled
-    });
+import loggEvent, { APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
+import { DialogLenkeToggel } from './DialogLenkeToggel';
 
 class Verktoylinje extends Component {
     componentDidMount() {
@@ -40,16 +33,7 @@ class Verktoylinje extends Component {
         return (
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy-container">
-                    <InternLenke
-                        href="/dialog"
-                        className={knapplenkeCls('aktivitetskort__henvendelser', !dialogLaster)}
-                        disabled={!dialogLaster}
-                        onClick={() => loggEvent(APNE_DIALOG)}
-                        aria-live="polite"
-                    >
-                        <TallAlert hidden={antallUlesteDialoger <= 0}>{antallUlesteDialoger}</TallAlert>
-                        <span>Dialog</span>
-                    </InternLenke>
+                    <DialogLenkeToggel dialogLaster={dialogLaster} antallUlesteDialoger={antallUlesteDialoger} />
                     <Lenkeknapp
                         type="hoved"
                         href="/aktivitet/ny"
@@ -118,7 +102,4 @@ const mapDispatchToProps = dispatch => ({
     doHentDialog: () => dispatch(hentDialog())
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Verktoylinje);
+export default connect(mapStateToProps, mapDispatchToProps)(Verktoylinje);
