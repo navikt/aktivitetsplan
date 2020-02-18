@@ -25,7 +25,7 @@ import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../fe
 import DeleLinje from '../delelinje/delelinje';
 import { Aktivitet, OppfolgingsPeriode } from '../../../../types';
 import { selectErBruker } from '../../../identitet/identitet-selector';
-import { useHarFeature, VIS_NY_DIALOG } from '../../../../felles-komponenter/feature/feature';
+import { useHarNyDialog } from '../../../../felles-komponenter/feature/feature';
 import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import LenkeTilDialog from '../../../dialog/DialogLink';
 
@@ -74,7 +74,7 @@ function AvtaltContainer(props: Props) {
     const erKvp = useSelector(selectErUnderKvp);
     const erreservertKRR = useSelector(selectReservasjonKRR);
     const erBruker = useSelector(selectErBruker);
-    const nyDialog = useHarFeature(VIS_NY_DIALOG);
+    const nyDialog = useHarNyDialog();
     const dialog = useSelector(createSelectDialogForAktivitetId(aktivitet.id));
     const dialogId = dialog && dialog.id;
 
