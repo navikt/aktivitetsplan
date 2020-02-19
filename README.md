@@ -17,7 +17,6 @@ npm build
 
 # Lokal utvikling
 npm start
-
 ```
 
 ### Kontakt og spørsmål
