@@ -19,7 +19,7 @@ export function harNyDialogToggel(features: { [key: string]: boolean }, bruker: 
     const visNyDialog = harFeature(VIS_NY_DIALOG, features);
     const visNyDialogForBruker = harFeature(VIS_NY_DIALOG_FOR_BRUKER, features);
 
-    return (bruker && visNyDialogForBruker) || visNyDialog;
+    return (bruker && visNyDialogForBruker) || (!bruker && visNyDialog);
 }
 
 export function useHarNyDialog() {
