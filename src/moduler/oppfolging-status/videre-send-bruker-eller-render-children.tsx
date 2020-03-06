@@ -44,7 +44,7 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
         } else {
             loggingAntallBrukere(servicegruppe, underOppfolging, aktorId, harNyDialog);
         }
-    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder]);
+    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder, harNyDialog]);
 
     if (!underOppfolging && oppfolgingsPerioder.length === 0) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
