@@ -62,12 +62,14 @@ class InformasjonModal extends Component {
 
 InformasjonModal.defaultProps = {
     lestInfo: null,
+    erBruker: false,
+    underOppfolging: false,
     backPath: '/'
 };
 
 InformasjonModal.propTypes = {
-    erBruker: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired,
+    erBruker: PT.bool,
+    underOppfolging: PT.bool,
     lestInfo: AppPT.lest,
     resetBackPath: PT.func.isRequired,
     backPath: PT.string,

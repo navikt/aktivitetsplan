@@ -6,7 +6,8 @@ function nyURLHarQueryString(url) {
 }
 
 function prependBasePath(fn) {
-    return url => {
+    return urlObj => {
+        const url = typeof urlObj === 'object' ? urlObj.pathname : urlObj;
         const fodselsnummer = getFodselsnummer();
         const urlParams = nyURLHarQueryString(url) ? '' : window.location.search;
         const fodselsnummerPath = `/${fodselsnummer}`;
