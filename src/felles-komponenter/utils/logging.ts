@@ -66,11 +66,16 @@ export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boole
     loggEvent(ANTALL_VEILEDERE, fields, { servicegruppe });
 }
 
-export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boolean, aktorId: string) {
+export function loggingAntallBrukere(
+    servicegruppe: string,
+    underOppfolging: boolean,
+    aktorId: string,
+    harNyDialog: boolean
+) {
     if (!underOppfolging) {
         loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, { servicegruppe });
     } else {
-        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId) }, { servicegruppe });
+        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId), harNyDialog }, { servicegruppe });
     }
 }
 
