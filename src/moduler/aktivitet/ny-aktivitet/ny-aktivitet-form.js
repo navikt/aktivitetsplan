@@ -27,6 +27,8 @@ import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sok
 import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
 import { aktivitetRoute } from '../../../routes';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
+import { useHarNyDialog } from '../../../felles-komponenter/feature/feature';
+import { nyAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 
 const CONFIRM = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
@@ -51,6 +53,7 @@ function NyAktivitetForm(props) {
 
     const isDirty = useRef(false);
     useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
+    const harNyDialog = useHarNyDialog();
 
     const onSubmitFactory = aktivitetsType => {
         return aktivitet => {
@@ -60,6 +63,7 @@ function NyAktivitetForm(props) {
                 type: aktivitetsType,
                 ...filteredAktivitet
             };
+            nyAktivitetMetrikk(aktivitetsType, harNyDialog);
             return onLagreNyAktivitet(nyAktivitet).then(action => history.push(aktivitetRoute(action.data.id)));
         };
     };
@@ -148,7 +152,4 @@ const mapStateToProps = state => ({
     underOppfolging: selectErUnderOppfolging(state)
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NyAktivitetForm);
+export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitetForm);

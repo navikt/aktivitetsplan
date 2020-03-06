@@ -4,7 +4,7 @@ import PT from 'prop-types';
 import classNames from 'classnames';
 import { DropTarget } from 'react-dnd';
 import { withRouter } from 'react-router-dom';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
 import * as AppPT from '../../../proptypes';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
@@ -15,11 +15,11 @@ const mottaAktivitetsKort = {
         return props.status !== monitor.getItem().status;
     },
 
-    drop({ doFlyttAktivitet, status, history }, monitor) {
+    drop({ doFlyttAktivitet, status, history, harNyDialog }, monitor) {
         const aktivitet = monitor.getItem();
         // utsett håndteringen til droppet er fullført. Unngår f.eks. F17HL3-144
         setTimeout(() => {
-            flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
+            flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status, harNyDialog);
             if (status === STATUS_FULLFOERT) {
                 history.push(fullforAktivitetRoute(aktivitet.id));
             } else if (status === STATUS_AVBRUTT) {
@@ -60,8 +60,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-    connect(
-        null,
-        mapDispatchToProps
-    )(DropTarget('AktivitetsKort', mottaAktivitetsKort, collect)(DropTargetKolonne))
+    connect(null, mapDispatchToProps)(DropTarget('AktivitetsKort', mottaAktivitetsKort, collect)(DropTargetKolonne))
 );

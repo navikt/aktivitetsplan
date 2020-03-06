@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { oppdaterAktivitet } from '../aktivitet-actions';
@@ -28,6 +28,8 @@ import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { aktivitetRoute } from '../../../routes';
+import { useHarNyDialog } from '../../../felles-komponenter/feature/feature';
+import { endreAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 
 function getAktivitetsFormComponent(aktivitet) {
     if (!aktivitet) {
@@ -76,10 +78,12 @@ function EndreAktivitet(props) {
 
     const isDirty = useRef(false);
     useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
+    const harNyDialog = useHarNyDialog();
 
     function oppdater(aktivitet) {
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
         const oppdatertAktivitet = { ...valgtAktivitet, ...filteredAktivitet };
+        endreAktivitetMetrikk(aktivitet.type, harNyDialog);
         return doOppdaterAktivitet(oppdatertAktivitet).then(() => history.push(aktivitetRoute(valgtAktivitet.id)));
     }
 
@@ -147,7 +151,4 @@ const mapDispatchToProps = dispatch => ({
     doOppdaterAktivitet: aktivitet => oppdaterAktivitet(aktivitet)(dispatch)
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(EndreAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(EndreAktivitet);

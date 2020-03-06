@@ -1,5 +1,5 @@
 import shajs from 'sha.js';
-import { Aktivitet, AktivitetStatus, Dialog, Lest, OppfolgingsPeriode } from '../../types';
+import { Aktivitet, AktivitetStatus, AktivitetType, Dialog, Lest, OppfolgingsPeriode } from '../../types';
 
 interface Frontendlogger {
     event: (name: string, fields: object, tags: object) => void;
@@ -86,12 +86,26 @@ export function metrikkTidForsteAvtalte(tid: number) {
     });
 }
 
-export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivitet, nyStatus: AktivitetStatus) {
+export function nyAktivitetMetrikk(aktivitetType: AktivitetType, harNyDialog: boolean) {
+    loggEvent('aktivitetsplan.aktivitet.ny', { aktivitetType, harNyDialog });
+}
+
+export function endreAktivitetMetrikk(aktivitetType: AktivitetType, harNyDialog: boolean) {
+    loggEvent('aktivitetsplan.aktivitet.endre', { aktivitetType, harNyDialog });
+}
+
+export function flyttetAktivitetMetrikk(
+    flytteMetode: string,
+    aktivitet: Aktivitet,
+    nyStatus: AktivitetStatus,
+    harNyDialog: boolean
+) {
     loggEvent(AKTIVITET_FLYTTET, {
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,
         aktivitetType: aktivitet.type,
-        flytteMetode
+        flytteMetode,
+        harNyDialog: harNyDialog
     });
 }
 
@@ -121,8 +135,8 @@ export function loggMittMalKlikk(veileder: boolean) {
     loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
 }
 
-export function loggMittMalLagre(veileder: boolean) {
-    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
+export function loggMittMalLagre(veileder: boolean, harNyDialog: boolean) {
+    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder, harNyDialog: harNyDialog });
 }
 
 export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgingsPerioder: Array<OppfolgingsPeriode>) {
