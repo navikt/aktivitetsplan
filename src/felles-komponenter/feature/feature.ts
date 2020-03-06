@@ -22,7 +22,7 @@ export function harNyDialogToggel(features: { [key: string]: boolean }, bruker: 
     return (bruker && visNyDialogForBruker) || (!bruker && visNyDialog);
 }
 
-export function useHarNyDialog() {
+export function useHarNyDialog(): boolean {
     const features = useSelector(selectFeatureData);
     const bruker = useSelector(selectErBruker);
 

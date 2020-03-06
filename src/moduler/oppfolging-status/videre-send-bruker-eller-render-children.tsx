@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
 import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
+import { useHarNyDialog } from '../../felles-komponenter/feature/feature';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
@@ -32,6 +33,7 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
 
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
 
+    const harNyDialog = useHarNyDialog();
     useEffect(() => {
         if (erVeileder === undefined || erVeileder === null) {
             return;
@@ -40,9 +42,9 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
         if (erVeileder) {
             loggAntalVeiledere(servicegruppe, underOppfolging, ident, aktorId);
         } else {
-            loggingAntallBrukere(servicegruppe, underOppfolging, aktorId);
+            loggingAntallBrukere(servicegruppe, underOppfolging, aktorId, harNyDialog);
         }
-    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder]);
+    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder, harNyDialog]);
 
     if (!underOppfolging && oppfolgingsPerioder.length === 0) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;

@@ -7,12 +7,14 @@ import { selectErVeileder } from '../identitet/identitet-selector';
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 import MalForm from './mal-form';
 import Malvisning from './mal-visning';
+import { useHarNyDialog } from '../../felles-komponenter/feature/feature';
 
 function MalContainer() {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
+    const harNyDialog = useHarNyDialog();
 
     const mal = malData && malData.mal;
 
@@ -24,7 +26,7 @@ function MalContainer() {
                 mal={mal}
                 handleComplete={() => {
                     setEdit(false);
-                    loggMittMalLagre(erVeileder);
+                    loggMittMalLagre(erVeileder, harNyDialog);
                 }}
             />
         );
