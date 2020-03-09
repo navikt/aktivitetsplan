@@ -54,7 +54,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-    lagreEtikett: ({ etikettstatus, harNyDialog }) => {
+    lagreEtikett: ({ etikettstatus }, harNyDialog) => {
         if (etikettstatus === props.aktivitet.etikett) {
             return Promise.resolve();
         }
