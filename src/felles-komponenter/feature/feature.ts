@@ -16,7 +16,7 @@ export const useHarFeature = (name: string, reverse?: boolean): boolean => {
 };
 
 export function harNyDialogToggel(features: { [key: string]: boolean }, bruker: boolean) {
-    const visNyDialog = harFeature(VIS_NY_DIALOG, features);
+    const visNyDialog = features[name] === undefined ? true : features[name];
     const visNyDialogForBruker = harFeature(VIS_NY_DIALOG_FOR_BRUKER, features);
 
     return (bruker && visNyDialogForBruker) || (!bruker && visNyDialog);
