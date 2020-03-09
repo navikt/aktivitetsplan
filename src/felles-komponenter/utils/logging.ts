@@ -99,6 +99,10 @@ export function endreAktivitetMetrikk(aktivitetType: AktivitetType, harNyDialog:
     loggEvent('aktivitetsplan.aktivitet.endre', { aktivitetType, harNyDialog });
 }
 
+export function endreStilingStatusMetrikk(harNyDialog: boolean) {
+    loggEvent('aktivitetsplan.stiling.status.endre', { harNyDialog });
+}
+
 export function flyttetAktivitetMetrikk(
     flytteMetode: string,
     aktivitet: Aktivitet,
