@@ -5,11 +5,13 @@ import KolonneHeader from './kolonneheader';
 import DropTargetKolonne from './drop-target-kolonne';
 import { sorterAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
+import { useHarNyDialog } from '../../../felles-komponenter/feature/feature';
 
 function KolonneFunction({ status, aktiviteter, render }) {
     const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
+    const harNyDialog = useHarNyDialog();
     return (
-        <DropTargetKolonne status={status}>
+        <DropTargetKolonne status={status} harNyDialog={harNyDialog}>
             <KolonneHeader status={status} />
             {render(sorterteAktiviter)}
         </DropTargetKolonne>

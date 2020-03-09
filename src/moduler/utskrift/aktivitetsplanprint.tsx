@@ -135,7 +135,6 @@ function AktivitetsplanPrint(props: Props) {
                             erVeileder={erVeileder}
                             utskriftPlanType={utskriftform}
                             kvpPerioder={kvpPerioder}
-                            erManuell={erManuell}
                             hidden={steps[stepIndex] !== STEP_UTSKRIFT}
                         />
                     </Innholdslaster>
@@ -183,7 +182,4 @@ function mapDispatchToProps(dispatch: any, props: any) {
     };
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AktivitetsplanPrint);
+export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsplanPrint);

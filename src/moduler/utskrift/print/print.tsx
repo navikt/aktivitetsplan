@@ -19,7 +19,6 @@ interface Props {
     erVeileder?: boolean;
     utskriftPlanType?: string;
     kvpPerioder?: KvpPeriode[];
-    erManuell?: boolean;
     hidden?: boolean;
 }
 
@@ -63,7 +62,6 @@ function Print(props: Props) {
         dialoger,
         utskriftPlanType,
         kvpPerioder,
-        erManuell,
         hidden
     } = props;
 
@@ -108,9 +106,6 @@ function Print(props: Props) {
                     <HiddenIfDiv hidden={!erKvpUtskrift}>Modia Arbeidsrettet Oppfølging</HiddenIfDiv>
                     <HiddenIfDiv hidden={!erKvpUtskrift}>
                         Periode: {kvpPeriodeFra} - {kvpPeriodeTil}
-                    </HiddenIfDiv>
-                    <HiddenIfDiv hidden={!erKvpUtskrift}>
-                        {erManuell ? 'Manuell bruker' : 'Pålogget nivå 4'}
                     </HiddenIfDiv>
                 </div>
             </div>

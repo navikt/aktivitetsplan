@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import * as statuser from '../../../../constant';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import StillingEtikettForm from './stilling-etikett-form';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
@@ -9,16 +10,17 @@ import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
-import { STATUS_FULLFOERT } from '../../../../constant';
-import { STATUS_AVBRUTT } from '../../../../constant';
 import SokeStatusEtikett from '../../etikett/sokeStatusEtikett';
+import { useHarNyDialog } from '../../../../felles-komponenter/feature/feature';
+import { endreStilingStatusMetrikk } from '../../../../felles-komponenter/utils/logging';
 
 function OppdaterAktivitetEtikett(props) {
     const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
     const [endring, setEndring] = useState(false);
+    const harNyDialog = useHarNyDialog();
 
     const onSubmit = val =>
-        lagreEtikett(val).then(() => {
+        lagreEtikett(val, harNyDialog).then(() => {
             setEndring(false);
             document.querySelector('.aktivitet-modal').focus();
         });
@@ -52,12 +54,15 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-    lagreEtikett: ({ etikettstatus }) => {
+    lagreEtikett: ({ etikettstatus }, harNyDialog) => {
         if (etikettstatus === props.aktivitet.etikett) {
             return Promise.resolve();
         }
 
         const nyEtikett = etikettstatus === statuser.INGEN_VALGT ? null : etikettstatus;
+
+        endreStilingStatusMetrikk(harNyDialog);
+
         return dispatch(
             oppdaterAktivitetEtikett({
                 ...props.aktivitet,
@@ -67,7 +72,4 @@ const mapDispatchToProps = (dispatch, props) => ({
     }
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(OppdaterAktivitetEtikett);
+export default connect(mapStateToProps, mapDispatchToProps)(OppdaterAktivitetEtikett);
