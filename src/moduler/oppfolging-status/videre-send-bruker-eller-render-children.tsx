@@ -18,6 +18,8 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     aktorId: string;
 }
 
+const dialogRegex = /\/dialog(\/.*)?(\?.*)?$/g;
+
 function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRenderChildrenProps) {
     const {
         erVeileder,
@@ -32,10 +34,12 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
     } = props;
 
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
+    const pathname = window.location.pathname;
+    const skalRedirectes = !erVeileder && dialogRegex.test(pathname);
 
     const harNyDialog = useHarNyDialog();
     useEffect(() => {
-        if (erVeileder === undefined || erVeileder === null) {
+        if (erVeileder === undefined || erVeileder === null || skalRedirectes) {
             return;
         }
 
@@ -44,7 +48,7 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
         } else {
             loggingAntallBrukere(servicegruppe, underOppfolging, aktorId, harNyDialog);
         }
-    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder, harNyDialog]);
+    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder, harNyDialog, skalRedirectes]);
 
     if (!underOppfolging && oppfolgingsPerioder.length === 0) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
