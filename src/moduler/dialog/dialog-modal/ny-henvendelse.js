@@ -19,7 +19,7 @@ import {
     selectUnderOppfolging
 } from '../../oppfolging-status/oppfolging-selector';
 import * as AppPT from '../../../proptypes';
-import { loggTidBruktForsteHenvendelse } from '../../../felles-komponenter/utils/logging';
+import loggEvent, { loggTidBruktForsteHenvendelse } from '../../../felles-komponenter/utils/logging';
 import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Checkbox from '../../../felles-komponenter/skjema/input/checkbox';
 import Input from '../../../felles-komponenter/skjema/input/input';
@@ -184,6 +184,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => ({
     onSubmit: (dialogData, props) => {
+        const metrikknavn = props.erNyDialog ? 'aktivitetsplan.ny.dialog' : 'aktivitetsplan.ny.henvendelse';
+        loggEvent(metrikknavn, { paaAktivitet: !!dialogData.aktivitetId });
         const nyHenvendelsePromise = nyHenvendelse({
             aktivitetId: props.aktivitetId,
             dialogId: props.dialogId,
@@ -231,9 +233,4 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default hiddenIf(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(NyHenvendelseForm)
-);
+export default hiddenIf(connect(mapStateToProps, mapDispatchToProps)(NyHenvendelseForm));
