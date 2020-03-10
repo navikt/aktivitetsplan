@@ -9,7 +9,7 @@ import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
 import NyHenvendelse from '../../../dialog/dialog-modal/ny-henvendelse';
 import Henvendelser from '../../../dialog/dialog-modal/henvendelser';
 import EndreDialog from '../../../dialog/dialog-modal/endre-dialog';
-import {
+import hiddenIfHOC, {
     div as HiddenIfDiv,
     span as HiddenIfSpan,
     button as HiddenIfButton
@@ -78,13 +78,8 @@ class UnderelementerForAktivitet extends Component {
             doToggleHistorikk,
             visDialog,
             visHistorikk,
-            dialogFeilmeldinger,
-            hidden
+            dialogFeilmeldinger
         } = this.props;
-
-        if (hidden) {
-            return null;
-        }
 
         const tolgeDialog = () => {
             doToggleDialog();
@@ -158,15 +153,13 @@ class UnderelementerForAktivitet extends Component {
 
 UnderelementerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    className: PT.string,
-    hidden: PT.bool
+    className: PT.string
 };
 
 UnderelementerForAktivitet.defaultProps = {
     className: '',
     dialog: undefined,
-    dialogFeilmeldinger: [],
-    hidden: false
+    dialogFeilmeldinger: []
 };
 
 const mapStateToProps = (state, props) => {
@@ -200,7 +193,4 @@ const mapDispatchToProps = dispatch => ({
     doToggleHistorikk: () => dispatch(toggleHistorikk())
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(UnderelementerForAktivitet);
+export default hiddenIfHOC(connect(mapStateToProps, mapDispatchToProps)(UnderelementerForAktivitet));
