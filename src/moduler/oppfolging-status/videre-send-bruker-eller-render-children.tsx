@@ -35,9 +35,9 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
 
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
     const pathname = window.location.pathname;
-    const skalRedirectes = !erVeileder && dialogRegex.test(pathname);
-
     const harNyDialog = useHarNyDialog();
+    const skalRedirectes = !erVeileder && harNyDialog && dialogRegex.test(pathname);
+
     useEffect(() => {
         if (erVeileder === undefined || erVeileder === null || skalRedirectes) {
             return;
