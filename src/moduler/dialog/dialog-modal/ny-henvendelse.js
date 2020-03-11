@@ -185,7 +185,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = dispatch => ({
     onSubmit: (dialogData, props) => {
         const metrikknavn = props.erNyDialog ? 'aktivitetsplan.ny.dialog' : 'aktivitetsplan.ny.henvendelse';
-        loggEvent(metrikknavn, { paaAktivitet: !!dialogData.aktivitetId });
+        loggEvent(metrikknavn, { paaAktivitet: props.erKnyttTilAktivitet });
         const nyHenvendelsePromise = nyHenvendelse({
             aktivitetId: props.aktivitetId,
             dialogId: props.dialogId,
