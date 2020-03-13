@@ -25,6 +25,7 @@ import * as AppPT from '../../../../proptypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import VelgKanal from '../velg-kanal';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -47,6 +48,17 @@ const varigheter = Array.from(new Array(24)).map((noValue, index) => {
         </option>
     );
 });
+
+const HuskVarsleBruker = props => {
+    if (!props.avtalt || props.pristine) {
+        return null;
+    }
+    return (
+        <AlertStripeAdvarsel className="mote-aktivitet_husk_bruker">
+            Husk å sende en dialogmelding til brukeren om endringen du gjør.
+        </AlertStripeAdvarsel>
+    );
+};
 
 export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
@@ -91,6 +103,8 @@ function MoteAktivitetForm(props) {
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
 
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
+
+                <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
 
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
