@@ -9,16 +9,16 @@ import { beregnFraTil, beregnKlokkeslettVarighet, formatterKlokkeslett, formatte
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import {
+    FORBEREDELSER_MAKS_LENGDE,
+    HENSIKT_MAKS_LENGDE,
     validateAdresse,
     validateForberedelser,
     validateFraDato,
     validateHensikt,
-    validateTittel,
-    HENSIKT_MAKS_LENGDE,
-    FORBEREDELSER_MAKS_LENGDE,
+    validateKanal,
     validateKlokkeslett,
-    validateVarighet,
-    validateKanal
+    validateTittel,
+    validateVarighet
 } from './validate';
 
 import * as AppPT from '../../../../proptypes';
@@ -104,7 +104,7 @@ function MoteAktivitetForm(props) {
                         {varigheter}
                     </Select>
                 </div>
-                <VelgKanal disabled={avtalt} label="Møteform *" {...state.fields.kanal} />
+                <VelgKanal label="Møteform *" {...state.fields.kanal} />
 
                 <Input label="Møtested eller annen praktisk informasjon *" {...state.fields.adresse} />
                 <Textarea

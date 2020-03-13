@@ -114,7 +114,7 @@ describe('MoteAktivitetForm', () => {
         expect(wrapper.find('DatoField').prop('disabled')).not.toBeTruthy();
         expect(wrapper.find('Select[label="Klokkeslett *"]').prop('disabled')).not.toBeTruthy();
         expect(wrapper.find('Select[label="Varighet *"]').prop('disabled')).not.toBeTruthy();
-        expect(wrapper.find('VelgKanal').prop('disabled')).toBeTruthy();
+        expect(wrapper.find('VelgKanal').prop('disabled')).toBeFalsy();
         expect(
             wrapper.find('Input[label="Møtested eller annen praktisk informasjon *"]').prop('disabled')
         ).not.toBeTruthy();
