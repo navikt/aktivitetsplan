@@ -6,7 +6,10 @@ import useFormstate from '@nutgaard/use-formstate';
 import { moment } from '../../../utils';
 import { hoyreKolonneSectionId, STATUS } from '../../../ducks/utils';
 import { nyHenvendelse, oppdaterFerdigbehandlet, oppdaterVenterPaSvar } from '../dialog-reducer';
-import { HiddenIfAlertStripeSuksessSolid } from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import {
+    HiddenIfAlertStripeInfoSolid,
+    HiddenIfAlertStripeSuksessSolid
+} from '../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import hiddenIf from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectErBruker } from '../../identitet/identitet-selector';
@@ -132,6 +135,10 @@ function NyHenvendelseForm(props) {
             <HiddenIfAlertStripeSuksessSolid style={{ marginTop: '1rem' }} hidden={!visBrukerInfo}>
                 Henvendelsen er sendt. Du kan forvente svar i løpet av noen dager.
             </HiddenIfAlertStripeSuksessSolid>
+
+            <HiddenIfAlertStripeInfoSolid style={{ marginTop: '1rem' }} hidden={!visBrukerInfo}>
+                Svartiden kan bli lenger enn vanlig på grunn av situasjonen rundt korona.
+            </HiddenIfAlertStripeInfoSolid>
         </form>
     );
 }
