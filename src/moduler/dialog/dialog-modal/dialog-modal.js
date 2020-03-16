@@ -7,9 +7,9 @@ import NavFrontendModal from 'nav-frontend-modal';
 import * as AppPT from '../../../proptypes';
 import { selectFnrPaMotpartHvisBruker, selectMotpartStatus, selectNavnPaMotpart } from '../../motpart/motpart-selector';
 import {
-    selectTilpasseDialogModalHistoriskVisning,
+    selectDialogFeilmeldinger,
     selectDialogMedId,
-    selectDialogFeilmeldinger
+    selectTilpasseDialogModalHistoriskVisning
 } from '../dialog-selector';
 import { selectViserHistoriskPeriode } from '../../filtrering/filter/filter-selector';
 import Feilmelding from '../../feilmelding/feilmelding';
@@ -18,21 +18,22 @@ import DialogOversikt from './dialog-oversikt';
 import DialogHenvendelse from './dialog-henvendelse';
 import FnrProvider from '../../../bootstrap/fnr-provider';
 import { selectErBruker, selectErVeileder } from '../../identitet/identitet-selector';
-import loggEvent from '../../../felles-komponenter/utils/logging';
-import { selectUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
+import loggEvent, { hash } from '../../../felles-komponenter/utils/logging';
+import { selectAktorId, selectUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { harNyDialogToggel } from '../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 import { dialogLenke } from '../DialogLink';
 
 const LOGGING_ANTALLBRUKERE_DIALOG = 'aktivitetsplan.antallBrukere.dialog';
 
-function loggingAntallBrukereDialog(typeEvent, hvem) {
-    loggEvent(typeEvent, hvem);
+function loggingAntallBrukereDialog(typeEvent, erVeileder, aktorId, underOppfolging) {
+    const id = underOppfolging ? hash(aktorId) : 'ikke-under-oppfolging';
+    loggEvent(typeEvent, { erVeileder, underOppfolging, id });
 }
 
 class DialogModal extends Component {
     componentDidMount() {
-        const { erVeileder, valgtDialog, nyDialogToggel } = this.props;
+        const { erVeileder, valgtDialog, nyDialogToggel, aktorId, underOppfolging } = this.props;
 
         if (nyDialogToggel) {
             if (!erVeileder) {
@@ -41,7 +42,9 @@ class DialogModal extends Component {
             }
         } else {
             loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, {
-                erVeileder
+                erVeileder,
+                aktorId,
+                underOppfolging
             });
         }
     }
@@ -134,6 +137,7 @@ DialogModal.propTypes = {
     history: AppPT.history.isRequired,
     dialogFeilmeldinger: PT.array,
     underOppfolging: PT.bool.isRequired,
+    aktorId: PT.string.isRequired,
     intl: intlShape.isRequired,
     erVeileder: PT.bool.isRequired,
     nyDialogToggel: PT.bool.isRequired
@@ -147,6 +151,7 @@ const mapStateToProps = (state, props) => {
     const historiskVisning = selectViserHistoriskPeriode(state);
     const fnrPaMotpartHvisBruker = selectFnrPaMotpartHvisBruker(state);
     const nyDialogToggel = harNyDialogToggel(selectFeatureData(state), selectErBruker(state));
+    const aktorId = selectAktorId(state);
     return {
         harNyDialog,
         valgtDialog,
@@ -157,6 +162,7 @@ const mapStateToProps = (state, props) => {
         navnPaMotpart: selectNavnPaMotpart(state),
         fnrPaMotpartHvisBruker,
         historiskVisning,
+        aktorId,
         tilpasseStorrelseHistoriskVisning: historiskVisning && selectTilpasseDialogModalHistoriskVisning(state),
         underOppfolging: selectUnderOppfolging(state),
         dialogFeilmeldinger: selectDialogFeilmeldinger(state),
