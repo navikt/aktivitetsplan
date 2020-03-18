@@ -16,6 +16,7 @@ import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/
 import { endreAktivitetRoute } from '../../../../routes';
 import DeleLinje from '../delelinje/delelinje';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
+import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
 function visningsIngress(type) {
     if (
@@ -25,6 +26,15 @@ function visningsIngress(type) {
     }
 
     return <AktivitetIngress aktivitetsType={type} />;
+}
+
+function KoronaInformasjon({ valgtAktivitet }) {
+    return (
+        <HiddenIfAlertStripeInfoSolid hidden={'Oppdater CV-en og jobbprofilen' !== valgtAktivitet.tittel}>
+            På grunn av situasjonen med korona-viruset vil det bli økt behov for arbeidskraft på flere områder. Tenk deg
+            om – kanskje du har kompetanse som samfunnet vil ha ekstra behov for i en periode fremover?
+        </HiddenIfAlertStripeInfoSolid>
+    );
 }
 
 function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
@@ -51,6 +61,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                 {visningsIngress(type)}
                 <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
+                <KoronaInformasjon valgtAktivitet={valgtAktivitet} />
             </div>
             <DeleLinje />
         </div>
