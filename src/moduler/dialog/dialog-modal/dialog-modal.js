@@ -24,7 +24,7 @@ import { harNyDialogToggel } from '../../../felles-komponenter/feature/feature';
 import { selectFeatureData } from '../../../felles-komponenter/feature/feature-selector';
 import { dialogLenke } from '../DialogLink';
 
-const LOGGING_ANTALLBRUKERE_DIALOG = 'aktivitetsplan.antallBrukere.dialog';
+const LOGGING_ANTALLBRUKERE_DIALOG = 'aktivitetsplan.antallBrukere.dialog.v2';
 
 function loggingAntallBrukereDialog(typeEvent, erVeileder, aktorId, underOppfolging) {
     const id = underOppfolging ? hash(aktorId) : 'ikke-under-oppfolging';
@@ -41,11 +41,7 @@ class DialogModal extends Component {
                 window.location.replace(url);
             }
         } else {
-            loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, {
-                erVeileder,
-                aktorId,
-                underOppfolging
-            });
+            loggingAntallBrukereDialog(LOGGING_ANTALLBRUKERE_DIALOG, erVeileder, aktorId, underOppfolging);
         }
     }
 
