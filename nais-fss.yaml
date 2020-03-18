@@ -9,6 +9,13 @@ metadata:
 spec:
   image: {{image}}
   port: 8080
+  resources:
+    limits:
+      cpu: "3"
+      memory: 2048Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
   liveness:
     path: aktivitetsplan/internal/isAlive
     initialDelay: 60
