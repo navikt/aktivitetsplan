@@ -29,3 +29,5 @@ redirect:
     to: {{VEIENTILARBEID_URL}}
   - from: /arbeidsrettet-dialog
     to: {{ARBEIDSRETTET_DIALOG_URL}}
+  - from: /dialog
+    to: {{ARBEIDSRETTET_DIALOG_URL}}

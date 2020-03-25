@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
@@ -31,8 +31,14 @@ function visningsIngress(type) {
 function KoronaInformasjon({ valgtAktivitet }) {
     return (
         <HiddenIfAlertStripeInfoSolid hidden={'Oppdater CV-en og jobbprofilen' !== valgtAktivitet.tittel}>
-            På grunn av situasjonen med korona-viruset vil det bli økt behov for arbeidskraft på flere områder. Tenk deg
-            om – kanskje du har kompetanse som samfunnet vil ha ekstra behov for i en periode fremover?
+            <Normaltekst style={{ marginBottom: '1rem' }}>
+                På grunn av situasjonen med korona-viruset kan det bli økt behov for kritisk arbeidskraft på flere
+                områder fremover. For eksempel helsevesen, transport og landbruk.
+            </Normaltekst>
+            <Normaltekst>
+                Kanskje du har kompetanse som samfunnet vil ha ekstra behov for, og kan hjelpe til i tiden du er
+                permittert?
+            </Normaltekst>
         </HiddenIfAlertStripeInfoSolid>
     );
 }
