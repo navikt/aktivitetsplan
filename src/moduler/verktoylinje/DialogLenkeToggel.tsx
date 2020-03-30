@@ -30,7 +30,7 @@ export function DialogLenkeToggel(props: Props) {
                 aria-live="polite"
             >
                 <TallAlert hidden={antallUlesteDialoger <= 0}>{antallUlesteDialoger}</TallAlert>
-                <span>Dialog</span>
+                <span>Dialog &gt;</span>
             </LenkeTilDialog>
         );
     }

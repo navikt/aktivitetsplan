@@ -3,6 +3,7 @@ import Varslinger from '../moduler/varslinger/varslinger';
 import AktivitetsTavle from './tavle/aktivitetstavle';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
+import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
 import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
 import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
@@ -22,6 +23,7 @@ function Hovedside() {
                     <InformasjonsHenting />
                     <Varslinger />
                     <div className="container">
+                        <Navigasjonslinje />
                         <Maal />
                         <Verktoylinje />
                     </div>

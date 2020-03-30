@@ -1,29 +1,30 @@
 @import '../../variables';
 
-.verktoylinje {
-    display: flex;
-    flex-direction: column;
+.dittNav {
+    padding: 0.9rem 1rem 0 1.5rem;
+    text-decoration: none;
 
-    &__verktoy {
+    span {
+        &:hover {
+            border-bottom: 1px solid @navBla;
+            margin-bottom: -1px;
+        }
+    }
+}
+
+.navigasjonslinje {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    &__navigasjon {
         display: flex;
         flex-direction: column;
         width: 100%;
-
-        &.filter {
-            width: auto;
-
-            .dropdown {
-                margin-bottom: 0;
-
-                .filter-dropdown__innhold {
-                    width: auto;
-                    left: inherit;
-                }
-            }
-        }
     }
 
-    &__verktoy-container {
+    &__navigasjon-container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -32,6 +33,12 @@
         &:nth-child(1) {
             align-items: flex-start;
             justify-content: flex-start;
+            .knappelenke {
+                span {
+                    border: 0;
+                    font-weight: bolder;
+                }
+            }
         }
 
         &:nth-child(2) {
@@ -41,12 +48,6 @@
                 justify-content: inherit;
                 align-items: inherit;
                 width: 100%;
-                .knappelenke {
-                    span {
-                        border: 0;
-                        font-weight: bolder;
-                    }
-                }
             }
         }
 
@@ -72,26 +73,47 @@
             }
         }
 
-        .lenkeknapp {
-            width: 100%;
-            margin-bottom: 0.5rem;
+        .aktivitetskort__henvendelser:focus {
+            background-color: transparent;
+            color: @navBla;
+        }
+
+        .aktivitetskort__henvendelser:hover {
+            > span:last-child {
+                border-bottom: 1px solid @navBla;
+                margin-bottom: -1px;
+            }
+        }
+
+        .aktivitetskort__henvendelser {
+            margin: 0 auto;
+            position: relative;
+            padding: 0.6rem 1rem 0.9rem 1.5rem;
+            background-position-y: 1rem;
+            top: -0.1rem;
+
+            > span:last-child {
+                text-transform: uppercase;
+                margin-left: 0.5rem;
+                margin-top: 0.4rem;
+            }
         }
     }
 }
 
 @media (min-width: @screen-md-min) {
-    .verktoylinje {
+    .navigasjonslinje {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
         flex-direction: inherit;
 
-        &__verktoy {
+        &__navigasjon {
             margin-bottom: 0.5rem;
             margin-right: 0;
         }
 
-        &__verktoy-container {
+        &__navigasjon-container {
             display: flex;
 
             &:nth-child(1) {
@@ -112,38 +134,15 @@
                 }
             }
 
-            &:nth-child(3) {
-                width: 69%;
-                order: inherit;
-            }
-
-            &:nth-child(4) {
-                width: 31%;
-                align-items: flex-start;
-            }
-
-            .navigasjonslinje-meny__knapp--print,
             .knappelenke {
                 margin-right: 1rem;
             }
 
-            .lenkeknapp {
-                width: auto;
-                margin-top: 1px;
+            .aktivitetskort__henvendelser {
+                margin-left: 1.2rem;
+                margin-right: 1rem;
+                top: -0.1rem;
             }
         }
-    }
-}
-
-@media (max-width: 360px) {
-    .utskrift-lenke {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .ny-aktivitet-lenke {
-        width: 100%;
-        margin-bottom: 5px;
     }
 }
