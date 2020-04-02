@@ -1,7 +1,7 @@
 @import '../../variables';
 
 .dittNav {
-    padding: 0.9rem 1rem 0 1.5rem;
+    padding: 0.9rem 1rem 0 0;
     text-decoration: none;
 
     span {
@@ -9,6 +9,10 @@
             border-bottom: 1px solid @navBla;
             margin-bottom: -1px;
         }
+    }
+
+    .lenkepanel__indikator:before {
+        transform: translateX(-2px) rotate(45deg);
     }
 }
 
@@ -33,6 +37,7 @@
         &:nth-child(1) {
             align-items: flex-start;
             justify-content: flex-start;
+
             .knappelenke {
                 span {
                     border: 0;
@@ -87,13 +92,14 @@
 
         .aktivitetskort__henvendelser {
             margin: 0 auto;
+            padding-right: 0;
             position: relative;
-            padding: 0.6rem 1rem 0.9rem 1.5rem;
             background-position-y: 1rem;
             top: -0.1rem;
 
-            > span:last-child {
+            span {
                 text-transform: uppercase;
+                font-weight: bolder;
                 margin-left: 0.5rem;
                 margin-top: 0.4rem;
             }
@@ -132,16 +138,6 @@
                     align-items: center;
                     flex-wrap: wrap;
                 }
-            }
-
-            .knappelenke {
-                margin-right: 1rem;
-            }
-
-            .aktivitetskort__henvendelser {
-                margin-left: 1.2rem;
-                margin-right: 1rem;
-                top: -0.1rem;
             }
         }
     }

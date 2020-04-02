@@ -5,6 +5,7 @@ import TallAlert from '../../felles-komponenter/tall-alert';
 import LenkeTilDialog from '../dialog/DialogLink';
 import InternLenke from '../../felles-komponenter/utils/internLenke';
 import classNames from 'classnames';
+import HoyreChevron from 'nav-frontend-chevron/lib/hoyre-chevron';
 
 const knapplenkeCls = (className: string, disabled: boolean) =>
     classNames(className, {
@@ -30,7 +31,9 @@ export function DialogLenkeToggel(props: Props) {
                 aria-live="polite"
             >
                 <TallAlert hidden={antallUlesteDialoger <= 0}>{antallUlesteDialoger}</TallAlert>
-                <span>Dialog &gt;</span>
+                <span>
+                    Dialog <HoyreChevron />
+                </span>
             </LenkeTilDialog>
         );
     }

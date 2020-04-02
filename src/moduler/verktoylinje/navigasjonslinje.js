@@ -10,8 +10,9 @@ import { hentDialog } from '../dialog/dialog-reducer';
 import { DialogLenkeToggel } from './DialogLenkeToggel';
 import Lenke from 'nav-frontend-lenker';
 import { selectErVeileder } from '../identitet/identitet-selector';
+import { VenstreChevron } from 'nav-frontend-chevron';
 
-const DITTNAVN_PATH = '/dittnav/';
+const DITTNAV_PATH = '/dittnav/';
 
 class Navigasjonslinje extends Component {
     componentDidMount() {
@@ -26,9 +27,12 @@ class Navigasjonslinje extends Component {
         } else {
             return (
                 <div className="navigasjonslinje">
-                    <Lenke className="dittNav" href={DITTNAVN_PATH}>
-                        <span>&lt; Ditt NAV</span>
+                    <Lenke className="dittNav" href={DITTNAV_PATH}>
+                        <span>
+                            <VenstreChevron /> Ditt NAV
+                        </span>
                     </Lenke>
+
                     <div className="navigasjonslinje__navigasjon-container">
                         <DialogLenkeToggel dialogLaster={dialogLaster} antallUlesteDialoger={antallUlesteDialoger} />
                     </div>
