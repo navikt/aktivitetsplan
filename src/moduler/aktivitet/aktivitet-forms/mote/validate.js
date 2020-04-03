@@ -1,6 +1,6 @@
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 
-const TITTEL_MAKS_LENGDE = 255;
+const TITTEL_MAKS_LENGDE = 100;
 const TITTEL_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${TITTEL_MAKS_LENGDE} tegn`;
 export const ADRESSE_MAKS_LENGDE = 255;
 const ADRESSE_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${ADRESSE_MAKS_LENGDE} tegn`;
@@ -33,10 +33,6 @@ export function validateTittel(avtalt, value) {
 }
 
 export function validateAdresse(avtalt, value) {
-    if (avtalt) {
-        return null;
-    }
-
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut møtested eller annen praktisk informasjon';
     }
@@ -49,10 +45,6 @@ export function validateAdresse(avtalt, value) {
 }
 
 export function validateFraDato(avtalt, tilDato, value) {
-    if (avtalt) {
-        return null;
-    }
-
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut dato for møtet';
     }
@@ -85,10 +77,6 @@ export function validateForberedelser(avtalt, value) {
 }
 
 export function validateKlokkeslett(avtalt, value) {
-    if (avtalt) {
-        return null;
-    }
-
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut klokkeslett';
     }
@@ -97,10 +85,6 @@ export function validateKlokkeslett(avtalt, value) {
 }
 
 export function validateVarighet(avtalt, value) {
-    if (avtalt) {
-        return null;
-    }
-
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut varighet';
     }
@@ -108,10 +92,6 @@ export function validateVarighet(avtalt, value) {
     return null;
 }
 export function validateKanal(avtalt, value) {
-    if (avtalt) {
-        return null;
-    }
-
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut møteform';
     }

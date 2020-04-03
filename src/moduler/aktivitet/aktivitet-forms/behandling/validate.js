@@ -7,8 +7,8 @@ export function validateBehandlingType(avtalt, value) {
     if (!value || value.trim().length === 0) {
         return 'Du må fylle ut type behandling';
     }
-    if (value.length > 255) {
-        return `Du må korte ned teksten til 255 tegn`;
+    if (value.length > 100) {
+        return `Du må korte ned teksten til 100 tegn`;
     }
 
     return null;

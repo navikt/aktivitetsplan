@@ -47,9 +47,6 @@ export function validateAntallStillingerIUken(avtalt, value, antallStillingerSok
 }
 
 export function validateFraDato(avtalt, tilDato, value) {
-    if (avtalt) {
-        return null;
-    }
     if (value.trim().length === 0) {
         return 'Du må fylle ut fra dato';
     }
@@ -57,9 +54,6 @@ export function validateFraDato(avtalt, tilDato, value) {
 }
 
 export function validateTilDato(avtalt, fraDato, value) {
-    if (avtalt) {
-        return null;
-    }
     if (value.trim().length === 0) {
         return 'Du må fylle ut fra dato';
     }
