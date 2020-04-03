@@ -5,7 +5,7 @@ import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
-import { beregnFraTil, beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
+import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import {
