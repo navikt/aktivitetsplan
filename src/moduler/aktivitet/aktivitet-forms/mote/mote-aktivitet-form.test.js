@@ -28,11 +28,9 @@ describe('MoteAktivitetForm', () => {
 
         const error = wrapper.find('Error');
 
-        expect(error.length).toEqual(5);
+        expect(error.length).toEqual(3);
         expect(error.find('[href="#tittel"]').length).toEqual(1);
         expect(error.find('[href="#dato"]').length).toEqual(1);
-        expect(error.find('[href="#klokkeslett"]').length).toEqual(1);
-        expect(error.find('[href="#varighet"]').length).toEqual(1);
         expect(error.find('[href="#adresse"]').length).toEqual(1);
     });
     it('Skal ikke vise feil når obligatoriske felter er oppgitt', () => {
@@ -73,8 +71,8 @@ describe('MoteAktivitetForm', () => {
 
         expect(wrapper.find('Input[label="Tema for møtet *"]').prop('initialValue')).toEqual(aktivitet.tittel);
         expect(wrapper.find('DatoField').prop('initialValue')).toEqual(aktivitet.fraDato);
-        expect(wrapper.find('Select[label="Klokkeslett *"]').prop('initialValue')).toEqual('420');
-        expect(wrapper.find('Select[label="Varighet *"]').prop('initialValue')).toEqual('60');
+        expect(wrapper.find('Input[label="Klokkeslett *"]').prop('initialValue')).toEqual('07:00');
+        expect(wrapper.find('Input[label="Varighet *"]').prop('initialValue')).toEqual('01:00');
         expect(wrapper.find('Input[label="Møtested eller annen praktisk informasjon *"]').prop('initialValue')).toEqual(
             aktivitet.adresse
         );
@@ -112,8 +110,8 @@ describe('MoteAktivitetForm', () => {
         );
         expect(wrapper.find('Input[label="Tema for møtet *"]').prop('disabled')).toBeTruthy();
         expect(wrapper.find('DatoField').prop('disabled')).not.toBeTruthy();
-        expect(wrapper.find('Select[label="Klokkeslett *"]').prop('disabled')).not.toBeTruthy();
-        expect(wrapper.find('Select[label="Varighet *"]').prop('disabled')).not.toBeTruthy();
+        expect(wrapper.find('Input[label="Klokkeslett *"]').prop('disabled')).not.toBeTruthy();
+        expect(wrapper.find('Input[label="Varighet *"]').prop('disabled')).not.toBeTruthy();
         expect(wrapper.find('VelgKanal').prop('disabled')).toBeFalsy();
         expect(
             wrapper.find('Input[label="Møtested eller annen praktisk informasjon *"]').prop('disabled')

@@ -12,11 +12,11 @@ describe('aktivitet-util', () => {
     it('beregnFraTil', () => {
         const fraTil = beregnFraTil({
             dato: '2017-08-01T00:00:00.000+02:00',
-            klokkeslett: 15,
-            varighet: 15
+            klokkeslett: '15:00',
+            varighet: '00:15'
         });
-        expect(fraTil.fraDato).toEqual('2017-07-31T22:15:00.000Z');
-        expect(fraTil.tilDato).toEqual('2017-07-31T22:30:00.000Z');
+        expect(fraTil.fraDato).toEqual('2017-08-01T13:00:00.000Z');
+        expect(fraTil.tilDato).toEqual('2017-08-01T13:15:00.000Z');
 
         expect(beregnFraTil({})).toEqual({});
     });
@@ -26,8 +26,8 @@ describe('aktivitet-util', () => {
             fraDato: '2017-08-01T04:00:00.000+02:00',
             tilDato: '2017-08-01T06:15:00.000+02:00'
         });
-        expect(klokkeslettVarighet.klokkeslett).toEqual(240);
-        expect(klokkeslettVarighet.varighet).toEqual(120 + 15);
+        expect(klokkeslettVarighet.klokkeslett).toEqual('04:00');
+        expect(klokkeslettVarighet.varighet).toEqual('02:15');
         expect(klokkeslettVarighet.dato).toEqual('2017-07-31T22:00:00.000Z');
 
         expect(beregnKlokkeslettVarighet({})).toEqual({});
