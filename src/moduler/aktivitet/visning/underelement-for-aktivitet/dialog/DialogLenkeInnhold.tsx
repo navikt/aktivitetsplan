@@ -21,13 +21,13 @@ function Message(props: MessageProps) {
 
 const melding_er = (antall: number) => (antall > 1 ? 'meldinger' : 'melding');
 
-interface DialogLenkeInnhold {
+interface DialogLenkeInnholdProps {
     henvendelser: number;
     uleste: number;
     erVeileder: boolean;
 }
 
-const DialogLenkeInnhold = (props: DialogLenkeInnhold) => {
+const DialogLenkeInnhold = (props: DialogLenkeInnholdProps) => {
     const { henvendelser, uleste, erVeileder } = props;
 
     if (!henvendelser) {

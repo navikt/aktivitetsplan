@@ -2,13 +2,11 @@
 
 .navigasjonslinje {
     display: flex;
-    flex-wrap: nowrap;
     justify-content: space-between;
-    padding: 1rem 0 1rem 0;
     min-height: 4rem;
+    padding: 0.25rem 0 0.25rem 0;
 
     .lenkepanel {
-        padding: 0 0 0 0;
         margin-bottom: 0;
         color: @navBla;
 
@@ -20,15 +18,17 @@
     .tilDittNav {
         left: -0.3rem;
         transform: scaleX(-1);
+        padding: 0.5rem 0 0.5rem 0.5rem;
 
-        .tekst {
+        .tilDittNavTekst {
             transform: scaleX(-1);
             vertical-align: middle;
         }
     }
 
     .tilDialog {
-        left: 1.2rem;
+        left: 0.5rem;
+        padding: 0.5rem 0.5rem 0.5rem 0.5rem;
 
         .dialogIkonMedUleste {
             position: relative;
@@ -37,12 +37,12 @@
         .avstand {
             padding-left: 1rem;
         }
-        .tekst {
+        .tilDialogTekst {
             text-transform: uppercase;
             font-weight: bolder;
         }
         .lenkepanel__indikator {
-            visibility: hidden;
+            display: none;
         }
     }
 }

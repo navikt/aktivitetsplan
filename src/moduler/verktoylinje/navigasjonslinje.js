@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { selectDialoger } from '../dialog/dialog-selector';
 import { dialogFilter } from '../filtrering/filter/filter-utils';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
-import { Panel } from 'nav-frontend-paneler';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
 
@@ -18,16 +17,16 @@ class Navigasjonslinje extends Component {
             return null;
         } else {
             return (
-                <Panel className="navigasjonslinje">
+                <div className="navigasjonslinje">
                     <LenkepanelBase className="tilDittNav" href={DITTNAV_PATH}>
-                        <span className="tekst">Ditt NAV</span>
+                        <span className="tilDittNavTekst">Ditt NAV</span>
                     </LenkepanelBase>
                     <LenkepanelBase className="tilDialog" href={DIALOG_PATH}>
                         <DialogIkon antallUleste={antallUlesteDialoger} />
                         <span className="avstand" hidden={antallUlesteDialoger > 0} />
-                        <span className="tekst">Dialog</span>
+                        <span className="tilDialogTekst">Dialog</span>
                     </LenkepanelBase>
-                </Panel>
+                </div>
             );
         }
     }
