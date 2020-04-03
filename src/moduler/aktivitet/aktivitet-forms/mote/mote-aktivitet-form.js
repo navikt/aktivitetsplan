@@ -5,7 +5,7 @@ import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
-import { beregnFraTil, beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
+import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import {
@@ -23,31 +23,12 @@ import {
 
 import * as AppPT from '../../../../proptypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Select from '../../../../felles-komponenter/skjema/input/select';
 import VelgKanal from '../velg-kanal';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
-
-const tidspunkter = Array.from(new Array(53)).map((noValue, index) => {
-    const minutter = index * 15 + 7 * 60;
-    return (
-        <option key={minutter} value={minutter}>
-            {formatterKlokkeslett(minutter)}
-        </option>
-    );
-});
-
-const varigheter = Array.from(new Array(24)).map((noValue, index) => {
-    const minutter = (index + 1) * 15;
-    return (
-        <option key={minutter} value={minutter}>
-            {formatterVarighet(minutter)}
-        </option>
-    );
-});
 
 const HuskVarsleBruker = props => {
     if (!props.avtalt || props.pristine) {
@@ -83,8 +64,8 @@ function MoteAktivitetForm(props) {
     const initalValue = {
         tittel: maybeAktivitet.tittel || '',
         dato: maybeAktivitet.fraDato || '',
-        klokkeslett: dato.klokkeslett ? dato.klokkeslett.toString() : '',
-        varighet: dato.varighet ? dato.varighet.toString() : '',
+        klokkeslett: dato.klokkeslett ? dato.klokkeslett : '10:00',
+        varighet: dato.varighet ? dato.varighet : '00:45',
         kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
         adresse: maybeAktivitet.adresse || '',
         beskrivelse: endre ? beskrivelse : defaultBeskrivelse,
@@ -110,13 +91,8 @@ function MoteAktivitetForm(props) {
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
                     <DatoField label="Dato *" {...state.fields.dato} />
-                    <Select bredde="xs" label="Klokkeslett *" {...state.fields.klokkeslett}>
-                        {tidspunkter}
-                    </Select>
-
-                    <Select bredde="xs" label="Varighet *" {...state.fields.varighet}>
-                        {varigheter}
-                    </Select>
+                    <Input bredde="S" label="Klokkeslett *" {...state.fields.klokkeslett} type="time" step="300" />
+                    <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
                 </div>
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
 
