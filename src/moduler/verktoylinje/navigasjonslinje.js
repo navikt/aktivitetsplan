@@ -1,42 +1,33 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { selectDialoger, selectHarTilgangTilDialog } from '../dialog/dialog-selector';
+import { selectDialoger } from '../dialog/dialog-selector';
 import { dialogFilter } from '../filtrering/filter/filter-utils';
-import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
-import { hentDialog } from '../dialog/dialog-reducer';
-import { DialogLenkeToggel } from './DialogLenkeToggel';
-import Lenke from 'nav-frontend-lenker';
+import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
+import { Panel } from 'nav-frontend-paneler';
 import { selectErVeileder } from '../identitet/identitet-selector';
-import { VenstreChevron } from 'nav-frontend-chevron';
+import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
 
 const DITTNAV_PATH = '/dittnav/';
+const DIALOG_PATH = '/arbeidsrettet-dialog';
 
 class Navigasjonslinje extends Component {
-    componentDidMount() {
-        const { doHentDialog } = this.props;
-        doHentDialog();
-    }
-
     render() {
-        const { erVeileder, antallUlesteDialoger, dialogLaster } = this.props;
+        const { erVeileder, antallUlesteDialoger } = this.props;
         if (erVeileder) {
             return null;
         } else {
             return (
-                <div className="navigasjonslinje">
-                    <Lenke className="dittNav" href={DITTNAV_PATH}>
-                        <span>
-                            <VenstreChevron /> Ditt NAV
-                        </span>
-                    </Lenke>
-
-                    <div className="navigasjonslinje__navigasjon-container">
-                        <DialogLenkeToggel dialogLaster={dialogLaster} antallUlesteDialoger={antallUlesteDialoger} />
-                    </div>
-                </div>
+                <Panel className="navigasjonslinje">
+                    <LenkepanelBase className="tilDittNav" href={DITTNAV_PATH}>
+                        <span className="tekst">Ditt NAV</span>
+                    </LenkepanelBase>
+                    <LenkepanelBase className="tilDialog" href={DIALOG_PATH}>
+                        <DialogIkon antallUleste={antallUlesteDialoger} />
+                        <span className="avstand" hidden={antallUlesteDialoger > 0} />
+                        <span className="tekst">Dialog</span>
+                    </LenkepanelBase>
+                </Panel>
             );
         }
     }
@@ -44,35 +35,17 @@ class Navigasjonslinje extends Component {
 
 Navigasjonslinje.propTypes = {
     erVeileder: PT.bool.isRequired,
-    viserHistoriskPeriode: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired,
-    aktivitetLaster: PT.bool.isRequired,
-    dialogLaster: PT.bool.isRequired,
-    harSkriveTilgang: PT.bool.isRequired,
-    antallUlesteDialoger: PT.number.isRequired,
-    doHentDialog: PT.func.isRequired
+    antallUlesteDialoger: PT.number.isRequired
 };
 
 const mapStateToProps = state => {
     const dialoger = selectDialoger(state)
         .filter(d => !d.lest)
         .filter(d => dialogFilter(d, state)).length;
-    const underOppfolging = selectErUnderOppfolging(state);
-    const historiskPeriode = selectViserHistoriskPeriode(state);
-
     return {
         erVeileder: selectErVeileder(state),
-        viserHistoriskPeriode: historiskPeriode,
-        underOppfolging,
-        harSkriveTilgang: selectHarSkriveTilgang(state),
-        antallUlesteDialoger: dialoger,
-        aktivitetLaster: selectHarTilgangTilAktiviteter(state),
-        dialogLaster: selectHarTilgangTilDialog(state)
+        antallUlesteDialoger: dialoger
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doHentDialog: () => dispatch(hentDialog())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navigasjonslinje);
+export default connect(mapStateToProps)(Navigasjonslinje);

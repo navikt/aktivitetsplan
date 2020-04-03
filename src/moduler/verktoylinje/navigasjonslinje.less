@@ -1,144 +1,48 @@
 @import '../../variables';
 
-.dittNav {
-    padding: 0.9rem 1rem 0 0;
-    text-decoration: none;
-
-    span {
-        &:hover {
-            border-bottom: 1px solid @navBla;
-            margin-bottom: -1px;
-        }
-    }
-
-    .lenkepanel__indikator:before {
-        transform: translateX(-2px) rotate(45deg);
-    }
-}
-
 .navigasjonslinje {
     display: flex;
-    flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    padding: 1rem 0 1rem 0;
+    min-height: 4rem;
 
-    &__navigasjon {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
+    .lenkepanel {
+        padding: 0 0 0 0;
+        margin-bottom: 0;
+        color: @navBla;
+
+        &:hover {
+            box-shadow: none;
+        }
     }
 
-    &__navigasjon-container {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-items: center;
+    .tilDittNav {
+        left: -0.3rem;
+        transform: scaleX(-1);
 
-        &:nth-child(1) {
-            align-items: flex-start;
-            justify-content: flex-start;
-
-            .knappelenke {
-                span {
-                    border: 0;
-                    font-weight: bolder;
-                }
-            }
+        .tekst {
+            transform: scaleX(-1);
+            vertical-align: middle;
         }
+    }
 
-        &:nth-child(2) {
-            .indre {
-                display: inherit;
-                flex-wrap: inherit;
-                justify-content: inherit;
-                align-items: inherit;
-                width: 100%;
-            }
-        }
+    .tilDialog {
+        left: 1.2rem;
 
-        .knappelenke {
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-
-            span:hover {
-                border-bottom: 1px solid @navBla;
-            }
-
-            span {
-                border: 0;
-            }
-
-            &.knappelenke--disabled {
-                color: @navGra40;
-                cursor: default;
-
-                span:hover {
-                    border-bottom: 0;
-                }
-            }
-        }
-
-        .aktivitetskort__henvendelser:focus {
-            background-color: transparent;
-            color: @navBla;
-        }
-
-        .aktivitetskort__henvendelser:hover {
-            > span:last-child {
-                border-bottom: 1px solid @navBla;
-                margin-bottom: -1px;
-            }
-        }
-
-        .aktivitetskort__henvendelser {
-            margin: 0 auto;
-            padding-right: 0;
+        .dialogIkonMedUleste {
             position: relative;
-            background-position-y: 1rem;
-            top: -0.1rem;
-
-            span {
-                text-transform: uppercase;
-                font-weight: bolder;
-                margin-left: 0.5rem;
-                margin-top: 0.4rem;
-            }
+            top: -0.3rem;
         }
-    }
-}
-
-@media (min-width: @screen-md-min) {
-    .navigasjonslinje {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        flex-direction: inherit;
-
-        &__navigasjon {
-            margin-bottom: 0.5rem;
-            margin-right: 0;
+        .avstand {
+            padding-left: 1rem;
         }
-
-        &__navigasjon-container {
-            display: flex;
-
-            &:nth-child(1) {
-                align-items: flex-start;
-                justify-content: flex-start;
-            }
-
-            &:nth-child(2) {
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-
-                > .indre {
-                    display: flex;
-                    justify-content: flex-end;
-                    align-items: center;
-                    flex-wrap: wrap;
-                }
-            }
+        .tekst {
+            text-transform: uppercase;
+            font-weight: bolder;
+        }
+        .lenkepanel__indikator {
+            visibility: hidden;
         }
     }
 }

@@ -9,20 +9,15 @@ import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-s
 import InternLenke from '../../felles-komponenter/utils/internLenke';
 import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
-import { hentDialog } from '../dialog/dialog-reducer';
 import loggEvent, { APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 
 class Verktoylinje extends Component {
-    componentDidMount() {
-        const { doHentDialog } = this.props;
-        doHentDialog();
-    }
-
     render() {
         const { viserHistoriskPeriode, underOppfolging, harSkriveTilgang, aktivitetLaster } = this.props;
         return (
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy-container">
+                    <div />
                     <Lenkeknapp
                         type="hoved"
                         href="/aktivitet/ny"
@@ -64,14 +59,12 @@ Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     aktivitetLaster: PT.bool.isRequired,
-    harSkriveTilgang: PT.bool.isRequired,
-    doHentDialog: PT.func.isRequired
+    harSkriveTilgang: PT.bool.isRequired
 };
 
 const mapStateToProps = state => {
     const underOppfolging = selectErUnderOppfolging(state);
     const historiskPeriode = selectViserHistoriskPeriode(state);
-
     return {
         viserHistoriskPeriode: historiskPeriode,
         underOppfolging,
@@ -80,8 +73,4 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doHentDialog: () => dispatch(hentDialog())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Verktoylinje);
+export default connect(mapStateToProps)(Verktoylinje);

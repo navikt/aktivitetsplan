@@ -8,6 +8,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
+        margin-bottom: 0.5rem;
 
         &.filter {
             width: auto;
@@ -32,6 +33,12 @@
         &:nth-child(1) {
             align-items: flex-start;
             justify-content: flex-start;
+            .knappelenke {
+                span {
+                    border: 0;
+                    font-weight: bolder;
+                }
+            }
         }
 
         &:nth-child(2) {
@@ -41,13 +48,11 @@
                 justify-content: inherit;
                 align-items: inherit;
                 width: 100%;
-                .knappelenke {
-                    span {
-                        border: 0;
-                        font-weight: bolder;
-                    }
-                }
             }
+        }
+
+        &:nth-child(3) {
+            order: 4;
         }
 
         .knappelenke {
@@ -72,6 +77,32 @@
             }
         }
 
+        .aktivitetskort__henvendelser:focus {
+            background-color: transparent;
+            color: @navBla;
+        }
+
+        .aktivitetskort__henvendelser:hover {
+            > span:last-child {
+                border-bottom: 1px solid @navBla;
+                margin-bottom: -1px;
+            }
+        }
+
+        .aktivitetskort__henvendelser {
+            margin: 0 auto;
+            position: relative;
+            padding: 0.6rem 1rem 0.9rem 1.5rem;
+            background-position-y: 1rem;
+            top: -0.1rem;
+
+            > span:last-child {
+                text-transform: uppercase;
+                margin-left: 0.5rem;
+                margin-top: 0.1rem;
+            }
+        }
+
         .lenkeknapp {
             width: 100%;
             margin-bottom: 0.5rem;
@@ -83,6 +114,7 @@
     .verktoylinje {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 0.5rem;
         flex-wrap: wrap;
         flex-direction: inherit;
 
@@ -125,6 +157,12 @@
             .navigasjonslinje-meny__knapp--print,
             .knappelenke {
                 margin-right: 1rem;
+            }
+
+            .aktivitetskort__henvendelser {
+                margin-left: 1.2rem;
+                margin-right: 1rem;
+                top: -0.1rem;
             }
 
             .lenkeknapp {
