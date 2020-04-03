@@ -1,6 +1,6 @@
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 
-const TITTEL_MAKS_LENGDE = 255;
+const TITTEL_MAKS_LENGDE = 100;
 const TITTEL_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${TITTEL_MAKS_LENGDE} tegn`;
 export const ADRESSE_MAKS_LENGDE = 255;
 const ADRESSE_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${ADRESSE_MAKS_LENGDE} tegn`;

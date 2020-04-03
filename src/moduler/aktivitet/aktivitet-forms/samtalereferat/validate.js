@@ -4,8 +4,8 @@ export function validateTittel(value) {
     if (!value || value.trim().length === 0) {
         return 'Du må fylle ut tema for samtalen';
     }
-    if (value.length > 255) {
-        return `Du må korte ned teksten til 255 tegn`;
+    if (value.length > 100) {
+        return `Du må korte ned teksten til 100 tegn`;
     }
 
     return null;
