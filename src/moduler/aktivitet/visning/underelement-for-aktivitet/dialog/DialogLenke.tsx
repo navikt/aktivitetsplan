@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectErVeileder } from '../../../../identitet/identitet-selector';
 import { selectErBrukerManuell, selectReservasjonKRR } from '../../../../oppfolging-status/oppfolging-selector';
 import styles from './dialogunderelement.module.less';
-import DailogLenkeInnhold from './DialogLenkeInnhold';
+import DialogLenkeInnhold from './DialogLenkeInnhold';
 import DeleLinje from '../../delelinje/delelinje';
 import React from 'react';
 import LenkeTilDialog from '../../../../dialog/DialogLink';
@@ -52,7 +52,7 @@ function DialogLenke(props: Props) {
     return (
         <>
             <LenkeTilDialog className={styles.dialogLinke} dialogId={dialogId} aktivitetId={aktivitetId}>
-                <DailogLenkeInnhold henvendelser={antallHenvendelser} uleste={uleste} erVeileder={erVeileder} />
+                <DialogLenkeInnhold henvendelser={antallHenvendelser} uleste={uleste} erVeileder={erVeileder} />
                 <DialogPil antallUleste={uleste} />
             </LenkeTilDialog>
 

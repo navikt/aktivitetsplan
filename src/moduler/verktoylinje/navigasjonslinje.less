@@ -1,0 +1,48 @@
+@import '../../variables';
+
+.navigasjonslinje {
+    display: flex;
+    justify-content: space-between;
+    min-height: 4rem;
+    padding: 0.25rem 0 0.25rem 0;
+
+    .lenkepanel {
+        margin-bottom: 0;
+        color: @navBla;
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
+
+    .tilDittNav {
+        left: -0.3rem;
+        transform: scaleX(-1);
+        padding: 0.5rem 0 0.5rem 0.5rem;
+
+        .tilDittNavTekst {
+            transform: scaleX(-1);
+            vertical-align: middle;
+        }
+    }
+
+    .tilDialog {
+        left: 0.5rem;
+        padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+
+        .dialogIkonMedUleste {
+            position: relative;
+            top: -0.3rem;
+        }
+        .avstand {
+            padding-left: 1rem;
+        }
+        .tilDialogTekst {
+            text-transform: uppercase;
+            font-weight: bolder;
+        }
+        .lenkepanel__indikator {
+            display: none;
+        }
+    }
+}

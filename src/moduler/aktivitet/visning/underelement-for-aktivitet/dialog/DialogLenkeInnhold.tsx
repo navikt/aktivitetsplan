@@ -1,12 +1,12 @@
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-interface MessagProps {
+interface MessageProps {
     titel: string;
     undertekst?: string;
 }
 
-function Message(props: MessagProps) {
+function Message(props: MessageProps) {
     const { titel, undertekst } = props;
     if (undertekst) {
         return (
@@ -21,13 +21,13 @@ function Message(props: MessagProps) {
 
 const melding_er = (antall: number) => (antall > 1 ? 'meldinger' : 'melding');
 
-interface DailogLenkeInnholdProps {
+interface DialogLenkeInnholdProps {
     henvendelser: number;
     uleste: number;
     erVeileder: boolean;
 }
 
-const DailogLenkeInnhold = (props: DailogLenkeInnholdProps) => {
+const DialogLenkeInnhold = (props: DialogLenkeInnholdProps) => {
     const { henvendelser, uleste, erVeileder } = props;
 
     if (!henvendelser) {
@@ -43,4 +43,4 @@ const DailogLenkeInnhold = (props: DailogLenkeInnholdProps) => {
     return <Message titel={`Se ${henvendelser} ${melding_er(henvendelser)} om aktiviteten`} />;
 };
 
-export default DailogLenkeInnhold;
+export default DialogLenkeInnhold;
