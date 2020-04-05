@@ -16,7 +16,8 @@ import {
     erKRRBruker,
     erEskalertBruker,
     oppfFeilet,
-    ingenMal
+    ingenMal,
+    ulesteDialoger
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -111,6 +112,11 @@ class DemoDashboard extends React.Component {
                             label: 'Oppfølging feiler',
                             id: SessionStorageElement.OPPF_FEILET,
                             checked: oppfFeilet()
+                        },
+                        {
+                            label: 'Uleste dialoger',
+                            id: SessionStorageElement.ULESTE_DIALOGER,
+                            checked: ulesteDialoger()
                         }
                     ]}
                     onChange={this.endreTilstand}

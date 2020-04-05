@@ -10,7 +10,8 @@ export const SessionStorageElement = {
     TEST_AKTIVITETER: 'testaktiviteter',
     ARENA_AKTIVITETER: 'arena_aktiviteter',
     TEST_DIALOGER: 'test_dialoger',
-    INGEN_MAL: 'ingen_mal'
+    INGEN_MAL: 'ingen_mal',
+    ULESTE_DIALOGER: 'uleste_dialoger'
 };
 
 export const settSessionStorage = (key, value) => {
@@ -48,6 +49,8 @@ export const visArenaAktiviteter = () => erSatt(SessionStorageElement.ARENA_AKTI
 export const visDialoger = () => erSatt(SessionStorageElement.TEST_DIALOGER);
 
 export const oppfFeilet = () => erSatt(SessionStorageElement.OPPF_FEILET);
+
+export const ulesteDialoger = () => erSatt(SessionStorageElement.ULESTE_DIALOGER);
 
 const fetureprefix = 'mock_feature__';
 export const setFeatureTogle = (name, value) => settSessionStorage(fetureprefix + name, value);
