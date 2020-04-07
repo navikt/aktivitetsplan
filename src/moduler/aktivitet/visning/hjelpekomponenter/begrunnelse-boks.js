@@ -8,7 +8,7 @@ function BegrunnelseBoks({ begrunnelse, className }) {
     return (
         <div className={className}>
             <AlertStripeInfo>
-                <Normaltekst className="tekst">{begrunnelse}</Normaltekst>
+                <Normaltekst className="tilDittNavTekst">{begrunnelse}</Normaltekst>
             </AlertStripeInfo>
         </div>
     );

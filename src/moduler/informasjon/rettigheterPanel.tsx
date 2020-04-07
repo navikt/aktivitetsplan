@@ -8,8 +8,8 @@ export function RettigheterPanel() {
     return (
         <Ekspanderbartpanel tittel="Rettigheter og personvern" tittelProps="undertittel">
             <Normaltekst>
-                Du har rett til å få en aktivitetsplan når du har kontaktet oss for å få hjelp til å komme i jobb. Alle
-                skal bruke aktivitetsplanen og kommunisere med NAV gjennom den.
+                Du har rett til å få en aktivitetsplan når du har registrert deg i NAV. Informasjonen i aktivitetsplanen
+                og annen informasjon du gir til veilederen din brukes til å vurdere ditt behov for hjelp fra NAV.
             </Normaltekst>
             <Element className={styles.element}>Manuell oppfølging</Element>
             <Normaltekst>

@@ -6,34 +6,18 @@ import Filter from '../filtrering/filter';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { selectDialoger, selectHarTilgangTilDialog } from '../dialog/dialog-selector';
-import { dialogFilter } from '../filtrering/filter/filter-utils';
 import InternLenke from '../../felles-komponenter/utils/internLenke';
 import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
-import { hentDialog } from '../dialog/dialog-reducer';
 import loggEvent, { APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
-import { DialogLenkeToggel } from './DialogLenkeToggel';
 
 class Verktoylinje extends Component {
-    componentDidMount() {
-        const { doHentDialog } = this.props;
-        doHentDialog();
-    }
-
     render() {
-        const {
-            viserHistoriskPeriode,
-            underOppfolging,
-            harSkriveTilgang,
-            antallUlesteDialoger,
-            aktivitetLaster,
-            dialogLaster
-        } = this.props;
+        const { viserHistoriskPeriode, underOppfolging, harSkriveTilgang, aktivitetLaster } = this.props;
         return (
             <div className="verktoylinje">
                 <div className="verktoylinje__verktoy-container">
-                    <DialogLenkeToggel dialogLaster={dialogLaster} antallUlesteDialoger={antallUlesteDialoger} />
+                    <div />
                     <Lenkeknapp
                         type="hoved"
                         href="/aktivitet/ny"
@@ -75,31 +59,18 @@ Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     aktivitetLaster: PT.bool.isRequired,
-    dialogLaster: PT.bool.isRequired,
-    harSkriveTilgang: PT.bool.isRequired,
-    antallUlesteDialoger: PT.number.isRequired,
-    doHentDialog: PT.func.isRequired
+    harSkriveTilgang: PT.bool.isRequired
 };
 
 const mapStateToProps = state => {
-    const dialoger = selectDialoger(state)
-        .filter(d => !d.lest)
-        .filter(d => dialogFilter(d, state)).length;
     const underOppfolging = selectErUnderOppfolging(state);
     const historiskPeriode = selectViserHistoriskPeriode(state);
-
     return {
         viserHistoriskPeriode: historiskPeriode,
         underOppfolging,
         harSkriveTilgang: selectHarSkriveTilgang(state),
-        antallUlesteDialoger: dialoger,
-        aktivitetLaster: selectHarTilgangTilAktiviteter(state),
-        dialogLaster: selectHarTilgangTilDialog(state)
+        aktivitetLaster: selectHarTilgangTilAktiviteter(state)
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doHentDialog: () => dispatch(hentDialog())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Verktoylinje);
+export default connect(mapStateToProps)(Verktoylinje);
