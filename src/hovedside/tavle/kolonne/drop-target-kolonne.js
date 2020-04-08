@@ -15,11 +15,11 @@ const mottaAktivitetsKort = {
         return props.status !== monitor.getItem().status;
     },
 
-    drop({ doFlyttAktivitet, status, history, harNyDialog }, monitor) {
+    drop({ doFlyttAktivitet, status, history }, monitor) {
         const aktivitet = monitor.getItem();
         // utsett håndteringen til droppet er fullført. Unngår f.eks. F17HL3-144
         setTimeout(() => {
-            flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status, harNyDialog);
+            flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {
                 history.push(fullforAktivitetRoute(aktivitet.id));
             } else if (status === STATUS_AVBRUTT) {

@@ -2,7 +2,7 @@
 
 Aktivitetsplan er et verktøy for veiledere og brukere av NAV som skal synliggjøre hvilke aktiviteter og tiltak som skal
 gjennomføres for at en bruker skal oppnå sine mål. Her kan brukere opprette aktiviteter som å delta på kurs, søke
-på en bestemt jobb eller motta behandling. Bruker har også mulighet til å kommunisere direkte med sin veileder via en dialogløsning.
+på en bestemt jobb eller motta behandling.
 
 Dette prosjektet er satt opp med [Create React App](https://github.com/facebook/create-react-app).
 

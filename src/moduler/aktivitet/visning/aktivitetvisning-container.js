@@ -10,7 +10,6 @@ import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivi
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { UTDANNING_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
-import { lukkAlle } from './underelement-for-aktivitet/underelementer-view-reducer';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { DirtyProvider } from '../../context/dirty-context';
@@ -18,7 +17,7 @@ import AktivitetvisningModal from './aktivitetvisning-modal';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
-        const { valgtAktivitet, doHentAktivitet, doHentArenaAktiviteter, doLukkDialogEllerHistorikk } = this.props;
+        const { valgtAktivitet, doHentAktivitet, doHentArenaAktiviteter } = this.props;
         if (valgtAktivitet) {
             if (valgtAktivitet.arenaAktivitet) {
                 doHentArenaAktiviteter();
@@ -26,7 +25,6 @@ class AktivitetvisningContainer extends Component {
                 doHentAktivitet(valgtAktivitet.id);
             }
         }
-        doLukkDialogEllerHistorikk();
     }
 
     componentWillUnmount() {
@@ -56,7 +54,6 @@ AktivitetvisningContainer.propTypes = {
     laster: PT.bool.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
-    doLukkDialogEllerHistorikk: PT.func.isRequired,
     history: AppPT.history.isRequired,
     match: PT.object.isRequired,
     underOppfolging: PT.bool.isRequired
@@ -96,13 +93,9 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
             doHentAktivitet: hentAktivitet,
-            doHentArenaAktiviteter: hentArenaAktiviteter,
-            doLukkDialogEllerHistorikk: lukkAlle
+            doHentArenaAktiviteter: hentArenaAktiviteter
         },
         dispatch
     );
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AktivitetvisningContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AktivitetvisningContainer);

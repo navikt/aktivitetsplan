@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
 import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
-import { useHarNyDialog } from '../../felles-komponenter/feature/feature';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;
@@ -18,8 +17,6 @@ interface VidereSendBrukereEllerRenderChildrenProps {
     aktorId: string;
 }
 
-const dialogRegex = /\/dialog(\/.*)?(\?.*)?$/g;
-
 function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRenderChildrenProps) {
     const {
         erVeileder,
@@ -34,21 +31,14 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
     } = props;
 
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;
-    const pathname = window.location.pathname;
-    const harNyDialog = useHarNyDialog();
-    const skalRedirectes = !erVeileder && harNyDialog && dialogRegex.test(pathname);
 
     useEffect(() => {
-        if (erVeileder === undefined || erVeileder === null || skalRedirectes) {
-            return;
-        }
-
         if (erVeileder) {
             loggAntalVeiledere(servicegruppe, underOppfolging, ident, aktorId);
         } else {
-            loggingAntallBrukere(servicegruppe, underOppfolging, aktorId, harNyDialog);
+            loggingAntallBrukere(servicegruppe, underOppfolging, aktorId);
         }
-    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder, harNyDialog, skalRedirectes]);
+    }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder]);
 
     if (!underOppfolging && oppfolgingsPerioder.length === 0) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
