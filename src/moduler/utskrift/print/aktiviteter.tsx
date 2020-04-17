@@ -36,7 +36,7 @@ function AktivitetReferat(props: AktivitetProps) {
 
     return (
         <HiddenIfDiv hidden={!visReferat} className="printmodal-body__aktivitetreferat">
-            <Informasjonsfelt key="referat" tittel="Samtalereferat" innhold={referat} />
+            <Informasjonsfelt key="referat" tittel="Samtalereferat" innhold={referat} formattertTekst />
         </HiddenIfDiv>
     );
 }
