@@ -73,7 +73,7 @@ export function beregnKlokkeslettVarighet(aktivitet: Aktivitet): MoteTid {
     if (fraDato && tilDato) {
         const fraMoment = moment(fraDato);
         const tilMoment = moment(tilDato);
-        const klokkeslett = fraMoment.format('hh:mm');
+        const klokkeslett = fraMoment.format('HH:mm');
         const diff = moment.duration(tilMoment.diff(fraMoment));
         const varighet = `${('0' + diff.hours()).slice(-2)}:${('0' + diff.minutes()).slice(-2)}`;
         return {
