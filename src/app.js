@@ -31,8 +31,6 @@ function App({ fnr }) {
 
     const history = createHistory();
 
-    window.openDialog = () => history.push('/dialog');
-
     useEventListener('visAktivitetsplan', event => {
         const aktivitetId = event.detail;
         if (aktivitetId) {
