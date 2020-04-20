@@ -20,12 +20,10 @@ import {
     selectOppfolgingsPerioder,
     selectReservasjonKRR
 } from '../../../oppfolging-status/oppfolging-selector';
-import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import DeleLinje from '../delelinje/delelinje';
 import { Aktivitet, OppfolgingsPeriode } from '../../../../types';
 import { selectErBruker } from '../../../identitet/identitet-selector';
-import { useHarNyDialog } from '../../../../felles-komponenter/feature/feature';
 import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import LenkeTilDialog from '../../../dialog/DialogLink';
 
@@ -59,8 +57,6 @@ function AvtaltContainer(props: Props) {
             })
         );
     };
-    const doApneDialog = () => dispatch(apneDialog());
-
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const harAvtalteAktiviteter =
         useSelector<any, Aktivitet[]>(selectAktiviteterData)
@@ -74,7 +70,6 @@ function AvtaltContainer(props: Props) {
     const erKvp = useSelector(selectErUnderKvp);
     const erreservertKRR = useSelector(selectReservasjonKRR);
     const erBruker = useSelector(selectErBruker);
-    const nyDialog = useHarNyDialog();
     const dialog = useSelector(createSelectDialogForAktivitetId(aktivitet.id));
     const dialogId = dialog && dialog.id;
 
@@ -122,7 +117,7 @@ function AvtaltContainer(props: Props) {
                                 forhandsorienteringType
                             }}
                         />
-                        <LenkeTilDialog dialogId={dialogId} hidden={!forhandsorienteringSent || !nyDialog} className="">
+                        <LenkeTilDialog dialogId={dialogId} hidden={!forhandsorienteringSent} className="">
                             Se meldingen
                         </LenkeTilDialog>
                     </AlertStripeSuksess>
@@ -141,9 +136,6 @@ function AvtaltContainer(props: Props) {
             doSendForhandsorientering(aktivitet, avtaltText);
             setForhandsorienteringSent(true);
             setForhandsorienteringType(avtaltForm.avtaltSelect);
-            if (!nyDialog) {
-                doApneDialog();
-            }
         }
 
         loggForhandsorientering(erManuellKrrKvpBruker, !merEnnsyvDagerTil, avtaltForm.avtaltSelect);

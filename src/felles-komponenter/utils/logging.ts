@@ -1,5 +1,5 @@
 import shajs from 'sha.js';
-import { Aktivitet, AktivitetStatus, AktivitetType, Dialog, Lest, OppfolgingsPeriode } from '../../types';
+import { Aktivitet, AktivitetStatus, Lest, OppfolgingsPeriode } from '../../types';
 
 interface Frontendlogger {
     event: (name: string, fields: object, tags: object) => void;
@@ -22,7 +22,6 @@ const FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD = 'tilltakSpesialTi
 
 const MITTMAL_KLIKK_LOGGEVENT = 'aktivitetsplan.mittmal.klikk';
 const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
-const DAILOG_BRUKER_HENVENDELSE = 'dialog.bruker.henvendelse';
 const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
 export const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallSluttBrukere';
@@ -31,15 +30,12 @@ export const LOGG_BRUKER_IKKE_OPPFOLGING = 'aktivitetsplan.antallBrukerIkkeOppfo
 export const PRINT_MODSAL_OPEN = 'aktivitetsplan.printmodal';
 export const TRYK_PRINT = 'aktivitetsplan.printmodalprint';
 
-export const APNE_DIALOG = 'aktivitetsplan.dialog.trykk';
 export const APNE_NY_AKTIVITET = 'aktivitetsplan.nyAktivitet.trykk';
 export const APNE_OM_TJENESTEN = 'aktivitetsplan.omTjenesten.trykk';
 export const APNE_ENDRE_AKTIVITET = 'aktivitetsplan.endreAktivitet.trykk';
 export const OPNE_AKTIVITETFILTER = 'aktivitetsplan.aktivitetfilter.opne';
-export const APNE_AKTIVITET_HISTORIK = 'aktivitetsplan.aktivitethistorikk';
 export const VIS_HISTORISK_PERIODE = 'aktivitetsplan.vis.historisk';
 export const LIST_HISTORISK_PERIODE = 'aktivitetsplan.list.historisk';
-export const OPNE_DIALOG_I_AKTIVITET_METRIKK = 'aktivitetsplan.aktivite.open.dialog';
 
 const filterBase = 'aktivitetsplan.filter.';
 export const AKTIVITESTYPE_FILER_METRIKK = `${filterBase}aktivitestype`;
@@ -66,16 +62,11 @@ export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boole
     loggEvent(ANTALL_VEILEDERE, fields, { servicegruppe });
 }
 
-export function loggingAntallBrukere(
-    servicegruppe: string,
-    underOppfolging: boolean,
-    aktorId: string,
-    harNyDialog: boolean
-) {
+export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boolean, aktorId: string) {
     if (!underOppfolging) {
         loggEvent(LOGG_BRUKER_IKKE_OPPFOLGING, {}, { servicegruppe });
     } else {
-        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId), harNyDialog }, { servicegruppe });
+        loggEvent(LOGGING_ANTALLBRUKERE, { bruker: hash(aktorId) }, { servicegruppe });
     }
 }
 
@@ -91,30 +82,12 @@ export function metrikkTidForsteAvtalte(tid: number) {
     });
 }
 
-export function nyAktivitetMetrikk(aktivitetType: AktivitetType, harNyDialog: boolean) {
-    loggEvent('aktivitetsplan.aktivitet.ny', { aktivitetType, harNyDialog });
-}
-
-export function endreAktivitetMetrikk(aktivitetType: AktivitetType, harNyDialog: boolean) {
-    loggEvent('aktivitetsplan.aktivitet.endre', { aktivitetType, harNyDialog });
-}
-
-export function endreStilingStatusMetrikk(harNyDialog: boolean) {
-    loggEvent('aktivitetsplan.stiling.status.endre', { harNyDialog });
-}
-
-export function flyttetAktivitetMetrikk(
-    flytteMetode: string,
-    aktivitet: Aktivitet,
-    nyStatus: AktivitetStatus,
-    harNyDialog: boolean
-) {
+export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivitet, nyStatus: AktivitetStatus) {
     loggEvent(AKTIVITET_FLYTTET, {
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,
         aktivitetType: aktivitet.type,
-        flytteMetode,
-        harNyDialog: harNyDialog
+        flytteMetode
     });
 }
 
@@ -144,27 +117,8 @@ export function loggMittMalKlikk(veileder: boolean) {
     loggEvent(MITTMAL_KLIKK_LOGGEVENT, { erVeileder: veileder });
 }
 
-export function loggMittMalLagre(veileder: boolean, harNyDialog: boolean) {
-    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder, harNyDialog: harNyDialog });
-}
-
-export function loggTidBruktForsteHenvendelse(dialoger: Array<Dialog>, oppfolgingsPerioder: Array<OppfolgingsPeriode>) {
-    const brukerHarSendtDialogTidligere = dialoger.find(
-        a => a.henvendelser && a.henvendelser.find(h => h.avsender === 'BRUKER')
-    );
-
-    if (!brukerHarSendtDialogTidligere) {
-        const periode = oppfolgingsPerioder.filter(p => p.sluttDato === null);
-        if (periode.length > 0) {
-            const startDatoPaaOppfolging = periode[0].startDato;
-            const tidBruktForsteHenvendelse = Math.ceil(
-                Math.abs(new Date(startDatoPaaOppfolging).getTime() - new Date().getTime()) / (1000 * 3600 * 24)
-            );
-            loggEvent(DAILOG_BRUKER_HENVENDELSE, {
-                tidBruktForsteHenvendelse
-            });
-        }
-    }
+export function loggMittMalLagre(veileder: boolean) {
+    loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
 }
 
 function tidBruktFra(fraDato: number | string, tilDato?: number | string) {

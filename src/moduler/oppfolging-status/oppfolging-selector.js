@@ -10,10 +10,6 @@ function selectOppfolgingData(state) {
     return selectOppfolgingSlice(state).data;
 }
 
-export function selectVeilederId(state) {
-    return selectOppfolgingData(state).veilederId;
-}
-
 export function selectOppfolgingStatus(state) {
     return selectOppfolgingSlice(state).status;
 }
@@ -27,9 +23,8 @@ export function selectOppfolgingsPerioder(state) {
     return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
 
-export const selectHistoriskeOppfolgingsPerioder = createSelector(
-    selectOppfolgingsPerioder,
-    oppfolgingsPerioder => oppfolgingsPerioder.filter(p => p.sluttDato)
+export const selectHistoriskeOppfolgingsPerioder = createSelector(selectOppfolgingsPerioder, oppfolgingsPerioder =>
+    oppfolgingsPerioder.filter(p => p.sluttDato)
 );
 
 export const selectForrigeHistoriskeSluttDato = createSelector(
@@ -70,10 +65,6 @@ export function selectErUnderOppfolging(state) {
     return selectOppfolgingData(state).underOppfolging;
 }
 
-export function selectOppfolgingUtgang(state) {
-    return selectOppfolgingData(state).oppfolgingUtgang;
-}
-
 export function selectErBrukerManuell(state) {
     return selectOppfolgingData(state).manuell;
 }
@@ -97,10 +88,6 @@ export function selectTilHorendeDialogId(state) {
     return null;
 }
 
-export function selectAvslutningStatus(state) {
-    return selectOppfolgingData(state).avslutningStatus;
-}
-
 export function selectUnderOppfolging(state) {
     return selectOppfolgingData(state).underOppfolging;
 }
@@ -119,10 +106,6 @@ export function selectKanReaktiveres(state) {
 
 export function selectInaktiveringsDato(state) {
     return selectOppfolgingData(state).inaktiveringsdato;
-}
-
-export function selectkanStarteOppfolging(state) {
-    return selectOppfolgingData(state).kanStarteOppfolging;
 }
 
 export function selectOppfolgingFeilmeldinger(state) {

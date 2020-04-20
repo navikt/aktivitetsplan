@@ -21,8 +21,6 @@ const statusPrioritet = {
     OK: 1
 };
 
-export const hoyreKolonneSectionId = 'dialog-modal__hoyre-kolonne';
-
 export function aggregerStatus(...reducereEllerStatuser) {
     return reducereEllerStatuser.reduce((a, b) => {
         const aStatus = a && (a.status || a);

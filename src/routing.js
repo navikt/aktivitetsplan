@@ -1,7 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import DialogModal from './moduler/dialog/dialog-modal/dialog-modal';
 import Aktivitetsmal from './moduler/mal/mal';
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
 import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
@@ -17,8 +16,6 @@ function getPathWithBase(path) {
 const Routing = ({ location }) => (
     <Switch location={location}>
         <Route path={getPathWithBase('/mal')} component={Aktivitetsmal} />
-        <Route exact path={getPathWithBase('/dialog')} component={DialogModal} />
-        <Route exact path={getPathWithBase('/dialog/:id')} component={DialogModal} />
         <Route path={getPathWithBase('/aktivitet')} component={AktivitetRoutes} />
         <Route path={getPathWithBase('/utskrift')} component={AktivitetsplanPrint} />
     </Switch>

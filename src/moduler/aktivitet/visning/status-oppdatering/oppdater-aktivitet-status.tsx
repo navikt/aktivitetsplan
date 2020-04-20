@@ -9,7 +9,6 @@ import EndreLinje from '../endre-linje/endre-linje';
 import StatusVisning from './status-visning';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { useHarNyDialog } from '../../../../felles-komponenter/feature/feature';
 import { Aktivitet } from '../../../../types';
 import { Dispatch } from 'redux';
 
@@ -21,12 +20,12 @@ const useDisableStatusEndring = (aktivitet: Aktivitet) => {
     return lasterAktivitet || !underOppfolging || !kanEndreAktivitet;
 };
 
-const lagreStatusEndringer = (dispatch: Dispatch, values: any, aktivitet: Aktivitet, harNyDialog: boolean) => {
+const lagreStatusEndringer = (dispatch: Dispatch, values: any, aktivitet: Aktivitet) => {
     if (values.aktivitetstatus === aktivitet.status) {
         return Promise.resolve();
     }
 
-    flyttetAktivitetMetrikk('submit', aktivitet, values.aktivitetstatus, harNyDialog);
+    flyttetAktivitetMetrikk('submit', aktivitet, values.aktivitetstatus);
     return dispatch<any>(flyttAktivitetMedBegrunnelse(aktivitet, values.aktivitetstatus, values.begrunnelse));
 };
 
@@ -37,12 +36,11 @@ interface OppdaterAktivitetStatusProps {
 function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
     const { aktivitet } = props;
     const [endring, setEndring] = useState(false);
-    const harNyDialog = useHarNyDialog();
     const dispatch = useDispatch();
     const disableStatusEndring = useDisableStatusEndring(aktivitet);
 
     const onSubmit = (val: any) => {
-        lagreStatusEndringer(dispatch, val, aktivitet, harNyDialog).then(() => {
+        lagreStatusEndringer(dispatch, val, aktivitet).then(() => {
             setEndring(false);
             // @ts-ignore
             document.querySelector('.aktivitet-modal').focus();

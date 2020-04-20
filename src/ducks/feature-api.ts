@@ -6,11 +6,11 @@ const featureQueryParams = (features: string[]) => {
     return features.reduce(reduceFunc, '');
 };
 
-export function hentFeature(enhet?: string): { [key: string]: boolean } {
+export function hentFeature(enhet?: string): Promise<{ [key: string]: boolean }> {
     const features = featureQueryParams(ALL_FEATURES);
 
     if (features.length === 0) {
-        return {};
+        return Promise.resolve({ ignore: false });
     }
 
     // @ts-ignore
