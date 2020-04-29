@@ -10,7 +10,7 @@ function FormErrorSummary({ submittoken, errors }) {
     useEffect(() => {
         if (submittoken) {
             summaryRef.current.focus();
-            summaryRef.current.scrollIntoView();
+            summaryRef.current.scrollIntoView && summaryRef.current.scrollIntoView();
         }
     }, [submittoken, summaryRef]);
 

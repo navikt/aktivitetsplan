@@ -8,8 +8,8 @@ import reducer from '../../../../reducer';
 const initialState = {
     data: {
         oppfolging: { data: { underOppfolging: true } },
-        aktiviteter: []
-    }
+        aktiviteter: [],
+    },
 };
 
 const dirtyRef = { current: false };
@@ -22,16 +22,14 @@ describe('MoteAktivitetForm', () => {
     it('Skal vise error summary når man submitter uten å oppgi påkrevde verdier', () => {
         const wrapper = mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} />);
 
-        expect(wrapper.find('Error').length).toEqual(0);
+        expect(wrapper.find('Feiloppsummering').length).toEqual(0);
 
         wrapper.simulate('submit');
 
-        const error = wrapper.find('Error');
+        const error = wrapper.find('Feiloppsummering');
 
-        expect(error.length).toEqual(3);
-        expect(error.find('[href="#tittel"]').length).toEqual(1);
-        expect(error.find('[href="#dato"]').length).toEqual(1);
-        expect(error.find('[href="#adresse"]').length).toEqual(1);
+        expect(error.length).toEqual(1);
+        expect(error.find('.lenke').length).toEqual(3);
     });
     it('Skal ikke vise feil når obligatoriske felter er oppgitt', () => {
         const aktivitet = {
@@ -43,7 +41,7 @@ describe('MoteAktivitetForm', () => {
             kanal: 'OPPMOTE',
             beskrivelse: 'jfioew',
             forberedelser: 'jfioewjfe',
-            erAvtalt: false
+            erAvtalt: false,
         };
         const wrapper = mountWithIntl(
             <MoteAktivitetForm
@@ -55,7 +53,7 @@ describe('MoteAktivitetForm', () => {
         );
 
         wrapper.simulate('submit');
-        expect(wrapper.find('Error').length).toEqual(0);
+        expect(wrapper.find('Feiloppsummering').length).toEqual(0);
     });
     it('Skal populere felter når aktivitet er satt', () => {
         const aktivitet = {
@@ -63,7 +61,7 @@ describe('MoteAktivitetForm', () => {
             opprettetDato: '2019-08-31T05:00:00.000Z',
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
-            adresse: 'Slottet'
+            adresse: 'Slottet',
         };
         const wrapper = shallow(
             <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />
@@ -103,7 +101,7 @@ describe('MoteAktivitetForm', () => {
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
             adresse: 'Slottet',
-            avtalt: true
+            avtalt: true,
         };
         const wrapper = shallow(
             <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre />

@@ -67,14 +67,14 @@ function Aktivitetvisning(props: Props) {
 }
 
 Aktivitetvisning.defaultProps = {
-    aktivitet: {}
+    aktivitet: {},
 };
 
 Aktivitetvisning.propTypes = {
     aktivitet: AppPT.aktivitet,
     tillatEndring: PT.bool.isRequired,
     laster: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired
+    underOppfolging: PT.bool.isRequired,
 };
 
-export default lazyHOC(Aktivitetvisning);
+export default Aktivitetvisning;
