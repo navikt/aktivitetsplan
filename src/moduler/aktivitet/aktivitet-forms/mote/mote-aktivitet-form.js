@@ -18,19 +18,20 @@ import {
     validateKanal,
     validateKlokkeslett,
     validateTittel,
-    validateVarighet
+    validateVarighet,
 } from './validate';
 
 import * as AppPT from '../../../../proptypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import VelgKanal from '../velg-kanal';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-const HuskVarsleBruker = props => {
+const HuskVarsleBruker = (props) => {
     if (!props.avtalt || props.pristine) {
         return null;
     }
@@ -51,7 +52,7 @@ const validator = useFormstate({
     kanal: (val, values, aktivitet) => validateKanal(erAvtalt(aktivitet), val),
     adresse: (val, values, aktivitet) => validateAdresse(erAvtalt(aktivitet), val),
     beskrivelse: (val, values, aktivitet) => validateHensikt(erAvtalt(aktivitet), val),
-    forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val)
+    forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val),
 });
 
 function MoteAktivitetForm(props) {
@@ -69,7 +70,7 @@ function MoteAktivitetForm(props) {
         kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
         adresse: maybeAktivitet.adresse || '',
         beskrivelse: endre ? beskrivelse : defaultBeskrivelse,
-        forberedelser: maybeAktivitet.forberedelser || ''
+        forberedelser: maybeAktivitet.forberedelser || '',
     };
 
     const state = validator(initalValue, aktivitet);
@@ -79,14 +80,10 @@ function MoteAktivitetForm(props) {
     }
 
     return (
-        <form onSubmit={state.onSubmit(x => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
-            <div className="skjema-innlogget aktivitetskjema">
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
+        <form onSubmit={state.onSubmit((x) => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
+            <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
-
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
-
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
@@ -109,7 +106,8 @@ function MoteAktivitetForm(props) {
                     maxLength={FORBEREDELSER_MAKS_LENGDE}
                     {...state.fields.forberedelser}
                 />
-            </div>
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+            </SkjemaGruppe>
             <LagreAktivitet />
         </form>
     );
@@ -119,13 +117,13 @@ MoteAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     isDirtyRef: PT.shape({ current: PT.bool }),
     aktivitet: AppPT.aktivitet,
-    endre: PT.bool
+    endre: PT.bool,
 };
 
 MoteAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: false,
-    endre: false
+    endre: false,
 };
 
 export default MoteAktivitetForm;

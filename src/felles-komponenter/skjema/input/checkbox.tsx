@@ -19,13 +19,13 @@ function Checkbox(props: Props & CheckboxProps) {
     const toggelOnChange = (event: any) => {
         const newValue = toggel ? 'false' : 'true';
         const customEvent: any = {
-            target: { name: event.target.name, value: newValue }
+            target: { name: event.target.name, value: newValue },
         };
         input.onChange(customEvent);
         setToggel(!toggel);
     };
 
-    const feil = error && touched ? { feilmelding: error } : undefined;
+    const feil = error && touched ? error : undefined;
     return <NavCheckbox {...inputProps} checked={input.value === 'true'} feil={feil} onChange={toggelOnChange} />;
 }
 

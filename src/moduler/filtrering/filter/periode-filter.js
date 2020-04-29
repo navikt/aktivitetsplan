@@ -1,6 +1,6 @@
 import React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
-import { Radio } from 'nav-frontend-skjema';
+import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -25,14 +25,14 @@ export function PeriodeLabel({ historiskPeriode }) {
 }
 
 PeriodeLabel.defaultProps = {
-    historiskPeriode: null
+    historiskPeriode: null,
 };
 
 PeriodeLabel.propTypes = {
-    historiskPeriode: AppPT.oppfolgingsPeriode
+    historiskPeriode: AppPT.oppfolgingsPeriode,
 };
 
-const periodeFilterCls = classes => classNames(classes);
+const periodeFilterCls = (classes) => classNames(classes);
 
 function PeriodeFilter({
     harHistoriskePerioder,
@@ -40,7 +40,7 @@ function PeriodeFilter({
     historiskePerioder,
     doVelgHistoriskPeriode,
     className,
-    skjulInneverende
+    skjulInneverende,
 }) {
     return (
         <VisibleIfDiv className={periodeFilterCls(className)} visible={harHistoriskePerioder}>
@@ -50,7 +50,7 @@ function PeriodeFilter({
                 onOpen={() => loggEvent(LIST_HISTORISK_PERIODE)}
             >
                 <div className="filter__container">
-                    <div className="filter">
+                    <SkjemaGruppe className="filter">
                         <Undertittel className="filter__tittel">Velg periode</Undertittel>
                         <HiddenIfDiv hidden={skjulInneverende}>
                             <Radio
@@ -61,7 +61,7 @@ function PeriodeFilter({
                                 checked={!historiskPeriode}
                             />
                         </HiddenIfDiv>
-                        {historiskePerioder.map(t => {
+                        {historiskePerioder.map((t) => {
                             const { id } = t;
                             return (
                                 <div key={id}>
@@ -78,7 +78,7 @@ function PeriodeFilter({
                                 </div>
                             );
                         })}
-                    </div>
+                    </SkjemaGruppe>
                 </div>
             </Dropdown>
         </VisibleIfDiv>
@@ -91,28 +91,25 @@ PeriodeFilter.propTypes = {
     historiskPeriode: AppPT.oppfolgingsPeriode,
     doVelgHistoriskPeriode: PT.func.isRequired,
     className: PT.string,
-    skjulInneverende: PT.bool.isRequired
+    skjulInneverende: PT.bool.isRequired,
 };
 
 PeriodeFilter.defaultProps = {
     historiskPeriode: null,
-    className: ''
+    className: '',
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const historiskePerioder = selectSorterteHistoriskeOppfolgingsPerioder(state);
     return {
         historiskePerioder,
         historiskPeriode: selectHistoriskPeriode(state),
-        harHistoriskePerioder: historiskePerioder.length > 0
+        harHistoriskePerioder: historiskePerioder.length > 0,
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doVelgHistoriskPeriode: aktivitetsType => dispatch(velgHistoriskPeriode(aktivitetsType))
+const mapDispatchToProps = (dispatch) => ({
+    doVelgHistoriskPeriode: (aktivitetsType) => dispatch(velgHistoriskPeriode(aktivitetsType)),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PeriodeFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(PeriodeFilter);

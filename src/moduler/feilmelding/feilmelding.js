@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { AlertStripeInfo, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import FeilmeldingDetaljer from './feilmelding-detaljer';
 import {
@@ -13,7 +13,7 @@ import {
     UGYLDIG_REQUEST_KATEGORI,
     UKJENT_KATEGORI,
     UNAUTHORIZED_KATEGORI,
-    VERSJONSKONFLIKT_KATEGORI
+    VERSJONSKONFLIKT_KATEGORI,
 } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
@@ -26,7 +26,7 @@ const stripeTyper = {
     [UNAUTHORIZED_KATEGORI]: AlertStripeFeil,
     [INGEN_TILGANG_KATEGORI]: AlertStripeInfo,
     [UGYLDIG_REQUEST_KATEGORI]: AlertStripeInfo,
-    [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo
+    [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo,
 };
 
 function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
@@ -46,7 +46,7 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
             .join('-')
             .toLowerCase()
     );
-    const mostSpesificKey = feilKeys.find(key => intl.formatMessage({ id: key, defaultMessage: key }) !== key);
+    const mostSpesificKey = feilKeys.find((key) => intl.formatMessage({ id: key, defaultMessage: key }) !== key);
 
     return (
         <Stripe>
@@ -59,28 +59,27 @@ function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
 
 FeilStripe.defaultProps = {
     erVeileder: false,
-    erArenaFeil: false
+    erArenaFeil: false,
 };
 
 FeilStripe.propTypes = {
     feil: AppPT.feil.isRequired,
     erVeileder: PT.bool,
-    intl: intlShape.isRequired,
-    erArenaFeil: PT.bool
+    erArenaFeil: PT.bool,
 };
 
 class Feilmelding extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            apen: false
+            apen: false,
         };
     }
 
     toggleDetaljer = () => {
         const { apen } = this.state;
         this.setState({
-            apen: !apen
+            apen: !apen,
         });
     };
 
@@ -97,7 +96,7 @@ class Feilmelding extends Component {
                     <span>Vis detaljer</span>
                 </Knappelenke>
                 <VisibleIfDiv visible={apen} className="feilmelding__detaljer">
-                    {feilmeldinger.map(feilen => {
+                    {feilmeldinger.map((feilen) => {
                         const id = (feilen.melding && feilen.melding.id) || feilen.type;
                         const action = feilen.type;
                         const rest = (feilen.melding && feilen.melding.detaljer) || feilen.melding;
@@ -121,15 +120,14 @@ Feilmelding.defaultProps = {
     feilmeldinger: [],
     className: undefined,
     erVeileder: false,
-    erArenaFeil: false
+    erArenaFeil: false,
 };
 
 Feilmelding.propTypes = {
-    intl: intlShape.isRequired,
     feilmeldinger: PT.array,
     erVeileder: PT.bool,
     erArenaFeil: PT.bool,
-    className: PT.string
+    className: PT.string,
 };
 
 export default injectIntl(Feilmelding);

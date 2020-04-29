@@ -1,11 +1,11 @@
 import React from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import styles from './informasjon-modal.module.less';
 
 export function BrukePlanenPanel() {
     return (
-        <Ekspanderbartpanel tittel="Slik bruker du aktivitetsplanen" tittelProps="undertittel">
+        <Ekspanderbartpanel tittel={<Undertittel>Slik bruker du aktivitetsplanen</Undertittel>}>
             <Normaltekst className={styles.avsnitt}>
                 Bestem deg først for hva som er målet ditt. Du kan endre dette senere. Vurder så hvilke aktiviteter du
                 ønsker å gjøre for å nå målet, for eksempel å søke jobber, gjennomføre et kurs eller arbeidstrening.

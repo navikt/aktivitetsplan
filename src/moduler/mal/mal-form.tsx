@@ -5,6 +5,7 @@ import { oppdaterMal } from './aktivitetsmal-reducer';
 import Textarea from '../../felles-komponenter/skjema/input/textarea';
 import { hentMalListe } from './malliste-reducer';
 import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function validateMal(val: string) {
     if (val.length === 0) {
@@ -16,7 +17,7 @@ function validateMal(val: string) {
 }
 
 const validator = useFormstate({
-    mal: validateMal
+    mal: validateMal,
 });
 
 interface Props {
@@ -40,12 +41,14 @@ function MalForm(props: Props) {
     };
 
     const state = validator({
-        mal: mal || ''
+        mal: mal || '',
     });
 
     return (
         <form className="aktivitetmal__innhold" onSubmit={state.onSubmit(onSubmit)}>
-            <Textarea label="" maxLength={500} {...state.fields.mal} />
+            <SkjemaGruppe>
+                <Textarea label="" maxLength={500} {...state.fields.mal} />
+            </SkjemaGruppe>
             <Hovedknapp>Lagre</Hovedknapp>
         </form>
     );

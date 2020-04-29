@@ -9,10 +9,10 @@ import {
     selectErUnderOppfolging,
     selectInaktiveringsDato,
     selectKanReaktiveres,
-    selectTilHorendeDialogId
+    selectTilHorendeDialogId,
 } from '../oppfolging-status/oppfolging-selector';
-import { moment } from '../../utils';
 import styls from './varslinger.module.less';
+import moment from 'moment';
 
 function infotekstTilInaktivertBrukere(antallDagerIgjen?: number): string | undefined {
     if (!antallDagerIgjen) {

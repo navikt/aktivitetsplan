@@ -1,22 +1,15 @@
-import momentImpl from 'moment';
-import 'moment-timezone';
-import 'moment/locale/nb';
-
-momentImpl.locale('nb');
-momentImpl.tz.setDefault('Europe/Oslo');
-
-export const moment = momentImpl;
+import moment from 'moment';
 
 export function fn(value) {
     return typeof value === 'function' ? value : () => value;
 }
 
-export const msSince = date => moment().unix() - moment(date).unix();
+export const msSince = (date) => moment().unix() - moment(date).unix();
 
 export function autobind(ctx) {
     Object.getOwnPropertyNames(ctx.constructor.prototype)
-        .filter(prop => typeof ctx[prop] === 'function')
-        .forEach(method => {
+        .filter((prop) => typeof ctx[prop] === 'function')
+        .forEach((method) => {
             // eslint-disable-next-line
             ctx[method] = ctx[method].bind(ctx);
         });
@@ -41,34 +34,34 @@ export function erInternlenke(href) {
 }
 
 export function storeForbokstaver(...tekster) {
-    const tekst = tekster.filter(s => s).join(' ');
+    const tekst = tekster.filter((s) => s).join(' ');
 
     return tekst
         .split(' ')
-        .map(ord => ord.charAt(0).toUpperCase() + ord.slice(1).toLowerCase())
+        .map((ord) => ord.charAt(0).toUpperCase() + ord.slice(1).toLowerCase())
         .join(' ');
 }
 
-export const erGyldigISODato = isoDato => {
+export const erGyldigISODato = (isoDato) => {
     return !!(isoDato && moment(isoDato, moment.ISO_8601).isValid());
 };
 
-export const erGyldigFormattertDato = formattertDato => {
+export const erGyldigFormattertDato = (formattertDato) => {
     return !!(formattertDato && formattertDato.length === 10 && moment(formattertDato, 'DD.MM.YYYY', true).isValid());
 };
 
-const erLocalDate = dato => {
+const erLocalDate = (dato) => {
     return dato.year && dato.monthValue && dato.dayOfMonth;
 };
 
-export const toDate = dato => {
+export const toDate = (dato) => {
     if (typeof dato === 'undefined' || dato === null) {
         return null;
     }
     return erLocalDate(dato) ? new Date(dato.year, dato.monthValue - 1, dato.dayOfMonth) : new Date(dato);
 };
 
-export const toDatePrettyPrint = dato => {
+export const toDatePrettyPrint = (dato) => {
     if (typeof dato === 'undefined' || dato === null) {
         return null;
     }
@@ -83,29 +76,23 @@ export const toDatePrettyPrint = dato => {
 };
 
 export const todayIsoString = () => {
-    return moment()
-        .startOf('day')
-        .toISOString();
+    return moment().startOf('day').toISOString();
 };
 
-export const datePickerToISODate = dato => {
+export const datePickerToISODate = (dato) => {
     const parsetDato = moment(dato, 'DD.MM.YYYY', true);
     return parsetDato.isValid() ? parsetDato.toISOString() : '';
 };
 
-export const dateToISODate = dato => {
+export const dateToISODate = (dato) => {
     const parsetDato = moment(dato);
     return dato && parsetDato.isValid() ? parsetDato.toISOString() : '';
 };
 
-export const ISODateToDatePicker = dato => {
+export const ISODateToDatePicker = (dato) => {
     const parsetDato = moment(dato);
     return dato && parsetDato.isValid() ? parsetDato.format('DD.MM.YYYY') : '';
 };
-
-moment.updateLocale('nb', {
-    monthsShort: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des']
-});
 
 function formatter(dato, format) {
     if (dato) {
@@ -138,38 +125,17 @@ export function formaterDatoTidSiden(dato) {
 
 function erMerEnntoDagerSiden(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid
-        ? datoVerdi.isAfter(
-              moment()
-                  .subtract(2, 'days')
-                  .startOf('day'),
-              'd'
-          )
-        : false;
+    return datoVerdi.isValid ? datoVerdi.isAfter(moment().subtract(2, 'days').startOf('day'), 'd') : false;
 }
 
 export function erMerEnnSyvDagerTil(dato) {
     const datoVerdi = moment(dato);
-    return datoVerdi.isValid
-        ? datoVerdi.isAfter(
-              moment()
-                  .add(7, 'days')
-                  .startOf('day'),
-              'd'
-          )
-        : false;
+    return datoVerdi.isValid ? datoVerdi.isAfter(moment().add(7, 'days').startOf('day'), 'd') : false;
 }
 
 export function erMerEnnEnManederSiden(aktivitet) {
     const datoVerdi = aktivitet.tilDato ? moment(aktivitet.tilDato) : moment(aktivitet.fraDato);
-    return datoVerdi.isValid
-        ? datoVerdi.isBefore(
-              moment()
-                  .subtract(1, 'month')
-                  .startOf('day'),
-              'd'
-          )
-        : false;
+    return datoVerdi.isValid ? datoVerdi.isBefore(moment().subtract(1, 'month').startOf('day'), 'd') : false;
 }
 
 export function formaterDatoEllerTidSiden(dato) {
@@ -208,7 +174,5 @@ export function HiddenIf({ hidden, children }) {
 }
 
 export function dagerTil(dato) {
-    return moment(dato)
-        .startOf('day')
-        .diff(moment().startOf('day'), 'day');
+    return moment(dato).startOf('day').diff(moment().startOf('day'), 'day');
 }

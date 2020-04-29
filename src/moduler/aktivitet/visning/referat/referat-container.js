@@ -6,11 +6,12 @@ import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import ReferatSeksjon from './referat-seksjon';
 import { publiserReferat } from '../../aktivitet-actions';
-import { autobind, moment } from '../../../../utils';
+import { autobind } from '../../../../utils';
 import { STATUS } from '../../../../ducks/utils';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import DeleLinje from '../delelinje/delelinje';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
+import moment from 'moment';
 
 class ReferatContainer extends Component {
     constructor(props) {
@@ -21,13 +22,13 @@ class ReferatContainer extends Component {
 
     startOppdaterReferat() {
         this.setState({
-            oppdaterReferat: true
+            oppdaterReferat: true,
         });
     }
 
     stoppOppdaterReferat() {
         this.setState({
-            oppdaterReferat: false
+            oppdaterReferat: false,
         });
     }
 
@@ -53,12 +54,12 @@ class ReferatContainer extends Component {
 
 ReferatContainer.defaultProps = {
     className: undefined,
-    erReferatPublisert: false
+    erReferatPublisert: false,
 };
 
 ReferatContainer.propTypes = {
     aktivitet: PT.object.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 const mapStateToProps = (state, props) => {
@@ -85,15 +86,12 @@ const mapStateToProps = (state, props) => {
         kanHaReferat,
         visReferat,
         referat,
-        harReferat
+        harReferat,
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    dispatchPubliserReferat: () => dispatch(publiserReferat(ownProps.aktivitet))
+    dispatchPubliserReferat: () => dispatch(publiserReferat(ownProps.aktivitet)),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ReferatContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ReferatContainer);

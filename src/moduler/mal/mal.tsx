@@ -30,7 +30,7 @@ function Mal() {
             <Innholdstittel className="aktivitetmal__header">
                 {viserHistoriskPeriode ? 'Ditt mål fra en tidligere periode' : 'Ditt mål'}
             </Innholdstittel>
-            <Undertekst className="aktivitetmal__sub-header">
+            <Undertekst className="aktivitetmal__sub-header" tag="div">
                 Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
                 <ul>
                     <li>Hva er målet på kort sikt? Hva er målet på lengre sikt?</li>

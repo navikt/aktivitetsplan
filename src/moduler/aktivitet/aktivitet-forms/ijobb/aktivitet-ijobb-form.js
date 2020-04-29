@@ -6,7 +6,6 @@ import LagreAktivitet from '../lagre-aktivitet';
 import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-validering';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import {
@@ -14,14 +13,16 @@ import {
     validateFeltForLangt,
     validateFraDato,
     validateJobbstatus,
-    validateTittel
+    validateTittel,
 } from './validate';
 import PeriodeValidering, {
-    validerPeriodeFelt
+    validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
+import Label from 'nav-frontend-skjema/lib/label';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -35,7 +36,7 @@ const validator = useFormstate({
     ansettelsesforhold: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
     jobbStatus: (val, values, aktivitet) => validateJobbstatus(erAvtalt(aktivitet), val),
     arbeidstid: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val)
+    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
 });
 
 function IJobbAktivitetForm(props) {
@@ -51,7 +52,7 @@ function IJobbAktivitetForm(props) {
         jobbStatus: maybeAktivitet.jobbStatus || '',
         ansettelsesforhold: maybeAktivitet.ansettelsesforhold || '',
         arbeidstid: maybeAktivitet.arbeidstid || '',
-        beskrivelse: maybeAktivitet.beskrivelse || ''
+        beskrivelse: maybeAktivitet.beskrivelse || '',
     };
 
     const state = validator(initalValues, aktivitet);
@@ -62,9 +63,7 @@ function IJobbAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
-            <div className="aktivitetskjema">
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
+            <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
@@ -81,11 +80,11 @@ function IJobbAktivitetForm(props) {
                     </div>
                 </PeriodeValidering>
 
-                <FieldGroup name="jobbStatus" field={state.fields.jobbStatus}>
-                    <legend className="skjemaelement__label">Stillingsandel *</legend>
+                <SkjemaGruppe id="jobbStatus" feil={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}>
+                    <Label>Stillingsandel *</Label>
                     <Radio label="Heltid" value={JOBB_STATUS_HELTID} disabled={avtalt} {...state.fields.jobbStatus} />
                     <Radio label="Deltid" value={JOBB_STATUS_DELTID} disabled={avtalt} {...state.fields.jobbStatus} />
-                </FieldGroup>
+                </SkjemaGruppe>
 
                 <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.ansettelsesforhold} />
                 <Input
@@ -100,7 +99,8 @@ function IJobbAktivitetForm(props) {
                     visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
-            </div>
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+            </SkjemaGruppe>
             <LagreAktivitet />
         </form>
     );
@@ -109,12 +109,12 @@ function IJobbAktivitetForm(props) {
 IJobbAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
-    isDirtyRef: PT.shape({ current: PT.bool })
+    isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
 IJobbAktivitetForm.defaultProps = {
     aktivitet: undefined,
-    isDirtyRef: undefined
+    isDirtyRef: undefined,
 };
 
 export default IJobbAktivitetForm;
