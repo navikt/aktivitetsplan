@@ -27,6 +27,8 @@ import VelgKanal from '../velg-kanal';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
+import Lenke from 'nav-frontend-lenker';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -48,13 +50,13 @@ function VideoInfo(props) {
         return (
             <Normaltekst className="mote-aktivitet-form__video-info">
                 Les om{' '}
-                <a
+                <Lenke
                     href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    rutiner for videomøte her
-                </a>
+                    rutiner for videomøte her <EksternLenkeIkon />
+                </Lenke>
             </Normaltekst>
         );
     }
