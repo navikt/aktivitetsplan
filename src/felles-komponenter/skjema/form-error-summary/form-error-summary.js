@@ -14,7 +14,7 @@ function FormErrorSummary({ submittoken, errors }) {
         }
     }, [submittoken, summaryRef]);
 
-    if (!submittoken) {
+    if (!submittoken || Object.keys(errors).length === 0) {
         return null;
     }
 
