@@ -7,12 +7,21 @@ import NAVSPA from './NAVSPA';
 import { erEksternBruker } from './mocks/demo/sessionstorage';
 import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
 import DemoBanner from './mocks/demo/demoBanner';
+import moment from 'moment';
+import 'moment-timezone';
+import 'moment/locale/nb';
 
 /* eslint-disable global-require */
 if (!global.Intl) {
     require('intl');
     require('intl/locale-data/jsonp/nb.js');
 }
+
+moment.locale('nb');
+moment.tz.setDefault('Europe/Oslo');
+moment.updateLocale('nb', {
+    monthsShort: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'],
+});
 
 if (process.env.REACT_APP_MOCK === 'true') {
     const fnr = '/12345678910';

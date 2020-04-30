@@ -1,11 +1,11 @@
 /* eslint-env mocha */
-import { moment } from '../../utils';
+import moment from 'moment';
 import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
     formatterKlokkeslett,
     formatterVarighet,
-    splitIEldreOgNyereAktiviteter
+    splitIEldreOgNyereAktiviteter,
 } from './aktivitet-util';
 
 describe('aktivitet-util', () => {
@@ -13,7 +13,7 @@ describe('aktivitet-util', () => {
         const fraTil = beregnFraTil({
             dato: '2017-08-01T00:00:00.000+02:00',
             klokkeslett: '15:00',
-            varighet: '00:15'
+            varighet: '00:15',
         });
         expect(fraTil.fraDato).toEqual('2017-08-01T13:00:00.000Z');
         expect(fraTil.tilDato).toEqual('2017-08-01T13:15:00.000Z');
@@ -24,7 +24,7 @@ describe('aktivitet-util', () => {
     it('beregnKlokkeslettVarighet', () => {
         const klokkeslettVarighet = beregnKlokkeslettVarighet({
             fraDato: '2017-08-01T04:00:00.000+02:00',
-            tilDato: '2017-08-01T06:15:00.000+02:00'
+            tilDato: '2017-08-01T06:15:00.000+02:00',
         });
         expect(klokkeslettVarighet.klokkeslett).toEqual('04:00');
         expect(klokkeslettVarighet.varighet).toEqual('02:15');
@@ -42,7 +42,7 @@ describe('aktivitet-util', () => {
                 beregnFraTil(
                     beregnKlokkeslettVarighet({
                         fraDato,
-                        tilDato
+                        tilDato,
                     })
                 )
             )
@@ -63,9 +63,7 @@ describe('aktivitet-util', () => {
     it('skallSplitteRiktigt', () => {
         const mangladeTilDato = [{ tilDato: null }];
         const tilDatoMerEnnToManederSiden = {
-            tilDato: moment()
-                .subtract(3, 'month')
-                .format()
+            tilDato: moment().subtract(3, 'month').format(),
         };
         const tilDatoMindreEnnToManederSiden = { tilDato: moment().format() };
         const aktiviteter = [mangladeTilDato, tilDatoMerEnnToManederSiden, tilDatoMindreEnnToManederSiden];

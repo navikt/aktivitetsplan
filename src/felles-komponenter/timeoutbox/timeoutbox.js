@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PT from 'prop-types';
 import NavFrontendModal from 'nav-frontend-modal';
+import moment from 'moment';
 import TimeoutboxNedtelling from './timeoutbox-nedtelling';
 import { hentGjenstaendeInnloggetTid } from './auth-reducer';
 import { selectExpirationTime } from './auth-selector';
-import { moment } from '../../utils';
 
 class Timeoutbox extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Timeoutbox extends Component {
         const { doHentGjenstaendeInnloggetTid } = this.props;
         doHentGjenstaendeInnloggetTid();
         this.state = {
-            manueltLukket: false
+            manueltLukket: false,
         };
     }
 
@@ -57,7 +57,7 @@ class Timeoutbox extends Component {
                 portalClassName="aktivitetsplanfs timeout-modal-portal"
                 onRequestClose={() => {
                     this.setState({
-                        manueltLukket: true
+                        manueltLukket: true,
                     });
                 }}
                 contentLabel="Advarsel om utlogging"
@@ -70,22 +70,19 @@ class Timeoutbox extends Component {
 
 Timeoutbox.propTypes = {
     doHentGjenstaendeInnloggetTid: PT.func.isRequired,
-    expirationTime: PT.string
+    expirationTime: PT.string,
 };
 
 Timeoutbox.defaultProps = {
-    expirationTime: null
+    expirationTime: null,
 };
 
-const mapStateToProps = state => ({
-    expirationTime: selectExpirationTime(state)
+const mapStateToProps = (state) => ({
+    expirationTime: selectExpirationTime(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    doHentGjenstaendeInnloggetTid: () => dispatch(hentGjenstaendeInnloggetTid())
+const mapDispatchToProps = (dispatch) => ({
+    doHentGjenstaendeInnloggetTid: () => dispatch(hentGjenstaendeInnloggetTid()),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Timeoutbox);
+export default connect(mapStateToProps, mapDispatchToProps)(Timeoutbox);

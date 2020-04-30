@@ -1,18 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import PT from 'prop-types';
-
-function Error({ name, error }) {
-    return (
-        <li key={`${name}-${error}`}>
-            <a href={`#${name}`}>{error}</a>
-        </li>
-    );
-}
-
-Error.propTypes = {
-    name: PT.string.isRequired,
-    error: PT.string.isRequired
-};
+import { Feiloppsummering } from 'nav-frontend-skjema';
+import styles from './feiloppsummering.module.less';
 
 function FormErrorSummary({ submittoken, errors }) {
     const summaryRef = useRef(null);
@@ -21,6 +10,7 @@ function FormErrorSummary({ submittoken, errors }) {
     useEffect(() => {
         if (submittoken) {
             summaryRef.current.focus();
+            summaryRef.current.scrollIntoView && summaryRef.current.scrollIntoView();
         }
     }, [submittoken, summaryRef]);
 
@@ -28,32 +18,25 @@ function FormErrorSummary({ submittoken, errors }) {
         return null;
     }
 
+    const feil = Object.entries(errors).map(([name, error]) => ({ skjemaelementId: name, feilmelding: error }));
+
     return (
-        <div
-            ref={summaryRef}
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-            className="feedbacksummary"
-            tabIndex="-1"
-        >
-            <h3>Fyll ut obligatoriske felt</h3>
-            <ul>
-                {Object.entries(errors).map(([name, error]) => (
-                    <Error key={name} error={error} name={name} />
-                ))}
-            </ul>
-        </div>
+        <Feiloppsummering
+            className={styles.container}
+            innerRef={summaryRef}
+            tittel="For å gå videre må du rette opp følgende:"
+            feil={feil}
+        />
     );
 }
 
 FormErrorSummary.propTypes = {
     submittoken: PT.string,
-    errors: PT.object.isRequired
+    errors: PT.object.isRequired,
 };
 
 FormErrorSummary.defaultProps = {
-    submittoken: undefined
+    submittoken: undefined,
 };
 
 export default FormErrorSummary;

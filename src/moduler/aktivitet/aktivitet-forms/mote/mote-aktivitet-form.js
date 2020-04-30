@@ -26,6 +26,7 @@ import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-s
 import VelgKanal from '../velg-kanal';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -95,13 +96,9 @@ function MoteAktivitetForm(props) {
 
     return (
         <form onSubmit={state.onSubmit(x => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
-            <div className="skjema-innlogget aktivitetskjema">
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
+            <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
-
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
-
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
@@ -125,7 +122,8 @@ function MoteAktivitetForm(props) {
                     maxLength={FORBEREDELSER_MAKS_LENGDE}
                     {...state.fields.forberedelser}
                 />
-            </div>
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+            </SkjemaGruppe>
             <LagreAktivitet />
         </form>
     );

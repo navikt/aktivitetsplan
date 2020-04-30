@@ -1,8 +1,8 @@
 import 'moment-duration-format';
-import { erMerEnnEnManederSiden, moment } from '../../utils';
+import { erMerEnnEnManederSiden } from '../../utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import { Aktivitet, AktivitetStatus, AktivitetType, Lest, Me } from '../../types';
-import { DurationInputArg1 } from 'moment';
+import moment, { DurationInputArg1 } from 'moment';
 
 function compareUndefindedOrNull(a: any, b: any): number {
     if (a != null && b == null) {
@@ -79,7 +79,7 @@ export function beregnKlokkeslettVarighet(aktivitet: Aktivitet): MoteTid {
         return {
             dato: fraMoment.startOf('day').toISOString(),
             klokkeslett,
-            varighet
+            varighet,
         };
     }
     return {};
@@ -100,16 +100,11 @@ export function beregnFraTil(data: Data): FraTil {
     const { dato, klokkeslett, varighet } = data;
 
     if (dato && klokkeslett && varighet) {
-        const fraDato = moment(dato)
-            .startOf('day')
-            .add(moment.duration(klokkeslett))
-            .toISOString();
-        const tilDato = moment(fraDato)
-            .add(moment.duration(varighet))
-            .toISOString();
+        const fraDato = moment(dato).startOf('day').add(moment.duration(klokkeslett)).toISOString();
+        const tilDato = moment(fraDato).add(moment.duration(varighet)).toISOString();
         return {
             fraDato,
-            tilDato
+            tilDato,
         };
     }
     return {};
@@ -164,7 +159,7 @@ export function trengerBegrunnelse(erAvtalt: boolean, status: AktivitetStatus, a
 
 export function sorterAktiviteter(aktiviteter: Aktivitet[], status: AktivitetStatus): Aktivitet[] {
     return aktiviteter
-        .filter(a => {
+        .filter((a) => {
             if (a.nesteStatus) {
                 return a.nesteStatus === status;
             }

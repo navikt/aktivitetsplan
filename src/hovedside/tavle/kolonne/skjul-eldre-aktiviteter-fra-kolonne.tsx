@@ -15,7 +15,7 @@ interface AktivitetListeProps {
 }
 
 function AktivitetsListe(props: AktivitetListeProps) {
-    const liste = props.aktiviteter.map(aktivitet => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />);
+    const liste = props.aktiviteter.map((aktivitet) => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />);
     return <> {liste} </>;
 }
 
@@ -43,7 +43,6 @@ function SkjulEldreAktiviteter(props: Props) {
 
 SkjulEldreAktiviteter.propTypes = {
     aktiviteteterTilDatoMerEnnToManederSiden: PT.arrayOf(PT.object).isRequired,
-    erVeileder: PT.bool.isRequired
 };
 
 export default SkjulEldreAktiviteter;

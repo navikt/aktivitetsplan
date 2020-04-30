@@ -1,7 +1,8 @@
 import React from 'react';
+import moment from 'moment';
 import PT from 'prop-types';
-import { erGyldigISODato, moment } from '../../../utils';
-import FieldGroup from './fieldgroups-validering';
+import { erGyldigISODato } from '../../../utils';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 export function validerPeriode(fradato, tildato) {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {
@@ -20,15 +21,10 @@ export function validerPeriodeFelt(fraDato, tilDato) {
 function PeriodeValidering(props) {
     const { valideringFelt, children } = props;
 
-    const field = {
-        touched: !!valideringFelt.error,
-        error: valideringFelt.error
-    };
-
     return (
-        <FieldGroup name={valideringFelt.input.name} field={field}>
+        <SkjemaGruppe feilmeldingId="periode-feil" id={valideringFelt.input.name} feil={valideringFelt.error}>
             {children}
-        </FieldGroup>
+        </SkjemaGruppe>
     );
 }
 
@@ -37,14 +33,14 @@ PeriodeValidering.propTypes = {
         name: PT.string,
         error: PT.string,
         input: PT.shape({
-            name: PT.string
-        }).isRequired
+            name: PT.string,
+        }).isRequired,
     }).isRequired,
-    children: PT.node
+    children: PT.node,
 };
 
 PeriodeValidering.defaultProps = {
-    children: undefined
+    children: undefined,
 };
 
 export default PeriodeValidering;

@@ -9,7 +9,6 @@ import VarslingBoks from './hjelpekomponenter/varsling-boks';
 import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
 import ReferatContainer from './referat/referat-container';
-import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
 import { Aktivitet } from '../../../types';
@@ -67,14 +66,14 @@ function Aktivitetvisning(props: Props) {
 }
 
 Aktivitetvisning.defaultProps = {
-    aktivitet: {}
+    aktivitet: {},
 };
 
 Aktivitetvisning.propTypes = {
     aktivitet: AppPT.aktivitet,
     tillatEndring: PT.bool.isRequired,
     laster: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired
+    underOppfolging: PT.bool.isRequired,
 };
 
-export default lazyHOC(Aktivitetvisning);
+export default Aktivitetvisning;

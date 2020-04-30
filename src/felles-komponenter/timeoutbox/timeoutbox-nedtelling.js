@@ -4,8 +4,8 @@ import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import ModalContainer from '../modal/modal-container';
 import ModalFooter from '../modal/modal-footer';
-import { moment } from '../../utils';
 import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
+import moment from 'moment';
 
 class TimeoutboxNedtelling extends Component {
     componentDidMount() {
@@ -54,7 +54,7 @@ class TimeoutboxNedtelling extends Component {
 }
 
 TimeoutboxNedtelling.propTypes = {
-    utlopsTidspunkt: PT.string.isRequired
+    utlopsTidspunkt: PT.string.isRequired,
 };
 
 export default TimeoutboxNedtelling;

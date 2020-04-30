@@ -12,13 +12,13 @@ import {
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT
+    STATUS_PLANLAGT,
 } from '../../../../constant';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import FieldGroup from '../../../../felles-komponenter/skjema/field-group/fieldgroups-validering';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import { DirtyContext } from '../../../context/dirty-context';
+import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripe);
 
@@ -60,7 +60,7 @@ function validateBegrunnelse(value, values, aktivitet) {
 const validator = useFormstate({
     aktivitetstatus: () => {},
     begrunnelse: (val, values, aktivitet) => validateBegrunnelse(val, values, aktivitet),
-    statusValidering: (val, values, aktivitet) => kanOppdatereStatus(aktivitet, values)
+    statusValidering: (val, values, aktivitet) => kanOppdatereStatus(aktivitet, values),
 });
 
 function AktivitetStatusForm(props) {
@@ -69,7 +69,7 @@ function AktivitetStatusForm(props) {
     const initalValue = {
         aktivitetstatus: aktivitet.status || '',
         begrunnelse: aktivitet.avsluttetBegrunnelse || '',
-        statusValidering: ''
+        statusValidering: '',
     };
 
     const state = validator(initalValue, aktivitet);
@@ -88,8 +88,7 @@ function AktivitetStatusForm(props) {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
-            <FieldGroup name="statusValidering" alwaysValidate field={state.fields.statusValidering}>
+            <SkjemaGruppe feil={state.fields.statusValidering.error}>
                 <Radio
                     label="Forslag"
                     value={STATUS_BRUKER_ER_INTRESSERT}
@@ -115,20 +114,25 @@ function AktivitetStatusForm(props) {
                     {...state.fields.aktivitetstatus}
                 />
                 <Radio label="Avbrutt" value={STATUS_AVBRUTT} disabled={disabled} {...state.fields.aktivitetstatus} />
-            </FieldGroup>
 
-            <VisibleIfDiv className="status-alert" visible={!state.pristine}>
-                <VisibleAlertStripeSuksessSolid visible={visAdvarsel} type="advarsel">
-                    {
-                        'Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre innholdet.'
-                    }
-                </VisibleAlertStripeSuksessSolid>
+                <VisibleIfDiv className="status-alert" visible={!state.pristine}>
+                    <VisibleAlertStripeSuksessSolid visible={visAdvarsel} type="advarsel">
+                        {
+                            'Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre innholdet.'
+                        }
+                    </VisibleAlertStripeSuksessSolid>
 
-                <VisibleIfDiv visible={visBegrunnelseFelt}>
-                    <Textarea label={label(status)} maxLength={255} disabled={disabled} {...state.fields.begrunnelse} />
+                    <VisibleIfDiv visible={visBegrunnelseFelt}>
+                        <Textarea
+                            label={label(status)}
+                            maxLength={255}
+                            disabled={disabled}
+                            {...state.fields.begrunnelse}
+                        />
+                    </VisibleIfDiv>
                 </VisibleIfDiv>
-            </VisibleIfDiv>
-
+            </SkjemaGruppe>
+            <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
             <Hovedknapp
                 spinner={state.submitting}
                 autoDisableVedSpinner
@@ -144,7 +148,7 @@ function AktivitetStatusForm(props) {
 AktivitetStatusForm.propTypes = {
     disabled: PT.bool.isRequired,
     onSubmit: PT.func.isRequired,
-    aktivitet: aktivitetPT.isRequired
+    aktivitet: aktivitetPT.isRequired,
 };
 
 export default AktivitetStatusForm;

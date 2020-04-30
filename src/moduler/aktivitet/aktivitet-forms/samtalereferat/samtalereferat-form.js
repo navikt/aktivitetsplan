@@ -11,12 +11,13 @@ import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 const validator = useFormstate({
     tittel: validateTittel,
     fraDato: validateFraDato,
     kanal: validateKanal,
-    referat: validateReferat
+    referat: validateReferat,
 });
 
 function SamtalereferatForm(props) {
@@ -26,19 +27,19 @@ function SamtalereferatForm(props) {
         tittel: '',
         fraDato: todayIsoString(),
         kanal: TELEFON_KANAL,
-        referat: ''
+        referat: '',
     });
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
     }
 
-    const lagreOgDel = state.onSubmit(values => {
+    const lagreOgDel = state.onSubmit((values) => {
         const newValues = {
             ...values,
             status: STATUS_GJENNOMFOERT,
             erReferatPublisert: true,
-            avtalt: true
+            avtalt: true,
         };
         return onSubmit(newValues);
     });
@@ -46,17 +47,15 @@ function SamtalereferatForm(props) {
     return (
         <form
             autoComplete="off"
-            onSubmit={state.onSubmit(data => {
+            onSubmit={state.onSubmit((data) => {
                 return onSubmit({
                     ...data,
                     status: STATUS_GJENNOMFOERT,
-                    avtalt: true
+                    avtalt: true,
                 });
             })}
         >
-            <div className="aktivitetskjema">
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
+            <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
                 <Input label="Tema for samtalen *" {...state.fields.tittel} />
@@ -72,7 +71,8 @@ function SamtalereferatForm(props) {
                     visTellerFra={500}
                     {...state.fields.referat}
                 />
-            </div>
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+            </SkjemaGruppe>
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp
                     spinner={state.submitting}
@@ -91,12 +91,12 @@ function SamtalereferatForm(props) {
 }
 
 SamtalereferatForm.defaultProps = {
-    isDirtyRef: undefined
+    isDirtyRef: undefined,
 };
 
 SamtalereferatForm.propTypes = {
     onSubmit: PT.func.isRequired,
-    isDirtyRef: PT.shape({ current: PT.bool })
+    isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
 export default SamtalereferatForm;

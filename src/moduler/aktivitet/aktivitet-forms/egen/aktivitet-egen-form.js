@@ -12,15 +12,16 @@ import {
     validateFraDato,
     validateLenke,
     validateTilDato,
-    validateTittel
+    validateTittel,
 } from './validate';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
-    validerPeriodeFelt
+    validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -34,7 +35,7 @@ const validator = useFormstate({
     hensikt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
     beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
     oppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val)
+    lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
 });
 
 function EgenAktivitetForm(props) {
@@ -51,7 +52,7 @@ function EgenAktivitetForm(props) {
         hensikt: maybeAktivitet.hensikt || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
         oppfolging: maybeAktivitet.oppfolging || '',
-        lenke: maybeAktivitet.lenke || ''
+        lenke: maybeAktivitet.lenke || '',
     };
 
     const state = validator(initalValues, aktivitet);
@@ -60,13 +61,11 @@ function EgenAktivitetForm(props) {
         isDirtyRef.current = !state.pristine;
     }
 
-    const reinitalize = newInitalValues => state.reinitialize({ ...initalValues, ...newInitalValues });
+    const reinitalize = (newInitalValues) => state.reinitialize({ ...initalValues, ...newInitalValues });
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
-            <div className="aktivitetskjema">
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
+            <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
 
                 <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="EGEN" />
@@ -90,7 +89,8 @@ function EgenAktivitetForm(props) {
                 />
                 <Input disabled={avtalt} label="Min huskeliste for denne aktiviteten" {...state.fields.oppfolging} />
                 <Input disabled={avtalt} label="Lenke til en aktuell nettside" {...state.fields.lenke} />
-            </div>
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+            </SkjemaGruppe>
             <LagreAktivitet />
         </form>
     );
@@ -100,13 +100,13 @@ EgenAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
     isDirtyRef: PT.shape({ current: PT.bool }),
-    endre: PT.bool
+    endre: PT.bool,
 };
 
 EgenAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: undefined,
-    endre: false
+    endre: false,
 };
 
 export default EgenAktivitetForm;

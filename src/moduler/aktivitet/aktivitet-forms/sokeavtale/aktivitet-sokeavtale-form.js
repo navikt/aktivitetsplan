@@ -5,7 +5,7 @@ import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import { HiddenIfInput } from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
-    validerPeriodeFelt
+    validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
@@ -18,9 +18,10 @@ import {
     validateBeskrivelse,
     validateFraDato,
     validateOppfolging,
-    validateTilDato
+    validateTilDato,
 } from './validate';
 import LagreAktivitet from '../lagre-aktivitet';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -35,7 +36,7 @@ const validator = useFormstate({
         validateAntallStillingerIUken(erAvtalt(aktivitet), val, values.antallStillingerSokes),
     antallStillingerSokes: (val, values, aktivitet) => validateAntallStillinger(erAvtalt(aktivitet), val),
     avtaleOppfolging: (val, values, aktivitet) => validateOppfolging(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val)
+    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
 });
 
 export default function SokeAvtaleAktivitetForm(props) {
@@ -52,7 +53,7 @@ export default function SokeAvtaleAktivitetForm(props) {
         antallStillingerIUken: maybeAktivitet.antallStillingerIUken || '',
         avtaleOppfolging: maybeAktivitet.avtaleOppfolging || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
-        periodeValidering: ''
+        periodeValidering: '',
     };
 
     const state = validator(initalValues, aktivitet);
@@ -61,7 +62,7 @@ export default function SokeAvtaleAktivitetForm(props) {
         isDirtyRef.current = !state.pristine;
     }
 
-    const reinitalize = newInitalValues => {
+    const reinitalize = (newInitalValues) => {
         state.reinitialize({ ...initalValues, ...newInitalValues });
     };
 
@@ -69,9 +70,7 @@ export default function SokeAvtaleAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
-            <div className="skjema-innlogget aktivitetskjema">
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
+            <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
 
                 <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="SOKEAVTALE" />
@@ -112,7 +111,8 @@ export default function SokeAvtaleAktivitetForm(props) {
                     visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
-            </div>
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+            </SkjemaGruppe>
             <LagreAktivitet />
         </form>
     );
@@ -122,11 +122,11 @@ SokeAvtaleAktivitetForm.propTypes = {
     aktivitet: AppPT.aktivitet,
     onSubmit: PT.func.isRequired,
     isDirtyRef: PT.shape({ current: PT.bool }),
-    endre: PT.bool
+    endre: PT.bool,
 };
 
 SokeAvtaleAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: undefined,
-    endre: false
+    endre: false,
 };
