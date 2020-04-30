@@ -18,7 +18,7 @@ import {
     validateKanal,
     validateKlokkeslett,
     validateTittel,
-    validateVarighet
+    validateVarighet,
 } from './validate';
 
 import * as AppPT from '../../../../proptypes';
@@ -32,7 +32,7 @@ function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-const HuskVarsleBruker = props => {
+const HuskVarsleBruker = (props) => {
     if (!props.avtalt || props.pristine) {
         return null;
     }
@@ -48,7 +48,11 @@ function VideoInfo(props) {
         return (
             <Normaltekst className="mote-aktivitet-form__video-info">
                 Les om{' '}
-                <a href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx">
+                <a
+                    href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     rutiner for videomøte her
                 </a>
             </Normaltekst>
@@ -67,7 +71,7 @@ const validator = useFormstate({
     kanal: (val, values, aktivitet) => validateKanal(erAvtalt(aktivitet), val),
     adresse: (val, values, aktivitet) => validateAdresse(erAvtalt(aktivitet), val),
     beskrivelse: (val, values, aktivitet) => validateHensikt(erAvtalt(aktivitet), val),
-    forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val)
+    forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val),
 });
 
 function MoteAktivitetForm(props) {
@@ -85,7 +89,7 @@ function MoteAktivitetForm(props) {
         kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
         adresse: maybeAktivitet.adresse || '',
         beskrivelse: endre ? beskrivelse : defaultBeskrivelse,
-        forberedelser: maybeAktivitet.forberedelser || ''
+        forberedelser: maybeAktivitet.forberedelser || '',
     };
 
     const state = validator(initalValue, aktivitet);
@@ -95,7 +99,7 @@ function MoteAktivitetForm(props) {
     }
 
     return (
-        <form onSubmit={state.onSubmit(x => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
+        <form onSubmit={state.onSubmit((x) => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
             <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
@@ -133,13 +137,13 @@ MoteAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     isDirtyRef: PT.shape({ current: PT.bool }),
     aktivitet: AppPT.aktivitet,
-    endre: PT.bool
+    endre: PT.bool,
 };
 
 MoteAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: false,
-    endre: false
+    endre: false,
 };
 
 export default MoteAktivitetForm;
