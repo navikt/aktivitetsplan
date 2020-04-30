@@ -4,7 +4,7 @@ import useFormstate from '@nutgaard/use-formstate';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import { MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
+import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
@@ -18,20 +18,21 @@ import {
     validateKanal,
     validateKlokkeslett,
     validateTittel,
-    validateVarighet,
+    validateVarighet
 } from './validate';
 
 import * as AppPT from '../../../../proptypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import VelgKanal from '../velg-kanal';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-const HuskVarsleBruker = (props) => {
+const HuskVarsleBruker = props => {
     if (!props.avtalt || props.pristine) {
         return null;
     }
@@ -41,6 +42,20 @@ const HuskVarsleBruker = (props) => {
         </AlertStripeAdvarsel>
     );
 };
+
+function VideoInfo(props) {
+    if (props.kanal === INTERNET_KANAL) {
+        return (
+            <Normaltekst className="mote-aktivitet-form__video-info">
+                Les om{' '}
+                <a href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx">
+                    rutiner for videomøte her
+                </a>
+            </Normaltekst>
+        );
+    }
+    return null;
+}
 
 export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
@@ -52,7 +67,7 @@ const validator = useFormstate({
     kanal: (val, values, aktivitet) => validateKanal(erAvtalt(aktivitet), val),
     adresse: (val, values, aktivitet) => validateAdresse(erAvtalt(aktivitet), val),
     beskrivelse: (val, values, aktivitet) => validateHensikt(erAvtalt(aktivitet), val),
-    forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val),
+    forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val)
 });
 
 function MoteAktivitetForm(props) {
@@ -70,7 +85,7 @@ function MoteAktivitetForm(props) {
         kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
         adresse: maybeAktivitet.adresse || '',
         beskrivelse: endre ? beskrivelse : defaultBeskrivelse,
-        forberedelser: maybeAktivitet.forberedelser || '',
+        forberedelser: maybeAktivitet.forberedelser || ''
     };
 
     const state = validator(initalValue, aktivitet);
@@ -80,7 +95,7 @@ function MoteAktivitetForm(props) {
     }
 
     return (
-        <form onSubmit={state.onSubmit((x) => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
+        <form onSubmit={state.onSubmit(x => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
             <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
@@ -92,6 +107,7 @@ function MoteAktivitetForm(props) {
                     <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
                 </div>
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
+                <VideoInfo kanal={state.fields.kanal.input.value} />
 
                 <Input label="Møtested eller annen praktisk informasjon *" {...state.fields.adresse} />
                 <Textarea
@@ -117,13 +133,13 @@ MoteAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     isDirtyRef: PT.shape({ current: PT.bool }),
     aktivitet: AppPT.aktivitet,
-    endre: PT.bool,
+    endre: PT.bool
 };
 
 MoteAktivitetForm.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: false,
-    endre: false,
+    endre: false
 };
 
 export default MoteAktivitetForm;
