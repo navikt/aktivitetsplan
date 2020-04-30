@@ -1,6 +1,5 @@
 import React from 'react';
 import PT from 'prop-types';
-import UnderelementerForAktivitet from './underelement-for-aktivitet/underelementer-for-aktivitet';
 import * as AppPT from '../../../proptypes';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import AvtaltContainer from './avtalt-container/avtalt-container';
@@ -10,9 +9,7 @@ import VarslingBoks from './hjelpekomponenter/varsling-boks';
 import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
 import ReferatContainer from './referat/referat-container';
-import lazyHOC from '../../../felles-komponenter/lazy/lazyHOC';
 import { trengerBegrunnelse } from '../aktivitet-util';
-import { useHarNyDialog } from '../../../felles-komponenter/feature/feature';
 import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
 import { Aktivitet } from '../../../types';
 import DialogLenke from './underelement-for-aktivitet/dialog/DialogLenke';
@@ -27,7 +24,6 @@ interface Props {
 function Aktivitetvisning(props: Props) {
     const { aktivitet, tillatEndring, laster, underOppfolging } = props;
 
-    const nyDialog = useHarNyDialog();
     const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(
         aktivitet.type
     );
@@ -62,27 +58,22 @@ function Aktivitetvisning(props: Props) {
 
                 <Statusadministrasjon aktivitet={aktivitet} arenaAktivitet={arenaAktivitet} />
 
-                <UnderelementerForAktivitet
-                    aktivitet={aktivitet}
-                    hidden={nyDialog}
-                    className="aktivitetvisning__underseksjon"
-                />
-                <DialogLenke aktivitet={aktivitet} hidden={!nyDialog} skulDelelingje={arenaAktivitet} />
-                <EndringsLogg aktivitet={aktivitet} hidden={!nyDialog || arenaAktivitet} />
+                <DialogLenke aktivitet={aktivitet} skulDelelingje={arenaAktivitet} />
+                <EndringsLogg aktivitet={aktivitet} hidden={arenaAktivitet} />
             </ModalContainer>
         </div>
     );
 }
 
 Aktivitetvisning.defaultProps = {
-    aktivitet: {}
+    aktivitet: {},
 };
 
 Aktivitetvisning.propTypes = {
     aktivitet: AppPT.aktivitet,
     tillatEndring: PT.bool.isRequired,
     laster: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired
+    underOppfolging: PT.bool.isRequired,
 };
 
-export default lazyHOC(Aktivitetvisning);
+export default Aktivitetvisning;

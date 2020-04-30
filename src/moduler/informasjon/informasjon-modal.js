@@ -48,7 +48,7 @@ class InformasjonModal extends Component {
                     </Normaltekst>
                     <Normaltekst>
                         I planen kan du legge inn målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Du
-                        kan kommunisere med veilederen din om aktivitetene i <Lenke href="./dialog">dialogen</Lenke>.
+                        kan kommunisere med veilederen din om aktivitetene i <Lenke href="/dialog">dialogen</Lenke>.
                     </Normaltekst>
                     <Video />
                     <BrukePlanenPanel />

@@ -6,7 +6,7 @@ import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import * as AppPT from '../../../../proptypes';
 import PeriodeValidering, {
-    validerPeriodeFelt
+    validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
@@ -16,10 +16,11 @@ import {
     validateBeskrivelse,
     validateFeltForLangt,
     validateFraDato,
-    validateTilDato
+    validateTilDato,
 } from './validate';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -34,7 +35,7 @@ const validator = useFormstate({
     effekt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
     beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
     behandlingOppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato)
+    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
 });
 
 function BehandlingAktivitetForm(props) {
@@ -52,7 +53,7 @@ function BehandlingAktivitetForm(props) {
         tilDato: maybeAktivitet.tilDato || '',
         effekt: maybeAktivitet.effekt || '',
         beskrivelse: maybeAktivitet.beskrivelse || '',
-        behandlingOppfolging: maybeAktivitet.behandlingOppfolging || ''
+        behandlingOppfolging: maybeAktivitet.behandlingOppfolging || '',
     };
 
     const state = validator(initalValues, aktivitet);
@@ -63,9 +64,7 @@ function BehandlingAktivitetForm(props) {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate="noValidate" autoComplete="off">
-            <div className="aktivitetskjema">
-                <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
-
+            <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Medisinsk behandling" aktivitetsType={BEHANDLING_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Type behandling *" {...state.fields.behandlingType} />
@@ -92,7 +91,8 @@ function BehandlingAktivitetForm(props) {
                     visTellerFra={500}
                     {...state.fields.beskrivelse}
                 />
-            </div>
+                <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
+            </SkjemaGruppe>
             <LagreAktivitet />
         </form>
     );
@@ -100,13 +100,13 @@ function BehandlingAktivitetForm(props) {
 
 BehandlingAktivitetForm.defaultProps = {
     aktivitet: undefined,
-    isDirtyRef: undefined
+    isDirtyRef: undefined,
 };
 
 BehandlingAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
-    isDirtyRef: PT.shape({ current: PT.bool })
+    isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
 export default BehandlingAktivitetForm;

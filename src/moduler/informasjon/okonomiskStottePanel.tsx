@@ -1,11 +1,11 @@
 import React from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 export function OkonomiskStotte() {
     return (
-        <Ekspanderbartpanel tittel="Aktivitetsplanen handler ikke om økonomi" tittelProps="undertittel">
+        <Ekspanderbartpanel tittel={<Undertittel>Aktivitetsplanen handler ikke om økonomi</Undertittel>}>
             <Normaltekst>
                 Aktivitetsplanen og dialogen skal bare handle om jobbrettede aktiviteter. Har du spørsmål om økonomisk
                 støtte, økonomisk sosialhjelp, boligsituasjon eller andre ting som ikke handler om å komme i jobb, kan

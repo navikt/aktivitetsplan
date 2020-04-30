@@ -1,14 +1,11 @@
 import React from 'react';
 import PT from 'prop-types';
-import { addLocaleData, IntlProvider as Provider } from 'react-intl';
-import nb from 'react-intl/locale-data/nb';
+import { IntlProvider as Provider } from 'react-intl';
 import tekster from './tekster'; // eslint-disable-line import/no-unresolved, import/extensions
-
-addLocaleData(nb);
 
 function keys(local) {
     return Object.keys(tekster[local])
-        .map(key => ({ key, value: `[${key}]` }))
+        .map((key) => ({ key, value: `[${key}]` }))
         .reduce((previous, current) => {
             previous[current.key] = current.value; // eslint-disable-line no-param-reassign
             return previous;
@@ -26,7 +23,7 @@ function IntlProvider({ children, locale, ...props }) {
 
 IntlProvider.propTypes = {
     children: PT.node.isRequired,
-    locale: PT.string.isRequired
+    locale: PT.string.isRequired,
 };
 
 export default IntlProvider;

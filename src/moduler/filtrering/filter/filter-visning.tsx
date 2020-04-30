@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
@@ -49,22 +49,24 @@ function FilterVisning(props: FilterVisningTypes) {
     const { harAktiviteter, filter, filterTittel, filterTekst, metrikkNavn, doToggleFunction, className } = props;
     return (
         <VisibleIfDiv visible={harAktiviteter} className={classNames(className, 'filter')}>
-            <Undertittel className="filter__tittel">{filterTittel}</Undertittel>
-            {Object.keys(filter).map(nokkel => {
-                return (
-                    <Checkbox
-                        key={nokkel}
-                        label={<FormattedMessage id={filterTekst + nokkel.toLowerCase()} />}
-                        onChange={() => {
-                            if (!filter[nokkel] && metrikkNavn) {
-                                loggEvent(metrikkNavn, { filter: nokkel });
-                            }
-                            doToggleFunction(nokkel);
-                        }}
-                        checked={filter[nokkel]}
-                    />
-                );
-            })}
+            <SkjemaGruppe>
+                <Undertittel className="filter__tittel">{filterTittel}</Undertittel>
+                {Object.keys(filter).map((nokkel) => {
+                    return (
+                        <Checkbox
+                            key={nokkel}
+                            label={<FormattedMessage id={filterTekst + nokkel.toLowerCase()} />}
+                            onChange={() => {
+                                if (!filter[nokkel] && metrikkNavn) {
+                                    loggEvent(metrikkNavn, { filter: nokkel });
+                                }
+                                doToggleFunction(nokkel);
+                            }}
+                            checked={filter[nokkel]}
+                        />
+                    );
+                })}
+            </SkjemaGruppe>
         </VisibleIfDiv>
     );
 }

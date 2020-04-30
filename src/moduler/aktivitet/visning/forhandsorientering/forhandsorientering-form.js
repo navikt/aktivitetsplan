@@ -10,7 +10,6 @@ import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../../proptypes';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import { STATUS } from '../../../../ducks/utils';
-import { apneDialog } from '../underelement-for-aktivitet/underelementer-view-reducer';
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
@@ -130,7 +129,6 @@ const mapDispatchToProps = (dispatch, props) => ({
             tekst: text,
             overskrift: props.valgtAktivitet.tittel
         })(dispatch).then(() => {
-            dispatch(apneDialog());
             props.forhandsorienteringSendt();
             loggForhandsorienteringTiltak();
             document.querySelector('.aktivitet-modal').focus();
@@ -138,7 +136,4 @@ const mapDispatchToProps = (dispatch, props) => ({
     }
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ForhandsorieteringsForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ForhandsorieteringsForm);

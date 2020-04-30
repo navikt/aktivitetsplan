@@ -11,16 +11,13 @@ import EndreLinje from '../endre-linje/endre-linje';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
 import SokeStatusEtikett from '../../etikett/sokeStatusEtikett';
-import { useHarNyDialog } from '../../../../felles-komponenter/feature/feature';
-import { endreStilingStatusMetrikk } from '../../../../felles-komponenter/utils/logging';
 
 function OppdaterAktivitetEtikett(props) {
     const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
     const [endring, setEndring] = useState(false);
-    const harNyDialog = useHarNyDialog();
 
     const onSubmit = val =>
-        lagreEtikett(val, harNyDialog).then(() => {
+        lagreEtikett(val).then(() => {
             setEndring(false);
             document.querySelector('.aktivitet-modal').focus();
         });
@@ -54,14 +51,12 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-    lagreEtikett: ({ etikettstatus }, harNyDialog) => {
+    lagreEtikett: ({ etikettstatus }) => {
         if (etikettstatus === props.aktivitet.etikett) {
             return Promise.resolve();
         }
 
         const nyEtikett = etikettstatus === statuser.INGEN_VALGT ? null : etikettstatus;
-
-        endreStilingStatusMetrikk(harNyDialog);
 
         return dispatch(
             oppdaterAktivitetEtikett({

@@ -2,13 +2,13 @@
 import React, { Component } from 'react';
 import PT from 'prop-types';
 import { FormattedDate } from 'react-intl';
+import moment from 'moment';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
-import { moment } from '../../../utils';
 
 const localeUtils = {
     ...MomentLocaleUtils,
-    formatWeekdayShort: (i, locale) => MomentLocaleUtils.formatWeekdayLong(i, locale).substring(0, 3)
+    formatWeekdayShort: (i, locale) => MomentLocaleUtils.formatWeekdayLong(i, locale).substring(0, 3),
 };
 
 export const Caption = ({ date }) => (
@@ -18,11 +18,11 @@ export const Caption = ({ date }) => (
 );
 
 Caption.propTypes = {
-    date: PT.instanceOf(Date)
+    date: PT.instanceOf(Date),
 };
 
 Caption.defaultProps = {
-    date: undefined
+    date: undefined,
 };
 
 export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showNextButton }) => {
@@ -35,7 +35,7 @@ export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showN
                 className={`${className} DayPicker-NavButton--prev`}
                 disabled={!showPreviousButton}
                 type="button"
-                onClick={e => {
+                onClick={(e) => {
                     e.preventDefault();
                     onPreviousClick();
                 }}
@@ -46,7 +46,7 @@ export const NavBar = ({ onNextClick, onPreviousClick, showPreviousButton, showN
                 className={`${className} DayPicker-NavButton--next`}
                 disabled={!showNextButton}
                 type="button"
-                onClick={e => {
+                onClick={(e) => {
                     e.preventDefault();
                     onNextClick();
                 }}
@@ -59,14 +59,14 @@ NavBar.propTypes = {
     onNextClick: PT.func,
     onPreviousClick: PT.func,
     showPreviousButton: PT.bool,
-    showNextButton: PT.bool
+    showNextButton: PT.bool,
 };
 
 NavBar.defaultProps = {
     onNextClick: undefined,
     onPreviousClick: undefined,
     showPreviousButton: false,
-    showNextButton: false
+    showNextButton: false,
 };
 
 class DayPickerComponent extends Component {
@@ -105,7 +105,7 @@ class DayPickerComponent extends Component {
             <div // eslint-disable-line jsx-a11y/no-static-element-interactions
                 className="datovelger__DayPicker"
                 aria-controls={ariaControls} // eslint-disable-line jsx-a11y/aria-props
-                onKeyUp={e => {
+                onKeyUp={(e) => {
                     onKeyUp(e);
                 }}
             >
@@ -116,7 +116,7 @@ class DayPickerComponent extends Component {
                     firstDayOfWeek={1}
                     captionElement={<Caption />}
                     navbarElement={<NavBar />}
-                    selectedDays={day => this.selectedDays(day)}
+                    selectedDays={(day) => this.selectedDays(day)}
                     onDayClick={(event, jsDato) => onDayClick(event, jsDato)}
                 />
             </div>
@@ -130,12 +130,12 @@ DayPickerComponent.propTypes = {
     lukk: PT.func.isRequired,
     ariaControls: PT.string,
     onDayClick: PT.func.isRequired,
-    tidligsteFom: PT.instanceOf(Date)
+    tidligsteFom: PT.instanceOf(Date),
 };
 
 DayPickerComponent.defaultProps = {
     ariaControls: undefined,
-    tidligsteFom: undefined
+    tidligsteFom: undefined,
 };
 
 export default DayPickerComponent;

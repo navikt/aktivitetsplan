@@ -1,12 +1,12 @@
 import React from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import styles from './informasjon-modal.module.less';
 
 export function RettigheterPanel() {
     return (
-        <Ekspanderbartpanel tittel="Rettigheter og personvern" tittelProps="undertittel">
+        <Ekspanderbartpanel tittel={<Undertittel>Rettigheter og personvern</Undertittel>}>
             <Normaltekst>
                 Du har rett til å få en aktivitetsplan når du har registrert deg i NAV. Informasjonen i aktivitetsplanen
                 og annen informasjon du gir til veilederen din brukes til å vurdere ditt behov for hjelp fra NAV.

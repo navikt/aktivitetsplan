@@ -10,11 +10,12 @@ import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-s
 import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke, validateTittel } from './validate';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
-    validerPeriodeFelt
+    validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import { todayIsoString } from '../../../../utils';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -29,7 +30,7 @@ const validator = useFormstate({
     arbeidsgiver: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
     kontaktperson: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
     lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
-    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato)
+    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
 });
 
 function StillingAktivitetForm(props) {
@@ -46,7 +47,7 @@ function StillingAktivitetForm(props) {
         arbeidsgiver: maybeAktivitet.arbeidsgiver || '',
         kontaktperson: maybeAktivitet.kontaktperson || '',
         lenke: maybeAktivitet.lenke || '',
-        periodeValidering: ''
+        periodeValidering: '',
     };
 
     const state = validator(initalValues, aktivitet);
@@ -57,9 +58,7 @@ function StillingAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
-            <div className="aktivitetskjema">
-                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
-
+            <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
@@ -86,7 +85,8 @@ function StillingAktivitetForm(props) {
                     {...state.fields.beskrivelse}
                 />
                 <Input disabled={avtalt} label="Lenke til stillingsannonse" {...state.fields.lenke} />
-            </div>
+                <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
+            </SkjemaGruppe>
             <LagreAktivitet />
         </form>
     );
@@ -95,12 +95,12 @@ function StillingAktivitetForm(props) {
 StillingAktivitetForm.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
-    isDirtyRef: PT.shape({ current: PT.bool })
+    isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
 StillingAktivitetForm.defaultProps = {
     aktivitet: undefined,
-    isDirtyRef: undefined
+    isDirtyRef: undefined,
 };
 
 export default StillingAktivitetForm;

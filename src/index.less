@@ -9,7 +9,6 @@
     @import './felles-komponenter/modal/modal';
     @import './felles-komponenter/felles-komponenter';
     @import './utils';
-    @import './moduler/dialog/dialog-modal/dialog';
     @import './moduler/aktivitet/aktivitet';
     @import './moduler/filtrering/filter';
     @import './moduler/verktoylinje/navigasjonslinje';
@@ -124,14 +123,14 @@
     width: 100%;
     position: fixed;
 
-    .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']):not([class*='dialog-modal']) {
+    .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']) {
         display: none;
     }
 }
 
 @media (min-width: @screen-md-min) {
     .ReactModal__Body--open {
-        .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']):not([class*='dialog-modal']) {
+        .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']) {
             display: block;
         }
     }

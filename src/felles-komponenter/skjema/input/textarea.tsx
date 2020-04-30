@@ -34,7 +34,7 @@ interface Props {
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Textarea(props: Props) {
     const { touched, error, input, pristine, initialValue, visTellerFra, ...rest } = props;
-    const feil = error && touched ? { feilmelding: error } : undefined;
+    const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
 
     return (
