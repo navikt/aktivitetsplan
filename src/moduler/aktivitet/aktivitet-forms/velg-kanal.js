@@ -7,7 +7,7 @@ function VelgKanal(props) {
         <Select noBlankOption bredde="fullbredde" {...props}>
             <option value={OPPMOTE_KANAL}>Oppmøte</option>
             <option value={TELEFON_KANAL}>Telefonmøte</option>
-            <option value={INTERNET_KANAL}>Nettmøte</option>
+            <option value={INTERNET_KANAL}>Videomøte</option>
         </Select>
     );
 }
