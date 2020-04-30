@@ -4,7 +4,7 @@ import useFormstate from '@nutgaard/use-formstate';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import Input from '../../../../felles-komponenter/skjema/input/input';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import { MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
+import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
@@ -25,6 +25,7 @@ import * as AppPT from '../../../../proptypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import VelgKanal from '../velg-kanal';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
@@ -40,6 +41,20 @@ const HuskVarsleBruker = props => {
         </AlertStripeAdvarsel>
     );
 };
+
+function VideoInfo(props) {
+    if (props.kanal === INTERNET_KANAL) {
+        return (
+            <Normaltekst className="mote-aktivitet-form__video-info">
+                Les om{' '}
+                <a href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Videom%C3%B8te-med-brukere.aspx">
+                    rutiner for videomøte her
+                </a>
+            </Normaltekst>
+        );
+    }
+    return null;
+}
 
 export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
@@ -95,6 +110,7 @@ function MoteAktivitetForm(props) {
                     <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
                 </div>
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
+                <VideoInfo kanal={state.fields.kanal.input.value} />
 
                 <Input label="Møtested eller annen praktisk informasjon *" {...state.fields.adresse} />
                 <Textarea
