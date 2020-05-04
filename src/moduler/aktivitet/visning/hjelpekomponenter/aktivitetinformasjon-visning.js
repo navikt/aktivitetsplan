@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
@@ -9,14 +9,13 @@ import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
-    STILLING_AKTIVITET_TYPE
+    STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import InternLenke from '../../../../felles-komponenter/utils/internLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import DeleLinje from '../delelinje/delelinje';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
-import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
 function visningsIngress(type) {
     if (
@@ -26,21 +25,6 @@ function visningsIngress(type) {
     }
 
     return <AktivitetIngress aktivitetsType={type} />;
-}
-
-function KoronaInformasjon({ valgtAktivitet }) {
-    return (
-        <HiddenIfAlertStripeInfoSolid hidden={'Oppdater CV-en og jobbprofilen' !== valgtAktivitet.tittel}>
-            <Normaltekst style={{ marginBottom: '1rem' }}>
-                På grunn av situasjonen med korona-viruset kan det bli økt behov for kritisk arbeidskraft på flere
-                områder fremover. For eksempel helsevesen, transport og landbruk.
-            </Normaltekst>
-            <Normaltekst>
-                Kanskje du har kompetanse som samfunnet vil ha ekstra behov for, og kan hjelpe til i tiden du er
-                permittert?
-            </Normaltekst>
-        </HiddenIfAlertStripeInfoSolid>
-    );
 }
 
 function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
@@ -67,7 +51,6 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                 {visningsIngress(type)}
                 <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
-                <KoronaInformasjon valgtAktivitet={valgtAktivitet} />
             </div>
             <DeleLinje />
         </div>
@@ -78,7 +61,7 @@ AktivitetinformasjonVisning.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     tillatEndring: PT.bool.isRequired,
     laster: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired
+    underOppfolging: PT.bool.isRequired,
 };
 
 export default AktivitetinformasjonVisning;
