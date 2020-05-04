@@ -82,7 +82,7 @@ describe('MoteAktivitetForm', () => {
             <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre={false} />
         );
 
-        expect(wrapper.find('Textarea[label="Hensikt med møtet"]').prop('initialValue')).toEqual(defaultBeskrivelse);
+        expect(wrapper.find('Textarea[label="Hensikt med møtet *"]').prop('initialValue')).toEqual(defaultBeskrivelse);
     });
 
     it('Skal ikke populere beskrivelse(hensikt) med defaultverdi når man endrer', () => {
@@ -91,7 +91,7 @@ describe('MoteAktivitetForm', () => {
             <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre />
         );
 
-        expect(wrapper.find('Textarea[label="Hensikt med møtet"]').prop('initialValue')).toEqual('');
+        expect(wrapper.find('Textarea[label="Hensikt med møtet *"]').prop('initialValue')).toEqual('');
     });
 
     it('Skal være disablede felter ved endring av aktivitet', () => {
@@ -114,7 +114,7 @@ describe('MoteAktivitetForm', () => {
         expect(
             wrapper.find('Input[label="Møtested eller annen praktisk informasjon *"]').prop('disabled')
         ).not.toBeTruthy();
-        expect(wrapper.find('Textarea[label="Hensikt med møtet"]').prop('disabled')).toBeTruthy();
+        expect(wrapper.find('Textarea[label="Hensikt med møtet *"]').prop('disabled')).toBeTruthy();
         expect(wrapper.find('Textarea[label="Forberedelser til møtet"]').prop('disabled')).toBeTruthy();
     });
 });
