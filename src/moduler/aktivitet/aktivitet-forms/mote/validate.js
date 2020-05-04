@@ -7,6 +7,7 @@ const ADRESSE_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${ADRESSE_MAKS_L
 export const HENSIKT_MAKS_LENGDE = 5000;
 const HENSIKT_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${HENSIKT_MAKS_LENGDE} tegn`;
 export const FORBEREDELSER_MAKS_LENGDE = 500;
+const FORBEREDELSER_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${FORBEREDELSER_MAKS_LENGDE} tegn`;
 
 function tekstForLang(maxLengde, value) {
     return value.length > maxLengde;
@@ -70,7 +71,7 @@ export function validateForberedelser(avtalt, value) {
     }
 
     if (tekstForLang(FORBEREDELSER_MAKS_LENGDE, value)) {
-        return HENSIKT_MAKS_LENGDE_TEKST;
+        return FORBEREDELSER_MAKS_LENGDE_TEKST;
     }
 
     return null;
