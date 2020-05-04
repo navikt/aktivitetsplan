@@ -58,6 +58,10 @@ export function validateHensikt(avtalt, value) {
         return null;
     }
 
+    if (!erVerdiSatt(value)) {
+        return 'Du må fylle ut hensikten med møtet';
+    }
+
     if (tekstForLang(HENSIKT_MAKS_LENGDE, value)) {
         return HENSIKT_MAKS_LENGDE_TEKST;
     }
