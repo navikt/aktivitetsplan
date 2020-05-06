@@ -9,6 +9,14 @@ interface DialogProps {
     dialog?: Dialog;
 }
 
+function avsender(avsenderType: string, avsenderId?: string) {
+    if (avsenderType === 'VEILEDER') {
+        return avsenderId ? avsenderId : 'NAV';
+    }
+
+    return 'BRUKER';
+}
+
 export function DialogPrint(props: DialogProps) {
     const { dialog } = props;
 
@@ -30,9 +38,7 @@ export function DialogPrint(props: DialogProps) {
                 henvendelserSynkende.map((h) => (
                     <div className="henvendelse" key={h.id}>
                         <EtikettLiten className="detaljfelt__tittel" tag="h2">
-                            {`${h.avsender === 'VEILEDER' ? h.avsenderId : 'BRUKER'} - ${formaterDatoKortManed(
-                                h.sendt
-                            )}`}
+                            {`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(h.sendt)}`}
                         </EtikettLiten>
                         <Tekstomrade>{h.tekst}</Tekstomrade>
                     </div>
