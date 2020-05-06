@@ -13,7 +13,9 @@
     "test:browsers": "node integrationtest/saucelabs-runner.js",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
     "heroku-serve": "serve -s build -l $PORT",
-    "lint": "echo \"Not implemented\""
+    "lint": "echo \"Not implemented\"",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@navikt/fnrvalidator": "^1.1.0",
@@ -83,7 +85,8 @@
     "reselect": "^4.0.0",
     "sha.js": "^2.4.11",
     "typescript": "^3.8.3",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.0.0",
+    "snyk": "^1.319.0"
   },
   "husky": {
     "hooks": {
@@ -141,5 +144,6 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "snyk": true
 }
