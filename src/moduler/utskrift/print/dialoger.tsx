@@ -1,8 +1,9 @@
 import React from 'react';
-import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
+import { Element, EtikettLiten } from 'nav-frontend-typografi';
 
 import { datoComparator, formaterDatoKortManed } from '../../../utils';
 import { Dialog } from '../../../types';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
 interface DialogProps {
     dialog?: Dialog;
@@ -26,14 +27,14 @@ export function DialogPrint(props: DialogProps) {
                 {overskrift}
             </Element>
             {henvendelserSynkende &&
-                henvendelserSynkende.map(h => (
+                henvendelserSynkende.map((h) => (
                     <div className="henvendelse" key={h.id}>
                         <EtikettLiten className="detaljfelt__tittel" tag="h2">
                             {`${h.avsender === 'VEILEDER' ? h.avsenderId : 'BRUKER'} - ${formaterDatoKortManed(
                                 h.sendt
                             )}`}
                         </EtikettLiten>
-                        <Normaltekst>{h.tekst}</Normaltekst>
+                        <Tekstomrade>{h.tekst}</Tekstomrade>
                     </div>
                 ))}
         </div>
@@ -46,7 +47,7 @@ interface DialogerUtenAktivitetProps {
 
 export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
     const { dialoger } = props;
-    const dialogerUtenAktivitet = dialoger && dialoger.filter(a => a.aktivitetId === null);
+    const dialogerUtenAktivitet = dialoger && dialoger.filter((a) => a.aktivitetId === null);
 
     if (!dialogerUtenAktivitet) {
         return null;
@@ -54,7 +55,7 @@ export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
 
     return (
         <section className="printmodal-body__statusgrupper">
-            {dialogerUtenAktivitet.map(d => (
+            {dialogerUtenAktivitet.map((d) => (
                 <DialogPrint dialog={d} />
             ))}
         </section>
