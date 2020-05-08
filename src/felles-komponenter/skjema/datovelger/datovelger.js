@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react';
 import PT from 'prop-types';
-import MaskedInput from 'react-maskedinput';
+import moment from 'moment';
+import { SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import {
     autobind,
     datePickerToISODate,
@@ -12,8 +13,7 @@ import {
     ISODateToDatePicker,
 } from '../../../utils';
 import DayPickerComponent from './day-picker';
-import moment from 'moment';
-import { SkjemaelementFeilmelding } from 'nav-frontend-skjema';
+import MaskedInput from './maskedinput';
 
 function stopEvent(event) {
     try {
