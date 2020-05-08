@@ -2,7 +2,7 @@ contextPath: /
 
 auth:
   enforce: true
-  loginUrl: {{VEILARBSTEPUP_OIDC_URL}}
+  loginUrl: {{ LOGINSERVICE_URL }}
 
 proxy:
   - contextPath: '/veilarbaktivitet'
