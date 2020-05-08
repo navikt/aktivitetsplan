@@ -1,5 +1,5 @@
 import React from 'react';
-import { Element, EtikettLiten } from 'nav-frontend-typografi';
+import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
 
 import { datoComparator, formaterDatoKortManed } from '../../../utils';
 import { Dialog } from '../../../types';
@@ -55,12 +55,15 @@ export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
     const { dialoger } = props;
     const dialogerUtenAktivitet = dialoger && dialoger.filter((a) => a.aktivitetId === null);
 
-    if (!dialogerUtenAktivitet) {
+    if (!dialogerUtenAktivitet || dialogerUtenAktivitet.length === 0) {
         return null;
     }
 
     return (
         <section className="printmodal-body__statusgrupper">
+            <Undertittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+                Dialogen med veileder
+            </Undertittel>
             {dialogerUtenAktivitet.map((d) => (
                 <DialogPrint dialog={d} />
             ))}
