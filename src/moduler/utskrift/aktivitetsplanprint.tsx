@@ -9,11 +9,11 @@ import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/ut
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
-    selectOppfolgingStatus
+    selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import FnrProvider from '../../bootstrap/fnr-provider';
-import { selectAlleDialoger, selectDialogStatus } from '../dialog/dialog-selector';
+import { selectDialoger, selectDialogStatus } from '../dialog/dialog-selector';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
 import Print from './print/print';
 import ModalHeader from './modalHeader';
@@ -66,7 +66,7 @@ function AktivitetsplanPrint(props: Props) {
         mittMal,
         erVeileder,
         aktiviteter,
-        erManuell
+        erManuell,
     } = props;
 
     useEffect(() => {
@@ -147,7 +147,7 @@ function AktivitetsplanPrint(props: Props) {
 const mapStateToProps = (state: any) => {
     const aktiviteter = selectAktivitetListe(state);
     const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
-    const dialoger = selectAlleDialoger(state);
+    const dialoger = selectDialoger(state);
 
     const bruker = selectBruker(state);
     const mittMal = selectGjeldendeMal(state);
@@ -160,7 +160,7 @@ const mapStateToProps = (state: any) => {
             selectOppfolgingStatus(state),
             selectAktivitetListeStatus(state),
             selectBrukerStatus(state),
-            selectDialogStatus(state)
+            selectDialogStatus(state),
         ],
         aktiviteter,
         dialoger,
@@ -168,7 +168,7 @@ const mapStateToProps = (state: any) => {
         mittMal,
         erManuell,
         kvpPerioder,
-        erVeileder
+        erVeileder,
     };
 };
 
@@ -178,7 +178,7 @@ function mapDispatchToProps(dispatch: any, props: any) {
             props.history.push('/');
         },
         doHentMal: () => dispatch(hentMal()),
-        doHentMalListe: () => dispatch(hentMalListe())
+        doHentMalListe: () => dispatch(hentMalListe()),
     };
 }
 

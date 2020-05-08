@@ -75,7 +75,7 @@ function filterDialog(
     }
 
     if (utskriftType === 'aktivitetsplan' && kvpPerioder) {
-        dialoger.filter((a) => kvpPerioder.every((kvp) => !iPeriode(a, kvp)));
+        return dialoger.filter((a) => kvpPerioder.every((kvp) => !iPeriode(a, kvp)));
     }
 
     return dialoger;
