@@ -106,6 +106,10 @@ export function formaterDatoTid(dato) {
     return formatter(dato, 'DD.MM.YYYY HH:mm');
 }
 
+export function formaterDatoManed(dato) {
+    return formatter(dato, 'Do MMMM YYYY');
+}
+
 export function formaterDatoKortManed(dato) {
     return formatter(dato, 'Do MMM YYYY');
 }

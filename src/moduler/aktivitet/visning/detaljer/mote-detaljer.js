@@ -3,7 +3,7 @@ import React from 'react';
 import { beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import * as AppPT from '../../../../proptypes';
-import { formaterDatoKortManed, HiddenIf } from '../../../../utils';
+import { formaterDatoManed, HiddenIf } from '../../../../utils';
 import { MOTE_TYPE } from '../../../../constant';
 
 const MoteDetaljer = ({ aktivitet }) => (
@@ -12,7 +12,7 @@ const MoteDetaljer = ({ aktivitet }) => (
             <Informasjonsfelt
                 key="dato"
                 tittel={<FormattedMessage id="aktivitetdetaljer.dato" />}
-                innhold={formaterDatoKortManed(aktivitet.fraDato)}
+                innhold={formaterDatoManed(aktivitet.fraDato)}
             />
             <Informasjonsfelt
                 key="klokkeslett"
