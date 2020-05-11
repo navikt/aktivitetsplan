@@ -65,7 +65,7 @@ export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
                 Dialogen med veileder
             </Undertittel>
             {dialogerUtenAktivitet.map((d) => (
-                <DialogPrint dialog={d} />
+                <DialogPrint key={d.id} dialog={d} />
             ))}
         </section>
     );
