@@ -33,6 +33,7 @@ const MoteDetaljer = ({ aktivitet }) => (
                 key="adresse"
                 tittel={<FormattedMessage id="aktivitetdetaljer.adresse" />}
                 innhold={aktivitet.adresse}
+                formattertTekst
                 fullbredde
             />
             <Informasjonsfelt
@@ -54,7 +55,7 @@ const MoteDetaljer = ({ aktivitet }) => (
 );
 
 MoteDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
 };
 
 export default MoteDetaljer;
