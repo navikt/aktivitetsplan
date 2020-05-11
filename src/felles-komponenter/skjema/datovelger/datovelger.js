@@ -13,7 +13,7 @@ import {
     ISODateToDatePicker,
 } from '../../../utils';
 import DayPickerComponent from './day-picker';
-import MaskedInput from './maskedinput';
+import { IMaskInput } from 'react-imask';
 
 function stopEvent(event) {
     try {
@@ -104,16 +104,16 @@ class DatoField extends Component {
         const { label, disabled, tidligsteFom, senesteTom, touched, error, input } = this.props;
 
         const { erApen } = this.state;
-        const { value, id } = input;
+        const { value, id, name } = input;
         const maskedInputProps = {
             ...input,
             value: erGyldigISODato(value) ? ISODateToDatePicker(value) : value,
         };
 
-        const onChange = (event) => {
-            const newValue = parseInputDate(event.target.value);
+        const onChange = (value) => {
+            const newValue = parseInputDate(value);
             const customEvent = {
-                target: { name: event.target.name, value: newValue },
+                target: { name: name, value: newValue },
             };
             input.onChange(customEvent);
         };
@@ -131,18 +131,19 @@ class DatoField extends Component {
                     </label>
                     <div className="datovelger__inner" onClick={stopEvent}>
                         <div className="datovelger__inputContainer">
-                            <MaskedInput
+                            <IMaskInput
+                                mask={Date}
                                 type="tel"
-                                mask="11.11.1111"
                                 autoComplete="off"
                                 placeholder="dd.mm.åååå"
+                                lazy={false}
                                 id={id}
                                 disabled={disabled}
                                 className={`skjemaelement__input input--m datovelger__input ${
                                     touched && error ? 'skjemaelement__input--harFeil' : ''
                                 }`}
                                 {...maskedInputProps}
-                                onChange={onChange}
+                                onAccept={onChange}
                             />
                             <button
                                 className="js-toggle datovelger__toggleDayPicker"
