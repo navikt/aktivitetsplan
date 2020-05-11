@@ -1,14 +1,14 @@
 /* eslint-disable */
 
 import me from './me';
-import oppfolging, { avslutningStatus, startEskalering, stoppEskalering } from './oppfolging';
+import oppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
 import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import aktiviteter, {
     getAktivitet,
     getAktivitetVersjoner,
     oppdaterAktivitet,
     opprettAktivitet,
-    publiserReferat
+    publiserReferat,
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
@@ -27,7 +27,7 @@ import { oppfFeilet } from './demo/sessionstorage';
 
 const mock = fetchMock.configure({
     enableFallback: false,
-    middleware: fetchmockMiddleware
+    middleware: fetchmockMiddleware,
 });
 
 const noContent = ResponseUtils.statusCode(204);
@@ -39,8 +39,8 @@ const unauthorized = ResponseUtils.combine(
         detaljer: {
             detaljertType: 'javax.ws.rs.Unauthorized',
             feilMelding: 'HTTP 401 Unauthorized',
-            stackTrace: 'javax.ws.rs.Unauthorized:HTTP 401 Unauthorized\r\n\t'
-        }
+            stackTrace: 'javax.ws.rs.Unauthorized:HTTP 401 Unauthorized\r\n\t',
+        },
     })
 );
 const internalServerError = ResponseUtils.combine(
@@ -51,8 +51,8 @@ const internalServerError = ResponseUtils.combine(
         detaljer: {
             detaljertType: 'javax.ws.rs.InternalServerErrorException',
             feilMelding: 'HTTP 500 Internal Server Error',
-            stackTrace: 'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t'
-        }
+            stackTrace: 'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t',
+        },
     })
 );
 
@@ -79,11 +79,12 @@ mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', instillingsH
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', veilederTilgang);
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', ({ body }) => avslutningStatus(body));
 mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }) => startEskalering(body));
+mock.post('/veilarboppfolging/api/oppfolging/settDigital', ({ body }) => settDigital(body));
 
 mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }) => stoppEskalering(body));
 mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () => ResponseUtils.statusCode(200));
 mock.post('/veilarboppfolging/api/oppfolging/settManuell', ({ queryParams }) =>
-    oppfolging(queryParams, res => {
+    oppfolging(queryParams, (res) => {
         res.manuell = true;
         return res;
     })

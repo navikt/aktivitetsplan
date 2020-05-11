@@ -12,7 +12,8 @@ import {
     selectErUnderOppfolging,
     selectOppfolgingsPerioder,
     selectOppfolgingStatus,
-    selectServicegruppe
+    selectReservasjonKRR,
+    selectServicegruppe,
 } from './oppfolging-selector';
 import { selectErVeileder, selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
@@ -43,14 +44,14 @@ OppfolgingStatus.propTypes = {
     toggleStatus: AppPT.status.isRequired,
     doHentOppfolging: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
-    sevicegruppe: PT.string
+    sevicegruppe: PT.string,
 };
 
 OppfolgingStatus.defaultProps = {
-    sevicegruppe: null
+    sevicegruppe: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     oppfolgingStatus: selectOppfolgingStatus(state),
     identitetStatus: selectIdentitetStatus(state),
     toggleStatus: selectFeatureStatus(state),
@@ -59,17 +60,15 @@ const mapStateToProps = state => ({
     underOppfolging: selectErUnderOppfolging(state),
     oppfolgingsPerioder: selectOppfolgingsPerioder(state),
     manuell: selectErBrukerManuell(state),
+    reservasjonKRR: selectReservasjonKRR(state),
     servicegruppe: selectServicegruppe(state),
     aktorId: selectAktorId(state),
-    ident: selectIdentitetId(state)
+    ident: selectIdentitetId(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     doHentOppfolging: () => dispatch(hentOppfolging()),
-    doHentIdentitet: () => dispatch(hentIdentitet())
+    doHentIdentitet: () => dispatch(hentIdentitet()),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(OppfolgingStatus);
+export default connect(mapStateToProps, mapDispatchToProps)(OppfolgingStatus);
