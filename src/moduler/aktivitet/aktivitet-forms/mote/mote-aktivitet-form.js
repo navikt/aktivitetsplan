@@ -118,7 +118,7 @@ function MoteAktivitetForm(props) {
                 <Input label="Møtested eller annen praktisk informasjon *" {...state.fields.adresse} />
                 <Textarea
                     disabled={avtalt}
-                    label="Hensikt med møtet"
+                    label="Hensikt med møtet *"
                     maxLength={HENSIKT_MAKS_LENGDE}
                     {...state.fields.beskrivelse}
                 />

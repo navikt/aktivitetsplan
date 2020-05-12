@@ -1,11 +1,20 @@
 import React from 'react';
-import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
+import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
 
 import { datoComparator, formaterDatoKortManed } from '../../../utils';
 import { Dialog } from '../../../types';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
 interface DialogProps {
     dialog?: Dialog;
+}
+
+function avsender(avsenderType: string, avsenderId?: string) {
+    if (avsenderType === 'VEILEDER') {
+        return avsenderId ? avsenderId : 'NAV';
+    }
+
+    return 'BRUKER';
 }
 
 export function DialogPrint(props: DialogProps) {
@@ -26,14 +35,12 @@ export function DialogPrint(props: DialogProps) {
                 {overskrift}
             </Element>
             {henvendelserSynkende &&
-                henvendelserSynkende.map(h => (
+                henvendelserSynkende.map((h) => (
                     <div className="henvendelse" key={h.id}>
                         <EtikettLiten className="detaljfelt__tittel" tag="h2">
-                            {`${h.avsender === 'VEILEDER' ? h.avsenderId : 'BRUKER'} - ${formaterDatoKortManed(
-                                h.sendt
-                            )}`}
+                            {`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(h.sendt)}`}
                         </EtikettLiten>
-                        <Normaltekst>{h.tekst}</Normaltekst>
+                        <Tekstomrade>{h.tekst}</Tekstomrade>
                     </div>
                 ))}
         </div>
@@ -46,16 +53,19 @@ interface DialogerUtenAktivitetProps {
 
 export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
     const { dialoger } = props;
-    const dialogerUtenAktivitet = dialoger && dialoger.filter(a => a.aktivitetId === null);
+    const dialogerUtenAktivitet = dialoger && dialoger.filter((a) => a.aktivitetId === null);
 
-    if (!dialogerUtenAktivitet) {
+    if (!dialogerUtenAktivitet || dialogerUtenAktivitet.length === 0) {
         return null;
     }
 
     return (
         <section className="printmodal-body__statusgrupper">
-            {dialogerUtenAktivitet.map(d => (
-                <DialogPrint dialog={d} />
+            <Undertittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+                Dialogen med veileder
+            </Undertittel>
+            {dialogerUtenAktivitet.map((d) => (
+                <DialogPrint key={d.id} dialog={d} />
             ))}
         </section>
     );

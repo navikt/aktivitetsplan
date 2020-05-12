@@ -18,7 +18,7 @@ function ModalHeader(props: Props) {
                 <div className="printmodal-header">
                     <Knappelenke
                         className="tilbakeknapp printmodal-header__tilbakeknapp"
-                        onClick={tilbake}
+                        onClick={!!tilbake ? tilbake : () => {}}
                         role="link"
                         tabIndex="0"
                         hidden={!tilbake}

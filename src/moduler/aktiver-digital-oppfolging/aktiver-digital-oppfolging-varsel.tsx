@@ -1,7 +1,7 @@
 import React from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
-import InternLenke from '../../felles-komponenter/utils/internLenke';
+import Lenke from 'nav-frontend-lenker';
 
 interface PropTypes {
     reservertIKRR: boolean;
@@ -25,9 +25,7 @@ function AktiverDigitalOppfolgingVarsel(props: PropTypes): React.ReactElement {
         return (
             <AlertStripe type="advarsel" className="sett-digital__varsel">
                 For å ta i bruk aktivitetsplanen, må du fjerne reservasjonen din mot digital kommunikasjon. &nbsp;
-                <InternLenke href={'https://www.norge.no/nn/reservasjon'}>
-                    Gå til Norge.no for å fjerne reservasjonen
-                </InternLenke>
+                <Lenke href={'https://www.norge.no/nn/reservasjon'}>Gå til Norge.no for å fjerne reservasjonen</Lenke>
             </AlertStripe>
         );
     }

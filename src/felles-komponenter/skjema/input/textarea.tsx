@@ -29,6 +29,8 @@ interface Props {
     visTellerFra?: number;
     maxLength: number;
     label: any;
+    autoFocus?: boolean;
+    textareaClass?: string;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input

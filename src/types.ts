@@ -62,6 +62,7 @@ export interface Dialog {
     erLestAvBruker?: boolean;
     venterPaSvar?: boolean;
     ferdigBehandlet?: boolean;
+    opprettetDato: string;
     henvendelser?: Array<Henvendelse>;
     egenskaper?: Array<string>;
 }

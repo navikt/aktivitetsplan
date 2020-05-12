@@ -6,16 +6,17 @@ import * as konstanter from '../../../../constant';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
+import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 
 const validator = useFormstate({
-    etikettstatus: () => {}
+    etikettstatus: () => {},
 });
 
 function StillingEtikettForm(props) {
     const { aktivitet, disabled, onSubmit } = props;
 
     const state = validator({
-        etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT
+        etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT,
     });
 
     const { setFormIsDirty } = useContext(DirtyContext);
@@ -30,31 +31,38 @@ function StillingEtikettForm(props) {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <Radio
-                label="Ikke startet"
-                value={konstanter.INGEN_VALGT}
-                disabled={disable}
-                {...state.fields.etikettstatus}
-            />
-            <Radio
-                label="Sendt søknad"
-                value={konstanter.SOKNAD_SENDT}
-                disabled={disable}
-                {...state.fields.etikettstatus}
-            />
-            <Radio
-                label="Skal på intervju"
-                value={konstanter.INNKALT_TIL_INTERVJU}
-                disabled={disable}
-                {...state.fields.etikettstatus}
-            />
-            <Radio
-                label="Fått jobbtilbud"
-                value={konstanter.JOBBTILBUD}
-                disabled={disable}
-                {...state.fields.etikettstatus}
-            />
-            <Radio label="Fått avslag" value={konstanter.AVSLAG} disabled={disable} {...state.fields.etikettstatus} />
+            <SkjemaGruppe>
+                <Radio
+                    label="Ikke startet"
+                    value={konstanter.INGEN_VALGT}
+                    disabled={disable}
+                    {...state.fields.etikettstatus}
+                />
+                <Radio
+                    label="Sendt søknad"
+                    value={konstanter.SOKNAD_SENDT}
+                    disabled={disable}
+                    {...state.fields.etikettstatus}
+                />
+                <Radio
+                    label="Skal på intervju"
+                    value={konstanter.INNKALT_TIL_INTERVJU}
+                    disabled={disable}
+                    {...state.fields.etikettstatus}
+                />
+                <Radio
+                    label="Fått jobbtilbud"
+                    value={konstanter.JOBBTILBUD}
+                    disabled={disable}
+                    {...state.fields.etikettstatus}
+                />
+                <Radio
+                    label="Fått avslag"
+                    value={konstanter.AVSLAG}
+                    disabled={disable}
+                    {...state.fields.etikettstatus}
+                />
+            </SkjemaGruppe>
             <Hovedknapp className="oppdater-status" disabled={disable} spinner={state.submitting} autoDisableVedSpinner>
                 Lagre
             </Hovedknapp>
@@ -63,13 +71,13 @@ function StillingEtikettForm(props) {
 }
 
 StillingEtikettForm.defaultProps = {
-    disabled: true
+    disabled: true,
 };
 
 StillingEtikettForm.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     onSubmit: PT.func.isRequired,
-    disabled: PT.bool
+    disabled: PT.bool,
 };
 
 export default StillingEtikettForm;

@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Normaltekst } from 'nav-frontend-typografi';
 import styles from './etikett.module.less';
 
 interface Props {
@@ -17,9 +16,7 @@ function EtikettBase(props: Props) {
 
     return (
         <div className={classNames(styles.etikett, className)}>
-            <Normaltekst tag="span" className={styles.etikettTekst}>
-                {children}
-            </Normaltekst>
+            <span className={styles.etikettTekst}>{children}</span>
         </div>
     );
 }
