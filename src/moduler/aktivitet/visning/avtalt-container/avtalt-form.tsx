@@ -11,6 +11,7 @@ import { DirtyContext } from '../../../context/dirty-context';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import InternLenke from '../../../../felles-komponenter/utils/internLenke';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
@@ -34,10 +35,15 @@ function noValidate(): undefined {
     return undefined;
 }
 
-const avtaltTekst =
-    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ' +
-    'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
-    'ber vi deg ta kontakt med veilederen din så snart som mulig.';
+const avtaltTekst = (aktivitetId: string) => {
+    const formattedLink = `[denne aktiviteten](/aktivitetsplan/aktivitet/vis/${aktivitetId})`;
+    return (
+        `Det er viktig at du gjennomfører ${formattedLink} med NAV. Gjør du ikke det, kan det medføre at ` +
+        'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
+        'ber vi deg ta kontakt med veilederen din så snart som mulig.'
+    );
+};
+
 const avtaltTekst119 =
     'Du kan få redusert utbetaling av arbeidsavklaringspenger med én stønadsdag hvis du lar være å ' +
     '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. Dette går ' +
@@ -56,7 +62,7 @@ const validator = useFormstate({
     avtaltCheckbox: noValidate,
     avtaltSelect: noValidate,
     avtaltText119: validateForhandsorienter,
-    avtaltText: noValidate
+    avtaltText: noValidate,
 });
 
 function InfoHeader() {
@@ -76,6 +82,7 @@ function InfoHeader() {
 }
 
 interface Props {
+    aktivitetId: string;
     onSubmit: Handler;
     className?: string;
     oppdaterer: boolean;
@@ -88,17 +95,18 @@ function AvtaltForm(props: Props) {
     const {
         onSubmit,
         className,
+        aktivitetId,
         oppdaterer,
         lasterData,
         erManuellKrrKvpBruker,
-        visAvtaltMedNavMindreEnnSyvDager
+        visAvtaltMedNavMindreEnnSyvDager,
     } = props;
 
     const state = validator({
         avtaltCheckbox: 'false',
         avtaltSelect: SEND_FORHANDSORIENTERING,
         avtaltText119: avtaltTekst119,
-        avtaltText: avtaltTekst
+        avtaltText: avtaltTekst(aktivitetId),
     });
 
     const { setFormIsDirty } = useContext(DirtyContext);
@@ -127,7 +135,7 @@ function AvtaltForm(props: Props) {
             <VisibleIfDiv
                 className={classNames({
                     'avtalt-container__innhold': kanSendeForhandsvarsel,
-                    'avtalt-container__alertstripe': erManuellKrrKvpBruker || visAvtaltMedNavMindreEnnSyvDager
+                    'avtalt-container__alertstripe': erManuellKrrKvpBruker || visAvtaltMedNavMindreEnnSyvDager,
                 })}
                 visible={avtalt}
             >
@@ -148,10 +156,11 @@ function AvtaltForm(props: Props) {
                         <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
                             <InfoHeader />
                             <Normaltekst className="blokk-xs">
-                                Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det
-                                medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du
-                                ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som
-                                mulig.
+                                Det er viktig at du gjennomfører{' '}
+                                <InternLenke href={`/aktivitet/vis/${aktivitetId}`}>denne aktiviteten</InternLenke> med
+                                NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en
+                                periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt
+                                med veilederen din så snart som mulig.
                             </Normaltekst>
                         </VisibleIfDiv>
                         <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>

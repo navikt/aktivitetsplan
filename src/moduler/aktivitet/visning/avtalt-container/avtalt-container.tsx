@@ -7,7 +7,7 @@ import AvtaltForm, {
     Handler,
     IKKE_SEND_FORHANDSORIENTERING,
     SEND_FORHANDSORIENTERING,
-    SEND_PARAGRAF_11_9
+    SEND_PARAGRAF_11_9,
 } from './avtalt-form';
 import { oppdaterAktivitet } from '../../aktivitet-actions';
 import { STATUS } from '../../../../ducks/utils';
@@ -18,7 +18,7 @@ import {
     selectErBrukerManuell,
     selectErUnderKvp,
     selectOppfolgingsPerioder,
-    selectReservasjonKRR
+    selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import DeleLinje from '../delelinje/delelinje';
@@ -36,7 +36,7 @@ interface Props {
 const avtaltTextMap = {
     [SEND_FORHANDSORIENTERING]: (avtaltForm: any) => avtaltForm.avtaltText,
     [SEND_PARAGRAF_11_9]: (avtaltForm: any) => avtaltForm.avtaltText119,
-    [IKKE_SEND_FORHANDSORIENTERING]: () => ''
+    [IKKE_SEND_FORHANDSORIENTERING]: () => '',
 };
 
 function AvtaltContainer(props: Props) {
@@ -53,18 +53,18 @@ function AvtaltContainer(props: Props) {
             sendForhandsorientering({
                 aktivitetId: aktivitet.id,
                 tekst: avtaltTekst,
-                overskrift: aktivitet.tittel
+                overskrift: aktivitet.tittel,
             })
         );
     };
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const harAvtalteAktiviteter =
         useSelector<any, Aktivitet[]>(selectAktiviteterData)
-            .filter(aktivitet => aktivitet.avtalt)
-            .filter(a => !a.historisk).length !== 0;
+            .filter((aktivitet) => aktivitet.avtalt)
+            .filter((a) => !a.historisk).length !== 0;
 
     const aktivOppfolgingsPeriode = useSelector<any, OppfolgingsPeriode[]>(selectOppfolgingsPerioder).filter(
-        periode => !periode.sluttDato
+        (periode) => !periode.sluttDato
     )[0];
     const erManuell = useSelector(selectErBrukerManuell);
     const erKvp = useSelector(selectErUnderKvp);
@@ -114,7 +114,7 @@ function AvtaltContainer(props: Props) {
                             id="sett-avtalt-bekreftelse"
                             values={{
                                 settAvtaltTekstVerdi,
-                                forhandsorienteringType
+                                forhandsorienteringType,
                             }}
                         />
                         <LenkeTilDialog dialogId={dialogId} hidden={!forhandsorienteringSent} className="">
@@ -127,7 +127,7 @@ function AvtaltContainer(props: Props) {
         );
     }
 
-    const onSubmit: Handler = avtaltForm => {
+    const onSubmit: Handler = (avtaltForm) => {
         setVisBekreftAvtalt(true);
         // @ts-ignore
         const avtaltText = avtaltTextMap[avtaltForm.avtaltSelect](avtaltForm);
@@ -154,6 +154,7 @@ function AvtaltContainer(props: Props) {
     return (
         <div>
             <AvtaltForm
+                aktivitetId={aktivitet.id}
                 className={`${className} avtalt-container`}
                 oppdaterer={oppdaterer}
                 visAvtaltMedNavMindreEnnSyvDager={visAvtaltMedNavMindreEnnSyvDager}
