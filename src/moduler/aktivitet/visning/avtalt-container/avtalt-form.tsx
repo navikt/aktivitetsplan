@@ -36,7 +36,7 @@ function noValidate(): undefined {
 }
 
 const avtaltTekst = (aktivitetId: string) => {
-    const formattedLink = `[denne aktiviteten](/aktivitetsplan/aktivitet/vis/${aktivitetId})`;
+    const formattedLink = `[denne aktiviteten](/arbeid/dialog/aktivitetsplan/aktivitet/vis/${aktivitetId})`;
     return (
         `Det er viktig at du gjennomfører ${formattedLink} med NAV. Gjør du ikke det, kan det medføre at ` +
         'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
