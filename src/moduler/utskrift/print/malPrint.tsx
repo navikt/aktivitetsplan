@@ -1,4 +1,4 @@
-import { Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Mal } from '../../../types';
 
@@ -12,9 +12,9 @@ function MalPrint(props: Props) {
 
     return (
         <section className="printmodal-body__vismittmal">
-            <Undertittel tag="h1" className="printmodal-body__vismittmal--overskrift">
+            <Systemtittel tag="h1" className="printmodal-body__vismittmal--overskrift">
                 Mitt mål
-            </Undertittel>
+            </Systemtittel>
             <p>{mal}</p>
         </section>
     );

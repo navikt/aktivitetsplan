@@ -4,9 +4,9 @@ import {
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT
+    STATUS_PLANLAGT,
 } from '../../../constant';
-import { Element, Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { compareAktivitet } from '../../aktivitet/aktivitet-util';
 import React from 'react';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
@@ -26,7 +26,7 @@ const typeMap = {
     IJOBB: 'Jobb jeg har nå',
     BEHANDLING: 'Behandling',
     MOTE: 'Møte med NAV',
-    SAMTALEREFERAT: 'Samtalereferat'
+    SAMTALEREFERAT: 'Samtalereferat',
 };
 
 function AktivitetReferat(props: AktivitetProps) {
@@ -54,9 +54,9 @@ function AktivitetPrint(props: AktivitetProps) {
         <div key={id} className="printmodal-body__statusgruppe">
             <p className="printmodal-body__statusgruppe--type">{typeMap[type]}</p>
 
-            <Element tag="h2" className="printmodal-body__statusgruppe--overskrift">
+            <Undertittel tag="h2" className="printmodal-body__statusgruppe--overskrift">
                 {tittel}
-            </Element>
+            </Undertittel>
 
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
             <AktivitetReferat aktivitet={aktivitet} />
@@ -80,11 +80,11 @@ function Gruppe(props: GruppeProps) {
 
     return (
         <section className="printmodal-body__statusgrupper">
-            <Undertittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+            <Systemtittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
                 {titel}
-            </Undertittel>
-            {aktiviteter.sort(compareAktivitet).map(aktivitet => {
-                const dialogForAktivitet = dialoger && dialoger.find(d => d.aktivitetId === aktivitet.id);
+            </Systemtittel>
+            {aktiviteter.sort(compareAktivitet).map((aktivitet) => {
+                const dialogForAktivitet = dialoger && dialoger.find((d) => d.aktivitetId === aktivitet.id);
                 return <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} dialog={dialogForAktivitet} />;
             })}
         </section>

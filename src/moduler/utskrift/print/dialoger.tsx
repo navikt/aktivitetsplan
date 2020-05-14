@@ -1,5 +1,5 @@
 import React from 'react';
-import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
+import { Element, EtikettLiten, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 
 import { datoComparator, formaterDatoKortManed } from '../../../utils';
 import { Dialog } from '../../../types';
@@ -17,6 +17,19 @@ function avsender(avsenderType: string, avsenderId?: string) {
     return 'BRUKER';
 }
 
+function Tittel(props: { dialog: Dialog }) {
+    const dialog = props.dialog;
+    if (dialog.aktivitetId) {
+        return (
+            <Element tag="h2" className="printmodal-body__statusgruppe--overskrift">
+                Dialog
+            </Element>
+        );
+    }
+
+    return <Undertittel className="printmodal-body__statusgruppe--overskrift">{dialog.overskrift}</Undertittel>;
+}
+
 export function DialogPrint(props: DialogProps) {
     const { dialog } = props;
 
@@ -25,15 +38,11 @@ export function DialogPrint(props: DialogProps) {
     }
 
     const { henvendelser } = dialog;
-    const henvendelserSynkende = henvendelser && [...henvendelser].sort((a, b) => datoComparator(b.sendt, a.sendt));
-
-    const overskrift = dialog.aktivitetId === null ? dialog.overskrift : 'Dialog';
+    const henvendelserSynkende = henvendelser && [...henvendelser].sort((a, b) => datoComparator(a.sendt, b.sendt));
 
     return (
         <div hidden={!henvendelserSynkende} className="printmodal-body__dialog">
-            <Element tag="h2" className="printmodal-body__statusgruppe--overskrift">
-                {overskrift}
-            </Element>
+            <Tittel dialog={dialog} />
             {henvendelserSynkende &&
                 henvendelserSynkende.map((h) => (
                     <div className="henvendelse" key={h.id}>
@@ -59,12 +68,14 @@ export function DialogerUtenAktivitet(props: DialogerUtenAktivitetProps) {
         return null;
     }
 
+    const sorterteDialoger = dialogerUtenAktivitet.sort((a, b) => datoComparator(a.opprettetDato, b.opprettetDato));
+
     return (
         <section className="printmodal-body__statusgrupper">
-            <Undertittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
+            <Systemtittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
                 Dialogen med veileder
-            </Undertittel>
-            {dialogerUtenAktivitet.map((d) => (
+            </Systemtittel>
+            {sorterteDialoger.map((d) => (
                 <DialogPrint key={d.id} dialog={d} />
             ))}
         </section>

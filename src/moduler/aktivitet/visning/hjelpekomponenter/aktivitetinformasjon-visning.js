@@ -31,13 +31,9 @@ function visningsIngress(type) {
 function KoronaInformasjon({ valgtAktivitet }) {
     return (
         <HiddenIfAlertStripeInfoSolid hidden={'Oppdater CV-en og jobbprofilen' !== valgtAktivitet.tittel}>
-            <Normaltekst style={{ marginBottom: '1rem' }}>
-                På grunn av situasjonen med korona-viruset kan det bli økt behov for kritisk arbeidskraft på flere
-                områder fremover. For eksempel helsevesen, transport og landbruk.
-            </Normaltekst>
             <Normaltekst>
-                Kanskje du har kompetanse som samfunnet vil ha ekstra behov for, og kan hjelpe til i tiden du er
-                permittert?
+                Flere bransjer og bedrifter trenger folk nå, og det er derfor spesielt viktig at du har en oppdatert CV
+                og jobbprofil slik at de kan finne deg i NAVs søk.
             </Normaltekst>
         </HiddenIfAlertStripeInfoSolid>
     );

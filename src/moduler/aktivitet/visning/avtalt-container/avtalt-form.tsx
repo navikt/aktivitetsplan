@@ -56,7 +56,7 @@ const validator = useFormstate({
     avtaltCheckbox: noValidate,
     avtaltSelect: noValidate,
     avtaltText119: validateForhandsorienter,
-    avtaltText: noValidate
+    avtaltText: noValidate,
 });
 
 function InfoHeader() {
@@ -91,14 +91,14 @@ function AvtaltForm(props: Props) {
         oppdaterer,
         lasterData,
         erManuellKrrKvpBruker,
-        visAvtaltMedNavMindreEnnSyvDager
+        visAvtaltMedNavMindreEnnSyvDager,
     } = props;
 
     const state = validator({
         avtaltCheckbox: 'false',
         avtaltSelect: SEND_FORHANDSORIENTERING,
         avtaltText119: avtaltTekst119,
-        avtaltText: avtaltTekst
+        avtaltText: avtaltTekst,
     });
 
     const { setFormIsDirty } = useContext(DirtyContext);
@@ -127,7 +127,7 @@ function AvtaltForm(props: Props) {
             <VisibleIfDiv
                 className={classNames({
                     'avtalt-container__innhold': kanSendeForhandsvarsel,
-                    'avtalt-container__alertstripe': erManuellKrrKvpBruker || visAvtaltMedNavMindreEnnSyvDager
+                    'avtalt-container__alertstripe': erManuellKrrKvpBruker || visAvtaltMedNavMindreEnnSyvDager,
                 })}
                 visible={avtalt}
             >
