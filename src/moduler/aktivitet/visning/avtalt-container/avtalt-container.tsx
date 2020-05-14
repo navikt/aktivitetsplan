@@ -154,7 +154,6 @@ function AvtaltContainer(props: Props) {
     return (
         <div>
             <AvtaltForm
-                aktivitetId={aktivitet.id}
                 className={`${className} avtalt-container`}
                 oppdaterer={oppdaterer}
                 visAvtaltMedNavMindreEnnSyvDager={visAvtaltMedNavMindreEnnSyvDager}
