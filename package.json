@@ -9,8 +9,6 @@
     "build": "npm run build:tekster && craco build",
     "test": "craco test",
     "test:coverage": "npm test -- --coverage --watchAll=false",
-    "test:e2e": "node integrationtest/local-runner.js",
-    "test:browsers": "node integrationtest/saucelabs-runner.js",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
     "lint": "echo \"Not implemented\""
   },
