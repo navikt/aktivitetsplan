@@ -1,0 +1,13 @@
+{
+  "name": "aktivitetsplan",
+  "description": "Aktivitetsplan i nav",
+  "scripts": {},
+  "env": {},
+  "formation": {},
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "mars/create-react-app"
+    }
+  ]
+}
