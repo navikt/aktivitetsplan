@@ -1,4 +1,4 @@
-import { sjekkStatuskode, handterFeil, toJson, getCookie, aggregerStatus, STATUS } from './utils';
+import { aggregerStatus, getCookie, handterFeil, sjekkStatuskode, STATUS, toJson } from './utils';
 
 const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = STATUS;
 
@@ -42,7 +42,7 @@ describe('utils', () => {
             const response = {
                 ok: true,
                 status: 200,
-                statusText: 'Status OK'
+                statusText: 'Status OK',
             };
             expect(sjekkStatuskode(response)).toEqual(response);
         });
@@ -50,7 +50,7 @@ describe('utils', () => {
             const response = {
                 ok: false,
                 status: 200,
-                statusText: 'Feilstatus'
+                statusText: 'Feilstatus',
             };
             expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
@@ -58,7 +58,7 @@ describe('utils', () => {
             const response = {
                 ok: true,
                 status: 300,
-                statusText: 'Feilstatus'
+                statusText: 'Feilstatus',
             };
             expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
@@ -66,7 +66,7 @@ describe('utils', () => {
             const response = {
                 ok: true,
                 status: 199,
-                statusText: 'Feilstatus'
+                statusText: 'Feilstatus',
             };
             expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
@@ -74,7 +74,7 @@ describe('utils', () => {
             const response = {
                 ok: false,
                 status: 199,
-                statusText: 'Feilstatus'
+                statusText: 'Feilstatus',
             };
             expect(() => sjekkStatuskode(response)).toThrow(Error);
         });
@@ -83,42 +83,54 @@ describe('utils', () => {
     describe('handterFeil', () => {
         const action = 'action';
 
+        let consoleOutput = [];
+        const originalError = console.error;
+        afterEach(() => {
+            consoleOutput = [];
+            console.error = originalError;
+        });
+
+        const mockedError = (output) => consoleOutput.push(output);
+        beforeEach(() => (console.error = mockedError));
+
         it('Sjekk at funksjonen returnerer et rejected promise', () => {
             expect(handterFeil(() => {}, action)(new Error('message'))).rejects.toThrow('message');
+            expect(consoleOutput.length).toBe(1);
         });
         it('Sjekk at funksjonen dispatcher parset feil', () => {
             const dispatch = jest.fn();
             const response = {
                 status: 1234,
-                text: () => Promise.resolve('{"type":"FEILTYPE"}')
+                text: () => Promise.resolve('{"type":"FEILTYPE"}'),
             };
 
-            try {
-                handterFeil(dispatch, action)({ response });
-            } catch (e) {
-                // ignore
-            }
+            handterFeil(dispatch, action)({ response }).catch(() => {});
+
             setTimeout(() => {
                 expect(dispatch.mock.calls[0][0]).toEqual({
                     data: {
                         melding: { type: 'FEILTYPE' },
                         type: action,
-                        httpStatus: 1234
+                        httpStatus: 1234,
                     },
-                    type: action
+                    type: action,
                 });
             }, 0);
+
+            expect(consoleOutput.length).toBe(0);
         });
         it('Sjekk at funksjonen dispatcher error message', () => {
             const dispatch = jest.fn();
             const error = new Error('message');
 
-            handterFeil(dispatch, action)(error);
+            handterFeil(dispatch, action)(error).catch(() => {});
 
             expect(dispatch.mock.calls[0][0]).toEqual({
                 data: { melding: error.toString(), type: action },
-                type: action
+                type: action,
             });
+
+            expect(consoleOutput.length).toBe(1);
         });
     });
 
@@ -126,14 +138,14 @@ describe('utils', () => {
         it('Sjekk at funksjonen returnere json ved gyldig status', () => {
             const response = {
                 status: 200,
-                json: () => ({ testprop: 'testprop' })
+                json: () => ({ testprop: 'testprop' }),
             };
             expect(toJson(response)).toEqual(response.json());
         });
         it('Returnerer respons ved 204', () => {
             const response = {
                 status: 204,
-                json: () => ({ testprop: 'testprop' })
+                json: () => ({ testprop: 'testprop' }),
             };
             expect(toJson(response)).toEqual(response);
         });

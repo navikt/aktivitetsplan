@@ -1,10 +1,8 @@
 import React from 'react';
-import { createIntl, intlShape } from 'react-intl';
+import { intlShape } from 'react-intl';
 import { mount } from 'enzyme';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
-import { MOTE_TYPE, IJOBB_AKTIVITET_TYPE } from '../../../constant';
-
-const intl = createIntl({ locale: 'no' });
+import { IJOBB_AKTIVITET_TYPE, MOTE_TYPE } from '../../../constant';
 
 function nodeWithIntlProp(node) {
     return React.cloneElement(node, { intl });
@@ -25,9 +23,10 @@ describe('Aktivitet-periode', () => {
         const aktivitet = {
             fraDato: '2017-08-17',
             tilDato: '2017-08-20',
+            opprettetDato: '2015-08-20',
             type: MOTE_TYPE,
         };
-        const wrapper = mountWithIntl(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
+        const wrapper = mount(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
         expect(wrapper.text()).toEqual('17. aug 2017');
     });
 
@@ -35,9 +34,10 @@ describe('Aktivitet-periode', () => {
         const aktivitet = {
             fraDato: '2017-08-17',
             tilDato: '2017-08-20',
+            opprettetDato: '2015-08-20',
             type: IJOBB_AKTIVITET_TYPE,
         };
-        const wrapper = mountWithIntl(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
+        const wrapper = mount(<AktiviteskortPeriodeVisning aktivitet={aktivitet} />);
         expect(wrapper.text()).toEqual('17. aug 2017 - 20. aug 2017');
     });
 });
