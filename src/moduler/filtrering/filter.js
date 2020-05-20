@@ -14,8 +14,6 @@ import StatusFilter from './filter/status-filter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 
-const filterClassNames = classes => classNames(classes, 'filter');
-
 function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
     const muligeFilterKombinasjoner = aktivitetsListe.reduce(
         (res, aktivitet) => {
@@ -43,9 +41,14 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
 }
 
 function Filter({ avhengigheter, harAktivitet, className }) {
+    const resolvedClassNames = classNames(
+        className,
+        "filter", {
+        "skjult": !harAktivitet
+    });
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
-            <VisibleIfDiv className={filterClassNames(className)} visible={harAktivitet}>
+            <VisibleIfDiv className={resolvedClassNames}>
                 <FormattedMessage id="filter.tittel">
                     {tittel => (
                         <Dropdown
