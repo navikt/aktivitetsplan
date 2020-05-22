@@ -30,7 +30,7 @@ const stripeTyper = {
 };
 
 function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
-    const aktor = erVeileder ? 'vei leder' : 'bruker';
+    const aktor = erVeileder ? 'veileder' : 'bruker';
     const feilType = feil.type;
     const { melding } = feil;
     const unauthorized = feil.httpStatus === 401;
