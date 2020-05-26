@@ -9,10 +9,7 @@
     "build": "npm run build:tekster && craco build",
     "test": "craco test",
     "test:coverage": "npm test -- --coverage --watchAll=false",
-    "test:e2e": "node integrationtest/local-runner.js",
-    "test:browsers": "node integrationtest/saucelabs-runner.js",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
-    "heroku-serve": "serve -s build -l $PORT",
     "lint": "echo \"Not implemented\""
   },
   "dependencies": {
@@ -129,9 +126,6 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5",
-    "serve": "^11.3.0",
-    "testcafe": "^1.8.4",
-    "testcafe-browser-provider-saucelabs": "^1.8.0",
     "ua-parser-js": "^0.7.21",
     "yet-another-fetch-mock": "^3.4.0"
   },

@@ -10,10 +10,10 @@ import {
     INGEN_TILGANG_KATEGORI,
     KATEGORI_RANGERING,
     parseFeil,
+    UGYLDIG_HANDLING,
     UGYLDIG_REQUEST_KATEGORI,
     UKJENT_KATEGORI,
     UNAUTHORIZED_KATEGORI,
-    VERSJONSKONFLIKT_KATEGORI,
 } from './feilmelding-utils';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
@@ -26,7 +26,7 @@ const stripeTyper = {
     [UNAUTHORIZED_KATEGORI]: AlertStripeFeil,
     [INGEN_TILGANG_KATEGORI]: AlertStripeInfo,
     [UGYLDIG_REQUEST_KATEGORI]: AlertStripeInfo,
-    [VERSJONSKONFLIKT_KATEGORI]: AlertStripeInfo,
+    [UGYLDIG_HANDLING]: AlertStripeInfo,
 };
 
 function FeilStripe({ feil, erVeileder, intl, erArenaFeil }) {
