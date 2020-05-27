@@ -20,7 +20,7 @@
     "history": "^4.10.1",
     "intl": "^1.2.5",
     "lodash.throttle": "^4.1.1",
-    "moment": "^2.24.0",
+    "moment": "^2.25.3",
     "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.28",
     "nav-frontend-alertstriper": "^3.0.14",
