@@ -67,7 +67,7 @@
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.13.1",
-    "react-intl": "^4.5.0",
+    "react-intl": "^4.5.3",
     "react-maskedinput": "^4.0.1",
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.0",
