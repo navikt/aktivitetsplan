@@ -1,8 +1,8 @@
-import React from 'react';
-import { Label, SkjemaGruppe } from 'nav-frontend-skjema';
+import React, { useCallback } from 'react';
+import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import Datovelger, { DatovelgerProps } from 'nav-datovelger/lib/Datovelger';
 import { FieldStateInput } from '../input/utils';
-import { datePickerToISODate, dateToDatePicker, erGyldigFormattertDato, ISODateToDatePicker } from '../../../utils';
+import { datePickerToISODate, dateToDatePicker, erGyldigFormattertDato } from '../../../utils';
 import styles from './datovelger.module.less';
 import classNames from 'classnames';
 
@@ -10,37 +10,47 @@ function parseInputDate(dato?: string) {
     return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
 }
 
+function DatoFeil(props: { feil?: string }) {
+    if (!props.feil) {
+        return null;
+    }
+    return <SkjemaelementFeilmelding>{props.feil}</SkjemaelementFeilmelding>;
+}
+
 interface Props {
     touched: boolean;
     error?: string;
     label: string;
     input: FieldStateInput;
-    pristine?: boolean;
-    initialValue?: string;
 }
 
-function BasicDatovelger(props: Props & DatovelgerProps) {
-    const { label, touched, error, input, pristine, initialValue, ...rest } = props;
+function DatovelgerWrapper(props: Props & DatovelgerProps) {
+    const { label, touched, error, input } = props;
     const feil = error && touched ? error : undefined;
 
-    const onChange = (date?: string) => {
-        const newValue = parseInputDate(date);
-        const customEvent = {
-            target: { name: input.name, value: newValue },
-        };
-        input.onChange(customEvent as any);
-    };
+    const { onChange, name } = input;
+    const _onChange = useCallback(
+        (date?: string) => {
+            const newValue = parseInputDate(date);
+            const customEvent = {
+                target: { name: name, value: newValue },
+            };
+            onChange(customEvent as any);
+        },
+        [name, onChange]
+    );
 
     const valgtDato = dateToDatePicker(input.value);
     const cls = classNames(styles.datovelger, { [styles.harFeil]: !!feil });
     const datovelgerInput = { ...input, placeholder: 'dd.mm.åååå' };
 
     return (
-        <SkjemaGruppe className={cls} feil={feil}>
+        <div className={cls}>
             <Label htmlFor={input.id}>{label}</Label>
-            <Datovelger {...props} input={datovelgerInput} onChange={onChange} valgtDato={valgtDato} />
-        </SkjemaGruppe>
+            <Datovelger {...props} input={datovelgerInput} onChange={_onChange} valgtDato={valgtDato} />
+            <DatoFeil feil={feil} />
+        </div>
     );
 }
 
-export default BasicDatovelger;
+export default DatovelgerWrapper;
