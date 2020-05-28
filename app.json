@@ -2,12 +2,12 @@
   "name": "aktivitetsplan",
   "description": "Aktivitetsplan i nav",
   "scripts": {},
-  "env": {
-    "NPM_CONFIG_PRODUCTION": {
-      "required": true
-    }
-  },
+  "env": {},
   "formation": {},
   "addons": [],
-  "buildpacks": []
+  "buildpacks": [
+    {
+      "url": "mars/create-react-app"
+    }
+  ]
 }

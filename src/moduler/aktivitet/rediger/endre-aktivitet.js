@@ -9,7 +9,7 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
 import { STATUS } from '../../../ducks/utils';
 import { selectAktivitetMedId } from '../aktivitetliste-selector';
-import { selectAktivitetStatus } from '../aktivitet-selector';
+import { selectAktivitetFeilmeldinger, selectAktivitetStatus } from '../aktivitet-selector';
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
@@ -17,7 +17,7 @@ import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
-    STILLING_AKTIVITET_TYPE
+    STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
@@ -57,7 +57,7 @@ const CONFIRM = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på
 
 function onBeforeLoadEffect(isDirty) {
     return () => {
-        window.onbeforeunload = e => {
+        window.onbeforeunload = (e) => {
             if (isDirty.current) {
                 e.returnValue = CONFIRM;
                 return CONFIRM;
@@ -72,7 +72,7 @@ function onBeforeLoadEffect(isDirty) {
 }
 
 function EndreAktivitet(props) {
-    const { valgtAktivitet, avhengigheter, history, doOppdaterAktivitet, lagrer } = props;
+    const { valgtAktivitet, avhengigheter, history, doOppdaterAktivitet, lagrer, aktivitetFeilmeldinger } = props;
 
     const isDirty = useRef(false);
     useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
@@ -89,7 +89,7 @@ function EndreAktivitet(props) {
         }
     };
 
-    const onReqBack = e => {
+    const onReqBack = (e) => {
         e.preventDefault();
         if (!isDirty.current || window.confirm(CONFIRM)) {
             history.goBack();
@@ -103,14 +103,19 @@ function EndreAktivitet(props) {
         onSubmit: oppdater,
         endre: true,
         isDirtyRef: isDirty,
-        lagrer
+        lagrer,
     };
 
     const Form = getAktivitetsFormComponent(valgtAktivitet);
     const AktivitetForm = Form ? <Form {...formProps} /> : null;
 
     return (
-        <Modal header={header} onRequestClose={onReqClose} contentLabel="aktivitet-modal">
+        <Modal
+            header={header}
+            feilmeldinger={aktivitetFeilmeldinger}
+            onRequestClose={onReqClose}
+            contentLabel="aktivitet-modal"
+        >
             <article>
                 <Innholdslaster avhengigheter={avhengigheter}>
                     <ModalContainer>{AktivitetForm}</ModalContainer>
@@ -121,16 +126,17 @@ function EndreAktivitet(props) {
 }
 
 EndreAktivitet.defaultProps = {
-    valgtAktivitet: undefined
+    valgtAktivitet: undefined,
 };
 
 EndreAktivitet.propTypes = {
     doOppdaterAktivitet: PT.func.isRequired,
     lagrer: PT.bool.isRequired,
     valgtAktivitet: AppPT.aktivitet,
+    aktivitetFeilmeldinger: PT.array.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
     history: AppPT.history.isRequired,
-    match: PT.object.isRequired
+    match: PT.object.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
@@ -139,12 +145,13 @@ const mapStateToProps = (state, props) => {
     return {
         valgtAktivitet,
         avhengigheter: [valgtAktivitet ? STATUS.OK : STATUS.PENDING],
-        lagrer: selectAktivitetStatus !== STATUS.OK
+        aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
+        lagrer: selectAktivitetStatus !== STATUS.OK,
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doOppdaterAktivitet: aktivitet => oppdaterAktivitet(aktivitet)(dispatch)
+const mapDispatchToProps = (dispatch) => ({
+    doOppdaterAktivitet: (aktivitet) => oppdaterAktivitet(aktivitet)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EndreAktivitet);

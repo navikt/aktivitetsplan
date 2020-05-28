@@ -20,7 +20,7 @@ if (!global.Intl) {
 moment.locale('nb');
 moment.tz.setDefault('Europe/Oslo');
 moment.updateLocale('nb', {
-    monthsShort: ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'],
+    monthsShort: ['jan.', 'feb.', 'mar.', 'apr.', 'mai', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'des.'],
 });
 
 if (process.env.REACT_APP_MOCK === 'true') {

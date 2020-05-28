@@ -2,7 +2,7 @@ import { formaterDatoKortManed } from '../../../utils';
 import logoPng from '../ikoner/logo.png';
 import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
 import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Aktivitet, Bruker, Dialog, KvpPeriode, Mal } from '../../../types';
 import Adresse from './adresse';
@@ -132,9 +132,9 @@ function Print(props: Props) {
                     </HiddenIfDiv>
                 </div>
             </div>
-            <Systemtittel tag="h1" className="printmodal-body__utskrift--overskrift">
+            <Sidetittel tag="h1" className="printmodal-body__utskrift--overskrift">
                 Aktivitetsplan
-            </Systemtittel>
+            </Sidetittel>
             <HiddenIfSection hidden={printMelding === ''} className="printmodal-body__visprintmelding">
                 <p>{printMelding}</p>
             </HiddenIfSection>

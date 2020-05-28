@@ -1,6 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
@@ -16,6 +16,7 @@ import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/
 import { endreAktivitetRoute } from '../../../../routes';
 import DeleLinje from '../delelinje/delelinje';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
+import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 
 function visningsIngress(type) {
     if (
@@ -25,6 +26,17 @@ function visningsIngress(type) {
     }
 
     return <AktivitetIngress aktivitetsType={type} />;
+}
+
+function KoronaInformasjon({ valgtAktivitet }) {
+    return (
+        <HiddenIfAlertStripeInfoSolid hidden={'Oppdater CV-en og jobbprofilen' !== valgtAktivitet.tittel}>
+            <Normaltekst>
+                Flere bransjer og bedrifter trenger folk nå, og det er derfor spesielt viktig at du har en oppdatert CV
+                og jobbprofil slik at de kan finne deg i NAVs søk.
+            </Normaltekst>
+        </HiddenIfAlertStripeInfoSolid>
+    );
 }
 
 function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
@@ -51,6 +63,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                 {visningsIngress(type)}
                 <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
+                <KoronaInformasjon valgtAktivitet={valgtAktivitet} />
             </div>
             <DeleLinje />
         </div>
