@@ -79,23 +79,12 @@ export const todayIsoString = () => {
     return moment().startOf('day').toISOString();
 };
 
-export const datePickerToISODate = (dato) => {
-    const parsetDato = moment(dato, 'DD.MM.YYYY', true);
-    return parsetDato.isValid() ? parsetDato.toISOString() : '';
-};
-
-export const dateToISODate = (dato) => {
-    const parsetDato = moment(dato);
-    return dato && parsetDato.isValid() ? parsetDato.toISOString() : '';
-};
-
-export const ISODateToDatePicker = (dato) => {
-    const parsetDato = moment(dato);
-    return dato && parsetDato.isValid() ? parsetDato.format('DD.MM.YYYY') : '';
+export const getNowAsISODate = () => {
+    return moment.unix(0).toISOString();
 };
 
 export const dateToDatePicker = (dato) => {
-    const parsetDato = moment(dato);
+    const parsetDato = moment(dato, 'YYYY-MM-DD');
     return dato && parsetDato.isValid() ? parsetDato.format('YYYY-MM-DD') : '';
 };
 

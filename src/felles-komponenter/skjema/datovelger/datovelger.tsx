@@ -1,14 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import Datovelger, { DatovelgerProps } from 'nav-datovelger/lib/Datovelger';
 import { FieldStateInput } from '../input/utils';
-import { datePickerToISODate, dateToDatePicker, erGyldigFormattertDato } from '../../../utils';
+import { dateToDatePicker } from '../../../utils';
 import styles from './datovelger.module.less';
 import classNames from 'classnames';
-
-function parseInputDate(dato?: string) {
-    return erGyldigFormattertDato(dato) ? datePickerToISODate(dato) : dato;
-}
 
 function DatoFeil(props: { feil?: string }) {
     if (!props.feil) {
@@ -25,17 +21,18 @@ interface Props {
 }
 
 function DatovelgerWrapper(props: Props & DatovelgerProps) {
-    const { label, touched, error, input } = props;
+    const { label, error, input } = props;
+    const [touched, setTouched] = useState(false);
     const feil = error && touched ? error : undefined;
 
     const { onChange, name } = input;
     const _onChange = useCallback(
         (date?: string) => {
-            const newValue = parseInputDate(date);
             const customEvent = {
-                target: { name: name, value: newValue },
+                target: { name: name, value: date },
             };
             onChange(customEvent as any);
+            setTouched(true);
         },
         [name, onChange]
     );
