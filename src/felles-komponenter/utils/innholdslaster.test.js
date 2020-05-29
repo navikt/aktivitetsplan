@@ -1,8 +1,6 @@
 /* eslint-env mocha */
 import React from 'react';
 import { mount } from 'enzyme';
-
-import { IntlProvider } from 'react-intl';
 import { STATUS } from '../../ducks/utils';
 import Innholdslaster from './innholdslaster';
 
@@ -19,11 +17,7 @@ describe('innholdslaster', () => {
 
     it('Skal ikke rendre children hvis det har oppstått en feil på noen avhengigheter', () => {
         const innhold = <div>yay</div>;
-        const wrapper = mount(
-            <IntlProvider locale="nb">
-                <Innholdslaster avhengigheter={[{ status: STATUS.ERROR }]}>{innhold}</Innholdslaster>
-            </IntlProvider>
-        );
+        const wrapper = mount(<Innholdslaster avhengigheter={[{ status: STATUS.ERROR }]}>{innhold}</Innholdslaster>);
 
         expect(wrapper.find(innhold)).toHaveLength(0);
     });
@@ -47,11 +41,7 @@ describe('innholdslaster', () => {
         const innhold = <div>yay</div>;
 
         const wrapper = mount(
-            <IntlProvider locale="nb">
-                <Innholdslaster avhengigheter={[{ status: STATUS.OK }, { status: STATUS.ERROR }]}>
-                    {innhold}
-                </Innholdslaster>
-            </IntlProvider>
+            <Innholdslaster avhengigheter={[{ status: STATUS.OK }, { status: STATUS.ERROR }]}>{innhold}</Innholdslaster>
         );
 
         expect(wrapper.find(innhold)).toHaveLength(0);
@@ -61,11 +51,9 @@ describe('innholdslaster', () => {
         const innhold = <div>yay</div>;
 
         const wrapper = mount(
-            <IntlProvider locale="nb">
-                <Innholdslaster avhengigheter={[{ status: STATUS.OK }, STATUS.ERROR, { status: STATUS.OK }]}>
-                    {innhold}
-                </Innholdslaster>
-            </IntlProvider>
+            <Innholdslaster avhengigheter={[{ status: STATUS.OK }, STATUS.ERROR, { status: STATUS.OK }]}>
+                {innhold}
+            </Innholdslaster>
         );
 
         expect(wrapper.find(innhold)).toHaveLength(0);
@@ -73,11 +61,9 @@ describe('innholdslaster', () => {
 
     it('Takler null og undefined', () => {
         const wrapper = mount(
-            <IntlProvider locale="nb">
-                <Innholdslaster avhengigheter={[null, undefined, { status: STATUS.OK }]}>
-                    <div>yay</div>
-                </Innholdslaster>
-            </IntlProvider>
+            <Innholdslaster avhengigheter={[null, undefined, { status: STATUS.OK }]}>
+                <div>yay</div>
+            </Innholdslaster>
         );
 
         expect(wrapper.find('.spinner')).toBeDefined();
