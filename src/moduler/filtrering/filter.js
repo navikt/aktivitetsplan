@@ -30,7 +30,7 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
             muligeStatus: new Set(),
             muligeTyper: new Set(),
             muligeEtiketter: new Set(),
-            muligeAvtalt: new Set()
+            muligeAvtalt: new Set(),
         }
     );
 
@@ -41,16 +41,14 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
 }
 
 function Filter({ avhengigheter, harAktivitet, className }) {
-    const resolvedClassNames = classNames(
-        className,
-        "filter", {
-        "skjult": !harAktivitet
+    const resolvedClassNames = classNames(className, 'filter', {
+        skjult: !harAktivitet,
     });
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <VisibleIfDiv className={resolvedClassNames}>
                 <FormattedMessage id="filter.tittel">
-                    {tittel => (
+                    {(tittel) => (
                         <Dropdown
                             name="filter"
                             knappeTekst={tittel}
@@ -76,20 +74,20 @@ function Filter({ avhengigheter, harAktivitet, className }) {
 Filter.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     harAktivitet: PT.bool,
-    className: PT.string
+    className: PT.string,
 };
 
 Filter.defaultProps = {
     harAktivitet: true,
-    className: ''
+    className: '',
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const harAktivitet = aktiviteter.length > 1 && sjekkAttFinnesFilteringsAlternativ(aktiviteter);
     return {
         avhengigheter: [selectAktivitetListeStatus(state)],
-        harAktivitet
+        harAktivitet,
     };
 };
 

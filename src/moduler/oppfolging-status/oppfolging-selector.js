@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { dateToISODate } from '../../utils';
+import { getNowAsISODate } from '../../utils';
 import { STATUS } from '../../ducks/utils';
 
 export function selectOppfolgingSlice(state) {
@@ -13,7 +13,7 @@ function selectOppfolgingData(state) {
 export function selectOppfolgingStatus(state) {
     return selectOppfolgingSlice(state).status;
 }
-export const selectReservasjonKRR = state => selectOppfolgingData(state).reservasjonKRR;
+export const selectReservasjonKRR = (state) => selectOppfolgingData(state).reservasjonKRR;
 
 export function selectServicegruppe(state) {
     return selectOppfolgingData(state).servicegruppe;
@@ -23,24 +23,24 @@ export function selectOppfolgingsPerioder(state) {
     return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
 
-export const selectHistoriskeOppfolgingsPerioder = createSelector(selectOppfolgingsPerioder, oppfolgingsPerioder =>
-    oppfolgingsPerioder.filter(p => p.sluttDato)
+export const selectHistoriskeOppfolgingsPerioder = createSelector(selectOppfolgingsPerioder, (oppfolgingsPerioder) =>
+    oppfolgingsPerioder.filter((p) => p.sluttDato)
 );
 
 export const selectForrigeHistoriskeSluttDato = createSelector(
     selectHistoriskeOppfolgingsPerioder,
-    historiskeOppfolgingsPerioder =>
+    (historiskeOppfolgingsPerioder) =>
         (historiskeOppfolgingsPerioder || [])
-            .map(p => p.sluttDato)
+            .map((p) => p.sluttDato)
             .sort()
             .reverse()[0]
 );
 
 export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
-    let nesteFra = dateToISODate(new Date(0));
+    let nesteFra = getNowAsISODate();
     return selectHistoriskeOppfolgingsPerioder(state)
         .sort((a, b) => a.sluttDato.localeCompare(b.sluttDato))
-        .map(periode => {
+        .map((periode) => {
             const { sluttDato } = periode;
             const fra = nesteFra;
             nesteFra = sluttDato;
@@ -48,7 +48,7 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
                 id: sluttDato,
                 fra,
                 til: sluttDato,
-                vistFra: periode.startDato
+                vistFra: periode.startDato,
             };
         })
         .reverse();
@@ -57,7 +57,7 @@ export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
 export function selectKvpPeriodeForValgteOppfolging(state) {
     const valgtOppfolging = state.data.filter.historiskPeriode;
     const valgtOppfolgingId = valgtOppfolging && valgtOppfolging.id;
-    const oppfolging = selectOppfolgingsPerioder(state).find(p => p.sluttDato === valgtOppfolgingId);
+    const oppfolging = selectOppfolgingsPerioder(state).find((p) => p.sluttDato === valgtOppfolgingId);
     return oppfolging && oppfolging.kvpPerioder;
 }
 

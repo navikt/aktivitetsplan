@@ -68,7 +68,7 @@ describe('MoteAktivitetForm', () => {
         );
 
         expect(wrapper.find('Input[label="Tema for møtet *"]').prop('initialValue')).toEqual(aktivitet.tittel);
-        expect(wrapper.find('DatoField').prop('initialValue')).toEqual(aktivitet.fraDato);
+        expect(wrapper.find('DatovelgerWrapper').prop('initialValue')).toEqual(aktivitet.fraDato);
         expect(wrapper.find('Input[label="Klokkeslett *"]').prop('initialValue')).toEqual('07:00');
         expect(wrapper.find('Input[label="Varighet *"]').prop('initialValue')).toEqual('01:00');
         expect(wrapper.find('Input[label="Møtested eller annen praktisk informasjon *"]').prop('initialValue')).toEqual(
@@ -107,7 +107,7 @@ describe('MoteAktivitetForm', () => {
             <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre />
         );
         expect(wrapper.find('Input[label="Tema for møtet *"]').prop('disabled')).toBeTruthy();
-        expect(wrapper.find('DatoField').prop('disabled')).not.toBeTruthy();
+        expect(wrapper.find('DatovelgerWrapper').prop('disabled')).not.toBeTruthy();
         expect(wrapper.find('Input[label="Klokkeslett *"]').prop('disabled')).not.toBeTruthy();
         expect(wrapper.find('Input[label="Varighet *"]').prop('disabled')).not.toBeTruthy();
         expect(wrapper.find('VelgKanal').prop('disabled')).toBeFalsy();
