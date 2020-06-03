@@ -7,7 +7,7 @@ export function validerDato(value, tidligsteFom, senesteTom) {
     }
 
     if (!erGyldigISODato(value)) {
-        return 'Datoen du har oppgitt er ikke en gyldig dato';
+        return 'Datoen må ha format dd.mm.åååå';
     }
 
     const inputDato = moment(value);

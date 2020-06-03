@@ -101,7 +101,7 @@ export default function SokeAvtaleAktivitetForm(props) {
                     disabled={avtalt}
                     label="Oppfølging fra NAV"
                     maxLength={255}
-                    visTellerFra={5000}
+                    visTellerFra={100}
                     {...state.fields.avtaleOppfolging}
                 />
                 <Textarea

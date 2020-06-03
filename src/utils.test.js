@@ -81,46 +81,6 @@ describe('app utils', () => {
         });
     });
 
-    describe('dateToISODate', () => {
-        it('Skal formattere korrekt', () => {
-            expect(Utils.dateToISODate(new Date(2014, 1, 14))).toEqual('2014-02-13T23:00:00.000Z');
-        });
-
-        it('Skal ikke formattere ugyldige eller tomme datoer', () => {
-            expect(Utils.dateToISODate('14.02.2014')).toEqual('');
-            expect(Utils.dateToISODate('ugyldig')).toEqual('');
-            expect(Utils.dateToISODate('')).toEqual('');
-            expect(Utils.dateToISODate(null)).toEqual('');
-            expect(Utils.dateToISODate(undefined)).toEqual('');
-        });
-    });
-
-    describe('datePickerToISODate', () => {
-        it('Skal formattere korrekt', () => {
-            expect(Utils.datePickerToISODate('14.02.2014')).toEqual('2014-02-13T23:00:00.000Z');
-        });
-
-        it('Skal ikke formattere ugyldige eller tomme datoer', () => {
-            expect(Utils.datePickerToISODate('ugyldig')).toEqual('');
-            expect(Utils.datePickerToISODate('')).toEqual('');
-            expect(Utils.datePickerToISODate(null)).toEqual('');
-            expect(Utils.datePickerToISODate(undefined)).toEqual('');
-        });
-    });
-
-    describe('ISODateToDatePicker', () => {
-        it('Skal formattere korrekt', () => {
-            expect(Utils.ISODateToDatePicker('2014-02-13T23:00:00.000Z')).toEqual('14.02.2014');
-        });
-
-        it('Skal ikke formattere ugyldige eller tomme datoer', () => {
-            expect(Utils.ISODateToDatePicker('ugyldig')).toEqual('');
-            expect(Utils.ISODateToDatePicker('')).toEqual('');
-            expect(Utils.ISODateToDatePicker(null)).toEqual('');
-            expect(Utils.ISODateToDatePicker(undefined)).toEqual('');
-        });
-    });
-
     describe('erGyldigISODato', () => {
         it('Tolker ISO-datoer riktig', () => {
             expect(Utils.erGyldigISODato('2014-02-13T23:00:00.000Z')).toEqual(true);

@@ -14,8 +14,6 @@ import StatusFilter from './filter/status-filter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 
-const filterClassNames = classes => classNames(classes, 'filter');
-
 function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
     const muligeFilterKombinasjoner = aktivitetsListe.reduce(
         (res, aktivitet) => {
@@ -32,7 +30,7 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
             muligeStatus: new Set(),
             muligeTyper: new Set(),
             muligeEtiketter: new Set(),
-            muligeAvtalt: new Set()
+            muligeAvtalt: new Set(),
         }
     );
 
@@ -43,11 +41,14 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
 }
 
 function Filter({ avhengigheter, harAktivitet, className }) {
+    const resolvedClassNames = classNames(className, 'filter', {
+        skjult: !harAktivitet,
+    });
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
-            <VisibleIfDiv className={filterClassNames(className)} visible={harAktivitet}>
+            <VisibleIfDiv className={resolvedClassNames}>
                 <FormattedMessage id="filter.tittel">
-                    {tittel => (
+                    {(tittel) => (
                         <Dropdown
                             name="filter"
                             knappeTekst={tittel}
@@ -73,20 +74,20 @@ function Filter({ avhengigheter, harAktivitet, className }) {
 Filter.propTypes = {
     avhengigheter: AppPT.avhengigheter.isRequired,
     harAktivitet: PT.bool,
-    className: PT.string
+    className: PT.string,
 };
 
 Filter.defaultProps = {
     harAktivitet: true,
-    className: ''
+    className: '',
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const harAktivitet = aktiviteter.length > 1 && sjekkAttFinnesFilteringsAlternativ(aktiviteter);
     return {
         avhengigheter: [selectAktivitetListeStatus(state)],
-        harAktivitet
+        harAktivitet,
     };
 };
 
