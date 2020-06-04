@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import Datovelger, { DatovelgerProps } from 'nav-datovelger/lib/Datovelger';
 import { FieldStateInput } from '../input/utils';
-import { dateToDatePicker } from '../../../utils';
+import { datePickerToISODate, dateToDatePicker } from '../../../utils';
 import styles from './datovelger.module.less';
 import classNames from 'classnames';
 
@@ -28,8 +28,9 @@ function DatovelgerWrapper(props: Props & DatovelgerProps) {
     const { onChange, name } = input;
     const _onChange = useCallback(
         (date?: string) => {
+            const newValue = datePickerToISODate(date);
             const customEvent = {
-                target: { name: name, value: date },
+                target: { name: name, value: newValue },
             };
             onChange(customEvent as any);
             setTouched(true);

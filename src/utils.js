@@ -83,6 +83,11 @@ export const getNowAsISODate = () => {
     return moment.unix(0).toISOString();
 };
 
+export const datePickerToISODate = (dato) => {
+    const parsetDato = moment(dato, 'YYYY-MM-DD', true);
+    return parsetDato.isValid() ? parsetDato.toISOString() : '';
+};
+
 export const dateToDatePicker = (dato) => {
     const parsetDato = moment(dato, 'YYYY-MM-DD');
     return dato && parsetDato.isValid() ? parsetDato.format('YYYY-MM-DD') : '';
