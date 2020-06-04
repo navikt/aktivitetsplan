@@ -76,7 +76,7 @@ export const toDatePrettyPrint = (dato) => {
 };
 
 export const todayIsoString = () => {
-    return moment().startOf('day').toISOString();
+    return moment().toISOString();
 };
 
 export const getNowAsISODate = () => {
