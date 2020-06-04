@@ -76,11 +76,22 @@ export const toDatePrettyPrint = (dato) => {
 };
 
 export const todayIsoString = () => {
-    return moment().startOf('day').toISOString();
+    return moment().toISOString();
 };
 
 export const getNowAsISODate = () => {
     return moment.unix(0).toISOString();
+};
+
+export const datePickerToISODate = (dato) => {
+    const now = moment();
+    const parsetDato = moment(dato, 'YYYY-MM-DD', true).set({
+        hour: now.hour(),
+        minute: now.minute(),
+        second: now.second(),
+    });
+
+    return parsetDato.isValid() ? parsetDato.toISOString(true) : '';
 };
 
 export const dateToDatePicker = (dato) => {
