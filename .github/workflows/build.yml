@@ -44,6 +44,14 @@ jobs:
           RESOURCE: nais-q-fss.yaml
           VAR: namespace=q0
 
+      - name: deply q1 fss
+          if: github.ref == 'refs/heads/dev'
+          uses: nais/deploy/actions/deploy@v1
+          env:
+            CLUSTER: dev-fss
+            RESOURCE: nais-q-fss.yaml
+            VAR: namespace=q1
+
       - name: deply q0 sbs
         if: github.ref == 'refs/heads/dev'
         uses: nais/deploy/actions/deploy@v1
@@ -51,6 +59,14 @@ jobs:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
           VAR: namespace=q0
+
+      - name: deply q1 sbs
+          if: github.ref == 'refs/heads/dev'
+          uses: nais/deploy/actions/deploy@v1
+          env:
+            CLUSTER: dev-sbs
+            RESOURCE: nais-q-sbs.yaml
+            VAR: namespace=q1
 
       - name: deply prod fss
         if: github.ref == 'refs/heads/master'
