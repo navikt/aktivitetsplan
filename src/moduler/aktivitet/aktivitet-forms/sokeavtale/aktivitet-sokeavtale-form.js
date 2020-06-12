@@ -77,7 +77,12 @@ export default function SokeAvtaleAktivitetForm(props) {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        <DatoField label="Fra dato *" senesteTom={maybeAktivitet.tilDato} {...state.fields.fraDato} />
+                        <DatoField
+                            label="Fra dato *"
+                            disabled={avtalt}
+                            senesteTom={maybeAktivitet.tilDato}
+                            {...state.fields.fraDato}
+                        />
                         <DatoField label="Til dato *" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
                     </div>
                 </PeriodeValidering>
