@@ -17,6 +17,7 @@ class Hovedside extends Component {
     componentDidMount() {
         const { doHentDialog } = this.props;
         doHentDialog();
+        setInterval(doHentDialog, 10000);
     }
 
     render() {
@@ -44,8 +45,8 @@ class Hovedside extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    doHentDialog: () => dispatch(hentDialog())
+const mapDispatchToProps = (dispatch) => ({
+    doHentDialog: () => dispatch(hentDialog()),
 });
 
 export default connect(undefined, mapDispatchToProps)(Hovedside);
