@@ -17,7 +17,6 @@ class Hovedside extends Component {
     componentDidMount() {
         const { doHentDialog } = this.props;
         doHentDialog();
-        setInterval(doHentDialog, 10000);
     }
 
     render() {
