@@ -18,8 +18,8 @@ import veilederTilgang from './veilederTilgang';
 import getFeatures from './features';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
 import instillingsHistorikk from './innstillings-historikk';
-import fetchMock, { ResponseUtils } from 'yet-another-fetch-mock';
-import { fetchmockMiddleware } from './utils';
+import fetchMock from 'yet-another-fetch-mock';
+import { delayed, fetchmockMiddleware, jsonResponse } from './utils';
 import { hentMalverkMedType } from './malverk';
 import auth from './auth';
 import lest from './lest';
@@ -30,10 +30,10 @@ const mock = fetchMock.configure({
     middleware: fetchmockMiddleware,
 });
 
-const noContent = ResponseUtils.statusCode(204);
-const unauthorized = ResponseUtils.combine(
-    ResponseUtils.statusCode(401),
-    ResponseUtils.json({
+const noContent = (ctx) => ctx.status(204);
+const unauthorized = (ctx) => [
+    ctx.status(401),
+    ctx.json({
         id: '1170c6534ed5eca272d527cd30c6a455',
         type: 'UKJENT',
         detaljer: {
@@ -41,11 +41,11 @@ const unauthorized = ResponseUtils.combine(
             feilMelding: 'HTTP 401 Unauthorized',
             stackTrace: 'javax.ws.rs.Unauthorized:HTTP 401 Unauthorized\r\n\t',
         },
-    })
-);
-const internalServerError = ResponseUtils.combine(
-    ResponseUtils.statusCode(500),
-    ResponseUtils.json({
+    }),
+];
+const internalServerError = (ctx) => [
+    ctx.status(500),
+    ctx.json({
         id: '9170c6534ed5eca272d527cd30c6a458',
         type: 'UKJENT',
         detaljer: {
@@ -53,95 +53,107 @@ const internalServerError = ResponseUtils.combine(
             feilMelding: 'HTTP 500 Internal Server Error',
             stackTrace: 'javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error\r\n\t',
         },
-    })
-);
+    }),
+];
 
 //feature-api
-mock.get('/aktivitetsplan/api/feature', ({ queryParams }) => getFeatures(queryParams));
-mock.get('/api/feature', ({ queryParams }) => getFeatures(queryParams));
+mock.get('/aktivitetsplan/api/feature', ({ queryParams }, res, ctx) => res(ctx.json(getFeatures(queryParams))));
+mock.get('/api/feature', ({ queryParams }, res, ctx) => res(ctx.json(getFeatures(queryParams))));
 
 //veilarboppfolging-api
-mock.get('/veilarboppfolging/api/oppfolging/me', me);
+mock.get('/veilarboppfolging/api/oppfolging/me', jsonResponse(me()));
 
-mock.get('/veilarboppfolging/api/oppfolging/mal', () => sisteMal());
-mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }) => opprettMal(body, true));
+mock.get('/veilarboppfolging/api/oppfolging/mal', jsonResponse(sisteMal()));
+mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }, res, ctx) => res(ctx.json(opprettMal(body, true))));
 
-mock.get('/veilarbvedtakinfo/api/fremtidigsituasjon', ResponseUtils.delayed(500, fremtidigSituasjon));
+mock.get('/veilarbvedtakinfo/api/fremtidigsituasjon', delayed(500, jsonResponse(fremtidigSituasjon)));
 
-mock.get('/veilarboppfolging/api/oppfolging/malListe', () => malListe());
+mock.get('/veilarboppfolging/api/oppfolging/malListe', jsonResponse(malListe()));
 
-mock.get(
-    '/veilarboppfolging/api/oppfolging',
-    oppfFeilet() ? internalServerError : ({ queryParams }) => oppfolging(queryParams)
+mock.get('/veilarboppfolging/api/oppfolging', (req, res, ctx) => {
+    const result = oppfFeilet() ? internalServerError(ctx) : ctx.json(oppfolging(req.queryParams));
+    return res(result);
+});
+
+mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', jsonResponse(instillingsHistorikk));
+mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', jsonResponse(veilederTilgang));
+mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', ({ body }, res, ctx) =>
+    res(ctx.json(avslutningStatus(body)))
 );
+mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }, res, ctx) =>
+    res(ctx.json(startEskalering(body)))
+);
+mock.post('/veilarboppfolging/api/oppfolging/settDigital', ({ body }, res, ctx) => res(ctx.json(settDigital(body))));
 
-mock.get('/veilarboppfolging/api/oppfolging/innstillingsHistorikk', instillingsHistorikk);
-mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', veilederTilgang);
-mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', ({ body }) => avslutningStatus(body));
-mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }) => startEskalering(body));
-mock.post('/veilarboppfolging/api/oppfolging/settDigital', ({ body }) => settDigital(body));
-
-mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }) => stoppEskalering(body));
-mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', () => ResponseUtils.statusCode(200));
-mock.post('/veilarboppfolging/api/oppfolging/settManuell', ({ queryParams }) =>
-    oppfolging(queryParams, (res) => {
-        res.manuell = true;
-        return res;
-    })
+mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }, res, ctx) =>
+    res(ctx.json(stoppEskalering(body)))
+);
+mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(200)));
+mock.post('/veilarboppfolging/api/oppfolging/settManuell', ({ queryParams }, res, ctx) =>
+    res(
+        ctx.json(
+            oppfolging(queryParams, (res) => {
+                res.manuell = true;
+                return res;
+            })
+        )
+    )
 );
 
 //veilarboppgave-api
-mock.get('/veilarboppgave/api/oppgavehistorikk', []);
+mock.get('/veilarboppgave/api/oppgavehistorikk', jsonResponse([]));
 
 //veilarbdialog-api
-mock.get('/veilarbdialog/api/dialog', dialog);
+mock.get('/veilarbdialog/api/dialog', jsonResponse(dialog));
 
-mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }) =>
-    setVenterPaSvar(pathParams.dialogId, pathParams.bool)
+mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }, res, ctx) =>
+    res(ctx.json(setVenterPaSvar(pathParams.dialogId, pathParams.bool)))
 );
-mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathParams }) =>
-    setFerdigBehandlet(pathParams.dialogId, pathParams.bool)
+mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathParams }, res, ctx) =>
+    res(ctx.json(setFerdigBehandlet(pathParams.dialogId, pathParams.bool)))
 );
-mock.post('/veilarbdialog/api/dialog', ({ body }) => opprettDialog(body));
-mock.post('/veilarbdialog/api/dialog/forhandsorientering', ({ body }) => opprettDialog(body));
+mock.post('/veilarbdialog/api/dialog', ({ body }, res, ctx) => res(ctx.json(opprettDialog(body))));
+mock.post('/veilarbdialog/api/dialog/forhandsorientering', ({ body }, res, ctx) => res(ctx.json(opprettDialog(body))));
 
 // veilarbaktivitet-api
-mock.get('/veilarbaktivitet/api/aktivitet/kanaler', ['INTERNETT', 'OPPMOTE', 'TELEFON']);
-mock.get('/veilarbaktivitet/api/aktivitet/arena', arena);
-mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }) => getAktivitet(pathParams.aktivitetId));
-mock.get('/veilarbaktivitet/api/aktivitet', aktiviteter);
+mock.get('/veilarbaktivitet/api/aktivitet/kanaler', jsonResponse(['INTERNETT', 'OPPMOTE', 'TELEFON']));
+mock.get('/veilarbaktivitet/api/aktivitet/arena', jsonResponse(arena));
+mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams }, res, ctx) =>
+    res(ctx.json(getAktivitet(pathParams.aktivitetId)))
+);
+mock.get('/veilarbaktivitet/api/aktivitet', jsonResponse(aktiviteter));
 
-mock.post('/veilarbaktivitet/api/aktivitet/ny', ({ body }) => opprettAktivitet(body));
-mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner', ({ pathParams }) =>
-    getAktivitetVersjoner(pathParams.aktivitetId)
+mock.post('/veilarbaktivitet/api/aktivitet/ny', ({ body }, res, ctx) => res(ctx.json(opprettAktivitet(body))));
+mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner', ({ pathParams }, res, ctx) =>
+    res(ctx.json(getAktivitetVersjoner(pathParams.aktivitetId)))
 );
-mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams, body }) =>
-    oppdaterAktivitet(pathParams.aktivitetId, body)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', ({ pathParams, body }, res, ctx) =>
+    res(ctx.json(oppdaterAktivitet(pathParams.aktivitetId, body)))
 );
-mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/status', ({ pathParams, body }) =>
-    oppdaterAktivitet(pathParams.aktivitetId, body)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/status', ({ pathParams, body }, res, ctx) =>
+    res(ctx.json(oppdaterAktivitet(pathParams.aktivitetId, body)))
 );
-mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett', ({ pathParams, body }) =>
-    oppdaterAktivitet(pathParams.aktivitetId, body)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett', ({ pathParams, body }, res, ctx) =>
+    res(ctx.json(oppdaterAktivitet(pathParams.aktivitetId, body)))
 );
-mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser', ({ pathParams }) =>
-    publiserReferat(pathParams.aktivitetId)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser', ({ pathParams }, res, ctx) =>
+    res(ctx.json(publiserReferat(pathParams.aktivitetId)))
 );
-mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', ({ pathParams, body }) =>
-    oppdaterAktivitet(pathParams.aktivitetId, body)
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', ({ pathParams, body }, res, ctx) =>
+    res(ctx.json(oppdaterAktivitet(pathParams.aktivitetId, body)))
 );
 
 //veilarbperson-api
-mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }) => getPerson(pathParams.fnr));
+mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }, res, ctx) => res(ctx.json(getPerson(pathParams.fnr))));
 
-mock.get('/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus', oppfoelgingsstatus);
+mock.get('/veilarboppfolging/api/person/:fnr/oppfoelgingsstatus', jsonResponse(oppfoelgingsstatus));
 
 //veilarbmalverk-api
-mock.post('/veilarbmalverk/api/mal', ({ body }) => hentMalverkMedType(body));
+mock.post('/veilarbmalverk/api/mal', ({ body }, res, ctx) => res(ctx.json(hentMalverkMedType(body))));
 
 //aktivitetsplan-api
-mock.get('/api/auth', auth);
+mock.get('/api/auth', jsonResponse(auth));
 
 ///veilarblest/api
-mock.get('/veilarblest/api/aktivitetsplan/les', () => lest);
-mock.put('/veilarblest/api/informasjon/les', ({ queryParams }) => lest);
+mock.get('/veilarblest/api/aktivitetsplan/les', (req, res, ctx) => res(ctx.json(lest)));
+mock.put('/veilarblest/api/informasjon/les', ({ queryParams }, res, ctx) => res(ctx.json(lest)));
