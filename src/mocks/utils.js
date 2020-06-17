@@ -17,3 +17,14 @@ export function fetchmockMiddleware(request, response) {
 export function rndId() {
     return `${Math.floor(Math.random() * 100000000)}`;
 }
+
+export function delayed(ms, handler) {
+    return async (req, res, ctx) => {
+        await ctx.delay(ms)({});
+        return handler(req, res, ctx);
+    };
+}
+
+export function jsonResponse(json) {
+    return (req, res, ctx) => res(ctx.json(json));
+}
