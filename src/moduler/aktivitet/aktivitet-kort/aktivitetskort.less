@@ -58,16 +58,16 @@
     .clearfix();
 }
 
-.aktivitetskort__henvendelser {
-    position: absolute;
-    bottom: 0.75rem;
-    right: 0;
-    padding: 0.5rem 1rem 1rem 1.25rem;
-    background: data-uri('./aktivitetskort-henvendelser.svg') no-repeat left bottom;
-}
-
-.aktivitetskort__henvendelser + .aktivitetskort__etiketter {
-    max-width: ~'calc(100% - 30px)';
+.aktivitetskort--dialogikon {
+    .dialogIkonUtenUleste {
+        display: none;
+    }
+    .dialogIkonMedUleste {
+        position: relative;
+        float: right;
+        top: -1.75rem;
+        left: 0.25rem;
+    }
 }
 
 .aktivitetskort__etikett {

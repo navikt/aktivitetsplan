@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import InternLenke from '../../../felles-komponenter/utils/internLenke';
 import * as AppPT from '../../../proptypes';
-import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
@@ -27,6 +26,8 @@ import Arbeidsgiver from './Stilling';
 import AktivitetType from './AktivitetType';
 import Aktivitetskorttittel from './AktivitetKortTitel';
 import { aktivitetRoute } from '../../../routes';
+import DialogIkon from "../visning/underelement-for-aktivitet/dialog/DialogIkon";
+import {selectDialogForAktivitetId} from "../../dialog/dialog-selector";
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -49,7 +50,8 @@ class AktivitetsKort extends Component {
             connectDragSource,
             erFlyttbar,
             doSettAktivitetMedEndringerSomVist,
-            harEndringerIAktivitet
+            harEndringerIAktivitet,
+            antallUlesteHenvendelser
         } = this.props;
         const { id, type } = aktivitet;
 
@@ -78,7 +80,9 @@ class AktivitetsKort extends Component {
                         <Arbeidsgiver aktivitet={aktivitet} />
                         <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
                         <SokeAvtaleAntall aktivitet={aktivitet} />
-                        <AktivitetskortTillegg aktivitet={aktivitet} />
+                        <div className="aktivitetskort--dialogikon">
+                            <DialogIkon antallUleste={antallUlesteHenvendelser} />
+                        </div>
                     </article>
                 </InternLenke>
             </div>
@@ -112,6 +116,7 @@ AktivitetsKort.defaultProps = {
 const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(AktivitetsKort);
 
 const mapStateToProps = (state, props) => {
+    const { aktivitet } = props;
     const lest = selectLestAktivitetsplan(state);
     const lestStatus = selectLestStatus(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
@@ -119,13 +124,20 @@ const mapStateToProps = (state, props) => {
         aktivitet => aktivitet.id === props.aktivitet.id
     );
 
+    const dialog = selectDialogForAktivitetId(state, aktivitet.id);
+    const henvendelser = dialog ? dialog.henvendelser : [];
+    const antallUlesteHenvendelser = henvendelser
+        .filter(henvendelse => !henvendelse.lest)
+        .length;
+
     const me = selectIdentitetSlice(state).data;
 
     const harEndringerIAktivitet =
         lestStatus === STATUS.OK && erNyEndringIAktivitet(props.aktivitet, lest, me) && aktivitetHarIkkeBlittVist;
     return {
         erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) && selectErUnderOppfolging(state),
-        harEndringerIAktivitet
+        harEndringerIAktivitet,
+        antallUlesteHenvendelser
     };
 };
 
