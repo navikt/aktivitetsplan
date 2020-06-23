@@ -54,9 +54,9 @@ aktivitetskort--drag {
 }
 
 .aktivitetskort__ikon-blokk {
-    height: 0;
-    margin-top: 0.5rem;
     .clearfix();
+    height: 0;
+    align-self: flex-end;
 }
 
 .aktivitetskort--dialogikon {
@@ -73,6 +73,13 @@ aktivitetskort--drag {
         left: 0.25rem;
         font-size: 14px;
     }
+}
+
+.aktivitetskort__tillegg {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    width: 100%;
 }
 
 .aktivitetskort__etikett {

@@ -18,14 +18,9 @@ function AktivitetskortTillegg({
     harDialog
 }) {
     return (
-        <div>
-            <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)} className="aktivitetskort__ikon-blokk">
-                <HiddenIfDiv hidden={antallHendvendelser <= 0} className="aktivitetskort--dialogikon">
-                    <DialogIkon antallUleste={antallUlesteHenvendelser} />
-                </HiddenIfDiv>
-            </HiddenIfDiv>
-
-            <div className="aktivitetskort__etiketter">
+        <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)}
+                     className="aktivitetskort__tillegg">
+            <div>
                 <AvtaltMarkering visible={aktivitet.avtalt} />
                 <SokeStatusEtikett
                     hidden={!aktivitet.etikett}
@@ -33,7 +28,13 @@ function AktivitetskortTillegg({
                     className="aktivitetskort__etikett"
                 />
             </div>
-        </div>
+
+            <HiddenIfDiv hidden={!harDialog} className="aktivitetskort__ikon-blokk">
+                <HiddenIfDiv hidden={antallHendvendelser <= 0} className="aktivitetskort--dialogikon">
+                    <DialogIkon antallUleste={antallUlesteHenvendelser} />
+                </HiddenIfDiv>
+            </HiddenIfDiv>
+        </HiddenIfDiv>
     );
 }
 
