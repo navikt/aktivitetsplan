@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import InternLenke from '../../../felles-komponenter/utils/internLenke';
 import * as AppPT from '../../../proptypes';
-import AktivitetskortTillegg from './aktivitetskort-tillegg';
 import {
     TILTAK_AKTIVITET_TYPE,
     GRUPPE_AKTIVITET_TYPE,
@@ -27,6 +26,7 @@ import Arbeidsgiver from './Stilling';
 import AktivitetType from './AktivitetType';
 import Aktivitetskorttittel from './AktivitetKortTitel';
 import { aktivitetRoute } from '../../../routes';
+import AktivitetskortTillegg from "./aktivitetskort-tillegg";
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
@@ -52,7 +52,6 @@ class AktivitetsKort extends Component {
             harEndringerIAktivitet
         } = this.props;
         const { id, type } = aktivitet;
-
         const ariaLabel = `aktivitetskort__header__${id} aktivitetskort__dato__${id}`;
 
         const aktivitetsKort = (

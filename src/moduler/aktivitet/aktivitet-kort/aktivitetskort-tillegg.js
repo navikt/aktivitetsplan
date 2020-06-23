@@ -1,14 +1,13 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import visibleIfHOC from '../../../hocs/visible-if';
-import TallAlert from '../../../felles-komponenter/tall-alert';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import * as AppPT from '../../../proptypes';
 import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
 import SokeStatusEtikett from '../etikett/sokeStatusEtikett';
+import DialogIkon from "../visning/underelement-for-aktivitet/dialog/DialogIkon";
 
 function AktivitetskortTillegg({
     antallHendvendelser,
@@ -19,15 +18,9 @@ function AktivitetskortTillegg({
     harDialog
 }) {
     return (
-        <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)} className="aktivitetskort__ikon-blokk">
-            <HiddenIfDiv hidden={antallHendvendelser <= 0} className="aktivitetskort__henvendelser">
-                <TallAlert hidden={antallUlesteHenvendelser <= 0}>{antallUlesteHenvendelser}</TallAlert>
-                <HiddenIfDiv hidden={antallUlesteHenvendelser > 0} className="sr-only">
-                    <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
-                </HiddenIfDiv>
-            </HiddenIfDiv>
-
-            <div className="aktivitetskort__etiketter">
+        <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)}
+                     className="aktivitetskort__tillegg">
+            <div>
                 <AvtaltMarkering visible={aktivitet.avtalt} />
                 <SokeStatusEtikett
                     hidden={!aktivitet.etikett}
@@ -35,6 +28,12 @@ function AktivitetskortTillegg({
                     className="aktivitetskort__etikett"
                 />
             </div>
+
+            <HiddenIfDiv hidden={!harDialog} className="aktivitetskort__ikon-blokk">
+                <HiddenIfDiv hidden={antallHendvendelser <= 0} className="aktivitetskort--dialogikon">
+                    <DialogIkon antallUleste={antallUlesteHenvendelser} />
+                </HiddenIfDiv>
+            </HiddenIfDiv>
         </HiddenIfDiv>
     );
 }
