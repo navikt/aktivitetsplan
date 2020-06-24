@@ -1,87 +1,36 @@
-name: Node CI
-
-on: [push]
-
-env:
-  IMAGE_NAME: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan
-  IMAGE_TAG: ${{ github.sha }}
-  IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}
-  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  PRINT_PAYLOAD: true
-  TZ: Europe/Amsterdam
-  CI: true
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - run: npm ci
-      - run: npm run test
-      - run: npm run build
-
-      - name: Build and publish Docker image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
-        run: |
-          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker build -t ${IMAGE} .
-          docker push ${IMAGE}
-  deploy-q1:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
-    needs: build
-    steps:
-      - uses: actions/checkout@v1
-      - name: deploy fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-fss
-          RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q1
-
-      - name: deploy sbs
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-sbs
-          RESOURCE: nais-q-sbs.yaml
-          VAR: namespace=q1,urlmiljo=q1
-  deploy-q:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
-    needs: build
-    steps:
-      - uses: actions/checkout@v1
-      - name: deploy fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-fss
-          RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q0
-
-      - name: deploy sbs
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-sbs
-          RESOURCE: nais-q-sbs.yaml
-          VAR: namespace=q0,urlmiljo=q
-  deploy-p:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    needs: build
-    steps:
-      - name: deploy fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: prod-fss
-          RESOURCE: nais-fss.yaml
-
-      - name: deploy sbs
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: prod-sbs
-          RESOURCE: nais-sbs.yaml
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
+metadata:
+  name: aktivitetsplan
+  namespace: {{namespace}}
+  cluster: dev-sbs
+  labels:
+    team: pto
+spec:
+  image: {{image}}
+  port: 8080
+  liveness:
+    path: aktivitetsplan/internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: aktivitetsplan/internal/selftest
+    initialDelay: 20
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  prometheus:
+    enabled: true
+    path: aktivitetsplan/internal/metrics
+  ingresses:
+    - https://aktivitetsplan-{{urlmiljo}}.nav.no
+  vault:
+    enabled: true
+  webproxy: true
+  env:
+    - name: APP_ENVIRONMENT_NAME
+      value: {{namespace}}
+    - name: DITTNAV_LINK_URL
+      value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
+  envFrom:
+    - configmap: pto-config
