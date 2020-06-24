@@ -7,6 +7,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
   IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}
   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PRINT_PAYLOAD: true
   TZ: Europe/Amsterdam
   CI: true
@@ -20,17 +21,67 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Create image tag
       - run: npm ci
       - run: npm run test
       - run: npm run build
 
       - name: Build and publish Docker image
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker build -t ${IMAGE} .
           docker push ${IMAGE}
+  deploy-q1:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    needs: build
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-fss
+          RESOURCE: nais-q-fss.yaml
+          VAR: namespace=q1
 
+      - name: deploy sbs
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-sbs
+          RESOURCE: nais-q-sbs.yaml
+          VAR: namespace=q1,urlmiljo=q1
+  deploy-q:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    needs: build
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-fss
+          RESOURCE: nais-q-fss.yaml
+          VAR: namespace=q0
+
+      - name: deploy sbs
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-sbs
+          RESOURCE: nais-q-sbs.yaml
+          VAR: namespace=q0,urlmiljo=q
+  deploy-p:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    steps:
+      - name: deploy fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-fss
+          RESOURCE: nais-fss.yaml
+
+      - name: deploy sbs
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-sbs
+          RESOURCE: nais-sbs.yaml
