@@ -58,7 +58,7 @@ jobs:
         env:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
-            VAR: namespace=q0, urlmiljo=q
+          VAR: namespace=q0, urlmiljo=q
 
       - name: deply q1 sbs
         if: github.ref == 'refs/heads/dev'
