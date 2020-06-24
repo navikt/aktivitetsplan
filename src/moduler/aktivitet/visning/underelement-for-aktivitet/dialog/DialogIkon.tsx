@@ -1,5 +1,4 @@
 import React from 'react';
-import {FormattedMessage} from "react-intl";
 
 function DialogIkonUtenUleste() {
     return (
@@ -35,7 +34,7 @@ function DialogIkonMedUleste(props: Props) {
                 </text>
             </svg>
             <div className="sr-only">
-                <FormattedMessage id="aktivitetskort-dialog-tidligere-meldinger" />
+                Aktiviteten har en dialog
             </div>
         </div>
     );
