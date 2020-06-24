@@ -33,10 +33,9 @@ jobs:
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker build -t ${IMAGE} .
           docker push ${IMAGE}
-
   deploy-q1:
-    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
     needs: build
     steps:
       - uses: actions/checkout@v1
@@ -53,10 +52,9 @@ jobs:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
           VAR: namespace=q1,urlmiljo=q1
-
   deploy-q:
-    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
     needs: build
     steps:
       - uses: actions/checkout@v1
@@ -73,13 +71,11 @@ jobs:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
           VAR: namespace=q0,urlmiljo=q
-
   deploy-p:
-    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     needs: build
     steps:
-      - uses: actions/checkout@v1
       - name: deploy fss
         uses: nais/deploy/actions/deploy@v1
         env:
