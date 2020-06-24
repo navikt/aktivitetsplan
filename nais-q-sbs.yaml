@@ -23,9 +23,7 @@ spec:
     enabled: true
     path: aktivitetsplan/internal/metrics
   ingresses:
-    - https://aktivitetsplan-q.nav.no
-    - https://aktivitetsplan-q0.nais.oera-q.local
-    - https://aktivitetsplan-q0.dev-sbs.nais.io
+    - https://aktivitetsplan-{{url-miljo}}.nav.no
   vault:
     enabled: true
   webproxy: true
