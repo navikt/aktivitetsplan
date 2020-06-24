@@ -23,7 +23,7 @@ spec:
     enabled: true
     path: aktivitetsplan/internal/metrics
   ingresses:
-    - https://aktivitetsplan-{{url-miljo}}.nav.no
+    - https://aktivitetsplan-{{urlmiljo}}.nav.no
   vault:
     enabled: true
   webproxy: true
