@@ -2,7 +2,7 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: aktivitetsplan
-  namespace: q0
+  namespace: {{namespace}}
   cluster: dev-sbs
   labels:
     team: pto
@@ -29,8 +29,8 @@ spec:
   webproxy: true
   env:
     - name: APP_ENVIRONMENT_NAME
-      value: 'q0'
+      value: {{namespace}}
     - name: DITTNAV_LINK_URL
-      value: 'https://tjenester-q0.nav.no/dittnav/'
+      value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
   envFrom:
     - configmap: pto-config
