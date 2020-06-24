@@ -6,17 +6,14 @@ env:
   IMAGE_NAME: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan
   IMAGE_TAG: ${{ github.sha }}
   IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}
+  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+  PRINT_PAYLOAD: true
   TZ: Europe/Amsterdam
   CI: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    env:
-      APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-      PRINT_PAYLOAD: true
-
     steps:
       - uses: actions/checkout@v1
 
@@ -38,13 +35,12 @@ jobs:
           docker push ${IMAGE}
 
   deploy-q1:
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/dev'
     steps:
       - uses: actions/checkout@v1
       - name: deploy fss
-        if: github.ref == 'refs/heads/dev'
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-fss
@@ -52,7 +48,6 @@ jobs:
           VAR: namespace=q1
 
       - name: deploy sbs
-        if: github.ref == 'refs/heads/dev'
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
@@ -60,12 +55,11 @@ jobs:
           VAR: namespace=q1,urlmiljo=q1
 
   deploy-q:
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/dev'
     steps:
       - uses: actions/checkout@v1
-
       - name: deploy fss
         uses: nais/deploy/actions/deploy@v1
         env:
@@ -81,9 +75,9 @@ jobs:
           VAR: namespace=q0,urlmiljo=q
 
   deploy-p:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v1
       - name: deploy fss
