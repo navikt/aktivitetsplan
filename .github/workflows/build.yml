@@ -5,7 +5,7 @@ on: [push]
 env:
   IMAGE_NAME: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan
   IMAGE_TAG: ${{ github.sha }}
-  IMAGE: ${{ IMAGE_NAME }}:${{ IMAGE_TAG }}
+  IMAGE: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan:${{ github.sha }}
   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PRINT_PAYLOAD: true
