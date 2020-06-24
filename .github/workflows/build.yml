@@ -4,6 +4,8 @@ on: [push]
 
 env:
   IMAGE_NAME: docker.pkg.github.com/navikt/aktivitetsplan/aktivitetsplan
+  IMAGE_TAG: ${{ github.sha }}
+  IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}
   TZ: Europe/Amsterdam
   CI: true
 
@@ -22,7 +24,6 @@ jobs:
         with:
           node-version: 12
       - name: Create image tag
-        run: echo ::set-env name=IMAGE::${IMAGE_NAME}:$(echo ${{ github.ref }} | cut -d '/' -f3).$(date '+%F-%H%M').$(echo $GITHUB_SHA | cut -c1-7) #eks pa tag  gh-actions.2020-01-08-1255.8fa4236
       - run: npm ci
       - run: npm run test
       - run: npm run build
@@ -36,15 +37,12 @@ jobs:
           docker build -t ${IMAGE} .
           docker push ${IMAGE}
 
-      - name: deply q0 fss
-        if: github.ref == 'refs/heads/dev'
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-fss
-          RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q0
-
-      - name: deply q1 fss
+  deploy-q1:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: deploy fss
         if: github.ref == 'refs/heads/dev'
         uses: nais/deploy/actions/deploy@v1
         env:
@@ -52,31 +50,45 @@ jobs:
           RESOURCE: nais-q-fss.yaml
           VAR: namespace=q1
 
-      - name: deply q0 sbs
+      - name: deploy sbs
         if: github.ref == 'refs/heads/dev'
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
-          VAR: namespace=q0,urlmiljo=q
+          VAR: namespace=q1, urlmiljo=q1
 
-      - name: deply q1 sbs
-        if: github.ref == 'refs/heads/dev'
+  deploy-q:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: deploy fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-fss
+          RESOURCE: nais-q-fss.yaml
+          VAR: namespace=q0
+
+      - name: deploy sbs
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
-          VAR: namespace=q1,urlmiljo=q1
+          VAR: namespace=q0, urlmiljo=q
 
-      - name: deply prod fss
-        if: github.ref == 'refs/heads/master'
+  deploy-p:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: deploy fss
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-fss
           RESOURCE: nais-fss.yaml
 
-      - name: deply prod sbs
-        if: github.ref == 'refs/heads/master'
+      - name: deploy sbs
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-sbs
