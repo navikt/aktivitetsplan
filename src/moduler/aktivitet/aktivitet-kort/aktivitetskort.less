@@ -35,7 +35,7 @@
     text-transform: uppercase;
 }
 
-.aktivitetskort--drag {
+aktivitetskort--drag {
     background-color: @navLysGra;
 }
 
@@ -54,20 +54,32 @@
 }
 
 .aktivitetskort__ikon-blokk {
-    margin-top: 0.5rem;
     .clearfix();
+    height: 0;
+    align-self: flex-end;
 }
 
-.aktivitetskort__henvendelser {
-    position: absolute;
-    bottom: 0.75rem;
-    right: 0;
-    padding: 0.5rem 1rem 1rem 1.25rem;
-    background: data-uri('./aktivitetskort-henvendelser.svg') no-repeat left bottom;
+.aktivitetskort--dialogikon {
+    .dialogIkonUtenUleste {
+        position: relative;
+        float: right;
+        top: -1.25rem;
+        left: 0.25rem;
+    }
+    .dialogIkonMedUleste {
+        position: relative;
+        float: right;
+        top: -1.75rem;
+        left: 0.25rem;
+        font-size: 14px;
+    }
 }
 
-.aktivitetskort__henvendelser + .aktivitetskort__etiketter {
-    max-width: ~'calc(100% - 30px)';
+.aktivitetskort__tillegg {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    width: 100%;
 }
 
 .aktivitetskort__etikett {

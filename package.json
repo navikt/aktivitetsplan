@@ -127,7 +127,7 @@
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5",
     "ua-parser-js": "^0.7.21",
-    "yet-another-fetch-mock": "^3.4.0"
+    "yet-another-fetch-mock": "^4.0.0"
   },
   "repository": {
     "type": "git",

@@ -6,11 +6,19 @@ import { dialogFilter } from '../filtrering/filter/filter-utils';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
+import { hentDialog } from '../dialog/dialog-reducer';
 
 const DITTNAV_PATH = '/dittnav/';
 const DIALOG_PATH = '/arbeidsrettet-dialog';
 
 class Navigasjonslinje extends Component {
+    componentDidMount() {
+        const { erVeileder, doHentDialog } = this.props;
+        if (!erVeileder) {
+            setInterval(doHentDialog, 10000);
+        }
+    }
+
     render() {
         const { erVeileder, antallUlesteDialoger } = this.props;
         if (erVeileder) {
@@ -34,17 +42,21 @@ class Navigasjonslinje extends Component {
 
 Navigasjonslinje.propTypes = {
     erVeileder: PT.bool.isRequired,
-    antallUlesteDialoger: PT.number.isRequired
+    antallUlesteDialoger: PT.number.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const dialoger = selectDialoger(state)
-        .filter(d => !d.lest)
-        .filter(d => dialogFilter(d, state)).length;
+        .filter((d) => !d.lest)
+        .filter((d) => dialogFilter(d, state)).length;
     return {
         erVeileder: selectErVeileder(state),
-        antallUlesteDialoger: dialoger
+        antallUlesteDialoger: dialoger,
     };
 };
 
-export default connect(mapStateToProps)(Navigasjonslinje);
+const mapDispatchToProps = (dispatch) => ({
+    doHentDialog: () => dispatch(hentDialog()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigasjonslinje);

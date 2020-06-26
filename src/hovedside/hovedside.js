@@ -44,8 +44,8 @@ class Hovedside extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    doHentDialog: () => dispatch(hentDialog())
+const mapDispatchToProps = (dispatch) => ({
+    doHentDialog: () => dispatch(hentDialog()),
 });
 
 export default connect(undefined, mapDispatchToProps)(Hovedside);
