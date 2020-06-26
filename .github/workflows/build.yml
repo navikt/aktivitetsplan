@@ -74,6 +74,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     needs: build
     steps:
+      - uses: actions/checkout@v1
       - name: deploy fss
         uses: nais/deploy/actions/deploy@v1
         env:
