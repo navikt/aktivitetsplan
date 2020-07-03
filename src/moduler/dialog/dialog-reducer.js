@@ -1,6 +1,7 @@
 import * as Api from './dialog-api';
 import { doThenDispatch, STATUS } from '../../ducks/utils';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
+import moment from 'moment';
 
 // Actions
 export const HENTER = 'dialog/hent';
@@ -28,19 +29,20 @@ export const SEND_FORHANDSORIENTERING = 'dialog/forhandsorientering';
 const initalState = {
     status: STATUS.NOT_STARTED,
     data: [],
-    esklaringsFilter: false
+    esklaringsFilter: false,
+    sistOppdatert: moment().toISOString(),
 };
 
 function nyStateMedOppdatertDialog(state, dialog) {
     const { data } = state;
-    const dialogIndeks = data.findIndex(d => d.id === dialog.id);
+    const dialogIndeks = data.findIndex((d) => d.id === dialog.id);
     const nyData = [...data];
     if (dialogIndeks >= 0) {
         nyData[dialogIndeks] = dialog;
     } else {
         nyData.unshift(dialog); // prepend
     }
-    return { ...state, status: STATUS.OK, data: nyData };
+    return { ...state, status: STATUS.OK, data: nyData, sistOppdatert: moment().toISOString() };
 }
 
 // Reducer
@@ -54,12 +56,13 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                data
+                sistOppdatert: moment().toISOString(),
+                data,
             };
         case ESKALERINGS_FILTER_TYPE:
             return {
                 ...state,
-                esklaringsFilter: !state.esklaringsFilter
+                esklaringsFilter: !state.esklaringsFilter,
             };
         case HENTING_FEILET:
         case OPPRETT_HENVENDELSE_FEILET:
@@ -83,7 +86,7 @@ export function hentDialog() {
     return doThenDispatch(() => Api.hentDialog(), {
         OK: HENTET,
         FEILET: HENTING_FEILET,
-        PENDING: HENTER
+        PENDING: HENTER,
     });
 }
 
@@ -91,7 +94,7 @@ export function nyHenvendelse(henvendelse) {
     return doThenDispatch(() => Api.nyHenvendelse(henvendelse), {
         OK: OPPRETTET_HENVENDELSE,
         FEILET: OPPRETT_HENVENDELSE_FEILET,
-        PENDING: OPPRETTER_HENVENDELSE
+        PENDING: OPPRETTER_HENVENDELSE,
     });
 }
 
@@ -99,7 +102,7 @@ export function markerDialogSomLest(dialogId) {
     return doThenDispatch(() => Api.markerDialogSomLest(dialogId), {
         OK: DIALOG_LEST_OK,
         FEILET: DIALOG_LEST_FEILET,
-        PENDING: DIALOG_LEST
+        PENDING: DIALOG_LEST,
     });
 }
 
@@ -107,7 +110,7 @@ export function oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet) {
     return doThenDispatch(() => Api.oppdaterFerdigbehandlet(dialogId, erFerdigbehandlet), {
         OK: OPPDATER_DIALOG_OK,
         FEILET: OPPDATER_DIALOG_FEILET,
-        PENDING: OPPDATER_DIALOG
+        PENDING: OPPDATER_DIALOG,
     });
 }
 
@@ -115,7 +118,7 @@ export function oppdaterVenterPaSvar(dialogId, venterPaSvar) {
     return doThenDispatch(() => Api.oppdaterVenterPaSvar(dialogId, venterPaSvar), {
         OK: OPPDATER_DIALOG_OK,
         FEILET: OPPDATER_DIALOG_FEILET,
-        PENDING: OPPDATER_DIALOG
+        PENDING: OPPDATER_DIALOG,
     });
 }
 
@@ -123,6 +126,6 @@ export function sendForhandsorientering(henvendelse) {
     return doThenDispatch(() => Api.sendForhandsorientering(henvendelse), {
         OK: SEND_FORHANDSORIENTERING_OK,
         FEILET: SEND_FORHANDSORIENTERING_FEILET,
-        PENDING: SEND_FORHANDSORIENTERING
+        PENDING: SEND_FORHANDSORIENTERING,
     });
 }

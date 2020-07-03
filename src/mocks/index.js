@@ -106,6 +106,8 @@ mock.get('/veilarboppgave/api/oppgavehistorikk', jsonResponse([]));
 //veilarbdialog-api
 mock.get('/veilarbdialog/api/dialog', jsonResponse(dialog));
 
+mock.get('/veilarbdialog/api/dialog/sistOppdatert', jsonResponse({ sistOppdatert: '2020-06-25T12:58:12.757+02:00' }));
+
 mock.put('/veilarbdialog/api/dialog/:dialogId/venter_pa_svar/:bool', ({ pathParams }, res, ctx) =>
     res(ctx.json(setVenterPaSvar(pathParams.dialogId, pathParams.bool)))
 );

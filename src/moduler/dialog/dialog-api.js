@@ -5,6 +5,10 @@ export function hentDialog() {
     return fetchToJson(`${DIALOG_BASE_URL}/dialog`);
 }
 
+export function hentSistOppdatert() {
+    return fetchToJson(`${DIALOG_BASE_URL}/dialog/sistOppdatert`);
+}
+
 export function nyHenvendelse(henvendelse) {
     return postAsJson(`${DIALOG_BASE_URL}/dialog`, henvendelse);
 }

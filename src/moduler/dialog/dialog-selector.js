@@ -25,18 +25,22 @@ export function selectAlleDialoger(state) {
 
 const hentDialogerFraState = (dialoger, esklaringsFilter, historiskPeriode, forrigeSluttDato) =>
     dialoger.data
-        .filter(d => newDatoErIPeriode(d.opprettetDato, historiskPeriode, forrigeSluttDato))
-        .filter(d => erViktigMelding(d) || !esklaringsFilter);
+        .filter((d) => newDatoErIPeriode(d.opprettetDato, historiskPeriode, forrigeSluttDato))
+        .filter((d) => erViktigMelding(d) || !esklaringsFilter);
 
 export const selectDialoger = createSelector(
     [selectDialogSlice, selectEskaleringsFilter, selectHistoriskPeriode, selectForrigeHistoriskeSluttDato],
     hentDialogerFraState
 );
 
+export function selectSistOppdatert(state) {
+    return selectDialogSlice(state).sistOppdatert;
+}
+
 export function createSelectDialogForAktivitetId(aktivitetId) {
-    return state => selectDialogForAktivitetId(state, aktivitetId);
+    return (state) => selectDialogForAktivitetId(state, aktivitetId);
 }
 
 export function selectDialogForAktivitetId(state, aktivitetId) {
-    return selectAlleDialoger(state).find(d => d.aktivitetId === aktivitetId);
+    return selectAlleDialoger(state).find((d) => d.aktivitetId === aktivitetId);
 }
