@@ -72,11 +72,11 @@ function OppdaterReferatForm(props) {
                 hidden={erReferatPublisert}
                 onClick={oppdaterOgPubliser}
             >
-                Del
+                Del med bruker
             </HiddenIfHovedknapp>
 
             <Knapp spinner={oppdaterer} disabled={oppdaterer}>
-                Lagre
+                Lagre utkast
             </Knapp>
         </form>
     );
