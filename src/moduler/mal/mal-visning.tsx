@@ -21,7 +21,7 @@ function Malvisning(props: Props) {
 
     const mal = malData && malData.mal;
     const malText: string =
-        historiskVisning && historiskeMal.length === 0 ? 'Det ble ikke skrevet mål i denne perioden' : mal;
+        (historiskVisning && historiskeMal.length === 0) || !mal ? 'Det ble ikke skrevet mål i denne perioden' : mal;
 
     return (
         <div className="aktivitetmal__innhold">
