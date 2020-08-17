@@ -10,11 +10,13 @@ import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import './mal.less';
 import MalHistorikk from './mal-historikk';
 import MalContainer from './mal-container';
+import { selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 
 function Mal() {
     const malStatus = useSelector(selectMalStatus, shallowEqual);
     const malListeStatus = useSelector(selectMalListeStatus, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
+    const underOppfolging = useSelector(selectUnderOppfolging, shallowEqual);
 
     const dispatch = useDispatch();
 
@@ -28,7 +30,7 @@ function Mal() {
     return (
         <MalModal>
             <Innholdstittel className="aktivitetmal__header">
-                {viserHistoriskPeriode ? 'Ditt mål fra en tidligere periode' : 'Ditt mål'}
+                {viserHistoriskPeriode || !underOppfolging ? 'Ditt mål fra en tidligere periode' : 'Ditt mål'}
             </Innholdstittel>
             <Undertekst className="aktivitetmal__sub-header" tag="div">
                 Skriv noen ord om hva som er målet ditt slik at vi kan veilede deg bedre.
