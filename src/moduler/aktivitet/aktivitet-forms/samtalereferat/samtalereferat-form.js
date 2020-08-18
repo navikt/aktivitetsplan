@@ -80,10 +80,10 @@ function SamtalereferatForm(props) {
                     onClick={lagreOgDel}
                     className="samtalereferat-form__lagre-og-publiser"
                 >
-                    Lagre og del
+                    Del med bruker
                 </Hovedknapp>
                 <Knapp spinner={state.submitting} autoDisableVedSpinner>
-                    Lagre
+                    Lagre utkast
                 </Knapp>
             </div>
         </form>

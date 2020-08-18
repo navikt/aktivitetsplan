@@ -6,6 +6,7 @@ import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import * as AppPT from '../../../../proptypes';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import {AlertStripeSuksess} from "nav-frontend-alertstriper";
 
 function ReferatVisning(props) {
     const {
@@ -28,11 +29,20 @@ function ReferatVisning(props) {
             <HiddenIfDiv
                 hidden={!erVeileder || aktivitetStatus === STATUS_FULLFOERT || aktivitetStatus === STATUS_AVBRUTT}
             >
-                <HiddenIfDiv hidden={erHistorisk || !underOppfolging}>
-                    <Hovedknapp onClick={dispatchPubliserReferat} spinner={publiserer} disabled={erReferatPublisert}>
-                        Del
-                    </Hovedknapp>
-                    <Knapp onClick={startOppdaterReferat}>Oppdater</Knapp>
+                <HiddenIfDiv hidden={erHistorisk || !underOppfolging}
+                             className="oppdater-referat-knapper">
+                    <HiddenIfDiv hidden={erReferatPublisert}>
+                        <Hovedknapp onClick={dispatchPubliserReferat}
+                                    spinner={publiserer}>
+                            Del med bruker
+                        </Hovedknapp>
+                    </HiddenIfDiv>
+                    <HiddenIfDiv hidden={!erReferatPublisert}>
+                        <AlertStripeSuksess className="oppdater-referat-status">
+                            Delt med bruker
+                        </AlertStripeSuksess>
+                    </HiddenIfDiv>
+                    <Knapp onClick={startOppdaterReferat}>Endre</Knapp>
                 </HiddenIfDiv>
             </HiddenIfDiv>
         </div>
