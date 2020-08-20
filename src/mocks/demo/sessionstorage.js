@@ -4,6 +4,9 @@ export const SessionStorageElement = {
     KRR_BRUKER: 'krrbruker',
     ESKALERT_BRUKER: 'eskalertbruker',
     OPPF_FEILET: 'oppffeilet',
+    DIALOG_FEILET: 'dialogfeilet',
+    AKTIVITET_FEILET: 'aktivitetfeilet',
+    ARENA_FEILET: 'arenafeilet',
     EKSTERN_BRUKER: 'eksternbruker',
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
     AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
@@ -11,22 +14,22 @@ export const SessionStorageElement = {
     ARENA_AKTIVITETER: 'arena_aktiviteter',
     TEST_DIALOGER: 'test_dialoger',
     INGEN_MAL: 'ingen_mal',
-    ULESTE_DIALOGER: 'uleste_dialoger'
+    ULESTE_DIALOGER: 'uleste_dialoger',
 };
 
 export const settSessionStorage = (key, value) => {
     window.localStorage.setItem(key, value);
 };
 
-export const hentFraSessionStorage = key => {
+export const hentFraSessionStorage = (key) => {
     return window.localStorage.getItem(key);
 };
 
-const erSatt = sessionStorageElement => {
+const erSatt = (sessionStorageElement) => {
     return hentFraSessionStorage(sessionStorageElement) === 'true';
 };
 
-const erSkrudAv = sessionStorageElement => hentFraSessionStorage(sessionStorageElement) === 'false';
+const erSkrudAv = (sessionStorageElement) => hentFraSessionStorage(sessionStorageElement) === 'false';
 
 export const erEksternBruker = () => erSatt(SessionStorageElement.EKSTERN_BRUKER);
 
@@ -50,10 +53,16 @@ export const visDialoger = () => erSatt(SessionStorageElement.TEST_DIALOGER);
 
 export const oppfFeilet = () => erSatt(SessionStorageElement.OPPF_FEILET);
 
+export const dialogFeilet = () => erSatt(SessionStorageElement.DIALOG_FEILET);
+
+export const aktivitetFeilet = () => erSatt(SessionStorageElement.AKTIVITET_FEILET);
+
+export const arenaFeilet = () => erSatt(SessionStorageElement.ARENA_FEILET);
+
 export const ulesteDialoger = () => erSatt(SessionStorageElement.ULESTE_DIALOGER);
 
 const fetureprefix = 'mock_feature__';
 export const setFeatureTogle = (name, value) => settSessionStorage(fetureprefix + name, value);
-export const fetureStatus = name => hentFraSessionStorage(fetureprefix + name) !== 'false';
+export const fetureStatus = (name) => hentFraSessionStorage(fetureprefix + name) !== 'false';
 
 export const ingenMal = () => erSatt(SessionStorageElement.INGEN_MAL);

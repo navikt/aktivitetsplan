@@ -72,10 +72,10 @@ const oppfolging = {
     inaktiveringsdato: '2018-08-31T10:46:10.971+01:00',
 };
 
-export default function (queryParams, changeFn = (ob) => ob) {
+export default function (queryParams) {
     const { fnr } = queryParams;
     oppfolging.fnr = fnr;
-    return changeFn(oppfolging);
+    return oppfolging;
 }
 
 export function startEskalering(update) {
