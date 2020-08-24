@@ -429,8 +429,10 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
 
     return oldAktivitet;
 }
-export function publiserReferat({ aktivitetId }) {
-    const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
+
+export function publiserReferat({aktivitetId}) {
+    const oldAktivitet = aktiviteter.find(akivitet => akivitet.id === aktivitetId);
+    oldAktivitet.erReferatPublisert = true;
     return { ...oldAktivitet, erReferatPublisert: true };
 }
 
