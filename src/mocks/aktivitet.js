@@ -28,7 +28,7 @@ const testAktiviteter = !visTestAktiviteter()
               arbeidssted: 'Karibien',
               lagtInnAv: 'NAV',
               transaksjonsType: 'AVTALT',
-              erReferatPublisert: false
+              erReferatPublisert: false,
           }),
           wrapAktivitet({
               id: '2',
@@ -51,7 +51,7 @@ const testAktiviteter = !visTestAktiviteter()
               kontaktperson: 'Sabeltann',
               arbeidsgiver: 'Skipet AS',
               arbeidssted: 'Skipet',
-              erReferatPublisert: false
+              erReferatPublisert: false,
           }),
           wrapAktivitet({
               id: '5',
@@ -71,7 +71,7 @@ const testAktiviteter = !visTestAktiviteter()
               transaksjonsType: 'STATUS_ENDRET',
               hensikt: 'Lære meg HTML',
               oppfolging: 'Bli en bedre sjørøver',
-              erReferatPublisert: false
+              erReferatPublisert: false,
           }),
           wrapAktivitet({
               id: '6871',
@@ -109,7 +109,7 @@ const testAktiviteter = !visTestAktiviteter()
               behandlingOppfolging: null,
               kanal: 'TELEFON',
               adresse: 'Ditt nærmeste NAV kontor',
-              erReferatPublisert: false
+              erReferatPublisert: false,
           }),
           wrapAktivitet({
               id: '10',
@@ -146,7 +146,7 @@ const testAktiviteter = !visTestAktiviteter()
               effekt: null,
               behandlingOppfolging: null,
               kanal: 'TELEFON',
-              erReferatPublisert: false
+              erReferatPublisert: false,
           }),
           wrapAktivitet({
               id: '1550',
@@ -185,8 +185,8 @@ const testAktiviteter = !visTestAktiviteter()
               effekt: null,
               behandlingOppfolging: null,
               kanal: null,
-              erReferatPublisert: false
-          })
+              erReferatPublisert: false,
+          }),
       ];
 
 const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
@@ -232,7 +232,7 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               forberedelser: null,
               kanal: null,
               referat: null,
-              erReferatPublisert: false
+              erReferatPublisert: false,
           },
           {
               id: '141439',
@@ -274,7 +274,7 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               forberedelser: null,
               kanal: null,
               referat: null,
-              erReferatPublisert: false
+              erReferatPublisert: false,
           },
           {
               id: '141440',
@@ -316,8 +316,8 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               forberedelser: null,
               kanal: null,
               referat: null,
-              erReferatPublisert: false
-          }
+              erReferatPublisert: false,
+          },
       ];
 
 const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter);
@@ -383,15 +383,15 @@ function wrapAktivitet(aktivitet) {
         forberedelser: valueOrNull(aktivitet.forberedelser),
         kanal: valueOrNull(aktivitet.kanal),
         referat: valueOrNull(aktivitet.referat),
-        erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert)
+        erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert),
     };
 }
 
-export function getAktivitet(aktivitetId) {
-    return aktiviteter.filter(akivitet => akivitet.id === aktivitetId)[0];
+export function getAktivitet({ aktivitetId }) {
+    return aktiviteter.filter((akivitet) => akivitet.id === aktivitetId)[0];
 }
 
-export function getAktivitetVersjoner(aktivitetId) {
+export function getAktivitetVersjoner({ aktivitetId }) {
     const aktivitet = getAktivitet(aktivitetId);
     return [
         aktivitet,
@@ -400,12 +400,12 @@ export function getAktivitetVersjoner(aktivitetId) {
             endretDato: '2017-02-26T15:51:44.85+01:00',
             versjon: '2',
             lagtInnAv: 'BRUKER',
-            transaksjonsType: 'OPPRETTET'
-        }
+            transaksjonsType: 'OPPRETTET',
+        },
     ];
 }
 
-export function opprettAktivitet(aktivitet) {
+export function opprettAktivitet(pathParams, body) {
     const newAktivitet = wrapAktivitet({
         id: rndId(),
         opprettetDato: new Date(),
@@ -414,14 +414,14 @@ export function opprettAktivitet(aktivitet) {
         endretAv: null,
         versjon: '1',
         erLestAvBruker: eksternBruker,
-        ...aktivitet
+        ...body,
     });
     aktiviteter.push(newAktivitet);
     return newAktivitet;
 }
 
-export function oppdaterAktivitet(aktivitetId, aktivitet) {
-    const oldAktivitet = aktiviteter.find(akivitet => akivitet.id === aktivitetId);
+export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
+    const oldAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
     Object.assign(oldAktivitet, aktivitet);
     oldAktivitet.endretDato = moment().toISOString();
     oldAktivitet.endretAv = bruker;
@@ -429,12 +429,11 @@ export function oppdaterAktivitet(aktivitetId, aktivitet) {
 
     return oldAktivitet;
 }
-
-export function publiserReferat(aktivitetId) {
-    const oldAktivitet = aktiviteter.find(akivitet => akivitet.id === aktivitetId);
+export function publiserReferat({ aktivitetId }) {
+    const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     return { ...oldAktivitet, erReferatPublisert: true };
 }
 
 export default {
-    aktiviteter
+    aktiviteter,
 };
