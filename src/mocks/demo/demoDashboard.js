@@ -17,7 +17,10 @@ import {
     erEskalertBruker,
     oppfFeilet,
     ingenMal,
-    ulesteDialoger
+    ulesteDialoger,
+    dialogFeilet,
+    aktivitetFeilet,
+    arenaFeilet,
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -25,7 +28,7 @@ import { ALL_FEATURES } from '../../felles-komponenter/feature/feature';
 
 const brukertype = {
     ekstern: 'eksternbruker',
-    veileder: 'veilederbruker'
+    veileder: 'veilederbruker',
 };
 
 class DemoDashboard extends React.Component {
@@ -34,7 +37,7 @@ class DemoDashboard extends React.Component {
         window.location.reload();
     };
 
-    endreTilstand = e => {
+    endreTilstand = (e) => {
         const checkbox = e.currentTarget;
         const saveInSessionStorage = Object.values(SessionStorageElement).indexOf(checkbox.id) > -1;
 
@@ -44,7 +47,7 @@ class DemoDashboard extends React.Component {
         }
     };
 
-    endreBrukerType = e => {
+    endreBrukerType = (e) => {
         const element = e.currentTarget;
         const erVeileder = element.id === brukertype.veileder;
 
@@ -69,13 +72,13 @@ class DemoDashboard extends React.Component {
                         {
                             label: 'Veileder',
                             id: brukertype.veileder,
-                            value: brukertype.veileder
+                            value: brukertype.veileder,
                         },
                         {
                             label: 'Eksternbruker',
                             id: brukertype.ekstern,
-                            value: brukertype.ekstern
-                        }
+                            value: brukertype.ekstern,
+                        },
                     ]}
                     checked={this.getBrukerType()}
                     onChange={this.endreBrukerType}
@@ -86,38 +89,33 @@ class DemoDashboard extends React.Component {
                         {
                             label: 'Ikke under oppfølging',
                             id: SessionStorageElement.PRIVAT_BRUKER,
-                            checked: erPrivatBruker()
+                            checked: erPrivatBruker(),
                         },
                         {
                             label: 'Manuell',
                             id: SessionStorageElement.MANUELL_BRUKER,
-                            checked: erManuellBruker()
+                            checked: erManuellBruker(),
                         },
                         {
                             label: 'KRR',
                             id: SessionStorageElement.KRR_BRUKER,
-                            checked: erKRRBruker()
+                            checked: erKRRBruker(),
                         },
                         {
                             label: 'Ingen oppfølgingsperioder',
                             id: SessionStorageElement.INGEN_OPPF_PERIODER,
-                            checked: ingenOppfPerioder()
+                            checked: ingenOppfPerioder(),
                         },
                         {
                             label: 'Eskaleringsvarsel',
                             id: SessionStorageElement.ESKALERT_BRUKER,
-                            checked: erEskalertBruker()
-                        },
-                        {
-                            label: 'Oppfølging feiler',
-                            id: SessionStorageElement.OPPF_FEILET,
-                            checked: oppfFeilet()
+                            checked: erEskalertBruker(),
                         },
                         {
                             label: 'Uleste dialoger',
                             id: SessionStorageElement.ULESTE_DIALOGER,
-                            checked: ulesteDialoger()
-                        }
+                            checked: ulesteDialoger(),
+                        },
                     ]}
                     onChange={this.endreTilstand}
                 />
@@ -127,29 +125,29 @@ class DemoDashboard extends React.Component {
                         {
                             label: 'Automatiske aktiviteter',
                             id: SessionStorageElement.AUTOMATISKE_AKTIVITETER,
-                            checked: visAutomatiskeAktiviteter()
+                            checked: visAutomatiskeAktiviteter(),
                         },
                         {
                             label: 'Arenaaktiviteter',
                             id: SessionStorageElement.ARENA_AKTIVITETER,
-                            checked: visArenaAktiviteter()
+                            checked: visArenaAktiviteter(),
                         },
                         {
                             label: 'Testaktiviteter',
                             id: SessionStorageElement.TEST_AKTIVITETER,
-                            checked: visTestAktiviteter()
-                        }
+                            checked: visTestAktiviteter(),
+                        },
                     ]}
                     onChange={this.endreTilstand}
                 />
                 <CheckboksPanelGruppe
                     legend="Feature togles"
-                    checkboxes={ALL_FEATURES.map(name => {
+                    checkboxes={ALL_FEATURES.map((name) => {
                         return {
                             label: name,
                             id: name,
                             value: name,
-                            checked: fetureStatus(name)
+                            checked: fetureStatus(name),
                         };
                     })}
                     onChange={this.setFeature}
@@ -160,8 +158,34 @@ class DemoDashboard extends React.Component {
                         {
                             label: 'Ingen mål',
                             id: SessionStorageElement.INGEN_MAL,
-                            checked: ingenMal()
-                        }
+                            checked: ingenMal(),
+                        },
+                    ]}
+                    onChange={this.endreTilstand}
+                />
+                <CheckboksPanelGruppe
+                    legend="Feiltilstander"
+                    checkboxes={[
+                        {
+                            label: 'Oppfølging feiler',
+                            id: SessionStorageElement.OPPF_FEILET,
+                            checked: oppfFeilet(),
+                        },
+                        {
+                            label: 'Dialog feiler',
+                            id: SessionStorageElement.DIALOG_FEILET,
+                            checked: dialogFeilet(),
+                        },
+                        {
+                            label: 'Aktivitet feiler',
+                            id: SessionStorageElement.AKTIVITET_FEILET,
+                            checked: aktivitetFeilet(),
+                        },
+                        {
+                            label: 'Arena feiler',
+                            id: SessionStorageElement.ARENA_FEILET,
+                            checked: arenaFeilet(),
+                        },
                     ]}
                     onChange={this.endreTilstand}
                 />
