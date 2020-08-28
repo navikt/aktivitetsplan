@@ -75,6 +75,7 @@ function SamtalereferatForm(props) {
             </SkjemaGruppe>
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp
+                    kompakt
                     spinner={state.submitting}
                     autoDisableVedSpinner
                     onClick={lagreOgDel}
@@ -82,7 +83,7 @@ function SamtalereferatForm(props) {
                 >
                     Del med bruker
                 </Hovedknapp>
-                <Knapp spinner={state.submitting} autoDisableVedSpinner>
+                <Knapp kompakt spinner={state.submitting} autoDisableVedSpinner>
                     Lagre utkast
                 </Knapp>
             </div>

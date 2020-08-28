@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Knapp } from 'nav-frontend-knapper';
+import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
 import { Undertittel } from 'nav-frontend-typografi';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
@@ -12,6 +12,7 @@ import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
+import { Flatknapp } from 'nav-frontend-knapper';
 
 function validate(val) {
     if (val.trim().length === 0) {
@@ -24,7 +25,7 @@ function validate(val) {
 }
 
 const validator = useFormstate({
-    referat: validate
+    referat: validate,
 });
 
 const label = <Undertittel>Samtalereferat</Undertittel>;
@@ -33,8 +34,12 @@ function OppdaterReferatForm(props) {
     const { onSubmit, aktivitet, oppdaterer, erReferatPublisert, dispatchPubliserReferat } = props;
 
     const state = validator({
-        referat: aktivitet.referat || ''
+        referat: aktivitet.referat || '',
     });
+
+    const reset_form = () => {
+        props.onFerdig();
+    };
 
     const { setFormIsDirty } = useContext(DirtyContext);
 
@@ -46,8 +51,8 @@ function OppdaterReferatForm(props) {
         };
     }, [setFormIsDirty, state.pristine]);
 
-    const oppdaterOgPubliser = state.onSubmit(values => {
-        return onSubmit(values).then(response => {
+    const oppdaterOgPubliser = state.onSubmit((values) => {
+        return onSubmit(values).then((response) => {
             if (response.data) {
                 dispatchPubliserReferat(response.data);
             }
@@ -67,6 +72,7 @@ function OppdaterReferatForm(props) {
             />
 
             <HiddenIfHovedknapp
+                kompakt
                 spinner={oppdaterer}
                 disabled={oppdaterer}
                 hidden={erReferatPublisert}
@@ -75,9 +81,27 @@ function OppdaterReferatForm(props) {
                 Del med bruker
             </HiddenIfHovedknapp>
 
-            <Knapp spinner={oppdaterer} disabled={oppdaterer}>
-                Lagre utkast
-            </Knapp>
+            <>
+                {erReferatPublisert ? (
+                    <Hovedknapp kompakt spinner={oppdaterer} disabled={oppdaterer}>
+                        {' '}
+                        Del endring{' '}
+                    </Hovedknapp>
+                ) : (
+                    <Knapp kompakt spinner={oppdaterer} disabled={oppdaterer}>
+                        {' '}
+                        Lagre utkast{' '}
+                    </Knapp>
+                )}
+            </>
+
+            <>
+                {state.fields.referat.initialValue !== '' ? (
+                    <Flatknapp kompakt onClick={reset_form}>
+                        Avbryt
+                    </Flatknapp>
+                ) : null}
+            </>
         </form>
     );
 }
@@ -88,32 +112,29 @@ OppdaterReferatForm.propTypes = {
     erReferatPublisert: PT.bool.isRequired,
     oppdaterer: PT.bool.isRequired,
     dispatchPubliserReferat: PT.func.isRequired,
-    onFerdig: PT.func.isRequired
+    onFerdig: PT.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
     const { erReferatPublisert } = props.aktivitet;
     return {
         oppdaterer: selectAktivitetStatus(state) === (STATUS.PENDING || STATUS.RELOADING),
-        erReferatPublisert
+        erReferatPublisert,
     };
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-    dispatchPubliserReferat: aktivitet => dispatch(publiserReferat(aktivitet)),
-    onSubmit: referatData => {
+    dispatchPubliserReferat: (aktivitet) => dispatch(publiserReferat(aktivitet)),
+    onSubmit: (referatData) => {
         const aktivitetMedOppdatertReferat = {
             ...props.aktivitet,
-            ...referatData
+            ...referatData,
         };
-        return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then(res => {
+        return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((res) => {
             props.onFerdig();
             return res;
         });
-    }
+    },
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(OppdaterReferatForm);
+export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReferatForm);
