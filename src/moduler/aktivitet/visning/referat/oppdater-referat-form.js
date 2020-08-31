@@ -37,10 +37,6 @@ function OppdaterReferatForm(props) {
         referat: aktivitet.referat || '',
     });
 
-    const reset_form = () => {
-        props.onFerdig();
-    };
-
     const { setFormIsDirty } = useContext(DirtyContext);
 
     useEffect(() => {
@@ -84,20 +80,18 @@ function OppdaterReferatForm(props) {
             <>
                 {erReferatPublisert ? (
                     <Hovedknapp kompakt spinner={oppdaterer} disabled={oppdaterer}>
-                        {' '}
-                        Del endring{' '}
+                        Del endring
                     </Hovedknapp>
                 ) : (
                     <Knapp kompakt spinner={oppdaterer} disabled={oppdaterer}>
-                        {' '}
-                        Lagre utkast{' '}
+                        Lagre utkast
                     </Knapp>
                 )}
             </>
 
             <>
                 {state.fields.referat.initialValue !== '' ? (
-                    <Flatknapp kompakt onClick={reset_form}>
+                    <Flatknapp kompakt onClick={props.onFerdig()}>
                         Avbryt
                     </Flatknapp>
                 ) : null}
