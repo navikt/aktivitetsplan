@@ -2,11 +2,11 @@ import React from 'react';
 import PT from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import * as AppPT from '../../../../proptypes';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import {AlertStripeSuksess} from "nav-frontend-alertstriper";
+import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 
 function ReferatVisning(props) {
     const {
@@ -17,7 +17,7 @@ function ReferatVisning(props) {
         publiserer,
         erReferatPublisert,
         startOppdaterReferat,
-        underOppfolging
+        underOppfolging,
     } = props;
 
     const aktivitetStatus = aktivitet.status;
@@ -29,20 +29,18 @@ function ReferatVisning(props) {
             <HiddenIfDiv
                 hidden={!erVeileder || aktivitetStatus === STATUS_FULLFOERT || aktivitetStatus === STATUS_AVBRUTT}
             >
-                <HiddenIfDiv hidden={erHistorisk || !underOppfolging}
-                             className="oppdater-referat-knapper">
+                <HiddenIfDiv hidden={erHistorisk || !underOppfolging} className="oppdater-referat-knapper">
                     <HiddenIfDiv hidden={erReferatPublisert}>
-                        <Hovedknapp onClick={dispatchPubliserReferat}
-                                    spinner={publiserer}>
+                        <Hovedknapp kompakt onClick={dispatchPubliserReferat} spinner={publiserer}>
                             Del med bruker
                         </Hovedknapp>
                     </HiddenIfDiv>
                     <HiddenIfDiv hidden={!erReferatPublisert}>
-                        <AlertStripeSuksess className="oppdater-referat-status">
-                            Delt med bruker
-                        </AlertStripeSuksess>
+                        <AlertStripeSuksess className="oppdater-referat-status">Delt med bruker</AlertStripeSuksess>
                     </HiddenIfDiv>
-                    <Knapp onClick={startOppdaterReferat}>Endre</Knapp>
+                    <Flatknapp kompakt onClick={startOppdaterReferat}>
+                        Endre
+                    </Flatknapp>
                 </HiddenIfDiv>
             </HiddenIfDiv>
         </div>
@@ -57,6 +55,6 @@ ReferatVisning.propTypes = {
     dispatchPubliserReferat: PT.func.isRequired,
     publiserer: PT.bool.isRequired,
     erReferatPublisert: PT.bool.isRequired,
-    startOppdaterReferat: PT.func.isRequired
+    startOppdaterReferat: PT.func.isRequired,
 };
 export default ReferatVisning;
