@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
 import { Undertittel } from 'nav-frontend-typografi';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
@@ -12,7 +12,9 @@ import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
-import { Flatknapp } from 'nav-frontend-knapper';
+import hiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
+
+const FlatKnappVisible = hiddenIfHOC(Flatknapp);
 
 function validate(val) {
     if (val.trim().length === 0) {
@@ -31,7 +33,7 @@ const validator = useFormstate({
 const label = <Undertittel>Samtalereferat</Undertittel>;
 
 function OppdaterReferatForm(props) {
-    const { onSubmit, aktivitet, oppdaterer, erReferatPublisert, dispatchPubliserReferat } = props;
+    const { onSubmit, aktivitet, oppdaterer, erReferatPublisert, dispatchPubliserReferat, onFerdig } = props;
 
     const state = validator({
         referat: aktivitet.referat || '',
@@ -77,25 +79,13 @@ function OppdaterReferatForm(props) {
                 Del med bruker
             </HiddenIfHovedknapp>
 
-            <>
-                {erReferatPublisert ? (
-                    <Hovedknapp kompakt spinner={oppdaterer} disabled={oppdaterer}>
-                        Del endring
-                    </Hovedknapp>
-                ) : (
-                    <Knapp kompakt spinner={oppdaterer} disabled={oppdaterer}>
-                        Lagre utkast
-                    </Knapp>
-                )}
-            </>
+            <Knapp type={erReferatPublisert ? 'hoved' : 'standard'} kompakt spinner={oppdaterer} disabled={oppdaterer}>
+                {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
+            </Knapp>
 
-            <>
-                {state.fields.referat.initialValue !== '' ? (
-                    <Flatknapp kompakt onClick={props.onFerdig()}>
-                        Avbryt
-                    </Flatknapp>
-                ) : null}
-            </>
+            <FlatKnappVisible hidden={!aktivitet.referat} kompakt onClick={onFerdig}>
+                Avbryt
+            </FlatKnappVisible>
         </form>
     );
 }
