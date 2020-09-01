@@ -43,12 +43,14 @@ class InformasjonModal extends Component {
                 <ModalContainer className="informasjon-modal-container">
                     <Innholdstittel className={styles.innholdsTittel}>Hva er aktivitetsplanen?</Innholdstittel>
                     <Normaltekst className={styles.avsnitt}>
-                        Aktivitetsplanen hjelper deg med å holde oversikt over det du gjør for å komme i jobb eller
-                        aktivitet. Hold planen oppdatert, slik at veilederen din kan følge deg opp best mulig.
+                        I aktivitetsplanen holder du oversikt over det du gjør for å komme i jobb eller annen aktivitet.
+                        Både du og veilederen din kan se og endre aktivitetsplanen.
                     </Normaltekst>
                     <Normaltekst>
-                        I planen kan du legge inn målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Du
-                        kan kommunisere med veilederen din om aktivitetene i <Lenke href="/dialog">dialogen</Lenke>.
+                        Du kan legge inn målet ditt, aktiviteter du skal gjøre og stillinger du vil søke på. Veilederen
+                        kan blant annet legge inn forslag til aktiviteter eller skrive referat fra et møte dere har
+                        hatt. Du kan kommunisere med veilederen din om aktivitetene i{' '}
+                        <Lenke href="/dialog">dialogen</Lenke>.
                     </Normaltekst>
                     <Video />
                     <BrukePlanenPanel />
@@ -64,7 +66,7 @@ InformasjonModal.defaultProps = {
     lestInfo: null,
     erBruker: false,
     underOppfolging: false,
-    backPath: '/'
+    backPath: '/',
 };
 
 InformasjonModal.propTypes = {
@@ -73,18 +75,18 @@ InformasjonModal.propTypes = {
     lestInfo: AppPT.lest,
     resetBackPath: PT.func.isRequired,
     backPath: PT.string,
-    history: AppPT.history.isRequired
+    history: AppPT.history.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     lestInfo: selectLestInformasjon(state),
     erBruker: selectErBruker(state),
     underOppfolging: selectErUnderOppfolging(state),
-    backPath: selectBackPath(state)
+    backPath: selectBackPath(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    resetBackPath: () => dispatch(setBackPath('/'))
+const mapDispatchToProps = (dispatch) => ({
+    resetBackPath: () => dispatch(setBackPath('/')),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InformasjonModal);

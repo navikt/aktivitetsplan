@@ -8,16 +8,17 @@ export function RettigheterPanel() {
     return (
         <Ekspanderbartpanel tittel={<Undertittel>Rettigheter og personvern</Undertittel>}>
             <Normaltekst>
-                Du har rett til å få en aktivitetsplan når du har registrert deg i NAV. Informasjonen i aktivitetsplanen
-                og annen informasjon du gir til veilederen din brukes til å vurdere ditt behov for hjelp fra NAV.
+                Du har rett til å få en aktivitetsplan når du har registrert deg hos NAV. Informasjonen i
+                aktivitetsplanen og annen informasjon du gir til veilederen din brukes til å vurdere ditt behov for
+                hjelp fra NAV.
             </Normaltekst>
             <Element className={styles.element}>Manuell oppfølging</Element>
             <Normaltekst>
-                NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og reservasjonsregisteret. Det
-                gjør vi for å se om du har reservert deg mot digital kommunikasjon med det offentlige. Hvis du har
-                reservert deg, eller ikke er i stand til å fylle inn en aktivitetsplan, vil NAV følge deg opp manuelt.
-                Det betyr at en veileder følger deg opp uten at du selv bruker den digitale aktivitetsplanen. Du får
-                aktivitetsplanen skrevet ut på papir.
+                NAV henter informasjon om deg fra Folkeregisteret og sjekker mot Kontakt- og reservasjonsregisteret for
+                å se om du har reservert deg mot digital kommunikasjon med det offentlige. Hvis du har reservert deg,
+                eller ikke er i stand til å bruke aktivitetsplanen, vil NAV følge deg opp manuelt. Det betyr at en
+                veileder følger deg opp, uten at du selv bruker den digitale aktivitetsplanen. Du får aktivitetsplanen
+                skrevet ut på papir.
             </Normaltekst>
             <Element className={styles.element}>Deling og lagring</Element>
             <Normaltekst className={styles.avsnitt}>
