@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { hentIdentitet } from '../../identitet/identitet-reducer';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
-import LeggTilIcon from './legg-til-ikon';
 import Modal from '../../../felles-komponenter/modal/modal';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
+import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
 
 class NyAktivitet extends Component {
     componentDidMount() {
@@ -25,12 +25,21 @@ class NyAktivitet extends Component {
                 feilmeldinger={aktivitetFeilmeldinger}
             >
                 <div className="ny-aktivitet-modal__header">
-                    <LeggTilIcon />
-                    <Innholdstittel className="ny-aktivitet-tittel">
-                        <FormattedMessage id="ny-aktivitet-modal.tittel" />
-                    </Innholdstittel>
+                    <Normaltekst className={'ny-aktivitet-modal__hjelpetekst'} hidden={erVeileder}>
+                        Her kan du legge til ulike aktiviteter du gjør for å nå målet ditt.
+                    </Normaltekst>
+
+                    <div className="ny-aktivitet-modal__tittel-boks">
+                        <Innholdstittel className="ny-aktivitet-tittel">
+                            <FormattedMessage id="ny-aktivitet-modal.tittel" />
+                        </Innholdstittel>
+
+                        <EtikettBase className={'ny-aktivitet-modal__etikett'} hidden={!erVeileder}>
+                            FOR NAV-ANSATT
+                        </EtikettBase>
+                    </div>
                 </div>
-                <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
+                <div hidden={!erVeileder} className="ny-aktivitet-modal__ny-aktivitet-lenker">
                     <Lenkepanel href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.sokeavtale-aktivitet" />
                     </Lenkepanel>
@@ -40,13 +49,18 @@ class NyAktivitet extends Component {
                     <Lenkepanel href="/aktivitet/ny/mote" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.mote" />
                     </Lenkepanel>
-                    <Lenkepanel
-                        href="/aktivitet/ny/samtalereferat"
-                        hidden={!erVeileder}
-                        className="ny-aktivitet-modal__veileder-skille"
-                    >
+                    <Lenkepanel href="/aktivitet/ny/samtalereferat" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
                     </Lenkepanel>
+                </div>
+
+                <hr hidden={!erVeileder} className="ny-aktivitet-modal__veileder-skille" />
+                <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
+                    <div className="ny-aktivitet-modal__etikett-bruker">
+                        <EtikettBase className={'ny-aktivitet-modal__etikett'} hidden={!erVeileder}>
+                            FOR BRUKER OG NAV-ANSATT
+                        </EtikettBase>
+                    </div>
 
                     <Lenkepanel href="/aktivitet/ny/stilling">
                         <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
@@ -67,19 +81,16 @@ class NyAktivitet extends Component {
 NyAktivitet.propTypes = {
     doHentIdentitet: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
-    aktivitetFeilmeldinger: PT.array.isRequired
+    aktivitetFeilmeldinger: PT.array.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     erVeileder: selectErVeileder(state),
-    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state)
+    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    doHentIdentitet: () => dispatch(hentIdentitet())
+const mapDispatchToProps = (dispatch) => ({
+    doHentIdentitet: () => dispatch(hentIdentitet()),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NyAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitet);

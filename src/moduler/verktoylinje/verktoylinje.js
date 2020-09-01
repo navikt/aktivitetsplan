@@ -10,6 +10,7 @@ import InternLenke from '../../felles-komponenter/utils/internLenke';
 import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import loggEvent, { APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
+import { ReactComponent as Pluss } from './pluss.svg';
 
 class Verktoylinje extends Component {
     render() {
@@ -26,7 +27,8 @@ class Verktoylinje extends Component {
                         visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
                         onClick={() => loggEvent(APNE_NY_AKTIVITET)}
                     >
-                        Legg til aktivitet
+                        <Pluss />
+                        <span> Legg til aktivitet</span>
                     </Lenkeknapp>
                 </div>
                 <div className="verktoylinje__verktoy-container">
@@ -59,17 +61,17 @@ Verktoylinje.propTypes = {
     viserHistoriskPeriode: PT.bool.isRequired,
     underOppfolging: PT.bool.isRequired,
     aktivitetLaster: PT.bool.isRequired,
-    harSkriveTilgang: PT.bool.isRequired
+    harSkriveTilgang: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const underOppfolging = selectErUnderOppfolging(state);
     const historiskPeriode = selectViserHistoriskPeriode(state);
     return {
         viserHistoriskPeriode: historiskPeriode,
         underOppfolging,
         harSkriveTilgang: selectHarSkriveTilgang(state),
-        aktivitetLaster: selectHarTilgangTilAktiviteter(state)
+        aktivitetLaster: selectHarTilgangTilAktiviteter(state),
     };
 };
 
