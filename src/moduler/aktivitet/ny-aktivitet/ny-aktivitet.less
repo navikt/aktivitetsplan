@@ -8,10 +8,14 @@
 
     &__header {
         .blokk-m();
+        padding-left: 2rem;
+        padding-right: 2rem;
+        margin-bottom: 1rem;
 
         .ny-aktivitet-tittel {
+            margin-top: 2rem;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         display: flex;
@@ -19,10 +23,31 @@
         justify-content: center;
     }
 
+    &__tittel-boks {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    &__hjelpetekst {
+        margin-top: 1rem;
+    }
+
     &__ny-aktivitet-lenker {
         .blokk-m();
         padding-left: 2rem;
         padding-right: 2rem;
+    }
+
+    &__etikett-bruker {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+
+    &__etikett {
+        color: #78706a;
     }
 
     &__linje {
@@ -44,6 +69,8 @@
     }
 
     &__veileder-skille {
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
+        margin-top: 2rem;
+        width: 100%;
     }
 }
