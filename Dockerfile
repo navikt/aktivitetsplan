@@ -5,6 +5,8 @@ FROM docker.pkg.github.com/navikt/pus-decorator/pus-decorator
 #  - applikasjonen får /aktivitetsplan som contextpath i begge soner
 ENV APPLICATION_NAME=aktivitetsplan
 ENV GZIP_ENABLED=true
+ENV FOOTER_TYPE=WITHOUT_ALPHABET
+
 COPY /build /app
 
 ADD decorator.yaml /decorator.yaml
