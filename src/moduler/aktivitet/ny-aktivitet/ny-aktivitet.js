@@ -35,7 +35,6 @@ class NyAktivitet extends Component {
                         </Innholdstittel>
 
                         <EtikettBase className={'ny-aktivitet-modal__etikett'} hidden={!erVeileder}>
-                            {' '}
                             FOR NAV-ANSATT
                         </EtikettBase>
                     </div>
@@ -59,7 +58,6 @@ class NyAktivitet extends Component {
                 <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
                     <div className="ny-aktivitet-modal__etikett-bruker">
                         <EtikettBase className={'ny-aktivitet-modal__etikett'} hidden={!erVeileder}>
-                            {' '}
                             FOR BRUKER OG NAV-ANSATT
                         </EtikettBase>
                     </div>
