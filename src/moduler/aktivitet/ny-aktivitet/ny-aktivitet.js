@@ -40,16 +40,21 @@ class NyAktivitet extends Component {
                     </div>
                 </div>
                 <div hidden={!erVeileder} className="ny-aktivitet-modal__ny-aktivitet-lenker">
-                    <Lenkepanel href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
+                    <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.sokeavtale-aktivitet" />
                     </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/behandling" hidden={!erVeileder}>
+                    <Lenkepanel border href="/aktivitet/ny/behandling" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.medisinsk-behandling" />
                     </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/mote" hidden={!erVeileder}>
+                    <Lenkepanel border href="/aktivitet/ny/mote" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.mote" />
                     </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/samtalereferat" hidden={!erVeileder}>
+                    <Lenkepanel
+                        border
+                        href="/aktivitet/ny/samtalereferat"
+                        hidden={!erVeileder}
+                        className="ny-aktivitet-modal__veileder-skille"
+                    >
                         <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
                     </Lenkepanel>
                 </div>
@@ -62,14 +67,14 @@ class NyAktivitet extends Component {
                         </EtikettBase>
                     </div>
 
-                    <Lenkepanel href="/aktivitet/ny/stilling">
+                    <Lenkepanel border href="/aktivitet/ny/stilling">
                         <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
                     </Lenkepanel>
 
-                    <Lenkepanel href="/aktivitet/ny/ijobb">
+                    <Lenkepanel border href="/aktivitet/ny/ijobb">
                         <FormattedMessage id="ny-aktivitet-modal.jobb-jeg-er-i" />
                     </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/egen">
+                    <Lenkepanel border href="/aktivitet/ny/egen">
                         <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
                     </Lenkepanel>
                 </div>
