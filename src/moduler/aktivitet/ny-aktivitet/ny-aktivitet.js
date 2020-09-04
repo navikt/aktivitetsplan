@@ -31,16 +31,17 @@ class NyAktivitet extends Component {
                     </Innholdstittel>
                 </div>
                 <div className="ny-aktivitet-modal__ny-aktivitet-lenker">
-                    <Lenkepanel href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
+                    <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.sokeavtale-aktivitet" />
                     </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/behandling" hidden={!erVeileder}>
+                    <Lenkepanel border href="/aktivitet/ny/behandling" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.medisinsk-behandling" />
                     </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/mote" hidden={!erVeileder}>
+                    <Lenkepanel border href="/aktivitet/ny/mote" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.mote" />
                     </Lenkepanel>
                     <Lenkepanel
+                        border
                         href="/aktivitet/ny/samtalereferat"
                         hidden={!erVeileder}
                         className="ny-aktivitet-modal__veileder-skille"
@@ -48,14 +49,14 @@ class NyAktivitet extends Component {
                         <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
                     </Lenkepanel>
 
-                    <Lenkepanel href="/aktivitet/ny/stilling">
+                    <Lenkepanel border href="/aktivitet/ny/stilling">
                         <FormattedMessage id="ny-aktivitet-modal.ledig-stilling" />
                     </Lenkepanel>
 
-                    <Lenkepanel href="/aktivitet/ny/ijobb">
+                    <Lenkepanel border href="/aktivitet/ny/ijobb">
                         <FormattedMessage id="ny-aktivitet-modal.jobb-jeg-er-i" />
                     </Lenkepanel>
-                    <Lenkepanel href="/aktivitet/ny/egen">
+                    <Lenkepanel border href="/aktivitet/ny/egen">
                         <FormattedMessage id="ny-aktivitet-modal.egen-aktivitet" />
                     </Lenkepanel>
                 </div>
@@ -67,19 +68,16 @@ class NyAktivitet extends Component {
 NyAktivitet.propTypes = {
     doHentIdentitet: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
-    aktivitetFeilmeldinger: PT.array.isRequired
+    aktivitetFeilmeldinger: PT.array.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     erVeileder: selectErVeileder(state),
-    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state)
+    aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    doHentIdentitet: () => dispatch(hentIdentitet())
+const mapDispatchToProps = (dispatch) => ({
+    doHentIdentitet: () => dispatch(hentIdentitet()),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NyAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitet);
