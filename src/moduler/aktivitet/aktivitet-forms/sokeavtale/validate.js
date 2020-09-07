@@ -55,7 +55,7 @@ export function validateFraDato(avtalt, tilDato, value) {
 
 export function validateTilDato(avtalt, fraDato, value) {
     if (value.trim().length === 0) {
-        return 'Du må fylle ut fra dato';
+        return 'Du må fylle ut til dato';
     }
     return validerDato(value, null, fraDato);
 }
