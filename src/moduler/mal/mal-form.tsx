@@ -59,6 +59,7 @@ function MalForm(props: Props) {
                     autoFocus
                     label=""
                     maxLength={500}
+
                     {...state.fields.mal}
                 />
             </SkjemaGruppe>
