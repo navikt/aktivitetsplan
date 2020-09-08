@@ -53,7 +53,14 @@ function MalForm(props: Props) {
     return (
         <form className="aktivitetmal__innhold" onSubmit={state.onSubmit(onSubmit)}>
             <SkjemaGruppe>
-                <Textarea textareaClass={textAreaCls} autoFocus label="" maxLength={500} {...state.fields.mal} />
+                <Textarea
+                    textareaClass={textAreaCls}
+                    autoFocus
+                    label=""
+                    maxLength={500}
+                    visTellerFra={150}
+                    {...state.fields.mal}
+                />
             </SkjemaGruppe>
             <Hovedknapp>Lagre</Hovedknapp>
         </form>
