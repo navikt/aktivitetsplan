@@ -29,8 +29,8 @@ class AktivitetvisningContainer extends Component {
 
     componentWillUnmount() {
         const { valgtAktivitet } = this.props;
-        const aktivitetskort = document.querySelector(`#aktivitetskort-${valgtAktivitet.id}`);
-        if (valgtAktivitet && aktivitetskort) {
+        const aktivitetskort = valgtAktivitet && document.querySelector(`#aktivitetskort-${valgtAktivitet.id}`);
+        if (aktivitetskort) {
             aktivitetskort.focus();
         }
     }
@@ -56,11 +56,11 @@ AktivitetvisningContainer.propTypes = {
     doHentArenaAktiviteter: PT.func.isRequired,
     history: AppPT.history.isRequired,
     match: PT.object.isRequired,
-    underOppfolging: PT.bool.isRequired
+    underOppfolging: PT.bool.isRequired,
 };
 
 AktivitetvisningContainer.defaultProps = {
-    valgtAktivitet: undefined
+    valgtAktivitet: undefined,
 };
 
 const mapStateToProps = (state, props) => {
@@ -71,7 +71,6 @@ const mapStateToProps = (state, props) => {
         !!valgtAktivitet &&
         [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(valgtAktivitet.type);
     const aktivitetDataStatus = erArenaAktivitet ? selectArenaAktivitetStatus(state) : selectAktivitetStatus(state);
-
     const laster = aktivitetDataStatus !== STATUS.OK;
 
     return {
@@ -80,20 +79,20 @@ const mapStateToProps = (state, props) => {
             // merk at vi egentlig avhenger av både vanlige aktiviteter og arena-aktiviteter
             // MEN: vi ønsker å rendre med en gang vi har riktig aktivitet tilgjengelig, slik
             // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena
-            valgtAktivitet ? STATUS.OK : STATUS.PENDING
+            aktivitetDataStatus,
         ],
         valgtAktivitet,
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
         laster,
-        underOppfolging: selectErUnderOppfolging(state)
+        underOppfolging: selectErUnderOppfolging(state),
     };
 };
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
     bindActionCreators(
         {
             doHentAktivitet: hentAktivitet,
-            doHentArenaAktiviteter: hentArenaAktiviteter
+            doHentArenaAktiviteter: hentArenaAktiviteter,
         },
         dispatch
     );

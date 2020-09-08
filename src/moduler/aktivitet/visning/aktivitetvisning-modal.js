@@ -5,13 +5,17 @@ import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
 import { DirtyContext } from '../../context/dirty-context';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import { shallowEqual, useSelector } from 'react-redux';
+import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
+import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
+import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 
 const statusMap = {
     PLANLAGT: 'Planlegger',
     BRUKER_ER_INTERESSERT: 'Forslag',
     GJENNOMFORES: 'Gjennomfører',
     FULLFORT: 'Fullført',
-    AVBRUTT: 'Avbrutt'
+    AVBRUTT: 'Avbrutt',
 };
 
 const typeMap = {
@@ -24,7 +28,7 @@ const typeMap = {
     IJOBB: 'Jobb jeg har nå',
     BEHANDLING: 'Behandling',
     MOTE: 'Møte med NAV',
-    SAMTALEREFERAT: 'Samtalereferat'
+    SAMTALEREFERAT: 'Samtalereferat',
 };
 
 function header(valgtAktivitet) {
@@ -47,8 +51,11 @@ const DIALOG_TEKST = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikke
 
 function AktivitetvisningModal(props) {
     const { aktivitet, avhengigheter, history, children } = props;
-
     const dirty = useContext(DirtyContext);
+    const selector = aktivitet?.arenaAktivitet ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
+    const aktivitetFeil = useSelector(selector, shallowEqual);
+    const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
+    const alleFeil = aktivitetFeil.concat(dialogFeil);
 
     return (
         <Modal
@@ -61,6 +68,7 @@ function AktivitetvisningModal(props) {
                     history.push('/');
                 }
             }}
+            feilmeldinger={alleFeil}
         >
             {children}
         </Modal>
@@ -68,14 +76,14 @@ function AktivitetvisningModal(props) {
 }
 
 AktivitetvisningModal.defaultProps = {
-    aktivitet: undefined
+    aktivitet: undefined,
 };
 
 AktivitetvisningModal.propTypes = {
     aktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
     history: AppPT.history.isRequired,
-    children: PT.object.isRequired
+    children: PT.object.isRequired,
 };
 
 export default AktivitetvisningModal;
