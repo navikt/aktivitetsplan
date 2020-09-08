@@ -49,12 +49,7 @@ class NyAktivitet extends Component {
                     <Lenkepanel border href="/aktivitet/ny/mote" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.mote" />
                     </Lenkepanel>
-                    <Lenkepanel
-                        border
-                        href="/aktivitet/ny/samtalereferat"
-                        hidden={!erVeileder}
-                        className="ny-aktivitet-modal__veileder-skille"
-                    >
+                    <Lenkepanel href="/aktivitet/ny/samtalereferat" hidden={!erVeileder}>
                         <FormattedMessage id="ny-aktivitet-modal.samtalereferat" />
                     </Lenkepanel>
                 </div>
