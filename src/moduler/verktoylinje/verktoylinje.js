@@ -27,7 +27,7 @@ class Verktoylinje extends Component {
                         visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
                         onClick={() => loggEvent(APNE_NY_AKTIVITET)}
                     >
-                        <Pluss />
+                        <Pluss className="plusslogo" />
                         <span> Legg til aktivitet</span>
                     </Lenkeknapp>
                 </div>
