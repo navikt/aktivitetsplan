@@ -55,10 +55,11 @@ function MalForm(props: Props) {
             <SkjemaGruppe>
                 <Textarea
                     textareaClass={textAreaCls}
+                    visTellerFra={150}
                     autoFocus
                     label=""
                     maxLength={500}
-                    visTellerFra={150}
+
                     {...state.fields.mal}
                 />
             </SkjemaGruppe>
