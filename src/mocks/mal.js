@@ -4,13 +4,13 @@ let maler = [
     {
         mal: 'Jeg vil bli stor og sterk',
         endretAv: 'BRUKER',
-        dato: '2017-12-31T09:46:10.971+01:00'
+        dato: '2017-12-31T09:46:10.971+01:00',
     },
     {
         mal: 'Jeg vil bli sjørøver',
         endretAv: 'BRUKER',
-        dato: new Date()
-    }
+        dato: new Date(),
+    },
 ];
 
 maler = ingenMal() ? [] : maler;
@@ -24,11 +24,11 @@ export function sisteMal() {
     return maler[maler.length - 1];
 }
 
-export function opprettMal(update) {
+export function opprettMal(params, update) {
     let nyMal = {
         mal: update.mal,
         endretAv: erEksternBruker() ? 'BRUKER' : 'VEILEDER',
-        dato: new Date()
+        dato: new Date(),
     };
     maler.push(nyMal);
     return nyMal;

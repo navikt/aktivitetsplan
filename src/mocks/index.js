@@ -23,7 +23,7 @@ import { delayed, fetchmockMiddleware, jsonResponse } from './utils';
 import { hentMalverkMedType } from './malverk';
 import auth from './auth';
 import lest from './lest';
-import { aktivitetFeilet, arenaFeilet, dialogFeilet, oppfFeilet } from './demo/sessionstorage';
+import { aktivitetFeilet, arenaFeilet, dialogFeilet, maalFeilet, oppfFeilet } from './demo/sessionstorage';
 import { failOrGetResponse } from './failOrGetResponse';
 
 const mock = fetchMock.configure({
@@ -41,10 +41,10 @@ mock.get('/api/feature', ({ queryParams }, res, ctx) => res(ctx.json(getFeatures
 
 mock.get('/veilarboppfolging/api/oppfolging/me', failOrGetResponse(oppfFeilet, me));
 
-mock.get('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(oppfFeilet, sisteMal));
-mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }, res, ctx) => res(ctx.json(opprettMal(body, true))));
+mock.get('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(maalFeilet, sisteMal));
+mock.post('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(maalFeilet, opprettMal));
 
-mock.get('/veilarboppfolging/api/oppfolging/malListe', failOrGetResponse(oppfFeilet, malListe));
+mock.get('/veilarboppfolging/api/oppfolging/malListe', failOrGetResponse(maalFeilet, malListe));
 
 mock.get('/veilarboppfolging/api/oppfolging', failOrGetResponse(oppfFeilet, oppfolging));
 

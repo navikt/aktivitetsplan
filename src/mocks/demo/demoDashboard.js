@@ -21,6 +21,7 @@ import {
     dialogFeilet,
     aktivitetFeilet,
     arenaFeilet,
+    maalFeilet,
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -185,6 +186,11 @@ class DemoDashboard extends React.Component {
                             label: 'Arena feiler',
                             id: SessionStorageElement.ARENA_FEILET,
                             checked: arenaFeilet(),
+                        },
+                        {
+                            label: 'Mål feiler',
+                            id: SessionStorageElement.MAAL_FEILET,
+                            checked: maalFeilet(),
                         },
                     ]}
                     onChange={this.endreTilstand}
