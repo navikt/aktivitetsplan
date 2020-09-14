@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Flatknapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 import InternLenke from '../../felles-komponenter/utils/internLenke';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectErUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentMal, selectGjeldendeMal, selectMalStatus } from '../../moduler/mal/aktivitetsmal-reducer';
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
@@ -72,8 +72,9 @@ function MittMaal() {
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
+    const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
 
-    const disabled = !underOppfolging || viserHistoriskPeriode;
+    const disabled = !underOppfolging || viserHistoriskPeriode || !harSkriveTilgang;
     const cls = classNames('mitt-maal', { empty: !mal && !disabled });
 
     return (
