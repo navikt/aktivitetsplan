@@ -22,6 +22,7 @@ import {
     aktivitetFeilet,
     arenaFeilet,
     maalFeilet,
+    oppdateringKunFeiler,
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -191,6 +192,11 @@ class DemoDashboard extends React.Component {
                             label: 'Mål feiler',
                             id: SessionStorageElement.MAAL_FEILET,
                             checked: maalFeilet(),
+                        },
+                        {
+                            label: 'Kun oppdatering feiler',
+                            id: SessionStorageElement.OPPDATERING_KUN_FEILER,
+                            checked: oppdateringKunFeiler(),
                         },
                     ]}
                     onChange={this.endreTilstand}

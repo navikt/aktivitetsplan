@@ -8,6 +8,7 @@ export const SessionStorageElement = {
     AKTIVITET_FEILET: 'aktivitetfeilet',
     ARENA_FEILET: 'arenafeilet',
     MAAL_FEILET: 'maalfeilet',
+    OPPDATERING_KUN_FEILER: 'oppdonlyfeiler',
     EKSTERN_BRUKER: 'eksternbruker',
     INGEN_OPPF_PERIODER: 'ingen_oppf_perioder',
     AUTOMATISKE_AKTIVITETER: 'automatiske_aktiviteter',
@@ -61,6 +62,8 @@ export const aktivitetFeilet = () => erSatt(SessionStorageElement.AKTIVITET_FEIL
 export const arenaFeilet = () => erSatt(SessionStorageElement.ARENA_FEILET);
 
 export const maalFeilet = () => erSatt(SessionStorageElement.MAAL_FEILET);
+
+export const oppdateringKunFeiler = () => erSatt(SessionStorageElement.OPPDATERING_KUN_FEILER);
 
 export const ulesteDialoger = () => erSatt(SessionStorageElement.ULESTE_DIALOGER);
 
