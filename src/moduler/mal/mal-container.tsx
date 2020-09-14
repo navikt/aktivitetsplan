@@ -17,7 +17,7 @@ function MalContainer() {
 
     const mal = malData && malData.mal;
 
-    const [edit, setEdit] = useState(!viserHistoriskPeriode && !mal && (underOppfolging || harSkriveTilgang));
+    const [edit, setEdit] = useState(!viserHistoriskPeriode && !mal && underOppfolging && harSkriveTilgang);
 
     if (edit) {
         return (
