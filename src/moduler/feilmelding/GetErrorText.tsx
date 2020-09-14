@@ -1,6 +1,6 @@
 import { HENTING_FEILET as AKTIVITET_HENT_FEILET } from '../aktivitet/aktivitet-action-types';
 import { HENTING_FEILET as DIALOG_HENT_FEIL } from '../dialog/dialog-reducer';
-
+import { HENTING_FEILET as ARENA_HENT_FEILET } from '../aktivitet/arena-aktiviteter-reducer';
 import { FeilmeldingType } from './FeilmeldingTypes';
 
 export const tekster = {
@@ -23,6 +23,10 @@ export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
     }
 
     if (feil.type === AKTIVITET_HENT_FEILET) {
+        return tekster.aktivitetFeilet;
+    }
+
+    if (feil.type === ARENA_HENT_FEILET) {
         return tekster.aktivitetFeilet;
     }
 
