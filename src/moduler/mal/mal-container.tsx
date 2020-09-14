@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectGjeldendeMal } from './aktivitetsmal-reducer';
-import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
+import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
 import MalForm from './mal-form';
@@ -13,10 +13,11 @@ function MalContainer() {
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
+    const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
 
     const mal = malData && malData.mal;
 
-    const [edit, setEdit] = useState(!viserHistoriskPeriode && !mal && underOppfolging);
+    const [edit, setEdit] = useState(!viserHistoriskPeriode && !mal && (underOppfolging || harSkriveTilgang));
 
     if (edit) {
         return (
