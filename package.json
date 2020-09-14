@@ -8,6 +8,7 @@
     "build:tekster": "node ./scripts/build-tekster.js",
     "build": "npm run build:tekster && craco build",
     "test": "craco test",
+    "ispretti": "prettier --check src/**/*.{js,ts,tsx,less}",
     "test:coverage": "npm test -- --coverage --watchAll=false",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
     "lint": "echo \"Not implemented\""
