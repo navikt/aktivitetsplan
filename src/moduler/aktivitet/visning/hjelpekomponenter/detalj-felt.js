@@ -9,7 +9,7 @@ function DetaljFelt({ tittel, children, fullbredde, beskrivelse }) {
         <div
             className={classNames('aktivitetsdetaljer__felt', 'detaljfelt', {
                 'detaljfelt--fullbredde': fullbredde,
-                'detaljfelt--beskrivelse': beskrivelse
+                'detaljfelt--beskrivelse': beskrivelse,
             })}
         >
             <EtikettLiten className="detaljfelt__tittel" tag="h2">
@@ -21,14 +21,14 @@ function DetaljFelt({ tittel, children, fullbredde, beskrivelse }) {
 }
 
 DetaljFelt.defaultProps = {
-    beskrivelse: false
+    beskrivelse: false,
 };
 
 DetaljFelt.propTypes = {
     children: PT.node.isRequired,
     tittel: PT.oneOfType([PT.string.isRequired, PT.node.isRequired]).isRequired,
     fullbredde: PT.bool.isRequired,
-    beskrivelse: PT.bool
+    beskrivelse: PT.bool,
 };
 
 export default visibleIfHOC(DetaljFelt);

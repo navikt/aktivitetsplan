@@ -6,7 +6,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
-    selectReservasjonKRR
+    selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import visibleIfHOC from '../../../../hocs/visible-if';
 
@@ -14,7 +14,7 @@ function AvtaltStripeKRRKvpManuellBruker() {
     const brukerUtenAktivitesPlan = {
         brukerErManuell: useSelector(selectErBrukerManuell, shallowEqual),
         brukerErUnderKvp: useSelector(selectErUnderKvp, shallowEqual),
-        brukerErIReservasjonKRR: useSelector(selectReservasjonKRR, shallowEqual)
+        brukerErIReservasjonKRR: useSelector(selectReservasjonKRR, shallowEqual),
     };
 
     const brukerUtenAktivitetsPlanSelectValue = Object.entries(brukerUtenAktivitesPlan).find(
@@ -26,7 +26,7 @@ function AvtaltStripeKRRKvpManuellBruker() {
                 <FormattedMessage
                     id="sett-avtalt-forhandsrientering-bruker-uten-aktivitesplan"
                     values={{
-                        brukerUtenAktivitesplan: brukerUtenAktivitetsPlanSelectValue
+                        brukerUtenAktivitesplan: brukerUtenAktivitetsPlanSelectValue,
                     }}
                 />
             </AlertStripeInfo>

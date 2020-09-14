@@ -11,11 +11,11 @@ function AvtaltMarkering(props) {
 }
 
 AvtaltMarkering.defaultProps = {
-    className: undefined
+    className: undefined,
 };
 
 AvtaltMarkering.propTypes = {
-    className: PT.string
+    className: PT.string,
 };
 
 export default visibleIfHOC(AvtaltMarkering);

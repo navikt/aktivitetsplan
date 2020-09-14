@@ -5,7 +5,7 @@ import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 const cls = (className?: string, brukLenkestyling?: boolean) =>
     classNames(className, {
-        lenke: brukLenkestyling
+        lenke: brukLenkestyling,
     });
 
 interface InternLenkeProps {

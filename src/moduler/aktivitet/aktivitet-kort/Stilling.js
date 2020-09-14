@@ -13,5 +13,5 @@ export default function Arbeidsgiver({ aktivitet }) {
 }
 
 Arbeidsgiver.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
 };

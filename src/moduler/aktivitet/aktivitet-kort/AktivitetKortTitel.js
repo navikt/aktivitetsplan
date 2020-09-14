@@ -13,7 +13,7 @@ export default function Aktivitetskorttittel({ aktivitet, harEndringerIAktivitet
                 tag="h1"
                 id={`aktivitetskort__header__${aktivitet.id}`}
                 className={classNames('aktivitetskort__tittel softbreak', {
-                    'aktivitetskort__tittel--drag': isDragging
+                    'aktivitetskort__tittel--drag': isDragging,
                 })}
             >
                 {aktivitet.tittel}
@@ -25,5 +25,5 @@ export default function Aktivitetskorttittel({ aktivitet, harEndringerIAktivitet
 Aktivitetskorttittel.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     isDragging: PT.bool.isRequired,
-    harEndringerIAktivitet: PT.bool.isRequired
+    harEndringerIAktivitet: PT.bool.isRequired,
 };

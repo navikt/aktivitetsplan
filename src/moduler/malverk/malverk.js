@@ -31,7 +31,7 @@ class Malverk extends Component {
         doSlettValgtMalverk();
     }
 
-    onChangeMalverk = event => {
+    onChangeMalverk = (event) => {
         const { doHentMalverkMedTittel, doSettValgtMalverk, onChange } = this.props;
         event.preventDefault();
         // event.target.value er tittel på malverk
@@ -79,36 +79,31 @@ Malverk.propTypes = {
     doSlettValgtMalverk: PT.func.isRequired,
     onChange: PT.func,
     endre: PT.bool,
-    type: PT.string.isRequired
+    type: PT.string.isRequired,
 };
 
 Malverk.defaultProps = {
     endre: false,
     malverk: undefined,
-    onChange: () => null
+    onChange: () => null,
 };
 
-const mapDispatchToProps = dispatch => ({
-    doHentMalverMedType: type => {
+const mapDispatchToProps = (dispatch) => ({
+    doHentMalverMedType: (type) => {
         dispatch(hentMalverkMedType(type));
     },
-    doSettValgtMalverk: valgtMalverk => {
+    doSettValgtMalverk: (valgtMalverk) => {
         dispatch(settValgtMalverk(valgtMalverk));
     },
     doSlettValgtMalverk: () => {
         dispatch(slettValgtMalverk());
-    }
+    },
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     malverk: selectMalverkData(state),
     avhengigheter: [selectMalverkStatus(state)],
-    doHentMalverkMedTittel: tittel => selectMalverkMedTittel(state, tittel)
+    doHentMalverkMedTittel: (tittel) => selectMalverkMedTittel(state, tittel),
 });
 
-export default visibleIfHOC(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(Malverk)
-);
+export default visibleIfHOC(connect(mapStateToProps, mapDispatchToProps)(Malverk));

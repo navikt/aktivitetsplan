@@ -12,5 +12,5 @@ export default function AktivitetType({ type }) {
 }
 
 AktivitetType.propTypes = {
-    type: PT.string.isRequired
+    type: PT.string.isRequired,
 };

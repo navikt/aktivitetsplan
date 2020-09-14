@@ -47,7 +47,7 @@ function DialogLenke(props: Props) {
     const henvendelser = dialog && dialog.henvendelser ? dialog.henvendelser : [];
     const dialogId = dialog && dialog.id;
     const antallHenvendelser = henvendelser.length;
-    const uleste = henvendelser.filter(h => !h.lest).length;
+    const uleste = henvendelser.filter((h) => !h.lest).length;
 
     return (
         <>

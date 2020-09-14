@@ -21,19 +21,19 @@ function ArenaFeilmelding({ aktivitetStatus, arenaStatus, arenaFeilmeldinger }) 
     return null;
 }
 ArenaFeilmelding.defaultProps = {
-    arenaFeilmeldinger: []
+    arenaFeilmeldinger: [],
 };
 
 ArenaFeilmelding.propTypes = {
     arenaFeilmeldinger: PT.array,
     arenaStatus: PT.string.isRequired,
-    aktivitetStatus: PT.string.isRequired
+    aktivitetStatus: PT.string.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     aktivitetStatus: selectAktivitetStatus(state),
     arenaStatus: selectArenaAktivitetStatus(state),
-    arenaFeilmeldinger: selectArenaFeilmeldinger(state)
+    arenaFeilmeldinger: selectArenaFeilmeldinger(state),
 });
 
 export default connect(mapStateToProps)(ArenaFeilmelding);

@@ -8,12 +8,12 @@ export default function Dato({ visTidspunkt, children, ...resten }) {
 
 Dato.propTypes = {
     children: PT.string,
-    visTidspunkt: PT.bool
+    visTidspunkt: PT.bool,
 };
 
 Dato.defaultProps = {
     children: undefined,
-    visTidspunkt: false
+    visTidspunkt: false,
 };
 
 export function DatoEllerTidSiden({ children, ...rest }) {
@@ -21,9 +21,9 @@ export function DatoEllerTidSiden({ children, ...rest }) {
 }
 
 DatoEllerTidSiden.propTypes = {
-    children: PT.string
+    children: PT.string,
 };
 
 DatoEllerTidSiden.defaultProps = {
-    children: undefined
+    children: undefined,
 };

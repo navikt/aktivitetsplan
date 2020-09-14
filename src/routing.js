@@ -22,7 +22,7 @@ const Routing = ({ location }) => (
 );
 
 Routing.propTypes = {
-    location: PT.object.isRequired
+    location: PT.object.isRequired,
 };
 
 function Public({ location }) {
@@ -34,7 +34,7 @@ function Public({ location }) {
 }
 
 Public.propTypes = {
-    location: PT.object.isRequired
+    location: PT.object.isRequired,
 };
 
 export const PublicRouting = withRouter(Public);

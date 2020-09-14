@@ -33,9 +33,7 @@ function DialogIkonMedUleste(props: Props) {
                     {antall}
                 </text>
             </svg>
-            <div className="sr-only">
-                Aktiviteten har en dialog
-            </div>
+            <div className="sr-only">Aktiviteten har en dialog</div>
         </div>
     );
 }

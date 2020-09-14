@@ -8,12 +8,12 @@ export const HENTING_FEILET = 'arenaAktivitet/hent/fail';
 
 const initalState = {
     data: [],
-    status: STATUS.NOT_STARTED
+    status: STATUS.NOT_STARTED,
 };
 
-const mapArenaType = arenaAktivitet => ({
+const mapArenaType = (arenaAktivitet) => ({
     ...arenaAktivitet,
-    arenaAktivitet: true
+    arenaAktivitet: true,
 });
 
 // Reducer
@@ -23,7 +23,7 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                data: action.data.map(mapArenaType)
+                data: action.data.map(mapArenaType),
             };
         case HENTING_FEILET:
             return { ...state, status: STATUS.ERROR, feil: action.data };
@@ -37,6 +37,6 @@ export function hentArenaAktiviteter() {
     return doThenDispatch(() => Api.hentArenaAktiviteter(), {
         OK: HENTET,
         FEILET: HENTING_FEILET,
-        PENDING: HENTER
+        PENDING: HENTER,
     });
 }

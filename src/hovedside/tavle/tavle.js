@@ -6,7 +6,7 @@ import { autobind } from '../../utils';
 
 const KOLONNEBREDDE = 300;
 const KOLONNEMARGIN = 10;
-const tavleClassname = className => classNames('tavle', className);
+const tavleClassname = (className) => classNames('tavle', className);
 
 class Tavle extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class Tavle extends Component {
             currentIndex: 0,
             clickIndex: 0,
             venstreKnappDisabled: true,
-            hoyreKnappDisabled: false
+            hoyreKnappDisabled: false,
         };
         autobind(this);
     }
@@ -44,7 +44,7 @@ class Tavle extends Component {
         this.setState({
             currentIndex: Math.ceil(values.scrollLeft / KOLONNEBREDDE),
             venstreKnappDisabled: values.left === 0,
-            hoyreKnappDisabled: values.left >= 0.99
+            hoyreKnappDisabled: values.left >= 0.99,
         });
     }
 
@@ -66,7 +66,7 @@ class Tavle extends Component {
             <button
                 type="button"
                 className={classNames('tavle__scrollknapp knapp-forrige', {
-                    invisible: venstreKnappDisabled
+                    invisible: venstreKnappDisabled,
                 })}
                 onClick={this.visForrige}
                 disabled={venstreKnappDisabled}
@@ -78,7 +78,7 @@ class Tavle extends Component {
             <button
                 type="button"
                 className={classNames('tavle__scrollknapp knapp-neste', {
-                    invisible: hoyreKnappDisabled
+                    invisible: hoyreKnappDisabled,
                 })}
                 onClick={this.visNeste}
                 hidden={hoyreKnappDisabled}
@@ -95,7 +95,7 @@ class Tavle extends Component {
                     autoHeight
                     autoHeightMax={9999}
                     onScrollFrame={this.updateState}
-                    ref={scrollbars => {
+                    ref={(scrollbars) => {
                         this.scrollbars = scrollbars;
                     }}
                 >
@@ -109,11 +109,11 @@ class Tavle extends Component {
 
 Tavle.propTypes = {
     className: PT.string,
-    children: PT.arrayOf(PT.element).isRequired
+    children: PT.arrayOf(PT.element).isRequired,
 };
 
 Tavle.defaultProps = {
-    className: ''
+    className: '',
 };
 
 export default Tavle;

@@ -11,7 +11,7 @@ function AktivitetskortEndring({ harEndringerIAktivitet }) {
 }
 
 AktivitetskortEndring.propTypes = {
-    harEndringerIAktivitet: PT.bool.isRequired
+    harEndringerIAktivitet: PT.bool.isRequired,
 };
 
 export default AktivitetskortEndring;

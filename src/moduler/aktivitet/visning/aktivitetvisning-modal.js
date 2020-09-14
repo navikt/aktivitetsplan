@@ -11,7 +11,7 @@ const statusMap = {
     BRUKER_ER_INTERESSERT: 'Forslag',
     GJENNOMFORES: 'Gjennomfører',
     FULLFORT: 'Fullført',
-    AVBRUTT: 'Avbrutt'
+    AVBRUTT: 'Avbrutt',
 };
 
 const typeMap = {
@@ -24,7 +24,7 @@ const typeMap = {
     IJOBB: 'Jobb jeg har nå',
     BEHANDLING: 'Behandling',
     MOTE: 'Møte med NAV',
-    SAMTALEREFERAT: 'Samtalereferat'
+    SAMTALEREFERAT: 'Samtalereferat',
 };
 
 function header(valgtAktivitet) {
@@ -68,14 +68,14 @@ function AktivitetvisningModal(props) {
 }
 
 AktivitetvisningModal.defaultProps = {
-    aktivitet: undefined
+    aktivitet: undefined,
 };
 
 AktivitetvisningModal.propTypes = {
     aktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
     history: AppPT.history.isRequired,
-    children: PT.object.isRequired
+    children: PT.object.isRequired,
 };
 
 export default AktivitetvisningModal;

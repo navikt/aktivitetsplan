@@ -4,7 +4,7 @@ import {
     selectAktivitetTyperFilter,
     selectHistoriskPeriode,
     selectAktivitetStatusFilter,
-    selectAktivitetAvtaltMedNavFilter
+    selectAktivitetAvtaltMedNavFilter,
 } from './filter-selector';
 
 function erAktivtFilter(filterData) {
@@ -20,7 +20,7 @@ export function datoErIPeriode(dato, state) {
     const historiskeOppfolgingsPerioder = selectHistoriskeOppfolgingsPerioder(state) || [];
 
     const forrigeSluttDato = historiskeOppfolgingsPerioder
-        .map(p => p.sluttDato)
+        .map((p) => p.sluttDato)
         .sort()
         .reverse()[0];
     return !forrigeSluttDato || dato >= forrigeSluttDato;

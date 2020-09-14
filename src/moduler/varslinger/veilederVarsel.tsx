@@ -3,7 +3,7 @@ import React from 'react';
 import {
     selectErEskalert,
     selectGjeldendeEskaleringsVarsel,
-    selectTilHorendeDialogId
+    selectTilHorendeDialogId,
 } from '../oppfolging-status/oppfolging-selector';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';

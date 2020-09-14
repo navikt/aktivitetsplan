@@ -24,7 +24,7 @@ function AktivitetRoutes({ match }) {
 }
 
 AktivitetRoutes.propTypes = {
-    match: PT.object.isRequired
+    match: PT.object.isRequired,
 };
 
 export default AktivitetRoutes;

@@ -8,7 +8,7 @@ function VisibleIfSpan(props) {
 }
 
 VisibleIfSpan.propTypes = {
-    children: PT.node.isRequired
+    children: PT.node.isRequired,
 };
 
 export default visibleIfHOC(VisibleIfSpan);

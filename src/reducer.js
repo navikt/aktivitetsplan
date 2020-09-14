@@ -31,14 +31,14 @@ const combinedReducers = combineReducers({
         feature: featureReducer,
         malverk: malverkReducer,
         lest: lestReducer,
-        auth: authReducer
+        auth: authReducer,
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,
-        informasjon: informasjonReducer
-    })
+        informasjon: informasjonReducer,
+    }),
 });
 
-export default function(state, action) {
+export default function (state, action) {
     return combinedReducers(state, action);
 }

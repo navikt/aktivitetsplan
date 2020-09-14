@@ -23,7 +23,7 @@ const FullforAktivitet = ({ valgtAktivitet, lagrer, doAvsluttOppfolging, history
             headerTekst={headerTekst}
             beskrivelseLabel={beskrivelseTekst}
             lagrer={lagrer}
-            onSubmit={beskrivelseForm => {
+            onSubmit={(beskrivelseForm) => {
                 history.replace('/');
                 return doAvsluttOppfolging(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
@@ -58,11 +58,11 @@ FullforAktivitet.propTypes = {
     lagrer: PT.bool.isRequired,
     doAvsluttOppfolging: PT.func.isRequired,
     history: AppPT.history.isRequired,
-    match: PT.object.isRequired
+    match: PT.object.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-    doAvsluttOppfolging: (aktivitet, begrunnelse) => dispatch(fullforAktivitet(aktivitet, begrunnelse))
+const mapDispatchToProps = (dispatch) => ({
+    doAvsluttOppfolging: (aktivitet, begrunnelse) => dispatch(fullforAktivitet(aktivitet, begrunnelse)),
 });
 
 const mapStateToProps = (state, props) => {
@@ -70,11 +70,8 @@ const mapStateToProps = (state, props) => {
     const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
     return {
         valgtAktivitet: valgtAktivitet || {},
-        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK
+        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(FullforAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(FullforAktivitet);

@@ -13,7 +13,7 @@ import {
     STATUS_FULLFOERT,
     STATUS_AVBRUTT,
     SAMTALEREFERAT_TYPE,
-    MOTE_TYPE
+    MOTE_TYPE,
 } from '../../../constant';
 import { selectErBruker, selectIdentitetSlice } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
@@ -26,18 +26,18 @@ import Arbeidsgiver from './Stilling';
 import AktivitetType from './AktivitetType';
 import Aktivitetskorttittel from './AktivitetKortTitel';
 import { aktivitetRoute } from '../../../routes';
-import AktivitetskortTillegg from "./aktivitetskort-tillegg";
+import AktivitetskortTillegg from './aktivitetskort-tillegg';
 
 const dndSpec = {
     beginDrag({ aktivitet }) {
         return aktivitet;
-    }
+    },
 };
 
 function collect(connector, monitor) {
     return {
         connectDragSource: connector.dragSource(),
-        isDragging: monitor.isDragging()
+        isDragging: monitor.isDragging(),
     };
 }
 
@@ -49,7 +49,7 @@ class AktivitetsKort extends Component {
             connectDragSource,
             erFlyttbar,
             doSettAktivitetMedEndringerSomVist,
-            harEndringerIAktivitet
+            harEndringerIAktivitet,
         } = this.props;
         const { id, type } = aktivitet;
         const ariaLabel = `aktivitetskort__header__${id} aktivitetskort__dato__${id}`;
@@ -62,7 +62,7 @@ class AktivitetsKort extends Component {
                     draggable={erFlyttbar}
                     className={classNames('aktivitetskort', {
                         'aktivitetskort--flyttbar': erFlyttbar,
-                        'aktivitetskort--drag': isDragging
+                        'aktivitetskort--drag': isDragging,
                     })}
                     onClick={() => doSettAktivitetMedEndringerSomVist(aktivitet)}
                     skipLenkeStyling
@@ -101,11 +101,11 @@ AktivitetsKort.propTypes = {
     connectDragSource: PT.func.isRequired,
     erFlyttbar: PT.bool.isRequired,
     doSettAktivitetMedEndringerSomVist: PT.func.isRequired,
-    harEndringerIAktivitet: PT.bool
+    harEndringerIAktivitet: PT.bool,
 };
 
 AktivitetsKort.defaultProps = {
-    harEndringerIAktivitet: false
+    harEndringerIAktivitet: false,
 };
 
 const dragbartAktivitetskort = DragSource('AktivitetsKort', dndSpec, collect)(AktivitetsKort);
@@ -115,7 +115,7 @@ const mapStateToProps = (state, props) => {
     const lestStatus = selectLestStatus(state);
     const aktiviteterSomHarBlittVist = selectAktiviteterSomHarBlittVist(state);
     const aktivitetHarIkkeBlittVist = !aktiviteterSomHarBlittVist.find(
-        aktivitet => aktivitet.id === props.aktivitet.id
+        (aktivitet) => aktivitet.id === props.aktivitet.id
     );
 
     const me = selectIdentitetSlice(state).data;
@@ -124,15 +124,12 @@ const mapStateToProps = (state, props) => {
         lestStatus === STATUS.OK && erNyEndringIAktivitet(props.aktivitet, lest, me) && aktivitetHarIkkeBlittVist;
     return {
         erFlyttbar: sjekkErFlyttbar(props.aktivitet, selectErBruker(state)) && selectErUnderOppfolging(state),
-        harEndringerIAktivitet
+        harEndringerIAktivitet,
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doSettAktivitetMedEndringerSomVist: aktivitet => dispatch(settAktivitetSomVist(aktivitet))
+const mapDispatchToProps = (dispatch) => ({
+    doSettAktivitetMedEndringerSomVist: (aktivitet) => dispatch(settAktivitetSomVist(aktivitet)),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(dragbartAktivitetskort);
+export default connect(mapStateToProps, mapDispatchToProps)(dragbartAktivitetskort);

@@ -19,11 +19,11 @@ function TallAlert({ children }) {
 }
 
 TallAlert.propTypes = {
-    children: PT.number
+    children: PT.number,
 };
 
 TallAlert.defaultProps = {
-    children: undefined
+    children: undefined,
 };
 
 export default hiddenIfHOC(TallAlert);

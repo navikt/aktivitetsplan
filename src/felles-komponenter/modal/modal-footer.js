@@ -7,11 +7,11 @@ function ModalFooter({ children }) {
 }
 
 ModalFooter.propTypes = {
-    children: PT.node
+    children: PT.node,
 };
 
 ModalFooter.defaultProps = {
-    children: undefined
+    children: undefined,
 };
 
 export default visibleIfHOC(ModalFooter);

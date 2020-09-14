@@ -28,13 +28,13 @@ const mottaAktivitetsKort = {
                 doFlyttAktivitet(aktivitet, status);
             }
         });
-    }
+    },
 };
 
 function collect(theConnect, monitor) {
     return {
         drag: monitor.isOver(),
-        connectDropTarget: theConnect.dropTarget()
+        connectDropTarget: theConnect.dropTarget(),
     };
 }
 
@@ -52,11 +52,11 @@ DropTargetKolonne.propTypes = {
     status: PT.string.isRequired,
     doFlyttAktivitet: PT.func.isRequired,
     history: AppPT.history.isRequired,
-    children: PT.node
+    children: PT.node,
 };
 
-const mapDispatchToProps = dispatch => ({
-    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
+const mapDispatchToProps = (dispatch) => ({
+    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch),
 });
 
 export default withRouter(

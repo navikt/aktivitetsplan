@@ -19,11 +19,11 @@ function KolonneFunction({ status, aktiviteter, render }) {
 KolonneFunction.propTypes = {
     status: PT.string.isRequired,
     aktiviteter: PT.arrayOf(PT.object).isRequired,
-    render: PT.func.isRequired
+    render: PT.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-    aktiviteter: selectAktivitetListe(state)
+const mapStateToProps = (state) => ({
+    aktiviteter: selectAktivitetListe(state),
 });
 
 export default connect(mapStateToProps)(KolonneFunction);

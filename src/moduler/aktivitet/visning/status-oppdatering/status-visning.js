@@ -6,7 +6,7 @@ import {
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
     STATUS_GJENNOMFOERT,
-    STATUS_PLANLAGT
+    STATUS_PLANLAGT,
 } from '../../../../constant';
 
 function getStatusText(status) {
@@ -32,7 +32,7 @@ function StatusVisning(props) {
 }
 
 StatusVisning.propTypes = {
-    status: PT.string.isRequired
+    status: PT.string.isRequired,
 };
 
 export default StatusVisning;

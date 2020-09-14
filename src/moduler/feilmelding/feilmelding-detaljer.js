@@ -20,7 +20,7 @@ FeilmeldingDetaljer.defaultProps = {
     httpStatus: null,
     detaljertType: null,
     feilMelding: null,
-    stackTrace: null
+    stackTrace: null,
 };
 
 FeilmeldingDetaljer.propTypes = {
@@ -29,7 +29,7 @@ FeilmeldingDetaljer.propTypes = {
     httpStatus: PT.number,
     detaljertType: PT.string,
     feilMelding: PT.string,
-    stackTrace: PT.string
+    stackTrace: PT.string,
 };
 
 export default FeilmeldingDetaljer;

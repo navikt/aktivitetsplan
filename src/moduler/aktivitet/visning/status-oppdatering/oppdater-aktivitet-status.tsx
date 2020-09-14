@@ -15,7 +15,7 @@ import { Dispatch } from 'redux';
 const useDisableStatusEndring = (aktivitet: Aktivitet) => {
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
     const underOppfolging = useSelector(selectErUnderOppfolging);
-    const kanEndreAktivitet = useSelector(state => selectKanEndreAktivitetStatus(state, aktivitet));
+    const kanEndreAktivitet = useSelector((state) => selectKanEndreAktivitetStatus(state, aktivitet));
 
     return lasterAktivitet || !underOppfolging || !kanEndreAktivitet;
 };

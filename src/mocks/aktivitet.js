@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { rndId } from './utils';
-import { erEksternBruker, visTestAktiviteter, visAutomatiskeAktiviteter } from './demo/sessionstorage';
+import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 
 const eksternBruker = erEksternBruker();
 const bruker = eksternBruker ? 'BRUKER' : 'NAV';
@@ -430,8 +430,8 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
     return oldAktivitet;
 }
 
-export function publiserReferat({aktivitetId}) {
-    const oldAktivitet = aktiviteter.find(akivitet => akivitet.id === aktivitetId);
+export function publiserReferat({ aktivitetId }) {
+    const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     oldAktivitet.erReferatPublisert = true;
     return { ...oldAktivitet, erReferatPublisert: true };
 }

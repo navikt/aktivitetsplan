@@ -32,13 +32,13 @@ function AktiviteskortPeriodeVisning({ aktivitet }) {
             return `FRA: ${formatertFraDato}`;
         }
 
-        return [formatertFraDato, formatertTilDato].filter(dato => dato).join(' - ');
+        return [formatertFraDato, formatertTilDato].filter((dato) => dato).join(' - ');
     }
     return <Normaltekst id={`aktivitetskort__dato__${id}`}>{periodeVisning()}</Normaltekst>;
 }
 
 AktiviteskortPeriodeVisning.propTypes = {
-    aktivitet: PT.aktivitet.isRequired
+    aktivitet: PT.aktivitet.isRequired,
 };
 
 export default AktiviteskortPeriodeVisning;

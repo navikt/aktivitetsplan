@@ -13,7 +13,7 @@ import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsor
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
-    selectReservasjonKRR
+    selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import DeleLinje from '../delelinje/delelinje';
 
@@ -60,12 +60,12 @@ Statusadministrasjon.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     arenaAktivitet: PT.bool.isRequired,
     erBruker: PT.bool.isRequired,
-    erManuellKrrKvpBruker: PT.bool.isRequired
+    erManuellKrrKvpBruker: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     erBruker: selectErBruker(state),
-    erManuellKrrKvpBruker: selectErBrukerManuell(state) || selectErUnderKvp(state) || selectReservasjonKRR(state)
+    erManuellKrrKvpBruker: selectErBrukerManuell(state) || selectErUnderKvp(state) || selectReservasjonKRR(state),
 });
 
 export default connect(mapStateToProps)(Statusadministrasjon);

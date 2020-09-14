@@ -31,7 +31,7 @@ const EgenAktivitetDetaljer = ({ aktivitet }) => (
 );
 
 EgenAktivitetDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
 };
 
 export default EgenAktivitetDetaljer;

@@ -56,11 +56,11 @@ AktivitetvisningContainer.propTypes = {
     doHentArenaAktiviteter: PT.func.isRequired,
     history: AppPT.history.isRequired,
     match: PT.object.isRequired,
-    underOppfolging: PT.bool.isRequired
+    underOppfolging: PT.bool.isRequired,
 };
 
 AktivitetvisningContainer.defaultProps = {
-    valgtAktivitet: undefined
+    valgtAktivitet: undefined,
 };
 
 const mapStateToProps = (state, props) => {
@@ -80,20 +80,20 @@ const mapStateToProps = (state, props) => {
             // merk at vi egentlig avhenger av både vanlige aktiviteter og arena-aktiviteter
             // MEN: vi ønsker å rendre med en gang vi har riktig aktivitet tilgjengelig, slik
             // at f.eks. visning av vanlige aktiviteter ikke følger responstidene til arena
-            valgtAktivitet ? STATUS.OK : STATUS.PENDING
+            valgtAktivitet ? STATUS.OK : STATUS.PENDING,
         ],
         valgtAktivitet,
         tillatEndring: selectKanEndreAktivitetDetaljer(state, valgtAktivitet),
         laster,
-        underOppfolging: selectErUnderOppfolging(state)
+        underOppfolging: selectErUnderOppfolging(state),
     };
 };
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
     bindActionCreators(
         {
             doHentAktivitet: hentAktivitet,
-            doHentArenaAktiviteter: hentArenaAktiviteter
+            doHentArenaAktiviteter: hentArenaAktiviteter,
         },
         dispatch
     );
