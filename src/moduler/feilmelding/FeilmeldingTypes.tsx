@@ -12,5 +12,5 @@ export interface FeilmeldingType {
     httpStatus?: number;
     melding?: FeilmeldingDetaljer;
     tekst?: string;
-    type: string; //TODO: det her er action name, rename
+    type: string;
 }

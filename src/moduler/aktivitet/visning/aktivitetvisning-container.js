@@ -54,7 +54,6 @@ AktivitetvisningContainer.propTypes = {
     laster: PT.bool.isRequired,
     doHentAktivitet: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
-    history: AppPT.history.isRequired,
     match: PT.object.isRequired,
     underOppfolging: PT.bool.isRequired,
 };

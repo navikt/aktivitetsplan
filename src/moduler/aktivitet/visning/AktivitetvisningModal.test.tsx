@@ -9,16 +9,10 @@ import create from '../../../store';
 
 const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: {} });
 
-const hi = {
-    goBack: () => {},
-    push: () => {},
-    replace: () => {},
-};
-
 const AktivitetsvisningModalWrapped = (props: { store: any }) => (
     <Router>
         <Provider store={props.store}>
-            <AktivitetvisningModal avhengigheter={[]} history={hi}>
+            <AktivitetvisningModal avhengigheter={[]}>
                 <div />
             </AktivitetvisningModal>
         </Provider>

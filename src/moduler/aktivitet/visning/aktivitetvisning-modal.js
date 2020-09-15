@@ -9,6 +9,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
+import { useHistory } from 'react-router-dom';
 
 const statusMap = {
     PLANLAGT: 'Planlegger',
@@ -50,8 +51,9 @@ function header(valgtAktivitet) {
 const DIALOG_TEKST = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
 function AktivitetvisningModal(props) {
-    const { aktivitet, avhengigheter, history, children } = props;
+    const { aktivitet, avhengigheter, children } = props;
     const dirty = useContext(DirtyContext);
+    const history = useHistory();
     const selector = aktivitet?.arenaAktivitet ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
     const aktivitetFeil = useSelector(selector, shallowEqual);
     const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
@@ -82,7 +84,6 @@ AktivitetvisningModal.defaultProps = {
 AktivitetvisningModal.propTypes = {
     aktivitet: AppPT.aktivitet,
     avhengigheter: AppPT.avhengigheter.isRequired,
-    history: AppPT.history.isRequired,
     children: PT.object.isRequired,
 };
 

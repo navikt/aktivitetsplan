@@ -18,7 +18,9 @@ export default function Feilmelding(props: PropTypes) {
     const [apen, setApen] = useState(false);
     const { feilmeldinger, className } = props;
 
-    if (feilmeldinger.length === 0) return null;
+    if (feilmeldinger.length === 0) {
+        return null;
+    }
 
     const tekst = getErrorText(feilmeldinger);
     const toggleDetaljer = () => {
