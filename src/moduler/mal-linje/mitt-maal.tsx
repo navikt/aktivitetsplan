@@ -7,12 +7,16 @@ import { Element } from 'nav-frontend-typografi';
 import InternLenke from '../../felles-komponenter/utils/internLenke';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { hentMal, selectGjeldendeMal, selectMalStatus } from '../../moduler/mal/aktivitetsmal-reducer';
-import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
+import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
+import { selectErVeileder, selectIdentitetSlice } from '../../moduler/identitet/identitet-selector';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import { selectViserHistoriskPeriode } from '../../moduler/filtrering/filter/filter-selector';
 import './mitt-maal.less';
 import { ReactComponent as Pluss } from './pluss.svg';
+import { Lest, Mal, Me } from '../../types';
+import moment from 'moment';
+import { selectLestAktivitetsplan } from '../lest/lest-reducer';
+import VisibleIfNotifikasjon from '../../felles-komponenter/utils/visible-if-notifikasjon';
 
 interface MalTextProps {
     mal?: string;
@@ -76,17 +80,50 @@ function MittMaal() {
 
     const disabled = !underOppfolging || viserHistoriskPeriode || !harSkriveTilgang;
     const cls = classNames('mitt-maal', { empty: !mal && !disabled });
+    const nyEndring = erNyEndringIMal(
+        malData,
+        useSelector(selectLestAktivitetsplan),
+        useSelector(selectIdentitetSlice)
+    );
 
     return (
         <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
-            <InternLenke skipLenkeStyling href="/mal" className={cls} onClick={() => loggMittMalKlikk(erVeileder)}>
-                <Element id="mittmal_header">DITT MÅL</Element>
+            <InternLenke
+                skipLenkeStyling
+                href="/mal"
+                className={cls}
+                onClick={() => {
+                    loggMittMalKlikk(erVeileder);
+                    dispatch(lesMal());
+                }}
+            >
+                <Element tag={'div'} id="mittmal_header">
+                    <VisibleIfNotifikasjon visible={nyEndring} />
+                    DITT MÅL
+                </Element>
                 <div className="mittmal_content">
                     <MalContent disabled={disabled} mal={mal} />
                 </div>
             </InternLenke>
         </Innholdslaster>
     );
+}
+
+function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boolean {
+    if (!maal.mal) {
+        return false;
+    }
+
+    if (!aktivitetsplanLestInfo) {
+        return true;
+    }
+
+    const maalLagdEtterSistLestAktivitetsplan = moment(maal.dato).isAfter(aktivitetsplanLestInfo.tidspunkt);
+
+    const sisteEndringVarFraMeg =
+        (maal.endretAv === 'BRUKER' && me.erBruker) || (maal.endretAv === 'NAV' && me.erVeileder);
+
+    return !sisteEndringVarFraMeg && !maal.lest && maalLagdEtterSistLestAktivitetsplan;
 }
 
 export default MittMaal;
