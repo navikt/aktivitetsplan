@@ -5,8 +5,7 @@ import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
-import HovedsideFeilmelding from '../moduler/feilmelding/hovedsidefeilmelding';
-import ArenaFeilmelding from '../moduler/feilmelding/arenafeilmelding';
+import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Maal from '../moduler/mal-linje/mitt-maal';
 import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
@@ -25,7 +24,6 @@ class Hovedside extends Component {
             <div className="hovedside" key={fnr}>
                 <div className="hovedsideinnhold">
                     <HovedsideFeilmelding />
-                    <ArenaFeilmelding />
                     <OppfolgingStatus>
                         <InformasjonsHenting />
                         <Varslinger />

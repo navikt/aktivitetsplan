@@ -6,11 +6,11 @@ export const STATUS = {
     PENDING: 'PENDING',
     OK: 'OK',
     RELOADING: 'RELOADING',
-    ERROR: 'ERROR'
+    ERROR: 'ERROR',
 };
 
 const DEFAULT_CONFIG = {
-    credentials: 'same-origin'
+    credentials: 'same-origin',
 };
 
 const statusPrioritet = {
@@ -18,7 +18,7 @@ const statusPrioritet = {
     NOT_STARTED: 4,
     PENDING: 3,
     RELOADING: 2,
-    OK: 1
+    OK: 1,
 };
 
 export function aggregerStatus(...reducereEllerStatuser) {
@@ -65,18 +65,18 @@ function parseError(errorData) {
 }
 
 export function handterFeil(dispatch, FEILET_TYPE) {
-    return error => {
+    return (error) => {
         const { response } = error;
         if (response) {
-            response.text().then(data => {
+            response.text().then((data) => {
                 console.error(error, error.stack, data); // eslint-disable-line no-console
                 dispatch({
                     type: FEILET_TYPE,
                     data: {
                         type: FEILET_TYPE,
                         httpStatus: response.status,
-                        melding: parseError(data)
-                    }
+                        melding: parseError(data),
+                    },
                 });
                 const errorData = JSON.parse(data);
 
@@ -86,8 +86,8 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                             error.stack,
                             `Id: ${errorData.id}`,
                             `Type: ${errorData.type} ${errorData.detaljer ? errorData.detaljer.detaljertType : ''}`,
-                            errorData.detaljer ? errorData.detaljer.stackTrace : ''
-                        ].join('\n')
+                            errorData.detaljer ? errorData.detaljer.stackTrace : '',
+                        ].join('\n'),
                     });
                 }
             });
@@ -97,15 +97,15 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                 type: FEILET_TYPE,
                 data: {
                     type: FEILET_TYPE,
-                    melding: error.toString()
-                }
+                    tekst: error.toString(),
+                },
             });
         }
         return Promise.reject(error);
     };
 }
 
-export const getCookie = name => {
+export const getCookie = (name) => {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
@@ -114,7 +114,7 @@ export const getCookie = name => {
 const defaultHeaders = {
     'Content-Type': 'application/json',
     NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
-    'Nav-Consumer-Id': 'aktivitetsplan'
+    'Nav-Consumer-Id': 'aktivitetsplan',
 };
 
 export function fetchToJson(url, config = { headers: defaultHeaders }) {
@@ -126,9 +126,7 @@ export function fetchToJson(url, config = { headers: defaultHeaders }) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fodselsnummer}`;
     }
 
-    return fetch(fetchUrl, configMedCredentials)
-        .then(sjekkStatuskode)
-        .then(toJson);
+    return fetch(fetchUrl, configMedCredentials).then(sjekkStatuskode).then(toJson);
 }
 
 function methodToJson(method, url, data, config) {
@@ -156,12 +154,10 @@ export function putAsJson(url, data = {}, config = {}) {
 }
 
 export function doThenDispatch(fn, { OK, FEILET, PENDING }) {
-    return dispatch => {
+    return (dispatch) => {
         if (PENDING) {
             dispatch({ type: PENDING });
         }
-        return fn()
-            .then(sendResultatTilDispatch(dispatch, OK))
-            .catch(handterFeil(dispatch, FEILET));
+        return fn().then(sendResultatTilDispatch(dispatch, OK)).catch(handterFeil(dispatch, FEILET));
     };
 }

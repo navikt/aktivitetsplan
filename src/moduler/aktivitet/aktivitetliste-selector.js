@@ -3,7 +3,7 @@ import { selectAktiviteterData, selectAktiviteterSlice, selectAktivitetStatus } 
 import {
     selectArenaAktiviteterData,
     selectArenaAktiviteterSlice,
-    selectArenaAktivitetStatus
+    selectArenaAktivitetStatus,
 } from './arena-aktivitet-selector';
 import { aggregerStatus, STATUS } from '../../ducks/utils';
 import { aktivitetFilter, datoErIPeriode } from '../filtrering/filter/filter-utils';
@@ -18,15 +18,15 @@ export const selectAlleAktiviter = createSelector(
 );
 
 export function selectAktiviterForAktuellePerioden(state) {
-    return selectAlleAktiviter(state).filter(a => datoErIPeriode(a.opprettetDato, state));
+    return selectAlleAktiviter(state).filter((a) => datoErIPeriode(a.opprettetDato, state));
 }
 
 export function selectAktivitetListe(state) {
-    return selectAktiviterForAktuellePerioden(state).filter(a => aktivitetFilter(a, state));
+    return selectAktiviterForAktuellePerioden(state).filter((a) => aktivitetFilter(a, state));
 }
 
 export function selectAktivitetMedId(state, aktivitetId) {
-    return selectAlleAktiviter(state).find(aktivitet => aktivitet.id === aktivitetId);
+    return selectAlleAktiviter(state).find((aktivitet) => aktivitet.id === aktivitetId);
 }
 
 export function selectAktivitetListeSlice(state) {
@@ -38,7 +38,7 @@ export function selectAktivitetListeSlice(state) {
     );
     return {
         status,
-        data: selectAktivitetListe(state)
+        data: selectAktivitetListe(state),
     };
 }
 
@@ -73,8 +73,7 @@ export function selectKanEndreAktivitetDetaljer(state, aktivitet) {
 
 export function selectAktivitetListeFeilMelding(state) {
     const alleAktiviteterSlice = [selectAktiviteterSlice(state), selectArenaAktiviteterSlice(state)];
+    const feilendeKall = alleAktiviteterSlice.filter((slice) => slice.status === STATUS.ERROR);
 
-    return alleAktiviteterSlice.every(slice => slice.status === STATUS.ERROR)
-        ? alleAktiviteterSlice.map(slice => slice.feil).filter(x => x)
-        : [];
+    return feilendeKall.map((slice) => slice.feil);
 }

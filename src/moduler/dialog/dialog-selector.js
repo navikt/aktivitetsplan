@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { newDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
+import { STATUS } from '../../ducks/utils';
 
 function erViktigMelding(dialog) {
     return dialog.egenskaper.length > 0;
@@ -43,4 +44,9 @@ export function createSelectDialogForAktivitetId(aktivitetId) {
 
 export function selectDialogForAktivitetId(state, aktivitetId) {
     return selectAlleDialoger(state).find((d) => d.aktivitetId === aktivitetId);
+}
+
+export function selectDialogFeilmeldinger(state) {
+    const feilmeldinger = selectDialogSlice(state).status === STATUS.ERROR && selectDialogSlice(state).feil;
+    return feilmeldinger ? feilmeldinger : [];
 }
