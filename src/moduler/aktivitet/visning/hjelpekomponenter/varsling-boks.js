@@ -15,8 +15,8 @@ function VarslingBoks({ className, avhengigheter, visVarselOmManglendeDialog }) 
             <Innholdslaster avhengigheter={avhengigheter}>
                 <HiddenIfDiv className={className} hidden={!visVarselOmManglendeDialog}>
                     <AlertStripe type="advarsel">
-                        Brukeren får ikke automatisk informasjon om møtet. Send en dialog eller forhåndsorientering for
-                        at brukeren skal få beskjed.
+                        Brukeren får ikke automatisk beskjed om at aktiviteten er opprettet. <br />
+                        Send en dialogmelding slik at bruker får informasjon om møtet.
                     </AlertStripe>
                 </HiddenIfDiv>
             </Innholdslaster>
@@ -26,7 +26,7 @@ function VarslingBoks({ className, avhengigheter, visVarselOmManglendeDialog }) 
 
 VarslingBoks.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
-    className: PT.string.isRequired
+    className: PT.string.isRequired,
 };
 
 const mapStateToProps = (state, props) => {
@@ -34,7 +34,7 @@ const mapStateToProps = (state, props) => {
     return {
         avhengigheter: [selectIdentitetStatus(state), selectDialogStatus(state)],
         visVarselOmManglendeDialog:
-            aktivitet.type === MOTE_TYPE && selectErVeileder(state) && !selectDialogForAktivitetId(state, aktivitet.id)
+            aktivitet.type === MOTE_TYPE && selectErVeileder(state) && !selectDialogForAktivitetId(state, aktivitet.id),
     };
 };
 
