@@ -16,7 +16,7 @@ import { ReactComponent as Pluss } from './pluss.svg';
 import { Lest, Mal, Me } from '../../types';
 import moment from 'moment';
 import { selectLestAktivitetsplan } from '../lest/lest-reducer';
-import VisibleIfNotifikasjon from '../../felles-komponenter/utils/visible-if-notifikasjon';
+import NotifikasjonMarkering from '../../felles-komponenter/utils/notifikasjon-markering';
 
 interface MalTextProps {
     mal?: string;
@@ -98,7 +98,7 @@ function MittMaal() {
                 }}
             >
                 <Element tag={'div'} id="mittmal_header">
-                    <VisibleIfNotifikasjon visible={nyEndring} />
+                    <NotifikasjonMarkering visible={nyEndring} />
                     DITT MÅL
                 </Element>
                 <div className="mittmal_content">
@@ -114,7 +114,9 @@ function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boole
         return false;
     }
 
-    if (!aktivitetsplanLestInfo) {
+    const aldriLestAktivitetsplanen = !aktivitetsplanLestInfo;
+
+    if (aldriLestAktivitetsplanen) {
         return true;
     }
 

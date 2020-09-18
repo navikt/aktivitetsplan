@@ -3,12 +3,12 @@ import React from 'react';
 import classNames from 'classnames';
 import PT from 'prop-types';
 import * as AppPT from '../../../proptypes';
-import VisibleIfNotifikasjon from '../../../felles-komponenter/utils/visible-if-notifikasjon';
+import NotifikasjonMarkering from '../../../felles-komponenter/utils/notifikasjon-markering';
 
 export default function Aktivitetskorttittel({ aktivitet, harEndringerIAktivitet, isDragging }) {
     return (
         <div className="aktivitetskort__header">
-            <VisibleIfNotifikasjon visible={harEndringerIAktivitet} />
+            <NotifikasjonMarkering visible={harEndringerIAktivitet} />
             <Element
                 tag="h1"
                 id={`aktivitetskort__header__${aktivitet.id}`}
