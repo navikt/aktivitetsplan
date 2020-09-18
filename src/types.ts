@@ -109,6 +109,7 @@ export interface Mal {
     mal: string;
     endretAv: string;
     dato: string;
+    lest?: boolean;
 }
 
 export interface KvpPeriode {
