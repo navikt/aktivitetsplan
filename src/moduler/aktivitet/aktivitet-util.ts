@@ -45,7 +45,6 @@ export function erNyEndringIAktivitet(aktivitet: Aktivitet, lestInformasjon: Les
     }
 
     if (!lestInformasjon) {
-        //Hvis aktivitetsplanen har blitt lest noensinne
         return true;
     }
 
