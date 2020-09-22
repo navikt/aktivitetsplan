@@ -31,7 +31,7 @@ function reducer(state: State = initialState, action: Action) {
         case OK:
             return {
                 ...state,
-                data: { ...action.data, ...state.data },
+                data: { ...state.data, ...action.data },
                 status: STATUS.OK,
             };
         case FEILET:
