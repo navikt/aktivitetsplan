@@ -80,11 +80,9 @@ function MittMaal() {
 
     const disabled = !underOppfolging || viserHistoriskPeriode || !harSkriveTilgang;
     const cls = classNames('mitt-maal', { empty: !mal && !disabled });
-    const nyEndring = erNyEndringIMal(
-        malData,
-        useSelector(selectLestAktivitetsplan),
-        useSelector(selectIdentitetSlice)
-    );
+    const nyEndring =
+        erNyEndringIMal(malData, useSelector(selectLestAktivitetsplan), useSelector(selectIdentitetSlice)) &&
+        harSkriveTilgang;
 
     return (
         <Innholdslaster className="mittmal_spinner" avhengigheter={avhengigheter}>
