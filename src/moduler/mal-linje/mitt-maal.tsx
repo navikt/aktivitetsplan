@@ -117,8 +117,8 @@ function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boole
     const sisteEndringVarFraMeg =
         (maal.endretAv === 'BRUKER' && me.erBruker) || (maal.endretAv === 'VEILEDER' && me.erVeileder);
 
-    if (aldriLestAktivitetsplanen && !sisteEndringVarFraMeg) {
-        return true;
+    if (aldriLestAktivitetsplanen) {
+        return !sisteEndringVarFraMeg;
     }
 
     const maalLagdEtterSistLestAktivitetsplan = moment(maal.dato).isAfter(aktivitetsplanLestInfo.tidspunkt);
