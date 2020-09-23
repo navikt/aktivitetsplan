@@ -8,7 +8,7 @@ import InternLenke from '../../felles-komponenter/utils/internLenke';
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
-import { selectErVeileder, selectIdentitetSlice } from '../../moduler/identitet/identitet-selector';
+import { selectErVeileder, selectIdentitetData } from '../../moduler/identitet/identitet-selector';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
 import { selectViserHistoriskPeriode } from '../../moduler/filtrering/filter/filter-selector';
 import './mitt-maal.less';
@@ -81,7 +81,7 @@ function MittMaal() {
     const disabled = !underOppfolging || viserHistoriskPeriode || !harSkriveTilgang;
     const cls = classNames('mitt-maal', { empty: !mal && !disabled });
     const nyEndring =
-        erNyEndringIMal(malData, useSelector(selectLestAktivitetsplan), useSelector(selectIdentitetSlice)) &&
+        erNyEndringIMal(malData, useSelector(selectLestAktivitetsplan), useSelector(selectIdentitetData)) &&
         harSkriveTilgang;
 
     return (
