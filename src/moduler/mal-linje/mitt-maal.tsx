@@ -114,14 +114,14 @@ function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boole
 
     const aldriLestAktivitetsplanen = !aktivitetsplanLestInfo;
 
-    if (aldriLestAktivitetsplanen) {
+    const sisteEndringVarFraMeg =
+        (maal.endretAv === 'BRUKER' && me.erBruker) || (maal.endretAv === 'VEILEDER' && me.erVeileder);
+
+    if (aldriLestAktivitetsplanen && !sisteEndringVarFraMeg) {
         return true;
     }
 
     const maalLagdEtterSistLestAktivitetsplan = moment(maal.dato).isAfter(aktivitetsplanLestInfo.tidspunkt);
-
-    const sisteEndringVarFraMeg =
-        (maal.endretAv === 'BRUKER' && me.erBruker) || (maal.endretAv === 'VEILEDER' && me.erVeileder);
 
     return !sisteEndringVarFraMeg && !maal.lest && maalLagdEtterSistLestAktivitetsplan;
 }
