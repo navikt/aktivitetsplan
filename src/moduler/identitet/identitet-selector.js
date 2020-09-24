@@ -4,6 +4,10 @@ export function selectIdentitetSlice(state) {
     return state.data.identitet;
 }
 
+export function selectIdentitetData(state) {
+    return selectIdentitetSlice(state).data;
+}
+
 export function selectIdentitetStatus(state) {
     return selectIdentitetSlice(state).status;
 }

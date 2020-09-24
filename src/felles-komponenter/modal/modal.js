@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import ModalHeader from './modal-header';
 import Innholdslaster from '../utils/innholdslaster';
 import * as AppPT from '../../proptypes';
-import Feilmelding from '../../moduler/feilmelding/feilmelding';
+import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 
 function Modal({
     header,
@@ -27,6 +27,7 @@ function Modal({
 
         history.push('/');
     };
+
     return (
         <NavFrontendModal
             {...props}
@@ -51,7 +52,7 @@ Modal.defaultProps = {
     header: <ModalHeader />,
     avhengigheter: [],
     minstEnAvhengighet: false,
-    feilmeldinger: []
+    feilmeldinger: [],
 };
 
 Modal.propTypes = {
@@ -62,7 +63,7 @@ Modal.propTypes = {
     feilmeldinger: PT.array,
     children: PT.node.isRequired,
     avhengigheter: PT.array,
-    minstEnAvhengighet: PT.bool
+    minstEnAvhengighet: PT.bool,
 };
 
 export default withRouter(Modal);

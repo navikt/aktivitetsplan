@@ -23,13 +23,24 @@ import { delayed, fetchmockMiddleware, jsonResponse } from './utils';
 import { hentMalverkMedType } from './malverk';
 import auth from './auth';
 import lest from './lest';
-import { aktivitetFeilet, arenaFeilet, dialogFeilet, oppfFeilet } from './demo/sessionstorage';
+import {
+    aktivitetFeilet,
+    arenaFeilet,
+    dialogFeilet,
+    maalFeilet,
+    oppdateringKunFeiler,
+    oppfFeilet,
+} from './demo/sessionstorage';
 import { failOrGetResponse } from './failOrGetResponse';
 
 const mock = fetchMock.configure({
     enableFallback: false,
     middleware: fetchmockMiddleware,
 });
+
+const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
+const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
+const getAktivitetFeiler = () => aktivitetFeilet() && !oppdateringKunFeiler();
 
 mock.get('/veilarbvedtakinfo/api/fremtidigsituasjon', delayed(500, jsonResponse(fremtidigSituasjon)));
 
@@ -39,18 +50,18 @@ mock.get('/api/feature', ({ queryParams }, res, ctx) => res(ctx.json(getFeatures
 
 //veilarboppfolging-api
 
-mock.get('/veilarboppfolging/api/oppfolging/me', failOrGetResponse(oppfFeilet, me));
+mock.get('/veilarboppfolging/api/oppfolging/me', failOrGetResponse(getOppfFeiler, me));
 
-mock.get('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(oppfFeilet, sisteMal));
-mock.post('/veilarboppfolging/api/oppfolging/mal', ({ body }, res, ctx) => res(ctx.json(opprettMal(body, true))));
+mock.get('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(getMaalFeiler, sisteMal));
+mock.post('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(maalFeilet, opprettMal));
 
-mock.get('/veilarboppfolging/api/oppfolging/malListe', failOrGetResponse(oppfFeilet, malListe));
+mock.get('/veilarboppfolging/api/oppfolging/malListe', failOrGetResponse(getMaalFeiler, malListe));
 
-mock.get('/veilarboppfolging/api/oppfolging', failOrGetResponse(oppfFeilet, oppfolging));
+mock.get('/veilarboppfolging/api/oppfolging', failOrGetResponse(getOppfFeiler, oppfolging));
 
 mock.get(
     '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
-    failOrGetResponse(oppfFeilet, () => innstillingsHistorikk)
+    failOrGetResponse(getOppfFeiler, () => innstillingsHistorikk)
 );
 mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', jsonResponse(veilederTilgang));
 mock.get('/veilarboppfolging/api/oppfolging/avslutningStatus', ({ body }, res, ctx) =>
@@ -93,26 +104,30 @@ mock.post('/veilarbdialog/api/dialog', ({ body }, res, ctx) => res(ctx.json(oppr
 mock.post('/veilarbdialog/api/dialog/forhandsorientering', ({ body }, res, ctx) => res(ctx.json(opprettDialog(body))));
 
 // veilarbaktivitet-api
+
 mock.get(
     '/veilarbaktivitet/api/aktivitet/kanaler',
-    failOrGetResponse(aktivitetFeilet, () => ['INTERNETT', 'OPPMOTE', 'TELEFON'])
+    failOrGetResponse(getAktivitetFeiler, () => ['INTERNETT', 'OPPMOTE', 'TELEFON'])
 );
 mock.get(
     '/veilarbaktivitet/api/aktivitet/arena',
-    failOrGetResponse(arenaFeilet, () => arena)
+    failOrGetResponse(
+        () => arenaFeilet() && !oppdateringKunFeiler(),
+        () => arena
+    )
 );
-mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, getAktivitet));
+mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAktivitetFeiler, getAktivitet));
 
 mock.get(
     '/veilarbaktivitet/api/aktivitet',
-    failOrGetResponse(aktivitetFeilet, () => aktiviteter)
+    failOrGetResponse(getAktivitetFeiler, () => aktiviteter)
 );
 
 mock.post('/veilarbaktivitet/api/aktivitet/ny', failOrGetResponse(aktivitetFeilet, opprettAktivitet));
 
 mock.get(
     '/veilarbaktivitet/api/aktivitet/:aktivitetId/versjoner',
-    failOrGetResponse(aktivitetFeilet, getAktivitetVersjoner)
+    failOrGetResponse(getAktivitetFeiler, getAktivitetVersjoner)
 );
 
 mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet));

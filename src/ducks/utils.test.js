@@ -126,7 +126,7 @@ describe('utils', () => {
             handterFeil(dispatch, action)(error).catch(() => {});
 
             expect(dispatch.mock.calls[0][0]).toEqual({
-                data: { melding: error.toString(), type: action },
+                data: { tekst: error.toString(), type: action },
                 type: action,
             });
 
