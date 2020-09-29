@@ -12,6 +12,7 @@ import aktiviteter, {
 } from './aktivitet';
 import arena from './arena';
 import getPerson from './person';
+import getNivaa4 from './tilgang';
 import { malListe, opprettMal, sisteMal } from './mal';
 import { fremtidigSituasjon } from './fremtidigSituasjon';
 import veilederTilgang from './veilederTilgang';
@@ -145,6 +146,9 @@ mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetRespon
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }, res, ctx) => res(ctx.json(getPerson(pathParams.fnr))));
+mock.get('/veilarbperson/api/person/:fnr/harNivaa4', ({ pathParams }, res, ctx) =>
+    res(ctx.json(getNivaa4(pathParams.fnr)))
+);
 
 //veilarbmalverk-api
 mock.post('/veilarbmalverk/api/mal', ({ body }, res, ctx) => res(ctx.json(hentMalverkMedType(body))));
