@@ -108,7 +108,7 @@ function MittMaal() {
 }
 
 function erNyEndringIMal(maal: Mal, aktivitetsplanLestInfo: Lest, me: Me): boolean {
-    if (!maal.mal || aktivitetsplanLestInfo === undefined) {
+    if (!maal?.mal) {
         return false;
     }
 
