@@ -12,6 +12,9 @@ import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import InternLenke from '../../../../felles-komponenter/utils/internLenke';
+import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
+import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import { useSelector } from 'react-redux';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
@@ -118,8 +121,17 @@ function AvtaltForm(props: Props) {
 
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
     const avtaltSelect = state.fields.avtaltSelect.input.value;
+    const loggetInnMedNivaa4Sist18Maaneder = useSelector(selectNivaa4);
 
-    const kanSendeForhandsvarsel = !erManuellKrrKvpBruker && !visAvtaltMedNavMindreEnnSyvDager;
+    const AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder = () => (
+        <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder}>
+            Du kan ikke sende forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med BankID
+            (nivå 4).
+        </HiddenIfAlertStripeInfoSolid>
+    );
+
+    const kanSendeForhandsvarsel =
+        !erManuellKrrKvpBruker && !visAvtaltMedNavMindreEnnSyvDager && loggetInnMedNivaa4Sist18Maaneder;
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
             <Undertittel>{'Merk aktiviteten som "Avtalt med NAV"'}</Undertittel>
@@ -135,10 +147,12 @@ function AvtaltForm(props: Props) {
             <VisibleIfDiv
                 className={classNames({
                     'avtalt-container__innhold': kanSendeForhandsvarsel,
-                    'avtalt-container__alertstripe': erManuellKrrKvpBruker || visAvtaltMedNavMindreEnnSyvDager,
+                    'avtalt-container__alertstripe':
+                        erManuellKrrKvpBruker || visAvtaltMedNavMindreEnnSyvDager || !loggetInnMedNivaa4Sist18Maaneder,
                 })}
                 visible={avtalt}
             >
+                <AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder />
                 <AvtaltStripeKRRKvpManuellBruker visible={erManuellKrrKvpBruker} />
                 <AvtaltFormMindreEnnSyvDager visible={!erManuellKrrKvpBruker && visAvtaltMedNavMindreEnnSyvDager} />
                 <VisibleIfDiv visible={kanSendeForhandsvarsel}>

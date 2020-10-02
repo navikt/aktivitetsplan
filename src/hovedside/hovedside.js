@@ -11,13 +11,11 @@ import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import { connect } from 'react-redux';
-import { hentNivaa4 } from '../moduler/tilgang/tilgang-reducer';
 
 class Hovedside extends Component {
     componentDidMount() {
-        const { doHentDialog, doHentNivaa4 } = this.props;
+        const { doHentDialog } = this.props;
         doHentDialog();
-        doHentNivaa4();
     }
 
     render() {
@@ -46,7 +44,6 @@ class Hovedside extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     doHentDialog: () => dispatch(hentDialog()),
-    doHentNivaa4: () => dispatch(hentNivaa4(getFodselsnummer())),
 });
 
 export default connect(undefined, mapDispatchToProps)(Hovedside);

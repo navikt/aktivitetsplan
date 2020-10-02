@@ -7,5 +7,5 @@ export function selectTilgang(state) {
 }
 
 export function selectNivaa4(state) {
-    return selectTilgangSlice(state).nivaa4;
+    return selectTilgang(state).harbruktnivaa4;
 }

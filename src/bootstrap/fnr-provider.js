@@ -2,7 +2,6 @@ import { Component } from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
 import { hentBruker, setStatusOk } from '../moduler/bruker/bruker-reducer';
-import { hentNivaa4 } from '../moduler/tilgang/tilgang-reducer';
 
 export function fnrFraUrl() {
     const fnrMatch = window.location.pathname.match(`${window.appconfig.CONTEXT_PATH}/(\\d*)`);
@@ -17,7 +16,6 @@ class FnrProvider extends Component {
             const fnr = fnrFraUrl();
             if (fnr) {
                 dispatch(hentBruker(fnr));
-                dispatch(hentNivaa4(fnr));
             }
         } else {
             // på utsiden
