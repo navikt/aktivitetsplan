@@ -17,6 +17,7 @@
     "@nutgaard/use-formstate": "^2.2.1",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
+    "date-fns": "^2.16.1",
     "history": "^4.10.1",
     "intl": "^1.2.5",
     "lodash.throttle": "^4.1.1",
