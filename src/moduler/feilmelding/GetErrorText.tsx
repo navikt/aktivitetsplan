@@ -1,4 +1,4 @@
-import { HENTING_FEILET as AKTIVITET_HENT_FEILET } from '../aktivitet/aktivitet-action-types';
+import { HENTING_FEILET as AKTIVITET_HENT_FEILET, NIVAA_4_FEILET } from '../aktivitet/aktivitet-action-types';
 import { HENTING_FEILET as DIALOG_HENT_FEIL } from '../dialog/dialog-reducer';
 import { HENTING_FEILET as ARENA_HENT_FEILET } from '../aktivitet/arena-aktiviteter-reducer';
 import { FeilmeldingType } from './FeilmeldingTypes';
@@ -9,6 +9,7 @@ export const tekster = {
     dialogFeilet: 'Noe gikk galt, og du får dessverre ikke sett dialogmeldinger. Prøv igjen senere.',
     unauthorized: 'Du er blitt logget ut. Ta vare på alt ulagret arbeid før du logger inn ved å laste siden på nytt.',
     forbidden: 'Noe gikk dessverre galt med aktivitetsplanen. Du har ikke tilgang til å se dette',
+    nivaa4: 'Vi vet ikke om brukeren kan åpne aktivitetesplanen. Forhåndsorientering kan derfor ikke sendes.',
 };
 
 export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
@@ -32,6 +33,10 @@ export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
 
     if (feil.type === DIALOG_HENT_FEIL) {
         return tekster.dialogFeilet;
+    }
+
+    if (feil.type === NIVAA_4_FEILET) {
+        return tekster.nivaa4;
     }
 
     return tekster.fallback;

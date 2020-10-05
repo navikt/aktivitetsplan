@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PT from 'prop-types';
 import * as AppPT from '../../../proptypes';
-import { STATUS_FULLFOERT, STATUS_AVBRUTT } from '../../../constant';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
 import { DirtyContext } from '../../context/dirty-context';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
@@ -10,6 +10,7 @@ import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 import { useHistory } from 'react-router-dom';
+import { selectNivaa4Feilmeldinger } from '../../tilgang/tilgang-selector';
 
 const statusMap = {
     PLANLAGT: 'Planlegger',
@@ -56,8 +57,9 @@ function AktivitetvisningModal(props) {
     const history = useHistory();
     const selector = aktivitet?.arenaAktivitet ? selectArenaFeilmeldinger : selectAktivitetFeilmeldinger;
     const aktivitetFeil = useSelector(selector, shallowEqual);
+    const nivaa4Feil = useSelector(selectNivaa4Feilmeldinger, shallowEqual);
     const dialogFeil = useSelector(selectDialogFeilmeldinger, shallowEqual);
-    const alleFeil = aktivitetFeil.concat(dialogFeil);
+    const alleFeil = aktivitetFeil.concat(dialogFeil).concat(nivaa4Feil);
 
     return (
         <Modal

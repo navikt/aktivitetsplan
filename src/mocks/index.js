@@ -29,6 +29,7 @@ import {
     arenaFeilet,
     dialogFeilet,
     maalFeilet,
+    nivaa4Feilet,
     oppdateringKunFeiler,
     oppfFeilet,
 } from './demo/sessionstorage';
@@ -146,9 +147,7 @@ mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetRespon
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }, res, ctx) => res(ctx.json(getPerson(pathParams.fnr))));
-mock.get('/veilarbperson/api/person/:fnr/harNivaa4', ({ pathParams }, res, ctx) =>
-    res(ctx.json(getNivaa4(pathParams.fnr)))
-);
+mock.get('/veilarbperson/api/person/:fnr/harNivaa4', failOrGetResponse(nivaa4Feilet, getNivaa4));
 
 //veilarbmalverk-api
 mock.post('/veilarbmalverk/api/mal', ({ body }, res, ctx) => res(ctx.json(hentMalverkMedType(body))));
