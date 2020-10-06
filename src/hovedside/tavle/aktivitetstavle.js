@@ -12,19 +12,21 @@ import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selecto
 import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
 import { doLesAktivitetsplan } from '../../moduler/oppfolging-status/oppfolging-api';
 import {
-    STATUS_PLANLAGT,
-    STATUS_GJENNOMFOERT,
+    STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT
+    STATUS_GJENNOMFOERT,
+    STATUS_PLANLAGT,
 } from '../../constant';
 import KolonneFunction from './kolonne/kolonnefunction';
 import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
+import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
+import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 function lagAktivitetsListe(aktiviteter) {
-    return aktiviteter.map(aktivitet => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />);
+    return aktiviteter.map((aktivitet) => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />);
 }
 
 function renderFullFortAvbryt(aktiviteter) {
@@ -39,10 +41,11 @@ function renderFullFortAvbryt(aktiviteter) {
 
 class AktivitetsTavle extends Component {
     componentDidMount() {
-        const { reducersNotStarted, erVeileder, doHentAktiviteter, doHentArenaAktiviteter } = this.props;
+        const { reducersNotStarted, erVeileder, doHentAktiviteter, doHentArenaAktiviteter, doHentNivaa4 } = this.props;
         if (reducersNotStarted) {
             if (erVeileder) {
                 doLesAktivitetsplan();
+                doHentNivaa4();
             }
             doHentAktiviteter();
             doHentArenaAktiviteter();
@@ -59,11 +62,11 @@ class AktivitetsTavle extends Component {
                     <KolonneFunction status={STATUS_GJENNOMFOERT} render={lagAktivitetsListe} />
                     <KolonneFunction
                         status={STATUS_FULLFOERT}
-                        render={aktiviteter => renderFullFortAvbryt(aktiviteter)}
+                        render={(aktiviteter) => renderFullFortAvbryt(aktiviteter)}
                     />
                     <KolonneFunction
                         status={STATUS_AVBRUTT}
-                        render={aktiviteter => renderFullFortAvbryt(aktiviteter)}
+                        render={(aktiviteter) => renderFullFortAvbryt(aktiviteter)}
                     />
                 </Tavle>
             </Innholdslaster>
@@ -74,12 +77,13 @@ class AktivitetsTavle extends Component {
 AktivitetsTavle.propTypes = {
     doHentAktiviteter: PT.func.isRequired,
     doHentArenaAktiviteter: PT.func.isRequired,
+    doHentNivaa4: PT.func.isRequired,
     erVeileder: PT.bool.isRequired,
     avhengigheter: AppPT.avhengigheter.isRequired,
-    reducersNotStarted: PT.bool.isRequired
+    reducersNotStarted: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const statusAktiviteter = selectAktivitetStatus(state);
     const statusArenaAktiviteter = selectArenaAktivitetStatus(state);
 
@@ -91,16 +95,14 @@ const mapStateToProps = state => {
     return {
         erVeileder: selectErVeileder(state),
         avhengigheter,
-        reducersNotStarted
+        reducersNotStarted,
     };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     doHentAktiviteter: () => hentAktiviteter()(dispatch),
-    doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch)
+    doHentArenaAktiviteter: () => hentArenaAktiviteter()(dispatch),
+    doHentNivaa4: () => dispatch(hentNivaa4(getFodselsnummer())),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AktivitetsTavle);
+export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsTavle);

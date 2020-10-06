@@ -31,7 +31,7 @@ class FnrProvider extends Component {
 
 FnrProvider.propTypes = {
     children: PT.node.isRequired,
-    dispatch: PT.func.isRequired
+    dispatch: PT.func.isRequired,
 };
 
 export default connect()(FnrProvider);
