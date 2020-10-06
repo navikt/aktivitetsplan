@@ -110,9 +110,9 @@ function AvtaltForm(props: Props) {
     const avhengigheter = useSelector(selectNivaa4Status);
 
     const AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder = () => (
-        <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder}>
-            Du kan ikke sende forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med BankID
-            (nivå 4).
+        <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder || avhengigheter === 'ERROR'}>
+            Du kan ikke sende forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4
+            (for eksempel BankID).
         </HiddenIfAlertStripeInfoSolid>
     );
 
@@ -131,7 +131,7 @@ function AvtaltForm(props: Props) {
                     </div>
                 </Hjelpetekst>
             </div>
-            <Innholdslaster avhengigheter={avhengigheter}>
+            <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                 <VisibleIfDiv
                     className={classNames({
                         'avtalt-container__innhold': kanSendeForhandsvarsel,

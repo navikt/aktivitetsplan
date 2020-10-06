@@ -9,7 +9,7 @@ export const tekster = {
     dialogFeilet: 'Noe gikk galt, og du får dessverre ikke sett dialogmeldinger. Prøv igjen senere.',
     unauthorized: 'Du er blitt logget ut. Ta vare på alt ulagret arbeid før du logger inn ved å laste siden på nytt.',
     forbidden: 'Noe gikk dessverre galt med aktivitetsplanen. Du har ikke tilgang til å se dette',
-    nivaa4: 'Vi vet ikke om brukeren kan åpne aktivitetesplanen. Forhåndsorientering kan derfor ikke sendes.',
+    nivaa4: 'Noe gikk galt, og du får dessverre ikke sende forhåndsorientering. Prøv igjen senere.',
 };
 
 export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
