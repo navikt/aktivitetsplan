@@ -11,9 +11,9 @@ import {
     erManuellBruker,
     erPrivatBruker,
     fetureStatus,
+    ikkeLoggetInnNivaa4,
     ingenMal,
     ingenOppfPerioder,
-    loggetInnNivaa4,
     maalFeilet,
     nivaa4Feilet,
     oppdateringKunFeiler,
@@ -106,9 +106,9 @@ class DemoDashboard extends React.Component {
                             checked: erKRRBruker(),
                         },
                         {
-                            label: 'Innlogget nivå 4',
+                            label: 'Ikke innlogget med nivå 4',
                             id: SessionStorageElement.INNLOGGET_NIVAA4,
-                            checked: loggetInnNivaa4(),
+                            checked: ikkeLoggetInnNivaa4(),
                         },
                         {
                             label: 'Ingen oppfølgingsperioder',

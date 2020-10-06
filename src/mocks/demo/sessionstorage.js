@@ -45,7 +45,7 @@ export const erKRRBruker = () => erSatt(SessionStorageElement.KRR_BRUKER);
 
 export const erEskalertBruker = () => erSatt(SessionStorageElement.ESKALERT_BRUKER);
 
-export const loggetInnNivaa4 = () => !erSkrudAv(SessionStorageElement.INNLOGGET_NIVAA4);
+export const ikkeLoggetInnNivaa4 = () => erSatt(SessionStorageElement.INNLOGGET_NIVAA4);
 
 export const ingenOppfPerioder = () => erSatt(SessionStorageElement.INGEN_OPPF_PERIODER);
 
