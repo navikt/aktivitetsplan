@@ -1,47 +1,63 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import PT from 'prop-types';
 import classNames from 'classnames';
-import { DropTarget } from 'react-dnd';
-import { withRouter } from 'react-router-dom';
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
-import * as AppPT from '../../../proptypes';
+import { useDrop } from 'react-dnd';
+import { useHistory } from 'react-router-dom';
+import {
+    GRUPPE_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+    TILTAK_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+} from '../../../constant';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
+import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 
-const mottaAktivitetsKort = {
-    canDrop(props, monitor) {
-        return props.status !== monitor.getItem().status;
-    },
+function sjekkErFlyttbar(aktivitet, erBruker) {
+    const { type, status, nesteStatus, historisk } = aktivitet;
+    const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
+    const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
+    const brukerKanOppdater = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
+    return !nesteStatus && !historisk && !erFerdig && !erArenaAktivitet && !brukerKanOppdater;
+}
 
-    drop({ doFlyttAktivitet, status, history }, monitor) {
-        const aktivitet = monitor.getItem();
-        // utsett håndteringen til droppet er fullført. Unngår f.eks. F17HL3-144
-        setTimeout(() => {
+function DropTargetKolonne({ status, children }) {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const erBruker = useSelector(selectErBruker, shallowEqual);
+
+    const [collectedProps, drop] = useDrop({
+        accept: 'AktivitetsKort',
+        canDrop: (aktivitet) => status !== aktivitet.status && sjekkErFlyttbar(aktivitet, erBruker),
+        drop: (aktivitet) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {
                 history.push(fullforAktivitetRoute(aktivitet.id));
             } else if (status === STATUS_AVBRUTT) {
                 history.push(avbrytAktivitetRoute(aktivitet.id));
             } else {
-                doFlyttAktivitet(aktivitet, status);
+                dispatch(flyttAktivitet(aktivitet, status));
             }
-        });
-    }
-};
+        },
+        collect: (monitor) => ({
+            canDrop: monitor.canDrop(),
+            isOver: monitor.isOver(),
+        }),
+    });
 
-function collect(theConnect, monitor) {
-    return {
-        drag: monitor.isOver(),
-        connectDropTarget: theConnect.dropTarget()
-    };
-}
-
-function DropTargetKolonne({ connectDropTarget, drag, children }) {
-    return connectDropTarget(
-        <div className="aktivitetstavle__kolonne-wrapper">
-            <div className={classNames('aktivitetstavle__kolonne', drag && 'aktivitetstavle__kolonne--drag')}>
+    return (
+        <div ref={drop} className="aktivitetstavle__kolonne-wrapper">
+            <div
+                className={classNames(
+                    'aktivitetstavle__kolonne',
+                    collectedProps.canDrop && collectedProps.isOver && 'aktivitetstavle__kolonne--drag'
+                )}
+            >
                 {children}
             </div>
         </div>
@@ -50,15 +66,7 @@ function DropTargetKolonne({ connectDropTarget, drag, children }) {
 
 DropTargetKolonne.propTypes = {
     status: PT.string.isRequired,
-    doFlyttAktivitet: PT.func.isRequired,
-    history: AppPT.history.isRequired,
-    children: PT.node
+    children: PT.node,
 };
 
-const mapDispatchToProps = dispatch => ({
-    doFlyttAktivitet: (aktivitet, status) => flyttAktivitet(aktivitet, status)(dispatch)
-});
-
-export default withRouter(
-    connect(null, mapDispatchToProps)(DropTarget('AktivitetsKort', mottaAktivitetsKort, collect)(DropTargetKolonne))
-);
+export default DropTargetKolonne;

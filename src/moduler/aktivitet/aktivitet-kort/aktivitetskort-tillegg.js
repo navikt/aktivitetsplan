@@ -7,7 +7,7 @@ import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import * as AppPT from '../../../proptypes';
 import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
 import SokeStatusEtikett from '../etikett/sokeStatusEtikett';
-import DialogIkon from "../visning/underelement-for-aktivitet/dialog/DialogIkon";
+import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
 
 function AktivitetskortTillegg({
     antallHendvendelser,
@@ -15,11 +15,10 @@ function AktivitetskortTillegg({
     aktivitet,
     erAvtalt,
     harEtikett,
-    harDialog
+    harDialog,
 }) {
     return (
-        <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)}
-                     className="aktivitetskort__tillegg">
+        <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)} className="aktivitetskort__tillegg">
             <div>
                 <AvtaltMarkering visible={aktivitet.avtalt} />
                 <SokeStatusEtikett
@@ -39,7 +38,7 @@ function AktivitetskortTillegg({
 }
 
 AktivitetskortTillegg.defaultProps = {
-    etikett: undefined
+    etikett: undefined,
 };
 
 AktivitetskortTillegg.propTypes = {
@@ -49,7 +48,7 @@ AktivitetskortTillegg.propTypes = {
     erAvtalt: PT.bool.isRequired,
     harDialog: PT.bool.isRequired,
     harEtikett: PT.bool.isRequired,
-    etikett: PT.string
+    etikett: PT.string,
 };
 
 const mapStateToProps = (state, props) => {
@@ -58,7 +57,7 @@ const mapStateToProps = (state, props) => {
     const dialog = selectDialogForAktivitetId(state, aktivitetId);
     const henvendelser = dialog ? dialog.henvendelser : [];
     const antallHendvendelser = henvendelser.length;
-    const antallUlesteHenvendelser = henvendelser.filter(h => !h.lest).length;
+    const antallUlesteHenvendelser = henvendelser.filter((h) => !h.lest).length;
     const { etikett } = aktivitet;
     return {
         antallHendvendelser,
@@ -66,13 +65,8 @@ const mapStateToProps = (state, props) => {
         erAvtalt: aktivitet.avtalt,
         harDialog: antallHendvendelser > 0,
         harEtikett: !!etikett,
-        aktivitet
+        aktivitet,
     };
 };
 
-export default visibleIfHOC(
-    connect(
-        mapStateToProps,
-        null
-    )(AktivitetskortTillegg)
-);
+export default visibleIfHOC(connect(mapStateToProps, null)(AktivitetskortTillegg));

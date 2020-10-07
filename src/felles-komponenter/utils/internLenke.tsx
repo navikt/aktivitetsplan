@@ -5,7 +5,7 @@ import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 const cls = (className?: string, brukLenkestyling?: boolean) =>
     classNames(className, {
-        lenke: brukLenkestyling
+        lenke: brukLenkestyling,
     });
 
 interface InternLenkeProps {
@@ -19,7 +19,7 @@ interface InternLenkeProps {
     hidden?: boolean;
 }
 
-export default function InternLenke(props: InternLenkeProps) {
+const InternLenke = React.forwardRef<HTMLAnchorElement, InternLenkeProps>((props, ref) => {
     const { id, href, className, skipLenkeStyling, children, onClick, role, hidden } = props;
     const fodselsnummer = getFodselsnummer();
     const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
@@ -29,8 +29,17 @@ export default function InternLenke(props: InternLenkeProps) {
     }
 
     return (
-        <Link id={id} to={internHref} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
+        <Link
+            ref={ref}
+            id={id}
+            to={internHref}
+            className={cls(className, !skipLenkeStyling)}
+            onClick={onClick}
+            role={role}
+        >
             {children}
         </Link>
     );
-}
+});
+
+export default InternLenke;
