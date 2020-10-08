@@ -18,8 +18,9 @@ import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/loggi
 import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { Aktivitet, AktivitetStatus } from '../../../types';
+import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
 
-function sjekkErFlyttbar(aktivitet: Aktivitet, erBruker: boolean) {
+function sjekkErDroppbar(aktivitet: Aktivitet, erBruker: boolean) {
     const { type, status, nesteStatus, historisk } = aktivitet;
     const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
     const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
@@ -43,10 +44,12 @@ function DropTargetKolonne({ status, children }: Props) {
     const dispatch = useDispatch();
     const history = useHistory();
     const erBruker = useSelector(selectErBruker, shallowEqual);
+    const erUnderOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
 
     const [collectedProps, drop] = useDrop({
         accept: DROP_TYPE,
-        canDrop: ({ aktivitet }: DragItem) => status !== aktivitet.status && sjekkErFlyttbar(aktivitet, erBruker),
+        canDrop: ({ aktivitet }: DragItem) =>
+            status !== aktivitet.status && sjekkErDroppbar(aktivitet, erBruker) && erUnderOppfolging,
         drop: ({ aktivitet }: DragItem) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {
