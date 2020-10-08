@@ -9,12 +9,12 @@ import Arbeidsgiver from './Stilling';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import SokeAvtaleAntall from './SokeAvtaleAntall';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
-import InternLenke from '../../../felles-komponenter/utils/InternLenke';
 import { Aktivitet } from '../../../types';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { STATUS } from '../../../ducks/utils';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
+import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -43,12 +43,11 @@ function Aktivitetskort(props: Props) {
     const ariaLabel = `aktivitetskort__header__${id} aktivitetskort__dato__${id}`;
 
     return (
-        <InternLenke
+        <LinkAsDiv
             id={`aktivitetskort-${aktivitet.id}`}
-            href={aktivitetRoute(id)}
             className={classNames('aktivitetskort', className)}
+            to={aktivitetRoute(id)}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}
-            skipLenkeStyling
         >
             <article aria-labelledby={ariaLabel}>
                 <AktivitetType type={type} />
@@ -58,7 +57,7 @@ function Aktivitetskort(props: Props) {
                 <SokeAvtaleAntall aktivitet={aktivitet} />
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </article>
-        </InternLenke>
+        </LinkAsDiv>
     );
 }
 

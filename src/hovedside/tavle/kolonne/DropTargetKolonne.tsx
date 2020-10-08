@@ -1,13 +1,23 @@
 import React, { ReactNode } from 'react';
-import { useDispatch } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useDrop } from 'react-dnd';
 import { useHistory } from 'react-router-dom';
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
+import {
+    GRUPPE_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+    TILTAK_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+} from '../../../constant';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
 import { Aktivitet, AktivitetStatus } from '../../../types';
+import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
 
 interface Props {
     status: AktivitetStatus;
@@ -25,9 +35,13 @@ function DropTargetKolonne({ status, children }: Props) {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const erBruker = useSelector(selectErBruker, shallowEqual);
+    const erUnderOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
+
     const [collectedProps, drop] = useDrop({
         accept: DROP_TYPE,
-        canDrop: ({ aktivitet }: DragItem) => status !== aktivitet.status,
+        canDrop: ({ aktivitet }: DragItem) =>
+            status !== aktivitet.status && sjekkErDroppbar(aktivitet, erBruker) && erUnderOppfolging,
         drop: ({ aktivitet }: DragItem) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {
@@ -56,6 +70,14 @@ function DropTargetKolonne({ status, children }: Props) {
             </div>
         </div>
     );
+}
+
+function sjekkErDroppbar(aktivitet: Aktivitet, erBruker: boolean) {
+    const { type, status, nesteStatus, historisk } = aktivitet;
+    const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
+    const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
+    const brukerKanOppdater = [SAMTALEREFERAT_TYPE, MOTE_TYPE].includes(type) && erBruker;
+    return !nesteStatus && !historisk && !erFerdig && !erArenaAktivitet && !brukerKanOppdater;
 }
 
 export default DropTargetKolonne;
