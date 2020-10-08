@@ -2,27 +2,29 @@ import React from 'react';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { CheckboksPanelGruppe, RadioPanelGruppe } from 'nav-frontend-skjema';
 import {
-    SessionStorageElement,
-    settSessionStorage,
-    erEksternBruker,
-    erPrivatBruker,
-    ingenOppfPerioder,
-    visAutomatiskeAktiviteter,
-    visArenaAktiviteter,
-    visTestAktiviteter,
-    setFeatureTogle,
-    fetureStatus,
-    erManuellBruker,
-    erKRRBruker,
-    erEskalertBruker,
-    oppfFeilet,
-    ingenMal,
-    ulesteDialoger,
-    dialogFeilet,
     aktivitetFeilet,
     arenaFeilet,
+    dialogFeilet,
+    erEksternBruker,
+    erEskalertBruker,
+    erKRRBruker,
+    erManuellBruker,
+    erPrivatBruker,
+    fetureStatus,
+    ikkeLoggetInnNivaa4,
+    ingenMal,
+    ingenOppfPerioder,
     maalFeilet,
+    nivaa4Feilet,
     oppdateringKunFeiler,
+    oppfFeilet,
+    SessionStorageElement,
+    setFeatureTogle,
+    settSessionStorage,
+    ulesteDialoger,
+    visArenaAktiviteter,
+    visAutomatiskeAktiviteter,
+    visTestAktiviteter,
 } from './sessionstorage';
 import './demoDashboard.less';
 import Hurtigfilter from './hurtigfilter';
@@ -102,6 +104,11 @@ class DemoDashboard extends React.Component {
                             label: 'KRR',
                             id: SessionStorageElement.KRR_BRUKER,
                             checked: erKRRBruker(),
+                        },
+                        {
+                            label: 'Ikke innlogget med nivå 4',
+                            id: SessionStorageElement.INNLOGGET_NIVAA4,
+                            checked: ikkeLoggetInnNivaa4(),
                         },
                         {
                             label: 'Ingen oppfølgingsperioder',
@@ -197,6 +204,11 @@ class DemoDashboard extends React.Component {
                             label: 'Kun oppdatering feiler',
                             id: SessionStorageElement.OPPDATERING_KUN_FEILER,
                             checked: oppdateringKunFeiler(),
+                        },
+                        {
+                            label: 'Nivå 4 feiler',
+                            id: SessionStorageElement.NIVAA4_FEILET,
+                            checked: nivaa4Feilet(),
                         },
                     ]}
                     onChange={this.endreTilstand}

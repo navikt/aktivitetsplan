@@ -20,7 +20,12 @@
     }
 
     &__alertstripe {
-        .knapp {
+        .alertstripe--info {
+            margin-bottom: 1rem;
+        }
+
+        // Så det ikke blir for mye margin mellom to feilmeldinger
+        .alertstripe--info:first-child {
             margin-top: 1rem;
         }
     }
