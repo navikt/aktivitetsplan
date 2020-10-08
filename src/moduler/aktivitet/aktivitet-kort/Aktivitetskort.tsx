@@ -9,7 +9,7 @@ import Arbeidsgiver from './Stilling';
 import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
 import SokeAvtaleAntall from './SokeAvtaleAntall';
 import AktivitetskortTillegg from './aktivitetskort-tillegg';
-import InternLenke from '../../../felles-komponenter/utils/internLenke';
+import InternLenke from '../../../felles-komponenter/utils/InternLenke';
 import { Aktivitet } from '../../../types';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { selectIdentitetData } from '../../identitet/identitet-selector';

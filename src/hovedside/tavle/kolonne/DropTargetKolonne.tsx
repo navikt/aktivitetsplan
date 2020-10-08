@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import PT from 'prop-types';
 import classNames from 'classnames';
@@ -17,8 +17,9 @@ import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import { Aktivitet, AktivitetStatus } from '../../../types';
 
-function sjekkErFlyttbar(aktivitet, erBruker) {
+function sjekkErFlyttbar(aktivitet: Aktivitet, erBruker: boolean) {
     const { type, status, nesteStatus, historisk } = aktivitet;
     const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
     const erFerdig = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
@@ -26,15 +27,27 @@ function sjekkErFlyttbar(aktivitet, erBruker) {
     return !nesteStatus && !historisk && !erFerdig && !erArenaAktivitet && !brukerKanOppdater;
 }
 
-function DropTargetKolonne({ status, children }) {
+interface Props {
+    status: AktivitetStatus;
+    children: ReactNode;
+}
+
+interface DragItem {
+    aktivitet: Aktivitet;
+    type: string;
+}
+
+export const DROP_TYPE = 'AktivitetsKort';
+
+function DropTargetKolonne({ status, children }: Props) {
     const dispatch = useDispatch();
     const history = useHistory();
     const erBruker = useSelector(selectErBruker, shallowEqual);
 
     const [collectedProps, drop] = useDrop({
-        accept: 'AktivitetsKort',
-        canDrop: (aktivitet) => status !== aktivitet.status && sjekkErFlyttbar(aktivitet, erBruker),
-        drop: (aktivitet) => {
+        accept: DROP_TYPE,
+        canDrop: ({ aktivitet }: DragItem) => status !== aktivitet.status && sjekkErFlyttbar(aktivitet, erBruker),
+        drop: ({ aktivitet }: DragItem) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {
                 history.push(fullforAktivitetRoute(aktivitet.id));

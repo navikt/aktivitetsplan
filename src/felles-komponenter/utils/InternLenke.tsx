@@ -19,7 +19,7 @@ interface InternLenkeProps {
     hidden?: boolean;
 }
 
-const InternLenke = React.forwardRef<HTMLAnchorElement, InternLenkeProps>((props, ref) => {
+function InternLenke(props: InternLenkeProps) {
     const { id, href, className, skipLenkeStyling, children, onClick, role, hidden } = props;
     const fodselsnummer = getFodselsnummer();
     const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
@@ -29,17 +29,10 @@ const InternLenke = React.forwardRef<HTMLAnchorElement, InternLenkeProps>((props
     }
 
     return (
-        <Link
-            ref={ref}
-            id={id}
-            to={internHref}
-            className={cls(className, !skipLenkeStyling)}
-            onClick={onClick}
-            role={role}
-        >
+        <Link id={id} to={internHref} className={cls(className, !skipLenkeStyling)} onClick={onClick} role={role}>
             {children}
         </Link>
     );
-});
+}
 
 export default InternLenke;

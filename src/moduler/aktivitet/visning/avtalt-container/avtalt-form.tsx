@@ -11,7 +11,7 @@ import { DirtyContext } from '../../../context/dirty-context';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
-import InternLenke from '../../../../felles-komponenter/utils/internLenke';
+import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';

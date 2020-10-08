@@ -11,7 +11,7 @@ import {
     IJOBB_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import InternLenke from '../../../../felles-komponenter/utils/internLenke';
+import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import DeleLinje from '../delelinje/delelinje';
