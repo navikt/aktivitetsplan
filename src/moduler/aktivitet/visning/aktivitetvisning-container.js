@@ -14,6 +14,7 @@ import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { DirtyProvider } from '../../context/dirty-context';
 import AktivitetvisningModal from './aktivitetvisning-modal';
+import { genererAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
@@ -29,7 +30,7 @@ class AktivitetvisningContainer extends Component {
 
     componentWillUnmount() {
         const { valgtAktivitet } = this.props;
-        const aktivitetskort = valgtAktivitet && document.querySelector(`#aktivitetskort-${valgtAktivitet.id}`);
+        const aktivitetskort = valgtAktivitet && document.querySelector(`#${genererAktivtetskortId(valgtAktivitet)}`);
         if (aktivitetskort) {
             aktivitetskort.focus();
         }

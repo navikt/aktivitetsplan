@@ -1,8 +1,12 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
-import * as AppPT from '../../../proptypes';
+import { Aktivitet } from '../../../types';
 
-export default function Arbeidsgiver({ aktivitet }) {
+interface Props {
+    aktivitet: Aktivitet;
+}
+
+export default function Arbeidsgiver({ aktivitet }: Props) {
     const { arbeidsgiver } = aktivitet;
 
     if (!arbeidsgiver) {
@@ -11,7 +15,3 @@ export default function Arbeidsgiver({ aktivitet }) {
 
     return <Normaltekst>{arbeidsgiver}</Normaltekst>;
 }
-
-Arbeidsgiver.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
-};

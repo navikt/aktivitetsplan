@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Aktivitetskort from './Aktivitetskort';
 import { Aktivitet } from '../../../types';
 import { DROP_TYPE } from '../../../hovedside/tavle/kolonne/DropTargetKolonne';
+import styles from './Aktivitetskort.module.less';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -20,7 +21,7 @@ function DragbartAktivitetskort(props: Props) {
         }),
     });
 
-    const className = classNames(collectedProps.isDragging && 'aktivitetskort--drag', 'aktivitetskort--flyttbar');
+    const className = classNames(collectedProps.isDragging && styles.drag, styles.flyttbar);
 
     return (
         <div ref={drag}>

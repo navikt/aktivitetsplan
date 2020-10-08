@@ -8,6 +8,7 @@ import * as AppPT from '../../../proptypes';
 import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
 import SokeStatusEtikett from '../etikett/sokeStatusEtikett';
 import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
+import styles from './Aktivitetskort.module.less';
 
 function AktivitetskortTillegg({
     antallHendvendelser,
@@ -18,18 +19,14 @@ function AktivitetskortTillegg({
     harDialog,
 }) {
     return (
-        <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)} className="aktivitetskort__tillegg">
+        <HiddenIfDiv hidden={!(erAvtalt || harEtikett || harDialog)} className={styles.tillegg}>
             <div>
                 <AvtaltMarkering visible={aktivitet.avtalt} />
-                <SokeStatusEtikett
-                    hidden={!aktivitet.etikett}
-                    etikett={aktivitet.etikett}
-                    className="aktivitetskort__etikett"
-                />
+                <SokeStatusEtikett hidden={!aktivitet.etikett} etikett={aktivitet.etikett} className={styles.etikett} />
             </div>
 
-            <HiddenIfDiv hidden={!harDialog} className="aktivitetskort__ikon-blokk">
-                <HiddenIfDiv hidden={antallHendvendelser <= 0} className="aktivitetskort--dialogikon">
+            <HiddenIfDiv hidden={!harDialog} className={styles.ikon}>
+                <HiddenIfDiv hidden={antallHendvendelser <= 0}>
                     <DialogIkon antallUleste={antallUlesteHenvendelser} />
                 </HiddenIfDiv>
             </HiddenIfDiv>

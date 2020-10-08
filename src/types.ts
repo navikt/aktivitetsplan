@@ -41,6 +41,7 @@ export interface Aktivitet {
     erReferatPublisert?: boolean;
     nesteStatus?: AktivitetStatus;
     referat?: string;
+    arbeidsgiver: StringOrNull;
 }
 
 export interface OppfolgingsPeriode {
