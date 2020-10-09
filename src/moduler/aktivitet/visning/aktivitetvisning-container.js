@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { hentAktivitet } from '../aktivitet-actions';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
-import Aktivitetvisning from './aktivitetvisning';
+import Aktivitetvisning from './Aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetliste-selector';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
