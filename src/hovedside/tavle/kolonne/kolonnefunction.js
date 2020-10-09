@@ -1,12 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import PT from 'prop-types';
 import KolonneHeader from './kolonneheader';
 import DropTargetKolonne from './DropTargetKolonne';
 import { sorterAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
 
-function KolonneFunction({ status, aktiviteter, render }) {
+function KolonneFunction({ status, render }) {
+    const aktiviteter = useSelector(selectAktivitetListe, shallowEqual);
     const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
     return (
         <DropTargetKolonne status={status}>
@@ -18,12 +19,7 @@ function KolonneFunction({ status, aktiviteter, render }) {
 
 KolonneFunction.propTypes = {
     status: PT.string.isRequired,
-    aktiviteter: PT.arrayOf(PT.object).isRequired,
     render: PT.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    aktiviteter: selectAktivitetListe(state),
-});
-
-export default connect(mapStateToProps)(KolonneFunction);
+export default KolonneFunction;

@@ -44,3 +44,11 @@ export function startDragging(aktivitet: Aktivitet) {
 export function stopDragging() {
     return { type: STOP };
 }
+
+function selectDragAndDropSlice(state: any): State {
+    return state.view.dragAndDrop;
+}
+
+export function selectDraggingAktivitet(state: any) {
+    return selectDragAndDropSlice(state).aktivitet;
+}
