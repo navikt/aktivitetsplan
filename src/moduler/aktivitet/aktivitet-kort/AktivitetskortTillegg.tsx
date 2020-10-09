@@ -26,7 +26,11 @@ function AktivitetskortTillegg({ aktivitet }: Props) {
             </div>
 
             <HiddenIfDiv hidden={!dialog && henvendelser.length <= 0} className={styles.ikon}>
-                <DialogIkon antallUleste={ulesteHenvendelser} />
+                <DialogIkon
+                    antallUleste={ulesteHenvendelser}
+                    classNameMedUleste={styles.dialogIkonMedUleste}
+                    classNameUtenUleste={styles.dialogIkonUtenUleste}
+                />
             </HiddenIfDiv>
         </HiddenIfDiv>
     );
