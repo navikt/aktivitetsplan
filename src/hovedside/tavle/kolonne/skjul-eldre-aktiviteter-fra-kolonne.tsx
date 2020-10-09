@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import PT from 'prop-types';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
 import loggEvent from '../../../felles-komponenter/utils/logging';
-import AktivitetsKort from '../../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
+import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import InvertedLestMer from './InvertedLesmer';
 import { Aktivitet } from '../../../types';
 
@@ -15,7 +15,9 @@ interface AktivitetListeProps {
 }
 
 function AktivitetsListe(props: AktivitetListeProps) {
-    const liste = props.aktiviteter.map((aktivitet) => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />);
+    const liste = props.aktiviteter.map((aktivitet) => (
+        <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />
+    ));
     return <> {liste} </>;
 }
 

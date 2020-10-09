@@ -1,6 +1,6 @@
 import React from 'react';
 import { VenstreChevron } from 'nav-frontend-chevron';
-import InternLenke from '../utils/internLenke';
+import InternLenke from '../utils/InternLenke';
 
 interface TilbakeknappType {
     tekst: string;

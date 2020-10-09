@@ -19,14 +19,14 @@ import {
     STATUS_PLANLAGT,
 } from '../../constant';
 import KolonneFunction from './kolonne/kolonnefunction';
-import AktivitetsKort from '../../moduler/aktivitet/aktivitet-kort/aktivitetskort';
+import DragbartAktivitetskort from '../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
 import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 function lagAktivitetsListe(aktiviteter) {
-    return aktiviteter.map((aktivitet) => <AktivitetsKort key={aktivitet.id} aktivitet={aktivitet} />);
+    return aktiviteter.map((aktivitet) => <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />);
 }
 
 function renderFullFortAvbryt(aktiviteter) {
