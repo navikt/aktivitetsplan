@@ -1,28 +1,29 @@
 import React from 'react';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../constant';
-import * as AppPT from '../../../proptypes';
+import { Aktivitet } from '../../../types';
 
-export default function SokeAvtaleAntall({ aktivitet }) {
+interface Props {
+    aktivitet: Aktivitet;
+}
+
+export default function SokeAvtaleAntall({ aktivitet }: Props) {
     const { antallStillingerSokes, antallStillingerIUken, type } = aktivitet;
+
     if (type !== SOKEAVTALE_AKTIVITET_TYPE) {
         return null;
     }
 
     return (
         <div>
-            <VisibleIfDiv visible={antallStillingerSokes > 0}>
+            <VisibleIfDiv visible={antallStillingerSokes && antallStillingerSokes > 0}>
                 Antall søknader i perioden &nbsp;
                 {antallStillingerSokes}
             </VisibleIfDiv>
-            <VisibleIfDiv visible={antallStillingerIUken > 0}>
+            <VisibleIfDiv visible={antallStillingerIUken && antallStillingerIUken > 0}>
                 Antall søknader i uken &nbsp;
                 {antallStillingerIUken}
             </VisibleIfDiv>
         </div>
     );
 }
-
-SokeAvtaleAntall.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
-};

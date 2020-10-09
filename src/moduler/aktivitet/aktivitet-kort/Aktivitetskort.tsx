@@ -8,7 +8,7 @@ import Aktivitetskorttittel from './AktivitetskortTittel';
 import Arbeidsgiver from './Arbeidsgiver';
 import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
 import SokeAvtaleAntall from './SokeAvtaleAntall';
-import AktivitetskortTillegg from './aktivitetskort-tillegg';
+import AktivitetskortTillegg from './AktivitetskortTillegg';
 import { Aktivitet } from '../../../types';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { selectIdentitetData } from '../../identitet/identitet-selector';

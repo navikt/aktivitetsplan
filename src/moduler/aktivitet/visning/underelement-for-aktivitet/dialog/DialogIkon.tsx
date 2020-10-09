@@ -12,6 +12,10 @@ function DialogIkonUtenUleste() {
     );
 }
 
+interface Props {
+    antallUleste: number;
+}
+
 function DialogIkonMedUleste(props: Props) {
     const antall = props.antallUleste;
     const xPos = antall > 9 ? 23 : 26.8;
@@ -37,10 +41,6 @@ function DialogIkonMedUleste(props: Props) {
             <div className="sr-only">Aktiviteten har en dialog</div>
         </div>
     );
-}
-
-interface Props {
-    antallUleste: number;
 }
 
 function DialogIkon(props: Props) {
