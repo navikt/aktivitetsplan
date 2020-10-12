@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import Aktivitetskort from './Aktivitetskort';
 import { Aktivitet } from '../../../types';
 import { DROP_TYPE } from '../../../hovedside/tavle/kolonne/DropTargetKolonne';
-import styles from './Aktivitetskort.module.less';
 import { startDragging, stopDragging } from './dragAndDropReducer';
+import styles from './Aktivitetskort.module.less';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -19,7 +19,8 @@ function DragbartAktivitetskort(props: Props) {
     const [collectedProps, drag] = useDrag({
         item: { aktivitet, type: DROP_TYPE },
         begin: () => {
-            dispatch(startDragging(aktivitet));
+            // Trenger dette fordi uten så går det ikke å dra noe bak advarsel-popup
+            setTimeout(() => dispatch(startDragging(aktivitet)));
             return { aktivitet, type: DROP_TYPE };
         },
         end: () => dispatch(stopDragging()),

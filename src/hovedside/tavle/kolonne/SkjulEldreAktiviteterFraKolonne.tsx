@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import PT from 'prop-types';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
@@ -9,17 +8,6 @@ import { Aktivitet } from '../../../types';
 
 const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
 const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';
-
-interface AktivitetListeProps {
-    aktiviteter: Aktivitet[];
-}
-
-function AktivitetsListe(props: AktivitetListeProps) {
-    const liste = props.aktiviteter.map((aktivitet) => (
-        <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />
-    ));
-    return <> {liste} </>;
-}
 
 interface Props {
     aktiviteteterTilDatoMerEnnToManederSiden: Aktivitet[];
@@ -30,6 +18,8 @@ function SkjulEldreAktiviteter(props: Props) {
     const aktiviteter = props.aktiviteteterTilDatoMerEnnToManederSiden;
     const hiden = aktiviteter.length === 0;
 
+    const liste = aktiviteter.map((aktivitet) => <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />);
+
     return (
         <InvertedLestMer
             hidden={hiden}
@@ -38,13 +28,9 @@ function SkjulEldreAktiviteter(props: Props) {
             apneTekst="Vis kort eldre enn 1 måned"
             lukkTekst="Skjul kort eldre enn 1 måned"
         >
-            <AktivitetsListe aktiviteter={aktiviteter} />
+            {liste}
         </InvertedLestMer>
     );
 }
-
-SkjulEldreAktiviteter.propTypes = {
-    aktiviteteterTilDatoMerEnnToManederSiden: PT.arrayOf(PT.object).isRequired,
-};
 
 export default SkjulEldreAktiviteter;

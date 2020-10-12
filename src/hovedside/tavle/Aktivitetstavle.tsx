@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames';
 import Tavle from './tavle';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
@@ -16,32 +17,14 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../constant';
-import KolonneFunction from './kolonne/kolonnefunction';
-import DragbartAktivitetskort from '../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
-import SkjulEldreAktiviteter from './kolonne/skjul-eldre-aktiviteter-fra-kolonne';
-import { splitIEldreOgNyereAktiviteter } from '../../moduler/aktivitet/aktivitet-util';
+import Kolonne from './kolonne/Kolonne';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import Tavleadvarsel from './Tavleadvarsel';
-import { Aktivitet } from '../../types';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { erDroppbar } from './tavleUtils';
-import classNames from 'classnames';
-
-function lagAktivitetsListe(aktiviteter: Aktivitet[]) {
-    return aktiviteter.map((aktivitet) => <DragbartAktivitetskort key={aktivitet.id} aktivitet={aktivitet} />);
-}
-
-function renderFullFortAvbryt(aktiviteter: Aktivitet[]) {
-    const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(aktiviteter);
-    return (
-        <div>
-            {lagAktivitetsListe(nyereAktiviteter)}
-            <SkjulEldreAktiviteter aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter} />
-        </div>
-    );
-}
+import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 
 function AktivitetsTavle() {
     const dispatch = useDispatch();
@@ -81,11 +64,11 @@ function AktivitetsTavle() {
                 antallKolonner={3}
                 className={classNames('aktivitetstavle', !skjulAdvarsel && 'aktivitetstavle-advarsel')}
             >
-                <KolonneFunction status={STATUS_BRUKER_ER_INTRESSERT} render={lagAktivitetsListe} />
-                <KolonneFunction status={STATUS_PLANLAGT} render={lagAktivitetsListe} />
-                <KolonneFunction status={STATUS_GJENNOMFOERT} render={lagAktivitetsListe} />
-                <KolonneFunction status={STATUS_FULLFOERT} render={renderFullFortAvbryt} />
-                <KolonneFunction status={STATUS_AVBRUTT} render={renderFullFortAvbryt} />
+                <Kolonne status={STATUS_BRUKER_ER_INTRESSERT} />
+                <Kolonne status={STATUS_PLANLAGT} />
+                <Kolonne status={STATUS_GJENNOMFOERT} />
+                <KolonneSomSkjulerEldreAktiviteter status={STATUS_FULLFOERT} />
+                <KolonneSomSkjulerEldreAktiviteter status={STATUS_AVBRUTT} />
             </Tavle>
         </Innholdslaster>
     );
