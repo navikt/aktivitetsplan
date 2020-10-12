@@ -1,7 +1,6 @@
 import React from 'react';
 import PT from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import * as AppPT from '../../../../proptypes';
 import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
@@ -13,7 +12,7 @@ import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsor
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
-    selectReservasjonKRR
+    selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import DeleLinje from '../delelinje/delelinje';
 
@@ -26,9 +25,13 @@ function Statusadministrasjon(props) {
     const visAdministreresAvVeileder = (
         <>
             <div className="aktivitetvisning__underseksjon">
-                <AlertStripeInfo className="aktivitetvisning__alert">
-                    <FormattedMessage id="aktivitetvisning.administreres-av-veileder" />
+                <AlertStripeInfo>
+                    Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal
+                    endres.
                 </AlertStripeInfo>
+            </div>
+            <DeleLinje />
+            <div className="aktivitetvisning__underseksjon">
                 <ForhandsorienteringArenaAktivitet
                     visible={skalViseForhandsorienteringsKomponent}
                     aktivitet={aktivitet}
@@ -60,12 +63,12 @@ Statusadministrasjon.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     arenaAktivitet: PT.bool.isRequired,
     erBruker: PT.bool.isRequired,
-    erManuellKrrKvpBruker: PT.bool.isRequired
+    erManuellKrrKvpBruker: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     erBruker: selectErBruker(state),
-    erManuellKrrKvpBruker: selectErBrukerManuell(state) || selectErUnderKvp(state) || selectReservasjonKRR(state)
+    erManuellKrrKvpBruker: selectErBrukerManuell(state) || selectErUnderKvp(state) || selectReservasjonKRR(state),
 });
 
 export default connect(mapStateToProps)(Statusadministrasjon);

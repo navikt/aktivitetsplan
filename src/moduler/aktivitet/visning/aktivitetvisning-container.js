@@ -8,7 +8,6 @@ import Aktivitetvisning from './Aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetliste-selector';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
-import { UTDANNING_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
@@ -67,9 +66,7 @@ const mapStateToProps = (state, props) => {
     const aktivitetId = props.match.params.id;
     const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
 
-    const erArenaAktivitet =
-        !!valgtAktivitet &&
-        [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(valgtAktivitet.type);
+    const erArenaAktivitet = aktivitetId.startsWith('ARENA');
     const aktivitetDataStatus = erArenaAktivitet ? selectArenaAktivitetStatus(state) : selectAktivitetStatus(state);
     const laster = aktivitetDataStatus !== STATUS.OK;
 
