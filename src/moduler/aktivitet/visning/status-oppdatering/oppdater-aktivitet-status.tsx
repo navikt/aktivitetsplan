@@ -15,7 +15,7 @@ import { Dispatch } from 'redux';
 const useDisableStatusEndring = (aktivitet: Aktivitet) => {
     const lasterAktivitet = useSelector(selectLasterAktivitetData);
     const underOppfolging = useSelector(selectErUnderOppfolging);
-    const kanEndreAktivitet = useSelector(state => selectKanEndreAktivitetStatus(state, aktivitet));
+    const kanEndreAktivitet = useSelector((state) => selectKanEndreAktivitetStatus(state, aktivitet));
 
     return lasterAktivitet || !underOppfolging || !kanEndreAktivitet;
 };
@@ -39,13 +39,12 @@ function OppdaterAktivitetStatus(props: OppdaterAktivitetStatusProps) {
     const dispatch = useDispatch();
     const disableStatusEndring = useDisableStatusEndring(aktivitet);
 
-    const onSubmit = (val: any) => {
+    const onSubmit = (val: any): Promise<any> =>
         lagreStatusEndringer(dispatch, val, aktivitet).then(() => {
             setEndring(false);
             // @ts-ignore
             document.querySelector('.aktivitet-modal').focus();
         });
-    };
 
     const visning = <StatusVisning status={aktivitet.status} />;
     const form = <AktivitetStatusForm disabled={disableStatusEndring} onSubmit={onSubmit} aktivitet={aktivitet} />;
