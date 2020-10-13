@@ -16,6 +16,7 @@ import lestReducer from './moduler/lest/lest-reducer';
 import tilgangReducer from './moduler/tilgang/tilgang-reducer';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
 import informasjonReducer from './moduler/informasjon/informasjon-reducer';
+import dragAndDropReducer from './moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 
 const combinedReducers = combineReducers({
     data: combineReducers({
@@ -38,6 +39,7 @@ const combinedReducers = combineReducers({
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,
         informasjon: informasjonReducer,
+        dragAndDrop: dragAndDropReducer,
     }),
 });
 

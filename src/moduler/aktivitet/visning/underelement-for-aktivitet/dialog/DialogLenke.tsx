@@ -2,7 +2,7 @@ import { Aktivitet, Dialog } from '../../../../../types';
 import { useSelector } from 'react-redux';
 import { selectErVeileder } from '../../../../identitet/identitet-selector';
 import { selectErBrukerManuell, selectReservasjonKRR } from '../../../../oppfolging-status/oppfolging-selector';
-import styles from './dialogunderelement.module.less';
+import styles from './Dialogunderelement.module.less';
 import DialogLenkeInnhold from './DialogLenkeInnhold';
 import DeleLinje from '../../delelinje/delelinje';
 import React from 'react';
@@ -47,7 +47,7 @@ function DialogLenke(props: Props) {
     const henvendelser = dialog && dialog.henvendelser ? dialog.henvendelser : [];
     const dialogId = dialog && dialog.id;
     const antallHenvendelser = henvendelser.length;
-    const uleste = henvendelser.filter(h => !h.lest).length;
+    const uleste = henvendelser.filter((h) => !h.lest).length;
 
     return (
         <>

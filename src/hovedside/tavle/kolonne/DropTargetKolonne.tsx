@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useDispatch } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useDrop } from 'react-dnd';
 import { useHistory } from 'react-router-dom';
@@ -8,6 +8,9 @@ import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
 import { Aktivitet, AktivitetStatus } from '../../../types';
+import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
+import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
+import { erDroppbar } from '../tavleUtils';
 
 interface Props {
     status: AktivitetStatus;
@@ -25,9 +28,13 @@ function DropTargetKolonne({ status, children }: Props) {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const erBruker = useSelector(selectErBruker, shallowEqual);
+    const erUnderOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
+
     const [collectedProps, drop] = useDrop({
         accept: DROP_TYPE,
-        canDrop: ({ aktivitet }: DragItem) => status !== aktivitet.status,
+        canDrop: ({ aktivitet }: DragItem) =>
+            status !== aktivitet.status && erDroppbar(aktivitet, erBruker, erUnderOppfolging),
         drop: ({ aktivitet }: DragItem) => {
             flyttetAktivitetMetrikk('dragAndDrop', aktivitet, status);
             if (status === STATUS_FULLFOERT) {

@@ -1,6 +1,4 @@
 import React from 'react';
-import PT from 'prop-types';
-import * as AppPT from '../../../proptypes';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import AvtaltContainer from './avtalt-container/avtalt-container';
 import { GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../../constant';
@@ -64,16 +62,5 @@ function Aktivitetvisning(props: Props) {
         </div>
     );
 }
-
-Aktivitetvisning.defaultProps = {
-    aktivitet: {},
-};
-
-Aktivitetvisning.propTypes = {
-    aktivitet: AppPT.aktivitet,
-    tillatEndring: PT.bool.isRequired,
-    laster: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired,
-};
 
 export default Aktivitetvisning;

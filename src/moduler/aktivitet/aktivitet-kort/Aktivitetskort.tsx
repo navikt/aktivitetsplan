@@ -3,22 +3,27 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { aktivitetRoute } from '../../../routes';
 import { selectAktiviteterSomHarBlittVist, settAktivitetSomVist } from '../aktivitetview-reducer';
-import AktivitetType from './AktivitetType';
-import Aktivitetskorttittel from './AktivitetKortTitel';
-import Arbeidsgiver from './Stilling';
-import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
+import Aktivitetstype from './Aktivitetstype';
+import Aktivitetskorttittel from './AktivitetskortTittel';
+import Arbeidsgiver from './Arbeidsgiver';
+import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
 import SokeAvtaleAntall from './SokeAvtaleAntall';
-import AktivitetskortTillegg from './aktivitetskort-tillegg';
-import InternLenke from '../../../felles-komponenter/utils/InternLenke';
+import AktivitetskortTillegg from './AktivitetskortTillegg';
 import { Aktivitet } from '../../../types';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { STATUS } from '../../../ducks/utils';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
+import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
+import styles from './Aktivitetskort.module.less';
 
 interface Props {
     aktivitet: Aktivitet;
     className: string;
+}
+
+export function genererAktivtetskortId(aktivitet: Aktivitet) {
+    return `aktivitetskort-${aktivitet.id}`;
 }
 
 function Aktivitetskort(props: Props) {
@@ -40,25 +45,26 @@ function Aktivitetskort(props: Props) {
     const harEndringerIAktivitet =
         lestStatus === STATUS.OK && erNyEndringIAktivitet(aktivitet, lest, me) && aktivitetHarIkkeBlittVist;
 
-    const ariaLabel = `aktivitetskort__header__${id} aktivitetskort__dato__${id}`;
+    const headerId = `aktivitetskort__header__${id}`;
+    const datoId = `aktivitetskort__dato__${id}`;
+    const ariaLabel = `${headerId} ${datoId}`;
 
     return (
-        <InternLenke
-            id={`aktivitetskort-${aktivitet.id}`}
-            href={aktivitetRoute(id)}
-            className={classNames('aktivitetskort', className)}
+        <LinkAsDiv
+            id={genererAktivtetskortId(aktivitet)}
+            className={classNames(styles.aktivitetskort, className)}
+            to={aktivitetRoute(id)}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}
-            skipLenkeStyling
         >
             <article aria-labelledby={ariaLabel}>
-                <AktivitetType type={type} />
-                <Aktivitetskorttittel aktivitet={aktivitet} harEndringerIAktivitet={harEndringerIAktivitet} />
+                <Aktivitetstype type={type} />
+                <Aktivitetskorttittel id={headerId} aktivitet={aktivitet} harEndring={harEndringerIAktivitet} />
                 <Arbeidsgiver aktivitet={aktivitet} />
-                <AktiviteskortPeriodeVisning aktivitet={aktivitet} />
+                <AktiviteskortPeriodeVisning id={datoId} aktivitet={aktivitet} />
                 <SokeAvtaleAntall aktivitet={aktivitet} />
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </article>
-        </InternLenke>
+        </LinkAsDiv>
     );
 }
 

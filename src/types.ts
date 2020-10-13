@@ -41,6 +41,9 @@ export interface Aktivitet {
     erReferatPublisert?: boolean;
     nesteStatus?: AktivitetStatus;
     referat?: string;
+    arbeidsgiver: StringOrNull;
+    antallStillingerSokes?: number;
+    antallStillingerIUken?: number;
 }
 
 export interface OppfolgingsPeriode {
@@ -67,7 +70,7 @@ export interface Dialog {
     egenskaper?: Array<string>;
 }
 
-interface Henvendelse {
+export interface Henvendelse {
     id: string;
     dialogId: string;
     tekst: string;

@@ -1,8 +1,14 @@
 import React from 'react';
 
-function DialogIkonUtenUleste() {
+interface DialogIkonUtenUlesteProps {
+    className?: string;
+}
+
+function DialogIkonUtenUleste(props: DialogIkonUtenUlesteProps) {
+    const { className } = props;
+
     return (
-        <svg className="dialogIkonUtenUleste" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+        <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
             <g stroke="#0067C5" fill="none">
                 <path d="M7.44 14.56A9.01 9.01 0 016 14.25l-5 2 2-3.5A6.53 6.53 0 01.5 7.69C.5 3.86 4.3.75 9 .75s8.5 3.1 8.5 6.94" />
                 <path d="M9.5 16.25c0 4.29 5 7.5 9.5 5.5l4 1.5-1.5-3a5 5 0 002-4c0-3.15-3.13-6-7-6s-7 2.85-7 6z" />
@@ -11,13 +17,18 @@ function DialogIkonUtenUleste() {
     );
 }
 
-function DialogIkonMedUleste(props: Props) {
-    const antall = props.antallUleste;
-    const xPos = antall > 9 ? 23 : 26.8;
+interface DialogIkonMedUlesteProps {
+    antallUleste: number;
+    className?: string;
+}
+
+function DialogIkonMedUleste(props: DialogIkonMedUlesteProps) {
+    const { antallUleste, className } = props;
+    const xPos = antallUleste > 9 ? 23 : 26.8;
 
     return (
         <div>
-            <svg className="dialogIkonMedUleste" xmlns="http://www.w3.org/2000/svg" width="40" height="32">
+            <svg className={className} xmlns="http://www.w3.org/2000/svg" width="40" height="32">
                 <svg y="8">
                     <path
                         fill="#0067C5"
@@ -30,26 +41,26 @@ function DialogIkonMedUleste(props: Props) {
                 </svg>
                 <circle opacity="1" fill="#c30000" cx="30" cy="10" r="10" />
                 <text x={xPos} y="14.4" fill="#fff" opacity="1">
-                    {antall}
+                    {antallUleste}
                 </text>
             </svg>
-            <div className="sr-only">
-                Aktiviteten har en dialog
-            </div>
+            <div className="sr-only">Aktiviteten har en dialog</div>
         </div>
     );
 }
 
-interface Props {
+interface DialogIkonProps {
     antallUleste: number;
+    classNameUtenUleste?: string;
+    classNameMedUleste?: string;
 }
 
-function DialogIkon(props: Props) {
-    const antallUleste = props.antallUleste;
+function DialogIkon(props: DialogIkonProps) {
+    const { antallUleste, classNameUtenUleste, classNameMedUleste } = props;
     if (antallUleste === 0) {
-        return <DialogIkonUtenUleste />;
+        return <DialogIkonUtenUleste className={classNameUtenUleste} />;
     }
-    return <DialogIkonMedUleste antallUleste={antallUleste} />;
+    return <DialogIkonMedUleste antallUleste={antallUleste} className={classNameMedUleste} />;
 }
 
 export default DialogIkon;
