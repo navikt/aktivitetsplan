@@ -18,8 +18,12 @@ function AktivitetskortTillegg({ aktivitet }: Props) {
     const henvendelser = dialog ? dialog.henvendelser : [];
     const ulesteHenvendelser = henvendelser.filter((h: Henvendelse) => !h.lest).length;
 
+    if (!(avtalt || !!etikett || !!dialog)) {
+        return null;
+    }
+
     return (
-        <HiddenIfDiv hidden={!(avtalt || !!etikett || !!dialog)} className={styles.tillegg}>
+        <div className={styles.tillegg}>
             <div>
                 <AvtaltMarkering visible={avtalt} />
                 <SokeStatusEtikett hidden={!etikett} etikett={etikett} className={styles.etikett} />
@@ -32,7 +36,7 @@ function AktivitetskortTillegg({ aktivitet }: Props) {
                     classNameUtenUleste={styles.dialogIkonUtenUleste}
                 />
             </HiddenIfDiv>
-        </HiddenIfDiv>
+        </div>
     );
 }
 

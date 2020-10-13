@@ -23,6 +23,12 @@ function LinkAsDiv(props: Props) {
                 history.push(to);
                 onClick();
             }}
+            onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                    history.push(to);
+                    onClick();
+                }
+            }}
         >
             {children}
         </div>

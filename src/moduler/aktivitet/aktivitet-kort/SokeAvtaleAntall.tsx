@@ -16,7 +16,7 @@ export default function SokeAvtaleAntall({ aktivitet }: Props) {
 
     return (
         <div>
-            <VisibleIfDiv visible={antallStillingerSokes && antallStillingerSokes > 0}>
+            <VisibleIfDiv visible={antallStillingerSokes}>
                 Antall søknader i perioden &nbsp;
                 {antallStillingerSokes}
             </VisibleIfDiv>
