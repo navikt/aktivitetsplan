@@ -343,6 +343,13 @@ function valueOrFalse(potentialValue) {
     return false;
 }
 
+function valueAsNumberOrNull(potentialValue) {
+    if (potentialValue) {
+        return parseInt(potentialValue);
+    }
+    return null;
+}
+
 function wrapAktivitet(aktivitet) {
     return {
         id: valueOrNull(aktivitet.id),
@@ -369,8 +376,8 @@ function wrapAktivitet(aktivitet) {
         stillingsTittel: valueOrNull(aktivitet.stillingsTittel),
         hensikt: valueOrNull(aktivitet.hensikt),
         oppfolging: valueOrNull(aktivitet.oppfolging),
-        antallStillingerSokes: valueOrNull(aktivitet.antallStillingerSokes),
-        antallStillingerIUken: valueOrNull(aktivitet.antallStillingerIUken),
+        antallStillingerSokes: valueAsNumberOrNull(aktivitet.antallStillingerSokes),
+        antallStillingerIUken: valueAsNumberOrNull(aktivitet.antallStillingerIUken),
         avtaleOppfolging: valueOrNull(aktivitet.avtaleOppfolging),
         jobbStatus: valueOrNull(aktivitet.jobbStatus),
         ansettelsesforhold: valueOrNull(aktivitet.ansettelsesforhold),
@@ -430,8 +437,8 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
     return oldAktivitet;
 }
 
-export function publiserReferat({aktivitetId}) {
-    const oldAktivitet = aktiviteter.find(akivitet => akivitet.id === aktivitetId);
+export function publiserReferat({ aktivitetId }) {
+    const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     oldAktivitet.erReferatPublisert = true;
     return { ...oldAktivitet, erReferatPublisert: true };
 }
