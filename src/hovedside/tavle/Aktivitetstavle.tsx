@@ -57,7 +57,7 @@ function AktivitetsTavle() {
 
     return (
         <Innholdslaster minstEn avhengigheter={avhengigheter}>
-            <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} />
+            <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
 
             <Tavle
                 defaultStartKolonne={1}

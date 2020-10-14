@@ -22,13 +22,14 @@ function Statusadministrasjon(props) {
 
     const skalViseForhandsorienteringsKomponent = !erBruker && !erManuellKrrKvpBruker;
 
+    const alertTekst = erBruker
+        ? 'Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal endres.'
+        : 'For å endre aktiviteten må du gå til Arena.';
+
     const visAdministreresAvVeileder = (
         <>
             <div className="aktivitetvisning__underseksjon">
-                <AlertStripeInfo>
-                    Du kan ikke endre denne aktiviteten selv. Send en melding til veilederen din hvis aktiviteten skal
-                    endres.
-                </AlertStripeInfo>
+                <AlertStripeInfo>{alertTekst}</AlertStripeInfo>
             </div>
             <DeleLinje />
             <div className="aktivitetvisning__underseksjon">
