@@ -9,6 +9,7 @@ import Adresse from './adresse';
 import { DialogerUtenAktivitet } from './dialoger';
 import MalPrint from './malPrint';
 import Aktiviteter from './aktiviteter';
+import { filtrerDialoger, filtrerAktiviteter } from './filter-utils';
 
 interface Props {
     dialoger?: Dialog[];
@@ -20,65 +21,6 @@ interface Props {
     utskriftPlanType?: string;
     kvpPerioder?: KvpPeriode[];
     hidden?: boolean;
-}
-
-function filtrerAktiviteter(
-    utskriftType: string | undefined,
-    kvpPerioder: KvpPeriode[] | undefined,
-    valgtKvpPeriode: KvpPeriode | undefined,
-    aktiviteter: Aktivitet[] | undefined
-): Aktivitet[] | undefined {
-    if (!aktiviteter) {
-        return;
-    }
-
-    if (valgtKvpPeriode) {
-        return aktiviteter.filter(
-            (a) =>
-                a.opprettetDato >= valgtKvpPeriode.opprettetDato &&
-                (!valgtKvpPeriode.avsluttetDato || a.opprettetDato <= valgtKvpPeriode.avsluttetDato)
-        );
-    }
-
-    if (utskriftType === 'aktivitetsplan' && kvpPerioder) {
-        return aktiviteter.filter((a) =>
-            kvpPerioder.every(
-                (kvp) =>
-                    a.opprettetDato < kvp.opprettetDato || !(!kvp.avsluttetDato || a.opprettetDato < kvp.avsluttetDato)
-            )
-        );
-    }
-
-    return aktiviteter;
-}
-
-function iPeriode(dialog: Dialog, periode: KvpPeriode): boolean {
-    if (dialog.sisteDato < periode.opprettetDato) {
-        return false;
-    }
-
-    return !periode.avsluttetDato || dialog.opprettetDato <= periode.avsluttetDato;
-}
-
-function filterDialog(
-    utskriftType: string | undefined,
-    kvpPerioder: KvpPeriode[] | undefined,
-    valgtKvpPeriode: KvpPeriode | undefined,
-    dialoger: Dialog[] | undefined
-): Dialog[] | undefined {
-    if (!dialoger || !utskriftType) {
-        return undefined;
-    }
-
-    if (valgtKvpPeriode) {
-        return dialoger.filter((d) => iPeriode(d, valgtKvpPeriode));
-    }
-
-    if (utskriftType === 'aktivitetsplan' && kvpPerioder) {
-        return dialoger.filter((a) => kvpPerioder.every((kvp) => !iPeriode(a, kvp)));
-    }
-
-    return dialoger;
 }
 
 function Print(props: Props) {
@@ -104,7 +46,7 @@ function Print(props: Props) {
 
     const filtrerteAktiviteter = filtrerAktiviteter(utskriftPlanType, kvpPerioder, valgtKvpPeriode, aktiviteter);
 
-    const filtrerteDialoger = filterDialog(utskriftPlanType, kvpPerioder, valgtKvpPeriode, dialoger);
+    const filtrerteDialoger = filtrerDialoger(utskriftPlanType, kvpPerioder, valgtKvpPeriode, dialoger);
 
     const kvpPeriodeFra = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.opprettetDato) : undefined;
     const kvpPeriodeTil = valgtKvpPeriode ? formaterDatoKortManed(valgtKvpPeriode.avsluttetDato) : undefined;

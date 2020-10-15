@@ -187,6 +187,47 @@ const testAktiviteter = !visTestAktiviteter()
               kanal: null,
               erReferatPublisert: false,
           }),
+          wrapAktivitet({
+              adresse: null,
+              ansettelsesforhold: null,
+              antallStillingerIUken: null,
+              antallStillingerSokes: null,
+              arbeidsgiver: null,
+              arbeidssted: null,
+              arbeidstid: null,
+              avsluttetKommentar: null,
+              avtaleOppfolging: null,
+              avtalt: true,
+              behandlingOppfolging: null,
+              behandlingSted: null,
+              behandlingType: null,
+              beskrivelse: null,
+              effekt: null,
+              endretAv: '1602677081175',
+              endretDato: '2020-10-14T12:04:41.175Z',
+              erReferatPublisert: true,
+              etikett: null,
+              forberedelser: null,
+              fraDato: '2020-10-14T12:04:33.649Z',
+              hensikt: null,
+              historisk: false,
+              id: '7005964',
+              jobbStatus: null,
+              kanal: 'TELEFON',
+              kontaktperson: null,
+              lagtInnAv: 'NAV',
+              lenke: null,
+              oppfolging: null,
+              opprettetDato: '2020-10-14T12:04:41.175Z',
+              referat: 'Dette er et referat',
+              status: 'GJENNOMFORES',
+              stillingsTittel: null,
+              tilDato: null,
+              tittel: 'Prat om noe',
+              transaksjonsType: null,
+              type: 'SAMTALEREFERAT',
+              versjon: '1',
+          }),
       ];
 
 const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
@@ -343,6 +384,13 @@ function valueOrFalse(potentialValue) {
     return false;
 }
 
+function valueAsNumberOrNull(potentialValue) {
+    if (potentialValue) {
+        return parseInt(potentialValue);
+    }
+    return null;
+}
+
 function wrapAktivitet(aktivitet) {
     return {
         id: valueOrNull(aktivitet.id),
@@ -369,8 +417,8 @@ function wrapAktivitet(aktivitet) {
         stillingsTittel: valueOrNull(aktivitet.stillingsTittel),
         hensikt: valueOrNull(aktivitet.hensikt),
         oppfolging: valueOrNull(aktivitet.oppfolging),
-        antallStillingerSokes: valueOrNull(aktivitet.antallStillingerSokes),
-        antallStillingerIUken: valueOrNull(aktivitet.antallStillingerIUken),
+        antallStillingerSokes: valueAsNumberOrNull(aktivitet.antallStillingerSokes),
+        antallStillingerIUken: valueAsNumberOrNull(aktivitet.antallStillingerIUken),
         avtaleOppfolging: valueOrNull(aktivitet.avtaleOppfolging),
         jobbStatus: valueOrNull(aktivitet.jobbStatus),
         ansettelsesforhold: valueOrNull(aktivitet.ansettelsesforhold),
@@ -430,8 +478,8 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
     return oldAktivitet;
 }
 
-export function publiserReferat({aktivitetId}) {
-    const oldAktivitet = aktiviteter.find(akivitet => akivitet.id === aktivitetId);
+export function publiserReferat({ aktivitetId }) {
+    const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     oldAktivitet.erReferatPublisert = true;
     return { ...oldAktivitet, erReferatPublisert: true };
 }

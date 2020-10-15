@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import InternLenke from '../../felles-komponenter/utils/internLenke';
+import InternLenke from '../../felles-komponenter/utils/InternLenke';
 import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from 'nav-frontend-lenker';
 
@@ -15,12 +15,12 @@ export function Varsling({ tekstId, className }) {
 }
 
 Varsling.defaultProps = {
-    className: ''
+    className: '',
 };
 
 Varsling.propTypes = {
     tekstId: PT.string.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className, onClick }) {
@@ -37,7 +37,7 @@ export function VarslingMedLenke({ tekstId, lenkeTekstId, href, className, onCli
 
 VarslingMedLenke.defaultProps = {
     className: '',
-    onClick: () => {}
+    onClick: () => {},
 };
 
 VarslingMedLenke.propTypes = {
@@ -45,7 +45,7 @@ VarslingMedLenke.propTypes = {
     lenkeTekstId: PT.string.isRequired,
     href: PT.string.isRequired,
     className: PT.string,
-    onClick: PT.func
+    onClick: PT.func,
 };
 
 export function AdvarselVarsling({ tekst, className }) {
@@ -53,12 +53,12 @@ export function AdvarselVarsling({ tekst, className }) {
 }
 
 AdvarselVarsling.defaultProps = {
-    className: ''
+    className: '',
 };
 
 AdvarselVarsling.propTypes = {
     tekst: PT.string.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 export function AdvarselMedLenkeVarsling({ tekstId, lenkeTekstId, href, className, onClick, values }) {
@@ -77,7 +77,7 @@ AdvarselMedLenkeVarsling.defaultProps = {
     className: '',
     onClick: () => {},
     values: undefined,
-    erEksternLenke: false
+    erEksternLenke: false,
 };
 
 AdvarselMedLenkeVarsling.propTypes = {
@@ -87,7 +87,7 @@ AdvarselMedLenkeVarsling.propTypes = {
     erEksternLenke: PT.bool,
     className: PT.string,
     onClick: PT.func,
-    values: PT.object
+    values: PT.object,
 };
 
 export const HiddenIfVarslingMedLenke = hiddenIf(VarslingMedLenke);

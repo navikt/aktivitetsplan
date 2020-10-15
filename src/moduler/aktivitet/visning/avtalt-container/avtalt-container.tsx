@@ -26,6 +26,7 @@ import { Aktivitet, OppfolgingsPeriode } from '../../../../types';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
 import LenkeTilDialog from '../../../dialog/DialogLink';
+import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
 
 interface Props {
     underOppfolging: boolean;
@@ -71,6 +72,8 @@ function AvtaltContainer(props: Props) {
     const erreservertKRR = useSelector(selectReservasjonKRR);
     const erBruker = useSelector(selectErBruker);
     const dialog = useSelector(createSelectDialogForAktivitetId(aktivitet.id));
+    const harLoggetInnNivaa4 = useSelector(selectNivaa4);
+
     const dialogId = dialog && dialog.id;
 
     const erManuellKrrKvpBruker = erManuell || erKvp || erreservertKRR;
@@ -131,7 +134,7 @@ function AvtaltContainer(props: Props) {
         setVisBekreftAvtalt(true);
         // @ts-ignore
         const avtaltText = avtaltTextMap[avtaltForm.avtaltSelect](avtaltForm);
-        const skalSendeVarsel = !!avtaltText && merEnnsyvDagerTil && !erManuellKrrKvpBruker;
+        const skalSendeVarsel = !!avtaltText && merEnnsyvDagerTil && !erManuellKrrKvpBruker && harLoggetInnNivaa4;
         if (skalSendeVarsel) {
             doSendForhandsorientering(aktivitet, avtaltText);
             setForhandsorienteringSent(true);

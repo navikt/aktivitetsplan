@@ -3,7 +3,7 @@ import React from 'react';
 import {
     selectErEskalert,
     selectGjeldendeEskaleringsVarsel,
-    selectTilHorendeDialogId
+    selectTilHorendeDialogId,
 } from '../oppfolging-status/oppfolging-selector';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -11,7 +11,7 @@ import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
 import { formaterDatoKortManed } from '../../utils';
 import styles from './varslinger.module.less';
-import InternLenke from '../../felles-komponenter/utils/internLenke';
+import InternLenke from '../../felles-komponenter/utils/InternLenke';
 
 function VeilederVarsel() {
     const dispatch = useReduxDispatch();

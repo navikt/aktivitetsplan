@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import classNames from 'classnames';
-import InternLenke from './internLenke';
+import InternLenke from './InternLenke';
 import visibleIfHOC from '../../hocs/visible-if';
 
 interface LenkeknappProps {

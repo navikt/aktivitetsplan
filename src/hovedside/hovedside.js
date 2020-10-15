@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Varslinger from '../moduler/varslinger/varslinger';
-import AktivitetsTavle from './tavle/aktivitetstavle';
+import AktivitetsTavle from './tavle/Aktivitetstavle';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';

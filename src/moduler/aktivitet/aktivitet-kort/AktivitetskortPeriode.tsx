@@ -2,11 +2,16 @@ import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { GRUPPE_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_AKTIVITET_TYPE } from '../../../constant';
 import { formaterDatoKortManed } from '../../../utils';
-import * as PT from '../../../proptypes';
 import Soknadfrist from './Soknadsfrist';
+import { Aktivitet } from '../../../types';
 
-function AktiviteskortPeriodeVisning({ aktivitet }) {
-    const { id, type, fraDato, tilDato } = aktivitet;
+interface Props {
+    aktivitet: Aktivitet;
+    id: string;
+}
+
+function AktiviteskortPeriodeVisning({ aktivitet, id }: Props) {
+    const { type, fraDato, tilDato } = aktivitet;
 
     if (type === STILLING_AKTIVITET_TYPE) {
         return <Soknadfrist aktivitet={aktivitet} />;
@@ -32,13 +37,9 @@ function AktiviteskortPeriodeVisning({ aktivitet }) {
             return `FRA: ${formatertFraDato}`;
         }
 
-        return [formatertFraDato, formatertTilDato].filter(dato => dato).join(' - ');
+        return [formatertFraDato, formatertTilDato].filter((dato) => dato).join(' - ');
     }
-    return <Normaltekst id={`aktivitetskort__dato__${id}`}>{periodeVisning()}</Normaltekst>;
+    return <Normaltekst id={id}>{periodeVisning()}</Normaltekst>;
 }
-
-AktiviteskortPeriodeVisning.propTypes = {
-    aktivitet: PT.aktivitet.isRequired
-};
 
 export default AktiviteskortPeriodeVisning;

@@ -1,16 +1,17 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import * as PT from '../../../proptypes';
 import { formaterDatoKortManed, dagerTil } from '../../../utils';
+import styles from './Aktivitetskort.module.less';
+import { Aktivitet } from '../../../types';
 
-function getClassName(frist) {
-    if (frist < 0) return 'aktivitetskort__frist__utgaat';
-    if (frist < 14) return 'aktivitetskort__frist';
+function getClassName(frist: number) {
+    if (frist < 0) return styles.fristUtgaat;
+    if (frist < 14) return styles.frist;
 
-    return ''
+    return '';
 }
 
-function getTekst(frist, tilDato) {
+function getTekst(frist: number, tilDato: string) {
     if (frist === 0) return 'Søknadsfristen går ut i dag';
     if (frist === 1) return 'Søknadsfristen går ut i morgen';
     if (frist > 14) return `Søknadsfrist: ${formaterDatoKortManed(tilDato)}`;
@@ -19,19 +20,19 @@ function getTekst(frist, tilDato) {
     return `Søknadsfristen går ut om ${frist} dager`;
 }
 
-function Soknadfrist({ aktivitet }) {
+interface Props {
+    aktivitet: Aktivitet;
+}
+
+function Soknadfrist({ aktivitet }: Props) {
     const { tilDato, etikett } = aktivitet;
 
-    if (etikett || !tilDato){
+    if (etikett || !tilDato) {
         return null;
     }
 
     const frist = dagerTil(tilDato);
     return <Normaltekst className={getClassName(frist)}>{getTekst(frist, tilDato)}</Normaltekst>;
 }
-
-Soknadfrist.propTypes = {
-    aktivitet: PT.aktivitet.isRequired
-};
 
 export default Soknadfrist;

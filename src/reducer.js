@@ -13,8 +13,10 @@ import versjonReducer from './moduler/aktivitet/aktivitet-versjoner/aktivitet-ve
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import authReducer from './felles-komponenter/timeoutbox/auth-reducer';
 import lestReducer from './moduler/lest/lest-reducer';
+import tilgangReducer from './moduler/tilgang/tilgang-reducer';
 import aktivitetViewReducer from './moduler/aktivitet/aktivitetview-reducer';
 import informasjonReducer from './moduler/informasjon/informasjon-reducer';
+import dragAndDropReducer from './moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 
 const combinedReducers = combineReducers({
     data: combineReducers({
@@ -27,18 +29,20 @@ const combinedReducers = combineReducers({
         mal: malReducer,
         malListe: malListeReducer,
         oppfolging: oppfolgingReducer,
+        tilgang: tilgangReducer,
         versjoner: versjonReducer,
         feature: featureReducer,
         malverk: malverkReducer,
         lest: lestReducer,
-        auth: authReducer
+        auth: authReducer,
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,
-        informasjon: informasjonReducer
-    })
+        informasjon: informasjonReducer,
+        dragAndDrop: dragAndDropReducer,
+    }),
 });
 
-export default function(state, action) {
+export default function (state, action) {
     return combinedReducers(state, action);
 }

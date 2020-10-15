@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import PT from 'prop-types';
 import { hentAktivitet } from '../aktivitet-actions';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
-import Aktivitetvisning from './aktivitetvisning';
+import Aktivitetvisning from './Aktivitetvisning';
 import * as AppPT from '../../../proptypes';
 import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetliste-selector';
 import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
-import { UTDANNING_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 import { DirtyProvider } from '../../context/dirty-context';
 import AktivitetvisningModal from './aktivitetvisning-modal';
+import { genererAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {
@@ -29,7 +29,7 @@ class AktivitetvisningContainer extends Component {
 
     componentWillUnmount() {
         const { valgtAktivitet } = this.props;
-        const aktivitetskort = valgtAktivitet && document.querySelector(`#aktivitetskort-${valgtAktivitet.id}`);
+        const aktivitetskort = valgtAktivitet && document.querySelector(`#${genererAktivtetskortId(valgtAktivitet)}`);
         if (aktivitetskort) {
             aktivitetskort.focus();
         }
@@ -66,9 +66,7 @@ const mapStateToProps = (state, props) => {
     const aktivitetId = props.match.params.id;
     const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
 
-    const erArenaAktivitet =
-        !!valgtAktivitet &&
-        [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(valgtAktivitet.type);
+    const erArenaAktivitet = aktivitetId.startsWith('ARENA');
     const aktivitetDataStatus = erArenaAktivitet ? selectArenaAktivitetStatus(state) : selectAktivitetStatus(state);
     const laster = aktivitetDataStatus !== STATUS.OK;
 

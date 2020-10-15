@@ -1,7 +1,7 @@
 import React from 'react';
 import { intlShape } from 'react-intl';
 import { mount } from 'enzyme';
-import AktiviteskortPeriodeVisning from './aktivitetskort-periode';
+import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
 import { IJOBB_AKTIVITET_TYPE, MOTE_TYPE } from '../../../constant';
 
 function nodeWithIntlProp(node) {

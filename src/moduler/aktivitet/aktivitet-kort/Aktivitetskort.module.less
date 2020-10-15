@@ -1,7 +1,7 @@
 @import '../../../variables';
 
 .aktivitetskort {
-    .blokk-xxs();
+    margin-bottom: 0.5rem;
     display: block;
     background-color: @color-background;
     color: @gray-text;
@@ -20,79 +20,70 @@
     &:hover {
         box-shadow: 1px 1px 3px 0 @navGra60;
 
-        .aktivitetskort__tittel {
+        .tittel {
             color: @navBla;
             text-decoration: underline;
-
-            &--drag {
-                border-bottom-color: @navLysGra;
-            }
         }
     }
 }
 
-.aktivitetskort__type {
+.type {
     text-transform: uppercase;
 }
 
-aktivitetskort--drag {
+.drag {
     background-color: @navLysGra;
 }
 
-.aktivitetskort__tittel {
+.tittel {
     display: inline-block;
-    .blokk-xxxs();
+    margin-bottom: 4px;
 }
 
-.aktivitetskort__frist {
+.frist {
     font-style: italic;
     color: #a13a28;
 }
 
-.aktivitetskort__frist__utgaat {
+.fristUtgaat {
     font-style: italic;
 }
 
-.aktivitetskort__ikon-blokk {
-    .clearfix();
+.ikon {
     height: 0;
     align-self: flex-end;
 }
 
-.aktivitetskort--dialogikon {
-    .dialogIkonUtenUleste {
-        position: relative;
-        float: right;
-        top: -1.25rem;
-        left: 0.25rem;
-    }
-    .dialogIkonMedUleste {
-        position: relative;
-        float: right;
-        top: -1.75rem;
-        left: 0.25rem;
-        font-size: 14px;
-    }
-}
-
-.aktivitetskort__tillegg {
+.tillegg {
     display: flex;
     justify-content: space-between;
     margin-top: 0.5rem;
     width: 100%;
 }
 
-.aktivitetskort__etikett {
+.etikett {
     margin-top: 2px;
 }
 
-.aktivitetskort--flyttbar {
+.flyttbar {
     cursor: move;
-    cursor: -webkit-grab; // lesshint duplicateProperty: false
-    cursor: -moz-grab; // lesshint duplicateProperty: false
     cursor: grab; // lesshint duplicateProperty: false
 }
 
-.aktivitetskort__header {
+.header {
     display: flex;
+}
+
+.dialogIkonUtenUleste {
+    position: relative;
+    float: right;
+    top: -1.25rem;
+    left: 0.25rem;
+}
+.dialogIkonMedUleste {
+    position: relative;
+    float: right;
+    top: -1.75rem;
+    left: 0.25rem;
+    font-size: 14px;
 }
