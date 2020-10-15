@@ -16,6 +16,10 @@ export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
     const antallFeil = feilmeldinger.length;
     const feil = feilmeldinger[0];
 
+    if (feil.type === DIALOG_HENT_FEIL && antallFeil === 1) {
+        return tekster.dialogFeilet;
+    }
+
     if (feil.httpStatus === 401) return tekster.unauthorized;
     if (feil.httpStatus === 403) return tekster.forbidden;
 
@@ -29,10 +33,6 @@ export function getErrorText(feilmeldinger: FeilmeldingType[]): string {
 
     if (feil.type === ARENA_HENT_FEILET) {
         return tekster.aktivitetFeilet;
-    }
-
-    if (feil.type === DIALOG_HENT_FEIL) {
-        return tekster.dialogFeilet;
     }
 
     if (feil.type === NIVAA_4_FEILET) {
