@@ -22,3 +22,5 @@ npm start
 ### Kontakt og spørsmål
 
 Opprett et issue i GitHub for eventuelle spørsmål.
+
+test
