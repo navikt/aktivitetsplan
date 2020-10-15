@@ -15,12 +15,12 @@ function BegrunnelseBoks({ begrunnelse, className }) {
 }
 
 BegrunnelseBoks.defaultProps = {
-    className: ''
+    className: '',
 };
 
 BegrunnelseBoks.propTypes = {
     begrunnelse: PT.string.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 export default visibleIfHOC(BegrunnelseBoks);

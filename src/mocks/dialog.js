@@ -23,7 +23,7 @@ const dialoger = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-27T12:48:56.097+01:00',
                 lest: !ulesteDialoger(),
-                tekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?'
+                tekst: 'Hei. Hva er status her? Har du finnet Kaptain Sabeltann?',
             },
             {
                 id: '2',
@@ -32,10 +32,10 @@ const dialoger = [
                 avsenderId: '0102030405',
                 sendt: '2018-02-28T12:48:56.097+01:00',
                 lest: !ulesteDialoger(),
-                tekst: 'Hei. Leter enda på sjøen :)'
-            }
+                tekst: 'Hei. Leter enda på sjøen :)',
+            },
         ],
-        egenskaper: []
+        egenskaper: [],
     },
     {
         id: '3',
@@ -60,10 +60,10 @@ const dialoger = [
                 sendt: '2018-11-21T13:13:20.685+01:00',
                 lest: !ulesteDialoger(),
                 tekst:
-                    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.'
-            }
+                    'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+            },
         ],
-        egenskaper: ['PARAGRAF8']
+        egenskaper: ['PARAGRAF8'],
     },
     {
         id: '2',
@@ -86,10 +86,10 @@ const dialoger = [
                 avsenderId: 'Z123456',
                 sendt: '2018-02-01T11:52:20.615+01:00',
                 lest: !ulesteDialoger(),
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
-            }
+                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n',
+            },
         ],
-        egenskaper: ['ESKALERINGSVARSEL']
+        egenskaper: ['ESKALERINGSVARSEL'],
     },
     {
         id: '4',
@@ -118,7 +118,7 @@ const dialoger = [
                 tekst:
                     'Hei!\n' +
                     'Du er registrert som arbeidssøker og NAV trenger å bli kjent med ditt behov for hjelp fra oss, slik at vi kan gi deg riktig veiledning.\n' +
-                    'Hva mener du? Klik her og vurder hva du selv tenker https://behovsvurdering.nav.no\n'
+                    'Hva mener du? Klik her og vurder hva du selv tenker https://behovsvurdering.nav.no\n',
             },
             {
                 id: '5',
@@ -134,7 +134,7 @@ const dialoger = [
                     '- i et møte med veilederen din på NAV-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
-                    'Skriv svaret ditt i feltet over. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
+                    'Skriv svaret ditt i feltet over. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n',
             },
             {
                 id: '6',
@@ -150,10 +150,10 @@ const dialoger = [
                     '- i et møte med veilederen din på NAV-kontoret\n' +
                     '- i en telefonsamtale\n' +
                     '- her i dialogen\n' +
-                    'Skriv svaret ditt i feltet over. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n'
-            }
+                    'Skriv svaret ditt i feltet over. Hvis du velger "her i dialogen", kan du fortelle mer allerede nå.\n',
+            },
         ],
-        egenskaper: []
+        egenskaper: [],
     },
     {
         id: '2',
@@ -176,7 +176,7 @@ const dialoger = [
                 avsenderId: 'Z123456',
                 sendt: '2017-02-17T11:52:20.535+01:00',
                 lest: !ulesteDialoger(),
-                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n'
+                tekst: 'Jeg har ikke hørt noe fra deg i det siste. Har du forlist?\n',
             },
             {
                 id: '3',
@@ -185,11 +185,11 @@ const dialoger = [
                 avsenderId: 'Z123456',
                 sendt: '2017-02-17T11:52:20.535+01:00',
                 lest: !ulesteDialoger(),
-                tekst: 'Fortsat ikke hørt noe. Har du forlist?\n'
-            }
+                tekst: 'Fortsat ikke hørt noe. Har du forlist?\n',
+            },
         ],
-        egenskaper: []
-    }
+        egenskaper: [],
+    },
 ];
 
 export function opprettDialog(update) {
@@ -202,10 +202,10 @@ export function opprettDialog(update) {
         overskrift: update.overskrift,
         tekst: update.tekst,
         lest: !ulesteDialoger(),
-        sendt: new Date()
+        sendt: new Date(),
     };
 
-    const eksisterendeDialoger = dialoger.filter(dialog => update.dialogId !== undefined && dialog.id === dialogId);
+    const eksisterendeDialoger = dialoger.filter((dialog) => update.dialogId !== undefined && dialog.id === dialogId);
 
     if (eksisterendeDialoger.length === 1) {
         const oldDialog = eksisterendeDialoger[0];
@@ -228,7 +228,7 @@ export function opprettDialog(update) {
             lestAvBrukerTidspunkt: null,
             erLestAvBruker: false,
             henvendelser: [nyHenvendelse],
-            egenskaper: update.egenskaper === undefined ? [] : update.egenskaper
+            egenskaper: update.egenskaper === undefined ? [] : update.egenskaper,
         };
         dialoger.push(nyDialog);
         return nyDialog;
@@ -236,12 +236,12 @@ export function opprettDialog(update) {
 }
 
 export function setVenterPaSvar(id, bool) {
-    const dialog = dialoger.filter(dialog => dialog.id === id)[0];
+    const dialog = dialoger.filter((dialog) => dialog.id === id)[0];
     dialog.venterPaSvar = bool === 'true';
     return dialog;
 }
 export function setFerdigBehandlet(id, bool) {
-    const dialog = dialoger.filter(dialog => dialog.id === id)[0];
+    const dialog = dialoger.filter((dialog) => dialog.id === id)[0];
     dialog.ferdigBehandlet = bool === 'true';
     return dialog;
 }

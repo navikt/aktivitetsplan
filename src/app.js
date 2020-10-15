@@ -26,12 +26,12 @@ function App({ fnr }) {
         VIS_SIDEBANNER: isValueOrGetDefault(window.appconfig.VIS_SIDEBANNER, false),
         FNR_I_URL: isValueOrGetDefault(window.appconfig.FNR_I_URL, true),
         VIS_MALER: isValueOrGetDefault(window.appconfig.VIS_MALER, true),
-        TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false)
+        TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
     };
 
     const history = createHistory();
 
-    useEventListener('visAktivitetsplan', event => {
+    useEventListener('visAktivitetsplan', (event) => {
         const aktivitetId = event.detail;
         if (aktivitetId) {
             history.replace('aktivitet/vis/' + aktivitetId);
@@ -61,11 +61,11 @@ function App({ fnr }) {
 }
 
 App.propTypes = {
-    fnr: PT.string
+    fnr: PT.string,
 };
 
 App.defaultProps = {
-    fnr: undefined
+    fnr: undefined,
 };
 
 export default App;

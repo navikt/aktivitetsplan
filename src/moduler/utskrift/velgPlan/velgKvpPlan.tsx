@@ -48,15 +48,15 @@ function KvpPlanListeValg(props: KvpPlanValgProps) {
         <div className="kvp-plan-valg">
             <UtskriftValg tittelId="KVP-perioden" tekstId="Du skriver ut innholdet i KVP-perioden" />
             {kvpPerioder &&
-                kvpPerioder.map(kvp => (
+                kvpPerioder.map((kvp) => (
                     <Radio
                         key={kvp.opprettetDato}
                         id={kvp.opprettetDato}
                         label={
                             <Normaltekst>
-                                {`${formaterDatoKortManed(kvp.opprettetDato)} - ${formaterDatoKortManed(
-                                    kvp.avsluttetDato
-                                ) || 'nå'}`}
+                                {`${formaterDatoKortManed(kvp.opprettetDato)} - ${
+                                    formaterDatoKortManed(kvp.avsluttetDato) || 'nå'
+                                }`}
                             </Normaltekst>
                         }
                         className="kvp-periode-valg"

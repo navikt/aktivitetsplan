@@ -11,6 +11,6 @@ export function hentBruker(fnr) {
 
 export function setStatusOk() {
     return {
-        type: actionTypes.OK
+        type: actionTypes.OK,
     };
 }

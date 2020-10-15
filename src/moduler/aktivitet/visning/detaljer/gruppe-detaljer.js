@@ -7,9 +7,9 @@ import * as AppPT from '../../../../proptypes';
 import { GRUPPE_AKTIVITET_TYPE } from '../../../../constant';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
-const Motaplan = planListe => (
+const Motaplan = (planListe) => (
     <span>
-        {planListe.planListe.map(mote => (
+        {planListe.planListe.map((mote) => (
             <Normaltekst key={mote.startDato} tag="span">
                 {formaterDatoKortManedTid(mote.startDato)}
                 {formaterTid(mote.sluttDato) === '00:00' ? '' : ` - ${formaterTid(mote.sluttDato)}`},{` ${mote.sted}`}
@@ -46,7 +46,7 @@ function GruppeDetaljer({ aktivitet }) {
 }
 
 GruppeDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
 };
 
 export default GruppeDetaljer;

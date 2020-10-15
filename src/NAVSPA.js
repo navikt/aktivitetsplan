@@ -21,7 +21,7 @@ export default class NAVSPA {
             }
 
             render() {
-                return <div ref={el => (this.el = el)} />;
+                return <div ref={(el) => (this.el = el)} />;
             }
         }
 

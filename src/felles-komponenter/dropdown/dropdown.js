@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 const btnCls = (erApen, className) =>
     classNames('dropdown', className, {
-        'dropdown--apen': erApen
+        'dropdown--apen': erApen,
     });
 
 function isChildOf(parent, element) {
@@ -86,7 +86,7 @@ class Dropdown extends Component {
         const { name, className, children, knappeTekst } = this.props;
         const { apen } = this.state;
 
-        const augmentedChild = Children.map(children, child => {
+        const augmentedChild = Children.map(children, (child) => {
             if (typeof child.type === 'string') {
                 return child;
             }
@@ -130,13 +130,13 @@ Dropdown.propTypes = {
     children: PT.oneOfType([PT.node, PT.arrayOf(PT.node)]).isRequired,
     className: PT.string,
     onLukk: PT.func,
-    onOpen: PT.func
+    onOpen: PT.func,
 };
 Dropdown.defaultProps = {
     apen: false,
     className: null,
     onLukk: () => {},
-    onOpen: () => {}
+    onOpen: () => {},
 };
 
 export default Dropdown;
