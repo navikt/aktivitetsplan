@@ -2,12 +2,12 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: aktivitetsplan
-  namespace: {{namespace}}
+  namespace: { { namespace } }
   cluster: dev-sbs
   labels:
     team: pto
 spec:
-  image: {{image}}
+  image: { { image } }
   port: 8080
   liveness:
     path: aktivitetsplan/internal/isAlive
@@ -29,7 +29,7 @@ spec:
   webproxy: true
   env:
     - name: APP_ENVIRONMENT_NAME
-      value: {{namespace}}
+      value: { { namespace } }
     - name: DITTNAV_LINK_URL
       value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
   envFrom:

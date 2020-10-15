@@ -8,7 +8,7 @@ const BUILD_PATH = path.resolve(__dirname, './build');
 const removeCssHashPlugin = {
     overrideWebpackConfig: ({ webpackConfig, cracoConfig, pluginOptions, context: { env, paths } }) => {
         const { plugins } = webpackConfig;
-        plugins.forEach(plugin => {
+        plugins.forEach((plugin) => {
             const { options } = plugin;
 
             if (!options) {
@@ -28,7 +28,7 @@ const removeCssHashPlugin = {
             }
         });
         return webpackConfig;
-    }
+    },
 };
 
 module.exports = {
@@ -37,18 +37,18 @@ module.exports = {
         {
             plugin: CracoLessPlugin,
             options: {
-                modifyLessRule: function(lessRule, _context) {
+                modifyLessRule: function (lessRule, _context) {
                     lessRule.test = /\.(module)\.(less)$/;
                     lessRule.exclude = /node_modules/;
 
                     return lessRule;
                 },
                 cssLoaderOptions: {
-                    modules: { localIdentName: '[local]_[hash:base64:5]' }
-                }
-            }
+                    modules: { localIdentName: '[local]_[hash:base64:5]' },
+                },
+            },
         },
-        { plugin: removeCssHashPlugin }
+        { plugin: removeCssHashPlugin },
     ],
     webpack: {
         configure: {
@@ -56,15 +56,15 @@ module.exports = {
                 splitChunks: {
                     cacheGroups: {
                         default: false,
-                        vendors: false
-                    }
+                        vendors: false,
+                    },
                 },
-                runtimeChunk: false
+                runtimeChunk: false,
             },
             output: {
                 path: BUILD_PATH,
-                filename: 'static/js/[name].js'
-            }
-        }
-    }
+                filename: 'static/js/[name].js',
+            },
+        },
+    },
 };

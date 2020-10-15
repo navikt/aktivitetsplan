@@ -3,11 +3,11 @@ import PT from 'prop-types';
 
 export const DirtyContext = React.createContext({
     isDirty: false,
-    setFormIsDirty: (name: string, dirty: boolean) => {}
+    setFormIsDirty: (name: string, dirty: boolean) => {},
 });
 
 function isFormsDirty(forms: { [key: string]: boolean | undefined }) {
-    return Object.values(forms).some(value => value === true);
+    return Object.values(forms).some((value) => value === true);
 }
 
 interface Children {
@@ -20,7 +20,7 @@ export function DirtyProvider(props: Children) {
 
     const setFormIsDirty = useCallback(
         (name, dirty) => {
-            setDirtyForms(forms => {
+            setDirtyForms((forms) => {
                 const newForm = { ...forms, [name]: dirty };
                 setIsDirty(isFormsDirty(newForm));
                 return newForm;
@@ -34,5 +34,5 @@ export function DirtyProvider(props: Children) {
 }
 
 DirtyProvider.propTypes = {
-    children: PT.object.isRequired
+    children: PT.object.isRequired,
 };

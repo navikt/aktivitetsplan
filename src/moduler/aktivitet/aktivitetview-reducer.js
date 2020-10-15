@@ -18,7 +18,7 @@ export default function reducer(state = initalState, action) {
 export function settAktivitetSomVist(aktivitet) {
     return {
         type: SETT_VIST_AKTIVITET,
-        data: aktivitet
+        data: aktivitet,
     };
 }
 

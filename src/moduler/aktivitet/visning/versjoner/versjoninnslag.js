@@ -7,7 +7,7 @@ import BrukerAvhengigTekst from '../../../../felles-komponenter/brukeravhengigte
 import {
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
     TRANSAKSJON_TYPE_STATUS_ENDRET,
-    TRANSAKSJON_TYPE_AVTALT_DATO_ENDRET
+    TRANSAKSJON_TYPE_AVTALT_DATO_ENDRET,
 } from '../../../../constant';
 
 function VersjonInnslag({ versjon, prevVersjon }) {
@@ -20,7 +20,7 @@ function VersjonInnslag({ versjon, prevVersjon }) {
                         id={textId}
                         values={{
                             fra: prevVersjon.status,
-                            til: versjon.status
+                            til: versjon.status,
                         }}
                     />
                 );
@@ -31,7 +31,7 @@ function VersjonInnslag({ versjon, prevVersjon }) {
                         id={textId}
                         values={{
                             fra: formaterDatoKortManed(prevVersjon.tilDato),
-                            til: formaterDatoKortManed(versjon.tilDato)
+                            til: formaterDatoKortManed(versjon.tilDato),
                         }}
                     />
                 );
@@ -41,7 +41,7 @@ function VersjonInnslag({ versjon, prevVersjon }) {
                     <FormattedMessage
                         id={textId}
                         values={{
-                            til: versjon.etikett ? versjon.etikett : 'INGEN'
+                            til: versjon.etikett ? versjon.etikett : 'INGEN',
                         }}
                     />
                 );
@@ -66,11 +66,11 @@ function VersjonInnslag({ versjon, prevVersjon }) {
 
 VersjonInnslag.propTypes = {
     versjon: AppPT.aktivitet.isRequired,
-    prevVersjon: AppPT.aktivitet
+    prevVersjon: AppPT.aktivitet,
 };
 
 VersjonInnslag.defaultProps = {
-    prevVersjon: undefined
+    prevVersjon: undefined,
 };
 
 export default VersjonInnslag;

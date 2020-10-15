@@ -34,7 +34,7 @@ export function doLesAktivitetsplan() {
         credentials: 'include',
         headers: new Headers({
             'Content-Type': 'application/json',
-            NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION') // eslint-disable-line quote-props
-        })
+            NAV_CSRF_PROTECTION: getCookie('NAV_CSRF_PROTECTION'), // eslint-disable-line quote-props
+        }),
     });
 }

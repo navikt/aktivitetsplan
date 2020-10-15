@@ -1,17 +1,17 @@
 const informasjonBackPath = 'informasjon/backpath';
 
 const initalState = {
-    backPath: '/'
+    backPath: '/',
 };
 
-export default function(state = initalState, action) {
+export default function (state = initalState, action) {
     const backPath = action.data;
 
     switch (action.type) {
         case informasjonBackPath:
             return {
                 ...state,
-                backPath
+                backPath,
             };
         default:
             return state;
@@ -21,7 +21,7 @@ export default function(state = initalState, action) {
 export function setBackPath(path) {
     return {
         type: informasjonBackPath,
-        data: path
+        data: path,
     };
 }
 

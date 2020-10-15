@@ -5,16 +5,16 @@ function getActions(navn) {
     return {
         PENDING: `${navnUppercase}/PENDING`,
         OK: `${navnUppercase}/OK`,
-        FEILET: `${navnUppercase}/FEILET`
+        FEILET: `${navnUppercase}/FEILET`,
     };
 }
 
 export function createActionsAndReducer(navn, statePath = navn, initialData = {}) {
     const initialState = { data: initialData, status: STATUS.NOT_STARTED };
     const actionTypes = getActions(navn);
-    const selectSlice = state => state.data[statePath];
-    const selectStatus = state => selectSlice(state).status;
-    const actionFunction = fn => doThenDispatch(fn, actionTypes);
+    const selectSlice = (state) => state.data[statePath];
+    const selectStatus = (state) => selectSlice(state).status;
+    const actionFunction = (fn) => doThenDispatch(fn, actionTypes);
     let promise = null;
 
     return {
@@ -23,19 +23,19 @@ export function createActionsAndReducer(navn, statePath = navn, initialData = {}
                 case actionTypes.PENDING:
                     return {
                         ...state,
-                        status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING
+                        status: state.status === STATUS.NOT_STARTED ? STATUS.PENDING : STATUS.RELOADING,
                     };
                 case actionTypes.OK:
                     return {
                         ...state,
                         data: action.data || initialData,
-                        status: STATUS.OK
+                        status: STATUS.OK,
                     };
                 case actionTypes.FEILET:
                     return {
                         ...state,
                         feil: action.data,
-                        status: STATUS.ERROR
+                        status: STATUS.ERROR,
                     };
                 default:
                     return state;
@@ -44,10 +44,10 @@ export function createActionsAndReducer(navn, statePath = navn, initialData = {}
 
         selectStatus,
         selectSlice,
-        selectData: state => selectSlice(state).data,
+        selectData: (state) => selectSlice(state).data,
 
         action: actionFunction,
-        cashedAction: fn => (dispatch, getState) => {
+        cashedAction: (fn) => (dispatch, getState) => {
             const status = selectStatus(getState());
             if (status === STATUS.NOT_STARTED || status === STATUS.ERROR) {
                 promise = actionFunction(fn)(dispatch);
@@ -56,7 +56,7 @@ export function createActionsAndReducer(navn, statePath = navn, initialData = {}
             return promise;
         },
 
-        actionTypes
+        actionTypes,
     };
 }
 

@@ -7,7 +7,7 @@ export function selectMalverkData(state) {
 }
 
 export function selectMalverkMedTittel(state, tittel) {
-    return selectMalverkData(state).filter(mal => mal.tittel === tittel);
+    return selectMalverkData(state).filter((mal) => mal.tittel === tittel);
 }
 
 export function selectValgtMalverkSlice(state) {

@@ -7,7 +7,7 @@ class DemoBanner extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalIsOpen: this.props.modalIsOpen
+            modalIsOpen: this.props.modalIsOpen,
         };
     }
 

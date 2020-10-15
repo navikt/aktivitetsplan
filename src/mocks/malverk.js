@@ -8,7 +8,7 @@ const egenMalverk = [
         lenke: 'https://tjenester.nav.no/sbl/nav_security_check?goto=/sbl/arbeid/endreCv',
         beskrivelse:
             'Som arbeidssøker er det viktig at du er synlig for flest mulige arbeidsgivere. Det blir du ved å registrere CV-en din på nav.no, NAV samarbeider med bemannings- og rekrutteringsbransjen. Det er også nødvendig for NAV å ha CV-din for å kunne følge deg opp på en god måte.',
-        status: 'BRUKER_ER_INTERESSERT'
+        status: 'BRUKER_ER_INTERESSERT',
     },
     {
         hensikt: 'Bli synlig for arbeidsgivere',
@@ -20,7 +20,7 @@ const egenMalverk = [
         lenke: 'https://tjenester.nav.no/sbl/nav_security_check?goto=/sbl/arbeid/endrePreferanser',
         beskrivelse:
             'Jobbønskene dine gir match når arbeidsgivere og veiledere i NAV leter etter kandidater i CV-basen vår. Du får også et automatisk abonnement på ledige stillinger',
-        status: 'BRUKER_ER_INTERESSERT'
+        status: 'BRUKER_ER_INTERESSERT',
     },
     {
         hensikt: 'Få råd og tips når du søker jobber',
@@ -32,8 +32,8 @@ const egenMalverk = [
         lenke: 'https://tjenester.nav.no/jobbsokerkompetanse/',
         beskrivelse:
             'Svar på noen spørsmål om hvordan du søker på jobber. Få råd og tips til søknaden, CV-en, intervjuet og hvordan du finner jobbene.',
-        status: 'BRUKER_ER_INTERESSERT'
-    }
+        status: 'BRUKER_ER_INTERESSERT',
+    },
 ];
 
 const sokeavtaleMalverk = [
@@ -46,8 +46,8 @@ const sokeavtaleMalverk = [
         tilDato: '2018-07-25T10:25:43.818Z',
         beskrivelse:
             'NAV forventer at du søker omtrent 5 stillinger i uken.\nDet er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb.',
-        status: 'BRUKER_ER_INTERESSERT'
-    }
+        status: 'BRUKER_ER_INTERESSERT',
+    },
 ];
 
 export function hentMalverkMedType({ type }) {

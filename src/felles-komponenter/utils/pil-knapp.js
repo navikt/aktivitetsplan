@@ -8,12 +8,12 @@ function PilKnapp({ onClick, className, ...rest }) {
 }
 
 PilKnapp.defaultProps = {
-    className: null
+    className: null,
 };
 
 PilKnapp.propTypes = {
     onClick: PT.func.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 export default visibleIfHOC(PilKnapp);

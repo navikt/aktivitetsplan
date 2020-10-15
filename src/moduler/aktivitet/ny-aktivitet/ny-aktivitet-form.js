@@ -15,7 +15,7 @@ import {
     SAMTALEREFERAT_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
     STATUS_PLANLAGT,
-    STILLING_AKTIVITET_TYPE
+    STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
@@ -32,7 +32,7 @@ const CONFIRM = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på
 
 function onBeforeLoadEffect(isDirty) {
     return () => {
-        window.onbeforeunload = e => {
+        window.onbeforeunload = (e) => {
             if (isDirty.current) {
                 e.returnValue = CONFIRM;
                 return CONFIRM;
@@ -52,15 +52,15 @@ function NyAktivitetForm(props) {
     const isDirty = useRef(false);
     useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
 
-    const onSubmitFactory = aktivitetsType => {
-        return aktivitet => {
+    const onSubmitFactory = (aktivitetsType) => {
+        return (aktivitet) => {
             const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
             const nyAktivitet = {
                 status: STATUS_PLANLAGT,
                 type: aktivitetsType,
-                ...filteredAktivitet
+                ...filteredAktivitet,
             };
-            return onLagreNyAktivitet(nyAktivitet).then(action => history.push(aktivitetRoute(action.data.id)));
+            return onLagreNyAktivitet(nyAktivitet).then((action) => history.push(aktivitetRoute(action.data.id)));
         };
     };
 
@@ -71,7 +71,7 @@ function NyAktivitetForm(props) {
         }
     }
 
-    const onReqBack = e => {
+    const onReqBack = (e) => {
         e.preventDefault();
         const isItReallyDirty = isDirty.current;
         if (!isItReallyDirty || window.confirm(CONFIRM)) {
@@ -136,16 +136,16 @@ NyAktivitetForm.propTypes = {
     onLagreNyAktivitet: PT.func.isRequired,
     history: PT.object.isRequired,
     match: PT.object.isRequired,
-    aktivitetFeilmeldinger: PT.array.isRequired
+    aktivitetFeilmeldinger: PT.array.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-    onLagreNyAktivitet: aktivitet => dispatch(lagNyAktivitet(aktivitet))
+const mapDispatchToProps = (dispatch) => ({
+    onLagreNyAktivitet: (aktivitet) => dispatch(lagNyAktivitet(aktivitet)),
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     aktivitetFeilmeldinger: selectAktivitetFeilmeldinger(state),
-    underOppfolging: selectErUnderOppfolging(state)
+    underOppfolging: selectErUnderOppfolging(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NyAktivitetForm);

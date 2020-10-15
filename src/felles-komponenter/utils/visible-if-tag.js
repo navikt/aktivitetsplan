@@ -8,7 +8,7 @@ function VisibleIfTag({ tagName, children, ...restProps }) {
 
 VisibleIfTag.propTypes = {
     children: PT.node.isRequired,
-    tagName: PT.string.isRequired
+    tagName: PT.string.isRequired,
 };
 
 export default visibleIfHOC(VisibleIfTag);

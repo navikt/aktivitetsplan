@@ -2,7 +2,7 @@ const kjonn = Math.random() > 0.5 ? 'K' : 'M';
 const fornavn = 'Test';
 const etternavn = 'Testus';
 
-export default function(fnr) {
+export default function (fnr) {
     return {
         fornavn: fornavn,
         mellomnavn: null,
@@ -17,7 +17,7 @@ export default function(fnr) {
         geografiskTilknytning: '',
         behandlendeEnhet: {
             enhetsnummer: '007',
-            navn: 'Den sorte dame'
+            navn: 'Den sorte dame',
         },
         telefon: null,
         epost: null,
@@ -30,6 +30,6 @@ export default function(fnr) {
         midlertidigAdresseUtland: null,
         postAdresse: null,
         egenAnsatt: false,
-        kjonn: kjonn
+        kjonn: kjonn,
     };
 }

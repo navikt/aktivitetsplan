@@ -18,26 +18,23 @@ class Identitet extends Component {
 Identitet.propTypes = {
     ident: PT.string,
     children: PT.string,
-    doHentIdentitet: PT.func.isRequired
+    doHentIdentitet: PT.func.isRequired,
 };
 
 Identitet.defaultProps = {
     ident: undefined,
-    children: undefined
+    children: undefined,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const ident = state.data.identitet.data.id;
     return {
-        ident
+        ident,
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doHentIdentitet: () => dispatch(hentIdentitet())
+const mapDispatchToProps = (dispatch) => ({
+    doHentIdentitet: () => dispatch(hentIdentitet()),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Identitet);
+export default connect(mapStateToProps, mapDispatchToProps)(Identitet);

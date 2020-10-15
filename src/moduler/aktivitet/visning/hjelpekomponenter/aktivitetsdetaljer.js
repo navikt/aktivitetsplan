@@ -31,11 +31,11 @@ function Aktivitetsdetaljer({ valgtAktivitet }) {
 
 Aktivitetsdetaljer.propTypes = {
     className: PT.string,
-    valgtAktivitet: AppPT.aktivitet.isRequired
+    valgtAktivitet: AppPT.aktivitet.isRequired,
 };
 
 Aktivitetsdetaljer.defaultProps = {
-    className: undefined
+    className: undefined,
 };
 
 export default Aktivitetsdetaljer;

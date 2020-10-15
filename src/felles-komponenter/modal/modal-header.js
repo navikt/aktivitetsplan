@@ -28,7 +28,7 @@ ModalHeader.propTypes = {
     headerTekst: PT.string,
     onTilbakeClick: PT.func,
     className: PT.string,
-    aktivitetErLaast: PT.bool
+    aktivitetErLaast: PT.bool,
 };
 
 ModalHeader.defaultProps = {
@@ -36,7 +36,7 @@ ModalHeader.defaultProps = {
     headerTekst: undefined,
     onTilbakeClick: undefined,
     className: undefined,
-    aktivitetErLaast: false
+    aktivitetErLaast: false,
 };
 
 export default ModalHeader;

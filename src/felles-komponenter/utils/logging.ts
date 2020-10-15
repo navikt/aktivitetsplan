@@ -46,18 +46,14 @@ export const TILSTAND_FILTER_METRIKK = `${filterBase}Tilstand`;
 const AKTIVITET_FLYTTET = 'aktivitetsplan.aktivitet.flyttet';
 
 export function hash(string?: string): string | undefined {
-    return string
-        ? shajs('sha256')
-              .update(string)
-              .digest('hex')
-        : undefined;
+    return string ? shajs('sha256').update(string).digest('hex') : undefined;
 }
 
 export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boolean, ident: string, aktorId?: string) {
     const fields = {
         underOppfolging,
         veileder: hash(ident),
-        bruker: hash(aktorId)
+        bruker: hash(aktorId),
     };
     loggEvent(ANTALL_VEILEDERE, fields, { servicegruppe });
 }
@@ -72,13 +68,13 @@ export function loggingAntallBrukere(servicegruppe: string, underOppfolging: boo
 
 export function loggForhandsorienteringTiltak() {
     loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-        forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD
+        forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_TILLTAK_SPESIALTILPASSAD,
     });
 }
 
 export function metrikkTidForsteAvtalte(tid: number) {
     loggEvent('aktivitetsplan.aktivitet.forste.avtalt.v2', {
-        tidSidenOppfolging: tid
+        tidSidenOppfolging: tid,
     });
 }
 
@@ -87,7 +83,7 @@ export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivit
         fraStatus: aktivitet.status,
         tilStatus: nyStatus,
         aktivitetType: aktivitet.type,
-        flytteMetode
+        flytteMetode,
     });
 }
 
@@ -98,18 +94,18 @@ export function loggForhandsorientering(
 ) {
     if (erManuellKrrKvpBruker) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-            forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_KRR_KVP_MANUELL
+            forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_KRR_KVP_MANUELL,
         });
     }
 
     if (mindreEnSyvDagerIgen) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-            forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_MINDRE_ENN_SYV_DAGER
+            forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_MINDRE_ENN_SYV_DAGER,
         });
     }
 
     return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-        forhandsorienteringType: avtaltForm
+        forhandsorienteringType: avtaltForm,
     });
 }
 
@@ -128,12 +124,12 @@ function tidBruktFra(fraDato: number | string, tilDato?: number | string) {
 
 function loggTidBruktFraRegistrert(fraDato: number | string) {
     loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
-        tidBruktFraRegistrert: tidBruktFra(fraDato)
+        tidBruktFraRegistrert: tidBruktFra(fraDato),
     });
 }
 
 export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Array<Lest>, perioder: Array<OppfolgingsPeriode>) {
-    const periode = perioder.find(p => p.sluttDato === null);
+    const periode = perioder.find((p) => p.sluttDato === null);
     if (periode) {
         // Tid brukt fra registrert til aktivitetsplanen
         if (lest.length === 0) {
@@ -146,13 +142,13 @@ export function loggTidBruktGaaInnPaaAktivitetsplanen(lest: Array<Lest>, periode
         }
         // Tid brukt mellom gangene i aktivitetsplanen
         if (lest.length !== 0) {
-            const lestAktivitetsplan = lest.find(a => a.ressurs === 'aktivitetsplan');
+            const lestAktivitetsplan = lest.find((a) => a.ressurs === 'aktivitetsplan');
             if (lestAktivitetsplan) {
                 const startDato = new Date(periode.startDato).getTime();
                 const tidspunkt = new Date(lestAktivitetsplan.tidspunkt).getTime();
                 if (startDato < tidspunkt) {
                     loggEvent(TID_BRUKT_GAINNPA_PLANEN, {
-                        tidMellomGangene: tidBruktFra(tidspunkt)
+                        tidMellomGangene: tidBruktFra(tidspunkt),
                     });
                 } else {
                     loggTidBruktFraRegistrert(startDato);

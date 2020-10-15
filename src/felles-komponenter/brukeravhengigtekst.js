@@ -13,17 +13,14 @@ function BrukerAvhengigTekst({ id, erBruker, endretAv }) {
 BrukerAvhengigTekst.propTypes = {
     id: PT.string.isRequired,
     erBruker: PT.bool.isRequired,
-    endretAv: PT.string
+    endretAv: PT.string,
 };
 BrukerAvhengigTekst.defaultProps = {
-    endretAv: undefined
+    endretAv: undefined,
 };
 
-const mapStateToProps = state => ({
-    erBruker: selectErBruker(state)
+const mapStateToProps = (state) => ({
+    erBruker: selectErBruker(state),
 });
 
-export default connect(
-    mapStateToProps,
-    null
-)(BrukerAvhengigTekst);
+export default connect(mapStateToProps, null)(BrukerAvhengigTekst);

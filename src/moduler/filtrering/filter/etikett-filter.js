@@ -23,10 +23,10 @@ function EtikettFilter({ harAktivitetEtiketter, aktivitetEtiketter, doToggleAkti
 EtikettFilter.propTypes = {
     harAktivitetEtiketter: PT.bool.isRequired,
     aktivitetEtiketter: PT.object.isRequired,
-    doToggleAktivitetsEtikett: PT.func.isRequired
+    doToggleAktivitetsEtikett: PT.func.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const aktiviteter = selectAktiviterForAktuellePerioden(state);
     const aktivitetEtiketterFilter = selectAktivitetEtiketterFilter(state);
     const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
@@ -39,15 +39,12 @@ const mapStateToProps = state => {
 
     return {
         aktivitetEtiketter,
-        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length >= 1
+        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length >= 1,
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    doToggleAktivitetsEtikett: aktivitetsType => dispatch(toggleAktivitetsEtikett(aktivitetsType))
+const mapDispatchToProps = (dispatch) => ({
+    doToggleAktivitetsEtikett: (aktivitetsType) => dispatch(toggleAktivitetsEtikett(aktivitetsType)),
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(EtikettFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(EtikettFilter);

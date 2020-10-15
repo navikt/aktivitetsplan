@@ -11,7 +11,7 @@ const defaultBeskrivelse =
     'Gi beskjed til NAV hvis det skjer endringer i situasjonen din eller hvis du ikke kan gjennomføre en aktivitet.';
 
 const validator = useFormstate({
-    beskrivelse: val => (val.length > 2000 ? 'Du må korte ned teksten til 2000 tegn' : undefined)
+    beskrivelse: (val) => (val.length > 2000 ? 'Du må korte ned teksten til 2000 tegn' : undefined),
 });
 
 interface Props {
@@ -24,7 +24,7 @@ function PrintMeldingForm(props: Props) {
     const { bruker, onSubmit, hidden } = props;
 
     const state = validator({
-        beskrivelse: defaultBeskrivelse
+        beskrivelse: defaultBeskrivelse,
     });
 
     const submit = (form: { beskrivelse: string }) => {
