@@ -14,17 +14,11 @@ export function selectMotpartData(state) {
     return selectMotpartSlice(state).data;
 }
 
-export const selectFnrPaMotpartHvisBruker = createSelector(
-    selectMotpartData,
-    selectErVeileder,
-    (motpart, erVeileder) => (erVeileder ? motpart.fodselsnummer : '')
+export const selectFnrPaMotpartHvisBruker = createSelector(selectMotpartData, selectErVeileder, (motpart, erVeileder) =>
+    erVeileder ? motpart.fodselsnummer : ''
 );
 
-export const selectNavnPaMotpart = createSelector(
-    selectMotpartData,
-    selectErVeileder,
-    (motpart, erVeileder) => {
-        const navn = storeForbokstaver(motpart.fornavn, motpart.mellomnavn, motpart.etternavn);
-        return erVeileder ? navn : 'NAV';
-    }
-);
+export const selectNavnPaMotpart = createSelector(selectMotpartData, selectErVeileder, (motpart, erVeileder) => {
+    const navn = storeForbokstaver(motpart.fornavn, motpart.mellomnavn, motpart.etternavn);
+    return erVeileder ? navn : 'NAV';
+});

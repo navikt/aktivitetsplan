@@ -11,13 +11,13 @@ import * as motpartSelector from './moduler/motpart/motpart-selector';
 import reducer from './reducer';
 
 const initialState = reducer(undefined, {
-    type: ''
+    type: '',
 });
 
 const initialStateString = JSON.stringify(initialState);
 
 function selectorModulTest(selectorModul) {
-    Object.keys(selectorModul).forEach(selectorKey => {
+    Object.keys(selectorModul).forEach((selectorKey) => {
         describe(selectorKey, () => {
             const selector = selectorModul[selectorKey];
 
@@ -29,7 +29,7 @@ function selectorModulTest(selectorModul) {
                 expect(initialStateString).toEqual(
                     JSON.stringify(
                         reducer(undefined, {
-                            type: ''
+                            type: '',
                         })
                     )
                 );

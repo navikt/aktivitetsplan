@@ -23,7 +23,7 @@ const SamtalereferatDetaljer = ({ aktivitet }) => (
 );
 
 SamtalereferatDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
 };
 
 export default SamtalereferatDetaljer;

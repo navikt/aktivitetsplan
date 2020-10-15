@@ -4,7 +4,7 @@ import * as AppPT from '../../../../proptypes';
 import ForhandsorienteringArenaAktivitetForm from './forhandsorientering-form';
 import {
     HiddenIfAlertStripeInfoSolid,
-    HiddenIfAlertStripeSuksess
+    HiddenIfAlertStripeSuksess,
 } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import visibleIfHOC from '../../../../hocs/visible-if';
@@ -55,7 +55,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
 }
 
 ForhandsorienteringArenaAktivitet.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
 };
 
 export default visibleIfHOC(ForhandsorienteringArenaAktivitet);

@@ -46,7 +46,7 @@ class SprettendeScrollbars extends Component {
         return (
             <Scrollbars
                 {...this.props}
-                ref={scrollbars => {
+                ref={(scrollbars) => {
                     this.scrollbars = scrollbars;
                 }}
             />

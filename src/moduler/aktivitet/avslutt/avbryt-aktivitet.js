@@ -24,7 +24,7 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse, history }) 
             headerTekst={headerTekst}
             beskrivelseLabel={beskrivelseLabel}
             lagrer={lagrer}
-            onSubmit={beskrivelseForm => {
+            onSubmit={(beskrivelseForm) => {
                 history.replace('/');
                 return lagreBegrunnelse(valgtAktivitet, beskrivelseForm.begrunnelse);
             }}
@@ -57,11 +57,11 @@ AvbrytAktivitet.propTypes = {
     lagrer: PT.bool.isRequired,
     lagreBegrunnelse: PT.func.isRequired,
     history: AppPT.history.isRequired,
-    match: PT.object.isRequired
+    match: PT.object.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-    lagreBegrunnelse: (aktivitet, begrunnelse) => dispatch(avbrytAktivitet(aktivitet, begrunnelse))
+const mapDispatchToProps = (dispatch) => ({
+    lagreBegrunnelse: (aktivitet, begrunnelse) => dispatch(avbrytAktivitet(aktivitet, begrunnelse)),
 });
 
 const mapStateToProps = (state, props) => {
@@ -69,11 +69,8 @@ const mapStateToProps = (state, props) => {
     const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
     return {
         valgtAktivitet: valgtAktivitet || {},
-        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK
+        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AvbrytAktivitet);
+export default connect(mapStateToProps, mapDispatchToProps)(AvbrytAktivitet);

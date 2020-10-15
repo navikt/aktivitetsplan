@@ -1,3 +1,3 @@
 export default {
-    tilgangTilBrukersKontor: true
+    tilgangTilBrukersKontor: true,
 };
