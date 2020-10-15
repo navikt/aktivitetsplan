@@ -8,8 +8,8 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v1
-          with:
-            node-version: 12
+        with:
+          node-version: 12
       - name: Format
         run: |
           npm ci
