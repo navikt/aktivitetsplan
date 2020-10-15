@@ -10,6 +10,7 @@
     "test": "craco test",
     "test:coverage": "npm test -- --coverage --watchAll=false",
     "heroku-postbuild": "npm run build:tekster && cross-env REACT_APP_MOCK=true craco build",
+    "format": "prettier --write .",
     "lint": "echo \"Not implemented\""
   },
   "dependencies": {
