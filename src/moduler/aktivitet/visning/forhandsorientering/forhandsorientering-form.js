@@ -56,7 +56,7 @@ function validate(val) {
 const validator = useFormstate({
     text: validate,
     checked: () => null,
-    avtaltSelect: () => null
+    avtaltSelect: () => null,
 });
 
 function ForhandsorieteringsForm(props) {
@@ -65,7 +65,7 @@ function ForhandsorieteringsForm(props) {
     const state = validator({
         text: avtaltTekst119,
         avtaltSelect: SEND_FORHANDSORIENTERING,
-        checked: ''
+        checked: '',
     });
 
     if (!visible) {
@@ -112,28 +112,28 @@ ForhandsorieteringsForm.propTypes = {
     valgtAktivitet: AppPT.aktivitet.isRequired,
     dialogStatus: AppPT.status.isRequired,
     onSubmit: PT.func.isRequired,
-    forhandsorienteringSendt: PT.func.isRequired
+    forhandsorienteringSendt: PT.func.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        dialogStatus: selectDialogStatus(state)
+        dialogStatus: selectDialogStatus(state),
     };
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-    onSubmit: data => {
+    onSubmit: (data) => {
         const text = data.avtaltSelect === SEND_FORHANDSORIENTERING ? avtaltTekst : data.text;
         return sendForhandsorientering({
             aktivitetId: props.valgtAktivitet.id,
             tekst: text,
-            overskrift: props.valgtAktivitet.tittel
+            overskrift: props.valgtAktivitet.tittel,
         })(dispatch).then(() => {
             props.forhandsorienteringSendt();
             loggForhandsorienteringTiltak();
             document.querySelector('.aktivitet-modal').focus();
         });
-    }
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForhandsorieteringsForm);

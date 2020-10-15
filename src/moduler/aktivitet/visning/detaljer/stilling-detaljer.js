@@ -41,7 +41,7 @@ const StillingDetaljer = ({ aktivitet }) => (
 );
 
 StillingDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
 };
 
 export default StillingDetaljer;

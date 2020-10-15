@@ -8,7 +8,7 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT
+    STATUS_AVBRUTT,
 } from '../../../constant';
 
 // HAR DETTE NOE MED UU ATT GORA???
@@ -40,7 +40,7 @@ function KolonneHeader({ status }) {
 }
 
 KolonneHeader.propTypes = {
-    status: PT.string.isRequired
+    status: PT.string.isRequired,
 };
 
 export default KolonneHeader;

@@ -32,8 +32,8 @@ const byttFlate = (event: MouseEvent, aktiviteId?: string, dialogId?: string) =>
         new CustomEvent('visDialog', {
             detail: {
                 dialogId: dialogId,
-                aktivitetId: aktiviteId
-            }
+                aktivitetId: aktiviteId,
+            },
         })
     );
 };

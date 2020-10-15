@@ -24,8 +24,8 @@ export default function DetaljvisningLenke({ lenke }) {
 }
 
 DetaljvisningLenke.propTypes = {
-    lenke: PT.string
+    lenke: PT.string,
 };
 DetaljvisningLenke.defaultProps = {
-    lenke: null
+    lenke: null,
 };

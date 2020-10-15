@@ -7,11 +7,11 @@ metadata:
   labels:
     team: pto
 spec:
-  image: {{image}}
+  image: { { image } }
   port: 8080
   resources:
     limits:
-      cpu: "3"
+      cpu: '3'
       memory: 2048Mi
     requests:
       cpu: 500m

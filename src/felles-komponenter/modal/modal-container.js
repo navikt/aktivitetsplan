@@ -2,7 +2,7 @@ import React from 'react';
 import PT from 'prop-types';
 import classNames from 'classnames';
 
-const cls = className => classNames(className, 'modal-container');
+const cls = (className) => classNames(className, 'modal-container');
 
 function ModalContainer({ className, children }) {
     return <div className={cls(className)}>{children}</div>;
@@ -10,12 +10,12 @@ function ModalContainer({ className, children }) {
 
 ModalContainer.propTypes = {
     children: PT.node,
-    className: PT.string
+    className: PT.string,
 };
 
 ModalContainer.defaultProps = {
     children: undefined,
-    className: undefined
+    className: undefined,
 };
 
 export default ModalContainer;

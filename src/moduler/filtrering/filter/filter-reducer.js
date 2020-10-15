@@ -10,7 +10,7 @@ const initalState = {
     aktivitetEtiketter: {},
     aktivitetStatus: {},
     aktivitetAvtaltMedNav: {},
-    historiskPeriode: null
+    historiskPeriode: null,
 };
 
 // Reducer
@@ -40,7 +40,7 @@ export default function reducer(state = initalState, action) {
         case VELG_HISTORISK_PERIODE:
             return {
                 ...initalState,
-                historiskPeriode: data
+                historiskPeriode: data,
             };
         default:
             return state;
@@ -50,34 +50,34 @@ export default function reducer(state = initalState, action) {
 export function toggleAktivitetsType(aktivitetType) {
     return {
         type: TOGGLE_AKTIVITET_TYPE,
-        data: aktivitetType
+        data: aktivitetType,
     };
 }
 
 export function toggleAktivitetsEtikett(aktivitetEtikett) {
     return {
         type: TOGGLE_AKTIVITET_ETIKETT,
-        data: aktivitetEtikett
+        data: aktivitetEtikett,
     };
 }
 
 export function velgHistoriskPeriode(historiskPeriode) {
     return {
         type: VELG_HISTORISK_PERIODE,
-        data: historiskPeriode
+        data: historiskPeriode,
     };
 }
 
 export function toggleAktivitetsStatus(aktivitetStatus) {
     return {
         type: TOGGLE_AKTIVITET_STATUS,
-        data: aktivitetStatus
+        data: aktivitetStatus,
     };
 }
 
 export function toggleAktivitetAvtaltMedNav(aktivitetAvtalt) {
     return {
         type: TOGGLE_AKTIVITET_AVTALT,
-        data: aktivitetAvtalt
+        data: aktivitetAvtalt,
     };
 }

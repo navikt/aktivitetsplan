@@ -18,14 +18,14 @@ function LagreAktivitet({ venter, underOppfolging }) {
 
 LagreAktivitet.propTypes = {
     venter: PT.bool.isRequired,
-    underOppfolging: PT.bool.isRequired
+    underOppfolging: PT.bool.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const aktivitetStatus = selectAktivitetStatus(state);
     return {
         venter: !(aktivitetStatus === STATUS.OK || aktivitetStatus === STATUS.ERROR),
-        underOppfolging: selectErUnderOppfolging(state)
+        underOppfolging: selectErUnderOppfolging(state),
     };
 };
 

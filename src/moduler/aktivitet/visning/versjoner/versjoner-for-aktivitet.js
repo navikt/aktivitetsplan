@@ -64,26 +64,21 @@ VersjonerForAktivitet.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     doHentVersjonerForAktivitet: PT.func.isRequired,
     doFjernVersjoner: PT.func.isRequired,
-    className: PT.string
+    className: PT.string,
 };
 
 VersjonerForAktivitet.defaultProps = {
-    className: ''
+    className: '',
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     avhengighet: selectVersjonerStatus(state),
-    versjoner: selectSorterteVersjoner(state)
+    versjoner: selectSorterteVersjoner(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-    doHentVersjonerForAktivitet: aktivitet => hentVersjonerForAktivtet(aktivitet)(dispatch),
-    doFjernVersjoner: () => fjernVersjoner()(dispatch)
+const mapDispatchToProps = (dispatch) => ({
+    doHentVersjonerForAktivitet: (aktivitet) => hentVersjonerForAktivtet(aktivitet)(dispatch),
+    doFjernVersjoner: () => fjernVersjoner()(dispatch),
 });
 
-export default visibleIfHOC(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(VersjonerForAktivitet)
-);
+export default visibleIfHOC(connect(mapStateToProps, mapDispatchToProps)(VersjonerForAktivitet));

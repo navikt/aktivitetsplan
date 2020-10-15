@@ -8,7 +8,7 @@ import React from 'react';
 export enum UpdateTypes {
     Dialog = 'DIALOG',
     Oppfolging = 'OPPFOLGING',
-    Aktivitet = 'AKTIVITET'
+    Aktivitet = 'AKTIVITET',
 }
 
 interface UpdateEventType {
@@ -35,7 +35,7 @@ function isUpdateEvent(toBeDetermined: Event): toBeDetermined is CustomEvent<Upd
 export function UppdateEventHandler() {
     const dispatch = useDispatch();
 
-    useEventListener(eventName, event => {
+    useEventListener(eventName, (event) => {
         if (!isUpdateEvent(event)) {
             return;
         }

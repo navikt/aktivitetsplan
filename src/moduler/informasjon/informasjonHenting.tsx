@@ -26,7 +26,7 @@ function InformasjonsHenting() {
     useEffect(() => {
         if (underOppfolging) {
             // @ts-ignore
-            doHentLest().then(a => {
+            doHentLest().then((a) => {
                 loggTidBruktGaaInnPaaAktivitetsplanen(a.data, oppfolgingsPerioder);
             });
         }

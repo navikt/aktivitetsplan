@@ -2,12 +2,12 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: aktivitetsplan-fss
-  namespace: {{namespace}}
+  namespace: { { namespace } }
   cluster: dev-fss
   labels:
     team: pto
 spec:
-  image: {{image}}
+  image: { { image } }
   port: 8080
   liveness:
     path: aktivitetsplan/internal/isAlive

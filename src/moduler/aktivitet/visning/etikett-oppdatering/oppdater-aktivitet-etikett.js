@@ -16,7 +16,7 @@ function OppdaterAktivitetEtikett(props) {
     const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
     const [endring, setEndring] = useState(false);
 
-    const onSubmit = val =>
+    const onSubmit = (val) =>
         lagreEtikett(val).then(() => {
             setEndring(false);
             document.querySelector('.aktivitet-modal').focus();
@@ -40,14 +40,14 @@ function OppdaterAktivitetEtikett(props) {
 OppdaterAktivitetEtikett.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
     disableEtikettEndringer: PT.bool.isRequired,
-    lagreEtikett: PT.func.isRequired
+    lagreEtikett: PT.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
     disableEtikettEndringer:
         selectLasterAktivitetData(state) ||
         !selectKanEndreAktivitetStatus(state, props.aktivitet) ||
-        !selectErUnderOppfolging(state)
+        !selectErUnderOppfolging(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
@@ -61,10 +61,10 @@ const mapDispatchToProps = (dispatch, props) => ({
         return dispatch(
             oppdaterAktivitetEtikett({
                 ...props.aktivitet,
-                etikett: nyEtikett
+                etikett: nyEtikett,
             })
         );
-    }
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OppdaterAktivitetEtikett);

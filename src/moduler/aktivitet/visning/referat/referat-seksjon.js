@@ -24,11 +24,11 @@ ReferatSeksjon.propTypes = {
     publiserer: PT.bool.isRequired,
     erReferatPublisert: PT.bool.isRequired,
     startOppdaterReferat: PT.func.isRequired,
-    stoppOppdaterReferat: PT.func.isRequired
+    stoppOppdaterReferat: PT.func.isRequired,
 };
 
 ReferatSeksjon.defaultProps = {
-    referat: undefined
+    referat: undefined,
 };
 
 export default ReferatSeksjon;

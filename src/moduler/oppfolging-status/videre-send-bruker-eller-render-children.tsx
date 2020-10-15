@@ -27,7 +27,7 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
         children,
         manuell,
         oppfolgingsPerioder,
-        reservasjonKRR
+        reservasjonKRR,
     } = props;
 
     const ikkeDigitalOppfolging = reservasjonKRR || manuell;

@@ -10,7 +10,7 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
     TILTAK_AKTIVITET_TYPE,
-    UTDANNING_AKTIVITET_TYPE
+    UTDANNING_AKTIVITET_TYPE,
 } from './constant';
 
 export const aktivitet = PT.shape({
@@ -26,7 +26,7 @@ export const aktivitet = PT.shape({
     avtalt: PT.bool,
     tiltaksarrangor: PT.string,
     deltakelsesprosent: PT.number,
-    dagerPerUke: PT.number
+    dagerPerUke: PT.number,
 });
 
 export const aktiviteter = PT.arrayOf(aktivitet);
@@ -37,7 +37,7 @@ export const henvendelse = PT.shape({
     avsender: PT.string.isRequired,
     avsenderId: PT.string,
     sendt: PT.string.isRequired,
-    lest: PT.bool.isRequired
+    lest: PT.bool.isRequired,
 });
 
 export const dialog = PT.shape({
@@ -51,18 +51,18 @@ export const dialog = PT.shape({
     venterPaSvar: PT.bool,
     ferdigBehandlet: PT.bool,
     henvendelser: PT.arrayOf(henvendelse).isRequired,
-    egenskaper: PT.arrayOf(PT.string)
+    egenskaper: PT.arrayOf(PT.string),
 });
 
 export const etikett = PT.shape({
     id: PT.string,
     type: PT.string,
-    visningsTekst: PT.string
+    visningsTekst: PT.string,
 });
 
 export const slice = PT.shape({
     status: PT.string,
-    data: PT.any
+    data: PT.any,
 });
 
 export const status = PT.oneOf(Object.keys(STATUS));
@@ -77,7 +77,7 @@ export const avslutningStatus = PT.shape({
     harYtelser: PT.bool,
     harTiltak: PT.bool,
     underKvp: PT.bool,
-    inaktiveringsDato: PT.string
+    inaktiveringsDato: PT.string,
 });
 
 export const eskaleringsvarsel = PT.shape({
@@ -86,7 +86,7 @@ export const eskaleringsvarsel = PT.shape({
     opprettetAv: PT.string,
     opprettetDato: PT.string,
     avsluttetDato: PT.string,
-    tilhorendeDialogId: PT.number
+    tilhorendeDialogId: PT.number,
 });
 
 export const oppfolging = PT.shape({
@@ -103,14 +103,14 @@ export const oppfolging = PT.shape({
         underKvp: PT.bool,
         avslutningStatus,
         oppfolgingsPerioder: PT.arrayOf(PT.object),
-        harSkriveTilgang: PT.bool
-    })
+        harSkriveTilgang: PT.bool,
+    }),
 });
 
 export const mal = PT.shape({
     mal: PT.string,
     endretAv: PT.string,
-    dato: PT.string
+    dato: PT.string,
 });
 
 export const malListe = PT.arrayOf(mal);
@@ -118,8 +118,8 @@ export const malListe = PT.arrayOf(mal);
 export const motpart = PT.shape({
     status: PT.string,
     data: PT.shape({
-        navn: PT.string
-    })
+        navn: PT.string,
+    }),
 });
 
 export const bruker = PT.shape({
@@ -127,14 +127,14 @@ export const bruker = PT.shape({
     fornavn: PT.string,
     mellomnavn: PT.string,
     etternavn: PT.string,
-    sammensattNavn: PT.string
+    sammensattNavn: PT.string,
 });
 
 export const oppfolgingsPeriode = PT.shape({
     id: PT.string,
     fra: PT.string,
     vistFra: PT.string,
-    til: PT.string
+    til: PT.string,
 });
 
 export const feil = PT.shape({
@@ -143,20 +143,20 @@ export const feil = PT.shape({
     melding: PT.shape({
         id: PT.string,
         type: PT.string.isRequired,
-        detaljer: PT.object
-    })
+        detaljer: PT.object,
+    }),
 });
 
 export const veileder = PT.shape({
     etternavn: PT.string,
     fornavn: PT.string,
     ident: PT.string,
-    navn: PT.string
+    navn: PT.string,
 });
 
 export const printMelding = PT.shape({
     overskrift: PT.string,
-    beskrivelse: PT.string
+    beskrivelse: PT.string,
 });
 
 export const aktivitettype = PT.oneOf([
@@ -169,7 +169,7 @@ export const aktivitettype = PT.oneOf([
     IJOBB_AKTIVITET_TYPE,
     BEHANDLING_AKTIVITET_TYPE,
     MOTE_TYPE,
-    SAMTALEREFERAT_TYPE
+    SAMTALEREFERAT_TYPE,
 ]);
 
 export const malverktype = PT.shape({
@@ -183,17 +183,17 @@ export const malverktype = PT.shape({
     lenke: PT.string,
     status: PT.string,
     fraDato: PT.string,
-    tilDato: PT.string
+    tilDato: PT.string,
 });
 
 export const history = PT.shape({
     goBack: PT.func.isRequired,
     push: PT.func.isRequired,
-    replace: PT.func.isRequired
+    replace: PT.func.isRequired,
 });
 
 export const lest = PT.shape({
     tidspunkt: PT.string.isRequired,
     verdi: PT.string,
-    ressurs: PT.string.isRequired
+    ressurs: PT.string.isRequired,
 });
