@@ -8,7 +8,7 @@ import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Textarea from '../../../felles-komponenter/skjema/input/textarea';
 
-const begrunnelseValidator = val => {
+const begrunnelseValidator = (val) => {
     if (val.trim().length === 0) {
         return 'Du må fylle ut en begrunnelse';
     }
@@ -20,7 +20,7 @@ const begrunnelseValidator = val => {
 };
 
 const validator = useFormstate({
-    begrunnelse: begrunnelseValidator
+    begrunnelse: begrunnelseValidator,
 });
 
 function BegrunnelseForm(props) {
@@ -55,7 +55,7 @@ BegrunnelseForm.propTypes = {
     headerTekst: PT.string.isRequired,
     beskrivelseLabel: PT.string.isRequired,
     lagrer: PT.bool.isRequired,
-    onSubmit: PT.func.isRequired
+    onSubmit: PT.func.isRequired,
 };
 
 export default BegrunnelseForm;

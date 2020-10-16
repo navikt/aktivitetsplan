@@ -18,7 +18,7 @@ function FiltreringLabel({ label, slettFilter }) {
 
 FiltreringLabel.propTypes = {
     label: PT.object.isRequired,
-    slettFilter: PT.func.isRequired
+    slettFilter: PT.func.isRequired,
 };
 
 export default FiltreringLabel;

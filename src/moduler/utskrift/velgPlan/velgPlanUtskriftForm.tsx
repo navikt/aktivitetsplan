@@ -8,7 +8,7 @@ import KvpPlanValg from './velgKvpPlan';
 import Radio from '../../../felles-komponenter/skjema/input/radio';
 
 const validator = useFormstate({
-    utskriftPlanType: () => undefined
+    utskriftPlanType: () => undefined,
 });
 
 interface VelgPlanUtskriftFormProps {
@@ -21,7 +21,7 @@ function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
     const { onSubmit, kvpPerioder, hidden } = props;
 
     const initial = {
-        utskriftPlanType: 'helePlanen'
+        utskriftPlanType: 'helePlanen',
     };
 
     const submit = (form: { utskriftPlanType: string }) => {

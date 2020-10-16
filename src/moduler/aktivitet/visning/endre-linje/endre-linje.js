@@ -57,11 +57,11 @@ EndreLinje.propTypes = {
     visning: PT.node.isRequired,
     endring: PT.bool.isRequired,
     setEndring: PT.func.isRequired,
-    kanEndre: PT.bool
+    kanEndre: PT.bool,
 };
 
 EndreLinje.defaultProps = {
-    kanEndre: true
+    kanEndre: true,
 };
 
 export default EndreLinje;

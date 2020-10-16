@@ -35,8 +35,8 @@ function toStatus(avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] {
     }
 
     return asArray(avhengiheter)
-        .map(element => (!element || typeof element === 'string' ? element : element.status))
-        .map(element => (element ? element : 'NOT_SETT'));
+        .map((element) => (!element || typeof element === 'string' ? element : element.status))
+        .map((element) => (element ? element : 'NOT_SETT'));
 }
 
 function Innholdslaster(props: InnholdslasterProps) {
@@ -75,7 +75,7 @@ Innholdslaster.defaultProps = {
     className: '',
     minstEn: false,
     visChildrenVedFeil: false,
-    alleOK: false
+    alleOK: false,
 };
 
 export default Innholdslaster;

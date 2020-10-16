@@ -8,15 +8,16 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v1
-          with:
-            node-version: 12
+        with:
+          node-version: 12
       - name: Format
         run: |
           npm ci
-          npm prettier --write .
+          npm run format-all
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.6.0
         with:
           commit_user_name: Prettier bot
+          commit_author: Prettier bot <dab@nav.no>
           commit_message: Apply formatting changes
           branch: ${{ github.head_ref }}

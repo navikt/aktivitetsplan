@@ -5,7 +5,7 @@ export default [
         begrunnelse: 'Sjørøvere skal kun tilhøre vårt NAV kontor',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z123456',
-        dialogId: null
+        dialogId: null,
     },
     {
         type: 'SATT_TIL_MANUELL',
@@ -13,7 +13,7 @@ export default [
         begrunnelse: 'Sjørøvere burde nok være manuel, siden de ikke har internett på havet',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z123456',
-        dialogId: null
+        dialogId: null,
     },
     {
         type: 'KVP_STOPPET',
@@ -21,7 +21,7 @@ export default [
         begrunnelse: 'Ombestemte meg',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z123456',
-        dialogId: null
+        dialogId: null,
     },
     {
         type: 'SATT_TIL_DIGITAL',
@@ -29,6 +29,6 @@ export default [
         begrunnelse: 'Wobs, viser seg det er internett overalt nå',
         opprettetAv: 'NAV',
         opprettetAvBrukerId: 'Z123456',
-        dialogId: null
-    }
+        dialogId: null,
+    },
 ];

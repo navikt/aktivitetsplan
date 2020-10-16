@@ -16,7 +16,7 @@ function AktivitetFormHeader({ tittel, aktivitetsType }) {
 
 AktivitetFormHeader.propTypes = {
     tittel: PT.string.isRequired,
-    aktivitetsType: AppPT.aktivitettype.isRequired
+    aktivitetsType: AppPT.aktivitettype.isRequired,
 };
 
 export default AktivitetFormHeader;

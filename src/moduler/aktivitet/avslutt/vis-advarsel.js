@@ -26,7 +26,7 @@ function VisAdvarsel({ onSubmit, headerTekst }) {
 
 VisAdvarsel.propTypes = {
     headerTekst: PT.string.isRequired,
-    onSubmit: PT.func.isRequired
+    onSubmit: PT.func.isRequired,
 };
 
 export default VisAdvarsel;

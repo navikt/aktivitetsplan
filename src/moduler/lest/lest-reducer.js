@@ -13,7 +13,7 @@ export function selectLest(state) {
 }
 
 function selectLestRessurs(state, ressurs) {
-    return selectLest(state).filter(e => e.ressurs === ressurs)[0];
+    return selectLest(state).filter((e) => e.ressurs === ressurs)[0];
 }
 
 export function selectLestInformasjon(state) {

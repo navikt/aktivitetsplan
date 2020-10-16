@@ -37,7 +37,7 @@ const BehandlingsDetaljer = ({ aktivitet }) => (
 );
 
 BehandlingsDetaljer.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired
+    aktivitet: AppPT.aktivitet.isRequired,
 };
 
 export default BehandlingsDetaljer;

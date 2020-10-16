@@ -21,7 +21,7 @@ const arena = !visArenaAktiviteter()
               antallDagerPerUke: 5.0,
               statusSistEndret: '2017-07-02T00:00:00+02:00',
               etikett: null,
-              moeteplanListe: null
+              moeteplanListe: null,
           },
           {
               id: 'ARENATA22',
@@ -41,7 +41,7 @@ const arena = !visArenaAktiviteter()
               antallDagerPerUke: 1.5,
               statusSistEndret: '2017-06-30T00:00:00+02:00',
               etikett: null,
-              moeteplanListe: null
+              moeteplanListe: null,
           },
           {
               id: 'ARENAGA120719688',
@@ -65,10 +65,10 @@ const arena = !visArenaAktiviteter()
                   {
                       startDato: '2018-02-22T13:00:00+01:00',
                       sluttDato: '2018-02-22T00:00:00+01:00',
-                      sted: 'NAV Frogner, Sommerrogata 1 (v/Solli Plass), 0255 Oslo'
-                  }
-              ]
-          }
+                      sted: 'NAV Frogner, Sommerrogata 1 (v/Solli Plass), 0255 Oslo',
+                  },
+              ],
+          },
       ];
 
 export default arena;

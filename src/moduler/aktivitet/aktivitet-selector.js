@@ -20,7 +20,7 @@ export function selectLasterAktivitetData(state) {
     return selectAktivitetStatus(state) !== STATUS.OK;
 }
 
-export const selectAktivitetFeilmeldinger = state => {
+export const selectAktivitetFeilmeldinger = (state) => {
     const feilMeldingsdata = selectAktivitetStatus(state) === STATUS.ERROR && selectAktiviteterSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 };

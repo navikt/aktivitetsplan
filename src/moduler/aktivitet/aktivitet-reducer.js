@@ -5,11 +5,11 @@ import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
-    forrigeAktiveAktivitetId: undefined
+    forrigeAktiveAktivitetId: undefined,
 };
 
 function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
-    const aktivitetIndex = state.data.findIndex(a => a.id === aktivitet.id);
+    const aktivitetIndex = state.data.findIndex((a) => a.id === aktivitet.id);
     const nyState = [...state.data];
     nyState[aktivitetIndex] = { ...aktivitet, ...aktivitetData };
     return { ...state, data: nyState };
@@ -30,14 +30,14 @@ export default function reducer(state = initalState, action) {
             return {
                 ...state,
                 status: STATUS.OK,
-                data: state.data.filter(aktivitet => aktivitet.id !== data.id).concat(data)
+                data: state.data.filter((aktivitet) => aktivitet.id !== data.id).concat(data),
             };
         case AT.OPPRETTET:
             widowEvent(UpdateTypes.Aktivitet);
             return { ...state, status: STATUS.OK, data: [...state.data, data] };
         case AT.FLYTTER:
             return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.RELOADING }, data.aktivitet, {
-                nesteStatus: data.status
+                nesteStatus: data.status,
             });
         case AT.OPPDATER:
         case AT.OPPRETT:
