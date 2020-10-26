@@ -34,3 +34,4 @@ spec:
       value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
   envFrom:
     - configmap: pto-config
+    - configmap: loginservice-idporten
