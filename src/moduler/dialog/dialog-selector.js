@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { newDatoErIPeriode } from '../filtrering/filter/filter-utils';
+import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';
 import { STATUS } from '../../ducks/utils';
@@ -24,9 +24,9 @@ export function selectAlleDialoger(state) {
     return selectDialogSlice(state).data;
 }
 
-const hentDialogerFraState = (dialoger, esklaringsFilter, historiskPeriode, forrigeSluttDato) =>
+const hentDialogerFraState = (dialoger, esklaringsFilter, valgtHistoriskPeriode, forrigeSluttDato) =>
     dialoger.data
-        .filter((d) => newDatoErIPeriode(d.opprettetDato, historiskPeriode, forrigeSluttDato))
+        .filter((d) => datoErIPeriode(d.opprettetDato, valgtHistoriskPeriode, forrigeSluttDato))
         .filter((d) => erViktigMelding(d) || !esklaringsFilter);
 
 export const selectDialoger = createSelector(
