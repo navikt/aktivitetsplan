@@ -1,4 +1,4 @@
-import { datoErIPeriode } from '../filtrering/filter/filter-utils';
+import { selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { STATUS } from '../../ducks/utils';
 import { selectMalSlice } from './aktivitetsmal-reducer';
 
@@ -15,7 +15,7 @@ export function selectMalListeStatus(state) {
 }
 
 export function selectMalListe(state) {
-    return selectMalListeData(state).filter((mal) => datoErIPeriode(mal.dato, state));
+    return selectMalListeData(state).filter((mal) => selectDatoErIPeriode(mal.dato, state));
 }
 
 export function selectMalListeFeilmeldinger(state) {

@@ -1,4 +1,4 @@
-import { selectHistoriskeOppfolgingsPerioder } from '../../oppfolging-status/oppfolging-selector';
+import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selector';
 import {
     selectAktivitetEtiketterFilter,
     selectAktivitetTyperFilter,
@@ -6,34 +6,42 @@ import {
     selectAktivitetStatusFilter,
     selectAktivitetAvtaltMedNavFilter,
 } from './filter-selector';
+import { isBefore, isWithinInterval } from 'date-fns';
 
-function erAktivtFilter(filterData) {
+function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;
 }
 
-// TODO depricated see newDatoErIPeriode
-export function datoErIPeriode(dato, state) {
+// TODO depricated see selectDatoErIPeriode
+export interface Periode {
+    fra: string;
+    til: string;
+}
+
+export function selectDatoErIPeriode(dato: string, state: any): boolean {
     const historiskPeriode = selectHistoriskPeriode(state);
-    if (historiskPeriode) {
-        return dato >= historiskPeriode.fra && dato <= historiskPeriode.til;
-    }
-    const historiskeOppfolgingsPerioder = selectHistoriskeOppfolgingsPerioder(state) || [];
+    const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
-    const forrigeSluttDato = historiskeOppfolgingsPerioder
-        .map((p) => p.sluttDato)
-        .sort()
-        .reverse()[0];
-    return !forrigeSluttDato || dato >= forrigeSluttDato;
+    return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
 }
 
-export function newDatoErIPeriode(dato, historiskPeriode, forrigeSluttDato) {
-    if (historiskPeriode) {
-        return dato >= historiskPeriode.fra && dato <= historiskPeriode.til;
+//TODO: Flytte til utils når den er ts
+const isAfterOrEqual = (date: Date, dateToCompare: Date) => !isBefore(date, dateToCompare);
+
+export function datoErIPeriode(dato: string, valgtHistoriskPeriode?: Periode, sistePeriodeSluttDato?: string) {
+    const datoDate = new Date(dato);
+
+    if (valgtHistoriskPeriode) {
+        const intervall = {
+            start: new Date(valgtHistoriskPeriode.fra),
+            end: new Date(valgtHistoriskPeriode.til),
+        };
+        return isWithinInterval(datoDate, intervall);
     }
-    return !forrigeSluttDato || dato >= forrigeSluttDato;
+    return !sistePeriodeSluttDato || isAfterOrEqual(datoDate, new Date(sistePeriodeSluttDato));
 }
 
-export function aktivitetFilter(aktivitet, state) {
+export function aktivitetFilter(aktivitet: any, state: any) {
     const aktivitetTypeFilter = selectAktivitetTyperFilter(state);
     if (erAktivtFilter(aktivitetTypeFilter) && !aktivitetTypeFilter[aktivitet.type]) {
         return false;
@@ -58,8 +66,4 @@ export function aktivitetFilter(aktivitet, state) {
     const muligeAvtaltFiltereringer = (avtaltMedNavFilter && !avtalt) || (ikkeAvtaltMedNavFilter && avtalt);
 
     return !(aktivtAvtaltFilter && muligeAvtaltFiltereringer);
-}
-
-export function dialogFilter(dialog, state) {
-    return datoErIPeriode(dialog.opprettetDato, state);
 }
