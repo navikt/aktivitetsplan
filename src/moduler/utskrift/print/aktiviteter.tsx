@@ -13,7 +13,7 @@ import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden
 import Informasjonsfelt from '../../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
 import Aktivitetsdetaljer from '../../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import AvtaltMarkering from '../../aktivitet/avtalt-markering/avtalt-markering';
-import SokeStatusEtikett from '../../aktivitet/etikett/sokeStatusEtikett';
+import SokeStatusEtikett from '../../aktivitet/etikett/SokeStatusEtikett';
 import { DialogPrint } from './dialoger';
 
 const typeMap = {

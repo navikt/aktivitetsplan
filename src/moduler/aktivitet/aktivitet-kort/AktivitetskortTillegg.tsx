@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
-import SokeStatusEtikett from '../etikett/sokeStatusEtikett';
+import SokeStatusEtikett from '../etikett/SokeStatusEtikett';
 import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
 import { Aktivitet, Henvendelse } from '../../../types';
 import styles from './Aktivitetskort.module.less';

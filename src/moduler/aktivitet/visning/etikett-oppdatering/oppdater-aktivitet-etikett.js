@@ -10,7 +10,7 @@ import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
-import SokeStatusEtikett from '../../etikett/sokeStatusEtikett';
+import SokeStatusEtikett from '../../etikett/SokeStatusEtikett';
 
 function OppdaterAktivitetEtikett(props) {
     const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
