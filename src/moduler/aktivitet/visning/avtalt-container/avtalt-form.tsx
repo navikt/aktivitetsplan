@@ -6,6 +6,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+import { STATUS } from '../../../../ducks/utils';
 import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
@@ -110,7 +111,7 @@ function AvtaltForm(props: Props) {
     const avhengigheter = useSelector(selectNivaa4Status);
 
     const AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder = () => (
-        <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder || avhengigheter === 'ERROR'}>
+        <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder || avhengigheter === STATUS.ERROR}>
             Du kan ikke sende forhåndsorientering fordi systemet ikke får sjekket om denne brukeren er en digital eller
             manuell bruker.
         </HiddenIfAlertStripeInfoSolid>
@@ -121,7 +122,7 @@ function AvtaltForm(props: Props) {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
-            <Undertittel>{'Merk aktiviteten som "Avtalt med NAV"'}</Undertittel>
+            <Undertittel>Merk aktiviteten som "Avtalt med NAV"</Undertittel>
             <div className="avtalt-container__radio">
                 <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
                 <Hjelpetekst id="hjelp">

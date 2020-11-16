@@ -2,13 +2,14 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { selectNivaa4 } from '../tilgang/tilgang-selector';
+import { selectNivaa4, selectNivaa4LastetOk } from '../tilgang/tilgang-selector';
 import styles from './Feilmelding.module.less';
 
 const Nivaa4Feilmelding = () => {
     const niva4 = useSelector(selectNivaa4);
+    const lastetOk = useSelector(selectNivaa4LastetOk);
 
-    if (niva4) {
+    if (niva4 || !lastetOk) {
         return null;
     }
 

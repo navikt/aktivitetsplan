@@ -9,7 +9,11 @@ export function selectTilgang(state) {
 }
 
 export function selectNivaa4(state) {
-    return selectTilgang(state) && selectNivaa4Status(state) === STATUS.OK ? selectTilgang(state).harbruktnivaa4 : true;
+    return selectTilgang(state) ? selectTilgang(state).harbruktnivaa4 : false;
+}
+
+export function selectNivaa4LastetOk(state) {
+    return selectNivaa4Status(state) === STATUS.OK;
 }
 
 export function selectNivaa4Status(state) {
