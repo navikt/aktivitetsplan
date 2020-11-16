@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import { getFodselsnummer } from '../bootstrap/fnr-util';
+import { getFodselsnummer } from '../bootstrap/fnr-util';
+import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
+import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
 import Maal from '../moduler/mal-linje/mitt-maal';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
@@ -25,6 +29,7 @@ class Hovedside extends Component {
             <div className="hovedside" key={fnr}>
                 <div className="hovedsideinnhold">
                     <HovedsideFeilmelding />
+                    <Nivaa4Feilmelding />
                     <OppfolgingStatus>
                         <InformasjonsHenting />
                         <Varslinger />

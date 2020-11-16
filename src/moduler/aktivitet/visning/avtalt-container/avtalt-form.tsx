@@ -111,8 +111,8 @@ function AvtaltForm(props: Props) {
 
     const AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder = () => (
         <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder || avhengigheter === 'ERROR'}>
-            Du kan ikke sende forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4
-            (for eksempel BankID).
+            Du kan ikke sende forhåndsorientering fordi systemet ikke får sjekket om denne brukeren er en digital eller
+            manuell bruker.
         </HiddenIfAlertStripeInfoSolid>
     );
 
