@@ -19,7 +19,7 @@ interface Props {
     onSubmit(): Promise<any>;
 }
 
-function StillingEtikettForm(props: Props) {
+const StillingEtikettForm = (props: Props) => {
     const { aktivitet, disabled = true, onSubmit } = props;
 
     const state = validator({
@@ -75,6 +75,6 @@ function StillingEtikettForm(props: Props) {
             </Hovedknapp>
         </form>
     );
-}
+};
 
 export default StillingEtikettForm;

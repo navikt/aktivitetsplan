@@ -45,7 +45,7 @@ export interface Props {
     hidden?: boolean;
 }
 
-function SokeStatusEtikett(props: Props) {
+const SokeStatusEtikett = (props: Props) => {
     const { etikett, className, hidden } = props;
 
     const cls = getCls(etikett);
@@ -55,6 +55,6 @@ function SokeStatusEtikett(props: Props) {
             {getText(etikett)}
         </EtikettBase>
     );
-}
+};
 
 export default SokeStatusEtikett;
