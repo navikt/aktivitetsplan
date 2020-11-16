@@ -46,7 +46,7 @@ function StillingEtikettForm(props: Props) {
                     {...state.fields.etikettstatus}
                 />
                 <Radio
-                    label="Sendt søknad"
+                    label="Sendt søknad og venter på svar"
                     value={konstanter.SOKNAD_SENDT}
                     disabled={disable}
                     {...state.fields.etikettstatus}

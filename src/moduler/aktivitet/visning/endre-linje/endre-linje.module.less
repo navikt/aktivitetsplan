@@ -4,6 +4,7 @@
 .endreVisning {
     display: flex;
     align-items: baseline;
+    width: 100%;
     @media all and (max-width: 465px) {
         flex-wrap: wrap;
     }
@@ -11,6 +12,12 @@
 
 .endreTittel {
     padding-right: 1rem;
+    max-width: 40%;
+
+    @media all and (max-width: 465px) {
+        width: 100%;
+        max-width: 100%;
+    }
 }
 
 .endreContainer {
