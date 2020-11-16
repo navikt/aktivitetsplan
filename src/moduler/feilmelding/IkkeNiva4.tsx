@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux';
 
 import { selectNivaa4, selectNivaa4LastetOk } from '../tilgang/tilgang-selector';
 import styles from './Feilmelding.module.less';
+import { selectErBrukerManuell, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 
 const Nivaa4Feilmelding = () => {
     const niva4 = useSelector(selectNivaa4);
     const lastetOk = useSelector(selectNivaa4LastetOk);
+    const erreservertKRR = useSelector(selectReservasjonKRR);
+    const erManuell = useSelector(selectErBrukerManuell);
 
-    if (niva4 || !lastetOk) {
+    if (niva4 || !lastetOk || erManuell || erreservertKRR) {
         return null;
     }
 
