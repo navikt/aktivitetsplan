@@ -1,5 +1,6 @@
-import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
 import React from 'react';
+
+import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
 import { Bruker } from '../../../types';
 
 interface Props {

@@ -1,5 +1,5 @@
+import { STATUS, doThenDispatch } from '../../ducks/utils';
 import * as Api from '../oppfolging-status/oppfolging-api';
-import { doThenDispatch, STATUS } from '../../ducks/utils';
 
 export const LISTE_OK = 'malListe/OK';
 export const LISTE_FEILET = 'malListe/FEILET';

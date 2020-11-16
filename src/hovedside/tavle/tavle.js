@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import PT from 'prop-types';
 import classNames from 'classnames';
-import SprettendeScrollbars from './sprettende-scrollbars';
+import PT from 'prop-types';
+import React, { Component } from 'react';
+
 import { autobind } from '../../utils';
+import SprettendeScrollbars from './sprettende-scrollbars';
 
 const KOLONNEBREDDE = 300;
 const KOLONNEMARGIN = 10;

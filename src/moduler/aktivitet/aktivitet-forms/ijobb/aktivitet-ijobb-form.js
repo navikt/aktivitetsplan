@@ -1,13 +1,22 @@
-import React from 'react';
-import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
-import * as AppPT from '../../../../proptypes';
-import LagreAktivitet from '../lagre-aktivitet';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
+import Label from 'nav-frontend-skjema/lib/label';
+import PT from 'prop-types';
+import React from 'react';
+
 import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
-import AktivitetFormHeader from '../aktivitet-form-header';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
+import PeriodeValidering, {
+    validerPeriodeFelt,
+} from '../../../../felles-komponenter/skjema/field-group/periode-validering';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Input from '../../../../felles-komponenter/skjema/input/input';
+import Radio from '../../../../felles-komponenter/skjema/input/radio';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import * as AppPT from '../../../../proptypes';
+import AktivitetFormHeader from '../aktivitet-form-header';
+import LagreAktivitet from '../lagre-aktivitet';
 import {
     validateBeskrivelse,
     validateFeltForLangt,
@@ -15,14 +24,6 @@ import {
     validateJobbstatus,
     validateTittel,
 } from './validate';
-import PeriodeValidering, {
-    validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/periode-validering';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import Label from 'nav-frontend-skjema/lib/label';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;

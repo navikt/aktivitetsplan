@@ -1,5 +1,5 @@
-import * as Api from '../oppfolging-status/oppfolging-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
+import * as Api from '../oppfolging-status/oppfolging-api';
 
 const { reducer, cashedAction } = createActionsAndReducer('identitet');
 

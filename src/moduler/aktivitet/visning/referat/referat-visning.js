@@ -1,12 +1,13 @@
-import React from 'react';
-import PT from 'prop-types';
-import { Undertittel } from 'nav-frontend-typografi';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
-import * as AppPT from '../../../../proptypes';
-import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import Tekstomrade from 'nav-frontend-tekstomrade';
+import { Undertittel } from 'nav-frontend-typografi';
+import PT from 'prop-types';
+import React from 'react';
+
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
+import * as AppPT from '../../../../proptypes';
 
 function ReferatVisning(props) {
     const {

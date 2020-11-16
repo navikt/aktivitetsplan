@@ -1,10 +1,11 @@
-import React from 'react';
-import PT from 'prop-types';
-import { Normaltekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-import Tilbakeknapp from './tilbakeknapp';
-import HengeLasIkon from './hengelas-ikon';
+import { Normaltekst } from 'nav-frontend-typografi';
+import PT from 'prop-types';
+import React from 'react';
+
 import VisibleIfSpan from '../utils/visible-if-span';
+import HengeLasIkon from './hengelas-ikon';
+import Tilbakeknapp from './tilbakeknapp';
 
 function ModalHeader({ tilbakeTekst, headerTekst, className, onTilbakeClick, aktivitetErLaast, ...props }) {
     return (

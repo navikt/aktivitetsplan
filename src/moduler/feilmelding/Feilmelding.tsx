@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
 import classNames from 'classnames';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import FeilmeldingDetaljer from './FeilmeldingDetaljer';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import React, { useState } from 'react';
+
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
-import { getErrorText } from './GetErrorText';
-import styles from './Feilmelding.module.less';
-import { FeilmeldingType } from './FeilmeldingTypes';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import { guid } from '../../utils';
+import styles from './Feilmelding.module.less';
+import FeilmeldingDetaljer from './FeilmeldingDetaljer';
+import { FeilmeldingType } from './FeilmeldingTypes';
+import { getErrorText } from './GetErrorText';
 
 interface PropTypes {
     className?: string;

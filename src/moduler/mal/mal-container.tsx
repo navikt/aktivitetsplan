@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { selectGjeldendeMal } from './aktivitetsmal-reducer';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { selectErVeileder } from '../identitet/identitet-selector';
+
 import { loggMittMalLagre } from '../../felles-komponenter/utils/logging';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectErVeileder } from '../identitet/identitet-selector';
+import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+import { selectGjeldendeMal } from './aktivitetsmal-reducer';
 import MalForm from './mal-form';
 import Malvisning from './mal-visning';
 

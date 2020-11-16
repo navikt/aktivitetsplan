@@ -1,10 +1,11 @@
-import { FormattedMessage } from 'react-intl';
 import React from 'react';
-import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
+import { FormattedMessage } from 'react-intl';
+
+import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import { HiddenIf } from '../../../../utils';
-import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
 import DetaljvisningLenke from '../hjelpekomponenter/detaljvisning-lenke';
+import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
 const EgenAktivitetDetaljer = ({ aktivitet }) => (

@@ -1,11 +1,12 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
+
+import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
-import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import FilterVisningsKomponent from './filter-visning';
-import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 function EtikettFilter({ harAktivitetEtiketter, aktivitetEtiketter, doToggleAktivitetsEtikett }) {
     return (

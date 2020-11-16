@@ -1,6 +1,7 @@
-import React from 'react';
-import PT from 'prop-types';
 import { Element } from 'nav-frontend-typografi';
+import PT from 'prop-types';
+import React from 'react';
+
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,

@@ -1,11 +1,12 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
+
+import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetsType } from './filter-reducer';
 import { selectAktivitetTyperFilter } from './filter-selector';
-import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import FilterVisningsKomponent from './filter-visning';
-import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 
 function TypeFilter({ harAktivitetTyper, aktivitetTyper, doToggleAktivitetsType }) {
     return (

@@ -1,8 +1,8 @@
-import React from 'react';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import Lenke from 'nav-frontend-lenker';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
 
 export const arbeidssokerregistreringHref = '/arbeidssokerregistrering';
 

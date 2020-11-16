@@ -1,9 +1,10 @@
-import { FormattedMessage } from 'react-intl';
 import React from 'react';
-import { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt';
+import { FormattedMessage } from 'react-intl';
+
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
-import { HiddenIf } from '../../../../utils';
 import * as AppPT from '../../../../proptypes';
+import { HiddenIf } from '../../../../utils';
+import { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
 const SokeDetaljer = ({ aktivitet }) => (

@@ -1,6 +1,6 @@
-import React, { Children, cloneElement, Component } from 'react';
-import PT from 'prop-types';
 import classNames from 'classnames';
+import PT from 'prop-types';
+import React, { Children, Component, cloneElement } from 'react';
 
 const btnCls = (erApen, className) =>
     classNames('dropdown', className, {

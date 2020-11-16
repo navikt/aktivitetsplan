@@ -1,5 +1,6 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
+
 import * as AppPT from '../../../../proptypes';
 import OppdaterReferatForm from './oppdater-referat-form';
 import ReferatVisning from './referat-visning';

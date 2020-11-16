@@ -1,19 +1,20 @@
-import React, { useContext, useEffect } from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
+import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
+import classNames from 'classnames';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
-import classNames from 'classnames';
-import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
+import { Undertittel } from 'nav-frontend-typografi';
+import React, { useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import { STATUS } from '../../../../ducks/utils';
+import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
+import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import { DirtyContext } from '../../../context/dirty-context';
+import { selectNivaa4, selectNivaa4Status } from '../../../tilgang/tilgang-selector';
 import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
 import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
-import { DirtyContext } from '../../../context/dirty-context';
-import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
-
-import { selectNivaa4, selectNivaa4Status } from '../../../tilgang/tilgang-selector';
-import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
-import { useSelector } from 'react-redux';
-import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
 import ForhaandsorienteringMelding from './forhaandsorienterings-melding';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
@@ -110,9 +111,9 @@ function AvtaltForm(props: Props) {
     const avhengigheter = useSelector(selectNivaa4Status);
 
     const AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder = () => (
-        <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder || avhengigheter === 'ERROR'}>
-            Du kan ikke sende forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4
-            (for eksempel BankID).
+        <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder || avhengigheter === STATUS.ERROR}>
+            Du kan ikke sende forhåndsorientering fordi systemet ikke får sjekket om denne brukeren er en digital eller
+            manuell bruker.
         </HiddenIfAlertStripeInfoSolid>
     );
 
@@ -121,7 +122,7 @@ function AvtaltForm(props: Props) {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
-            <Undertittel>{'Merk aktiviteten som "Avtalt med NAV"'}</Undertittel>
+            <Undertittel>Merk aktiviteten som "Avtalt med NAV"</Undertittel>
             <div className="avtalt-container__radio">
                 <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
                 <Hjelpetekst id="hjelp">

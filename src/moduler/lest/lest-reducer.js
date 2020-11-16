@@ -1,6 +1,6 @@
-import * as Api from './lest-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
 import { STATUS } from '../../ducks/utils';
+import * as Api from './lest-api';
 
 const { reducer, action, selectSlice, selectData, selectStatus } = createActionsAndReducer('lest', 'lest', []);
 

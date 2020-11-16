@@ -1,12 +1,13 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import KolonneHeader from './kolonneheader';
-import DropTargetKolonne from './DropTargetKolonne';
+
+import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { sorterAktiviteter, splitIEldreOgNyereAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
 import { Aktivitet, AktivitetStatus } from '../../../types';
+import DropTargetKolonne from './DropTargetKolonne';
+import KolonneHeader from './kolonneheader';
 import SkjulEldreAktiviteter from './SkjulEldreAktiviteterFraKolonne';
-import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 
 interface Props {
     status: AktivitetStatus;

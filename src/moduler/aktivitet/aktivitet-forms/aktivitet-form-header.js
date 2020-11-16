@@ -1,8 +1,9 @@
-import React from 'react';
-import PT from 'prop-types';
 import { Sidetittel, Undertekst } from 'nav-frontend-typografi';
-import AktivitetIngress from '../visning/aktivitetingress/aktivitetingress';
+import PT from 'prop-types';
+import React from 'react';
+
 import * as AppPT from '../../../proptypes';
+import AktivitetIngress from '../visning/aktivitetingress/aktivitetingress';
 
 function AktivitetFormHeader({ tittel, aktivitetsType }) {
     return (

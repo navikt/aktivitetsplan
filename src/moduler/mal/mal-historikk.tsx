@@ -1,11 +1,12 @@
+import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { selectMalListe } from './aktivitetsmal-selector';
-import { selectErVeileder } from '../identitet/identitet-selector';
+
 import { Mal } from '../../types';
 import { formaterDatoEllerTidSiden } from '../../utils';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import { selectErVeileder } from '../identitet/identitet-selector';
+import { selectMalListe } from './aktivitetsmal-selector';
 
 const identitetMap = (erVeileder: boolean, endretAv: string) => {
     if (erVeileder) {

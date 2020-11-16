@@ -1,15 +1,17 @@
-import React from 'react';
+import './index.less';
+
 import PT from 'prop-types';
+import React from 'react';
 import { Router } from 'react-router-dom';
+
+import { useEventListener } from './felles-komponenter/hooks/useEventListner';
+import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
+import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
+import createHistory from './history';
+import Hovedside from './hovedside/hovedside';
 import SideBanner from './moduler/sidebanner/sidebanner';
 import Provider from './provider';
-import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
-import createHistory from './history';
-import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
-import Hovedside from './hovedside/hovedside';
-import './index.less';
 import { HiddenIf } from './utils';
-import { useEventListener } from './felles-komponenter/hooks/useEventListner';
 import { UppdateEventHandler } from './utils/UpdateHandler';
 
 function isValueOrGetDefault(value, defaultValue) {

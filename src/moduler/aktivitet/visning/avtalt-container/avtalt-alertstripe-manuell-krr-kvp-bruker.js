@@ -1,14 +1,14 @@
-import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { shallowEqual, useSelector } from 'react-redux';
 
+import visibleIfHOC from '../../../../hocs/visible-if';
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
-import visibleIfHOC from '../../../../hocs/visible-if';
 
 function AvtaltStripeKRRKvpManuellBruker() {
     const brukerUtenAktivitesPlan = {

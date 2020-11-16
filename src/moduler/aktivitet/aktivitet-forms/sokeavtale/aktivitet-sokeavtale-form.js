@@ -1,17 +1,20 @@
-import React from 'react';
-import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
+import PT from 'prop-types';
+import React from 'react';
+
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../../constant';
-import AktivitetFormHeader from '../aktivitet-form-header';
-import { HiddenIfInput } from '../../../../felles-komponenter/skjema/input/input';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import { HiddenIfInput } from '../../../../felles-komponenter/skjema/input/input';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';
+import AktivitetFormHeader from '../aktivitet-form-header';
+import LagreAktivitet from '../lagre-aktivitet';
 import {
     validateAntallStillinger,
     validateAntallStillingerIUken,
@@ -20,8 +23,6 @@ import {
     validateOppfolging,
     validateTilDato,
 } from './validate';
-import LagreAktivitet from '../lagre-aktivitet';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;

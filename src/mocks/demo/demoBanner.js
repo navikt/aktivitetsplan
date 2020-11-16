@@ -1,7 +1,8 @@
-import React from 'react';
-import { DemoIkon } from './demoIkon';
 import Modal from 'nav-frontend-modal';
+import React from 'react';
+
 import DemoDashboard from './demoDashboard';
+import { DemoIkon } from './demoIkon';
 
 class DemoBanner extends React.Component {
     constructor(props) {

@@ -1,9 +1,10 @@
-import { FormattedMessage } from 'react-intl';
 import React from 'react';
-import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
-import { formaterDatoKortManed, HiddenIf } from '../../../../utils';
-import * as AppPT from '../../../../proptypes';
+import { FormattedMessage } from 'react-intl';
+
 import { SAMTALEREFERAT_TYPE } from '../../../../constant';
+import * as AppPT from '../../../../proptypes';
+import { HiddenIf, formaterDatoKortManed } from '../../../../utils';
+import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 
 const SamtalereferatDetaljer = ({ aktivitet }) => (
     <HiddenIf hidden={aktivitet.type !== SAMTALEREFERAT_TYPE}>

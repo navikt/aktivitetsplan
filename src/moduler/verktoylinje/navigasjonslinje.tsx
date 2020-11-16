@@ -1,14 +1,15 @@
+import moment from 'moment';
+import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelector, shallowEqual } from 'react-redux';
-import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
-import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
-import { selectErVeileder } from '../identitet/identitet-selector';
-import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
-import { hentDialog } from '../dialog/dialog-reducer';
-import { hentSistOppdatert } from '../dialog/dialog-api';
+import { shallowEqual, useSelector } from 'react-redux';
+
 import { Dialog } from '../../types';
-import moment from 'moment';
+import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
+import { hentSistOppdatert } from '../dialog/dialog-api';
+import { hentDialog } from '../dialog/dialog-reducer';
+import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
+import { selectErVeileder } from '../identitet/identitet-selector';
 
 const DITTNAV_PATH = '/dittnav/';
 const DIALOG_PATH = '/arbeidsrettet-dialog';

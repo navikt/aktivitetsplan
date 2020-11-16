@@ -1,6 +1,7 @@
 import React from 'react';
-import { FeilmeldingType } from './FeilmeldingTypes';
+
 import styles from './FeilmeldingDetaljer.module.less';
+import { FeilmeldingType } from './FeilmeldingTypes';
 
 interface PropTypes {
     feil: FeilmeldingType;

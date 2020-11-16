@@ -1,5 +1,5 @@
-import * as Api from './timeoutbox-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
+import * as Api from './timeoutbox-api';
 
 const { reducer, action } = createActionsAndReducer('auth');
 

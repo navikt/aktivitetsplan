@@ -1,21 +1,22 @@
-import React from 'react';
-import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
-import LagreAktivitet from '../lagre-aktivitet';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
+import PT from 'prop-types';
+import React from 'react';
+
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import AktivitetFormHeader from '../aktivitet-form-header';
-import * as AppPT from '../../../../proptypes';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke, validateTittel } from './validate';
-import Input from '../../../../felles-komponenter/skjema/input/input';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Input from '../../../../felles-komponenter/skjema/input/input';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import * as AppPT from '../../../../proptypes';
 import { todayIsoString } from '../../../../utils';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
+import AktivitetFormHeader from '../aktivitet-form-header';
+import LagreAktivitet from '../lagre-aktivitet';
+import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke, validateTittel } from './validate';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;

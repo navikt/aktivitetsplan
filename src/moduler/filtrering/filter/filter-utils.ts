@@ -1,12 +1,13 @@
+import { isBefore, isWithinInterval } from 'date-fns';
+
 import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selector';
 import {
+    selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
+    selectAktivitetStatusFilter,
     selectAktivitetTyperFilter,
     selectHistoriskPeriode,
-    selectAktivitetStatusFilter,
-    selectAktivitetAvtaltMedNavFilter,
 } from './filter-selector';
-import { isBefore, isWithinInterval } from 'date-fns';
 
 function erAktivtFilter(filterData: any) {
     return Object.values(filterData).indexOf(true) >= 0;

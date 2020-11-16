@@ -1,11 +1,12 @@
+import moment from 'moment';
+import NavFrontendModal from 'nav-frontend-modal';
+import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PT from 'prop-types';
-import NavFrontendModal from 'nav-frontend-modal';
-import moment from 'moment';
-import TimeoutboxNedtelling from './timeoutbox-nedtelling';
+
 import { hentGjenstaendeInnloggetTid } from './auth-reducer';
 import { selectExpirationTime } from './auth-selector';
+import TimeoutboxNedtelling from './timeoutbox-nedtelling';
 
 class Timeoutbox extends Component {
     constructor(props) {

@@ -1,5 +1,5 @@
-import { selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { STATUS } from '../../ducks/utils';
+import { selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectMalSlice } from './aktivitetsmal-reducer';
 
 function selectMalListeSlice(state) {

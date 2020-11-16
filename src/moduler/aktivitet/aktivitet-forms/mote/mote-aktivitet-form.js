@@ -1,13 +1,22 @@
-import React from 'react';
-import PT from 'prop-types';
 import useFormstate from '@nutgaard/use-formstate';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import Lenke from 'nav-frontend-lenker';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { Normaltekst } from 'nav-frontend-typografi';
+import PT from 'prop-types';
+import React from 'react';
+
 import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Input from '../../../../felles-komponenter/skjema/input/input';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
+import * as AppPT from '../../../../proptypes';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
-import LagreAktivitet from '../lagre-aktivitet';
 import AktivitetFormHeader from '../aktivitet-form-header';
+import LagreAktivitet from '../lagre-aktivitet';
+import VelgKanal from '../velg-kanal';
 import {
     FORBEREDELSER_MAKS_LENGDE,
     HENSIKT_MAKS_LENGDE,
@@ -20,15 +29,6 @@ import {
     validateTittel,
     validateVarighet,
 } from './validate';
-
-import * as AppPT from '../../../../proptypes';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import VelgKanal from '../velg-kanal';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
-import Lenke from 'nav-frontend-lenker';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;

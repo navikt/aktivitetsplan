@@ -1,32 +1,33 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { STATUS_AVBRUTT, STATUS_FULLFOERT, UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
-import AvtaltForm, {
-    Handler,
-    IKKE_SEND_FORHANDSORIENTERING,
-    SEND_FORHANDSORIENTERING,
-    SEND_PARAGRAF_11_9,
-} from './avtalt-form';
-import { oppdaterAktivitet } from '../../aktivitet-actions';
 import { STATUS } from '../../../../ducks/utils';
-import { selectAktiviteterData, selectAktivitetStatus } from '../../aktivitet-selector';
+import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
+import { Aktivitet, OppfolgingsPeriode } from '../../../../types';
 import { erGyldigISODato, erMerEnnSyvDagerTil, msSince } from '../../../../utils';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
+import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
+import LenkeTilDialog from '../../../dialog/DialogLink';
+import { selectErBruker } from '../../../identitet/identitet-selector';
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
     selectOppfolgingsPerioder,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
-import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
-import DeleLinje from '../delelinje/delelinje';
-import { Aktivitet, OppfolgingsPeriode } from '../../../../types';
-import { selectErBruker } from '../../../identitet/identitet-selector';
-import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
-import LenkeTilDialog from '../../../dialog/DialogLink';
 import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
+import { oppdaterAktivitet } from '../../aktivitet-actions';
+import { selectAktivitetStatus, selectAktiviteterData } from '../../aktivitet-selector';
+import DeleLinje from '../delelinje/delelinje';
+import AvtaltForm, {
+    Handler,
+    IKKE_SEND_FORHANDSORIENTERING,
+    SEND_FORHANDSORIENTERING,
+    SEND_PARAGRAF_11_9,
+} from './avtalt-form';
 
 interface Props {
     underOppfolging: boolean;

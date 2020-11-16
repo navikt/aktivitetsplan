@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
+
+import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
-import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
 
 interface VidereSendBrukereEllerRenderChildrenProps {
     children: React.ReactNode;

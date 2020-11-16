@@ -1,18 +1,19 @@
-import React, { useContext, useEffect } from 'react';
-import PT from 'prop-types';
-import { connect } from 'react-redux';
-import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
+import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
-import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
+import PT from 'prop-types';
+import React, { useContext, useEffect } from 'react';
+import { connect } from 'react-redux';
+
 import { STATUS } from '../../../../ducks/utils';
+import hiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/hidden-if-knapper';
-import { selectAktivitetStatus } from '../../aktivitet-selector';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
-import hiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
+import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
+import { selectAktivitetStatus } from '../../aktivitet-selector';
 
 const FlatKnappVisible = hiddenIfHOC(Flatknapp);
 

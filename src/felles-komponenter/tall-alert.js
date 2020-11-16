@@ -1,5 +1,6 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
+
 import hiddenIfHOC from './hidden-if/hidden-if';
 
 function getText(antall) {

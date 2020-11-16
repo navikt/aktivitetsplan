@@ -1,7 +1,7 @@
+import Select from 'nav-frontend-skjema/lib/select';
 import React from 'react';
 
 import { SessionStorageElement, settSessionStorage } from './sessionstorage';
-import Select from 'nav-frontend-skjema/lib/select';
 
 const hurtigfilterType = [
     {

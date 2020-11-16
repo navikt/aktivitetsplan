@@ -1,6 +1,7 @@
+import { Select as NavSelect, SelectProps } from 'nav-frontend-skjema';
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
-import { Select as NavSelect, SelectProps } from 'nav-frontend-skjema';
+
 import { FieldStateInput } from './utils';
 
 interface Props {

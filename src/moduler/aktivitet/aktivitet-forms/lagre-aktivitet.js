@@ -1,10 +1,11 @@
-import React from 'react';
-import PT from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import PT from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { selectAktivitetStatus } from '../aktivitet-selector';
+
 import { STATUS } from '../../../ducks/utils';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
+import { selectAktivitetStatus } from '../aktivitet-selector';
 
 function LagreAktivitet({ venter, underOppfolging }) {
     return (

@@ -1,11 +1,12 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { selectAktivitetAvtaltMedNavFilter } from './filter-selector';
-import FilterVisningsKomponent from './filter-visning';
+
+import { AVTALT_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
 import { toggleAktivitetAvtaltMedNav } from './filter-reducer';
-import { AVTALT_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { selectAktivitetAvtaltMedNavFilter } from './filter-selector';
+import FilterVisningsKomponent from './filter-visning';
 
 function AvtaltmedNavFilter({ harAvtaltAktivitet, avtaltAktivitet, doToggleAktivitetAvtaltMedNav }) {
     return (

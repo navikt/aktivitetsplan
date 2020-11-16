@@ -1,5 +1,5 @@
-import * as Api from '../motpart/motpart-api';
 import { createActionsAndReducer } from '../../ducks/rest-reducer';
+import * as Api from '../motpart/motpart-api';
 
 const { reducer, cashedAction, actionTypes } = createActionsAndReducer('tilgang');
 

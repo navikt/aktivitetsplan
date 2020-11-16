@@ -1,9 +1,10 @@
-import { FormattedMessage } from 'react-intl';
+import Lenke from 'nav-frontend-lenker';
 import PT from 'prop-types';
 import React from 'react';
-import DetaljFelt from './detalj-felt';
+import { FormattedMessage } from 'react-intl';
+
 import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
-import Lenke from 'nav-frontend-lenker';
+import DetaljFelt from './detalj-felt';
 
 const httpRegex = /^(https?):\/\/.*$/;
 

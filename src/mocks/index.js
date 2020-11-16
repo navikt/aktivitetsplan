@@ -1,8 +1,7 @@
 /* eslint-disable */
 
-import me from './me';
-import oppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
-import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
+import fetchMock from 'yet-another-fetch-mock';
+
 import aktiviteter, {
     getAktivitet,
     getAktivitetVersjoner,
@@ -11,19 +10,7 @@ import aktiviteter, {
     publiserReferat,
 } from './aktivitet';
 import arena from './arena';
-import getPerson from './person';
-import getNivaa4 from './tilgang';
-import { malListe, opprettMal, sisteMal } from './mal';
-import { fremtidigSituasjon } from './fremtidigSituasjon';
-import veilederTilgang from './veilederTilgang';
-import getFeatures from './features';
-import oppfoelgingsstatus from './oppfoelgingsstatus';
-import innstillingsHistorikk from './innstillings-historikk';
-import fetchMock from 'yet-another-fetch-mock';
-import { delayed, fetchmockMiddleware, jsonResponse } from './utils';
-import { hentMalverkMedType } from './malverk';
 import auth from './auth';
-import lest from './lest';
 import {
     aktivitetFeilet,
     arenaFeilet,
@@ -33,7 +20,21 @@ import {
     oppdateringKunFeiler,
     oppfFeilet,
 } from './demo/sessionstorage';
+import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import { failOrGetResponse } from './failOrGetResponse';
+import getFeatures from './features';
+import { fremtidigSituasjon } from './fremtidigSituasjon';
+import innstillingsHistorikk from './innstillings-historikk';
+import lest from './lest';
+import { malListe, opprettMal, sisteMal } from './mal';
+import { hentMalverkMedType } from './malverk';
+import me from './me';
+import oppfoelgingsstatus from './oppfoelgingsstatus';
+import oppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
+import getPerson from './person';
+import getNivaa4 from './tilgang';
+import { delayed, fetchmockMiddleware, jsonResponse } from './utils';
+import veilederTilgang from './veilederTilgang';
 
 const mock = fetchMock.configure({
     enableFallback: false,

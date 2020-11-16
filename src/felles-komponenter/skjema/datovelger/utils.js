@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { toDatePrettyPrint, erGyldigISODato } from '../../../utils';
+
+import { erGyldigISODato, toDatePrettyPrint } from '../../../utils';
 
 export function validerDato(value, tidligsteFom, senesteTom) {
     if (!value || value.trim().length === 0) {

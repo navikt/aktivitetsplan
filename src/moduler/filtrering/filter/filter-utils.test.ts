@@ -1,4 +1,4 @@
-import { datoErIPeriode, Periode } from './filter-utils';
+import { Periode, datoErIPeriode } from './filter-utils';
 
 describe('datoErIPeriode', () => {
     it('Skal returnere true når det er ingen historiske perioder', () => {

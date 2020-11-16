@@ -1,9 +1,10 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
+
 import * as statuskoder from '../../../constant';
-import styles from './etikett.module.less';
 import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
 import { StillingsStatus } from '../../../types';
+import styles from './etikett.module.less';
 
 const getCls = (etikettnavn?: StillingsStatus): string => {
     switch (etikettnavn) {
@@ -25,7 +26,7 @@ const getCls = (etikettnavn?: StillingsStatus): string => {
 const getText = (etikettnavn?: StillingsStatus): string => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
-            return 'Sendt søknad';
+            return 'Sendt søknad og venter på svar';
         case statuskoder.INNKALT_TIL_INTERVJU:
             return 'Skal på intervju';
         case statuskoder.JOBBTILBUD:
@@ -45,7 +46,7 @@ export interface Props {
     hidden?: boolean;
 }
 
-function SokeStatusEtikett(props: Props) {
+const SokeStatusEtikett = (props: Props) => {
     const { etikett, className, hidden } = props;
 
     const cls = getCls(etikett);
@@ -55,6 +56,6 @@ function SokeStatusEtikett(props: Props) {
             {getText(etikett)}
         </EtikettBase>
     );
-}
+};
 
 export default SokeStatusEtikett;

@@ -1,7 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import PT from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
@@ -9,9 +11,8 @@ import {
     toggleAktivitetsType,
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
-import FiltreringLabel from './filteringslabel/filtering-label';
 import { PeriodeLabel } from './filter/periode-filter';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import FiltreringLabel from './filteringslabel/filtering-label';
 
 function FilterGruppe({
     filterKey,

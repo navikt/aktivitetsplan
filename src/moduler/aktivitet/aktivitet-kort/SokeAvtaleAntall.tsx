@@ -1,6 +1,7 @@
 import React from 'react';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../constant';
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import { Aktivitet } from '../../../types';
 
 interface Props {

@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
+
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
-import InvertedLestMer from './InvertedLesmer';
+import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
 import { Aktivitet } from '../../../types';
+import InvertedLestMer from './InvertedLesmer';
 
 const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
 const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';

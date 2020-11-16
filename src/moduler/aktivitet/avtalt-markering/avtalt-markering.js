@@ -1,9 +1,10 @@
-import React from 'react';
-import PT from 'prop-types';
 import classNames from 'classnames';
-import styles from './avtalt-markering.module.less';
-import visibleIfHOC from '../../../hocs/visible-if';
+import PT from 'prop-types';
+import React from 'react';
+
 import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
+import visibleIfHOC from '../../../hocs/visible-if';
+import styles from './avtalt-markering.module.less';
 
 function AvtaltMarkering(props) {
     const { className } = props;

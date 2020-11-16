@@ -1,6 +1,6 @@
-import * as Api from './oppfolging-api';
-import { doThenDispatch, STATUS } from '../../ducks/utils';
+import { STATUS, doThenDispatch } from '../../ducks/utils';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
+import * as Api from './oppfolging-api';
 
 // Actions
 export const OK = 'oppfolging/OK';

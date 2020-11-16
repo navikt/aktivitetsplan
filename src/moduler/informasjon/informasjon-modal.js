@@ -1,21 +1,22 @@
-import React, { Component } from 'react';
+import Lenke from 'nav-frontend-lenker';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { connect } from 'react-redux';
 import PT from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
-import Video from './video';
-import { selectLestInformasjon } from '../lest/lest-reducer';
-import * as Api from '../lest/lest-api';
-import { selectErBruker } from '../identitet/identitet-selector';
 import * as AppPT from '../../proptypes';
+import { selectErBruker } from '../identitet/identitet-selector';
+import * as Api from '../lest/lest-api';
+import { selectLestInformasjon } from '../lest/lest-reducer';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
-import { selectBackPath, setBackPath } from './informasjon-reducer';
-import styles from './informasjon-modal.module.less';
-import { RettigheterPanel } from './rettigheterPanel';
 import { BrukePlanenPanel } from './brukePlanenPanel';
+import styles from './informasjon-modal.module.less';
+import { selectBackPath, setBackPath } from './informasjon-reducer';
 import { OkonomiskStotte } from './okonomiskStottePanel';
-import Lenke from 'nav-frontend-lenker';
+import { RettigheterPanel } from './rettigheterPanel';
+import Video from './video';
 
 export const INFORMASJON_MODAL_VERSJON = 'v1';
 

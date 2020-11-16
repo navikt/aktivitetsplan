@@ -1,5 +1,6 @@
-import React from 'react';
 import Spinner from 'nav-frontend-spinner';
+import React from 'react';
+
 import { STATUS } from '../../ducks/utils';
 import HiddenIfHOC from '../hidden-if/hidden-if';
 

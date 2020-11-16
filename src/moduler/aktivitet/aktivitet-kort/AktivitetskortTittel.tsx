@@ -1,9 +1,10 @@
+import classNames from 'classnames';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
-import classNames from 'classnames';
+
 import NotifikasjonMarkering from '../../../felles-komponenter/utils/notifikasjon-markering';
-import styles from './Aktivitetskort.module.less';
 import { Aktivitet } from '../../../types';
+import styles from './Aktivitetskort.module.less';
 
 interface Props {
     aktivitet: Aktivitet;

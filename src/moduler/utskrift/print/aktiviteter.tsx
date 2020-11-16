@@ -1,4 +1,6 @@
-import { Aktivitet, Dialog } from '../../../types';
+import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
@@ -6,14 +8,13 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../../constant';
-import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
-import { compareAktivitet } from '../../aktivitet/aktivitet-util';
-import React from 'react';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
-import Informasjonsfelt from '../../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
-import Aktivitetsdetaljer from '../../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
+import { Aktivitet, Dialog } from '../../../types';
+import { compareAktivitet } from '../../aktivitet/aktivitet-util';
 import AvtaltMarkering from '../../aktivitet/avtalt-markering/avtalt-markering';
-import SokeStatusEtikett from '../../aktivitet/etikett/sokeStatusEtikett';
+import SokeStatusEtikett from '../../aktivitet/etikett/SokeStatusEtikett';
+import Aktivitetsdetaljer from '../../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
+import Informasjonsfelt from '../../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
 import { DialogPrint } from './dialoger';
 
 const typeMap = {

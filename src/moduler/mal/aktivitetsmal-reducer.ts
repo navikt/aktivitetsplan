@@ -1,8 +1,8 @@
-import * as Api from '../oppfolging-status/oppfolging-api';
-import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
-import { selectMalListe } from './aktivitetsmal-selector';
-import { doThenDispatch, STATUS } from '../../ducks/utils';
+import { STATUS, doThenDispatch } from '../../ducks/utils';
 import { Mal } from '../../types';
+import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
+import * as Api from '../oppfolging-status/oppfolging-api';
+import { selectMalListe } from './aktivitetsmal-selector';
 
 const PENDING = `MAL/PENDING`;
 const OK = `MAL/OK`;

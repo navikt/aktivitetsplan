@@ -1,6 +1,7 @@
-import React from 'react';
 import PT from 'prop-types';
-import { formaterDatoTid, formaterDatoKortManed, formaterDatoEllerTidSidenUtenKlokkeslett } from '../utils';
+import React from 'react';
+
+import { formaterDatoEllerTidSidenUtenKlokkeslett, formaterDatoKortManed, formaterDatoTid } from '../utils';
 
 export default function Dato({ visTidspunkt, children, ...resten }) {
     return <span {...resten}>{visTidspunkt ? formaterDatoTid(children) : formaterDatoKortManed(children)}</span>;

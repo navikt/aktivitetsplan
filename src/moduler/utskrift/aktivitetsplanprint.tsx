@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+
+import FnrProvider from '../../bootstrap/fnr-provider';
 import Modal from '../../felles-komponenter/modal/modal';
+import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
+import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
+import { Aktivitet, Bruker, Dialog, KvpPeriode, Mal } from '../../types';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetliste-selector';
 import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
+import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
+import { selectErVeileder } from '../identitet/identitet-selector';
 import { hentMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { hentMalListe } from '../mal/malliste-reducer';
-import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
 import {
     selectErBrukerManuell,
     selectKvpPeriodeForValgteOppfolging,
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
-import { selectErVeileder } from '../identitet/identitet-selector';
-import FnrProvider from '../../bootstrap/fnr-provider';
-import { selectDialoger, selectDialogStatus } from '../dialog/dialog-selector';
-import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
-import Print from './print/print';
 import ModalHeader from './modalHeader';
+import Print from './print/print';
 import PrintMeldingForm from './printMelding';
 import VelgPlanUtskriftForm from './velgPlan/velgPlanUtskriftForm';
-import { Aktivitet, Bruker, Dialog, KvpPeriode, Mal } from '../../types';
 
 const STEP_VELG_PLAN = 'VELG_PLAN';
 const STEP_MELDING_FORM = 'MELDING_FORM';
