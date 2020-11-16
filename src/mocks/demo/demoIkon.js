@@ -1,5 +1,6 @@
-import React from 'react';
 import './demoIkon.less';
+
+import React from 'react';
 
 export function DemoIkon({ onClick }) {
     return (

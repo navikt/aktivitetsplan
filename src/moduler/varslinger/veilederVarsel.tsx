@@ -1,17 +1,18 @@
-import { shallowEqual, useSelector } from 'react-redux';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
+
+import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
+import InternLenke from '../../felles-komponenter/utils/InternLenke';
+import { formaterDatoKortManed } from '../../utils';
+import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import {
     selectErEskalert,
     selectGjeldendeEskaleringsVarsel,
     selectTilHorendeDialogId,
 } from '../oppfolging-status/oppfolging-selector';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
-import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
-import { formaterDatoKortManed } from '../../utils';
 import styles from './varslinger.module.less';
-import InternLenke from '../../felles-komponenter/utils/InternLenke';
 
 function VeilederVarsel() {
     const dispatch = useReduxDispatch();

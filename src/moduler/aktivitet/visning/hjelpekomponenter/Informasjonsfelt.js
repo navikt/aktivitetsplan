@@ -1,9 +1,10 @@
-import React from 'react';
-import PT from 'prop-types';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Normaltekst } from 'nav-frontend-typografi';
-import DetaljFelt from './detalj-felt';
+import PT from 'prop-types';
+import React from 'react';
+
 import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
+import DetaljFelt from './detalj-felt';
 
 export default function Informasjonsfelt({ tittel, innhold, fullbredde, formattertTekst, beskrivelse }) {
     if (innhold === null) {

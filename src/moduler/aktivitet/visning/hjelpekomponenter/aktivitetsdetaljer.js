@@ -1,5 +1,6 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
+
 import * as AppPT from '../../../../proptypes';
 import BehandlingsDetaljer from '../detaljer/behandlings-detaljer';
 import EgenAktivitetDetaljer from '../detaljer/egenAktivitet-detaljer';

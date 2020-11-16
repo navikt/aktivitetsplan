@@ -1,6 +1,6 @@
-import * as AT from './aktivitet-action-types';
 import { STATUS } from '../../ducks/utils';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
+import * as AT from './aktivitet-action-types';
 
 const initalState = {
     data: [],

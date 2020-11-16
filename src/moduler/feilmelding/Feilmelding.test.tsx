@@ -1,13 +1,14 @@
 import { mount } from 'enzyme';
-import Feilmelding from './Feilmelding';
-import React from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { tekster } from './GetErrorText';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+
+import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import { HENTING_FEILET as AKTIVITET_HENT_FEILET } from '../aktivitet/aktivitet-action-types';
 import { HENTING_FEILET as DIALOG_HENT_FEIL } from '../dialog/dialog-reducer';
-import { Normaltekst } from 'nav-frontend-typografi';
+import Feilmelding from './Feilmelding';
 import FeilmeldingDetaljer from './FeilmeldingDetaljer';
-import Knappelenke from '../../felles-komponenter/utils/knappelenke';
+import { tekster } from './GetErrorText';
 
 describe('Feilmelding', () => {
     it('Skal vise generell feilmelding ved flere feil', () => {

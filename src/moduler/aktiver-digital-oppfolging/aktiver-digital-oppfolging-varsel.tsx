@@ -1,7 +1,8 @@
-import React from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 import Lenke from 'nav-frontend-lenker';
+import React from 'react';
+
+import { AdvarselVarsling } from '../varslinger/varsel-alertstriper';
 
 interface PropTypes {
     reservertIKRR: boolean;

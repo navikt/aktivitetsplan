@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import PT from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { hentIdentitet } from '../../identitet/identitet-reducer';
+import PT from 'prop-types';
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+
+import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import Modal from '../../../felles-komponenter/modal/modal';
+import { hentIdentitet } from '../../identitet/identitet-reducer';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
-import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
 
 class NyAktivitet extends Component {
     componentDidMount() {

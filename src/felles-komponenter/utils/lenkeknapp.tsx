@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react';
-import { Knapp } from 'nav-frontend-knapper';
 import classNames from 'classnames';
-import InternLenke from './InternLenke';
+import { Knapp } from 'nav-frontend-knapper';
+import React, { ReactNode } from 'react';
+
 import visibleIfHOC from '../../hocs/visible-if';
+import InternLenke from './InternLenke';
 
 interface LenkeknappProps {
     href: string;

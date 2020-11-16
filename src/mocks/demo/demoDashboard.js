@@ -1,7 +1,13 @@
-import React from 'react';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import './demoDashboard.less';
+
 import { CheckboksPanelGruppe, RadioPanelGruppe } from 'nav-frontend-skjema';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import React from 'react';
+
+import { ALL_FEATURES } from '../../felles-komponenter/feature/feature';
+import Hurtigfilter from './hurtigfilter';
 import {
+    SessionStorageElement,
     aktivitetFeilet,
     arenaFeilet,
     dialogFeilet,
@@ -18,7 +24,6 @@ import {
     nivaa4Feilet,
     oppdateringKunFeiler,
     oppfFeilet,
-    SessionStorageElement,
     setFeatureTogle,
     settSessionStorage,
     ulesteDialoger,
@@ -26,9 +31,6 @@ import {
     visAutomatiskeAktiviteter,
     visTestAktiviteter,
 } from './sessionstorage';
-import './demoDashboard.less';
-import Hurtigfilter from './hurtigfilter';
-import { ALL_FEATURES } from '../../felles-komponenter/feature/feature';
 
 const brukertype = {
     ekstern: 'eksternbruker',

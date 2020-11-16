@@ -1,10 +1,11 @@
-import React from 'react';
-import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
-import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import loggEvent from '../../../felles-komponenter/utils/logging';
+import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 
 type FilterType = { [key: string]: boolean | undefined };
 

@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
 import classNames from 'classnames';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
 
 const cls = (className?: string, brukLenkestyling?: boolean) =>

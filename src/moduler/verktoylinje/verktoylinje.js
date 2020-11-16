@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
 import PT from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
-import Filter from '../filtrering/filter';
-import PeriodeFilter from '../filtrering/filter/periode-filter';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+
 import InternLenke from '../../felles-komponenter/utils/InternLenke';
-import VisValgtFilter from '../filtrering/filter-vis-label';
-import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
+import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
 import loggEvent, { APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
+import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
+import Filter from '../filtrering/filter';
+import VisValgtFilter from '../filtrering/filter-vis-label';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import PeriodeFilter from '../filtrering/filter/periode-filter';
+import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { ReactComponent as Pluss } from './pluss.svg';
 
 class Verktoylinje extends Component {

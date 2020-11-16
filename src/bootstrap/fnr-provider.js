@@ -1,6 +1,7 @@
-import { Component } from 'react';
 import PT from 'prop-types';
+import { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { hentBruker, setStatusOk } from '../moduler/bruker/bruker-reducer';
 
 export function fnrFraUrl() {

@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
-import Datovelger, { DatovelgerProps } from 'nav-datovelger/lib/Datovelger';
-import { FieldStateInput } from '../input/utils';
-import { datePickerToISODate, dateToDatePicker } from '../../../utils';
-import styles from './datovelger.module.less';
 import classNames from 'classnames';
+import Datovelger, { DatovelgerProps } from 'nav-datovelger/lib/Datovelger';
+import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
+import React, { useCallback, useState } from 'react';
+
+import { datePickerToISODate, dateToDatePicker } from '../../../utils';
+import { FieldStateInput } from '../input/utils';
+import styles from './datovelger.module.less';
 
 function DatoFeil(props: { feil?: string }) {
     if (!props.feil) {

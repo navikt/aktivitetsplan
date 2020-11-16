@@ -1,5 +1,5 @@
-import React from 'react';
 import { Textarea as NavTextArea } from 'nav-frontend-skjema';
+import React from 'react';
 
 function getTellerTekst(antallTegn: number, maxLength: number, visTellerFra?: number) {
     const tegnIgjen = maxLength - antallTegn;

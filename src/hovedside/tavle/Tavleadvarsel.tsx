@@ -1,8 +1,7 @@
-import React from 'react';
-import Veilederpanel from 'nav-frontend-veilederpanel';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { ReactComponent as ObsSVG } from './obs.svg';
-import { Aktivitet } from '../../types';
+import Veilederpanel from 'nav-frontend-veilederpanel';
+import React from 'react';
+
 import {
     GRUPPE_AKTIVITET_TYPE,
     MOTE_TYPE,
@@ -12,6 +11,8 @@ import {
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
+import { Aktivitet } from '../../types';
+import { ReactComponent as ObsSVG } from './obs.svg';
 import styles from './Tavleadvarsel.module.less';
 
 function getAdvarseltekst(aktivitet: Aktivitet, erVeileder: boolean) {

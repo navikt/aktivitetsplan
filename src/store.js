@@ -1,7 +1,8 @@
 /* eslint-env browser */
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { applyMiddleware, compose, createStore } from 'redux';
 import freeze from 'redux-freeze';
+import thunkMiddleware from 'redux-thunk';
+
 import reducer from './reducer';
 
 /* eslint-disable no-underscore-dangle */

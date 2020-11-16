@@ -1,22 +1,23 @@
-import React from 'react';
-import PT from 'prop-types';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import PT from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import AktivitetIngress from '../aktivitetingress/aktivitetingress';
-import Aktivitetsdetaljer from './aktivitetsdetaljer';
-import * as AppPT from '../../../../proptypes';
+
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
+import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
+import * as AppPT from '../../../../proptypes';
 import { endreAktivitetRoute } from '../../../../routes';
-import DeleLinje from '../delelinje/delelinje';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
-import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
+import AktivitetIngress from '../aktivitetingress/aktivitetingress';
+import DeleLinje from '../delelinje/delelinje';
+import Aktivitetsdetaljer from './aktivitetsdetaljer';
 
 function visningsIngress(type) {
     if (

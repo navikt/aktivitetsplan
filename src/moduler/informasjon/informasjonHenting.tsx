@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useLocation, Redirect } from 'react-router-dom';
-import { selectErUnderOppfolging, selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
-import { hentLest, selectLestInformasjon, selectLestStatus } from '../lest/lest-reducer';
-import { selectErBruker } from '../identitet/identitet-selector';
-import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
+import { Redirect, useLocation } from 'react-router-dom';
+
 import { STATUS } from '../../ducks/utils';
 import { loggTidBruktGaaInnPaaAktivitetsplanen } from '../../felles-komponenter/utils/logging';
+import { selectErBruker } from '../identitet/identitet-selector';
+import { hentLest, selectLestInformasjon, selectLestStatus } from '../lest/lest-reducer';
+import { selectErUnderOppfolging, selectOppfolgingsPerioder } from '../oppfolging-status/oppfolging-selector';
+import { INFORMASJON_MODAL_VERSJON } from './informasjon-modal';
 import { setBackPath } from './informasjon-reducer';
 
 const redirectPath = '/informasjon';

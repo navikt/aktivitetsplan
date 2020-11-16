@@ -1,10 +1,11 @@
-import { FormattedMessage } from 'react-intl';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
+import { MOTE_TYPE } from '../../../../constant';
+import * as AppPT from '../../../../proptypes';
+import { HiddenIf, formaterDatoManed } from '../../../../utils';
 import { beregnKlokkeslettVarighet, formatterKlokkeslett, formatterVarighet } from '../../aktivitet-util';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
-import * as AppPT from '../../../../proptypes';
-import { formaterDatoManed, HiddenIf } from '../../../../utils';
-import { MOTE_TYPE } from '../../../../constant';
 
 const MoteDetaljer = ({ aktivitet }) => (
     <HiddenIf hidden={aktivitet.type !== MOTE_TYPE}>

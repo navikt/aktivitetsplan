@@ -130,8 +130,10 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "husky": "^4.2.5",
+    "import-sort-style-module": "^6.0.0",
     "lint-staged": "^10.1.7",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.2",
+    "prettier-plugin-import-sort": "0.0.6",
     "ua-parser-js": "^0.7.21",
     "yet-another-fetch-mock": "^4.0.0"
   },
@@ -141,5 +143,11 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module",
+      "parser": "typescript"
+    }
   }
 }

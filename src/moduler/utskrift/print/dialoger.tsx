@@ -1,9 +1,9 @@
-import React from 'react';
-import { Element, EtikettLiten, Systemtittel, Undertittel } from 'nav-frontend-typografi';
-
-import { datoComparator, formaterDatoKortManed } from '../../../utils';
-import { Dialog } from '../../../types';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import { Element, EtikettLiten, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+
+import { Dialog } from '../../../types';
+import { datoComparator, formaterDatoKortManed } from '../../../utils';
 
 interface DialogProps {
     dialog?: Dialog;

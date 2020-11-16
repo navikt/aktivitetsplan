@@ -1,19 +1,16 @@
-import React from 'react';
-
 import { mount } from 'enzyme';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import reducer from '../../reducer';
-
-import HovedsideFeilmelding from './HovedsideFeilmelding';
-import Feilmelding from './Feilmelding';
-import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../dialog/dialog-reducer';
 import { HENTING_FEILET as ARENA_HENT_FEILET } from '../aktivitet/arena-aktiviteter-reducer';
+import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../dialog/dialog-reducer';
 import { FEILET as OPPFOLGING_FEILET } from '../oppfolging-status/oppfolging-reducer';
-
-import { Normaltekst } from 'nav-frontend-typografi';
+import Feilmelding from './Feilmelding';
 import { tekster } from './GetErrorText';
+import HovedsideFeilmelding from './HovedsideFeilmelding';
 
 const oppfFeilet = () => ({ type: OPPFOLGING_FEILET, data: {} });
 const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: { type: DIALOG_HENT_FEILET } });

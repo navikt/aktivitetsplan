@@ -1,6 +1,7 @@
-import React from 'react';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+
 import ModalContainer from '../modal/modal-container';
 import ModalFooter from '../modal/modal-footer';
 

@@ -1,10 +1,11 @@
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import React from 'react';
-import { formaterDatoKortManed, formaterDatoKortManedTid, formaterTid, HiddenIf } from '../../../../utils';
-import Informasjonsfelt, { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt';
-import * as AppPT from '../../../../proptypes';
+import { FormattedMessage } from 'react-intl';
+
 import { GRUPPE_AKTIVITET_TYPE } from '../../../../constant';
+import * as AppPT from '../../../../proptypes';
+import { HiddenIf, formaterDatoKortManed, formaterDatoKortManedTid, formaterTid } from '../../../../utils';
+import Informasjonsfelt, { HiddenIfInformasjonsfelt } from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
 const Motaplan = (planListe) => (

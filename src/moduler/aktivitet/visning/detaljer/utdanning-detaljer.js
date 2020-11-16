@@ -1,7 +1,8 @@
 import React from 'react';
+
+import { UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import { HiddenIf } from '../../../../utils';
-import { UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
 const UtdanningDetaljer = ({ aktivitet }) => (

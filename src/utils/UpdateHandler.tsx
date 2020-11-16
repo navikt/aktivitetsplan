@@ -1,9 +1,10 @@
-import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+
+import { useEventListener } from '../felles-komponenter/hooks/useEventListner';
 import { hentAktiviteter } from '../moduler/aktivitet/aktivitet-actions';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import { hentOppfolging } from '../moduler/oppfolging-status/oppfolging-reducer';
-import React from 'react';
 
 export enum UpdateTypes {
     Dialog = 'DIALOG',

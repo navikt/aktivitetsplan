@@ -1,8 +1,10 @@
 import 'moment-duration-format';
-import { erMerEnnEnManederSiden } from '../../utils';
+
+import moment, { DurationInputArg1 } from 'moment';
+
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import { Aktivitet, AktivitetStatus, AktivitetType, Lest, Me } from '../../types';
-import moment, { DurationInputArg1 } from 'moment';
+import { erMerEnnEnManederSiden } from '../../utils';
 
 function compareUndefindedOrNull(a: any, b: any): number {
     if (a != null && b == null) {

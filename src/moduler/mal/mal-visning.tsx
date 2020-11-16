@@ -1,11 +1,12 @@
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { selectGjeldendeMal } from './aktivitetsmal-reducer';
-import { selectMalListe } from './aktivitetsmal-selector';
+
+import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
-import Tekstomrade from 'nav-frontend-tekstomrade';
+import { selectGjeldendeMal } from './aktivitetsmal-reducer';
+import { selectMalListe } from './aktivitetsmal-selector';
 
 interface Props {
     onClick: () => void;

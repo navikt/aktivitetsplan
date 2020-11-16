@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
 import PT from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { hentOppfolging } from './oppfolging-reducer';
-import { hentIdentitet } from '../identitet/identitet-reducer';
-import * as AppPT from '../../proptypes';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 
+import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../proptypes';
+import { hentIdentitet } from '../identitet/identitet-reducer';
+import { selectErVeileder, selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
+import { hentOppfolging } from './oppfolging-reducer';
 import {
     selectAktorId,
     selectErBrukerManuell,
     selectErUnderOppfolging,
-    selectOppfolgingsPerioder,
     selectOppfolgingStatus,
+    selectOppfolgingsPerioder,
     selectReservasjonKRR,
     selectServicegruppe,
 } from './oppfolging-selector';
-import { selectErVeileder, selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';
-import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
 import VidereSendBrukereEllerRenderChildren from './videre-send-bruker-eller-render-children';
 
 class OppfolgingStatus extends Component {

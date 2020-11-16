@@ -1,7 +1,8 @@
-import React from 'react';
 import NavLenkepanel from 'nav-frontend-lenkepanel';
-import InternLenke from './utils/InternLenke';
+import React from 'react';
+
 import hiddenIf from './hidden-if/hidden-if';
+import InternLenke from './utils/InternLenke';
 
 function LenkeUtenStyling(props) {
     return <InternLenke {...props} skipLenkeStyling />;

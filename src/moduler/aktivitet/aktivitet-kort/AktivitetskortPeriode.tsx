@@ -1,9 +1,10 @@
-import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+
 import { GRUPPE_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_AKTIVITET_TYPE } from '../../../constant';
+import { Aktivitet } from '../../../types';
 import { formaterDatoKortManed } from '../../../utils';
 import Soknadfrist from './Soknadsfrist';
-import { Aktivitet } from '../../../types';
 
 interface Props {
     aktivitet: Aktivitet;

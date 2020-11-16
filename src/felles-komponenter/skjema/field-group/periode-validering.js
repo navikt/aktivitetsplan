@@ -1,8 +1,9 @@
-import React from 'react';
 import moment from 'moment';
-import PT from 'prop-types';
-import { erGyldigISODato } from '../../../utils';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import PT from 'prop-types';
+import React from 'react';
+
+import { erGyldigISODato } from '../../../utils';
 
 export function validerPeriode(fradato, tildato) {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {

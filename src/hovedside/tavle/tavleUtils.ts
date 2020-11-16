@@ -1,4 +1,3 @@
-import { Aktivitet } from '../../types';
 import {
     GRUPPE_AKTIVITET_TYPE,
     MOTE_TYPE,
@@ -8,6 +7,7 @@ import {
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
+import { Aktivitet } from '../../types';
 
 export function erDroppbar(aktivitet: Aktivitet, erBruker: boolean, underOppfolging: boolean) {
     const { type, status, nesteStatus, historisk } = aktivitet;

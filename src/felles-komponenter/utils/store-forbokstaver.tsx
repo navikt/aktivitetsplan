@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { storeForbokstaver } from '../../utils';
 
 function StoreForbokstaver(props: Props) {

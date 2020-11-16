@@ -1,9 +1,10 @@
-import { FormattedMessage } from 'react-intl';
 import PT from 'prop-types';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
+import * as AppPT from '../../../../proptypes';
 import { formaterDatoManed } from '../../../../utils';
 import Informasjonsfelt, { HiddenIfInformasjonsfelt } from './Informasjonsfelt';
-import * as AppPT from '../../../../proptypes';
 
 const formatertDato = (dato, visIkkeSatt) => {
     if (visIkkeSatt && !dato) {

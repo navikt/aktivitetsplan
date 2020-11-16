@@ -1,15 +1,7 @@
-import React, { useEffect, useRef } from 'react';
 import PT from 'prop-types';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { oppdaterAktivitet } from '../aktivitet-actions';
-import * as AppPT from '../../../proptypes';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import Modal from '../../../felles-komponenter/modal/modal';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
-import { STATUS } from '../../../ducks/utils';
-import { selectAktivitetMedId } from '../aktivitetliste-selector';
-import { selectAktivitetFeilmeldinger, selectAktivitetStatus } from '../aktivitet-selector';
+
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
@@ -19,15 +11,24 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
-import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
-import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
-import SokeavtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
+import { STATUS } from '../../../ducks/utils';
+import Modal from '../../../felles-komponenter/modal/modal';
+import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../proptypes';
+import { aktivitetRoute } from '../../../routes';
+import { removeEmptyKeysFromObject } from '../../../utils/object';
+import { oppdaterAktivitet } from '../aktivitet-actions';
 import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-behandling-form';
+import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
+import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
 import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
-import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
-import { removeEmptyKeysFromObject } from '../../../utils/object';
-import { aktivitetRoute } from '../../../routes';
+import SokeavtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
+import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
+import { selectAktivitetFeilmeldinger, selectAktivitetStatus } from '../aktivitet-selector';
+import { selectAktivitetMedId } from '../aktivitetliste-selector';
 
 function getAktivitetsFormComponent(aktivitet) {
     if (!aktivitet) {

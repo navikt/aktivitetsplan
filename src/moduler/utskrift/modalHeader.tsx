@@ -1,8 +1,9 @@
+import React from 'react';
+
+import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
-import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
-import React from 'react';
 
 interface Props {
     avhengigheter: InnholdslasterProps['avhengigheter'];

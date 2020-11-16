@@ -1,15 +1,8 @@
+import classNames from 'classnames';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames';
-import Tavle from './tavle';
-import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
-import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
-import { STATUS } from '../../ducks/utils';
-import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
-import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
-import { doLesAktivitetsplan } from '../../moduler/oppfolging-status/oppfolging-api';
+
+import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
@@ -17,14 +10,22 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../constant';
-import Kolonne from './kolonne/Kolonne';
-import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
-import { getFodselsnummer } from '../../bootstrap/fnr-util';
-import Tavleadvarsel from './Tavleadvarsel';
+import { STATUS } from '../../ducks/utils';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
+import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';
+import { selectArenaAktivitetStatus } from '../../moduler/aktivitet/arena-aktivitet-selector';
+import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-reducer';
+import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
+import { doLesAktivitetsplan } from '../../moduler/oppfolging-status/oppfolging-api';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
-import { erDroppbar } from './tavleUtils';
+import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
+import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
+import Tavle from './tavle';
+import Tavleadvarsel from './Tavleadvarsel';
+import { erDroppbar } from './tavleUtils';
 
 function AktivitetsTavle() {
     const dispatch = useDispatch();

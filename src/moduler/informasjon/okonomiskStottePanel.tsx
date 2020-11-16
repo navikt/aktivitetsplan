@@ -1,7 +1,7 @@
-import React from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
 
 export function OkonomiskStotte() {
     return (

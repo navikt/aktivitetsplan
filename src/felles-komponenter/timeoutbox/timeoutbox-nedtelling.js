@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import PT from 'prop-types';
+import moment from 'moment';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+import PT from 'prop-types';
+import React, { Component } from 'react';
+
 import ModalContainer from '../modal/modal-container';
 import ModalFooter from '../modal/modal-footer';
 import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
-import moment from 'moment';
 
 class TimeoutboxNedtelling extends Component {
     componentDidMount() {

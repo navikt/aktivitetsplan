@@ -1,15 +1,16 @@
 import { createSelector } from 'reselect';
-import { selectAktiviteterData, selectAktiviteterSlice, selectAktivitetStatus } from './aktivitet-selector';
-import {
-    selectArenaAktiviteterData,
-    selectArenaAktiviteterSlice,
-    selectArenaAktivitetStatus,
-} from './arena-aktivitet-selector';
-import { aggregerStatus, STATUS } from '../../ducks/utils';
+
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import { STATUS, aggregerStatus } from '../../ducks/utils';
 import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
+import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterSlice } from './aktivitet-selector';
+import {
+    selectArenaAktivitetStatus,
+    selectArenaAktiviteterData,
+    selectArenaAktiviteterSlice,
+} from './arena-aktivitet-selector';
 
 export const selectAlleAktiviter = createSelector(
     selectAktiviteterData,

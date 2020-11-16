@@ -1,15 +1,16 @@
-import { Aktivitet, Dialog } from '../../../../../types';
+import { HoyreChevron } from 'nav-frontend-chevron';
+import React from 'react';
 import { useSelector } from 'react-redux';
+
+import { Aktivitet, Dialog } from '../../../../../types';
+import { createSelectDialogForAktivitetId } from '../../../../dialog/dialog-selector';
+import LenkeTilDialog from '../../../../dialog/DialogLink';
 import { selectErVeileder } from '../../../../identitet/identitet-selector';
 import { selectErBrukerManuell, selectReservasjonKRR } from '../../../../oppfolging-status/oppfolging-selector';
-import styles from './Dialogunderelement.module.less';
-import DialogLenkeInnhold from './DialogLenkeInnhold';
 import DeleLinje from '../../delelinje/delelinje';
-import React from 'react';
-import LenkeTilDialog from '../../../../dialog/DialogLink';
 import DialogIkon from './DialogIkon';
-import { HoyreChevron } from 'nav-frontend-chevron';
-import { createSelectDialogForAktivitetId } from '../../../../dialog/dialog-selector';
+import DialogLenkeInnhold from './DialogLenkeInnhold';
+import styles from './Dialogunderelement.module.less';
 
 interface Props {
     aktivitet: Aktivitet;

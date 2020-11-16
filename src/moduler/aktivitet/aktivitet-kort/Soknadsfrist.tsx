@@ -1,8 +1,9 @@
-import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { formaterDatoKortManed, dagerTil } from '../../../utils';
-import styles from './Aktivitetskort.module.less';
+import React from 'react';
+
 import { Aktivitet } from '../../../types';
+import { dagerTil, formaterDatoKortManed } from '../../../utils';
+import styles from './Aktivitetskort.module.less';
 
 function getClassName(frist: number) {
     if (frist < 0) return styles.fristUtgaat;

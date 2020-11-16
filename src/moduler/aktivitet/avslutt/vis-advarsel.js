@@ -1,8 +1,9 @@
-import React from 'react';
-import PT from 'prop-types';
-import { Innholdstittel } from 'nav-frontend-typografi';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import PT from 'prop-types';
+import React from 'react';
+
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 

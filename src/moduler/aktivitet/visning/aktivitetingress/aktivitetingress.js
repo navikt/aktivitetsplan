@@ -1,6 +1,6 @@
-import React from 'react';
-import PT from 'prop-types';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import PT from 'prop-types';
+import React from 'react';
 
 const aktivitetingress = {
     behandling:

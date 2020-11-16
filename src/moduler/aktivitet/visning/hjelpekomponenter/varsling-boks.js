@@ -1,12 +1,13 @@
-import React from 'react';
-import PT from 'prop-types';
-import { connect } from 'react-redux';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
-import { selectDialogForAktivitetId, selectDialogStatus } from '../../../dialog/dialog-selector';
-import * as AppPT from '../../../../proptypes';
-import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import PT from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+
 import { MOTE_TYPE } from '../../../../constant';
+import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
+import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import * as AppPT from '../../../../proptypes';
+import { selectDialogForAktivitetId, selectDialogStatus } from '../../../dialog/dialog-selector';
 import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/identitet-selector';
 
 function VarslingBoks({ className, avhengigheter, visVarselOmManglendeDialog }) {

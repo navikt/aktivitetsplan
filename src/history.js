@@ -1,4 +1,5 @@
 import { createBrowserHistory } from 'history';
+
 import { getFodselsnummer } from './bootstrap/fnr-util';
 
 function nyURLHarQueryString(url) {

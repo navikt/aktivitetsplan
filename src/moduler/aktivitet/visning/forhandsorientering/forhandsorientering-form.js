@@ -1,19 +1,20 @@
+import useFormstate from '@nutgaard/use-formstate';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { Knapp } from 'nav-frontend-knapper';
+import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import PT from 'prop-types';
-import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { Knapp } from 'nav-frontend-knapper';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import useFormstate from '@nutgaard/use-formstate';
-import { selectDialogStatus } from '../../../dialog/dialog-selector';
+
+import { STATUS } from '../../../../ducks/utils';
+import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
+import Select from '../../../../felles-komponenter/skjema/input/select';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../../proptypes';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
-import { STATUS } from '../../../../ducks/utils';
-import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
-import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
-import Select from '../../../../felles-komponenter/skjema/input/select';
+import { selectDialogStatus } from '../../../dialog/dialog-selector';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';

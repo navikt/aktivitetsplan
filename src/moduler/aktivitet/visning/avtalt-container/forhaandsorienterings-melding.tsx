@@ -1,11 +1,12 @@
-import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import Select from '../../../../felles-komponenter/skjema/input/select';
-import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
-import React from 'react';
-import { IKKE_SEND_FORHANDSORIENTERING, SEND_FORHANDSORIENTERING, SEND_PARAGRAF_11_9 } from './avtalt-form';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+
+import Select from '../../../../felles-komponenter/skjema/input/select';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
+import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import { IKKE_SEND_FORHANDSORIENTERING, SEND_FORHANDSORIENTERING, SEND_PARAGRAF_11_9 } from './avtalt-form';
 
 function InfoHeader() {
     return (

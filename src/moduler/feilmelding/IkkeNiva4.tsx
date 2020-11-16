@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
-import { selectNivaa4 } from '../tilgang/tilgang-selector';
-import React from 'react';
-
-import styles from './Feilmelding.module.less';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { selectNivaa4 } from '../tilgang/tilgang-selector';
+import styles from './Feilmelding.module.less';
 
 const Nivaa4Feilmelding = () => {
     const niva4 = useSelector(selectNivaa4);

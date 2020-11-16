@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AktivitetStatusForm from './aktivitet-status-form';
-import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
-import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
-import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
-import EndreLinje from '../endre-linje/endre-linje';
-import StatusVisning from './status-visning';
-import { selectLasterAktivitetData } from '../../aktivitet-selector';
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { Aktivitet } from '../../../../types';
 import { Dispatch } from 'redux';
+
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
+import { Aktivitet } from '../../../../types';
+import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
+import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
+import { selectLasterAktivitetData } from '../../aktivitet-selector';
+import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
+import EndreLinje from '../endre-linje/endre-linje';
+import AktivitetStatusForm from './aktivitet-status-form';
+import StatusVisning from './status-visning';
 
 const useDisableStatusEndring = (aktivitet: Aktivitet) => {
     const lasterAktivitet = useSelector(selectLasterAktivitetData);

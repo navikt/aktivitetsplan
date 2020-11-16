@@ -1,6 +1,7 @@
+import { mount } from 'enzyme';
 /* eslint-env mocha */
 import React from 'react';
-import { mount } from 'enzyme';
+
 import { STATUS } from '../../ducks/utils';
 import Innholdslaster from './innholdslaster';
 

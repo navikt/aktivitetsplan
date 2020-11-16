@@ -1,14 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/label-has-for */
 
-import React, { Component } from 'react';
 import PT from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import visibleIfHOC from '../../hocs/visible-if';
+
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectMalverkData, selectMalverkMedTittel, selectMalverkStatus } from './malverk-selector';
+import visibleIfHOC from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
 import { hentMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-reducer';
+import { selectMalverkData, selectMalverkMedTittel, selectMalverkStatus } from './malverk-selector';
 
 function lagMalverkOption(mal) {
     return (

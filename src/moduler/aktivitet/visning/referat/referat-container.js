@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
+import moment from 'moment';
 import PT from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
-import { selectErVeileder } from '../../../identitet/identitet-selector';
-import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
-import ReferatSeksjon from './referat-seksjon';
-import { publiserReferat } from '../../aktivitet-actions';
-import { autobind } from '../../../../utils';
 import { STATUS } from '../../../../ducks/utils';
+import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
+import { autobind } from '../../../../utils';
+import { selectErVeileder } from '../../../identitet/identitet-selector';
+import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
+import { publiserReferat } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import DeleLinje from '../delelinje/delelinje';
-import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import moment from 'moment';
+import ReferatSeksjon from './referat-seksjon';
 
 class ReferatContainer extends Component {
     constructor(props) {

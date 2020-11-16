@@ -1,5 +1,6 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
+
 import FilterIkon from './filter-ikon';
 
 function FiltreringLabel({ label, slettFilter }) {

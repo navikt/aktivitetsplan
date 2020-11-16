@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import React, { Component } from 'react';
+
 import styles from './video.module.less';
 
 const ONBOARDING_VIDEO_URL =

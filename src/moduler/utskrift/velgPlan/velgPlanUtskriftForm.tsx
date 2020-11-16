@@ -1,11 +1,12 @@
-import React from 'react';
-import { Innholdstittel } from 'nav-frontend-typografi';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import React from 'react';
+
+import Radio from '../../../felles-komponenter/skjema/input/radio';
 import { KvpPeriode } from '../../../types';
 import UtskriftValg from './utskriftValg';
 import KvpPlanValg from './velgKvpPlan';
-import Radio from '../../../felles-komponenter/skjema/input/radio';
 
 const validator = useFormstate({
     utskriftPlanType: () => undefined,

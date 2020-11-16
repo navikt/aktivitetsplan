@@ -1,6 +1,7 @@
-import React from 'react';
-import PT from 'prop-types';
 import classNames from 'classnames';
+import PT from 'prop-types';
+import React from 'react';
+
 import visibleIfHOC from '../../hocs/visible-if';
 
 function Knappelenke({ onClick, className, ...rest }) {

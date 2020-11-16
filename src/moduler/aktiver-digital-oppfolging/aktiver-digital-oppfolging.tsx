@@ -1,10 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { settDigital } from '../oppfolging-status/oppfolging-reducer';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { STATUS } from '../../ducks/utils';
-import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
+import { settDigital } from '../oppfolging-status/oppfolging-reducer';
+import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel';
 
 function AktiverDigitalOppfolging() {

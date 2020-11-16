@@ -1,4 +1,4 @@
-import { aggregerStatus, getCookie, handterFeil, sjekkStatuskode, STATUS, toJson } from './utils';
+import { STATUS, aggregerStatus, getCookie, handterFeil, sjekkStatuskode, toJson } from './utils';
 
 const { OK, PENDING, ERROR, RELOADING, NOT_STARTED } = STATUS;
 

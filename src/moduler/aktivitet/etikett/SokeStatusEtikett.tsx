@@ -1,9 +1,10 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
+
 import * as statuskoder from '../../../constant';
-import styles from './etikett.module.less';
 import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
 import { StillingsStatus } from '../../../types';
+import styles from './etikett.module.less';
 
 const getCls = (etikettnavn?: StillingsStatus): string => {
     switch (etikettnavn) {
