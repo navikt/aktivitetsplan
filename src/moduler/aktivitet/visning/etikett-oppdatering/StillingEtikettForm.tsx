@@ -1,19 +1,26 @@
 import React, { useContext, useEffect } from 'react';
-import PT from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
+import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import * as konstanter from '../../../../constant';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
-import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
+import { Aktivitet } from '../../../../types';
+
+const validateEtikettStatus = (): string | undefined => undefined;
 
 const validator = useFormstate({
-    etikettstatus: () => {},
+    etikettstatus: validateEtikettStatus,
 });
 
-function StillingEtikettForm(props) {
-    const { aktivitet, disabled, onSubmit } = props;
+interface Props {
+    aktivitet: Aktivitet;
+    disabled?: boolean;
+    onSubmit(): Promise<any>;
+}
+
+const StillingEtikettForm = (props: Props) => {
+    const { aktivitet, disabled = true, onSubmit } = props;
 
     const state = validator({
         etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT,
@@ -39,7 +46,7 @@ function StillingEtikettForm(props) {
                     {...state.fields.etikettstatus}
                 />
                 <Radio
-                    label="Sendt søknad"
+                    label="Sendt søknad og venter på svar"
                     value={konstanter.SOKNAD_SENDT}
                     disabled={disable}
                     {...state.fields.etikettstatus}
@@ -68,16 +75,6 @@ function StillingEtikettForm(props) {
             </Hovedknapp>
         </form>
     );
-}
-
-StillingEtikettForm.defaultProps = {
-    disabled: true,
-};
-
-StillingEtikettForm.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
-    onSubmit: PT.func.isRequired,
-    disabled: PT.bool,
 };
 
 export default StillingEtikettForm;

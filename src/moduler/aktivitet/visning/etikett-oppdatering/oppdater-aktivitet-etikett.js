@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as statuser from '../../../../constant';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
-import StillingEtikettForm from './stilling-etikett-form';
+import StillingEtikettForm from './StillingEtikettForm';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import EndreLinje from '../endre-linje/endre-linje';
