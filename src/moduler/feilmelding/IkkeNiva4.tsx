@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { selectNivaa4 } from '../tilgang/tilgang-selector';
-import classNames from 'classnames';
 import React from 'react';
 
 import styles from './Feilmelding.module.less';
