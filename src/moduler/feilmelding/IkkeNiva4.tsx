@@ -14,7 +14,7 @@ const Nivaa4Feilmelding = () => {
     }
 
     return (
-        <div className={classNames(styles.feilmelding)}>
+        <div className={styles.feilmelding}>
             <AlertStripeAdvarsel>
                 Systemet får ikke sjekket om denne brukeren er en digital eller manuell bruker. <br />
                 Dette er et midlertidig problem på grunn av ny teknisk løsning etter koronasituasjonen.
