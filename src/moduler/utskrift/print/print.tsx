@@ -1,15 +1,16 @@
-import { formaterDatoKortManed } from '../../../utils';
-import logoPng from '../ikoner/logo.png';
-import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
-import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
+
+import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
+import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
 import { Aktivitet, Bruker, Dialog, KvpPeriode, Mal } from '../../../types';
+import { formaterDatoKortManed } from '../../../utils';
+import logoPng from '../ikoner/logo.png';
 import Adresse from './adresse';
-import { DialogerUtenAktivitet } from './dialoger';
-import MalPrint from './malPrint';
 import Aktiviteter from './aktiviteter';
-import { filtrerDialoger, filtrerAktiviteter } from './filter-utils';
+import { DialogerUtenAktivitet } from './dialoger';
+import { filtrerAktiviteter, filtrerDialoger } from './filter-utils';
+import MalPrint from './malPrint';
 
 interface Props {
     dialoger?: Dialog[];

@@ -1,16 +1,18 @@
+import './mal.less';
+
+import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { MalModal } from './mal-modal';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectHarSkriveTilgang, selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { hentMal, selectMalStatus } from './aktivitetsmal-reducer';
 import { selectMalListeStatus } from './aktivitetsmal-selector';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { hentMalListe } from './malliste-reducer';
-import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
-import './mal.less';
-import MalHistorikk from './mal-historikk';
 import MalContainer from './mal-container';
-import { selectHarSkriveTilgang, selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
+import MalHistorikk from './mal-historikk';
+import { MalModal } from './mal-modal';
+import { hentMalListe } from './malliste-reducer';
 
 function Mal() {
     const malStatus = useSelector(selectMalStatus, shallowEqual);

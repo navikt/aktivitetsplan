@@ -1,19 +1,20 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import PT from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { STATUS } from '../../../ducks/utils';
+import * as AppPT from '../../../proptypes';
+import { DirtyProvider } from '../../context/dirty-context';
+import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
 import { hentAktivitet } from '../aktivitet-actions';
+import { genererAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
+import { selectAktivitetStatus } from '../aktivitet-selector';
+import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetliste-selector';
+import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './Aktivitetvisning';
-import * as AppPT from '../../../proptypes';
-import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetliste-selector';
-import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolging-status/oppfolging-selector';
-import { STATUS } from '../../../ducks/utils';
-import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
-import { selectAktivitetStatus } from '../aktivitet-selector';
-import { DirtyProvider } from '../../context/dirty-context';
 import AktivitetvisningModal from './aktivitetvisning-modal';
-import { genererAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {

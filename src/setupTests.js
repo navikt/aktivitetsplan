@@ -1,8 +1,9 @@
+import 'moment-timezone';
+import 'moment/locale/nb';
+
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import moment from 'moment';
-import 'moment-timezone';
-import 'moment/locale/nb';
 
 moment.locale('nb');
 moment.tz.setDefault('Europe/Oslo');

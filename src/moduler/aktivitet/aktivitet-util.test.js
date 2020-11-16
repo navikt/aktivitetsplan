@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 import moment from 'moment';
+
 import {
     beregnFraTil,
     beregnKlokkeslettVarighet,

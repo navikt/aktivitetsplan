@@ -1,5 +1,6 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
+
 import visibleIfHOC from '../../hocs/visible-if';
 
 function VisibleIfTag({ tagName, children, ...restProps }) {

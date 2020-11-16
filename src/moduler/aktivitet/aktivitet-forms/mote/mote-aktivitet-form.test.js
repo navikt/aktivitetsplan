@@ -1,9 +1,10 @@
-import React from 'react';
 import { mount, shallow } from 'enzyme';
+import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStore } from 'redux';
-import MoteAktivitetForm, { defaultBeskrivelse } from './mote-aktivitet-form';
+
 import reducer from '../../../../reducer';
+import MoteAktivitetForm, { defaultBeskrivelse } from './mote-aktivitet-form';
 
 const initialState = {
     data: {

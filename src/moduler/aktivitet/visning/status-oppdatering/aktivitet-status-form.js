@@ -1,12 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import PT from 'prop-types';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import AlertStripe from 'nav-frontend-alertstriper';
 import useFormstate from '@nutgaard/use-formstate';
-import { aktivitet as aktivitetPT } from '../../../../proptypes';
-import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import visibleIf from '../../../../hocs/visible-if';
-import { manglerPubliseringAvSamtaleReferat, trengerBegrunnelse } from '../../aktivitet-util';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
+import PT from 'prop-types';
+import React, { useContext, useEffect } from 'react';
+
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
@@ -17,8 +15,11 @@ import {
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import visibleIf from '../../../../hocs/visible-if';
+import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
-import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
+import { manglerPubliseringAvSamtaleReferat, trengerBegrunnelse } from '../../aktivitet-util';
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripe);
 

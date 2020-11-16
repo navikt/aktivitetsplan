@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
-import { getNowAsISODate } from '../../utils';
+
 import { STATUS } from '../../ducks/utils';
+import { getNowAsISODate } from '../../utils';
 
 export function selectOppfolgingSlice(state) {
     return state.data.oppfolging;

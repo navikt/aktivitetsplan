@@ -1,16 +1,17 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import * as AppPT from '../../../proptypes';
-import BegrunnelseAktivitet from './begrunnelse-form';
-import { fullforAktivitet } from '../aktivitet-actions';
+
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
-import VisAdvarsel from './vis-advarsel';
-import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetliste-selector';
-import PubliserReferat from './publiser-referat';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
+import * as AppPT from '../../../proptypes';
+import { fullforAktivitet } from '../aktivitet-actions';
+import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetliste-selector';
+import BegrunnelseAktivitet from './begrunnelse-form';
+import PubliserReferat from './publiser-referat';
+import VisAdvarsel from './vis-advarsel';
 
 const headerTekst = 'Fullført aktivitet';
 const beskrivelseTekst =

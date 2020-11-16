@@ -1,22 +1,24 @@
+import './mitt-maal.less';
+
+import classNames from 'classnames';
+import moment from 'moment';
+import { Flatknapp } from 'nav-frontend-knapper';
+import Tekstomrade from 'nav-frontend-tekstomrade';
+import { Element } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Flatknapp } from 'nav-frontend-knapper';
-import { Element } from 'nav-frontend-typografi';
-import moment from 'moment';
-import InternLenke from '../../felles-komponenter/utils/InternLenke';
+
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
-import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-selector';
+import InternLenke from '../../felles-komponenter/utils/InternLenke';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
-import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
-import { ReactComponent as Pluss } from './pluss.svg';
-import { Lest, Mal, Me } from '../../types';
-import { selectLestAktivitetsplan } from '../lest/lest-reducer';
 import NotifikasjonMarkering from '../../felles-komponenter/utils/notifikasjon-markering';
-import './mitt-maal.less';
+import { Lest, Mal, Me } from '../../types';
+import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
+import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-selector';
+import { selectLestAktivitetsplan } from '../lest/lest-reducer';
+import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
+import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
+import { ReactComponent as Pluss } from './pluss.svg';
 
 interface MalTextProps {
     mal?: string;

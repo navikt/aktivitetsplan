@@ -1,11 +1,12 @@
+import PT from 'prop-types';
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import PT from 'prop-types';
-import { Provider as ReduxProvider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import IntlProvider from './intl-provider';
+import { Provider as ReduxProvider } from 'react-redux';
+
 import InitiellDataLast from './initiell-data-last';
+import IntlProvider from './intl-provider';
 import createStore from './store';
 
 const store = createStore(window.history);

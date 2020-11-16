@@ -1,18 +1,19 @@
-import React from 'react';
-import PT from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import * as AppPT from '../../proptypes';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import PT from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
-import { selectAktivitetListeStatus, selectAktiviterForAktuellePerioden } from '../aktivitet/aktivitetliste-selector';
-import TypeFilter from './filter/type-filter';
+import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
+import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
+import * as AppPT from '../../proptypes';
+import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetliste-selector';
+import AvtaltMedNavFilter from './filter/avtalt-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';
-import AvtaltMedNavFilter from './filter/avtalt-filter';
-import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
+import TypeFilter from './filter/type-filter';
 
 function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
     const muligeFilterKombinasjoner = aktivitetsListe.reduce(

@@ -1,6 +1,7 @@
-import React from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+
 import styles from './informasjon-modal.module.less';
 
 export function BrukePlanenPanel() {

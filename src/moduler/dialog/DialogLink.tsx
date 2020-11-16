@@ -1,8 +1,9 @@
 import React, { MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
 import { fnrFraUrl } from '../../bootstrap/fnr-provider';
 import { selectErVeileder } from '../identitet/identitet-selector';
-import { useHistory } from 'react-router-dom';
 
 export const dialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
     if (erVeileder) {

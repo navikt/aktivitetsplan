@@ -1,7 +1,8 @@
-import React from 'react';
-import PT from 'prop-types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
+import PT from 'prop-types';
+import React from 'react';
+
 import visibleIfHOC from '../../../../hocs/visible-if';
 
 function BegrunnelseBoks({ begrunnelse, className }) {

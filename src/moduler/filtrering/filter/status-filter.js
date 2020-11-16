@@ -1,18 +1,19 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { selectAktivitetStatusFilter } from './filter-selector';
-import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
-import { toggleAktivitetsStatus } from './filter-reducer';
-import FilterVisning from './filter-visning';
+
 import {
-    STATUS_BRUKER_ER_INTRESSERT,
-    STATUS_PLANLAGT,
-    STATUS_GJENNOMFOERT,
-    STATUS_FULLFOERT,
     STATUS_AVBRUTT,
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_FULLFOERT,
+    STATUS_GJENNOMFOERT,
+    STATUS_PLANLAGT,
 } from '../../../constant';
 import { STATUS_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
+import { toggleAktivitetsStatus } from './filter-reducer';
+import { selectAktivitetStatusFilter } from './filter-selector';
+import FilterVisning from './filter-visning';
 
 const filtreringsRekkefolge = [
     STATUS_BRUKER_ER_INTRESSERT,

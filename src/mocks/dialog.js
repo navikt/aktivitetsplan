@@ -1,5 +1,5 @@
-import { rndId } from './utils';
 import { erEksternBruker, ulesteDialoger } from './demo/sessionstorage';
+import { rndId } from './utils';
 
 const dialoger = [
     {

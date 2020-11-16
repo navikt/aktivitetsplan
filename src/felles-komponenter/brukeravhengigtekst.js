@@ -1,7 +1,8 @@
-import React from 'react';
 import PT from 'prop-types';
-import { connect } from 'react-redux';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+
 import { selectErBruker } from '../moduler/identitet/identitet-selector';
 
 function BrukerAvhengigTekst({ id, erBruker, endretAv }) {

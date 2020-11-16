@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
+
 import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
-import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectErBruker, selectIdentitetStatus } from '../identitet/identitet-selector';
+import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import BrukerVarslinger from './brukerVarsel';
 import VeilederVarsel from './veilederVarsel';
 

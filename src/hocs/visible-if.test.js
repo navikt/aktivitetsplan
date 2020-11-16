@@ -1,7 +1,7 @@
+import { mount } from 'enzyme';
 /* eslint-env mocha */
 import React from 'react';
 
-import { mount } from 'enzyme';
 import visibleIfHOC from './visible-if';
 
 describe('visible-if', () => {

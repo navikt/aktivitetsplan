@@ -1,12 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { Route, Switch } from 'react-router-dom';
 import PT from 'prop-types';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { lagNyAktivitet } from '../aktivitet-actions';
-import Modal from '../../../felles-komponenter/modal/modal';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
+import { Route, Switch } from 'react-router-dom';
+
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
@@ -17,16 +13,21 @@ import {
     STATUS_PLANLAGT,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
-import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
-import { removeEmptyKeysFromObject } from '../../../utils/object';
-import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
-import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
-import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
-import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-behandling-form';
-import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
-import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
+import Modal from '../../../felles-komponenter/modal/modal';
+import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import { aktivitetRoute } from '../../../routes';
+import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
+import { lagNyAktivitet } from '../aktivitet-actions';
+import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-behandling-form';
+import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
+import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
+import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
+import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
+import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
+import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
+import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 const CONFIRM = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 

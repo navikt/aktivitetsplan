@@ -1,9 +1,10 @@
-import { HiddenIfAdvarselMedLenke, HiddenIfVarslingMedLenke } from './varsel-alertstriper';
-import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
+import moment from 'moment';
 import React from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
+
 import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
-import { shallowEqual, useSelector } from 'react-redux';
+import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
 import {
     selectErEskalert,
     selectErUnderOppfolging,
@@ -11,8 +12,8 @@ import {
     selectKanReaktiveres,
     selectTilHorendeDialogId,
 } from '../oppfolging-status/oppfolging-selector';
+import { HiddenIfAdvarselMedLenke, HiddenIfVarslingMedLenke } from './varsel-alertstriper';
 import styls from './varslinger.module.less';
-import moment from 'moment';
 
 function infotekstTilInaktivertBrukere(antallDagerIgjen?: number): string | undefined {
     if (!antallDagerIgjen) {

@@ -1,5 +1,5 @@
-import { DIALOG_BASE_URL } from '../../environment';
 import { fetchToJson, postAsJson, putAsJson } from '../../ducks/utils';
+import { DIALOG_BASE_URL } from '../../environment';
 
 export function hentDialog() {
     return fetchToJson(`${DIALOG_BASE_URL}/dialog`);

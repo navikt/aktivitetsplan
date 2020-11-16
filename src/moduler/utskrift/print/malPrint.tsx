@@ -1,5 +1,6 @@
 import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
+
 import { Mal } from '../../../types';
 
 interface Props {

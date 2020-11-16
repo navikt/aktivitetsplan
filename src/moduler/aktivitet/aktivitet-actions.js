@@ -1,7 +1,7 @@
-import * as Api from './aktivitet-api';
-import { doThenDispatch } from '../../ducks/utils';
 import * as statuskoder from '../../constant';
+import { doThenDispatch } from '../../ducks/utils';
 import * as AT from './aktivitet-action-types';
+import * as Api from './aktivitet-api';
 
 export function hentAktiviteter() {
     return doThenDispatch(() => Api.hentAktiviteter(), {

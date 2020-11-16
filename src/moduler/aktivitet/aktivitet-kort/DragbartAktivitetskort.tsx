@@ -1,12 +1,13 @@
+import classNames from 'classnames';
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import Aktivitetskort from './Aktivitetskort';
-import { Aktivitet } from '../../../types';
+
 import { DROP_TYPE } from '../../../hovedside/tavle/kolonne/DropTargetKolonne';
-import { startDragging, stopDragging } from './dragAndDropReducer';
+import { Aktivitet } from '../../../types';
+import Aktivitetskort from './Aktivitetskort';
 import styles from './Aktivitetskort.module.less';
+import { startDragging, stopDragging } from './dragAndDropReducer';
 
 interface Props {
     aktivitet: Aktivitet;

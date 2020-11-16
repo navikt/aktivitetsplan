@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
 import PT from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { hentIdentitet } from './identitet-reducer';
 
 class Identitet extends Component {

@@ -1,12 +1,13 @@
-import React from 'react';
-import PT from 'prop-types';
-import NavFrontendModal from 'nav-frontend-modal';
 import classNames from 'classnames';
+import NavFrontendModal from 'nav-frontend-modal';
+import PT from 'prop-types';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
-import ModalHeader from './modal-header';
-import Innholdslaster from '../utils/innholdslaster';
-import * as AppPT from '../../proptypes';
+
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
+import * as AppPT from '../../proptypes';
+import Innholdslaster from '../utils/innholdslaster';
+import ModalHeader from './modal-header';
 
 function Modal({
     header,

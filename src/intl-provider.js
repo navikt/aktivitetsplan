@@ -1,6 +1,7 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
 import { IntlProvider as Provider } from 'react-intl';
+
 import tekster from './tekster'; // eslint-disable-line import/no-unresolved, import/extensions
 
 function keys(local) {

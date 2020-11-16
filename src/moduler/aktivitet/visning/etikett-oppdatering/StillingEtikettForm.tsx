@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
+import React, { useContext, useEffect } from 'react';
+
 import * as konstanter from '../../../../constant';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import { DirtyContext } from '../../../context/dirty-context';
 import { Aktivitet } from '../../../../types';
+import { DirtyContext } from '../../../context/dirty-context';
 
 const validateEtikettStatus = (): string | undefined => undefined;
 

@@ -1,7 +1,8 @@
-/* eslint-env mocha */
-import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+/* eslint-env mocha */
+import React from 'react';
+
 import UnsafeHtml from './unsafe-html';
 
 describe('unsafe-html', () => {

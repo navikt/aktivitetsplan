@@ -1,16 +1,17 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import * as AppPT from '../../../proptypes';
-import BegrunnelseAktivitet from './begrunnelse-form';
-import VisAdvarsel from './vis-advarsel';
-import { avbrytAktivitet } from '../aktivitet-actions';
-import { STATUS } from '../../../ducks/utils';
-import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetliste-selector';
-import PubliserReferat from './publiser-referat';
-import Modal from '../../../felles-komponenter/modal/modal';
+
 import { STATUS_AVBRUTT } from '../../../constant';
+import { STATUS } from '../../../ducks/utils';
+import Modal from '../../../felles-komponenter/modal/modal';
+import * as AppPT from '../../../proptypes';
+import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
+import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetliste-selector';
+import BegrunnelseAktivitet from './begrunnelse-form';
+import PubliserReferat from './publiser-referat';
+import VisAdvarsel from './vis-advarsel';
 
 const headerTekst = 'Avbrutt aktivitet';
 const beskrivelseLabel =

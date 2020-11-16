@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
 import PT from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { hentFeature } from './ducks/feature-reducer';
 
 function getEnhetFromURL() {

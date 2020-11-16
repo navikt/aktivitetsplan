@@ -1,6 +1,7 @@
+import { Radio as NavRadio } from 'nav-frontend-skjema';
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Radio as NavRadio } from 'nav-frontend-skjema';
+
 import { FieldStateInput } from './utils';
 
 interface RadioProps {

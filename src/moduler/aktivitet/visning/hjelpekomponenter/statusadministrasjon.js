@@ -1,20 +1,21 @@
-import React from 'react';
-import PT from 'prop-types';
-import { connect } from 'react-redux';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import * as AppPT from '../../../../proptypes';
-import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
-import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-etikett';
+import PT from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_AKTIVITET_TYPE } from '../../../../constant';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import * as AppPT from '../../../../proptypes';
 import { selectErBruker } from '../../../identitet/identitet-selector';
-import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsorientering-arena-aktivitet';
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import DeleLinje from '../delelinje/delelinje';
+import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-etikett';
+import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsorientering-arena-aktivitet';
+import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
 
 function Statusadministrasjon(props) {
     const { aktivitet, arenaAktivitet, erBruker, erManuellKrrKvpBruker } = props;

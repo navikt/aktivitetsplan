@@ -1,9 +1,10 @@
-import { FormattedMessage } from 'react-intl';
 import React from 'react';
-import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
-import { HiddenIf } from '../../../../utils';
-import * as AppPT from '../../../../proptypes';
+import { FormattedMessage } from 'react-intl';
+
 import { TILTAK_AKTIVITET_TYPE } from '../../../../constant';
+import * as AppPT from '../../../../proptypes';
+import { HiddenIf } from '../../../../utils';
+import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
 const TiltakDetaljer = ({ aktivitet }) => (

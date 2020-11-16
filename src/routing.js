@@ -1,10 +1,11 @@
-import React from 'react';
 import PT from 'prop-types';
+import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import Aktivitetsmal from './moduler/mal/mal';
+
 import AktivitetRoutes from './moduler/aktivitet/aktivitet-routes';
-import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 import InformasjonModal from './moduler/informasjon/informasjon-modal';
+import Aktivitetsmal from './moduler/mal/mal';
+import AktivitetsplanPrint from './moduler/utskrift/aktivitetsplanprint';
 
 function getPathWithBase(path) {
     if (window.appconfig.FNR_I_URL) {

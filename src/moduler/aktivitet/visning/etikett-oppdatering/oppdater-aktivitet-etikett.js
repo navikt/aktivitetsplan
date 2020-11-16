@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
 import PT from 'prop-types';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+
 import * as statuser from '../../../../constant';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
-import StillingEtikettForm from './StillingEtikettForm';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
-import EndreLinje from '../endre-linje/endre-linje';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
 import SokeStatusEtikett from '../../etikett/SokeStatusEtikett';
+import EndreLinje from '../endre-linje/endre-linje';
+import StillingEtikettForm from './StillingEtikettForm';
 
 function OppdaterAktivitetEtikett(props) {
     const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;

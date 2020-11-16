@@ -1,21 +1,22 @@
+import classNames from 'classnames';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames';
-import { aktivitetRoute } from '../../../routes';
-import { selectAktiviteterSomHarBlittVist, settAktivitetSomVist } from '../aktivitetview-reducer';
-import Aktivitetstype from './Aktivitetstype';
-import Aktivitetskorttittel from './AktivitetskortTittel';
-import Arbeidsgiver from './Arbeidsgiver';
-import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
-import SokeAvtaleAntall from './SokeAvtaleAntall';
-import AktivitetskortTillegg from './AktivitetskortTillegg';
-import { Aktivitet } from '../../../types';
-import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
-import { selectIdentitetData } from '../../identitet/identitet-selector';
+
 import { STATUS } from '../../../ducks/utils';
-import { erNyEndringIAktivitet } from '../aktivitet-util';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
+import { aktivitetRoute } from '../../../routes';
+import { Aktivitet } from '../../../types';
+import { selectIdentitetData } from '../../identitet/identitet-selector';
+import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
+import { erNyEndringIAktivitet } from '../aktivitet-util';
+import { selectAktiviteterSomHarBlittVist, settAktivitetSomVist } from '../aktivitetview-reducer';
 import styles from './Aktivitetskort.module.less';
+import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
+import AktivitetskortTillegg from './AktivitetskortTillegg';
+import Aktivitetskorttittel from './AktivitetskortTittel';
+import Aktivitetstype from './Aktivitetstype';
+import Arbeidsgiver from './Arbeidsgiver';
+import SokeAvtaleAntall from './SokeAvtaleAntall';
 
 interface Props {
     aktivitet: Aktivitet;

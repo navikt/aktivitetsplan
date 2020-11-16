@@ -1,9 +1,10 @@
-import React from 'react';
-import { Innholdstittel } from 'nav-frontend-typografi';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
-import Textarea from '../../felles-komponenter/skjema/input/textarea';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Innholdstittel } from 'nav-frontend-typografi';
+import React from 'react';
+
 import FormErrorSummary from '../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Textarea from '../../felles-komponenter/skjema/input/textarea';
 import { Bruker } from '../../types';
 
 const defaultBeskrivelse =

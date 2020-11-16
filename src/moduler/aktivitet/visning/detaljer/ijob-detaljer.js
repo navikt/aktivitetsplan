@@ -1,9 +1,10 @@
-import { FormattedMessage } from 'react-intl';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { IJOBB_AKTIVITET_TYPE } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
-import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { HiddenIf } from '../../../../utils';
+import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import { Beskrivelse, FraDato, TilDato } from '../hjelpekomponenter/standard-felt';
 
 const IJobbDetaljer = ({ aktivitet }) => (

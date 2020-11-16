@@ -1,15 +1,18 @@
-import './polyfill';
-import React from 'react';
-import ReactModal from 'react-modal';
-import * as ReactDOM from 'react-dom';
-import App from './app';
-import NAVSPA from './NAVSPA';
-import { erEksternBruker } from './mocks/demo/sessionstorage';
-import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
-import DemoBanner from './mocks/demo/demoBanner';
-import moment from 'moment';
 import 'moment-timezone';
 import 'moment/locale/nb';
+
+import './polyfill';
+
+import moment from 'moment';
+import React from 'react';
+import * as ReactDOM from 'react-dom';
+import ReactModal from 'react-modal';
+
+import App from './app';
+import { eksternBrukerConfig, veilederConfig } from './mocks/appconfig';
+import DemoBanner from './mocks/demo/demoBanner';
+import { erEksternBruker } from './mocks/demo/sessionstorage';
+import NAVSPA from './NAVSPA';
 
 /* eslint-disable global-require */
 if (!global.Intl) {

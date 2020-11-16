@@ -1,6 +1,7 @@
 import moment from 'moment';
+
+import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 import { rndId } from './utils';
-import { erEksternBruker, visTestAktiviteter, visAutomatiskeAktiviteter } from './demo/sessionstorage';
 
 const eksternBruker = erEksternBruker();
 const bruker = eksternBruker ? 'BRUKER' : 'NAV';

@@ -1,5 +1,5 @@
-import { fetchToJson } from './utils';
 import { ALL_FEATURES } from '../felles-komponenter/feature/feature';
+import { fetchToJson } from './utils';
 
 const featureQueryParams = (features: string[]) => {
     const reduceFunc = (acc: string, toggle: string, i: number) => `${acc}${i === 0 ? '?' : '&'}feature=${toggle}`;

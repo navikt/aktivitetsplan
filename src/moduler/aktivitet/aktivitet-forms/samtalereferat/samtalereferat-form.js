@@ -1,17 +1,18 @@
-import React from 'react';
-import PT from 'prop-types';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
+import PT from 'prop-types';
+import React from 'react';
+
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import Input from '../../../../felles-komponenter/skjema/input/input';
+import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
 import { todayIsoString } from '../../../../utils';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import Input from '../../../../felles-komponenter/skjema/input/input';
 import VelgKanal from '../velg-kanal';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
 import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
-import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 const validator = useFormstate({
     tittel: validateTittel,

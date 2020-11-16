@@ -1,15 +1,16 @@
-import React from 'react';
-import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
-import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
+import PT from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import {
-    STATUS_PLANLAGT,
-    STATUS_GJENNOMFOERT,
+    STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
     STATUS_FULLFOERT,
-    STATUS_AVBRUTT,
+    STATUS_GJENNOMFOERT,
+    STATUS_PLANLAGT,
 } from '../../../constant';
+import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
 
 // HAR DETTE NOE MED UU ATT GORA???
 function hjelpeklasse(aktivitetStatus) {

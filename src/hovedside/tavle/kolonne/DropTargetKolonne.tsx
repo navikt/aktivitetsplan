@@ -1,15 +1,16 @@
-import React, { ReactNode } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
+import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
-import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
-import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
-import { Aktivitet, AktivitetStatus } from '../../../types';
+import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
+import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
+import { Aktivitet, AktivitetStatus } from '../../../types';
 import { erDroppbar } from '../tavleUtils';
 
 interface Props {

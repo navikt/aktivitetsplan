@@ -1,14 +1,15 @@
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import * as AppPT from '../../../../proptypes';
-import { formaterDatoKortManed, formaterDatoEllerTidSiden } from '../../../../utils';
-import BrukerAvhengigTekst from '../../../../felles-komponenter/brukeravhengigtekst';
+
 import {
+    TRANSAKSJON_TYPE_AVTALT_DATO_ENDRET,
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
     TRANSAKSJON_TYPE_STATUS_ENDRET,
-    TRANSAKSJON_TYPE_AVTALT_DATO_ENDRET,
 } from '../../../../constant';
+import BrukerAvhengigTekst from '../../../../felles-komponenter/brukeravhengigtekst';
+import * as AppPT from '../../../../proptypes';
+import { formaterDatoEllerTidSiden, formaterDatoKortManed } from '../../../../utils';
 
 function VersjonInnslag({ versjon, prevVersjon }) {
     function endringsTekst() {

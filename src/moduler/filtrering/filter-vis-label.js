@@ -1,11 +1,9 @@
+import classNames from 'classnames';
+import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import PT from 'prop-types';
-import classNames from 'classnames';
-import { selectFilterSlice } from './filter/filter-selector';
-import FiltreringLabel from './filteringslabel/filtering-label';
-import { PeriodeLabel } from './filter/periode-filter';
+
 import {
     toggleAktivitetAvtaltMedNav,
     toggleAktivitetsEtikett,
@@ -13,6 +11,9 @@ import {
     toggleAktivitetsType,
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
+import { selectFilterSlice } from './filter/filter-selector';
+import { PeriodeLabel } from './filter/periode-filter';
+import FiltreringLabel from './filteringslabel/filtering-label';
 
 function VisValgtFilter(props) {
     const {

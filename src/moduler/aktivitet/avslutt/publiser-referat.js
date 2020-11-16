@@ -1,10 +1,11 @@
-import React from 'react';
-import PT from 'prop-types';
 import AlertStripe from 'nav-frontend-alertstriper';
+import PT from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
+
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import * as AppPT from '../../../proptypes';
+import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
 
 function PubliserReferat({ aktivitet, nyStatus, children }) {
     if (manglerPubliseringAvSamtaleReferat(aktivitet, nyStatus)) {

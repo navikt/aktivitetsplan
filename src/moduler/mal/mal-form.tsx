@@ -1,12 +1,13 @@
-import React from 'react';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import useFormstate from '@nutgaard/use-formstate';
-import { oppdaterMal } from './aktivitetsmal-reducer';
-import Textarea from '../../felles-komponenter/skjema/input/textarea';
-import { hentMalListe } from './malliste-reducer';
-import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import React from 'react';
+
 import { useMoveSelectionStartToEnd } from '../../felles-komponenter/hooks/useMoveSelectionStartToEnd';
+import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
+import Textarea from '../../felles-komponenter/skjema/input/textarea';
+import { oppdaterMal } from './aktivitetsmal-reducer';
+import { hentMalListe } from './malliste-reducer';
 
 function validateMal(val: string) {
     if (val.length === 0) {

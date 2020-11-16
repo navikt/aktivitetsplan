@@ -1,4 +1,5 @@
 import shajs from 'sha.js';
+
 import { Aktivitet, AktivitetStatus, Lest, OppfolgingsPeriode } from '../../types';
 
 interface Frontendlogger {

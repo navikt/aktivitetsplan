@@ -1,5 +1,5 @@
-import { filtrerAktiviteter, filtrerDialoger } from './filter-utils';
 import { Aktivitet, Dialog, KvpPeriode } from '../../../types';
+import { filtrerAktiviteter, filtrerDialoger } from './filter-utils';
 
 const kvpPeriode: KvpPeriode = {
     opprettetDato: '2019-07-01T10:41:50.761983+02:00',

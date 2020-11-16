@@ -1,16 +1,17 @@
 import React from 'react';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import AvtaltContainer from './avtalt-container/avtalt-container';
+
 import { GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../../constant';
-import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
-import VarslingBoks from './hjelpekomponenter/varsling-boks';
-import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
-import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
-import ReferatContainer from './referat/referat-container';
-import { trengerBegrunnelse } from '../aktivitet-util';
-import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
+import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import { Aktivitet } from '../../../types';
+import { trengerBegrunnelse } from '../aktivitet-util';
+import AvtaltContainer from './avtalt-container/avtalt-container';
+import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
+import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
+import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
+import VarslingBoks from './hjelpekomponenter/varsling-boks';
+import ReferatContainer from './referat/referat-container';
 import DialogLenke from './underelement-for-aktivitet/dialog/DialogLenke';
+import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
 
 interface Props {
     aktivitet: Aktivitet;

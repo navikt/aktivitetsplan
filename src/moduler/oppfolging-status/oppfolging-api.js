@@ -1,6 +1,6 @@
-import { OPPFOLGING_BASE_URL } from '../../environment';
-import { fetchToJson, postAsJson, getCookie } from '../../ducks/utils';
 import { getFodselsnummer } from '../../bootstrap/fnr-util';
+import { fetchToJson, getCookie, postAsJson } from '../../ducks/utils';
+import { OPPFOLGING_BASE_URL } from '../../environment';
 
 export function hentIdentitet() {
     return fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/me`);

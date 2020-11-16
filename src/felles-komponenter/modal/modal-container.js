@@ -1,6 +1,6 @@
-import React from 'react';
-import PT from 'prop-types';
 import classNames from 'classnames';
+import PT from 'prop-types';
+import React from 'react';
 
 const cls = (className) => classNames(className, 'modal-container');
 

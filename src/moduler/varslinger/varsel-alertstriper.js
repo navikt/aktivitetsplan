@@ -1,10 +1,11 @@
-import React from 'react';
-import PT from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { AlertStripeAdvarsel, AlertStripeInfo } from 'nav-frontend-alertstriper';
-import InternLenke from '../../felles-komponenter/utils/InternLenke';
-import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import Lenke from 'nav-frontend-lenker';
+import PT from 'prop-types';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
+import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
+import InternLenke from '../../felles-komponenter/utils/InternLenke';
 
 export function Varsling({ tekstId, className }) {
     return (

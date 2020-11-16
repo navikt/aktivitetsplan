@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { UnmountClosed } from 'react-collapse';
-import styles from './ekspanderbar-linje.module.less';
-import VisibleIfDiv from '../utils/visible-if-div';
 import { guid } from 'nav-frontend-js-utils';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React, { useMemo, useState } from 'react';
+import { UnmountClosed } from 'react-collapse';
+
+import VisibleIfDiv from '../utils/visible-if-div';
+import styles from './ekspanderbar-linje.module.less';
 
 function moveElementIntoView(id: string) {
     // moves the element into view after the react-collapse animation is finished

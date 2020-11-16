@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+
 import { storeForbokstaver } from '../../utils';
 import { selectErVeileder } from '../identitet/identitet-selector';
 
