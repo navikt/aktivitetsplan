@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { connect } from 'react-redux';
 
 import { getFodselsnummer } from '../bootstrap/fnr-util';
-import { getFodselsnummer } from '../bootstrap/fnr-util';
-import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
