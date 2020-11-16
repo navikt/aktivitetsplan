@@ -11,6 +11,7 @@ import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../bootstrap/fnr-util';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import { connect } from 'react-redux';
+import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 
 class Hovedside extends Component {
     componentDidMount() {
@@ -24,6 +25,7 @@ class Hovedside extends Component {
             <div className="hovedside" key={fnr}>
                 <div className="hovedsideinnhold">
                     <HovedsideFeilmelding />
+                    <Nivaa4Feilmelding />
                     <OppfolgingStatus>
                         <InformasjonsHenting />
                         <Varslinger />
