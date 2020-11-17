@@ -1,4 +1,4 @@
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -9,7 +9,6 @@ import {
     IJOBB_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
-import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import * as AppPT from '../../../../proptypes';
@@ -27,17 +26,6 @@ function visningsIngress(type) {
     }
 
     return <AktivitetIngress aktivitetsType={type} />;
-}
-
-function KoronaInformasjon({ valgtAktivitet }) {
-    return (
-        <HiddenIfAlertStripeInfoSolid hidden={'Oppdater CV-en og jobbprofilen' !== valgtAktivitet.tittel}>
-            <Normaltekst>
-                Flere bransjer og bedrifter trenger folk nå, og det er derfor spesielt viktig at du har en oppdatert CV
-                og jobbprofil slik at de kan finne deg i NAVs søk.
-            </Normaltekst>
-        </HiddenIfAlertStripeInfoSolid>
-    );
 }
 
 function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
@@ -64,7 +52,6 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                 {visningsIngress(type)}
                 <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
-                <KoronaInformasjon valgtAktivitet={valgtAktivitet} />
             </div>
             <DeleLinje />
         </div>
