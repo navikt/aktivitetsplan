@@ -63,13 +63,6 @@ interface SubmitProps {
 
 export type Handler = SubmitHandler<SubmitProps>;
 
-const validator = useFormstate({
-    avtaltCheckbox: noValidate,
-    avtaltSelect: noValidate,
-    avtaltText119: validateForhandsorienter,
-    avtaltText: noValidate,
-});
-
 interface Props {
     aktivitetId: string;
     onSubmit: Handler;
@@ -90,6 +83,13 @@ function AvtaltForm(props: Props) {
         erManuellKrrKvpBruker,
         visAvtaltMedNavMindreEnnSyvDager,
     } = props;
+
+    const validator = useFormstate({
+        avtaltCheckbox: noValidate,
+        avtaltSelect: noValidate,
+        avtaltText119: validateForhandsorienter,
+        avtaltText: noValidate,
+    });
 
     const state = validator({
         avtaltCheckbox: 'false',

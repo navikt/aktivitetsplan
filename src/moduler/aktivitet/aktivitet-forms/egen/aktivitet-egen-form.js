@@ -28,19 +28,20 @@ function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-const validator = useFormstate({
-    tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
-    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-    hensikt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-    oppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
-});
-
 function EgenAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
+
+    const validator = useFormstate({
+        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
+        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
+        hensikt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+        oppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
+    });
+
     const maybeAktivitet = aktivitet || {};
 
     const avtalt = maybeAktivitet.avtalt === true;

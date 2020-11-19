@@ -65,19 +65,20 @@ function VideoInfo(props) {
 
 export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
-const validator = useFormstate({
-    tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-    dato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
-    klokkeslett: (val, values, aktivitet) => validateKlokkeslett(erAvtalt(aktivitet), val),
-    varighet: (val, values, aktivitet) => validateVarighet(erAvtalt(aktivitet), val),
-    kanal: (val, values, aktivitet) => validateKanal(erAvtalt(aktivitet), val),
-    adresse: (val, values, aktivitet) => validateAdresse(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) => validateHensikt(erAvtalt(aktivitet), val),
-    forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val),
-});
-
 function MoteAktivitetForm(props) {
     const { aktivitet, isDirtyRef, onSubmit, endre } = props;
+
+    const validator = useFormstate({
+        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+        dato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
+        klokkeslett: (val, values, aktivitet) => validateKlokkeslett(erAvtalt(aktivitet), val),
+        varighet: (val, values, aktivitet) => validateVarighet(erAvtalt(aktivitet), val),
+        kanal: (val, values, aktivitet) => validateKanal(erAvtalt(aktivitet), val),
+        adresse: (val, values, aktivitet) => validateAdresse(erAvtalt(aktivitet), val),
+        beskrivelse: (val, values, aktivitet) => validateHensikt(erAvtalt(aktivitet), val),
+        forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val),
+    });
+
     const maybeAktivitet = aktivitet || {};
     const avtalt = maybeAktivitet.avtalt === true;
     const dato = beregnKlokkeslettVarighet(maybeAktivitet);

@@ -27,14 +27,14 @@ function validate(val) {
     return null;
 }
 
-const validator = useFormstate({
-    referat: validate,
-});
-
 const label = <Undertittel>Samtalereferat</Undertittel>;
 
 function OppdaterReferatForm(props) {
     const { onSubmit, aktivitet, oppdaterer, erReferatPublisert, dispatchPubliserReferat, onFerdig } = props;
+
+    const validator = useFormstate({
+        referat: validate,
+    });
 
     const state = validator({
         referat: aktivitet.referat || '',
