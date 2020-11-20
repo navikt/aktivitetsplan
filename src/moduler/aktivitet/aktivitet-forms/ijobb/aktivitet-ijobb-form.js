@@ -29,19 +29,20 @@ function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-const validator = useFormstate({
-    tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) => validerDato(val, null, aktivitet.fraDato),
-    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-    ansettelsesforhold: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    jobbStatus: (val, values, aktivitet) => validateJobbstatus(erAvtalt(aktivitet), val),
-    arbeidstid: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-});
-
 function IJobbAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;
+
+    const validator = useFormstate({
+        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet) => validerDato(val, null, aktivitet.fraDato),
+        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
+        ansettelsesforhold: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        jobbStatus: (val, values, aktivitet) => validateJobbstatus(erAvtalt(aktivitet), val),
+        arbeidstid: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+    });
+
     const maybeAktivitet = aktivitet || {};
     const avtalt = maybeAktivitet.avtalt === true;
 

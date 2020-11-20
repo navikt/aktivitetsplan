@@ -8,10 +8,6 @@ import { KvpPeriode } from '../../../types';
 import UtskriftValg from './utskriftValg';
 import KvpPlanValg from './velgKvpPlan';
 
-const validator = useFormstate({
-    utskriftPlanType: () => undefined,
-});
-
 interface VelgPlanUtskriftFormProps {
     onSubmit: (utskriftPlanType: string) => Promise<any>;
     hidden?: boolean;
@@ -20,6 +16,10 @@ interface VelgPlanUtskriftFormProps {
 
 function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
     const { onSubmit, kvpPerioder, hidden } = props;
+
+    const validator = useFormstate({
+        utskriftPlanType: () => undefined,
+    });
 
     const initial = {
         utskriftPlanType: 'helePlanen',

@@ -27,20 +27,20 @@ function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-const validator = useFormstate({
-    tittel: () => {},
-    behandlingType: (val, values, aktivitet) => validateBehandlingType(erAvtalt(aktivitet), val),
-    behandlingSted: (val, values, aktivitet) => validateBehandlingSted(erAvtalt(aktivitet), val),
-    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
-    effekt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-    behandlingOppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-});
-
 function BehandlingAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;
+
+    const validator = useFormstate({
+        tittel: () => {},
+        behandlingType: (val, values, aktivitet) => validateBehandlingType(erAvtalt(aktivitet), val),
+        behandlingSted: (val, values, aktivitet) => validateBehandlingSted(erAvtalt(aktivitet), val),
+        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
+        effekt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+        behandlingOppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
+    });
 
     const maybeAktivitet = aktivitet || {};
     const avtalt = maybeAktivitet.avtalt === true;

@@ -20,12 +20,13 @@ const begrunnelseValidator = (val) => {
     return null;
 };
 
-const validator = useFormstate({
-    begrunnelse: begrunnelseValidator,
-});
-
 function BegrunnelseForm(props) {
     const { beskrivelseLabel, headerTekst, lagrer, onSubmit } = props;
+
+    const validator = useFormstate({
+        begrunnelse: begrunnelseValidator,
+    });
+
     const state = validator({ begrunnelse: '' });
 
     return (
