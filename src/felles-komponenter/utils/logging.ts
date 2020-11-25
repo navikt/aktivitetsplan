@@ -1,6 +1,6 @@
 import shajs from 'sha.js';
 
-import { Aktivitet, AktivitetStatus, Lest, OppfolgingsPeriode } from '../../types';
+import { Aktivitet, AktivitetStatus, AktivitetType, Lest, OppfolgingsPeriode } from '../../types';
 
 interface Frontendlogger {
     event: (name: string, fields: object, tags: object) => void;
@@ -91,22 +91,26 @@ export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivit
 export function loggForhandsorientering(
     erManuellKrrKvpBruker: boolean,
     mindreEnSyvDagerIgen: boolean,
-    avtaltForm: string
+    avtaltForm: string,
+    aktivitettype: AktivitetType
 ) {
     if (erManuellKrrKvpBruker) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
             forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_KRR_KVP_MANUELL,
+            aktivitettype: aktivitettype,
         });
     }
 
     if (mindreEnSyvDagerIgen) {
         return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
             forhandsorienteringType: FORHANDSORIENTERING_LOGGEVENT_MINDRE_ENN_SYV_DAGER,
+            aktivitettype: aktivitettype,
         });
     }
 
     return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
         forhandsorienteringType: avtaltForm,
+        aktivitettype: aktivitettype,
     });
 }
 
