@@ -142,7 +142,7 @@ function AvtaltContainer(props: Props) {
             setForhandsorienteringType(avtaltForm.avtaltSelect);
         }
 
-        loggForhandsorientering(erManuellKrrKvpBruker, !merEnnsyvDagerTil, avtaltForm.avtaltSelect);
+        loggForhandsorientering(erManuellKrrKvpBruker, !merEnnsyvDagerTil, avtaltForm.avtaltSelect, aktivitet.type);
 
         if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.startDato)) {
             metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode.startDato));

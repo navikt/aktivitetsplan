@@ -10,10 +10,6 @@ import { DirtyContext } from '../../../context/dirty-context';
 
 const validateEtikettStatus = (): string | undefined => undefined;
 
-const validator = useFormstate({
-    etikettstatus: validateEtikettStatus,
-});
-
 interface Props {
     aktivitet: Aktivitet;
     disabled?: boolean;
@@ -22,6 +18,10 @@ interface Props {
 
 const StillingEtikettForm = (props: Props) => {
     const { aktivitet, disabled = true, onSubmit } = props;
+
+    const validator = useFormstate({
+        etikettstatus: validateEtikettStatus,
+    });
 
     const state = validator({
         etikettstatus: aktivitet.etikett || konstanter.INGEN_VALGT,

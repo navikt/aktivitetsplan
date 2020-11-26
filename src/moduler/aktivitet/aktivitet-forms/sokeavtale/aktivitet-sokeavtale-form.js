@@ -28,20 +28,20 @@ function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-const validator = useFormstate({
-    tittel: () => null,
-    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) => validateTilDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
-    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-    antallStillingerIUken: (val, values, aktivitet) =>
-        validateAntallStillingerIUken(erAvtalt(aktivitet), val, values.antallStillingerSokes),
-    antallStillingerSokes: (val, values, aktivitet) => validateAntallStillinger(erAvtalt(aktivitet), val),
-    avtaleOppfolging: (val, values, aktivitet) => validateOppfolging(erAvtalt(aktivitet), val),
-    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-});
-
 export default function SokeAvtaleAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
+
+    const validator = useFormstate({
+        tittel: () => null,
+        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet) => validateTilDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
+        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
+        antallStillingerIUken: (val, values, aktivitet) =>
+            validateAntallStillingerIUken(erAvtalt(aktivitet), val, values.antallStillingerSokes),
+        antallStillingerSokes: (val, values, aktivitet) => validateAntallStillinger(erAvtalt(aktivitet), val),
+        avtaleOppfolging: (val, values, aktivitet) => validateOppfolging(erAvtalt(aktivitet), val),
+        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+    });
 
     const maybeAktivitet = aktivitet || {};
     const avtalt = maybeAktivitet.avtalt === true;

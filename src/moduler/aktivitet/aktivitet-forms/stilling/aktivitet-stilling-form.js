@@ -22,20 +22,21 @@ function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-const validator = useFormstate({
-    tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-    fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
-    tilDato: (val, values, aktivitet) => validerDato(val, null, aktivitet.fraDato),
-    beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
-    arbeidssted: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    arbeidsgiver: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    kontaktperson: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
-    lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
-    periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
-});
-
 function StillingAktivitetForm(props) {
     const { onSubmit, isDirtyRef, aktivitet } = props;
+
+    const validator = useFormstate({
+        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
+        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet) => validerDato(val, null, aktivitet.fraDato),
+        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+        arbeidssted: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        arbeidsgiver: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        kontaktperson: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        lenke: (val, values, aktivitet) => validateLenke(erAvtalt(aktivitet), val),
+        periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
+    });
+
     const maybeAktivitet = aktivitet || {};
     const avtalt = maybeAktivitet.avtalt === true;
 

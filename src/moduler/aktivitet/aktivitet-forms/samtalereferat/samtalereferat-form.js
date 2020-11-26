@@ -14,15 +14,15 @@ import AktivitetFormHeader from '../aktivitet-form-header';
 import VelgKanal from '../velg-kanal';
 import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
 
-const validator = useFormstate({
-    tittel: validateTittel,
-    fraDato: validateFraDato,
-    kanal: validateKanal,
-    referat: validateReferat,
-});
-
 function SamtalereferatForm(props) {
     const { onSubmit, isDirtyRef } = props;
+
+    const validator = useFormstate({
+        tittel: validateTittel,
+        fraDato: validateFraDato,
+        kanal: validateKanal,
+        referat: validateReferat,
+    });
 
     const state = validator({
         tittel: '',

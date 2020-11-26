@@ -54,14 +54,14 @@ function validate(val) {
     return null;
 }
 
-const validator = useFormstate({
-    text: validate,
-    checked: () => null,
-    avtaltSelect: () => null,
-});
-
 function ForhandsorieteringsForm(props) {
     const { visible, dialogStatus, onSubmit } = props;
+
+    const validator = useFormstate({
+        text: validate,
+        checked: () => null,
+        avtaltSelect: () => null,
+    });
 
     const state = validator({
         text: avtaltTekst119,

@@ -18,10 +18,6 @@ function validateMal(val: string) {
     return undefined;
 }
 
-const validator = useFormstate({
-    mal: validateMal,
-});
-
 interface Props {
     mal?: string;
     handleComplete: () => void;
@@ -30,6 +26,10 @@ interface Props {
 function MalForm(props: Props) {
     const dispatch = useReduxDispatch();
     const { mal, handleComplete } = props;
+
+    const validator = useFormstate({
+        mal: validateMal,
+    });
 
     const textAreaCls = 'aktivitetplansmal';
     useMoveSelectionStartToEnd(textAreaCls);

@@ -58,14 +58,14 @@ function validateBegrunnelse(value, values, aktivitet) {
     return null;
 }
 
-const validator = useFormstate({
-    aktivitetstatus: () => {},
-    begrunnelse: (val, values, aktivitet) => validateBegrunnelse(val, values, aktivitet),
-    statusValidering: (val, values, aktivitet) => kanOppdatereStatus(aktivitet, values),
-});
-
 function AktivitetStatusForm(props) {
     const { aktivitet, onSubmit, disabled } = props;
+
+    const validator = useFormstate({
+        aktivitetstatus: () => {},
+        begrunnelse: (val, values, aktivitet) => validateBegrunnelse(val, values, aktivitet),
+        statusValidering: (val, values, aktivitet) => kanOppdatereStatus(aktivitet, values),
+    });
 
     const initalValue = {
         aktivitetstatus: aktivitet.status || '',
