@@ -1,4 +1,4 @@
-export default [
+const lest = [
     {
         tidspunkt: '2018-08-30T09:46:10.971+01:00',
         ressurs: 'aktivitetsplan',
@@ -10,3 +10,5 @@ export default [
         verdi: 'v1',
     },
 ];
+
+export default lest;

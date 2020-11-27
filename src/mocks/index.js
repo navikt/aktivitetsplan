@@ -2,7 +2,7 @@
 
 import fetchMock from 'yet-another-fetch-mock';
 
-import aktiviteter, {
+import aktiviteterData, {
     getAktivitet,
     getAktivitetVersjoner,
     oppdaterAktivitet,
@@ -30,7 +30,7 @@ import { malListe, opprettMal, sisteMal } from './mal';
 import { hentMalverkMedType } from './malverk';
 import me from './me';
 import oppfoelgingsstatus from './oppfoelgingsstatus';
-import oppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
+import getOppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
 import getPerson from './person';
 import getNivaa4 from './tilgang';
 import { delayed, fetchmockMiddleware, jsonResponse } from './utils';
@@ -60,7 +60,7 @@ mock.post('/veilarboppfolging/api/oppfolging/mal', failOrGetResponse(maalFeilet,
 
 mock.get('/veilarboppfolging/api/oppfolging/malListe', failOrGetResponse(getMaalFeiler, malListe));
 
-mock.get('/veilarboppfolging/api/oppfolging', failOrGetResponse(getOppfFeiler, oppfolging));
+mock.get('/veilarboppfolging/api/oppfolging', failOrGetResponse(getOppfFeiler, getOppfolging));
 
 mock.get(
     '/veilarboppfolging/api/oppfolging/innstillingsHistorikk',
@@ -123,7 +123,7 @@ mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAk
 
 mock.get(
     '/veilarbaktivitet/api/aktivitet',
-    failOrGetResponse(getAktivitetFeiler, () => aktiviteter)
+    failOrGetResponse(getAktivitetFeiler, () => aktiviteterData)
 );
 
 mock.post('/veilarbaktivitet/api/aktivitet/ny', failOrGetResponse(aktivitetFeilet, opprettAktivitet));

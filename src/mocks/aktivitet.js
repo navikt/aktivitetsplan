@@ -485,6 +485,8 @@ export function publiserReferat({ aktivitetId }) {
     return { ...oldAktivitet, erReferatPublisert: true };
 }
 
-export default {
+const aktiviteterData = {
     aktiviteter,
 };
+
+export default aktiviteterData;

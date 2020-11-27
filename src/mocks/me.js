@@ -14,7 +14,9 @@ const veileder = {
 
 const erEksternbruker = erEksternBruker();
 
-export default () => {
+const me = () => {
     if (erEksternbruker) return eksternbruker;
     else return veileder;
 };
+
+export default me;

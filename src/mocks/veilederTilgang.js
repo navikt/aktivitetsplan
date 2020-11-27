@@ -1,3 +1,5 @@
-export default {
+const veilederTilgang = {
     tilgangTilBrukersKontor: true,
 };
+
+export default veilederTilgang;

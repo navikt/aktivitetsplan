@@ -1,4 +1,4 @@
-export default {
+const oppfolgingsstatus = {
     rettighetsgruppe: 'IYT',
     formidlingsgruppe: 'SERV',
     servicegruppe: 'BATT',
@@ -8,3 +8,5 @@ export default {
     },
     inaktiveringsdato: '2018-03-13T12:00:00+01:00',
 };
+
+export default oppfolgingsstatus;
