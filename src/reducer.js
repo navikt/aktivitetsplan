@@ -44,6 +44,6 @@ const combinedReducers = combineReducers({
     }),
 });
 
-export default function reducer(state, action) {
+export default function (state, action) {
     return combinedReducers(state, action);
 }

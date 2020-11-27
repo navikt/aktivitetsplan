@@ -18,3 +18,5 @@ export function hentFeature(enhet?: string): Promise<{ [key: string]: boolean }>
     const featuresWithEnhet = (features && enhet && `${features}&enhet=${enhet}`) || features;
     return fetchToJson(`${path}/api/feature${featuresWithEnhet}`);
 }
+
+export default {};

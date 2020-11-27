@@ -8,3 +8,5 @@ export function hentPerson(fnr) {
 export function hentHarNivaa4(fnr) {
     return fetchToJson(`${PERSON_BASE_URL}/person/${fnr}/harNivaa4`);
 }
+
+export default {};
