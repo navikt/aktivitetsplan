@@ -1,9 +1,5 @@
 import { useLayoutEffect } from 'react';
 
-interface Props {
-    className: string;
-}
-
 export function useMoveSelectionStartToEnd(className: string) {
     useLayoutEffect(() => {
         const el = document.getElementsByClassName(className)[0] as HTMLInputElement;
