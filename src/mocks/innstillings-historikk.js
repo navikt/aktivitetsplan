@@ -1,4 +1,4 @@
-const innstillingsHistorikk = [
+export const innstillingsHistorikk = [
     {
         type: 'KVP_STARTET',
         dato: '2018-05-03T10:44:28.113+02:00',
@@ -32,5 +32,3 @@ const innstillingsHistorikk = [
         dialogId: null,
     },
 ];
-
-export default innstillingsHistorikk;

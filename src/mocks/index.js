@@ -2,7 +2,8 @@
 
 import fetchMock from 'yet-another-fetch-mock';
 
-import aktiviteterData, {
+import {
+    aktiviteterData,
     getAktivitet,
     getAktivitetVersjoner,
     oppdaterAktivitet,
@@ -10,7 +11,7 @@ import aktiviteterData, {
     publiserReferat,
 } from './aktivitet';
 import arena from './arena';
-import auth from './auth';
+import { auth } from './auth';
 import {
     aktivitetFeilet,
     arenaFeilet,
@@ -24,17 +25,17 @@ import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaSvar } from './di
 import { failOrGetResponse } from './failOrGetResponse';
 import getFeatures from './features';
 import { fremtidigSituasjon } from './fremtidigSituasjon';
-import innstillingsHistorikk from './innstillings-historikk';
-import lest from './lest';
+import { innstillingsHistorikk } from './innstillings-historikk';
+import { lest } from './lest';
 import { malListe, opprettMal, sisteMal } from './mal';
 import { hentMalverkMedType } from './malverk';
-import me from './me';
-import oppfoelgingsstatus from './oppfoelgingsstatus';
+import { me } from './me';
+import { oppfoelgingsstatus } from './oppfoelgingsstatus';
 import getOppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
 import getPerson from './person';
 import getNivaa4 from './tilgang';
 import { delayed, fetchmockMiddleware, jsonResponse } from './utils';
-import veilederTilgang from './veilederTilgang';
+import { veilederTilgang } from './veilederTilgang';
 
 const mock = fetchMock.configure({
     enableFallback: false,
