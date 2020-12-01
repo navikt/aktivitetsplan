@@ -18,7 +18,7 @@ const initalState: State = {
     aktivitet: undefined,
 };
 
-export default function (state = initalState, action: Action) {
+export default function dragAndDropReducer(state = initalState, action: Action) {
     switch (action.type) {
         case START:
             return {

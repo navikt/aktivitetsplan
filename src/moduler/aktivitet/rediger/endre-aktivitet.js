@@ -1,5 +1,5 @@
 import PT from 'prop-types';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -12,6 +12,7 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import { STATUS } from '../../../ducks/utils';
+import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
@@ -54,29 +55,11 @@ function getAktivitetsFormComponent(aktivitet) {
     }
 }
 
-const CONFIRM = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
-
-function onBeforeLoadEffect(isDirty) {
-    return () => {
-        window.onbeforeunload = (e) => {
-            if (isDirty.current) {
-                e.returnValue = CONFIRM;
-                return CONFIRM;
-            }
-            return undefined;
-        };
-
-        return () => {
-            window.onbeforeunload = null;
-        };
-    };
-}
-
 function EndreAktivitet(props) {
     const { valgtAktivitet, avhengigheter, history, doOppdaterAktivitet, lagrer, aktivitetFeilmeldinger } = props;
 
     const isDirty = useRef(false);
-    useEffect(onBeforeLoadEffect(isDirty), [isDirty]);
+    useConfirmOnBeforeUnload(isDirty);
 
     function oppdater(aktivitet) {
         const filteredAktivitet = removeEmptyKeysFromObject(aktivitet);
