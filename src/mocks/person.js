@@ -2,7 +2,7 @@ const kjonn = Math.random() > 0.5 ? 'K' : 'M';
 const fornavn = 'Test';
 const etternavn = 'Testus';
 
-export default function (fnr) {
+export default function getPerson(fnr) {
     return {
         fornavn: fornavn,
         mellomnavn: null,

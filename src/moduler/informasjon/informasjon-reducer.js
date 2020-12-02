@@ -4,7 +4,7 @@ const initalState = {
     backPath: '/',
 };
 
-export default function (state = initalState, action) {
+export default function informasjonReducer(state = initalState, action) {
     const backPath = action.data;
 
     switch (action.type) {
