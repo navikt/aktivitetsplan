@@ -13,7 +13,7 @@ import {
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import DeleLinje from '../delelinje/delelinje';
-import OppdaterAktivitetEtikett from '../etikett-oppdatering/oppdater-aktivitet-etikett';
+import OppdaterAktivitetEtikett from '../etikett-oppdatering/OppdaterAktivitetEtikett';
 import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsorientering-arena-aktivitet';
 import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
 
