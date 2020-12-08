@@ -60,6 +60,15 @@ export function selectKanEndreAktivitetStatus(state, aktivitet) {
     );
 }
 
+export function selectKanEndreAktivitetEtikett(state, aktivitet) {
+    if (!aktivitet) {
+        return false;
+    }
+    const { historisk, type } = aktivitet;
+
+    return !historisk && (selectErVeileder(state) || type !== MOTE_TYPE);
+}
+
 export function selectKanEndreAktivitetDetaljer(state, aktivitet) {
     if (!aktivitet) {
         return false;

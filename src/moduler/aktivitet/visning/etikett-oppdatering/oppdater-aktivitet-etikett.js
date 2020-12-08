@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import * as statuser from '../../../../constant';
-import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import * as AppPT from '../../../../proptypes';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
-import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
+import { selectKanEndreAktivitetEtikett } from '../../aktivitetliste-selector';
 import SokeStatusEtikett from '../../etikett/SokeStatusEtikett';
 import EndreLinje from '../endre-linje/endre-linje';
 import StillingEtikettForm from './StillingEtikettForm';
@@ -24,7 +23,6 @@ function OppdaterAktivitetEtikett(props) {
         });
 
     const form = <StillingEtikettForm disabled={disableEtikettEndringer} aktivitet={aktivitet} onSubmit={onSubmit} />;
-    const kanEndre = aktivitet.status !== STATUS_FULLFOERT && aktivitet.status !== STATUS_AVBRUTT;
 
     return (
         <EndreLinje
@@ -33,7 +31,6 @@ function OppdaterAktivitetEtikett(props) {
             endring={endring}
             setEndring={setEndring}
             visning={<SokeStatusEtikett etikett={aktivitet.etikett} />}
-            kanEndre={kanEndre}
         />
     );
 }
@@ -47,7 +44,7 @@ OppdaterAktivitetEtikett.propTypes = {
 const mapStateToProps = (state, props) => ({
     disableEtikettEndringer:
         selectLasterAktivitetData(state) ||
-        !selectKanEndreAktivitetStatus(state, props.aktivitet) ||
+        !selectKanEndreAktivitetEtikett(state, props.aktivitet) ||
         !selectErUnderOppfolging(state),
 });
 
