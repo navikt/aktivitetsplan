@@ -1,9 +1,8 @@
-import PT from 'prop-types';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import * as statuser from '../../../../constant';
-import * as AppPT from '../../../../proptypes';
+import { Aktivitet } from '../../../../types';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
@@ -12,14 +11,41 @@ import SokeStatusEtikett from '../../etikett/SokeStatusEtikett';
 import EndreLinje from '../endre-linje/endre-linje';
 import StillingEtikettForm from './StillingEtikettForm';
 
-function OppdaterAktivitetEtikett(props) {
-    const { aktivitet, disableEtikettEndringer, lagreEtikett } = props;
-    const [endring, setEndring] = useState(false);
+interface Props {
+    aktivitet: Aktivitet;
+}
 
-    const onSubmit = (val) =>
+const OppdaterAktivitetEtikett = (props: Props) => {
+    const { aktivitet } = props;
+
+    const lasterAktivitetData = useSelector(selectLasterAktivitetData, shallowEqual);
+    const kanIkkeEndreAktivitet = !useSelector(
+        (state) => selectKanEndreAktivitetEtikett(state, aktivitet),
+        shallowEqual
+    );
+    const erIkkeUnderOppfolging = !useSelector(selectErUnderOppfolging);
+
+    const [endring, setEndring] = useState(false);
+    const dispatch = useDispatch();
+    const disableEtikettEndringer = lasterAktivitetData || kanIkkeEndreAktivitet || erIkkeUnderOppfolging;
+
+    const lagreEtikett = ({ etikettstatus }: { etikettstatus: string }): Promise<any> => {
+        if (etikettstatus === aktivitet.etikett) {
+            return Promise.resolve();
+        }
+
+        const nyEtikett = etikettstatus === statuser.INGEN_VALGT ? null : etikettstatus;
+
+        return oppdaterAktivitetEtikett({
+            ...aktivitet,
+            etikett: nyEtikett,
+        })(dispatch);
+    };
+
+    const onSubmit = (val: { etikettstatus: string }): Promise<any> =>
         lagreEtikett(val).then(() => {
             setEndring(false);
-            document.querySelector('.aktivitet-modal').focus();
+            document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
 
     const form = <StillingEtikettForm disabled={disableEtikettEndringer} aktivitet={aktivitet} onSubmit={onSubmit} />;
@@ -33,36 +59,6 @@ function OppdaterAktivitetEtikett(props) {
             visning={<SokeStatusEtikett etikett={aktivitet.etikett} />}
         />
     );
-}
-
-OppdaterAktivitetEtikett.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
-    disableEtikettEndringer: PT.bool.isRequired,
-    lagreEtikett: PT.func.isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-    disableEtikettEndringer:
-        selectLasterAktivitetData(state) ||
-        !selectKanEndreAktivitetEtikett(state, props.aktivitet) ||
-        !selectErUnderOppfolging(state),
-});
-
-const mapDispatchToProps = (dispatch, props) => ({
-    lagreEtikett: ({ etikettstatus }) => {
-        if (etikettstatus === props.aktivitet.etikett) {
-            return Promise.resolve();
-        }
-
-        const nyEtikett = etikettstatus === statuser.INGEN_VALGT ? null : etikettstatus;
-
-        return dispatch(
-            oppdaterAktivitetEtikett({
-                ...props.aktivitet,
-                etikett: nyEtikett,
-            })
-        );
-    },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(OppdaterAktivitetEtikett);
+export default OppdaterAktivitetEtikett;
