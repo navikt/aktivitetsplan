@@ -18,19 +18,16 @@ export const selectAlleAktiviter = createSelector(
     (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter)
 );
 
-export function selectAktiviterForAktuellePerioden(state) {
-    return selectAlleAktiviter(state).filter((a) => selectDatoErIPeriode(a.opprettetDato, state));
-}
+export const selectAktiviterForAktuellePerioden = (state) =>
+    selectAlleAktiviter(state).filter((a) => selectDatoErIPeriode(a.opprettetDato, state));
 
-export function selectAktivitetListe(state) {
-    return selectAktiviterForAktuellePerioden(state).filter((a) => aktivitetFilter(a, state));
-}
+export const selectAktivitetListe = (state) =>
+    selectAktiviterForAktuellePerioden(state).filter((a) => aktivitetFilter(a, state));
 
-export function selectAktivitetMedId(state, aktivitetId) {
-    return selectAlleAktiviter(state).find((aktivitet) => aktivitet.id === aktivitetId);
-}
+export const selectAktivitetMedId = (state, aktivitetId) =>
+    selectAlleAktiviter(state).find((aktivitet) => aktivitet.id === aktivitetId);
 
-export function selectAktivitetListeSlice(state) {
+export const selectAktivitetListeSlice = (state) => {
     const status = aggregerStatus(
         selectOppfolgingStatus(state),
         selectIdentitetStatus(state),
@@ -41,13 +38,11 @@ export function selectAktivitetListeSlice(state) {
         status,
         data: selectAktivitetListe(state),
     };
-}
+};
 
-export function selectAktivitetListeStatus(state) {
-    return selectAktivitetListeSlice(state).status;
-}
+export const selectAktivitetListeStatus = (state) => selectAktivitetListeSlice(state).status;
 
-export function selectKanEndreAktivitetStatus(state, aktivitet) {
+export const selectKanEndreAktivitetStatus = (state, aktivitet) => {
     if (!aktivitet) {
         return false;
     }
@@ -58,18 +53,18 @@ export function selectKanEndreAktivitetStatus(state, aktivitet) {
         status !== STATUS_AVBRUTT &&
         status !== STATUS_FULLFOERT
     );
-}
+};
 
-export function selectKanEndreAktivitetEtikett(state, aktivitet) {
+export const selectKanEndreAktivitetEtikett = (state, aktivitet) => {
     if (!aktivitet) {
         return false;
     }
     const { historisk, type } = aktivitet;
 
     return !historisk && (selectErVeileder(state) || type !== MOTE_TYPE);
-}
+};
 
-export function selectKanEndreAktivitetDetaljer(state, aktivitet) {
+export const selectKanEndreAktivitetDetaljer = (state, aktivitet) => {
     if (!aktivitet) {
         return false;
     }
@@ -79,11 +74,11 @@ export function selectKanEndreAktivitetDetaljer(state, aktivitet) {
         type !== SAMTALEREFERAT_TYPE &&
         (avtalt !== true || !!window.appconfig.TILLAT_SET_AVTALT)
     );
-}
+};
 
-export function selectAktivitetListeFeilMelding(state) {
+export const selectAktivitetListeFeilMelding = (state) => {
     const alleAktiviteterSlice = [selectAktiviteterSlice(state), selectArenaAktiviteterSlice(state)];
     const feilendeKall = alleAktiviteterSlice.filter((slice) => slice.status === STATUS.ERROR);
 
     return feilendeKall.map((slice) => slice.feil);
-}
+};

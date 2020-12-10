@@ -10,7 +10,7 @@ import { selectErUnderOppfolging, selectOppfolgingStatus } from '../../oppfolgin
 import { hentAktivitet } from '../aktivitet-actions';
 import { genererAktivtetskortId } from '../aktivitet-kort/Aktivitetskort';
 import { selectAktivitetStatus } from '../aktivitet-selector';
-import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetliste-selector';
+import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivitetlisteSelector';
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './Aktivitetvisning';

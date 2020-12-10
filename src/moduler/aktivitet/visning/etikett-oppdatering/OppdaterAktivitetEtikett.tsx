@@ -6,7 +6,7 @@ import { Aktivitet, StillingsStatus } from '../../../../types';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
-import { selectKanEndreAktivitetEtikett } from '../../aktivitetliste-selector';
+import { selectKanEndreAktivitetEtikett } from '../../aktivitetlisteSelector';
 import SokeStatusEtikett from '../../etikett/SokeStatusEtikett';
 import EndreLinje from '../endre-linje/endre-linje';
 import StillingEtikettForm from './StillingEtikettForm';

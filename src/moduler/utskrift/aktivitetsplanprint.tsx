@@ -6,7 +6,7 @@ import Modal from '../../felles-komponenter/modal/modal';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
 import { Aktivitet, Bruker, Dialog, KvpPeriode, Mal } from '../../types';
-import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetliste-selector';
+import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
