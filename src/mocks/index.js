@@ -24,7 +24,6 @@ import {
 import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
 import { failOrGetResponse } from './failOrGetResponse';
 import getFeatures from './features';
-import { fremtidigSituasjon } from './fremtidigSituasjon';
 import { innstillingsHistorikk } from './innstillings-historikk';
 import { lest } from './lest';
 import { malListe, opprettMal, sisteMal } from './mal';
@@ -34,7 +33,7 @@ import { oppfoelgingsstatus } from './oppfoelgingsstatus';
 import getOppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
 import getPerson from './person';
 import getNivaa4 from './tilgang';
-import { delayed, fetchmockMiddleware, jsonResponse } from './utils';
+import { fetchmockMiddleware, jsonResponse } from './utils';
 import { veilederTilgang } from './veilederTilgang';
 
 const mock = fetchMock.configure({
@@ -46,7 +45,7 @@ const getOppfFeiler = () => oppfFeilet() && !oppdateringKunFeiler();
 const getMaalFeiler = () => maalFeilet() && !oppdateringKunFeiler();
 const getAktivitetFeiler = () => aktivitetFeilet() && !oppdateringKunFeiler();
 
-mock.get('/veilarbvedtakinfo/api/fremtidigsituasjon', delayed(500, jsonResponse(fremtidigSituasjon)));
+mock.get('/veilarboppfolging/api/oppfolging/harFlereAktorIderMedOppfolging', jsonResponse(true));
 
 //feature-api
 mock.get('/aktivitetsplan/api/feature', ({ queryParams }, res, ctx) => res(ctx.json(getFeatures(queryParams))));
