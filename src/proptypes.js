@@ -1,5 +1,6 @@
 import PT from 'prop-types';
 
+import { STATUS } from './api/utils';
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
@@ -12,7 +13,6 @@ import {
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from './constant';
-import { STATUS } from './ducks/utils';
 
 export const aktivitet = PT.shape({
     tittel: PT.string,

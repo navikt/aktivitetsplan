@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { SOKEAVTALE_AKTIVITET_TYPE } from '../../../constant';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
-import { Aktivitet } from '../../../types';
 
 interface Props {
     aktivitet: Aktivitet;

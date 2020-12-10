@@ -1,4 +1,4 @@
-import { STATUS } from '../../ducks/utils';
+import { STATUS } from '../../api/utils';
 import { selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectMalSlice } from './aktivitetsmal-reducer';
 

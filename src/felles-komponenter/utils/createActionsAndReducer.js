@@ -1,4 +1,4 @@
-import { STATUS, doThenDispatch } from './utils';
+import { STATUS, doThenDispatch } from '../../api/utils';
 
 function getActions(navn) {
     const navnUppercase = navn.toUpperCase();

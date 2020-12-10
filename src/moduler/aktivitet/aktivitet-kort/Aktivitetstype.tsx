@@ -1,7 +1,7 @@
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { AktivitetType } from '../../../types';
+import { AktivitetType } from '../../../datatypes/aktivitetTypes';
 import styles from './Aktivitetskort.module.less';
 
 function getType(type: AktivitetType) {

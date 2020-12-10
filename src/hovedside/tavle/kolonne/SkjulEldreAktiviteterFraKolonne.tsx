@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
-import { Aktivitet } from '../../../types';
 import InvertedLestMer from './InvertedLesmer';
 
 const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';

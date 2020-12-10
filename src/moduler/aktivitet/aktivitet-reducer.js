@@ -1,4 +1,4 @@
-import { STATUS } from '../../ducks/utils';
+import { STATUS } from '../../api/utils';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 import * as AT from './aktivitet-action-types';
 

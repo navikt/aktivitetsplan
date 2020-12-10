@@ -2,6 +2,7 @@ import PT from 'prop-types';
 import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 
+import { STATUS } from '../../../api/utils';
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
@@ -11,7 +12,6 @@ import {
     SOKEAVTALE_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
-import { STATUS } from '../../../ducks/utils';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';

@@ -8,8 +8,9 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../../constant';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { Dialog } from '../../../datatypes/dialogTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
-import { Aktivitet, Dialog } from '../../../types';
 import { compareAktivitet } from '../../aktivitet/aktivitet-util';
 import AvtaltMarkering from '../../aktivitet/avtalt-markering/avtalt-markering';
 import SokeStatusEtikett from '../../aktivitet/etikett/SokeStatusEtikett';

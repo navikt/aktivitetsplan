@@ -1,7 +1,7 @@
-import { STATUS, doThenDispatch } from '../../ducks/utils';
-import { Mal } from '../../types';
+import * as Api from '../../api/oppfolgingAPI';
+import { STATUS, doThenDispatch } from '../../api/utils';
+import { Mal } from '../../datatypes/oppfolgingTypes';
 import { selectViserInneverendePeriode } from '../filtrering/filter/filter-selector';
-import * as Api from '../oppfolging-status/oppfolging-api';
 import { selectMalListe } from './aktivitetsmal-selector';
 
 const PENDING = `MAL/PENDING`;
@@ -63,7 +63,7 @@ export function lesMal() {
 }
 
 export function hentMal() {
-    return action(() => Api.hentMal());
+    return action(() => Api.fetchMal());
 }
 
 export function oppdaterMal(data: { mal: string }) {

@@ -1,5 +1,5 @@
-import { STATUS, doThenDispatch } from '../../ducks/utils';
-import * as Api from '../oppfolging-status/oppfolging-api';
+import * as Api from '../../api/oppfolgingAPI';
+import { STATUS, doThenDispatch } from '../../api/utils';
 
 export const LISTE_OK = 'malListe/OK';
 export const LISTE_FEILET = 'malListe/FEILET';
@@ -32,7 +32,7 @@ export default function reducer(state = initalState, action) {
 }
 
 export function hentMalListe() {
-    return doThenDispatch(() => Api.hentMalListe(), {
+    return doThenDispatch(() => Api.fetchMalListe(), {
         OK: LISTE_OK,
         FEILET: LISTE_FEILET,
         PENDING: LISTE_PENDING,

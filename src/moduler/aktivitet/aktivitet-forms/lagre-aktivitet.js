@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { STATUS } from '../../../ducks/utils';
+import { STATUS } from '../../../api/utils';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 

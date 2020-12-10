@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import * as statuser from '../../../../constant';
-import { Aktivitet, StillingsStatus } from '../../../../types';
+import { Aktivitet, StillingsStatus } from '../../../../datatypes/aktivitetTypes';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';

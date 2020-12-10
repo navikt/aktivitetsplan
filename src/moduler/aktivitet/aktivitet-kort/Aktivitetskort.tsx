@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import { STATUS } from '../../../ducks/utils';
+import { STATUS } from '../../../api/utils';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
-import { Aktivitet } from '../../../types';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';

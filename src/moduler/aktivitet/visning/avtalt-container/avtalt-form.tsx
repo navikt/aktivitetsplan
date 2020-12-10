@@ -6,7 +6,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { STATUS } from '../../../../ducks/utils';
+import { STATUS } from '../../../../api/utils';
 import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';

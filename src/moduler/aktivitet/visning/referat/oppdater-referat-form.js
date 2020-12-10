@@ -5,7 +5,7 @@ import PT from 'prop-types';
 import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { STATUS } from '../../../../ducks/utils';
+import { STATUS } from '../../../../api/utils';
 import hiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/hidden-if-knapper';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';

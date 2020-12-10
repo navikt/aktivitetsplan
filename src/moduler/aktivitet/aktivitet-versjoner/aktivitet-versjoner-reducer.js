@@ -1,6 +1,6 @@
-import { STATUS, doThenDispatch } from '../../../ducks/utils';
+import * as Api from '../../../api/aktivitetAPI';
+import { STATUS, doThenDispatch } from '../../../api/utils';
 import { FLYTT_OK, OPPDATER_OK, OPPDATER_REFERAT_OK, PUBLISER_REFERAT_OK } from '../aktivitet-action-types';
-import * as Api from '../aktivitet-api';
 
 // Actions
 export const OK = 'versjoner/OK';
