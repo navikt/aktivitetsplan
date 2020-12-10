@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { selectAktivitetListeFeilMelding } from '../aktivitet/aktivitetliste-selector';
+import { selectAktivitetListeFeilMelding } from '../aktivitet/aktivitetlisteSelector';
 import { selectDialogFeilmeldinger } from '../dialog/dialog-selector';
 import { selectIdentitetFeilMelding } from '../identitet/identitet-selector';
 import { selectLestFeilMelding } from '../lest/lest-reducer';

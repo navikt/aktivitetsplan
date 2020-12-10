@@ -1,5 +1,5 @@
 import * as aktivitetSelector from './moduler/aktivitet/aktivitet-selector';
-import * as aktivitetListeSelector from './moduler/aktivitet/aktivitetliste-selector';
+import * as aktivitetListeSelector from './moduler/aktivitet/aktivitetlisteSelector';
 import * as arenaAktivitetSelector from './moduler/aktivitet/arena-aktivitet-selector';
 import * as brukerSelector from './moduler/bruker/bruker-selector';
 import * as dialogSelector from './moduler/dialog/dialog-selector';

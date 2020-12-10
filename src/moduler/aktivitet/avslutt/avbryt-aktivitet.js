@@ -8,7 +8,7 @@ import Modal from '../../../felles-komponenter/modal/modal';
 import * as AppPT from '../../../proptypes';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
-import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetliste-selector';
+import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
 import BegrunnelseAktivitet from './begrunnelse-form';
 import PubliserReferat from './publiser-referat';
 import VisAdvarsel from './vis-advarsel';

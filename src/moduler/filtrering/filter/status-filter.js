@@ -10,7 +10,7 @@ import {
     STATUS_PLANLAGT,
 } from '../../../constant';
 import { STATUS_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
-import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsStatus } from './filter-reducer';
 import { selectAktivitetStatusFilter } from './filter-selector';
 import FilterVisning from './filter-visning';

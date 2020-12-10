@@ -13,7 +13,7 @@ const validateEtikettStatus = (): string | undefined => undefined;
 interface Props {
     aktivitet: Aktivitet;
     disabled?: boolean;
-    onSubmit(): Promise<any>;
+    onSubmit(val: { etikettstatus: string }): Promise<any>;
 }
 
 const StillingEtikettForm = (props: Props) => {

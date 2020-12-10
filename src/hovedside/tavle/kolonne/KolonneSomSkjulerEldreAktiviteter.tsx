@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { sorterAktiviteter, splitIEldreOgNyereAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
-import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetliste-selector';
+import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
 import { Aktivitet, AktivitetStatus } from '../../../types';
 import DropTargetKolonne from './DropTargetKolonne';
 import KolonneHeader from './kolonneheader';

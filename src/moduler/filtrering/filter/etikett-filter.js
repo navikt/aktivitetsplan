@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
-import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
 import FilterVisningsKomponent from './filter-visning';
