@@ -9,7 +9,7 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../proptypes';
-import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetliste-selector';
+import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
 import EtikettFilter from './filter/etikett-filter';
 import StatusFilter from './filter/status-filter';

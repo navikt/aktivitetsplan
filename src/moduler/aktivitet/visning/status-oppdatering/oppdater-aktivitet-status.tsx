@@ -8,7 +8,7 @@ import { Aktivitet } from '../../../../types';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
-import { selectKanEndreAktivitetStatus } from '../../aktivitetliste-selector';
+import { selectKanEndreAktivitetStatus } from '../../aktivitetlisteSelector';
 import EndreLinje from '../endre-linje/endre-linje';
 import AktivitetStatusForm from './aktivitet-status-form';
 import StatusVisning from './status-visning';

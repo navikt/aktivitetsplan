@@ -29,7 +29,7 @@ import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat
 import SokeavtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
 import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
 import { selectAktivitetFeilmeldinger, selectAktivitetStatus } from '../aktivitet-selector';
-import { selectAktivitetMedId } from '../aktivitetliste-selector';
+import { selectAktivitetMedId } from '../aktivitetlisteSelector';
 
 function getAktivitetsFormComponent(aktivitet) {
     if (!aktivitet) {

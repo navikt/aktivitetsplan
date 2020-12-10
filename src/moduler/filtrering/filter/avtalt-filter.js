@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { AVTALT_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
-import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetliste-selector';
+import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetAvtaltMedNav } from './filter-reducer';
 import { selectAktivitetAvtaltMedNavFilter } from './filter-selector';
 import FilterVisningsKomponent from './filter-visning';
