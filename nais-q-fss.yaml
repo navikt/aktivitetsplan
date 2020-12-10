@@ -25,6 +25,7 @@ spec:
   ingresses:
     - https://aktivitetsplan-{{namespace}}.nais.preprod.local
     - https://app-{{namespace}}.adeo.no/aktivitetsplan
+    - https://app-{{namespace}}.dev.adeo.no/aktivitetsplan
   vault:
     enabled: true
   webproxy: true
