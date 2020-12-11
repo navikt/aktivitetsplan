@@ -1,6 +1,6 @@
-import { STATUS, doThenDispatch } from '../../ducks/utils';
+import * as Api from '../../api/oppfolgingAPI';
+import { STATUS, doThenDispatch } from '../../api/utils';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
-import * as Api from './oppfolging-api';
 
 // Actions
 export const OK = 'oppfolging/OK';
@@ -51,7 +51,7 @@ export default function reducer(state = initalState, action) {
 }
 
 export function hentOppfolging() {
-    return doThenDispatch(() => Api.hentOppfolging(), {
+    return doThenDispatch(() => Api.fetchOppfolging(), {
         OK,
         FEILET,
         PENDING,

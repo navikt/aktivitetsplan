@@ -1,6 +1,7 @@
 import shajs from 'sha.js';
 
-import { Aktivitet, AktivitetStatus, AktivitetType, Lest, OppfolgingsPeriode } from '../../types';
+import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+import { OppfolgingsPeriode } from '../../datatypes/oppfolgingTypes';
 
 interface Frontendlogger {
     event: (name: string, fields: object, tags: object) => void;

@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 
-import { STATUS } from '../../ducks/utils';
+import { fetchHarFlereAktorId } from '../../api/oppfolgingAPI';
+import { STATUS } from '../../api/utils';
 import { loggTidBruktGaaInnPaaAktivitetsplanen } from '../../felles-komponenter/utils/logging';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { hentLest, selectLestInformasjon, selectLestStatus } from '../lest/lest-reducer';
@@ -25,6 +26,8 @@ function InformasjonsHenting() {
     const setBack = (path: string) => dispatch(setBackPath(path));
 
     useEffect(() => {
+        fetchHarFlereAktorId();
+
         if (underOppfolging) {
             // @ts-ignore
             doHentLest().then((a) => {

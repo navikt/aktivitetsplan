@@ -1,4 +1,4 @@
-import { STATUS } from '../../ducks/utils';
+import { STATUS } from '../../api/utils';
 
 export function selectArenaAktiviteterSlice(state) {
     return state.data.arenaAktiviteter;

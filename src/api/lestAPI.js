@@ -1,5 +1,5 @@
-import { fetchToJson, putAsJson } from '../../ducks/utils';
-import { VEILARBLEST_BASE_URL } from '../../environment';
+import { VEILARBLEST_BASE_URL } from '../environment';
+import { fetchToJson, putAsJson } from './utils';
 
 // eslint-disable-next-line import/prefer-default-export
 export function hentSisteLest() {

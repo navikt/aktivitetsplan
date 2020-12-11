@@ -4,8 +4,8 @@ import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
 import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
+import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import { Aktivitet } from '../../../../types';
 import { DirtyContext } from '../../../context/dirty-context';
 
 const validateEtikettStatus = (): string | undefined => undefined;

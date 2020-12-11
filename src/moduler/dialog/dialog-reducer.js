@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import { STATUS, doThenDispatch } from '../../ducks/utils';
+import * as Api from '../../api/dialogAPI';
+import { STATUS, doThenDispatch } from '../../api/utils';
 import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
-import * as Api from './dialog-api';
 
 // Actions
 export const HENTER = 'dialog/hent';

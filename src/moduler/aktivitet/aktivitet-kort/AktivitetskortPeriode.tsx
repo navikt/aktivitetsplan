@@ -2,7 +2,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { GRUPPE_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_AKTIVITET_TYPE } from '../../../constant';
-import { Aktivitet } from '../../../types';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { formaterDatoKortManed } from '../../../utils';
 import Soknadfrist from './Soknadsfrist';
 

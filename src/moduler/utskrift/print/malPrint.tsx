@@ -1,7 +1,7 @@
 import { Systemtittel } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Mal } from '../../../types';
+import { Mal } from '../../../datatypes/oppfolgingTypes';
 
 interface Props {
     mittMal?: Mal;

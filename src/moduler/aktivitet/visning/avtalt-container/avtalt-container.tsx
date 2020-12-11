@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { STATUS } from '../../../../api/utils';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT, UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
-import { STATUS } from '../../../../ducks/utils';
+import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
-import { Aktivitet, OppfolgingsPeriode } from '../../../../types';
 import { erGyldigISODato, erMerEnnSyvDagerTil, msSince } from '../../../../utils';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';

@@ -7,7 +7,7 @@ import {
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
-import { Aktivitet } from '../../types';
+import { Aktivitet } from '../../datatypes/aktivitetTypes';
 
 export function erDroppbar(aktivitet: Aktivitet, erBruker: boolean, underOppfolging: boolean) {
     const { type, status, nesteStatus, historisk } = aktivitet;

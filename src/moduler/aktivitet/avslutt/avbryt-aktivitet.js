@@ -2,8 +2,8 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { STATUS } from '../../../api/utils';
 import { STATUS_AVBRUTT } from '../../../constant';
-import { STATUS } from '../../../ducks/utils';
 import Modal from '../../../felles-komponenter/modal/modal';
 import * as AppPT from '../../../proptypes';
 import { avbrytAktivitet } from '../aktivitet-actions';

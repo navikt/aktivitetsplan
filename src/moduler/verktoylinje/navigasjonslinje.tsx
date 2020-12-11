@@ -4,9 +4,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { Dialog } from '../../types';
+import { hentSistOppdatert } from '../../api/dialogAPI';
+import { Dialog } from '../../datatypes/dialogTypes';
 import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
-import { hentSistOppdatert } from '../dialog/dialog-api';
 import { hentDialog } from '../dialog/dialog-reducer';
 import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';

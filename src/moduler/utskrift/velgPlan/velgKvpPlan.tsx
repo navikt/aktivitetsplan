@@ -2,8 +2,8 @@ import { FieldState } from '@nutgaard/use-formstate';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
+import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 import Radio from '../../../felles-komponenter/skjema/input/radio';
-import { KvpPeriode } from '../../../types';
 import { formaterDatoKortManed } from '../../../utils';
 import UtskriftValg from './utskriftValg';
 

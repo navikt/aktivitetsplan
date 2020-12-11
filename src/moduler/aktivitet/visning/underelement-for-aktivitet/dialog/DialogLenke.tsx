@@ -2,7 +2,8 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Aktivitet, Dialog } from '../../../../../types';
+import { Aktivitet } from '../../../../../datatypes/aktivitetTypes';
+import { Dialog } from '../../../../../datatypes/dialogTypes';
 import { createSelectDialogForAktivitetId } from '../../../../dialog/dialog-selector';
 import LenkeTilDialog from '../../../../dialog/DialogLink';
 import { selectErVeileder } from '../../../../identitet/identitet-selector';

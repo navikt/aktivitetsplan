@@ -3,7 +3,8 @@ import 'moment-duration-format';
 import moment, { DurationInputArg1 } from 'moment';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
-import { Aktivitet, AktivitetStatus, AktivitetType, Lest, Me } from '../../types';
+import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
+import { Me } from '../../datatypes/oppfolgingTypes';
 import { erMerEnnEnManederSiden } from '../../utils';
 
 function compareUndefindedOrNull(a: any, b: any): number {

@@ -11,7 +11,7 @@ import {
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../constant';
-import { Aktivitet } from '../../types';
+import { Aktivitet } from '../../datatypes/aktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
 import styles from './Tavleadvarsel.module.less';
 

@@ -2,7 +2,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Element, EtikettLiten, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Dialog } from '../../../types';
+import { Dialog } from '../../../datatypes/dialogTypes';
 import { datoComparator, formaterDatoKortManed } from '../../../utils';
 
 interface DialogProps {

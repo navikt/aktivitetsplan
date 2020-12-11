@@ -1,10 +1,10 @@
-import { createActionsAndReducer } from '../../ducks/rest-reducer';
-import * as Api from '../oppfolging-status/oppfolging-api';
+import * as Api from '../../api/oppfolgingAPI';
+import { createActionsAndReducer } from '../../felles-komponenter/utils/createActionsAndReducer';
 
 const { reducer, cashedAction } = createActionsAndReducer('identitet');
 
 export default reducer;
 
 export function hentIdentitet() {
-    return cashedAction(() => Api.hentIdentitet());
+    return cashedAction(() => Api.fetchIdentitet());
 }

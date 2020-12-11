@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { STATUS } from '../../ducks/utils';
+import { STATUS } from '../../api/utils';
 import { selectHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { datoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectForrigeHistoriskeSluttDato } from '../oppfolging-status/oppfolging-selector';

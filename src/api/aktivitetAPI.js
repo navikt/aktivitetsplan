@@ -1,5 +1,5 @@
-import { deleteAsJson, fetchToJson, postAsJson, putAsJson } from '../../ducks/utils';
-import { AKTIVITET_BASE_URL } from '../../environment';
+import { AKTIVITET_BASE_URL } from '../environment';
+import { deleteAsJson, fetchToJson, postAsJson, putAsJson } from './utils';
 
 export function hentAktivitet(aktivitetId) {
     return fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}`);

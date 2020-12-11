@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import FnrProvider from '../../bootstrap/fnr-provider';
+import { Aktivitet } from '../../datatypes/aktivitetTypes';
+import { Dialog } from '../../datatypes/dialogTypes';
+import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
 import Modal from '../../felles-komponenter/modal/modal';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
-import { Aktivitet, Bruker, Dialog, KvpPeriode, Mal } from '../../types';
+import { Bruker } from '../../types';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';

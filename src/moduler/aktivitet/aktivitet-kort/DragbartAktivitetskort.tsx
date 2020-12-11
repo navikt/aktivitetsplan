@@ -3,8 +3,8 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { DROP_TYPE } from '../../../hovedside/tavle/kolonne/DropTargetKolonne';
-import { Aktivitet } from '../../../types';
 import Aktivitetskort from './Aktivitetskort';
 import styles from './Aktivitetskort.module.less';
 import { startDragging, stopDragging } from './dragAndDropReducer';
