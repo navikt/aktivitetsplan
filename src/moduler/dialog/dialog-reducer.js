@@ -63,7 +63,7 @@ export default function reducer(state = initalState, action) {
 
 // Action creator
 export function hentDialog() {
-    return doThenDispatch(() => Api.hentDialog(), {
+    return doThenDispatch(() => Api.fetchDialoger(), {
         OK: HENTET,
         FEILET: HENTING_FEILET,
         PENDING: HENTER,
@@ -71,7 +71,7 @@ export function hentDialog() {
 }
 
 export function sendForhandsorientering(henvendelse) {
-    return doThenDispatch(() => Api.sendForhandsorientering(henvendelse), {
+    return doThenDispatch(() => Api.postForhandsorientering(henvendelse), {
         OK: SEND_FORHANDSORIENTERING_OK,
         FEILET: SEND_FORHANDSORIENTERING_FEILET,
         PENDING: SEND_FORHANDSORIENTERING,

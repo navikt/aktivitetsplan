@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { hentSistOppdatert } from '../../api/dialogAPI';
+import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { Dialog } from '../../datatypes/dialogTypes';
 import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/DialogIkon';
 import { hentDialog } from '../dialog/dialog-reducer';
@@ -29,8 +29,8 @@ function Navigasjonslinje() {
             let interval: NodeJS.Timeout;
 
             const pollForChanges = () =>
-                hentSistOppdatert()
-                    .then((data: { sistOppdatert?: string }) => {
+                fetchSistOppdatert()
+                    .then((data) => {
                         const localSistOppdatert = moment(sistOppdatert, moment.ISO_8601);
                         const remoteSistOppdatert = moment(data.sistOppdatert, moment.ISO_8601);
                         if (!!data.sistOppdatert && remoteSistOppdatert.isAfter(localSistOppdatert)) {

@@ -24,3 +24,17 @@ export interface Henvendelse {
     sendt: string;
     lest: boolean;
 }
+
+type DialogEgenskap = 'ESKALERINGSVARSEL' | 'PARAGRAF8';
+
+export interface NyHenvendelse {
+    tekst: string;
+    dialogId: string;
+    overskrift: string;
+    aktivitetId: string;
+    egenskaper: DialogEgenskap[];
+}
+
+export interface SistOppdatert {
+    sistOppdatert: Date;
+}
