@@ -1,4 +1,4 @@
-import { getFodselsnummer } from '../bootstrap/fnr-util';
+import { getFodselsnummer } from '../utils/fnr-util';
 
 /* eslint-env browser */
 export const STATUS = {

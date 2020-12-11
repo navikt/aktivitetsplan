@@ -1,6 +1,6 @@
 import { createBrowserHistory } from 'history';
 
-import { getFodselsnummer } from './bootstrap/fnr-util';
+import { getFodselsnummer } from './utils/fnr-util';
 
 function nyURLHarQueryString(url) {
     return url.indexOf('?') !== -1;
