@@ -1,4 +1,4 @@
-import { brukertype } from '../types';
+import { brukertype } from './types';
 
 export interface Dialog {
     id: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { Bruker } from '../../../datatypes/types';
 import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
-import { Bruker } from '../../../types';
 
 interface Props {
     bruker: Bruker;
