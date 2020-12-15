@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import featureReducer from './ducks/feature-reducer';
+import featureReducer from './felles-komponenter/feature/feature-reducer';
 import authReducer from './felles-komponenter/timeoutbox/auth-reducer';
 import dragAndDropReducer from './moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import aktiviteterReducer from './moduler/aktivitet/aktivitet-reducer';

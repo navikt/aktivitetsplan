@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { createActionsAndReducer } from './rest-reducer';
+import { createActionsAndReducer } from './createActionsAndReducer';
 
 const { reducer, actionTypes, selectData, selectStatus } = createActionsAndReducer('test');
 

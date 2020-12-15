@@ -1,5 +1,5 @@
-import * as Api from './feature-api';
-import { createActionsAndReducer } from './rest-reducer';
+import * as Api from '../../api/featureAPI';
+import { createActionsAndReducer } from '../utils/createActionsAndReducer';
 
 const { reducer, cashedAction } = createActionsAndReducer('feature');
 

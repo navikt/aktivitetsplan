@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
+import { STATUS, aggregerStatus } from '../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
-import { STATUS, aggregerStatus } from '../../ducks/utils';
-import { Aktivitet } from '../../types';
+import { Aktivitet } from '../../datatypes/aktivitetTypes';
 import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';

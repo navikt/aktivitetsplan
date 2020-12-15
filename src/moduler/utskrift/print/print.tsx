@@ -1,9 +1,12 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { Dialog } from '../../../datatypes/dialogTypes';
+import { KvpPeriode, Mal } from '../../../datatypes/oppfolgingTypes';
 import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
 import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
-import { Aktivitet, Bruker, Dialog, KvpPeriode, Mal } from '../../../types';
+import { Bruker } from '../../../types';
 import { formaterDatoKortManed } from '../../../utils';
 import logoPng from '../ikoner/logo.png';
 import Adresse from './adresse';

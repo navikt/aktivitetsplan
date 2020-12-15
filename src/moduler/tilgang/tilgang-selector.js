@@ -1,4 +1,4 @@
-import { STATUS } from '../../ducks/utils';
+import { STATUS } from '../../api/utils';
 
 function selectTilgangSlice(state) {
     return state.data.tilgang;

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
-import { Aktivitet } from '../../../../types';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';

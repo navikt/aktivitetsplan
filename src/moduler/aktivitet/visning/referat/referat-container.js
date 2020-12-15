@@ -3,8 +3,8 @@ import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { STATUS } from '../../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
-import { STATUS } from '../../../../ducks/utils';
 import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { autobind } from '../../../../utils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';

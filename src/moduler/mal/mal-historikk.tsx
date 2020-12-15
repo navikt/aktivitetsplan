@@ -3,7 +3,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { Mal } from '../../types';
+import { Mal } from '../../datatypes/oppfolgingTypes';
 import { formaterDatoEllerTidSiden } from '../../utils';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectMalListe } from './aktivitetsmal-selector';

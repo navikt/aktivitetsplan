@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { hentFeature } from './ducks/feature-reducer';
+import { hentFeature } from './felles-komponenter/feature/feature-reducer';
 
 function getEnhetFromURL() {
     const queryString = window.location.search;

@@ -4,11 +4,11 @@ import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import * as Api from '../../api/lestAPI';
 import Modal from '../../felles-komponenter/modal/modal';
 import ModalContainer from '../../felles-komponenter/modal/modal-container';
 import * as AppPT from '../../proptypes';
 import { selectErBruker } from '../identitet/identitet-selector';
-import * as Api from '../lest/lest-api';
 import { selectLestInformasjon } from '../lest/lest-reducer';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { BrukePlanenPanel } from './brukePlanenPanel';

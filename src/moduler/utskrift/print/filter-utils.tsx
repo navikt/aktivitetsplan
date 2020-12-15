@@ -1,6 +1,8 @@
 import { isAfter, isBefore } from 'date-fns';
 
-import { Aktivitet, Dialog, KvpPeriode } from '../../../types';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { Dialog } from '../../../datatypes/dialogTypes';
+import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 
 function aktivitetIKvpPeriode(aktivitet: Aktivitet, kvpPeriode: KvpPeriode) {
     const aktivitetDato = new Date(aktivitet.opprettetDato);

@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 /* eslint-env mocha */
 import React from 'react';
 
-import { STATUS } from '../../ducks/utils';
+import { STATUS } from '../../api/utils';
 import Innholdslaster from './innholdslaster';
 
 describe('innholdslaster', () => {

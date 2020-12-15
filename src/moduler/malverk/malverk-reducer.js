@@ -1,5 +1,5 @@
-import { STATUS, doThenDispatch } from '../../ducks/utils';
-import * as API from './malverk-api';
+import * as API from '../../api/malverkAPI';
+import { STATUS, doThenDispatch } from '../../api/utils';
 
 // Actions
 export const HENT_MALVERK_MED_TYPE_OK = 'malverk/hent_med_type/OK';

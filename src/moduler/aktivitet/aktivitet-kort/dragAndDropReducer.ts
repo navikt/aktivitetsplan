@@ -1,4 +1,4 @@
-import { Aktivitet } from '../../../types';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 
 const START = `DRAG/START`;
 const STOP = `DRAG/STOP`;

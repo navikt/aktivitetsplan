@@ -2,8 +2,8 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { STATUS } from '../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
-import { STATUS } from '../../../ducks/utils';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalHeader from '../../../felles-komponenter/modal/modal-header';
 import * as AppPT from '../../../proptypes';

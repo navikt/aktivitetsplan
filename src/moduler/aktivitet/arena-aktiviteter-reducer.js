@@ -1,5 +1,5 @@
-import { STATUS, doThenDispatch } from '../../ducks/utils';
-import * as Api from './aktivitet-api';
+import * as Api from '../../api/aktivitetAPI';
+import { STATUS, doThenDispatch } from '../../api/utils';
 
 // Actions
 export const HENTER = 'arenaAktivitet/hent';

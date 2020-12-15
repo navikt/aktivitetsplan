@@ -3,8 +3,8 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 
+import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 import Radio from '../../../felles-komponenter/skjema/input/radio';
-import { KvpPeriode } from '../../../types';
 import UtskriftValg from './utskriftValg';
 import KvpPlanValg from './velgKvpPlan';
 

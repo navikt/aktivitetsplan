@@ -5,12 +5,12 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
+import { Aktivitet, AktivitetStatus } from '../../../datatypes/aktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../felles-komponenter/utils/logging';
 import { flyttAktivitet } from '../../../moduler/aktivitet/aktivitet-actions';
 import { selectErBruker } from '../../../moduler/identitet/identitet-selector';
 import { selectErUnderOppfolging } from '../../../moduler/oppfolging-status/oppfolging-selector';
 import { avbrytAktivitetRoute, fullforAktivitetRoute } from '../../../routes';
-import { Aktivitet, AktivitetStatus } from '../../../types';
 import { erDroppbar } from '../tavleUtils';
 
 interface Props {

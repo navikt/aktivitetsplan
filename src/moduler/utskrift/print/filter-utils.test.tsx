@@ -1,4 +1,6 @@
-import { Aktivitet, Dialog, KvpPeriode } from '../../../types';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import { Dialog } from '../../../datatypes/dialogTypes';
+import { KvpPeriode } from '../../../datatypes/oppfolgingTypes';
 import { filtrerAktiviteter, filtrerDialoger } from './filter-utils';
 
 const kvpPeriode: KvpPeriode = {

@@ -1,7 +1,7 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Aktivitet } from '../../../types';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { dagerTil, formaterDatoKortManed } from '../../../utils';
 import styles from './Aktivitetskort.module.less';
 
