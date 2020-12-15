@@ -54,10 +54,11 @@ function Aktivitetskort(props: Props) {
         <LinkAsDiv
             id={genererAktivtetskortId(aktivitet)}
             className={classNames(styles.aktivitetskort, className)}
+            aria-labelledby={ariaLabel}
             to={aktivitetRoute(id)}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}
         >
-            <article aria-labelledby={ariaLabel}>
+            <article>
                 <Aktivitetstype type={type} />
                 <Aktivitetskorttittel id={headerId} aktivitet={aktivitet} harEndring={harEndringerIAktivitet} />
                 <Arbeidsgiver aktivitet={aktivitet} />
