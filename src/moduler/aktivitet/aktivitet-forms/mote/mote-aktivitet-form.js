@@ -16,7 +16,7 @@ import * as AppPT from '../../../../proptypes';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../lagre-aktivitet';
-import VelgKanal from '../velg-kanal';
+import VelgKanal from '../VelgKanal';
 import {
     FORBEREDELSER_MAKS_LENGDE,
     HENSIKT_MAKS_LENGDE,

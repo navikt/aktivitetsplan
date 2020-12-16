@@ -11,7 +11,7 @@ import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { todayIsoString } from '../../../../utils';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import VelgKanal from '../velg-kanal';
+import VelgKanal from '../VelgKanal';
 import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
 
 function SamtalereferatForm(props) {
