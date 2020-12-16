@@ -4,7 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { createStore } from 'redux';
 
 import reducer from '../../../../reducer';
-import MoteAktivitetForm, { defaultBeskrivelse } from './mote-aktivitet-form';
+import MoteAktivitetForm, { defaultBeskrivelse } from './MoteAktivitetForm';
 
 const initialState = {
     data: {
