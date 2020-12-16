@@ -4,7 +4,7 @@ import PT from 'prop-types';
 import React from 'react';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
     validerPeriodeFelt,
@@ -59,7 +59,7 @@ function StillingAktivitetForm(props) {
     }
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
             <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
 
@@ -71,6 +71,7 @@ function StillingAktivitetForm(props) {
                             disabled={avtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
+                            required
                             {...state.fields.fraDato}
                         />
                         <DatoField label="Frist" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
