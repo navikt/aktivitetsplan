@@ -66,7 +66,7 @@ function EgenAktivitetForm(props) {
     const reinitalize = (newInitalValues) => state.reinitialize({ ...initalValues, ...newInitalValues });
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate="noValidate">
             <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
 

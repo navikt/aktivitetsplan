@@ -48,6 +48,7 @@ function SamtalereferatForm(props) {
     return (
         <form
             autoComplete="off"
+            noValidate="noValidate"
             onSubmit={state.onSubmit((data) => {
                 return onSubmit({
                     ...data,

@@ -64,7 +64,7 @@ function IJobbAktivitetForm(props) {
     }
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate="noValidate">
             <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
 
