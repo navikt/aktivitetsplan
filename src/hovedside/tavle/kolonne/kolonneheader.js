@@ -32,7 +32,7 @@ function hjelpeklasse(aktivitetStatus) {
 function KolonneHeader({ status }) {
     return (
         <div className={`aktivitetstavle__kolonne-header-wrapper ${hjelpeklasse(status)}`}>
-            <Undertittel className="aktivitetstavle__kolonne-header" tag="h1">
+            <Undertittel className="aktivitetstavle__kolonne-header" tag="h2">
                 <FormattedMessage id={`aktivitetstavle.${status}`} />
             </Undertittel>
             <AktivitetsplanHjelpetekst status={status} />

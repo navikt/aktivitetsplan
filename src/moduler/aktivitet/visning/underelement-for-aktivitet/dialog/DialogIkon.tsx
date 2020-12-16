@@ -8,7 +8,7 @@ function DialogIkonUtenUleste(props: DialogIkonUtenUlesteProps) {
     const { className } = props;
 
     return (
-        <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+        <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" focusable="false">
             <g stroke="#0067C5" fill="none">
                 <path d="M7.44 14.56A9.01 9.01 0 016 14.25l-5 2 2-3.5A6.53 6.53 0 01.5 7.69C.5 3.86 4.3.75 9 .75s8.5 3.1 8.5 6.94" />
                 <path d="M9.5 16.25c0 4.29 5 7.5 9.5 5.5l4 1.5-1.5-3a5 5 0 002-4c0-3.15-3.13-6-7-6s-7 2.85-7 6z" />

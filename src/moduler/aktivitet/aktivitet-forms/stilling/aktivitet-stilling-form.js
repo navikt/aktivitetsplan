@@ -63,7 +63,7 @@ function StillingAktivitetForm(props) {
             <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
 
-                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
+                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} required />
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">

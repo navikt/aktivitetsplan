@@ -55,7 +55,6 @@ function FilterVisning(props: FilterVisningTypes) {
                 {Object.keys(filter).map((nokkel) => {
                     return (
                         <Checkbox
-                            key={nokkel}
                             label={<FormattedMessage id={filterTekst + nokkel.toLowerCase()} />}
                             onChange={() => {
                                 if (!filter[nokkel] && metrikkNavn) {

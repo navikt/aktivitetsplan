@@ -18,7 +18,7 @@ function ModalHeader({ tilbakeTekst, headerTekst, className, onTilbakeClick, akt
                     <HengeLasIkon />
                 </VisibleIfSpan>
                 {tilbakeTekst && <Tilbakeknapp tekst={tilbakeTekst} onClick={onTilbakeClick} />}
-                {headerTekst && <Normaltekst tag="h1">{headerTekst}</Normaltekst>}
+                {headerTekst && <Normaltekst>{headerTekst}</Normaltekst>}
             </header>
         </div>
     );

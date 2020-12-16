@@ -4,7 +4,13 @@ import React from 'react';
 export default function EksternLenkeIkon() {
     return (
         <span className="eksternlenkeIkonBoks">
-            <svg className="EksternLenkeIkon" height="14px" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+            <svg
+                className="EksternLenkeIkon"
+                height="14px"
+                viewBox="0 0 14 14"
+                xmlns="http://www.w3.org/2000/svg"
+                focusable="false"
+            >
                 <g id="ikon_external_link" fill="none" fillRule="evenodd" strokeLinecap="round">
                     <g id="LINE/interface/-external-link" transform="translate(2 2)" stroke="#0067C5">
                         <g id="external-link">

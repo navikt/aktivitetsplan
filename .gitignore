@@ -8,3 +8,4 @@ coverage/
 src/tekster.js
 build/
 .DS_Store
+.eslintcache
