@@ -11,9 +11,9 @@ import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/input';
+import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../lagre-aktivitet';
@@ -76,6 +76,7 @@ function IJobbAktivitetForm(props) {
                             disabled={avtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
+                            required
                             {...state.fields.fraDato}
                         />
                         <DatoField label="Til dato" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />

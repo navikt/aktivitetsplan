@@ -14,7 +14,7 @@ import {
 } from '../../../../constant';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import visibleIf from '../../../../hocs/visible-if';
 import { aktivitet as aktivitetPT } from '../../../../proptypes';

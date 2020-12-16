@@ -4,7 +4,7 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import FormErrorSummary from '../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Textarea from '../../felles-komponenter/skjema/input/textarea';
+import Textarea from '../../felles-komponenter/skjema/input/Textarea';
 import { Bruker } from '../../types';
 
 const defaultBeskrivelse =

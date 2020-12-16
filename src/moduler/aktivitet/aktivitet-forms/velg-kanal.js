@@ -5,7 +5,7 @@ import Select from '../../../felles-komponenter/skjema/input/select';
 
 function VelgKanal(props) {
     return (
-        <Select noBlankOption bredde="fullbredde" {...props}>
+        <Select noBlankOption bredde="fullbredde" {...props} required>
             <option value={OPPMOTE_KANAL}>Oppmøte</option>
             <option value={TELEFON_KANAL}>Telefonmøte</option>
             <option value={INTERNET_KANAL}>Videomøte</option>

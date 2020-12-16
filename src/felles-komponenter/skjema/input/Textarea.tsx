@@ -31,11 +31,12 @@ interface Props {
     label: any;
     autoFocus?: boolean;
     textareaClass?: string;
+    required?: boolean;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 function Textarea(props: Props) {
-    const { touched, error, input, pristine, initialValue, visTellerFra, ...rest } = props;
+    const { touched, error, input, pristine, initialValue, visTellerFra, required, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
 
@@ -43,6 +44,7 @@ function Textarea(props: Props) {
         <NavTextArea
             tellerTekst={(antallTegn, max) => getTellerTekst(antallTegn, max, visTellerFra)}
             feil={feil}
+            required={required}
             {...inputProps}
         />
     );

@@ -9,8 +9,8 @@ import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import { HiddenIfInput } from '../../../../felles-komponenter/skjema/input/input';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import { HiddenIfInput } from '../../../../felles-komponenter/skjema/input/Input';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../aktivitet-form-header';
@@ -83,8 +83,14 @@ export default function SokeAvtaleAktivitetForm(props) {
                             disabled={avtalt}
                             senesteTom={maybeAktivitet.tilDato}
                             {...state.fields.fraDato}
+                            required
                         />
-                        <DatoField label="Til dato *" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
+                        <DatoField
+                            label="Til dato *"
+                            tidligsteFom={maybeAktivitet.fraDato}
+                            {...state.fields.tilDato}
+                            required
+                        />
                     </div>
                 </PeriodeValidering>
 
