@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getFodselsnummer } from '../bootstrap/fnr-util';
 import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
@@ -12,6 +11,7 @@ import Varslinger from '../moduler/varslinger/varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
 import Routing, { PublicRouting } from '../routing';
+import { getFodselsnummer } from '../utils/fnr-util';
 import AktivitetsTavle from './tavle/Aktivitetstavle';
 
 class Hovedside extends Component {

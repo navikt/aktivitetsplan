@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import FnrProvider from '../../bootstrap/fnr-provider';
 import { Aktivitet } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
+import { Bruker } from '../../datatypes/types';
 import Modal from '../../felles-komponenter/modal/modal';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
-import { Bruker } from '../../types';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
@@ -20,6 +19,7 @@ import {
     selectKvpPeriodeForValgteOppfolging,
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
+import FnrProvider from './fnr-provider';
 import ModalHeader from './modalHeader';
 import Print from './print/print';
 import PrintMeldingForm from './printMelding';

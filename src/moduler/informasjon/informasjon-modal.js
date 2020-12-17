@@ -25,7 +25,7 @@ class InformasjonModal extends Component {
         const { erBruker, underOppfolging, lestInfo } = this.props;
 
         if (erBruker && underOppfolging && (!lestInfo || lestInfo.verdi !== INFORMASJON_MODAL_VERSJON)) {
-            Api.lesInformasjon(INFORMASJON_MODAL_VERSJON);
+            Api.postLest(INFORMASJON_MODAL_VERSJON);
         }
     }
 

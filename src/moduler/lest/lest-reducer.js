@@ -5,7 +5,7 @@ import { createActionsAndReducer } from '../../felles-komponenter/utils/createAc
 const { reducer, action, selectSlice, selectData, selectStatus } = createActionsAndReducer('lest', 'lest', []);
 
 export function hentLest() {
-    return action(Api.hentSisteLest);
+    return action(Api.fetchSisteLest);
 }
 
 export function selectLest(state) {

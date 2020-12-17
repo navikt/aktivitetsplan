@@ -4,7 +4,6 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { doLesAktivitetsplan } from '../../api/oppfolgingAPI';
 import { STATUS } from '../../api/utils';
-import { getFodselsnummer } from '../../bootstrap/fnr-util';
 import {
     STATUS_AVBRUTT,
     STATUS_BRUKER_ER_INTRESSERT,
@@ -21,6 +20,7 @@ import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
+import { getFodselsnummer } from '../../utils/fnr-util';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './tavle';
