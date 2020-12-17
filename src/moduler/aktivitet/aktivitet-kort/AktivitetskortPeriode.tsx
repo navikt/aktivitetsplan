@@ -31,11 +31,11 @@ function AktiviteskortPeriodeVisning({ aktivitet, id }: Props) {
         }
 
         if (!fraDato && tilDato) {
-            return `TIL: ${formatertTilDato}`;
+            return `Til: ${formatertTilDato}`;
         }
 
         if (!tilDato && fraDato) {
-            return `FRA: ${formatertFraDato}`;
+            return `Fra: ${formatertFraDato}`;
         }
 
         return [formatertFraDato, formatertTilDato].filter((dato) => dato).join(' - ');
