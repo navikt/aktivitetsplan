@@ -48,7 +48,6 @@ function SamtalereferatForm(props) {
     return (
         <form
             autoComplete="off"
-            noValidate="noValidate"
             onSubmit={state.onSubmit((data) => {
                 return onSubmit({
                     ...data,
@@ -56,6 +55,7 @@ function SamtalereferatForm(props) {
                     avtalt: true,
                 });
             })}
+            noValidate
         >
             <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />

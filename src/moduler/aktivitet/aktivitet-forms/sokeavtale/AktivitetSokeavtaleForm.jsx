@@ -70,7 +70,7 @@ export default function SokeAvtaleAktivitetForm(props) {
     const brukeStillingerIUken = !state.fields.antallStillingerSokes.initialValue;
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate="noValidate">
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
             <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Avtale om å søke jobber" aktivitetsType={SOKEAVTALE_AKTIVITET_TYPE} />
 

@@ -102,7 +102,7 @@ function MoteAktivitetForm(props) {
     }
 
     return (
-        <form onSubmit={state.onSubmit((x) => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off" noValidate="noValidate">
+        <form onSubmit={state.onSubmit((x) => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off" noValidate>
             <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />

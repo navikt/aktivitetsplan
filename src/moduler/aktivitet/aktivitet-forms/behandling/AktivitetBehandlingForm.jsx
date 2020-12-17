@@ -64,7 +64,7 @@ function BehandlingAktivitetForm(props) {
     }
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} noValidate="noValidate" autoComplete="off">
+        <form onSubmit={state.onSubmit(onSubmit)} autoComplete="off" noValidate>
             <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Medisinsk behandling" aktivitetsType={BEHANDLING_AKTIVITET_TYPE} />
 
