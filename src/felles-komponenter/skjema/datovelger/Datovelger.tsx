@@ -1,9 +1,10 @@
 import classNames from 'classnames';
-import Datovelger, { DatovelgerProps } from 'nav-datovelger/lib/Datovelger';
+import dayjs from 'dayjs';
+import Datovelger, { DatepickerProps } from 'nav-datovelger/lib/Datepicker';
 import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 
-import { datePickerToISODate, dateToDatePicker } from '../../../utils';
+import { datePickerToISODate } from '../../../utils';
 import { FieldStateInput } from '../input/utils';
 import styles from './datovelger.module.less';
 
@@ -19,34 +20,34 @@ interface Props {
     error?: string;
     label: string;
     input: FieldStateInput;
+    required?: boolean;
 }
 
-function DatovelgerWrapper(props: Props & DatovelgerProps) {
-    const { label, error, input } = props;
+function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps'>) {
+    const { label, error, input, required } = props;
     const [touched, setTouched] = useState(false);
     const feil = error && touched ? error : undefined;
 
     const { onChange, name } = input;
-    const _onChange = useCallback(
-        (date?: string) => {
-            const newValue = datePickerToISODate(date);
-            const customEvent = {
-                target: { name: name, value: newValue },
-            };
-            onChange(customEvent as any);
-            setTouched(true);
-        },
-        [name, onChange]
-    );
 
-    const valgtDato = dateToDatePicker(input.value);
+    const _onChange = (date?: string) => {
+        const newValue = datePickerToISODate(date);
+        const customEvent: any = {
+            target: { name: name, value: newValue },
+        };
+        onChange(customEvent);
+        setTouched(true);
+    };
+
+    const day = input.value ? dayjs(input.value).startOf('day').format('YYYY-MM-DD') : '';
+
     const cls = classNames(styles.datovelger, { [styles.harFeil]: !!feil });
-    const datovelgerInput = { ...input, placeholder: 'dd.mm.åååå' };
+    const datovelgerInput = { ...input, placeholder: 'dd.mm.åååå', required };
 
     return (
         <div className={cls}>
             <Label htmlFor={input.id}>{label}</Label>
-            <Datovelger {...props} input={datovelgerInput} onChange={_onChange} valgtDato={valgtDato} />
+            <Datovelger {...props} inputProps={datovelgerInput} onChange={_onChange} value={day} />
             <DatoFeil feil={feil} />
         </div>
     );

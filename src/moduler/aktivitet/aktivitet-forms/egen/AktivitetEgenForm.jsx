@@ -4,13 +4,13 @@ import PT from 'prop-types';
 import React from 'react';
 
 import { EGEN_AKTIVITET_TYPE } from '../../../../constant';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Input from '../../../../felles-komponenter/skjema/input/Input';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../aktivitet-form-header';
@@ -66,7 +66,7 @@ function EgenAktivitetForm(props) {
     const reinitalize = (newInitalValues) => state.reinitialize({ ...initalValues, ...newInitalValues });
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
             <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
 
@@ -76,8 +76,8 @@ function EgenAktivitetForm(props) {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        <DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} />
-                        <DatoField label="Til dato *" {...state.fields.tilDato} />
+                        <DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} required />
+                        <DatoField label="Til dato *" {...state.fields.tilDato} required />
                     </div>
                 </PeriodeValidering>
 

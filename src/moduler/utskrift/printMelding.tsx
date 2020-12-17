@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Bruker } from '../../datatypes/types';
 import FormErrorSummary from '../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Textarea from '../../felles-komponenter/skjema/input/textarea';
+import Textarea from '../../felles-komponenter/skjema/input/Textarea';
 
 const defaultBeskrivelse =
     'Her finner du avtalte aktiviteter med NAV som du skal gjennomføre for å nå målet ditt. ' +

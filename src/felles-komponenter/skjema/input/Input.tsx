@@ -18,7 +18,7 @@ function Input(props: Props & InputProps) {
     const { touched, error, input, pristine, initialValue, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
-    return <NavInput {...inputProps} feil={feil} />;
+    return <NavInput {...inputProps} feil={feil} required />;
 }
 
 export default Input;

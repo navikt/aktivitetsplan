@@ -7,7 +7,7 @@ import React from 'react';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
 import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Textarea from '../../../felles-komponenter/skjema/input/textarea';
+import Textarea from '../../../felles-komponenter/skjema/input/Textarea';
 
 const begrunnelseValidator = (val) => {
     if (val.trim().length === 0) {
