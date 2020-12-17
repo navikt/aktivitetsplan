@@ -10,7 +10,8 @@ export interface Bruker {
     mellomnavn?: string;
     etternavn?: string;
     sammensattNavn?: string;
-    behandlendeEnhet?: BehandlendeEnhet;
+    geografiskEnhet?: BehandlendeEnhet;
+
     bostedsadresse?: Bostedsadresse;
 }
 
