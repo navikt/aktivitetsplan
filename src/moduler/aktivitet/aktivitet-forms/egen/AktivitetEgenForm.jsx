@@ -67,7 +67,7 @@ function EgenAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <SkjemaGruppe className="aktivitetskjema">
+            <SkjemaGruppe className="aktivitetskjema" tag="div">
                 <AktivitetFormHeader tittel="Jobbrettet egenaktivitet" aktivitetsType={EGEN_AKTIVITET_TYPE} />
 
                 <Malverk visible={window.appconfig.VIS_MALER} endre={endre} onChange={reinitalize} type="EGEN" />

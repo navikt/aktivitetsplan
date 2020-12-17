@@ -1,5 +1,5 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import Label from 'nav-frontend-skjema/lib/label';
 import PT from 'prop-types';
 import React from 'react';
@@ -65,7 +65,7 @@ function IJobbAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <SkjemaGruppe className="aktivitetskjema">
+            <SkjemaGruppe className="aktivitetskjema" tag="div">
                 <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
@@ -83,11 +83,14 @@ function IJobbAktivitetForm(props) {
                     </div>
                 </PeriodeValidering>
 
-                <SkjemaGruppe id="jobbStatus" feil={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}>
-                    <Label>Stillingsandel *</Label>
+                <RadioGruppe
+                    id="jobbStatus"
+                    feil={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}
+                    legend="Stillingsandel *"
+                >
                     <Radio label="Heltid" value={JOBB_STATUS_HELTID} disabled={avtalt} {...state.fields.jobbStatus} />
                     <Radio label="Deltid" value={JOBB_STATUS_DELTID} disabled={avtalt} {...state.fields.jobbStatus} />
-                </SkjemaGruppe>
+                </RadioGruppe>
 
                 <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.ansettelsesforhold} />
                 <Input

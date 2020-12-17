@@ -60,7 +60,7 @@ function StillingAktivitetForm(props) {
 
     return (
         <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
-            <SkjemaGruppe className="aktivitetskjema">
+            <SkjemaGruppe className="aktivitetskjema" tag="div">
                 <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} required />

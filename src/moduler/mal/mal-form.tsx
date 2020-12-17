@@ -1,6 +1,6 @@
 import useFormstate from '@nutgaard/use-formstate';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
+import { Textarea as NavTextArea, SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
 import { useMoveSelectionStartToEnd } from '../../felles-komponenter/hooks/useMoveSelectionStartToEnd';
@@ -59,6 +59,7 @@ function MalForm(props: Props) {
                     visTellerFra={150}
                     autoFocus
                     label=""
+                    aria-label="Ditt mål"
                     maxLength={500}
                     {...state.fields.mal}
                 />
