@@ -1,6 +1,6 @@
-import { getFodselsnummer } from '../bootstrap/fnr-util';
 import { Mal, Me, OppfolgingStatus } from '../datatypes/oppfolgingTypes';
 import { OPPFOLGING_BASE_URL } from '../environment';
+import { getFodselsnummer } from '../utils/fnr-util';
 import { fetchToJson, postAsJson } from './utils';
 
 export const fetchIdentitet = (): Promise<Me> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/me`);

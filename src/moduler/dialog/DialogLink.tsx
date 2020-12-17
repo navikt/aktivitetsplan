@@ -2,12 +2,12 @@ import React, { MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { fnrFraUrl } from '../../bootstrap/fnr-provider';
+import { getFodselsnummer } from '../../utils/fnr-util';
 import { selectErVeileder } from '../identitet/identitet-selector';
 
 export const dialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
     if (erVeileder) {
-        const fnr = fnrFraUrl();
+        const fnr = getFodselsnummer();
         if (dialogId) {
             return `/veilarbpersonflatefs/${fnr}/${dialogId}`;
         }
