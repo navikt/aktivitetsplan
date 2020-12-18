@@ -27,7 +27,7 @@ import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
 import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';
 import SamtalereferatForm from '../aktivitet-forms/samtalereferat/SamtalereferatForm';
 import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
-import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
+import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 function NyAktivitetForm(props) {

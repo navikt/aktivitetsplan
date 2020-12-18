@@ -5,7 +5,7 @@ import { hentDialog } from '../moduler/dialog/dialog-reducer';
 import HovedsideFeilmelding from '../moduler/feilmelding/HovedsideFeilmelding';
 import Nivaa4Feilmelding from '../moduler/feilmelding/IkkeNiva4';
 import InformasjonsHenting from '../moduler/informasjon/informasjonHenting';
-import Maal from '../moduler/mal-linje/mitt-maal';
+import Maal from '../moduler/mal-linje/MittMaal';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Varslinger from '../moduler/varslinger/varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';

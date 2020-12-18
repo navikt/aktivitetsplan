@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import { Flatknapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -98,10 +98,10 @@ function MittMaal() {
                     dispatch(lesMal());
                 }}
             >
-                <Element tag={'div'} id="mittmal_header">
+                <Normaltekst tag="div" id="mittmal_header">
                     <NotifikasjonMarkering visible={nyEndring} />
-                    DITT MÅL
-                </Element>
+                    Ditt mål
+                </Normaltekst>
                 <div className="mittmal_content">
                     <MalContent disabled={disabled} mal={mal} />
                 </div>

@@ -59,6 +59,7 @@ function MalForm(props: Props) {
                     visTellerFra={150}
                     autoFocus
                     label=""
+                    aria-label="Ditt mål"
                     maxLength={500}
                     {...state.fields.mal}
                 />

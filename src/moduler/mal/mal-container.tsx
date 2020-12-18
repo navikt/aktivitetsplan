@@ -6,8 +6,8 @@ import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selecto
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectGjeldendeMal } from './aktivitetsmal-reducer';
-import MalForm from './mal-form';
 import Malvisning from './mal-visning';
+import MalForm from './MalForm';
 
 function MalContainer() {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
