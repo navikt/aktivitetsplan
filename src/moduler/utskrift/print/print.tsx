@@ -40,8 +40,8 @@ function Print(props: Props) {
         hidden,
     } = props;
 
-    const { fodselsnummer, fornavn, etternavn, behandlendeEnhet } = bruker;
-    const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
+    const { fodselsnummer, fornavn, etternavn, geografiskEnhet } = bruker;
+    const enhetsNavn = geografiskEnhet && geografiskEnhet.navn;
 
     const erKvpUtskrift =
         utskriftPlanType !== undefined && utskriftPlanType !== 'helePlanen' && utskriftPlanType !== 'aktivitetsplan';
