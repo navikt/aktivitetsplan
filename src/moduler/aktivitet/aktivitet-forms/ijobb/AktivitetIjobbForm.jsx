@@ -1,6 +1,5 @@
 import useFormstate from '@nutgaard/use-formstate';
 import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
-import Label from 'nav-frontend-skjema/lib/label';
 import PT from 'prop-types';
 import React from 'react';
 

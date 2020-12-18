@@ -1,6 +1,6 @@
 import useFormstate from '@nutgaard/use-formstate';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Textarea as NavTextArea, SkjemaGruppe } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
 import { useMoveSelectionStartToEnd } from '../../felles-komponenter/hooks/useMoveSelectionStartToEnd';
