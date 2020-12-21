@@ -4,9 +4,9 @@ import React from 'react';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../../datatypes/oppfolgingTypes';
+import { Bruker } from '../../../datatypes/types';
 import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
 import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
-import { Bruker } from '../../../types';
 import { formaterDatoKortManed } from '../../../utils';
 import logoPng from '../ikoner/logo.png';
 import Adresse from './adresse';
@@ -40,8 +40,8 @@ function Print(props: Props) {
         hidden,
     } = props;
 
-    const { fodselsnummer, fornavn, etternavn, behandlendeEnhet } = bruker;
-    const enhetsNavn = behandlendeEnhet && behandlendeEnhet.navn;
+    const { fodselsnummer, fornavn, etternavn, geografiskEnhet } = bruker;
+    const enhetsNavn = geografiskEnhet && geografiskEnhet.navn;
 
     const erKvpUtskrift =
         utskriftPlanType !== undefined && utskriftPlanType !== 'helePlanen' && utskriftPlanType !== 'aktivitetsplan';

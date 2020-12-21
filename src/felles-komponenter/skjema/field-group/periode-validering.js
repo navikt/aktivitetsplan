@@ -23,7 +23,7 @@ function PeriodeValidering(props) {
     const { valideringFelt, children } = props;
 
     return (
-        <SkjemaGruppe feilmeldingId="periode-feil" id={valideringFelt.input.name} feil={valideringFelt.error}>
+        <SkjemaGruppe feilmeldingId="periode-feil" id={valideringFelt.input.name} feil={valideringFelt.error} tag="div">
             {children}
         </SkjemaGruppe>
     );

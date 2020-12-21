@@ -7,16 +7,16 @@ import PT from 'prop-types';
 import React from 'react';
 
 import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Input from '../../../../felles-komponenter/skjema/input/Input';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
 import * as AppPT from '../../../../proptypes';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../lagre-aktivitet';
-import VelgKanal from '../velg-kanal';
+import VelgKanal from '../VelgKanal';
 import {
     FORBEREDELSER_MAKS_LENGDE,
     HENSIKT_MAKS_LENGDE,
@@ -102,14 +102,14 @@ function MoteAktivitetForm(props) {
     }
 
     return (
-        <form onSubmit={state.onSubmit((x) => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off">
+        <form onSubmit={state.onSubmit((x) => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off" noValidate>
             <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    <DatoField label="Dato *" {...state.fields.dato} />
+                    <DatoField label="Dato *" {...state.fields.dato} required />
                     <Input bredde="S" label="Klokkeslett *" {...state.fields.klokkeslett} type="time" step="300" />
                     <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
                 </div>
@@ -122,6 +122,7 @@ function MoteAktivitetForm(props) {
                     label="Hensikt med møtet *"
                     maxLength={HENSIKT_MAKS_LENGDE}
                     visTellerFra={500}
+                    required
                     {...state.fields.beskrivelse}
                 />
                 <Textarea

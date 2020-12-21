@@ -21,13 +21,13 @@ import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import BehandlingAktivitetForm from '../aktivitet-forms/behandling/aktivitet-behandling-form';
-import EgenAktivitetForm from '../aktivitet-forms/egen/aktivitet-egen-form';
-import IJobbAktivitetForm from '../aktivitet-forms/ijobb/aktivitet-ijobb-form';
-import MoteAktivitetForm from '../aktivitet-forms/mote/mote-aktivitet-form';
-import SamtalereferatForm from '../aktivitet-forms/samtalereferat/samtalereferat-form';
-import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/aktivitet-sokeavtale-form';
-import StillingAktivitetForm from '../aktivitet-forms/stilling/aktivitet-stilling-form';
+import BehandlingAktivitetForm from '../aktivitet-forms/behandling/AktivitetBehandlingForm';
+import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
+import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
+import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';
+import SamtalereferatForm from '../aktivitet-forms/samtalereferat/SamtalereferatForm';
+import SokeAvtaleAktivitetForm from '../aktivitet-forms/sokeavtale/AktivitetSokeavtaleForm';
+import StillingAktivitetForm from '../aktivitet-forms/stilling/AktivitetStillingForm';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 function NyAktivitetForm(props) {

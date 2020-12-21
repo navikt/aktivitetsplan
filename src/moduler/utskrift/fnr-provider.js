@@ -2,19 +2,15 @@ import PT from 'prop-types';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { hentBruker, setStatusOk } from '../moduler/bruker/bruker-reducer';
-
-export function fnrFraUrl() {
-    const fnrMatch = window.location.pathname.match(`${window.appconfig.CONTEXT_PATH}/(\\d*)`);
-    return fnrMatch && fnrMatch[1];
-}
+import { getFodselsnummer } from '../../utils/fnr-util';
+import { hentBruker, setStatusOk } from '../bruker/bruker-reducer';
 
 class FnrProvider extends Component {
     componentDidMount() {
         const { dispatch } = this.props;
         if (window.appconfig.FNR_I_URL) {
             // på innsiden - merk at urlen ikke alltid har et fnr!
-            const fnr = fnrFraUrl();
+            const fnr = getFodselsnummer();
             if (fnr) {
                 dispatch(hentBruker(fnr));
             }
@@ -26,7 +22,7 @@ class FnrProvider extends Component {
 
     render() {
         const { children } = this.props;
-        return !window.appconfig.FNR_I_URL || fnrFraUrl() ? children : null;
+        return !window.appconfig.FNR_I_URL || getFodselsnummer() ? children : null;
     }
 }
 

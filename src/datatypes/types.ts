@@ -1,6 +1,6 @@
 export type brukertype = 'VEILEDER' | 'BRUKER';
 
-interface BehandlendeEnhet {
+interface GeografiskEnhet {
     navn?: string;
 }
 
@@ -10,7 +10,7 @@ export interface Bruker {
     mellomnavn?: string;
     etternavn?: string;
     sammensattNavn?: string;
-    behandlendeEnhet?: BehandlendeEnhet;
+    geografiskEnhet?: GeografiskEnhet;
     bostedsadresse?: Bostedsadresse;
 }
 

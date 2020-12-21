@@ -1,19 +1,18 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import Label from 'nav-frontend-skjema/lib/label';
+import { RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import React from 'react';
 
 import { IJOBB_AKTIVITET_TYPE, JOBB_STATUS_DELTID, JOBB_STATUS_HELTID } from '../../../../constant';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/input';
+import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Radio from '../../../../felles-komponenter/skjema/input/radio';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../lagre-aktivitet';
@@ -64,8 +63,8 @@ function IJobbAktivitetForm(props) {
     }
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe className="aktivitetskjema">
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
+            <SkjemaGruppe className="aktivitetskjema" tag="div">
                 <AktivitetFormHeader tittel="Jobb jeg har nå" aktivitetsType={IJOBB_AKTIVITET_TYPE} />
 
                 <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
@@ -76,17 +75,21 @@ function IJobbAktivitetForm(props) {
                             disabled={avtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
+                            required
                             {...state.fields.fraDato}
                         />
                         <DatoField label="Til dato" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />
                     </div>
                 </PeriodeValidering>
 
-                <SkjemaGruppe id="jobbStatus" feil={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}>
-                    <Label>Stillingsandel *</Label>
+                <RadioGruppe
+                    id="jobbStatus"
+                    feil={state.fields.jobbStatus.touched && state.fields.jobbStatus.error}
+                    legend="Stillingsandel *"
+                >
                     <Radio label="Heltid" value={JOBB_STATUS_HELTID} disabled={avtalt} {...state.fields.jobbStatus} />
                     <Radio label="Deltid" value={JOBB_STATUS_DELTID} disabled={avtalt} {...state.fields.jobbStatus} />
-                </SkjemaGruppe>
+                </RadioGruppe>
 
                 <Input disabled={avtalt} label="Arbeidsgiver" {...state.fields.ansettelsesforhold} />
                 <Input

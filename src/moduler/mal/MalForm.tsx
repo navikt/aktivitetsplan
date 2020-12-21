@@ -5,7 +5,7 @@ import React from 'react';
 
 import { useMoveSelectionStartToEnd } from '../../felles-komponenter/hooks/useMoveSelectionStartToEnd';
 import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
-import Textarea from '../../felles-komponenter/skjema/input/textarea';
+import Textarea from '../../felles-komponenter/skjema/input/Textarea';
 import { oppdaterMal } from './aktivitetsmal-reducer';
 import { hentMalListe } from './malliste-reducer';
 
@@ -59,6 +59,7 @@ function MalForm(props: Props) {
                     visTellerFra={150}
                     autoFocus
                     label=""
+                    aria-label="Ditt mål"
                     maxLength={500}
                     {...state.fields.mal}
                 />

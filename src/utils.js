@@ -94,11 +94,6 @@ export const datePickerToISODate = (dato) => {
     return parsetDato.isValid() ? parsetDato.toISOString(true) : '';
 };
 
-export const dateToDatePicker = (dato) => {
-    const parsetDato = moment(dato, 'YYYY-MM-DD');
-    return dato && parsetDato.isValid() ? parsetDato.format('YYYY-MM-DD') : '';
-};
-
 function formatter(dato, format) {
     if (dato) {
         const datoVerdi = moment(dato);

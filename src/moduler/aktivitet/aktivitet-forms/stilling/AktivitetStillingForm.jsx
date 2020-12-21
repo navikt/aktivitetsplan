@@ -4,14 +4,14 @@ import PT from 'prop-types';
 import React from 'react';
 
 import { STILLING_AKTIVITET_TYPE } from '../../../../constant';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
     validerPeriodeFelt,
 } from '../../../../felles-komponenter/skjema/field-group/periode-validering';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Input from '../../../../felles-komponenter/skjema/input/Input';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import { todayIsoString } from '../../../../utils';
 import AktivitetFormHeader from '../aktivitet-form-header';
@@ -59,11 +59,11 @@ function StillingAktivitetForm(props) {
     }
 
     return (
-        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)}>
-            <SkjemaGruppe className="aktivitetskjema">
+        <form autoComplete="off" onSubmit={state.onSubmit(onSubmit)} noValidate>
+            <SkjemaGruppe className="aktivitetskjema" tag="div">
                 <AktivitetFormHeader tittel="En jobb jeg vil søke på" aktivitetsType={STILLING_AKTIVITET_TYPE} />
 
-                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} />
+                <Input disabled={avtalt} label="Stillingstittel *" {...state.fields.tittel} required />
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
@@ -71,6 +71,7 @@ function StillingAktivitetForm(props) {
                             disabled={avtalt}
                             label="Fra dato *"
                             senesteTom={maybeAktivitet.tilDato}
+                            required
                             {...state.fields.fraDato}
                         />
                         <DatoField label="Frist" tidligsteFom={maybeAktivitet.fraDato} {...state.fields.tilDato} />

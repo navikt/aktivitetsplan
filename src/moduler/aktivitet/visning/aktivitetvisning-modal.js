@@ -44,7 +44,7 @@ function header(valgtAktivitet) {
     return (
         <ModalHeader
             headerTekst={`${statusMap[valgtAktivitet.status]} / ${typeMap[valgtAktivitet.type]}`}
-            aria-labelledby="modal-aktivitetsvisning-header"
+            aria-describedby="modal-aktivitetsvisning-header"
             aktivitetErLaast={aktivitetErLaast}
         />
     );

@@ -16,7 +16,7 @@ export default function Aktivitetskorttittel({ aktivitet, harEndring, id }: Prop
     return (
         <div className={styles.header}>
             <NotifikasjonMarkering visible={harEndring} />
-            <Element tag="h1" id={id} className={classNames(styles.tittel, 'softbreak')}>
+            <Element tag="h3" id={id} className={classNames(styles.tittel, 'softbreak')}>
                 {aktivitet.tittel}
             </Element>
         </div>

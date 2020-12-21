@@ -5,13 +5,13 @@ import PT from 'prop-types';
 import React from 'react';
 
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
-import DatoField from '../../../../felles-komponenter/skjema/datovelger/datovelger';
+import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Input from '../../../../felles-komponenter/skjema/input/input';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Input from '../../../../felles-komponenter/skjema/input/Input';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { todayIsoString } from '../../../../utils';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import VelgKanal from '../velg-kanal';
+import VelgKanal from '../VelgKanal';
 import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
 
 function SamtalereferatForm(props) {
@@ -55,13 +55,14 @@ function SamtalereferatForm(props) {
                     avtalt: true,
                 });
             })}
+            noValidate
         >
             <SkjemaGruppe className="aktivitetskjema">
                 <AktivitetFormHeader tittel="Samtalereferat" aktivitetsType={SAMTALEREFERAT_TYPE} />
 
                 <Input label="Tema for samtalen *" {...state.fields.tittel} />
 
-                <DatoField label="Dato *" {...state.fields.fraDato} />
+                <DatoField label="Dato *" {...state.fields.fraDato} required />
 
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
 
@@ -70,6 +71,7 @@ function SamtalereferatForm(props) {
                     placeholder="Skriv her"
                     maxLength={5000}
                     visTellerFra={500}
+                    required
                     {...state.fields.referat}
                 />
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { STATUS } from '../../../../api/utils';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Select from '../../../../felles-komponenter/skjema/input/select';
-import Textarea from '../../../../felles-komponenter/skjema/input/textarea';
+import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../../proptypes';
