@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import InternLenke from '../../felles-komponenter/utils/InternLenke';
-import Lenkeknapp from '../../felles-komponenter/utils/lenkeknapp';
+import Lenkeknapp from '../../felles-komponenter/utils/Lenkeknapp';
 import loggEvent, { APNE_NY_AKTIVITET, APNE_OM_TJENESTEN } from '../../felles-komponenter/utils/logging';
 import { selectHarTilgangTilAktiviteter } from '../aktivitet/aktivitet-selector';
 import Filter from '../filtrering/filter';

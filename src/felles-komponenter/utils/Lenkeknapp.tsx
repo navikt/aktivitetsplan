@@ -9,12 +9,12 @@ interface LenkeknappProps {
     href: string;
     disabled: boolean;
     type: string;
-    onClick: () => void;
     className?: string;
     children: ReactNode;
+    onClick(): void;
 }
 
-function Lenkeknapp(props: LenkeknappProps) {
+const Lenkeknapp = (props: LenkeknappProps) => {
     const { href, disabled, type, onClick, className, children } = props;
     const lenkeknappClassNames = classNames(`knapp knapp--${type}`, className);
     if (disabled) {
@@ -23,7 +23,6 @@ function Lenkeknapp(props: LenkeknappProps) {
 
     return (
         <InternLenke
-            role="button"
             onClick={onClick}
             className={lenkeknappClassNames}
             href={href}
@@ -31,6 +30,6 @@ function Lenkeknapp(props: LenkeknappProps) {
             skipLenkeStyling
         />
     );
-}
+};
 
 export default visibleIfHOC(Lenkeknapp);
