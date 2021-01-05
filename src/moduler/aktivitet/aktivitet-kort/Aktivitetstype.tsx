@@ -4,7 +4,7 @@ import React from 'react';
 import { AktivitetType } from '../../../datatypes/aktivitetTypes';
 import styles from './Aktivitetskort.module.less';
 
-function getType(type: AktivitetType) {
+export const getType = (type: AktivitetType) => {
     switch (type.toLowerCase()) {
         case 'behandling':
             return 'Behandling';
@@ -27,16 +27,16 @@ function getType(type: AktivitetType) {
         case 'utdanningsaktivitet':
             return 'Utdanning';
     }
-}
+};
 
 interface Props {
     type: AktivitetType;
 }
 
-export default function Aktivitetstype({ type }: Props) {
-    return (
-        <Undertekst tag="p" className={styles.type} data-testid={type}>
-            {getType(type)}
-        </Undertekst>
-    );
-}
+const Aktivitetstype = ({ type }: Props) => (
+    <Undertekst tag="p" className={styles.type} data-testid={type}>
+        {getType(type)}
+    </Undertekst>
+);
+
+export default Aktivitetstype;

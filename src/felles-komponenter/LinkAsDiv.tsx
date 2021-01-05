@@ -6,16 +6,18 @@ interface Props {
     children: ReactNode;
     className: string;
     id: string;
+    ariaLabel: string;
     onClick(): void;
 }
 
-function LinkAsDiv(props: Props) {
-    const { to, children, id, className, onClick } = props;
+const LinkAsDiv = (props: Props) => {
+    const { to, children, id, className, ariaLabel, onClick } = props;
     const history = useHistory();
 
     return (
         <div
             role="link"
+            aria-label={ariaLabel}
             id={id}
             className={className}
             tabIndex={0}
@@ -33,6 +35,6 @@ function LinkAsDiv(props: Props) {
             {children}
         </div>
     );
-}
+};
 
 export default LinkAsDiv;
