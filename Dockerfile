@@ -6,6 +6,7 @@ FROM docker.pkg.github.com/navikt/pus-decorator/pus-decorator
 ENV APPLICATION_NAME=aktivitetsplan
 ENV GZIP_ENABLED=true
 ENV FOOTER_TYPE=WITHOUT_ALPHABET
+ENV EXTRA_DECORATOR_PARAMS='&chatbot=false'
 
 COPY /build /app
 
