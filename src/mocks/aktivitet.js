@@ -441,7 +441,7 @@ export function getAktivitet({ aktivitetId }) {
 }
 
 export function getAktivitetVersjoner({ aktivitetId }) {
-    const aktivitet = getAktivitet(aktivitetId);
+    const aktivitet = getAktivitet({ aktivitetId });
     return [
         aktivitet,
         {
