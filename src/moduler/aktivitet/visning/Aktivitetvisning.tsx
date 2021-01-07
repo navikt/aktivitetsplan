@@ -4,7 +4,7 @@ import { GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE 
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
 import { trengerBegrunnelse } from '../aktivitet-util';
-import AvtaltContainer from './avtalt-container/avtalt-container';
+import AvtaltContainer from './avtalt-container/AvtaltContainer';
 import AktivitetinformasjonVisning from './hjelpekomponenter/aktivitetinformasjon-visning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';

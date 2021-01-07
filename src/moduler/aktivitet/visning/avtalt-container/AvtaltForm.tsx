@@ -129,7 +129,7 @@ const AvtaltForm = (props: Props) => {
                 <div className={styles.checkbox}>
                     <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
                     <Hjelpetekst id="hjelp">
-                        <div className="max-width-300">
+                        <div className={styles.maxWidth300}>
                             Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt
                             med NAV"
                         </div>

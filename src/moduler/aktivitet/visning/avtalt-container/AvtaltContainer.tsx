@@ -42,7 +42,7 @@ const avtaltTextMap = {
     [IKKE_SEND_FORHANDSORIENTERING]: () => '',
 };
 
-function AvtaltContainer(props: Props) {
+const AvtaltContainer = (props: Props) => {
     const { underOppfolging, aktivitet, className } = props;
     const [visBekreftAvtalt, setVisBekreftAvtalt] = useState(false);
     const [forhandsorienteringSent, setForhandsorienteringSent] = useState(false);
@@ -157,7 +157,7 @@ function AvtaltContainer(props: Props) {
     };
 
     return (
-        <div>
+        <>
             <AvtaltForm
                 aktivitetId={aktivitet.id}
                 className={`${className} avtalt-container`}
@@ -168,8 +168,8 @@ function AvtaltContainer(props: Props) {
                 onSubmit={onSubmit}
             />
             <DeleLinje />
-        </div>
+        </>
     );
-}
+};
 
 export default AvtaltContainer;
