@@ -28,7 +28,7 @@ import AvtaltForm, {
     IKKE_SEND_FORHANDSORIENTERING,
     SEND_FORHANDSORIENTERING,
     SEND_PARAGRAF_11_9,
-} from './avtalt-form';
+} from './AvtaltForm';
 
 interface Props {
     underOppfolging: boolean;
