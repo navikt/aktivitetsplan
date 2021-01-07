@@ -7,11 +7,12 @@ import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { IKKE_SEND_FORHANDSORIENTERING, SEND_FORHANDSORIENTERING, SEND_PARAGRAF_11_9 } from './AvtaltForm';
+import styles from './ForhaandsorientringsMelding.module.less';
 
 function InfoHeader() {
     return (
         <div>
-            <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
+            <EtikettLiten className={styles.avtaltTekstEtikett}>Tekst til brukeren</EtikettLiten>
             <Hjelpetekst>
                 <div className="max-width-300">
                     Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
