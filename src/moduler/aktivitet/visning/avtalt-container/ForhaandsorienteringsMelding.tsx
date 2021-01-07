@@ -13,7 +13,7 @@ const InfoHeader = () => (
     <>
         <EtikettLiten className={styles.avtaltTekstEtikett}>Tekst til brukeren</EtikettLiten>
         <Hjelpetekst>
-            <div className="max-width-300">
+            <div className={styles.maxWidth300}>
                 Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
                 offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
                 Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv
