@@ -84,7 +84,10 @@ function ForhandsorieteringsForm(props) {
             <SkjemaGruppe>
                 <Checkbox label="Send forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
 
-                <VisibleIfDiv visible={state.fields.checked.input.value === 'true'}>
+                <VisibleIfDiv
+                    visible={state.fields.checked.input.value === 'true'}
+                    className="forhandsorientering-arena-innhold"
+                >
                     <Select
                         label="Velg type forhåndsorientering"
                         disabled={lasterData}
