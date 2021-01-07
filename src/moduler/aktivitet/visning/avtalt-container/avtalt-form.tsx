@@ -2,6 +2,7 @@ import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -123,39 +124,43 @@ function AvtaltForm(props: Props) {
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
             <Undertittel>Merk aktiviteten som "Avtalt med NAV"</Undertittel>
-            <div className="avtalt-container__radio">
-                <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
-                <Hjelpetekst id="hjelp">
-                    <div className="max-width-300">
-                        Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt med
-                        NAV"
-                    </div>
-                </Hjelpetekst>
-            </div>
-            <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
-                <VisibleIfDiv
-                    className={classNames({
-                        'avtalt-container__innhold': kanSendeForhandsvarsel,
-                        'avtalt-container__alertstripe': !kanSendeForhandsvarsel,
-                    })}
-                    visible={avtalt}
-                >
-                    <AvtaltStripeKRRKvpManuellBruker visible={erManuellKrrKvpBruker} />
-                    <AvtaltFormMindreEnnSyvDager visible={!erManuellKrrKvpBruker && visAvtaltMedNavMindreEnnSyvDager} />
-                    <AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder />
-                    <ForhaandsorienteringMelding
-                        state={state}
-                        hidden={!kanSendeForhandsvarsel}
-                        oppdaterer={oppdaterer}
-                        aktivitetId={aktivitetId}
-                    />
-                    <Knapp spinner={oppdaterer} disabled={lasterData}>
-                        {avtaltSelect === IKKE_SEND_FORHANDSORIENTERING || !kanSendeForhandsvarsel
-                            ? 'Bekreft'
-                            : 'Bekreft og send'}
-                    </Knapp>
-                </VisibleIfDiv>
-            </Innholdslaster>
+            <SkjemaGruppe>
+                <div className="avtalt-container__radio">
+                    <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
+                    <Hjelpetekst id="hjelp">
+                        <div className="max-width-300">
+                            Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt
+                            med NAV"
+                        </div>
+                    </Hjelpetekst>
+                </div>
+                <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
+                    <VisibleIfDiv
+                        className={classNames({
+                            'avtalt-container__innhold': kanSendeForhandsvarsel,
+                            'avtalt-container__alertstripe': !kanSendeForhandsvarsel,
+                        })}
+                        visible={avtalt}
+                    >
+                        <AvtaltStripeKRRKvpManuellBruker visible={erManuellKrrKvpBruker} />
+                        <AvtaltFormMindreEnnSyvDager
+                            visible={!erManuellKrrKvpBruker && visAvtaltMedNavMindreEnnSyvDager}
+                        />
+                        <AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder />
+                        <ForhaandsorienteringMelding
+                            state={state}
+                            hidden={!kanSendeForhandsvarsel}
+                            oppdaterer={oppdaterer}
+                            aktivitetId={aktivitetId}
+                        />
+                        <Knapp spinner={oppdaterer} disabled={lasterData}>
+                            {avtaltSelect === IKKE_SEND_FORHANDSORIENTERING || !kanSendeForhandsvarsel
+                                ? 'Bekreft'
+                                : 'Bekreft og send'}
+                        </Knapp>
+                    </VisibleIfDiv>
+                </Innholdslaster>
+            </SkjemaGruppe>
         </form>
     );
 }
