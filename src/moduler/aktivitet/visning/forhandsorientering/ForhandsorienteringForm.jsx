@@ -55,7 +55,7 @@ function validate(val) {
     return null;
 }
 
-function ForhandsorieteringsForm(props) {
+const ForhandsorieteringsForm = (props) => {
     const { visible, dialogStatus, onSubmit } = props;
 
     const validator = useFormstate({
@@ -112,7 +112,7 @@ function ForhandsorieteringsForm(props) {
             </SkjemaGruppe>
         </form>
     );
-}
+};
 
 ForhandsorieteringsForm.propTypes = {
     visible: PT.bool.isRequired,
