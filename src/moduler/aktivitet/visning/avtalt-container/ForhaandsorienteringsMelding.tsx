@@ -6,23 +6,22 @@ import Select from '../../../../felles-komponenter/skjema/input/select';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { IKKE_SEND_FORHANDSORIENTERING, SEND_FORHANDSORIENTERING, SEND_PARAGRAF_11_9 } from './avtalt-form';
+import { IKKE_SEND_FORHANDSORIENTERING, SEND_FORHANDSORIENTERING, SEND_PARAGRAF_11_9 } from './AvtaltForm';
+import styles from './ForhaandsorienteringsMelding.module.less';
 
-function InfoHeader() {
-    return (
-        <div>
-            <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
-            <Hjelpetekst>
-                <div className="max-width-300">
-                    Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
-                    offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
-                    Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en
-                    halv time så blir det kun sendt én SMS eller e-post.
-                </div>
-            </Hjelpetekst>
-        </div>
-    );
-}
+const InfoHeader = () => (
+    <>
+        <EtikettLiten className={styles.avtaltTekstEtikett}>Tekst til brukeren</EtikettLiten>
+        <Hjelpetekst>
+            <div className={styles.maxWidth300}>
+                Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
+                offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
+                Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv
+                time så blir det kun sendt én SMS eller e-post.
+            </div>
+        </Hjelpetekst>
+    </>
+);
 
 interface Props {
     hidden: boolean;
@@ -31,7 +30,7 @@ interface Props {
     aktivitetId: string;
 }
 
-function ForhaandsorienteringMelding(props: Props) {
+const ForhaandsorienteringMelding = (props: Props) => {
     const { hidden, oppdaterer, state, aktivitetId } = props;
     const avtaltSelect = state.fields.avtaltSelect.input.value;
 
@@ -40,7 +39,7 @@ function ForhaandsorienteringMelding(props: Props) {
     }
 
     return (
-        <div>
+        <>
             <Select
                 label="Velg type forhåndsorientering"
                 disabled={oppdaterer}
@@ -66,8 +65,8 @@ function ForhaandsorienteringMelding(props: Props) {
                     <Textarea label={<InfoHeader />} maxLength={500} {...state.fields.avtaltText119} />
                 </VisibleIfDiv>
             </VisibleIfDiv>
-        </div>
+        </>
     );
-}
+};
 
 export default ForhaandsorienteringMelding;

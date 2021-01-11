@@ -10,15 +10,8 @@ import styles from './Feilmelding.module.less';
 
 const Mere = () => (
     <Hjelpetekst type={PopoverOrientering.Under}>
-        Dette er et midlertidig problem på grunn av ny teknisk løsning etter koronasituasjonen.
-        <ul>
-            <li>
-                Hvis brukeren svarer på digital dialog, så kan du kommunisere digitalt. Forhåndsorientering og varsel
-                vil ikke fungere på denne brukeren.
-                <br />
-            </li>
-            <li>Hvis brukeren ikke svarer på digital dialog, så setter du brukeren til manuell bruker.</li>
-        </ul>
+        Denne brukeren har ikke vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID). <br />
+        Du kan derfor ikke sende forhåndsorientering, varsel og meldinger.
     </Hjelpetekst>
 );
 
@@ -35,7 +28,8 @@ const Nivaa4Feilmelding = () => {
     return (
         <div className={styles.feilmelding}>
             <AlertStripeAdvarsel>
-                Systemet får ikke sjekket om denne brukeren er en digital eller manuell bruker. <Mere />
+                Denne brukeren kan ikke logge inn i aktivitetsplan og dialog.
+                <Mere />
             </AlertStripeAdvarsel>
         </div>
     );

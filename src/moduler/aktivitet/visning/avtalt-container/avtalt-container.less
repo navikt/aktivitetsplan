@@ -1,32 +1,17 @@
 @import '../../../../variables';
 
 .avtalt-container {
-    &__radio {
-        display: flex;
-        padding-bottom: 5px;
-    }
-
     &__vis-avtalt {
         display: flex;
         align-items: center;
     }
 
-    &__innhold {
-        margin-left: 2rem;
-
-        .avtalt-tekst-etikett {
-            float: left;
-        }
+    .alertstripe--info {
+        margin-bottom: 1rem;
     }
 
-    &__alertstripe {
-        .alertstripe--info {
-            margin-bottom: 1rem;
-        }
-
-        // Så det ikke blir for mye margin mellom to feilmeldinger
-        .alertstripe--info:first-child {
-            margin-top: 1rem;
-        }
+    // Så det ikke blir for mye margin mellom to feilmeldinger
+    .alertstripe--info:first-child {
+        margin-top: 1rem;
     }
 }

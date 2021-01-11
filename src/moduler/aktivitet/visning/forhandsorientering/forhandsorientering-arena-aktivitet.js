@@ -8,7 +8,7 @@ import {
 import visibleIfHOC from '../../../../hocs/visible-if';
 import * as AppPT from '../../../../proptypes';
 import { autobind, erMerEnnSyvDagerTil } from '../../../../utils';
-import ForhandsorienteringArenaAktivitetForm from './forhandsorientering-form';
+import ForhandsorienteringArenaAktivitetForm from './ForhandsorienteringForm';
 
 class ForhandsorienteringArenaAktivitet extends Component {
     constructor() {
