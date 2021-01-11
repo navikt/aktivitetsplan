@@ -2,6 +2,7 @@ import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -15,13 +16,14 @@ import { DirtyContext } from '../../../context/dirty-context';
 import { selectNivaa4, selectNivaa4Status } from '../../../tilgang/tilgang-selector';
 import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
 import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
-import ForhaandsorienteringMelding from './forhaandsorienterings-melding';
+import styles from './AvtaltForm.module.less';
+import ForhaandsorienteringMelding from './ForhaandsorienteringsMelding';
 
 export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 export const IKKE_SEND_FORHANDSORIENTERING = 'ikke_send_forhandsorientering';
 
-function validateForhandsorienter(val: string, values: { avtaltSelect?: string }): string | undefined {
+const validateForhandsorienter = (val: string, values: { avtaltSelect?: string }): string | undefined => {
     if (values.avtaltSelect !== SEND_PARAGRAF_11_9) {
         return undefined;
     }
@@ -34,11 +36,11 @@ function validateForhandsorienter(val: string, values: { avtaltSelect?: string }
     }
 
     return undefined;
-}
+};
 
-function noValidate(): undefined {
+const noValidate = (): undefined => {
     return undefined;
-}
+};
 
 const avtaltTekst = (aktivitetId: string) => {
     const formattedLink = `[denne aktiviteten](/arbeid/dialog/aktivitetsplan/aktivitet/vis/${aktivitetId})`;
@@ -73,7 +75,7 @@ interface Props {
     visAvtaltMedNavMindreEnnSyvDager: boolean;
 }
 
-function AvtaltForm(props: Props) {
+const AvtaltForm = (props: Props) => {
     const {
         onSubmit,
         className,
@@ -123,41 +125,39 @@ function AvtaltForm(props: Props) {
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
             <Undertittel>Merk aktiviteten som "Avtalt med NAV"</Undertittel>
-            <div className="avtalt-container__radio">
-                <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
-                <Hjelpetekst id="hjelp">
-                    <div className="max-width-300">
-                        Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt med
-                        NAV"
-                    </div>
-                </Hjelpetekst>
-            </div>
-            <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
-                <VisibleIfDiv
-                    className={classNames({
-                        'avtalt-container__innhold': kanSendeForhandsvarsel,
-                        'avtalt-container__alertstripe': !kanSendeForhandsvarsel,
-                    })}
-                    visible={avtalt}
-                >
-                    <AvtaltStripeKRRKvpManuellBruker visible={erManuellKrrKvpBruker} />
-                    <AvtaltFormMindreEnnSyvDager visible={!erManuellKrrKvpBruker && visAvtaltMedNavMindreEnnSyvDager} />
-                    <AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder />
-                    <ForhaandsorienteringMelding
-                        state={state}
-                        hidden={!kanSendeForhandsvarsel}
-                        oppdaterer={oppdaterer}
-                        aktivitetId={aktivitetId}
-                    />
-                    <Knapp spinner={oppdaterer} disabled={lasterData}>
-                        {avtaltSelect === IKKE_SEND_FORHANDSORIENTERING || !kanSendeForhandsvarsel
-                            ? 'Bekreft'
-                            : 'Bekreft og send'}
-                    </Knapp>
-                </VisibleIfDiv>
-            </Innholdslaster>
+            <SkjemaGruppe>
+                <div className={styles.checkbox}>
+                    <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
+                    <Hjelpetekst id="hjelp">
+                        <div className={styles.maxWidth300}>
+                            Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt
+                            med NAV"
+                        </div>
+                    </Hjelpetekst>
+                </div>
+                <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
+                    <VisibleIfDiv className={classNames(kanSendeForhandsvarsel && styles.innhold)} visible={avtalt}>
+                        <AvtaltStripeKRRKvpManuellBruker visible={erManuellKrrKvpBruker} />
+                        <AvtaltFormMindreEnnSyvDager
+                            visible={!erManuellKrrKvpBruker && visAvtaltMedNavMindreEnnSyvDager}
+                        />
+                        <AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder />
+                        <ForhaandsorienteringMelding
+                            state={state}
+                            hidden={!kanSendeForhandsvarsel}
+                            oppdaterer={oppdaterer}
+                            aktivitetId={aktivitetId}
+                        />
+                        <Knapp spinner={oppdaterer} disabled={lasterData}>
+                            {avtaltSelect === IKKE_SEND_FORHANDSORIENTERING || !kanSendeForhandsvarsel
+                                ? 'Bekreft'
+                                : 'Bekreft og send'}
+                        </Knapp>
+                    </VisibleIfDiv>
+                </Innholdslaster>
+            </SkjemaGruppe>
         </form>
     );
-}
+};
 
 export default AvtaltForm;

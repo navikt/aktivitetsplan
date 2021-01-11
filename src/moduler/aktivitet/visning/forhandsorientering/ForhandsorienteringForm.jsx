@@ -1,6 +1,7 @@
 import useFormstate from '@nutgaard/use-formstate';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
@@ -21,7 +22,7 @@ export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 
 const label = (
     <div className="forhandsorientering-arena-aktivitet">
-        <EtikettLiten className="avtalt-tekst-etikett">Tekst til brukeren</EtikettLiten>
+        <EtikettLiten>Tekst til brukeren</EtikettLiten>
         <Hjelpetekst>
             <div className="max-width-300">
                 Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
@@ -54,7 +55,7 @@ function validate(val) {
     return null;
 }
 
-function ForhandsorieteringsForm(props) {
+const ForhandsorieteringsForm = (props) => {
     const { visible, dialogStatus, onSubmit } = props;
 
     const validator = useFormstate({
@@ -78,35 +79,40 @@ function ForhandsorieteringsForm(props) {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <Undertittel>{'Tiltaket er automatisk merket "Avtalt med NAV"'}</Undertittel>
+            <Undertittel>Tiltaket er automatisk merket "Avtalt med NAV"</Undertittel>
 
-            <Checkbox label="Send forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
+            <SkjemaGruppe>
+                <Checkbox label="Send forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
 
-            <VisibleIfDiv visible={state.fields.checked.input.value === 'true'}>
-                <Select
-                    label="Velg type forhåndsorientering"
-                    disabled={lasterData}
-                    noBlankOption
-                    {...state.fields.avtaltSelect}
+                <VisibleIfDiv
+                    visible={state.fields.checked.input.value === 'true'}
+                    className="forhandsorientering-arena-innhold"
                 >
-                    <option value={SEND_FORHANDSORIENTERING}>Send forhåndsorientering (standard melding)</option>
-                    <option value={SEND_PARAGRAF_11_9}>Send forhåndsorientering for §11-9 (AAP)</option>
-                </Select>
-                <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
-                    <Normaltekst className="blokk-xs">{avtaltTekst}</Normaltekst>
-                </VisibleIfDiv>
+                    <Select
+                        label="Velg type forhåndsorientering"
+                        disabled={lasterData}
+                        noBlankOption
+                        {...state.fields.avtaltSelect}
+                    >
+                        <option value={SEND_FORHANDSORIENTERING}>Send forhåndsorientering (standard melding)</option>
+                        <option value={SEND_PARAGRAF_11_9}>Send forhåndsorientering for §11-9 (AAP)</option>
+                    </Select>
+                    <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
+                        <Normaltekst className="blokk-xs">{avtaltTekst}</Normaltekst>
+                    </VisibleIfDiv>
 
-                <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>
-                    <Textarea label={label} maxLength={500} {...state.fields.text} />
-                </VisibleIfDiv>
+                    <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>
+                        <Textarea label={label} maxLength={500} {...state.fields.text} />
+                    </VisibleIfDiv>
 
-                <Knapp spinner={lasterData} autoDisableVedSpinner>
-                    Bekreft og send
-                </Knapp>
-            </VisibleIfDiv>
+                    <Knapp spinner={lasterData} autoDisableVedSpinner>
+                        Bekreft og send
+                    </Knapp>
+                </VisibleIfDiv>
+            </SkjemaGruppe>
         </form>
     );
-}
+};
 
 ForhandsorieteringsForm.propTypes = {
     visible: PT.bool.isRequired,
