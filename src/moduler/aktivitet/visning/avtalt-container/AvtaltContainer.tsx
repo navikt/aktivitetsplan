@@ -1,6 +1,4 @@
-import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
@@ -12,7 +10,6 @@ import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../fe
 import { erGyldigISODato, erMerEnnSyvDagerTil, msSince } from '../../../../utils';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import { createSelectDialogForAktivitetId } from '../../../dialog/dialog-selector';
-import LenkeTilDialog from '../../../dialog/DialogLink';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import {
     selectErBrukerManuell,
@@ -30,6 +27,7 @@ import AvtaltForm, {
     SEND_FORHAANDSORIENTERING,
     SEND_PARAGRAF_11_9,
 } from './AvtaltForm';
+import { SendtSuksesInfoLinje } from './SendtSuksesInfoLinje';
 
 interface Props {
     underOppfolging: boolean;
@@ -61,7 +59,6 @@ const AvtaltContainer = (props: Props) => {
 
     const skalBrukeNyForaandsorientering = useSkalBrukeNyForhaandsorientering();
     const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
-    const [forhandsorienteringSent, setForhandsorienteringSent] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState('');
     const dispatch = useDispatch();
 
@@ -126,30 +123,15 @@ const AvtaltContainer = (props: Props) => {
     }
 
     if (avtalt) {
-        const settAvtaltTekstVerdi =
-            (!merEnnsyvDagerTil && 'avtaltMedNavMindreEnnSyvDager') ||
-            (erManuellKrrKvpBruker && 'erManuellKrrKvpBruker') ||
-            (forhandsorienteringSent && 'forhandsorienteringSent') ||
-            (!forhandsorienteringSent && 'forhandsorienteringIkkeSent');
-
         return (
-            <div>
-                <div className={className}>
-                    <AlertStripeSuksess>
-                        <FormattedMessage
-                            id="sett-avtalt-bekreftelse"
-                            values={{
-                                settAvtaltTekstVerdi,
-                                forhandsorienteringType,
-                            }}
-                        />
-                        <LenkeTilDialog dialogId={dialogId} hidden={!forhandsorienteringSent} className="">
-                            Se meldingen
-                        </LenkeTilDialog>
-                    </AlertStripeSuksess>
-                </div>
-                <DeleLinje />
-            </div>
+            <SendtSuksesInfoLinje
+                erManuellKrrKvpBruker={erManuellKrrKvpBruker}
+                forhaandsorienteringstype={forhandsorienteringType} //TODO kan bruke aktivitet.forhaandsorentering.type når vi sletter den gamle koden
+                mindrennSyvDager={!merEnnsyvDagerTil}
+                skalBrukeNyForaandsorientering={skalBrukeNyForaandsorientering}
+                dialogId={dialogId}
+                className={className}
+            />
         );
     }
 
@@ -167,9 +149,8 @@ const AvtaltContainer = (props: Props) => {
         const skalSendeVarsel = !!avtaltText && merEnnsyvDagerTil && !erManuellKrrKvpBruker && harLoggetInnNivaa4;
         if (skalSendeVarsel) {
             doSendForhandsorientering(aktivitet, avtaltText);
-            setForhandsorienteringSent(true);
-            setForhandsorienteringType(dialogProps.avtaltSelect);
         }
+        setForhandsorienteringType(dialogProps.avtaltSelect);
 
         doSetAktivitetTilAvtalt(aktivitet);
     };
@@ -178,7 +159,6 @@ const AvtaltContainer = (props: Props) => {
         setSendtAtErAvtaltMedNav(true);
         const tekst = getForhaandsorienteringText(dialogProps);
         doSettAktivitetTilAvtaltNy(aktivitet, { type: dialogProps.avtaltSelect, tekst });
-        setForhandsorienteringSent(dialogProps.avtaltSelect !== IKKE_SEND_FORHAANDSORIENTERING);
         setForhandsorienteringType(dialogProps.avtaltSelect);
     };
 
