@@ -50,6 +50,14 @@ export function oppdaterAktivitet(aktivitet) {
     });
 }
 
+export function settAktivitetTilAvtalt(aktivitet, forhaandsorientering) {
+    return doThenDispatch(() => Api.setAktivitetTilAvtalt(aktivitet.id, aktivitet.versjon, forhaandsorientering), {
+        OK: AT.OPPDATER_OK,
+        FEILET: AT.OPPDATER_FEILET,
+        PENDING: AT.OPPDATER,
+    });
+}
+
 export function flyttAktivitetMedBegrunnelse(aktivitet, status, avsluttetKommentar) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, status);

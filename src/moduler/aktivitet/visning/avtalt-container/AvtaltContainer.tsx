@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT, UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, Forhaandsorientering } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
@@ -21,7 +21,7 @@ import {
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
-import { oppdaterAktivitet } from '../../aktivitet-actions';
+import { oppdaterAktivitet, settAktivitetTilAvtalt } from '../../aktivitet-actions';
 import { selectAktivitetStatus, selectAktiviteterData } from '../../aktivitet-selector';
 import DeleLinje from '../delelinje/delelinje';
 import AvtaltForm, {
@@ -67,7 +67,8 @@ const AvtaltContainer = (props: Props) => {
 
     const doSetAktivitetTilAvtalt = (aktivitet: Aktivitet) =>
         dispatch(oppdaterAktivitet({ ...aktivitet, avtalt: true }));
-    const doSendForhandsorientering = (aktivitet: Aktivitet, avtaltTekst: String) => {
+
+    const doSendForhandsorientering = (aktivitet: Aktivitet, avtaltTekst: string) => {
         dispatch(
             sendForhandsorientering({
                 aktivitetId: aktivitet.id,
@@ -76,6 +77,10 @@ const AvtaltContainer = (props: Props) => {
             })
         );
     };
+
+    const doSettAktivitetTilAvtaltNy = (aktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
+        dispatch(settAktivitetTilAvtalt(aktivitet, forhaandsorientering));
+
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const harAvtalteAktiviteter =
         useSelector<any, Aktivitet[]>(selectAktiviteterData)
@@ -171,7 +176,10 @@ const AvtaltContainer = (props: Props) => {
 
     const sendForhaandsorienteringAktivitet = (dialogProps: ForhaandsorienteringDialogProps) => {
         setSendtAtErAvtaltMedNav(true);
-        const avtaltText = getForhaandsorienteringText(dialogProps);
+        const tekst = getForhaandsorienteringText(dialogProps);
+        doSettAktivitetTilAvtaltNy(aktivitet, { type: dialogProps.avtaltSelect, tekst });
+        setForhandsorienteringSent(dialogProps.avtaltSelect !== IKKE_SEND_FORHAANDSORIENTERING);
+        setForhandsorienteringType(dialogProps.avtaltSelect);
     };
 
     const onSubmit: Handler = (avtaltForm) => {
