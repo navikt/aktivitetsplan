@@ -6,7 +6,7 @@ import Select from '../../../../felles-komponenter/skjema/input/select';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { IKKE_SEND_FORHANDSORIENTERING, SEND_FORHANDSORIENTERING, SEND_PARAGRAF_11_9 } from './AvtaltForm';
+import { IKKE_SEND_FORHAANDSORIENTERING, SEND_FORHAANDSORIENTERING, SEND_PARAGRAF_11_9 } from './AvtaltForm';
 import styles from './ForhaandsorienteringsMelding.module.less';
 
 const InfoHeader = () => (
@@ -46,12 +46,12 @@ const ForhaandsorienteringMelding = (props: Props) => {
                 noBlankOption
                 {...state.fields.avtaltSelect}
             >
-                <option value={SEND_FORHANDSORIENTERING}>Send forhåndsorientering (standard melding)</option>
+                <option value={SEND_FORHAANDSORIENTERING}>Send forhåndsorientering (standard melding)</option>
                 <option value={SEND_PARAGRAF_11_9}>Send forhåndsorientering for §11-9 (AAP)</option>
-                <option value={IKKE_SEND_FORHANDSORIENTERING}>Ikke send forhåndsorientering</option>
+                <option value={IKKE_SEND_FORHAANDSORIENTERING}>Ikke send forhåndsorientering</option>
             </Select>
-            <VisibleIfDiv visible={avtaltSelect !== IKKE_SEND_FORHANDSORIENTERING}>
-                <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
+            <VisibleIfDiv visible={avtaltSelect !== IKKE_SEND_FORHAANDSORIENTERING}>
+                <VisibleIfDiv visible={avtaltSelect === SEND_FORHAANDSORIENTERING}>
                     <InfoHeader />
                     <Normaltekst className="blokk-xs">
                         Det er viktig at du gjennomfører{' '}

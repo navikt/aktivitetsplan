@@ -7,6 +7,7 @@ import { STATUS } from '../../../../api/utils';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT, UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
+import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import { erGyldigISODato, erMerEnnSyvDagerTil, msSince } from '../../../../utils';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
@@ -25,8 +26,8 @@ import { selectAktivitetStatus, selectAktiviteterData } from '../../aktivitet-se
 import DeleLinje from '../delelinje/delelinje';
 import AvtaltForm, {
     Handler,
-    IKKE_SEND_FORHANDSORIENTERING,
-    SEND_FORHANDSORIENTERING,
+    IKKE_SEND_FORHAANDSORIENTERING,
+    SEND_FORHAANDSORIENTERING,
     SEND_PARAGRAF_11_9,
 } from './AvtaltForm';
 
@@ -36,15 +37,30 @@ interface Props {
     className: string;
 }
 
-const avtaltTextMap = {
-    [SEND_FORHANDSORIENTERING]: (avtaltForm: any) => avtaltForm.avtaltText,
-    [SEND_PARAGRAF_11_9]: (avtaltForm: any) => avtaltForm.avtaltText119,
-    [IKKE_SEND_FORHANDSORIENTERING]: () => '',
+interface ForhaandsorienteringDialogProps {
+    avtaltText: string;
+    avtaltText119: string;
+    avtaltSelect: string;
+}
+
+const getForhaandsorienteringText = (avtaltTextProps: ForhaandsorienteringDialogProps) => {
+    switch (avtaltTextProps.avtaltSelect) {
+        case SEND_FORHAANDSORIENTERING:
+            return avtaltTextProps.avtaltText;
+        case SEND_PARAGRAF_11_9:
+            return avtaltTextProps.avtaltText119;
+        case IKKE_SEND_FORHAANDSORIENTERING:
+            return '';
+        default:
+            throw new Error('Ukjent avtalttype');
+    }
 };
 
 const AvtaltContainer = (props: Props) => {
     const { underOppfolging, aktivitet, className } = props;
-    const [visBekreftAvtalt, setVisBekreftAvtalt] = useState(false);
+
+    const skalBrukeNyForaandsorientering = useSkalBrukeNyForhaandsorientering();
+    const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
     const [forhandsorienteringSent, setForhandsorienteringSent] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState('');
     const dispatch = useDispatch();
@@ -100,7 +116,7 @@ const AvtaltContainer = (props: Props) => {
     }
 
     // Kun vis bekreftet hvis nettopp satt til avtalt.
-    if (!visBekreftAvtalt && avtalt) {
+    if (!sendtAtErAvtaltMedNav && avtalt) {
         return null;
     }
 
@@ -132,24 +148,39 @@ const AvtaltContainer = (props: Props) => {
         );
     }
 
-    const onSubmit: Handler = (avtaltForm) => {
-        setVisBekreftAvtalt(true);
-        // @ts-ignore
-        const avtaltText = avtaltTextMap[avtaltForm.avtaltSelect](avtaltForm);
-        const skalSendeVarsel = !!avtaltText && merEnnsyvDagerTil && !erManuellKrrKvpBruker && harLoggetInnNivaa4;
-        if (skalSendeVarsel) {
-            doSendForhandsorientering(aktivitet, avtaltText);
-            setForhandsorienteringSent(true);
-            setForhandsorienteringType(avtaltForm.avtaltSelect);
-        }
-
-        loggForhandsorientering(erManuellKrrKvpBruker, !merEnnsyvDagerTil, avtaltForm.avtaltSelect, aktivitet.type);
+    const sendMetrikker = (avtaltSelect: string) => {
+        loggForhandsorientering(erManuellKrrKvpBruker, !merEnnsyvDagerTil, avtaltSelect, aktivitet.type);
 
         if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.startDato)) {
             metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode.startDato));
         }
+    };
+
+    const sendForhaandsorienteringDialog = (dialogProps: ForhaandsorienteringDialogProps) => {
+        setSendtAtErAvtaltMedNav(true);
+        const avtaltText = getForhaandsorienteringText(dialogProps);
+        const skalSendeVarsel = !!avtaltText && merEnnsyvDagerTil && !erManuellKrrKvpBruker && harLoggetInnNivaa4;
+        if (skalSendeVarsel) {
+            doSendForhandsorientering(aktivitet, avtaltText);
+            setForhandsorienteringSent(true);
+            setForhandsorienteringType(dialogProps.avtaltSelect);
+        }
 
         doSetAktivitetTilAvtalt(aktivitet);
+    };
+
+    const sendForhaandsorienteringAktivitet = (dialogProps: ForhaandsorienteringDialogProps) => {
+        setSendtAtErAvtaltMedNav(true);
+        const avtaltText = getForhaandsorienteringText(dialogProps);
+    };
+
+    const onSubmit: Handler = (avtaltForm) => {
+        if (skalBrukeNyForaandsorientering) {
+            sendForhaandsorienteringAktivitet(avtaltForm);
+        } else {
+            sendForhaandsorienteringDialog(avtaltForm);
+        }
+        sendMetrikker(avtaltForm.avtaltSelect);
 
         // @ts-ignore
         document.querySelector('.aktivitet-modal').focus();
