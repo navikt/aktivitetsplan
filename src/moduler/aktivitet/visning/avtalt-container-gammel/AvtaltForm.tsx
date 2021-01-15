@@ -17,12 +17,11 @@ import { selectNivaa4, selectNivaa4Status } from '../../../tilgang/tilgang-selec
 import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
 import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
 import styles from './AvtaltForm.module.less';
-import { useKanSendeVarsel } from './avtaltHooks';
 import ForhaandsorienteringMelding from './ForhaandsorienteringsMelding';
 
-export const SEND_FORHAANDSORIENTERING = 'send_forhandsorientering';
+export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
-export const IKKE_SEND_FORHAANDSORIENTERING = 'ikke_send_forhandsorientering';
+export const IKKE_SEND_FORHANDSORIENTERING = 'ikke_send_forhandsorientering';
 
 const validateForhandsorienter = (val: string, values: { avtaltSelect?: string }): string | undefined => {
     if (values.avtaltSelect !== SEND_PARAGRAF_11_9) {
@@ -94,13 +93,9 @@ const AvtaltForm = (props: Props) => {
         avtaltText: noValidate,
     });
 
-    const loggetInnMedNivaa4Sist18Maaneder = useSelector(selectNivaa4);
-
-    const kanSendeForhaandsvarsel = useKanSendeVarsel();
-
     const state = validator({
         avtaltCheckbox: 'false',
-        avtaltSelect: kanSendeForhaandsvarsel ? SEND_FORHAANDSORIENTERING : IKKE_SEND_FORHAANDSORIENTERING,
+        avtaltSelect: SEND_FORHANDSORIENTERING,
         avtaltText119: avtaltTekst119,
         avtaltText: avtaltTekst(aktivitetId),
     });
@@ -114,6 +109,7 @@ const AvtaltForm = (props: Props) => {
 
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
     const avtaltSelect = state.fields.avtaltSelect.input.value;
+    const loggetInnMedNivaa4Sist18Maaneder = useSelector(selectNivaa4);
     const avhengigheter = useSelector(selectNivaa4Status);
 
     const AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder = () => (
@@ -122,6 +118,9 @@ const AvtaltForm = (props: Props) => {
             (for eksempel BankID).
         </HiddenIfAlertStripeInfoSolid>
     );
+
+    const kanSendeForhandsvarsel =
+        !erManuellKrrKvpBruker && !visAvtaltMedNavMindreEnnSyvDager && loggetInnMedNivaa4Sist18Maaneder;
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
@@ -137,7 +136,7 @@ const AvtaltForm = (props: Props) => {
                     </Hjelpetekst>
                 </div>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
-                    <VisibleIfDiv className={classNames(kanSendeForhaandsvarsel && styles.innhold)} visible={avtalt}>
+                    <VisibleIfDiv className={classNames(kanSendeForhandsvarsel && styles.innhold)} visible={avtalt}>
                         <AvtaltStripeKRRKvpManuellBruker visible={erManuellKrrKvpBruker} />
                         <AvtaltFormMindreEnnSyvDager
                             visible={!erManuellKrrKvpBruker && visAvtaltMedNavMindreEnnSyvDager}
@@ -145,12 +144,14 @@ const AvtaltForm = (props: Props) => {
                         <AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder />
                         <ForhaandsorienteringMelding
                             state={state}
-                            hidden={!kanSendeForhaandsvarsel}
+                            hidden={!kanSendeForhandsvarsel}
                             oppdaterer={oppdaterer}
                             aktivitetId={aktivitetId}
                         />
                         <Knapp spinner={oppdaterer} disabled={lasterData}>
-                            {avtaltSelect === IKKE_SEND_FORHAANDSORIENTERING ? 'Bekreft' : 'Bekreft og send'}
+                            {avtaltSelect === IKKE_SEND_FORHANDSORIENTERING || !kanSendeForhandsvarsel
+                                ? 'Bekreft'
+                                : 'Bekreft og send'}
                         </Knapp>
                     </VisibleIfDiv>
                 </Innholdslaster>

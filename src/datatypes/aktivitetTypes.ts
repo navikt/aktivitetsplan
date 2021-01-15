@@ -23,6 +23,7 @@ export interface Lest {
 export interface Aktivitet {
     //denne er ikke komplett
     id: string;
+    versjon: string;
     tittel?: string;
     fraDato?: string;
     tilDato?: string;
@@ -95,4 +96,9 @@ export interface ArenaAktivitet {
 
     // Gruppeaktivitet
     moeteplanListe: Moteplan[];
+}
+
+export interface Forhaandsorientering {
+    type: string;
+    tekst: string;
 }
