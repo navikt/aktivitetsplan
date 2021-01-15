@@ -7,16 +7,10 @@ import { Aktivitet, Forhaandsorientering } from '../../../../datatypes/aktivitet
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { erMerEnnSyvDagerTil } from '../../../../utils';
 import { selectErBruker } from '../../../identitet/identitet-selector';
-import {
-    selectErBrukerManuell,
-    selectErUnderKvp,
-    selectReservasjonKRR,
-} from '../../../oppfolging-status/oppfolging-selector';
 import { settAktivitetTilAvtalt } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import AvtaltContainerGammel from '../avtalt-container-gammel/AvtaltContainer-gammel';
 import DeleLinje from '../delelinje/delelinje';
-import AvtaltBekreftAlertStripe from './AvtaltBekreftAlertStripe';
 import AvtaltForm, {
     Handler,
     IKKE_SEND_FORHAANDSORIENTERING,
@@ -24,6 +18,7 @@ import AvtaltForm, {
     SEND_PARAGRAF_11_9,
 } from './AvtaltForm';
 import { useSendAvtaltMetrikker } from './avtaltHooks';
+import SattTilAvtaltInfotekst from './SattTilAvtaltInfotekst';
 
 interface Props {
     underOppfolging: boolean;
@@ -62,20 +57,13 @@ const AvtaltContainer = (props: Props) => {
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const sendMetrikker = useSendAvtaltMetrikker();
 
-    const erManuell = useSelector(selectErBrukerManuell);
-    const erKvp = useSelector(selectErUnderKvp);
-    const erreservertKRR = useSelector(selectReservasjonKRR);
     const erBruker = useSelector(selectErBruker);
-
-    const erManuellKrrKvpBruker = erManuell || erKvp || erreservertKRR;
-
     const { type, status, historisk, avtalt } = aktivitet;
 
     const lasterData = aktivitetStatus !== STATUS.OK;
     const oppdaterer = aktivitetStatus === STATUS.RELOADING;
     const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
-    const merEnnsyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato);
-    const visAvtaltMedNavMindreEnnSyvDager = !avtalt && !merEnnsyvDagerTil;
+    const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
 
     if (
         erBruker ||
@@ -95,9 +83,10 @@ const AvtaltContainer = (props: Props) => {
 
     if (avtalt) {
         return (
-            <AvtaltBekreftAlertStripe
-                mindreEnnSyvDagerTil={!merEnnsyvDagerTil}
+            <SattTilAvtaltInfotekst
+                mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                 forhaandsoreteringstype={forhandsorienteringType}
+                className={className}
             />
         );
     }
@@ -108,7 +97,7 @@ const AvtaltContainer = (props: Props) => {
         doSettAktivitetTilAvtaltNy(aktivitet, { type: avtaltForm.avtaltSelect, tekst });
         setForhandsorienteringType(avtaltForm.avtaltSelect);
 
-        sendMetrikker(avtaltForm.avtaltSelect, aktivitet.type, merEnnsyvDagerTil);
+        sendMetrikker(avtaltForm.avtaltSelect, aktivitet.type, mindreEnnSyvDagerTil);
 
         // @ts-ignore
         document.querySelector('.aktivitet-modal').focus();
@@ -121,8 +110,7 @@ const AvtaltContainer = (props: Props) => {
                 aktivitetId={aktivitet.id}
                 className={`${className} avtalt-container`}
                 oppdaterer={oppdaterer}
-                visAvtaltMedNavMindreEnnSyvDager={visAvtaltMedNavMindreEnnSyvDager}
-                erManuellKrrKvpBruker={erManuellKrrKvpBruker}
+                mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                 lasterData={lasterData}
                 onSubmit={onSubmit}
             />

@@ -7,18 +7,15 @@ import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { STATUS } from '../../../../api/utils';
-import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { DirtyContext } from '../../../context/dirty-context';
-import { selectNivaa4, selectNivaa4Status } from '../../../tilgang/tilgang-selector';
-import AvtaltStripeKRRKvpManuellBruker from './avtalt-alertstripe-manuell-krr-kvp-bruker';
-import AvtaltFormMindreEnnSyvDager from './avtalt-form-mindre-enn-syv-dager';
+import { selectNivaa4Status } from '../../../tilgang/tilgang-selector';
 import styles from './AvtaltForm.module.less';
 import { useKanSendeVarsel } from './avtaltHooks';
 import ForhaandsorienteringMelding from './ForhaandsorienteringsMelding';
+import KanIkkeSendeForhaandsorienteringInfotekst from './KanIkkeSendeForhaandsorienteringInfotekst';
 
 export const SEND_FORHAANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
@@ -43,14 +40,10 @@ const noValidate = (): undefined => {
     return undefined;
 };
 
-const avtaltTekst = (aktivitetId: string) => {
-    const formattedLink = `[denne aktiviteten](/arbeid/dialog/aktivitetsplan/aktivitet/vis/${aktivitetId})`;
-    return (
-        `Det er viktig at du gjennomfører ${formattedLink} med NAV. Gjør du ikke det, kan det medføre at ` +
-        'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
-        'ber vi deg ta kontakt med veilederen din så snart som mulig.'
-    );
-};
+const avtaltTekst =
+    `Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ` +
+    'stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ' +
+    'ber vi deg ta kontakt med veilederen din så snart som mulig.';
 
 const avtaltTekst119 =
     'Du kan få redusert utbetaling av arbeidsavklaringspenger med én stønadsdag hvis du lar være å ' +
@@ -72,20 +65,11 @@ interface Props {
     className?: string;
     oppdaterer: boolean;
     lasterData: boolean;
-    erManuellKrrKvpBruker: boolean;
-    visAvtaltMedNavMindreEnnSyvDager: boolean;
+    mindreEnnSyvDagerTil: boolean;
 }
 
 const AvtaltForm = (props: Props) => {
-    const {
-        onSubmit,
-        className,
-        aktivitetId,
-        oppdaterer,
-        lasterData,
-        erManuellKrrKvpBruker,
-        visAvtaltMedNavMindreEnnSyvDager,
-    } = props;
+    const { onSubmit, className, aktivitetId, oppdaterer, lasterData, mindreEnnSyvDagerTil } = props;
 
     const validator = useFormstate({
         avtaltCheckbox: noValidate,
@@ -94,15 +78,13 @@ const AvtaltForm = (props: Props) => {
         avtaltText: noValidate,
     });
 
-    const loggetInnMedNivaa4Sist18Maaneder = useSelector(selectNivaa4);
-
     const kanSendeForhaandsvarsel = useKanSendeVarsel();
 
     const state = validator({
         avtaltCheckbox: 'false',
         avtaltSelect: kanSendeForhaandsvarsel ? SEND_FORHAANDSORIENTERING : IKKE_SEND_FORHAANDSORIENTERING,
         avtaltText119: avtaltTekst119,
-        avtaltText: avtaltTekst(aktivitetId),
+        avtaltText: avtaltTekst,
     });
 
     const { setFormIsDirty } = useContext(DirtyContext);
@@ -115,13 +97,6 @@ const AvtaltForm = (props: Props) => {
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
     const avtaltSelect = state.fields.avtaltSelect.input.value;
     const avhengigheter = useSelector(selectNivaa4Status);
-
-    const AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder = () => (
-        <HiddenIfAlertStripeInfoSolid hidden={loggetInnMedNivaa4Sist18Maaneder || avhengigheter === STATUS.ERROR}>
-            Du kan ikke sende forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4
-            (for eksempel BankID).
-        </HiddenIfAlertStripeInfoSolid>
-    );
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
@@ -138,16 +113,11 @@ const AvtaltForm = (props: Props) => {
                 </div>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv className={classNames(kanSendeForhaandsvarsel && styles.innhold)} visible={avtalt}>
-                        <AvtaltStripeKRRKvpManuellBruker visible={erManuellKrrKvpBruker} />
-                        <AvtaltFormMindreEnnSyvDager
-                            visible={!erManuellKrrKvpBruker && visAvtaltMedNavMindreEnnSyvDager}
-                        />
-                        <AlertStripeHvisIkkeLoggetInnMedNivaa4Siste18Maaneder />
+                        <KanIkkeSendeForhaandsorienteringInfotekst mindreEnnSyvDagerTil={mindreEnnSyvDagerTil} />
                         <ForhaandsorienteringMelding
                             state={state}
                             hidden={!kanSendeForhaandsvarsel}
                             oppdaterer={oppdaterer}
-                            aktivitetId={aktivitetId}
                         />
                         <Knapp spinner={oppdaterer} disabled={lasterData}>
                             {avtaltSelect === IKKE_SEND_FORHAANDSORIENTERING ? 'Bekreft' : 'Bekreft og send'}

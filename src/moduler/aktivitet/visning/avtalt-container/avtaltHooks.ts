@@ -3,9 +3,7 @@ import { useSelector } from 'react-redux';
 import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
-import { nivaa4Feilet } from '../../../../mocks/demo/sessionstorage';
 import { erGyldigISODato, msSince } from '../../../../utils';
-import { selectErBruker } from '../../../identitet/identitet-selector';
 import {
     selectErBrukerManuell,
     selectErUnderKvp,
@@ -21,7 +19,7 @@ export const useKanSendeVarsel = () => {
     const erreservertKRR = useSelector(selectReservasjonKRR);
     const harNivaa4 = useSelector(selectNivaa4);
 
-    return !(erManuell || erKvp || erreservertKRR || harNivaa4);
+    return !(erManuell || erKvp || erreservertKRR || !harNivaa4);
 };
 
 export const useSendAvtaltMetrikker = () => {
@@ -35,8 +33,8 @@ export const useSendAvtaltMetrikker = () => {
     )[0];
     const kanSendeVarsel = useKanSendeVarsel();
 
-    return (forhaandsorenteringsType: string, aktivitetType: AktivitetType, merEnnsyvDagerTil: boolean) => {
-        loggForhandsorientering(!kanSendeVarsel, !merEnnsyvDagerTil, forhaandsorenteringsType, aktivitetType);
+    return (forhaandsorenteringsType: string, aktivitetType: AktivitetType, mindreEnnSyvDagerTil: boolean) => {
+        loggForhandsorientering(!kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorenteringsType, aktivitetType);
 
         if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.startDato)) {
             metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode.startDato));

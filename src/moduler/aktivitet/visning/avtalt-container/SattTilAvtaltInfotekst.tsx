@@ -34,7 +34,8 @@ interface Props {
     className?: string;
 }
 
-const AvtaltBekreftAlertStripe = (props: Props) => {
+//TODO: Husk å slette tekstfil sett-avtalt-bekreftelse
+const SattTilAvtaltInfotekst = (props: Props) => {
     const kanSendeVarsel = useKanSendeVarsel();
 
     const { mindreEnnSyvDagerTil, forhaandsoreteringstype, className } = props;
@@ -43,13 +44,13 @@ const AvtaltBekreftAlertStripe = (props: Props) => {
 
     //TODO sjekk div og className
     return (
-        <div>
+        <>
             <div className={className}>
                 <AlertStripeSuksess>{text}</AlertStripeSuksess>
             </div>
             <DeleLinje />
-        </div>
+        </>
     );
 };
 
-export default AvtaltBekreftAlertStripe;
+export default SattTilAvtaltInfotekst;
