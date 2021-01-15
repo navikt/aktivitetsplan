@@ -7,6 +7,8 @@ import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
@@ -17,6 +19,10 @@ import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
+import IkkeDeltMarkering from "../../ikke-delt-markering/ikke-delt-markering";
+import {selectErVeileder} from "../../../identitet/identitet-selector";
+import {selectDialogForAktivitetId} from "../../../dialog/dialog-selector";
+import {connect} from "react-redux";
 
 function visningsIngress(type) {
     if (
@@ -28,8 +34,9 @@ function visningsIngress(type) {
     return <AktivitetIngress aktivitetsType={type} />;
 }
 
-function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
+function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging, manglerReferat, manglerDialog }) {
     const { tittel, type, arenaAktivitet } = valgtAktivitet;
+    const ikkeDelt = manglerReferat || manglerDialog;
 
     return (
         <div>
@@ -51,6 +58,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                 </div>
                 {visningsIngress(type)}
                 <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
+                <IkkeDeltMarkering visible={ikkeDelt} className="aktivitetvisning__etikett" />
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
             <DeleLinje />
@@ -65,4 +73,14 @@ AktivitetinformasjonVisning.propTypes = {
     underOppfolging: PT.bool.isRequired,
 };
 
-export default AktivitetinformasjonVisning;
+const mapStateToProps = (state, props) => {
+    const { valgtAktivitet } = props;
+    return {
+        manglerReferat:
+            valgtAktivitet.type === SAMTALEREFERAT_TYPE && selectErVeileder(state) && !valgtAktivitet.erReferatPublisert,
+        manglerDialog:
+            valgtAktivitet.type === MOTE_TYPE && selectErVeileder(state) && !selectDialogForAktivitetId(state, valgtAktivitet.id),
+    };
+};
+
+export default connect(mapStateToProps)(AktivitetinformasjonVisning);
