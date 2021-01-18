@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { guid } from 'nav-frontend-js-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useMemo, useState } from 'react';
@@ -19,12 +20,13 @@ interface Props {
     kanToogle: boolean;
     aapneTekst: string;
     lukkeTekst: string;
+    deafultApen?: boolean;
 }
 
 function EkspanderbarLinje(props: Props) {
-    const { tittel, children, kanToogle, aapneTekst, lukkeTekst } = props;
+    const { tittel, children, kanToogle, aapneTekst, lukkeTekst, deafultApen = false } = props;
 
-    const [erAapen, setAapen] = useState(false);
+    const [erAapen, setAapen] = useState(deafultApen);
     //to get a valid css id it needs to start with a letter
     const unique = useMemo(() => 'a' + guid(), []);
 
