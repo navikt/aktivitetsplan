@@ -2,42 +2,8 @@ import React, { MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { getFodselsnummer } from '../../utils/fnr-util';
 import { selectErVeileder } from '../identitet/identitet-selector';
-
-export const dialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
-    if (erVeileder) {
-        const fnr = getFodselsnummer();
-        if (dialogId) {
-            return `/veilarbpersonflatefs/${fnr}/${dialogId}`;
-        }
-        if (aktiviteId) {
-            return `/veilarbpersonflatefs/${fnr}/ny?aktivitetId=${aktiviteId}`;
-        }
-        return `/veilarbpersonflatefs/${fnr}`;
-    }
-
-    if (dialogId) {
-        return `/arbeidsrettet-dialog/${dialogId}`;
-    }
-    if (aktiviteId) {
-        return `/arbeidsrettet-dialog/ny?aktivitetId=${aktiviteId}`;
-    }
-    return `/arbeidsrettet-dialog`;
-};
-
-const byttFlate = (event: MouseEvent, aktiviteId?: string, dialogId?: string) => {
-    event.preventDefault();
-    window.history.pushState('', 'Dialog', dialogLenke(true, aktiviteId, dialogId));
-    window.dispatchEvent(
-        new CustomEvent('visDialog', {
-            detail: {
-                dialogId: dialogId,
-                aktivitetId: aktiviteId,
-            },
-        })
-    );
-};
+import { byttTilDialogFlate, getDialogLenke } from './DialogFlateUtils';
 
 interface Props {
     className?: string;
@@ -57,7 +23,7 @@ function LenkeTilDialog(props: Props) {
         onClick && onClick();
         if (erVeileder) {
             history.replace('/');
-            byttFlate(event, aktivitetId, dialogId);
+            byttTilDialogFlate(event, aktivitetId, dialogId);
         }
     };
 
@@ -66,7 +32,7 @@ function LenkeTilDialog(props: Props) {
     }
 
     return (
-        <a href={dialogLenke(erVeileder, aktivitetId, dialogId)} onClick={internalOnClick} className={className}>
+        <a href={getDialogLenke(erVeileder, aktivitetId, dialogId)} onClick={internalOnClick} className={className}>
             {children}
         </a>
     );
