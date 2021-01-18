@@ -34,6 +34,7 @@ export interface Aktivitet {
     avsluttetKommentar?: string;
     etikett?: StillingsStatus;
     historisk?: boolean;
+    forhaandsorientering?: Forhaandsorientering;
     lagtInnAv?: string;
     detaljer?: object;
     endretAv: string;

@@ -479,14 +479,15 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
     return oldAktivitet;
 }
 
-export function oppdaterAvtaltMedNav({ aktivitetId }, { forhaandsorienteringsTekst, forhaandsorientringsType }) {
+export function oppdaterAvtaltMedNav({}, { forhaandsorientering }, { aktivitetId }) {
     const aktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+
     aktivitet.endretDato = moment().toISOString();
     aktivitet.endretAv = bruker;
     aktivitet.lagtInnAv = bruker;
     aktivitet.forhaandsorientering = {
-        type: forhaandsorientringsType,
-        tekst: forhaandsorienteringsTekst,
+        type: forhaandsorientering.type,
+        tekst: forhaandsorientering.tekst,
     };
     aktivitet.avtalt = true;
     return aktivitet;

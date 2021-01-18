@@ -17,6 +17,7 @@ import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
+import Forhaandsorenteringsvisning from './Forhaandsorenteringsvisning';
 
 function visningsIngress(type) {
     if (
@@ -51,6 +52,9 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                 </div>
                 {visningsIngress(type)}
                 <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
+            </div>
+            <Forhaandsorenteringsvisning forhaandsorientering={valgtAktivitet.forhaandsorientering} />
+            <div className="aktivitetvisning__underseksjon">
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
             <DeleLinje />

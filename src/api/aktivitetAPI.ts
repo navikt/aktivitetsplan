@@ -18,7 +18,7 @@ export const setAktivitetTilAvtalt = (
     aktivitetVersjon: string,
     forhaandsorientering: Forhaandsorientering
 ) =>
-    putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitetId}/avtaltMedNav`, {
+    putAsJson(`${AKTIVITET_BASE_URL}/avtaltMedNav?aktivitetId=${aktivitetId}`, {
         aktivitetVersjon,
         forhaandsorientering,
     });

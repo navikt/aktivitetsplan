@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { guid } from 'nav-frontend-js-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useMemo, useState } from 'react';

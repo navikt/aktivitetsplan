@@ -60,7 +60,6 @@ interface SubmitProps {
 export type Handler = SubmitHandler<SubmitProps>;
 
 interface Props {
-    aktivitetId: string;
     onSubmit: Handler;
     className?: string;
     oppdaterer: boolean;
@@ -69,7 +68,7 @@ interface Props {
 }
 
 const AvtaltForm = (props: Props) => {
-    const { onSubmit, className, aktivitetId, oppdaterer, lasterData, mindreEnnSyvDagerTil } = props;
+    const { onSubmit, className, oppdaterer, lasterData, mindreEnnSyvDagerTil } = props;
 
     const validator = useFormstate({
         avtaltCheckbox: noValidate,

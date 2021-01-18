@@ -107,7 +107,6 @@ const AvtaltContainer = (props: Props) => {
     return (
         <>
             <AvtaltForm
-                aktivitetId={aktivitet.id}
                 className={`${className} avtalt-container`}
                 oppdaterer={oppdaterer}
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
