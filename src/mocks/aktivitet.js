@@ -479,7 +479,7 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
     return oldAktivitet;
 }
 
-export function oppdaterAvtaltMedNav({}, { forhaandsorientering }, { aktivitetId }) {
+export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktivitetId }) {
     const aktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
 
     aktivitet.endretDato = moment().toISOString();
