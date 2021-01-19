@@ -1,10 +1,10 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
+import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { ForhaandsorienteringType } from './AvtaltContainer';
 import VarslingInfo from './VarslingInfo';
 
 interface Props {

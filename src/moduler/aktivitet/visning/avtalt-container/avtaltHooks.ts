@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, AktivitetType, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import { erGyldigISODato, msSince } from '../../../../utils';
@@ -12,7 +12,6 @@ import {
 } from '../../../oppfolging-status/oppfolging-selector';
 import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
 import { selectAktiviteterData } from '../../aktivitet-selector';
-import { ForhaandsorienteringType } from './AvtaltContainer';
 
 export const useKanSendeVarsel = () => {
     const erManuell = useSelector(selectErBrukerManuell);

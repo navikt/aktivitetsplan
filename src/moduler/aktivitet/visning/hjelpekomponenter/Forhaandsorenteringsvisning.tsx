@@ -1,9 +1,8 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Forhaandsorientering } from '../../../../datatypes/aktivitetTypes';
+import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
-import { ForhaandsorienteringType } from '../avtalt-container/AvtaltContainer';
 import DeleLinje from '../delelinje/delelinje';
 import styles from './Forhaandsorienteringsvisning.module.less';
 

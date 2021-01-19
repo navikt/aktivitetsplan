@@ -1,14 +1,14 @@
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import React from 'react';
 
+import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
-import { ForhaandsorienteringType } from './AvtaltContainer';
 import { useKanSendeVarsel } from './avtaltHooks';
 
 const getText = (
     kanSendeVarsel: boolean,
     avtaltMedNavMindreEnnSyvDager: boolean,
-    forhaandsoreteringstype: ForhaandsorienteringType
+    forhaandsorienteringstype: ForhaandsorienteringType
 ): string => {
     if (!kanSendeVarsel) {
         return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering er ikke sendt.';
@@ -17,7 +17,7 @@ const getText = (
         return 'Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke sendt, men brukeren skal være informert om mulige konsekvenser for ytelse og du skal ha dokumentert dette.';
     }
 
-    switch (forhaandsoreteringstype) {
+    switch (forhaandsorienteringstype) {
         case ForhaandsorienteringType.IKKE_SEND:
             return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering er ikke sendt.';
         case ForhaandsorienteringType.SEND_STANDARD:
@@ -30,7 +30,7 @@ const getText = (
 
 interface Props {
     mindreEnnSyvDagerTil: boolean;
-    forhaandsoreteringstype: ForhaandsorienteringType;
+    forhaandsorienteringstype: ForhaandsorienteringType;
     className?: string;
 }
 
@@ -38,9 +38,9 @@ interface Props {
 const SattTilAvtaltInfotekst = (props: Props) => {
     const kanSendeVarsel = useKanSendeVarsel();
 
-    const { mindreEnnSyvDagerTil, forhaandsoreteringstype, className } = props;
+    const { mindreEnnSyvDagerTil, forhaandsorienteringstype, className } = props;
 
-    const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsoreteringstype);
+    const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringstype);
 
     return (
         <>

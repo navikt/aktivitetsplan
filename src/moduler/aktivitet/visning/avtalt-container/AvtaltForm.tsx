@@ -7,12 +7,12 @@ import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../tilgang/tilgang-selector';
-import { ForhaandsorienteringType } from './AvtaltContainer';
 import styles from './AvtaltForm.module.less';
 import { useKanSendeVarsel } from './avtaltHooks';
 import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
@@ -95,11 +95,8 @@ const AvtaltForm = (props: Props) => {
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
     const valgtType = state.fields.forhaandsorienteringType.input.value;
     const avhengigheter = useSelector(selectNivaa4Status);
-    const bekreftKnappTekst = [ForhaandsorienteringType.IKKE_SEND, ForhaandsorienteringType.IKKE_SATT].includes(
-        valgtType as ForhaandsorienteringType
-    )
-        ? 'Bekreft'
-        : 'Bekreft og send';
+    const bekreftKnappTekst =
+        ForhaandsorienteringType.IKKE_SEND === (valgtType as ForhaandsorienteringType) ? 'Bekreft' : 'Bekreft og send';
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>

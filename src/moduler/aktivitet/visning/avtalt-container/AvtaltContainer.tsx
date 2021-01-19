@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT, UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
-import { Aktivitet, Forhaandsorientering } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { erMerEnnSyvDagerTil } from '../../../../utils';
 import { selectErBruker } from '../../../identitet/identitet-selector';
@@ -15,13 +15,6 @@ import DeleLinje from '../delelinje/delelinje';
 import AvtaltForm, { Handler } from './AvtaltForm';
 import { useSendAvtaltMetrikker } from './avtaltHooks';
 import SattTilAvtaltInfotekst from './SattTilAvtaltInfotekst';
-
-export enum ForhaandsorienteringType {
-    SEND_STANDARD = 'SEND_FORHAANDSORIENTERING',
-    SEND_PARAGRAF_11_9 = 'SEND_PARAGRAF_11_9',
-    IKKE_SEND = 'IKKE_SEND_FORHAANDSORIENTERING',
-    IKKE_SATT = 'IKKE_SATT',
-}
 
 interface Props {
     underOppfolging: boolean;
@@ -42,7 +35,6 @@ const getForhaandsorienteringText = (avtaltTextProps: ForhaandsorienteringDialog
         case ForhaandsorienteringType.SEND_PARAGRAF_11_9:
             return avtaltTextProps.avtaltText119;
         case ForhaandsorienteringType.IKKE_SEND:
-        case ForhaandsorienteringType.IKKE_SATT:
             return '';
         default:
             throw new Error('Ukjent avtalttype');
@@ -53,7 +45,7 @@ const AvtaltContainer = (props: Props) => {
     const { underOppfolging, aktivitet, className } = props;
     const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState<ForhaandsorienteringType>(
-        ForhaandsorienteringType.IKKE_SATT
+        ForhaandsorienteringType.IKKE_SEND
     );
     const dispatch = useDispatch();
 
@@ -90,7 +82,7 @@ const AvtaltContainer = (props: Props) => {
         return (
             <SattTilAvtaltInfotekst
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
-                forhaandsoreteringstype={forhandsorienteringType}
+                forhaandsorienteringstype={forhandsorienteringType}
                 className={className}
             />
         );
