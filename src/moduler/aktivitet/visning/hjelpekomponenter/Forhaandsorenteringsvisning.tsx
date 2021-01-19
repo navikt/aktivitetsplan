@@ -5,6 +5,7 @@ import { Forhaandsorientering } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { IKKE_SEND_FORHAANDSORIENTERING } from '../avtalt-container/AvtaltForm';
 import DeleLinje from '../delelinje/delelinje';
+import styles from './Forhaandsorienteringsvisning.module.less';
 
 interface Props {
     forhaandsorientering?: Forhaandsorientering;
@@ -27,7 +28,7 @@ const Forhaandsorenteringsvisning = (props: Props) => {
                 lukkeTekst="Lukk"
                 defaultAapen
             >
-                <Normaltekst>{forhaandsorientering.tekst}</Normaltekst>
+                <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorientering.tekst}</Normaltekst>
             </EkspanderbarLinje>
             <DeleLinje />
         </>
