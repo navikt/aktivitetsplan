@@ -115,7 +115,7 @@ const AvtaltForm = (props: Props) => {
                         <KanIkkeSendeForhaandsorienteringInfotekst mindreEnnSyvDagerTil={mindreEnnSyvDagerTil} />
                         <ForhaandsorienteringMelding
                             state={state}
-                            hidden={!kanSendeForhaandsvarsel}
+                            hidden={!kanSendeForhaandsvarsel || mindreEnnSyvDagerTil}
                             oppdaterer={oppdaterer}
                         />
                         <Knapp spinner={oppdaterer} disabled={lasterData}>
