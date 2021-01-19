@@ -74,7 +74,7 @@ const AvtaltForm = (props: Props) => {
         avtaltText: noValidate,
     });
 
-    const kanSendeForhaandsvarsel = useKanSendeVarsel();
+    const kanSendeForhaandsvarsel = useKanSendeVarsel() && !mindreEnnSyvDagerTil;
 
     const state = validator({
         avtaltCheckbox: 'false',
@@ -116,7 +116,7 @@ const AvtaltForm = (props: Props) => {
                         <KanIkkeSendeForhaandsorienteringInfotekst mindreEnnSyvDagerTil={mindreEnnSyvDagerTil} />
                         <ForhaandsorienteringsMelding
                             state={state}
-                            hidden={!kanSendeForhaandsvarsel || mindreEnnSyvDagerTil}
+                            hidden={!kanSendeForhaandsvarsel}
                             oppdaterer={oppdaterer}
                         />
                         <Knapp spinner={oppdaterer} disabled={lasterData}>
