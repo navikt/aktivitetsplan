@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect, shallowEqual, useSelector} from 'react-redux';
+import {shallowEqual, useSelector} from 'react-redux';
 
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { Henvendelse } from '../../../datatypes/dialogTypes';
@@ -9,21 +9,23 @@ import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
 import SokeStatusEtikett from '../etikett/SokeStatusEtikett';
 import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
 import styles from './Aktivitetskort.module.less';
-import IkkeDeltMarkering from "../ikke-delt-markering/ikke-delt-markering";
+import IkkeDeltMarkering from "../ikke-delt-markering/IkkeDeltMarkering";
 import {MOTE_TYPE, SAMTALEREFERAT_TYPE} from "../../../constant";
 import {selectErVeileder} from "../../identitet/identitet-selector";
 
 interface Props {
     aktivitet: Aktivitet;
-    manglerReferat: boolean;
-    manglerDialog: boolean
 }
 
-function AktivitetskortTillegg({aktivitet, manglerReferat, manglerDialog}: Props) {
+const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const { avtalt, id, etikett } = aktivitet;
     const dialog = useSelector((state) => selectDialogForAktivitetId(state, id), shallowEqual);
     const henvendelser = dialog ? dialog.henvendelser : [];
     const ulesteHenvendelser = henvendelser.filter((h: Henvendelse) => !h.lest).length;
+
+    const erVeileder = useSelector((state) =>  selectErVeileder(state));
+    const manglerReferat = aktivitet.type === SAMTALEREFERAT_TYPE && erVeileder && !aktivitet.erReferatPublisert;
+    const manglerDialog = aktivitet.type === MOTE_TYPE && erVeileder && !dialog;
     const ikkeDelt = manglerReferat || manglerDialog;
 
     if (!(avtalt || !!etikett || !!dialog || ikkeDelt)) {
@@ -49,16 +51,4 @@ function AktivitetskortTillegg({aktivitet, manglerReferat, manglerDialog}: Props
     );
 }
 
-const mapStateToProps = (state: any, props: any) => {
-    const { aktivitet } = props;
-    return {
-        aktivitet:
-            props.aktivitet,
-        manglerReferat:
-            aktivitet.type === SAMTALEREFERAT_TYPE && selectErVeileder(state) && !aktivitet.erReferatPublisert,
-        manglerDialog:
-            aktivitet.type === MOTE_TYPE && selectErVeileder(state) && !selectDialogForAktivitetId(state, aktivitet.id),
-    };
-};
-
-export default connect(mapStateToProps)(AktivitetskortTillegg);
+export default AktivitetskortTillegg;
