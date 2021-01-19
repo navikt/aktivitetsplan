@@ -19,10 +19,10 @@ import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
-import IkkeDeltMarkering from "../../ikke-delt-markering/ikke-delt-markering";
+import IkkeDeltMarkering from "../../ikke-delt-markering/IkkeDeltMarkering";
 import {selectErVeileder} from "../../../identitet/identitet-selector";
 import {selectDialogForAktivitetId} from "../../../dialog/dialog-selector";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 
 function visningsIngress(type) {
     if (
@@ -34,8 +34,13 @@ function visningsIngress(type) {
     return <AktivitetIngress aktivitetsType={type} />;
 }
 
-function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging, manglerReferat, manglerDialog }) {
-    const { tittel, type, arenaAktivitet } = valgtAktivitet;
+function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
+    const { id, tittel, type, arenaAktivitet, avtalt, erReferatPublisert } = valgtAktivitet;
+
+    const erVeileder = useSelector((state) => selectErVeileder(state));
+    const manglerReferat = type === SAMTALEREFERAT_TYPE && erVeileder && !erReferatPublisert;
+    const dialog = useSelector((state) => selectDialogForAktivitetId(state, id))
+    const manglerDialog = type === MOTE_TYPE && erVeileder && !dialog;
     const ikkeDelt = manglerReferat || manglerDialog;
 
     return (
@@ -49,7 +54,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                         className="endreknapp"
                         role="button"
                         hidden={!tillatEndring || arenaAktivitet}
-                        href={endreAktivitetRoute(valgtAktivitet.id)}
+                        href={endreAktivitetRoute(id)}
                         onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
                         disabled={laster || !underOppfolging}
                     >
@@ -57,7 +62,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                     </InternLenke>
                 </div>
                 {visningsIngress(type)}
-                <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
+                <AvtaltMarkering visible={avtalt} className="aktivitetvisning__etikett" />
                 <IkkeDeltMarkering visible={ikkeDelt} className="aktivitetvisning__etikett" />
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
@@ -73,14 +78,4 @@ AktivitetinformasjonVisning.propTypes = {
     underOppfolging: PT.bool.isRequired,
 };
 
-const mapStateToProps = (state, props) => {
-    const { valgtAktivitet } = props;
-    return {
-        manglerReferat:
-            valgtAktivitet.type === SAMTALEREFERAT_TYPE && selectErVeileder(state) && !valgtAktivitet.erReferatPublisert,
-        manglerDialog:
-            valgtAktivitet.type === MOTE_TYPE && selectErVeileder(state) && !selectDialogForAktivitetId(state, valgtAktivitet.id),
-    };
-};
-
-export default connect(mapStateToProps)(AktivitetinformasjonVisning);
+export default AktivitetinformasjonVisning;
