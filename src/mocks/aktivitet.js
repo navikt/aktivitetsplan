@@ -479,6 +479,20 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
     return oldAktivitet;
 }
 
+export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktivitetId }) {
+    const aktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+
+    aktivitet.endretDato = moment().toISOString();
+    aktivitet.endretAv = bruker;
+    aktivitet.lagtInnAv = bruker;
+    aktivitet.forhaandsorientering = {
+        type: forhaandsorientering.type,
+        tekst: forhaandsorientering.tekst,
+    };
+    aktivitet.avtalt = true;
+    return aktivitet;
+}
+
 export function publiserReferat({ aktivitetId }) {
     const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     oldAktivitet.erReferatPublisert = true;

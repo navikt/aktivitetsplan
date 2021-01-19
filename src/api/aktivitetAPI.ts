@@ -1,4 +1,4 @@
-import { Aktivitet, ArenaAktivitet } from '../datatypes/aktivitetTypes';
+import { Aktivitet, ArenaAktivitet, Forhaandsorientering } from '../datatypes/aktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
 
@@ -12,6 +12,16 @@ export const lagNyAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
 
 export const oppdaterAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
+
+export const settAktivitetTilAvtalt = (
+    aktivitetId: string,
+    aktivitetVersjon: string,
+    forhaandsorientering: Forhaandsorientering
+) =>
+    putAsJson(`${AKTIVITET_BASE_URL}/avtaltMedNav?aktivitetId=${aktivitetId}`, {
+        aktivitetVersjon,
+        forhaandsorientering,
+    });
 
 export const oppdaterAktivitetStatus = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
