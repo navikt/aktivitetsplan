@@ -35,7 +35,7 @@ const getTekst = (
 
 //TODO: slette tekstfil sett-avtalt-forhandsrientering-bruker-uten-aktivitesplan
 //TODO: Husk å slette tekstfil sett-til-avtalt-mindre-enn-syv-dager
-const KanIkkeSendeForhaandsorienteringInfortekst = (props: { mindreEnnSyvDagerTil: boolean }) => {
+const KanIkkeSendeForhaandsorienteringInfotekst = (props: { mindreEnnSyvDagerTil: boolean }) => {
     const brukerErManuell = useSelector(selectErBrukerManuell);
     const brukerErUnderKvp = useSelector(selectErUnderKvp);
     const brukerErIReservasjonKRR = useSelector(selectReservasjonKRR);
@@ -56,4 +56,4 @@ const KanIkkeSendeForhaandsorienteringInfortekst = (props: { mindreEnnSyvDagerTi
     return <AlertStripeInfo>{tekst}</AlertStripeInfo>;
 };
 
-export default KanIkkeSendeForhaandsorienteringInfortekst;
+export default KanIkkeSendeForhaandsorienteringInfotekst;

@@ -25,7 +25,7 @@ const Forhaandsorenteringsvisning = (props: Props) => {
                 kanToogle
                 aapneTekst="Les mer"
                 lukkeTekst="Lukk"
-                deafultApen
+                defaultAapen
             >
                 <Normaltekst>{forhaandsorientering.tekst}</Normaltekst>
             </EkspanderbarLinje>

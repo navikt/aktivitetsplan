@@ -21,8 +21,8 @@ export const SEND_FORHAANDSORIENTERING = 'send_forhandsorientering';
 export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 export const IKKE_SEND_FORHAANDSORIENTERING = 'ikke_send_forhandsorientering';
 
-const validateForhandsorienter = (val: string, values: { avtaltSelect?: string }): string | undefined => {
-    if (values.avtaltSelect !== SEND_PARAGRAF_11_9) {
+const validateForhandsorienter = (val: string, values: { forhaandsorienteringType?: string }): string | undefined => {
+    if (values.forhaandsorienteringType !== SEND_PARAGRAF_11_9) {
         return undefined;
     }
 
@@ -52,7 +52,7 @@ const avtaltTekst119 =
 
 interface SubmitProps {
     avtaltCheckbox: string;
-    avtaltSelect: string;
+    forhaandsorienteringType: string;
     avtaltText119: string;
     avtaltText: string;
 }
@@ -72,7 +72,7 @@ const AvtaltForm = (props: Props) => {
 
     const validator = useFormstate({
         avtaltCheckbox: noValidate,
-        avtaltSelect: noValidate,
+        forhaandsorienteringType: noValidate,
         avtaltText119: validateForhandsorienter,
         avtaltText: noValidate,
     });
@@ -81,7 +81,7 @@ const AvtaltForm = (props: Props) => {
 
     const state = validator({
         avtaltCheckbox: 'false',
-        avtaltSelect: kanSendeForhaandsvarsel ? SEND_FORHAANDSORIENTERING : IKKE_SEND_FORHAANDSORIENTERING,
+        forhaandsorienteringType: kanSendeForhaandsvarsel ? SEND_FORHAANDSORIENTERING : IKKE_SEND_FORHAANDSORIENTERING,
         avtaltText119: avtaltTekst119,
         avtaltText: avtaltTekst,
     });
@@ -94,7 +94,7 @@ const AvtaltForm = (props: Props) => {
     }, [setFormIsDirty, state.pristine]);
 
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
-    const avtaltSelect = state.fields.avtaltSelect.input.value;
+    const forhaandsorienteringType = state.fields.forhaandsorienteringType.input.value;
     const avhengigheter = useSelector(selectNivaa4Status);
 
     return (
@@ -119,7 +119,9 @@ const AvtaltForm = (props: Props) => {
                             oppdaterer={oppdaterer}
                         />
                         <Knapp spinner={oppdaterer} disabled={lasterData}>
-                            {avtaltSelect === IKKE_SEND_FORHAANDSORIENTERING ? 'Bekreft' : 'Bekreft og send'}
+                            {forhaandsorienteringType === IKKE_SEND_FORHAANDSORIENTERING
+                                ? 'Bekreft'
+                                : 'Bekreft og send'}
                         </Knapp>
                     </VisibleIfDiv>
                 </Innholdslaster>

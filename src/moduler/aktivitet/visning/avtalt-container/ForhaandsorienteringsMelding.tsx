@@ -15,7 +15,7 @@ interface Props {
 
 const ForhaandsorienteringMelding = (props: Props) => {
     const { hidden, oppdaterer, state } = props;
-    const avtaltSelect = state.fields.avtaltSelect.input.value;
+    const forhaandsorienteringType = state.fields.forhaandsorienteringType.input.value;
 
     if (hidden) {
         return null;
@@ -27,13 +27,13 @@ const ForhaandsorienteringMelding = (props: Props) => {
                 label="Velg type forhåndsorientering"
                 disabled={oppdaterer}
                 noBlankOption
-                {...state.fields.avtaltSelect}
+                {...state.fields.forhaandsorienteringType}
             >
                 <option value={SEND_FORHAANDSORIENTERING}>Send forhåndsorientering (standard melding)</option>
                 <option value={SEND_PARAGRAF_11_9}>Send forhåndsorientering for §11-9 (AAP)</option>
                 <option value={IKKE_SEND_FORHAANDSORIENTERING}>Ikke send forhåndsorientering</option>
             </Select>
-            <VisibleIfDiv visible={avtaltSelect === SEND_FORHAANDSORIENTERING}>
+            <VisibleIfDiv visible={forhaandsorienteringType === SEND_FORHAANDSORIENTERING}>
                 <VarslingInfo />
                 <Normaltekst className="blokk-xs">
                     Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at
@@ -41,7 +41,7 @@ const ForhaandsorienteringMelding = (props: Props) => {
                     aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.
                 </Normaltekst>
             </VisibleIfDiv>
-            <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>
+            <VisibleIfDiv visible={forhaandsorienteringType === SEND_PARAGRAF_11_9}>
                 <Textarea label={<VarslingInfo />} maxLength={500} {...state.fields.avtaltText119} />
             </VisibleIfDiv>
         </>

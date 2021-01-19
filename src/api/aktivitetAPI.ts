@@ -13,7 +13,7 @@ export const lagNyAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
 export const oppdaterAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}`, aktivitet);
 
-export const setAktivitetTilAvtalt = (
+export const settAktivitetTilAvtalt = (
     aktivitetId: string,
     aktivitetVersjon: string,
     forhaandsorientering: Forhaandsorientering

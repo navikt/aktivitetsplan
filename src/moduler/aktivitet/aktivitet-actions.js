@@ -51,7 +51,7 @@ export function oppdaterAktivitet(aktivitet) {
 }
 
 export function settAktivitetTilAvtalt(aktivitet, forhaandsorientering) {
-    return doThenDispatch(() => Api.setAktivitetTilAvtalt(aktivitet.id, aktivitet.versjon, forhaandsorientering), {
+    return doThenDispatch(() => Api.settAktivitetTilAvtalt(aktivitet.id, aktivitet.versjon, forhaandsorientering), {
         OK: AT.OPPDATER_OK,
         FEILET: AT.OPPDATER_FEILET,
         PENDING: AT.OPPDATER,

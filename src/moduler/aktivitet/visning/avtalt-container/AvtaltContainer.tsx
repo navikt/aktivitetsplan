@@ -29,11 +29,11 @@ interface Props {
 interface ForhaandsorienteringDialogProps {
     avtaltText: string;
     avtaltText119: string;
-    avtaltSelect: string;
+    forhaandsorienteringType: string;
 }
 
 const getForhaandsorienteringText = (avtaltTextProps: ForhaandsorienteringDialogProps) => {
-    switch (avtaltTextProps.avtaltSelect) {
+    switch (avtaltTextProps.forhaandsorienteringType) {
         case SEND_FORHAANDSORIENTERING:
             return avtaltTextProps.avtaltText;
         case SEND_PARAGRAF_11_9:
@@ -94,10 +94,10 @@ const AvtaltContainer = (props: Props) => {
     const onSubmit: Handler = (avtaltForm) => {
         setSendtAtErAvtaltMedNav(true);
         const tekst = getForhaandsorienteringText(avtaltForm);
-        doSettAktivitetTilAvtaltNy(aktivitet, { type: avtaltForm.avtaltSelect, tekst });
-        setForhandsorienteringType(avtaltForm.avtaltSelect);
+        doSettAktivitetTilAvtaltNy(aktivitet, { type: avtaltForm.forhaandsorienteringType, tekst });
+        setForhandsorienteringType(avtaltForm.forhaandsorienteringType);
 
-        sendMetrikker(avtaltForm.avtaltSelect, aktivitet.type, mindreEnnSyvDagerTil);
+        sendMetrikker(avtaltForm.forhaandsorienteringType, aktivitet.type, mindreEnnSyvDagerTil);
 
         // @ts-ignore
         document.querySelector('.aktivitet-modal').focus();

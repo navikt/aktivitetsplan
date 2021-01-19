@@ -42,7 +42,6 @@ const SattTilAvtaltInfotekst = (props: Props) => {
 
     const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsoreteringstype);
 
-    //TODO sjekk div og className
     return (
         <>
             <div className={className}>
