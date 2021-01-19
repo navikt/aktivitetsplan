@@ -89,10 +89,11 @@ export function flyttetAktivitetMetrikk(flytteMetode: string, aktivitet: Aktivit
     });
 }
 
+//TODO: forhandsorienteringType kan endres til enum når gammel kode er slettet
 export function loggForhandsorientering(
     erManuellKrrKvpBruker: boolean,
     mindreEnSyvDagerIgen: boolean,
-    avtaltForm: string,
+    forhandsorienteringType: string,
     aktivitettype: AktivitetType
 ) {
     if (erManuellKrrKvpBruker) {
@@ -110,7 +111,7 @@ export function loggForhandsorientering(
     }
 
     return loggEvent(FORHANDSORIENTERING_LOGGEVENT, {
-        forhandsorienteringType: avtaltForm,
+        forhandsorienteringType: forhandsorienteringType,
         aktivitettype: aktivitettype,
     });
 }

@@ -2,13 +2,13 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import React from 'react';
 
 import DeleLinje from '../delelinje/delelinje';
-import { IKKE_SEND_FORHAANDSORIENTERING, SEND_FORHAANDSORIENTERING, SEND_PARAGRAF_11_9 } from './AvtaltForm';
+import { ForhaandsorienteringType } from './AvtaltContainer';
 import { useKanSendeVarsel } from './avtaltHooks';
 
 const getText = (
     kanSendeVarsel: boolean,
     avtaltMedNavMindreEnnSyvDager: boolean,
-    forhaandsoreteringstype: string
+    forhaandsoreteringstype: ForhaandsorienteringType
 ): string => {
     if (!kanSendeVarsel) {
         return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering er ikke sendt.';
@@ -18,11 +18,11 @@ const getText = (
     }
 
     switch (forhaandsoreteringstype) {
-        case IKKE_SEND_FORHAANDSORIENTERING:
+        case ForhaandsorienteringType.IKKE_SEND:
             return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering er ikke sendt.';
-        case SEND_FORHAANDSORIENTERING:
+        case ForhaandsorienteringType.SEND_STANDARD:
             return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering (standard melding) er sendt.';
-        case SEND_PARAGRAF_11_9:
+        case ForhaandsorienteringType.SEND_PARAGRAF_11_9:
             return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering for §11-9 (AAP) er sendt.';
     }
     return 'Noe er feil, kontakt brukerstøtte';
@@ -30,7 +30,7 @@ const getText = (
 
 interface Props {
     mindreEnnSyvDagerTil: boolean;
-    forhaandsoreteringstype: string;
+    forhaandsoreteringstype: ForhaandsorienteringType;
     className?: string;
 }
 

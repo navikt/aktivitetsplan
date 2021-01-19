@@ -12,6 +12,7 @@ import {
 } from '../../../oppfolging-status/oppfolging-selector';
 import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
 import { selectAktiviteterData } from '../../aktivitet-selector';
+import { ForhaandsorienteringType } from './AvtaltContainer';
 
 export const useKanSendeVarsel = () => {
     const erManuell = useSelector(selectErBrukerManuell);
@@ -33,8 +34,12 @@ export const useSendAvtaltMetrikker = () => {
     )[0];
     const kanSendeVarsel = useKanSendeVarsel();
 
-    return (forhaandsorenteringsType: string, aktivitetType: AktivitetType, mindreEnnSyvDagerTil: boolean) => {
-        loggForhandsorientering(!kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorenteringsType, aktivitetType);
+    return (
+        forhaandsorienteringsType: ForhaandsorienteringType,
+        aktivitetType: AktivitetType,
+        mindreEnnSyvDagerTil: boolean
+    ) => {
+        loggForhandsorientering(!kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringsType, aktivitetType);
 
         if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.startDato)) {
             metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode.startDato));

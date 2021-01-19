@@ -1,3 +1,4 @@
+import { Values } from '@nutgaard/use-formstate';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,14 +12,16 @@ import { settAktivitetTilAvtalt } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import AvtaltContainerGammel from '../avtalt-container-gammel/AvtaltContainer-gammel';
 import DeleLinje from '../delelinje/delelinje';
-import AvtaltForm, {
-    Handler,
-    IKKE_SEND_FORHAANDSORIENTERING,
-    SEND_FORHAANDSORIENTERING,
-    SEND_PARAGRAF_11_9,
-} from './AvtaltForm';
+import AvtaltForm, { Handler } from './AvtaltForm';
 import { useSendAvtaltMetrikker } from './avtaltHooks';
 import SattTilAvtaltInfotekst from './SattTilAvtaltInfotekst';
+
+export enum ForhaandsorienteringType {
+    SEND_STANDARD = 'SEND_FORHAANDSORIENTERING',
+    SEND_PARAGRAF_11_9 = 'SEND_PARAGRAF_11_9',
+    IKKE_SEND = 'IKKE_SEND_FORHAANDSORIENTERING',
+    IKKE_SATT = 'IKKE_SATT',
+}
 
 interface Props {
     underOppfolging: boolean;
@@ -29,16 +32,17 @@ interface Props {
 interface ForhaandsorienteringDialogProps {
     avtaltText: string;
     avtaltText119: string;
-    forhaandsorienteringType: string;
+    forhaandsorienteringType: ForhaandsorienteringType;
 }
 
 const getForhaandsorienteringText = (avtaltTextProps: ForhaandsorienteringDialogProps) => {
     switch (avtaltTextProps.forhaandsorienteringType) {
-        case SEND_FORHAANDSORIENTERING:
+        case ForhaandsorienteringType.SEND_STANDARD:
             return avtaltTextProps.avtaltText;
-        case SEND_PARAGRAF_11_9:
+        case ForhaandsorienteringType.SEND_PARAGRAF_11_9:
             return avtaltTextProps.avtaltText119;
-        case IKKE_SEND_FORHAANDSORIENTERING:
+        case ForhaandsorienteringType.IKKE_SEND:
+        case ForhaandsorienteringType.IKKE_SATT:
             return '';
         default:
             throw new Error('Ukjent avtalttype');
@@ -48,7 +52,9 @@ const getForhaandsorienteringText = (avtaltTextProps: ForhaandsorienteringDialog
 const AvtaltContainer = (props: Props) => {
     const { underOppfolging, aktivitet, className } = props;
     const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
-    const [forhandsorienteringType, setForhandsorienteringType] = useState('');
+    const [forhandsorienteringType, setForhandsorienteringType] = useState<ForhaandsorienteringType>(
+        ForhaandsorienteringType.IKKE_SATT
+    );
     const dispatch = useDispatch();
 
     const doSettAktivitetTilAvtaltNy = (aktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
@@ -59,7 +65,6 @@ const AvtaltContainer = (props: Props) => {
 
     const erBruker = useSelector(selectErBruker);
     const { type, status, historisk, avtalt } = aktivitet;
-
     const lasterData = aktivitetStatus !== STATUS.OK;
     const oppdaterer = aktivitetStatus === STATUS.RELOADING;
     const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
@@ -91,7 +96,8 @@ const AvtaltContainer = (props: Props) => {
         );
     }
 
-    const onSubmit: Handler = (avtaltForm) => {
+    const onSubmit: Handler = (avtaltFormMapped: Values<ForhaandsorienteringDialogProps>) => {
+        const avtaltForm: ForhaandsorienteringDialogProps = avtaltFormMapped as ForhaandsorienteringDialogProps;
         setSendtAtErAvtaltMedNav(true);
         const tekst = getForhaandsorienteringText(avtaltForm);
         doSettAktivitetTilAvtaltNy(aktivitet, { type: avtaltForm.forhaandsorienteringType, tekst });

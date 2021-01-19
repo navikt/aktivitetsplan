@@ -12,17 +12,14 @@ import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster'
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../tilgang/tilgang-selector';
+import { ForhaandsorienteringType } from './AvtaltContainer';
 import styles from './AvtaltForm.module.less';
 import { useKanSendeVarsel } from './avtaltHooks';
-import ForhaandsorienteringMelding from './ForhaandsorienteringsMelding';
+import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
 import KanIkkeSendeForhaandsorienteringInfotekst from './KanIkkeSendeForhaandsorienteringInfotekst';
 
-export const SEND_FORHAANDSORIENTERING = 'send_forhandsorientering';
-export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
-export const IKKE_SEND_FORHAANDSORIENTERING = 'ikke_send_forhandsorientering';
-
-const validateForhandsorienter = (val: string, values: { forhaandsorienteringType?: string }): string | undefined => {
-    if (values.forhaandsorienteringType !== SEND_PARAGRAF_11_9) {
+const validateForhandsorientering = (val: string, values: { forhaandsorienteringType: string }): string | undefined => {
+    if (values.forhaandsorienteringType !== ForhaandsorienteringType.SEND_PARAGRAF_11_9) {
         return undefined;
     }
 
@@ -52,7 +49,7 @@ const avtaltTekst119 =
 
 interface SubmitProps {
     avtaltCheckbox: string;
-    forhaandsorienteringType: string;
+    forhaandsorienteringType: ForhaandsorienteringType;
     avtaltText119: string;
     avtaltText: string;
 }
@@ -70,10 +67,10 @@ interface Props {
 const AvtaltForm = (props: Props) => {
     const { onSubmit, className, oppdaterer, lasterData, mindreEnnSyvDagerTil } = props;
 
-    const validator = useFormstate({
+    const validator = useFormstate<SubmitProps>({
         avtaltCheckbox: noValidate,
         forhaandsorienteringType: noValidate,
-        avtaltText119: validateForhandsorienter,
+        avtaltText119: validateForhandsorientering,
         avtaltText: noValidate,
     });
 
@@ -81,7 +78,9 @@ const AvtaltForm = (props: Props) => {
 
     const state = validator({
         avtaltCheckbox: 'false',
-        forhaandsorienteringType: kanSendeForhaandsvarsel ? SEND_FORHAANDSORIENTERING : IKKE_SEND_FORHAANDSORIENTERING,
+        forhaandsorienteringType: kanSendeForhaandsvarsel
+            ? ForhaandsorienteringType.SEND_STANDARD
+            : ForhaandsorienteringType.IKKE_SEND,
         avtaltText119: avtaltTekst119,
         avtaltText: avtaltTekst,
     });
@@ -94,8 +93,13 @@ const AvtaltForm = (props: Props) => {
     }, [setFormIsDirty, state.pristine]);
 
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
-    const forhaandsorienteringType = state.fields.forhaandsorienteringType.input.value;
+    const valgtType = state.fields.forhaandsorienteringType.input.value;
     const avhengigheter = useSelector(selectNivaa4Status);
+    const bekreftKnappTekst = [ForhaandsorienteringType.IKKE_SEND, ForhaandsorienteringType.IKKE_SATT].includes(
+        valgtType as ForhaandsorienteringType
+    )
+        ? 'Bekreft'
+        : 'Bekreft og send';
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
@@ -113,15 +117,13 @@ const AvtaltForm = (props: Props) => {
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv className={classNames(kanSendeForhaandsvarsel && styles.innhold)} visible={avtalt}>
                         <KanIkkeSendeForhaandsorienteringInfotekst mindreEnnSyvDagerTil={mindreEnnSyvDagerTil} />
-                        <ForhaandsorienteringMelding
+                        <ForhaandsorienteringsMelding
                             state={state}
                             hidden={!kanSendeForhaandsvarsel || mindreEnnSyvDagerTil}
                             oppdaterer={oppdaterer}
                         />
                         <Knapp spinner={oppdaterer} disabled={lasterData}>
-                            {forhaandsorienteringType === IKKE_SEND_FORHAANDSORIENTERING
-                                ? 'Bekreft'
-                                : 'Bekreft og send'}
+                            {bekreftKnappTekst}
                         </Knapp>
                     </VisibleIfDiv>
                 </Innholdslaster>
