@@ -23,7 +23,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const henvendelser = dialog ? dialog.henvendelser : [];
     const ulesteHenvendelser = henvendelser.filter((h: Henvendelse) => !h.lest).length;
 
-    const erVeileder = useSelector((state) =>  selectErVeileder(state));
+    const erVeileder = useSelector(selectErVeileder);
     const manglerReferat = aktivitet.type === SAMTALEREFERAT_TYPE && erVeileder && !aktivitet.erReferatPublisert;
     const manglerDialog = aktivitet.type === MOTE_TYPE && erVeileder && !dialog;
     const ikkeDelt = manglerReferat || manglerDialog;
