@@ -20,10 +20,10 @@ import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import Forhaandsorenteringsvisning from './Forhaandsorenteringsvisning';
-import IkkeDeltMarkering from "../../ikke-delt-markering/IkkeDeltMarkering";
-import {selectErVeileder} from "../../../identitet/identitet-selector";
-import {selectDialogForAktivitetId} from "../../../dialog/dialog-selector";
-import {useSelector} from "react-redux";
+import IkkeDeltMarkering from '../../ikke-delt-markering/IkkeDeltMarkering';
+import {selectErVeileder} from '../../../identitet/identitet-selector';
+import {selectDialogForAktivitetId} from '../../../dialog/dialog-selector';
+import {useSelector} from 'react-redux';
 
 function visningsIngress(type) {
     if (
@@ -38,7 +38,7 @@ function visningsIngress(type) {
 function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
     const { id, tittel, type, arenaAktivitet, avtalt, erReferatPublisert } = valgtAktivitet;
 
-    const erVeileder = useSelector((state) => selectErVeileder(state));
+    const erVeileder = useSelector(selectErVeileder);
     const manglerReferat = type === SAMTALEREFERAT_TYPE && erVeileder && !erReferatPublisert;
     const dialog = useSelector((state) => selectDialogForAktivitetId(state, id))
     const manglerDialog = type === MOTE_TYPE && erVeileder && !dialog;
