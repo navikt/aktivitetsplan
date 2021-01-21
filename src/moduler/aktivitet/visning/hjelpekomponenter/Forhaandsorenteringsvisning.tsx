@@ -1,9 +1,8 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Forhaandsorientering } from '../../../../datatypes/aktivitetTypes';
+import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
-import { IKKE_SEND_FORHAANDSORIENTERING } from '../avtalt-container/AvtaltForm';
 import DeleLinje from '../delelinje/delelinje';
 import styles from './Forhaandsorienteringsvisning.module.less';
 
@@ -14,7 +13,7 @@ interface Props {
 const Forhaandsorenteringsvisning = (props: Props) => {
     const forhaandsorientering = props.forhaandsorientering;
 
-    if (!forhaandsorientering || forhaandsorientering.type === IKKE_SEND_FORHAANDSORIENTERING) {
+    if (!forhaandsorientering || forhaandsorientering.type === ForhaandsorienteringType.IKKE_SEND) {
         return null;
     }
 

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, AktivitetType, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import { erGyldigISODato, msSince } from '../../../../utils';
@@ -33,8 +33,12 @@ export const useSendAvtaltMetrikker = () => {
     )[0];
     const kanSendeVarsel = useKanSendeVarsel();
 
-    return (forhaandsorenteringsType: string, aktivitetType: AktivitetType, mindreEnnSyvDagerTil: boolean) => {
-        loggForhandsorientering(!kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorenteringsType, aktivitetType);
+    return (
+        forhaandsorienteringsType: ForhaandsorienteringType,
+        aktivitetType: AktivitetType,
+        mindreEnnSyvDagerTil: boolean
+    ) => {
+        loggForhandsorientering(!kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringsType, aktivitetType);
 
         if (!harAvtalteAktiviteter && aktivOppfolgingsPeriode && erGyldigISODato(aktivOppfolgingsPeriode.startDato)) {
             metrikkTidForsteAvtalte(msSince(aktivOppfolgingsPeriode.startDato));
