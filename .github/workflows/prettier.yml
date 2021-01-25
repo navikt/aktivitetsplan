@@ -1,4 +1,4 @@
-name: Format
+name: Formatter kode med prettier og commit
 on: [workflow_dispatch]
 jobs:
   format:
@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Format
+      - name: Kjør prettier
         run: |
           npm ci
           npm run format-all
