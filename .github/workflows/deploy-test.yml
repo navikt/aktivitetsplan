@@ -24,7 +24,6 @@ jobs:
       - run: npm run build
 
       - name: Build and publish Docker image
-        if: github.ref == 'refs/heads/gh'
         run: |
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker build -t ${IMAGE} .
@@ -35,7 +34,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: deploy fss
-        if: github.ref == 'refs/heads/gh'
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-fss
