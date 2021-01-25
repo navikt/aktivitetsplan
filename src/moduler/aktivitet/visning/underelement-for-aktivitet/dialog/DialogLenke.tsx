@@ -52,14 +52,14 @@ function DialogLenke(props: Props) {
     const uleste = henvendelser.filter((h) => !h.lest).length;
 
     return (
-        <>
+        <div>
             <LenkeTilDialog className={styles.dialogLinke} dialogId={dialogId} aktivitetId={aktivitetId}>
                 <DialogLenkeInnhold henvendelser={antallHenvendelser} uleste={uleste} erVeileder={erVeileder} />
                 <DialogPil antallUleste={uleste} />
             </LenkeTilDialog>
 
             <DeleLinje hidden={skulDelelingje} />
-        </>
+        </div>
     );
 }
 

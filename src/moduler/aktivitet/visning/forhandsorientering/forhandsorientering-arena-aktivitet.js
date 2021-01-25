@@ -42,7 +42,7 @@ class ForhandsorienteringArenaAktivitet extends Component {
             </HiddenIfAlertStripeSuksess>
         );
         return (
-            <div>
+            <div className="aktivitetvisning__underseksjon">
                 <AlertStripeHvisMindreEnnSyvDagerTil />
                 <ForhandsorienteringArenaAktivitetForm
                     valgtAktivitet={aktivitet}

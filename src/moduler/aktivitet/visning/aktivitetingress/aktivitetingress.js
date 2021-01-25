@@ -16,7 +16,8 @@ const aktivitetingress = {
     samtalereferat: 'Her finner du referat fra en samtale du har hatt med NAV.',
     sokeavtale:
         'Her ser du hvor mange jobber NAV forventer at du søker. Legg inn stillinger du søker på i aktivitetsplanen ved å klikke på "Legg til aktivitet".\t',
-    stilling: 'Skriv inn informasjon om jobben du har lyst til å søke på her',
+    stilling:
+        'Her kan du legge til informasjon om en stilling du har lyst å søke på. Du kan også legge til en stilling du allerede har søkt på.',
     tiltaksaktivitet: 'Her finner du informasjon om et tiltak NAV har søkt deg inn på. ',
     utdanningsaktivitet:
         'Her ser du informasjon om en utdanningsaktivitet eller et kurs NAV har registrert at du skal gjennomføre.',
