@@ -7,13 +7,12 @@ import {Aktivitet} from "../../../datatypes/aktivitetTypes";
 import {MOTE_TYPE, SAMTALEREFERAT_TYPE} from "../../../constant";
 import {useSelector} from "react-redux";
 import {selectErVeileder} from "../../identitet/identitet-selector";
-import {selectDialogForAktivitetId} from "../../dialog/dialog-selector";
 
-export function SkalIkkeDeltMarkeringVises(aktivitet: Aktivitet): boolean {
+export function SkalIkkeDeltMarkeringVises({type, erReferatPublisert, referat}: Aktivitet): boolean {
     const erVeileder = useSelector(selectErVeileder);
-    const dialog = useSelector((state) => selectDialogForAktivitetId(state, aktivitet.id))
-    const harIkkeDeltSamtalereferat = aktivitet.type === SAMTALEREFERAT_TYPE && !aktivitet.erReferatPublisert;
-    const harIkkedeltReferatFraMote = aktivitet.type === MOTE_TYPE && !(dialog || aktivitet.erReferatPublisert);
+    const harIkkeDeltSamtalereferat = type === SAMTALEREFERAT_TYPE && !erReferatPublisert;
+    const harMoteReferat = Boolean(referat)
+    const harIkkedeltReferatFraMote = type === MOTE_TYPE && (harMoteReferat && !erReferatPublisert);
     return erVeileder && (harIkkeDeltSamtalereferat || harIkkedeltReferatFraMote);
 }
 
