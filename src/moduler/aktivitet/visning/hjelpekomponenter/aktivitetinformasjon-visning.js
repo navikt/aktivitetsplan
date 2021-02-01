@@ -7,8 +7,6 @@ import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
-    MOTE_TYPE,
-    SAMTALEREFERAT_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
@@ -20,10 +18,7 @@ import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import Forhaandsorenteringsvisning from './Forhaandsorenteringsvisning';
-import IkkeDeltMarkering from '../../ikke-delt-markering/IkkeDeltMarkering';
-import {selectErVeileder} from '../../../identitet/identitet-selector';
-import {selectDialogForAktivitetId} from '../../../dialog/dialog-selector';
-import {useSelector} from 'react-redux';
+import IkkeDeltMarkering, {SkalIkkeDeltMarkeringVises} from '../../ikke-delt-markering/IkkeDeltMarkering';
 
 function visningsIngress(type) {
     if (
@@ -36,13 +31,8 @@ function visningsIngress(type) {
 }
 
 function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
-    const { id, tittel, type, arenaAktivitet, avtalt, erReferatPublisert } = valgtAktivitet;
-
-    const erVeileder = useSelector(selectErVeileder);
-    const manglerReferat = type === SAMTALEREFERAT_TYPE && erVeileder && !erReferatPublisert;
-    const dialog = useSelector((state) => selectDialogForAktivitetId(state, id))
-    const manglerDialog = type === MOTE_TYPE && erVeileder && !dialog;
-    const ikkeDelt = manglerReferat || manglerDialog;
+    const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
+    const ikkeDelt = SkalIkkeDeltMarkeringVises(valgtAktivitet);
 
     return (
         <div>
