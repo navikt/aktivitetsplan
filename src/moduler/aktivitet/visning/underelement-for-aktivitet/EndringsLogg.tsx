@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
-import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/ekspanderbar-linje';
+import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import VersjonerForAktivitet from '../versjoner/versjoner-for-aktivitet';
 
 interface Props {

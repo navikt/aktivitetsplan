@@ -7,6 +7,7 @@ import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
 import SokeStatusEtikett from '../etikett/SokeStatusEtikett';
+import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../ikke-delt-markering/IkkeDeltMarkering';
 import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
 import styles from './Aktivitetskort.module.less';
 
@@ -14,13 +15,14 @@ interface Props {
     aktivitet: Aktivitet;
 }
 
-function AktivitetskortTillegg({ aktivitet }: Props) {
+const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const { avtalt, id, etikett } = aktivitet;
     const dialog = useSelector((state) => selectDialogForAktivitetId(state, id), shallowEqual);
     const henvendelser = dialog ? dialog.henvendelser : [];
     const ulesteHenvendelser = henvendelser.filter((h: Henvendelse) => !h.lest).length;
+    const ikkeDelt = SkalIkkeDeltMarkeringVises(aktivitet);
 
-    if (!(avtalt || !!etikett || !!dialog)) {
+    if (!(avtalt || !!etikett || !!dialog || ikkeDelt)) {
         return null;
     }
 
@@ -28,6 +30,7 @@ function AktivitetskortTillegg({ aktivitet }: Props) {
         <div className={styles.tillegg}>
             <div>
                 <AvtaltMarkering visible={avtalt} />
+                <IkkeDeltMarkering visible={ikkeDelt} />
                 <SokeStatusEtikett hidden={!etikett} etikett={etikett} className={styles.etikett} />
             </div>
 
@@ -40,6 +43,6 @@ function AktivitetskortTillegg({ aktivitet }: Props) {
             </HiddenIfDiv>
         </div>
     );
-}
+};
 
 export default AktivitetskortTillegg;

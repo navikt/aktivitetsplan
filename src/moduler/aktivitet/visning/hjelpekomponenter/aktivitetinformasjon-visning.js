@@ -17,6 +17,8 @@ import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
+import Forhaandsorenteringsvisning from './Forhaandsorenteringsvisning';
+import IkkeDeltMarkering, {SkalIkkeDeltMarkeringVises} from '../../ikke-delt-markering/IkkeDeltMarkering';
 
 function visningsIngress(type) {
     if (
@@ -29,7 +31,8 @@ function visningsIngress(type) {
 }
 
 function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, underOppfolging }) {
-    const { tittel, type, arenaAktivitet } = valgtAktivitet;
+    const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
+    const ikkeDelt = SkalIkkeDeltMarkeringVises(valgtAktivitet);
 
     return (
         <div>
@@ -42,7 +45,7 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                         className="endreknapp"
                         role="button"
                         hidden={!tillatEndring || arenaAktivitet}
-                        href={endreAktivitetRoute(valgtAktivitet.id)}
+                        href={endreAktivitetRoute(id)}
                         onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
                         disabled={laster || !underOppfolging}
                     >
@@ -50,7 +53,12 @@ function AktivitetinformasjonVisning({ valgtAktivitet, tillatEndring, laster, un
                     </InternLenke>
                 </div>
                 {visningsIngress(type)}
-                <AvtaltMarkering visible={valgtAktivitet.avtalt} className="aktivitetvisning__etikett" />
+                <AvtaltMarkering visible={avtalt} className="aktivitetvisning__etikett" />
+                <IkkeDeltMarkering visible={ikkeDelt} className="aktivitetvisning__etikett" />
+            </div>
+            <Forhaandsorenteringsvisning forhaandsorientering={valgtAktivitet.forhaandsorientering} />
+            <div className="aktivitetvisning__underseksjon">
+
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
             <DeleLinje />

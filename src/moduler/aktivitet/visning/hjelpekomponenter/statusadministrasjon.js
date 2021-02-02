@@ -33,12 +33,7 @@ function Statusadministrasjon(props) {
                 <AlertStripeInfo>{alertTekst}</AlertStripeInfo>
             </div>
             <DeleLinje />
-            <div className="aktivitetvisning__underseksjon">
-                <ForhandsorienteringArenaAktivitet
-                    visible={skalViseForhandsorienteringsKomponent}
-                    aktivitet={aktivitet}
-                />
-            </div>
+            <ForhandsorienteringArenaAktivitet visible={skalViseForhandsorienteringsKomponent} aktivitet={aktivitet} />
             <DeleLinje hidden={!skalViseForhandsorienteringsKomponent} />
         </>
     );

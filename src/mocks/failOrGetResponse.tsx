@@ -16,12 +16,12 @@ export const internalServerError = (ctx: MockContext): Array<HandlerResponseElem
 
 export function failOrGetResponse(
     failFn: () => boolean,
-    successFn: (params: string, body: object) => object
+    successFn: (params: string, body: object, queryParams: string) => object
 ): MockHandler {
     return (req, res, ctx): Promise<ResponseData> => {
         if (failFn()) {
             return res(...internalServerError(ctx));
         }
-        return res(ctx.json(successFn(req.pathParams, req.body)));
+        return res(ctx.json(successFn(req.pathParams, req.body, req.queryParams)));
     };
 }

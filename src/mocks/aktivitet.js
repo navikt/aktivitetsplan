@@ -285,8 +285,8 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               lenke: 'https://arbeidsplassen-q.nav.no/minside',
               type: 'EGEN',
               status: 'GJENNOMFORES',
-              fraDato: '2019-06-13T10:00:36.699+02:00',
-              tilDato: '2019-06-21T10:00:36.699+02:00',
+              fraDato: '2021-06-13T10:00:36.699+02:00',
+              tilDato: '2021-06-21T10:00:36.699+02:00',
               opprettetDato: '2019-06-13T10:00:36.722+02:00',
               endretDato: '2019-06-13T10:00:36.742+02:00',
               endretAv: 'srvveilarbdirigent',
@@ -477,6 +477,20 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
     oldAktivitet.lagtInnAv = bruker;
 
     return oldAktivitet;
+}
+
+export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktivitetId }) {
+    const aktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+
+    aktivitet.endretDato = moment().toISOString();
+    aktivitet.endretAv = bruker;
+    aktivitet.lagtInnAv = bruker;
+    aktivitet.forhaandsorientering = {
+        type: forhaandsorientering.type,
+        tekst: forhaandsorientering.tekst,
+    };
+    aktivitet.avtalt = true;
+    return aktivitet;
 }
 
 export function publiserReferat({ aktivitetId }) {

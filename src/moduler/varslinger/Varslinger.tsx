@@ -5,7 +5,7 @@ import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
 import { selectErBruker, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import BrukerVarslinger from './brukerVarsel';
-import VeilederVarsel from './veilederVarsel';
+import VeilederVarsel from './VeilederVarsel';
 
 function Varslinger() {
     const oppfolgingstatus = useSelector(selectOppfolgingStatus, shallowEqual);

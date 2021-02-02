@@ -23,6 +23,7 @@ export interface Lest {
 export interface Aktivitet {
     //denne er ikke komplett
     id: string;
+    versjon: string;
     tittel?: string;
     fraDato?: string;
     tilDato?: string;
@@ -33,6 +34,7 @@ export interface Aktivitet {
     avsluttetKommentar?: string;
     etikett?: StillingsStatus;
     historisk?: boolean;
+    forhaandsorientering?: Forhaandsorientering;
     lagtInnAv?: string;
     detaljer?: object;
     endretAv: string;
@@ -95,4 +97,15 @@ export interface ArenaAktivitet {
 
     // Gruppeaktivitet
     moeteplanListe: Moteplan[];
+}
+
+export enum ForhaandsorienteringType {
+    SEND_STANDARD = 'send_forhandsorientering',
+    SEND_PARAGRAF_11_9 = 'send_paragraf_11_9',
+    IKKE_SEND = 'ikke_send_forhandsorientering',
+}
+
+export interface Forhaandsorientering {
+    type: ForhaandsorienteringType;
+    tekst: string;
 }

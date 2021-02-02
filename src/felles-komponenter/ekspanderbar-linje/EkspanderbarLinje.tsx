@@ -19,12 +19,13 @@ interface Props {
     kanToogle: boolean;
     aapneTekst: string;
     lukkeTekst: string;
+    defaultAapen?: boolean;
 }
 
 function EkspanderbarLinje(props: Props) {
-    const { tittel, children, kanToogle, aapneTekst, lukkeTekst } = props;
+    const { tittel, children, kanToogle, aapneTekst, lukkeTekst, defaultAapen = false } = props;
 
-    const [erAapen, setAapen] = useState(false);
+    const [erAapen, setAapen] = useState(defaultAapen);
     //to get a valid css id it needs to start with a letter
     const unique = useMemo(() => 'a' + guid(), []);
 

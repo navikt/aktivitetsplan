@@ -26,8 +26,8 @@ function SkjulEldreAktiviteter(props: Props) {
             hidden={hiden}
             onOpen={() => loggEvent(LOGGING_VISELDREAKITIVITETER, { erVeileder })}
             onClose={() => loggEvent(LOGGING_SKJULELDREAKTIVITETER, { erVeileder })}
-            apneTekst="Vis kort eldre enn 1 måned"
-            lukkTekst="Skjul kort eldre enn 1 måned"
+            apneTekst="Vis aktiviteter eldre enn 1 måned"
+            lukkTekst="Skjul aktiviteter eldre enn 1 måned"
         >
             {liste}
         </InvertedLestMer>
