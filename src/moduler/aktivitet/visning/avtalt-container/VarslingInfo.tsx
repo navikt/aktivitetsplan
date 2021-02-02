@@ -6,7 +6,7 @@ import styles from './ForhaandsorienteringsMelding.module.less';
 
 const VarslingInfo = () => (
     <>
-        <EtikettLiten className={styles.avtaltTekstEtikett}>Tekst til brukeren</EtikettLiten>
+        <EtikettLiten className={styles.avtaltTekstEtikett}>Teksten som blir lagt til aktiviteten:</EtikettLiten>
         <Hjelpetekst>
             <div className={styles.maxWidth300}>
                 Brukeren mottar sms eller e-post (se KRR) med en lenke til aktiviteten. <br />
