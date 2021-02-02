@@ -100,7 +100,6 @@ const AvtaltForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
-            <Undertittel>Merk aktiviteten som "Avtalt med NAV"</Undertittel>
             <SkjemaGruppe>
                 <div className={styles.checkbox}>
                     <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
