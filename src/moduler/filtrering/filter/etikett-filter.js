@@ -6,7 +6,7 @@ import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/loggi
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
-import FilterVisningsKomponent from './filter-visning';
+import FilterVisningsKomponent from './FilterVisning';
 
 function EtikettFilter({ harAktivitetEtiketter, aktivitetEtiketter, doToggleAktivitetsEtikett }) {
     return (

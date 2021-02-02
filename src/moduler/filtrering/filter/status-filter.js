@@ -13,7 +13,7 @@ import { STATUS_FILER_METRIKK } from '../../../felles-komponenter/utils/logging'
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsStatus } from './filter-reducer';
 import { selectAktivitetStatusFilter } from './filter-selector';
-import FilterVisning from './filter-visning';
+import FilterVisning from './FilterVisning';
 
 const filtreringsRekkefolge = [
     STATUS_BRUKER_ER_INTRESSERT,
