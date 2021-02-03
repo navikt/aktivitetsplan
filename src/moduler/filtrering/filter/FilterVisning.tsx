@@ -46,15 +46,16 @@ interface FilterVisningTypes {
 }
 
 //TODO: Refaktorer. Filter er ikke bare et objekt hvor den boolske verdien bestemmer om filteret er påskrudd eller ikke, det sier også noe om selve filtercheckboksen skal vises eller ikke(ved FilterTypet noen FilterTypev propertiene kan mangle fra objektet).
-function FilterVisning(props: FilterVisningTypes) {
+const FilterVisning = (props: FilterVisningTypes) => {
     const { harAktiviteter, filter, filterTittel, filterTekst, metrikkNavn, doToggleFunction, className } = props;
     return (
         <VisibleIfDiv visible={harAktiviteter} className={classNames(className, 'filter')}>
             <SkjemaGruppe>
                 <Undertittel className="filter__tittel">{filterTittel}</Undertittel>
-                {Object.keys(filter).map((nokkel) => {
+                {Object.keys(filter).map((nokkel, i) => {
                     return (
                         <Checkbox
+                            key={i}
                             label={<FormattedMessage id={filterTekst + nokkel.toLowerCase()} />}
                             onChange={() => {
                                 if (!filter[nokkel] && metrikkNavn) {
@@ -69,6 +70,6 @@ function FilterVisning(props: FilterVisningTypes) {
             </SkjemaGruppe>
         </VisibleIfDiv>
     );
-}
+};
 
 export default FilterVisning;

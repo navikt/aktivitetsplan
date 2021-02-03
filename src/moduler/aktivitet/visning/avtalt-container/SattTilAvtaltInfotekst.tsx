@@ -19,11 +19,11 @@ const getText = (
 
     switch (forhaandsorienteringstype) {
         case ForhaandsorienteringType.IKKE_SEND:
-            return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering er ikke sendt.';
+            return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering om konsekvens for ytelse er ikke lagt til aktiviteten.';
         case ForhaandsorienteringType.SEND_STANDARD:
-            return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering (standard melding) er sendt.';
+            return 'Forhåndsorientering (standard melding) er lagt til aktiviteten. Bruker får sms eller e-post.';
         case ForhaandsorienteringType.SEND_PARAGRAF_11_9:
-            return 'Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering for §11-9 (AAP) er sendt.';
+            return 'Forhåndsorientering for §11-9 (AAP) er lagt til aktiviteten. Bruker får sms eller e-post.';
     }
     return 'Noe er feil, kontakt brukerstøtte';
 };

@@ -6,13 +6,14 @@ import styles from './ForhaandsorienteringsMelding.module.less';
 
 const VarslingInfo = () => (
     <>
-        <EtikettLiten className={styles.avtaltTekstEtikett}>Tekst til brukeren</EtikettLiten>
+        <EtikettLiten className={styles.avtaltTekstEtikett}>Teksten som blir lagt til aktiviteten:</EtikettLiten>
         <Hjelpetekst>
             <div className={styles.maxWidth300}>
-                Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
-                offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
-                Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv
-                time så blir det kun sendt én SMS eller e-post.
+                Brukeren mottar sms eller e-post (se KRR) med en lenke til aktiviteten. <br />
+                <br />
+                På aktiviteten vil bruker se forhåndsorienteringen og en knapp for å bekrefte at en har lest. <br />
+                <br />
+                Hvis ikke brukeren leser beskjeden innen 7 dager, så blir de revarslet.
             </div>
         </Hjelpetekst>
     </>

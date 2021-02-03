@@ -6,7 +6,7 @@ import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/l
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsType } from './filter-reducer';
 import { selectAktivitetTyperFilter } from './filter-selector';
-import FilterVisningsKomponent from './filter-visning';
+import FilterVisningsKomponent from './FilterVisning';
 
 function TypeFilter({ harAktivitetTyper, aktivitetTyper, doToggleAktivitetsType }) {
     return (
