@@ -98,7 +98,12 @@ const AvtaltForm = (props: Props) => {
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
             <SkjemaGruppe>
                 <div className={styles.checkbox}>
-                    <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
+                    <Checkbox
+                        label="Avtalt med NAV"
+                        disabled={lasterData}
+                        {...state.fields.avtaltCheckbox}
+                        className={styles.checkboxNoSpace}
+                    />
                     <Hjelpetekst id="hjelp">
                         <div className={styles.maxWidth300}>
                             Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt
