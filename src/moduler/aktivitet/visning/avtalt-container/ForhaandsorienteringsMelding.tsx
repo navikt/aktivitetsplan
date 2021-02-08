@@ -5,6 +5,7 @@ import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import Select from '../../../../felles-komponenter/skjema/input/select';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
+import styles from './ForhaandsorienteringsMelding.module.less';
 import VarslingInfo from './VarslingInfo';
 
 interface Props {
@@ -26,6 +27,7 @@ const ForhaandsorienteringsMelding = (props: Props) => {
             <Select
                 label="Velg type forhåndsorientering"
                 disabled={oppdaterer}
+                className={styles.selectType}
                 noBlankOption
                 {...state.fields.forhaandsorienteringType}
             >

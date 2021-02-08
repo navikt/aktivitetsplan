@@ -2,7 +2,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { EtikettLiten } from 'nav-frontend-typografi';
 import React from 'react';
 
-import styles from './ForhaandsorienteringsMelding.module.less';
+import styles from './VarslingInfo.module.less';
 
 const VarslingInfo = () => (
     <>
