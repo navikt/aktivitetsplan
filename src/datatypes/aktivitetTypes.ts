@@ -100,9 +100,9 @@ export interface ArenaAktivitet {
 }
 
 export enum ForhaandsorienteringType {
-    SEND_STANDARD = 'SEND_FORHANDSORIENTERING',
+    SEND_STANDARD = 'SEND_FORHAANDSORIENTERING',
     SEND_PARAGRAF_11_9 = 'SEND_PARAGRAF_11_9',
-    IKKE_SEND = 'IKKE_SEND_FORHANDSORIENTERING',
+    IKKE_SEND = 'IKKE_SEND_FORHAANDSORIENTERING',
 }
 
 export interface Forhaandsorientering {
