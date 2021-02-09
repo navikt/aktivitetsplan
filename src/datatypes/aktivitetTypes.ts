@@ -46,6 +46,11 @@ export interface Aktivitet {
     arbeidsgiver?: StringOrNull;
     antallStillingerSokes?: number;
     antallStillingerIUken?: number;
+
+    behandlingType: string;
+    behandlingSted: string;
+    effekt: string;
+    behandlingOppfolging: string;
 }
 
 enum ArenaEtikett {
