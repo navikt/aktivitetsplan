@@ -21,7 +21,7 @@ import * as AppPT from '../../../proptypes';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { oppdaterAktivitet } from '../aktivitet-actions';
-import BehandlingAktivitetForm from '../aktivitet-forms/behandling/AktivitetBehandlingForm';
+import BehandlingAktivitetForm from '../aktivitet-forms/behandling-gammel/AktivitetBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
 import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';

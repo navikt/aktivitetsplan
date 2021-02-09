@@ -47,6 +47,11 @@ export interface Aktivitet {
     antallStillingerSokes?: number;
     antallStillingerIUken?: number;
     arenaAktivitet?: boolean;
+
+    behandlingType: string;
+    behandlingSted: string;
+    effekt: string;
+    behandlingOppfolging: string;
 }
 
 enum ArenaEtikett {
