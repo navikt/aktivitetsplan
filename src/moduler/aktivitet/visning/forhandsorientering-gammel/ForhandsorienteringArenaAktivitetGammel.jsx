@@ -10,7 +10,7 @@ import * as AppPT from '../../../../proptypes';
 import { autobind, erMerEnnSyvDagerTil } from '../../../../utils';
 import ForhandsorienteringArenaAktivitetForm from './ForhandsorienteringForm';
 
-class ForhandsorienteringArenaAktivitet extends Component {
+class ForhandsorienteringArenaAktivitetGammel extends Component {
     constructor() {
         super();
         this.state = { forhandsorienteringSkalSendes: true };
@@ -55,8 +55,8 @@ class ForhandsorienteringArenaAktivitet extends Component {
     }
 }
 
-ForhandsorienteringArenaAktivitet.propTypes = {
+ForhandsorienteringArenaAktivitetGammel.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
 };
 
-export default visibleIfHOC(ForhandsorienteringArenaAktivitet);
+export default visibleIfHOC(ForhandsorienteringArenaAktivitetGammel);
