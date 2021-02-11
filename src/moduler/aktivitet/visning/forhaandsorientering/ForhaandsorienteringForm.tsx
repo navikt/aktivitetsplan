@@ -1,37 +1,18 @@
 import useFormstate from '@nutgaard/use-formstate';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { Knapp } from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
-import Select from '../../../../felles-komponenter/skjema/input/select';
-import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
-import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
 import { selectDialogStatus } from '../../../dialog/dialog-selector';
-
-export const SEND_FORHANDSORIENTERING = 'send_forhandsorientering';
-export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
-
-const label = (
-    <div className="forhandsorientering-arena-aktivitet">
-        <EtikettLiten>Tekst til brukeren</EtikettLiten>
-        <Hjelpetekst>
-            <div className="max-width-300">
-                Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det
-                offentlige kontaktregisteret. Brukeren får beskjed om en viktig oppgave og det lenkes til dialog.
-                Beskjeden sendes gjennom Altinn etter en halv time. Sender du flere forhåndsorienteringer innen en halv
-                time så blir det kun sendt én SMS eller e-post.
-            </div>
-        </Hjelpetekst>
-    </div>
-);
+import { sendForhaandsorienteringArenaAktivitet } from '../../aktivitet-actions';
+import styles from './ForhaandsorienteringForm.module.less';
+import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 
 const avtaltTekst =
     'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at ' +
@@ -67,14 +48,14 @@ const ForhaandsorieteringsForm = (props: Props) => {
     const dispatch = useDispatch();
 
     const validator = useFormstate({
-        text: validate,
+        tekst: validate,
         checked: () => undefined,
-        avtaltSelect: () => undefined,
+        forhaandsorienteringType: () => undefined,
     });
 
     const state = validator({
-        text: avtaltTekst119,
-        avtaltSelect: SEND_FORHANDSORIENTERING,
+        tekst: avtaltTekst119,
+        forhaandsorienteringType: ForhaandsorienteringType.SEND_STANDARD,
         checked: '',
     });
 
@@ -82,12 +63,12 @@ const ForhaandsorieteringsForm = (props: Props) => {
         return null;
     }
 
-    const onSubmit = (data: { avtaltSelect: string; text: string }) => {
-        const text = data.avtaltSelect === SEND_FORHANDSORIENTERING ? avtaltTekst : data.text;
-        return sendForhandsorientering({
-            aktivitetId: valgtAktivitet.id,
-            tekst: text,
-            overskrift: valgtAktivitet.tittel,
+    const onSubmit = (data: { forhaandsorienteringType: string; tekst: string }) => {
+        const tekst =
+            data.forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD ? avtaltTekst : data.tekst;
+        return sendForhaandsorienteringArenaAktivitet(valgtAktivitet, {
+            tekst,
+            type: data.forhaandsorienteringType,
         })(dispatch).then(() => {
             forhandsorienteringSendt();
             loggForhandsorienteringTiltak();
@@ -97,40 +78,25 @@ const ForhaandsorieteringsForm = (props: Props) => {
     };
 
     const lasterData = dialogStatus !== STATUS.OK;
-    const avtaltSelect = state.fields.avtaltSelect.input.value;
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <Undertittel>Tiltaket er automatisk merket "Avtalt med NAV"</Undertittel>
+            <Normaltekst>Tiltaket er automatisk merket "Avtalt med NAV"</Normaltekst>
 
             <SkjemaGruppe>
-                <Checkbox label="Send forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
+                <Checkbox label="Legg til forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
 
-                <VisibleIfDiv
-                    visible={state.fields.checked.input.value === 'true'}
-                    className="forhandsorientering-arena-innhold"
-                >
-                    <Select
-                        label="Velg type forhåndsorientering"
-                        disabled={lasterData}
-                        noBlankOption
-                        {...state.fields.avtaltSelect}
-                    >
-                        <option value={SEND_FORHANDSORIENTERING}>Send forhåndsorientering (standard melding)</option>
-                        <option value={SEND_PARAGRAF_11_9}>Send forhåndsorientering for §11-9 (AAP)</option>
-                    </Select>
-                    <VisibleIfDiv visible={avtaltSelect === SEND_FORHANDSORIENTERING}>
-                        <Normaltekst className="blokk-xs">{avtaltTekst}</Normaltekst>
-                    </VisibleIfDiv>
+                <div className={styles.forhandsorienteringArenaInnhold}>
+                    <ForhaandsorienteringsMeldingArenaaktivitet
+                        visible={state.fields.checked.input.value === 'true'}
+                        lasterData={lasterData}
+                        state={state}
+                    />
 
-                    <VisibleIfDiv visible={avtaltSelect === SEND_PARAGRAF_11_9}>
-                        <Textarea label={label} maxLength={500} {...state.fields.text} />
-                    </VisibleIfDiv>
-
-                    <Knapp spinner={lasterData} autoDisableVedSpinner>
-                        Bekreft og send
-                    </Knapp>
-                </VisibleIfDiv>
+                    <Hovedknapp spinner={lasterData} autoDisableVedSpinner>
+                        Bekreft
+                    </Hovedknapp>
+                </div>
             </SkjemaGruppe>
         </form>
     );

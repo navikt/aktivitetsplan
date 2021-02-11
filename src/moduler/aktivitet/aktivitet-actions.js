@@ -96,3 +96,11 @@ export function publiserReferat(aktivitet) {
         PENDING: AT.PUBLISER_REFERAT,
     });
 }
+
+export function sendForhaandsorienteringArenaAktivitet(arenaaktivitet, forhaandsorientering) {
+    return doThenDispatch(() => Api.sendForhaandsorienteringArenaAktivitet(arenaaktivitet.id, forhaandsorientering), {
+        OK: AT.OPPDATER_OK,
+        FEILET: AT.OPPDATER_FEILET,
+        PENDING: AT.OPPDATER,
+    });
+}

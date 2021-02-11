@@ -1,6 +1,6 @@
 import { visArenaAktiviteter } from './demo/sessionstorage';
 
-const arena = !visArenaAktiviteter()
+export const arena = !visArenaAktiviteter()
     ? []
     : [
           {
@@ -71,4 +71,13 @@ const arena = !visArenaAktiviteter()
           },
       ];
 
-export default arena;
+export const oppdaterArenaaktivitet = (__params, { forhaandsorientering }, { arenaaktivitetId }) => {
+    const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === arenaaktivitetId);
+
+    aktivitet.forhaandsorientering = {
+        type: forhaandsorientering.type,
+        tekst: forhaandsorientering.tekst,
+    };
+
+    return aktivitet;
+};
