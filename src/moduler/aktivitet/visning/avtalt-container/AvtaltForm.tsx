@@ -1,9 +1,8 @@
 import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { Knapp } from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Undertittel } from 'nav-frontend-typografi';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -93,17 +92,18 @@ const AvtaltForm = (props: Props) => {
     }, [setFormIsDirty, state.pristine]);
 
     const avtalt = state.fields.avtaltCheckbox.input.value === 'true';
-    const valgtType = state.fields.forhaandsorienteringType.input.value;
     const avhengigheter = useSelector(selectNivaa4Status);
-    const bekreftKnappTekst =
-        ForhaandsorienteringType.IKKE_SEND === (valgtType as ForhaandsorienteringType) ? 'Bekreft' : 'Bekreft og send';
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
-            <Undertittel>Merk aktiviteten som "Avtalt med NAV"</Undertittel>
             <SkjemaGruppe>
                 <div className={styles.checkbox}>
-                    <Checkbox label="Avtalt med NAV" disabled={lasterData} {...state.fields.avtaltCheckbox} />
+                    <Checkbox
+                        label="Avtalt med NAV"
+                        disabled={lasterData}
+                        {...state.fields.avtaltCheckbox}
+                        className={styles.checkboxNoSpace}
+                    />
                     <Hjelpetekst id="hjelp">
                         <div className={styles.maxWidth300}>
                             Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt
@@ -119,9 +119,9 @@ const AvtaltForm = (props: Props) => {
                             hidden={!kanSendeForhaandsvarsel}
                             oppdaterer={oppdaterer}
                         />
-                        <Knapp spinner={oppdaterer} disabled={lasterData}>
-                            {bekreftKnappTekst}
-                        </Knapp>
+                        <Hovedknapp spinner={oppdaterer} disabled={lasterData}>
+                            Bekreft
+                        </Hovedknapp>
                     </VisibleIfDiv>
                 </Innholdslaster>
             </SkjemaGruppe>

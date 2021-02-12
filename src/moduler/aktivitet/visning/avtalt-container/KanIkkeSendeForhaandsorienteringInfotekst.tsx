@@ -17,19 +17,19 @@ const getTekst = (
     mindreEnnSyvDagerTil: boolean
 ): string | undefined => {
     if (brukerErManuell) {
-        return 'Du kan ikke sende forhåndsorientering fordi brukeren er manuell bruker.';
+        return 'Du kan ikke legge til forhåndsorientering fordi brukeren er manuell bruker.';
     }
     if (brukerErUnderKvp) {
-        return 'Du kan ikke sende forhåndsorientering fordi brukeren deltar i kvalifiseringsprogrammet.';
+        return 'Du kan ikke legge til forhåndsorientering fordi brukeren deltar i kvalifiseringsprogrammet.';
     }
     if (brukerErIReservasjonKRR) {
-        return 'Du kan ikke sende forhåndsorientering fordi brukeren har reservert seg i kontakt- og reservasjonsregisteret.';
+        return 'Du kan ikke legge til forhåndsorientering fordi brukeren har reservert seg i kontakt- og reservasjonsregisteret.';
     }
     if (!harLoggetInnMedNivaa4) {
-        return 'Du kan ikke sende forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
+        return 'Du kan ikke legge til forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID).';
     }
     if (mindreEnnSyvDagerTil) {
-        return 'Du kan ikke sende forhåndsorientering fordi du har satt sluttdatoen til mindre enn 7 dager frem i tid. Hvis du har hatt muntlig dialog med brukeren om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat, så kan du sette aktiviteten til "Avtalt med NAV".';
+        return 'Du kan ikke legge til forhåndsorientering fordi sluttdatoen er færre enn 7 dager frem i tid. Hvis du har hatt muntlig dialog med brukeren om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat, så kan du sette aktiviteten til “Avtalt med NAV".';
     }
 };
 
