@@ -44,7 +44,7 @@ export const hentVersjonerTilAktivitet = (aktivitet: Aktivitet): Promise<Aktivit
 export const sendForhaandsorienteringArenaAktivitet = (
     arenaaktivitetId: string,
     forhaandsorientering: Forhaandsorientering
-) =>
+): Promise<ArenaAktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/arena/forhaandsorientering?arenaaktivitetId=${arenaaktivitetId}`, {
         forhaandsorientering,
     });

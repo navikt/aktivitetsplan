@@ -46,6 +46,7 @@ export interface Aktivitet {
     arbeidsgiver?: StringOrNull;
     antallStillingerSokes?: number;
     antallStillingerIUken?: number;
+    arenaAktivitet?: boolean;
 }
 
 enum ArenaEtikett {
@@ -85,6 +86,7 @@ export interface ArenaAktivitet {
     opprettetDato: string;
     avtalt: boolean;
     etikett: ArenaEtikett;
+    forhaandsorientering?: Forhaandsorientering;
 
     // Tiltaksaktivitet
     deltakelseProsent: number;

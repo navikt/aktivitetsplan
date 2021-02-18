@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -16,6 +17,13 @@ export const SkalIkkeDeltMarkeringVises = ({ type, erReferatPublisert, referat }
     return erVeileder && (harIkkeDeltSamtalereferat || harIkkedeltReferatFraMote);
 };
 
-const IkkeDeltMarkering = () => <EtikettBase className={styles.etikett}>Samtalereferatet er ikke delt</EtikettBase>;
+interface Props {
+    className?: string;
+}
+
+const IkkeDeltMarkering = (props: Props) => {
+    const { className } = props;
+    return <EtikettBase className={classNames(styles.etikett, className)}>Samtalereferatet er ikke delt</EtikettBase>;
+};
 
 export default visibleIfHOC(IkkeDeltMarkering);

@@ -9,7 +9,7 @@ import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktiv
 import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../dialog/dialog-selector';
-import { sendForhaandsorienteringArenaAktivitet } from '../../aktivitet-actions';
+import { sendForhaandsorienteringArenaAktivitet } from '../../arena-aktiviteter-reducer';
 import styles from './ForhaandsorienteringForm.module.less';
 import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 
