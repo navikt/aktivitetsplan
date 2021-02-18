@@ -1,5 +1,4 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
@@ -81,22 +80,16 @@ const ForhaandsorieteringsForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <Normaltekst>Tiltaket er automatisk merket "Avtalt med NAV"</Normaltekst>
+            <Normaltekst className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</Normaltekst>
 
             <SkjemaGruppe>
                 <Checkbox label="Legg til forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
 
-                <div className={styles.forhandsorienteringArenaInnhold}>
-                    <ForhaandsorienteringsMeldingArenaaktivitet
-                        visible={state.fields.checked.input.value === 'true'}
-                        lasterData={lasterData}
-                        state={state}
-                    />
-
-                    <Hovedknapp spinner={lasterData} autoDisableVedSpinner>
-                        Bekreft
-                    </Hovedknapp>
-                </div>
+                <ForhaandsorienteringsMeldingArenaaktivitet
+                    visible={state.fields.checked.input.value === 'true'}
+                    lasterData={lasterData}
+                    state={state}
+                />
             </SkjemaGruppe>
         </form>
     );

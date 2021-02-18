@@ -1,3 +1,4 @@
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -6,6 +7,7 @@ import Select from '../../../../felles-komponenter/skjema/input/select';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import VarslingInfo from '../avtalt-container/VarslingInfo';
+import styles from './ForaandsorienteringsMeldingArenaaktivitet.module.less';
 
 interface Props {
     visible: boolean;
@@ -22,7 +24,7 @@ const ForaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     }
 
     return (
-        <>
+        <div className={styles.forhandsorienteringArenaInnhold}>
             <Select
                 label="Velg type forhåndsorientering"
                 disabled={lasterData}
@@ -44,7 +46,11 @@ const ForaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
             <VisibleIfDiv visible={valgtForhaandsorienteringType === ForhaandsorienteringType.SEND_PARAGRAF_11_9}>
                 <Textarea label={<VarslingInfo />} maxLength={500} {...state.fields.tekst} />
             </VisibleIfDiv>
-        </>
+
+            <Hovedknapp spinner={lasterData} autoDisableVedSpinner>
+                Bekreft
+            </Hovedknapp>
+        </div>
     );
 };
 
