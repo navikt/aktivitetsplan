@@ -1,7 +1,5 @@
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import React, { useEffect } from 'react';
 
-import { useSkruddAv } from '../../felles-komponenter/feature/feature';
 import { loggAntalVeiledere, loggingAntallBrukere } from '../../felles-komponenter/utils/logging';
 import AktiverDigitalOppfolging from '../aktiver-digital-oppfolging/aktiver-digital-oppfolging';
 import HarIkkeAktivitetsplan from './har-ikke-aktivitetsplan';
@@ -42,17 +40,6 @@ function VidereSendBrukereEllerRenderChildren(props: VidereSendBrukereEllerRende
             loggingAntallBrukere(servicegruppe, underOppfolging, aktorId);
         }
     }, [ident, aktorId, servicegruppe, underOppfolging, erVeileder]);
-
-    const skruddAv = useSkruddAv();
-
-    if (skruddAv) {
-        return (
-            <AlertStripeInfo>
-                På grunn av en teknisk oppdatering fungerer ikke aktivitetsplanen og dialog-tjenesten akkurat nå. Prøv
-                igjen om en time.
-            </AlertStripeInfo>
-        );
-    }
 
     if (!underOppfolging && oppfolgingsPerioder.length === 0) {
         return <HarIkkeAktivitetsplan erVeileder={erVeileder} />;
