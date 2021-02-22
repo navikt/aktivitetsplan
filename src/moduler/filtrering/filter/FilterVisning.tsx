@@ -1,11 +1,10 @@
 import classNames from 'classnames';
-import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
-import loggEvent from '../../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
+import FilterCheckbox from './FilterCheckbox';
 
 type FilterType = { [key: string]: boolean | undefined };
 
@@ -35,9 +34,11 @@ export interface EtikettType extends FilterType {
     AVSLAG: boolean;
 }
 
+export type Filter = AvtaltFilterType | StatusFilterType | AktiviteFilterType | EtikettType;
+
 interface FilterVisningTypes {
     harAktiviteter: boolean;
-    filter: AvtaltFilterType | StatusFilterType | AktiviteFilterType | EtikettType;
+    filter: Filter;
     filterTittel: string;
     filterTekst: string;
     metrikkNavn: string;
@@ -48,25 +49,23 @@ interface FilterVisningTypes {
 //TODO: Refaktorer. Filter er ikke bare et objekt hvor den boolske verdien bestemmer om filteret er påskrudd eller ikke, det sier også noe om selve filtercheckboksen skal vises eller ikke(ved FilterTypet noen FilterTypev propertiene kan mangle fra objektet).
 const FilterVisning = (props: FilterVisningTypes) => {
     const { harAktiviteter, filter, filterTittel, filterTekst, metrikkNavn, doToggleFunction, className } = props;
+
+    const checkboxes = Object.keys(filter).map((nokkel, i) => (
+        <FilterCheckbox
+            key={i}
+            filterTekst={filterTekst}
+            filter={filter}
+            nokkel={nokkel}
+            metrikkNavn={metrikkNavn}
+            doToggle={doToggleFunction}
+        />
+    ));
+
     return (
         <VisibleIfDiv visible={harAktiviteter} className={classNames(className, 'filter')}>
             <SkjemaGruppe>
                 <Undertittel className="filter__tittel">{filterTittel}</Undertittel>
-                {Object.keys(filter).map((nokkel, i) => {
-                    return (
-                        <Checkbox
-                            key={i}
-                            label={<FormattedMessage id={filterTekst + nokkel.toLowerCase()} />}
-                            onChange={() => {
-                                if (!filter[nokkel] && metrikkNavn) {
-                                    loggEvent(metrikkNavn, { filter: nokkel });
-                                }
-                                doToggleFunction(nokkel);
-                            }}
-                            checked={filter[nokkel]}
-                        />
-                    );
-                })}
+                {checkboxes}
             </SkjemaGruppe>
         </VisibleIfDiv>
     );
