@@ -14,7 +14,7 @@ import {
 } from '../../../oppfolging-status/oppfolging-selector';
 import DeleLinje from '../delelinje/delelinje';
 import OppdaterAktivitetEtikett from '../etikett-oppdatering/OppdaterAktivitetEtikett';
-import ForhandsorienteringArenaAktivitet from '../forhandsorientering/forhandsorientering-arena-aktivitet';
+import ForhaandsorienteringArenaAktivitetWrapper from '../forhaandsorientering/ForhaandsorienteringArenaAktivitet';
 import OppdaterAktivitetStatus from '../status-oppdatering/oppdater-aktivitet-status';
 
 function Statusadministrasjon(props) {
@@ -33,7 +33,10 @@ function Statusadministrasjon(props) {
                 <AlertStripeInfo>{alertTekst}</AlertStripeInfo>
             </div>
             <DeleLinje />
-            <ForhandsorienteringArenaAktivitet visible={skalViseForhandsorienteringsKomponent} aktivitet={aktivitet} />
+            <ForhaandsorienteringArenaAktivitetWrapper
+                visible={skalViseForhandsorienteringsKomponent}
+                aktivitet={aktivitet}
+            />
             <DeleLinje hidden={!skalViseForhandsorienteringsKomponent} />
         </>
     );

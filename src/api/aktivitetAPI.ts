@@ -40,3 +40,12 @@ export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> =>
 
 export const hentVersjonerTilAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
+
+export const sendForhaandsorienteringArenaAktivitet = (
+    arenaaktivitetId: string,
+    forhaandsorientering: Forhaandsorientering
+): Promise<ArenaAktivitet> =>
+    putAsJson(
+        `${AKTIVITET_BASE_URL}/arena/forhaandsorientering?arenaaktivitetId=${arenaaktivitetId}`,
+        forhaandsorientering
+    );
