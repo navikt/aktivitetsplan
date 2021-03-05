@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import AvbrytAktivitet from './avslutt/avbryt-aktivitet';
 import FullforAktivitet from './avslutt/fullfor-aktivitet';
-import NyAktivitetVelger from './ny-aktivitet/ny-aktivitet';
+import LeggTilForm from './ny-aktivitet/LeggTilForm';
 import NyAktivitetForm from './ny-aktivitet/ny-aktivitet-form';
 import EndreAktivitet from './rediger/endre-aktivitet';
 import AktivitetvisningContainer from './visning/aktivitetvisning-container';
@@ -13,7 +13,7 @@ function AktivitetRoutes({ match }) {
     const basePath = match.path;
     return (
         <Switch>
-            <Route exact path={`${basePath}/ny`} component={NyAktivitetVelger} />
+            <Route exact path={`${basePath}/ny`} component={LeggTilForm} />
             <Route path={`${basePath}/ny`} component={NyAktivitetForm} />
 
             <Route exact path={`${basePath}/vis/:id`} component={AktivitetvisningContainer} />
