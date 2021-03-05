@@ -23,13 +23,12 @@ interface Props {
     required?: boolean;
 }
 
-function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps'>) {
+function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | 'onChange'>) {
     const { label, error, input, required } = props;
     const [touched, setTouched] = useState(false);
     const feil = error && touched ? error : undefined;
 
     const { onChange, name } = input;
-
     const _onChange = (date?: string) => {
         const newValue = datePickerToISODate(date);
         const customEvent: any = {

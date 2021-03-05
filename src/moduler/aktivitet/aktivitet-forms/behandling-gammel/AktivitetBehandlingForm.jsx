@@ -27,7 +27,7 @@ function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;
 }
 
-function BehandlingAktivitetForm(props) {
+function AktivitetBehandlingFormGammel(props) {
     const { onSubmit, aktivitet, isDirtyRef } = props;
 
     const validator = useFormstate({
@@ -105,15 +105,15 @@ function BehandlingAktivitetForm(props) {
     );
 }
 
-BehandlingAktivitetForm.defaultProps = {
+AktivitetBehandlingFormGammel.defaultProps = {
     aktivitet: undefined,
     isDirtyRef: undefined,
 };
 
-BehandlingAktivitetForm.propTypes = {
+AktivitetBehandlingFormGammel.propTypes = {
     onSubmit: PT.func.isRequired,
     aktivitet: AppPT.aktivitet,
     isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
-export default BehandlingAktivitetForm;
+export default AktivitetBehandlingFormGammel;

@@ -26,7 +26,7 @@ const erAvtalt = (aktivitet: Aktivitet) => {
     return aktivitet.avtalt === true;
 };
 
-interface SubmitProps {
+interface AktivitetProps {
     tittel: string;
     behandlingType: string;
     behandlingSted: string;
@@ -38,7 +38,7 @@ interface SubmitProps {
     periodeValidering: string;
 }
 
-export type Handler = SubmitHandler<SubmitProps>;
+export type Handler = SubmitHandler<AktivitetProps>;
 
 interface DirtyRef {
     current: boolean;
@@ -50,18 +50,18 @@ interface Props {
     onSubmit: Handler;
 }
 
-const BehandlingAktivitetForm = (props: Props) => {
+export const MedisinskBehandlingForm = (props: Props) => {
     const { onSubmit, aktivitet, isDirtyRef } = props;
 
-    const validator = useFormstate({
+    const validator = useFormstate<AktivitetProps, Aktivitet>({
         tittel: () => '',
-        behandlingType: (val, values, aktivitet) => validateBehandlingType(erAvtalt(aktivitet as Aktivitet), val),
-        behandlingSted: (val, values, aktivitet) => validateBehandlingSted(erAvtalt(aktivitet as Aktivitet), val),
-        fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet as Aktivitet), aktivitet.tilDato, val),
-        tilDato: (val, values, aktivitet) => validateTilDato(aktivitet.fraDato, val),
-        effekt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet as Aktivitet), val),
-        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet as Aktivitet), val),
-        behandlingOppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet as Aktivitet), val),
+        behandlingType: (val, values, aktivitet) => validateBehandlingType(erAvtalt(aktivitet), val),
+        behandlingSted: (val, values, aktivitet) => validateBehandlingSted(erAvtalt(aktivitet), val),
+        fraDato: (val, values, aktivitet: Aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
+        tilDato: (val, values, aktivitet: Aktivitet) => validateTilDato(aktivitet.fraDato, val),
+        effekt: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
+        beskrivelse: (val, values, aktivitet) => validateBeskrivelse(erAvtalt(aktivitet), val),
+        behandlingOppfolging: (val, values, aktivitet) => validateFeltForLangt(erAvtalt(aktivitet), val),
         periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
     });
 
@@ -85,7 +85,6 @@ const BehandlingAktivitetForm = (props: Props) => {
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
     }
-
     return (
         <form onSubmit={state.onSubmit(onSubmit)} autoComplete="off" noValidate>
             <SkjemaGruppe className="aktivitetskjema">
@@ -96,19 +95,8 @@ const BehandlingAktivitetForm = (props: Props) => {
 
                 <PeriodeValidering valideringFelt={state.fields.periodeValidering}>
                     <div className="dato-container">
-                        <DatoField
-                            disabled={avtalt}
-                            label="Fra dato *"
-                            senesteTom={maybeAktivitet.tilDato}
-                            {...state.fields.fraDato}
-                            required
-                        />
-                        <DatoField
-                            label="Til dato *"
-                            tidligsteFom={maybeAktivitet.fraDato}
-                            {...state.fields.tilDato}
-                            required
-                        />
+                        <DatoField disabled={avtalt} label="Fra dato *" {...state.fields.fraDato} required />
+                        <DatoField label="Til dato *" {...state.fields.tilDato} required />
                     </div>
                 </PeriodeValidering>
 
@@ -128,4 +116,4 @@ const BehandlingAktivitetForm = (props: Props) => {
     );
 };
 
-export default BehandlingAktivitetForm;
+export default MedisinskBehandlingForm;

@@ -13,6 +13,7 @@ import {
     STATUS_PLANLAGT,
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
+import { useSkalBrukeMedisinskBehandlingAvBruker } from '../../../felles-komponenter/feature/feature';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Modal from '../../../felles-komponenter/modal/modal';
 import ModalContainer from '../../../felles-komponenter/modal/modal-container';
@@ -21,7 +22,8 @@ import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import BehandlingAktivitetForm from '../aktivitet-forms/behandling-gammel/AktivitetBehandlingForm';
+import AktivitetBehandlingFormGammel from '../aktivitet-forms/behandling-gammel/AktivitetBehandlingForm';
+import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
 import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';
@@ -32,6 +34,7 @@ import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 
 function NyAktivitetForm(props) {
     const { onLagreNyAktivitet, history, match, aktivitetFeilmeldinger, underOppfolging } = props;
+    const nyMedisinskBehandling = useSkalBrukeMedisinskBehandlingAvBruker();
 
     const isDirty = useRef(false);
     useConfirmOnBeforeUnload(isDirty);
@@ -98,10 +101,17 @@ function NyAktivitetForm(props) {
                             />
                         </Route>
                         <Route path={`${match.path}/behandling`}>
-                            <BehandlingAktivitetForm
-                                onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
-                                isDirtyRef={isDirty}
-                            />
+                            {nyMedisinskBehandling ? (
+                                <MedisinskBehandlingForm
+                                    onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
+                                    isDirtyRef={isDirty}
+                                />
+                            ) : (
+                                <AktivitetBehandlingFormGammel
+                                    onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
+                                    isDirtyRef={isDirty}
+                                />
+                            )}
                         </Route>
                         <Route path={`${match.path}/egen`}>
                             <EgenAktivitetForm onSubmit={onSubmitFactory(EGEN_AKTIVITET_TYPE)} isDirtyRef={isDirty} />
