@@ -15,7 +15,7 @@ import Radio from '../../../../felles-komponenter/skjema/input/radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../lagre-aktivitet';
+import LagreAktivitet from '../LagreAktivitet';
 import {
     validateBeskrivelse,
     validateFeltForLangt,
