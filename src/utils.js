@@ -1,3 +1,5 @@
+//TODO: konvertere dato stuff til date-fns og flytte til dateUtils.ts
+
 import moment from 'moment';
 
 export function fn(value) {
@@ -46,10 +48,6 @@ export const erGyldigISODato = (isoDato) => {
     return !!(isoDato && moment(isoDato, moment.ISO_8601).isValid());
 };
 
-export const erGyldigFormattertDato = (formattertDato) => {
-    return !!(formattertDato && formattertDato.length === 10 && moment(formattertDato, 'DD.MM.YYYY', true).isValid());
-};
-
 const erLocalDate = (dato) => {
     return dato.year && dato.monthValue && dato.dayOfMonth;
 };
@@ -73,10 +71,6 @@ export const toDatePrettyPrint = (dato) => {
     const years = tmpDato.getFullYear();
 
     return `${days}.${months}.${years}`;
-};
-
-export const todayIsoString = () => {
-    return moment().toISOString();
 };
 
 export const getNowAsISODate = () => {

@@ -21,7 +21,7 @@ import * as AppPT from '../../../proptypes';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { oppdaterAktivitet } from '../aktivitet-actions';
-import BehandlingAktivitetForm from '../aktivitet-forms/behandling-gammel/AktivitetBehandlingForm';
+import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
 import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';
@@ -43,7 +43,7 @@ function getAktivitetsFormComponent(aktivitet) {
         case SOKEAVTALE_AKTIVITET_TYPE:
             return SokeavtaleAktivitetForm;
         case BEHANDLING_AKTIVITET_TYPE:
-            return BehandlingAktivitetForm;
+            return MedisinskBehandlingForm;
         case MOTE_TYPE:
             return MoteAktivitetForm;
         case SAMTALEREFERAT_TYPE:

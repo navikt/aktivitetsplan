@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectFeatureData } from './feature-selector';
 
 const nyForaandsorientering = 'aktivitetsplan.ny.forhaandsorientering';
-const medisinskBehandlingAvBruker = 'aktivitetsplan.medisinsk.behandling.bruker';
+const medisinskBehandlingAvBruker = 'veilarbportefolje.hendelse_medisinskbehandling';
 
 export const ALL_FEATURES = [nyForaandsorientering, medisinskBehandlingAvBruker];
 
@@ -18,4 +18,4 @@ const useHarFeature = (name: string, reverse?: boolean): boolean => {
 
 export const useSkalBrukeNyForhaandsorientering = () => useHarFeature(nyForaandsorientering);
 
-export const useSkalBrukeMedisinskBehandlingAvBruker = () => useHarFeature(medisinskBehandlingAvBruker);
+export const useSkalBrukeNyMedisinskBehandling = () => useHarFeature(medisinskBehandlingAvBruker);

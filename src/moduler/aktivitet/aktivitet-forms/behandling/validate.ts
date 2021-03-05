@@ -38,7 +38,7 @@ export const validateFeltForLangt = (avtalt: boolean, value?: string) => {
     return undefined;
 };
 
-export const validateFraDato = (avtalt: boolean, tilDato: string, value?: string) => {
+export const validateFraDato = (avtalt: boolean, tilDato: string | undefined, value?: string) => {
     if (avtalt) {
         return undefined;
     }
@@ -51,7 +51,7 @@ export const validateFraDato = (avtalt: boolean, tilDato: string, value?: string
     return validertDato ? validertDato : undefined;
 };
 
-export const validateTilDato = (fraDato: string, value?: string) => {
+export const validateTilDato = (fraDato: string | undefined, value?: string) => {
     if (!value || value.trim().length === 0) {
         return 'Du må fylle ut til dato. Hvis du ikke vet når behandlingen avsluttes, kan du legge inn en foreløpig til dato.';
     }
@@ -65,8 +65,8 @@ export const validateBeskrivelse = (avtalt: boolean, value?: string) => {
     if (avtalt) {
         return undefined;
     }
-    if (value && value.length > 5000) {
-        return 'Du må korte ned teksten til 5000 tegn';
+    if (value && value.length > 400) {
+        return 'Du må korte ned teksten til 400 tegn';
     }
     return undefined;
 };

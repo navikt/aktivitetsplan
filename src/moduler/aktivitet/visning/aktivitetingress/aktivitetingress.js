@@ -4,7 +4,12 @@ import React from 'react';
 
 const aktivitetingress = {
     behandling:
-        'Medisinsk behandling kan være behandling, oppfølging eller utredning hos fastlege, spesialist, fysioterapeut og lignende.',
+        'Her kan du legge inn medisinsk behandling som påvirker muligheten din til å jobbe eller være på kurs og tiltak.\n\n' +
+        'Eksempler:\n' +
+        '- Oppfølging hos fastlege\n' +
+        '- Behandling og veiledning hos fysioterapaut\n' +
+        '- Behandling hos psykolog\n' +
+        '- Behandling hos spesialist\n',
     egen:
         'Her kan du eller veilederen din legge inn aktiviteter som hjelper deg når du skal komme i arbeid. ' +
         'Eksempler kan være å registrere deg hos bemannings- og rekrutteringsbyråer, jobbe godt med CV-en, ' +
