@@ -21,10 +21,10 @@ const mapArenaType = (arenaAktivitet) => ({
     arenaAktivitet: true,
 });
 
-const nyStateMedOppdatertAktivitet = (state, aktivitet, aktivitetData) => {
+const nyStateMedOppdatertAktivitet = (state, aktivitet) => {
     const aktivitetIndex = state.data.findIndex((a) => a.id === aktivitet.id);
     const nyState = [...state.data];
-    nyState[aktivitetIndex] = { ...aktivitet, ...aktivitetData };
+    nyState[aktivitetIndex] = mapArenaType(aktivitet);
     return { ...state, data: nyState };
 };
 
