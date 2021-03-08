@@ -7,7 +7,7 @@ import { trengerBegrunnelse } from '../aktivitet-util';
 import AvtaltContainer from './avtalt-container/AvtaltContainer';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
-import Statusadministrasjon from './hjelpekomponenter/statusadministrasjon';
+import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
 import VarslingBoks from './hjelpekomponenter/varsling-boks';
 import ReferatContainer from './referat/referat-container';
 import DialogLenke from './underelement-for-aktivitet/dialog/DialogLenke';
@@ -23,11 +23,12 @@ interface Props {
 function Aktivitetvisning(props: Props) {
     const { aktivitet, tillatEndring, laster, underOppfolging } = props;
 
-    const arenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(
+    const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(
         aktivitet.type
     );
 
-    const visBegrunnelse = !arenaAktivitet && trengerBegrunnelse(!!aktivitet.avtalt, aktivitet.status, aktivitet.type);
+    const visBegrunnelse =
+        !erArenaAktivitet && trengerBegrunnelse(!!aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
     return (
         <div>
@@ -55,10 +56,10 @@ function Aktivitetvisning(props: Props) {
 
                 <ReferatContainer aktivitet={aktivitet} />
 
-                <Statusadministrasjon aktivitet={aktivitet} arenaAktivitet={arenaAktivitet} />
+                <Statusadministrasjon aktivitet={aktivitet} erArenaAktivitet={erArenaAktivitet} />
 
-                <DialogLenke aktivitet={aktivitet} skulDelelingje={arenaAktivitet} />
-                <EndringsLogg aktivitet={aktivitet} hidden={arenaAktivitet} />
+                <DialogLenke aktivitet={aktivitet} skulDelelingje={erArenaAktivitet} />
+                <EndringsLogg aktivitet={aktivitet} hidden={erArenaAktivitet} />
             </ModalContainer>
         </div>
     );
