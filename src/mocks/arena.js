@@ -71,7 +71,7 @@ export const arena = !visArenaAktiviteter()
           },
       ];
 
-export const oppdaterArenaaktivitet = (__params, { forhaandsorientering }, { arenaaktivitetId }) => {
+export const oppdaterArenaaktivitet = (__params, forhaandsorientering, { arenaaktivitetId }) => {
     const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === arenaaktivitetId);
 
     aktivitet.forhaandsorientering = {
