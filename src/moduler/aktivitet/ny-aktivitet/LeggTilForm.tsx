@@ -9,7 +9,7 @@ import { selectErVeileder } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 import styles from './LeggTilForm.module.less';
 
-function LeggTilForm() {
+const LeggTilForm = () => {
     const erVeileder = useSelector(selectErVeileder);
     const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
 
@@ -67,6 +67,6 @@ function LeggTilForm() {
             </div>
         </Modal>
     );
-}
+};
 
 export default LeggTilForm;
