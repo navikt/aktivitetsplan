@@ -18,6 +18,7 @@ interface InternLenkeProps {
     onClick?: () => void;
     role?: string;
     hidden?: boolean;
+    disabled?: boolean;
 }
 
 function InternLenke(props: InternLenkeProps) {

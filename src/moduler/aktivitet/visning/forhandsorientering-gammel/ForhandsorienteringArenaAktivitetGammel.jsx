@@ -8,9 +8,10 @@ import {
 import visibleIfHOC from '../../../../hocs/visible-if';
 import * as AppPT from '../../../../proptypes';
 import { autobind, erMerEnnSyvDagerTil } from '../../../../utils';
+import DeleLinje from '../delelinje/delelinje';
 import ForhandsorienteringArenaAktivitetForm from './ForhandsorienteringForm';
 
-class ForhandsorienteringArenaAktivitet extends Component {
+class ForhandsorienteringArenaAktivitetGammel extends Component {
     constructor() {
         super();
         this.state = { forhandsorienteringSkalSendes: true };
@@ -42,21 +43,24 @@ class ForhandsorienteringArenaAktivitet extends Component {
             </HiddenIfAlertStripeSuksess>
         );
         return (
-            <div className="aktivitetvisning__underseksjon">
-                <AlertStripeHvisMindreEnnSyvDagerTil />
-                <ForhandsorienteringArenaAktivitetForm
-                    valgtAktivitet={aktivitet}
-                    visible={merEnnsyvDagerTil && forhandsorienteringSkalSendes}
-                    forhandsorienteringSendt={this.forhandsorienteringSendt}
-                />
-                <AlertStripeVisBekreftelse />
-            </div>
+            <>
+                <div className="aktivitetvisning__underseksjon">
+                    <AlertStripeHvisMindreEnnSyvDagerTil />
+                    <ForhandsorienteringArenaAktivitetForm
+                        valgtAktivitet={aktivitet}
+                        visible={merEnnsyvDagerTil && forhandsorienteringSkalSendes}
+                        forhandsorienteringSendt={this.forhandsorienteringSendt}
+                    />
+                    <AlertStripeVisBekreftelse />
+                </div>
+                <DeleLinje />
+            </>
         );
     }
 }
 
-ForhandsorienteringArenaAktivitet.propTypes = {
+ForhandsorienteringArenaAktivitetGammel.propTypes = {
     aktivitet: AppPT.aktivitet.isRequired,
 };
 
-export default visibleIfHOC(ForhandsorienteringArenaAktivitet);
+export default visibleIfHOC(ForhandsorienteringArenaAktivitetGammel);

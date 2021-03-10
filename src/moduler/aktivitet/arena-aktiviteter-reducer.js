@@ -1,10 +1,15 @@
 import * as Api from '../../api/aktivitetAPI';
 import { STATUS, doThenDispatch } from '../../api/utils';
+import { UpdateTypes, widowEvent } from '../../utils/UpdateHandler';
 
 // Actions
 export const HENTER = 'arenaAktivitet/hent';
 export const HENTET = 'arenaAktivitet/hent/ok';
 export const HENTING_FEILET = 'arenaAktivitet/hent/fail';
+
+export const OPPDATER = 'arenaAktivitet/oppdater';
+export const OPPDATER_OK = 'arenaAktivitet/oppdater/ok';
+export const OPPDATER_FEILET = 'arenaAktivitet/oppdater/fail';
 
 const initalState = {
     data: [],
@@ -16,8 +21,15 @@ const mapArenaType = (arenaAktivitet) => ({
     arenaAktivitet: true,
 });
 
+const nyStateMedOppdatertAktivitet = (state, aktivitet) => {
+    const aktivitetIndex = state.data.findIndex((a) => a.id === aktivitet.id);
+    const nyState = [...state.data];
+    nyState[aktivitetIndex] = mapArenaType(aktivitet);
+    return { ...state, data: nyState };
+};
+
 // Reducer
-export default function reducer(state = initalState, action) {
+const reducer = (state = initalState, action) => {
     switch (action.type) {
         case HENTET:
             return {
@@ -25,18 +37,32 @@ export default function reducer(state = initalState, action) {
                 status: STATUS.OK,
                 data: action.data.map(mapArenaType),
             };
+        case OPPDATER_FEILET:
         case HENTING_FEILET:
             return { ...state, status: STATUS.ERROR, feil: action.data };
+        case OPPDATER:
+            return { ...state, status: STATUS.RELOADING };
+        case OPPDATER_OK:
+            widowEvent(UpdateTypes.Aktivitet);
+            return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, action.data);
         default:
             return state;
     }
-}
+};
+
+export default reducer;
 
 // Action creator
-export function hentArenaAktiviteter() {
-    return doThenDispatch(() => Api.hentArenaAktiviteter(), {
+export const hentArenaAktiviteter = () =>
+    doThenDispatch(() => Api.hentArenaAktiviteter(), {
         OK: HENTET,
         FEILET: HENTING_FEILET,
         PENDING: HENTER,
     });
-}
+
+export const sendForhaandsorienteringArenaAktivitet = (arenaaktivitet, forhaandsorientering) =>
+    doThenDispatch(() => Api.sendForhaandsorienteringArenaAktivitet(arenaaktivitet.id, forhaandsorientering), {
+        OK: OPPDATER_OK,
+        FEILET: OPPDATER_FEILET,
+        PENDING: OPPDATER,
+    });

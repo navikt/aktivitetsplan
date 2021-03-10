@@ -11,7 +11,7 @@ import {
     opprettAktivitet,
     publiserReferat,
 } from './aktivitet';
-import arena from './arena';
+import { arena, oppdaterArenaaktivitet } from './arena';
 import { auth } from './auth';
 import {
     aktivitetFeilet,
@@ -120,6 +120,12 @@ mock.get(
         () => arena
     )
 );
+
+mock.put(
+    '/veilarbaktivitet/api/arena/forhaandsorientering',
+    failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterArenaaktivitet)
+);
+
 mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAktivitetFeiler, getAktivitet));
 
 mock.get(
