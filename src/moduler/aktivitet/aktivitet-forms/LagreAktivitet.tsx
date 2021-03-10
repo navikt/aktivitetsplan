@@ -6,7 +6,7 @@ import { STATUS } from '../../../api/utils';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus } from '../aktivitet-selector';
 
-export default function LagreAktivitet() {
+const LagreAktivitet = () => {
     const underOppfolging = useSelector(selectErUnderOppfolging);
     const status = useSelector(selectAktivitetStatus);
     const venter = !(status === STATUS.OK || status === STATUS.ERROR);
@@ -18,4 +18,6 @@ export default function LagreAktivitet() {
             </Hovedknapp>
         </div>
     );
-}
+};
+
+export default LagreAktivitet;
