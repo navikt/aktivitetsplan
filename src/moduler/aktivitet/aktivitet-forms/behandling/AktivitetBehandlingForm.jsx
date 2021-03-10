@@ -13,7 +13,7 @@ import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../lagre-aktivitet';
+import LagreAktivitet from '../LagreAktivitet';
 import {
     validateBehandlingSted,
     validateBehandlingType,
