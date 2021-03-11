@@ -48,12 +48,6 @@ function Aktivitetvisning(props: Props) {
                     laster={laster}
                 />
 
-                <AvtaltContainer
-                    underOppfolging={underOppfolging}
-                    aktivitet={aktivitet}
-                    className="aktivitetvisning__underseksjon"
-                />
-
                 <ReferatContainer aktivitet={aktivitet} />
 
                 <Statusadministrasjon aktivitet={aktivitet} erArenaAktivitet={erArenaAktivitet} />

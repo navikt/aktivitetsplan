@@ -44,10 +44,10 @@ const SattTilAvtaltInfotekst = (props: Props) => {
 
     return (
         <>
+            <DeleLinje />
             <div className={className}>
                 <AlertStripeSuksess>{text}</AlertStripeSuksess>
             </div>
-            <DeleLinje />
         </>
     );
 };

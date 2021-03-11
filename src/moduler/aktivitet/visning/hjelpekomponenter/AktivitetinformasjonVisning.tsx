@@ -9,12 +9,14 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import ModalContainer from '../../../../felles-komponenter/modal/modal-container';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
+import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import Forhaandsorenteringsvisning from './Forhaandsorenteringsvisning';
@@ -62,6 +64,11 @@ const AktivitetinformasjonVisning = ({ valgtAktivitet, tillatEndring, laster, un
                 <AvtaltMarkering visible={avtalt} className="aktivitetvisning__etikett" />
                 <IkkeDeltMarkering visible={ikkeDelt} className="aktivitetvisning__etikett" />
             </div>
+            <AvtaltContainer
+                underOppfolging={underOppfolging}
+                aktivitet={valgtAktivitet}
+                className="aktivitetvisning__underseksjon"
+            />
             <Forhaandsorenteringsvisning forhaandsorientering={valgtAktivitet.forhaandsorientering} />
             <div className="aktivitetvisning__underseksjon">
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />

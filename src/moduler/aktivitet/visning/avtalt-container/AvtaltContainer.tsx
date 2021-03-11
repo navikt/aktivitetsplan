@@ -104,6 +104,7 @@ const AvtaltContainer = (props: Props) => {
 
     return (
         <>
+            <DeleLinje />
             <AvtaltForm
                 className={`${className} avtalt-container`}
                 oppdaterer={oppdaterer}
