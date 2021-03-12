@@ -5,7 +5,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Dato from '../../../felles-komponenter/dato';
+import Dato from '../../../felles-komponenter/Dato';
 import Dropdown from '../../../felles-komponenter/dropdown/dropdown';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/HiddenIf';
 import loggEvent, { LIST_HISTORISK_PERIODE, VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';

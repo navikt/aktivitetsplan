@@ -7,7 +7,7 @@ import {
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
     TRANSAKSJON_TYPE_STATUS_ENDRET,
 } from '../../../../constant';
-import BrukerAvhengigTekst from '../../../../felles-komponenter/brukeravhengigtekst';
+import BrukerAvhengigTekst from '../../../../felles-komponenter/Brukeravhengigtekst';
 import * as AppPT from '../../../../proptypes';
 import { formaterDatoEllerTidSiden, formaterDatoKortManed } from '../../../../utils';
 
