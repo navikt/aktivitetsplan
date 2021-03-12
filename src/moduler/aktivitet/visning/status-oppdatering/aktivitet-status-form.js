@@ -13,7 +13,7 @@ import {
     STATUS_PLANLAGT,
 } from '../../../../constant';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Radio from '../../../../felles-komponenter/skjema/input/radio';
+import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import visibleIf from '../../../../hocs/visible-if';

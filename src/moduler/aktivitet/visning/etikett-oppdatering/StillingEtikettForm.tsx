@@ -5,7 +5,7 @@ import React, { useContext, useEffect } from 'react';
 
 import * as konstanter from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
-import Radio from '../../../../felles-komponenter/skjema/input/radio';
+import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import { DirtyContext } from '../../../context/dirty-context';
 
 const validateEtikettStatus = (): string | undefined => undefined;

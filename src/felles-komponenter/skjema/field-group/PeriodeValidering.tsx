@@ -1,47 +1,42 @@
 import moment from 'moment';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import PT from 'prop-types';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { erGyldigISODato } from '../../../utils';
 
-export function validerPeriode(fradato, tildato) {
+export const validerPeriode = (fradato: string, tildato: string) => {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {
         const momentTilDato = moment(tildato).startOf('day');
         const momentFraDato = moment(fradato).startOf('day');
         return momentTilDato.isSameOrAfter(momentFraDato);
     }
     return true;
-}
+};
 
-export function validerPeriodeFelt(fraDato, tilDato) {
+export const validerPeriodeFelt = (fraDato: string, tilDato: string) => {
     const isValidPeriode = !validerPeriode(fraDato, tilDato);
     return isValidPeriode ? 'Fra dato kan ikke være etter til dato' : null;
+};
+
+interface ValideringFelt {
+    name?: string;
+    error?: string;
+    input: { name: string };
 }
 
-function PeriodeValidering(props) {
+interface Props {
+    valideringFelt: ValideringFelt;
+    children: ReactNode;
+}
+
+const PeriodeValidering = (props: Props) => {
     const { valideringFelt, children } = props;
 
     return (
-        <SkjemaGruppe feilmeldingId="periode-feil" id={valideringFelt.input.name} feil={valideringFelt.error} tag="div">
+        <SkjemaGruppe feilmeldingId="periode-feil" feil={valideringFelt.error} tag="div">
             {children}
         </SkjemaGruppe>
     );
-}
-
-PeriodeValidering.propTypes = {
-    valideringFelt: PT.shape({
-        name: PT.string,
-        error: PT.string,
-        input: PT.shape({
-            name: PT.string,
-        }).isRequired,
-    }).isRequired,
-    children: PT.node,
-};
-
-PeriodeValidering.defaultProps = {
-    children: undefined,
 };
 
 export default PeriodeValidering;
