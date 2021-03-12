@@ -5,7 +5,7 @@ import { Aktivitet } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
 import { Bruker } from '../../datatypes/types';
-import Modal from '../../felles-komponenter/modal/modal';
+import Modal from '../../felles-komponenter/modal/Modal';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';

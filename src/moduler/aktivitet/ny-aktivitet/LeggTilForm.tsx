@@ -2,9 +2,9 @@ import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
+import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
-import Modal from '../../../felles-komponenter/modal/modal';
+import Modal from '../../../felles-komponenter/modal/Modal';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
 import styles from './LeggTilForm.module.less';

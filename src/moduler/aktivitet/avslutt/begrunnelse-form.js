@@ -4,8 +4,8 @@ import { Innholdstittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
 
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import ModalFooter from '../../../felles-komponenter/modal/modal-footer';
+import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
+import ModalFooter from '../../../felles-komponenter/modal/ModalFooter';
 import FormErrorSummary from '../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Textarea from '../../../felles-komponenter/skjema/input/Textarea';
 

@@ -1,8 +1,7 @@
 import { AlertStripeInfo, AlertStripeSuksess } from 'nav-frontend-alertstriper';
 
-import hiddenIfHOC from './hidden-if';
+import hiddenIfHOC from './HiddenIf';
 
 export const HiddenIfAlertStripeSuksess = hiddenIfHOC(AlertStripeSuksess);
-export const HiddenIfAlertStripeSuksessSolid = hiddenIfHOC(AlertStripeSuksess);
 
 export const HiddenIfAlertStripeInfoSolid = hiddenIfHOC(AlertStripeInfo);

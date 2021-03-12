@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import Dato from '../../../felles-komponenter/dato';
 import Dropdown from '../../../felles-komponenter/dropdown/dropdown';
-import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
+import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/HiddenIf';
 import loggEvent, { LIST_HISTORISK_PERIODE, VIS_HISTORISK_PERIODE } from '../../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../../proptypes';

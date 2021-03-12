@@ -1,7 +1,7 @@
 import NavLenkepanel from 'nav-frontend-lenkepanel';
 import React from 'react';
 
-import hiddenIf from './hidden-if/hidden-if';
+import hiddenIf from './hidden-if/HiddenIf';
 import InternLenke from './utils/InternLenke';
 
 function LenkeUtenStyling(props) {

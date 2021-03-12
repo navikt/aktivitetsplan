@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import { STATUS } from '../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
-import Modal from '../../../felles-komponenter/modal/modal';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import Modal from '../../../felles-komponenter/modal/Modal';
+import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import * as AppPT from '../../../proptypes';
 import { fullforAktivitet } from '../aktivitet-actions';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';

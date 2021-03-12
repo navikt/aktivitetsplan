@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import styles from './etikett.module.less';
+import styles from './EtikettBase.module.less';
 
 interface Props {
     className?: string;
     children: React.ReactNode;
     hidden?: boolean;
 }
-function EtikettBase(props: Props) {
+const EtikettBase = (props: Props) => {
     const { className, children, hidden } = props;
 
     if (hidden) {
@@ -20,6 +20,6 @@ function EtikettBase(props: Props) {
             <span className={styles.etikettTekst}>{children}</span>
         </div>
     );
-}
+};
 
 export default EtikettBase;

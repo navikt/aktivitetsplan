@@ -2,7 +2,7 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
+import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfKnapper';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
 import { selectGjeldendeMal } from './aktivitetsmal-reducer';

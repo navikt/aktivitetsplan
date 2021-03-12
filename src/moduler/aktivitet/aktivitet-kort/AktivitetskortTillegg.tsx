@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { Henvendelse } from '../../../datatypes/dialogTypes';
-import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
+import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/HiddenIf';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
 import SokeStatusEtikett from '../etikett/SokeStatusEtikett';

@@ -1,7 +1,7 @@
 import PT from 'prop-types';
 import React from 'react';
 
-import hiddenIfHOC from './hidden-if/hidden-if';
+import hiddenIfHOC from './hidden-if/HiddenIf';
 
 function getText(antall) {
     if (antall === 1) {

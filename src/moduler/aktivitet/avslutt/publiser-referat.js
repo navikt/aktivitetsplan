@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import * as AppPT from '../../../proptypes';
 import { manglerPubliseringAvSamtaleReferat } from '../aktivitet-util';
 

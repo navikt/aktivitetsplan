@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
+import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfKnapper';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
 import Knappelenke from '../../felles-komponenter/utils/knappelenke';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';

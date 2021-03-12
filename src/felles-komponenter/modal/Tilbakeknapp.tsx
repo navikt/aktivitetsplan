@@ -8,8 +8,9 @@ interface TilbakeknappType {
     onClick: () => void;
 }
 
-export default function Tilbakeknapp(props: TilbakeknappType) {
+const Tilbakeknapp = (props: TilbakeknappType) => {
     const { tekst, onClick } = props;
+
     return (
         <InternLenke href="/" onClick={onClick} className="tilbakeknapp">
             <div className="tilbakeknapp-innhold">
@@ -18,4 +19,6 @@ export default function Tilbakeknapp(props: TilbakeknappType) {
             </div>
         </InternLenke>
     );
-}
+};
+
+export default Tilbakeknapp;
