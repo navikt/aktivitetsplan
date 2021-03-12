@@ -5,7 +5,7 @@ import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../../datatypes/oppfolgingTypes';
 import { Bruker } from '../../../datatypes/types';
-import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/HiddenIf';
+import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/hidden-if';
 import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstaver';
 import { formaterDatoKortManed } from '../../../utils';
 import logoPng from '../ikoner/logo.png';

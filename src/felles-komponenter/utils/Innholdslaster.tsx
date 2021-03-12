@@ -2,7 +2,7 @@ import Spinner from 'nav-frontend-spinner';
 import React from 'react';
 
 import { STATUS } from '../../api/utils';
-import HiddenIfHOC from '../hidden-if/HiddenIf';
+import HiddenIfHOC from '../hidden-if/hidden-if';
 
 function asArray<T>(value: T | T[]): T[] {
     return Array.isArray(value) ? value : [value];

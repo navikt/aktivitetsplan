@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import { erGyldigISODato, toDatePrettyPrint } from '../../../utils';
 
-export const validerDato = (value: string | null, tidligsteFom: string, senesteTom: string) => {
+export const validerDato = (value: string | null, tidligsteFom: string | undefined, senesteTom?: string) => {
     if (!value || value.trim().length === 0) {
         return null;
     }

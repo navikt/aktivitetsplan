@@ -32,6 +32,7 @@ interface Props {
     autoFocus?: boolean;
     textareaClass?: string;
     required?: boolean;
+    disabled?: boolean;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input

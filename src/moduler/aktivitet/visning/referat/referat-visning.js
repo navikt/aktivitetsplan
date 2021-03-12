@@ -6,7 +6,7 @@ import PT from 'prop-types';
 import React from 'react';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/HiddenIf';
+import HiddenIfDiv from '../../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../../proptypes';
 
 function ReferatVisning(props) {
