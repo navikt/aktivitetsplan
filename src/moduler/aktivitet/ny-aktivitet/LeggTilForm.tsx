@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
+import { useSkalBrukeNyMedisinskBehandling } from '../../../felles-komponenter/feature/feature';
 import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import Modal from '../../../felles-komponenter/modal/modal';
 import { selectErVeileder } from '../../identitet/identitet-selector';
@@ -12,6 +13,7 @@ import styles from './LeggTilForm.module.less';
 const LeggTilForm = () => {
     const erVeileder = useSelector(selectErVeileder);
     const aktivitetFeilmeldinger = useSelector(selectAktivitetFeilmeldinger);
+    const skalBrukeNyMedisinskBehandling = useSkalBrukeNyMedisinskBehandling();
 
     return (
         <Modal
@@ -36,7 +38,11 @@ const LeggTilForm = () => {
                 <Lenkepanel border href="/aktivitet/ny/sokeavtale" hidden={!erVeileder}>
                     Avtale om å søke jobber
                 </Lenkepanel>
-                <Lenkepanel border href="/aktivitet/ny/behandling" hidden={!erVeileder}>
+                <Lenkepanel
+                    border
+                    href="/aktivitet/ny/behandling"
+                    hidden={!erVeileder || skalBrukeNyMedisinskBehandling}
+                >
                     Medisinsk behandling
                 </Lenkepanel>
                 <Lenkepanel border href="/aktivitet/ny/mote" hidden={!erVeileder}>
@@ -63,6 +69,9 @@ const LeggTilForm = () => {
                 </Lenkepanel>
                 <Lenkepanel border href="/aktivitet/ny/egen" hidden={false}>
                     Jobbrettet egenaktivitet
+                </Lenkepanel>
+                <Lenkepanel border href="/aktivitet/ny/behandling" hidden={!skalBrukeNyMedisinskBehandling}>
+                    Medisinsk behandling
                 </Lenkepanel>
             </div>
         </Modal>
