@@ -5,7 +5,7 @@ import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import visibleIfHOC from '../../hocs/visible-if';
 import * as AppPT from '../../proptypes';
 import { hentMalverkMedType, settValgtMalverk, slettValgtMalverk } from './malverk-reducer';

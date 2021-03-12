@@ -11,7 +11,7 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../constant';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { hentAktiviteter } from '../../moduler/aktivitet/aktivitet-actions';
 import { selectDraggingAktivitet } from '../../moduler/aktivitet/aktivitet-kort/dragAndDropReducer';
 import { selectAktivitetStatus } from '../../moduler/aktivitet/aktivitet-selector';

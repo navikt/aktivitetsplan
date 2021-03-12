@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfKnapper';
-import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/innholdslaster';
-import Knappelenke from '../../felles-komponenter/utils/knappelenke';
+import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
+import Knappelenke from '../../felles-komponenter/utils/Knappelenke';
 import loggEvent, { TRYK_PRINT } from '../../felles-komponenter/utils/logging';
 
 interface Props {
@@ -21,7 +21,7 @@ function ModalHeader(props: Props) {
                         className="tilbakeknapp printmodal-header__tilbakeknapp"
                         onClick={!!tilbake ? tilbake : () => {}}
                         role="link"
-                        tabIndex="0"
+                        tabIndex={0}
                         hidden={!tilbake}
                     >
                         <div className="tilbakeknapp-innhold">

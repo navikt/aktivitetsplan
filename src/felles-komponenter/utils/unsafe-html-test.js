@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 /* eslint-env mocha */
 import React from 'react';
 
-import UnsafeHtml from './unsafe-html';
+import UnsafeHtml from './UnsafeHtml';
 
 describe('unsafe-html', () => {
     it('Skal kunne rendre uten props', () => {

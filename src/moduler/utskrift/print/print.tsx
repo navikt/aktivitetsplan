@@ -6,7 +6,7 @@ import { Dialog } from '../../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../../datatypes/oppfolgingTypes';
 import { Bruker } from '../../../datatypes/types';
 import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-komponenter/hidden-if/HiddenIf';
-import StoreForbokstaver from '../../../felles-komponenter/utils/store-forbokstaver';
+import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstaver';
 import { formaterDatoKortManed } from '../../../utils';
 import logoPng from '../ikoner/logo.png';
 import Adresse from './adresse';

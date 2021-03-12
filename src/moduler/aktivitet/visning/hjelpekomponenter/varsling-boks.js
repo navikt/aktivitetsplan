@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { MOTE_TYPE } from '../../../../constant';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/HiddenIf';
-import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import * as AppPT from '../../../../proptypes';
 import { selectDialogForAktivitetId, selectDialogStatus } from '../../../dialog/dialog-selector';
 import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/identitet-selector';

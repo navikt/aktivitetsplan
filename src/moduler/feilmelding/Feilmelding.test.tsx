@@ -3,7 +3,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import Knappelenke from '../../felles-komponenter/utils/knappelenke';
+import Knappelenke from '../../felles-komponenter/utils/Knappelenke';
 import { HENTING_FEILET as AKTIVITET_HENT_FEILET } from '../aktivitet/aktivitet-action-types';
 import { HENTING_FEILET as DIALOG_HENT_FEIL } from '../dialog/dialog-reducer';
 import Feilmelding from './Feilmelding';

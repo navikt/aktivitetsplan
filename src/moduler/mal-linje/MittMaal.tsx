@@ -10,10 +10,10 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { Lest } from '../../datatypes/aktivitetTypes';
 import { Mal, Me } from '../../datatypes/oppfolgingTypes';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import InternLenke from '../../felles-komponenter/utils/InternLenke';
 import { loggMittMalKlikk } from '../../felles-komponenter/utils/logging';
-import NotifikasjonMarkering from '../../felles-komponenter/utils/notifikasjon-markering';
+import NotifikasjonMarkering from '../../felles-komponenter/utils/NotifikasjonMarkering';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-selector';
 import { selectLestAktivitetsplan } from '../lest/lest-reducer';

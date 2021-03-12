@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
+import EksternLenkeIkon from '../../../../felles-komponenter/utils/EksternLenkeIkon';
 import DetaljFelt from './detalj-felt';
 
 const httpRegex = /^(https?):\/\/.*$/;

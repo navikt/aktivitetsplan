@@ -16,7 +16,7 @@ import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/h
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster from '../../../felles-komponenter/utils/Innholdslaster';
 import * as AppPT from '../../../proptypes';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';

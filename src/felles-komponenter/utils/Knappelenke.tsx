@@ -1,25 +1,25 @@
 import classNames from 'classnames';
-import PT from 'prop-types';
 import React from 'react';
 
 import visibleIfHOC from '../../hocs/visible-if';
 
-function Knappelenke({ onClick, className, ...rest }) {
-    function click(e) {
-        e.preventDefault();
-        onClick(e);
-    }
-
-    return <button type="button" {...rest} className={classNames('knappelenke', className)} onClick={click} />;
+interface Props {
+    className?: string;
+    role?: string;
+    tabIndex?: number;
+    hidden?: boolean;
+    onClick(e: React.MouseEvent): void;
 }
 
-Knappelenke.propTypes = {
-    onClick: PT.func.isRequired,
-    className: PT.string,
-};
+const Knappelenke = (props: Props) => {
+    const { onClick, role, className, ...rest } = props;
 
-Knappelenke.defaultProps = {
-    className: undefined,
+    const click = (e: React.MouseEvent) => {
+        e.preventDefault();
+        onClick(e);
+    };
+
+    return <button type="button" {...rest} className={classNames('knappelenke', className)} onClick={click} />;
 };
 
 export default visibleIfHOC(Knappelenke);

@@ -5,7 +5,7 @@ import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 
 import Feilmelding from '../../moduler/feilmelding/Feilmelding';
 import { FeilmeldingType } from '../../moduler/feilmelding/FeilmeldingTypes';
-import Innholdslaster, { Avhengighet } from '../utils/innholdslaster';
+import Innholdslaster, { Avhengighet } from '../utils/Innholdslaster';
 import ModalHeader from './ModalHeader';
 
 interface Props extends RouteComponentProps {
