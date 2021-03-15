@@ -17,6 +17,7 @@ import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-m
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import DeleLinje from '../delelinje/delelinje';
+import ForhaandsorienteringArenaAktivitetWrapper from '../forhaandsorientering-arena/ForhaandsorienteringArenaAktivitet';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 
 const visningsIngress = (type: AktivitetType) => {
@@ -36,8 +37,10 @@ interface Props {
     underOppfolging: boolean;
 }
 
-const AktivitetinformasjonVisning = ({ valgtAktivitet, tillatEndring, laster, underOppfolging }: Props) => {
+const AktivitetinformasjonVisning = (props: Props) => {
+    const { valgtAktivitet, tillatEndring, laster, underOppfolging } = props;
     const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
+
     const ikkeDelt = SkalIkkeDeltMarkeringVises(valgtAktivitet);
 
     return (
@@ -67,6 +70,7 @@ const AktivitetinformasjonVisning = ({ valgtAktivitet, tillatEndring, laster, un
                 aktivitet={valgtAktivitet}
                 className="aktivitetvisning__underseksjon"
             />
+            <ForhaandsorienteringArenaAktivitetWrapper aktivitet={valgtAktivitet} />
             <div className="aktivitetvisning__underseksjon">
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>

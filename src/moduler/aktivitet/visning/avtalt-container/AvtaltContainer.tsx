@@ -3,7 +3,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
-import { STATUS_AVBRUTT, STATUS_FULLFOERT, UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
+import {
+    GRUPPE_AKTIVITET_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+    TILTAK_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+} from '../../../../constant';
 import { Aktivitet, Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { erMerEnnSyvDagerTil } from '../../../../utils';
@@ -39,7 +45,7 @@ const AvtaltContainer = (props: Props) => {
     const aktivitetStatus = useSelector(selectAktivitetStatus);
     const erBruker = useSelector(selectErBruker);
 
-    const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
+    const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
 
     if (
@@ -48,7 +54,7 @@ const AvtaltContainer = (props: Props) => {
         !underOppfolging ||
         status === STATUS_FULLFOERT ||
         status === STATUS_AVBRUTT ||
-        arenaAktivitet
+        erArenaAktivitet
     ) {
         return null;
     }
