@@ -9,7 +9,7 @@ interface Props {
 
 const ForNavAnsattMarkeringWrapper = ({ children }: Props) => (
     <div className={styles.navAnsattContainer}>
-        {children}
+        <div className={styles.navAnsattChildren}>{children}</div>
         <EtikettLiten className={styles.navAnsattTekst}>FOR NAV-ANSATT</EtikettLiten>
     </div>
 );
