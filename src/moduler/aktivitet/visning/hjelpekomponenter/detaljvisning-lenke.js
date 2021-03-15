@@ -16,7 +16,11 @@ export default function DetaljvisningLenke({ lenke }) {
             visible={!!(lenke && lenke.trim())}
             fullbredde
         >
-            <Lenke href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`} className="detaljfelt__lenke">
+            <Lenke
+                target="_blank"
+                href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
+                className="detaljfelt__lenke"
+            >
                 {lenke}
                 <EksternLenkeIkon />
             </Lenke>
