@@ -1,18 +1,18 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import styles from './Forhaandsorienteringsvisning.module.less';
 
 interface Props {
-    forhaandsorientering?: Forhaandsorientering;
+    forhaandsorienteringTekst?: String;
+    hidden: boolean;
 }
 
 const Forhaandsorenteringsvisning = (props: Props) => {
-    const forhaandsorientering = props.forhaandsorientering;
+    const { forhaandsorienteringTekst, hidden } = props;
 
-    if (!forhaandsorientering || forhaandsorientering.type === ForhaandsorienteringType.IKKE_SEND) {
+    if (hidden) {
         return null;
     }
 
@@ -24,7 +24,7 @@ const Forhaandsorenteringsvisning = (props: Props) => {
             lukkeTekst="Lukk"
             defaultAapen
         >
-            <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorientering.tekst}</Normaltekst>
+            <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</Normaltekst>
         </EkspanderbarLinje>
     );
 };

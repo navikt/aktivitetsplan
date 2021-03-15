@@ -51,6 +51,7 @@ const ForhaandsorienteringArenaAktivitet = (props: Props) => {
     const kanVarsles = erManuellBruker || erUnderKvp || erReservertKrr || !harNivaa4;
 
     const erBrukerOgKanVarsles = !erBruker && !kanVarsles;
+    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
 
     if (
         [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) ||
@@ -63,7 +64,10 @@ const ForhaandsorienteringArenaAktivitet = (props: Props) => {
         return (
             <>
                 <DeleLinje />
-                <Forhaandsorenteringsvisning forhaandsorientering={aktivitet.forhaandsorientering} />
+                <Forhaandsorenteringsvisning
+                    forhaandsorienteringTekst={forhaandsorienteringTekst}
+                    hidden={!forhaandsorienteringTekst}
+                />
                 <DeleLinje />
             </>
         );
@@ -83,7 +87,10 @@ const ForhaandsorienteringArenaAktivitet = (props: Props) => {
                 />
                 <ForhaandsorienteringLagtTilInfotekst forhaandsorienteringIkkeLagtTil={!forhaandsorienteringLagtTil} />
             </div>
-            <Forhaandsorenteringsvisning forhaandsorientering={aktivitet.forhaandsorientering} />
+            <Forhaandsorenteringsvisning
+                forhaandsorienteringTekst={forhaandsorienteringTekst}
+                hidden={!forhaandsorienteringTekst}
+            />
             <DeleLinje />
         </>
     );

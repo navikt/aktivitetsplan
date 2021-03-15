@@ -30,19 +30,23 @@ const getText = (
 interface Props {
     mindreEnnSyvDagerTil: boolean;
     forhaandsorienteringstype: ForhaandsorienteringType;
-    className?: string;
+    hidden: boolean;
 }
 
 //TODO: Husk å slette tekstfil sett-avtalt-bekreftelse
 const SattTilAvtaltInfotekst = (props: Props) => {
     const kanSendeVarsel = useKanSendeVarsel();
 
-    const { mindreEnnSyvDagerTil, forhaandsorienteringstype, className } = props;
+    const { mindreEnnSyvDagerTil, forhaandsorienteringstype, hidden } = props;
+
+    if (hidden) {
+        return null;
+    }
 
     const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringstype);
 
     return (
-        <div className={className}>
+        <div className="aktivitetvisning__underseksjon">
             <AlertStripeSuksess>{text}</AlertStripeSuksess>
         </div>
     );
