@@ -2,7 +2,6 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import DeleLinje from '../delelinje/delelinje';
 import { useKanSendeVarsel } from './avtaltHooks';
 
 const getText = (
@@ -43,12 +42,9 @@ const SattTilAvtaltInfotekst = (props: Props) => {
     const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringstype);
 
     return (
-        <>
-            <DeleLinje />
-            <div className={className}>
-                <AlertStripeSuksess>{text}</AlertStripeSuksess>
-            </div>
-        </>
+        <div className={className}>
+            <AlertStripeSuksess>{text}</AlertStripeSuksess>
+        </div>
     );
 };
 

@@ -9,7 +9,6 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
-import ModalContainer from '../../../../felles-komponenter/modal/modal-container';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
@@ -19,7 +18,6 @@ import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
-import Forhaandsorenteringsvisning from './Forhaandsorenteringsvisning';
 
 const visningsIngress = (type: AktivitetType) => {
     if (
@@ -69,7 +67,6 @@ const AktivitetinformasjonVisning = ({ valgtAktivitet, tillatEndring, laster, un
                 aktivitet={valgtAktivitet}
                 className="aktivitetvisning__underseksjon"
             />
-            <Forhaandsorenteringsvisning forhaandsorientering={valgtAktivitet.forhaandsorientering} />
             <div className="aktivitetvisning__underseksjon">
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>

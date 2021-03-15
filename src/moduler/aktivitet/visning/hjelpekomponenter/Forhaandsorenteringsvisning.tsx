@@ -3,7 +3,6 @@ import React from 'react';
 
 import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
-import DeleLinje from '../delelinje/delelinje';
 import styles from './Forhaandsorienteringsvisning.module.less';
 
 interface Props {
@@ -18,19 +17,15 @@ const Forhaandsorenteringsvisning = (props: Props) => {
     }
 
     return (
-        <>
-            <DeleLinje />
-            <EkspanderbarLinje
-                tittel="Informasjon om ansvaret ditt"
-                kanToogle
-                aapneTekst="Les mer"
-                lukkeTekst="Lukk"
-                defaultAapen
-            >
-                <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorientering.tekst}</Normaltekst>
-            </EkspanderbarLinje>
-            <DeleLinje />
-        </>
+        <EkspanderbarLinje
+            tittel="Informasjon om ansvaret ditt"
+            kanToogle
+            aapneTekst="Les mer"
+            lukkeTekst="Lukk"
+            defaultAapen
+        >
+            <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorientering.tekst}</Normaltekst>
+        </EkspanderbarLinje>
     );
 };
 

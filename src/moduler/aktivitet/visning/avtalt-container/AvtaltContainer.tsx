@@ -12,9 +12,11 @@ import { settAktivitetTilAvtalt } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import AvtaltContainerGammel from '../avtalt-container-gammel/AvtaltContainer-gammel';
 import DeleLinje from '../delelinje/delelinje';
+import Forhaandsorenteringsvisning from '../hjelpekomponenter/Forhaandsorenteringsvisning';
 import AvtaltForm, { Handler } from './AvtaltForm';
 import { useSendAvtaltMetrikker } from './avtaltHooks';
 import SattTilAvtaltInfotekst from './SattTilAvtaltInfotekst';
+import { ForhaandsorienteringDialogProps, getForhaandsorienteringText } from './utilsForhaandsorientering';
 
 interface Props {
     underOppfolging: boolean;
@@ -22,43 +24,21 @@ interface Props {
     className: string;
 }
 
-interface ForhaandsorienteringDialogProps {
-    avtaltText: string;
-    avtaltText119: string;
-    forhaandsorienteringType: ForhaandsorienteringType;
-}
-
-const getForhaandsorienteringText = (avtaltTextProps: ForhaandsorienteringDialogProps) => {
-    switch (avtaltTextProps.forhaandsorienteringType) {
-        case ForhaandsorienteringType.SEND_STANDARD:
-            return avtaltTextProps.avtaltText;
-        case ForhaandsorienteringType.SEND_PARAGRAF_11_9:
-            return avtaltTextProps.avtaltText119;
-        case ForhaandsorienteringType.IKKE_SEND:
-            return '';
-        default:
-            throw new Error('Ukjent avtalttype');
-    }
-};
-
 const AvtaltContainer = (props: Props) => {
     const { underOppfolging, aktivitet, className } = props;
+    const { type, status, historisk, avtalt } = aktivitet;
+
     const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState<ForhaandsorienteringType>(
         ForhaandsorienteringType.IKKE_SEND
     );
+
     const dispatch = useDispatch();
-
-    const doSettAktivitetTilAvtaltNy = (aktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
-        dispatch(settAktivitetTilAvtalt(aktivitet, forhaandsorientering));
-
-    const aktivitetStatus = useSelector(selectAktivitetStatus);
     const sendMetrikker = useSendAvtaltMetrikker();
 
+    const aktivitetStatus = useSelector(selectAktivitetStatus);
     const erBruker = useSelector(selectErBruker);
-    const { type, status, historisk, avtalt } = aktivitet;
-    const lasterData = aktivitetStatus !== STATUS.OK;
-    const oppdaterer = aktivitetStatus === STATUS.RELOADING;
+
     const arenaAktivitet = UTDANNING_AKTIVITET_TYPE === type;
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
 
@@ -73,20 +53,42 @@ const AvtaltContainer = (props: Props) => {
         return null;
     }
 
+    if (
+        !sendtAtErAvtaltMedNav &&
+        aktivitet.forhaandsorientering &&
+        aktivitet.forhaandsorientering.type === ForhaandsorienteringType.IKKE_SEND
+    ) {
+        return null;
+    }
+
     // Kun vis bekreftet hvis nettopp satt til avtalt.
     if (!sendtAtErAvtaltMedNav && avtalt) {
-        return null;
+        return (
+            <>
+                <DeleLinje />
+                <Forhaandsorenteringsvisning forhaandsorientering={aktivitet.forhaandsorientering} />
+                <DeleLinje />
+            </>
+        );
     }
 
     if (avtalt) {
         return (
-            <SattTilAvtaltInfotekst
-                mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
-                forhaandsorienteringstype={forhandsorienteringType}
-                className={className}
-            />
+            <>
+                <DeleLinje />
+                <SattTilAvtaltInfotekst
+                    mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
+                    forhaandsorienteringstype={forhandsorienteringType}
+                    className={className}
+                />
+                <Forhaandsorenteringsvisning forhaandsorientering={aktivitet.forhaandsorientering} />
+                <DeleLinje />
+            </>
         );
     }
+
+    const doSettAktivitetTilAvtaltNy = (aktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
+        dispatch(settAktivitetTilAvtalt(aktivitet, forhaandsorientering));
 
     const onSubmit: Handler = (avtaltFormMapped: Values<ForhaandsorienteringDialogProps>) => {
         const avtaltForm: ForhaandsorienteringDialogProps = avtaltFormMapped as ForhaandsorienteringDialogProps;
@@ -107,9 +109,9 @@ const AvtaltContainer = (props: Props) => {
             <DeleLinje />
             <AvtaltForm
                 className={`${className} avtalt-container`}
-                oppdaterer={oppdaterer}
+                oppdaterer={aktivitetStatus === STATUS.RELOADING}
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
-                lasterData={lasterData}
+                lasterData={aktivitetStatus !== STATUS.OK}
                 onSubmit={onSubmit}
             />
             <DeleLinje />
