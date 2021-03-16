@@ -20,26 +20,27 @@ export interface Lest {
     ressurs: string;
 }
 
-export interface Aktivitet {
-    //denne er ikke komplett
+interface AktivitetRequiredProps {
     id: string;
     versjon: string;
-    tittel?: string;
-    fraDato?: string;
-    tilDato?: string;
+    tittel: string;
     opprettetDato: string;
-    endretDato?: string;
     status: AktivitetStatus;
     type: AktivitetType;
+    endretAv: string;
+    avtalt: boolean;
+}
+export interface Aktivitet extends AktivitetRequiredProps {
+    fraDato?: string;
+    tilDato?: string;
+    endretDato?: string;
     avsluttetKommentar?: string;
     etikett?: StillingsStatus;
     historisk?: boolean;
     forhaandsorientering?: Forhaandsorientering;
     lagtInnAv?: string;
     detaljer?: object;
-    endretAv: string;
     beskrivelse?: string;
-    avtalt?: boolean;
     erReferatPublisert?: boolean;
     nesteStatus?: AktivitetStatus;
     referat?: string;
@@ -47,6 +48,16 @@ export interface Aktivitet {
     antallStillingerSokes?: number;
     antallStillingerIUken?: number;
     arenaAktivitet?: boolean;
+}
+
+export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
+    fraDato: string;
+    tilDato: string;
+    behandlingType: string;
+    behandlingSted: string;
+    effekt: string; //TODO: Rename i api, mål for behandlingen
+    behandlingOppfolging: string; //oppfølging fra nav, utgått
+    beskrivelse: string;
 }
 
 enum ArenaEtikett {

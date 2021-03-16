@@ -21,7 +21,7 @@ import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { selectErUnderOppfolging } from '../../oppfolging-status/oppfolging-selector';
 import { lagNyAktivitet } from '../aktivitet-actions';
-import BehandlingAktivitetForm from '../aktivitet-forms/behandling/AktivitetBehandlingForm';
+import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
 import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';
@@ -98,7 +98,7 @@ function NyAktivitetForm(props) {
                             />
                         </Route>
                         <Route path={`${match.path}/behandling`}>
-                            <BehandlingAktivitetForm
+                            <MedisinskBehandlingForm
                                 onSubmit={onSubmitFactory(BEHANDLING_AKTIVITET_TYPE)}
                                 isDirtyRef={isDirty}
                             />

@@ -12,7 +12,7 @@ import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster'
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../tilgang/tilgang-selector';
-import ForNavAnsattMarkering from '../hjelpekomponenter/ForNavAnsattMarkering';
+import ForNavAnsattMarkeringWrapper from '../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import styles from './AvtaltForm.module.less';
 import { useKanSendeVarsel } from './avtaltHooks';
 import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
@@ -98,7 +98,7 @@ const AvtaltForm = (props: Props) => {
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
             <SkjemaGruppe>
-                <div className={styles.navAnsattContainer}>
+                <ForNavAnsattMarkeringWrapper>
                     <div className={styles.checkbox}>
                         <Checkbox
                             label="Avtalt med NAV"
@@ -113,8 +113,7 @@ const AvtaltForm = (props: Props) => {
                             </div>
                         </Hjelpetekst>
                     </div>
-                    <ForNavAnsattMarkering />
-                </div>
+                </ForNavAnsattMarkeringWrapper>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv className={classNames(kanSendeForhaandsvarsel && styles.innhold)} visible={avtalt}>
                         <KanIkkeSendeForhaandsorienteringInfotekst mindreEnnSyvDagerTil={mindreEnnSyvDagerTil} />
