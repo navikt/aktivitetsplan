@@ -10,7 +10,6 @@ import {
 } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
-import { erMerEnnSyvDagerTil } from '../../../../utils';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import {
     selectErBrukerManuell,
@@ -18,12 +17,9 @@ import {
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
-import DeleLinje from '../delelinje/delelinje';
 import ForhandsorienteringArenaAktivitetGammel from '../forhandsorientering-gammel/ForhandsorienteringArenaAktivitetGammel';
-import Forhaandsorenteringsvisning from '../hjelpekomponenter/Forhaandsorenteringsvisning';
-import ForhaandsorieteringsForm from './ForhaandsorienteringForm';
-import ForhaandsorienteringLagtTilInfotekst from './ForhaandsorienteringLagtTilInfotekst';
-import KanIkkeLeggeTilForhaandsorienteringInfotekst from './KanIkkeLeggeTilForhaandsorienteringInfotekst';
+import ArenaForhaandsorienteringFormKomponent from './ArenaForhaandsorienteringFormKomponent';
+import ArenaForhaandsorienteringKomponent from './ArenaForhaandsorienteringKomponent';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -43,56 +39,29 @@ const ForhaandsorienteringArenaAktivitet = (props: Props) => {
     const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(
         aktivitet.type
     );
+    const erIFullfortStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status);
+    const kanVarsles = erManuellBruker || erUnderKvp || erReservertKrr || !harNivaa4;
+    const erBrukerOgKanVarsles = !erBruker && !kanVarsles;
+    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
 
     if (!erArenaAktivitet) {
         return null;
     }
 
-    const kanVarsles = erManuellBruker || erUnderKvp || erReservertKrr || !harNivaa4;
-
-    const erBrukerOgKanVarsles = !erBruker && !kanVarsles;
-    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
-
-    if (
-        [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(aktivitet.status) ||
-        (!erBrukerOgKanVarsles && !forhaandsorienteringLagtTil)
-    ) {
+    if (erIFullfortStatus || (!erBrukerOgKanVarsles && !forhaandsorienteringLagtTil)) {
         return null;
     }
 
     if (!forhaandsorienteringLagtTil && aktivitet.forhaandsorientering) {
-        return (
-            <>
-                <DeleLinje />
-                <Forhaandsorenteringsvisning
-                    forhaandsorienteringTekst={forhaandsorienteringTekst}
-                    hidden={!forhaandsorienteringTekst}
-                />
-                <DeleLinje />
-            </>
-        );
+        return <ArenaForhaandsorienteringKomponent forhaandsorienteringTekst={forhaandsorienteringTekst} />;
     }
 
-    const merEnnSyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
-
     return (
-        <>
-            <DeleLinje />
-            <div className="aktivitetvisning__underseksjon">
-                <KanIkkeLeggeTilForhaandsorienteringInfotekst merEnnSyvDagerTil={merEnnSyvDagerTil} />
-                <ForhaandsorieteringsForm
-                    valgtAktivitet={aktivitet}
-                    visible={merEnnSyvDagerTil && !forhaandsorienteringLagtTil}
-                    forhandsorienteringSendt={() => setForhaandsorienteringLagtTil(true)}
-                />
-                <ForhaandsorienteringLagtTilInfotekst forhaandsorienteringIkkeLagtTil={!forhaandsorienteringLagtTil} />
-            </div>
-            <Forhaandsorenteringsvisning
-                forhaandsorienteringTekst={forhaandsorienteringTekst}
-                hidden={!forhaandsorienteringTekst}
-            />
-            <DeleLinje />
-        </>
+        <ArenaForhaandsorienteringFormKomponent
+            aktivitet={aktivitet}
+            forhaandsorienteringLagtTil={forhaandsorienteringLagtTil}
+            forhandsorienteringSendt={() => setForhaandsorienteringLagtTil(true)}
+        />
     );
 };
 
