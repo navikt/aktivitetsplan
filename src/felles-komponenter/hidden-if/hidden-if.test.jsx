@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 
-import hiddenIfHOC from './HiddenIf';
+import hiddenIfHOC from './hidden-if';
 
 describe('hidden-if', () => {
     it('Skal rendre hvis hidden er undefined', () => {

@@ -3,7 +3,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
 
-import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/HiddenIf';
+import HiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
 import DetaljFelt from './detalj-felt';
 
 export default function Informasjonsfelt({ tittel, innhold, fullbredde, formattertTekst, beskrivelse }) {

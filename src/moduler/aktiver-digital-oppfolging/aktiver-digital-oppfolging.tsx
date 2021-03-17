@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../api/utils';
-import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/HiddenIfKnapper';
+import { HiddenIfHovedknapp } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import { settDigital } from '../oppfolging-status/oppfolging-reducer';
 import { selectOppfolgingStatus, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import AktiverDigitalOppfolgingVarsel from './aktiver-digital-oppfolging-varsel';

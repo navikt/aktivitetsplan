@@ -4,7 +4,7 @@ import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import {
     HiddenIfAlertStripeInfoSolid,
     HiddenIfAlertStripeSuksess,
-} from '../../../../felles-komponenter/hidden-if/HiddenIfAlertstriper';
+} from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
 import visibleIfHOC from '../../../../hocs/visible-if';
 import * as AppPT from '../../../../proptypes';
 import { autobind, erMerEnnSyvDagerTil } from '../../../../utils';

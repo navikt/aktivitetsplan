@@ -1,5 +1,5 @@
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import hiddenIfHOC from './HiddenIf';
+import hiddenIfHOC from './hidden-if';
 
 export const HiddenIfHovedknapp = hiddenIfHOC(Hovedknapp);

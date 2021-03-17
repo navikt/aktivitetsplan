@@ -4,7 +4,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import hiddenIf from '../../felles-komponenter/hidden-if/HiddenIf';
+import hiddenIf from '../../felles-komponenter/hidden-if/hidden-if';
 import InternLenke from '../../felles-komponenter/utils/InternLenke';
 
 export function Varsling({ tekstId, className }) {

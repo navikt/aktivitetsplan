@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
-import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/HiddenIf';
+import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { autobind } from '../../../../utils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
