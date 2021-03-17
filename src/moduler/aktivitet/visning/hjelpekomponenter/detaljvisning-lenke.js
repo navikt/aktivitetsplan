@@ -3,7 +3,6 @@ import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import EksternLenkeIkon from '../../../../felles-komponenter/utils/EksternLenkeIkon';
 import DetaljFelt from './detalj-felt';
 
 const httpRegex = /^(https?):\/\/.*$/;
@@ -16,9 +15,12 @@ export default function DetaljvisningLenke({ lenke }) {
             visible={!!(lenke && lenke.trim())}
             fullbredde
         >
-            <Lenke href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`} className="detaljfelt__lenke">
-                {lenke}
-                <EksternLenkeIkon />
+            <Lenke
+                target="_blank"
+                href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
+                className="detaljfelt__lenke"
+            >
+                {lenke} (åpnes i ny fane)
             </Lenke>
         </DetaljFelt>
     );

@@ -15,7 +15,7 @@ export const validerPeriode = (fradato: string, tildato: string) => {
 
 export const validerPeriodeFelt = (fraDato: string, tilDato: string) => {
     const isValidPeriode = !validerPeriode(fraDato, tilDato);
-    return isValidPeriode ? 'Fra dato kan ikke være etter til dato' : null;
+    return isValidPeriode ? 'Fra dato kan ikke være etter til dato' : undefined;
 };
 
 interface ValideringFelt {

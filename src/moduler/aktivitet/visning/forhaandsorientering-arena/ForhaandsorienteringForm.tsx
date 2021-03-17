@@ -10,6 +10,7 @@ import Checkbox from '../../../../felles-komponenter/skjema/input/Checkbox';
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../dialog/dialog-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../arena-aktiviteter-reducer';
+import ForNavAnsattMarkeringWrapper from '../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import styles from './ForhaandsorienteringForm.module.less';
 import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 
@@ -80,7 +81,9 @@ const ForhaandsorieteringsForm = (props: Props) => {
 
     return (
         <form onSubmit={state.onSubmit(onSubmit)}>
-            <Normaltekst className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</Normaltekst>
+            <ForNavAnsattMarkeringWrapper>
+                <Normaltekst className={styles.tittel}>Tiltaket er automatisk merket "Avtalt med NAV"</Normaltekst>
+            </ForNavAnsattMarkeringWrapper>
 
             <SkjemaGruppe>
                 <Checkbox label="Legg til forhåndsorientering" disabled={lasterData} {...state.fields.checked} />
