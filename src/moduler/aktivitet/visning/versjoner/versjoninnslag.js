@@ -7,7 +7,7 @@ import {
     TRANSAKSJON_TYPE_ETIKETT_ENDRET,
     TRANSAKSJON_TYPE_STATUS_ENDRET,
 } from '../../../../constant';
-import BrukerAvhengigTekst from '../../../../felles-komponenter/brukeravhengigtekst';
+import BrukeravhengigTekst from '../../../../felles-komponenter/BrukeravhengigTekst';
 import * as AppPT from '../../../../proptypes';
 import { formaterDatoEllerTidSiden, formaterDatoKortManed } from '../../../../utils';
 
@@ -56,7 +56,7 @@ function VersjonInnslag({ versjon, prevVersjon }) {
     return (
         <div className="versjon-for-aktivitet-innslag">
             <Element className="versjon-for-aktivitet-innslag__identitet">
-                <BrukerAvhengigTekst id={`lagtInnAv.${versjon.lagtInnAv}`} endretAv={versjon.endretAv} />
+                <BrukeravhengigTekst id={`lagtInnAv.${versjon.lagtInnAv}`} endretAv={versjon.endretAv} />
                 &nbsp;
             </Element>
             {endringsTekst()}

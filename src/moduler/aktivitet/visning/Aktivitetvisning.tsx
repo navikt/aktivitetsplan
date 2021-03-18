@@ -2,7 +2,7 @@ import React from 'react';
 
 import { GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../../constant';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';

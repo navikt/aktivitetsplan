@@ -4,8 +4,8 @@ import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 
-import ModalContainer from '../modal/modal-container';
-import ModalFooter from '../modal/modal-footer';
+import ModalContainer from '../modal/ModalContainer';
+import ModalFooter from '../modal/ModalFooter';
 import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
 
 class TimeoutboxNedtelling extends Component {

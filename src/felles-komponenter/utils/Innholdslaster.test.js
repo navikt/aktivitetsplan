@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 
 import { STATUS } from '../../api/utils';
-import Innholdslaster from './innholdslaster';
+import Innholdslaster from './Innholdslaster';
 
 describe('innholdslaster', () => {
     it('Skal rendre spinner hvis ikke alle avhengigheter har blitt lastet og det ikke er noen feil', () => {

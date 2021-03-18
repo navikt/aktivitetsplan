@@ -2,7 +2,7 @@ import { Select as NavSelect, SelectProps } from 'nav-frontend-skjema';
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 
-import { FieldStateInput } from './utils';
+import { FieldStateInput } from './inputTypes';
 
 interface Props {
     initialValue?: string;
@@ -13,8 +13,9 @@ interface Props {
     error?: string;
     input: FieldStateInput;
 }
+
 // pristine and initialValue isn't used, but we don't want to pass it to input
-function Select(props: Props & SelectProps) {
+const Select = (props: Props & SelectProps) => {
     const { touched, error, input, pristine, initialValue, noBlankOption, children, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
@@ -25,6 +26,6 @@ function Select(props: Props & SelectProps) {
             {children}
         </NavSelect>
     );
-}
+};
 
 export default Select;

@@ -21,7 +21,7 @@ interface InternLenkeProps {
     disabled?: boolean;
 }
 
-function InternLenke(props: InternLenkeProps) {
+const InternLenke = (props: InternLenkeProps) => {
     const { id, href, className, skipLenkeStyling, children, onClick, role, hidden } = props;
     const fodselsnummer = getFodselsnummer();
     const internHref = (fodselsnummer ? `/${fodselsnummer}` : '') + href;
@@ -35,6 +35,6 @@ function InternLenke(props: InternLenkeProps) {
             {children}
         </Link>
     );
-}
+};
 
 export default InternLenke;

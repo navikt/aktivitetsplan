@@ -16,7 +16,7 @@ const alleErOK = (avhengigheter: string[]): boolean => avhengigheter.every(harSt
 
 const HiddenIfSpinner = HiddenIfHOC(Spinner);
 
-type Avhengighet = Status | { status?: Status } | null | undefined;
+export type Avhengighet = Status | { status?: Status } | null | undefined;
 export interface InnholdslasterProps {
     avhengigheter?: Avhengighet[] | Avhengighet;
     children: React.ReactNode;
@@ -30,7 +30,7 @@ export interface InnholdslasterProps {
 type Status = 'NOT_STARTED' | 'PENDING' | 'OK' | 'RELOADING' | 'ERROR';
 type InternStatus = Status | 'NOT_SETT';
 
-function toStatus(avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] {
+const toStatus = (avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] => {
     if (!avhengiheter) {
         return [];
     }
@@ -38,17 +38,17 @@ function toStatus(avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] {
     return asArray(avhengiheter)
         .map((element) => (!element || typeof element === 'string' ? element : element.status))
         .map((element) => (element ? element : 'NOT_SETT'));
-}
+};
 
-function Innholdslaster(props: InnholdslasterProps) {
+const Innholdslaster = (props: InnholdslasterProps) => {
     const {
         avhengigheter,
-        spinnerStorrelse,
+        spinnerStorrelse = 'XL',
         className,
         children,
-        minstEn,
-        visChildrenVedFeil,
-        alleOK,
+        minstEn = false,
+        visChildrenVedFeil = false,
+        alleOK = false,
         ...rest
     } = props;
 
@@ -69,14 +69,6 @@ function Innholdslaster(props: InnholdslasterProps) {
     }
 
     return <HiddenIfSpinner hidden={noenHarFeil(statuser)} className={className} type={spinnerStorrelse} />;
-}
-
-Innholdslaster.defaultProps = {
-    spinnerStorrelse: 'XL',
-    className: '',
-    minstEn: false,
-    visChildrenVedFeil: false,
-    alleOK: false,
 };
 
 export default Innholdslaster;

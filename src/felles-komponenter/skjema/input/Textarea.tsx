@@ -1,7 +1,7 @@
 import { Textarea as NavTextArea } from 'nav-frontend-skjema';
 import React from 'react';
 
-function getTellerTekst(antallTegn: number, maxLength: number, visTellerFra?: number) {
+const getTellerTekst = (antallTegn: number, maxLength: number, visTellerFra?: number) => {
     const tegnIgjen = maxLength - antallTegn;
     const tegnForMange = antallTegn - maxLength;
     const tellerFra = visTellerFra || maxLength;
@@ -13,7 +13,7 @@ function getTellerTekst(antallTegn: number, maxLength: number, visTellerFra?: nu
         return `Du har ${tegnIgjen} tegn igjen`;
     }
     return null;
-}
+};
 
 interface Input {
     value: string;
@@ -36,7 +36,7 @@ interface Props {
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
-function Textarea(props: Props) {
+const Textarea = (props: Props) => {
     const { touched, error, input, pristine, initialValue, visTellerFra, required, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
@@ -49,6 +49,6 @@ function Textarea(props: Props) {
             {...inputProps}
         />
     );
-}
+};
 
 export default Textarea;

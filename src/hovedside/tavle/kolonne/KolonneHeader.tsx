@@ -1,5 +1,4 @@
 import { Undertittel } from 'nav-frontend-typografi';
-import PT from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,8 +11,7 @@ import {
 } from '../../../constant';
 import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
 
-// HAR DETTE NOE MED UU ATT GORA???
-function hjelpeklasse(aktivitetStatus) {
+const mapKlassenavn = (aktivitetStatus: string) => {
     switch (aktivitetStatus) {
         case STATUS_BRUKER_ER_INTRESSERT:
         case STATUS_PLANLAGT:
@@ -27,21 +25,23 @@ function hjelpeklasse(aktivitetStatus) {
         default:
             return null;
     }
+};
+
+interface Props {
+    status: string;
 }
 
-function KolonneHeader({ status }) {
+const KolonneHeader = (props: Props) => {
+    const { status } = props;
+
     return (
-        <div className={`aktivitetstavle__kolonne-header-wrapper ${hjelpeklasse(status)}`}>
+        <div className={`aktivitetstavle__kolonne-header-wrapper ${mapKlassenavn(status)}`}>
             <Undertittel className="aktivitetstavle__kolonne-header" tag="h2">
                 <FormattedMessage id={`aktivitetstavle.${status}`} />
             </Undertittel>
             <AktivitetsplanHjelpetekst status={status} />
         </div>
     );
-}
-
-KolonneHeader.propTypes = {
-    status: PT.string.isRequired,
 };
 
 export default KolonneHeader;

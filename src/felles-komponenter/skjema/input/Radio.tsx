@@ -2,7 +2,7 @@ import { Radio as NavRadio } from 'nav-frontend-skjema';
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
-import { FieldStateInput } from './utils';
+import { FieldStateInput } from './inputTypes';
 
 interface RadioProps {
     id?: string;
@@ -18,11 +18,11 @@ interface RadioProps {
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
-function Radio(props: RadioProps) {
+const Radio = (props: RadioProps) => {
     const { value, touched, error, input, pristine, initialValue, ...rest } = props;
     const inputProps = { ...input, ...rest };
 
     return <NavRadio {...inputProps} value={value} checked={value === input.value} id={`id--${value}`} />;
-}
+};
 
 export default Radio;

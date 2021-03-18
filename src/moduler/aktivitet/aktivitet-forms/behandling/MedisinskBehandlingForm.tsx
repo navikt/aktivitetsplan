@@ -8,7 +8,7 @@ import { useSkalBrukeNyMedisinskBehandling } from '../../../../felles-komponente
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import PeriodeValidering, {
     validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/periode-validering';
+} from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { HiddenIfInput as Input } from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';

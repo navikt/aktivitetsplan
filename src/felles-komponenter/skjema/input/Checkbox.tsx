@@ -1,7 +1,7 @@
 import { CheckboxProps, Checkbox as NavCheckbox } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 
-import { FieldStateInput } from './utils';
+import { FieldStateInput } from './inputTypes';
 
 interface Props {
     initialValue?: string;
@@ -11,7 +11,7 @@ interface Props {
     input: FieldStateInput;
 }
 // pristine isn't used, but we don't want to pass it to input
-function Checkbox(props: Props & CheckboxProps) {
+const Checkbox = (props: Props & CheckboxProps) => {
     const { touched, error, input, pristine, initialValue, ...rest } = props;
 
     const inputProps = { ...input, ...rest };
@@ -28,6 +28,6 @@ function Checkbox(props: Props & CheckboxProps) {
 
     const feil = error && touched ? error : undefined;
     return <NavCheckbox {...inputProps} checked={input.value === 'true'} feil={feil} onChange={toggelOnChange} />;
-}
+};
 
 export default Checkbox;

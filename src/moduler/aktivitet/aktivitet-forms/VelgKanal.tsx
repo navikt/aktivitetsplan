@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { INTERNET_KANAL, OPPMOTE_KANAL, TELEFON_KANAL } from '../../../constant';
-import Select from '../../../felles-komponenter/skjema/input/select';
+import Select from '../../../felles-komponenter/skjema/input/Select';
 
 const VelgKanal = (props: any) => (
     <Select noBlankOption bredde="fullbredde" {...props} required>

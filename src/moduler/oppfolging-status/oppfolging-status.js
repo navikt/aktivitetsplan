@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { selectFeatureStatus } from '../../felles-komponenter/feature/feature-selector';
-import Innholdslaster from '../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import * as AppPT from '../../proptypes';
 import { hentIdentitet } from '../identitet/identitet-reducer';
 import { selectErVeileder, selectIdentitetId, selectIdentitetStatus } from '../identitet/identitet-selector';

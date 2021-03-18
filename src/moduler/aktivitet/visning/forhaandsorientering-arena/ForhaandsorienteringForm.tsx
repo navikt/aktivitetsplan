@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
+import Checkbox from '../../../../felles-komponenter/skjema/input/Checkbox';
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 import { selectDialogStatus } from '../../../dialog/dialog-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../arena-aktiviteter-reducer';

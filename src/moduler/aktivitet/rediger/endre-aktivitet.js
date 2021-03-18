@@ -13,10 +13,10 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
-import Modal from '../../../felles-komponenter/modal/modal';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import Modal from '../../../felles-komponenter/modal/Modal';
+import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
+import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
+import Innholdslaster from '../../../felles-komponenter/utils/Innholdslaster';
 import * as AppPT from '../../../proptypes';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';

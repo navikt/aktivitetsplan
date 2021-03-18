@@ -38,7 +38,7 @@ export const validateFeltForLangt = (avtalt: boolean, value?: string) => {
     return undefined;
 };
 
-export const validateFraDato = (avtalt: boolean, tilDato: string | undefined, value?: string) => {
+export const validateFraDato = (avtalt: boolean, tilDato?: string, value?: string) => {
     if (avtalt) {
         return undefined;
     }
@@ -46,17 +46,17 @@ export const validateFraDato = (avtalt: boolean, tilDato: string | undefined, va
         return 'Du må fylle ut fra dato';
     }
 
-    const validertDato = validerDato(value, tilDato, null);
+    const validertDato = validerDato(value, tilDato, undefined);
 
     return validertDato ? validertDato : undefined;
 };
 
-export const validateTilDato = (fraDato: string | undefined, value?: string) => {
+export const validateTilDato = (fraDato?: string, value?: string) => {
     if (!value || value.trim().length === 0) {
         return 'Du må fylle ut til dato. Hvis du ikke vet når behandlingen avsluttes, kan du legge inn en foreløpig til dato.';
     }
 
-    const validertDato = validerDato(value, null, fraDato);
+    const validertDato = validerDato(value, undefined, fraDato);
 
     return validertDato ? validertDato : undefined;
 };

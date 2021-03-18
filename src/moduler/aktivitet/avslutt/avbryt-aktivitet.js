@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { STATUS } from '../../../api/utils';
 import { STATUS_AVBRUTT } from '../../../constant';
-import Modal from '../../../felles-komponenter/modal/modal';
+import Modal from '../../../felles-komponenter/modal/Modal';
 import * as AppPT from '../../../proptypes';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';

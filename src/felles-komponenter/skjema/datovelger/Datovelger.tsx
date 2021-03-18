@@ -5,7 +5,7 @@ import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 
 import { datePickerToISODate } from '../../../utils';
-import { FieldStateInput } from '../input/utils';
+import { FieldStateInput } from '../input/inputTypes';
 import styles from './datovelger.module.less';
 
 function DatoFeil(props: { feil?: string }) {

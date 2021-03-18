@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
-import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
+import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import visibleIfHOC from '../../../hocs/visible-if';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import styles from './ikke-delt-markering.module.less';

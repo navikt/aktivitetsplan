@@ -4,8 +4,8 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
-import Modal from '../../../felles-komponenter/modal/modal';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
+import Modal from '../../../felles-komponenter/modal/Modal';
+import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import * as AppPT from '../../../proptypes';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';

@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import { erGyldigISODato, toDatePrettyPrint } from '../../../utils';
 
-export function validerDato(value, tidligsteFom, senesteTom) {
+export const validerDato = (value: string | null, tidligsteFom?: string, senesteTom?: string) => {
     if (!value || value.trim().length === 0) {
         return null;
     }
@@ -25,5 +25,6 @@ export function validerDato(value, tidligsteFom, senesteTom) {
 
         return `Datoen må være innenfor perioden ${prettyFra}-${prettyTil}`;
     }
+
     return null;
-}
+};
