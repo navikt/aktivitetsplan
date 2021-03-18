@@ -9,7 +9,7 @@ interface Props {
     endretAv?: string;
 }
 
-const BrukerAvhengigTekst = (props: Props) => {
+const BrukeravhengigTekst = (props: Props) => {
     const { id, endretAv } = props;
 
     const erBruker = useSelector(selectErBruker);
@@ -20,4 +20,4 @@ const BrukerAvhengigTekst = (props: Props) => {
     return <FormattedMessage id={labelId} values={{ endretAv }} />;
 };
 
-export default BrukerAvhengigTekst;
+export default BrukeravhengigTekst;

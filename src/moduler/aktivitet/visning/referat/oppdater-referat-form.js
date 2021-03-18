@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
 import hiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
-import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/hidden-if-knapper';
+import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';

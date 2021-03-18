@@ -1,4 +1,4 @@
-import * as Api from '../../api/motpartAPI';
+import * as Api from '../../api/personAPI';
 import { createActionsAndReducer } from '../../felles-komponenter/utils/createActionsAndReducer';
 
 const { reducer, cashedAction, actionTypes } = createActionsAndReducer('tilgang');
