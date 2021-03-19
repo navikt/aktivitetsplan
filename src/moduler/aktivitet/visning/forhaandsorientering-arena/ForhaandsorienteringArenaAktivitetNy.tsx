@@ -17,7 +17,6 @@ import {
     selectReservasjonKRR,
 } from '../../../oppfolging-status/oppfolging-selector';
 import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
-import ForhandsorienteringArenaAktivitetGammel from '../forhandsorientering-gammel/ForhandsorienteringArenaAktivitetGammel';
 import ArenaForhaandsorienteringFormKomponent from './ArenaForhaandsorienteringFormKomponent';
 import ArenaForhaandsorienteringKomponent from './ArenaForhaandsorienteringKomponent';
 
@@ -25,8 +24,10 @@ interface Props {
     aktivitet: Aktivitet;
 }
 
-const ForhaandsorienteringArenaAktivitet = (props: Props) => {
+const ForhaandsorienteringArenaAktivitetNy = (props: Props) => {
     const { aktivitet } = props;
+
+    const brukeNyForhaandsorientering = useSkalBrukeNyForhaandsorientering();
 
     const erBruker = useSelector(selectErBruker);
     const erManuellBruker = useSelector(selectErBrukerManuell);
@@ -35,6 +36,10 @@ const ForhaandsorienteringArenaAktivitet = (props: Props) => {
     const harNivaa4 = useSelector(selectNivaa4);
 
     const [forhaandsorienteringLagtTil, setForhaandsorienteringLagtTil] = useState(false);
+
+    if (!brukeNyForhaandsorientering) {
+        return null;
+    }
 
     const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(
         aktivitet.type
@@ -65,13 +70,4 @@ const ForhaandsorienteringArenaAktivitet = (props: Props) => {
     );
 };
 
-const ForhaandsorienteringArenaAktivitetWrapper = (props: Props) => {
-    const brukeNyForhaandsorientering = useSkalBrukeNyForhaandsorientering();
-    return brukeNyForhaandsorientering ? (
-        <ForhaandsorienteringArenaAktivitet {...props} />
-    ) : (
-        <ForhandsorienteringArenaAktivitetGammel {...props} />
-    );
-};
-
-export default ForhaandsorienteringArenaAktivitetWrapper;
+export default ForhaandsorienteringArenaAktivitetNy;

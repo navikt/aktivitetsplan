@@ -11,7 +11,6 @@ import {
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { selectErBruker } from '../../../identitet/identitet-selector';
-import AvtaltContainerGammel from '../avtalt-container-gammel/AvtaltContainer-gammel';
 import AvtaltFormContainer from './AvtaltMedNavFormContainer';
 import SattTilAvtaltVisning from './SattTilAvtaltVisning';
 
@@ -21,9 +20,11 @@ interface Props {
     className: string;
 }
 
-const AvtaltContainer = (props: Props) => {
+const AvtaltContainerNy = (props: Props) => {
     const { underOppfolging, aktivitet } = props;
     const { type, status, historisk, avtalt } = aktivitet;
+
+    const brukeNyForhaandsorientering = useSkalBrukeNyForhaandsorientering();
 
     const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState<ForhaandsorienteringType>(
@@ -31,6 +32,10 @@ const AvtaltContainer = (props: Props) => {
     );
 
     const erBruker = useSelector(selectErBruker);
+
+    if (!brukeNyForhaandsorientering) {
+        return null;
+    }
 
     const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
     const aktivitetKanIkkeEndres =
@@ -67,9 +72,4 @@ const AvtaltContainer = (props: Props) => {
     );
 };
 
-const AvtaltContainerWrapper = (props: Props) => {
-    const brukeNyForhaandsorientering = useSkalBrukeNyForhaandsorientering();
-    return brukeNyForhaandsorientering ? <AvtaltContainer {...props} /> : <AvtaltContainerGammel {...props} />;
-};
-
-export default AvtaltContainerWrapper;
+export default AvtaltContainerNy;
