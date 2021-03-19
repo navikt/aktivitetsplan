@@ -187,6 +187,11 @@ const testAktiviteter = !visTestAktiviteter()
               behandlingOppfolging: null,
               kanal: null,
               erReferatPublisert: false,
+              forhaandsorientering: {
+                  tekst:
+                      'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+                  type: 'SEND_FORHAANDSORIENTERING',
+              },
           }),
           wrapAktivitet({
               adresse: null,
@@ -433,6 +438,7 @@ function wrapAktivitet(aktivitet) {
         kanal: valueOrNull(aktivitet.kanal),
         referat: valueOrNull(aktivitet.referat),
         erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert),
+        forhaandsorientering: valueOrNull(aktivitet.forhaandsorientering),
     };
 }
 

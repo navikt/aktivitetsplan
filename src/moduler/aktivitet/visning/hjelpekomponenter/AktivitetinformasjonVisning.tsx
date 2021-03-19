@@ -15,9 +15,9 @@ import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
-import AvtaltContainer from '../avtalt-container/AvtaltContainer';
+import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
 import DeleLinje from '../delelinje/delelinje';
-import ForhaandsorienteringArenaAktivitetWrapper from '../forhaandsorientering-arena/ForhaandsorienteringArenaAktivitet';
+import ForhaandsorienteringArenaAktivitetNy from '../forhaandsorientering-arena/ForhaandsorienteringArenaAktivitetNy';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 
 const visningsIngress = (type: AktivitetType) => {
@@ -65,12 +65,12 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 <AvtaltMarkering visible={avtalt} className="aktivitetvisning__etikett" />
                 <IkkeDeltMarkering visible={ikkeDelt} className="aktivitetvisning__etikett" />
             </div>
-            <AvtaltContainer
+            <AvtaltContainerNy
                 underOppfolging={underOppfolging}
                 aktivitet={valgtAktivitet}
                 className="aktivitetvisning__underseksjon"
             />
-            <ForhaandsorienteringArenaAktivitetWrapper aktivitet={valgtAktivitet} />
+            <ForhaandsorienteringArenaAktivitetNy aktivitet={valgtAktivitet} />
             <div className="aktivitetvisning__underseksjon">
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>

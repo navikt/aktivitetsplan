@@ -7,6 +7,7 @@ import { STATUS } from '../../../../api/utils';
 import { STATUS_AVBRUTT, STATUS_FULLFOERT, UTDANNING_AKTIVITET_TYPE } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
+import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import { erGyldigISODato, erMerEnnSyvDagerTil, msSince } from '../../../../utils';
 import { sendForhandsorientering } from '../../../dialog/dialog-reducer';
@@ -44,6 +45,8 @@ const avtaltTextMap = {
 
 const AvtaltContainerGammel = (props: Props) => {
     const { underOppfolging, aktivitet, className } = props;
+    const brukeNyForhaandsorientering = useSkalBrukeNyForhaandsorientering();
+
     const [visBekreftAvtalt, setVisBekreftAvtalt] = useState(false);
     const [forhandsorienteringSent, setForhandsorienteringSent] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState('');
@@ -75,6 +78,10 @@ const AvtaltContainerGammel = (props: Props) => {
     const erBruker = useSelector(selectErBruker);
     const dialog = useSelector(createSelectDialogForAktivitetId(aktivitet.id));
     const harLoggetInnNivaa4 = useSelector(selectNivaa4);
+
+    if (brukeNyForhaandsorientering) {
+        return null;
+    }
 
     const dialogId = dialog && dialog.id;
 
