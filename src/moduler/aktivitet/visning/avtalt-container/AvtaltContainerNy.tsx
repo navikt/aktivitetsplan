@@ -12,6 +12,7 @@ import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktiv
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import AvtaltFormContainer from './AvtaltMedNavFormContainer';
+import ForhaandsorienteringBrukerVisning from './ForhaandsorienteringBrukerVisning';
 import SattTilAvtaltVisning from './SattTilAvtaltVisning';
 
 interface Props {
@@ -40,6 +41,15 @@ const AvtaltContainerNy = (props: Props) => {
     const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
     const aktivitetKanIkkeEndres =
         historisk || !underOppfolging || status === STATUS_FULLFOERT || status === STATUS_AVBRUTT || erArenaAktivitet;
+
+    if (
+        erBruker &&
+        !sendtAtErAvtaltMedNav &&
+        aktivitet.forhaandsorientering &&
+        aktivitet.forhaandsorientering.type !== ForhaandsorienteringType.IKKE_SEND
+    ) {
+        return <ForhaandsorienteringBrukerVisning aktivitet={aktivitet} />;
+    }
 
     if (erBruker || aktivitetKanIkkeEndres) {
         return null;
