@@ -8,6 +8,8 @@ import DetaljFelt from './detalj-felt';
 const httpRegex = /^(https?):\/\/.*$/;
 
 export default function DetaljvisningLenke({ lenke }) {
+    const shortenedUrl = new URL(lenke.startsWith('http') ? lenke : 'http://' + lenke);
+
     return (
         <DetaljFelt
             key="lenke"
@@ -20,7 +22,7 @@ export default function DetaljvisningLenke({ lenke }) {
                 href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
                 className="detaljfelt__lenke"
             >
-                {lenke} (åpnes i ny fane)
+                {shortenedUrl.hostname} (åpnes i ny fane)
             </Lenke>
         </DetaljFelt>
     );
