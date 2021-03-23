@@ -2,7 +2,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import Select from '../../../../felles-komponenter/skjema/input/select';
+import Select from '../../../../felles-komponenter/skjema/input/Select';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';

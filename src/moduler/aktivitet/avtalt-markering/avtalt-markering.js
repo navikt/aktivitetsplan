@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import PT from 'prop-types';
 import React from 'react';
 
-import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
+import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import visibleIfHOC from '../../../hocs/visible-if';
 import styles from './avtalt-markering.module.less';
 

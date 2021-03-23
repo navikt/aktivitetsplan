@@ -5,8 +5,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import * as Api from '../../api/lestAPI';
-import Modal from '../../felles-komponenter/modal/modal';
-import ModalContainer from '../../felles-komponenter/modal/modal-container';
+import Modal from '../../felles-komponenter/modal/Modal';
+import ModalContainer from '../../felles-komponenter/modal/ModalContainer';
 import * as AppPT from '../../proptypes';
 import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon } from '../lest/lest-reducer';

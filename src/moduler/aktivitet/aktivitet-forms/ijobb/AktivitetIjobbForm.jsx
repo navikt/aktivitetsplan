@@ -8,14 +8,14 @@ import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelg
 import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 import PeriodeValidering, {
     validerPeriodeFelt,
-} from '../../../../felles-komponenter/skjema/field-group/periode-validering';
+} from '../../../../felles-komponenter/skjema/field-group/PeriodeValidering';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
-import Radio from '../../../../felles-komponenter/skjema/input/radio';
+import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../lagre-aktivitet';
+import LagreAktivitet from '../LagreAktivitet';
 import {
     validateBeskrivelse,
     validateFeltForLangt,

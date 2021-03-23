@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import Modal from '../../felles-komponenter/modal/modal';
-import ModalContainer from '../../felles-komponenter/modal/modal-container';
+import Modal from '../../felles-komponenter/modal/Modal';
+import ModalContainer from '../../felles-komponenter/modal/ModalContainer';
 import { selectMalListeFeilmeldinger } from './aktivitetsmal-selector';
 
 interface Props {

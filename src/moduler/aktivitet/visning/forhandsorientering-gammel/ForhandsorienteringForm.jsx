@@ -8,8 +8,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
-import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
-import Select from '../../../../felles-komponenter/skjema/input/select';
+import Checkbox from '../../../../felles-komponenter/skjema/input/Checkbox';
+import Select from '../../../../felles-komponenter/skjema/input/Select';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';

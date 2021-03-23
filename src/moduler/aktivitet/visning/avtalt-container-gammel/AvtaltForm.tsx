@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
 import { HiddenIfAlertStripeInfoSolid } from '../../../../felles-komponenter/hidden-if/hidden-if-alertstriper';
-import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
-import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import Checkbox from '../../../../felles-komponenter/skjema/input/Checkbox';
+import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectNivaa4, selectNivaa4Status } from '../../../tilgang/tilgang-selector';

@@ -7,11 +7,12 @@ import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import Checkbox from '../../../../felles-komponenter/skjema/input/checkbox';
-import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import Checkbox from '../../../../felles-komponenter/skjema/input/Checkbox';
+import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import { DirtyContext } from '../../../context/dirty-context';
 import { selectNivaa4Status } from '../../../tilgang/tilgang-selector';
+import ForNavAnsattMarkeringWrapper from '../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import styles from './AvtaltForm.module.less';
 import { useKanSendeVarsel } from './avtaltHooks';
 import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
@@ -97,20 +98,22 @@ const AvtaltForm = (props: Props) => {
     return (
         <form onSubmit={state.onSubmit(onSubmit)} noValidate autoComplete="off" className={className}>
             <SkjemaGruppe>
-                <div className={styles.checkbox}>
-                    <Checkbox
-                        label="Avtalt med NAV"
-                        disabled={lasterData}
-                        {...state.fields.avtaltCheckbox}
-                        className={styles.checkboxNoSpace}
-                    />
-                    <Hjelpetekst id="hjelp">
-                        <div className={styles.maxWidth300}>
-                            Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som "Avtalt
-                            med NAV"
-                        </div>
-                    </Hjelpetekst>
-                </div>
+                <ForNavAnsattMarkeringWrapper>
+                    <div className={styles.checkbox}>
+                        <Checkbox
+                            label="Avtalt med NAV"
+                            disabled={lasterData}
+                            {...state.fields.avtaltCheckbox}
+                            className={styles.checkboxNoSpace}
+                        />
+                        <Hjelpetekst id="hjelp">
+                            <div className={styles.maxWidth300}>
+                                Aktiviteter som oppfyller brukerens aktivitets- og medvirkningsplikt skal settes som
+                                "Avtalt med NAV"
+                            </div>
+                        </Hjelpetekst>
+                    </div>
+                </ForNavAnsattMarkeringWrapper>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv className={classNames(kanSendeForhaandsvarsel && styles.innhold)} visible={avtalt}>
                         <KanIkkeSendeForhaandsorienteringInfotekst mindreEnnSyvDagerTil={mindreEnnSyvDagerTil} />

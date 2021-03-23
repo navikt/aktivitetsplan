@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Innholdslaster from '../../../../felles-komponenter/utils/innholdslaster';
+import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import visibleIfHOC from '../../../../hocs/visible-if';
 import * as AppPT from '../../../../proptypes';

@@ -3,7 +3,7 @@ import React from 'react';
 
 import * as statuskoder from '../../../constant';
 import { StillingsStatus } from '../../../datatypes/aktivitetTypes';
-import EtikettBase from '../../../felles-komponenter/etikett-base/etikett-base';
+import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import styles from './etikett.module.less';
 
 const getCls = (etikettnavn?: StillingsStatus): string => {

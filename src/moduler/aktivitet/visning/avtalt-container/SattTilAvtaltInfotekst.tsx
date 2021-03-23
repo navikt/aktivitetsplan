@@ -2,7 +2,6 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import DeleLinje from '../delelinje/delelinje';
 import { useKanSendeVarsel } from './avtaltHooks';
 
 const getText = (
@@ -31,24 +30,25 @@ const getText = (
 interface Props {
     mindreEnnSyvDagerTil: boolean;
     forhaandsorienteringstype: ForhaandsorienteringType;
-    className?: string;
+    hidden: boolean;
 }
 
 //TODO: Husk å slette tekstfil sett-avtalt-bekreftelse
 const SattTilAvtaltInfotekst = (props: Props) => {
     const kanSendeVarsel = useKanSendeVarsel();
 
-    const { mindreEnnSyvDagerTil, forhaandsorienteringstype, className } = props;
+    const { mindreEnnSyvDagerTil, forhaandsorienteringstype, hidden } = props;
+
+    if (hidden) {
+        return null;
+    }
 
     const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringstype);
 
     return (
-        <>
-            <div className={className}>
-                <AlertStripeSuksess>{text}</AlertStripeSuksess>
-            </div>
-            <DeleLinje />
-        </>
+        <div className="aktivitetvisning__underseksjon">
+            <AlertStripeSuksess>{text}</AlertStripeSuksess>
+        </div>
     );
 };
 

@@ -11,11 +11,11 @@ import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelg
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import EksternLenkeIkon from '../../../../felles-komponenter/utils/ekstern-lenke-ikon';
+import EksternLenkeIkon from '../../../../felles-komponenter/utils/EksternLenkeIkon';
 import * as AppPT from '../../../../proptypes';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import LagreAktivitet from '../lagre-aktivitet';
+import LagreAktivitet from '../LagreAktivitet';
 import VelgKanal from '../VelgKanal';
 import {
     FORBEREDELSER_MAKS_LENGDE,

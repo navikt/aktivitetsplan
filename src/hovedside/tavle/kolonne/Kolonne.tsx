@@ -6,7 +6,7 @@ import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/Dr
 import { sorterAktiviteter } from '../../../moduler/aktivitet/aktivitet-util';
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
 import DropTargetKolonne from './DropTargetKolonne';
-import KolonneHeader from './kolonneheader';
+import KolonneHeader from './KolonneHeader';
 
 interface Props {
     status: AktivitetStatus;

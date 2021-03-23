@@ -2,9 +2,9 @@ import React from 'react';
 
 import { GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../../constant';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
+import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import { trengerBegrunnelse } from '../aktivitet-util';
-import AvtaltContainer from './avtalt-container/AvtaltContainer';
+import AvtaltContainerGammel from './avtalt-container-gammel/AvtaltContainer-gammel';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
@@ -48,7 +48,7 @@ function Aktivitetvisning(props: Props) {
                     laster={laster}
                 />
 
-                <AvtaltContainer
+                <AvtaltContainerGammel
                     underOppfolging={underOppfolging}
                     aktivitet={aktivitet}
                     className="aktivitetvisning__underseksjon"

@@ -15,9 +15,10 @@ import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
+import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
 import DeleLinje from '../delelinje/delelinje';
+import ForhaandsorienteringArenaAktivitetNy from '../forhaandsorientering-arena/ForhaandsorienteringArenaAktivitetNy';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
-import Forhaandsorenteringsvisning from './Forhaandsorenteringsvisning';
 
 const visningsIngress = (type: AktivitetType) => {
     if (
@@ -36,8 +37,10 @@ interface Props {
     underOppfolging: boolean;
 }
 
-const AktivitetinformasjonVisning = ({ valgtAktivitet, tillatEndring, laster, underOppfolging }: Props) => {
+const AktivitetinformasjonVisning = (props: Props) => {
+    const { valgtAktivitet, tillatEndring, laster, underOppfolging } = props;
     const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
+
     const ikkeDelt = SkalIkkeDeltMarkeringVises(valgtAktivitet);
 
     return (
@@ -62,7 +65,12 @@ const AktivitetinformasjonVisning = ({ valgtAktivitet, tillatEndring, laster, un
                 <AvtaltMarkering visible={avtalt} className="aktivitetvisning__etikett" />
                 <IkkeDeltMarkering visible={ikkeDelt} className="aktivitetvisning__etikett" />
             </div>
-            <Forhaandsorenteringsvisning forhaandsorientering={valgtAktivitet.forhaandsorientering} />
+            <AvtaltContainerNy
+                underOppfolging={underOppfolging}
+                aktivitet={valgtAktivitet}
+                className="aktivitetvisning__underseksjon"
+            />
+            <ForhaandsorienteringArenaAktivitetNy aktivitet={valgtAktivitet} />
             <div className="aktivitetvisning__underseksjon">
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>

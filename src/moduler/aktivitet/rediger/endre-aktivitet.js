@@ -13,15 +13,15 @@ import {
     STILLING_AKTIVITET_TYPE,
 } from '../../../constant';
 import { CONFIRM, useConfirmOnBeforeUnload } from '../../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
-import Modal from '../../../felles-komponenter/modal/modal';
-import ModalContainer from '../../../felles-komponenter/modal/modal-container';
-import ModalHeader from '../../../felles-komponenter/modal/modal-header';
-import Innholdslaster from '../../../felles-komponenter/utils/innholdslaster';
+import Modal from '../../../felles-komponenter/modal/Modal';
+import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
+import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
+import Innholdslaster from '../../../felles-komponenter/utils/Innholdslaster';
 import * as AppPT from '../../../proptypes';
 import { aktivitetRoute } from '../../../routes';
 import { removeEmptyKeysFromObject } from '../../../utils/object';
 import { oppdaterAktivitet } from '../aktivitet-actions';
-import BehandlingAktivitetForm from '../aktivitet-forms/behandling/AktivitetBehandlingForm';
+import MedisinskBehandlingForm from '../aktivitet-forms/behandling/MedisinskBehandlingForm';
 import EgenAktivitetForm from '../aktivitet-forms/egen/AktivitetEgenForm';
 import IJobbAktivitetForm from '../aktivitet-forms/ijobb/AktivitetIjobbForm';
 import MoteAktivitetForm from '../aktivitet-forms/mote/MoteAktivitetForm';
@@ -43,7 +43,7 @@ function getAktivitetsFormComponent(aktivitet) {
         case SOKEAVTALE_AKTIVITET_TYPE:
             return SokeavtaleAktivitetForm;
         case BEHANDLING_AKTIVITET_TYPE:
-            return BehandlingAktivitetForm;
+            return MedisinskBehandlingForm;
         case MOTE_TYPE:
             return MoteAktivitetForm;
         case SAMTALEREFERAT_TYPE:
