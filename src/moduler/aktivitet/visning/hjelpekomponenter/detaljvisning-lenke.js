@@ -8,13 +8,17 @@ import DetaljFelt from './detalj-felt';
 const httpRegex = /^(https?):\/\/.*$/;
 
 export default function DetaljvisningLenke({ lenke }) {
+    if (!lenke || !lenke.trim()) {
+        return null;
+    }
+
     const shortenedUrl = new URL(lenke.startsWith('http') ? lenke : 'http://' + lenke);
 
     return (
         <DetaljFelt
             key="lenke"
             tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
-            visible={!!(lenke && lenke.trim())}
+            visible={true}
             fullbredde
         >
             <Lenke
