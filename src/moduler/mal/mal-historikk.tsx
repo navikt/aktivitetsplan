@@ -1,9 +1,9 @@
-import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import { Mal } from '../../datatypes/oppfolgingTypes';
+import EkspanderbarLinje from '../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoEllerTidSiden } from '../../utils';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { selectMalListe } from './aktivitetsmal-selector';
@@ -39,11 +39,9 @@ function MalHistorikk() {
     return (
         <>
             <hr className="aktivitetmal__delelinje" />
-            <div className="aktivitetmal__footer">
-                <Lesmerpanel className="" lukkTekst="Skjul tidligere lagrede mål" apneTekst="Vis tidligere lagrede mål">
-                    {historiskeMal.map((m: Mal) => malListeVisning(m, erVeileder))}
-                </Lesmerpanel>
-            </div>
+            <EkspanderbarLinje tittel="Tidligere lagrede mål" kanToogle aapneTekst="Vis" lukkeTekst="Skjul">
+                {historiskeMal.map((m: Mal) => malListeVisning(m, erVeileder))}
+            </EkspanderbarLinje>
         </>
     );
 }
