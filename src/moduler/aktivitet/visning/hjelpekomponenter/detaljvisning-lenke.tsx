@@ -1,13 +1,16 @@
 import Lenke from 'nav-frontend-lenker';
-import PT from 'prop-types';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import DetaljFelt from './detalj-felt';
 
 const httpRegex = /^(https?):\/\/.*$/;
 
-export default function DetaljvisningLenke({ lenke }) {
+interface Props {
+    lenke?: string;
+}
+
+export default function DetaljvisningLenke(props: Props) {
+    const lenke = props.lenke;
     if (!lenke || !lenke.trim()) {
         return null;
     }
@@ -15,12 +18,7 @@ export default function DetaljvisningLenke({ lenke }) {
     const shortenedUrl = new URL(lenke.startsWith('http') ? lenke : 'http://' + lenke);
 
     return (
-        <DetaljFelt
-            key="lenke"
-            tittel={<FormattedMessage id="aktivitetdetaljer.lenke-label" />}
-            visible={true}
-            fullbredde
-        >
+        <DetaljFelt key="lenke" tittel="Lenke" fullbredde>
             <Lenke
                 target="_blank"
                 href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
@@ -31,10 +29,3 @@ export default function DetaljvisningLenke({ lenke }) {
         </DetaljFelt>
     );
 }
-
-DetaljvisningLenke.propTypes = {
-    lenke: PT.string,
-};
-DetaljvisningLenke.defaultProps = {
-    lenke: null,
-};
