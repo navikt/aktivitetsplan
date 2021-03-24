@@ -1,11 +1,17 @@
 import classNames from 'classnames';
 import { EtikettLiten } from 'nav-frontend-typografi';
-import PT from 'prop-types';
 import React from 'react';
 
-import visibleIfHOC from '../../../../hocs/visible-if';
+interface Props {
+    children: React.ReactNode;
+    tittel: React.ReactNode;
+    fullbredde?: boolean;
+    beskrivelse?: boolean;
+}
 
-function DetaljFelt({ tittel, children, fullbredde, beskrivelse }) {
+function DetaljFelt(props: Props) {
+    const { tittel, children, fullbredde, beskrivelse } = props;
+
     return (
         <div
             className={classNames('aktivitetsdetaljer__felt', 'detaljfelt', {
@@ -21,15 +27,4 @@ function DetaljFelt({ tittel, children, fullbredde, beskrivelse }) {
     );
 }
 
-DetaljFelt.defaultProps = {
-    beskrivelse: false,
-};
-
-DetaljFelt.propTypes = {
-    children: PT.node.isRequired,
-    tittel: PT.oneOfType([PT.string.isRequired, PT.node.isRequired]).isRequired,
-    fullbredde: PT.bool.isRequired,
-    beskrivelse: PT.bool,
-};
-
-export default visibleIfHOC(DetaljFelt);
+export default DetaljFelt;
