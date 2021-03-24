@@ -14,8 +14,12 @@ export default function DetaljvisningLenke(props: Props) {
     if (!lenke || !lenke.trim()) {
         return null;
     }
-
-    const shortenedUrl = new URL(lenke.startsWith('http') ? lenke : 'http://' + lenke);
+    let shortenedUrl;
+    try {
+        shortenedUrl = new URL(lenke.startsWith('http') ? lenke : 'http://' + lenke).hostname;
+    } catch (e) {
+        shortenedUrl = lenke;
+    }
 
     return (
         <DetaljFelt key="lenke" tittel="Lenke" fullbredde>
@@ -24,7 +28,7 @@ export default function DetaljvisningLenke(props: Props) {
                 href={lenke && lenke.match(httpRegex) ? lenke : `http://${lenke}`}
                 className="detaljfelt__lenke"
             >
-                {shortenedUrl.hostname} (åpnes i ny fane)
+                {shortenedUrl} (åpnes i ny fane)
             </Lenke>
         </DetaljFelt>
     );
