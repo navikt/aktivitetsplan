@@ -7,6 +7,7 @@ import { selectMalListeFeilmeldinger } from './aktivitetsmal-selector';
 
 interface Props {
     children: React.ReactNode;
+    onRequestClosed: () => void;
 }
 
 export function MalModal(props: Props) {
@@ -14,7 +15,7 @@ export function MalModal(props: Props) {
     const feil = useSelector(selectMalListeFeilmeldinger, shallowEqual);
 
     return (
-        <Modal contentLabel="aktivitetsmal-modal" feilmeldinger={feil}>
+        <Modal onRequestClose={props.onRequestClosed} contentLabel="aktivitetsmal-modal" feilmeldinger={feil}>
             <ModalContainer>{children}</ModalContainer>
         </Modal>
     );
