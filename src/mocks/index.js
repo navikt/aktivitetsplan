@@ -114,7 +114,7 @@ mock.get(
     failOrGetResponse(getAktivitetFeiler, () => ['INTERNETT', 'OPPMOTE', 'TELEFON'])
 );
 mock.get(
-    '/veilarbaktivitet/api/aktivitet/arena',
+    '/veilarbaktivitet/api/arena/tiltak',
     failOrGetResponse(
         () => arenaFeilet() && !oppdateringKunFeiler(),
         () => arena
