@@ -1,9 +1,11 @@
 import './mal.less';
 
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
+import { CONFIRM } from '../../felles-komponenter/hooks/useConfirmOnBeforeUnload';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import { selectHarSkriveTilgang, selectUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
@@ -21,7 +23,10 @@ function Mal() {
     const underOppfolging = useSelector(selectUnderOppfolging, shallowEqual);
     const harSkriveTilgang = useSelector(selectHarSkriveTilgang, shallowEqual);
 
+    const isDirty = useRef(false);
+
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(hentMal());
@@ -30,8 +35,18 @@ function Mal() {
 
     const avhengigheter = [malStatus, malListeStatus];
 
+    const onModalRequestClosed = () => {
+        if (isDirty.current) {
+            if (window.confirm(CONFIRM)) {
+                history.push('/');
+            }
+        } else {
+            history.push('/');
+        }
+    };
+
     return (
-        <MalModal>
+        <MalModal onRequestClosed={onModalRequestClosed}>
             <Innholdstittel className="aktivitetmal__header">
                 {viserHistoriskPeriode || !underOppfolging || !harSkriveTilgang
                     ? 'Ditt mål fra en tidligere periode'
@@ -46,7 +61,7 @@ function Mal() {
             </Undertekst>
             <Innholdslaster avhengigheter={avhengigheter} alleOK>
                 <section className="aktivitetmal">
-                    <MalContainer />
+                    <MalContainer dirtyRef={isDirty} />
                     <MalHistorikk />
                 </section>
             </Innholdslaster>

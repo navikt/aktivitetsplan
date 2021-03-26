@@ -18,14 +18,19 @@ function validateMal(val: string) {
     return undefined;
 }
 
+interface DirtyRef {
+    current: boolean;
+}
+
 interface Props {
     mal?: string;
+    isDirty: DirtyRef;
     handleComplete: () => void;
 }
 
 function MalForm(props: Props) {
     const dispatch = useReduxDispatch();
-    const { mal, handleComplete } = props;
+    const { mal, isDirty, handleComplete } = props;
 
     const validator = useFormstate({
         mal: validateMal,
@@ -50,6 +55,10 @@ function MalForm(props: Props) {
     const state = validator({
         mal: mal || '',
     });
+
+    if (isDirty) {
+        isDirty.current = !state.pristine;
+    }
 
     return (
         <form className="aktivitetmal__innhold" onSubmit={state.onSubmit(onSubmit)}>
