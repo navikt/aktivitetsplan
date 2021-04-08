@@ -35,6 +35,7 @@ function MalContainer(props: Props) {
                 isDirty={props.dirtyRef}
                 handleComplete={() => {
                     setEdit(false);
+                    props.dirtyRef.current = false;
                     loggMittMalLagre(erVeileder);
                 }}
             />
