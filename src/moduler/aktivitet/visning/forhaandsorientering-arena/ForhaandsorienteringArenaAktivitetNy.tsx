@@ -48,6 +48,7 @@ const ForhaandsorienteringArenaAktivitetNy = (props: Props) => {
     const kanVarsles = erManuellBruker || erUnderKvp || erReservertKrr || !harNivaa4;
     const erBrukerOgKanVarsles = !erBruker && !kanVarsles;
     const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
+    const forhaandsorienteringLest = aktivitet.forhaandsorientering?.lest;
 
     if (!erArenaAktivitet) {
         return null;
@@ -58,7 +59,12 @@ const ForhaandsorienteringArenaAktivitetNy = (props: Props) => {
     }
 
     if (!forhaandsorienteringLagtTil && aktivitet.forhaandsorientering) {
-        return <ArenaForhaandsorienteringKomponent forhaandsorienteringTekst={forhaandsorienteringTekst} />;
+        return (
+            <ArenaForhaandsorienteringKomponent
+                forhaandsorienteringTekst={forhaandsorienteringTekst}
+                forhaandsorienteringLest={forhaandsorienteringLest}
+            />
+        );
     }
 
     return (

@@ -1,6 +1,6 @@
 import { guid } from 'nav-frontend-js-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { UnmountClosed } from 'react-collapse';
 
 import VisibleIfDiv from '../utils/visible-if-div';
@@ -26,6 +26,10 @@ const EkspanderbarLinje = (props: Props) => {
     const { tittel, children, kanToogle, aapneTekst, lukkeTekst, defaultAapen = false } = props;
 
     const [erAapen, setAapen] = useState(defaultAapen);
+
+    useEffect(() => setAapen(defaultAapen), [defaultAapen]);
+
+    console.log('er åpen: ', erAapen);
     //to get a valid css id it needs to start with a letter
     const unique = useMemo(() => 'a' + guid(), []);
 

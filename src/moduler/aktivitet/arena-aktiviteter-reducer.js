@@ -66,3 +66,10 @@ export const sendForhaandsorienteringArenaAktivitet = (arenaaktivitet, forhaands
         FEILET: OPPDATER_FEILET,
         PENDING: OPPDATER,
     });
+
+export const markerForhaandsorienteringSomLestArenaAktivitet = (arenaaktivitet) =>
+    doThenDispatch(() => Api.markerForhaandsorienteringSomLestArenaAktivitet(arenaaktivitet.id), {
+        OK: OPPDATER_OK,
+        FEILET: OPPDATER_FEILET,
+        PENDING: OPPDATER,
+    });

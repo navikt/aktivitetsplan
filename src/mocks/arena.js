@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { visArenaAktiviteter } from './demo/sessionstorage';
 
 export const arena = !visArenaAktiviteter()
@@ -102,6 +104,19 @@ export const oppdaterArenaaktivitet = (__params, forhaandsorientering, { arenaak
     aktivitet.forhaandsorientering = {
         type: forhaandsorientering.type,
         tekst: forhaandsorientering.tekst,
+    };
+
+    return aktivitet;
+};
+
+export const oppdaterLestFHOArenaaktivitet = (__params, __body, { aktivitetId }) => {
+    const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === aktivitetId);
+
+    console.log('aktivitet: ', aktivitetId);
+
+    aktivitet.forhaandsorientering = {
+        ...aktivitet.forhaandsorientering,
+        lest: moment().toISOString(),
     };
 
     return aktivitet;

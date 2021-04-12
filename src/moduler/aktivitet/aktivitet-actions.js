@@ -58,6 +58,14 @@ export function settAktivitetTilAvtalt(aktivitet, forhaandsorientering) {
     });
 }
 
+export function markerForhaandsorienteringSomLest(aktivitet) {
+    return doThenDispatch(() => Api.markerForhaandsorienteringSomLest(aktivitet.id, aktivitet.versjon), {
+        OK: AT.OPPDATER_OK,
+        FEILET: AT.OPPDATER_FEILET,
+        PENDING: AT.OPPDATER,
+    });
+}
+
 export function flyttAktivitetMedBegrunnelse(aktivitet, status, avsluttetKommentar) {
     const nyAktivitet = { ...aktivitet, avsluttetKommentar };
     return flyttAktivitet(nyAktivitet, status);

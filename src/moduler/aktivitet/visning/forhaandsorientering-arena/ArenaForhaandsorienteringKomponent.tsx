@@ -5,13 +5,15 @@ import Forhaandsorenteringsvisning from '../hjelpekomponenter/Forhaandsorenterin
 
 interface Props {
     forhaandsorienteringTekst?: string;
+    forhaandsorienteringLest?: string;
 }
 
-const ArenaForhaandsorienteringKomponent = ({ forhaandsorienteringTekst }: Props) => (
+const ArenaForhaandsorienteringKomponent = ({ forhaandsorienteringTekst, forhaandsorienteringLest }: Props) => (
     <>
         <DeleLinje />
         <Forhaandsorenteringsvisning
             forhaandsorienteringTekst={forhaandsorienteringTekst}
+            forhaandsorienteringLest={forhaandsorienteringLest}
             hidden={!forhaandsorienteringTekst}
         />
         <DeleLinje />

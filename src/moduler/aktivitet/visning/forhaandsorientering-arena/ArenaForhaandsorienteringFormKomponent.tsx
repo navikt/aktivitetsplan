@@ -19,6 +19,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
 
     const merEnnSyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
     const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
+    const forhaandsorienteringLest = aktivitet.forhaandsorientering?.lest;
 
     return (
         <>
@@ -34,6 +35,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
             </div>
             <Forhaandsorenteringsvisning
                 forhaandsorienteringTekst={forhaandsorienteringTekst}
+                forhaandsorienteringLest={forhaandsorienteringLest}
                 hidden={!forhaandsorienteringTekst}
             />
             <DeleLinje />
