@@ -35,11 +35,10 @@ export const publiserReferat = (aktivitet: Aktivitet): Promise<Aktivitet> =>
 export const oppdaterReferat = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/referat`, aktivitet);
 
-export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> =>
-    fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/arena`);
-
 export const hentVersjonerTilAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
+
+export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> => fetchToJson(`${AKTIVITET_BASE_URL}/arena/tiltak`);
 
 export const sendForhaandsorienteringArenaAktivitet = (
     arenaaktivitetId: string,

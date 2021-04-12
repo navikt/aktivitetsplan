@@ -9,7 +9,15 @@ import { selectGjeldendeMal } from './aktivitetsmal-reducer';
 import Malvisning from './mal-visning';
 import MalForm from './MalForm';
 
-function MalContainer() {
+interface DirtyRef {
+    current: boolean;
+}
+
+interface Props {
+    dirtyRef: DirtyRef;
+}
+
+function MalContainer(props: Props) {
     const viserHistoriskPeriode = useSelector(selectViserHistoriskPeriode, shallowEqual);
     const malData = useSelector(selectGjeldendeMal, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging, shallowEqual);
@@ -24,8 +32,10 @@ function MalContainer() {
         return (
             <MalForm
                 mal={mal}
+                isDirty={props.dirtyRef}
                 handleComplete={() => {
                     setEdit(false);
+                    props.dirtyRef.current = false;
                     loggMittMalLagre(erVeileder);
                 }}
             />
