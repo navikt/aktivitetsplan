@@ -3,7 +3,7 @@ import React from 'react';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../utils';
 import DeleLinje from '../delelinje/delelinje';
-import Forhaandsorenteringsvisning from '../hjelpekomponenter/Forhaandsorenteringsvisning';
+import Forhaandsorienteringsvisning from '../hjelpekomponenter/forhaandsorientering/Forhaandsorienteringsvisning';
 import ForhaandsorieteringsForm from './ForhaandsorienteringForm';
 import ForhaandsorienteringLagtTilInfotekst from './ForhaandsorienteringLagtTilInfotekst';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from './KanIkkeLeggeTilForhaandsorienteringInfotekst';
@@ -33,7 +33,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
                 />
                 <ForhaandsorienteringLagtTilInfotekst forhaandsorienteringIkkeLagtTil={!forhaandsorienteringLagtTil} />
             </div>
-            <Forhaandsorenteringsvisning
+            <Forhaandsorienteringsvisning
                 forhaandsorienteringTekst={forhaandsorienteringTekst}
                 forhaandsorienteringLest={forhaandsorienteringLest}
                 hidden={!forhaandsorienteringTekst}

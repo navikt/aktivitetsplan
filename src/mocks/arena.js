@@ -109,10 +109,8 @@ export const oppdaterArenaaktivitet = (__params, forhaandsorientering, { arenaak
     return aktivitet;
 };
 
-export const oppdaterLestFHOArenaaktivitet = (__params, __body, { aktivitetId }) => {
+export const oppdaterLestFhoArenaaktivitet = (__params, __body, { aktivitetId }) => {
     const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === aktivitetId);
-
-    console.log('aktivitet: ', aktivitetId);
 
     aktivitet.forhaandsorientering = {
         ...aktivitet.forhaandsorientering,

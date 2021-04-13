@@ -5,7 +5,7 @@ import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { markerForhaandsorienteringSomLest } from '../../aktivitet-actions';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../arena-aktiviteter-reducer';
 import DeleLinje from '../delelinje/delelinje';
-import Forhaandsorenteringsvisning from '../hjelpekomponenter/Forhaandsorenteringsvisning';
+import Forhaandsorienteringsvisning from '../hjelpekomponenter/forhaandsorientering/Forhaandsorienteringsvisning';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -30,7 +30,7 @@ const ForhaandsorienteringBrukerVisning = (props: Props) => {
     return (
         <>
             <DeleLinje />
-            <Forhaandsorenteringsvisning
+            <Forhaandsorienteringsvisning
                 forhaandsorienteringTekst={forhaandsorienteringTekst}
                 forhaandsorienteringLest={forhaandsorienteringLest}
                 hidden={!forhaandsorienteringTekst}

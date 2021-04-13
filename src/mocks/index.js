@@ -8,11 +8,11 @@ import {
     getAktivitetVersjoner,
     oppdaterAktivitet,
     oppdaterAvtaltMedNav,
-    oppdaterFHOTilLest,
+    oppdaterLestFho,
     opprettAktivitet,
     publiserReferat,
 } from './aktivitet';
-import { arena, oppdaterArenaaktivitet, oppdaterLestFHOArenaaktivitet } from './arena';
+import { arena, oppdaterArenaaktivitet, oppdaterLestFhoArenaaktivitet } from './arena';
 import { auth } from './auth';
 import {
     aktivitetFeilet,
@@ -129,7 +129,7 @@ mock.put(
 
 mock.put(
     '/veilarbaktivitet/api/arena/forhaandsorientering/lest',
-    failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterLestFHOArenaaktivitet)
+    failOrGetResponse(() => arenaFeilet() && !oppdateringKunFeiler(), oppdaterLestFhoArenaaktivitet)
 );
 
 mock.get('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(getAktivitetFeiler, getAktivitet));
@@ -161,7 +161,7 @@ mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetRespon
 
 mock.put('/veilarbaktivitet/api/avtaltMedNav', failOrGetResponse(aktivitetFeilet, oppdaterAvtaltMedNav));
 
-mock.put('/veilarbaktivitet/api/avtaltMedNav/lest', failOrGetResponse(aktivitetFeilet, oppdaterFHOTilLest));
+mock.put('/veilarbaktivitet/api/avtaltMedNav/lest', failOrGetResponse(aktivitetFeilet, oppdaterLestFho));
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }, res, ctx) => res(ctx.json(getPerson(pathParams.fnr))));

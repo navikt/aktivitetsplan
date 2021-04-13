@@ -14,7 +14,7 @@ const moveElementIntoView = (id: string) => {
 };
 
 interface Props {
-    tittel: string;
+    tittel: string | React.ReactNode;
     children: React.ReactNode;
     kanToogle: boolean;
     aapneTekst: string;
@@ -29,7 +29,6 @@ const EkspanderbarLinje = (props: Props) => {
 
     useEffect(() => setAapen(defaultAapen), [defaultAapen]);
 
-    console.log('er åpen: ', erAapen);
     //to get a valid css id it needs to start with a letter
     const unique = useMemo(() => 'a' + guid(), []);
 
@@ -40,12 +39,12 @@ const EkspanderbarLinje = (props: Props) => {
         }
     };
 
+    const tittelKomponent = typeof tittel === 'string' ? <Normaltekst>{tittel}</Normaltekst> : tittel;
+
     return (
         <section>
             <button onClick={toggle} className={styles.endreContainer} aria-expanded={erAapen} disabled={!kanToogle}>
-                <div className={styles.endreVisning}>
-                    <Normaltekst>{tittel}</Normaltekst>
-                </div>
+                <div className={styles.endreVisning}>{tittelKomponent}</div>
                 <VisibleIfDiv visible={kanToogle} className={styles.endreKnapp}>
                     <div className={styles.endreKnappInnhold}>{erAapen ? lukkeTekst : aapneTekst}</div>
                     <div className={erAapen ? styles.endreIndikasjonLukket : styles.endreIndikasjonApen} />

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DeleLinje from '../delelinje/delelinje';
-import Forhaandsorenteringsvisning from '../hjelpekomponenter/Forhaandsorenteringsvisning';
+import Forhaandsorienteringsvisning from '../hjelpekomponenter/forhaandsorientering/Forhaandsorienteringsvisning';
 
 interface Props {
     forhaandsorienteringTekst?: string;
@@ -11,7 +11,7 @@ interface Props {
 const ArenaForhaandsorienteringKomponent = ({ forhaandsorienteringTekst, forhaandsorienteringLest }: Props) => (
     <>
         <DeleLinje />
-        <Forhaandsorenteringsvisning
+        <Forhaandsorienteringsvisning
             forhaandsorienteringTekst={forhaandsorienteringTekst}
             forhaandsorienteringLest={forhaandsorienteringLest}
             hidden={!forhaandsorienteringTekst}

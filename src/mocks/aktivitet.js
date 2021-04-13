@@ -499,15 +499,14 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
     return aktivitet;
 }
 
-export function oppdaterFHOTilLest(__params, { aktivitetId }) {
+export function oppdaterLestFho(__params, { aktivitetId }) {
     const aktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
-
-    console.log('her ', aktivitet);
 
     aktivitet.forhaandsorientering = {
         ...aktivitet.forhaandsorientering,
         lest: moment().toISOString(),
     };
+    return aktivitet;
 }
 
 export function publiserReferat({ aktivitetId }) {
