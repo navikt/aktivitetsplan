@@ -110,12 +110,12 @@ export const oppdaterArenaaktivitet = (__params, forhaandsorientering, { arenaak
 };
 
 export const oppdaterLestFhoArenaaktivitet = (__params, __body, { aktivitetId }) => {
-    const aktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === aktivitetId);
+    const lestAktivitet = arena.find((arenaaktivitet) => arenaaktivitet.id === aktivitetId);
 
-    aktivitet.forhaandsorientering = {
-        ...aktivitet.forhaandsorientering,
+    lestAktivitet.forhaandsorientering = {
+        ...lestAktivitet.forhaandsorientering,
         lest: moment().toISOString(),
     };
 
-    return aktivitet;
+    return lestAktivitet;
 };

@@ -547,13 +547,13 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
 }
 
 export function oppdaterLestFho(__params, { aktivitetId }) {
-    const aktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    const lestAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
 
-    aktivitet.forhaandsorientering = {
-        ...aktivitet.forhaandsorientering,
+    lestAktivitet.forhaandsorientering = {
+        ...lestAktivitet.forhaandsorientering,
         lest: moment().toISOString(),
     };
-    return aktivitet;
+    return lestAktivitet;
 }
 
 export function publiserReferat({ aktivitetId }) {
