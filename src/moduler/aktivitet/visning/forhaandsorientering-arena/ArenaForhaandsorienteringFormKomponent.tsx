@@ -18,8 +18,6 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
     const { forhaandsorienteringLagtTil, forhandsorienteringSendt, aktivitet } = props;
 
     const merEnnSyvDagerTil = erMerEnnSyvDagerTil(aktivitet.tilDato) || !aktivitet.tilDato;
-    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
-    const forhaandsorienteringLest = aktivitet.forhaandsorientering?.lest;
 
     return (
         <>
@@ -34,9 +32,8 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
                 <ForhaandsorienteringLagtTilInfotekst forhaandsorienteringIkkeLagtTil={!forhaandsorienteringLagtTil} />
             </div>
             <Forhaandsorienteringsvisning
-                forhaandsorienteringTekst={forhaandsorienteringTekst}
-                forhaandsorienteringLest={forhaandsorienteringLest}
-                hidden={!forhaandsorienteringTekst}
+                forhaandsorientering={aktivitet.forhaandsorientering}
+                forhaandsorienteringLagtTil={forhaandsorienteringLagtTil}
             />
             <DeleLinje />
         </>

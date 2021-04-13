@@ -16,7 +16,7 @@ const LestKnappForhaandsorientering = (props: Props) => {
     }
 
     return (
-        <Knapp onClick={onClick} className={styles.lestKnapp} kompakt>
+        <Knapp onClick={onClick} className={styles.lestKnapp} mini>
             Ok, jeg har lest beskjeden
         </Knapp>
     );

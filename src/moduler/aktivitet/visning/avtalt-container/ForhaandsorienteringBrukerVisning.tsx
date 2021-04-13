@@ -16,9 +16,6 @@ const ForhaandsorienteringBrukerVisning = (props: Props) => {
 
     const dispatch = useDispatch();
 
-    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
-    const forhaandsorienteringLest = aktivitet.forhaandsorientering?.lest;
-
     const onMarkerSomLest = () => {
         if (aktivitet.arenaAktivitet) {
             dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet));
@@ -31,9 +28,7 @@ const ForhaandsorienteringBrukerVisning = (props: Props) => {
         <>
             <DeleLinje />
             <Forhaandsorienteringsvisning
-                forhaandsorienteringTekst={forhaandsorienteringTekst}
-                forhaandsorienteringLest={forhaandsorienteringLest}
-                hidden={!forhaandsorienteringTekst}
+                forhaandsorientering={aktivitet.forhaandsorientering}
                 markerSomLest={onMarkerSomLest}
             />
             <DeleLinje />

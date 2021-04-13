@@ -6,19 +6,17 @@ import styles from './LestDatoForhaandsorientering.module.less';
 
 interface Props {
     hidden: boolean;
-    forhaandsorienteringLest?: string;
+    lestDato?: string;
 }
 
 const LestDatoForhaandsorientering = (props: Props) => {
-    const { hidden, forhaandsorienteringLest } = props;
+    const { hidden, lestDato } = props;
 
     if (hidden) {
         return null;
     }
 
-    return (
-        <Normaltekst className={styles.lestDato}>Lest {formaterDatoKortManed(forhaandsorienteringLest)}</Normaltekst>
-    );
+    return <Normaltekst className={styles.lestDato}>Lest {formaterDatoKortManed(lestDato)}</Normaltekst>;
 };
 
 export default LestDatoForhaandsorientering;

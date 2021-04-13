@@ -1,8 +1,9 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Forhaandsorientering } from '../../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
 import styles from './Forhaandsorienteringsvisning.module.less';
@@ -10,20 +11,25 @@ import LestDatoForhaandsorientering from './LestDatoForhaandsorientering';
 import LestKnappForhaandsorientering from './LestKnappForhaandsorientering';
 
 interface Props {
-    forhaandsorienteringTekst?: string;
-    forhaandsorienteringLest?: string;
-    hidden: boolean;
+    forhaandsorientering?: Forhaandsorientering;
+    forhaandsorienteringLagtTil?: boolean;
     markerSomLest?(): void;
 }
 
 const Forhaandsorienteringsvisning = (props: Props) => {
-    const { forhaandsorienteringTekst, forhaandsorienteringLest, hidden, markerSomLest } = props;
-
-    const [ekspandert, setEkspandert] = useState(!forhaandsorienteringLest);
+    const { forhaandsorientering, markerSomLest, forhaandsorienteringLagtTil = false } = props;
 
     const erBruker = useSelector(selectErBruker);
 
-    if (hidden) {
+    const forhaandsorienteringTekst = forhaandsorientering?.tekst;
+    const forhaandsorienteringLestDato = forhaandsorientering?.lest;
+
+    const erLest = !!forhaandsorienteringLestDato;
+
+    const ekspandertDefault = !erBruker ? forhaandsorienteringLagtTil : !erLest;
+    const [ekspandert, setEkspandert] = useState(ekspandertDefault);
+
+    if (!forhaandsorienteringTekst) {
         return null;
     }
 
@@ -33,25 +39,19 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     };
 
     const advarselTittel = (
-        <AlertStripe type="advarsel" form="inline" className={styles.advarsel}>
-            Informasjon om ansvaret ditt
+        <AlertStripe type="advarsel" form="inline">
+            <Element>Informasjon om ansvaret ditt</Element>
         </AlertStripe>
     );
     const normalTittel = 'Informasjon om ansvaret ditt';
 
-    const tittel = forhaandsorienteringLest ? normalTittel : advarselTittel;
+    const tittel = erLest || !erBruker ? normalTittel : advarselTittel;
 
     return (
         <EkspanderbarLinje tittel={tittel} kanToogle aapneTekst="Les" lukkeTekst="Lukk" defaultAapen={ekspandert}>
             <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</Normaltekst>
-            <LestDatoForhaandsorientering
-                hidden={!forhaandsorienteringLest}
-                forhaandsorienteringLest={forhaandsorienteringLest}
-            />
-            <LestKnappForhaandsorientering
-                hidden={!erBruker || !!forhaandsorienteringLest}
-                onClick={onClickLestKnapp}
-            />
+            <LestDatoForhaandsorientering hidden={!erLest} lestDato={forhaandsorienteringLestDato} />
+            <LestKnappForhaandsorientering hidden={!erBruker || erLest} onClick={onClickLestKnapp} />
         </EkspanderbarLinje>
     );
 };
