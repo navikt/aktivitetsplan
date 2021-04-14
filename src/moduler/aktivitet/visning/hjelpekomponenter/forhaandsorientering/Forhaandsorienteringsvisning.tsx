@@ -1,28 +1,34 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Forhaandsorientering } from '../../../../../datatypes/aktivitetTypes';
+import { Aktivitet } from '../../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinjeBase from '../../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
-import AdvarselTittel from './AdvarselTittel';
+import { markerForhaandsorienteringSomLest } from '../../../aktivitet-actions';
+import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-reducer';
 import styles from './Forhaandsorienteringsvisning.module.less';
 import LestDatoVisning from './LestDatoVisning';
 import LestKnapp from './LestKnapp';
+import Tittel from './Tittel';
 
 interface Props {
-    forhaandsorientering?: Forhaandsorientering;
+    aktivitet: Aktivitet;
     forhaandsorienteringLagtTil?: boolean;
-    onMarkerSomLest?(): void;
 }
 
 const Forhaandsorienteringsvisning = (props: Props) => {
-    const { forhaandsorientering, onMarkerSomLest, forhaandsorienteringLagtTil = false } = props;
-    const forhaandsorienteringTekst = forhaandsorientering?.tekst;
-    const forhaandsorienteringLestDato = forhaandsorientering?.lest;
+    const { aktivitet, forhaandsorienteringLagtTil = false } = props;
+
+    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
+    const forhaandsorienteringLestDato = aktivitet.forhaandsorientering?.lest;
+
     const erLest = !!forhaandsorienteringLestDato;
 
     const erBruker = useSelector(selectErBruker);
+    const dispatch = useDispatch();
+
+    const kanMarkeresSomLest = !erLest && erBruker;
 
     const ekspandertDefault = !erBruker ? forhaandsorienteringLagtTil : !erLest;
     const [erEkspandert, setErEkspandert] = useState(ekspandertDefault);
@@ -31,6 +37,14 @@ const Forhaandsorienteringsvisning = (props: Props) => {
         return null;
     }
 
+    const onMarkerSomLest = () => {
+        if (aktivitet.arenaAktivitet) {
+            dispatch(markerForhaandsorienteringSomLestArenaAktivitet(aktivitet));
+        } else {
+            dispatch(markerForhaandsorienteringSomLest(aktivitet));
+        }
+    };
+
     const onClickLestKnapp = () => {
         onMarkerSomLest && onMarkerSomLest();
         setErEkspandert(false);
@@ -38,11 +52,9 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const onClickToggle = () => setErEkspandert((ekspandert) => !ekspandert);
 
-    const tittel = erLest || !erBruker ? 'Informasjon om ansvaret ditt' : <AdvarselTittel />;
-
     return (
         <EkspanderbarLinjeBase
-            tittel={tittel}
+            tittel={<Tittel kanMarkeresSomLest={kanMarkeresSomLest} />}
             aapneTekst="Les"
             lukkeTekst="Lukk"
             erAapen={erEkspandert}
@@ -51,7 +63,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
         >
             <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</Normaltekst>
             <LestDatoVisning hidden={!erLest} lestDato={forhaandsorienteringLestDato} />
-            <LestKnapp hidden={!erBruker || erLest} onClick={onClickLestKnapp} />
+            <LestKnapp hidden={!kanMarkeresSomLest} onClick={onClickLestKnapp} />
         </EkspanderbarLinjeBase>
     );
 };

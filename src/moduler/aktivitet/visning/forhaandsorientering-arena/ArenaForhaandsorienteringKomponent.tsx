@@ -1,21 +1,18 @@
 import React from 'react';
 
-import { Forhaandsorientering } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
 import Forhaandsorienteringsvisning from '../hjelpekomponenter/forhaandsorientering/Forhaandsorienteringsvisning';
 
 interface Props {
-    forhaandsorientering?: Forhaandsorientering;
+    aktivitet: Aktivitet;
     forhaandsorienteringLagtTil: boolean;
 }
 
-const ArenaForhaandsorienteringKomponent = ({ forhaandsorientering, forhaandsorienteringLagtTil }: Props) => (
+const ArenaForhaandsorienteringKomponent = ({ aktivitet, forhaandsorienteringLagtTil }: Props) => (
     <>
         <DeleLinje />
-        <Forhaandsorienteringsvisning
-            forhaandsorientering={forhaandsorientering}
-            forhaandsorienteringLagtTil={forhaandsorienteringLagtTil}
-        />
+        <Forhaandsorienteringsvisning aktivitet={aktivitet} forhaandsorienteringLagtTil={forhaandsorienteringLagtTil} />
         <DeleLinje />
     </>
 );

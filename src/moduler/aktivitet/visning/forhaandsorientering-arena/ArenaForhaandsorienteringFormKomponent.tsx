@@ -32,7 +32,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
                 <ForhaandsorienteringLagtTilInfotekst forhaandsorienteringIkkeLagtTil={!forhaandsorienteringLagtTil} />
             </div>
             <Forhaandsorienteringsvisning
-                forhaandsorientering={aktivitet.forhaandsorientering}
+                aktivitet={aktivitet}
                 forhaandsorienteringLagtTil={forhaandsorienteringLagtTil}
             />
             <DeleLinje />

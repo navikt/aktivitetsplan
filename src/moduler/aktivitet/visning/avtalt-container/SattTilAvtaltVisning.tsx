@@ -16,8 +16,7 @@ const SattTilAvtaltVisning = (props: Props) => {
     const { aktivitet, forhaandsorienteringstype, sendtAtErAvtaltMedNav } = props;
 
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
-    const forhaandsorientering = aktivitet.forhaandsorientering;
-    const forhaandsorienteringTekst = forhaandsorientering?.tekst;
+    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
 
     if (!forhaandsorienteringTekst && !sendtAtErAvtaltMedNav) {
         return null;
@@ -31,10 +30,7 @@ const SattTilAvtaltVisning = (props: Props) => {
                 forhaandsorienteringstype={forhaandsorienteringstype}
                 hidden={!sendtAtErAvtaltMedNav}
             />
-            <Forhaandsorienteringsvisning
-                forhaandsorientering={forhaandsorientering}
-                forhaandsorienteringLagtTil={sendtAtErAvtaltMedNav}
-            />
+            <Forhaandsorienteringsvisning aktivitet={aktivitet} forhaandsorienteringLagtTil={sendtAtErAvtaltMedNav} />
             <DeleLinje />
         </>
     );
