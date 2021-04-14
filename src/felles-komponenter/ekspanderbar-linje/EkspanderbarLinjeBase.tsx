@@ -33,7 +33,7 @@ const EkspanderbarLinjeBase = (props: PropsBase) => {
             moveElementIntoView(contentRef.current);
         }
         aapenRef.current = erAapen;
-    }, [erAapen, aapenRef.current, contentRef.current]);
+    }, [erAapen]);
 
     const tittelKomponent = typeof tittel === 'string' ? <Normaltekst>{tittel}</Normaltekst> : tittel;
 

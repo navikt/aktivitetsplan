@@ -1,14 +1,14 @@
 import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 
-import styles from './LestKnappForhaandsorientering.module.less';
+import styles from './LestKnapp.module.less';
 
 interface Props {
     hidden: boolean;
     onClick(): void;
 }
 
-const LestKnappForhaandsorientering = (props: Props) => {
+const LestKnapp = (props: Props) => {
     const { hidden, onClick } = props;
 
     if (hidden) {
@@ -22,4 +22,4 @@ const LestKnappForhaandsorientering = (props: Props) => {
     );
 };
 
-export default LestKnappForhaandsorientering;
+export default LestKnapp;

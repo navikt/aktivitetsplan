@@ -29,7 +29,7 @@ const ForhaandsorienteringBrukerVisning = (props: Props) => {
             <DeleLinje />
             <Forhaandsorienteringsvisning
                 forhaandsorientering={aktivitet.forhaandsorientering}
-                markerSomLest={onMarkerSomLest}
+                onMarkerSomLest={onMarkerSomLest}
             />
             <DeleLinje />
         </>

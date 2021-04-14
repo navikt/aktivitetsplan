@@ -1,23 +1,23 @@
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Forhaandsorientering } from '../../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinjeBase from '../../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
+import AdvarselTittel from './AdvarselTittel';
 import styles from './Forhaandsorienteringsvisning.module.less';
-import LestDatoForhaandsorientering from './LestDatoForhaandsorientering';
-import LestKnappForhaandsorientering from './LestKnappForhaandsorientering';
+import LestDatoVisning from './LestDatoVisning';
+import LestKnapp from './LestKnapp';
 
 interface Props {
     forhaandsorientering?: Forhaandsorientering;
     forhaandsorienteringLagtTil?: boolean;
-    markerSomLest?(): void;
+    onMarkerSomLest?(): void;
 }
 
 const Forhaandsorienteringsvisning = (props: Props) => {
-    const { forhaandsorientering, markerSomLest, forhaandsorienteringLagtTil = false } = props;
+    const { forhaandsorientering, onMarkerSomLest, forhaandsorienteringLagtTil = false } = props;
     const forhaandsorienteringTekst = forhaandsorientering?.tekst;
     const forhaandsorienteringLestDato = forhaandsorientering?.lest;
     const erLest = !!forhaandsorienteringLestDato;
@@ -32,33 +32,26 @@ const Forhaandsorienteringsvisning = (props: Props) => {
     }
 
     const onClickLestKnapp = () => {
-        markerSomLest && markerSomLest();
+        onMarkerSomLest && onMarkerSomLest();
         setErEkspandert(false);
     };
 
-    const advarselTittel = (
-        <AlertStripe type="advarsel" form="inline">
-            <Element>Informasjon om ansvaret ditt</Element>
-        </AlertStripe>
-    );
-    const normalTittel = 'Informasjon om ansvaret ditt';
+    const onClickToggle = () => setErEkspandert((ekspandert) => !ekspandert);
 
-    const tittel = erLest || !erBruker ? normalTittel : advarselTittel;
-
-    const onClick = () => setErEkspandert((ekspandert) => !ekspandert);
+    const tittel = erLest || !erBruker ? 'Informasjon om ansvaret ditt' : <AdvarselTittel />;
 
     return (
         <EkspanderbarLinjeBase
             tittel={tittel}
-            kanToogle
             aapneTekst="Les"
             lukkeTekst="Lukk"
             erAapen={erEkspandert}
-            onClick={onClick}
+            onClick={onClickToggle}
+            kanToogle
         >
             <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</Normaltekst>
-            <LestDatoForhaandsorientering hidden={!erLest} lestDato={forhaandsorienteringLestDato} />
-            <LestKnappForhaandsorientering hidden={!erBruker || erLest} onClick={onClickLestKnapp} />
+            <LestDatoVisning hidden={!erLest} lestDato={forhaandsorienteringLestDato} />
+            <LestKnapp hidden={!erBruker || erLest} onClick={onClickLestKnapp} />
         </EkspanderbarLinjeBase>
     );
 };
