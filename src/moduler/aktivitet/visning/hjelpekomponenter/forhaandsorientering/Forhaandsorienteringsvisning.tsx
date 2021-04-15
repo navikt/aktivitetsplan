@@ -14,11 +14,11 @@ import Tittel from './Tittel';
 
 interface Props {
     aktivitet: Aktivitet;
-    forhaandsorienteringLagtTil?: boolean;
+    startAapen?: boolean;
 }
 
 const Forhaandsorienteringsvisning = (props: Props) => {
-    const { aktivitet, forhaandsorienteringLagtTil = false } = props;
+    const { aktivitet, startAapen = false } = props;
 
     const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
     const forhaandsorienteringLestDato = aktivitet.forhaandsorientering?.lest;
@@ -30,8 +30,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const kanMarkeresSomLest = !erLest && erBruker;
 
-    const ekspandertDefault = !erBruker ? forhaandsorienteringLagtTil : !erLest;
-    const [erEkspandert, setErEkspandert] = useState(ekspandertDefault);
+    const [erEkspandert, setErEkspandert] = useState(startAapen);
 
     if (!forhaandsorienteringTekst) {
         return null;

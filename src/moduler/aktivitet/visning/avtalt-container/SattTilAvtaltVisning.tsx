@@ -8,12 +8,11 @@ import SattTilAvtaltInfotekst from './SattTilAvtaltInfotekst';
 
 interface Props {
     forhaandsorienteringstype: ForhaandsorienteringType;
-    sendtAtErAvtaltMedNav: boolean;
     aktivitet: Aktivitet;
 }
 
 const SattTilAvtaltVisning = (props: Props) => {
-    const { aktivitet, forhaandsorienteringstype, sendtAtErAvtaltMedNav } = props;
+    const { aktivitet, forhaandsorienteringstype } = props;
 
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
     const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
@@ -29,7 +28,7 @@ const SattTilAvtaltVisning = (props: Props) => {
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                 forhaandsorienteringstype={forhaandsorienteringstype}
             />
-            <Forhaandsorienteringsvisning aktivitet={aktivitet} forhaandsorienteringLagtTil={sendtAtErAvtaltMedNav} />
+            <Forhaandsorienteringsvisning aktivitet={aktivitet} startAapen />
             <DeleLinje />
         </>
     );

@@ -12,7 +12,7 @@ import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktiv
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { selectErBruker, selectErVeileder } from '../../../identitet/identitet-selector';
 import AvtaltFormContainer from './AvtaltMedNavFormContainer';
-import ForhaandsorienteringBrukerVisning from './ForhaandsorienteringBrukerVisning';
+import ForhaandsorienteringsVisningsLinje from './ForhaandsorienteringsVisningsLinje';
 import FormContainer from './FormContainer';
 import SattTilAvtaltVisning from './SattTilAvtaltVisning';
 
@@ -34,6 +34,7 @@ const AvtaltContainerNy = (props: Props) => {
     );
 
     const erVeileder = useSelector(selectErVeileder);
+    const erBruker = useSelector(selectErBruker);
 
     if (!brukeNyForhaandsorientering) {
         return null;
@@ -52,8 +53,6 @@ const AvtaltContainerNy = (props: Props) => {
     if (!skalViseForhondsorentering && !skalViseAvtaltFormKonteiner && !skalViseSattTilAvtalt) {
         return null;
     }
-    //TODO se på SattTilAvtaltVisning for arena aktiviteter
-    //TODO se på AvtaltFormContainer for arena aktiviter
 
     if (skalViseAvtaltFormKonteiner) {
         return (
@@ -66,16 +65,10 @@ const AvtaltContainerNy = (props: Props) => {
         );
     }
     if (skalViseSattTilAvtalt) {
-        return (
-            <SattTilAvtaltVisning
-                forhaandsorienteringstype={forhandsorienteringType}
-                sendtAtErAvtaltMedNav={sendtAtErAvtaltMedNav}
-                aktivitet={aktivitet}
-            />
-        );
+        return <SattTilAvtaltVisning forhaandsorienteringstype={forhandsorienteringType} aktivitet={aktivitet} />;
     }
 
-    return <ForhaandsorienteringBrukerVisning aktivitet={aktivitet} />;
+    return <ForhaandsorienteringsVisningsLinje aktivitet={aktivitet} erBruker={erBruker} />;
 };
 
 export default AvtaltContainerNy;

@@ -6,14 +6,18 @@ import Forhaandsorienteringsvisning from '../hjelpekomponenter/forhaandsorienter
 
 interface Props {
     aktivitet: Aktivitet;
+    erBruker: boolean;
 }
 
-const ForhaandsorienteringBrukerVisning = ({ aktivitet }: Props) => (
+const ForhaandsorienteringsVisningsLinje = ({ aktivitet, erBruker }: Props) => (
     <>
         <DeleLinje />
-        <Forhaandsorienteringsvisning aktivitet={aktivitet} />
+        <Forhaandsorienteringsvisning
+            aktivitet={aktivitet}
+            startAapen={erBruker && !aktivitet.forhaandsorientering?.lest}
+        />
         <DeleLinje />
     </>
 );
 
-export default ForhaandsorienteringBrukerVisning;
+export default ForhaandsorienteringsVisningsLinje;
