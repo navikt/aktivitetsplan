@@ -11,7 +11,6 @@ import {
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { selectErBruker, selectErVeileder } from '../../../identitet/identitet-selector';
-import AvtaltFormContainer from './AvtaltMedNavFormContainer';
 import ForhaandsorienteringsVisningsLinje from './ForhaandsorienteringsVisningsLinje';
 import FormContainer from './FormContainer';
 import SattTilAvtaltVisning from './SattTilAvtaltVisning';
@@ -46,8 +45,8 @@ const AvtaltContainerNy = (props: Props) => {
 
     const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
     const aktivAktivitet = !historisk && underOppfolging && status !== STATUS_FULLFOERT && status !== STATUS_AVBRUTT;
-    //TODO finn ut hvordan vi bør løse dette (oppdatere alle avtalte aktiviteter til en vardi på fho?)
     const harForhaandsorientering = erArenaAktivitet ? aktivitet.forhaandsorientering : avtalt;
+
     const skalViseAvtaltFormKonteiner = !harForhaandsorientering && erVeileder && aktivAktivitet;
 
     if (!skalViseForhondsorentering && !skalViseAvtaltFormKonteiner && !skalViseSattTilAvtalt) {
