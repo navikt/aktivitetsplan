@@ -15,9 +15,8 @@ const SattTilAvtaltVisning = (props: Props) => {
     const { aktivitet, forhaandsorienteringstype } = props;
 
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
-    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
 
-    if (!forhaandsorienteringTekst) {
+    if (!forhaandsorienteringstype) {
         return null;
     }
 
