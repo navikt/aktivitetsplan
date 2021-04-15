@@ -36,13 +36,14 @@ const validate = (val: string) => {
 };
 
 interface Props {
-    visible: boolean;
-    valgtAktivitet: Aktivitet;
-    forhandsorienteringSendt(): void;
+    setSendtAtErAvtaltMedNav(): void;
+    aktivitet: Aktivitet;
+    hidden: boolean;
+    setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
 const ForhaandsorieteringsForm = (props: Props) => {
-    const { visible, valgtAktivitet, forhandsorienteringSendt } = props;
+    const { setSendtAtErAvtaltMedNav, setForhandsorienteringType, aktivitet, hidden } = props;
 
     const dialogStatus = useSelector(selectDialogStatus);
     const dispatch = useDispatch();
@@ -59,18 +60,20 @@ const ForhaandsorieteringsForm = (props: Props) => {
         checked: '',
     });
 
-    if (!visible) {
+    if (hidden) {
         return null;
     }
 
     const onSubmit = (data: { forhaandsorienteringType: string; tekst: string }) => {
         const tekst =
             data.forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD ? avtaltTekst : data.tekst;
-        return sendForhaandsorienteringArenaAktivitet(valgtAktivitet, {
+
+        setForhandsorienteringType(data.forhaandsorienteringType as ForhaandsorienteringType);
+        return sendForhaandsorienteringArenaAktivitet(aktivitet, {
             tekst,
             type: data.forhaandsorienteringType,
         })(dispatch).then(() => {
-            forhandsorienteringSendt();
+            setSendtAtErAvtaltMedNav();
             loggForhandsorienteringTiltak();
             // @ts-ignore
             document.querySelector('.aktivitet-modal').focus();

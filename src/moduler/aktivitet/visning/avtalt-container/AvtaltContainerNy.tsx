@@ -10,9 +10,10 @@ import {
 } from '../../../../constant';
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
-import { selectErBruker } from '../../../identitet/identitet-selector';
+import { selectErBruker, selectErVeileder } from '../../../identitet/identitet-selector';
 import AvtaltFormContainer from './AvtaltMedNavFormContainer';
 import ForhaandsorienteringBrukerVisning from './ForhaandsorienteringBrukerVisning';
+import FormContainer from './FormContainer';
 import SattTilAvtaltVisning from './SattTilAvtaltVisning';
 
 interface Props {
@@ -32,38 +33,39 @@ const AvtaltContainerNy = (props: Props) => {
         ForhaandsorienteringType.IKKE_SEND
     );
 
-    const erBruker = useSelector(selectErBruker);
+    const erVeileder = useSelector(selectErVeileder);
 
     if (!brukeNyForhaandsorientering) {
         return null;
     }
 
+    const skalViseForhondsorentering =
+        aktivitet.forhaandsorientering && aktivitet.forhaandsorientering.type !== ForhaandsorienteringType.IKKE_SEND;
+    const skalViseSattTilAvtalt = sendtAtErAvtaltMedNav;
+
     const erArenaAktivitet = [TILTAK_AKTIVITET_TYPE, GRUPPE_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE].includes(type);
-    const aktivitetKanIkkeEndres =
-        historisk || !underOppfolging || status === STATUS_FULLFOERT || status === STATUS_AVBRUTT || erArenaAktivitet;
+    const aktivAktivitet = !historisk && underOppfolging && status !== STATUS_FULLFOERT && status !== STATUS_AVBRUTT;
+    //TODO finn ut hvordan vi bør løse dette (oppdatere alle avtalte aktiviteter til en vardi på fho?)
+    const harForhaandsorientering = erArenaAktivitet ? aktivitet.forhaandsorientering : avtalt;
+    const skalViseAvtaltFormKonteiner = !harForhaandsorientering && erVeileder && aktivAktivitet;
 
-    if (
-        erBruker &&
-        !sendtAtErAvtaltMedNav &&
-        aktivitet.forhaandsorientering &&
-        aktivitet.forhaandsorientering.type !== ForhaandsorienteringType.IKKE_SEND
-    ) {
-        return <ForhaandsorienteringBrukerVisning aktivitet={aktivitet} />;
-    }
-
-    if (erBruker || aktivitetKanIkkeEndres) {
+    if (!skalViseForhondsorentering && !skalViseAvtaltFormKonteiner && !skalViseSattTilAvtalt) {
         return null;
     }
+    //TODO se på SattTilAvtaltVisning for arena aktiviteter
+    //TODO se på AvtaltFormContainer for arena aktiviter
 
-    if (
-        !sendtAtErAvtaltMedNav &&
-        aktivitet.forhaandsorientering &&
-        aktivitet.forhaandsorientering.type === ForhaandsorienteringType.IKKE_SEND
-    ) {
-        return null;
+    if (skalViseAvtaltFormKonteiner) {
+        return (
+            <FormContainer
+                setSendtAtErAvtaltMedNav={() => setSendtAtErAvtaltMedNav(true)}
+                aktivitet={aktivitet}
+                setForhandsorienteringType={setForhandsorienteringType}
+                erArenaAktivitet={erArenaAktivitet}
+            />
+        );
     }
-
-    if (avtalt) {
+    if (skalViseSattTilAvtalt) {
         return (
             <SattTilAvtaltVisning
                 forhaandsorienteringstype={forhandsorienteringType}
@@ -73,13 +75,7 @@ const AvtaltContainerNy = (props: Props) => {
         );
     }
 
-    return (
-        <AvtaltFormContainer
-            setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
-            aktivitet={aktivitet}
-            setForhandsorienteringType={setForhandsorienteringType}
-        />
-    );
+    return <ForhaandsorienteringBrukerVisning aktivitet={aktivitet} />;
 };
 
 export default AvtaltContainerNy;
