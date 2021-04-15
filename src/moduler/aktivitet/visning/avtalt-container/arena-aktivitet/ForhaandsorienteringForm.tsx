@@ -42,7 +42,7 @@ interface Props {
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
-const ForhaandsorieteringsForm = (props: Props) => {
+const ForhaandsorieteringForm = (props: Props) => {
     const { setSendtAtErAvtaltMedNav, setForhandsorienteringType, aktivitet, hidden } = props;
 
     const dialogStatus = useSelector(selectDialogStatus);
@@ -101,4 +101,4 @@ const ForhaandsorieteringsForm = (props: Props) => {
     );
 };
 
-export default ForhaandsorieteringsForm;
+export default ForhaandsorieteringForm;

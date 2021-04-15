@@ -4,7 +4,7 @@ import { Aktivitet, ForhaandsorienteringType } from '../../../../../datatypes/ak
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import DeleLinje from '../../delelinje/delelinje';
 import { useKanSendeVarsel } from '../avtaltHooks';
-import ForhaandsorieteringsForm from './ForhaandsorienteringForm';
+import ForhaandsorieteringForm from './ForhaandsorienteringForm';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from './KanIkkeLeggeTilForhaandsorienteringInfotekst';
 
 interface Props {
@@ -28,7 +28,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
             <DeleLinje />
             <div className="aktivitetvisning__underseksjon">
                 <KanIkkeLeggeTilForhaandsorienteringInfotekst merEnnSyvDagerTil={merEnnSyvDagerTil} />
-                <ForhaandsorieteringsForm
+                <ForhaandsorieteringForm
                     setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}
                     aktivitet={aktivitet}
                     setForhandsorienteringType={setForhandsorienteringType}

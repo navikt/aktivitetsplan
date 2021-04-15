@@ -27,8 +27,8 @@ const AvtaltFormContainer = (props: Props) => {
     const sendMetrikker = useSendAvtaltMetrikker();
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
 
-    const doSettAktivitetTilAvtalt = (aktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
-        dispatch(settAktivitetTilAvtalt(aktivitet, forhaandsorientering));
+    const doSettAktivitetTilAvtalt = (avtaltAktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
+        dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering));
 
     const onSubmit: Handler = (avtaltFormMapped: Values<ForhaandsorienteringDialogProps>) => {
         const avtaltForm: ForhaandsorienteringDialogProps = avtaltFormMapped as ForhaandsorienteringDialogProps;

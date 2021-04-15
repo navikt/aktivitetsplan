@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import AvtaltFormContainer from './aktivitet/AvtaltMedNavFormContainer';
+import AvtaltFormContainer from './aktivitet/AvtaltFormContainer';
 import ArenaForhaandsorienteringFormKomponent from './arena-aktivitet/ArenaForhaandsorienteringFormKomponent';
 
 interface Props {

@@ -15,7 +15,7 @@ interface Props {
     state: any;
 }
 
-const ForaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
+const ForhaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     const { visible, lasterData, state } = props;
     const valgtForhaandsorienteringType = state.fields.forhaandsorienteringType.input.value;
 
@@ -54,4 +54,4 @@ const ForaandsorienteringsMeldingArenaaktivitet = (props: Props) => {
     );
 };
 
-export default ForaandsorienteringsMeldingArenaaktivitet;
+export default ForhaandsorienteringsMeldingArenaaktivitet;
