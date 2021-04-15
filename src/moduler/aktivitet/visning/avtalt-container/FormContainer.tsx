@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import ArenaForhaandsorienteringFormKomponent from '../forhaandsorientering-arena/ArenaForhaandsorienteringFormKomponent';
-import AvtaltFormContainer from './AvtaltMedNavFormContainer';
+import AvtaltFormContainer from './aktivitet/AvtaltMedNavFormContainer';
+import ArenaForhaandsorienteringFormKomponent from './arena-aktivitet/ArenaForhaandsorienteringFormKomponent';
 
 interface Props {
     setSendtAtErAvtaltMedNav(): void;

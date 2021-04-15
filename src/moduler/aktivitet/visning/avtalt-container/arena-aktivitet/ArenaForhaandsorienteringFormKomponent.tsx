@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import { erMerEnnSyvDagerTil } from '../../../../utils';
-import { useKanSendeVarsel } from '../avtalt-container/avtaltHooks';
-import DeleLinje from '../delelinje/delelinje';
+import { Aktivitet, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import { erMerEnnSyvDagerTil } from '../../../../../utils';
+import DeleLinje from '../../delelinje/delelinje';
+import { useKanSendeVarsel } from '../avtaltHooks';
 import ForhaandsorieteringsForm from './ForhaandsorienteringForm';
 import KanIkkeLeggeTilForhaandsorienteringInfotekst from './KanIkkeLeggeTilForhaandsorienteringInfotekst';
 

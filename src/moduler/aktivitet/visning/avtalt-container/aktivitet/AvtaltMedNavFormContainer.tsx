@@ -2,15 +2,15 @@ import { Values } from '@nutgaard/use-formstate';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { STATUS } from '../../../../api/utils';
-import { Aktivitet, Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import { erMerEnnSyvDagerTil } from '../../../../utils';
-import { settAktivitetTilAvtalt } from '../../aktivitet-actions';
-import { selectAktivitetStatus } from '../../aktivitet-selector';
-import DeleLinje from '../delelinje/delelinje';
+import { STATUS } from '../../../../../api/utils';
+import { Aktivitet, Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import { erMerEnnSyvDagerTil } from '../../../../../utils';
+import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
+import { selectAktivitetStatus } from '../../../aktivitet-selector';
+import DeleLinje from '../../delelinje/delelinje';
+import { useSendAvtaltMetrikker } from '../avtaltHooks';
+import { ForhaandsorienteringDialogProps, getForhaandsorienteringText } from '../utilsForhaandsorientering';
 import AvtaltForm, { Handler } from './AvtaltForm';
-import { useSendAvtaltMetrikker } from './avtaltHooks';
-import { ForhaandsorienteringDialogProps, getForhaandsorienteringText } from './utilsForhaandsorientering';
 
 interface Props {
     setSendtAtErAvtaltMedNav(): void;
