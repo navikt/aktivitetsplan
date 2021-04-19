@@ -8,6 +8,8 @@ import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hid
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import { selectDialogForAktivitetId, selectDialogStatus } from '../../../dialog/dialog-selector';
 import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/identitet-selector';
+import { selectErBrukerManuell, selectReservasjonKRR } from '../../../oppfolging-status/oppfolging-selector';
+import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
 
 interface Props {
     className: string;
@@ -21,7 +23,17 @@ const VarslingBoks = ({ className, aktivitet }: Props) => {
 
     const erVeileder = useSelector(selectErVeileder);
     const dialogForAktivitetId = useSelector((state) => selectDialogForAktivitetId(state, aktivitet.id));
-    const visVarselOmManglendeDialog = aktivitet.type === MOTE_TYPE && erVeileder && !dialogForAktivitetId;
+    const erKRR = useSelector(selectReservasjonKRR);
+    const erManuell = useSelector(selectErBrukerManuell);
+    const harLoggetInnNivaa4 = useSelector(selectNivaa4);
+
+    const visVarselOmManglendeDialog =
+        aktivitet.type === MOTE_TYPE &&
+        erVeileder &&
+        !dialogForAktivitetId &&
+        !erKRR &&
+        !erManuell &&
+        harLoggetInnNivaa4;
 
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
