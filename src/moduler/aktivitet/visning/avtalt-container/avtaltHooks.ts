@@ -2,24 +2,17 @@ import { useSelector } from 'react-redux';
 
 import { Aktivitet, AktivitetType, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { OppfolgingsPeriode } from '../../../../datatypes/oppfolgingTypes';
+import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import { loggForhandsorientering, metrikkTidForsteAvtalte } from '../../../../felles-komponenter/utils/logging';
 import { erGyldigISODato, msSince } from '../../../../utils';
-import {
-    selectErBrukerManuell,
-    selectErUnderKvp,
-    selectOppfolgingsPerioder,
-    selectReservasjonKRR,
-} from '../../../oppfolging-status/oppfolging-selector';
-import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
+import { selectErUnderKvp, selectOppfolgingsPerioder } from '../../../oppfolging-status/oppfolging-selector';
 import { selectAktiviteterData } from '../../aktivitet-selector';
 
 export const useKanSendeVarsel = () => {
-    const erManuell = useSelector(selectErBrukerManuell);
     const erKvp = useSelector(selectErUnderKvp);
-    const erreservertKRR = useSelector(selectReservasjonKRR);
-    const harNivaa4 = useSelector(selectNivaa4);
+    const erDigital = useErBrukerDigital();
 
-    return !(erManuell || erKvp || erreservertKRR || !harNivaa4);
+    return erDigital && !erKvp;
 };
 
 export const useSendAvtaltMetrikker = () => {

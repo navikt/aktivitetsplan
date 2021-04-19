@@ -1,16 +1,31 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import PT from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE } from '../../../../constant';
+import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
+import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
-import * as AppPT from '../../../../proptypes';
 import { selectDialogForAktivitetId, selectDialogStatus } from '../../../dialog/dialog-selector';
 import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/identitet-selector';
 
-function VarslingBoks({ className, avhengigheter, visVarselOmManglendeDialog }) {
+interface Props {
+    className: string;
+    aktivitet: Aktivitet;
+}
+
+const VarslingBoks = ({ className, aktivitet }: Props) => {
+    const identitetStatus = useSelector(selectIdentitetStatus);
+    const dialogStatus = useSelector(selectDialogStatus);
+    const avhengigheter = [identitetStatus, dialogStatus];
+
+    const erVeileder = useSelector(selectErVeileder);
+    const dialogForAktivitetId = useSelector((state) => selectDialogForAktivitetId(state, aktivitet.id));
+    const erDigital = useErBrukerDigital();
+
+    const visVarselOmManglendeDialog = aktivitet.type === MOTE_TYPE && erVeileder && !dialogForAktivitetId && erDigital;
+
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
             <Innholdslaster avhengigheter={avhengigheter}>
@@ -23,20 +38,6 @@ function VarslingBoks({ className, avhengigheter, visVarselOmManglendeDialog }) 
             </Innholdslaster>
         </HiddenIfDiv>
     );
-}
-
-VarslingBoks.propTypes = {
-    aktivitet: AppPT.aktivitet.isRequired,
-    className: PT.string.isRequired,
 };
 
-const mapStateToProps = (state, props) => {
-    const { aktivitet } = props;
-    return {
-        avhengigheter: [selectIdentitetStatus(state), selectDialogStatus(state)],
-        visVarselOmManglendeDialog:
-            aktivitet.type === MOTE_TYPE && selectErVeileder(state) && !selectDialogForAktivitetId(state, aktivitet.id),
-    };
-};
-
-export default connect(mapStateToProps)(VarslingBoks);
+export default VarslingBoks;
