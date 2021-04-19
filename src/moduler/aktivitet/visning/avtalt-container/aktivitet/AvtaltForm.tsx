@@ -6,15 +6,15 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import Checkbox from '../../../../felles-komponenter/skjema/input/Checkbox';
-import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
-import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import { DirtyContext } from '../../../context/dirty-context';
-import { selectNivaa4Status } from '../../../tilgang/tilgang-selector';
-import ForNavAnsattMarkeringWrapper from '../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
+import { ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import Checkbox from '../../../../../felles-komponenter/skjema/input/Checkbox';
+import Innholdslaster from '../../../../../felles-komponenter/utils/Innholdslaster';
+import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
+import { DirtyContext } from '../../../../context/dirty-context';
+import { selectNivaa4Status } from '../../../../tilgang/tilgang-selector';
+import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
+import { useKanSendeVarsel } from '../avtaltHooks';
 import styles from './AvtaltForm.module.less';
-import { useKanSendeVarsel } from './avtaltHooks';
 import ForhaandsorienteringsMelding from './ForhaandsorienteringsMelding';
 import KanIkkeSendeForhaandsorienteringInfotekst from './KanIkkeSendeForhaandsorienteringInfotekst';
 

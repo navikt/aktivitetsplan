@@ -17,7 +17,6 @@ import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-m
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
 import DeleLinje from '../delelinje/delelinje';
-import ForhaandsorienteringArenaAktivitetNy from '../forhaandsorientering-arena/ForhaandsorienteringArenaAktivitetNy';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
 
 const visningsIngress = (type: AktivitetType) => {
@@ -70,7 +69,6 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 aktivitet={valgtAktivitet}
                 className="aktivitetvisning__underseksjon"
             />
-            <ForhaandsorienteringArenaAktivitetNy aktivitet={valgtAktivitet} />
             <div className="aktivitetvisning__underseksjon">
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>

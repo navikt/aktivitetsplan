@@ -3,22 +3,20 @@ import React from 'react';
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../utils';
 import DeleLinje from '../delelinje/delelinje';
-import Forhaandsorenteringsvisning from '../hjelpekomponenter/Forhaandsorenteringsvisning';
+import Forhaandsorienteringsvisning from '../hjelpekomponenter/forhaandsorientering/Forhaandsorienteringsvisning';
 import SattTilAvtaltInfotekst from './SattTilAvtaltInfotekst';
 
 interface Props {
     forhaandsorienteringstype: ForhaandsorienteringType;
-    sendtAtErAvtaltMedNav: boolean;
     aktivitet: Aktivitet;
 }
 
 const SattTilAvtaltVisning = (props: Props) => {
-    const { aktivitet, forhaandsorienteringstype, sendtAtErAvtaltMedNav } = props;
+    const { aktivitet, forhaandsorienteringstype } = props;
 
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
-    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
 
-    if (!forhaandsorienteringTekst && !sendtAtErAvtaltMedNav) {
+    if (!forhaandsorienteringstype) {
         return null;
     }
 
@@ -28,12 +26,8 @@ const SattTilAvtaltVisning = (props: Props) => {
             <SattTilAvtaltInfotekst
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                 forhaandsorienteringstype={forhaandsorienteringstype}
-                hidden={!sendtAtErAvtaltMedNav}
             />
-            <Forhaandsorenteringsvisning
-                forhaandsorienteringTekst={forhaandsorienteringTekst}
-                hidden={!forhaandsorienteringTekst}
-            />
+            <Forhaandsorienteringsvisning aktivitet={aktivitet} startAapen />
             <DeleLinje />
         </>
     );

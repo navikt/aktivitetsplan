@@ -23,6 +23,12 @@ export const settAktivitetTilAvtalt = (
         forhaandsorientering,
     });
 
+export const markerForhaandsorienteringSomLest = (aktivitetId: string, aktivitetVersjon: string): Promise<Aktivitet> =>
+    putAsJson(`${AKTIVITET_BASE_URL}/avtaltMedNav/lest`, {
+        aktivitetId,
+        aktivitetVersion: aktivitetVersjon,
+    });
+
 export const oppdaterAktivitetStatus = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
 
@@ -48,3 +54,6 @@ export const sendForhaandsorienteringArenaAktivitet = (
         `${AKTIVITET_BASE_URL}/arena/forhaandsorientering?arenaaktivitetId=${arenaaktivitetId}`,
         forhaandsorientering
     );
+
+export const markerForhaandsorienteringSomLestArenaAktivitet = (aktivitetId: string): Promise<ArenaAktivitet> =>
+    putAsJson(`${AKTIVITET_BASE_URL}/arena/forhaandsorientering/lest?aktivitetId=${aktivitetId}`);

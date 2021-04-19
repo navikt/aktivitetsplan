@@ -121,4 +121,5 @@ export enum ForhaandsorienteringType {
 export interface Forhaandsorientering {
     type: ForhaandsorienteringType;
     tekst: string;
+    lest?: string;
 }
