@@ -5,11 +5,10 @@ import { useSelector } from 'react-redux';
 import { MOTE_TYPE } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
+import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
 import { selectDialogForAktivitetId, selectDialogStatus } from '../../../dialog/dialog-selector';
 import { selectErVeileder, selectIdentitetStatus } from '../../../identitet/identitet-selector';
-import { selectErBrukerManuell, selectReservasjonKRR } from '../../../oppfolging-status/oppfolging-selector';
-import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
 
 interface Props {
     className: string;
@@ -23,17 +22,9 @@ const VarslingBoks = ({ className, aktivitet }: Props) => {
 
     const erVeileder = useSelector(selectErVeileder);
     const dialogForAktivitetId = useSelector((state) => selectDialogForAktivitetId(state, aktivitet.id));
-    const erKRR = useSelector(selectReservasjonKRR);
-    const erManuell = useSelector(selectErBrukerManuell);
-    const harLoggetInnNivaa4 = useSelector(selectNivaa4);
+    const erDigital = useErBrukerDigital();
 
-    const visVarselOmManglendeDialog =
-        aktivitet.type === MOTE_TYPE &&
-        erVeileder &&
-        !dialogForAktivitetId &&
-        !erKRR &&
-        !erManuell &&
-        harLoggetInnNivaa4;
+    const visVarselOmManglendeDialog = aktivitet.type === MOTE_TYPE && erVeileder && !dialogForAktivitetId && erDigital;
 
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
