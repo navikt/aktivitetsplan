@@ -8,7 +8,7 @@ import AvtaltContainerGammel from './avtalt-container-gammel/AvtaltContainer-gam
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
-import VarslingBoks from './hjelpekomponenter/varsling-boks';
+import VarslingBoks from './hjelpekomponenter/VarslingBoks';
 import ReferatContainer from './referat/referat-container';
 import DialogLenke from './underelement-for-aktivitet/dialog/DialogLenke';
 import EndringsLogg from './underelement-for-aktivitet/EndringsLogg';
