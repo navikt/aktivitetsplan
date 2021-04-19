@@ -26,11 +26,13 @@ const BehandlingsDetaljer = ({ aktivitet }) => (
                 key="effekt"
                 tittel={<FormattedMessage id="aktivitetdetaljer.effekt-label" />}
                 innhold={aktivitet.effekt}
+                fullbredde={true}
             />
             <Informasjonsfelt
                 key="behandlingOppfolging"
                 tittel={<FormattedMessage id="aktivitetdetaljer.behandling-oppfolging-label" />}
                 innhold={aktivitet.behandlingOppfolging}
+                fullbredde={true}
             />
             <Beskrivelse aktivitet={aktivitet} />
         </div>
