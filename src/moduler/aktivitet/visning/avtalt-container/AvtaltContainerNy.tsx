@@ -64,10 +64,22 @@ const AvtaltContainerNy = (props: Props) => {
         );
     }
     if (skalViseSattTilAvtalt) {
-        return <SattTilAvtaltVisning forhaandsorienteringstype={forhandsorienteringType} aktivitet={aktivitet} />;
+        return (
+            <SattTilAvtaltVisning
+                forhaandsorienteringstype={forhandsorienteringType}
+                aktivitet={aktivitet}
+                erArenaAktivitet={erArenaAktivitet}
+            />
+        );
     }
 
-    return <ForhaandsorienteringsVisningsLinje aktivitet={aktivitet} erBruker={erBruker} />;
+    return (
+        <ForhaandsorienteringsVisningsLinje
+            aktivitet={aktivitet}
+            erBruker={erBruker}
+            erArenaAktivitet={erArenaAktivitet}
+        />
+    );
 };
 
 export default AvtaltContainerNy;
