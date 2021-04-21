@@ -5,18 +5,19 @@ import styles from './LestKnapp.module.less';
 
 interface Props {
     hidden: boolean;
+    lasterData: boolean;
     onClick(): void;
 }
 
 const LestKnapp = (props: Props) => {
-    const { hidden, onClick } = props;
+    const { hidden, lasterData, onClick } = props;
 
     if (hidden) {
         return null;
     }
 
     return (
-        <Knapp onClick={onClick} className={styles.lestKnapp} mini>
+        <Knapp onClick={onClick} className={styles.lestKnapp} spinner={lasterData} autoDisableVedSpinner mini>
             Ok, jeg har lest beskjeden
         </Knapp>
     );

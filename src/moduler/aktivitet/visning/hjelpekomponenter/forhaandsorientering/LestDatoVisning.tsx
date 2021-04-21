@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { formaterDatoKortManed } from '../../../../../utils';
@@ -16,7 +16,7 @@ const LestDatoVisning = (props: Props) => {
         return null;
     }
 
-    return <Normaltekst className={styles.lestDato}>Lest {formaterDatoKortManed(lestDato)}</Normaltekst>;
+    return <Undertekst className={styles.lestDato}>Lest {formaterDatoKortManed(lestDato)}</Undertekst>;
 };
 
 export default LestDatoVisning;
