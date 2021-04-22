@@ -14,7 +14,7 @@ import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivi
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './Aktivitetvisning';
-import AktivitetvisningModal from './aktivitetvisning-modal';
+import AktivitetvisningModal from './AktivitetvisningModal';
 
 class AktivitetvisningContainer extends Component {
     componentDidMount() {

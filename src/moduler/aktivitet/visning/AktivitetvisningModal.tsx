@@ -1,12 +1,12 @@
-import PT from 'prop-types';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
-import * as AppPT from '../../../proptypes';
+import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 import { selectNivaa4Feilmeldinger } from '../../tilgang/tilgang-selector';
@@ -34,7 +34,7 @@ const typeMap = {
     SAMTALEREFERAT: 'Samtalereferat',
 };
 
-function header(valgtAktivitet) {
+const header = (valgtAktivitet?: Aktivitet) => {
     if (!valgtAktivitet) {
         return null;
     }
@@ -48,11 +48,17 @@ function header(valgtAktivitet) {
             aktivitetErLaast={aktivitetErLaast}
         />
     );
-}
+};
 
 const DIALOG_TEKST = 'Alle endringer blir borte hvis du ikke lagrer. Er du sikker på at du vil lukke siden?';
 
-function AktivitetvisningModal(props) {
+interface Props {
+    aktivitet?: Aktivitet;
+    avhengigheter: Avhengighet[];
+    children: React.ReactNode;
+}
+
+const AktivitetvisningModal = (props: Props) => {
     const { aktivitet, avhengigheter, children } = props;
     const dirty = useContext(DirtyContext);
     const history = useHistory();
@@ -78,16 +84,6 @@ function AktivitetvisningModal(props) {
             {children}
         </Modal>
     );
-}
-
-AktivitetvisningModal.defaultProps = {
-    aktivitet: undefined,
-};
-
-AktivitetvisningModal.propTypes = {
-    aktivitet: AppPT.aktivitet,
-    avhengigheter: AppPT.avhengigheter.isRequired,
-    children: PT.object.isRequired,
 };
 
 export default AktivitetvisningModal;
