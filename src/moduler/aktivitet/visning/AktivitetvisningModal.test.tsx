@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import create from '../../../store';
 import { HENTING_FEILET as DIALOG_HENT_FEILET } from '../../dialog/dialog-reducer';
 import Feilmelding from '../../feilmelding/Feilmelding';
-import AktivitetvisningModal from './aktivitetvisning-modal';
+import AktivitetvisningModal from './AktivitetvisningModal';
 
 const dialogFeilet = () => ({ type: DIALOG_HENT_FEILET, data: {} });
 
