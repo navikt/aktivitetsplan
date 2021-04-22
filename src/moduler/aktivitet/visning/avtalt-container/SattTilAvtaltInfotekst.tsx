@@ -30,18 +30,13 @@ const getText = (
 interface Props {
     mindreEnnSyvDagerTil: boolean;
     forhaandsorienteringstype: ForhaandsorienteringType;
-    hidden: boolean;
 }
 
 //TODO: Husk å slette tekstfil sett-avtalt-bekreftelse
 const SattTilAvtaltInfotekst = (props: Props) => {
     const kanSendeVarsel = useKanSendeVarsel();
 
-    const { mindreEnnSyvDagerTil, forhaandsorienteringstype, hidden } = props;
-
-    if (hidden) {
-        return null;
-    }
+    const { mindreEnnSyvDagerTil, forhaandsorienteringstype } = props;
 
     const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringstype);
 

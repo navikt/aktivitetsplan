@@ -4,13 +4,13 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { STATUS } from '../../../../api/utils';
-import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import Checkbox from '../../../../felles-komponenter/skjema/input/Checkbox';
-import { loggForhandsorienteringTiltak } from '../../../../felles-komponenter/utils/logging';
-import { selectDialogStatus } from '../../../dialog/dialog-selector';
-import { sendForhaandsorienteringArenaAktivitet } from '../../arena-aktiviteter-reducer';
-import ForNavAnsattMarkeringWrapper from '../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
+import { STATUS } from '../../../../../api/utils';
+import { Aktivitet, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
+import Checkbox from '../../../../../felles-komponenter/skjema/input/Checkbox';
+import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter/utils/logging';
+import { selectDialogStatus } from '../../../../dialog/dialog-selector';
+import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
+import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
 import styles from './ForhaandsorienteringForm.module.less';
 import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 
@@ -36,13 +36,14 @@ const validate = (val: string) => {
 };
 
 interface Props {
-    visible: boolean;
-    valgtAktivitet: Aktivitet;
-    forhandsorienteringSendt(): void;
+    setSendtAtErAvtaltMedNav(): void;
+    aktivitet: Aktivitet;
+    hidden: boolean;
+    setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
-const ForhaandsorieteringsForm = (props: Props) => {
-    const { visible, valgtAktivitet, forhandsorienteringSendt } = props;
+const ForhaandsorienteringForm = (props: Props) => {
+    const { setSendtAtErAvtaltMedNav, setForhandsorienteringType, aktivitet, hidden } = props;
 
     const dialogStatus = useSelector(selectDialogStatus);
     const dispatch = useDispatch();
@@ -59,18 +60,20 @@ const ForhaandsorieteringsForm = (props: Props) => {
         checked: '',
     });
 
-    if (!visible) {
+    if (hidden) {
         return null;
     }
 
     const onSubmit = (data: { forhaandsorienteringType: string; tekst: string }) => {
         const tekst =
             data.forhaandsorienteringType === ForhaandsorienteringType.SEND_STANDARD ? avtaltTekst : data.tekst;
-        return sendForhaandsorienteringArenaAktivitet(valgtAktivitet, {
+
+        setForhandsorienteringType(data.forhaandsorienteringType as ForhaandsorienteringType);
+        return sendForhaandsorienteringArenaAktivitet(aktivitet, {
             tekst,
             type: data.forhaandsorienteringType,
         })(dispatch).then(() => {
-            forhandsorienteringSendt();
+            setSendtAtErAvtaltMedNav();
             loggForhandsorienteringTiltak();
             // @ts-ignore
             document.querySelector('.aktivitet-modal').focus();
@@ -98,4 +101,4 @@ const ForhaandsorieteringsForm = (props: Props) => {
     );
 };
 
-export default ForhaandsorieteringsForm;
+export default ForhaandsorienteringForm;

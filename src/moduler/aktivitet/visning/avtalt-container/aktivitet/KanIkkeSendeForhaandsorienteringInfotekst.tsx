@@ -6,8 +6,8 @@ import {
     selectErBrukerManuell,
     selectErUnderKvp,
     selectReservasjonKRR,
-} from '../../../oppfolging-status/oppfolging-selector';
-import { selectNivaa4 } from '../../../tilgang/tilgang-selector';
+} from '../../../../oppfolging-status/oppfolging-selector';
+import { selectNivaa4 } from '../../../../tilgang/tilgang-selector';
 
 const getTekst = (
     brukerErManuell: boolean,
