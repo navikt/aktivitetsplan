@@ -76,7 +76,7 @@ const AktivitetvisningModal = (props: Props) => {
     const erBruker = useSelector(selectErBruker);
 
     const fho = aktivitet?.forhaandsorientering;
-    const skalLeses = skalMarkereForhaandsorienteringSomLest(erBruker, !!aktivitet?.historisk, fho);
+    const skalLeses = skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet);
 
     const markerFhoSomLest = () => {
         if (aktivitet?.arenaAktivitet) {

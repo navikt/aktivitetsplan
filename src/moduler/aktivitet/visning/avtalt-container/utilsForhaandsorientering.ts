@@ -1,4 +1,4 @@
-import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 
 export interface ForhaandsorienteringDialogProps {
     avtaltText: string;
@@ -19,8 +19,9 @@ export const getForhaandsorienteringText = (avtaltTextProps: Forhaandsorienterin
     }
 };
 
-export const skalMarkereForhaandsorienteringSomLest = (
-    erBruker: boolean,
-    erHistoriskAktivitet: boolean,
-    fho?: Forhaandsorientering
-) => !!fho?.type && !fho.lest && fho.type !== ForhaandsorienteringType.IKKE_SEND && erBruker && !erHistoriskAktivitet;
+export const skalMarkereForhaandsorienteringSomLest = (erBruker: boolean, aktivitet?: Aktivitet) => {
+    const fho = aktivitet?.forhaandsorientering;
+    return (
+        !!fho?.type && !fho.lest && fho.type !== ForhaandsorienteringType.IKKE_SEND && erBruker && !aktivitet?.historisk
+    );
+};

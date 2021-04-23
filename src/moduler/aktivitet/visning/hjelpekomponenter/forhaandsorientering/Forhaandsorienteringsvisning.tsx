@@ -37,11 +37,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const dispatch = useDispatch();
 
-    const kanMarkeresSomLest = skalMarkereForhaandsorienteringSomLest(
-        erBruker,
-        !!aktivitet.historisk,
-        forhaandsorientering
-    );
+    const kanMarkeresSomLest = skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet);
 
     const [erEkspandert, setErEkspandert] = useState(startAapen);
 
