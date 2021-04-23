@@ -1,4 +1,4 @@
-import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import { Forhaandsorientering, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 
 export interface ForhaandsorienteringDialogProps {
     avtaltText: string;
@@ -18,3 +18,9 @@ export const getForhaandsorienteringText = (avtaltTextProps: Forhaandsorienterin
             throw new Error('Ukjent avtalttype');
     }
 };
+
+export const skalMarkereForhaandsorienteringSomLest = (
+    erBruker: boolean,
+    erHistoriskAktivitet: boolean,
+    fho?: Forhaandsorientering
+) => !!fho?.type && !fho.lest && fho.type !== ForhaandsorienteringType.IKKE_SEND && erBruker && !erHistoriskAktivitet;

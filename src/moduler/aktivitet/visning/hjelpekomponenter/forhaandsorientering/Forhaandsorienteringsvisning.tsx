@@ -10,6 +10,7 @@ import { markerForhaandsorienteringSomLest } from '../../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../../aktivitet-selector';
 import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-reducer';
+import { skalMarkereForhaandsorienteringSomLest } from '../../avtalt-container/utilsForhaandsorientering';
 import styles from './Forhaandsorienteringsvisning.module.less';
 import LestDatoVisning from './LestDatoVisning';
 import LestKnapp from './LestKnapp';
@@ -24,8 +25,9 @@ interface Props {
 const Forhaandsorienteringsvisning = (props: Props) => {
     const { aktivitet, erArenaAktivitet, startAapen = false } = props;
 
-    const forhaandsorienteringTekst = aktivitet.forhaandsorientering?.tekst;
-    const forhaandsorienteringLestDato = aktivitet.forhaandsorientering?.lest;
+    const forhaandsorientering = aktivitet.forhaandsorientering;
+    const forhaandsorienteringTekst = forhaandsorientering?.tekst;
+    const forhaandsorienteringLestDato = forhaandsorientering?.lest;
 
     const erLest = !!forhaandsorienteringLestDato;
 
@@ -35,7 +37,11 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const dispatch = useDispatch();
 
-    const kanMarkeresSomLest = !erLest && erBruker;
+    const kanMarkeresSomLest = skalMarkereForhaandsorienteringSomLest(
+        erBruker,
+        !!aktivitet.historisk,
+        forhaandsorientering
+    );
 
     const [erEkspandert, setErEkspandert] = useState(startAapen);
 
