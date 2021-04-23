@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
+import { Undertittel } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { Dialog } from '../../datatypes/dialogTypes';
@@ -52,6 +52,9 @@ function Navigasjonslinje() {
                 <LenkepanelBase className="tilDittNav" href={DITTNAV_PATH}>
                     <span className="tilDittNavTekst">Ditt NAV</span>
                 </LenkepanelBase>
+                <Undertittel className="tittel" tag="h1">
+                    Aktivitetsplan
+                </Undertittel>
                 <LenkepanelBase className="tilDialog" href={DIALOG_PATH}>
                     <DialogIkon antallUleste={antallUlesteDialoger} />
                     <span className="avstand" hidden={antallUlesteDialoger > 0} />
