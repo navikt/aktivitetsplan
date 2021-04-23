@@ -3,7 +3,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../constant';
-import { Aktivitet, ForhaandsorienteringType } from '../../../datatypes/aktivitetTypes';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
