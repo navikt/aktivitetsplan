@@ -33,6 +33,8 @@ const getTekst = (
     }
 };
 
+//TODO: slette tekstfil sett-avtalt-forhandsrientering-bruker-uten-aktivitesplan
+//TODO: Husk å slette tekstfil sett-til-avtalt-mindre-enn-syv-dager
 const KanIkkeSendeForhaandsorienteringInfotekst = (props: { mindreEnnSyvDagerTil: boolean }) => {
     const brukerErManuell = useSelector(selectErBrukerManuell);
     const brukerErUnderKvp = useSelector(selectErUnderKvp);
