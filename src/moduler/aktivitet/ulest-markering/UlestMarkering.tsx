@@ -1,7 +1,7 @@
-import AlertStripe from 'nav-frontend-alertstriper';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 
+import { ReactComponent as UlestViktigIkon } from './ikon_ulest_viktig.svg';
 import styles from './UlestMarkering.module.less';
 
 interface Props {
@@ -15,9 +15,10 @@ const UlestMarkering = (props: Props) => {
     }
 
     return (
-        <AlertStripe type="advarsel" form="inline" className={styles.ulestMarkering}>
-            <Element>Ulest</Element>
-        </AlertStripe>
+        <div className={styles.ulestMarkering}>
+            <UlestViktigIkon />
+            <Element className={styles.ulestTekst}>Ulest</Element>
+        </div>
     );
 };
 
