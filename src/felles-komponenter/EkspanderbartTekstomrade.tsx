@@ -1,45 +1,49 @@
 import { NedChevron, OppChevron } from 'nav-frontend-chevron';
+import { Knapp } from 'nav-frontend-knapper';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 
 import styles from './EkspanderbartTekstomrade.module.less';
 
-const MoreOrLess = ({ text, maxCharacters }: { text: string; maxCharacters: number }) => {
+interface MoreOrLessProps {
+    className: string;
+    text: string;
+    maxCharacters: number;
+}
+
+const MoreOrLess = (props: MoreOrLessProps) => {
+    const { className, text, maxCharacters } = props;
     const [hasLongText, setHasLongText] = useState(true);
     const toggleMoreOrLess = () => {
         setHasLongText(!hasLongText);
     };
     if (text.length > maxCharacters) {
         return (
-            <p>
+            <Normaltekst className={className}>
                 {hasLongText ? text.slice(0, maxCharacters) + ' ... ' : text + ' '}
-                <span className={styles.nobreak}>
-                    <span className={styles.color}>
-                        <span onClick={toggleMoreOrLess} className={styles.padding}>
-                            {hasLongText ? 'Les mer' : 'Vis mindre'}
-                        </span>
-                        {hasLongText ? <NedChevron /> : <OppChevron />}
-                    </span>
-                </span>
-            </p>
+                <Knapp onClick={toggleMoreOrLess} className={styles.button}>
+                    {hasLongText ? 'Les mer' : 'Vis mindre'}
+                    {hasLongText ? (
+                        <NedChevron className={styles.padding} />
+                    ) : (
+                        <OppChevron className={styles.padding} />
+                    )}
+                </Knapp>
+            </Normaltekst>
         );
-    } else {
-        return <p>{text}</p>;
     }
+    return <Normaltekst className={className}>{text}</Normaltekst>;
 };
 
 interface Props {
+    klasseNavn: string;
     tekst: string;
     antallTegn: number;
-    className: string;
 }
 
 const EkspanderbartTekstomrade = (props: Props) => {
-    const { tekst, antallTegn, className } = props;
-    return (
-        <div className={className}>
-            <MoreOrLess text={tekst} maxCharacters={antallTegn} />
-        </div>
-    );
+    const { tekst, antallTegn, klasseNavn } = props;
+    return <MoreOrLess className={klasseNavn} text={tekst} maxCharacters={antallTegn} />;
 };
 
 export default EkspanderbartTekstomrade;
