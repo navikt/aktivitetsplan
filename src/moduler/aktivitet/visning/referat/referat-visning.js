@@ -1,11 +1,11 @@
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Undertittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
+import EkspanderbartTekstomrade from '../../../../felles-komponenter/EkspanderbartTekstomrade';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import * as AppPT from '../../../../proptypes';
 
@@ -26,7 +26,7 @@ function ReferatVisning(props) {
     return (
         <div className="oppdater-referat aktivitetvisning__underseksjon">
             <Undertittel>Samtalereferat</Undertittel>
-            <Tekstomrade className="oppdater-referat__referat">{referat}</Tekstomrade>
+            <EkspanderbartTekstomrade className="oppdater-referat__referat" tekst={referat} antallTegn={275} />
             <HiddenIfDiv
                 hidden={!erVeileder || aktivitetStatus === STATUS_FULLFOERT || aktivitetStatus === STATUS_AVBRUTT}
             >
