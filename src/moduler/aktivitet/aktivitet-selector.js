@@ -24,3 +24,7 @@ export const selectAktivitetFeilmeldinger = (state) => {
     const feilMeldingsdata = selectAktivitetStatus(state) === STATUS.ERROR && selectAktiviteterSlice(state).feil;
     return feilMeldingsdata ? [feilMeldingsdata] : [];
 };
+
+export function selectAktivitetFhoLestStatus(state) {
+    return selectAktiviteterSlice(state).fhoLestStatus;
+}

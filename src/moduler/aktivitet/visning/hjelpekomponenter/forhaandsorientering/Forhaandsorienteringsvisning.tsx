@@ -7,8 +7,8 @@ import { Aktivitet } from '../../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinjeBase from '../../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { selectErBruker } from '../../../../identitet/identitet-selector';
 import { markerForhaandsorienteringSomLest } from '../../../aktivitet-actions';
-import { selectAktivitetStatus } from '../../../aktivitet-selector';
-import { selectArenaAktivitetStatus } from '../../../arena-aktivitet-selector';
+import { selectAktivitetFhoLestStatus } from '../../../aktivitet-selector';
+import { selectArenaAktivitetFhoLestStatus } from '../../../arena-aktivitet-selector';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-reducer';
 import { skalMarkereForhaandsorienteringSomLest } from '../../avtalt-container/utilsForhaandsorientering';
 import styles from './Forhaandsorienteringsvisning.module.less';
@@ -27,13 +27,13 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const forhaandsorientering = aktivitet.forhaandsorientering;
     const forhaandsorienteringTekst = forhaandsorientering?.tekst;
-    const forhaandsorienteringLestDato = forhaandsorientering?.lest;
+    const forhaandsorienteringLestDato = forhaandsorientering?.lestDato;
 
     const erLest = !!forhaandsorienteringLestDato;
 
     const erBruker = useSelector(selectErBruker);
-    const arenaAktivitetStatus = useSelector(selectArenaAktivitetStatus);
-    const aktivitetStatus = useSelector(selectAktivitetStatus);
+    const arenaAktivitetFhoLestStatus = useSelector(selectArenaAktivitetFhoLestStatus);
+    const aktivitetFhoLestStatus = useSelector(selectAktivitetFhoLestStatus);
 
     const dispatch = useDispatch();
 
@@ -60,8 +60,8 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const onClickToggle = () => setErEkspandert((ekspandert) => !ekspandert);
 
-    const lasterDataArena = arenaAktivitetStatus !== STATUS.OK;
-    const lasterDataAktivitet = aktivitetStatus !== STATUS.OK;
+    const lasterDataArena = arenaAktivitetFhoLestStatus === STATUS.PENDING;
+    const lasterDataAktivitet = aktivitetFhoLestStatus === STATUS.PENDING;
     const lasterData = erArenaAktivitet ? lasterDataArena : lasterDataAktivitet;
 
     return (

@@ -22,6 +22,10 @@ export const getForhaandsorienteringText = (avtaltTextProps: Forhaandsorienterin
 export const skalMarkereForhaandsorienteringSomLest = (erBruker: boolean, aktivitet?: Aktivitet) => {
     const fho = aktivitet?.forhaandsorientering;
     return (
-        !!fho?.type && !fho.lest && fho.type !== ForhaandsorienteringType.IKKE_SEND && erBruker && !aktivitet?.historisk
+        !!fho?.type &&
+        !fho.lestDato &&
+        fho.type !== ForhaandsorienteringType.IKKE_SEND &&
+        erBruker &&
+        !aktivitet?.historisk
     );
 };

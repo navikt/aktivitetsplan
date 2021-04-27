@@ -27,6 +27,10 @@ export const OPPDATER = 'aktivitet/oppdater';
 export const OPPDATER_OK = 'aktivitet/oppdater/ok';
 export const OPPDATER_FEILET = 'aktivitet/oppdater/fail';
 
+export const FHO_LEST = 'aktivitet/fho/lest';
+export const FHO_LEST_OK = 'aktivitet/fho/lest/ok';
+export const FHO_LEST_FEILET = 'aktivitet/fho/lest/fail';
+
 export const SETT_FORRIGE_AKTIVE_AKTIVITET_ID = 'aktivitet/forrigeaktive/sett';
 
 export const NIVAA_4_FEILET = 'TILGANG/FEILET';

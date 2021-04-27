@@ -15,7 +15,7 @@ const ForhaandsorienteringsVisningsLinje = ({ aktivitet, erBruker, erArenaAktivi
         <DeleLinje />
         <Forhaandsorienteringsvisning
             aktivitet={aktivitet}
-            startAapen={erBruker && !aktivitet.forhaandsorientering?.lest}
+            startAapen={erBruker && !aktivitet.forhaandsorientering?.lestDato}
             erArenaAktivitet={erArenaAktivitet}
         />
         <DeleLinje />
