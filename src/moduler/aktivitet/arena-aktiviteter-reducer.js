@@ -11,9 +11,14 @@ export const OPPDATER = 'arenaAktivitet/oppdater';
 export const OPPDATER_OK = 'arenaAktivitet/oppdater/ok';
 export const OPPDATER_FEILET = 'arenaAktivitet/oppdater/fail';
 
+export const FHO_LEST = 'arenaAktivitet/fho/lest';
+export const FHO_LEST_OK = 'arenaAktivitet/fho/lest/ok';
+export const FHO_LEST_FEILET = 'arenaAktivitet/fho/lest/fail';
+
 const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
+    fhoLestStatus: STATUS.NOT_STARTED,
 };
 
 const mapArenaType = (arenaAktivitet) => ({
@@ -45,6 +50,13 @@ const reducer = (state = initalState, action) => {
         case OPPDATER_OK:
             widowEvent(UpdateTypes.Aktivitet);
             return nyStateMedOppdatertAktivitet({ ...state, status: STATUS.OK }, action.data);
+        case FHO_LEST:
+            return { ...state, fhoLestStatus: STATUS.RELOADING };
+        case FHO_LEST_OK:
+            widowEvent(UpdateTypes.Aktivitet);
+            return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: STATUS.OK }, action.data);
+        case FHO_LEST_FEILET:
+            return { ...state, fhoLestStatus: STATUS.ERROR, feil: action.data };
         default:
             return state;
     }
@@ -69,7 +81,7 @@ export const sendForhaandsorienteringArenaAktivitet = (arenaaktivitet, forhaands
 
 export const markerForhaandsorienteringSomLestArenaAktivitet = (arenaaktivitet) =>
     doThenDispatch(() => Api.markerForhaandsorienteringSomLestArenaAktivitet(arenaaktivitet.id), {
-        OK: OPPDATER_OK,
-        FEILET: OPPDATER_FEILET,
-        PENDING: OPPDATER,
+        OK: FHO_LEST_OK,
+        FEILET: FHO_LEST_FEILET,
+        PENDING: FHO_LEST,
     });

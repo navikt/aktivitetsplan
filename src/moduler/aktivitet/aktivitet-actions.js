@@ -60,9 +60,9 @@ export function settAktivitetTilAvtalt(aktivitet, forhaandsorientering) {
 
 export function markerForhaandsorienteringSomLest(aktivitet) {
     return doThenDispatch(() => Api.markerForhaandsorienteringSomLest(aktivitet.id, aktivitet.versjon), {
-        OK: AT.OPPDATER_OK,
-        FEILET: AT.OPPDATER_FEILET,
-        PENDING: AT.OPPDATER,
+        OK: AT.FHO_LEST_OK,
+        FEILET: AT.FHO_LEST_FEILET,
+        PENDING: AT.FHO_LEST,
     });
 }
 
