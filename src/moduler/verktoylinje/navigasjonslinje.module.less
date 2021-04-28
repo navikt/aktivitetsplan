@@ -1,4 +1,5 @@
 @import '../../variables';
+@import (reference) '~nav-frontend-knapper-style/src/index';
 
 .navigasjonslinje {
     display: flex;
@@ -17,6 +18,7 @@
     }
 
     .tilDittNav {
+        .lenkepanel();
         left: -0.8rem;
         transform: scaleX(-1);
         padding: 0.5rem 0.5rem 0.5rem 0.5rem;
@@ -27,9 +29,16 @@
         }
     }
 
+    .tittel {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
     .tilDialog {
-        left: 0.5rem;
+        .knapp--flat();
+        display: flex;
+        align-items: center;
         padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+        text-decoration: none;
 
         .dialogIkonMedUleste {
             position: relative;
@@ -40,11 +49,7 @@
             padding-left: 1rem;
         }
         .tilDialogTekst {
-            text-transform: uppercase;
-            font-weight: bolder;
-        }
-        .lenkepanel__indikator {
-            display: none;
+            padding-right: 0.5rem;
         }
     }
 }

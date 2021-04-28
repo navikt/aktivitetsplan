@@ -9,7 +9,6 @@ import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
 import createHistory from './history';
 import Hovedside from './hovedside/hovedside';
-import SideBanner from './moduler/sidebanner/sidebanner';
 import Provider from './provider';
 import { HiddenIf } from './utils';
 import { UppdateEventHandler } from './utils/UpdateHandler';
@@ -25,7 +24,6 @@ function App({ fnr }) {
     window.appconfig = {
         CONTEXT_PATH: path,
         TILLAT_SET_AVTALT: isValueOrGetDefault(window.appconfig.TILLAT_SET_AVTALT, true),
-        VIS_SIDEBANNER: isValueOrGetDefault(window.appconfig.VIS_SIDEBANNER, false),
         FNR_I_URL: isValueOrGetDefault(window.appconfig.FNR_I_URL, true),
         VIS_MALER: isValueOrGetDefault(window.appconfig.VIS_MALER, true),
         TIMEOUTBOX: isValueOrGetDefault(window.appconfig.TIMEOUTBOX, false),
@@ -43,7 +41,6 @@ function App({ fnr }) {
     return (
         <div className="aktivitetsplanfs">
             <Provider key={fnr}>
-                <SideBanner visible={window.appconfig.VIS_SIDEBANNER} />
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
                         <Router history={history}>
