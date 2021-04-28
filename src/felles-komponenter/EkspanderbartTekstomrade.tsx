@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -13,13 +14,14 @@ interface ToggleBetweenDisplayingTruncatedOrFullTextProps {
 
 const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayingTruncatedOrFullTextProps) => {
     const { className, text, maxCharacters } = props;
+    const contentClassNames = classNames(className, styles.content);
     const [hasLongText, setHasLongText] = useState(true);
     const toggleMoreOrLess = () => {
         setHasLongText(!hasLongText);
     };
     if (text.length > maxCharacters) {
         return (
-            <Normaltekst className={className}>
+            <Normaltekst className={contentClassNames}>
                 {hasLongText ? text.slice(0, maxCharacters) + ' ... ' : text + ' '}
                 <Knapp onClick={toggleMoreOrLess} className={styles.button}>
                     {hasLongText ? 'Les mer' : 'Vis mindre'}
@@ -32,20 +34,18 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
             </Normaltekst>
         );
     }
-    return <Normaltekst className={className}>{text}</Normaltekst>;
+    return <Normaltekst className={contentClassNames}>{text}</Normaltekst>;
 };
 
 interface Props {
-    klasseNavn: string;
+    className: string;
     tekst: string;
     antallTegn: number;
 }
 
 const EkspanderbartTekstomrade = (props: Props) => {
-    const { tekst, antallTegn, klasseNavn } = props;
-    return (
-        <ToggleBetweenDisplayingTruncatedOrFullText className={klasseNavn} text={tekst} maxCharacters={antallTegn} />
-    );
+    const { className, tekst, antallTegn } = props;
+    return <ToggleBetweenDisplayingTruncatedOrFullText className={className} text={tekst} maxCharacters={antallTegn} />;
 };
 
 export default EkspanderbartTekstomrade;
