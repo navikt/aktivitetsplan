@@ -5,11 +5,11 @@ import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { Henvendelse } from '../../../datatypes/dialogTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
-import AvtaltMarkering from '../avtalt-markering/avtalt-markering';
 import SokeStatusEtikett from '../etikett/SokeStatusEtikett';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../ikke-delt-markering/IkkeDeltMarkering';
 import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
 import styles from './Aktivitetskort.module.less';
+import UlestAvtaltMarkering from './UlestAvtaltMarkering';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -29,7 +29,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     return (
         <div className={styles.tillegg}>
             <div>
-                <AvtaltMarkering visible={avtalt} />
+                <UlestAvtaltMarkering aktivitet={aktivitet} />
                 <IkkeDeltMarkering visible={ikkeDelt} />
                 <SokeStatusEtikett hidden={!etikett} etikett={etikett} className={styles.etikett} />
             </div>

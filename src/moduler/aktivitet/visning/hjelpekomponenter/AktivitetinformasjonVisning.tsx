@@ -12,7 +12,7 @@ import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
-import AvtaltMarkering from '../../avtalt-markering/avtalt-markering';
+import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
 import AktivitetIngress from '../aktivitetingress/aktivitetingress';
 import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
@@ -61,7 +61,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                     </InternLenke>
                 </div>
                 {visningsIngress(type)}
-                <AvtaltMarkering visible={avtalt} className="aktivitetvisning__etikett" />
+                <AvtaltMarkering hidden={!avtalt} className="aktivitetvisning__etikett" />
                 <IkkeDeltMarkering visible={ikkeDelt} className="aktivitetvisning__etikett" />
             </div>
             <AvtaltContainerNy

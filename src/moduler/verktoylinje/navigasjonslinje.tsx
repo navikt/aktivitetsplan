@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { LenkepanelBase } from 'nav-frontend-lenkepanel/lib';
+import { Undertittel } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { fetchSistOppdatert } from '../../api/dialogAPI';
 import { Dialog } from '../../datatypes/dialogTypes';
@@ -10,6 +10,7 @@ import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/D
 import { hentDialog } from '../dialog/dialog-reducer';
 import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
+import styles from './navigasjonslinje.module.less';
 
 const DITTNAV_PATH = '/dittnav/';
 const DIALOG_PATH = '/arbeidsrettet-dialog';
@@ -48,15 +49,18 @@ function Navigasjonslinje() {
         return null;
     } else {
         return (
-            <div className="navigasjonslinje">
-                <LenkepanelBase className="tilDittNav" href={DITTNAV_PATH}>
-                    <span className="tilDittNavTekst">Ditt NAV</span>
+            <div className={styles.navigasjonslinje}>
+                <LenkepanelBase className={styles.tilDittNav} href={DITTNAV_PATH}>
+                    <span className={styles.tilDittNavTekst}>Ditt NAV</span>
                 </LenkepanelBase>
-                <LenkepanelBase className="tilDialog" href={DIALOG_PATH}>
+                <Undertittel className={styles.tittel} tag="h1">
+                    Aktivitetsplan
+                </Undertittel>
+                <a className={styles.tilDialog} href={DIALOG_PATH}>
+                    <span className={styles.tilDialogTekst}>Dialog</span>
                     <DialogIkon antallUleste={antallUlesteDialoger} />
-                    <span className="avstand" hidden={antallUlesteDialoger > 0} />
-                    <span className="tilDialogTekst">Dialog</span>
-                </LenkepanelBase>
+                    <span className={styles.avstand} hidden={antallUlesteDialoger > 0} />
+                </a>
             </div>
         );
     }

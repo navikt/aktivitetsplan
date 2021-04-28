@@ -12,7 +12,7 @@ import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../datatypes/dialogTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { compareAktivitet } from '../../aktivitet/aktivitet-util';
-import AvtaltMarkering from '../../aktivitet/avtalt-markering/avtalt-markering';
+import AvtaltMarkering from '../../aktivitet/avtalt-markering/AvtaltMarkering';
 import SokeStatusEtikett from '../../aktivitet/etikett/SokeStatusEtikett';
 import Aktivitetsdetaljer from '../../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import Informasjonsfelt from '../../aktivitet/visning/hjelpekomponenter/Informasjonsfelt';
@@ -62,7 +62,7 @@ function AktivitetPrint(props: AktivitetProps) {
 
             <Aktivitetsdetaljer valgtAktivitet={aktivitet} key={id} />
             <AktivitetReferat aktivitet={aktivitet} />
-            <AvtaltMarkering visible={aktivitet.avtalt} className="etikett-print" />
+            <AvtaltMarkering hidden={!aktivitet.avtalt} className="etikett-print" />
             <SokeStatusEtikett hidden={!aktivitet.etikett} etikett={aktivitet.etikett} className="etikett-print" />
             <DialogPrint dialog={dialog} />
         </div>
