@@ -5,13 +5,13 @@ import React, { useState } from 'react';
 
 import styles from './EkspanderbartTekstomrade.module.less';
 
-interface MoreOrLessProps {
+interface ToggleBetweenDisplayingTruncatedOrFullTextProps {
     className: string;
     text: string;
     maxCharacters: number;
 }
 
-const MoreOrLess = (props: MoreOrLessProps) => {
+const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayingTruncatedOrFullTextProps) => {
     const { className, text, maxCharacters } = props;
     const [hasLongText, setHasLongText] = useState(true);
     const toggleMoreOrLess = () => {
@@ -43,7 +43,9 @@ interface Props {
 
 const EkspanderbartTekstomrade = (props: Props) => {
     const { tekst, antallTegn, klasseNavn } = props;
-    return <MoreOrLess className={klasseNavn} text={tekst} maxCharacters={antallTegn} />;
+    return (
+        <ToggleBetweenDisplayingTruncatedOrFullText className={klasseNavn} text={tekst} maxCharacters={antallTegn} />
+    );
 };
 
 export default EkspanderbartTekstomrade;
