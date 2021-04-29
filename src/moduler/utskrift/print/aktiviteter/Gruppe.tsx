@@ -19,12 +19,14 @@ const Gruppe = (props: Props) => {
         return null;
     }
 
+    const sorterteAktiviteter = [...aktiviteter].sort(compareAktivitet);
+
     return (
         <section className="printmodal-body__statusgrupper">
             <Systemtittel tag="h1" className="printmodal-body__statusgruppe--overskrift">
                 {tittel}
             </Systemtittel>
-            {aktiviteter.sort(compareAktivitet).map((aktivitet) => {
+            {sorterteAktiviteter.map((aktivitet) => {
                 const dialogForAktivitet = dialoger && dialoger.find((d) => d.aktivitetId === aktivitet.id);
                 return <AktivitetPrint aktivitet={aktivitet} key={aktivitet.id} dialog={dialogForAktivitet} />;
             })}
