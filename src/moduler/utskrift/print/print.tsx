@@ -10,7 +10,7 @@ import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstav
 import { formaterDatoKortManed } from '../../../utils';
 import logoPng from '../ikoner/logo.png';
 import Adresse from './adresse';
-import Aktiviteter from './aktiviteter';
+import Aktiviteter from './aktiviteter/Aktiviteter';
 import { DialogerUtenAktivitet } from './dialoger';
 import { filtrerAktiviteter, filtrerDialoger } from './filter-utils';
 import MalPrint from './malPrint';
