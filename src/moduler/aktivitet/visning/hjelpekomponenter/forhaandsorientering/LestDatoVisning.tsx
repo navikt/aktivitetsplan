@@ -1,7 +1,7 @@
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { formaterDatoKortManed } from '../../../../../utils';
+import { formaterDatoManed } from '../../../../../utils';
 import styles from './LestDatoVisning.module.less';
 
 interface Props {
@@ -16,7 +16,7 @@ const LestDatoVisning = (props: Props) => {
         return null;
     }
 
-    return <Undertekst className={styles.lestDato}>Lest {formaterDatoKortManed(lestDato)}</Undertekst>;
+    return <Undertekst className={styles.lestDato}>Lest {formaterDatoManed(lestDato)}</Undertekst>;
 };
 
 export default LestDatoVisning;
