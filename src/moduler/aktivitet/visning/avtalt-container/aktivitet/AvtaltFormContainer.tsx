@@ -6,7 +6,7 @@ import { STATUS } from '../../../../../api/utils';
 import { Aktivitet, Forhaandsorientering, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
-import { selectAktivitetStatus } from '../../../aktivitet-selector';
+import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
 import DeleLinje from '../../delelinje/delelinje';
 import { useSendAvtaltMetrikker } from '../avtaltHooks';
 import { ForhaandsorienteringDialogProps, getForhaandsorienteringText } from '../utilsForhaandsorientering';
@@ -21,6 +21,7 @@ interface Props {
 const AvtaltFormContainer = (props: Props) => {
     const { setSendtAtErAvtaltMedNav, aktivitet, setForhandsorienteringType } = props;
 
+    const bekreftStatus = useSelector(selectAktivitetFhoBekreftStatus);
     const nettverksStatus = useSelector(selectAktivitetStatus);
 
     const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const AvtaltFormContainer = (props: Props) => {
             <DeleLinje />
             <AvtaltForm
                 className="aktivitetvisning__underseksjon avtalt-container"
-                oppdaterer={nettverksStatus === STATUS.RELOADING}
+                oppdaterer={bekreftStatus === STATUS.RELOADING}
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                 lasterData={nettverksStatus !== STATUS.OK}
                 onSubmit={onSubmit}
