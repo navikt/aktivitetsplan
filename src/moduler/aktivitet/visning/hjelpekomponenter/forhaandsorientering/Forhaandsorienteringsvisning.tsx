@@ -1,3 +1,4 @@
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -73,7 +74,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
             onClick={onClickToggle}
             kanToogle
         >
-            <Normaltekst className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</Normaltekst>
+            <Tekstomrade className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</Tekstomrade>
             <LestDatoVisning hidden={!erLest} lestDato={forhaandsorienteringLestDato} />
             <LestKnapp hidden={!kanMarkeresSomLest} onClick={onClickLestKnapp} lasterData={lasterData} />
         </EkspanderbarLinjeBase>
