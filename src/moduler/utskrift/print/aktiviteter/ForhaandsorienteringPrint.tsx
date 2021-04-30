@@ -1,8 +1,8 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { formaterDatoKortManed } from '../../../../utils';
+import { formaterDatoManed } from '../../../../utils';
 import styles from './ForhaandsorienteringPrint.module.less';
 
 interface Props {
@@ -19,11 +19,14 @@ const ForhaandsorienteringPrint = (props: Props) => {
 
     return (
         <div className="aktivitetvisning__detaljer aktivitetsdetaljer">
+            <EtikettLiten className={styles.tittel} tag="h2">
+                Informasjon om ansvaret ditt
+            </EtikettLiten>
             <Tekstomrade className={styles.forhaandsorientering}>{forhaandsorienteringTekst}</Tekstomrade>
 
             {forhaandsorienteringLest && (
                 <Normaltekst className={styles.lestTekst}>
-                    Lest {formaterDatoKortManed(forhaandsorienteringLest)}
+                    Lest {formaterDatoManed(forhaandsorienteringLest)}
                 </Normaltekst>
             )}
         </div>
