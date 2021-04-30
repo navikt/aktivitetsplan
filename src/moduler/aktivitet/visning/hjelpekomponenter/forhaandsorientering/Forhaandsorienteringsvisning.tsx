@@ -1,5 +1,4 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
