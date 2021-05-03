@@ -28,3 +28,7 @@ export const selectAktivitetFeilmeldinger = (state) => {
 export function selectAktivitetFhoLestStatus(state) {
     return selectAktiviteterSlice(state).fhoLestStatus;
 }
+
+export function selectAktivitetFhoBekreftStatus(state) {
+    return selectAktiviteterSlice(state).fhoBekreftStatus;
+}

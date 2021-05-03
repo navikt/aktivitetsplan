@@ -6,6 +6,7 @@ const initalState = {
     data: [],
     status: STATUS.NOT_STARTED,
     fhoLestStatus: STATUS.NOT_STARTED,
+    fhoBekreftStatus: STATUS.NOT_STARTED,
     forrigeAktiveAktivitetId: undefined,
 };
 
@@ -59,6 +60,13 @@ export default function reducer(state = initalState, action) {
             return nyStateMedOppdatertAktivitet({ ...state, fhoLestStatus: STATUS.OK }, data);
         case AT.FHO_LEST_FEILET:
             return { ...state, fhoLestStatus: STATUS.ERROR, feil: data };
+        case AT.FHO_BEKREFT:
+            return { ...state, fhoBekreftStatus: STATUS.RELOADING };
+        case AT.FHO_BEKREFT_OK:
+            widowEvent(UpdateTypes.Aktivitet);
+            return nyStateMedOppdatertAktivitet({ ...state, fhoBekreftStatus: STATUS.OK }, data);
+        case AT.FHO_BEKREFT_FEILET:
+            return { ...state, fhoBekreftStatus: STATUS.ERROR, feil: data };
         default:
             return state;
     }
