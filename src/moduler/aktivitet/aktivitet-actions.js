@@ -52,17 +52,17 @@ export function oppdaterAktivitet(aktivitet) {
 
 export function settAktivitetTilAvtalt(aktivitet, forhaandsorientering) {
     return doThenDispatch(() => Api.settAktivitetTilAvtalt(aktivitet.id, aktivitet.versjon, forhaandsorientering), {
-        OK: AT.OPPDATER_OK,
-        FEILET: AT.OPPDATER_FEILET,
-        PENDING: AT.OPPDATER,
+        OK: AT.FHO_BEKREFT_OK,
+        FEILET: AT.FHO_BEKREFT_FEILET,
+        PENDING: AT.FHO_BEKREFT,
     });
 }
 
 export function markerForhaandsorienteringSomLest(aktivitet) {
     return doThenDispatch(() => Api.markerForhaandsorienteringSomLest(aktivitet.id, aktivitet.versjon), {
-        OK: AT.OPPDATER_OK,
-        FEILET: AT.OPPDATER_FEILET,
-        PENDING: AT.OPPDATER,
+        OK: AT.FHO_LEST_OK,
+        FEILET: AT.FHO_LEST_FEILET,
+        PENDING: AT.FHO_LEST,
     });
 }
 

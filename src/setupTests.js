@@ -1,8 +1,8 @@
 import 'moment-timezone';
 import 'moment/locale/nb';
 
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import moment from 'moment';
 
 moment.locale('nb');
