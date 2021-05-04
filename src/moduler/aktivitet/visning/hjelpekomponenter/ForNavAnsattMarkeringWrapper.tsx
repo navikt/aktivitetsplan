@@ -1,4 +1,4 @@
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 
 import styles from './ForNavAnsattMarkeringWrapper.module.less';
@@ -10,7 +10,7 @@ interface Props {
 const ForNavAnsattMarkeringWrapper = ({ children }: Props) => (
     <div className={styles.navAnsattContainer}>
         <div className={styles.navAnsattChildren}>{children}</div>
-        <EtikettLiten className={styles.navAnsattTekst}>FOR NAV-ANSATT</EtikettLiten>
+        <Undertekst className={styles.navAnsattTekst}>FOR NAV-ANSATT</Undertekst>
     </div>
 );
 

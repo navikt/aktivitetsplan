@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 interface Props {
@@ -19,9 +19,9 @@ function DetaljFelt(props: Props) {
                 'detaljfelt--beskrivelse': beskrivelse,
             })}
         >
-            <EtikettLiten className="detaljfelt__tittel" tag="h2">
+            <Undertekst className="detaljfelt__tittel" tag="h2">
                 {tittel}
-            </EtikettLiten>
+            </Undertekst>
             {children}
         </div>
     );
