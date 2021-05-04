@@ -5,7 +5,7 @@ import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import DragbartAktivitetskort from '../../../moduler/aktivitet/aktivitet-kort/DragbartAktivitetskort';
 import { selectErVeileder } from '../../../moduler/identitet/identitet-selector';
-import InvertedLestMer from './InvertedLesmer';
+import InvertedLestMer from './InvertedLesMer';
 
 const LOGGING_VISELDREAKITIVITETER = 'aktivitetsplan.viseldreaktiviter';
 const LOGGING_SKJULELDREAKTIVITETER = 'aktivitetsplan.skjuleldreaktiviter';
@@ -14,7 +14,7 @@ interface Props {
     aktiviteteterTilDatoMerEnnToManederSiden: Aktivitet[];
 }
 
-function SkjulEldreAktiviteter(props: Props) {
+const SkjulEldreAktiviteterFraKolonne = (props: Props) => {
     const erVeileder = useSelector(selectErVeileder);
     const aktiviteter = props.aktiviteteterTilDatoMerEnnToManederSiden;
     const hiden = aktiviteter.length === 0;
@@ -32,6 +32,6 @@ function SkjulEldreAktiviteter(props: Props) {
             {liste}
         </InvertedLestMer>
     );
-}
+};
 
-export default SkjulEldreAktiviteter;
+export default SkjulEldreAktiviteterFraKolonne;

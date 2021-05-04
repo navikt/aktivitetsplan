@@ -13,7 +13,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-export default function InvertedLestMer(props: Props) {
+export const InvertedLestMer = (props: Props) => {
     const [vis, setVis] = useState(false);
     const toggle = () => {
         if (vis) {
@@ -38,4 +38,6 @@ export default function InvertedLestMer(props: Props) {
             <Collapse isOpened={vis}>{children}</Collapse>
         </div>
     );
-}
+};
+
+export default InvertedLestMer;
