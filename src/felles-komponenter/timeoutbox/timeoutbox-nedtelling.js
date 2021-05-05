@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 
 import ModalContainer from '../modal/ModalContainer';
 import ModalFooter from '../modal/ModalFooter';
-import TimeoutboxLoggetUt from './timeoutbox-logget-ut';
+import TimeoutboxLoggetUt from './TimeoutboxLoggetUt';
 
 class TimeoutboxNedtelling extends Component {
     componentDidMount() {

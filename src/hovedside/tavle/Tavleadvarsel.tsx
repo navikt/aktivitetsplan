@@ -15,7 +15,7 @@ import { Aktivitet } from '../../datatypes/aktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
 import styles from './Tavleadvarsel.module.less';
 
-function getAdvarseltekst(aktivitet: Aktivitet, erVeileder: boolean) {
+const getAdvarseltekst = (aktivitet: Aktivitet, erVeileder: boolean) => {
     if (aktivitet.status === STATUS_FULLFOERT) {
         return 'Aktiviteten er fullført og kan ikke endres.';
     } else if (aktivitet.status === STATUS_AVBRUTT) {
@@ -32,7 +32,7 @@ function getAdvarseltekst(aktivitet: Aktivitet, erVeileder: boolean) {
     }
 
     return 'Du kan ikke endre status på denne aktiviteten. Ta kontakt med veilederen din for å gjøre endringer.';
-}
+};
 
 interface Props {
     hidden: boolean;
@@ -40,7 +40,7 @@ interface Props {
     erVeileder: boolean;
 }
 
-function Tavleadvarsel(props: Props) {
+const Tavleadvarsel = (props: Props) => {
     const { hidden, draggingAktivitet, erVeileder } = props;
 
     if (hidden || !draggingAktivitet) {
@@ -54,6 +54,6 @@ function Tavleadvarsel(props: Props) {
             </Veilederpanel>
         </div>
     );
-}
+};
 
 export default Tavleadvarsel;

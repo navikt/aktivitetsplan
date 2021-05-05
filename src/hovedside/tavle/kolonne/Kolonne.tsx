@@ -12,7 +12,7 @@ interface Props {
     status: AktivitetStatus;
 }
 
-function Kolonne({ status }: Props) {
+const Kolonne = ({ status }: Props) => {
     const aktiviteter = useSelector(selectAktivitetListe, shallowEqual);
 
     const sorterteAktiviter = sorterAktiviteter(aktiviteter, status);
@@ -26,6 +26,6 @@ function Kolonne({ status }: Props) {
             {aktivitetsListe}
         </DropTargetKolonne>
     );
-}
+};
 
 export default Kolonne;

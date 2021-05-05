@@ -7,7 +7,7 @@ import { sorterAktiviteter, splitIEldreOgNyereAktiviteter } from '../../../modul
 import { selectAktivitetListe } from '../../../moduler/aktivitet/aktivitetlisteSelector';
 import DropTargetKolonne from './DropTargetKolonne';
 import KolonneHeader from './KolonneHeader';
-import SkjulEldreAktiviteter from './SkjulEldreAktiviteterFraKolonne';
+import SkjulEldreAktiviteterFraKolonne from './SkjulEldreAktiviteterFraKolonne';
 
 interface Props {
     status: AktivitetStatus;
@@ -29,7 +29,7 @@ function KolonneSomSkjulerEldreAktiviteter({ status }: Props) {
             <KolonneHeader status={status} />
             <div>
                 {aktivitetsListe}
-                <SkjulEldreAktiviteter aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter} />
+                <SkjulEldreAktiviteterFraKolonne aktiviteteterTilDatoMerEnnToManederSiden={eldreAktiviteter} />
             </div>
         </DropTargetKolonne>
     );

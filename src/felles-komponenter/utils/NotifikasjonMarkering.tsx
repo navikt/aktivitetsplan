@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './notifikasjon-markering.module.less';
+import styles from './NotifikasjonMarkering.module.less';
 import VisibleIfDiv from './visible-if-div';
 
 interface LenkeknappProps {
