@@ -23,11 +23,11 @@ import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { getFodselsnummer } from '../../utils/fnr-util';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
-import Tavle from './tavle';
+import Tavle from './Tavle';
 import Tavleadvarsel from './Tavleadvarsel';
 import { erDroppbar } from './tavleUtils';
 
-function AktivitetsTavle() {
+const Aktivitetstavle = () => {
     const dispatch = useDispatch();
 
     const statusAktiviteter = useSelector(selectAktivitetStatus);
@@ -60,11 +60,7 @@ function AktivitetsTavle() {
         <Innholdslaster minstEn avhengigheter={avhengigheter}>
             <Tavleadvarsel hidden={skjulAdvarsel} draggingAktivitet={draggingAktivitet} erVeileder={erVeileder} />
 
-            <Tavle
-                defaultStartKolonne={1}
-                antallKolonner={3}
-                className={classNames('aktivitetstavle', !skjulAdvarsel && 'aktivitetstavle-advarsel')}
-            >
+            <Tavle className={classNames('aktivitetstavle', !skjulAdvarsel && 'aktivitetstavle-advarsel')}>
                 <Kolonne status={STATUS_BRUKER_ER_INTRESSERT} />
                 <Kolonne status={STATUS_PLANLAGT} />
                 <Kolonne status={STATUS_GJENNOMFOERT} />
@@ -73,6 +69,6 @@ function AktivitetsTavle() {
             </Tavle>
         </Innholdslaster>
     );
-}
+};
 
-export default AktivitetsTavle;
+export default Aktivitetstavle;

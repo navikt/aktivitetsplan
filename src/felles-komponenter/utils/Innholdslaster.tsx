@@ -27,7 +27,7 @@ export interface InnholdslasterProps {
     alleOK?: boolean;
 }
 
-type Status = 'NOT_STARTED' | 'PENDING' | 'OK' | 'RELOADING' | 'ERROR';
+export type Status = 'NOT_STARTED' | 'PENDING' | 'OK' | 'RELOADING' | 'ERROR';
 type InternStatus = Status | 'NOT_SETT';
 
 const toStatus = (avhengiheter?: Avhengighet[] | Avhengighet): InternStatus[] => {
