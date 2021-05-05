@@ -1,3 +1,4 @@
+import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 
 export interface ForhaandsorienteringDialogProps {
@@ -22,6 +23,12 @@ export const getForhaandsorienteringText = (avtaltTextProps: Forhaandsorienterin
 export const skalMarkereForhaandsorienteringSomLest = (erBruker: boolean, aktivitet?: Aktivitet) => {
     const fho = aktivitet?.forhaandsorientering;
     return (
-        !!fho?.type && !fho.lest && fho.type !== ForhaandsorienteringType.IKKE_SEND && erBruker && !aktivitet?.historisk
+        !!fho?.type &&
+        !fho.lest &&
+        fho.type !== ForhaandsorienteringType.IKKE_SEND &&
+        erBruker &&
+        !aktivitet?.historisk &&
+        aktivitet?.status !== STATUS_FULLFOERT &&
+        aktivitet?.status !== STATUS_AVBRUTT
     );
 };
