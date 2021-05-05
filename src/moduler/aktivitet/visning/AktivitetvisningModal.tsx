@@ -94,8 +94,7 @@ const AktivitetvisningModal = (props: Props) => {
             header={header(aktivitet)}
             onRequestClose={() => {
                 if (!dirty.isDirty || window.confirm(DIALOG_TEKST)) {
-                    if (skalLeses && fho) {
-                        window.alert(fho.tekst);
+                    if (skalLeses && fho && window.confirm(fho.tekst)) {
                         markerFhoSomLest();
                     }
                     history.push('/');
