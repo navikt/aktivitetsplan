@@ -25,28 +25,7 @@
     min-height: @min-height;
     border-radius: @border-radius-base;
     margin: 0.5rem 8px;
-}
 
-.aktivitetstavle__kolonne-wrapper {
-    height: 100%;
-}
-
-.aktivitetstavle__kolonne-header-wrapper {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 0.5rem;
-}
-
-.aktivitetstavle__kolonne-header {
-    text-align: left;
-}
-
-.aktivitetstavle__kolonne--drag {
-    background-color: @color-background-drag;
-    padding-bottom: @min-height;
-}
-
-.aktivitetstavle__kolonne {
     .hjelpetekst__tooltip--under-venstre {
         @media (min-width: 480px) {
             right: -0.5rem;
@@ -68,6 +47,25 @@
             width: 15rem;
         }
     }
+}
+
+.aktivitetstavle__kolonne-wrapper {
+    height: 100%;
+}
+
+.aktivitetstavle__kolonne-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+}
+
+.aktivitetstavle__kolonne-header {
+    text-align: left;
+}
+
+.aktivitetstavle__kolonne--drag {
+    background-color: @color-background-drag;
+    padding-bottom: @min-height;
 }
 
 // 992px
