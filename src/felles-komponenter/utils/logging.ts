@@ -47,8 +47,19 @@ export const TILSTAND_FILTER_METRIKK = `${filterBase}Tilstand`;
 
 const AKTIVITET_FLYTTET = 'aktivitetsplan.aktivitet.flyttet';
 
+const FORHAANDSORIENTERING_LEST = 'aktivitetsplan.forhaandsorientering.lest';
+
 export function hash(string?: string): string | undefined {
     return string ? shajs('sha256').update(string).digest('hex') : undefined;
+}
+
+export function loggForhaandsorienteringLest(aktivitetType: AktivitetType, lestKnappTrykket: boolean) {
+    const tag = {
+        aktivitetType,
+        lestKnappTrykket,
+    };
+
+    loggEvent(FORHAANDSORIENTERING_LEST, {}, tag);
 }
 
 export function loggAntalVeiledere(servicegruppe: string, underOppfolging: boolean, ident: string, aktorId?: string) {
