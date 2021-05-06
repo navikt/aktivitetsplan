@@ -93,10 +93,11 @@ const AktivitetvisningModal = (props: Props) => {
             avhengigheter={avhengigheter}
             header={header(aktivitet)}
             onRequestClose={() => {
-                if (!dirty.isDirty || window.confirm(DIALOG_TEKST)) {
-                    if (skalLeses && fho && window.confirm(fho.tekst)) {
-                        markerFhoSomLest();
-                    }
+                if (dirty.isDirty && window.confirm(DIALOG_TEKST) && !skalLeses) {
+                    history.push('/');
+                }
+                if (skalLeses && fho && window.confirm(fho.tekst)) {
+                    markerFhoSomLest();
                     history.push('/');
                 }
             }}
