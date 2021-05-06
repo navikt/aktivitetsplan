@@ -12,7 +12,7 @@ import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
 import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
 import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../utils/fnr-util';
-import AktivitetsTavle from './tavle/Aktivitetstavle';
+import Aktivitetstavle from './tavle/Aktivitetstavle';
 
 class Hovedside extends Component {
     componentDidMount() {
@@ -35,7 +35,7 @@ class Hovedside extends Component {
                             <Maal />
                             <Verktoylinje />
                         </div>
-                        <AktivitetsTavle />
+                        <Aktivitetstavle />
                         <Routing />
                     </OppfolgingStatus>
                     <PublicRouting />
