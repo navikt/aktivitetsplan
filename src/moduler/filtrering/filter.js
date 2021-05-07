@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import PT from 'prop-types';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
@@ -48,11 +47,9 @@ function Filter({ avhengigheter, harAktivitet, className }) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <VisibleIfDiv className={resolvedClassNames}>
-                <FormattedMessage id="filter.tittel">
-                    {(tittel) => (
                         <Dropdown
                             name="filter"
-                            knappeTekst={tittel}
+                            knappeTekst="Filtrer"
                             className="dropdown--alignright"
                             onOpen={() => {
                                 loggEvent(OPNE_AKTIVITETFILTER);
@@ -65,8 +62,7 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                                 <TypeFilter />
                             </div>
                         </Dropdown>
-                    )}
-                </FormattedMessage>
+
             </VisibleIfDiv>
         </Innholdslaster>
     );
