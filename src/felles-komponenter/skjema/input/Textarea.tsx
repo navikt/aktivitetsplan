@@ -33,11 +33,12 @@ interface Props {
     textareaClass?: string;
     required?: boolean;
     disabled?: boolean;
+    setValue: (value: string) => void;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 const Textarea = (props: Props) => {
-    const { touched, error, input, pristine, initialValue, visTellerFra, required, ...rest } = props;
+    const { touched, error, input, pristine, initialValue, visTellerFra, required, setValue, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
 

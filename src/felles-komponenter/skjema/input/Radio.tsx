@@ -15,11 +15,12 @@ interface RadioProps {
     touched: boolean;
     error?: string;
     input: FieldStateInput;
+    setValue: (value: string) => void;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 const Radio = (props: RadioProps) => {
-    const { value, touched, error, input, pristine, initialValue, ...rest } = props;
+    const { value, touched, error, input, pristine, initialValue, setValue, ...rest } = props;
     const inputProps = { ...input, ...rest };
 
     return <NavRadio {...inputProps} value={value} checked={value === input.value} id={`id--${value}`} />;

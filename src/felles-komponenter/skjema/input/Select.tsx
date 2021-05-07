@@ -12,11 +12,12 @@ interface Props {
     touched: boolean;
     error?: string;
     input: FieldStateInput;
+    setValue: (value: string) => void;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 const Select = (props: Props & SelectProps) => {
-    const { touched, error, input, pristine, initialValue, noBlankOption, children, ...rest } = props;
+    const { touched, error, input, pristine, initialValue, noBlankOption, children, setValue, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
 

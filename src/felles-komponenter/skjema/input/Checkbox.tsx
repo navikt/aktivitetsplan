@@ -9,10 +9,11 @@ interface Props {
     touched: boolean;
     error?: string;
     input: FieldStateInput;
+    setValue: (value: string) => void;
 }
 // pristine isn't used, but we don't want to pass it to input
 const Checkbox = (props: Props & CheckboxProps) => {
-    const { touched, error, input, pristine, initialValue, ...rest } = props;
+    const { touched, error, input, pristine, initialValue, setValue, ...rest } = props;
 
     const inputProps = { ...input, ...rest };
     const [toggel, setToggel] = useState(initialValue === 'true');
