@@ -57,7 +57,7 @@ const MedisinskBehandlingForm = (props: Props) => {
     const { onSubmit, aktivitet, isDirtyRef } = props;
 
     const validator = useFormstate<ValideringsProps, Aktivitet>({
-        tittel: () => '',
+        tittel: () => undefined,
         behandlingType: (val, values, aktivitet) => validateBehandlingType(aktivitet.avtalt, val),
         behandlingSted: (val, values, aktivitet) => validateBehandlingSted(aktivitet.avtalt, val),
         fraDato: (val, values, aktivitet: Aktivitet) => validateFraDato(aktivitet.avtalt, aktivitet.tilDato, val),
@@ -83,7 +83,7 @@ const MedisinskBehandlingForm = (props: Props) => {
         periodeValidering: '',
     };
 
-    const state = validator(initalValues, aktivitet);
+    const state = validator(initalValues, aktivitet ? aktivitet : {} as MedisinskBehandlingAktivitet);
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
