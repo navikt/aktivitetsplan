@@ -17,12 +17,10 @@ import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
 import {
-    validateBeskrivelse,
-    validateFeltForLangt,
-    validateFraDato,
     validateJobbstatus,
     validateTittel,
 } from './validate';
+import { validateBeskrivelse, validateFeltForLangt, validateFraDato } from '../validate';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;

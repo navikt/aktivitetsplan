@@ -16,13 +16,15 @@ import Malverk from '../../../malverk/malverk';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
 import {
-    validateBeskrivelse,
-    validateFeltForLangt,
-    validateFraDato,
-    validateLenke,
     validateTilDato,
     validateTittel,
 } from './validate';
+import {
+    validateBeskrivelse,
+    validateFeltForLangt,
+    validateLenke,
+    validateFraDato
+} from '../validate';
 
 function erAvtalt(aktivitet) {
     return aktivitet.avtalt === true;

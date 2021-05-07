@@ -7,8 +7,6 @@ export function validateTittel(value) {
     if (value.length > 100) {
         return `Du må korte ned teksten til 100 tegn`;
     }
-
-    return undefined;
 }
 
 export function validateReferat(value) {
@@ -18,14 +16,12 @@ export function validateReferat(value) {
     if (value && value.length > 5000) {
         return `Du må korte ned teksten til 5000 tegn`;
     }
-    return undefined;
 }
 
 export function validateKanal(value) {
     if (value.length === 0) {
         return 'Du må fylle ut samtaleform';
     }
-    return undefined;
 }
 
 export function validateFraDato(value) {
