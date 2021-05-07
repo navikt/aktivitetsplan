@@ -19,7 +19,7 @@ function erVerdiSatt(value) {
 
 export function validateTittel(avtalt, value) {
     if (avtalt) {
-        return null;
+        return undefined;
     }
 
     if (!erVerdiSatt(value)) {
@@ -30,7 +30,7 @@ export function validateTittel(avtalt, value) {
         return TITTEL_MAKS_LENGDE_TEKST;
     }
 
-    return null;
+    return undefined;
 }
 
 export function validateAdresse(avtalt, value) {
@@ -42,7 +42,7 @@ export function validateAdresse(avtalt, value) {
         return ADRESSE_MAKS_LENGDE_TEKST;
     }
 
-    return null;
+    return undefined;
 }
 
 export function validateFraDato(avtalt, tilDato, value) {
@@ -55,7 +55,7 @@ export function validateFraDato(avtalt, tilDato, value) {
 
 export function validateHensikt(avtalt, value) {
     if (avtalt) {
-        return null;
+        return undefined;
     }
 
     if (!erVerdiSatt(value)) {
@@ -66,19 +66,19 @@ export function validateHensikt(avtalt, value) {
         return HENSIKT_MAKS_LENGDE_TEKST;
     }
 
-    return null;
+    return undefined;
 }
 
 export function validateForberedelser(avtalt, value) {
     if (avtalt) {
-        return null;
+        return undefined;
     }
 
     if (tekstForLang(FORBEREDELSER_MAKS_LENGDE, value)) {
         return FORBEREDELSER_MAKS_LENGDE_TEKST;
     }
 
-    return null;
+    return undefined;
 }
 
 export function validateKlokkeslett(avtalt, value) {
@@ -86,7 +86,7 @@ export function validateKlokkeslett(avtalt, value) {
         return 'Du må fylle ut klokkeslett';
     }
 
-    return null;
+    return undefined;
 }
 
 export function validateVarighet(avtalt, value) {
@@ -94,12 +94,12 @@ export function validateVarighet(avtalt, value) {
         return 'Du må fylle ut varighet';
     }
 
-    return null;
+    return undefined;
 }
 export function validateKanal(avtalt, value) {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut møteform';
     }
 
-    return null;
+    return undefined;
 }

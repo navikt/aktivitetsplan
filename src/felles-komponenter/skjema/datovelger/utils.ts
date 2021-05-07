@@ -4,7 +4,7 @@ import { erGyldigISODato, toDatePrettyPrint } from '../../../utils';
 
 export const validerDato = (value: string | null, tidligsteFom?: string, senesteTom?: string) => {
     if (!value || value.trim().length === 0) {
-        return null;
+        return undefined;
     }
 
     if (!erGyldigISODato(value)) {
@@ -26,5 +26,5 @@ export const validerDato = (value: string | null, tidligsteFom?: string, seneste
         return `Datoen må være innenfor perioden ${prettyFra}-${prettyTil}`;
     }
 
-    return null;
+    return undefined;
 };
