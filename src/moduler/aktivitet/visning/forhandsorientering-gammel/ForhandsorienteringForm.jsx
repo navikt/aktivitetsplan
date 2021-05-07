@@ -2,7 +2,7 @@ import useFormstate from '@nutgaard/use-formstate';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { EtikettLiten, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel, Undertekst } from 'nav-frontend-typografi';
 import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -22,7 +22,7 @@ export const SEND_PARAGRAF_11_9 = 'send_paragraf_11_9';
 
 const label = (
     <div className="forhandsorientering-arena-aktivitet">
-        <EtikettLiten>Tekst til brukeren</EtikettLiten>
+        <Undertekst>Tekst til brukeren</Undertekst>
         <Hjelpetekst>
             <div className="max-width-300">
                 Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det

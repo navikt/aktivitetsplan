@@ -1,5 +1,5 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Element, EtikettLiten, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Element, Systemtittel, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { Dialog } from '../../../datatypes/dialogTypes';
@@ -46,9 +46,9 @@ export function DialogPrint(props: DialogProps) {
             {henvendelserSynkende &&
                 henvendelserSynkende.map((h) => (
                     <div className="henvendelse" key={h.id}>
-                        <EtikettLiten className="detaljfelt__tittel" tag="h2">
+                        <Undertekst className="detaljfelt__tittel" tag="h2">
                             {`${avsender(h.avsender, h.avsenderId)} - ${formaterDatoKortManed(h.sendt)}`}
-                        </EtikettLiten>
+                        </Undertekst>
                         <Tekstomrade>{h.tekst}</Tekstomrade>
                     </div>
                 ))}

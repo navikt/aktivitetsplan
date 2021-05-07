@@ -1,5 +1,5 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { formaterDatoManed } from '../../../../utils';
@@ -19,9 +19,9 @@ const ForhaandsorienteringPrint = (props: Props) => {
 
     return (
         <div className="aktivitetvisning__detaljer aktivitetsdetaljer">
-            <EtikettLiten className={styles.tittel} tag="h2">
+            <Undertekst className={styles.tittel} tag="h2">
                 Informasjon om ansvaret ditt
-            </EtikettLiten>
+            </Undertekst>
             <Tekstomrade className={styles.forhaandsorientering}>{forhaandsorienteringTekst}</Tekstomrade>
 
             {forhaandsorienteringLest && (
