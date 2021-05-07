@@ -2,7 +2,7 @@ import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/ut
 
 export function validateBehandlingType(avtalt, value) {
     if (avtalt) {
-        return null;
+        return;
     }
     if (!value || value.trim().length === 0) {
         return 'Du må fylle ut type behandling';
@@ -10,12 +10,10 @@ export function validateBehandlingType(avtalt, value) {
     if (value.length > 100) {
         return `Du må korte ned teksten til 100 tegn`;
     }
-
-    return null;
 }
 export function validateBehandlingSted(avtalt, value) {
     if (avtalt) {
-        return null;
+        return undefined;
     }
     if (!value || value.trim().length === 0) {
         return 'Du må fylle ut behandlingssted';
@@ -23,23 +21,20 @@ export function validateBehandlingSted(avtalt, value) {
     if (value.length > 255) {
         return `Du må korte ned teksten til 255 tegn`;
     }
-
-    return null;
 }
 
 export function validateFeltForLangt(avtalt, value) {
     if (avtalt) {
-        return null;
+        return;
     }
     if (value && value.length > 255) {
         return `Du må korte ned teksten til 255 tegn`;
     }
-    return null;
 }
 
 export function validateFraDato(avtalt, tilDato, value) {
     if (avtalt) {
-        return null;
+        return undefined;
     }
     if (!value || value.trim().length === 0) {
         return 'Du må fylle ut fra dato';
@@ -59,10 +54,10 @@ export function validateTilDato(fraDato, value) {
 
 export function validateBeskrivelse(avtalt, value) {
     if (avtalt) {
-        return null;
+        return undefined;
     }
     if (value && value.length > 5000) {
         return `Du må korte ned teksten til 5000 tegn`;
     }
-    return null;
+    return undefined;
 }

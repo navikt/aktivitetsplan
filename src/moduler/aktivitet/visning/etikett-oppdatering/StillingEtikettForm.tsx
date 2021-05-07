@@ -16,10 +16,14 @@ interface Props {
     onSubmit(val: { etikettstatus: string }): Promise<any>;
 }
 
+type FormType = {
+    etikettstatus: string
+}
+
 const StillingEtikettForm = (props: Props) => {
     const { aktivitet, disabled = true, onSubmit } = props;
 
-    const validator = useFormstate({
+    const validator = useFormstate<FormType>({
         etikettstatus: validateEtikettStatus,
     });
 
