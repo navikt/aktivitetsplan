@@ -137,7 +137,7 @@
     "lint-staged": "^10.1.7",
     "prettier": "^2.1.2",
     "prettier-plugin-import-sort": "0.0.6",
-    "ua-parser-js": "^0.7.21",
+    "ua-parser-js": "^0.7.24",
     "yet-another-fetch-mock": "^4.0.0"
   },
   "repository": {
