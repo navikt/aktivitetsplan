@@ -11,7 +11,7 @@ interface Props {
     input: FieldStateInput;
     pristine?: boolean;
     initialValue?: string;
-    setValue: (value: string) => void;
+    setValue?: (value: string) => void;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input

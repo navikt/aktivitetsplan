@@ -12,7 +12,7 @@ interface Props {
     touched: boolean;
     error?: string;
     input: FieldStateInput;
-    setValue: (value: string) => void;
+    setValue?: (value: string) => void;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
