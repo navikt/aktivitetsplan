@@ -27,7 +27,7 @@ const label = (status: AktivitetStatus) => {
     if (status === STATUS_FULLFOERT) {
         return 'Skriv en kort kommentar om hvordan det har gått med aktiviteten, eller noe NAV bør kjenne til.';
     }
-    return 'Skriv en kort begrunnelse om hvorfor du avbrøt aktiviteten. Etter at du har trykket på "Bekreft", må du gi beskjed til veilederen din ved å starte en dialog her i aktivitetsplanen.';
+    return 'Skriv en kort begrunnelse om hvorfor du avbryter aktiviteten.';
 };
 
 //Det er anbefalt at man bruker type er pga en known issue i use-formstate
