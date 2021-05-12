@@ -1,4 +1,5 @@
 {valgtAktivitetStatus, select,
 FULLFORT{Skriv en kort kommentar om hvordan det har gått med aktiviteten, eller noe NAV bør kjenne til.}
 AVBRUTT{Skriv en kort begrunnelse om hvorfor du avbrøt aktiviteten. Etter at du har trykket på "Bekreft", må du gi beskjed til veilederen din ved å starte en dialog her i aktivitetsplanen.}
+other {Skriv en kort begrunnelse om hvorfor aktiviteten ble satt til {valgtAktivitetStatus}.}
  }
