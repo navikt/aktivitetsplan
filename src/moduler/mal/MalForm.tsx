@@ -28,11 +28,15 @@ interface Props {
     handleComplete: () => void;
 }
 
+type FormType = {
+    mal: string
+};
+
 function MalForm(props: Props) {
     const dispatch = useReduxDispatch();
     const { mal, isDirty, handleComplete } = props;
 
-    const validator = useFormstate({
+    const validator = useFormstate<FormType>({
         mal: validateMal,
     });
 

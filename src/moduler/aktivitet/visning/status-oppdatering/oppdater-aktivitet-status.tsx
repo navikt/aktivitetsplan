@@ -10,7 +10,7 @@ import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetStatus } from '../../aktivitetlisteSelector';
 import EndreLinje from '../endre-linje/endre-linje';
-import AktivitetStatusForm from './aktivitet-status-form';
+import AktivitetStatusForm from './AktivitetStatusForm';
 import StatusVisning from './status-visning';
 
 const useDisableStatusEndring = (aktivitet: Aktivitet) => {

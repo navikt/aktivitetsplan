@@ -15,7 +15,13 @@ import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import * as AppPT from '../../../../proptypes';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
-import { validateBeskrivelse, validateFeltForLangt, validateFraDato, validateLenke, validateTittel } from './validate';
+import { validateTittel } from './validate';
+import {
+    validateBeskrivelse,
+    validateFeltForLangt,
+    validateLenke,
+    validateFraDato
+} from '../validate';
 import { todayIsoString } from '../../../../utils/dateUtils';
 
 function erAvtalt(aktivitet) {

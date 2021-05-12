@@ -17,10 +17,14 @@ interface Props {
     hidden?: boolean;
 }
 
+type FormType = {
+    beskrivelse: string
+}
+
 function PrintMeldingForm(props: Props) {
     const { bruker, onSubmit, hidden } = props;
 
-    const validator = useFormstate({
+    const validator = useFormstate<FormType>({
         beskrivelse: (val) => (val.length > 2000 ? 'Du må korte ned teksten til 2000 tegn' : undefined),
     });
 
@@ -28,7 +32,7 @@ function PrintMeldingForm(props: Props) {
         beskrivelse: defaultBeskrivelse,
     });
 
-    const submit = (form: { beskrivelse: string }) => {
+    const submit = (form: FormType) => {
         return onSubmit(form.beskrivelse);
     };
 

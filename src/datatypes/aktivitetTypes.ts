@@ -48,6 +48,7 @@ export interface Aktivitet extends AktivitetRequiredProps {
     antallStillingerSokes?: number;
     antallStillingerIUken?: number;
     arenaAktivitet?: boolean;
+    avsluttetBegrunnelse?: string;
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {

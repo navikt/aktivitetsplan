@@ -13,11 +13,14 @@ interface VelgPlanUtskriftFormProps {
     hidden?: boolean;
     kvpPerioder?: KvpPeriode[];
 }
+type FormType = {
+    utskriftPlanType: string
+}
 
 function VelgPlanUtskriftForm(props: VelgPlanUtskriftFormProps) {
     const { onSubmit, kvpPerioder, hidden } = props;
 
-    const validator = useFormstate({
+    const validator = useFormstate<FormType>({
         utskriftPlanType: () => undefined,
     });
 

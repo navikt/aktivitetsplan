@@ -32,7 +32,7 @@ export default function SokeAvtaleAktivitetForm(props) {
     const { onSubmit, aktivitet, isDirtyRef, endre } = props;
 
     const validator = useFormstate({
-        tittel: () => null,
+        tittel: () => undefined,
         fraDato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.tilDato, val),
         tilDato: (val, values, aktivitet) => validateTilDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
         periodeValidering: (val, values) => validerPeriodeFelt(values.fraDato, values.tilDato),
