@@ -16,8 +16,7 @@ import VisAdvarsel from './vis-advarsel';
 const headerTekst = 'Avbrutt aktivitet';
 const beskrivelseLabel =
     'Skriv en kort begrunnelse under om hvorfor du avbrøt aktiviteten. ' +
-    'Når du lagrer blir aktiviteten låst, og du kan ikke lenger redigere innholdet. Etter at du har lagret, ' +
-    'må du gi beskjed til  veilederen din ved å starte en dialog her i aktivitetsplanen.';
+    'Når du lagrer blir aktiviteten låst, og du kan ikke lenger redigere innholdet.';
 
 interface Props {
     match: { params: { id: string } };
