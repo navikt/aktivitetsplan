@@ -51,8 +51,6 @@ function validate(val) {
     if (val.length > 500) {
         return 'Du må korte ned teksten til 500 tegn';
     }
-
-    return null;
 }
 
 const ForhandsorieteringsForm = (props) => {
