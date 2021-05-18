@@ -13,7 +13,7 @@ interface Props {
 const VersjonInnslag = (props: Props) => {
     const {versjon, prevVersjon} = props;
 
-    function endringsTekst() {
+    const endringsTekst = () => {
         switch (versjon.transaksjonsType) {
             case TransaksjonsType.MOTE_TID_OG_STED_ENDRET:
                 return 'endret tid eller sted for møtet';
