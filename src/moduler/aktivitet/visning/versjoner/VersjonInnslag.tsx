@@ -14,7 +14,7 @@ interface Props {
 const VersjonInnslag = (props: Props) => {
     const {versjon, prevVersjon} = props;
 
-    function endringsTekst() {
+    const endringsTekst = () => {
         const textId = `endringstype.${versjon.transaksjonsType}`;
         switch (versjon.transaksjonsType) {
             case TransaksjonsType.MOTE_TID_OG_STED_ENDRET:
