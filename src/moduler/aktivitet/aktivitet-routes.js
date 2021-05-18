@@ -2,7 +2,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import AvbrytAktivitet from './avslutt/avbryt-aktivitet';
+import AvbrytAktivitet from './avslutt/AvbrytAktivitet';
 import FullforAktivitet from './avslutt/fullfor-aktivitet';
 import LeggTilForm from './ny-aktivitet/LeggTilForm';
 import NyAktivitetForm from './ny-aktivitet/ny-aktivitet-form';
