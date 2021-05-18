@@ -167,7 +167,7 @@ const testAktiviteter = !visTestAktiviteter()
               avsluttetKommentar: null,
               avtalt: true,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'STATUS_ENDRET',
+              transaksjonsType: 'OPPRETTET',
               etikett: null,
               kontaktperson: null,
               arbeidsgiver: null,
@@ -543,6 +543,7 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
         type: forhaandsorientering.type,
         tekst: forhaandsorientering.tekst,
     };
+    aktivitet.transaksjonsType = 'AVTALT';
     aktivitet.avtalt = true;
     return aktivitet;
 }
@@ -552,8 +553,11 @@ export function oppdaterLestFho(__params, { aktivitetId }) {
 
     lestAktivitet.forhaandsorientering = {
         ...lestAktivitet.forhaandsorientering,
-        lest: moment().toISOString(),
+        lest: moment().toISOString()
     };
+    lestAktivitet.transaksjonsType = 'FHO_LEST';
+    lestAktivitet.lagtInnAv = 'BRUKER';
+    aktiviteter.push(lestAktivitet);
     return lestAktivitet;
 }
 

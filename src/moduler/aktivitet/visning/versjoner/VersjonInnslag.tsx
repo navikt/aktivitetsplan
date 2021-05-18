@@ -3,6 +3,8 @@ import React from 'react';
 import { Aktivitet, AktivitetStatus, StillingsStatus, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
 import BrukeravhengigTekst from '../../../../felles-komponenter/BrukeravhengigTekst';
 import { formaterDatoEllerTidSiden, formaterDatoKortManed } from '../../../../utils';
+import { useSelector } from 'react-redux';
+import { selectErBruker } from '../../../identitet/identitet-selector';
 
 interface Props {
     versjon: Aktivitet,
@@ -12,6 +14,7 @@ interface Props {
 // TODO fjerne tekster 'endringstype.*'
 const VersjonInnslag = (props: Props) => {
     const {versjon, prevVersjon} = props;
+    const erBruker = useSelector(selectErBruker);
 
     const endringsTekst = () => {
         switch (versjon.transaksjonsType) {
@@ -31,6 +34,10 @@ const VersjonInnslag = (props: Props) => {
                 return 'merket aktiviteten som "Avtalt med NAV"';
             case TransaksjonsType.OPPRETTET:
                 return 'opprettet aktiviteten';
+            case TransaksjonsType.FHO_LEST: {
+                const sittEllerDitt = erBruker ? 'ditt' : 'sitt';
+                return `bekreftet å ha lest informasjon om ansvaret ${sittEllerDitt}`;
+            }
             case TransaksjonsType.AVTALT_DATO_ENDRET: {
                 const fraDatoString = formaterDatoKortManed(prevVersjon ? prevVersjon.tilDato : undefined);
                 const tilDatoString = formaterDatoKortManed(versjon.tilDato);
@@ -46,8 +53,8 @@ const VersjonInnslag = (props: Props) => {
                 const tilStatus = versjon.etikett ? stillingStatusTilBeskrivelse(versjon.etikett) : 'Ingen';
                 return `endret tilstand til ${tilStatus}`;
             }
-            default:
-                return 'Gjorde noe';
+            default: // Vi skal aldri komme hit
+                return 'gjorde noe';
         }
     }
 
