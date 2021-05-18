@@ -1,7 +1,6 @@
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Aktivitet, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, AktivitetStatus, StillingsStatus, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
 import BrukeravhengigTekst from '../../../../felles-komponenter/BrukeravhengigTekst';
 import { formaterDatoEllerTidSiden, formaterDatoKortManed } from '../../../../utils';
 
@@ -10,65 +9,52 @@ interface Props {
     prevVersjon?: Aktivitet
 }
 
-
+// TODO fjerne tekster 'endringstype.*'
 const VersjonInnslag = (props: Props) => {
     const {versjon, prevVersjon} = props;
 
     function endringsTekst() {
-        const textId = `endringstype.${versjon.transaksjonsType}`;
         switch (versjon.transaksjonsType) {
             case TransaksjonsType.MOTE_TID_OG_STED_ENDRET:
+                return 'endret tid eller sted for møtet';
             case TransaksjonsType.REFERAT_OPPRETTET:
+                return 'opprettet referat';
             case TransaksjonsType.REFERAT_ENDRET:
+                return 'endret referatet';
             case TransaksjonsType.REFERAT_PUBLISERT:
+                return 'delte referatet';
             case TransaksjonsType.BLE_HISTORISK:
+                return 'arkiverte aktiviteten';
             case TransaksjonsType.DETALJER_ENDRET:
+                return 'endret detaljer på aktiviteten';
             case TransaksjonsType.AVTALT:
+                return 'merket aktiviteten som "Avtalt med NAV"';
             case TransaksjonsType.OPPRETTET:
-                return <FormattedMessage id={textId} />;
+                return 'opprettet aktiviteten';
             case TransaksjonsType.AVTALT_DATO_ENDRET: {
-                return (
-                    <FormattedMessage
-                        id={textId}
-                        values={{
-                            fra: formaterDatoKortManed(prevVersjon ? prevVersjon.tilDato : undefined),
-                            til: formaterDatoKortManed(versjon.tilDato),
-                        }}
-                    />
-                );
+                const fraDatoString = formaterDatoKortManed(prevVersjon ? prevVersjon.tilDato : undefined);
+                const tilDatoString = formaterDatoKortManed(versjon.tilDato);
+                return `endret til dato på aktiviteten fra ${fraDatoString} til ${tilDatoString}`;
             }
             case TransaksjonsType.STATUS_ENDRET: {
-                return (
-                    <FormattedMessage
-                        id={textId}
-                        values={{
-                            fra: prevVersjon ? prevVersjon.status : undefined,
-                            til: versjon.status,
-                        }}
-                    />
-                );
+                const fraStatus = prevVersjon ? aktivitetStatusTilBeskrivelse(prevVersjon?.status) : 'ingen';
+                const tilStatus = aktivitetStatusTilBeskrivelse(versjon?.status);
+                return `flyttet aktiviteten fra ${fraStatus} til ${tilStatus}`;
             }
 
             case TransaksjonsType.ETIKETT_ENDRET: {
-                return (
-                    <FormattedMessage
-                        id={textId}
-                        values={{
-                            til: versjon.etikett ? versjon.etikett : 'INGEN',
-                        }}
-                    />
-                );
+                const tilStatus = versjon.etikett ? stillingStatusTilBeskrivelse(versjon.etikett) : 'Ingen';
+                return `endret tilstand til ${tilStatus}`;
             }
-            default: {
-                return <FormattedMessage id={textId} />;
-            }
+            default:
+                return 'Gjorde noe';
         }
     }
 
     return (
         <div className="versjon-for-aktivitet-innslag">
             <Element className="versjon-for-aktivitet-innslag__identitet">
-                <BrukeravhengigTekst id={`lagtInnAv.${versjon.lagtInnAv}`} endretAv={versjon.endretAv} />
+                <BrukeravhengigTekst lagtInnAv={versjon.lagtInnAv} endretAv={versjon.endretAv} />
                 &nbsp;
             </Element>
             {endringsTekst()}
@@ -78,3 +64,34 @@ const VersjonInnslag = (props: Props) => {
 }
 
 export default VersjonInnslag;
+
+function aktivitetStatusTilBeskrivelse(aktivitetStatus: AktivitetStatus ) {
+    switch (aktivitetStatus) {
+        case 'AVBRUTT':
+            return 'avbrutt';
+        case 'FULLFORT':
+            return 'fullført';
+        case 'GJENNOMFORES':
+            return 'gjennomfører';
+        case 'PLANLAGT':
+            return 'planlegger';
+        case 'BRUKER_ER_INTERESSERT':
+            return 'forslag';
+    }
+}
+
+function stillingStatusTilBeskrivelse(stillingStatus: StillingsStatus) {
+    switch (stillingStatus) {
+        case 'INGEN_VALGT':
+            return 'Ingen';
+        case 'SOKNAD_SENDT':
+            return 'Søknaden er sendt';
+        case 'INNKALT_TIL_INTERVJU':
+            return 'Skal på intervju';
+        case 'AVSLAG':
+            return 'Fått avslag';
+        case 'JOBBTILBUD':
+            return 'Fått jobbtilbud';
+
+    }
+}

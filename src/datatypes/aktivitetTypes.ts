@@ -40,6 +40,7 @@ interface AktivitetRequiredProps {
     opprettetDato: string;
     status: AktivitetStatus;
     type: AktivitetType;
+    lagtInnAv: string;
     endretAv: string;
     avtalt: boolean;
 }
@@ -51,7 +52,6 @@ export interface Aktivitet extends AktivitetRequiredProps {
     etikett?: StillingsStatus;
     historisk?: boolean;
     forhaandsorientering?: Forhaandsorientering;
-    lagtInnAv?: string;
     detaljer?: object;
     beskrivelse?: string;
     erReferatPublisert?: boolean;
