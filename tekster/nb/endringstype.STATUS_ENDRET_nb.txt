@@ -1,13 +1,15 @@
 flyttet aktiviteten fra { fra, select,
-BRUKER_ER_INTERESSERT { forslag }
-PLANLAGT { planlegger }
-GJENNOMFORES { gjennomfører }
-FULLFORT { fullført }
-AVBRUTT { avbrutt }
+    BRUKER_ER_INTERESSERT { forslag }
+    PLANLAGT { planlegger }
+    GJENNOMFORES { gjennomfører }
+    FULLFORT { fullført }
+    AVBRUTT { avbrutt }
+    other { {fra} }
 } til { til, select,
-BRUKER_ER_INTERESSERT { forslag }
-PLANLAGT { planlegger }
-GJENNOMFORES { gjennomfører }
-FULLFORT { fullført }
-AVBRUTT { avbrutt }
+    BRUKER_ER_INTERESSERT { forslag }
+    PLANLAGT { planlegger }
+    GJENNOMFORES { gjennomfører }
+    FULLFORT { fullført }
+    AVBRUTT { avbrutt }
+    other { {til}}
 }

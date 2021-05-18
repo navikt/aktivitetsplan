@@ -4,6 +4,7 @@ BRUKER_ER_INTERESSERT { Forslag }
 GJENNOMFORES { Gjennomfører }
 FULLFORT { Fullført }
 AVBRUTT { Avbrutt }
+other { {status} }
 } / { type, select,
 EGEN { Jobbrettet egenaktivitet }
 STILLING { Stilling }
@@ -15,4 +16,5 @@ IJOBB { Jobb jeg har nå }
 BEHANDLING { Behandling }
 MOTE { Møte med NAV }
 SAMTALEREFERAT { Samtalereferat }
+other { {type} }
 }
