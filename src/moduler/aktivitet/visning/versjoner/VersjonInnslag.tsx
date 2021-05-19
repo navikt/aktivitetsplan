@@ -6,22 +6,22 @@ import BrukeravhengigTekst from '../../../../felles-komponenter/BrukeravhengigTe
 import { formaterDatoEllerTidSiden } from '../../../../utils';
 
 interface Props {
-    versjon: Aktivitet,
-    prevVersjon?: Aktivitet
+    aktivitet: Aktivitet,
+    forrigeAktivitet?: Aktivitet
 }
 
 // Senere: fjerne tekster 'endringstype.*'
 const VersjonInnslag = (props: Props) => {
-    const {versjon, prevVersjon} = props;
+    const {aktivitet, forrigeAktivitet} = props;
 
     return (
         <div className="versjon-for-aktivitet-innslag">
             <Element className="versjon-for-aktivitet-innslag__identitet">
-                <BrukeravhengigTekst lagtInnAv={versjon.lagtInnAv} endretAv={versjon.endretAv} />
+                <BrukeravhengigTekst lagtInnAv={aktivitet.lagtInnAv} endretAv={aktivitet.endretAv} />
                 &nbsp;
             </Element>
-            {endringsTekst(versjon, prevVersjon)}
-            <Normaltekst>{formaterDatoEllerTidSiden(versjon.endretDato)}</Normaltekst>
+            {endringsTekst(aktivitet, forrigeAktivitet)}
+            <Normaltekst>{formaterDatoEllerTidSiden(aktivitet.endretDato)}</Normaltekst>
         </div>
     );
 }
