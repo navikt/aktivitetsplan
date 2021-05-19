@@ -37,13 +37,13 @@ class VersjonerForAktivitet extends Component {
         const versjonerInnslag = versjoner
             .slice(0, MAX_SIZE)
             .map((versjon, index) => (
-                <VersjonInnslag key={versjon.endretDato} versjon={versjon} prevVersjon={versjoner[index + 1]} />
+                <VersjonInnslag key={versjon.endretDato} aktivitet={versjon} forrigeAktivitet={versjoner[index + 1]} />
             ));
 
         const versjonerInnslagUnderAccordion = (
             <Lesmerpanel className="" apneTekst="Vis mer" lukkTekst="Vis mer">
                 {versjoner.slice(MAX_SIZE).map((versjon, index) => (
-                    <VersjonInnslag key={versjon.endretDato} versjon={versjon} prevVersjon={versjoner[index + 1]} />
+                    <VersjonInnslag key={versjon.endretDato} aktivitet={versjon} forrigeAktivitet={versjoner[index + 1]} />
                 ))}
             </Lesmerpanel>
         );
