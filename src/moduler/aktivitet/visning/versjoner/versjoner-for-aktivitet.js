@@ -10,7 +10,7 @@ import * as AppPT from '../../../../proptypes';
 import { autobind } from '../../../../utils';
 import { fjernVersjoner, hentVersjonerForAktivtet } from '../../aktivitet-versjoner/aktivitet-versjoner-reducer';
 import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
-import VersjonInnslag from './versjoninnslag';
+import VersjonInnslag from './VersjonInnslag';
 
 const MAX_SIZE = 10;
 

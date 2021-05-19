@@ -14,6 +14,19 @@ export type AktivitetType =
 //aktivitetStatusd efinisjonen bor også i .\const som STATUS_*
 export type AktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
+export enum TransaksjonsType {
+    OPPRETTET = 'OPPETTET',
+    STATUS_ENDRET = 'STATUS_ENDRET',
+    DETALJER_ENDRET = 'DETALJER_ENDRET',
+    AVTALT = 'AVTALT',
+    AVTALT_DATO_ENDRET = 'AVTALT_DATO_ENDRET',
+    ETIKETT_ENDRET = 'ETIKETT_ENDRET',
+    MOTE_TID_OG_STED_ENDRET = 'MOTE_TID_OG_STED_ENDRET',
+    REFERAT_OPPRETTET = 'REFERAT_OPPRETTET',
+    REFERAT_ENDRET = 'REFERAT_ENDRET',
+    REFERAT_PUBLISERT = 'REFERAT_PUBLISERT',
+    BLE_HISTORISK = 'BLE_HISTORISK'
+}
 export interface Lest {
     tidspunkt: string;
     verdi?: string;
@@ -49,6 +62,7 @@ export interface Aktivitet extends AktivitetRequiredProps {
     antallStillingerIUken?: number;
     arenaAktivitet?: boolean;
     avsluttetBegrunnelse?: string;
+    transaksjonsType?: TransaksjonsType;
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {

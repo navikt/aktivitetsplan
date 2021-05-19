@@ -1,43 +1,55 @@
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
-import {
-    TRANSAKSJON_TYPE_AVTALT_DATO_ENDRET,
-    TRANSAKSJON_TYPE_ETIKETT_ENDRET,
-    TRANSAKSJON_TYPE_STATUS_ENDRET,
-} from '../../../../constant';
+import { Aktivitet, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
 import BrukeravhengigTekst from '../../../../felles-komponenter/BrukeravhengigTekst';
-import * as AppPT from '../../../../proptypes';
 import { formaterDatoEllerTidSiden, formaterDatoKortManed } from '../../../../utils';
 
-function VersjonInnslag({ versjon, prevVersjon }) {
-    function endringsTekst() {
+interface Props {
+    versjon: Aktivitet,
+    prevVersjon?: Aktivitet
+}
+
+
+const VersjonInnslag = (props: Props) => {
+    const {versjon, prevVersjon} = props;
+
+    const endringsTekst = () => {
         const textId = `endringstype.${versjon.transaksjonsType}`;
         switch (versjon.transaksjonsType) {
-            case TRANSAKSJON_TYPE_STATUS_ENDRET: {
+            case TransaksjonsType.MOTE_TID_OG_STED_ENDRET:
+            case TransaksjonsType.REFERAT_OPPRETTET:
+            case TransaksjonsType.REFERAT_ENDRET:
+            case TransaksjonsType.REFERAT_PUBLISERT:
+            case TransaksjonsType.BLE_HISTORISK:
+            case TransaksjonsType.DETALJER_ENDRET:
+            case TransaksjonsType.AVTALT:
+            case TransaksjonsType.OPPRETTET:
+                return <FormattedMessage id={textId} />;
+            case TransaksjonsType.AVTALT_DATO_ENDRET: {
                 return (
                     <FormattedMessage
                         id={textId}
                         values={{
-                            fra: prevVersjon.status,
-                            til: versjon.status,
-                        }}
-                    />
-                );
-            }
-            case TRANSAKSJON_TYPE_AVTALT_DATO_ENDRET: {
-                return (
-                    <FormattedMessage
-                        id={textId}
-                        values={{
-                            fra: formaterDatoKortManed(prevVersjon.tilDato),
+                            fra: formaterDatoKortManed(prevVersjon ? prevVersjon.tilDato : undefined),
                             til: formaterDatoKortManed(versjon.tilDato),
                         }}
                     />
                 );
             }
-            case TRANSAKSJON_TYPE_ETIKETT_ENDRET: {
+            case TransaksjonsType.STATUS_ENDRET: {
+                return (
+                    <FormattedMessage
+                        id={textId}
+                        values={{
+                            fra: prevVersjon ? prevVersjon.status : undefined,
+                            til: versjon.status,
+                        }}
+                    />
+                );
+            }
+
+            case TransaksjonsType.ETIKETT_ENDRET: {
                 return (
                     <FormattedMessage
                         id={textId}
@@ -64,14 +76,5 @@ function VersjonInnslag({ versjon, prevVersjon }) {
         </div>
     );
 }
-
-VersjonInnslag.propTypes = {
-    versjon: AppPT.aktivitet.isRequired,
-    prevVersjon: AppPT.aktivitet,
-};
-
-VersjonInnslag.defaultProps = {
-    prevVersjon: undefined,
-};
 
 export default VersjonInnslag;
