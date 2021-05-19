@@ -2,9 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectErBruker } from '../moduler/identitet/identitet-selector';
+import { BrukerType } from '../datatypes/aktivitetTypes';
 
 interface Props {
-    lagtInnAv: string;
+    lagtInnAv: BrukerType;
     endretAv?: string;
 }
 // Senere: fjern tekster lagtInnAv.*

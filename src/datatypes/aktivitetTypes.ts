@@ -27,6 +27,7 @@ export enum TransaksjonsType {
     REFERAT_PUBLISERT = 'REFERAT_PUBLISERT',
     BLE_HISTORISK = 'BLE_HISTORISK'
 }
+export type BrukerType = 'NAV' | 'BRUKER';
 export interface Lest {
     tidspunkt: string;
     verdi?: string;
@@ -40,7 +41,7 @@ interface AktivitetRequiredProps {
     opprettetDato: string;
     status: AktivitetStatus;
     type: AktivitetType;
-    lagtInnAv: string;
+    lagtInnAv: BrukerType;
     endretAv: string;
     avtalt: boolean;
 }
