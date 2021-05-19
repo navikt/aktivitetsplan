@@ -555,7 +555,7 @@ export function oppdaterLestFho(__params, { aktivitetId }) {
         ...lestAktivitet.forhaandsorientering,
         lest: moment().toISOString()
     };
-    lestAktivitet.transaksjonsType = 'FHO_LEST';
+    lestAktivitet.transaksjonsType = 'FORHAANDSORIENTERING_LEST';
     lestAktivitet.lagtInnAv = 'BRUKER';
     aktiviteter.push(lestAktivitet);
     return lestAktivitet;

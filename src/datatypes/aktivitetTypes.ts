@@ -26,7 +26,7 @@ export enum TransaksjonsType {
     REFERAT_ENDRET = 'REFERAT_ENDRET',
     REFERAT_PUBLISERT = 'REFERAT_PUBLISERT',
     BLE_HISTORISK = 'BLE_HISTORISK',
-    FHO_LEST = 'FHO_LEST'
+    FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST'
 }
 export interface Lest {
     tidspunkt: string;

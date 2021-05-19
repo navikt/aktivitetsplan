@@ -34,7 +34,7 @@ const VersjonInnslag = (props: Props) => {
                 return 'merket aktiviteten som "Avtalt med NAV"';
             case TransaksjonsType.OPPRETTET:
                 return 'opprettet aktiviteten';
-            case TransaksjonsType.FHO_LEST: {
+            case TransaksjonsType.FORHAANDSORIENTERING_LEST: {
                 const sittEllerDitt = erBruker ? 'ditt' : 'sitt';
                 return `bekreftet å ha lest informasjon om ansvaret ${sittEllerDitt}`;
             }
