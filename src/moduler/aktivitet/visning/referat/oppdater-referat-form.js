@@ -24,7 +24,6 @@ function validate(val) {
     if (val.length > 5000) {
         return 'Du må korte ned teksten til 5000 tegn';
     }
-    return null;
 }
 
 const label = <Undertittel>Samtalereferat</Undertittel>;
