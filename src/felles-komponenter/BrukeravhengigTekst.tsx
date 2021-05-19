@@ -7,7 +7,7 @@ interface Props {
     lagtInnAv: string;
     endretAv?: string;
 }
-// TODO fjern tekster lagtInnAv.*
+// Senere: fjern tekster lagtInnAv.*
 const BrukeravhengigTekst = (props: Props) => {
     const { lagtInnAv, endretAv } = props;
 
