@@ -188,8 +188,7 @@ const testAktiviteter = !visTestAktiviteter()
               kanal: null,
               erReferatPublisert: false,
               forhaandsorientering: {
-                  tekst:
-                      'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+                  tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
                   type: 'SEND_FORHAANDSORIENTERING',
               },
           }),
@@ -234,8 +233,7 @@ const testAktiviteter = !visTestAktiviteter()
               type: 'SAMTALEREFERAT',
               versjon: '1',
               forhaandsorientering: {
-                  tekst:
-                      'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+                  tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
                   type: 'SEND_FORHAANDSORIENTERING',
                   lest: '2021-04-04T12:04:41.175Z',
               },
@@ -495,17 +493,7 @@ export function getAktivitet({ aktivitetId }) {
 }
 
 export function getAktivitetVersjoner({ aktivitetId }) {
-    const aktivitet = getAktivitet({ aktivitetId });
-    return [
-        aktivitet,
-        {
-            ...aktivitet,
-            endretDato: '2017-02-26T15:51:44.85+01:00',
-            versjon: '2',
-            lagtInnAv: 'BRUKER',
-            transaksjonsType: 'OPPRETTET',
-        },
-    ];
+    return aktiviteter.filter((aktivitet) => aktivitet.id === aktivitetId);
 }
 
 export function opprettAktivitet(pathParams, body) {
@@ -517,6 +505,7 @@ export function opprettAktivitet(pathParams, body) {
         endretAv: null,
         versjon: '1',
         erLestAvBruker: eksternBruker,
+        transaksjonsType: 'OPPRETTET',
         ...body,
     });
     aktiviteter.push(newAktivitet);
@@ -529,7 +518,29 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
     oldAktivitet.endretDato = moment().toISOString();
     oldAktivitet.endretAv = bruker;
     oldAktivitet.lagtInnAv = bruker;
+    oldAktivitet.transaksjonsType = 'DETALJER_ENDRET';
 
+    return oldAktivitet;
+}
+
+export function oppdaterAktivitetStatus({ aktivitetId }, aktivitet) {
+    const oldAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    Object.assign(oldAktivitet, aktivitet);
+    oldAktivitet.endretDato = moment().toISOString();
+    oldAktivitet.endretAv = bruker;
+    oldAktivitet.lagtInnAv = bruker;
+    oldAktivitet.transaksjonsType = 'STATUS_ENDRET';
+
+    return oldAktivitet;
+}
+
+export function oppdaterEtikett({ aktivitetId }, aktivitet) {
+    const oldAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    Object.assign(oldAktivitet, aktivitet);
+    oldAktivitet.endretDato = moment().toISOString();
+    oldAktivitet.endretAv = bruker;
+    oldAktivitet.lagtInnAv = bruker;
+    oldAktivitet.transaksjonsType = 'ETIKETT_ENDRET';
     return oldAktivitet;
 }
 
@@ -553,17 +564,27 @@ export function oppdaterLestFho(__params, { aktivitetId }) {
 
     lestAktivitet.forhaandsorientering = {
         ...lestAktivitet.forhaandsorientering,
-        lest: moment().toISOString()
+        lest: moment().toISOString(),
     };
-    lestAktivitet.transaksjonsType = 'FORHAANDSORIENTERING_LEST';
     lestAktivitet.lagtInnAv = 'BRUKER';
-    aktiviteter.push(lestAktivitet);
+    lestAktivitet.endretDato = moment().toISOString();
+    lestAktivitet.transaksjonsType = 'FORHAANDSORIENTERING_LEST';
     return lestAktivitet;
 }
 
 export function publiserReferat({ aktivitetId }) {
     const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     oldAktivitet.erReferatPublisert = true;
+    oldAktivitet.endretDato = moment().toISOString();
+    oldAktivitet.transaksjonsType = 'REFERAT_PUBLISERT';
+    return { ...oldAktivitet, erReferatPublisert: true };
+}
+
+export function endreReferat({ aktivitetId }) {
+    const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
+    oldAktivitet.erReferatPublisert = true;
+    oldAktivitet.endretDato = moment().toISOString();
+    oldAktivitet.transaksjonsType = 'REFERAT_ENDRET';
     return { ...oldAktivitet, erReferatPublisert: true };
 }
 
