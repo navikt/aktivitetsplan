@@ -150,6 +150,7 @@ mock.get(
 );
 
 mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet));
+mock.post('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet));
 
 mock.put(
     '/veilarbaktivitet/api/aktivitet/:aktivitetId/status',

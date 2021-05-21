@@ -28,7 +28,7 @@ const testAktiviteter = !visTestAktiviteter()
               kontaktperson: 'Sabeltann sin mor',
               arbeidssted: 'Karibien',
               lagtInnAv: 'NAV',
-              transaksjonsType: 'AVTALT',
+              transaksjonsType: 'OPPRETTET',
               erReferatPublisert: false,
           }),
           wrapAktivitet({
@@ -47,7 +47,7 @@ const testAktiviteter = !visTestAktiviteter()
               historisk: false,
               avtalt: false,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'AVTALT',
+              transaksjonsType: 'OPPRETTET',
               etikett: 'SOKNAD_SENDT',
               kontaktperson: 'Sabeltann',
               arbeidsgiver: 'Skipet AS',
@@ -69,7 +69,7 @@ const testAktiviteter = !visTestAktiviteter()
               endretAv: 'Z123456',
               avtalt: false,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'STATUS_ENDRET',
+              transaksjonsType: 'OPPRETTET',
               hensikt: 'Lære meg HTML',
               oppfolging: 'Bli en bedre sjørøver',
               erReferatPublisert: false,
@@ -91,7 +91,7 @@ const testAktiviteter = !visTestAktiviteter()
               avsluttetKommentar: null,
               avtalt: false,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'STATUS_ENDRET',
+              transaksjonsType: 'OPPRETTET',
               etikett: null,
               kontaktperson: null,
               arbeidsgiver: null,
@@ -129,7 +129,7 @@ const testAktiviteter = !visTestAktiviteter()
               avsluttetKommentar: null,
               avtalt: true,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'STATUS_ENDRET',
+              transaksjonsType: 'OPPRETTET',
               etikett: null,
               kontaktperson: null,
               arbeidsgiver: null,
@@ -229,7 +229,7 @@ const testAktiviteter = !visTestAktiviteter()
               stillingsTittel: null,
               tilDato: null,
               tittel: 'Prat om pirat',
-              transaksjonsType: null,
+              transaksjonsType: 'OPPRETTET',
               type: 'SAMTALEREFERAT',
               versjon: '1',
               forhaandsorientering: {
@@ -276,7 +276,7 @@ const testAktiviteter = !visTestAktiviteter()
               stillingsTittel: null,
               tilDato: null,
               tittel: 'Inneholder et langt referat',
-              transaksjonsType: null,
+              transaksjonsType: 'OPPRETTET',
               type: 'SAMTALEREFERAT',
               versjon: '1',
           }),
@@ -489,11 +489,11 @@ function wrapAktivitet(aktivitet) {
 }
 
 export function getAktivitet({ aktivitetId }) {
-    return aktiviteter.filter((akivitet) => akivitet.id === aktivitetId)[0];
+    return aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
 }
 
 export function getAktivitetVersjoner({ aktivitetId }) {
-    return aktiviteter.filter((aktivitet) => aktivitet.id === aktivitetId);
+    return versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
 }
 
 export function opprettAktivitet(pathParams, body) {
@@ -502,92 +502,102 @@ export function opprettAktivitet(pathParams, body) {
         opprettetDato: new Date(),
         lagtInnAv: bruker,
         endretDato: moment().toISOString(),
-        endretAv: null,
+        endretAv: bruker,
         versjon: '1',
         erLestAvBruker: eksternBruker,
         transaksjonsType: 'OPPRETTET',
         ...body,
     });
     aktiviteter.push(newAktivitet);
+    versjoner.push(newAktivitet);
     return newAktivitet;
 }
 
-export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
-    const oldAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
-    Object.assign(oldAktivitet, aktivitet);
-    oldAktivitet.endretDato = moment().toISOString();
-    oldAktivitet.endretAv = bruker;
-    oldAktivitet.lagtInnAv = bruker;
-    oldAktivitet.transaksjonsType = 'DETALJER_ENDRET';
-
-    return oldAktivitet;
+function doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter) {
+    // Hent den gamle aktiviteten
+    const gammelAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
+    // Merge de nye attributtene inn i den originale aktiviteten
+    const nyAktivitet = Object.assign({}, gammelAktivitet, lagNyVersion(nyeAktivitetAttributter));
+    // Legg til ny versjon i historikk
+    versjoner.push(nyAktivitet);
+    // Overskriv eksisterende aktivitet i aktiviteterData
+    Object.assign(gammelAktivitet, nyAktivitet);
+    return nyAktivitet;
 }
 
-export function oppdaterAktivitetStatus({ aktivitetId }, aktivitet) {
-    const oldAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
-    Object.assign(oldAktivitet, aktivitet);
-    oldAktivitet.endretDato = moment().toISOString();
-    oldAktivitet.endretAv = bruker;
-    oldAktivitet.lagtInnAv = bruker;
-    oldAktivitet.transaksjonsType = 'STATUS_ENDRET';
-
-    return oldAktivitet;
+function lagNyVersion(aktivitet) {
+    return {
+        ...aktivitet,
+        versjon: aktivitet.versjon + 1,
+        endretDato: moment().toISOString(),
+        endretAv: bruker,
+        lagtInnAv: bruker,
+    };
 }
 
-export function oppdaterEtikett({ aktivitetId }, aktivitet) {
-    const oldAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
-    Object.assign(oldAktivitet, aktivitet);
-    oldAktivitet.endretDato = moment().toISOString();
-    oldAktivitet.endretAv = bruker;
-    oldAktivitet.lagtInnAv = bruker;
-    oldAktivitet.transaksjonsType = 'ETIKETT_ENDRET';
-    return oldAktivitet;
+export function oppdaterAktivitet({ aktivitetId }, aktivitetPayload) {
+    const nyeAktivitetAttributter = {
+        ...aktivitetPayload,
+        transaksjonsType: 'DETALJER_ENDRET',
+    };
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
+}
+
+export function oppdaterAktivitetStatus({ aktivitetId }, aktivitetPayload) {
+    const nyeAktivitetAttributter = {
+        ...aktivitetPayload,
+        transaksjonsType: 'STATUS_ENDRET',
+    };
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
+}
+
+export function oppdaterEtikett({ aktivitetId }, aktivitetPayload) {
+    const nyeAktivitetAttributter = {
+        ...aktivitetPayload,
+        transaksjonsType: 'ETIKETT_ENDRET',
+    };
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
 export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktivitetId }) {
-    const aktivitet = aktiviteter.find((a) => a.id === aktivitetId);
-
-    aktivitet.endretDato = moment().toISOString();
-    aktivitet.endretAv = bruker;
-    aktivitet.lagtInnAv = bruker;
-    aktivitet.forhaandsorientering = {
-        type: forhaandsorientering.type,
-        tekst: forhaandsorientering.tekst,
+    const nyeAktivitetAttributter = {
+        forhaandsorientering: forhaandsorientering,
+        avtalt: true,
+        transaksjonsType: 'AVTALT',
     };
-    aktivitet.transaksjonsType = 'AVTALT';
-    aktivitet.avtalt = true;
-    return aktivitet;
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
 export function oppdaterLestFho(__params, { aktivitetId }) {
-    const lestAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
-
-    lestAktivitet.forhaandsorientering = {
-        ...lestAktivitet.forhaandsorientering,
-        lest: moment().toISOString(),
+    const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
+    const nyeAktivitetAttributter = {
+        forhaandsorientering: {
+            ...gammelAktivitet.forhaandsorientering,
+            lest: moment().toISOString(),
+        },
+        transaksjonsType: 'FORHAANDSORIENTERING_LEST',
     };
-    lestAktivitet.lagtInnAv = 'BRUKER';
-    lestAktivitet.endretDato = moment().toISOString();
-    lestAktivitet.transaksjonsType = 'FORHAANDSORIENTERING_LEST';
-    return lestAktivitet;
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
 export function publiserReferat({ aktivitetId }) {
-    const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
-    oldAktivitet.erReferatPublisert = true;
-    oldAktivitet.endretDato = moment().toISOString();
-    oldAktivitet.transaksjonsType = 'REFERAT_PUBLISERT';
-    return { ...oldAktivitet, erReferatPublisert: true };
+    const nyeAktivitetAttributter = {
+        erReferatPublisert: true,
+        transaksjonsType: 'REFERAT_PUBLISERT',
+    };
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function endreReferat({ aktivitetId }) {
-    const oldAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
-    oldAktivitet.erReferatPublisert = true;
-    oldAktivitet.endretDato = moment().toISOString();
-    oldAktivitet.transaksjonsType = 'REFERAT_ENDRET';
-    return { ...oldAktivitet, erReferatPublisert: true };
+export function endreReferat({ aktivitetId }, aktivitetPayload) {
+    const nyeAktivitetAttributter = {
+        ...aktivitetPayload,
+        transaksjonsType: 'REFERAT_ENDRET',
+    };
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
 export const aktiviteterData = {
     aktiviteter,
 };
+
+export const versjoner = aktiviteter.map((aktivitet) => wrapAktivitet(aktivitet));
