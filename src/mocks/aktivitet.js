@@ -513,7 +513,7 @@ export function opprettAktivitet(pathParams, body) {
 }
 
 export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
-    const oldAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    const oldAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
     Object.assign(oldAktivitet, aktivitet);
     oldAktivitet.endretDato = moment().toISOString();
     oldAktivitet.endretAv = bruker;
@@ -524,7 +524,7 @@ export function oppdaterAktivitet({ aktivitetId }, aktivitet) {
 }
 
 export function oppdaterAktivitetStatus({ aktivitetId }, aktivitet) {
-    const oldAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    const oldAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
     Object.assign(oldAktivitet, aktivitet);
     oldAktivitet.endretDato = moment().toISOString();
     oldAktivitet.endretAv = bruker;
@@ -535,7 +535,7 @@ export function oppdaterAktivitetStatus({ aktivitetId }, aktivitet) {
 }
 
 export function oppdaterEtikett({ aktivitetId }, aktivitet) {
-    const oldAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    const oldAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
     Object.assign(oldAktivitet, aktivitet);
     oldAktivitet.endretDato = moment().toISOString();
     oldAktivitet.endretAv = bruker;
@@ -545,7 +545,7 @@ export function oppdaterEtikett({ aktivitetId }, aktivitet) {
 }
 
 export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktivitetId }) {
-    const aktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    const aktivitet = aktiviteter.find((a) => a.id === aktivitetId);
 
     aktivitet.endretDato = moment().toISOString();
     aktivitet.endretAv = bruker;
