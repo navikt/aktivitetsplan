@@ -31,8 +31,6 @@ const validate = (val: string) => {
     if (val.length > 500) {
         return 'Du må korte ned teksten til 500 tegn';
     }
-
-    return undefined;
 };
 
 interface Props {

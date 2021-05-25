@@ -1,11 +1,11 @@
-import PT from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { STATUS } from '../../../api/utils';
 import { STATUS_AVBRUTT } from '../../../constant';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
-import * as AppPT from '../../../proptypes';
 import { avbrytAktivitet } from '../aktivitet-actions';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import { selectAktivitetListeStatus, selectAktivitetMedId } from '../aktivitetlisteSelector';
@@ -16,10 +16,27 @@ import VisAdvarsel from './vis-advarsel';
 const headerTekst = 'Avbrutt aktivitet';
 const beskrivelseLabel =
     'Skriv en kort begrunnelse under om hvorfor du avbrøt aktiviteten. ' +
-    'Når du lagrer blir aktiviteten låst, og du kan ikke lenger redigere innholdet. Etter at du har lagret, ' +
-    'må du gi beskjed til  veilederen din ved å starte en dialog her i aktivitetsplanen.';
+    'Når du lagrer blir aktiviteten låst, og du kan ikke lenger redigere innholdet.';
 
-const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse, history }) => {
+interface Props {
+    match: { params: { id: string } };
+}
+
+const AvbrytAktivitet = (props: Props) => {
+    const { match } = props;
+    const aktivitetId = match.params.id;
+
+    const valgtAktivitet = useSelector((state) => selectAktivitetMedId(state, aktivitetId));
+    const aktivitetListeStatus = useSelector(selectAktivitetListeStatus);
+
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const lagreBegrunnelse = (aktivitet: Aktivitet, begrunnelseTekst: string | null) =>
+        dispatch(avbrytAktivitet(valgtAktivitet, begrunnelseTekst));
+
+    const lagrer = aktivitetListeStatus !== STATUS.OK;
+
     const begrunnelse = (
         <BegrunnelseAktivitet
             headerTekst={headerTekst}
@@ -53,25 +70,4 @@ const AvbrytAktivitet = ({ lagrer, valgtAktivitet, lagreBegrunnelse, history }) 
     );
 };
 
-AvbrytAktivitet.propTypes = {
-    valgtAktivitet: AppPT.aktivitet.isRequired,
-    lagrer: PT.bool.isRequired,
-    lagreBegrunnelse: PT.func.isRequired,
-    history: AppPT.history.isRequired,
-    match: PT.object.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    lagreBegrunnelse: (aktivitet, begrunnelse) => dispatch(avbrytAktivitet(aktivitet, begrunnelse)),
-});
-
-const mapStateToProps = (state, props) => {
-    const aktivitetId = props.match.params.id;
-    const valgtAktivitet = selectAktivitetMedId(state, aktivitetId);
-    return {
-        valgtAktivitet: valgtAktivitet || {},
-        lagrer: selectAktivitetListeStatus(state) !== STATUS.OK,
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AvbrytAktivitet);
+export default AvbrytAktivitet;
