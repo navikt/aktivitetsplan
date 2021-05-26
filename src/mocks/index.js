@@ -4,10 +4,13 @@ import fetchMock from 'yet-another-fetch-mock';
 
 import {
     aktiviteterData,
+    endreReferat,
     getAktivitet,
     getAktivitetVersjoner,
     oppdaterAktivitet,
+    oppdaterAktivitetStatus,
     oppdaterAvtaltMedNav,
+    oppdaterEtikett,
     oppdaterLestFho,
     opprettAktivitet,
     publiserReferat,
@@ -147,17 +150,21 @@ mock.get(
 );
 
 mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet));
+mock.post('/veilarbaktivitet/api/aktivitet/:aktivitetId', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet));
 
-mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/status', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet));
+mock.put(
+    '/veilarbaktivitet/api/aktivitet/:aktivitetId/status',
+    failOrGetResponse(aktivitetFeilet, oppdaterAktivitetStatus)
+);
 
-mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet));
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/etikett', failOrGetResponse(aktivitetFeilet, oppdaterEtikett));
 
 mock.put(
     '/veilarbaktivitet/api/aktivitet/:aktivitetId/referat/publiser',
     failOrGetResponse(aktivitetFeilet, publiserReferat)
 );
 
-mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetResponse(aktivitetFeilet, oppdaterAktivitet));
+mock.put('/veilarbaktivitet/api/aktivitet/:aktivitetId/referat', failOrGetResponse(aktivitetFeilet, endreReferat));
 
 mock.put('/veilarbaktivitet/api/avtaltMedNav', failOrGetResponse(aktivitetFeilet, oppdaterAvtaltMedNav));
 

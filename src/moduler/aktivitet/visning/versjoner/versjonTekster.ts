@@ -32,7 +32,7 @@ const stillingStatusTilBeskrivelse = (stillingStatus: StillingsStatus) => {
     }
 }
 
-export const endringsTekst = (aktivitet: Aktivitet, forrigeAktivitet?: Aktivitet) => {
+export const endringsTekst = (erBruker: boolean, aktivitet: Aktivitet, forrigeAktivitet?: Aktivitet) => {
     switch (aktivitet.transaksjonsType) {
         case TransaksjonsType.MOTE_TID_OG_STED_ENDRET:
             return 'endret tid eller sted for møtet';
@@ -50,6 +50,10 @@ export const endringsTekst = (aktivitet: Aktivitet, forrigeAktivitet?: Aktivitet
             return 'merket aktiviteten som "Avtalt med NAV"';
         case TransaksjonsType.OPPRETTET:
             return 'opprettet aktiviteten';
+        case TransaksjonsType.FORHAANDSORIENTERING_LEST: {
+            const sittEllerDitt = erBruker ? 'ditt' : 'sitt';
+            return `bekreftet å ha lest informasjon om ansvaret ${sittEllerDitt}`;
+        }
         case TransaksjonsType.AVTALT_DATO_ENDRET: {
             const fraDatoString = formaterDatoKortManed(forrigeAktivitet ? forrigeAktivitet.tilDato : undefined);
             const tilDatoString = formaterDatoKortManed(aktivitet.tilDato);
