@@ -516,19 +516,25 @@ export function opprettAktivitet(pathParams, body) {
 function doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter) {
     // Hent den gamle aktiviteten
     const gammelAktivitet = aktiviteter.find((a) => a.id === aktivitetId);
-    // Merge de nye attributtene inn i den originale aktiviteten
-    const nyAktivitet = Object.assign({}, gammelAktivitet, lagNyVersion(nyeAktivitetAttributter));
+    // Merge de nye attributtene og den originale aktiviteten inn i en ny aktivitet
+    const nyAktivitet = {
+        ...gammelAktivitet,
+        ...lagNyVersion(nyeAktivitetAttributter),
+    };
+
     // Legg til ny versjon i historikk
     versjoner.push(nyAktivitet);
-    // Overskriv eksisterende aktivitet i aktiviteterData
+    // Overskriv den gamle aktiviteten i aktiviteterData
     Object.assign(gammelAktivitet, nyAktivitet);
+
     return nyAktivitet;
 }
 
 function lagNyVersion(aktivitet) {
     return {
         ...aktivitet,
-        versjon: aktivitet.versjon + 1,
+        // versjon er typet som string, men er et løpenummer (egentlig global sekvens for alle aktiviteter), derfor denne hacken.
+        versjon: String(parseInt(aktivitet.versjon) + 1),
         endretDato: moment().toISOString(),
         endretAv: bruker,
         lagtInnAv: bruker,
