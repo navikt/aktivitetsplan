@@ -16,9 +16,6 @@ const getTekst = (
     harLoggetInnMedNivaa4: boolean,
     mindreEnnSyvDagerTil: boolean
 ): string | undefined => {
-    if (brukerErManuell) {
-        return 'Du kan ikke legge til forhåndsorientering fordi brukeren har manuell oppfølging. Du skal ha orientert brukeren om mulig konsekvens for ytelse, og dokumentert dette.';
-    }
     if (brukerErUnderKvp) {
         return 'Du kan ikke legge til forhåndsorientering fordi brukeren deltar i kvalifiseringsprogrammet.';
     }
@@ -27,6 +24,9 @@ const getTekst = (
     }
     if (!harLoggetInnMedNivaa4) {
         return 'Du kan ikke legge til forhåndsorientering fordi brukeren ikke har vært innlogget de siste 18 månedene med nivå 4 (for eksempel BankID). Du skal ha orientert brukeren om mulig konsekvens for ytelse, og dokumentert dette.';
+    }
+    if (brukerErManuell) {
+        return 'Du kan ikke legge til forhåndsorientering fordi brukeren har manuell oppfølging. Du skal ha orientert brukeren om mulig konsekvens for ytelse, og dokumentert dette.';
     }
     if (mindreEnnSyvDagerTil) {
         return 'Du kan ikke legge til forhåndsorientering fordi sluttdatoen er færre enn 7 dager frem i tid. Hvis du har hatt muntlig dialog med brukeren om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat, så kan du sette aktiviteten til “Avtalt med NAV".';
