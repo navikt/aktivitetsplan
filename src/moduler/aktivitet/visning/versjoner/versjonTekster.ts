@@ -1,7 +1,7 @@
 import { Aktivitet, AktivitetStatus, StillingsStatus, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
 import { formaterDatoKortManed } from '../../../../utils';
 
-const aktivitetStatusTilBeskrivelse = (aktivitetStatus: AktivitetStatus ) => {
+const aktivitetStatusTilBeskrivelse = (aktivitetStatus: AktivitetStatus) => {
     switch (aktivitetStatus) {
         case 'AVBRUTT':
             return 'avbrutt';
@@ -14,7 +14,7 @@ const aktivitetStatusTilBeskrivelse = (aktivitetStatus: AktivitetStatus ) => {
         case 'BRUKER_ER_INTERESSERT':
             return 'forslag';
     }
-}
+};
 
 const stillingStatusTilBeskrivelse = (stillingStatus: StillingsStatus) => {
     switch (stillingStatus) {
@@ -28,9 +28,8 @@ const stillingStatusTilBeskrivelse = (stillingStatus: StillingsStatus) => {
             return 'Fått avslag';
         case 'JOBBTILBUD':
             return 'Fått jobbtilbud';
-
     }
-}
+};
 
 export const endringsTekst = (erBruker: boolean, aktivitet: Aktivitet, forrigeAktivitet?: Aktivitet) => {
     switch (aktivitet.transaksjonsType) {
@@ -55,7 +54,9 @@ export const endringsTekst = (erBruker: boolean, aktivitet: Aktivitet, forrigeAk
             return `bekreftet å ha lest informasjon om ansvaret ${sittEllerDitt}`;
         }
         case TransaksjonsType.AVTALT_DATO_ENDRET: {
-            const fraDatoString = formaterDatoKortManed(forrigeAktivitet ? forrigeAktivitet.tilDato : undefined);
+            const fraDatoString = formaterDatoKortManed(
+                forrigeAktivitet?.tilDato ? forrigeAktivitet.tilDato : 'ingen dato'
+            );
             const tilDatoString = formaterDatoKortManed(aktivitet.tilDato);
             return `endret til dato på aktiviteten fra ${fraDatoString} til ${tilDatoString}`;
         }
@@ -72,4 +73,4 @@ export const endringsTekst = (erBruker: boolean, aktivitet: Aktivitet, forrigeAk
         default:
             return 'Gjorde noe';
     }
-}
+};
