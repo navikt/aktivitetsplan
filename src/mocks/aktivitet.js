@@ -497,7 +497,7 @@ export function getAktivitetVersjoner({ aktivitetId }) {
 }
 
 export function opprettAktivitet(pathParams, body) {
-    const newAktivitet = wrapAktivitet({
+    const nyAktivitet = wrapAktivitet({
         id: rndId(),
         opprettetDato: new Date(),
         lagtInnAv: bruker,
@@ -508,9 +508,10 @@ export function opprettAktivitet(pathParams, body) {
         transaksjonsType: 'OPPRETTET',
         ...body,
     });
-    aktiviteter.push(newAktivitet);
-    versjoner.push(newAktivitet);
-    return newAktivitet;
+    aktiviteter.push(nyAktivitet);
+    const nyAktivitetKlone = wrapAktivitet(nyAktivitet);
+    versjoner.push(nyAktivitetKlone);
+    return nyAktivitet;
 }
 
 function doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter) {
