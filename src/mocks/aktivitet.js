@@ -5,7 +5,6 @@ import { rndId } from './utils';
 
 const eksternBruker = erEksternBruker();
 const bruker = eksternBruker ? 'BRUKER' : 'NAV';
-
 const testAktiviteter = !visTestAktiviteter()
     ? []
     : [
@@ -152,7 +151,7 @@ const testAktiviteter = !visTestAktiviteter()
           wrapAktivitet({
               id: '1550',
               versjon: '9825',
-              tittel: 'Avtale om å søke jobber',
+              tittel: 'Denne har en ulest forhåndsorientering',
               beskrivelse:
                   'NAV forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb. Legg til hver stilling du søker i aktiviteten «En jobb jeg vil søke på».',
               lenke: null,
@@ -190,6 +189,7 @@ const testAktiviteter = !visTestAktiviteter()
               forhaandsorientering: {
                   tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
                   type: 'SEND_FORHAANDSORIENTERING',
+                  lestDato: null,
               },
           }),
           wrapAktivitet({
@@ -228,14 +228,14 @@ const testAktiviteter = !visTestAktiviteter()
               status: 'GJENNOMFORES',
               stillingsTittel: null,
               tilDato: null,
-              tittel: 'Prat om pirat',
+              tittel: 'Denne har en lest forhåndsorientering',
               transaksjonsType: 'OPPRETTET',
               type: 'SAMTALEREFERAT',
-              versjon: '1',
+              versjon: '2',
               forhaandsorientering: {
                   tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
                   type: 'SEND_FORHAANDSORIENTERING',
-                  lest: '2021-04-04T12:04:41.175Z',
+                  lestDato: '2021-05-30T10:46:40.459+00:00',
               },
           }),
           wrapAktivitet({
@@ -580,7 +580,7 @@ export function oppdaterLestFho(__params, { aktivitetId }) {
     const nyeAktivitetAttributter = {
         forhaandsorientering: {
             ...gammelAktivitet.forhaandsorientering,
-            lest: moment().toISOString(),
+            lestDato: moment().toISOString(),
         },
         transaksjonsType: 'FORHAANDSORIENTERING_LEST',
     };

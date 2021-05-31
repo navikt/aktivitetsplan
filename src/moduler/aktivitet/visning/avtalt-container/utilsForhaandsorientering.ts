@@ -24,7 +24,7 @@ export const skalMarkereForhaandsorienteringSomLest = (erBruker: boolean, aktivi
     const fho = aktivitet?.forhaandsorientering;
     return (
         !!fho?.type &&
-        !fho.lest &&
+        !fho.lestDato &&
         fho.type !== ForhaandsorienteringType.IKKE_SEND &&
         erBruker &&
         !aktivitet?.historisk &&

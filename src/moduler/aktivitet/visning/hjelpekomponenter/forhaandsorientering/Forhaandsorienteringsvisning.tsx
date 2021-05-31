@@ -28,7 +28,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
 
     const forhaandsorientering = aktivitet.forhaandsorientering;
     const forhaandsorienteringTekst = forhaandsorientering?.tekst;
-    const forhaandsorienteringLestDato = forhaandsorientering?.lest;
+    const forhaandsorienteringLestDato = forhaandsorientering?.lestDato;
 
     const erLest = !!forhaandsorienteringLestDato;
 
