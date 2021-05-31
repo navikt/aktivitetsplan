@@ -26,7 +26,7 @@ export enum TransaksjonsType {
     REFERAT_ENDRET = 'REFERAT_ENDRET',
     REFERAT_PUBLISERT = 'REFERAT_PUBLISERT',
     BLE_HISTORISK = 'BLE_HISTORISK',
-    FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST'
+    FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
 }
 export type BrukerType = 'NAV' | 'BRUKER';
 export interface Lest {
@@ -138,5 +138,5 @@ export enum ForhaandsorienteringType {
 export interface Forhaandsorientering {
     type: ForhaandsorienteringType;
     tekst: string;
-    lest?: string;
+    lestDato?: string;
 }

@@ -5,7 +5,6 @@ import { rndId } from './utils';
 
 const eksternBruker = erEksternBruker();
 const bruker = eksternBruker ? 'BRUKER' : 'NAV';
-
 const testAktiviteter = !visTestAktiviteter()
     ? []
     : [
@@ -228,14 +227,14 @@ const testAktiviteter = !visTestAktiviteter()
               status: 'GJENNOMFORES',
               stillingsTittel: null,
               tilDato: null,
-              tittel: 'Prat om pirat',
+              tittel: 'Denne har en lest forhåndsorientering',
               transaksjonsType: 'OPPRETTET',
               type: 'SAMTALEREFERAT',
-              versjon: '1',
+              versjon: '2',
               forhaandsorientering: {
                   tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
                   type: 'SEND_FORHAANDSORIENTERING',
-                  lest: '2021-04-04T12:04:41.175Z',
+                  lestDato: '2021-05-30T10:46:40.459+00:00',
               },
           }),
           wrapAktivitet({
