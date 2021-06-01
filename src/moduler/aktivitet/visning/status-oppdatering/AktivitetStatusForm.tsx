@@ -1,8 +1,7 @@
-import useFormstate from '@nutgaard/use-formstate';
+import useFormstate, { SubmitHandler } from '@nutgaard/use-formstate';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import SkjemaGruppe from 'nav-frontend-skjema/lib/skjema-gruppe';
-import PT from 'prop-types';
 import React, { useContext, useEffect } from 'react';
 
 import {
@@ -12,59 +11,47 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../../../constant';
+import { Aktivitet, AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Radio from '../../../../felles-komponenter/skjema/input/Radio';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
 import visibleIf from '../../../../hocs/visible-if';
-import { aktivitet as aktivitetPT } from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
-import { manglerPubliseringAvSamtaleReferat, trengerBegrunnelse } from '../../aktivitet-util';
+import { trengerBegrunnelse } from '../../aktivitet-util';
+import { kanOppdatereStatus, validateBegrunnelse } from './valideringUtils';
 
 const VisibleAlertStripeSuksessSolid = visibleIf(AlertStripe);
 
-function statusKreverInformasjonMelding(status) {
-    return status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
-}
-
-function label(status) {
+const label = (status: AktivitetStatus) => {
     if (status === STATUS_FULLFOERT) {
         return 'Skriv en kort kommentar om hvordan det har gått med aktiviteten, eller noe NAV bør kjenne til.';
     }
-    return 'Skriv en kort begrunnelse om hvorfor du avbrøt aktiviteten. Etter at du har trykket på "Bekreft", må du gi beskjed til veilederen din ved å starte en dialog her i aktivitetsplanen.';
+    return 'Skriv en kort begrunnelse om hvorfor du avbryter aktiviteten.';
+};
+
+//Det er anbefalt at man bruker type er pga en known issue i use-formstate
+export type ValideringsProps = {
+    aktivitetstatus: string;
+    begrunnelse: string;
+    statusValidering: string;
+};
+
+type Handler = SubmitHandler<ValideringsProps>;
+
+interface Props {
+    aktivitet: Aktivitet;
+    disabled: boolean;
+    onSubmit: Handler;
 }
 
-function kanOppdatereStatus(aktivitet, values) {
-    const status = values.aktivitetstatus;
-    const ferdigStatus = [STATUS_FULLFOERT, STATUS_AVBRUTT].includes(status);
-    const ferdigOgManglerPubliseringAvSamtaleReferat =
-        ferdigStatus && manglerPubliseringAvSamtaleReferat(aktivitet || {}, status);
-
-    if (ferdigOgManglerPubliseringAvSamtaleReferat) {
-        return 'Samtalereferatet må deles før du kan sette aktiviteten til denne statusen';
-    }
-
-    return null;
-}
-
-function validateBegrunnelse(value, values, aktivitet) {
-    const status = values.aktivitetstatus;
-    if (trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type) && value.trim().length === 0) {
-        return 'Du må fylle ut en begrunnelse';
-    }
-    if (value.length > 255) {
-        return 'Du må korte ned teksten til 255 tegn';
-    }
-    return null;
-}
-
-function AktivitetStatusForm(props) {
+const AktivitetStatusForm = (props: Props) => {
     const { aktivitet, onSubmit, disabled } = props;
 
-    const validator = useFormstate({
-        aktivitetstatus: () => {},
-        begrunnelse: (val, values, aktivitet) => validateBegrunnelse(val, values, aktivitet),
-        statusValidering: (val, values, aktivitet) => kanOppdatereStatus(aktivitet, values),
+    const validator = useFormstate<ValideringsProps, Aktivitet>({
+        aktivitetstatus: () => undefined,
+        begrunnelse: (val, values, valgtAktivitet) => validateBegrunnelse(val, values, valgtAktivitet),
+        statusValidering: (val, values, validerStatusAktivitet) => kanOppdatereStatus(validerStatusAktivitet, values),
     });
 
     const initalValue = {
@@ -76,6 +63,7 @@ function AktivitetStatusForm(props) {
     const state = validator(initalValue, aktivitet);
 
     const { setFormIsDirty } = useContext(DirtyContext);
+
     useEffect(() => {
         setFormIsDirty('status', !state.pristine);
         return () => {
@@ -83,8 +71,8 @@ function AktivitetStatusForm(props) {
         };
     }, [setFormIsDirty, state.pristine]);
 
-    const status = state.fields.aktivitetstatus.input.value;
-    const visAdvarsel = statusKreverInformasjonMelding(status);
+    const status = state.fields.aktivitetstatus.input.value as AktivitetStatus;
+    const visAdvarsel = status === STATUS_FULLFOERT || status === STATUS_AVBRUTT;
     const visBegrunnelseFelt = trengerBegrunnelse(aktivitet.avtalt, status, aktivitet.type);
 
     return (
@@ -118,9 +106,8 @@ function AktivitetStatusForm(props) {
 
                 <VisibleIfDiv className="status-alert" visible={!state.pristine}>
                     <VisibleAlertStripeSuksessSolid visible={visAdvarsel} type="advarsel">
-                        {
-                            'Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre innholdet.'
-                        }
+                        Hvis du endrer til "Fullført" eller "Avbrutt", blir aktiviteten låst og du kan ikke lenger endre
+                        innholdet.
                     </VisibleAlertStripeSuksessSolid>
 
                     <VisibleIfDiv visible={visBegrunnelseFelt}>
@@ -144,12 +131,6 @@ function AktivitetStatusForm(props) {
             </Hovedknapp>
         </form>
     );
-}
-
-AktivitetStatusForm.propTypes = {
-    disabled: PT.bool.isRequired,
-    onSubmit: PT.func.isRequired,
-    aktivitet: aktivitetPT.isRequired,
 };
 
 export default AktivitetStatusForm;

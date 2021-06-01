@@ -17,7 +17,7 @@ const begrunnelseValidator = (val) => {
         return 'Du må korte ned teksten til 255 tegn';
     }
 
-    return null;
+    return undefined;
 };
 
 function BegrunnelseForm(props) {

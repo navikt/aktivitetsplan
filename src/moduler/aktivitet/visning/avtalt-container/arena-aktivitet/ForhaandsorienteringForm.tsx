@@ -31,8 +31,6 @@ const validate = (val: string) => {
     if (val.length > 500) {
         return 'Du må korte ned teksten til 500 tegn';
     }
-
-    return undefined;
 };
 
 interface Props {
@@ -42,13 +40,19 @@ interface Props {
     setForhandsorienteringType(type: ForhaandsorienteringType): void;
 }
 
+type FormType = {
+    tekst: string,
+    checked: string,
+    forhaandsorienteringType: string
+}
+
 const ForhaandsorienteringForm = (props: Props) => {
     const { setSendtAtErAvtaltMedNav, setForhandsorienteringType, aktivitet, hidden } = props;
 
     const dialogStatus = useSelector(selectDialogStatus);
     const dispatch = useDispatch();
 
-    const validator = useFormstate({
+    const validator = useFormstate<FormType>({
         tekst: validate,
         checked: () => undefined,
         forhaandsorienteringType: () => undefined,

@@ -47,7 +47,7 @@ const avtaltTekst119 =
     '[komme på møtet vi har innkalt deg til [dato]/ møte på … /levere ... innen [dato]] uten rimelig grunn. Dette går ' +
     'fram av folketrygdloven § 11-9.';
 
-interface SubmitProps {
+type SubmitProps = {
     avtaltCheckbox: string;
     forhaandsorienteringType: ForhaandsorienteringType;
     avtaltText119: string;

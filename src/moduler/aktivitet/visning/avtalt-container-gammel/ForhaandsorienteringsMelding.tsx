@@ -1,5 +1,5 @@
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import Select from '../../../../felles-komponenter/skjema/input/Select';
@@ -11,7 +11,7 @@ import styles from './ForhaandsorienteringsMelding.module.less';
 
 const InfoHeader = () => (
     <>
-        <EtikettLiten className={styles.avtaltTekstEtikett}>Tekst til brukeren</EtikettLiten>
+        <Undertekst className={styles.avtaltTekstEtikett}>Tekst til brukeren</Undertekst>
         <Hjelpetekst>
             <div className={styles.maxWidth300}>
                 Brukeren får en SMS eller e-post via kontaktinformasjon som brukeren selv har registrert i det

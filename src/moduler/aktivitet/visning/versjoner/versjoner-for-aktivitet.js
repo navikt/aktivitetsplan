@@ -10,7 +10,7 @@ import * as AppPT from '../../../../proptypes';
 import { autobind } from '../../../../utils';
 import { fjernVersjoner, hentVersjonerForAktivtet } from '../../aktivitet-versjoner/aktivitet-versjoner-reducer';
 import { selectSorterteVersjoner, selectVersjonerStatus } from '../../aktivitet-versjoner/aktivitet-versjoner-selector';
-import VersjonInnslag from './versjoninnslag';
+import VersjonInnslag from './VersjonInnslag';
 
 const MAX_SIZE = 10;
 
@@ -37,13 +37,13 @@ class VersjonerForAktivitet extends Component {
         const versjonerInnslag = versjoner
             .slice(0, MAX_SIZE)
             .map((versjon, index) => (
-                <VersjonInnslag key={versjon.endretDato} versjon={versjon} prevVersjon={versjoner[index + 1]} />
+                <VersjonInnslag key={versjon.endretDato} aktivitet={versjon} forrigeAktivitet={versjoner[index + 1]} />
             ));
 
         const versjonerInnslagUnderAccordion = (
             <Lesmerpanel className="" apneTekst="Vis mer" lukkTekst="Vis mer">
                 {versjoner.slice(MAX_SIZE).map((versjon, index) => (
-                    <VersjonInnslag key={versjon.endretDato} versjon={versjon} prevVersjon={versjoner[index + 1]} />
+                    <VersjonInnslag key={versjon.endretDato} aktivitet={versjon} forrigeAktivitet={versjoner[index + 1]} />
                 ))}
             </Lesmerpanel>
         );

@@ -1,23 +1,35 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 
 import { selectErBruker } from '../moduler/identitet/identitet-selector';
+import { BrukerType } from '../datatypes/aktivitetTypes';
 
 interface Props {
-    id: string;
+    lagtInnAv: BrukerType;
     endretAv?: string;
 }
-
+// Senere: fjern tekster lagtInnAv.*
 const BrukeravhengigTekst = (props: Props) => {
-    const { id, endretAv } = props;
+    const { lagtInnAv, endretAv } = props;
 
     const erBruker = useSelector(selectErBruker);
 
-    const postFix = erBruker ? 'bruker' : 'veileder';
-    const labelId = `${id}.${postFix}`;
+    let brukeravhengigTekst;
 
-    return <FormattedMessage id={labelId} values={{ endretAv }} />;
+    if (erBruker) {
+        if (lagtInnAv === 'BRUKER') {
+            brukeravhengigTekst = 'Du';
+        } else {
+            brukeravhengigTekst = 'NAV';
+        }
+    } else {
+        if (lagtInnAv === 'NAV') {
+            brukeravhengigTekst = endretAv ? endretAv : 'NAV';
+        } else {
+            brukeravhengigTekst = 'Bruker';
+        }
+    }
+    return <>{brukeravhengigTekst}</>
 };
 
 export default BrukeravhengigTekst;

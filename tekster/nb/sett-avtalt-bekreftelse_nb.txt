@@ -4,6 +4,8 @@
     forhandsorienteringSent {{forhandsorienteringType, select,
        send_forhandsorientering { Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering (standard melding) er sendt. }
        send_paragraf_11_9 { Aktiviteten er merket "Avtalt med NAV" og forhåndsorientering for §11-9 (AAP) er sendt. }
+       other { Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er sendt.}
     }}
     avtaltMedNavMindreEnnSyvDager { Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke sendt, men brukeren skal være informert om mulige konsekvenser for ytelse og du skal ha dokumentert dette. }
+    other { Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke sendt.}
 }

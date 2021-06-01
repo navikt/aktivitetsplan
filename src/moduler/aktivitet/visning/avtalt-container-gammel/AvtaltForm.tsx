@@ -86,7 +86,14 @@ const AvtaltForm = (props: Props) => {
         visAvtaltMedNavMindreEnnSyvDager,
     } = props;
 
-    const validator = useFormstate({
+    type FormType = {
+        avtaltCheckbox: string,
+        avtaltSelect: string,
+        avtaltText119: string,
+        avtaltText: string
+    }
+
+    const validator = useFormstate<FormType>({
         avtaltCheckbox: noValidate,
         avtaltSelect: noValidate,
         avtaltText119: validateForhandsorienter,

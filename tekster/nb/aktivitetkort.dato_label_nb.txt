@@ -1,4 +1,5 @@
 { label, select,
 FRA {Fra:}
 TIL {Til:}
+other { {label}:}
 } {DATO}

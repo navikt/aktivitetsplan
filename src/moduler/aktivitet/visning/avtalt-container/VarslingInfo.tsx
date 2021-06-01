@@ -1,12 +1,12 @@
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import styles from './VarslingInfo.module.less';
 
 const VarslingInfo = () => (
     <>
-        <EtikettLiten className={styles.avtaltTekstEtikett}>Teksten som blir lagt til aktiviteten:</EtikettLiten>
+        <Undertekst className={styles.avtaltTekstEtikett}>Teksten som blir lagt til aktiviteten:</Undertekst>
         <Hjelpetekst>
             <div className={styles.maxWidth300}>
                 Brukeren mottar sms eller e-post (se KRR) med en lenke til aktiviteten. <br />

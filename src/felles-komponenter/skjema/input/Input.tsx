@@ -11,11 +11,12 @@ interface Props {
     input: FieldStateInput;
     pristine?: boolean;
     initialValue?: string;
+    setValue?: (value: string) => void;
 }
 
 // pristine and initialValue isn't used, but we don't want to pass it to input
 const Input = (props: Props & InputProps) => {
-    const { touched, error, input, pristine, initialValue, ...rest } = props;
+    const { touched, error, input, pristine, initialValue, setValue, ...rest } = props;
     const feil = error && touched ? error : undefined;
     const inputProps = { ...input, ...rest };
     return <NavInput {...inputProps} feil={feil} required />;

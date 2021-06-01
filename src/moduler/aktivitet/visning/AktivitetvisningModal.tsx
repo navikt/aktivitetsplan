@@ -7,6 +7,7 @@ import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
+import { loggForhaandsorienteringLest } from '../../../felles-komponenter/utils/logging';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 import { selectErBruker } from '../../identitet/identitet-selector';
@@ -84,6 +85,7 @@ const AktivitetvisningModal = (props: Props) => {
         } else {
             dispatch(markerForhaandsorienteringSomLest(aktivitet));
         }
+        aktivitet && loggForhaandsorienteringLest(aktivitet.type, false);
     };
 
     return (
@@ -93,13 +95,17 @@ const AktivitetvisningModal = (props: Props) => {
             avhengigheter={avhengigheter}
             header={header(aktivitet)}
             onRequestClose={() => {
-                if (!dirty.isDirty || window.confirm(DIALOG_TEKST)) {
-                    if (skalLeses && fho) {
-                        window.alert(fho.tekst);
-                        markerFhoSomLest();
-                    }
-                    history.push('/');
+                if (dirty.isDirty && !window.confirm(DIALOG_TEKST)) {
+                    return;
                 }
+                if (skalLeses && fho) {
+                    if (window.confirm(fho.tekst)) {
+                        markerFhoSomLest();
+                    } else {
+                        return;
+                    }
+                }
+                history.push('/');
             }}
             feilmeldinger={alleFeil}
         >

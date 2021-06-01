@@ -14,6 +14,21 @@ export type AktivitetType =
 //aktivitetStatusd efinisjonen bor også i .\const som STATUS_*
 export type AktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
+export enum TransaksjonsType {
+    OPPRETTET = 'OPPRETTET',
+    STATUS_ENDRET = 'STATUS_ENDRET',
+    DETALJER_ENDRET = 'DETALJER_ENDRET',
+    AVTALT = 'AVTALT',
+    AVTALT_DATO_ENDRET = 'AVTALT_DATO_ENDRET',
+    ETIKETT_ENDRET = 'ETIKETT_ENDRET',
+    MOTE_TID_OG_STED_ENDRET = 'MOTE_TID_OG_STED_ENDRET',
+    REFERAT_OPPRETTET = 'REFERAT_OPPRETTET',
+    REFERAT_ENDRET = 'REFERAT_ENDRET',
+    REFERAT_PUBLISERT = 'REFERAT_PUBLISERT',
+    BLE_HISTORISK = 'BLE_HISTORISK',
+    FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
+}
+export type BrukerType = 'NAV' | 'BRUKER';
 export interface Lest {
     tidspunkt: string;
     verdi?: string;
@@ -27,6 +42,7 @@ interface AktivitetRequiredProps {
     opprettetDato: string;
     status: AktivitetStatus;
     type: AktivitetType;
+    lagtInnAv: BrukerType;
     endretAv: string;
     avtalt: boolean;
 }
@@ -38,7 +54,6 @@ export interface Aktivitet extends AktivitetRequiredProps {
     etikett?: StillingsStatus;
     historisk?: boolean;
     forhaandsorientering?: Forhaandsorientering;
-    lagtInnAv?: string;
     detaljer?: object;
     beskrivelse?: string;
     erReferatPublisert?: boolean;
@@ -48,6 +63,8 @@ export interface Aktivitet extends AktivitetRequiredProps {
     antallStillingerSokes?: number;
     antallStillingerIUken?: number;
     arenaAktivitet?: boolean;
+    avsluttetBegrunnelse?: string;
+    transaksjonsType?: TransaksjonsType;
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
@@ -121,5 +138,5 @@ export enum ForhaandsorienteringType {
 export interface Forhaandsorientering {
     type: ForhaandsorienteringType;
     tekst: string;
-    lest?: string;
+    lestDato?: string;
 }

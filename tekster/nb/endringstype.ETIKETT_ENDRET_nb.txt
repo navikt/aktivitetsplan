@@ -1,7 +1,8 @@
 endret tilstand til { til, select,
-INGEN { Ingen }
+INGEN_VALGT { Ingen }
 SOKNAD_SENDT { Søknaden er sendt }
 INNKALT_TIL_INTERVJU { Skal på intervju }
 AVSLAG { Fått avslag }
 JOBBTILBUD { Fått jobbtilbud }
+other { {til} }
 }
