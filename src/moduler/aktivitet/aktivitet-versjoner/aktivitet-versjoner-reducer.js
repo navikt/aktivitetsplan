@@ -1,6 +1,13 @@
 import * as Api from '../../../api/aktivitetAPI';
 import { STATUS, doThenDispatch } from '../../../api/utils';
-import { FLYTT_OK, OPPDATER_OK, OPPDATER_REFERAT_OK, PUBLISER_REFERAT_OK } from '../aktivitet-action-types';
+import {
+    FHO_BEKREFT_OK,
+    FHO_LEST_OK,
+    FLYTT_OK,
+    OPPDATER_OK,
+    OPPDATER_REFERAT_OK,
+    PUBLISER_REFERAT_OK,
+} from '../aktivitet-action-types';
 
 // Actions
 export const OK = 'versjoner/OK';
@@ -27,6 +34,8 @@ export default function reducer(state = initalState, action) {
         case OPPDATER_OK:
         case OPPDATER_REFERAT_OK:
         case PUBLISER_REFERAT_OK:
+        case FHO_LEST_OK:
+        case FHO_BEKREFT_OK:
         case FLYTT_OK:
             if (state.status === STATUS.NOT_STARTED) {
                 return state;
