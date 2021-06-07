@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { MOTE_TYPE } from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
 import { div as HiddenIfDiv } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { useErBrukerDigital } from '../../../../felles-komponenter/hooks/useBrukerDigital';
 import Innholdslaster from '../../../../felles-komponenter/utils/Innholdslaster';
@@ -23,8 +23,13 @@ const VarslingBoks = ({ className, aktivitet }: Props) => {
     const erVeileder = useSelector(selectErVeileder);
     const dialogForAktivitetId = useSelector((state) => selectDialogForAktivitetId(state, aktivitet.id));
     const erDigital = useErBrukerDigital();
+    const erAlleredeVarslet =
+        aktivitet.avtalt &&
+        aktivitet.forhaandsorientering &&
+        aktivitet.forhaandsorientering.type !== ForhaandsorienteringType.IKKE_SEND;
 
-    const visVarselOmManglendeDialog = aktivitet.type === MOTE_TYPE && erVeileder && !dialogForAktivitetId && erDigital;
+    const visVarselOmManglendeDialog =
+        aktivitet.type === MOTE_TYPE && erVeileder && !dialogForAktivitetId && erDigital && !erAlleredeVarslet;
 
     return (
         <HiddenIfDiv hidden={!visVarselOmManglendeDialog}>
