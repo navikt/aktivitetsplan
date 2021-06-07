@@ -7,11 +7,7 @@ import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filt
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
 import { selectOppfolgingStatus } from '../oppfolging-status/oppfolging-selector';
 import { selectAktivitetStatus, selectAktiviteterData, selectAktiviteterSlice } from './aktivitet-selector';
-import {
-    selectArenaAktivitetStatus,
-    selectArenaAktiviteterData,
-    selectArenaAktiviteterSlice,
-} from './arena-aktivitet-selector';
+import { selectArenaAktiviteterData, selectArenaAktiviteterSlice } from './arena-aktivitet-selector';
 
 export const selectAlleAktiviter = createSelector(
     selectAktiviteterData,
@@ -32,8 +28,7 @@ export const selectAktivitetListeSlice = (state: any) => {
     const status = aggregerStatus(
         selectOppfolgingStatus(state),
         selectIdentitetStatus(state),
-        selectAktivitetStatus(state),
-        selectArenaAktivitetStatus(state)
+        selectAktivitetStatus(state)
     );
     return {
         status,
