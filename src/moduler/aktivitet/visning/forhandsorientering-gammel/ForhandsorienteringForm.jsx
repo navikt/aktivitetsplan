@@ -58,8 +58,8 @@ const ForhandsorieteringsForm = (props) => {
 
     const validator = useFormstate({
         text: validate,
-        checked: () => null,
-        avtaltSelect: () => null,
+        checked: () => undefined,
+        avtaltSelect: () => undefined,
     });
 
     const state = validator({
@@ -76,7 +76,7 @@ const ForhandsorieteringsForm = (props) => {
     const avtaltSelect = state.fields.avtaltSelect.input.value;
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)}>
+        <form onSubmit={state.onSubmit(onSubmit)} noValidate>
             <Undertittel>Tiltaket er automatisk merket "Avtalt med NAV"</Undertittel>
 
             <SkjemaGruppe>
