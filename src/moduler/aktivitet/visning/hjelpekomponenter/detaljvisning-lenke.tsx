@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function DetaljvisningLenke(props: Props) {
-    const lenke = props.lenke ? props.lenke.trim() : undefined;
+    const lenke = props.lenke?.trim();
     if (!lenke) {
         return null;
     }
