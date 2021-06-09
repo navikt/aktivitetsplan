@@ -10,8 +10,8 @@ interface Props {
 }
 
 export default function DetaljvisningLenke(props: Props) {
-    const lenke = props.lenke;
-    if (!lenke || !lenke.trim()) {
+    const lenke = props.lenke?.trim();
+    if (!lenke) {
         return null;
     }
     let shortenedUrl;
