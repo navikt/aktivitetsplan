@@ -27,6 +27,8 @@ const AvtaltFormContainer = (props: Props) => {
     const dispatch = useDispatch();
     const sendMetrikker = useSendAvtaltMetrikker();
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
+    const manglerTilDato = aktivitet.tilDato == null;
+    console.log('Mangler tildato:', manglerTilDato, aktivitet);
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
         dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering));
@@ -52,6 +54,7 @@ const AvtaltFormContainer = (props: Props) => {
                 className="aktivitetvisning__underseksjon avtalt-container"
                 oppdaterer={bekreftStatus === STATUS.RELOADING}
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
+                manglerTilDato={manglerTilDato}
                 lasterData={nettverksStatus !== STATUS.OK}
                 onSubmit={onSubmit}
             />

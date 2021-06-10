@@ -52,7 +52,7 @@ type SubmitProps = {
     forhaandsorienteringType: ForhaandsorienteringType;
     avtaltText119: string;
     avtaltText: string;
-}
+};
 
 export type Handler = SubmitHandler<SubmitProps>;
 
@@ -62,10 +62,11 @@ interface Props {
     oppdaterer: boolean;
     lasterData: boolean;
     mindreEnnSyvDagerTil: boolean;
+    manglerTilDato: boolean;
 }
 
 const AvtaltForm = (props: Props) => {
-    const { onSubmit, className, oppdaterer, lasterData, mindreEnnSyvDagerTil } = props;
+    const { onSubmit, className, oppdaterer, lasterData, mindreEnnSyvDagerTil, manglerTilDato } = props;
 
     const validator = useFormstate<SubmitProps>({
         avtaltCheckbox: noValidate,
@@ -116,7 +117,10 @@ const AvtaltForm = (props: Props) => {
                 </ForNavAnsattMarkeringWrapper>
                 <Innholdslaster avhengigheter={avhengigheter} visChildrenVedFeil>
                     <VisibleIfDiv className={classNames(kanSendeForhaandsvarsel && styles.innhold)} visible={avtalt}>
-                        <KanIkkeSendeForhaandsorienteringInfotekst mindreEnnSyvDagerTil={mindreEnnSyvDagerTil} />
+                        <KanIkkeSendeForhaandsorienteringInfotekst
+                            mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
+                            manglerTilDato={manglerTilDato}
+                        />
                         <ForhaandsorienteringsMelding
                             state={state}
                             hidden={!kanSendeForhaandsvarsel}
