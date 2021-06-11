@@ -28,7 +28,6 @@ const AvtaltFormContainer = (props: Props) => {
     const sendMetrikker = useSendAvtaltMetrikker();
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
     const manglerTilDato = aktivitet.tilDato == null;
-    console.log('Mangler tildato:', manglerTilDato, aktivitet);
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
         dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering));
