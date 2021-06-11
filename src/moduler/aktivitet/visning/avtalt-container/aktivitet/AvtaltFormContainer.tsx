@@ -27,7 +27,6 @@ const AvtaltFormContainer = (props: Props) => {
     const dispatch = useDispatch();
     const sendMetrikker = useSendAvtaltMetrikker();
     const mindreEnnSyvDagerTil = !erMerEnnSyvDagerTil(aktivitet.tilDato);
-    const manglerTilDato = aktivitet.tilDato == null;
 
     const doSettAktivitetTilAvtalt = (avtaltAktivitet: Aktivitet, forhaandsorientering: Forhaandsorientering) =>
         dispatch(settAktivitetTilAvtalt(avtaltAktivitet, forhaandsorientering));
