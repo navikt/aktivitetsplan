@@ -52,6 +52,7 @@ const AvtaltFormContainer = (props: Props) => {
                 className="aktivitetvisning__underseksjon avtalt-container"
                 oppdaterer={bekreftStatus === STATUS.RELOADING}
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
+                manglerTilDato={!aktivitet.tilDato}
                 lasterData={nettverksStatus !== STATUS.OK}
                 onSubmit={onSubmit}
             />

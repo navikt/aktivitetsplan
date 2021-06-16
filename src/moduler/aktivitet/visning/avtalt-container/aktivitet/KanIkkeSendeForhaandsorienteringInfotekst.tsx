@@ -14,7 +14,8 @@ const getTekst = (
     brukerErUnderKvp: boolean,
     brukerErIReservasjonKRR: boolean,
     harLoggetInnMedNivaa4: boolean,
-    mindreEnnSyvDagerTil: boolean
+    mindreEnnSyvDagerTil: boolean,
+    manglerTilDato: boolean
 ): string | undefined => {
     if (brukerErUnderKvp) {
         return 'Du kan ikke legge til forhåndsorientering fordi brukeren deltar i kvalifiseringsprogrammet.';
@@ -28,14 +29,20 @@ const getTekst = (
     if (brukerErManuell) {
         return 'Du kan ikke legge til forhåndsorientering fordi brukeren har manuell oppfølging. Du skal ha orientert brukeren om mulig konsekvens for ytelse, og dokumentert dette.';
     }
+    if (manglerTilDato) {
+        return 'Du kan ikke sende forhåndsorientering fordi aktiviteten ikke har "til dato". Hvis du har hatt muntlig dialog med brukeren om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat, så kan du sette aktiviteten til "Avtalt med NAV"';
+    }
     if (mindreEnnSyvDagerTil) {
         return 'Du kan ikke legge til forhåndsorientering fordi sluttdatoen er færre enn 7 dager frem i tid. Hvis du har hatt muntlig dialog med brukeren om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat, så kan du sette aktiviteten til “Avtalt med NAV".';
     }
 };
 
-//TODO: slette tekstfil sett-avtalt-forhandsrientering-bruker-uten-aktivitesplan
-//TODO: Husk å slette tekstfil sett-til-avtalt-mindre-enn-syv-dager
-const KanIkkeSendeForhaandsorienteringInfotekst = (props: { mindreEnnSyvDagerTil: boolean }) => {
+//Senere: slette tekstfil sett-avtalt-forhandsrientering-bruker-uten-aktivitesplan
+//Senere: Husk å slette tekstfil sett-til-avtalt-mindre-enn-syv-dager
+const KanIkkeSendeForhaandsorienteringInfotekst = (props: {
+    mindreEnnSyvDagerTil: boolean;
+    manglerTilDato: boolean;
+}) => {
     const brukerErManuell = useSelector(selectErBrukerManuell);
     const brukerErUnderKvp = useSelector(selectErUnderKvp);
     const brukerErIReservasjonKRR = useSelector(selectReservasjonKRR);
@@ -46,7 +53,8 @@ const KanIkkeSendeForhaandsorienteringInfotekst = (props: { mindreEnnSyvDagerTil
         brukerErUnderKvp,
         brukerErIReservasjonKRR,
         harLoggetInnMedNivaa4,
-        props.mindreEnnSyvDagerTil
+        props.mindreEnnSyvDagerTil,
+        props.manglerTilDato
     );
 
     if (!tekst) {
