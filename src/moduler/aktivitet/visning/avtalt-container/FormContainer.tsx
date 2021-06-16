@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import AvtaltFormContainer from './aktivitet/AvtaltFormContainer';
 import ArenaForhaandsorienteringFormKomponent from './arena-aktivitet/ArenaForhaandsorienteringFormKomponent';
 
@@ -13,6 +14,12 @@ interface Props {
 
 const FormContainer = (props: Props) => {
     const { erArenaAktivitet, ...rest } = props;
+
+    const brukerNyForhaandsorientering = useSkalBrukeNyForhaandsorientering();
+
+    if (!brukerNyForhaandsorientering) {
+        return null;
+    }
 
     //TODO kan vi slå sammen ArenaForhaandsorienteringFormKomponent og AvtaltFormContainer
     if (erArenaAktivitet) {
