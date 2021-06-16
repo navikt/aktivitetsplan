@@ -9,7 +9,6 @@ import {
     UTDANNING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { Aktivitet, ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import { useSkalBrukeNyForhaandsorientering } from '../../../../felles-komponenter/feature/feature';
 import { selectErBruker, selectErVeileder } from '../../../identitet/identitet-selector';
 import ForhaandsorienteringsVisningsLinje from './ForhaandsorienteringsVisningsLinje';
 import FormContainer from './FormContainer';
@@ -25,8 +24,6 @@ const AvtaltContainerNy = (props: Props) => {
     const { underOppfolging, aktivitet } = props;
     const { type, status, historisk, avtalt } = aktivitet;
 
-    const brukeNyForhaandsorientering = useSkalBrukeNyForhaandsorientering();
-
     const [sendtAtErAvtaltMedNav, setSendtAtErAvtaltMedNav] = useState(false);
     const [forhandsorienteringType, setForhandsorienteringType] = useState<ForhaandsorienteringType>(
         ForhaandsorienteringType.IKKE_SEND
@@ -34,10 +31,6 @@ const AvtaltContainerNy = (props: Props) => {
 
     const erVeileder = useSelector(selectErVeileder);
     const erBruker = useSelector(selectErBruker);
-
-    if (!brukeNyForhaandsorientering) {
-        return null;
-    }
 
     const skalViseForhondsorentering =
         aktivitet.forhaandsorientering && aktivitet.forhaandsorientering.type !== ForhaandsorienteringType.IKKE_SEND;
