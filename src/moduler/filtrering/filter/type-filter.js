@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { AKTIVITESTYPE_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { aktivitetTypeMap } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsType } from './filter-reducer';
 import { selectAktivitetTyperFilter } from './filter-selector';
@@ -13,10 +14,11 @@ function TypeFilter({ harAktivitetTyper, aktivitetTyper, doToggleAktivitetsType 
         <FilterVisningsKomponent
             harAktiviteter={harAktivitetTyper}
             filter={aktivitetTyper}
-            filterTittel="Aktivitetstype"
+            tekst="Aktivitetstype"
             filterTekst="aktivitet.type."
             metrikkNavn={AKTIVITESTYPE_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsType}
+            textMapper={aktivitetTypeMap}
         />
     );
 }

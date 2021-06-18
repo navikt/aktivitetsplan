@@ -19,3 +19,16 @@ export const aktivitetStatusMap = {
     FULLFORT: 'Fullført',
     AVBRUTT: 'Avbrutt',
 };
+
+export const avtaltMapper = {
+    avtaltMedNav: 'Avtalt med nav',
+    ikkeAvtaltMedNav: 'Ikke avtalt med nav',
+};
+
+export const etikettMapper = {
+    INGEN_VALGT: 'Ingen',
+    SOKNAD_SENDT: 'Søknaden er sendt',
+    INNKALT_TIL_INTERVJU: 'Skal på intervju',
+    AVSLAG: 'Fått avslag',
+    JOBBTILBUD: 'Fått jobbtilbud',
+};
