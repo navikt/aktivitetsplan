@@ -26,6 +26,7 @@ const SattTilAvtaltVisning = (props: Props) => {
             <DeleLinje />
             <SattTilAvtaltInfotekst
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
+                manglerTilDato={!aktivitet.tilDato}
                 forhaandsorienteringstype={forhaandsorienteringstype}
             />
             <Forhaandsorienteringsvisning aktivitet={aktivitet} erArenaAktivitet={erArenaAktivitet} startAapen />

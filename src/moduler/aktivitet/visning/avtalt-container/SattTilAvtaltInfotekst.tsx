@@ -7,10 +7,11 @@ import { useKanSendeVarsel } from './avtaltHooks';
 const getText = (
     kanSendeVarsel: boolean,
     avtaltMedNavMindreEnnSyvDager: boolean,
+    manglerTilDato: boolean,
     forhaandsorienteringstype: ForhaandsorienteringType
 ): string => {
-    if (!kanSendeVarsel) {
-        return 'Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering om konsekvens for ytelse er ikke lagt til aktiviteten.';
+    if (!kanSendeVarsel || manglerTilDato) {
+        return 'Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke lagt til. Du skal ha informert bruker om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat.';
     }
     if (avtaltMedNavMindreEnnSyvDager) {
         return 'Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke lagt til fordi sluttdatoen er færre enn 7 dager frem i tid. Du skal ha informert bruker om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat.';
@@ -29,16 +30,17 @@ const getText = (
 
 interface Props {
     mindreEnnSyvDagerTil: boolean;
+    manglerTilDato: boolean;
     forhaandsorienteringstype: ForhaandsorienteringType;
 }
 
-//TODO: Husk å slette tekstfil sett-avtalt-bekreftelse
+//Senere: Husk å slette tekstfil sett-avtalt-bekreftelse
 const SattTilAvtaltInfotekst = (props: Props) => {
     const kanSendeVarsel = useKanSendeVarsel();
 
-    const { mindreEnnSyvDagerTil, forhaandsorienteringstype } = props;
+    const { mindreEnnSyvDagerTil, manglerTilDato, forhaandsorienteringstype } = props;
 
-    const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, forhaandsorienteringstype);
+    const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, manglerTilDato, forhaandsorienteringstype);
 
     return (
         <div className="aktivitetvisning__underseksjon">
