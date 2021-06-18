@@ -10,7 +10,8 @@ export type AktivitetType =
     | 'IJOBB'
     | 'BEHANDLING'
     | 'MOTE'
-    | 'SAMTALEREFERAT';
+    | 'SAMTALEREFERAT'
+    | 'REKRUTTERINGSBISTAND';
 //aktivitetStatusd efinisjonen bor også i .\const som STATUS_*
 export type AktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
@@ -75,6 +76,13 @@ export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
     effekt: string; //TODO: Rename i api, mål for behandlingen
     behandlingOppfolging: string; //oppfølging fra nav, utgått
     beskrivelse: string;
+}
+
+export interface RekrutteringsbistandAktivitet extends AktivitetRequiredProps {
+    arbeidsgiver: string;
+    arbeidssted: string;
+    kontaktperson: string;
+    lenke: string;
 }
 
 enum ArenaEtikett {
