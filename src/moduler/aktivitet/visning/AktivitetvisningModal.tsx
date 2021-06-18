@@ -8,6 +8,7 @@ import Modal from '../../../felles-komponenter/modal/Modal';
 import ModalHeader from '../../../felles-komponenter/modal/ModalHeader';
 import { Avhengighet } from '../../../felles-komponenter/utils/Innholdslaster';
 import { loggForhaandsorienteringLest } from '../../../felles-komponenter/utils/logging';
+import { aktivitetStatusMap, aktivitetTypeMap } from '../../../utils/textMappers';
 import { DirtyContext } from '../../context/dirty-context';
 import { selectDialogFeilmeldinger } from '../../dialog/dialog-selector';
 import { selectErBruker } from '../../identitet/identitet-selector';
@@ -18,27 +19,6 @@ import { selectArenaFeilmeldinger } from '../arena-aktivitet-selector';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../arena-aktiviteter-reducer';
 import { skalMarkereForhaandsorienteringSomLest } from './avtalt-container/utilsForhaandsorientering';
 
-const statusMap = {
-    PLANLAGT: 'Planlegger',
-    BRUKER_ER_INTERESSERT: 'Forslag',
-    GJENNOMFORES: 'Gjennomfører',
-    FULLFORT: 'Fullført',
-    AVBRUTT: 'Avbrutt',
-};
-
-const typeMap = {
-    EGEN: 'Jobbrettet egenaktivitet',
-    STILLING: 'Stilling',
-    TILTAKSAKTIVITET: 'Tiltak gjennom NAV',
-    GRUPPEAKTIVITET: 'Gruppeaktivitet',
-    UTDANNINGSAKTIVITET: 'Utdanning',
-    SOKEAVTALE: 'Jobbsøking',
-    IJOBB: 'Jobb jeg har nå',
-    BEHANDLING: 'Behandling',
-    MOTE: 'Møte med NAV',
-    SAMTALEREFERAT: 'Samtalereferat',
-};
-
 const header = (valgtAktivitet?: Aktivitet) => {
     if (!valgtAktivitet) {
         return null;
@@ -48,7 +28,7 @@ const header = (valgtAktivitet?: Aktivitet) => {
 
     return (
         <ModalHeader
-            headerTekst={`${statusMap[valgtAktivitet.status]} / ${typeMap[valgtAktivitet.type]}`}
+            headerTekst={`${aktivitetStatusMap[valgtAktivitet.status]} / ${aktivitetTypeMap[valgtAktivitet.type]}`}
             aria-describedby="modal-aktivitetsvisning-header"
             aktivitetErLaast={aktivitetErLaast}
         />

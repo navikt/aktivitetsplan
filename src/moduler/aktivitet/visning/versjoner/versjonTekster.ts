@@ -1,35 +1,6 @@
-import { Aktivitet, AktivitetStatus, StillingsStatus, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
 import { formaterDatoKortManed } from '../../../../utils';
-
-const aktivitetStatusTilBeskrivelse = (aktivitetStatus: AktivitetStatus) => {
-    switch (aktivitetStatus) {
-        case 'AVBRUTT':
-            return 'avbrutt';
-        case 'FULLFORT':
-            return 'fullført';
-        case 'GJENNOMFORES':
-            return 'gjennomfører';
-        case 'PLANLAGT':
-            return 'planlegger';
-        case 'BRUKER_ER_INTERESSERT':
-            return 'forslag';
-    }
-};
-
-const stillingStatusTilBeskrivelse = (stillingStatus: StillingsStatus) => {
-    switch (stillingStatus) {
-        case 'INGEN_VALGT':
-            return 'Ingen';
-        case 'SOKNAD_SENDT':
-            return 'Søknaden er sendt';
-        case 'INNKALT_TIL_INTERVJU':
-            return 'Skal på intervju';
-        case 'AVSLAG':
-            return 'Fått avslag';
-        case 'JOBBTILBUD':
-            return 'Fått jobbtilbud';
-    }
-};
+import { aktivitetStatusMap, etikettMapper } from '../../../../utils/textMappers';
 
 export const endringsTekst = (erBruker: boolean, aktivitet: Aktivitet, forrigeAktivitet?: Aktivitet) => {
     switch (aktivitet.transaksjonsType) {
@@ -61,13 +32,13 @@ export const endringsTekst = (erBruker: boolean, aktivitet: Aktivitet, forrigeAk
             return `endret til dato på aktiviteten fra ${fraDatoString} til ${tilDatoString}`;
         }
         case TransaksjonsType.STATUS_ENDRET: {
-            const fraStatus = forrigeAktivitet ? aktivitetStatusTilBeskrivelse(forrigeAktivitet?.status) : 'ingen';
-            const tilStatus = aktivitetStatusTilBeskrivelse(aktivitet?.status);
+            const fraStatus = forrigeAktivitet ? aktivitetStatusMap[forrigeAktivitet?.status] : 'ingen';
+            const tilStatus = aktivitetStatusMap[aktivitet?.status];
             return `flyttet aktiviteten fra ${fraStatus} til ${tilStatus}`;
         }
 
         case TransaksjonsType.ETIKETT_ENDRET: {
-            const tilStatus = aktivitet.etikett ? stillingStatusTilBeskrivelse(aktivitet.etikett) : 'Ingen';
+            const tilStatus = aktivitet.etikett ? etikettMapper[aktivitet.etikett] : 'Ingen';
             return `endret tilstand til ${tilStatus}`;
         }
         default:

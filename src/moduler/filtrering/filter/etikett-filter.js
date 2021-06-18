@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { etikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
@@ -13,10 +14,11 @@ function EtikettFilter({ harAktivitetEtiketter, aktivitetEtiketter, doToggleAkti
         <FilterVisningsKomponent
             harAktiviteter={harAktivitetEtiketter}
             filter={aktivitetEtiketter}
-            filterTittel="Etikett"
+            tekst="Etikett"
             filterTekst="aktivitet.etikett."
             metrikkNavn={TILSTAND_FILTER_METRIKK}
             doToggleFunction={doToggleAktivitetsEtikett}
+            textMapper={etikettMapper}
         />
     );
 }

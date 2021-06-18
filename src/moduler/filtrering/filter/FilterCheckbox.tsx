@@ -1,6 +1,5 @@
 import { Checkbox } from 'nav-frontend-skjema';
 import React, { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import loggEvent from '../../../felles-komponenter/utils/logging';
 import { Filter } from './FilterVisning';
@@ -29,13 +28,7 @@ const FilterCheckbox = (props: Props) => {
         doToggle(nokkel);
     };
 
-    return (
-        <Checkbox
-            label={<FormattedMessage id={filterTekst + nokkel.toLowerCase()} />}
-            onChange={onChange}
-            checked={checked}
-        />
-    );
+    return <Checkbox label={filterTekst} onChange={onChange} checked={checked} />;
 };
 
 export default FilterCheckbox;
