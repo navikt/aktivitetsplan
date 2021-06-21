@@ -14,15 +14,18 @@ type Props = {
 
 export const RekrutteringsbistandStillingDetaljer = ({ aktivitet }: Props) => {
     if (aktivitet.type !== REKRUTTERINGSBISTAND_TYPE) return null;
+
     return (
-        <div className={styles.detaljer}>
-            <Informasjonsfelt key="arbeidsgiver" tittel="arbeidsgiver" innhold={aktivitet.arbeidsgiver} />
-            <Informasjonsfelt key="kontaktperson" tittel="kontaktperson" innhold={aktivitet.kontaktperson} />
-            <Informasjonsfelt key="arbeidssted" tittel="arbeidssted" innhold={aktivitet.arbeidssted} />
+        <>
+            <div className={styles.detaljer}>
+                <Informasjonsfelt key="arbeidsgiver" tittel="arbeidsgiver" innhold={aktivitet.arbeidsgiver} />
+                <Informasjonsfelt key="arbeidssted" tittel="arbeidssted" innhold={aktivitet.arbeidssted} />
+                <Informasjonsfelt key="kontaktperson" tittel="kontaktperson" innhold={aktivitet.kontaktperson} />
+            </div>
             <Knapp onClick={() => window.open(formatterLenke(aktivitet.lenke))} mini>
                 Les mer om stillingen
                 <HoyreChevron />
             </Knapp>
-        </div>
+        </>
     );
 };
