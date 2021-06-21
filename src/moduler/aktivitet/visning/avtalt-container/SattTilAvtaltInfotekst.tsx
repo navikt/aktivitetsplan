@@ -7,10 +7,10 @@ import { useKanSendeVarsel } from './avtaltHooks';
 const getText = (
     kanSendeVarsel: boolean,
     avtaltMedNavMindreEnnSyvDager: boolean,
-    manglerTilDato: boolean,
+    harTilDato: boolean,
     forhaandsorienteringstype: ForhaandsorienteringType
 ): string => {
-    if (!kanSendeVarsel || manglerTilDato) {
+    if (!kanSendeVarsel || !harTilDato) {
         return 'Aktiviteten er merket "Avtalt med NAV". Forhåndsorientering er ikke lagt til. Du skal ha informert bruker om mulige konsekvenser for ytelse og dokumentert dette i et samtalereferat.';
     }
     if (avtaltMedNavMindreEnnSyvDager) {
@@ -30,7 +30,7 @@ const getText = (
 
 interface Props {
     mindreEnnSyvDagerTil: boolean;
-    manglerTilDato: boolean;
+    harTilDato: boolean;
     forhaandsorienteringstype: ForhaandsorienteringType;
 }
 
@@ -38,9 +38,9 @@ interface Props {
 const SattTilAvtaltInfotekst = (props: Props) => {
     const kanSendeVarsel = useKanSendeVarsel();
 
-    const { mindreEnnSyvDagerTil, manglerTilDato, forhaandsorienteringstype } = props;
+    const { mindreEnnSyvDagerTil, harTilDato, forhaandsorienteringstype } = props;
 
-    const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, manglerTilDato, forhaandsorienteringstype);
+    const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, harTilDato, forhaandsorienteringstype);
 
     return (
         <div className="aktivitetvisning__underseksjon">
