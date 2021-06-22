@@ -3,6 +3,7 @@ import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStore } from 'redux';
 
+import { MOTE_TYPE } from '../../../../constant';
 import reducer from '../../../../reducer';
 import MoteAktivitetForm, { defaultBeskrivelse } from './MoteAktivitetForm';
 
@@ -19,6 +20,7 @@ const store = createStore(reducer, initialState);
 function mountWithIntl(node) {
     return mount(<ReduxProvider store={store}>{node}</ReduxProvider>);
 }
+
 describe('MoteAktivitetForm', () => {
     it('Skal vise error summary når man submitter uten å oppgi påkrevde verdier', () => {
         const wrapper = mountWithIntl(<MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} />);
@@ -38,6 +40,7 @@ describe('MoteAktivitetForm', () => {
             opprettetDato: '2019-08-31T05:00:00.000Z',
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
+            type: MOTE_TYPE,
             adresse: 'Slottet',
             kanal: 'OPPMOTE',
             beskrivelse: 'jfioew',
@@ -62,6 +65,7 @@ describe('MoteAktivitetForm', () => {
             opprettetDato: '2019-08-31T05:00:00.000Z',
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
+            type: MOTE_TYPE,
             adresse: 'Slottet',
         };
         const wrapper = shallow(
@@ -102,6 +106,7 @@ describe('MoteAktivitetForm', () => {
             fraDato: '2019-08-31T05:00:00.000Z',
             tilDato: '2019-08-31T06:00:00.000Z',
             adresse: 'Slottet',
+            type: MOTE_TYPE,
             avtalt: true,
         };
         const wrapper = shallow(
