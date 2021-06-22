@@ -7,10 +7,10 @@ import EgenAktivitetDetaljer from '../detaljer/egenAktivitet-detaljer';
 import GruppeDetaljer from '../detaljer/gruppe-detaljer';
 import IJobbDetaljer from '../detaljer/ijob-detaljer';
 import MoteDetaljer from '../detaljer/mote-detaljer';
-import { RekrutteringsbistandStillingDetaljer } from '../detaljer/RekrutteringsbistandStillingDetaljer';
 import SamtalereferatDetaljer from '../detaljer/samtalereferat-detaljer';
 import SokeDetaljer from '../detaljer/soke-detaljer';
 import StillingDetaljer from '../detaljer/stilling-detaljer';
+import { StillingFraNavDetaljer } from '../detaljer/StillingFraNavDetaljer';
 import TiltakDetaljer from '../detaljer/tiltak-detaljer';
 import UtdanningDetaljer from '../detaljer/utdanning-detaljer';
 
@@ -27,7 +27,7 @@ function Aktivitetsdetaljer({ valgtAktivitet }) {
             <StillingDetaljer aktivitet={valgtAktivitet} />
             <TiltakDetaljer aktivitet={valgtAktivitet} />
             <UtdanningDetaljer aktivitet={valgtAktivitet} />
-            <RekrutteringsbistandStillingDetaljer aktivitet={valgtAktivitet} />
+            <StillingFraNavDetaljer aktivitet={valgtAktivitet} />
         </section>
     );
 }

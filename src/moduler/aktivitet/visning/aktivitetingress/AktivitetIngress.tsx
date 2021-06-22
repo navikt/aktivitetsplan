@@ -26,7 +26,7 @@ const aktivitetingress = {
     TILTAKSAKTIVITET: 'Her finner du informasjon om et tiltak NAV har søkt deg inn på. ',
     UTDANNINGSAKTIVITET:
         'Her ser du informasjon om en utdanningsaktivitet eller et kurs NAV har registrert at du skal gjennomføre.',
-    REKRUTTERINGSBISTAND:
+    STILLING_FRA_NAV:
         'NAV hjelper en arbeidsgiver med å finne kandidater til en stilling, og tror den kan passe for deg.',
 };
 

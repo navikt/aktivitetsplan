@@ -2,18 +2,18 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 
-import { REKRUTTERINGSBISTAND_TYPE } from '../../../../constant';
-import { RekrutteringsbistandAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { STILLING_FRA_NAV_TYPE } from '../../../../constant';
+import { StillingFraNavAktivitet } from '../../../../datatypes/aktivitetTypes';
 import { formatterLenke } from '../../../../utils/formatterLenke';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import styles from './AktivitetDetaljer.module.less';
 
 type Props = {
-    aktivitet: RekrutteringsbistandAktivitet;
+    aktivitet: StillingFraNavAktivitet;
 };
 
-export const RekrutteringsbistandStillingDetaljer = ({ aktivitet }: Props) => {
-    if (aktivitet.type !== REKRUTTERINGSBISTAND_TYPE) return null;
+export const StillingFraNavDetaljer = ({ aktivitet }: Props) => {
+    if (aktivitet.type !== STILLING_FRA_NAV_TYPE) return null;
 
     return (
         <>

@@ -1,17 +1,32 @@
+import {
+    BEHANDLING_AKTIVITET_TYPE,
+    EGEN_AKTIVITET_TYPE,
+    GRUPPE_AKTIVITET_TYPE,
+    IJOBB_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    SOKEAVTALE_AKTIVITET_TYPE,
+    STILLING_AKTIVITET_TYPE,
+    STILLING_FRA_NAV_TYPE,
+    TILTAK_AKTIVITET_TYPE,
+    UTDANNING_AKTIVITET_TYPE,
+} from '../constant';
+
 type StringOrNull = string | null;
 //aktivitetType definisjonen bor også i .\const som *_AKTIVITET_TYPE finens det noen smartere måte å gjøre dette på?
 export type AktivitetType =
-    | 'EGEN'
-    | 'STILLING'
-    | 'TILTAKSAKTIVITET'
-    | 'GRUPPEAKTIVITET'
-    | 'UTDANNINGSAKTIVITET'
-    | 'SOKEAVTALE'
-    | 'IJOBB'
-    | 'BEHANDLING'
-    | 'MOTE'
-    | 'SAMTALEREFERAT'
-    | 'REKRUTTERINGSBISTAND';
+    | typeof EGEN_AKTIVITET_TYPE
+    | typeof STILLING_AKTIVITET_TYPE
+    | typeof TILTAK_AKTIVITET_TYPE
+    | typeof GRUPPE_AKTIVITET_TYPE
+    | typeof UTDANNING_AKTIVITET_TYPE
+    | typeof SOKEAVTALE_AKTIVITET_TYPE
+    | typeof IJOBB_AKTIVITET_TYPE
+    | typeof BEHANDLING_AKTIVITET_TYPE
+    | typeof MOTE_TYPE
+    | typeof SAMTALEREFERAT_TYPE
+    | typeof STILLING_FRA_NAV_TYPE;
+
 //aktivitetStatusd efinisjonen bor også i .\const som STATUS_*
 export type AktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
@@ -78,7 +93,7 @@ export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
     beskrivelse: string;
 }
 
-export interface RekrutteringsbistandAktivitet extends AktivitetRequiredProps {
+export interface StillingFraNavAktivitet extends AktivitetRequiredProps {
     arbeidsgiver: string;
     arbeidssted: string;
     kontaktperson: string;

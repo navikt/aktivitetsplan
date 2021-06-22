@@ -5,6 +5,7 @@ import {
     GRUPPE_AKTIVITET_TYPE,
     STATUS_AVBRUTT,
     STATUS_FULLFOERT,
+    STILLING_FRA_NAV_TYPE,
     TILTAK_AKTIVITET_TYPE,
     UTDANNING_AKTIVITET_TYPE,
 } from '../../../../constant';
@@ -41,7 +42,7 @@ const AvtaltContainerNy = (props: Props) => {
     const harForhaandsorientering = erArenaAktivitet ? aktivitet.forhaandsorientering : avtalt;
 
     const skalViseAvtaltFormKonteiner =
-        !harForhaandsorientering && erVeileder && aktivAktivitet && type !== 'REKRUTTERINGSBISTAND';
+        !harForhaandsorientering && erVeileder && aktivAktivitet && type !== STILLING_FRA_NAV_TYPE;
 
     if (!skalViseForhondsorentering && !skalViseAvtaltFormKonteiner && !skalViseSattTilAvtalt) {
         return null;

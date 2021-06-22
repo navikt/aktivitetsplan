@@ -9,7 +9,7 @@ export const aktivitetTypeMap = {
     BEHANDLING: 'Behandling',
     MOTE: 'Møte med NAV',
     SAMTALEREFERAT: 'Samtalereferat',
-    REKRUTTERINGSBISTAND: 'Stilling fra nav',
+    STILLING_FRA_NAV: 'Stilling fra nav',
 };
 
 export const aktivitetStatusMap = {

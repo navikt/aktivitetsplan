@@ -285,7 +285,7 @@ const testAktiviteter = !visTestAktiviteter()
               id: '53498574398',
               tittel: 'Servitør',
               lenke: 'www.nav.no',
-              type: 'REKRUTTERINGSBISTAND',
+              type: 'STILLING_FRA_NAV',
               status: 'PLANLAGT',
               opprettetDato: '2020-05-31T10:46:51.622+01:00',
               endretDato: '2018-09-30T10:46:51.622+01:00',
