@@ -280,6 +280,23 @@ const testAktiviteter = !visTestAktiviteter()
               type: 'SAMTALEREFERAT',
               versjon: '1',
           }),
+          wrapAktivitet({
+              versjon: '5345435',
+              id: '53498574398',
+              tittel: 'Servitør',
+              lenke: 'www.nav.no',
+              type: 'STILLING_FRA_NAV',
+              status: 'PLANLAGT',
+              opprettetDato: '2020-05-31T10:46:51.622+01:00',
+              endretDato: '2018-09-30T10:46:51.622+01:00',
+              endretAv: 'z990207',
+              historisk: false,
+              arbeidsgiver: 'Havsalt AS',
+              kontaktperson: 'Vidar Vidarsen,\newline NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no1',
+              arbeidssted: 'Kristiansand',
+              lagtInnAv: 'NAV',
+              transaksjonsType: 'OPPRETTET',
+          }),
       ];
 
 const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
