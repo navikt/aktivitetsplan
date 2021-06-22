@@ -40,7 +40,8 @@ const AvtaltContainerNy = (props: Props) => {
     const aktivAktivitet = !historisk && underOppfolging && status !== STATUS_FULLFOERT && status !== STATUS_AVBRUTT;
     const harForhaandsorientering = erArenaAktivitet ? aktivitet.forhaandsorientering : avtalt;
 
-    const skalViseAvtaltFormKonteiner = !harForhaandsorientering && erVeileder && aktivAktivitet;
+    const skalViseAvtaltFormKonteiner =
+        !harForhaandsorientering && erVeileder && aktivAktivitet && type !== 'REKRUTTERINGSBISTAND';
 
     if (!skalViseForhondsorentering && !skalViseAvtaltFormKonteiner && !skalViseSattTilAvtalt) {
         return null;
