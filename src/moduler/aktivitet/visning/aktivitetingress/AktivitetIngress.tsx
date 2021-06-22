@@ -34,12 +34,12 @@ type Props = {
     aktivitetstype: AktivitetType;
 };
 
-function AktivitetIngress({ aktivitetstype }: Props) {
+const AktivitetIngress = ({ aktivitetstype }: Props) => {
     return (
         <section className="aktivitetingress">
             <Tekstomrade className="aktivitetingress__tekst">{aktivitetingress[aktivitetstype]}</Tekstomrade>
         </section>
     );
-}
+};
 
 export default AktivitetIngress;
