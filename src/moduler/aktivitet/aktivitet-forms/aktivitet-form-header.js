@@ -3,7 +3,7 @@ import PT from 'prop-types';
 import React from 'react';
 
 import * as AppPT from '../../../proptypes';
-import AktivitetIngress from '../visning/aktivitetingress/aktivitetingress';
+import AktivitetIngress from '../visning/aktivitetingress/AktivitetIngress';
 
 function AktivitetFormHeader({ tittel, aktivitetsType }) {
     return (
