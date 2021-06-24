@@ -9,7 +9,7 @@ export const AktivitetvisningIkkeFunnet = () => {
         <ModalContainer>
             <ModalHeader className={styles.header} />
             <AlertStripeFeil className={styles.feilmelding}>
-                Noe er galt. Denne aktiviteten finnes ikke i aktivitetsplanen din.
+                Denne aktiviteten finnes ikke i aktivitetsplanen din
             </AlertStripeFeil>
         </ModalContainer>
     );
