@@ -7,6 +7,7 @@ import {
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
+    STILLING_FRA_NAV_TYPE,
 } from '../../../../constant';
 import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
@@ -19,6 +20,7 @@ import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
 import DeleLinje from '../delelinje/delelinje';
 import styles from './AktivitetinformasjonVisning.module.less';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
+import { MeldInteresseForStillingen } from './MeldInteresseForStilling';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (
@@ -75,6 +77,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
             <div className={styles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
+            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE ? <MeldInteresseForStillingen /> : null}
             <DeleLinje />
         </div>
     );
