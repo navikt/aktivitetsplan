@@ -77,7 +77,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
             <div className={styles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE ? <MeldInteresseForStillingen /> : null}
+            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && <MeldInteresseForStillingen />}
             <DeleLinje />
         </div>
     );
