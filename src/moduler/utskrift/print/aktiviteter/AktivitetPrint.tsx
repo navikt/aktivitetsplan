@@ -3,25 +3,13 @@ import React from 'react';
 
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
+import { aktivitetTypeMap } from '../../../../utils/textMappers';
 import AvtaltMarkering from '../../../aktivitet/avtalt-markering/AvtaltMarkering';
 import SokeStatusEtikett from '../../../aktivitet/etikett/SokeStatusEtikett';
 import Aktivitetsdetaljer from '../../../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
 import { DialogPrint } from '../dialoger';
 import AktivitetReferat from './AktivitetReferat';
 import ForhaandsorienteringPrint from './ForhaandsorienteringPrint';
-
-const typeMap = {
-    EGEN: 'Jobbrettet egenaktivitet',
-    STILLING: 'Stilling',
-    TILTAKSAKTIVITET: 'Tiltak gjennom NAV',
-    GRUPPEAKTIVITET: 'Gruppeaktivitet',
-    UTDANNINGSAKTIVITET: 'Utdanning',
-    SOKEAVTALE: 'Jobbsøking',
-    IJOBB: 'Jobb jeg har nå',
-    BEHANDLING: 'Behandling',
-    MOTE: 'Møte med NAV',
-    SAMTALEREFERAT: 'Samtalereferat',
-};
 
 interface Props {
     aktivitet: Aktivitet;
@@ -35,7 +23,7 @@ const AktivitetPrint = (props: Props) => {
 
     return (
         <div key={id} className="printmodal-body__statusgruppe">
-            <p className="printmodal-body__statusgruppe--type">{typeMap[type]}</p>
+            <p className="printmodal-body__statusgruppe--type">{aktivitetTypeMap[type]}</p>
             <Undertittel tag="h2" className="printmodal-body__statusgruppe--overskrift">
                 {tittel}
             </Undertittel>

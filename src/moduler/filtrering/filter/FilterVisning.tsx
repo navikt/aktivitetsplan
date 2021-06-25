@@ -39,21 +39,23 @@ export type Filter = AvtaltFilterType | StatusFilterType | AktiviteFilterType | 
 interface FilterVisningTypes {
     harAktiviteter: boolean;
     filter: Filter;
-    filterTittel: string;
-    filterTekst: string;
+    tekst: string;
     metrikkNavn: string;
     doToggleFunction: (key: string) => void;
     className?: string;
+    textMapper: any;
 }
 
-//TODO: Refaktorer. Filter er ikke bare et objekt hvor den boolske verdien bestemmer om filteret er påskrudd eller ikke, det sier også noe om selve filtercheckboksen skal vises eller ikke(ved FilterTypet noen FilterTypev propertiene kan mangle fra objektet).
+//TODO: Refaktorer. Denne er bare konvertert til ts i forsøk på å gjøre det mulig å forstå hvordan den fungerer.
+// Filter er ikke bare et objekt hvor den boolske verdien bestemmer om filteret er påskrudd eller ikke,
+// det sier også noe om selve filtercheckboksen skal vises eller ikke(ved at noen av Filter propertiene kan mangle fra objektet).
 const FilterVisning = (props: FilterVisningTypes) => {
-    const { harAktiviteter, filter, filterTittel, filterTekst, metrikkNavn, doToggleFunction, className } = props;
+    const { harAktiviteter, filter, tekst, metrikkNavn, doToggleFunction, className, textMapper } = props;
 
     const checkboxes = Object.keys(filter).map((nokkel, i) => (
         <FilterCheckbox
             key={i}
-            filterTekst={filterTekst}
+            filterTekst={textMapper[nokkel]}
             filter={filter}
             nokkel={nokkel}
             metrikkNavn={metrikkNavn}
@@ -64,7 +66,7 @@ const FilterVisning = (props: FilterVisningTypes) => {
     return (
         <VisibleIfDiv visible={harAktiviteter} className={classNames(className, 'filter')}>
             <SkjemaGruppe>
-                <Undertittel className="filter__tittel">{filterTittel}</Undertittel>
+                <Undertittel className="filter__tittel">{tekst}</Undertittel>
                 {checkboxes}
             </SkjemaGruppe>
         </VisibleIfDiv>

@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { AVTALT_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { avtaltMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetAvtaltMedNav } from './filter-reducer';
 import { selectAktivitetAvtaltMedNavFilter } from './filter-selector';
@@ -13,10 +14,11 @@ function AvtaltmedNavFilter({ harAvtaltAktivitet, avtaltAktivitet, doToggleAktiv
         <FilterVisningsKomponent
             harAktiviteter={harAvtaltAktivitet}
             filter={avtaltAktivitet}
-            filterTittel="Avtalt aktivitet"
+            tekst="Avtalt aktivitet"
             filterTekst="aktivitet."
             metrikkNavn={AVTALT_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetAvtaltMedNav}
+            textMapper={avtaltMapper}
         />
     );
 }

@@ -25,6 +25,7 @@ spec:
   ingresses:
     - https://aktivitetsplan-{{urlmiljo}}.nav.no
     - https://aktivitetsplan-{{urlmiljo}}.dev.nav.no
+    - https://aktivitetsplan.dev.nav.no
 
   vault:
     enabled: true

@@ -14,6 +14,7 @@ import { selectAktivitetMedId, selectKanEndreAktivitetDetaljer } from '../aktivi
 import { selectArenaAktivitetStatus } from '../arena-aktivitet-selector';
 import { hentArenaAktiviteter } from '../arena-aktiviteter-reducer';
 import Aktivitetvisning from './Aktivitetvisning';
+import { AktivitetvisningIkkeFunnet } from './AktivitetvisningIkkeFunnet';
 import AktivitetvisningModal from './AktivitetvisningModal';
 
 class AktivitetvisningContainer extends Component {
@@ -42,7 +43,11 @@ class AktivitetvisningContainer extends Component {
         return (
             <DirtyProvider>
                 <AktivitetvisningModal aktivitet={valgtAktivitet} {...props}>
-                    <Aktivitetvisning aktivitet={valgtAktivitet} {...props} />
+                    {valgtAktivitet ? (
+                        <Aktivitetvisning aktivitet={valgtAktivitet} {...props} />
+                    ) : (
+                        <AktivitetvisningIkkeFunnet />
+                    )}
                 </AktivitetvisningModal>
             </DirtyProvider>
         );

@@ -10,12 +10,13 @@ import MoteDetaljer from '../detaljer/mote-detaljer';
 import SamtalereferatDetaljer from '../detaljer/samtalereferat-detaljer';
 import SokeDetaljer from '../detaljer/soke-detaljer';
 import StillingDetaljer from '../detaljer/stilling-detaljer';
+import { StillingFraNavDetaljer } from '../detaljer/StillingFraNavDetaljer';
 import TiltakDetaljer from '../detaljer/tiltak-detaljer';
 import UtdanningDetaljer from '../detaljer/utdanning-detaljer';
 
 function Aktivitetsdetaljer({ valgtAktivitet }) {
     return (
-        <section className="aktivitetvisning__detaljer aktivitetsdetaljer">
+        <section>
             <BehandlingsDetaljer aktivitet={valgtAktivitet} />
             <EgenAktivitetDetaljer aktivitet={valgtAktivitet} />
             <GruppeDetaljer aktivitet={valgtAktivitet} />
@@ -26,6 +27,7 @@ function Aktivitetsdetaljer({ valgtAktivitet }) {
             <StillingDetaljer aktivitet={valgtAktivitet} />
             <TiltakDetaljer aktivitet={valgtAktivitet} />
             <UtdanningDetaljer aktivitet={valgtAktivitet} />
+            <StillingFraNavDetaljer aktivitet={valgtAktivitet} />
         </section>
     );
 }

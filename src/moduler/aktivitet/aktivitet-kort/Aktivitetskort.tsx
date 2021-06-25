@@ -6,6 +6,7 @@ import { STATUS } from '../../../api/utils';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import LinkAsDiv from '../../../felles-komponenter/LinkAsDiv';
 import { aktivitetRoute } from '../../../routes';
+import { aktivitetTypeMap } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
@@ -14,7 +15,7 @@ import styles from './Aktivitetskort.module.less';
 import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
 import AktivitetskortTillegg from './AktivitetskortTillegg';
 import Aktivitetskorttittel from './AktivitetskortTittel';
-import Aktivitetstype, { getType } from './Aktivitetstype';
+import Aktivitetstype from './Aktivitetstype';
 import Arbeidsgiver from './Arbeidsgiver';
 import SokeAvtaleAntall from './SokeAvtaleAntall';
 
@@ -46,7 +47,7 @@ const Aktivitetskort = (props: Props) => {
 
     const headerId = `aktivitetskort__header__${id}`;
     const datoId = `aktivitetskort__dato__${id}`;
-    const ariaLabel = `${getType(type)}: ${aktivitet.tittel}`;
+    const ariaLabel = `${aktivitetTypeMap[type]}: ${aktivitet.tittel}`;
 
     return (
         <LinkAsDiv

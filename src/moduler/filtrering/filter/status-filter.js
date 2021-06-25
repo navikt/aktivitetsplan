@@ -10,6 +10,7 @@ import {
     STATUS_PLANLAGT,
 } from '../../../constant';
 import { STATUS_FILER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { aktivitetStatusMap } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsStatus } from './filter-reducer';
 import { selectAktivitetStatusFilter } from './filter-selector';
@@ -28,11 +29,12 @@ function StatusFilter({ harAktivitetStatus, sortedAktivitetStatus, doToggleAktiv
         <FilterVisning
             harAktiviteter={harAktivitetStatus}
             filter={sortedAktivitetStatus}
-            filterTittel="Status"
+            tekst="Status"
             filterTekst="aktivitet.status."
             metrikkNavn={STATUS_FILER_METRIKK}
             doToggleFunction={doToggleAktivitetsStatus}
             className={className}
+            textMapper={aktivitetStatusMap}
         />
     );
 }
