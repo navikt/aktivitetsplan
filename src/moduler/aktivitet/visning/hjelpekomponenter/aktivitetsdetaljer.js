@@ -16,7 +16,7 @@ import UtdanningDetaljer from '../detaljer/utdanning-detaljer';
 
 function Aktivitetsdetaljer({ valgtAktivitet }) {
     return (
-        <section className="aktivitetvisning__detaljer aktivitetsdetaljer">
+        <section>
             <BehandlingsDetaljer aktivitet={valgtAktivitet} />
             <EgenAktivitetDetaljer aktivitet={valgtAktivitet} />
             <GruppeDetaljer aktivitet={valgtAktivitet} />

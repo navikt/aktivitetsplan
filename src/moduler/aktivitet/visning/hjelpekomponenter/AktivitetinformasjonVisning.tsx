@@ -7,6 +7,7 @@ import {
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
+    STILLING_FRA_NAV_TYPE,
 } from '../../../../constant';
 import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
@@ -17,7 +18,9 @@ import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-m
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
 import DeleLinje from '../delelinje/delelinje';
+import styles from './AktivitetinformasjonVisning.module.less';
 import Aktivitetsdetaljer from './aktivitetsdetaljer';
+import { MeldInteresseForStillingen } from './MeldInteresseForStilling';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (
@@ -46,8 +49,8 @@ const AktivitetinformasjonVisning = (props: Props) => {
 
     return (
         <div>
-            <div className="aktivitetvisning__underseksjon">
-                <div className="aktivitetvisning__header">
+            <div className={styles.underseksjon}>
+                <div className={styles.header}>
                     <Sidetittel id="modal-aktivitetsvisning-header" className="softbreak">
                         {tittel}
                     </Sidetittel>
@@ -63,17 +66,18 @@ const AktivitetinformasjonVisning = (props: Props) => {
                     </InternLenke>
                 </div>
                 <VisningIngress aktivitetstype={type} />
-                <AvtaltMarkering hidden={!avtalt} className="aktivitetvisning__etikett" />
-                <IkkeDeltMarkering visible={ikkeDelt} className="aktivitetvisning__etikett" />
+                <AvtaltMarkering hidden={!avtalt} className={styles.etikett} />
+                <IkkeDeltMarkering visible={ikkeDelt} className={styles.etikett} />
             </div>
             <AvtaltContainerNy
                 underOppfolging={underOppfolging}
                 aktivitet={valgtAktivitet}
-                className="aktivitetvisning__underseksjon"
+                className={styles.underseksjon}
             />
-            <div className="aktivitetvisning__underseksjon">
+            <div className={styles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
+            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && <MeldInteresseForStillingen />}
             <DeleLinje />
         </div>
     );

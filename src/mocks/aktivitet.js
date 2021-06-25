@@ -292,7 +292,7 @@ const testAktiviteter = !visTestAktiviteter()
               endretAv: 'z990207',
               historisk: false,
               arbeidsgiver: 'Havsalt AS',
-              kontaktperson: 'Vidar Vidarsen,\newline NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no1',
+              kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
               arbeidssted: 'Kristiansand',
               lagtInnAv: 'NAV',
               transaksjonsType: 'OPPRETTET',

@@ -46,10 +46,6 @@
         margin-top: 0.5rem;
     }
 
-    &__etikett {
-        .blokk-s();
-    }
-
     &__detaljer {
         display: flex;
         flex-direction: row;
@@ -104,17 +100,6 @@
     }
 }
 
-@media (min-width: @screen-sm-min) {
-    .aktivitetvisning {
-        &__underseksjon {
-            .col-xs-4 {
-                float: left;
-                width: 33.33%;
-            }
-        }
-    }
-}
-
 @media (max-width: @screen-sm-max) {
     .aktivitetvisning {
         .endreknapp {
@@ -125,10 +110,6 @@
 
 @media (min-width: @screen-md-min) {
     .aktivitetvisning {
-        &__underseksjon {
-            padding: 0 2rem;
-        }
-
         &__detaljer {
             width: 32rem;
         }
