@@ -6,6 +6,11 @@ import {
     MOTE_TYPE,
     SAMTALEREFERAT_TYPE,
     SOKEAVTALE_AKTIVITET_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_BRUKER_ER_INTRESSERT,
+    STATUS_FULLFOERT,
+    STATUS_GJENNOMFOERT,
+    STATUS_PLANLAGT,
     STILLING_AKTIVITET_TYPE,
     STILLING_FRA_NAV_TYPE,
     TILTAK_AKTIVITET_TYPE,
@@ -13,7 +18,7 @@ import {
 } from '../constant';
 
 type StringOrNull = string | null;
-//aktivitetType definisjonen bor også i .\const som *_AKTIVITET_TYPE finens det noen smartere måte å gjøre dette på?
+
 export type AktivitetType =
     | typeof EGEN_AKTIVITET_TYPE
     | typeof STILLING_AKTIVITET_TYPE
@@ -27,8 +32,13 @@ export type AktivitetType =
     | typeof SAMTALEREFERAT_TYPE
     | typeof STILLING_FRA_NAV_TYPE;
 
-//aktivitetStatusd efinisjonen bor også i .\const som STATUS_*
-export type AktivitetStatus = 'AVBRUTT' | 'FULLFORT' | 'GJENNOMFORES' | 'PLANLAGT' | 'BRUKER_ER_INTERESSERT';
+export type AktivitetStatus =
+    | typeof STATUS_AVBRUTT
+    | typeof STATUS_FULLFOERT
+    | typeof STATUS_GJENNOMFOERT
+    | typeof STATUS_PLANLAGT
+    | typeof STATUS_BRUKER_ER_INTRESSERT;
+
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
 export enum TransaksjonsType {
     OPPRETTET = 'OPPRETTET',

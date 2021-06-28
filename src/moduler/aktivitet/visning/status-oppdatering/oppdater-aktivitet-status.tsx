@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../../constant';
-import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, AktivitetStatus } from '../../../../datatypes/aktivitetTypes';
 import { flyttetAktivitetMetrikk } from '../../../../felles-komponenter/utils/logging';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { flyttAktivitetMedBegrunnelse } from '../../aktivitet-actions';
@@ -21,7 +21,11 @@ const useDisableStatusEndring = (aktivitet: Aktivitet) => {
     return lasterAktivitet || !underOppfolging || !kanEndreAktivitet;
 };
 
-const lagreStatusEndringer = (dispatch: Dispatch, values: any, aktivitet: Aktivitet) => {
+export const lagreStatusEndringer = (
+    dispatch: Dispatch,
+    values: { aktivitetstatus: AktivitetStatus; begrunnelse?: string },
+    aktivitet: Aktivitet
+) => {
     if (values.aktivitetstatus === aktivitet.status) {
         return Promise.resolve();
     }

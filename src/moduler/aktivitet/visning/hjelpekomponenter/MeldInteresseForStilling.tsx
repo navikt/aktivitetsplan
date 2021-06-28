@@ -1,24 +1,57 @@
+import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { ReactComponent as VarselIkon } from '../../../../Ikoner/advarsel-ikon.svg';
+import { STATUS_AVBRUTT, STATUS_GJENNOMFOERT } from '../../../../constant';
+import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
+import { lagreStatusEndringer } from '../status-oppdatering/oppdater-aktivitet-status';
 import detaljVisningStyles from './AktivitetinformasjonVisning.module.less';
+import { CustomAlertstripe } from './CustomAlertstripe';
 import styles from './MeldInteresseForStillingen.module.less';
 
 enum SvarType {
-    JA,
-    NEI,
+    JA = 'ja',
+    NEI = 'nei',
 }
 
-export const MeldInteresseForStillingen = () => {
-    const [svar, setSvar] = useState<string>('');
+interface PropTypes {
+    aktivitet: Aktivitet;
+}
+
+export const MeldInteresseForStillingen = ({ aktivitet }: PropTypes) => {
+    const [valgtAlternativ, setValgtAlternativ] = useState<SvarType | undefined>(undefined);
+    const [infoTekst, setInfoTekst] = useState<string | undefined>(undefined);
+    const dispatch = useDispatch();
 
     const onChange = (event: any, value: string) => {
-        setSvar(value);
+        setValgtAlternativ(value as SvarType);
+
+        if (value === SvarType.JA) {
+            setInfoTekst('Stillingen flyttes til "Gjennomfører"');
+        }
+        if (value === SvarType.NEI) {
+            setInfoTekst('Stillingen flyttes til "Avbrutt"');
+        }
     };
+
+    const onClick = () => {
+        //Her skal vi lage et eget endepunkt som ikke finnes enda
+        if (valgtAlternativ === SvarType.JA) {
+            lagreStatusEndringer(dispatch, { aktivitetstatus: STATUS_GJENNOMFOERT }, aktivitet);
+        } else if (valgtAlternativ === SvarType.NEI) {
+            lagreStatusEndringer(dispatch, { aktivitetstatus: STATUS_AVBRUTT }, aktivitet);
+        }
+    };
+
+    const HeaderMedIngress = () => (
+        <>
+            <CustomAlertstripe tekst="Er du interessert i denne stillingen?" />
+            <p className={styles.ingress}>Du bestemmer selv om nav skal dele CV-en din på denne stillingen</p>
+        </>
+    );
 
     return (
         <>
@@ -26,30 +59,32 @@ export const MeldInteresseForStillingen = () => {
             <div className={detaljVisningStyles.underseksjon}>
                 <RadioPanelGruppe
                     name="MeldInteresseForStillingen"
-                    legend={
-                        <div className={styles.overskrift}>
-                            <VarselIkon className={styles.varselIkon} />
-                            <Element className={styles.tekst}>Er du interessert i denne stillingen?</Element>
-                        </div>
-                    }
+                    legend={<HeaderMedIngress />}
                     radios={[
                         {
                             label: 'Ja, og NAV kan dele CV-en min med arbeidsgiver',
-                            value: 'ja',
+                            value: SvarType.JA.toString(),
                             id: SvarType.JA.toString(),
                         },
                         {
                             label: 'Nei, og jeg vil ikke at NAV skal dele CV-en min med arbeidsgiveren',
-                            value: 'nei',
+                            value: SvarType.NEI.toString(),
                             id: SvarType.NEI.toString(),
                         },
                     ]}
-                    checked={svar}
+                    checked={valgtAlternativ?.toString()}
                     onChange={onChange}
                 />
-                <Hovedknapp mini className={styles.knapp}>
-                    Lagre
-                </Hovedknapp>
+                {infoTekst && (
+                    <AlertStripe children={infoTekst} type="info" form="inline" className={styles.infoboks} />
+                )}
+                <Hovedknapp
+                    children="Lagre"
+                    mini
+                    className={styles.knapp}
+                    onClick={onClick}
+                    disabled={!valgtAlternativ}
+                />
             </div>
         </>
     );
