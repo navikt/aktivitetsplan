@@ -10,11 +10,9 @@ interface Props {
     textClassName?: string;
 }
 
-export const CustomAlertstripe = (props: Props) => {
-    return (
-        <div className={props.sectionClassName ? props.sectionClassName : styles.overskrift}>
-            <VarselIkon />
-            <Element className={props.textClassName ? props.textClassName : styles.tekst}>{props.tekst}</Element>
-        </div>
-    );
-};
+export const CustomAlertstripe = (props: Props) => (
+    <div className={props.sectionClassName ? props.sectionClassName : styles.overskrift}>
+        <VarselIkon />
+        <Element className={props.textClassName ? props.textClassName : styles.tekst}>{props.tekst}</Element>
+    </div>
+);

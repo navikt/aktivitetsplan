@@ -29,15 +29,16 @@ export const MeldInteresseForStillingen = ({ aktivitet }: PropTypes) => {
     const onChange = (event: any, value: string) => {
         setValgtAlternativ(value as SvarType);
 
-        if (value == SvarType.JA) {
+        if (value === SvarType.JA) {
             setInfoTekst('Stillingen flyttes til "Gjennomfører"');
         }
-        if (value == SvarType.NEI) {
+        if (value === SvarType.NEI) {
             setInfoTekst('Stillingen flyttes til "Avbrutt"');
         }
     };
 
     const onClick = () => {
+        //Her skal vi lage et eget endepunkt som ikke finnes enda
         if (valgtAlternativ === SvarType.JA) {
             lagreStatusEndringer(dispatch, { aktivitetstatus: STATUS_GJENNOMFOERT }, aktivitet);
         } else if (valgtAlternativ === SvarType.NEI) {
