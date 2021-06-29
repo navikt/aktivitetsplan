@@ -1,7 +1,13 @@
 import { createSelector } from 'reselect';
 
 import { STATUS, aggregerStatus } from '../../api/utils';
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import {
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+    STILLING_FRA_NAV_TYPE,
+} from '../../constant';
 import { Aktivitet } from '../../datatypes/aktivitetTypes';
 import { aktivitetFilter, selectDatoErIPeriode } from '../filtrering/filter/filter-utils';
 import { selectErVeileder, selectIdentitetStatus } from '../identitet/identitet-selector';
@@ -68,6 +74,7 @@ export const selectKanEndreAktivitetDetaljer = (state: any, aktivitet: Aktivitet
     return (
         selectKanEndreAktivitetStatus(state, aktivitet) &&
         type !== SAMTALEREFERAT_TYPE &&
+        type !== STILLING_FRA_NAV_TYPE &&
         // @ts-ignore
         (avtalt !== true || !!window.appconfig.TILLAT_SET_AVTALT)
     );
