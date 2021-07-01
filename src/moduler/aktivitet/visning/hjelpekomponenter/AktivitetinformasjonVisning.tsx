@@ -66,8 +66,8 @@ const AktivitetinformasjonVisning = (props: Props) => {
                     </InternLenke>
                 </div>
                 <VisningIngress aktivitetstype={type} />
-                <AvtaltMarkering hidden={!avtalt} className={styles.etikett} />
-                <IkkeDeltMarkering visible={ikkeDelt} className={styles.etikett} />
+                <AvtaltMarkering hidden={!avtalt} />
+                <IkkeDeltMarkering visible={ikkeDelt} />
             </div>
             <AvtaltContainerNy
                 underOppfolging={underOppfolging}
