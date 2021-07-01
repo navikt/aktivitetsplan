@@ -6,7 +6,7 @@ import { Dialog } from '../../../../datatypes/dialogTypes';
 import { aktivitetTypeMap } from '../../../../utils/textMappers';
 import AvtaltMarkering from '../../../aktivitet/avtalt-markering/AvtaltMarkering';
 import SokeStatusEtikett from '../../../aktivitet/etikett/SokeStatusEtikett';
-import Aktivitetsdetaljer from '../../../aktivitet/visning/hjelpekomponenter/aktivitetsdetaljer';
+import Aktivitetsdetaljer from '../../../aktivitet/visning/detaljer/aktivitetsdetaljer';
 import { DialogPrint } from '../dialoger';
 import AktivitetReferat from './AktivitetReferat';
 import ForhaandsorienteringPrint from './ForhaandsorienteringPrint';

@@ -15,11 +15,12 @@ import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
+import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
 import DeleLinje from '../delelinje/delelinje';
+import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
 import styles from './AktivitetinformasjonVisning.module.less';
-import Aktivitetsdetaljer from './aktivitetsdetaljer';
 import { MeldInteresseForStillingen } from './MeldInteresseForStilling';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
@@ -49,7 +50,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
 
     return (
         <div>
-            <div className={styles.underseksjon}>
+            <div className={aktivitetsvisningStyles.underseksjon}>
                 <div className={styles.header}>
                     <Sidetittel id="modal-aktivitetsvisning-header" className="softbreak">
                         {tittel}
@@ -72,9 +73,9 @@ const AktivitetinformasjonVisning = (props: Props) => {
             <AvtaltContainerNy
                 underOppfolging={underOppfolging}
                 aktivitet={valgtAktivitet}
-                className={styles.underseksjon}
+                className={aktivitetsvisningStyles.underseksjon}
             />
-            <div className={styles.underseksjon}>
+            <div className={aktivitetsvisningStyles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
             {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && <MeldInteresseForStillingen aktivitet={valgtAktivitet} />}

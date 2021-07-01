@@ -4,6 +4,7 @@ import { GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE 
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import { trengerBegrunnelse } from '../aktivitet-util';
+import styles from './Aktivitetsvisning.module.less';
 import AvtaltContainerGammel from './avtalt-container-gammel/AvtaltContainer-gammel';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
@@ -33,10 +34,10 @@ function Aktivitetvisning(props: Props) {
     return (
         <div>
             <ModalContainer className="aktivitetvisning">
-                <VarslingBoks className="aktivitetvisning__underseksjon" aktivitet={aktivitet} />
+                <VarslingBoks className={styles.underseksjon} aktivitet={aktivitet} />
 
                 <BegrunnelseBoks
-                    className="aktivitetvisning__underseksjon"
+                    className={styles.underseksjon}
                     begrunnelse={aktivitet.avsluttetKommentar}
                     visible={visBegrunnelse}
                 />
@@ -51,7 +52,7 @@ function Aktivitetvisning(props: Props) {
                 <AvtaltContainerGammel
                     underOppfolging={underOppfolging}
                     aktivitet={aktivitet}
-                    className="aktivitetvisning__underseksjon"
+                    className={styles.underseksjon}
                 />
 
                 <ReferatContainer aktivitet={aktivitet} />

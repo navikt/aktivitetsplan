@@ -6,11 +6,12 @@ import React from 'react';
 
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalFooter from '../../../felles-komponenter/modal/ModalFooter';
+import aktivitetvisningStyles from '../../aktivitet/visning/Aktivitetsvisning.module.less';
 
 function VisAdvarsel({ onSubmit, headerTekst }) {
     return (
         <div>
-            <ModalContainer className="aktivitetvisning__underseksjon">
+            <ModalContainer className={aktivitetvisningStyles.underseksjon}>
                 <Innholdstittel>{headerTekst}</Innholdstittel>
                 <AlertStripe type="advarsel">
                     Når du lagrer, blir aktiviteten låst og du kan ikke lenger endre innholdet.
