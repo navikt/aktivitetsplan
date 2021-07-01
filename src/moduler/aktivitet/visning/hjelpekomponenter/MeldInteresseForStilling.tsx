@@ -6,9 +6,9 @@ import { useDispatch } from 'react-redux';
 
 import { STATUS_AVBRUTT, STATUS_GJENNOMFOERT } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import detaljVisningStyles from './../Aktivitetsvisning.module.less';
 import DeleLinje from '../delelinje/delelinje';
 import { lagreStatusEndringer } from '../status-oppdatering/oppdater-aktivitet-status';
-import detaljVisningStyles from './AktivitetinformasjonVisning.module.less';
 import { CustomAlertstripe } from './CustomAlertstripe';
 import styles from './MeldInteresseForStillingen.module.less';
 

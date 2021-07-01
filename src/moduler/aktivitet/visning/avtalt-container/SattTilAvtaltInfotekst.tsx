@@ -2,6 +2,7 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
+import aktivitetvisningStyles from '../Aktivitetsvisning.module.less';
 import { useKanSendeVarsel } from './avtaltHooks';
 
 const getText = (
@@ -43,7 +44,7 @@ const SattTilAvtaltInfotekst = (props: Props) => {
     const text = getText(kanSendeVarsel, mindreEnnSyvDagerTil, harTilDato, forhaandsorienteringstype);
 
     return (
-        <div className="aktivitetvisning__underseksjon">
+        <div className={aktivitetvisningStyles.underseksjon}>
             <AlertStripeSuksess>{text}</AlertStripeSuksess>
         </div>
     );

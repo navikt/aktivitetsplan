@@ -1,4 +1,5 @@
 import { Values } from '@nutgaard/use-formstate';
+import classNames from 'classnames';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,6 +8,7 @@ import { Aktivitet, Forhaandsorientering, ForhaandsorienteringType } from '../..
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
+import aktivitetvisningStyles from './../../Aktivitetsvisning.module.less';
 import DeleLinje from '../../delelinje/delelinje';
 import { useSendAvtaltMetrikker } from '../avtaltHooks';
 import { ForhaandsorienteringDialogProps, getForhaandsorienteringText } from '../utilsForhaandsorientering';
@@ -49,7 +51,7 @@ const AvtaltFormContainer = (props: Props) => {
         <>
             <DeleLinje />
             <AvtaltForm
-                className="aktivitetvisning__underseksjon avtalt-container"
+                className={classNames(aktivitetvisningStyles.underseksjon, 'avtalt-container')}
                 oppdaterer={bekreftStatus === STATUS.RELOADING}
                 mindreEnnSyvDagerTil={mindreEnnSyvDagerTil}
                 manglerTilDato={!aktivitet.tilDato}
