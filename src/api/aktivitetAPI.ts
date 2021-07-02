@@ -1,4 +1,4 @@
-import { Aktivitet, ArenaAktivitet, Forhaandsorientering } from '../datatypes/aktivitetTypes';
+import { Aktivitet, ArenaAktivitet, Forhaandsorientering, StillingFraNavAktivitet } from '../datatypes/aktivitetTypes';
 import { AKTIVITET_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
 
@@ -28,6 +28,17 @@ export const markerForhaandsorienteringSomLest = (aktivitetId: string, aktivitet
         aktivitetId,
         aktivitetVersion: aktivitetVersjon,
     });
+
+export const oppdaterCvKanDelesSvar = (
+    aktivitetId: string,
+    aktivitetVersjon: string,
+    kanDeles: boolean
+): Promise<StillingFraNavAktivitet> => {
+    return putAsJson(`${AKTIVITET_BASE_URL}/stillingFraNav/kanDeleCV?aktivitetId=${aktivitetId}`, {
+        aktivitetVersjon,
+        kanDeles,
+    });
+};
 
 export const oppdaterAktivitetStatus = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     putAsJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/status`, aktivitet);
