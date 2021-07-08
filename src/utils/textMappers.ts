@@ -9,7 +9,7 @@ export const aktivitetTypeMap = {
     BEHANDLING: 'Behandling',
     MOTE: 'Møte med NAV',
     SAMTALEREFERAT: 'Samtalereferat',
-    STILLING_FRA_NAV: 'Stilling fra nav',
+    STILLING_FRA_NAV: 'Stilling fra NAV',
 };
 
 export const aktivitetStatusMap = {
@@ -21,8 +21,8 @@ export const aktivitetStatusMap = {
 };
 
 export const avtaltMapper = {
-    avtaltMedNav: 'Avtalt med nav',
-    ikkeAvtaltMedNav: 'Ikke avtalt med nav',
+    avtaltMedNav: 'Avtalt med NAV',
+    ikkeAvtaltMedNav: 'Ikke avtalt med NAV',
 };
 
 export const etikettMapper = {
