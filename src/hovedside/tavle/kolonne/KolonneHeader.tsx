@@ -9,7 +9,8 @@ import {
     STATUS_GJENNOMFOERT,
     STATUS_PLANLAGT,
 } from '../../../constant';
-import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/aktivitetsplan-hjelpetekst';
+import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
+import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/AktivitetsplanHjelpetekst';
 
 const mapKlassenavn = (aktivitetStatus: string) => {
     switch (aktivitetStatus) {
@@ -28,7 +29,7 @@ const mapKlassenavn = (aktivitetStatus: string) => {
 };
 
 interface Props {
-    status: string;
+    status: AktivitetStatus;
 }
 
 const KolonneHeader = (props: Props) => {
