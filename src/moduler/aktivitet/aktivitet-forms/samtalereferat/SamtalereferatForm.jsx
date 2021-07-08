@@ -40,7 +40,7 @@ function SamtalereferatForm(props) {
             ...values,
             status: STATUS_GJENNOMFOERT,
             erReferatPublisert: true,
-            avtalt: true,
+            avtalt: false,
         };
         return onSubmit(newValues);
     });
@@ -52,7 +52,7 @@ function SamtalereferatForm(props) {
                 return onSubmit({
                     ...data,
                     status: STATUS_GJENNOMFOERT,
-                    avtalt: true,
+                    avtalt: false,
                 });
             })}
             noValidate
