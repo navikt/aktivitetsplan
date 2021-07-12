@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+import { STATUS_AVBRUTT, STATUS_GJENNOMFOERT } from '../constant';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 import { rndId } from './utils';
 
@@ -296,6 +297,7 @@ const testAktiviteter = !visTestAktiviteter()
               arbeidssted: 'Kristiansand',
               lagtInnAv: 'NAV',
               transaksjonsType: 'OPPRETTET',
+              cvKanDelesData: null,
           }),
       ];
 
@@ -537,7 +539,7 @@ function doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivite
     // Merge de nye attributtene og den originale aktiviteten inn i en ny aktivitet
     const nyAktivitet = {
         ...gammelAktivitet,
-        ...lagNyVersion(nyeAktivitetAttributter),
+        ...lagNyVersion({ ...nyeAktivitetAttributter, versjon: gammelAktivitet.versjon }),
     };
 
     // Legg til ny versjon i historikk
@@ -588,6 +590,20 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
         forhaandsorientering: forhaandsorientering,
         avtalt: true,
         transaksjonsType: 'AVTALT',
+    };
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
+}
+
+export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles }, { aktivitetId }) {
+    const nyeAktivitetAttributter = {
+        status: kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
+        transaksjonsType: 'STATUS_ENDRET',
+        cvKanDelesData: {
+            kanDeles: kanDeles,
+            endretTidspunkt: new Date(),
+            endretAv: bruker ? '843029483' : 'z123',
+            endretAvType: bruker,
+        },
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }

@@ -81,6 +81,14 @@ export function fullforAktivitet(aktivitet, avsluttetKommentar) {
     return flyttAktivitet(nyAktivitet, statuskoder.STATUS_FULLFOERT);
 }
 
+export function oppdaterCVSvar(aktivitetId, aktivitetVersjon, kanDeles) {
+    return doThenDispatch(() => Api.oppdaterCvKanDelesSvar(aktivitetId, aktivitetId, kanDeles), {
+        OK: AT.OPPDATER_CV_SVAR_OK,
+        PENDING: AT.OPPDATER_CV_SVAR_PENDING,
+        FEILET: AT.OPPDATER_CV_SVAR_FEILET,
+    });
+}
+
 export function lagNyAktivitet(aktivitet) {
     return doThenDispatch(() => Api.lagNyAktivitet(aktivitet), {
         OK: AT.OPPRETTET,
