@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Aktivitet, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
+import aktivitetsvisningStyles from '../../Aktivitetsvisning.module.less';
 import DeleLinje from '../../delelinje/delelinje';
 import { useKanSendeVarsel } from '../avtaltHooks';
 import ForhaandsorienteringForm from './ForhaandsorienteringForm';
@@ -26,7 +27,7 @@ const ArenaForhaandsorienteringFormKomponent = (props: Props) => {
     return (
         <>
             <DeleLinje />
-            <div className="aktivitetvisning__underseksjon">
+            <div className={aktivitetsvisningStyles.underseksjon}>
                 <KanIkkeLeggeTilForhaandsorienteringInfotekst merEnnSyvDagerTil={merEnnSyvDagerTil} />
                 <ForhaandsorienteringForm
                     setSendtAtErAvtaltMedNav={setSendtAtErAvtaltMedNav}

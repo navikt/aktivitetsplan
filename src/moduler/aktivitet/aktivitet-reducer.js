@@ -8,6 +8,7 @@ const initalState = {
     fhoLestStatus: STATUS.NOT_STARTED,
     fhoBekreftStatus: STATUS.NOT_STARTED,
     forrigeAktiveAktivitetId: undefined,
+    cvSvarStatus: STATUS.NOT_STARTED,
 };
 
 function nyStateMedOppdatertAktivitet(state, aktivitet, aktivitetData) {
@@ -67,6 +68,12 @@ export default function reducer(state = initalState, action) {
             return nyStateMedOppdatertAktivitet({ ...state, fhoBekreftStatus: STATUS.OK }, data);
         case AT.FHO_BEKREFT_FEILET:
             return { ...state, fhoBekreftStatus: STATUS.ERROR, feil: data };
+        case AT.OPPDATER_CV_SVAR_OK:
+            return nyStateMedOppdatertAktivitet({ ...state, cvSvarStatus: STATUS.OK }, data);
+        case AT.OPPDATER_CV_SVAR_FEILET:
+            return { ...state, cvSvarStatus: STATUS.ERROR, feil: data };
+        case AT.OPPDATER_CV_SVAR_PENDING:
+            return { ...state, cvSvarStatus: STATUS.PENDING };
         default:
             return state;
     }

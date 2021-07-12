@@ -1,4 +1,5 @@
 import useFormstate from '@nutgaard/use-formstate';
+import classNames from 'classnames';
 import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import PT from 'prop-types';
@@ -14,6 +15,7 @@ import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
+import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 
 const FlatKnappVisible = hiddenIfHOC(Flatknapp);
 
@@ -58,7 +60,10 @@ function OppdaterReferatForm(props) {
     });
 
     return (
-        <form onSubmit={state.onSubmit(onSubmit)} className="oppdater-referat aktivitetvisning__underseksjon">
+        <form
+            onSubmit={state.onSubmit(onSubmit)}
+            className={classNames('oppdater-referat', aktivitetsvisningStyles.underseksjon)}
+        >
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
             <Textarea
                 label={label}

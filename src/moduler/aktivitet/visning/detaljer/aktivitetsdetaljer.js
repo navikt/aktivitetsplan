@@ -2,17 +2,17 @@ import PT from 'prop-types';
 import React from 'react';
 
 import * as AppPT from '../../../../proptypes';
-import BehandlingsDetaljer from '../detaljer/behandlings-detaljer';
-import EgenAktivitetDetaljer from '../detaljer/egenAktivitet-detaljer';
-import GruppeDetaljer from '../detaljer/gruppe-detaljer';
-import IJobbDetaljer from '../detaljer/ijob-detaljer';
-import MoteDetaljer from '../detaljer/mote-detaljer';
-import SamtalereferatDetaljer from '../detaljer/samtalereferat-detaljer';
-import SokeDetaljer from '../detaljer/soke-detaljer';
-import StillingDetaljer from '../detaljer/stilling-detaljer';
-import { StillingFraNavDetaljer } from '../detaljer/StillingFraNavDetaljer';
-import TiltakDetaljer from '../detaljer/tiltak-detaljer';
-import UtdanningDetaljer from '../detaljer/utdanning-detaljer';
+import BehandlingsDetaljer from './behandlings-detaljer';
+import EgenAktivitetDetaljer from './egenAktivitet-detaljer';
+import GruppeDetaljer from './gruppe-detaljer';
+import IJobbDetaljer from './ijob-detaljer';
+import MoteDetaljer from './mote-detaljer';
+import SamtalereferatDetaljer from './samtalereferat-detaljer';
+import SokeDetaljer from './soke-detaljer';
+import StillingDetaljer from './stilling-detaljer';
+import { StillingFraNavDetaljer } from './StillingFraNavDetaljer';
+import TiltakDetaljer from './tiltak-detaljer';
+import UtdanningDetaljer from './utdanning-detaljer';
 
 function Aktivitetsdetaljer({ valgtAktivitet }) {
     return (

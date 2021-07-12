@@ -9,18 +9,19 @@ import {
     STILLING_AKTIVITET_TYPE,
     STILLING_FRA_NAV_TYPE,
 } from '../../../../constant';
-import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, AktivitetType, StillingFraNavAktivitet } from '../../../../datatypes/aktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
+import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
+import { DeleCvContainer } from '../dele-cv/DeleCvContainer';
 import DeleLinje from '../delelinje/delelinje';
+import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
 import styles from './AktivitetinformasjonVisning.module.less';
-import Aktivitetsdetaljer from './aktivitetsdetaljer';
-import { MeldInteresseForStillingen } from './MeldInteresseForStilling';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (
@@ -49,7 +50,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
 
     return (
         <div>
-            <div className={styles.underseksjon}>
+            <div className={aktivitetsvisningStyles.underseksjon}>
                 <div className={styles.header}>
                     <Sidetittel id="modal-aktivitetsvisning-header" className="softbreak">
                         {tittel}
@@ -66,18 +67,20 @@ const AktivitetinformasjonVisning = (props: Props) => {
                     </InternLenke>
                 </div>
                 <VisningIngress aktivitetstype={type} />
-                <AvtaltMarkering hidden={!avtalt} className={styles.etikett} />
-                <IkkeDeltMarkering visible={ikkeDelt} className={styles.etikett} />
+                <AvtaltMarkering hidden={!avtalt} />
+                <IkkeDeltMarkering visible={ikkeDelt} />
             </div>
             <AvtaltContainerNy
                 underOppfolging={underOppfolging}
                 aktivitet={valgtAktivitet}
-                className={styles.underseksjon}
+                className={aktivitetsvisningStyles.underseksjon}
             />
-            <div className={styles.underseksjon}>
+            <div className={aktivitetsvisningStyles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && <MeldInteresseForStillingen aktivitet={valgtAktivitet} />}
+            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && (
+                <DeleCvContainer aktivitet={valgtAktivitet as StillingFraNavAktivitet} />
+            )}
             <DeleLinje />
         </div>
     );

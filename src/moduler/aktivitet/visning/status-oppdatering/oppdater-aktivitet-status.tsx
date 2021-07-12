@@ -21,7 +21,7 @@ const useDisableStatusEndring = (aktivitet: Aktivitet) => {
     return lasterAktivitet || !underOppfolging || !kanEndreAktivitet;
 };
 
-export const lagreStatusEndringer = (
+const lagreStatusEndringer = (
     dispatch: Dispatch,
     values: { aktivitetstatus: AktivitetStatus; begrunnelse?: string },
     aktivitet: Aktivitet

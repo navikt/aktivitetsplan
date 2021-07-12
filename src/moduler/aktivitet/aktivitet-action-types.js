@@ -35,6 +35,10 @@ export const FHO_BEKREFT = 'aktivitet/fho/bekreft';
 export const FHO_BEKREFT_OK = 'aktivitet/fho/bekreft/ok';
 export const FHO_BEKREFT_FEILET = 'aktivitet/fho/bekreft/fail';
 
+export const OPPDATER_CV_SVAR_OK = 'aktivitet/oppdatercvsvar/ok';
+export const OPPDATER_CV_SVAR_PENDING = 'aktivitet/oppdatercvsvar/pending';
+export const OPPDATER_CV_SVAR_FEILET = 'aktivitet/oppdatercvsvar/feilet';
+
 export const SETT_FORRIGE_AKTIVE_AKTIVITET_ID = 'aktivitet/forrigeaktive/sett';
 
 export const NIVAA_4_FEILET = 'TILGANG/FEILET';

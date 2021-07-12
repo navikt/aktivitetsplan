@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import {
     GRUPPE_AKTIVITET_TYPE,
+    SAMTALEREFERAT_TYPE,
     STATUS_AVBRUTT,
     STATUS_FULLFOERT,
     STILLING_FRA_NAV_TYPE,
@@ -41,8 +42,10 @@ const AvtaltContainerNy = (props: Props) => {
     const aktivAktivitet = !historisk && underOppfolging && status !== STATUS_FULLFOERT && status !== STATUS_AVBRUTT;
     const harForhaandsorientering = erArenaAktivitet ? aktivitet.forhaandsorientering : avtalt;
 
+    const aktivitetTypeKanAvtales = type !== STILLING_FRA_NAV_TYPE && type !== SAMTALEREFERAT_TYPE;
+
     const skalViseAvtaltFormKonteiner =
-        !harForhaandsorientering && erVeileder && aktivAktivitet && type !== STILLING_FRA_NAV_TYPE;
+        !harForhaandsorientering && erVeileder && aktivAktivitet && aktivitetTypeKanAvtales;
 
     if (!skalViseForhondsorentering && !skalViseAvtaltFormKonteiner && !skalViseSattTilAvtalt) {
         return null;

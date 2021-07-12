@@ -103,11 +103,24 @@ export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
     beskrivelse: string;
 }
 
+interface CvKanDelesData {
+    kanDeles: boolean;
+    endretTidspunkt: Date;
+    endretAv: string;
+    endretAvType: BrukerType;
+}
+
 export interface StillingFraNavAktivitet extends AktivitetRequiredProps {
+    cvKanDelesData?: CvKanDelesData;
+    soknadsfrist: string;
+    svarfrist: Date;
     arbeidsgiver: string;
+    bestillingsId: string;
+    stillingsId: string;
     arbeidssted: string;
-    kontaktperson: string;
-    lenke: string;
+    varselId: string;
+    lenke: string; //mangler i backend
+    kontaktperson: string; //mangler i backend
 }
 
 enum ArenaEtikett {
