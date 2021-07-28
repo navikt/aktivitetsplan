@@ -27,7 +27,7 @@ function Aktivitetsdetaljer({ valgtAktivitet }) {
             <StillingDetaljer aktivitet={valgtAktivitet} />
             <TiltakDetaljer aktivitet={valgtAktivitet} />
             <UtdanningDetaljer aktivitet={valgtAktivitet} />
-            <StillingFraNavDetaljer aktivitet={valgtAktivitet} />
+            <StillingFraNavDetaljer stillingFraNavData={valgtAktivitet.stillingFraNavData} />
         </section>
     );
 }

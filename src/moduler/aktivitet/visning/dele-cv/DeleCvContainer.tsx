@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { StillingFraNavAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
 import { MeldInteresseForStilling } from './MeldInteresseForStilling';
 
 interface PropTypes {
-    aktivitet: StillingFraNavAktivitet;
+    aktivitet: Aktivitet;
 }
 
 export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
-    const harSvart = !!aktivitet.cvKanDelesData;
+    const harSvart = aktivitet.stillingFraNavData && !!aktivitet.stillingFraNavData.cvKanDelesData;
     return (
         <>
             <DeleLinje />
