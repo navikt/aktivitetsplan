@@ -22,7 +22,7 @@ interface Props {
     className: string;
 }
 
-const AvtaltContainerNy = (props: Props) => {
+const AvtaltContainer = (props: Props) => {
     const { underOppfolging, aktivitet } = props;
     const { type, status, historisk, avtalt } = aktivitet;
 
@@ -80,4 +80,4 @@ const AvtaltContainerNy = (props: Props) => {
     );
 };
 
-export default AvtaltContainerNy;
+export default AvtaltContainer;

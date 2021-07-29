@@ -23,7 +23,7 @@ const Statusadministrasjon = (props: Props) => {
     }
 
     if (erArenaAktivitet) {
-        return <ArenaStatusAdministrasjon erBruker={erBruker} aktivitet={aktivitet} />;
+        return <ArenaStatusAdministrasjon erBruker={erBruker} />;
     }
 
     return <AktivitetStatusAdministrasjon type={type} aktivitet={aktivitet} />;
