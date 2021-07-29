@@ -82,7 +82,7 @@ export function fullforAktivitet(aktivitet, avsluttetKommentar) {
 }
 
 export function oppdaterCVSvar(aktivitetId, aktivitetVersjon, kanDeles) {
-    return doThenDispatch(() => Api.oppdaterCvKanDelesSvar(aktivitetId, aktivitetId, kanDeles), {
+    return doThenDispatch(() => Api.oppdaterCvKanDelesSvar(aktivitetId, aktivitetVersjon, kanDeles), {
         OK: AT.OPPDATER_CV_SVAR_OK,
         PENDING: AT.OPPDATER_CV_SVAR_PENDING,
         FEILET: AT.OPPDATER_CV_SVAR_FEILET,

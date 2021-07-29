@@ -285,19 +285,22 @@ const testAktiviteter = !visTestAktiviteter()
               versjon: '5345435',
               id: '53498574398',
               tittel: 'Servitør',
-              lenke: 'www.nav.no',
               type: 'STILLING_FRA_NAV',
+              lenke: null,
               status: 'PLANLAGT',
               opprettetDato: '2020-05-31T10:46:51.622+01:00',
               endretDato: '2018-09-30T10:46:51.622+01:00',
               endretAv: 'z990207',
               historisk: false,
-              arbeidsgiver: 'Havsalt AS',
               kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
-              arbeidssted: 'Kristiansand',
               lagtInnAv: 'NAV',
               transaksjonsType: 'OPPRETTET',
-              cvKanDelesData: null,
+              stillingFraNavData: {
+                  cvKanDelesData: null,
+                  arbeidsgiver: 'Havsalt AS',
+                  arbeidssted: 'Kristiansand',
+                  lenke: 'www.nav.no',
+              },
           }),
       ];
 
@@ -345,6 +348,7 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               kanal: null,
               referat: null,
               erReferatPublisert: false,
+              stillingFraNavData: null,
           },
           {
               id: '141439',
@@ -504,6 +508,7 @@ function wrapAktivitet(aktivitet) {
         referat: valueOrNull(aktivitet.referat),
         erReferatPublisert: valueOrFalse(aktivitet.erReferatPublisert),
         forhaandsorientering: valueOrNull(aktivitet.forhaandsorientering),
+        stillingFraNavData: valueOrNull(aktivitet.stillingFraNavData),
     };
 }
 

@@ -9,7 +9,7 @@ import {
     STILLING_AKTIVITET_TYPE,
     STILLING_FRA_NAV_TYPE,
 } from '../../../../constant';
-import { Aktivitet, AktivitetType, StillingFraNavAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
@@ -78,9 +78,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
             <div className={aktivitetsvisningStyles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && (
-                <DeleCvContainer aktivitet={valgtAktivitet as StillingFraNavAktivitet} />
-            )}
+            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && <DeleCvContainer aktivitet={valgtAktivitet} />}
             <DeleLinje />
         </div>
     );
