@@ -14,7 +14,7 @@ const UlestMarkering = (props: Props) => {
     }
 
     return (
-        <CustomAlertstripe tekst="Ulest" sectionClassName={styles.ulestMarkering} textClassName={styles.ulestTekst} />
+        <CustomAlertstripe tekst="Ulest" sectionClassName={styles.ulestMarkering} ikonClassName={styles.varselIkon} />
     );
 };
 
