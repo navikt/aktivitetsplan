@@ -19,10 +19,10 @@ enum SvarType {
 interface PropTypes {
     aktivitet: Aktivitet;
     overskrift: string;
-    ingress: ReactElement;
+    Ingress: () => ReactElement;
 }
 
-export const MeldInteresseForStilling = ({ aktivitet, overskrift, ingress }: PropTypes) => {
+export const MeldInteresseForStilling = ({ aktivitet, overskrift, Ingress }: PropTypes) => {
     const [valgtAlternativ, setValgtAlternativ] = useState<SvarType | undefined>(undefined);
     const [infoTekst, setInfoTekst] = useState<string | undefined>(undefined);
     const dispatch = useDispatch();
@@ -45,7 +45,8 @@ export const MeldInteresseForStilling = ({ aktivitet, overskrift, ingress }: Pro
     const HeaderMedIngress = () => (
         <>
             <CustomAlertstripe tekst={overskrift} />
-            {ingress}
+            <div className={styles.luft} />
+            <Ingress />
         </>
     );
 
