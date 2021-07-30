@@ -17,7 +17,7 @@ import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
 import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
-import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
+import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import { DeleCvContainer } from '../dele-cv/DeleCvContainer';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
@@ -70,7 +70,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 <AvtaltMarkering hidden={!avtalt} />
                 <IkkeDeltMarkering visible={ikkeDelt} />
             </div>
-            <AvtaltContainerNy
+            <AvtaltContainer
                 underOppfolging={underOppfolging}
                 aktivitet={valgtAktivitet}
                 className={aktivitetsvisningStyles.underseksjon}

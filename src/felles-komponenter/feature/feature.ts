@@ -16,6 +16,4 @@ const useHarFeature = (name: string, reverse?: boolean): boolean => {
     return harFeature(name, features, reverse);
 };
 
-export const useSkalBrukeNyForhaandsorientering = () => useHarFeature(nyForaandsorientering);
-
 export const useSkalBrukeNyMedisinskBehandling = () => useHarFeature(medisinskBehandlingAvBruker);
