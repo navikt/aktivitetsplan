@@ -105,7 +105,7 @@ export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
     beskrivelse: string;
 }
 
-interface CvKanDelesData {
+export interface CvKanDelesData {
     kanDeles: boolean;
     endretTidspunkt: Date;
     endretAv: string;
@@ -113,7 +113,7 @@ interface CvKanDelesData {
 }
 
 export interface StillingFraNavAktivitetData {
-    cvKanDelesData?: CvKanDelesData;
+    cvKanDelesData: CvKanDelesData;
     soknadsfrist: string;
     svarfrist: Date;
     arbeidsgiver: string;
