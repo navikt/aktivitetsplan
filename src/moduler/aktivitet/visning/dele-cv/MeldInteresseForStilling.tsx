@@ -1,14 +1,16 @@
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { formaterDatoManed } from '../../../../utils';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import detaljVisningStyles from '../Aktivitetsvisning.module.less';
 import { CustomAlertstripe } from '../hjelpekomponenter/CustomAlertstripe';
-import styles from './MeldInteresseForStillingen.module.less';
+import styles from './MeldInteresseForStilling.module.less';
 import { JaSvarTekst, NeiSvarTekst } from './tekster';
 
 enum SvarType {
@@ -42,11 +44,16 @@ export const MeldInteresseForStilling = ({ aktivitet, overskrift, Ingress }: Pro
         dispatch(oppdaterCVSvar(aktivitet.id, aktivitet.versjon, valgtAlternativ === SvarType.JA));
     };
 
+    const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
+
     const HeaderMedIngress = () => (
         <>
             <CustomAlertstripe tekst={overskrift} />
             <div className={styles.luft} />
             <Ingress />
+            {svarfrist && (
+                <Normaltekst className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</Normaltekst>
+            )}
         </>
     );
 
