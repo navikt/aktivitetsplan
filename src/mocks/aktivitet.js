@@ -300,6 +300,7 @@ const testAktiviteter = !visTestAktiviteter()
                   arbeidsgiver: 'Havsalt AS',
                   arbeidssted: 'Kristiansand',
                   lenke: 'www.nav.no',
+                  svarfrist: '2021-09-29T10:46:51.622+01:00',
               },
           }),
           wrapAktivitet({
