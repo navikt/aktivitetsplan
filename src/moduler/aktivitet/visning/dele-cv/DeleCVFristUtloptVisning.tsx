@@ -3,7 +3,7 @@ import React from 'react';
 
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoManed } from '../../../../utils';
-import styles from './DeleCvSvarVisning.module.less';
+import styles from './DeleCVFristUtloptVisning.module.less';
 
 interface Props {
     overskrift: string;
@@ -18,7 +18,7 @@ export const DeleCVFristUtloptVisning = (props: Props) => {
     const TittelMedUtloptTekst = () => (
         <>
             <Tittel />
-            <Element className={styles.deleCVTittelSvarTekst}>Fristen har gått ut</Element>
+            <Element className={styles.deleCVTittelUtloptTekst}>Fristen har gått ut</Element>
         </>
     );
 
@@ -31,7 +31,7 @@ export const DeleCVFristUtloptVisning = (props: Props) => {
             lukkeTekst="Lukk"
         >
             <Ingress />
-            <Normaltekst className={styles.deleCVSvarTekst}>
+            <Normaltekst className={styles.deleCVUtloptTekst}>
                 Spørsmålet ble ikke besvart innen fristen {formaterDatoManed(svarfrist)}
             </Normaltekst>
         </EkspanderbarLinje>
