@@ -115,7 +115,7 @@ export interface CvKanDelesData {
 export interface StillingFraNavAktivitetData {
     cvKanDelesData: CvKanDelesData;
     soknadsfrist: string;
-    svarfrist: Date;
+    svarfrist: string;
     arbeidsgiver: string;
     bestillingsId: string;
     stillingsId: string;
