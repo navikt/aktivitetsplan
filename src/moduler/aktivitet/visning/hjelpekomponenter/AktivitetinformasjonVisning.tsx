@@ -9,7 +9,7 @@ import {
     STILLING_AKTIVITET_TYPE,
     STILLING_FRA_NAV_TYPE,
 } from '../../../../constant';
-import { Aktivitet, AktivitetType, StillingFraNavAktivitet } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
@@ -17,7 +17,7 @@ import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
 import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
-import AvtaltContainerNy from '../avtalt-container/AvtaltContainerNy';
+import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import { DeleCvContainer } from '../dele-cv/DeleCvContainer';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
@@ -70,7 +70,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 <AvtaltMarkering hidden={!avtalt} />
                 <IkkeDeltMarkering visible={ikkeDelt} />
             </div>
-            <AvtaltContainerNy
+            <AvtaltContainer
                 underOppfolging={underOppfolging}
                 aktivitet={valgtAktivitet}
                 className={aktivitetsvisningStyles.underseksjon}
@@ -78,9 +78,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
             <div className={aktivitetsvisningStyles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && (
-                <DeleCvContainer aktivitet={valgtAktivitet as StillingFraNavAktivitet} />
-            )}
+            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && <DeleCvContainer aktivitet={valgtAktivitet} />}
             <DeleLinje />
         </div>
     );

@@ -1,14 +1,17 @@
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import React, { useState } from 'react';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React, { ReactElement, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import { formaterDatoManed } from '../../../../utils';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import detaljVisningStyles from '../Aktivitetsvisning.module.less';
 import { CustomAlertstripe } from '../hjelpekomponenter/CustomAlertstripe';
-import styles from './MeldInteresseForStillingen.module.less';
+import styles from './MeldInteresseForStilling.module.less';
+import { JaSvarTekst, NeiSvarTekst } from './tekster';
 
 enum SvarType {
     JA = 'ja',
@@ -17,9 +20,11 @@ enum SvarType {
 
 interface PropTypes {
     aktivitet: Aktivitet;
+    overskrift: string;
+    Ingress: () => ReactElement;
 }
 
-export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
+export const MeldInteresseForStilling = ({ aktivitet, overskrift, Ingress }: PropTypes) => {
     const [valgtAlternativ, setValgtAlternativ] = useState<SvarType | undefined>(undefined);
     const [infoTekst, setInfoTekst] = useState<string | undefined>(undefined);
     const dispatch = useDispatch();
@@ -39,10 +44,16 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
         dispatch(oppdaterCVSvar(aktivitet.id, aktivitet.versjon, valgtAlternativ === SvarType.JA));
     };
 
+    const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
+
     const HeaderMedIngress = () => (
         <>
-            <CustomAlertstripe tekst="Er du interessert i denne stillingen?" />
-            <p className={styles.ingress}>Du bestemmer selv om nav skal dele CV-en din på denne stillingen</p>
+            <CustomAlertstripe tekst={overskrift} />
+            <div className={styles.luft} />
+            <Ingress />
+            {svarfrist && (
+                <Normaltekst className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</Normaltekst>
+            )}
         </>
     );
 
@@ -53,12 +64,12 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
                 legend={<HeaderMedIngress />}
                 radios={[
                     {
-                        label: 'Ja, og NAV kan dele CV-en min med arbeidsgiver',
+                        label: JaSvarTekst,
                         value: SvarType.JA.toString(),
                         id: SvarType.JA.toString(),
                     },
                     {
-                        label: 'Nei, og jeg vil ikke at NAV skal dele CV-en min med arbeidsgiveren',
+                        label: NeiSvarTekst,
                         value: SvarType.NEI.toString(),
                         id: SvarType.NEI.toString(),
                     },

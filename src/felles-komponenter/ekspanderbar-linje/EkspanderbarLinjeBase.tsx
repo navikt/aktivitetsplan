@@ -7,6 +7,7 @@ import styles from './EkspanderbarLinjeBase.module.less';
 
 export interface PropsBase {
     tittel: string | React.ReactNode;
+    aapneTittel?: string | React.ReactNode;
     children: React.ReactNode;
     kanToogle: boolean;
     aapneTekst: string;
@@ -23,7 +24,7 @@ const moveElementIntoView = (element: HTMLDivElement | null) => {
 };
 
 const EkspanderbarLinjeBase = (props: PropsBase) => {
-    const { tittel, children, kanToogle, aapneTekst, lukkeTekst, onClick, erAapen } = props;
+    const { tittel, aapneTittel, children, kanToogle, aapneTekst, lukkeTekst, onClick, erAapen } = props;
 
     const aapenRef = useRef(erAapen);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -35,7 +36,9 @@ const EkspanderbarLinjeBase = (props: PropsBase) => {
         aapenRef.current = erAapen;
     }, [erAapen]);
 
-    const tittelKomponent = typeof tittel === 'string' ? <Normaltekst>{tittel}</Normaltekst> : tittel;
+    const tittelUtifraState = erAapen ? aapneTittel : tittel;
+    const tittelKomponent =
+        typeof tittelUtifraState === 'string' ? <Normaltekst>{tittelUtifraState}</Normaltekst> : tittelUtifraState;
 
     return (
         <section>

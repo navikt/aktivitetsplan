@@ -71,7 +71,10 @@ interface AktivitetRequiredProps {
     lagtInnAv: BrukerType;
     endretAv: string;
     avtalt: boolean;
+    transaksjonsType: TransaksjonsType;
+    stillingFraNavData: StillingFraNavAktivitetData | null;
 }
+
 export interface Aktivitet extends AktivitetRequiredProps {
     fraDato?: string;
     tilDato?: string;
@@ -90,7 +93,6 @@ export interface Aktivitet extends AktivitetRequiredProps {
     antallStillingerIUken?: number;
     arenaAktivitet?: boolean;
     avsluttetBegrunnelse?: string;
-    transaksjonsType?: TransaksjonsType;
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
@@ -103,15 +105,15 @@ export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
     beskrivelse: string;
 }
 
-interface CvKanDelesData {
+export interface CvKanDelesData {
     kanDeles: boolean;
     endretTidspunkt: Date;
     endretAv: string;
     endretAvType: BrukerType;
 }
 
-export interface StillingFraNavAktivitet extends AktivitetRequiredProps {
-    cvKanDelesData?: CvKanDelesData;
+export interface StillingFraNavAktivitetData {
+    cvKanDelesData: CvKanDelesData;
     soknadsfrist: string;
     svarfrist: Date;
     arbeidsgiver: string;

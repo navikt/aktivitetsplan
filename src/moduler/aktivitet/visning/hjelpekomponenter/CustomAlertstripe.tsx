@@ -7,12 +7,12 @@ import styles from './CustomAlertstripe.module.less';
 interface Props {
     tekst: string;
     sectionClassName?: string;
-    textClassName?: string;
+    ikonClassName?: string;
 }
 
 export const CustomAlertstripe = (props: Props) => (
     <div className={props.sectionClassName ? props.sectionClassName : styles.overskrift}>
-        <VarselIkon />
-        <Element className={props.textClassName ? props.textClassName : styles.tekst}>{props.tekst}</Element>
+        <VarselIkon className={props.ikonClassName ? props.ikonClassName : styles.ikon} />
+        <Element>{props.tekst}</Element>
     </div>
 );
