@@ -18,7 +18,7 @@ export default function EndringsLogg(props: Props) {
     }
 
     return (
-        <EkspanderbarLinje tittel="Historikk" kanToogle aapneTekst="Vis" lukkeTekst="Skjul">
+        <EkspanderbarLinje tittel="Historikk" kanToogle aapneTekst="Åpne" lukkeTekst="Lukk">
             <VersjonerForAktivitet
                 visible={true}
                 aktivitet={aktivitet}

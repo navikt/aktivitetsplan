@@ -39,7 +39,7 @@ function MalHistorikk() {
     return (
         <>
             <hr className="aktivitetmal__delelinje" />
-            <EkspanderbarLinje tittel="Tidligere lagrede mål" kanToogle aapneTekst="Vis" lukkeTekst="Skjul">
+            <EkspanderbarLinje tittel="Tidligere lagrede mål" kanToogle aapneTekst="Åpne" lukkeTekst="Lukk">
                 {historiskeMal.map((m: Mal) => malListeVisning(m, erVeileder))}
             </EkspanderbarLinje>
         </>
