@@ -15,6 +15,7 @@ import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltMarkering, { SkalIkkeDeltMarkeringVises } from '../../ikke-delt-markering/IkkeDeltMarkering';
+import IkkeFerdigMarkering, { SkalIkkeFerdigMarkeringVises } from '../../ikke-ferdig-markering/IkkeFerdigMarkering';
 import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
@@ -47,6 +48,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
     const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
 
     const ikkeDelt = SkalIkkeDeltMarkeringVises(valgtAktivitet);
+    const ikkeFerdig = SkalIkkeFerdigMarkeringVises(valgtAktivitet);
 
     return (
         <div>
@@ -69,6 +71,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />
                 <IkkeDeltMarkering visible={ikkeDelt} />
+                <IkkeFerdigMarkering visible={ikkeFerdig} />
             </div>
             <AvtaltContainer
                 underOppfolging={underOppfolging}

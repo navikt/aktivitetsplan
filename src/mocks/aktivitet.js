@@ -257,7 +257,7 @@ const testAktiviteter = !visTestAktiviteter()
               effekt: null,
               endretAv: '1602677081175',
               endretDato: '2020-10-14T12:04:41.175Z',
-              erReferatPublisert: true,
+              erReferatPublisert: false,
               etikett: null,
               forberedelser: null,
               fraDato: '2020-10-14T12:04:33.649Z',
