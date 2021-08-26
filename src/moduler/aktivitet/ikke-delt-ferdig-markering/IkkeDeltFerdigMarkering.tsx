@@ -6,24 +6,27 @@ import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../constant';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import visibleIfHOC from '../../../hocs/visible-if';
-import { selectErVeileder } from '../../identitet/identitet-selector';
-import styles from './ikke-delt-markering.module.less';
+import { selectErBruker } from '../../identitet/identitet-selector';
+import styles from './ikke-delt-ferdig-markering.module.less';
 
-export const SkalIkkeDeltMarkeringVises = ({ type, erReferatPublisert, referat }: Aktivitet): boolean => {
-    const erVeileder = useSelector(selectErVeileder);
+export const skalMarkeringVises = ({ type, erReferatPublisert, referat }: Aktivitet): boolean => {
     const harIkkeDeltSamtalereferat = type === SAMTALEREFERAT_TYPE && !erReferatPublisert;
     const harMoteReferat = Boolean(referat);
     const harIkkedeltReferatFraMote = type === MOTE_TYPE && harMoteReferat && !erReferatPublisert;
-    return erVeileder && (harIkkeDeltSamtalereferat || harIkkedeltReferatFraMote);
+    return harIkkeDeltSamtalereferat || harIkkedeltReferatFraMote;
 };
 
 interface Props {
     className?: string;
 }
 
-const IkkeDeltMarkering = (props: Props) => {
+const IkkeDeltFerdigMarkering = (props: Props) => {
     const { className } = props;
-    return <EtikettBase className={classNames(styles.etikett, className)}>Samtalereferatet er ikke delt</EtikettBase>;
+
+    const erBruker = useSelector(selectErBruker);
+    const tekst = erBruker ? 'Samtalereferatet er ikke ferdig' : 'Samtalereferatet er ikke delt';
+
+    return <EtikettBase className={classNames(styles.etikett, className)}>{tekst}</EtikettBase>;
 };
 
-export default visibleIfHOC(IkkeDeltMarkering);
+export default visibleIfHOC(IkkeDeltFerdigMarkering);

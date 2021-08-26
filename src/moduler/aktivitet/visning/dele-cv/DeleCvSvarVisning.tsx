@@ -4,6 +4,7 @@ import React from 'react';
 
 import { CvKanDelesData } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
+import { formaterDatoManed } from '../../../../utils';
 import styles from './DeleCvSvarVisning.module.less';
 import { JaSvarTekst, NeiSvarTekst } from './tekster';
 
@@ -41,6 +42,9 @@ export const DeleCvSvarVisning = ({ overskrift, Ingress, cvKanDelesData }: Props
         >
             <Ingress />
             <Normaltekst className={styles.deleCVSvarTekst}>{cvKanDeles ? JaSvarTekst : NeiSvarTekst}</Normaltekst>
+            <Normaltekst className={styles.endretTidspunkt}>
+                Du svarte {formaterDatoManed(cvKanDelesData.endretTidspunkt)}
+            </Normaltekst>
             <Infostripe />
         </EkspanderbarLinje>
     );
