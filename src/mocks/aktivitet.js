@@ -330,10 +330,10 @@ const testAktiviteter = !visTestAktiviteter()
                   lenke: 'www.nav.no',
                   svarfrist: '2021-07-29T10:46:51.622+01:00',
                   kontaktpersonData: {
-                      navn: 'Harry Potter',
+                      navn: 'Sykfest Strutle',
                       tittel: 'NAV-ansatt',
-                      mobil: '+47 99999999',
-                      epost: 'harry.potter@nav.no',
+                      mobil: '+47 99009900',
+                      epost: 'sylfest.strutle@nav.no',
                   },
               },
           }),
@@ -364,7 +364,7 @@ const testAktiviteter = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Odd Fellow',
                       tittel: 'Daglig leder',
-                      epost: 'odd.fellow@nav.no',
+                      epost: 'odd.fellow@oddfellow.no',
                   },
               },
           }),
