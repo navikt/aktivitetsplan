@@ -18,7 +18,7 @@ interface ChildProps {
     formattertTekst?: boolean;
 }
 
-const InholdsWrapper = (props: ChildProps) => {
+export const InholdsWrapper = (props: ChildProps) => {
     const { children, formattertTekst } = props;
     if (formattertTekst) {
         return <Tekstomrade className="detaljfelt__tekst">{children}</Tekstomrade>;

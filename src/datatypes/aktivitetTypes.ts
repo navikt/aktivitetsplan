@@ -112,6 +112,13 @@ export interface CvKanDelesData {
     endretAvType: BrukerType;
 }
 
+export interface KontaktInfo {
+    navn: string;
+    tittel: string;
+    mobil: string;
+    epost: string;
+}
+
 export interface StillingFraNavAktivitetData {
     cvKanDelesData: CvKanDelesData;
     soknadsfrist: string;
@@ -122,7 +129,7 @@ export interface StillingFraNavAktivitetData {
     arbeidssted: string;
     varselId: string;
     lenke: string; //mangler i backend
-    kontaktperson: string; //mangler i backend
+    kontaktpersonData: KontaktInfo;
 }
 
 enum ArenaEtikett {
