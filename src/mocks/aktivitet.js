@@ -4,6 +4,7 @@ import { STATUS_AVBRUTT, STATUS_GJENNOMFOERT } from '../constant';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 import { rndId } from './utils';
 
+// NOSONAR
 const eksternBruker = erEksternBruker();
 const bruker = eksternBruker ? 'BRUKER' : 'NAV';
 const testAktiviteter = !visTestAktiviteter()
