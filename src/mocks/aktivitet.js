@@ -301,6 +301,12 @@ const testAktiviteter = !visTestAktiviteter()
                   arbeidssted: 'Kristiansand',
                   lenke: 'www.nav.no',
                   svarfrist: '2021-09-29T10:46:51.622+01:00',
+                  kontaktpersonData: {
+                      navn: 'Harry Potter',
+                      tittel: 'NAV-ansatt',
+                      mobil: '+47 99999999',
+                      epost: 'harry.potter@nav.no',
+                  },
               },
           }),
           wrapAktivitet({
@@ -323,6 +329,12 @@ const testAktiviteter = !visTestAktiviteter()
                   arbeidssted: 'Kristiansand',
                   lenke: 'www.nav.no',
                   svarfrist: '2021-07-29T10:46:51.622+01:00',
+                  kontaktpersonData: {
+                      navn: 'Sykfest Strutle',
+                      tittel: 'NAV-ansatt',
+                      mobil: '+47 99009900',
+                      epost: 'sylfest.strutle@nav.no',
+                  },
               },
           }),
           wrapAktivitet({
@@ -349,6 +361,11 @@ const testAktiviteter = !visTestAktiviteter()
                   arbeidsgiver: 'Havsalt AS',
                   arbeidssted: 'Kristiansand',
                   lenke: 'www.nav.no',
+                  kontaktpersonData: {
+                      navn: 'Odd Fellow',
+                      tittel: 'Daglig leder',
+                      epost: 'odd.fellow@oddfellow.no',
+                  },
               },
           }),
       ];
