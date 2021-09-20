@@ -331,7 +331,7 @@ const testAktiviteter = !visTestAktiviteter()
               tittel: 'Servitør har svart',
               type: 'STILLING_FRA_NAV',
               lenke: null,
-              status: 'PLANLAGT',
+              status: 'GJENNOMFORES',
               opprettetDato: '2020-05-31T10:46:51.622+01:00',
               endretDato: '2018-09-30T10:46:51.622+01:00',
               endretAv: 'z990207',

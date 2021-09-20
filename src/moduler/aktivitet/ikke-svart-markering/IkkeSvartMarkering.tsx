@@ -11,12 +11,12 @@ export const SkalIkkeSvartMarkeringVises = (aktivitet: Aktivitet): boolean => {
     const erBruker = useSelector(selectErBruker);
 
     const erStillingFraNav = aktivitet.type === STILLING_FRA_NAV_TYPE;
-    const harIkkeDeltCv = !aktivitet.stillingFraNavData?.cvKanDelesData;
+    const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
     const status = aktivitet.status;
     const historisk = aktivitet.historisk;
     const ikkeAktiv = status === STATUS_AVBRUTT || status === STATUS_FULLFOERT || !!historisk;
 
-    return erBruker && erStillingFraNav && harIkkeDeltCv && !ikkeAktiv;
+    return erBruker && erStillingFraNav && harIkkeSvart && !ikkeAktiv;
 };
 
 const IkkeSvartMarkering = () => {
