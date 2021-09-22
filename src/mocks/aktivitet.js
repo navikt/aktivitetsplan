@@ -345,12 +345,12 @@ const testAktiviteter = !visTestAktiviteter()
               lenke: null,
               status: 'GJENNOMFORES',
               opprettetDato: '2020-05-31T10:46:51.622+01:00',
-              endretDato: '2018-09-30T10:46:51.622+01:00',
+              endretDato: '2020-09-30T10:46:51.622+01:00',
               endretAv: 'z990207',
               historisk: false,
               kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
               lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
+              transaksjonsType: 'STATUS_ENDRET',
               stillingFraNavData: {
                   cvKanDelesData: {
                       kanDeles: true,
@@ -500,6 +500,67 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               referat: null,
               erReferatPublisert: false,
           },
+      ];
+
+const ekstraVersjoner = !visTestAktiviteter()
+    ? []
+    : [
+          wrapAktivitet({
+              versjon: '5345434',
+              id: '53498574399',
+              tittel: 'Servitør har svart',
+              type: 'STILLING_FRA_NAV',
+              lenke: null,
+              status: 'PLANLAGT',
+              opprettetDato: '2020-05-31T10:46:51.622+01:00',
+              endretDato: '2020-05-31T10:46:51.622+01:00',
+              endretAv: 'z990207',
+              historisk: false,
+              kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+              lagtInnAv: 'NAV',
+              transaksjonsType: 'OPPRETTET',
+              stillingFraNavData: {
+                  arbeidsgiver: 'Havsalt AS',
+                  arbeidssted: 'Kristiansand',
+                  lenke: 'www.nav.no',
+                  kontaktpersonData: {
+                      navn: 'Odd Fellow',
+                      tittel: 'Daglig leder',
+                      epost: 'odd.fellow@oddfellow.no',
+                  },
+              },
+          }),
+          wrapAktivitet({
+              versjon: '5345439',
+              id: '53498574399',
+              tittel: 'Servitør har svart',
+              type: 'STILLING_FRA_NAV',
+              lenke: null,
+              status: 'PLANLAGT',
+              opprettetDato: '2020-05-31T10:46:51.622+01:00',
+              endretDato: '2020-10-30T10:46:51.622+01:00',
+              endretAv: 'z990207',
+              historisk: false,
+              kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+              lagtInnAv: 'NAV',
+              transaksjonsType: 'DEL_CV_SVART',
+              stillingFraNavData: {
+                  cvKanDelesData: {
+                      kanDeles: true,
+                      endretTidspunkt: new Date(),
+                      endretAv: 'V123',
+                      endretAvType: 'BRUKER',
+                  },
+                  arbeidsgiver: 'Havsalt AS',
+                  arbeidssted: 'Kristiansand',
+                  lenke: 'www.nav.no',
+                  kontaktpersonData: {
+                      navn: 'Odd Fellow',
+                      tittel: 'Daglig leder',
+                      epost: 'odd.fellow@oddfellow.no',
+                  },
+              },
+          }),
       ];
 
 const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter);
@@ -666,10 +727,12 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
 }
 
 export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles }, { aktivitetId }) {
+    const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         status: kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
-        transaksjonsType: 'STATUS_ENDRET',
+        transaksjonsType: 'DEL_CV_SVART',
         stillingFraNavData: {
+            ...gammelAktivitet.stillingFraNavData,
             cvKanDelesData: {
                 kanDeles: kanDeles,
                 endretTidspunkt: new Date(),
@@ -713,4 +776,4 @@ export const aktiviteterData = {
     aktiviteter,
 };
 
-export const versjoner = aktiviteter.map((aktivitet) => wrapAktivitet(aktivitet));
+export const versjoner = aktiviteter.concat(ekstraVersjoner).map((aktivitet) => wrapAktivitet(aktivitet));

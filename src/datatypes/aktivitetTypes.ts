@@ -53,6 +53,7 @@ export enum TransaksjonsType {
     REFERAT_PUBLISERT = 'REFERAT_PUBLISERT',
     BLE_HISTORISK = 'BLE_HISTORISK',
     FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
+    DEL_CV_SVART = 'DEL_CV_SVART',
 }
 export type BrukerType = 'NAV' | 'BRUKER';
 export interface Lest {
