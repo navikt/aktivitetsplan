@@ -40,6 +40,7 @@ export type AktivitetStatus =
     | typeof STATUS_BRUKER_ER_INTRESSERT;
 
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
+export type StillingFraNavSoknadsstatus = 'VENTER' | 'SKAL_PAA_INTERVJU' | 'JOBB_TILBUD' | 'AVSLAG';
 export enum TransaksjonsType {
     OPPRETTET = 'OPPRETTET',
     STATUS_ENDRET = 'STATUS_ENDRET',
@@ -54,6 +55,7 @@ export enum TransaksjonsType {
     BLE_HISTORISK = 'BLE_HISTORISK',
     FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
     DEL_CV_SVART = 'DEL_CV_SVART',
+    SOKNADSSTATUS_ENDRET = 'SOKNADSSTATUS_ENDRET',
 }
 export type BrukerType = 'NAV' | 'BRUKER';
 export interface Lest {
@@ -131,6 +133,7 @@ export interface StillingFraNavAktivitetData {
     varselId: string;
     lenke: string; //mangler i backend
     kontaktpersonData: KontaktInfo;
+    soknadsstatus: StillingFraNavSoknadsstatus;
 }
 
 enum ArenaEtikett {

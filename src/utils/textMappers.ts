@@ -32,3 +32,10 @@ export const etikettMapper = {
     AVSLAG: 'Fått avslag',
     JOBBTILBUD: 'Fått jobbtilbud',
 };
+
+export const stillingFraNavSoknadsstatusMapper = {
+    VENTER: 'Venter på å bli kontaktet',
+    SKAL_PAA_INTERVJU: 'Skal på intervju',
+    JOBB_TILBUD: 'Fått jobbtilbud',
+    AVSLAG: 'Fått avslag',
+};
