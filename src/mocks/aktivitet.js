@@ -727,14 +727,18 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
 }
 
 export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles }, { aktivitetId }) {
+    const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         status: kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
         transaksjonsType: 'DEL_CV_SVART',
-        cvKanDelesData: {
-            kanDeles: kanDeles,
-            endretTidspunkt: new Date(),
-            endretAv: bruker ? '843029483' : 'z123',
-            endretAvType: bruker,
+        stillingFraNavData: {
+            ...gammelAktivitet.stillingFraNavData,
+            cvKanDelesData: {
+                kanDeles: kanDeles,
+                endretTidspunkt: new Date(),
+                endretAv: bruker ? '843029483' : 'z123',
+                endretAvType: bruker,
+            },
         },
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
