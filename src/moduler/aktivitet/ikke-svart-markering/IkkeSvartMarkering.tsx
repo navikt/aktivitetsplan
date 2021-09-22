@@ -1,22 +1,16 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT, STILLING_FRA_NAV_TYPE } from '../../../constant';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import visibleIfHOC from '../../../hocs/visible-if';
 import { selectErBruker } from '../../identitet/identitet-selector';
+import { ikkeSvartMarkeringSkalVises } from '../aktivitet-util';
 import { CustomAlertstripe } from '../visning/hjelpekomponenter/CustomAlertstripe';
 
 export const SkalIkkeSvartMarkeringVises = (aktivitet: Aktivitet): boolean => {
     const erBruker = useSelector(selectErBruker);
+    const markeringSkalVises = ikkeSvartMarkeringSkalVises(aktivitet);
 
-    const erStillingFraNav = aktivitet.type === STILLING_FRA_NAV_TYPE;
-    const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
-    const status = aktivitet.status;
-    const historisk = aktivitet.historisk;
-    const ikkeAktiv = status === STATUS_AVBRUTT || status === STATUS_FULLFOERT || !!historisk;
-
-    return erBruker && erStillingFraNav && harIkkeSvart && !ikkeAktiv;
+    return erBruker && markeringSkalVises;
 };
 
 const IkkeSvartMarkering = () => {
