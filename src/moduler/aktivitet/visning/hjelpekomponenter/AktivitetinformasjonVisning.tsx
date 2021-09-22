@@ -14,7 +14,9 @@ import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
-import IkkeDeltFerdigMarkering, { skalMarkeringVises } from '../../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
+import IkkeDeltFerdigMarkering, {
+    SkalIkkeDeltFerdigMarkeringVises,
+} from '../../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
 import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
@@ -46,7 +48,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
     const { valgtAktivitet, tillatEndring, laster, underOppfolging } = props;
     const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
 
-    const markeringSkalVises = skalMarkeringVises(valgtAktivitet);
+    const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet);
 
     return (
         <div>
@@ -68,7 +70,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 </div>
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />
-                <IkkeDeltFerdigMarkering visible={markeringSkalVises} />
+                <IkkeDeltFerdigMarkering visible={deltFerdigMarkeringSkalVises} />
             </div>
             <AvtaltContainer
                 underOppfolging={underOppfolging}
