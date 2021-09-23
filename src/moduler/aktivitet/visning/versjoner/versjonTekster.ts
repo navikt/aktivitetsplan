@@ -43,7 +43,7 @@ export const endringsTekst = (erBruker: boolean, aktivitet: Aktivitet, forrigeAk
         }
         case TransaksjonsType.DEL_CV_SVART: {
             const svar = aktivitet.stillingFraNavData?.cvKanDelesData.kanDeles ? 'Ja' : 'Nei';
-            return `svarte "${svar}" på spørsmålet "Er du interessert i denne stillingen?`;
+            return `svarte "${svar}" på spørsmålet "Er du interessert i denne stillingen?"`;
         }
         default:
             return 'Gjorde noe';
