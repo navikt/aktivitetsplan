@@ -1,3 +1,4 @@
+import Lenke from 'nav-frontend-lenker';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
@@ -10,13 +11,14 @@ type Props = {
 
 export const KontaktInfoDetaljer = ({ kontaktInfo }: Props) => {
     if (!kontaktInfo) return null;
+    const href = kontaktInfo.epost ? `mailto:${kontaktInfo.epost}` : '';
     return (
         <>
             <DetaljFelt tittel="Kontaktinfo" fullbredde={true} beskrivelse={true}>
                 <Normaltekst>{kontaktInfo.navn}</Normaltekst>
                 <Normaltekst>{kontaktInfo.tittel}</Normaltekst>
                 <Normaltekst>{kontaktInfo.mobil}</Normaltekst>
-                <Normaltekst>{kontaktInfo.epost}</Normaltekst>
+                <Lenke href={href}>{kontaktInfo.epost}</Lenke>
             </DetaljFelt>
         </>
     );
