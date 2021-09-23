@@ -20,7 +20,7 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     const fristUtlopt = svarfrist && isAfter(new Date(), parseISO(svarfrist));
 
     const overskrift = 'Er du interessert i denne stillingen?';
-    const ingress = 'Du bestemmer selv om nav skal dele CV-en din på denne stillingen';
+    const ingress = 'Du bestemmer selv om NAV skal dele CV-en din på denne stillingen.';
 
     const Ingress = () => <Normaltekst className={styles.ingress}>{ingress}</Normaltekst>;
 
