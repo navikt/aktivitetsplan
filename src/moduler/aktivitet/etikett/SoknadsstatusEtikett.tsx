@@ -2,51 +2,47 @@ import classNames from 'classnames';
 import React from 'react';
 
 import * as statuskoder from '../../../constant';
-import { StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { StillingFraNavSoknadsstatus } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import styles from './etikett.module.less';
 
-const getCls = (etikettnavn?: StillingsStatus): string => {
+const getCls = (etikettnavn?: StillingFraNavSoknadsstatus): string => {
     switch (etikettnavn) {
-        case statuskoder.SOKNAD_SENDT:
-            return styles.soknadSendt;
-        case statuskoder.INNKALT_TIL_INTERVJU:
-            return styles.innkaltTilIntervju;
+        case statuskoder.VENTER:
+            return styles.venter;
+        case statuskoder.SKAL_PAA_INTERVJU:
+            return styles.skalPaaIntervju;
         case statuskoder.JOBBTILBUD:
             return styles.jobbtilbud;
         case statuskoder.AVSLAG:
             return styles.avslag;
-        case statuskoder.INGEN_VALGT:
-        case undefined:
-        case null:
-            return styles.ikkeStartet;
+        default:
+            return '';
     }
 };
 
-const getText = (etikettnavn?: StillingsStatus): string => {
+const getText = (etikettnavn?: StillingFraNavSoknadsstatus): string => {
     switch (etikettnavn) {
-        case statuskoder.SOKNAD_SENDT:
-            return 'Sendt søknad og venter på svar';
-        case statuskoder.INNKALT_TIL_INTERVJU:
+        case statuskoder.VENTER:
+            return 'Venter på å bli kontaktet';
+        case statuskoder.SKAL_PAA_INTERVJU:
             return 'Skal på intervju';
         case statuskoder.JOBBTILBUD:
             return 'Fått jobbtilbud 🎉';
         case statuskoder.AVSLAG:
             return 'Fått avslag';
-        case statuskoder.INGEN_VALGT:
-        case undefined:
-        case null:
-            return 'Ikke startet';
+        default:
+            return '';
     }
 };
 
 export interface Props {
-    etikett?: StillingsStatus;
+    etikett?: StillingFraNavSoknadsstatus;
     className?: string;
     hidden?: boolean;
 }
 
-const SokeStatusEtikett = (props: Props) => {
+const SoknadsstatusEtikett = (props: Props) => {
     const { etikett, className, hidden } = props;
 
     const cls = getCls(etikett);
@@ -58,4 +54,4 @@ const SokeStatusEtikett = (props: Props) => {
     );
 };
 
-export default SokeStatusEtikett;
+export default SoknadsstatusEtikett;

@@ -55,6 +55,16 @@ export const oppdaterReferat = (aktivitet: Aktivitet): Promise<Aktivitet> =>
 export const hentVersjonerTilAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
 
+export const oppdaterSoknadsstatus = (
+    aktivitetId: string,
+    aktivitetVersjon: string,
+    soknadsstatus: string
+): Promise<Aktivitet> =>
+    putAsJson(`${AKTIVITET_BASE_URL}/stillingFraNav/soknadStatus?aktivitetId=${aktivitetId}`, {
+        aktivitetVersjon,
+        soknadsstatus,
+    });
+
 export const hentArenaAktiviteter = (): Promise<ArenaAktivitet[]> => fetchToJson(`${AKTIVITET_BASE_URL}/arena/tiltak`);
 
 export const sendForhaandsorienteringArenaAktivitet = (

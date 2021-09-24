@@ -6,6 +6,7 @@ import { Henvendelse } from '../../../datatypes/dialogTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import SokeStatusEtikett from '../etikett/SokeStatusEtikett';
+import SoknadsstatusEtikett from '../etikett/SoknadsstatusEtikett';
 import IkkeDeltFerdigMarkering, {
     SkalIkkeDeltFerdigMarkeringVises,
 } from '../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
@@ -25,8 +26,18 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const ulesteHenvendelser = henvendelser.filter((h: Henvendelse) => !h.lest).length;
     const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(aktivitet);
     const svartMarkeringSkalVises = SkalIkkeSvartMarkeringVises(aktivitet);
+    const soknadsstatusEtikett = aktivitet.stillingFraNavData?.soknadsstatus;
 
-    if (!(avtalt || !!etikett || !!dialog || deltFerdigMarkeringSkalVises || svartMarkeringSkalVises)) {
+    if (
+        !(
+            avtalt ||
+            !!etikett ||
+            !!dialog ||
+            deltFerdigMarkeringSkalVises ||
+            svartMarkeringSkalVises ||
+            !!soknadsstatusEtikett
+        )
+    ) {
         return null;
     }
 
@@ -37,6 +48,11 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                 <UlestAvtaltMarkering aktivitet={aktivitet} />
                 <IkkeDeltFerdigMarkering visible={deltFerdigMarkeringSkalVises} />
                 <SokeStatusEtikett hidden={!etikett} etikett={etikett} className={styles.etikett} />
+                <SoknadsstatusEtikett
+                    hidden={!soknadsstatusEtikett}
+                    etikett={soknadsstatusEtikett}
+                    className={styles.etikett}
+                />
             </div>
 
             <HiddenIfDiv hidden={!dialog && henvendelser.length <= 0} className={styles.ikon}>
