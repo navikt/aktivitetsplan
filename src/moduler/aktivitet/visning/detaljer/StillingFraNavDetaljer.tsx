@@ -26,10 +26,10 @@ export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
                 <Informasjonsfelt key="arbeidssted" tittel="arbeidssted" innhold={stillingFraNavData.arbeidssted} />
                 <KontaktInfoDetaljer kontaktInfo={stillingFraNavData.kontaktpersonData} />
             </div>
-            <Knapp onClick={() => window.open(url)} mini>
+            <a href={url} className="knapp knapp--mini" target="_blank">
                 Les mer om stillingen
                 <HoyreChevron />
-            </Knapp>
+            </a>
         </>
     );
 };
