@@ -10,6 +10,7 @@ type Props = {
     stillingFraNavData: StillingFraNavAktivitetData;
 };
 const deafultBasePath = 'https://www.nav.no/arbeid/stilling/';
+/* eslint-disable react/jsx-no-target-blank */
 export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
     if (!stillingFraNavData) return null;
     // @ts-ignore
