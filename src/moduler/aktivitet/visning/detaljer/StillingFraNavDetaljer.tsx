@@ -3,7 +3,6 @@ import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 
 import { StillingFraNavAktivitetData } from '../../../../datatypes/aktivitetTypes';
-import { formatterLenke } from '../../../../utils/formatterLenke';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import styles from './AktivitetDetaljer.module.less';
 import { KontaktInfoDetaljer } from './KontaktInfoDetaljer';
@@ -14,6 +13,8 @@ type Props = {
 
 export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
     if (!stillingFraNavData) return null;
+    // @ts-ignore
+    const url = window?.aktivitetsplan?.SITLING_FRA_NAV_BASE_URL + stillingFraNavData.stillingsId;
 
     return (
         <>
@@ -22,7 +23,7 @@ export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
                 <Informasjonsfelt key="arbeidssted" tittel="arbeidssted" innhold={stillingFraNavData.arbeidssted} />
                 <KontaktInfoDetaljer kontaktInfo={stillingFraNavData.kontaktpersonData} />
             </div>
-            <Knapp onClick={() => window.open(formatterLenke(stillingFraNavData.lenke))} mini>
+            <Knapp onClick={() => window.open(url)} mini>
                 Les mer om stillingen
                 <HoyreChevron />
             </Knapp>

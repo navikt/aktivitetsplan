@@ -36,5 +36,7 @@ spec:
       value: 'true'
     - name: CONFIGURATION_LOCATION
       value: '/decorator-fss.yaml'
+    - name: PUBLIC_SITLING_FRA_NAV_BASE_URL
+      value: 'https://vis-stilling.dev.nav.no/arbeid/stilling/'
   envFrom:
     - configmap: pto-config
