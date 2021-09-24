@@ -1,5 +1,4 @@
 import { HoyreChevron } from 'nav-frontend-chevron';
-import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 
 import { StillingFraNavAktivitetData } from '../../../../datatypes/aktivitetTypes';
