@@ -14,7 +14,7 @@ const deafultBasePath = 'https://www.nav.no/arbeid/stilling/';
 export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
     if (!stillingFraNavData) return null;
     // @ts-ignore
-    const envBasePath = window?.aktivitetsplan?.SITLING_FRA_NAV_BASE_URL;
+    const envBasePath = window?.aktivitetsplan?.STILLING_FRA_NAV_BASE_URL;
     const basePath = envBasePath ? envBasePath : deafultBasePath;
 
     const url = basePath + stillingFraNavData.stillingsId;
