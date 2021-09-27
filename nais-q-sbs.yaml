@@ -35,6 +35,8 @@ spec:
       value: {{namespace}}
     - name: DITTNAV_LINK_URL
       value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
+    - name: PUBLIC_STILLING_FRA_NAV_BASE_URL
+      value: 'https://vis-stilling.dev.nav.no/arbeid/stilling/'
   envFrom:
     - configmap: pto-config
     - configmap: loginservice-idporten

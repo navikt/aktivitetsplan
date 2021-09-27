@@ -1,9 +1,7 @@
 import { HoyreChevron } from 'nav-frontend-chevron';
-import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 
 import { StillingFraNavAktivitetData } from '../../../../datatypes/aktivitetTypes';
-import { formatterLenke } from '../../../../utils/formatterLenke';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import styles from './AktivitetDetaljer.module.less';
 import { KontaktInfoDetaljer } from './KontaktInfoDetaljer';
@@ -11,9 +9,15 @@ import { KontaktInfoDetaljer } from './KontaktInfoDetaljer';
 type Props = {
     stillingFraNavData: StillingFraNavAktivitetData;
 };
-
+const deafultBasePath = 'https://www.nav.no/arbeid/stilling/';
+/* eslint-disable react/jsx-no-target-blank */
 export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
     if (!stillingFraNavData) return null;
+    // @ts-ignore
+    const envBasePath = window?.aktivitetsplan?.STILLING_FRA_NAV_BASE_URL;
+    const basePath = envBasePath ? envBasePath : deafultBasePath;
+
+    const url = basePath + stillingFraNavData.stillingsId;
 
     return (
         <>
@@ -22,10 +26,10 @@ export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
                 <Informasjonsfelt key="arbeidssted" tittel="arbeidssted" innhold={stillingFraNavData.arbeidssted} />
                 <KontaktInfoDetaljer kontaktInfo={stillingFraNavData.kontaktpersonData} />
             </div>
-            <Knapp onClick={() => window.open(formatterLenke(stillingFraNavData.lenke))} mini>
+            <a href={url} className="knapp knapp--mini" target="_blank">
                 Les mer om stillingen
                 <HoyreChevron />
-            </Knapp>
+            </a>
         </>
     );
 };

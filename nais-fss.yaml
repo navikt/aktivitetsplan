@@ -42,5 +42,7 @@ spec:
       value: 'true'
     - name: CONFIGURATION_LOCATION
       value: '/decorator-fss.yaml'
+    - name: PUBLIC_STILLING_FRA_NAV_BASE_URL #hvis man endrer denne husk og endre deafult i js også
+      value: 'https://www.nav.no/arbeid/stilling/'
   envFrom:
     - configmap: pto-config
