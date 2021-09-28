@@ -746,7 +746,7 @@ export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles },
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterSoknadsstatus(__params, { aktivitetVersjon, soknadsstatus }, { aktivitetId }) {
+export function oppdaterStillingFraNavSoknadsstatus(__params, { aktivitetVersjon, soknadsstatus }, { aktivitetId }) {
     const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         stillingFraNavData: {

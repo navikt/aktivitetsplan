@@ -13,7 +13,7 @@ import {
     oppdaterCVKanDelesSvar,
     oppdaterEtikett,
     oppdaterLestFho,
-    oppdaterSoknadsstatus,
+    oppdaterStillingFraNavSoknadsstatus,
     opprettAktivitet,
     publiserReferat,
 } from './aktivitet';
@@ -176,7 +176,7 @@ mock.put('/veilarbaktivitet/api/stillingFraNav/kanDeleCV', failOrGetResponse(akt
 
 mock.put(
     '/veilarbaktivitet/api/stillingFraNav/soknadStatus',
-    failOrGetResponse(aktivitetFeilet, oppdaterSoknadsstatus)
+    failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus)
 );
 
 //veilarbperson-api

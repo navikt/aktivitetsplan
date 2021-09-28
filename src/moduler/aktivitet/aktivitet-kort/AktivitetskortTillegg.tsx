@@ -26,7 +26,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const ulesteHenvendelser = henvendelser.filter((h: Henvendelse) => !h.lest).length;
     const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(aktivitet);
     const svartMarkeringSkalVises = SkalIkkeSvartMarkeringVises(aktivitet);
-    const soknadsstatusEtikett = aktivitet.stillingFraNavData?.soknadsstatus;
+    const stillingFraNavSoknadsstatus = aktivitet.stillingFraNavData?.soknadsstatus;
 
     if (
         !(
@@ -35,7 +35,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
             !!dialog ||
             deltFerdigMarkeringSkalVises ||
             svartMarkeringSkalVises ||
-            !!soknadsstatusEtikett
+            !!stillingFraNavSoknadsstatus
         )
     ) {
         return null;
@@ -49,8 +49,8 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                 <IkkeDeltFerdigMarkering visible={deltFerdigMarkeringSkalVises} />
                 <SokeStatusEtikett hidden={!etikett} etikett={etikett} className={styles.etikett} />
                 <SoknadsstatusEtikett
-                    hidden={!soknadsstatusEtikett}
-                    etikett={soknadsstatusEtikett}
+                    hidden={!stillingFraNavSoknadsstatus}
+                    etikett={stillingFraNavSoknadsstatus}
                     className={styles.etikett}
                 />
             </div>

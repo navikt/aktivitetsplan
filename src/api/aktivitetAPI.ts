@@ -55,7 +55,7 @@ export const oppdaterReferat = (aktivitet: Aktivitet): Promise<Aktivitet> =>
 export const hentVersjonerTilAktivitet = (aktivitet: Aktivitet): Promise<Aktivitet> =>
     fetchToJson(`${AKTIVITET_BASE_URL}/aktivitet/${aktivitet.id}/versjoner`);
 
-export const oppdaterSoknadsstatus = (
+export const oppdaterStillingFraNavSoknadsstatus = (
     aktivitetId: string,
     aktivitetVersjon: string,
     soknadsstatus: string

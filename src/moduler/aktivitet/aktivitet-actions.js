@@ -89,8 +89,8 @@ export function oppdaterCVSvar(aktivitetId, aktivitetVersjon, kanDeles) {
     });
 }
 
-export function oppdaterSoknadsstatus(aktivitetId, aktivitetVersjon, soknadsstatus) {
-    return doThenDispatch(() => Api.oppdaterSoknadsstatus(aktivitetId, aktivitetVersjon, soknadsstatus), {
+export function oppdaterStillingFraNavSoknadsstatus(aktivitetId, aktivitetVersjon, soknadsstatus) {
+    return doThenDispatch(() => Api.oppdaterStillingFraNavSoknadsstatus(aktivitetId, aktivitetVersjon, soknadsstatus), {
         OK: AT.OPPDATER_OK,
         FEILET: AT.OPPDATER_FEILET,
         PENDING: AT.OPPDATER,

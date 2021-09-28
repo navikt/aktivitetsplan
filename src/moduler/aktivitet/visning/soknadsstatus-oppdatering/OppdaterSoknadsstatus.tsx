@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 
 import { Aktivitet, StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
-import { oppdaterSoknadsstatus } from '../../aktivitet-actions';
+import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import SoknadsstatusEtikett from '../../etikett/SoknadsstatusEtikett';
 import EndreLinje from '../endre-linje/endre-linje';
@@ -26,7 +26,7 @@ const lagreSoknadsstatus = (dispatch: Dispatch, value: SoknadsstatusValue, aktiv
         return Promise.resolve();
     }
 
-    return oppdaterSoknadsstatus(aktivitet.id, aktivitet.versjon, soknadsstatus)(dispatch);
+    return oppdaterStillingFraNavSoknadsstatus(aktivitet.id, aktivitet.versjon, soknadsstatus)(dispatch);
 };
 
 interface Props {
