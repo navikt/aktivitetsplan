@@ -366,6 +366,7 @@ const testAktiviteter = !visTestAktiviteter()
                       tittel: 'Daglig leder',
                       epost: 'odd.fellow@oddfellow.no',
                   },
+                  soknadsstatus: 'VENTER',
               },
           }),
       ];
@@ -739,7 +740,20 @@ export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles },
                 endretAv: bruker ? '843029483' : 'z123',
                 endretAvType: bruker,
             },
+            soknadsstatus: kanDeles ? 'VENTER' : null,
         },
+    };
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
+}
+
+export function oppdaterStillingFraNavSoknadsstatus(__params, { aktivitetVersjon, soknadsstatus }, { aktivitetId }) {
+    const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    const nyeAktivitetAttributter = {
+        stillingFraNavData: {
+            ...gammelAktivitet.stillingFraNavData,
+            soknadsstatus: soknadsstatus,
+        },
+        transaksjonsType: 'SOKNADSSTATUS_ENDRET',
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }

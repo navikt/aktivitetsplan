@@ -13,6 +13,7 @@ import {
     oppdaterCVKanDelesSvar,
     oppdaterEtikett,
     oppdaterLestFho,
+    oppdaterStillingFraNavSoknadsstatus,
     opprettAktivitet,
     publiserReferat,
 } from './aktivitet';
@@ -172,6 +173,11 @@ mock.put('/veilarbaktivitet/api/avtaltMedNav', failOrGetResponse(aktivitetFeilet
 mock.put('/veilarbaktivitet/api/avtaltMedNav/lest', failOrGetResponse(aktivitetFeilet, oppdaterLestFho));
 
 mock.put('/veilarbaktivitet/api/stillingFraNav/kanDeleCV', failOrGetResponse(aktivitetFeilet, oppdaterCVKanDelesSvar));
+
+mock.put(
+    '/veilarbaktivitet/api/stillingFraNav/soknadStatus',
+    failOrGetResponse(aktivitetFeilet, oppdaterStillingFraNavSoknadsstatus)
+);
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/person/:fnr', ({ pathParams }, res, ctx) => res(ctx.json(getPerson(pathParams.fnr))));
