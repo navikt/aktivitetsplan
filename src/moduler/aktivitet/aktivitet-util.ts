@@ -2,7 +2,13 @@ import 'moment-duration-format';
 
 import moment, { DurationInputArg1 } from 'moment';
 
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import {
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+    STILLING_FRA_NAV_TYPE,
+} from '../../constant';
 import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
 import { erMerEnnEnManederSiden } from '../../utils';
@@ -27,16 +33,29 @@ function samenlingDato(a?: string, b?: string): number {
 }
 
 export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
-    if (b.avtalt && !a.avtalt) {
-        return 1;
-    }
-    if (!b.avtalt && a.avtalt) {
-        return -1;
-    }
+    const aIkkeSvartMarkering = ikkeSvartMarkeringSkalVises(a);
+    const bIkkeSvartMarkering = ikkeSvartMarkeringSkalVises(b);
+
+    if (bIkkeSvartMarkering && !aIkkeSvartMarkering) return 1;
+    if (!bIkkeSvartMarkering && aIkkeSvartMarkering) return -1;
+
+    if (b.avtalt && !a.avtalt) return 1;
+    if (!b.avtalt && a.avtalt) return -1;
+
     const manglerFraDato = !!a.fraDato || !!b.fraDato;
     const fradato = samenlingDato(a.fraDato, b.fraDato);
 
     return fradato === 0 || manglerFraDato ? samenlingDato(a.opprettetDato, b.opprettetDato) : fradato;
+}
+
+export function ikkeSvartMarkeringSkalVises(aktivitet: Aktivitet): boolean {
+    const erStillingFraNav = aktivitet.type === STILLING_FRA_NAV_TYPE;
+    const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
+    const status = aktivitet.status;
+    const historisk = aktivitet.historisk;
+    const ikkeAktiv = status === STATUS_AVBRUTT || status === STATUS_FULLFOERT || !!historisk;
+
+    return erStillingFraNav && harIkkeSvart && !ikkeAktiv;
 }
 
 export function erNyEndringIAktivitet(aktivitet: Aktivitet, lestInformasjon: Lest, me: Me): boolean {
