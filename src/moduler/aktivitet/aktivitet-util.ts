@@ -141,6 +141,19 @@ export function formatterKlokkeslett(klokkeslett: DurationInputArg1): string {
     return formatterVarighet(klokkeslett);
 }
 
+export function formatterTelefonnummer(telefonnummer: string): string {
+    let utenSpace = telefonnummer.replace(/ /g, '');
+
+    if (utenSpace.length !== 8) {
+        return telefonnummer;
+    } else if (utenSpace.substring(0, 3) === '800') {
+        return `${utenSpace.substring(0, 3)} ${utenSpace.substring(3, 5)} ${utenSpace.substring(5)}`;
+    } else {
+        const numberPairs = utenSpace.match(/.{1,2}/g);
+        return numberPairs ? numberPairs.join(' ') : telefonnummer;
+    }
+}
+
 function moteManglerPubliseringAvSamtalereferat(type: AktivitetType, erReferatPublisert?: boolean): boolean {
     return type === MOTE_TYPE && !erReferatPublisert;
 }
