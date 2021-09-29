@@ -8,7 +8,7 @@ import { datePickerToISODate } from '../../../utils';
 import { FieldStateInput } from '../input/inputTypes';
 import styles from './datovelger.module.less';
 
-function DatoFeil(props: { feil?: string }) {
+export function DatoFeil(props: { feil?: string }) {
     if (!props.feil) {
         return null;
     }
@@ -16,7 +16,6 @@ function DatoFeil(props: { feil?: string }) {
 }
 
 interface Props {
-    touched: boolean;
     error?: string;
     label: string;
     input: FieldStateInput;

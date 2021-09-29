@@ -300,7 +300,7 @@ const testAktiviteter = !visTestAktiviteter()
                   arbeidsgiver: 'Havsalt AS',
                   arbeidssted: 'Kristiansand',
                   lenke: 'www.nav.no',
-                  svarfrist: '2021-09-29T10:46:51.622+01:00',
+                  svarfrist: '2030-09-29T10:46:51.622+01:00',
                   kontaktpersonData: {
                       navn: 'Harry Potter',
                       tittel: 'NAV-ansatt',
@@ -726,7 +726,7 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles }, { aktivitetId }) {
+export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles, avtaltDato }, { aktivitetId }) {
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         status: kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
@@ -736,6 +736,7 @@ export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles },
             cvKanDelesData: {
                 kanDeles: kanDeles,
                 endretTidspunkt: new Date(),
+                avtaltDato: avtaltDato,
                 endretAv: bruker ? '843029483' : 'z123',
                 endretAvType: bruker,
             },

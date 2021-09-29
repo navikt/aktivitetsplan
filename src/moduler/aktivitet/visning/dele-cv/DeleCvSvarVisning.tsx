@@ -32,7 +32,7 @@ export const DeleCvSvarVisning = ({ overskrift, Ingress, cvKanDelesData }: Props
             </AlertStripeInfo>
         ) : null;
 
-    return (
+    const BrukerHarSvart = () => (
         <EkspanderbarLinje
             tittel={<TittelMedCvSvar />}
             aapneTittel={<Tittel />}
@@ -48,4 +48,17 @@ export const DeleCvSvarVisning = ({ overskrift, Ingress, cvKanDelesData }: Props
             <Infostripe />
         </EkspanderbarLinje>
     );
+
+    const SaksBehandlerHarSvartPaaVegneAvBruker = () => (
+        <>
+            <Tittel />
+            <Normaltekst className={styles.deleCVSvarTekst}>
+                NAV var i kontakt med deg {formaterDatoManed(cvKanDelesData.avtaltDato)}. Du sa{' '}
+                {cvKanDeles ? 'ja' : 'nei'} til at CV-en din deles med arbeidsgiver. NAV svarte på vegne av deg{' '}
+                {formaterDatoManed(cvKanDelesData.endretTidspunkt)}.
+            </Normaltekst>
+        </>
+    );
+
+    return cvKanDelesData.endretAvType === 'NAV' ? <SaksBehandlerHarSvartPaaVegneAvBruker /> : <BrukerHarSvart />;
 };
