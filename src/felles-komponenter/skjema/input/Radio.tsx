@@ -1,4 +1,4 @@
-import { Radio as NavRadio } from 'nav-frontend-skjema';
+import { Radio as NavRadio, RadioPanel as NavRadioPanel } from 'nav-frontend-skjema';
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
@@ -26,4 +26,10 @@ const Radio = (props: RadioProps) => {
     return <NavRadio {...inputProps} value={value} checked={value === input.value} id={`id--${value}`} />;
 };
 
+export const RadioPanel = (props: RadioProps) => {
+    const { value, touched, error, input, pristine, initialValue, setValue, ...rest } = props;
+    const inputProps = { ...input, ...rest };
+
+    return <NavRadioPanel {...inputProps} value={value} checked={value === input.value} id={`id--${value}`} />;
+};
 export default Radio;

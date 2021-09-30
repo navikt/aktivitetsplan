@@ -1,14 +1,14 @@
 import useFormstate from '@nutgaard/use-formstate';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { RadioGruppe } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
-import Radio from '../../../../felles-komponenter/skjema/input/Radio';
+import { RadioPanel } from '../../../../felles-komponenter/skjema/input/Radio';
 import { formaterDatoManed } from '../../../../utils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
@@ -83,22 +83,22 @@ export const MeldInteresseForStilling = ({ aktivitet, overskrift, Ingress }: Pro
     return (
         <form className={detaljVisningStyles.underseksjon} onSubmit={state.onSubmit(onSubmit)}>
             <HeaderMedIngress />
-            <RadioGruppe feil={state.submittoken && state.fields.kanDeles.error}>
-                <Radio
+            <SkjemaGruppe className="inputPanelGruppe" feil={state.submittoken && state.fields.kanDeles.error}>
+                <RadioPanel
                     label={JaSvarTekst}
                     value={SvarType.JA.toString()}
                     {...state.fields.kanDeles}
                     input={{ ...state.fields.kanDeles.input, onChange: onChange }}
                 />
-                <Radio
+                <RadioPanel
                     label={NeiSvarTekst}
                     value={SvarType.NEI.toString()}
                     {...state.fields.kanDeles}
                     input={{ ...state.fields.kanDeles.input, onChange: onChange }}
                 />
-            </RadioGruppe>
+            </SkjemaGruppe>
             {infoTekst && <AlertStripe children={infoTekst} type="info" form="inline" className={styles.infoboks} />}
-            <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
+            {erVeileder && <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />}
             <Hovedknapp children="Lagre" mini className={styles.knapp} />
         </form>
     );
