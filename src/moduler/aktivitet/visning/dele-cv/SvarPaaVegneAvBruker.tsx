@@ -20,16 +20,20 @@ export const SvarPaaVegneAvBruker = ({ formhandler }: Props) => {
 
     const Tittel = () => <p>{overskrift}</p>;
 
-    return erVeileder ? (
-        <div>
-            <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>
-            <Panel border>
-                <div className={styles.boks}>
-                    <Tittel />
-                    <DatovelgerWrapper input={formhandler.input} label={ingress} />
-                </div>
-            </Panel>
-            <DatoFeil feil={formhandler.touched ? formhandler.error : undefined} />
-        </div>
-    ) : null;
+    if (erVeileder) {
+        return (
+            <div>
+                <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>
+                <Panel border>
+                    <div className={styles.boks}>
+                        <Tittel />
+                        <DatovelgerWrapper input={formhandler.input} label={ingress} />
+                    </div>
+                </Panel>
+                <DatoFeil feil={formhandler.touched ? formhandler.error : undefined} />
+            </div>
+        );
+    } else {
+        return null;
+    }
 };
