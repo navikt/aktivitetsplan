@@ -15,6 +15,8 @@ export function DatoFeil(props: { feil?: string }) {
     return <SkjemaelementFeilmelding>{props.feil}</SkjemaelementFeilmelding>;
 }
 
+interface BaseDatePickerProps extends Omit<DatepickerProps, 'inputProps' | 'onChange'> {}
+
 interface Props {
     error?: string;
     label: string;
@@ -22,10 +24,45 @@ interface Props {
     required?: boolean;
 }
 
-function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | 'onChange'>) {
-    const { label, error, input, required } = props;
+function DatovelgerWrapper(props: Props & BaseDatePickerProps) {
+    const { label, error, input } = props;
     const [touched, setTouched] = useState(false);
     const feil = error && touched ? error : undefined;
+
+    const cls = classNames(styles.datovelger, { [styles.harFeil]: !!feil });
+
+    return (
+        <div className={cls}>
+            <Label htmlFor={input.id}>{label}</Label>
+            <DatovelgerWrapperInternal {...props} error={!!error} touched={touched} setTouched={setTouched} />
+            <DatoFeil feil={feil} />
+        </div>
+    );
+}
+
+interface BaseProps extends BaseDatePickerProps {
+    input: FieldStateInput;
+    required?: boolean;
+    error?: boolean;
+}
+
+export function DatovelgerWrapperBase(props: BaseProps) {
+    const [touched, setTouched] = useState(false);
+    return <DatovelgerWrapperInternal {...props} touched={touched} setTouched={setTouched} />;
+}
+
+interface InternalProps {
+    input: FieldStateInput;
+    required?: boolean;
+    error?: boolean;
+    touched: boolean;
+    setTouched: (touched: boolean) => void;
+}
+
+function DatovelgerWrapperInternal(props: InternalProps & Omit<DatepickerProps, 'inputProps' | 'onChange'>) {
+    const { input, required, error, touched, setTouched } = props;
+
+    const feil = error && touched;
 
     const { onChange, name } = input;
     const _onChange = (date?: string) => {
@@ -39,14 +76,12 @@ function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | '
 
     const day = input.value ? dayjs(input.value).startOf('day').format('YYYY-MM-DD') : '';
 
-    const cls = classNames(styles.datovelger, { [styles.harFeil]: !!feil });
+    const cls = classNames({ [styles.harFeil]: feil });
     const datovelgerInput = { ...input, placeholder: 'dd.mm.åååå', required };
 
     return (
         <div className={cls}>
-            <Label htmlFor={input.id}>{label}</Label>
             <Datovelger {...props} inputProps={datovelgerInput} onChange={_onChange} value={day} />
-            <DatoFeil feil={feil} />
         </div>
     );
 }

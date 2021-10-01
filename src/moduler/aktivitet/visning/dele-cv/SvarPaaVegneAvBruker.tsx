@@ -1,10 +1,13 @@
 import { FieldState } from '@nutgaard/use-formstate';
+import classNames from 'classnames';
 import Panel from 'nav-frontend-paneler';
+import { Label } from 'nav-frontend-skjema';
+import { Element as NavElement } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import EtikettBase from '../../../../felles-komponenter/etikett-base/EtikettBase';
-import DatovelgerWrapper, { DatoFeil } from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
+import { DatoFeil, DatovelgerWrapperBase } from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import styles from './SvarPaaVegneAvBruker.module.less';
 
@@ -17,17 +20,18 @@ export const SvarPaaVegneAvBruker = ({ formhandler }: Props) => {
 
     if (!erVeileder) return null;
 
-    const overskrift = 'Svar på vegne av brukeren';
-    const ingress = 'Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren?';
+    const feil = formhandler.touched && formhandler.error;
 
-    const Tittel = () => <p>{overskrift}</p>;
-
+    const cls = classNames(styles.svarPaaVegneAvBruker, { [styles.feil]: !!feil });
     return (
-        <div>
+        <div className={cls}>
             <EtikettBase className={styles.etikett}>FOR NAV-ANSATT</EtikettBase>
-            <Panel border>
-                <Tittel />
-                <DatovelgerWrapper input={formhandler.input} label={ingress} />
+            <Panel border className={styles.panel}>
+                <NavElement>Svar på vegne av brukeren</NavElement>
+                <Label className={styles.label} htmlFor={formhandler.input.id}>
+                    Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren?
+                </Label>
+                <DatovelgerWrapperBase input={formhandler.input} error={!!feil} required={false} />
             </Panel>
             <DatoFeil feil={formhandler.touched ? formhandler.error : undefined} />
         </div>
