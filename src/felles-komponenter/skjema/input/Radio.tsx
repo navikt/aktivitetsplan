@@ -27,9 +27,11 @@ const Radio = (props: RadioProps) => {
 };
 
 export const RadioPanel = (props: RadioProps) => {
-    const { value, touched, error, input, pristine, initialValue, setValue, ...rest } = props;
+    const { value, touched, error, input, pristine, initialValue, setValue, id, ...rest } = props;
     const inputProps = { ...input, ...rest };
 
-    return <NavRadioPanel {...inputProps} value={value} checked={value === input.value} id={`id--${value}`} />;
+    return (
+        <NavRadioPanel {...inputProps} value={value} checked={value === input.value} id={id ? id : `id--${value}`} />
+    );
 };
 export default Radio;

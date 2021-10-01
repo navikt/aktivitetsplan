@@ -85,6 +85,7 @@ export const MeldInteresseForStilling = ({ aktivitet, overskrift, Ingress }: Pro
             <HeaderMedIngress />
             <SkjemaGruppe className="inputPanelGruppe" feil={state.submittoken && state.fields.kanDeles.error}>
                 <RadioPanel
+                    id="kanDeles"
                     label={JaSvarTekst}
                     value={SvarType.JA.toString()}
                     {...state.fields.kanDeles}
