@@ -21,7 +21,8 @@ export const SvarPaaVegneAvBruker = ({ formhandler }: Props) => {
     if (!erVeileder) return null;
 
     const feil = formhandler.touched && formhandler.error;
-
+    // TODO problemer med å få fokus til neste input når dato er fylt ut
+    // TODO når dato er fylt ut med tekst, mister datokomponenten teksten når neste felt velges
     const cls = classNames(styles.svarPaaVegneAvBruker, { [styles.feil]: !!feil });
     return (
         <div className={cls}>
