@@ -32,7 +32,19 @@ export const DeleCvSvarVisning = ({ overskrift, Ingress, cvKanDelesData }: Props
             </AlertStripeInfo>
         ) : null;
 
-    const BrukerHarSvart = () => (
+    // TODO Tekst tar ikke hensyn til pålogget brukertype. Er dette ok?
+    var svarTekst: string, endretTekst: string;
+    if (cvKanDelesData.endretAvType === 'BRUKER') {
+        svarTekst = cvKanDeles ? JaSvarTekst : NeiSvarTekst;
+        endretTekst = `Du svarte ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}`;
+    } else {
+        svarTekst = `NAV var i kontakt med deg ${formaterDatoManed(cvKanDelesData.avtaltDato)}. Du sa ${
+            cvKanDeles ? 'ja' : 'nei'
+        } til at CV-en din deles med arbeidsgiver.`;
+        endretTekst = `NAV svarte på vegne av deg ${formaterDatoManed(cvKanDelesData.endretTidspunkt)}.`;
+    }
+
+    return (
         <EkspanderbarLinje
             tittel={<TittelMedCvSvar />}
             aapneTittel={<Tittel />}
@@ -41,24 +53,9 @@ export const DeleCvSvarVisning = ({ overskrift, Ingress, cvKanDelesData }: Props
             lukkeTekst="Lukk"
         >
             <Ingress />
-            <Normaltekst className={styles.deleCVSvarTekst}>{cvKanDeles ? JaSvarTekst : NeiSvarTekst}</Normaltekst>
-            <Normaltekst className={styles.endretTidspunkt}>
-                Du svarte {formaterDatoManed(cvKanDelesData.endretTidspunkt)}
-            </Normaltekst>
+            <Normaltekst className={styles.deleCVSvarTekst}>{svarTekst}</Normaltekst>
+            <Normaltekst className={styles.endretTidspunkt}>{endretTekst}</Normaltekst>
             <Infostripe />
         </EkspanderbarLinje>
     );
-
-    const SaksBehandlerHarSvartPaaVegneAvBruker = () => (
-        <>
-            <Tittel />
-            <Normaltekst className={styles.deleCVSvarTekst}>
-                NAV var i kontakt med deg {formaterDatoManed(cvKanDelesData.avtaltDato)}. Du sa{' '}
-                {cvKanDeles ? 'ja' : 'nei'} til at CV-en din deles med arbeidsgiver. NAV svarte på vegne av deg{' '}
-                {formaterDatoManed(cvKanDelesData.endretTidspunkt)}.
-            </Normaltekst>
-        </>
-    );
-
-    return cvKanDelesData.endretAvType === 'NAV' ? <SaksBehandlerHarSvartPaaVegneAvBruker /> : <BrukerHarSvart />;
 };
