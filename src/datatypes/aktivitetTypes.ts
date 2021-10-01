@@ -119,7 +119,6 @@ export interface KontaktInfo {
     navn: string;
     tittel: string;
     mobil: string;
-    epost: string;
 }
 
 export interface StillingFraNavAktivitetData {
