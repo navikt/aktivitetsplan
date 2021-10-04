@@ -7,7 +7,6 @@ import {
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
-    STILLING_FRA_NAV_TYPE,
 } from '../../../../constant';
 import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
@@ -20,7 +19,6 @@ import IkkeDeltFerdigMarkering, {
 import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
-import { DeleCvContainer } from '../dele-cv/DeleCvContainer';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
 import styles from './AktivitetinformasjonVisning.module.less';
@@ -80,7 +78,6 @@ const AktivitetinformasjonVisning = (props: Props) => {
             <div className={aktivitetsvisningStyles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && <DeleCvContainer aktivitet={valgtAktivitet} />}
             <DeleLinje />
         </div>
     );

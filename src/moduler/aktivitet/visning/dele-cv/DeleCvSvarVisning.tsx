@@ -5,16 +5,16 @@ import React from 'react';
 import { CvKanDelesData } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoManed } from '../../../../utils';
+import { Ingress } from './DeleCvContainer';
 import styles from './DeleCvSvarVisning.module.less';
 import { JaSvarTekst, NeiSvarTekst } from './tekster';
 
 interface Props {
     overskrift: string;
-    Ingress: () => JSX.Element;
     cvKanDelesData: CvKanDelesData;
 }
 
-export const DeleCvSvarVisning = ({ overskrift, Ingress, cvKanDelesData }: Props) => {
+export const DeleCvSvarVisning = ({ overskrift, cvKanDelesData }: Props) => {
     const cvKanDeles = cvKanDelesData.kanDeles;
 
     const Tittel = () => <Normaltekst>{overskrift}</Normaltekst>;
@@ -32,7 +32,6 @@ export const DeleCvSvarVisning = ({ overskrift, Ingress, cvKanDelesData }: Props
             </AlertStripeInfo>
         ) : null;
 
-    // TODO Tekst tar ikke hensyn til pålogget brukertype. Er dette ok?
     var svarTekst: string, endretTekst: string;
     if (cvKanDelesData.endretAvType === 'BRUKER') {
         svarTekst = cvKanDeles ? JaSvarTekst : NeiSvarTekst;
