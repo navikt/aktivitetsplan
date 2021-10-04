@@ -146,7 +146,7 @@ export function formatterTelefonnummer(telefonnummer: string): string {
 
     if (utenSpace.length !== 8) {
         return telefonnummer;
-    } else if (utenSpace.substring(0, 3) === '800') {
+    } else if (utenSpace.startsWith('8')) {
         return `${utenSpace.substring(0, 3)} ${utenSpace.substring(3, 5)} ${utenSpace.substring(5)}`;
     } else {
         const numberPairs = utenSpace.match(/.{1,2}/g);
