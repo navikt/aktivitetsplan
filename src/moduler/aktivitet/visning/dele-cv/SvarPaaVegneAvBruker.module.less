@@ -1,0 +1,23 @@
+@import (reference) '~nav-frontend-core/less/core';
+
+.etikett {
+    color: @navGra40;
+    display: flex;
+    justify-content: flex-end;
+}
+.svarPaaVegneAvBruker {
+    .label {
+        font-weight: normal;
+        margin-top: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+}
+.feil {
+    .etikett {
+        color: @redError;
+    }
+    .panel {
+        border-color: @redError;
+        box-shadow: 0 0 0 1px @redError;
+    }
+}

@@ -2,6 +2,7 @@ import { isAfter, parseISO } from 'date-fns';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
+import { STILLING_FRA_NAV_TYPE } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
 import styles from './DeleCvContainer.module.less';
@@ -13,34 +14,45 @@ interface PropTypes {
     aktivitet: Aktivitet;
 }
 
+export const Ingress = () => (
+    <Normaltekst className={styles.ingress}>
+        Du bestemmer selv om NAV skal dele CV-en din på denne stillingen.
+    </Normaltekst>
+);
+export const overskrift = 'Er du interessert i denne stillingen?';
+
 export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     const stillingFraNavData = aktivitet.stillingFraNavData;
     const cvKanDelesSvar = stillingFraNavData && stillingFraNavData?.cvKanDelesData;
     const svarfrist = stillingFraNavData?.svarfrist;
     const fristUtlopt = svarfrist && isAfter(new Date(), parseISO(svarfrist));
 
-    const overskrift = 'Er du interessert i denne stillingen?';
-    const ingress = 'Du bestemmer selv om NAV skal dele CV-en din på denne stillingen.';
+    if (aktivitet.type !== STILLING_FRA_NAV_TYPE) {
+        return null;
+    }
 
-    const Ingress = () => <Normaltekst className={styles.ingress}>{ingress}</Normaltekst>;
-
-    if (!cvKanDelesSvar && fristUtlopt && svarfrist) {
+    if (cvKanDelesSvar) {
         return (
             <>
+                <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} overskrift={overskrift} />
                 <DeleLinje />
-                <DeleCVFristUtloptVisning overskrift={overskrift} Ingress={Ingress} svarfrist={svarfrist} />
+            </>
+        );
+    }
+
+    if (fristUtlopt && svarfrist) {
+        return (
+            <>
+                <DeleCVFristUtloptVisning overskrift={overskrift} svarfrist={svarfrist} />
+                <DeleLinje />
             </>
         );
     }
 
     return (
         <>
+            <MeldInteresseForStilling aktivitet={aktivitet} overskrift={overskrift} />
             <DeleLinje />
-            {cvKanDelesSvar ? (
-                <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} overskrift={overskrift} Ingress={Ingress} />
-            ) : (
-                <MeldInteresseForStilling aktivitet={aktivitet} overskrift={overskrift} Ingress={Ingress} />
-            )}
         </>
     );
 };

@@ -111,6 +111,7 @@ export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
 export interface CvKanDelesData {
     kanDeles: boolean;
     endretTidspunkt: Date;
+    avtaltDato: Date;
     endretAv: string;
     endretAvType: BrukerType;
 }
