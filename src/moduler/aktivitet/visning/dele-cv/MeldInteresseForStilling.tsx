@@ -101,7 +101,9 @@ export const MeldInteresseForStilling = ({ aktivitet, overskrift }: PropTypes) =
             </RadioGruppe>
             {infoTekst && <AlertStripe children={infoTekst} type="info" form="inline" className={styles.infoboks} />}
             {erVeileder && <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />}
-            <Hovedknapp children="Lagre" mini className={styles.knapp} />
+            <Hovedknapp mini className={styles.knapp} disabled={state.submitting}>
+                Lagre
+            </Hovedknapp>
         </form>
     );
 };

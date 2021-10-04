@@ -24,7 +24,7 @@ interface Props {
     required?: boolean;
 }
 
-function Datovelger(props: Props & Omit<DatepickerProps, 'inputProps' | 'onChange'>) {
+function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | 'onChange'>) {
     const { label, error, input, required, labelClassName } = props;
     const [touched, setTouched] = useState(false);
     const feil = error && touched ? error : undefined;
@@ -55,4 +55,4 @@ function Datovelger(props: Props & Omit<DatepickerProps, 'inputProps' | 'onChang
     );
 }
 
-export default Datovelger;
+export default DatovelgerWrapper;
