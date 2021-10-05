@@ -17,7 +17,6 @@ export const KontaktInfoDetaljer = ({ kontaktInfo }: Props) => {
                 <Normaltekst>{kontaktInfo.navn}</Normaltekst>
                 <Normaltekst>{kontaktInfo.tittel}</Normaltekst>
                 <Normaltekst>{formatterTelefonnummer(kontaktInfo.mobil)}</Normaltekst>
-                <Normaltekst>{kontaktInfo.epost}</Normaltekst>
             </DetaljFelt>
         </>
     );
