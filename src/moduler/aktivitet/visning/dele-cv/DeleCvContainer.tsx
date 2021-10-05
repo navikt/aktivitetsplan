@@ -22,12 +22,11 @@ export const Ingress = () => (
 export const overskrift = 'Er du interessert i denne stillingen?';
 
 export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
-    const [startAapen, setStartAapen] = useState(false);
-
     const stillingFraNavData = aktivitet.stillingFraNavData;
     const cvKanDelesSvar = stillingFraNavData && stillingFraNavData?.cvKanDelesData;
     const svarfrist = stillingFraNavData?.svarfrist;
     const fristUtlopt = svarfrist && isAfter(new Date(), parseISO(svarfrist));
+    const [startCvSvarVisningAapen] = useState(!cvKanDelesSvar);
 
     if (aktivitet.type !== STILLING_FRA_NAV_TYPE) {
         return null;
@@ -36,7 +35,11 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     if (cvKanDelesSvar) {
         return (
             <>
-                <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} overskrift={overskrift} startAapen={startAapen} />
+                <DeleCvSvarVisning
+                    cvKanDelesData={cvKanDelesSvar}
+                    overskrift={overskrift}
+                    startAapen={startCvSvarVisningAapen}
+                />
                 <DeleLinje />
             </>
         );
@@ -53,11 +56,7 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
 
     return (
         <>
-            <MeldInteresseForStilling
-                aktivitet={aktivitet}
-                overskrift={overskrift}
-                setStartAapenTilTrue={() => setStartAapen(true)}
-            />
+            <MeldInteresseForStilling aktivitet={aktivitet} overskrift={overskrift} />
             <DeleLinje />
         </>
     );
