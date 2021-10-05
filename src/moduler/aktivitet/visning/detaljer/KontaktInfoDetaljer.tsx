@@ -16,7 +16,7 @@ export const KontaktInfoDetaljer = ({ kontaktInfo }: Props) => {
             <DetaljFelt tittel="Kontaktinfo" fullbredde={true} beskrivelse={true}>
                 <Normaltekst>{kontaktInfo.navn}</Normaltekst>
                 <Normaltekst>{kontaktInfo.tittel}</Normaltekst>
-                <Normaltekst>{formatterTelefonnummer(kontaktInfo.mobil)}</Normaltekst>
+                <Normaltekst>{kontaktInfo.mobil != null && formatterTelefonnummer(kontaktInfo.mobil)}</Normaltekst>
             </DetaljFelt>
         </>
     );
