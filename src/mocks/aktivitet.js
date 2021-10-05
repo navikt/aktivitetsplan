@@ -305,7 +305,6 @@ const testAktiviteter = !visTestAktiviteter()
                       navn: 'Harry Potter',
                       tittel: 'NAV-ansatt',
                       mobil: '+47 99999999',
-                      epost: 'harry.potter@nav.no',
                   },
               },
           }),
@@ -333,7 +332,6 @@ const testAktiviteter = !visTestAktiviteter()
                       navn: 'Sykfest Strutle',
                       tittel: 'NAV-ansatt',
                       mobil: '+47 99009900',
-                      epost: 'sylfest.strutle@nav.no',
                   },
               },
           }),
@@ -364,7 +362,7 @@ const testAktiviteter = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Odd Fellow',
                       tittel: 'Daglig leder',
-                      epost: 'odd.fellow@oddfellow.no',
+                      mobil: '+47 99999999',
                   },
                   soknadsstatus: 'VENTER',
               },
@@ -527,7 +525,7 @@ const ekstraVersjoner = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Odd Fellow',
                       tittel: 'Daglig leder',
-                      epost: 'odd.fellow@oddfellow.no',
+                      mobil: '+47 99999999',
                   },
               },
           }),
@@ -558,7 +556,7 @@ const ekstraVersjoner = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Odd Fellow',
                       tittel: 'Daglig leder',
-                      epost: 'odd.fellow@oddfellow.no',
+                      mobil: '+47 99999999',
                   },
               },
           }),
