@@ -32,11 +32,13 @@ export const markerForhaandsorienteringSomLest = (aktivitetId: string, aktivitet
 export const oppdaterCvKanDelesSvar = (
     aktivitetId: string,
     aktivitetVersjon: string,
-    kanDeles: boolean
+    kanDeles: boolean,
+    avtaltDato?: string
 ): Promise<Aktivitet> => {
     return putAsJson(`${AKTIVITET_BASE_URL}/stillingFraNav/kanDeleCV?aktivitetId=${aktivitetId}`, {
         aktivitetVersjon,
         kanDeles,
+        avtaltDato,
     });
 };
 

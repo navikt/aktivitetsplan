@@ -3,16 +3,16 @@ import React from 'react';
 
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoManed } from '../../../../utils';
+import { Ingress } from './DeleCvContainer';
 import styles from './DeleCVFristUtloptVisning.module.less';
 
 interface Props {
     overskrift: string;
     svarfrist: string;
-    Ingress(): JSX.Element;
 }
 
 export const DeleCVFristUtloptVisning = (props: Props) => {
-    const { overskrift, Ingress, svarfrist } = props;
+    const { overskrift, svarfrist } = props;
 
     const Tittel = () => <Normaltekst>{overskrift}</Normaltekst>;
     const TittelMedUtloptTekst = () => (

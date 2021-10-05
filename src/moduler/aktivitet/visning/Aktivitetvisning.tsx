@@ -5,6 +5,7 @@ import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import { trengerBegrunnelse } from '../aktivitet-util';
 import styles from './Aktivitetsvisning.module.less';
+import { DeleCvContainer } from './dele-cv/DeleCvContainer';
 import AktivitetinformasjonVisning from './hjelpekomponenter/AktivitetinformasjonVisning';
 import BegrunnelseBoks from './hjelpekomponenter/begrunnelse-boks';
 import Statusadministrasjon from './hjelpekomponenter/Statusadministrasjon';
@@ -27,8 +28,7 @@ function Aktivitetvisning(props: Props) {
         aktivitet.type
     );
 
-    const visBegrunnelse =
-        !erArenaAktivitet && trengerBegrunnelse(!!aktivitet.avtalt, aktivitet.status, aktivitet.type);
+    const visBegrunnelse = !erArenaAktivitet && trengerBegrunnelse(aktivitet.avtalt, aktivitet.status, aktivitet.type);
 
     return (
         <div>
@@ -48,10 +48,9 @@ function Aktivitetvisning(props: Props) {
                     laster={laster}
                 />
 
+                <DeleCvContainer aktivitet={aktivitet} />
                 <ReferatContainer aktivitet={aktivitet} />
-
                 <Statusadministrasjon aktivitet={aktivitet} erArenaAktivitet={erArenaAktivitet} />
-
                 <DialogLenke aktivitet={aktivitet} skulDelelingje={erArenaAktivitet} />
                 <EndringsLogg aktivitet={aktivitet} hidden={erArenaAktivitet} />
             </ModalContainer>
