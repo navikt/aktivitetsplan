@@ -1,7 +1,13 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import { GRUPPE_AKTIVITET_TYPE, MOTE_TYPE, SAMTALEREFERAT_TYPE, STILLING_AKTIVITET_TYPE } from '../../../constant';
+import {
+    GRUPPE_AKTIVITET_TYPE,
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STILLING_AKTIVITET_TYPE,
+    STILLING_FRA_NAV_TYPE,
+} from '../../../constant';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { formaterDatoKortManed } from '../../../utils';
 import Soknadfrist from './Soknadsfrist';
@@ -13,6 +19,10 @@ interface Props {
 
 function AktiviteskortPeriodeVisning({ aktivitet, id }: Props) {
     const { type, fraDato, tilDato } = aktivitet;
+
+    if (type === STILLING_FRA_NAV_TYPE) {
+        return null;
+    }
 
     if (type === STILLING_AKTIVITET_TYPE) {
         return <Soknadfrist aktivitet={aktivitet} />;
