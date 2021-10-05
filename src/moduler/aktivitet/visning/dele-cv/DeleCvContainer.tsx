@@ -1,6 +1,6 @@
 import { isAfter, parseISO } from 'date-fns';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { STILLING_FRA_NAV_TYPE } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
@@ -26,6 +26,7 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     const cvKanDelesSvar = stillingFraNavData && stillingFraNavData?.cvKanDelesData;
     const svarfrist = stillingFraNavData?.svarfrist;
     const fristUtlopt = svarfrist && isAfter(new Date(), parseISO(svarfrist));
+    const [startCvSvarVisningAapen] = useState(!cvKanDelesSvar);
 
     if (aktivitet.type !== STILLING_FRA_NAV_TYPE) {
         return null;
@@ -34,7 +35,11 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     if (cvKanDelesSvar) {
         return (
             <>
-                <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} overskrift={overskrift} />
+                <DeleCvSvarVisning
+                    cvKanDelesData={cvKanDelesSvar}
+                    overskrift={overskrift}
+                    startAapen={startCvSvarVisningAapen}
+                />
                 <DeleLinje />
             </>
         );

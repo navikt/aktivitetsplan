@@ -1,9 +1,9 @@
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { CvKanDelesData } from '../../../../datatypes/aktivitetTypes';
-import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
+import EkspanderbarLinjeBase from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { formaterDatoManed } from '../../../../utils';
 import { Ingress } from './DeleCvContainer';
 import styles from './DeleCvSvarVisning.module.less';
@@ -12,9 +12,13 @@ import { JaSvarTekst, NeiSvarTekst } from './tekster';
 interface Props {
     overskrift: string;
     cvKanDelesData: CvKanDelesData;
+    startAapen?: boolean;
 }
 
-export const DeleCvSvarVisning = ({ overskrift, cvKanDelesData }: Props) => {
+export const DeleCvSvarVisning = ({ overskrift, cvKanDelesData, startAapen = false }: Props) => {
+    const [erAapen, setAapen] = useState(startAapen);
+    const toggle = () => setAapen(!erAapen);
+
     const cvKanDeles = cvKanDelesData.kanDeles;
 
     const Tittel = () => <Normaltekst>{overskrift}</Normaltekst>;
@@ -44,17 +48,19 @@ export const DeleCvSvarVisning = ({ overskrift, cvKanDelesData }: Props) => {
     }
 
     return (
-        <EkspanderbarLinje
+        <EkspanderbarLinjeBase
             tittel={<TittelMedCvSvar />}
             aapneTittel={<Tittel />}
             kanToogle
             aapneTekst="Åpne"
             lukkeTekst="Lukk"
+            erAapen={erAapen}
+            onClick={toggle}
         >
             <Ingress />
             <Normaltekst className={styles.deleCVSvarTekst}>{svarTekst}</Normaltekst>
             <Normaltekst className={styles.endretTidspunkt}>{endretTekst}</Normaltekst>
             <Infostripe />
-        </EkspanderbarLinje>
+        </EkspanderbarLinjeBase>
     );
 };
