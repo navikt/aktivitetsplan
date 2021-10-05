@@ -27,6 +27,7 @@ enum SvarType {
 interface PropTypes {
     aktivitet: Aktivitet;
     overskrift: string;
+    setStartAapenTilTrue: () => void;
 }
 
 type KanDeles = {
@@ -37,7 +38,7 @@ type ErVeileder = {
     erVeileder: boolean;
 };
 
-export const MeldInteresseForStilling = ({ aktivitet, overskrift }: PropTypes) => {
+export const MeldInteresseForStilling = ({ aktivitet, overskrift, setStartAapenTilTrue }: PropTypes) => {
     const [infoTekst, setInfoTekst] = useState<string | undefined>(undefined);
     const dispatch = useDispatch();
 
@@ -67,6 +68,7 @@ export const MeldInteresseForStilling = ({ aktivitet, overskrift }: PropTypes) =
 
     const onSubmit = (data: KanDeles) => {
         dispatch(oppdaterCVSvar(aktivitet.id, aktivitet.versjon, data.kanDeles === SvarType.JA, data.avtaltDato));
+        setStartAapenTilTrue();
         return Promise.resolve();
     };
 

@@ -1,6 +1,6 @@
 import { isAfter, parseISO } from 'date-fns';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { STILLING_FRA_NAV_TYPE } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
@@ -22,6 +22,8 @@ export const Ingress = () => (
 export const overskrift = 'Er du interessert i denne stillingen?';
 
 export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
+    const [startAapen, setStartAapen] = useState(false);
+
     const stillingFraNavData = aktivitet.stillingFraNavData;
     const cvKanDelesSvar = stillingFraNavData && stillingFraNavData?.cvKanDelesData;
     const svarfrist = stillingFraNavData?.svarfrist;
@@ -34,7 +36,7 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     if (cvKanDelesSvar) {
         return (
             <>
-                <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} overskrift={overskrift} />
+                <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} overskrift={overskrift} startAapen={startAapen} />
                 <DeleLinje />
             </>
         );
@@ -51,7 +53,11 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
 
     return (
         <>
-            <MeldInteresseForStilling aktivitet={aktivitet} overskrift={overskrift} />
+            <MeldInteresseForStilling
+                aktivitet={aktivitet}
+                overskrift={overskrift}
+                setStartAapenTilTrue={() => setStartAapen(true)}
+            />
             <DeleLinje />
         </>
     );
