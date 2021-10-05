@@ -304,7 +304,7 @@ const testAktiviteter = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Harry Potter',
                       tittel: 'NAV-ansatt',
-                      mobil: '+47 99999999',
+                      mobil: '+47 99009900',
                   },
               },
           }),
@@ -331,7 +331,7 @@ const testAktiviteter = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Sykfest Strutle',
                       tittel: 'NAV-ansatt',
-                      mobil: '+47 99009900',
+                      mobil: null,
                   },
               },
           }),
