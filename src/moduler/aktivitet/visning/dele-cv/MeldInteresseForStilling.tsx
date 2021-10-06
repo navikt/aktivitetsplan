@@ -10,6 +10,7 @@ import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { RadioPanel } from '../../../../felles-komponenter/skjema/input/Radio';
 import { formaterDatoManed } from '../../../../utils';
+import { todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import detaljVisningStyles from '../Aktivitetsvisning.module.less';
@@ -33,8 +34,9 @@ type KanDeles = {
     kanDeles: string;
     avtaltDato: string;
 };
-type ErVeileder = {
+type ValidatorProps = {
     erVeileder: boolean;
+    opprettetDato: string;
 };
 
 export const MeldInteresseForStilling = ({ aktivitet, overskrift }: PropTypes) => {
@@ -42,17 +44,20 @@ export const MeldInteresseForStilling = ({ aktivitet, overskrift }: PropTypes) =
     const dispatch = useDispatch();
 
     const erVeileder = useSelector(selectErVeileder);
+    const opprettetDato = aktivitet.opprettetDato;
 
-    const validator = useFormstate<KanDeles, ErVeileder>({
+    const validator = useFormstate<KanDeles, ValidatorProps>({
         avtaltDato: (value, values, props) => {
             if (props.erVeileder && !value) return 'Du må fylle ut datoen for når du var i dialog med brukeren';
+            if (value < props.opprettetDato) return 'Dato for dialog må være etter at kortet ble opprettet';
+            if (value > todayIsoString()) return 'Dato for dialog kan ikke være frem i tid';
         },
         kanDeles: (value) => {
             if (!value) return 'Du må svare ja eller nei';
         },
     });
 
-    const state = validator({ kanDeles: '', avtaltDato: '' }, { erVeileder });
+    const state = validator({ kanDeles: '', avtaltDato: '' }, { erVeileder, opprettetDato });
 
     const onChange = (event: any) => {
         const value = event.target.value;
