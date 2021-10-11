@@ -14,7 +14,7 @@ interface Props {
 export const DeleCVFristUtloptVisning = (props: Props) => {
     const { overskrift, svarfrist } = props;
 
-    const Tittel = () => <Normaltekst>{overskrift}</Normaltekst>;
+    const Tittel = () => <Normaltekst className={styles.deleCVEndreTittel}>{overskrift}</Normaltekst>;
     const TittelMedUtloptTekst = () => (
         <>
             <Tittel />

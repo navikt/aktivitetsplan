@@ -21,7 +21,7 @@ export const DeleCvSvarVisning = ({ overskrift, cvKanDelesData, startAapen = fal
 
     const cvKanDeles = cvKanDelesData.kanDeles;
 
-    const Tittel = () => <Normaltekst>{overskrift}</Normaltekst>;
+    const Tittel = () => <Normaltekst className={styles.deleCVEndreTittel}>{overskrift}</Normaltekst>;
     const TittelMedCvSvar = () => (
         <>
             <Tittel />

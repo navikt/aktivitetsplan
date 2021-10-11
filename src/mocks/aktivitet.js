@@ -362,7 +362,7 @@ const testAktiviteter = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Odd Fellow',
                       tittel: 'Daglig leder',
-                      mobil: '+47 99999999',
+                      mobil: '99999999',
                   },
                   soknadsstatus: 'VENTER',
               },
