@@ -47,6 +47,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
 
     const validator = useFormstate<KanDeles, ValidatorProps>({
         avtaltDato: (value, values, props) => {
+            if (!props.erVeileder) return;
             if (props.erVeileder && !value) return 'Du må fylle ut datoen for når du var i dialog med brukeren';
             if (value < props.opprettetDato) return 'Dato for dialog må være etter at kortet ble opprettet';
             if (value > todayIsoString()) return 'Dato for dialog kan ikke være frem i tid';
