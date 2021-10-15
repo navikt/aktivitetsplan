@@ -7,15 +7,14 @@ import EkspanderbarLinjeBase from '../../../../felles-komponenter/ekspanderbar-l
 import { formaterDatoManed } from '../../../../utils';
 import { Ingress } from './DeleCvContainer';
 import styles from './DeleCvSvarVisning.module.less';
-import { JaSvarTekst, NeiSvarTekst } from './tekster';
+import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
 
 interface Props {
-    overskrift: string;
     cvKanDelesData: CvKanDelesData;
     startAapen?: boolean;
 }
 
-export const DeleCvSvarVisning = ({ overskrift, cvKanDelesData, startAapen = false }: Props) => {
+export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props) => {
     const [erAapen, setAapen] = useState(startAapen);
     const toggle = () => setAapen(!erAapen);
 

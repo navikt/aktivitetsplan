@@ -17,7 +17,7 @@ import { CustomAlertstripe } from '../hjelpekomponenter/CustomAlertstripe';
 import { Ingress } from './DeleCvContainer';
 import styles from './MeldInteresseForStilling.module.less';
 import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
-import { JaSvarTekst, NeiSvarTekst } from './tekster';
+import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
 
 enum SvarType {
     JA = 'ja',
@@ -26,7 +26,6 @@ enum SvarType {
 
 interface PropTypes {
     aktivitet: Aktivitet;
-    overskrift: string;
 }
 
 type KanDeles = {
@@ -37,7 +36,7 @@ type ErVeileder = {
     erVeileder: boolean;
 };
 
-export const MeldInteresseForStilling = ({ aktivitet, overskrift }: PropTypes) => {
+export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const [infoTekst, setInfoTekst] = useState<string | undefined>(undefined);
     const dispatch = useDispatch();
 

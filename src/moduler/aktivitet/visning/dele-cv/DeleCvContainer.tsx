@@ -1,12 +1,11 @@
-import { isAfter, parseISO } from 'date-fns';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 
-import { STILLING_FRA_NAV_TYPE } from '../../../../constant';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT, STILLING_FRA_NAV_TYPE } from '../../../../constant';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
+import { DeleCVAvbruttVisning } from './DeleCVAvbruttVisning';
 import styles from './DeleCvContainer.module.less';
-import { DeleCVFristUtloptVisning } from './DeleCVFristUtloptVisning';
 import { DeleCvSvarVisning } from './DeleCvSvarVisning';
 import { MeldInteresseForStilling } from './MeldInteresseForStilling';
 
@@ -19,36 +18,35 @@ export const Ingress = () => (
         Du bestemmer selv om NAV skal dele CV-en din på denne stillingen.
     </Normaltekst>
 );
-export const overskrift = 'Er du interessert i denne stillingen?';
 
 export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
     const stillingFraNavData = aktivitet.stillingFraNavData;
     const cvKanDelesSvar = stillingFraNavData && stillingFraNavData?.cvKanDelesData;
-    const svarfrist = stillingFraNavData?.svarfrist;
-    const fristUtlopt = svarfrist && isAfter(new Date(), parseISO(svarfrist));
+    const erHistorisk = !!aktivitet.historisk;
     const [startCvSvarVisningAapen] = useState(!cvKanDelesSvar);
 
-    if (aktivitet.type !== STILLING_FRA_NAV_TYPE) {
+    if (aktivitet.type !== STILLING_FRA_NAV_TYPE || !stillingFraNavData) {
         return null;
     }
 
     if (cvKanDelesSvar) {
         return (
             <>
-                <DeleCvSvarVisning
-                    cvKanDelesData={cvKanDelesSvar}
-                    overskrift={overskrift}
-                    startAapen={startCvSvarVisningAapen}
-                />
+                <DeleCvSvarVisning cvKanDelesData={cvKanDelesSvar} startAapen={startCvSvarVisningAapen} />
                 <DeleLinje />
             </>
         );
     }
 
-    if (fristUtlopt && svarfrist) {
+    if (erHistorisk || aktivitet.status === STATUS_FULLFOERT || aktivitet.status === STATUS_AVBRUTT) {
         return (
             <>
-                <DeleCVFristUtloptVisning overskrift={overskrift} svarfrist={svarfrist} />
+                <DeleCVAvbruttVisning
+                    status={aktivitet.status}
+                    livslopsstatus={stillingFraNavData.livslopsstatus}
+                    erHistorisk={erHistorisk}
+                    svarfrist={stillingFraNavData.svarfrist}
+                />
                 <DeleLinje />
             </>
         );
@@ -56,7 +54,7 @@ export const DeleCvContainer = ({ aktivitet }: PropTypes) => {
 
     return (
         <>
-            <MeldInteresseForStilling aktivitet={aktivitet} overskrift={overskrift} />
+            <MeldInteresseForStilling aktivitet={aktivitet} />
             <DeleLinje />
         </>
     );

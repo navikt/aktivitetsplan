@@ -41,6 +41,13 @@ export type AktivitetStatus =
 
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
 export type StillingFraNavSoknadsstatus = 'VENTER' | 'SKAL_PAA_INTERVJU' | 'JOBBTILBUD' | 'AVSLAG';
+export type Livslopsstatus =
+    | 'PROVER_VARSLING'
+    | 'HAR_VARSLET'
+    | 'KAN_IKKE_VARSLE'
+    | 'HAR_SVART'
+    | 'AVBRUTT_AV_SYSTEM'
+    | 'AVBRUTT_AV_BRUKER';
 export enum TransaksjonsType {
     OPPRETTET = 'OPPRETTET',
     STATUS_ENDRET = 'STATUS_ENDRET',
@@ -134,6 +141,7 @@ export interface StillingFraNavAktivitetData {
     lenke: string; //mangler i backend
     kontaktpersonData: KontaktInfo;
     soknadsstatus: StillingFraNavSoknadsstatus;
+    livslopsstatus: Livslopsstatus;
 }
 
 enum ArenaEtikett {

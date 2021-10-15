@@ -24,6 +24,13 @@ export const SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU';
 export const AVSLAG = 'AVSLAG';
 export const JOBBTILBUD = 'JOBBTILBUD';
 
+export const PROVER_VARSLING = 'PROVER_VARSLING';
+export const HAR_VARSLET = 'HAR_VARSLET';
+export const KAN_IKKE_VARSLE = 'KAN_IKKE_VARSLE';
+export const HAR_SVART = 'HAR_SVART';
+export const AVBRUTT_AV_SYSTEM = 'AVBRUTT_AV_SYSTEM';
+export const AVBRUTT_AV_BRUKER = 'AVBRUTT_AV_BRUKER';
+
 export const AVTALT_MED_NAV = 'AVTALT_MED_NAV';
 
 export const JOBB_STATUS_HELTID = 'HELTID';
