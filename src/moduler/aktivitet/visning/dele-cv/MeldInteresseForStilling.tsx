@@ -76,13 +76,17 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     };
 
     const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
+    const datobegrensninger = {
+        minDate: opprettetDato,
+        maxDate: todayIsoString(),
+    };
 
     return (
         <form className={detaljVisningStyles.underseksjon} onSubmit={state.onSubmit(onSubmit)} noValidate>
             <CustomAlertstripe tekst={overskrift} />
             <div className={styles.luft} />
             <Ingress />
-            <SvarPaaVegneAvBruker formhandler={state.fields.avtaltDato} />
+            <SvarPaaVegneAvBruker formhandler={state.fields.avtaltDato} datoBegrensninger={datobegrensninger} />
             <Normaltekst className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</Normaltekst>
             <RadioGruppe
                 aria-label={overskrift}
