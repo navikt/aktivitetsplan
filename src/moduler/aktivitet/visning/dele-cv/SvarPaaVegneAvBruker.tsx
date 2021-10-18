@@ -1,5 +1,6 @@
 import { FieldState } from '@nutgaard/use-formstate';
 import classNames from 'classnames';
+import { DatepickerLimitations } from 'nav-datovelger/lib/types';
 import Panel from 'nav-frontend-paneler';
 import { Element as NavElement } from 'nav-frontend-typografi';
 import React from 'react';
@@ -12,9 +13,10 @@ import styles from './SvarPaaVegneAvBruker.module.less';
 
 interface Props {
     formhandler: FieldState;
+    datoBegrensninger: DatepickerLimitations;
 }
 
-export const SvarPaaVegneAvBruker = ({ formhandler }: Props) => {
+export const SvarPaaVegneAvBruker = ({ formhandler, datoBegrensninger }: Props) => {
     const erVeileder = useSelector(selectErVeileder);
 
     if (!erVeileder) return null;
@@ -31,6 +33,7 @@ export const SvarPaaVegneAvBruker = ({ formhandler }: Props) => {
                     label="Når var du i dialog med brukeren om å dele CV-en deres med denne arbeidsgiveren? *"
                     {...formhandler}
                     required
+                    limitations={datoBegrensninger}
                 />
             </Panel>
         </div>
