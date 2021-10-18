@@ -2,7 +2,13 @@ import 'moment-duration-format';
 
 import moment, { DurationInputArg1 } from 'moment';
 
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../constant';
+import {
+    MOTE_TYPE,
+    SAMTALEREFERAT_TYPE,
+    STATUS_AVBRUTT,
+    STATUS_FULLFOERT,
+    STILLING_FRA_NAV_TYPE,
+} from '../../constant';
 import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
 import { erMerEnnEnManederSiden } from '../../utils';
@@ -27,16 +33,29 @@ function samenlingDato(a?: string, b?: string): number {
 }
 
 export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
-    if (b.avtalt && !a.avtalt) {
-        return 1;
-    }
-    if (!b.avtalt && a.avtalt) {
-        return -1;
-    }
+    const aIkkeSvartMarkering = ikkeSvartMarkeringSkalVises(a);
+    const bIkkeSvartMarkering = ikkeSvartMarkeringSkalVises(b);
+
+    if (bIkkeSvartMarkering && !aIkkeSvartMarkering) return 1;
+    if (!bIkkeSvartMarkering && aIkkeSvartMarkering) return -1;
+
+    if (b.avtalt && !a.avtalt) return 1;
+    if (!b.avtalt && a.avtalt) return -1;
+
     const manglerFraDato = !!a.fraDato || !!b.fraDato;
     const fradato = samenlingDato(a.fraDato, b.fraDato);
 
     return fradato === 0 || manglerFraDato ? samenlingDato(a.opprettetDato, b.opprettetDato) : fradato;
+}
+
+export function ikkeSvartMarkeringSkalVises(aktivitet: Aktivitet): boolean {
+    const erStillingFraNav = aktivitet.type === STILLING_FRA_NAV_TYPE;
+    const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
+    const status = aktivitet.status;
+    const historisk = aktivitet.historisk;
+    const ikkeAktiv = status === STATUS_AVBRUTT || status === STATUS_FULLFOERT || !!historisk;
+
+    return erStillingFraNav && harIkkeSvart && !ikkeAktiv;
 }
 
 export function erNyEndringIAktivitet(aktivitet: Aktivitet, lestInformasjon: Lest, me: Me): boolean {
@@ -120,6 +139,19 @@ export function formatterVarighet(varighet: DurationInputArg1): string {
 
 export function formatterKlokkeslett(klokkeslett: DurationInputArg1): string {
     return formatterVarighet(klokkeslett);
+}
+
+export function formatterTelefonnummer(telefonnummer: string): string {
+    let utenSpace = telefonnummer.replace(/ /g, '');
+
+    if (utenSpace.length !== 8) {
+        return telefonnummer;
+    } else if (utenSpace.startsWith('8')) {
+        return `${utenSpace.substring(0, 3)} ${utenSpace.substring(3, 5)} ${utenSpace.substring(5)}`;
+    } else {
+        const numberPairs = utenSpace.match(/.{1,2}/g);
+        return numberPairs ? numberPairs.join(' ') : telefonnummer;
+    }
 }
 
 function moteManglerPubliseringAvSamtalereferat(type: AktivitetType, erReferatPublisert?: boolean): boolean {

@@ -150,6 +150,33 @@ const testAktiviteter = !visTestAktiviteter()
               erReferatPublisert: false,
           }),
           wrapAktivitet({
+              versjon: '5345436',
+              id: '53498574399',
+              tittel: 'Servitør historisk',
+              type: 'STILLING_FRA_NAV',
+              lenke: null,
+              status: 'GJENNOMFORES',
+              fraDato: '2017-02-16T00:00:00+01:00',
+              opprettetDato: '2017-02-16T00:00:00+01:00',
+              endretDato: '2017-02-16T00:00:00+01:00',
+              endretAv: 'z990207',
+              historisk: true,
+              kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+              lagtInnAv: 'NAV',
+              transaksjonsType: 'STATUS_ENDRET',
+              stillingFraNavData: {
+                  cvKanDelesData: null,
+                  arbeidsgiver: 'Havsalt AS',
+                  arbeidssted: 'Kristiansand',
+                  lenke: 'www.nav.no',
+                  kontaktpersonData: {
+                      navn: 'Odd Fellow',
+                      tittel: 'Daglig leder',
+                      mobil: '99999999',
+                  },
+              },
+          }),
+          wrapAktivitet({
               id: '1550',
               versjon: '9825',
               tittel: 'Denne har en ulest forhåndsorientering',
@@ -300,12 +327,11 @@ const testAktiviteter = !visTestAktiviteter()
                   arbeidsgiver: 'Havsalt AS',
                   arbeidssted: 'Kristiansand',
                   lenke: 'www.nav.no',
-                  svarfrist: '2021-09-29T10:46:51.622+01:00',
+                  svarfrist: '2030-09-29T10:46:51.622+01:00',
                   kontaktpersonData: {
                       navn: 'Harry Potter',
                       tittel: 'NAV-ansatt',
-                      mobil: '+47 99999999',
-                      epost: 'harry.potter@nav.no',
+                      mobil: '+47 99009900',
                   },
               },
           }),
@@ -315,7 +341,7 @@ const testAktiviteter = !visTestAktiviteter()
               tittel: 'Servitør ikke svart innen fristen',
               type: 'STILLING_FRA_NAV',
               lenke: null,
-              status: 'PLANLAGT',
+              status: 'AVBRUTT',
               opprettetDato: '2020-05-31T10:46:51.622+01:00',
               endretDato: '2018-09-30T10:46:51.622+01:00',
               endretAv: 'z990207',
@@ -332,8 +358,7 @@ const testAktiviteter = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Sykfest Strutle',
                       tittel: 'NAV-ansatt',
-                      mobil: '+47 99009900',
-                      epost: 'sylfest.strutle@nav.no',
+                      mobil: null,
                   },
               },
           }),
@@ -343,14 +368,14 @@ const testAktiviteter = !visTestAktiviteter()
               tittel: 'Servitør har svart',
               type: 'STILLING_FRA_NAV',
               lenke: null,
-              status: 'PLANLAGT',
+              status: 'GJENNOMFORES',
               opprettetDato: '2020-05-31T10:46:51.622+01:00',
-              endretDato: '2018-09-30T10:46:51.622+01:00',
+              endretDato: '2020-09-30T10:46:51.622+01:00',
               endretAv: 'z990207',
               historisk: false,
               kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
               lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
+              transaksjonsType: 'STATUS_ENDRET',
               stillingFraNavData: {
                   cvKanDelesData: {
                       kanDeles: true,
@@ -364,8 +389,9 @@ const testAktiviteter = !visTestAktiviteter()
                   kontaktpersonData: {
                       navn: 'Odd Fellow',
                       tittel: 'Daglig leder',
-                      epost: 'odd.fellow@oddfellow.no',
+                      mobil: '99999999',
                   },
+                  soknadsstatus: 'VENTER',
               },
           }),
       ];
@@ -500,6 +526,67 @@ const automatiskeAktiviteter = !visAutomatiskeAktiviteter()
               referat: null,
               erReferatPublisert: false,
           },
+      ];
+
+const ekstraVersjoner = !visTestAktiviteter()
+    ? []
+    : [
+          wrapAktivitet({
+              versjon: '5345434',
+              id: '53498574399',
+              tittel: 'Servitør har svart',
+              type: 'STILLING_FRA_NAV',
+              lenke: null,
+              status: 'PLANLAGT',
+              opprettetDato: '2020-05-31T10:46:51.622+01:00',
+              endretDato: '2020-05-31T10:46:51.622+01:00',
+              endretAv: 'z990207',
+              historisk: false,
+              kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+              lagtInnAv: 'NAV',
+              transaksjonsType: 'OPPRETTET',
+              stillingFraNavData: {
+                  arbeidsgiver: 'Havsalt AS',
+                  arbeidssted: 'Kristiansand',
+                  lenke: 'www.nav.no',
+                  kontaktpersonData: {
+                      navn: 'Odd Fellow',
+                      tittel: 'Daglig leder',
+                      mobil: '+47 99999999',
+                  },
+              },
+          }),
+          wrapAktivitet({
+              versjon: '5345439',
+              id: '53498574399',
+              tittel: 'Servitør har svart',
+              type: 'STILLING_FRA_NAV',
+              lenke: null,
+              status: 'PLANLAGT',
+              opprettetDato: '2020-05-31T10:46:51.622+01:00',
+              endretDato: '2020-10-30T10:46:51.622+01:00',
+              endretAv: 'z990207',
+              historisk: false,
+              kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+              lagtInnAv: 'NAV',
+              transaksjonsType: 'DEL_CV_SVART',
+              stillingFraNavData: {
+                  cvKanDelesData: {
+                      kanDeles: true,
+                      endretTidspunkt: new Date(),
+                      endretAv: 'V123',
+                      endretAvType: 'BRUKER',
+                  },
+                  arbeidsgiver: 'Havsalt AS',
+                  arbeidssted: 'Kristiansand',
+                  lenke: 'www.nav.no',
+                  kontaktpersonData: {
+                      navn: 'Odd Fellow',
+                      tittel: 'Daglig leder',
+                      mobil: '+47 99999999',
+                  },
+              },
+          }),
       ];
 
 const aktiviteter = testAktiviteter.concat(automatiskeAktiviteter);
@@ -665,16 +752,34 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles }, { aktivitetId }) {
+export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles, avtaltDato }, { aktivitetId }) {
+    const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         status: kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
-        transaksjonsType: 'STATUS_ENDRET',
-        cvKanDelesData: {
-            kanDeles: kanDeles,
-            endretTidspunkt: new Date(),
-            endretAv: bruker ? '843029483' : 'z123',
-            endretAvType: bruker,
+        transaksjonsType: 'DEL_CV_SVART',
+        stillingFraNavData: {
+            ...gammelAktivitet.stillingFraNavData,
+            cvKanDelesData: {
+                kanDeles: kanDeles,
+                endretTidspunkt: new Date(),
+                avtaltDato: avtaltDato,
+                endretAv: bruker ? '843029483' : 'z123',
+                endretAvType: bruker,
+            },
+            soknadsstatus: kanDeles ? 'VENTER' : null,
         },
+    };
+    return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
+}
+
+export function oppdaterStillingFraNavSoknadsstatus(__params, { aktivitetVersjon, soknadsstatus }, { aktivitetId }) {
+    const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
+    const nyeAktivitetAttributter = {
+        stillingFraNavData: {
+            ...gammelAktivitet.stillingFraNavData,
+            soknadsstatus: soknadsstatus,
+        },
+        transaksjonsType: 'SOKNADSSTATUS_ENDRET',
     };
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
@@ -711,4 +816,4 @@ export const aktiviteterData = {
     aktiviteter,
 };
 
-export const versjoner = aktiviteter.map((aktivitet) => wrapAktivitet(aktivitet));
+export const versjoner = aktiviteter.concat(ekstraVersjoner).map((aktivitet) => wrapAktivitet(aktivitet));

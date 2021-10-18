@@ -7,18 +7,18 @@ import {
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
     STILLING_AKTIVITET_TYPE,
-    STILLING_FRA_NAV_TYPE,
 } from '../../../../constant';
 import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
 import InternLenke from '../../../../felles-komponenter/utils/InternLenke';
 import loggEvent, { APNE_ENDRE_AKTIVITET } from '../../../../felles-komponenter/utils/logging';
 import { endreAktivitetRoute } from '../../../../routes';
 import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
-import IkkeDeltFerdigMarkering, { skalMarkeringVises } from '../../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
+import IkkeDeltFerdigMarkering, {
+    SkalIkkeDeltFerdigMarkeringVises,
+} from '../../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
 import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
-import { DeleCvContainer } from '../dele-cv/DeleCvContainer';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
 import styles from './AktivitetinformasjonVisning.module.less';
@@ -46,7 +46,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
     const { valgtAktivitet, tillatEndring, laster, underOppfolging } = props;
     const { id, tittel, type, arenaAktivitet, avtalt } = valgtAktivitet;
 
-    const markeringSkalVises = skalMarkeringVises(valgtAktivitet);
+    const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(valgtAktivitet);
 
     return (
         <div>
@@ -68,7 +68,7 @@ const AktivitetinformasjonVisning = (props: Props) => {
                 </div>
                 <VisningIngress aktivitetstype={type} />
                 <AvtaltMarkering hidden={!avtalt} />
-                <IkkeDeltFerdigMarkering visible={markeringSkalVises} />
+                <IkkeDeltFerdigMarkering visible={deltFerdigMarkeringSkalVises} />
             </div>
             <AvtaltContainer
                 underOppfolging={underOppfolging}
@@ -78,7 +78,6 @@ const AktivitetinformasjonVisning = (props: Props) => {
             <div className={aktivitetsvisningStyles.underseksjon}>
                 <Aktivitetsdetaljer valgtAktivitet={valgtAktivitet} />
             </div>
-            {valgtAktivitet.type === STILLING_FRA_NAV_TYPE && <DeleCvContainer aktivitet={valgtAktivitet} />}
             <DeleLinje />
         </div>
     );

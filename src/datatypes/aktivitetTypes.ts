@@ -40,6 +40,14 @@ export type AktivitetStatus =
     | typeof STATUS_BRUKER_ER_INTRESSERT;
 
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
+export type StillingFraNavSoknadsstatus = 'VENTER' | 'SKAL_PAA_INTERVJU' | 'JOBBTILBUD' | 'AVSLAG';
+export type Livslopsstatus =
+    | 'PROVER_VARSLING'
+    | 'HAR_VARSLET'
+    | 'KAN_IKKE_VARSLE'
+    | 'HAR_SVART'
+    | 'AVBRUTT_AV_SYSTEM'
+    | 'AVBRUTT_AV_BRUKER';
 export enum TransaksjonsType {
     OPPRETTET = 'OPPRETTET',
     STATUS_ENDRET = 'STATUS_ENDRET',
@@ -53,6 +61,8 @@ export enum TransaksjonsType {
     REFERAT_PUBLISERT = 'REFERAT_PUBLISERT',
     BLE_HISTORISK = 'BLE_HISTORISK',
     FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
+    DEL_CV_SVART = 'DEL_CV_SVART',
+    SOKNADSSTATUS_ENDRET = 'SOKNADSSTATUS_ENDRET',
 }
 export type BrukerType = 'NAV' | 'BRUKER';
 export interface Lest {
@@ -108,6 +118,7 @@ export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
 export interface CvKanDelesData {
     kanDeles: boolean;
     endretTidspunkt: Date;
+    avtaltDato: Date;
     endretAv: string;
     endretAvType: BrukerType;
 }
@@ -116,7 +127,6 @@ export interface KontaktInfo {
     navn: string;
     tittel: string;
     mobil: string;
-    epost: string;
 }
 
 export interface StillingFraNavAktivitetData {
@@ -130,6 +140,8 @@ export interface StillingFraNavAktivitetData {
     varselId: string;
     lenke: string; //mangler i backend
     kontaktpersonData: KontaktInfo;
+    soknadsstatus: StillingFraNavSoknadsstatus;
+    livslopsstatus: Livslopsstatus;
 }
 
 enum ArenaEtikett {

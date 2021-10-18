@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import Datovelger, { DatepickerProps } from 'nav-datovelger/lib/Datepicker';
+import NavDatoVelger, { DatepickerProps } from 'nav-datovelger/lib/Datepicker';
 import { Label, SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import React, { useState } from 'react';
 
@@ -19,12 +19,13 @@ interface Props {
     touched: boolean;
     error?: string;
     label: string;
+    labelClassName?: string;
     input: FieldStateInput;
     required?: boolean;
 }
 
 function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | 'onChange'>) {
-    const { label, error, input, required } = props;
+    const { label, error, input, required, labelClassName } = props;
     const [touched, setTouched] = useState(false);
     const feil = error && touched ? error : undefined;
 
@@ -45,8 +46,10 @@ function DatovelgerWrapper(props: Props & Omit<DatepickerProps, 'inputProps' | '
 
     return (
         <div className={cls}>
-            <Label htmlFor={input.id}>{label}</Label>
-            <Datovelger {...props} inputProps={datovelgerInput} onChange={_onChange} value={day} />
+            <Label htmlFor={input.id} className={labelClassName}>
+                {label}
+            </Label>
+            <NavDatoVelger {...props} inputProps={datovelgerInput} onChange={_onChange} value={day} />
             <DatoFeil feil={feil} />
         </div>
     );

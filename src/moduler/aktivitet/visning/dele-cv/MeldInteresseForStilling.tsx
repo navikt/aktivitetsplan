@@ -1,17 +1,24 @@
+import useFormstate from '@nutgaard/use-formstate';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import { RadioGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React, { ReactElement, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
+import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
+import { RadioPanel } from '../../../../felles-komponenter/skjema/input/Radio';
 import { formaterDatoManed } from '../../../../utils';
+import { todayIsoString } from '../../../../utils/dateUtils';
+import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import detaljVisningStyles from '../Aktivitetsvisning.module.less';
 import { CustomAlertstripe } from '../hjelpekomponenter/CustomAlertstripe';
+import { Ingress } from './DeleCvContainer';
 import styles from './MeldInteresseForStilling.module.less';
-import { JaSvarTekst, NeiSvarTekst } from './tekster';
+import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
+import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
 
 enum SvarType {
     JA = 'ja',
@@ -20,65 +27,88 @@ enum SvarType {
 
 interface PropTypes {
     aktivitet: Aktivitet;
-    overskrift: string;
-    Ingress: () => ReactElement;
 }
 
-export const MeldInteresseForStilling = ({ aktivitet, overskrift, Ingress }: PropTypes) => {
-    const [valgtAlternativ, setValgtAlternativ] = useState<SvarType | undefined>(undefined);
+type KanDeles = {
+    kanDeles: string;
+    avtaltDato: string;
+};
+type ValidatorProps = {
+    erVeileder: boolean;
+    opprettetDato: string;
+};
+
+export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const [infoTekst, setInfoTekst] = useState<string | undefined>(undefined);
     const dispatch = useDispatch();
 
-    const onChange = (event: any, value: string) => {
-        setValgtAlternativ(value as SvarType);
+    const erVeileder = useSelector(selectErVeileder);
+    const opprettetDato = aktivitet.opprettetDato;
 
+    const validator = useFormstate<KanDeles, ValidatorProps>({
+        avtaltDato: (value, values, props) => {
+            if (!props.erVeileder) return;
+            if (props.erVeileder && !value) return 'Du må fylle ut datoen for når du var i dialog med brukeren';
+            if (value < props.opprettetDato) return 'Dato for dialog må være etter at kortet ble opprettet';
+            if (value > todayIsoString()) return 'Dato for dialog kan ikke være frem i tid';
+        },
+        kanDeles: (value) => {
+            if (!value) return 'Du må svare ja eller nei';
+        },
+    });
+
+    const state = validator({ kanDeles: '', avtaltDato: '' }, { erVeileder, opprettetDato });
+
+    const onChange = (event: any) => {
+        const value = event.target.value;
         if (value === SvarType.JA) {
             setInfoTekst('Stillingen flyttes til "Gjennomfører"');
         }
         if (value === SvarType.NEI) {
             setInfoTekst('Stillingen flyttes til "Avbrutt"');
         }
+        state.fields.kanDeles?.input.onChange(event);
     };
 
-    const onClick = () => {
-        dispatch(oppdaterCVSvar(aktivitet.id, aktivitet.versjon, valgtAlternativ === SvarType.JA));
+    const onSubmit = (data: KanDeles) => {
+        dispatch(oppdaterCVSvar(aktivitet.id, aktivitet.versjon, data.kanDeles === SvarType.JA, data.avtaltDato));
+        return Promise.resolve();
     };
 
     const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
 
-    const HeaderMedIngress = () => (
-        <>
+    return (
+        <form className={detaljVisningStyles.underseksjon} onSubmit={state.onSubmit(onSubmit)} noValidate>
             <CustomAlertstripe tekst={overskrift} />
             <div className={styles.luft} />
             <Ingress />
-            {svarfrist && (
-                <Normaltekst className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</Normaltekst>
-            )}
-        </>
-    );
-
-    return (
-        <div className={detaljVisningStyles.underseksjon}>
-            <RadioPanelGruppe
-                name="MeldInteresseForStillingen"
-                legend={<HeaderMedIngress />}
-                radios={[
-                    {
-                        label: JaSvarTekst,
-                        value: SvarType.JA.toString(),
-                        id: SvarType.JA.toString(),
-                    },
-                    {
-                        label: NeiSvarTekst,
-                        value: SvarType.NEI.toString(),
-                        id: SvarType.NEI.toString(),
-                    },
-                ]}
-                checked={valgtAlternativ?.toString()}
-                onChange={onChange}
-            />
+            <SvarPaaVegneAvBruker formhandler={state.fields.avtaltDato} />
+            <Normaltekst className={styles.svarfrist}>Svar før: {formaterDatoManed(svarfrist)}</Normaltekst>
+            <RadioGruppe
+                aria-label={overskrift}
+                role="radiogroup"
+                className="inputPanelGruppe"
+                feil={state.submittoken && state.fields.kanDeles.error}
+            >
+                <RadioPanel
+                    id="kanDeles"
+                    label={JaSvarTekst}
+                    value={SvarType.JA.toString()}
+                    {...state.fields.kanDeles}
+                    input={{ ...state.fields.kanDeles.input, onChange: onChange }}
+                />
+                <RadioPanel
+                    label={NeiSvarTekst}
+                    value={SvarType.NEI.toString()}
+                    {...state.fields.kanDeles}
+                    input={{ ...state.fields.kanDeles.input, onChange: onChange }}
+                />
+            </RadioGruppe>
             {infoTekst && <AlertStripe children={infoTekst} type="info" form="inline" className={styles.infoboks} />}
-            <Hovedknapp children="Lagre" mini className={styles.knapp} onClick={onClick} disabled={!valgtAlternativ} />
-        </div>
+            {erVeileder && <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />}
+            <Hovedknapp mini className={styles.knapp} disabled={state.submitting}>
+                Lagre
+            </Hovedknapp>
+        </form>
     );
 };

@@ -2,6 +2,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { KontaktInfo } from '../../../../datatypes/aktivitetTypes';
+import { formatterTelefonnummer } from '../../aktivitet-util';
 import DetaljFelt from '../hjelpekomponenter/detalj-felt';
 
 type Props = {
@@ -15,8 +16,7 @@ export const KontaktInfoDetaljer = ({ kontaktInfo }: Props) => {
             <DetaljFelt tittel="Kontaktinfo" fullbredde={true} beskrivelse={true}>
                 <Normaltekst>{kontaktInfo.navn}</Normaltekst>
                 <Normaltekst>{kontaktInfo.tittel}</Normaltekst>
-                <Normaltekst>{kontaktInfo.mobil}</Normaltekst>
-                <Normaltekst>{kontaktInfo.epost}</Normaltekst>
+                <Normaltekst>{kontaktInfo.mobil != null && formatterTelefonnummer(kontaktInfo.mobil)}</Normaltekst>
             </DetaljFelt>
         </>
     );

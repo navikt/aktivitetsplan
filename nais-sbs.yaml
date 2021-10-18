@@ -38,6 +38,8 @@ spec:
   env:
     - name: DITTNAV_LINK_URL
       value: 'https://tjenester.nav.no/dittnav/'
+    - name: PUBLIC_STILLING_FRA_NAV_BASE_URL #hvis man endrer denne husk og endre deafult i js også
+      value: 'https://www.nav.no/arbeid/stilling/'
   envFrom:
     - configmap: pto-config
     - configmap: loginservice-idporten

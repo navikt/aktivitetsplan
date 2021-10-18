@@ -5,6 +5,7 @@ import {
     beregnFraTil,
     beregnKlokkeslettVarighet,
     formatterKlokkeslett,
+    formatterTelefonnummer,
     formatterVarighet,
     splitIEldreOgNyereAktiviteter,
 } from './aktivitet-util';
@@ -59,6 +60,12 @@ describe('aktivitet-util', () => {
 
     it('formatterKlokkeslett', () => {
         expect(formatterKlokkeslett(75)).toEqual('1:15');
+    });
+
+    it('formatterTelefonnummer', () => {
+        expect(formatterTelefonnummer('80012345')).toEqual('800 12 345');
+        expect(formatterTelefonnummer('12345678')).toEqual('12 34 56 78');
+        expect(formatterTelefonnummer('04545')).toEqual('04545');
     });
 
     it('skallSplitteRiktigt', () => {
