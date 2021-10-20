@@ -26,6 +26,8 @@ const MITTMAL_KLIKK_LOGGEVENT = 'aktivitetsplan.mittmal.klikk';
 const MITTMAL_LAGRE_LOGGEVENT = 'aktivitetsplan.mittmal.lagre';
 const TID_BRUKT_GAINNPA_PLANEN = 'tidbrukt.gainnpa.planen';
 
+const STILLING_FRA_NAV_AAPNE_STILLINGSLENKE = 'aktivitetsplan.stillingfranav.stillingslenke.klikk';
+
 export const LOGGING_ANTALLBRUKERE = 'aktivitetsplan.antallSluttBrukere';
 export const ANTALL_VEILEDERE = 'aktivitetsplan.antallVeiledere';
 export const LOGG_BRUKER_IKKE_OPPFOLGING = 'aktivitetsplan.antallBrukerIkkeOppfolging';
@@ -133,6 +135,10 @@ export function loggMittMalKlikk(veileder: boolean) {
 
 export function loggMittMalLagre(veileder: boolean) {
     loggEvent(MITTMAL_LAGRE_LOGGEVENT, { erVeileder: veileder });
+}
+
+export function loggStillingFraNavStillingslenkeKlikk(veileder: boolean) {
+    loggEvent(STILLING_FRA_NAV_AAPNE_STILLINGSLENKE, { erVeileder: veileder });
 }
 
 function tidBruktFra(fraDato: number | string, tilDato?: number | string) {
