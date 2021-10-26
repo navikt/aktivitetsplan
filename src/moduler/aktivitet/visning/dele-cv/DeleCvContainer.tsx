@@ -15,7 +15,7 @@ interface PropTypes {
 
 export const Ingress = () => (
     <Normaltekst className={styles.ingress}>
-        Du bestemmer selv om NAV skal dele CV-en din på denne stillingen.
+        Du bestemmer selv om NAV kan dele CV-en din for denne stillingen.
     </Normaltekst>
 );
 
