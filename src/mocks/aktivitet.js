@@ -151,7 +151,7 @@ const testAktiviteter = !visTestAktiviteter()
           }),
           wrapAktivitet({
               versjon: '5345436',
-              id: '53498574399',
+              id: '2277',
               tittel: 'Servitør historisk',
               type: 'STILLING_FRA_NAV',
               lenke: null,
