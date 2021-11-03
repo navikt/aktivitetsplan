@@ -1,3 +1,4 @@
+import { Add } from '@navikt/ds-icons';
 import PT from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -11,7 +12,6 @@ import VisValgtFilter from '../filtrering/filter-vis-label';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
 import PeriodeFilter from '../filtrering/filter/periode-filter';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { ReactComponent as Pluss } from './pluss.svg';
 
 class Verktoylinje extends Component {
     render() {
@@ -28,7 +28,7 @@ class Verktoylinje extends Component {
                         visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
                         onClick={() => loggEvent(APNE_NY_AKTIVITET)}
                     >
-                        <Pluss className="plusslogo" />
+                        <Add aria-label="Legg til ikon" role="img" focusable="false" />
                         <span> Legg til aktivitet</span>
                     </Lenkeknapp>
                 </div>
