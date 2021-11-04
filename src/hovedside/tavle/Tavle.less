@@ -13,10 +13,13 @@
 
         &:disabled {
             cursor: default;
-            background: data-uri('./pil-disabled.svg') no-repeat;
+            color: @navGra40;
+            border-color: @navGra40;
 
             &:hover {
-                background: data-uri('./pil-disabled.svg') no-repeat;
+                color: @navGra40;
+                border: 0.1rem solid @navGra40;
+                background-color: white;
             }
         }
     }
@@ -37,10 +40,6 @@
 
         .knapp-forrige {
             margin: 1rem 0.5rem 0 0;
-        }
-
-        .knapp-neste {
-            margin: 1rem 0 0 0.5rem;
             transform: rotate(180deg);
 
             &:hover,
@@ -48,6 +47,18 @@
             &:hover:disabled {
                 transform: rotate(180deg);
             }
+        }
+
+        .knapp-forrige-ikon {
+            margin-left: 0.12rem;
+        }
+
+        .knapp-neste {
+            margin: 1rem 0 0 0.5rem;
+        }
+
+        .knapp-neste-ikon {
+            margin-left: 0.1rem;
         }
     }
 }
@@ -70,19 +81,21 @@
         }
 
         .tavle__scrollknapp {
-            display: block;
             height: @knapp-storrelse;
             width: @knapp-storrelse;
-            padding: calc(@knapp-storrelse / 2);
-            border: 0;
-            background: data-uri('./pil.svg') no-repeat;
-            background-size: contain;
+            display: flex;
+            align-items: center;
+            border-radius: 100%;
+            border: 0.1rem solid;
+            font-size: 2rem;
+            background: none;
 
             &:hover,
             &:active,
             &:active:hover {
+                background-color: @navGra80;
                 border: 0;
-                background: transparent data-uri('./pil-hover.svg') no-repeat;
+                color: white;
             }
         }
 
