@@ -1,4 +1,5 @@
 import { Next } from '@navikt/ds-icons';
+import { Back } from '@navikt/ds-icons';
 import classNames from 'classnames';
 import React, { ReactElement, useRef, useState } from 'react';
 
@@ -67,7 +68,7 @@ const Tavle = (props: Props) => {
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
         >
-            <Next className="knapp-forrige-ikon" aria-label="Knapp forrige ikon" role="img" focusable="false" />
+            <Back className="knapp-forrige-ikon" aria-label="Knapp forrige ikon" role="img" focusable="false" />
         </button>
     );
 
