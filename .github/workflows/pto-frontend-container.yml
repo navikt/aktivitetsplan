@@ -7,6 +7,8 @@ on:
       - 'nais-q-gcp.yml'
   workflow_dispatch:
 
+env:
+  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
 
 jobs:
   deploy-dev:
