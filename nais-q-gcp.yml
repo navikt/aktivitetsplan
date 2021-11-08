@@ -35,7 +35,7 @@ spec:
         - host: navtestb2c.b2clogin.com
   gcp:
     buckets:
-      - name: aktivitetsplan-dev
+      - name: aktivitetsplan-dev-2
         cascadingDelete: true
   env:
     - name: ENFORCE_LOGIN
