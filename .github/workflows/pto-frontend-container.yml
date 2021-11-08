@@ -1,0 +1,20 @@
+name: pto-frontend-container-dev
+
+on:
+  push:
+    paths:
+      - '.github/workflows/pto-frontend-container.yml'
+      - 'nais-q-gcp.yml'
+  workflow_dispatch:
+
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy gcp dev
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: nais-q-gcp.yml
