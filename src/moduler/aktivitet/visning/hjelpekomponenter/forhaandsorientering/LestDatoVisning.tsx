@@ -6,17 +6,17 @@ import styles from './LestDatoVisning.module.less';
 
 interface Props {
     hidden: boolean;
-    lestDato?: string;
+    lest?: string;
 }
 
 const LestDatoVisning = (props: Props) => {
-    const { hidden, lestDato } = props;
+    const { hidden, lest } = props;
 
     if (hidden) {
         return null;
     }
 
-    return <Undertekst className={styles.lestDato}>Lest {formaterDatoManed(lestDato)}</Undertekst>;
+    return <Undertekst className={styles.lestDato}>Lest {formaterDatoManed(lest)}</Undertekst>;
 };
 
 export default LestDatoVisning;
