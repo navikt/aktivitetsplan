@@ -1,5 +1,4 @@
-import { Next } from '@navikt/ds-icons';
-import { Back } from '@navikt/ds-icons';
+import { Back, Next } from '@navikt/ds-icons';
 import classNames from 'classnames';
 import React, { ReactElement, useRef, useState } from 'react';
 
