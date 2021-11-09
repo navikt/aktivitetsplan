@@ -66,8 +66,6 @@ const AktivitetvisningModal = (props: Props) => {
                     return;
                 }
                 if (skalLeses && fho) {
-                    console.log('skal leses: ', skalLeses);
-                    console.log('fho: ', fho);
                     window.alert('Det er en viktig beskjed om ansvaret ditt som du må lese.');
                     return;
                 }
