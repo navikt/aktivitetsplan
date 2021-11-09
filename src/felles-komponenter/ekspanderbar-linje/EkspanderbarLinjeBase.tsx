@@ -36,7 +36,7 @@ const EkspanderbarLinjeBase = (props: PropsBase) => {
         aapenRef.current = erAapen;
     }, [erAapen]);
 
-    const tittelUtifraState = erAapen ? aapneTittel : tittel;
+    const tittelUtifraState = erAapen && aapneTittel ? aapneTittel : tittel;
     const tittelKomponent =
         typeof tittelUtifraState === 'string' ? <Normaltekst>{tittelUtifraState}</Normaltekst> : tittelUtifraState;
 
