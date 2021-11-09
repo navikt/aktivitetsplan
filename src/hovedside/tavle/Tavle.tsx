@@ -67,7 +67,7 @@ const Tavle = (props: Props) => {
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
         >
-            <Back className="knapp-forrige-ikon" aria-label="Knapp forrige ikon" role="img" focusable="false" />
+            <Back className="knapp-forrige-ikon" aria-label="Forrige kolonne" role="img" focusable="false" />
         </button>
     );
 
