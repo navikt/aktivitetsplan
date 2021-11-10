@@ -1,7 +1,9 @@
-name: pto-frontend-container-dev
+name: pto frontend container dev
 
 on:
   push:
+    branches:
+      - 'dev'
     paths:
       - '.github/workflows/pto-frontend-container.yml'
       - 'nais-q-gcp.yml'
@@ -13,6 +15,7 @@ env:
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v1
       - name: deploy gcp dev
