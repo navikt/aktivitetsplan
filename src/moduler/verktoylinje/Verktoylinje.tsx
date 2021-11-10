@@ -30,7 +30,7 @@ const Verktoylinje = () => {
                     visible={!viserHistoriskPeriode && underOppfolging && harSkriveTilgang}
                     onClick={() => loggEvent(APNE_NY_AKTIVITET)}
                 >
-                    <Add aria-describedby="Legg til aktivitet" role="img" focusable="false" />
+                    <Add role="img" focusable="false" aria-hidden />
                     <span> Legg til aktivitet</span>
                 </Lenkeknapp>
             </div>
