@@ -1,12 +1,12 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: aktivitetsplan-gcp
+  name: aktivitetsplan
   namespace: pto
   labels:
     team: pto
 spec:
-  image: docker.pkg.github.com/navikt/pto-frontend/pto-frontend:2021.06.07_11.12-09a62aa37369
+  image: ghcr.io/navikt/pto-frontend/pto-frontend:2021.06.07_11.12-09a62aa37369
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -35,7 +35,7 @@ spec:
         - host: navtestb2c.b2clogin.com
   gcp:
     buckets:
-      - name: aktivitetsplan-dev-2
+      - name: aktivitetsplan-dev
         cascadingDelete: true
   env:
     - name: ENFORCE_LOGIN
