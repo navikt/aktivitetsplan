@@ -55,7 +55,7 @@ function MalContent(props: MalContentProps) {
             <div className="mittmal_callToAction">
                 <Element>Hva er målet ditt fremover?</Element>
                 <Flatknapp className="mittmal_knapp" form="kompakt">
-                    <Add aria-label="Legg til ikon" role="img" focusable="false" />
+                    <Add aria-describedby="Legg til mål" role="img" focusable="false" />
                     <span>Legg til</span>
                 </Flatknapp>
             </div>

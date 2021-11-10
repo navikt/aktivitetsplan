@@ -67,7 +67,7 @@ const Tavle = (props: Props) => {
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
         >
-            <Back className="knapp-forrige-ikon" aria-label="Forrige kolonne" role="img" focusable="false" />
+            <Back className="knapp-forrige-ikon" aria-describedby="Forrige kolonne" role="img" focusable="false" />
         </button>
     );
 
@@ -81,7 +81,7 @@ const Tavle = (props: Props) => {
             hidden={hoyreKnappDisabled}
             aria-label="Flytt visning en kolonne til høyre"
         >
-            <Next className="knapp-neste-ikon" aria-label="Knapp neste ikon" role="img" focusable="false" />
+            <Next className="knapp-neste-ikon" aria-describedby="Neste kolonne" role="img" focusable="false" />
         </button>
     );
 
