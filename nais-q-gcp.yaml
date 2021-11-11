@@ -59,5 +59,11 @@ spec:
             { "from": "/veilarboppfolging", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
             { "from": "/veilarbdialog", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
             { "from": "/veilarbaktivitet", "to": "http://pto-proxy/proxy", "preserveContextPath": true }
+          ],
+          "redirects": [
+              {
+                "from": "/api/auth",
+                "to": "/auth/info"
+              }
           ]
         }
