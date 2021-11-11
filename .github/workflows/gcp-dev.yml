@@ -4,7 +4,7 @@ on:
   push:
     paths-ignore:
       - '.github/workflows/pto-frontend-container.yml'
-      - 'nais-q-gcp.yml'
+      - 'nais-q-gcp.yaml'
   workflow_dispatch:
 
 jobs:

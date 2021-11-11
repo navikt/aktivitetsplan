@@ -2,11 +2,9 @@ name: pto frontend container dev
 
 on:
   push:
-    branches:
-      - 'dev'
     paths:
       - '.github/workflows/pto-frontend-container.yml'
-      - 'nais-q-gcp.yml'
+      - 'nais-q-gcp.yaml'
   workflow_dispatch:
 
 env:
@@ -22,4 +20,4 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-gcp
-          RESOURCE: nais-q-gcp.yml
+          RESOURCE: nais-q-gcp.yaml
