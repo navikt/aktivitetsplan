@@ -1,3 +1,4 @@
+import { Back, Next } from '@navikt/ds-icons';
 import classNames from 'classnames';
 import React, { ReactElement, useRef, useState } from 'react';
 
@@ -65,7 +66,9 @@ const Tavle = (props: Props) => {
             onClick={visForrige}
             disabled={venstreKnappDisabled}
             aria-label="Flytt visning en kolonne til venstre"
-        />
+        >
+            <Back className="knapp-forrige-ikon" aria-describedby="Forrige kolonne" role="img" focusable="false" />
+        </button>
     );
 
     const hoyreKnapp = (
@@ -77,7 +80,9 @@ const Tavle = (props: Props) => {
             onClick={visNeste}
             hidden={hoyreKnappDisabled}
             aria-label="Flytt visning en kolonne til høyre"
-        />
+        >
+            <Next className="knapp-neste-ikon" aria-describedby="Neste kolonne" role="img" focusable="false" />
+        </button>
     );
 
     return (

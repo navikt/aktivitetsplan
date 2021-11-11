@@ -9,7 +9,7 @@ import Maal from '../moduler/mal-linje/MittMaal';
 import OppfolgingStatus from '../moduler/oppfolging-status/oppfolging-status';
 import Varslinger from '../moduler/varslinger/Varslinger';
 import Navigasjonslinje from '../moduler/verktoylinje/navigasjonslinje';
-import Verktoylinje from '../moduler/verktoylinje/verktoylinje';
+import Verktoylinje from '../moduler/verktoylinje/Verktoylinje';
 import Routing, { PublicRouting } from '../routing';
 import { getFodselsnummer } from '../utils/fnr-util';
 import Aktivitetstavle from './tavle/Aktivitetstavle';

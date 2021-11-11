@@ -13,7 +13,7 @@ import {
 } from './filter/filter-reducer';
 import { selectFilterSlice } from './filter/filter-selector';
 import { PeriodeLabel } from './filter/periode-filter';
-import FiltreringLabel from './filteringslabel/filtering-label';
+import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
 function VisValgtFilter(props) {
     const {
