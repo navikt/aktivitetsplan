@@ -7,6 +7,10 @@ on:
       - 'nais-q-gcp.yaml'
   workflow_dispatch:
 
+concurrency:
+  group: gcp_dev
+  cancel-in-progress: true
+
 jobs:
   deploy-dev:
     name: Deploy application to dev

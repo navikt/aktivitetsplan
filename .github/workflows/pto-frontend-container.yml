@@ -7,6 +7,10 @@ on:
       - 'nais-q-gcp.yaml'
   workflow_dispatch:
 
+concurrency:
+  group: pto_frontend_container_dev
+  cancel-in-progress: true
+
 env:
   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
 
