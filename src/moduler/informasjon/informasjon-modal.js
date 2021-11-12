@@ -53,10 +53,10 @@ class InformasjonModal extends Component {
                         hatt. Du kan kommunisere med veilederen din om aktivitetene i{' '}
                         <Lenke href="/dialog">dialogen</Lenke>.
                     </Normaltekst>
-                    <Video />
                     <BrukePlanenPanel />
                     <OkonomiskStotte />
                     <RettigheterPanel />
+                    <Video />
                 </ModalContainer>
             </Modal>
         );
