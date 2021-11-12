@@ -17,13 +17,19 @@
                 TIMEOUTBOX: true
             };
         </script>
+        <link href="https://www.nav.no/dekoratoren/css/client.css" rel="stylesheet" />
     </head>
     <body style="background-color: white">
         <div id="modal-a11y-wrapper">
             <div id="demo"></div>
             <div id="mainapp" class="appContainer"></div>
         </div>
+        <div id="decorator-footer"></div>
+        <div id="decorator-env" data-src="https://www.nav.no/dekoratoren/env?feedback=false&chatbot=false"></div>
     </body>
+
+
+    <script src="https://www.nav.no/dekoratoren/client.js"></script>
     <script>
         function render() {
             return window.NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));
