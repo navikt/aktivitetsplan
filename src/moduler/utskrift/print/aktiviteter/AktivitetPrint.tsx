@@ -32,7 +32,7 @@ const AktivitetPrint = (props: Props) => {
             <AvtaltMarkering hidden={!aktivitet.avtalt} className="etikett-print" />
             <ForhaandsorienteringPrint
                 forhaandsorienteringTekst={forhaandsorientering?.tekst}
-                forhaandsorienteringLest={forhaandsorientering?.lest}
+                forhaandsorienteringLest={forhaandsorientering?.lestDato}
             />
             <SokeStatusEtikett hidden={!aktivitet.etikett} etikett={aktivitet.etikett} className="etikett-print" />
             <DialogPrint dialog={dialog} />

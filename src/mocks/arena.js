@@ -65,8 +65,7 @@ export const arena = !visArenaAktiviteter()
               etikett: null,
               moeteplanListe: null,
               forhaandsorientering: {
-                  tekst:
-                      'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
+                  tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
                   type: 'SEND_FORHAANDSORIENTERING',
               },
           },
@@ -114,7 +113,7 @@ export const oppdaterLestFhoArenaaktivitet = (__params, __body, { aktivitetId })
 
     lestAktivitet.forhaandsorientering = {
         ...lestAktivitet.forhaandsorientering,
-        lest: moment().toISOString(),
+        lestDato: moment().toISOString(),
     };
 
     return lestAktivitet;
