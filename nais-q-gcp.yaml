@@ -64,6 +64,26 @@ spec:
               {
                 "from": "/api/auth",
                 "to": "/auth/info"
+              },
+              {
+                "from": "/aktivitetsplan",
+                "to": "{{AKTIVITETSPLAN_URL}}"
+              },              {
+                "from": "/arbeidssokerregistrering",
+                "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
+              },              {
+                "from": "/dittnav",
+                "to": "{{DITTNAV_LINK_URL}}"
+              },              {
+                "from": "/veientilarbeid",
+                "to": "{{VEIENTILARBEID_URL}}"
+              },              {
+                "from": "/arbeidsrettet-dialog",
+                "to": "{{ARBEIDSRETTET_DIALOG_URL}}"
+              },
+              {
+                "from": "/dialog",
+                "to": "{{ARBEIDSRETTET_DIALOG_URL}}"
               }
           ]
         }
