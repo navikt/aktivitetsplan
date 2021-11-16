@@ -86,6 +86,14 @@ spec:
               {
                 "from": "/dialog",
                 "to": "{{ARBEIDSRETTET_DIALOG_URL}}"
+              },
+              {
+                "from": "/stillingFraNav",
+                "to": "{{INTERN_STILLING_URL}}"
+              },
+              {
+                "from": "/rekrutteringsbistand",
+                "to": "{{REKRUTERINGSBISTAND_URL}}"
               }
           ]
         }
