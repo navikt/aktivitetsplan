@@ -37,6 +37,8 @@ spec:
     buckets:
       - name: aktivitetsplan-dev
         cascadingDelete: true
+  envFrom:
+    - configmap: pto-config
   env:
     - name: ENFORCE_LOGIN
       value: "true"
