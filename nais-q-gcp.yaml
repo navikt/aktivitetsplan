@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/pto-frontend/pto-frontend:2021.11.10_15.47-ccce5c2834b9
+  image: ghcr.io/navikt/pto-frontend/pto-frontend:2021.11.16_10.00-ac0a8ce20e9f
   port: 8080
   liveness:
     path: /internal/isAlive
