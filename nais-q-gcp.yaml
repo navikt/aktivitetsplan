@@ -75,7 +75,7 @@ spec:
                 "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
               },              {
                 "from": "/dittnav",
-                "to": "{{DITTNAV_LINK_URL}}"
+                "to": "{{DITTNAV_URL}}"
               },              {
                 "from": "/veientilarbeid",
                 "to": "{{VEIENTILARBEID_URL}}"
