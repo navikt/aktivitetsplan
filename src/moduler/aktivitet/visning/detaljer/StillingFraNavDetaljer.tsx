@@ -19,7 +19,7 @@ export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
 
     if (!stillingFraNavData) return null;
 
-    const basePath = erVeileder ? '/stillingFraNav/' : '/rekrutteringsbistand/';
+    const basePath = erVeileder ? '/rekrutteringsbistand/' : '/stillingFraNav/';
     const url = basePath + stillingFraNavData.stillingsId;
 
     return (
