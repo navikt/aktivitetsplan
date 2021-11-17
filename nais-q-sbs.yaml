@@ -2,8 +2,7 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: aktivitetsplan
-  namespace: {{namespace}}
-  cluster: dev-sbs
+  namespace: pto
   labels:
     team: pto
 spec:
@@ -23,8 +22,8 @@ spec:
     enabled: true
     path: aktivitetsplan/internal/metrics
   ingresses:
-    - https://aktivitetsplan-{{urlmiljo}}.nav.no
-    - https://aktivitetsplan-{{urlmiljo}}.dev.nav.no
+    - https://aktivitetsplan-q1.nav.no
+    - https://aktivitetsplan-q1.dev.nav.no
     - https://aktivitetsplan.dev.nav.no
 
   vault:
@@ -32,9 +31,9 @@ spec:
   webproxy: true
   env:
     - name: APP_ENVIRONMENT_NAME
-      value: {{namespace}}
+      value: q1
     - name: DITTNAV_LINK_URL
-      value: 'https://tjenester-{{namespace}}.nav.no/dittnav/'
+      value: 'https://tjenester-q1.nav.no/dittnav/'
     - name: PUBLIC_STILLING_FRA_NAV_BASE_URL
       value: 'https://vis-stilling.dev.nav.no/arbeid/stilling/'
   envFrom:

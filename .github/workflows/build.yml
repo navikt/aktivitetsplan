@@ -42,14 +42,11 @@ jobs:
         env:
           CLUSTER: dev-fss
           RESOURCE: nais-q-fss.yaml
-          VAR: namespace=q1
-
       - name: deploy sbs
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-sbs
           RESOURCE: nais-q-sbs.yaml
-          VAR: namespace=q1,urlmiljo=q1
   deploy-p:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'

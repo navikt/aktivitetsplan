@@ -2,8 +2,7 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: aktivitetsplan
-  namespace: default
-  cluster: prod-sbs
+  namespace: pto
   labels:
     team: pto
 spec:
