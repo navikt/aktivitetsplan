@@ -7,7 +7,6 @@ import { loggStillingFraNavStillingslenkeKlikk } from '../../../../felles-kompon
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
 import styles from './AktivitetDetaljer.module.less';
-import { KontaktInfoDetaljer } from './KontaktInfoDetaljer';
 
 type Props = {
     stillingFraNavData: StillingFraNavAktivitetData;
@@ -29,7 +28,6 @@ export const StillingFraNavDetaljer = ({ stillingFraNavData }: Props) => {
             <div className={styles.detaljer}>
                 <Informasjonsfelt key="arbeidsgiver" tittel="arbeidsgiver" innhold={stillingFraNavData.arbeidsgiver} />
                 <Informasjonsfelt key="arbeidssted" tittel="arbeidssted" innhold={stillingFraNavData.arbeidssted} />
-                <KontaktInfoDetaljer kontaktInfo={stillingFraNavData.kontaktpersonData} />
             </div>
             <a
                 href={url}
