@@ -2,7 +2,8 @@ apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
   name: aktivitetsplan-fss
-  namespace: pto
+  namespace: {{namespace}}
+  cluster: dev-fss
   labels:
     team: pto
 spec:
@@ -22,9 +23,9 @@ spec:
     enabled: true
     path: aktivitetsplan/internal/metrics
   ingresses:
-    - https://aktivitetsplan-q1.nais.preprod.local
-    - https://app-q1.adeo.no/aktivitetsplan
-    - https://app-q1.dev.adeo.no/aktivitetsplan
+    - https://aktivitetsplan-{{namespace}}.nais.preprod.local
+    - https://app-{{namespace}}.adeo.no/aktivitetsplan
+    - https://app-{{namespace}}.dev.adeo.no/aktivitetsplan
   vault:
     enabled: true
   webproxy: true
