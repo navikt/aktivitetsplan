@@ -2,6 +2,7 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { STILLING_FRA_NAV_TYPE } from '../../../../../constant';
 import { Aktivitet } from '../../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../../datatypes/dialogTypes';
 import { createSelectDialogForAktivitetId } from '../../../../dialog/dialog-selector';
@@ -50,11 +51,17 @@ function DialogLenke(props: Props) {
     const dialogId = dialog && dialog.id;
     const antallHenvendelser = henvendelser.length;
     const uleste = henvendelser.filter((h) => !h.lest).length;
+    const erStillingFraNav = aktivitet.type === STILLING_FRA_NAV_TYPE;
 
     return (
         <>
             <LenkeTilDialog className={styles.dialogLinke} dialogId={dialogId} aktivitetId={aktivitetId}>
-                <DialogLenkeInnhold henvendelser={antallHenvendelser} uleste={uleste} erVeileder={erVeileder} />
+                <DialogLenkeInnhold
+                    henvendelser={antallHenvendelser}
+                    uleste={uleste}
+                    erVeileder={erVeileder}
+                    erStillingFraNav={erStillingFraNav}
+                />
                 <DialogPil antallUleste={uleste} />
             </LenkeTilDialog>
 
