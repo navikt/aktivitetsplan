@@ -1,5 +1,6 @@
 import './mitt-maal.less';
 
+import { Add } from '@navikt/ds-icons';
 import classNames from 'classnames';
 import moment from 'moment';
 import { Flatknapp } from 'nav-frontend-knapper';
@@ -19,7 +20,6 @@ import { selectErVeileder, selectIdentitetData } from '../identitet/identitet-se
 import { selectLestAktivitetsplan } from '../lest/lest-reducer';
 import { hentMal, lesMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
 import { selectErUnderOppfolging, selectHarSkriveTilgang } from '../oppfolging-status/oppfolging-selector';
-import { ReactComponent as Pluss } from './pluss.svg';
 
 interface MalTextProps {
     mal?: string;
@@ -55,7 +55,7 @@ function MalContent(props: MalContentProps) {
             <div className="mittmal_callToAction">
                 <Element>Hva er målet ditt fremover?</Element>
                 <Flatknapp className="mittmal_knapp" form="kompakt">
-                    <Pluss />
+                    <Add role="img" focusable="false" aria-hidden />
                     <span>Legg til</span>
                 </Flatknapp>
             </div>

@@ -4,7 +4,6 @@ import React from 'react';
 
 import { BEHANDLING_AKTIVITET_TYPE } from '../../../../constant';
 import { Aktivitet, MedisinskBehandlingAktivitet } from '../../../../datatypes/aktivitetTypes';
-import { useSkalBrukeNyMedisinskBehandling } from '../../../../felles-komponenter/feature/feature';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import PeriodeValidering, {
     validerPeriodeFelt,
@@ -14,7 +13,6 @@ import { HiddenIfInput as Input } from '../../../../felles-komponenter/skjema/in
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
-import AktivitetBehandlingFormGammel from '../behandling-gammel/AktivitetBehandlingForm';
 import LagreAktivitet from '../LagreAktivitet';
 import {
     validateBehandlingSted,
@@ -83,7 +81,7 @@ const MedisinskBehandlingForm = (props: Props) => {
         periodeValidering: '',
     };
 
-    const state = validator(initalValues, aktivitet ? aktivitet : {} as MedisinskBehandlingAktivitet);
+    const state = validator(initalValues, aktivitet ? aktivitet : ({} as MedisinskBehandlingAktivitet));
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -124,13 +122,4 @@ const MedisinskBehandlingForm = (props: Props) => {
     );
 };
 
-const MedisinskBehandlingFormToggle = (props: Props) => {
-    const brukNyMedisinskBehandling = useSkalBrukeNyMedisinskBehandling();
-    return brukNyMedisinskBehandling ? (
-        <MedisinskBehandlingForm {...props} />
-    ) : (
-        <AktivitetBehandlingFormGammel {...props} />
-    );
-};
-
-export default MedisinskBehandlingFormToggle;
+export default MedisinskBehandlingForm;

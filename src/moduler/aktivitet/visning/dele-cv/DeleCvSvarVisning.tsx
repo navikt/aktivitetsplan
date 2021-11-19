@@ -31,7 +31,7 @@ export const DeleCvSvarVisning = ({ cvKanDelesData, startAapen = false }: Props)
     const Infostripe = () =>
         cvKanDeles ? (
             <AlertStripeInfo className={styles.infoStripe}>
-                Du trenger ikke gjøre noe mer med stillingen. Arbeidsgiveren eller NAV vil ta kontakt
+                Arbeidsgiveren eller NAV vil kontakte deg hvis du er aktuell for stillingen
             </AlertStripeInfo>
         ) : null;
 

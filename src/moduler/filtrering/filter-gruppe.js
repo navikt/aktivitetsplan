@@ -12,7 +12,7 @@ import {
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
 import { PeriodeLabel } from './filter/periode-filter';
-import FiltreringLabel from './filteringslabel/filtering-label';
+import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
 function FilterGruppe({
     filterKey,

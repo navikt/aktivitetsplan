@@ -76,7 +76,7 @@ const Forhaandsorienteringsvisning = (props: Props) => {
             kanToogle
         >
             <Tekstomrade className={styles.forhaandsorienteringTekst}>{forhaandsorienteringTekst}</Tekstomrade>
-            <LestDatoVisning hidden={!erLest} lestDato={forhaandsorienteringLestDato} />
+            <LestDatoVisning hidden={!erLest} lest={forhaandsorienteringLestDato} />
             <LestKnapp hidden={!kanMarkeresSomLest} onClick={onClickLestKnapp} lasterData={lasterData} />
         </EkspanderbarLinjeBase>
     );
