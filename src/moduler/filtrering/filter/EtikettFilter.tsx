@@ -1,12 +1,17 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { StillingsStatus } from '../../../datatypes/aktivitetTypes';
 import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 import { etikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
 import FilterVisningsKomponent from './FilterVisning';
+
+type FilterType = {
+    [key in StillingsStatus]?: boolean;
+};
 
 const EtikettFilter = () => {
     const dispatch = useDispatch();

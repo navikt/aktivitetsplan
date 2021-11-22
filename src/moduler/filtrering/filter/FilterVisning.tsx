@@ -28,10 +28,10 @@ interface AktiviteFilterType extends FilterType {
 }
 
 export interface EtikettType extends FilterType {
-    SOKNAD_SENDT: boolean;
-    INNKALT_TIL_INTERVJU: boolean;
-    JOBBTILBUD: boolean;
-    AVSLAG: boolean;
+    SOKNAD_SENDT?: boolean;
+    INNKALT_TIL_INTERVJU?: boolean;
+    JOBBTILBUD?: boolean;
+    AVSLAG?: boolean;
 }
 
 export type Filter = AvtaltFilterType | StatusFilterType | AktiviteFilterType | EtikettType;

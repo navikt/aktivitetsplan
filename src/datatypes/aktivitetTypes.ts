@@ -90,7 +90,7 @@ export interface Aktivitet extends AktivitetRequiredProps {
     tilDato?: string;
     endretDato?: string;
     avsluttetKommentar?: string;
-    etikett?: StillingsStatus;
+    etikett?: StillingsStatus | ArenaEtikett;
     historisk?: boolean;
     forhaandsorientering?: Forhaandsorientering;
     detaljer?: object;
