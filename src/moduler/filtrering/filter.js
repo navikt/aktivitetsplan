@@ -10,7 +10,7 @@ import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../proptypes';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
-import EtikettFilter from './filter/etikett-filter';
+import EtikettFilter from './filter/EtikettFilter';
 import StatusFilter from './filter/status-filter';
 import TypeFilter from './filter/type-filter';
 
@@ -47,22 +47,21 @@ function Filter({ avhengigheter, harAktivitet, className }) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <VisibleIfDiv className={resolvedClassNames}>
-                        <Dropdown
-                            name="filter"
-                            knappeTekst="Filtrer"
-                            className="dropdown--alignright"
-                            onOpen={() => {
-                                loggEvent(OPNE_AKTIVITETFILTER);
-                            }}
-                        >
-                            <div className="filter__container">
-                                <AvtaltMedNavFilter />
-                                <EtikettFilter />
-                                <StatusFilter />
-                                <TypeFilter />
-                            </div>
-                        </Dropdown>
-
+                <Dropdown
+                    name="filter"
+                    knappeTekst="Filtrer"
+                    className="dropdown--alignright"
+                    onOpen={() => {
+                        loggEvent(OPNE_AKTIVITETFILTER);
+                    }}
+                >
+                    <div className="filter__container">
+                        <AvtaltMedNavFilter />
+                        <EtikettFilter />
+                        <StatusFilter />
+                        <TypeFilter />
+                    </div>
+                </Dropdown>
             </VisibleIfDiv>
         </Innholdslaster>
     );

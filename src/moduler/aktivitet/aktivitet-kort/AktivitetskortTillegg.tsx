@@ -27,6 +27,7 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(aktivitet);
     const svartMarkeringSkalVises = SkalIkkeSvartMarkeringVises(aktivitet);
     const stillingFraNavSoknadsstatus = aktivitet.stillingFraNavData?.soknadsstatus;
+    const erArenaAktivitet = !!aktivitet.arenaAktivitet;
 
     if (
         !(
@@ -47,7 +48,12 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                 <IkkeSvartMarkering visible={svartMarkeringSkalVises} />
                 <UlestAvtaltMarkering aktivitet={aktivitet} />
                 <IkkeDeltFerdigMarkering visible={deltFerdigMarkeringSkalVises} />
-                <SokeStatusEtikett hidden={!etikett} etikett={etikett} className={styles.etikett} />
+                <SokeStatusEtikett
+                    hidden={!etikett}
+                    etikett={etikett}
+                    className={styles.etikett}
+                    erArenaAktivitet={erArenaAktivitet}
+                />
                 <SoknadsstatusEtikett
                     hidden={!stillingFraNavSoknadsstatus}
                     etikett={stillingFraNavSoknadsstatus}

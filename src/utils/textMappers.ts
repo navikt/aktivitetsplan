@@ -39,3 +39,15 @@ export const stillingFraNavSoknadsstatusMapper = {
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Fått avslag',
 };
+
+export const arenaEtikettMapper = {
+    AKTUELL: 'Søkt inn på tiltaket',
+    AVSLAG: 'Fått avslag',
+    IKKAKTUELL: 'Ikke aktuell for tiltaket',
+    IKKEM: 'Ikke møtt på tiltaket',
+    INFOMOETE: 'Infomøte før tiltaket',
+    JATAKK: 'Takket ja til tilbud',
+    NEITAKK: 'Takket nei til tilbud',
+    TILBUD: 'Fått plass på tiltaket',
+    VENTELISTE: 'På venteliste',
+};

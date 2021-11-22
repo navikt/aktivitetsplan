@@ -144,7 +144,18 @@ export interface StillingFraNavAktivitetData {
     livslopsstatus: Livslopsstatus;
 }
 
-enum ArenaEtikett {
+// export type ArenaEtikett =
+//     | 'AKTUELL'
+//     | 'AVSLAG'
+//     | 'IKKAKTUELL'
+//     | 'IKKEM'
+//     | 'INFOMOETE'
+//     | 'JATAKK'
+//     | 'NEITAKK'
+//     | 'TILBUD'
+//     | 'VENTELISTE';
+
+export enum ArenaEtikett {
     AKTUELL = 'AKTUELL',
     AVSLAG = 'AVSLAG',
     IKKAKTUELL = 'IKKAKTUELL',
