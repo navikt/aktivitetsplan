@@ -1,6 +1,5 @@
-import PT from 'prop-types';
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 import { etikettMapper } from '../../../utils/textMappers';
@@ -9,19 +8,16 @@ import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
 import FilterVisningsKomponent from './FilterVisning';
 
-interface Props {
-    harAktivitetEtiketter: boolean;
-    aktivitetEtiketter: any;
-    doToggleAktivitetsEtikett: (key: string) => void;
-}
-
-const EtikettFilter = (props: Props) => {
-    const { harAktivitetEtiketter, aktivitetEtiketter, doToggleAktivitetsEtikett } = props;
-
+const EtikettFilter = () => {
+    const dispatch = useDispatch();
     const aktiviteter = useSelector(selectAktiviterForAktuellePerioden);
     const aktivitetEtiketterFilter = useSelector(selectAktivitetEtiketterFilter);
 
-    const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
+    const doToggleAktivitetsEtikett = (aktivitetsType: string) => {
+        dispatch(toggleAktivitetsEtikett(aktivitetsType));
+    };
+
+    const aktivitetEtiketter: any = aktiviteter.reduce((etiketter: any, aktivitet) => {
         const { etikett } = aktivitet;
         if (etikett) {
             etiketter[etikett] = aktivitetEtiketterFilter[etikett]; // eslint-disable-line no-param-reassign
@@ -29,17 +25,11 @@ const EtikettFilter = (props: Props) => {
         return etiketter;
     }, {});
 
-    return {
-        aktivitetEtiketter,
-        harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length >= 1,
-    };
-
     return (
         <FilterVisningsKomponent
-            harAktiviteter={harAktivitetEtiketter}
+            harAktiviteter={Object.keys(aktivitetEtiketter).length >= 1}
             filter={aktivitetEtiketter}
             tekst="Etikett"
-            filterTekst="aktivitet.etikett."
             metrikkNavn={TILSTAND_FILTER_METRIKK}
             doToggleFunction={doToggleAktivitetsEtikett}
             textMapper={etikettMapper}
@@ -48,46 +38,3 @@ const EtikettFilter = (props: Props) => {
 };
 
 export default EtikettFilter;
-
-// function EtikettFilter({ harAktivitetEtiketter, aktivitetEtiketter, doToggleAktivitetsEtikett }) {
-//     return (
-//         <FilterVisningsKomponent
-//             harAktiviteter={harAktivitetEtiketter}
-//             filter={aktivitetEtiketter}
-//             tekst="Etikett"
-//             filterTekst="aktivitet.etikett."
-//             metrikkNavn={TILSTAND_FILTER_METRIKK}
-//             doToggleFunction={doToggleAktivitetsEtikett}
-//             textMapper={etikettMapper}
-//         />
-//     );
-// }
-//
-// EtikettFilter.propTypes = {
-//     harAktivitetEtiketter: PT.bool.isRequired,
-//     aktivitetEtiketter: PT.object.isRequired,
-//     doToggleAktivitetsEtikett: PT.func.isRequired,
-// };
-//
-// const mapStateToProps = (state) => {
-//     const aktiviteter = selectAktiviterForAktuellePerioden(state);
-//     const aktivitetEtiketterFilter = selectAktivitetEtiketterFilter(state);
-//     const aktivitetEtiketter = aktiviteter.reduce((etiketter, aktivitet) => {
-//         const { etikett } = aktivitet;
-//         if (etikett) {
-//             etiketter[etikett] = aktivitetEtiketterFilter[etikett]; // eslint-disable-line no-param-reassign
-//         }
-//         return etiketter;
-//     }, {});
-//
-//     return {
-//         aktivitetEtiketter,
-//         harAktivitetEtiketter: Object.keys(aktivitetEtiketter).length >= 1,
-//     };
-// };
-//
-// const mapDispatchToProps = (dispatch) => ({
-//     doToggleAktivitetsEtikett: (aktivitetsType) => dispatch(toggleAktivitetsEtikett(aktivitetsType)),
-// });
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(EtikettFilter);
