@@ -1,6 +1,7 @@
 // Actions
 export const TOGGLE_AKTIVITET_TYPE = 'filter/toggleAktivitetType';
 export const TOGGLE_AKTIVITET_ETIKETT = 'filter/toggleAktivitetEtikett';
+export const TOGGLE_ARENA_AKTIVITET_ETIKETT = 'filter/toggleArenaAktivitetEtikett';
 export const VELG_HISTORISK_PERIODE = 'filter/velg';
 export const TOGGLE_AKTIVITET_STATUS = 'filter/toggleAktivitetStatus';
 export const TOGGLE_AKTIVITET_AVTALT = 'filter/toggleAktivitetAvtaltMedNav';
@@ -8,6 +9,7 @@ export const TOGGLE_AKTIVITET_AVTALT = 'filter/toggleAktivitetAvtaltMedNav';
 const initalState = {
     aktivitetTyper: {},
     aktivitetEtiketter: {},
+    arenaAktivitetEtiketter: {},
     aktivitetStatus: {},
     aktivitetAvtaltMedNav: {},
     historiskPeriode: null,
@@ -26,6 +28,11 @@ export default function reducer(state = initalState, action) {
             const aktivitetEtiketter = { ...state.aktivitetEtiketter };
             aktivitetEtiketter[data] = !aktivitetEtiketter[data];
             return { ...state, aktivitetEtiketter };
+        }
+        case TOGGLE_ARENA_AKTIVITET_ETIKETT: {
+            const arenaAktivitetEtiketter = { ...state.arenaAktivitetEtiketter };
+            arenaAktivitetEtiketter[data] = !arenaAktivitetEtiketter[data];
+            return { ...state, arenaAktivitetEtiketter };
         }
         case TOGGLE_AKTIVITET_STATUS: {
             const aktivitetStatus = { ...state.aktivitetStatus };
@@ -58,6 +65,12 @@ export function toggleAktivitetsEtikett(aktivitetEtikett) {
     return {
         type: TOGGLE_AKTIVITET_ETIKETT,
         data: aktivitetEtikett,
+    };
+}
+export function toggleArenaAktivitetsEtikett(arenaAktivitetEtiketter) {
+    return {
+        type: TOGGLE_AKTIVITET_ETIKETT,
+        data: arenaAktivitetEtiketter,
     };
 }
 

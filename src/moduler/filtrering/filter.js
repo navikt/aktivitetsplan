@@ -9,6 +9,7 @@ import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../proptypes';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
+import ArenaEtikettFilter from './filter/ArenaEtikettFilter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
 import EtikettFilter from './filter/EtikettFilter';
 import StatusFilter from './filter/status-filter';
@@ -58,6 +59,7 @@ function Filter({ avhengigheter, harAktivitet, className }) {
                     <div className="filter__container">
                         <AvtaltMedNavFilter />
                         <EtikettFilter />
+                        <ArenaEtikettFilter />
                         <StatusFilter />
                         <TypeFilter />
                     </div>
