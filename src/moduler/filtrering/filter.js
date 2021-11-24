@@ -3,6 +3,7 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
@@ -22,7 +23,11 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
             res.muligeStatus.add(status);
             res.muligeTyper.add(type);
             if (etikett) {
-                res.muligeEtiketter.add(etikett);
+                if (isArenaAktivitet(aktivitet)) {
+                    res.muligeArenaEtiketter.add(etikett);
+                } else {
+                    res.muligeEtiketter.add(etikett);
+                }
             }
             res.muligeAvtalt.add(avtalt);
             return res;
@@ -31,6 +36,7 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
             muligeStatus: new Set(),
             muligeTyper: new Set(),
             muligeEtiketter: new Set(),
+            muligeArenaEtiketter: new Set(),
             muligeAvtalt: new Set(),
         }
     );

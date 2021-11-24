@@ -64,6 +64,7 @@ interface FilterVisningTypes {
 const FilterVisning = (props: FilterVisningTypes) => {
     const { harAktiviteter, filter, tekst, metrikkNavn, doToggleFunction, className, textMapper } = props;
 
+    console.log(filter);
     const checkboxes = Object.keys(filter).map((nokkel, i) => (
         <FilterCheckbox
             key={i}
