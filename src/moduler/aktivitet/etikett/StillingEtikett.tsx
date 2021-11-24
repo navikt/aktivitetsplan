@@ -2,30 +2,22 @@ import classNames from 'classnames';
 import React from 'react';
 
 import * as statuskoder from '../../../constant';
-import { ArenaEtikett, StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { StillingsStatus } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
-import { tiltakEtikettMapper } from '../../../utils/textMappers';
 import styles from './etikett.module.less';
 
-const getCls = (etikettnavn?: StillingsStatus): string => {
+const getCls = (etikettnavn: StillingsStatus): string => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
-            return styles.soknadSendt;
+            return styles.navGronnLighten60;
         case statuskoder.INNKALT_TIL_INTERVJU:
-            return styles.innkaltTilIntervju;
+            return styles.navLysBlaLighten60;
         case statuskoder.JOBBTILBUD:
-            return styles.jobbtilbud;
+            return styles.navOransjeLighten60;
         case statuskoder.AVSLAG:
-            return styles.avslag;
         case statuskoder.INGEN_VALGT:
-        case undefined:
-        case null:
-            return styles.ikkeStartet;
+            return styles.navGra20;
     }
-};
-
-const getArenaCls = (etikettnavn?: ArenaEtikett): string => {
-    return styles.test;
 };
 
 const getText = (etikettnavn?: StillingsStatus): string => {
@@ -45,23 +37,17 @@ const getText = (etikettnavn?: StillingsStatus): string => {
     }
 };
 
-const getArenaText = (etikettnavn?: ArenaEtikett): string => {
-    if (!etikettnavn) return '';
-    return tiltakEtikettMapper[etikettnavn];
-};
-
 export interface Props {
-    etikett?: StillingsStatus | ArenaEtikett;
+    etikett?: StillingsStatus;
     className?: string;
     hidden?: boolean;
-    erArenaAktivitet?: boolean;
 }
 
-const SokeStatusEtikett = (props: Props) => {
-    const { etikett, className, hidden, erArenaAktivitet = false } = props;
+const StillingEtikett = (props: Props) => {
+    const { etikett, className, hidden } = props;
 
-    const cls = !erArenaAktivitet ? getCls(etikett as StillingsStatus) : getArenaCls(etikett as ArenaEtikett);
-    const text = !erArenaAktivitet ? getText(etikett as StillingsStatus) : getArenaText(etikett as ArenaEtikett);
+    const cls = getCls(etikett);
+    const text = getText(etikett);
 
     return (
         <EtikettBase className={classNames(cls, className)} hidden={hidden}>
@@ -70,4 +56,4 @@ const SokeStatusEtikett = (props: Props) => {
     );
 };
 
-export default SokeStatusEtikett;
+export default StillingEtikett;

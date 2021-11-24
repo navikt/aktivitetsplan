@@ -7,7 +7,7 @@ import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-s
 import { oppdaterAktivitetEtikett } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import { selectKanEndreAktivitetEtikett } from '../../aktivitetlisteSelector';
-import SokeStatusEtikett from '../../etikett/SokeStatusEtikett';
+import StillingEtikett from '../../etikett/StillingEtikett';
 import EndreLinje from '../endre-linje/endre-linje';
 import StillingEtikettForm from './StillingEtikettForm';
 
@@ -63,7 +63,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
             form={form}
             endring={endring}
             setEndring={setEndring}
-            visning={<SokeStatusEtikett etikett={aktivitet.etikett} />}
+            visning={<StillingEtikett etikett={aktivitet.etikett} />}
         />
     );
 };

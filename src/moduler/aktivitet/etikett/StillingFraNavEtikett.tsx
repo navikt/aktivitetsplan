@@ -42,7 +42,7 @@ export interface Props {
     hidden?: boolean;
 }
 
-const SoknadsstatusEtikett = (props: Props) => {
+const StillingFraNavEtikett = (props: Props) => {
     const { etikett, className, hidden } = props;
 
     const cls = getCls(etikett);
@@ -54,4 +54,4 @@ const SoknadsstatusEtikett = (props: Props) => {
     );
 };
 
-export default SoknadsstatusEtikett;
+export default StillingFraNavEtikett;
