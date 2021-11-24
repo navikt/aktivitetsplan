@@ -1,13 +1,7 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import {
-    Aktivitet,
-    ArenaEtikett,
-    StillingsStatus,
-    isArenaAktivitet,
-    isVeilarbAktivitetAktivitet,
-} from '../../../datatypes/aktivitetTypes';
+import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { Henvendelse } from '../../../datatypes/dialogTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
@@ -54,16 +48,8 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                 <DelCvIkkeSvart visible={svartMarkeringSkalVises} />
                 <UlestAvtaltMarkering aktivitet={aktivitet} />
                 <ReferatIkkeDelt visible={deltFerdigMarkeringSkalVises} />
-                <StillingEtikett
-                    hidden={isArenaAktivitet(aktivitet)}
-                    etikett={etikett as StillingsStatus}
-                    className={styles.etikett}
-                />
-                <TiltakEtikett
-                    hidden={isVeilarbAktivitetAktivitet(aktivitet)}
-                    etikett={etikett as ArenaEtikett}
-                    className={styles.etikett}
-                />
+                <StillingEtikett aktivitet={aktivitet} className={styles.etikett} />
+                <TiltakEtikett aktivitet={aktivitet} className={styles.etikett} />
                 <StillingFraNavEtikett
                     hidden={!stillingFraNavSoknadsstatus}
                     etikett={stillingFraNavSoknadsstatus}

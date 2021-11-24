@@ -63,7 +63,7 @@ const OppdaterAktivitetEtikett = (props: Props) => {
             form={form}
             endring={endring}
             setEndring={setEndring}
-            visning={<StillingEtikett etikett={aktivitet.etikett} />}
+            visning={<StillingEtikett aktivitet={aktivitet} />}
         />
     );
 };

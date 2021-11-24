@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { ArenaEtikett } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, ArenaEtikett, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import { tiltakEtikettMapper } from '../../../utils/textMappers';
 import styles from './etikett.module.less';
@@ -28,24 +28,25 @@ const getText = (etikettnavn: ArenaEtikett): string => {
 };
 
 export interface Props {
-    etikett?: ArenaEtikett;
+    aktivitet: AlleAktiviteter;
     className?: string;
-    hidden?: boolean;
 }
 
-const AktivitetEtikett = (props: Props) => {
-    const { etikett, className, hidden } = props;
+const TiltakEtikett = (props: Props) => {
+    const { aktivitet, className } = props;
+
+    if (!isArenaAktivitet(aktivitet)) {
+        return null;
+    }
+
+    const etikett = aktivitet.etikett;
 
     if (!etikett) return null;
 
     const cls = getCls(etikett);
     const text = getText(etikett);
 
-    return (
-        <EtikettBase className={classNames(cls, className)} hidden={hidden}>
-            {text}
-        </EtikettBase>
-    );
+    return <EtikettBase className={classNames(cls, className)}>{text}</EtikettBase>;
 };
 
-export default AktivitetEtikett;
+export default TiltakEtikett;

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import * as statuskoder from '../../../constant';
-import { StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import styles from './etikett.module.less';
 
@@ -36,24 +36,25 @@ const getText = (etikettnavn: StillingsStatus): string => {
 };
 
 export interface Props {
-    etikett?: StillingsStatus;
+    aktivitet: AlleAktiviteter;
     className?: string;
-    hidden?: boolean;
 }
 
 const StillingEtikett = (props: Props) => {
-    const { etikett, className, hidden } = props;
+    const { aktivitet, className } = props;
+
+    if (!isVeilarbAktivitetAktivitet(aktivitet)) {
+        return null;
+    }
+
+    const etikett = aktivitet.etikett;
 
     if (!etikett) return null;
 
     const cls = getCls(etikett);
     const text = getText(etikett);
 
-    return (
-        <EtikettBase className={classNames(cls, className)} hidden={hidden}>
-            {text}
-        </EtikettBase>
-    );
+    return <EtikettBase className={classNames(cls, className)}>{text}</EtikettBase>;
 };
 
 export default StillingEtikett;
