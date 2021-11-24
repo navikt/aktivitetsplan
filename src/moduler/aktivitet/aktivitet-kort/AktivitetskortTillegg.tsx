@@ -1,13 +1,20 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { Aktivitet } from '../../../datatypes/aktivitetTypes';
+import {
+    Aktivitet,
+    ArenaEtikett,
+    StillingsStatus,
+    isArenaAktivitet,
+    isVeilarbAktivitetAktivitet,
+} from '../../../datatypes/aktivitetTypes';
 import { Henvendelse } from '../../../datatypes/dialogTypes';
 import { div as HiddenIfDiv } from '../../../felles-komponenter/hidden-if/hidden-if';
 import { selectDialogForAktivitetId } from '../../dialog/dialog-selector';
 import DelCvIkkeSvart, { SkalDelCvIkkeSvartVises } from '../del-cv-ikke-svart/DelCvIkkeSvart';
 import StillingEtikett from '../etikett/StillingEtikett';
 import StillingFraNavEtikett from '../etikett/StillingFraNavEtikett';
+import TiltakEtikett from '../etikett/TiltakEtikett';
 import ReferatIkkeDelt, {
     SkalIkkeDeltFerdigMarkeringVises,
 } from '../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
@@ -27,7 +34,6 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
     const deltFerdigMarkeringSkalVises = SkalIkkeDeltFerdigMarkeringVises(aktivitet);
     const svartMarkeringSkalVises = SkalDelCvIkkeSvartVises(aktivitet);
     const stillingFraNavSoknadsstatus = aktivitet.stillingFraNavData?.soknadsstatus;
-    const erArenaAktivitet = !!aktivitet.arenaAktivitet;
 
     if (
         !(
@@ -49,10 +55,14 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
                 <UlestAvtaltMarkering aktivitet={aktivitet} />
                 <ReferatIkkeDelt visible={deltFerdigMarkeringSkalVises} />
                 <StillingEtikett
-                    hidden={!etikett}
-                    etikett={etikett}
+                    hidden={isArenaAktivitet(aktivitet)}
+                    etikett={etikett as StillingsStatus}
                     className={styles.etikett}
-                    erArenaAktivitet={erArenaAktivitet}
+                />
+                <TiltakEtikett
+                    hidden={isVeilarbAktivitetAktivitet(aktivitet)}
+                    etikett={etikett as ArenaEtikett}
+                    className={styles.etikett}
                 />
                 <StillingFraNavEtikett
                     hidden={!stillingFraNavSoknadsstatus}

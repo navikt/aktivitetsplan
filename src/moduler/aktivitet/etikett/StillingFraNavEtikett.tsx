@@ -6,22 +6,20 @@ import { StillingFraNavSoknadsstatus } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import styles from './etikett.module.less';
 
-const getCls = (etikettnavn?: StillingFraNavSoknadsstatus): string => {
+const getCls = (etikettnavn: StillingFraNavSoknadsstatus): string => {
     switch (etikettnavn) {
         case statuskoder.VENTER:
-            return styles.venter;
+            return styles.navGronnLighten60;
         case statuskoder.SKAL_PAA_INTERVJU:
-            return styles.skalPaaIntervju;
+            return styles.navLysBlaLighten60;
         case statuskoder.JOBBTILBUD:
-            return styles.jobbtilbud;
+            return styles.navOransjeLighten60;
         case statuskoder.AVSLAG:
-            return styles.avslag;
-        default:
-            return '';
+            return styles.navGra20;
     }
 };
 
-const getText = (etikettnavn?: StillingFraNavSoknadsstatus): string => {
+const getText = (etikettnavn: StillingFraNavSoknadsstatus): string => {
     switch (etikettnavn) {
         case statuskoder.VENTER:
             return 'Venter på å bli kontaktet';
@@ -31,8 +29,6 @@ const getText = (etikettnavn?: StillingFraNavSoknadsstatus): string => {
             return 'Fått jobbtilbud 🎉';
         case statuskoder.AVSLAG:
             return 'Fått avslag';
-        default:
-            return '';
     }
 };
 
@@ -44,6 +40,8 @@ export interface Props {
 
 const StillingFraNavEtikett = (props: Props) => {
     const { etikett, className, hidden } = props;
+
+    if (!etikett) return null;
 
     const cls = getCls(etikett);
 

@@ -20,7 +20,7 @@ const getCls = (etikettnavn: StillingsStatus): string => {
     }
 };
 
-const getText = (etikettnavn?: StillingsStatus): string => {
+const getText = (etikettnavn: StillingsStatus): string => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
             return 'Sendt søknad og venter på svar';
@@ -31,8 +31,6 @@ const getText = (etikettnavn?: StillingsStatus): string => {
         case statuskoder.AVSLAG:
             return 'Fått avslag';
         case statuskoder.INGEN_VALGT:
-        case undefined:
-        case null:
             return 'Ikke startet';
     }
 };
@@ -45,6 +43,8 @@ export interface Props {
 
 const StillingEtikett = (props: Props) => {
     const { etikett, className, hidden } = props;
+
+    if (!etikett) return null;
 
     const cls = getCls(etikett);
     const text = getText(etikett);
