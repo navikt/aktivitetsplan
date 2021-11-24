@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
 import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
-import { etikettMapper } from '../../../utils/textMappers';
+import { stillingsEtikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsEtikett } from './filter-reducer';
 import { selectAktivitetEtiketterFilter } from './filter-selector';
@@ -27,7 +27,7 @@ const EtikettFilter = () => {
         .reduce((etiketter: FilterType, aktivitet) => {
             const { etikett } = aktivitet;
             if (etikett) {
-                etiketter[etikett] = aktivitetEtiketterFilter[etikett]; // eslint-disable-line no-param-reassign
+                etiketter[etikett] = aktivitetEtiketterFilter[etikett];
             }
             return etiketter;
         }, {});
@@ -36,10 +36,10 @@ const EtikettFilter = () => {
         <FilterVisningsKomponent
             harAktiviteter={Object.keys(aktivitetEtiketter).length >= 1}
             filter={aktivitetEtiketter}
-            tekst="Stillings status"
+            tekst="Stillingsstatus"
             metrikkNavn={TILSTAND_FILTER_METRIKK}
             doToggleFunction={doToggleAktivitetsEtikett}
-            textMapper={etikettMapper}
+            textMapper={stillingsEtikettMapper}
         />
     );
 };

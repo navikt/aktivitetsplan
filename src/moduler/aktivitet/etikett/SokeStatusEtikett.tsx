@@ -4,7 +4,7 @@ import React from 'react';
 import * as statuskoder from '../../../constant';
 import { ArenaEtikett, StillingsStatus } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
-import { arenaEtikettMapper } from '../../../utils/textMappers';
+import { tiltakEtikettMapper } from '../../../utils/textMappers';
 import styles from './etikett.module.less';
 
 const getCls = (etikettnavn?: StillingsStatus): string => {
@@ -47,7 +47,7 @@ const getText = (etikettnavn?: StillingsStatus): string => {
 
 const getArenaText = (etikettnavn?: ArenaEtikett): string => {
     if (!etikettnavn) return '';
-    return arenaEtikettMapper[etikettnavn];
+    return tiltakEtikettMapper[etikettnavn];
 };
 
 export interface Props {

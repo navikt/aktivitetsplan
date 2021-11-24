@@ -20,11 +20,23 @@ interface StatusFilterType extends FilterType {
     PLANLAGT: boolean;
 }
 
-interface AktiviteFilterType extends FilterType {
+interface AktivitetFilterType extends FilterType {
     EGEN: boolean;
     MOTE: boolean;
     SOKEAVTALE: boolean;
     STILLING: boolean;
+}
+
+interface ArenaEtikettFilterType extends FilterType {
+    AKTUELL: boolean;
+    AVSLAG: boolean;
+    IKKAKTUELL: boolean;
+    IKKEM: boolean;
+    INFOMOETE: boolean;
+    JATAKK: boolean;
+    NEITAKK: boolean;
+    TILBUD: boolean;
+    VENTELISTE: boolean;
 }
 
 export interface EtikettType extends FilterType {
@@ -34,7 +46,7 @@ export interface EtikettType extends FilterType {
     AVSLAG?: boolean;
 }
 
-export type Filter = AvtaltFilterType | StatusFilterType | AktiviteFilterType | EtikettType;
+export type Filter = AvtaltFilterType | StatusFilterType | AktivitetFilterType | EtikettType | ArenaEtikettFilterType;
 
 interface FilterVisningTypes {
     harAktiviteter: boolean;

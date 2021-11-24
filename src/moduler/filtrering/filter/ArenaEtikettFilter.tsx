@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { AlleAktiviteter, ArenaEtikett, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
-import { etikettMapper } from '../../../utils/textMappers';
+import { tiltakEtikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleArenaAktivitetsEtikett } from './filter-reducer';
-import { selectAktivitetEtiketterFilter } from './filter-selector';
+import { selectArenaAktivitetEtiketterFilter } from './filter-selector';
 import FilterVisningsKomponent from './FilterVisning';
 
 type FilterType = {
@@ -16,9 +16,9 @@ type FilterType = {
 const ArenaEtikettFilter = () => {
     const dispatch = useDispatch();
     const aktiviteter: AlleAktiviteter[] = useSelector(selectAktiviterForAktuellePerioden);
-    const aktivitetEtiketterFilter = useSelector(selectAktivitetEtiketterFilter);
+    const aktivitetEtiketterFilter = useSelector(selectArenaAktivitetEtiketterFilter);
 
-    const doToggleAktivitetsEtikett = (aktivitetsType: string) => {
+    const doToggleArenaAktivitetsEtikett = (aktivitetsType: string) => {
         dispatch(toggleArenaAktivitetsEtikett(aktivitetsType));
     };
 
@@ -34,10 +34,10 @@ const ArenaEtikettFilter = () => {
         <FilterVisningsKomponent
             harAktiviteter={Object.keys(aktivitetEtiketter).length >= 1}
             filter={aktivitetEtiketter}
-            tekst="Tiltak status"
+            tekst="Tiltaksstatus"
             metrikkNavn={TILSTAND_FILTER_METRIKK}
-            doToggleFunction={doToggleAktivitetsEtikett}
-            textMapper={etikettMapper}
+            doToggleFunction={doToggleArenaAktivitetsEtikett}
+            textMapper={tiltakEtikettMapper}
         />
     );
 };

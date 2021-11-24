@@ -27,6 +27,7 @@ export default function reducer(state = initalState, action) {
         case TOGGLE_AKTIVITET_ETIKETT: {
             const aktivitetEtiketter = { ...state.aktivitetEtiketter };
             aktivitetEtiketter[data] = !aktivitetEtiketter[data];
+            console.log(aktivitetEtiketter);
             return { ...state, aktivitetEtiketter };
         }
         case TOGGLE_ARENA_AKTIVITET_ETIKETT: {
@@ -69,7 +70,7 @@ export function toggleAktivitetsEtikett(aktivitetEtikett) {
 }
 export function toggleArenaAktivitetsEtikett(arenaAktivitetEtiketter) {
     return {
-        type: TOGGLE_AKTIVITET_ETIKETT,
+        type: TOGGLE_ARENA_AKTIVITET_ETIKETT,
         data: arenaAktivitetEtiketter,
     };
 }
