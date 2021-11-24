@@ -46,15 +46,17 @@ const AktivitetskortTillegg = ({ aktivitet }: Props) => {
         <div className={styles.tillegg}>
             <div>
                 <DelCvIkkeSvart visible={svartMarkeringSkalVises} />
-                <UlestAvtaltMarkering aktivitet={aktivitet} />
-                <ReferatIkkeDelt visible={deltFerdigMarkeringSkalVises} />
-                <StillingEtikett aktivitet={aktivitet} className={styles.etikett} />
-                <TiltakEtikett aktivitet={aktivitet} className={styles.etikett} />
-                <StillingFraNavEtikett
-                    hidden={!stillingFraNavSoknadsstatus}
-                    etikett={stillingFraNavSoknadsstatus}
-                    className={styles.etikett}
-                />
+                <div className={styles.etikettWrapper}>
+                    <UlestAvtaltMarkering aktivitet={aktivitet} />
+                    <ReferatIkkeDelt visible={deltFerdigMarkeringSkalVises} />
+                    <StillingEtikett aktivitet={aktivitet} className={styles.etikett} />
+                    <TiltakEtikett aktivitet={aktivitet} className={styles.etikett} />
+                    <StillingFraNavEtikett
+                        hidden={!stillingFraNavSoknadsstatus}
+                        etikett={stillingFraNavSoknadsstatus}
+                        className={styles.etikett}
+                    />
+                </div>
             </div>
 
             <HiddenIfDiv hidden={!dialog && henvendelser.length <= 0} className={styles.ikon}>
