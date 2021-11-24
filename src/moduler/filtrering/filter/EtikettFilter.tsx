@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
-import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { ETIKETT_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 import { stillingsEtikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleAktivitetsEtikett } from './filter-reducer';
@@ -37,7 +37,7 @@ const EtikettFilter = () => {
             harAktiviteter={Object.keys(aktivitetEtiketter).length >= 1}
             filter={aktivitetEtiketter}
             tekst="Stillingsstatus"
-            metrikkNavn={TILSTAND_FILTER_METRIKK}
+            metrikkNavn={ETIKETT_FILTER_METRIKK}
             doToggleFunction={doToggleAktivitetsEtikett}
             textMapper={stillingsEtikettMapper}
         />

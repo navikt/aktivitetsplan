@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AlleAktiviteter, ArenaEtikett, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
-import { TILSTAND_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
+import { ARENA_ETIKETT_FILTER_METRIKK } from '../../../felles-komponenter/utils/logging';
 import { tiltakEtikettMapper } from '../../../utils/textMappers';
 import { selectAktiviterForAktuellePerioden } from '../../aktivitet/aktivitetlisteSelector';
 import { toggleArenaAktivitetsEtikett } from './filter-reducer';
@@ -35,7 +35,7 @@ const ArenaEtikettFilter = () => {
             harAktiviteter={Object.keys(aktivitetEtiketter).length >= 1}
             filter={aktivitetEtiketter}
             tekst="Tiltaksstatus"
-            metrikkNavn={TILSTAND_FILTER_METRIKK}
+            metrikkNavn={ARENA_ETIKETT_FILTER_METRIKK}
             doToggleFunction={doToggleArenaAktivitetsEtikett}
             textMapper={tiltakEtikettMapper}
         />
