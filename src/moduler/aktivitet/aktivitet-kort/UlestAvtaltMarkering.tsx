@@ -17,6 +17,8 @@ const UlestAvtaltMarkering = (props: Props) => {
     const erBruker = useSelector(selectErBruker);
     const skalMarkereSomLest = skalMarkereForhaandsorienteringSomLest(erBruker, aktivitet);
 
+    if (!skalMarkereSomLest && !aktivitet.avtalt) return null;
+
     return (
         <div className={styles.container}>
             <UlestMarkering hidden={!skalMarkereSomLest} />
