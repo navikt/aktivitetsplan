@@ -21,7 +21,7 @@ export const selectAlleAktiviter = createSelector(
     (aktiviteter, arenaAktiviteter) => aktiviteter.concat(arenaAktiviteter)
 );
 
-export const selectAktiviterForAktuellePerioden = (state: any) =>
+export const selectAktiviterForAktuellePerioden = (state: any): Aktivitet[] =>
     selectAlleAktiviter(state).filter((a: Aktivitet) => selectDatoErIPeriode(a.opprettetDato, state));
 
 export const selectAktivitetListe = (state: any) =>

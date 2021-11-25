@@ -2,28 +2,25 @@ import classNames from 'classnames';
 import React from 'react';
 
 import * as statuskoder from '../../../constant';
-import { StillingsStatus } from '../../../datatypes/aktivitetTypes';
+import { AlleAktiviteter, StillingsStatus, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import styles from './etikett.module.less';
 
-const getCls = (etikettnavn?: StillingsStatus): string => {
+const getCls = (etikettnavn: StillingsStatus): string => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
-            return styles.soknadSendt;
+            return styles.navGronnLighten60;
         case statuskoder.INNKALT_TIL_INTERVJU:
-            return styles.innkaltTilIntervju;
+            return styles.navLysBlaLighten60;
         case statuskoder.JOBBTILBUD:
-            return styles.jobbtilbud;
+            return styles.navOransjeLighten60;
         case statuskoder.AVSLAG:
-            return styles.avslag;
         case statuskoder.INGEN_VALGT:
-        case undefined:
-        case null:
-            return styles.ikkeStartet;
+            return styles.navGra20;
     }
 };
 
-const getText = (etikettnavn?: StillingsStatus): string => {
+const getText = (etikettnavn: StillingsStatus): string => {
     switch (etikettnavn) {
         case statuskoder.SOKNAD_SENDT:
             return 'Sendt søknad og venter på svar';
@@ -34,28 +31,30 @@ const getText = (etikettnavn?: StillingsStatus): string => {
         case statuskoder.AVSLAG:
             return 'Fått avslag';
         case statuskoder.INGEN_VALGT:
-        case undefined:
-        case null:
             return 'Ikke startet';
     }
 };
 
 export interface Props {
-    etikett?: StillingsStatus;
+    aktivitet: AlleAktiviteter;
     className?: string;
-    hidden?: boolean;
 }
 
-const SokeStatusEtikett = (props: Props) => {
-    const { etikett, className, hidden } = props;
+const StillingEtikett = (props: Props) => {
+    const { aktivitet, className } = props;
+
+    if (!isVeilarbAktivitetAktivitet(aktivitet)) {
+        return null;
+    }
+
+    const etikett = aktivitet.etikett;
+
+    if (!etikett) return null;
 
     const cls = getCls(etikett);
+    const text = getText(etikett);
 
-    return (
-        <EtikettBase className={classNames(cls, className)} hidden={hidden}>
-            {getText(etikett)}
-        </EtikettBase>
-    );
+    return <EtikettBase className={classNames(cls, className)}>{text}</EtikettBase>;
 };
 
-export default SokeStatusEtikett;
+export default StillingEtikett;

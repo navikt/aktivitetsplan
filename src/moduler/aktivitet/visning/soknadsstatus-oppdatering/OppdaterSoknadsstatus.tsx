@@ -6,7 +6,7 @@ import { Aktivitet, StillingFraNavSoknadsstatus } from '../../../../datatypes/ak
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
-import SoknadsstatusEtikett from '../../etikett/SoknadsstatusEtikett';
+import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
 import EndreLinje from '../endre-linje/endre-linje';
 import SoknadsstatusForm from './SoknadsstatusForm';
 
@@ -49,7 +49,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
 
-    const visning = <SoknadsstatusEtikett etikett={aktivitet.stillingFraNavData?.soknadsstatus} />;
+    const visning = <StillingFraNavEtikett etikett={aktivitet.stillingFraNavData?.soknadsstatus} />;
     const form = <SoknadsstatusForm disabled={disableSoknadsstatusEndring} aktivitet={aktivitet} onSubmit={onSubmit} />;
 
     return (
