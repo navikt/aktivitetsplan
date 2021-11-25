@@ -16,6 +16,7 @@ import { selectFilterSlice } from './filter/filter-selector';
 import { PeriodeLabel } from './filter/periode-filter';
 import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
+//TODO se på det her, trengs kanskje ikke. hvis nødvendig, skriv det bort fra FormattedMessage
 function VisValgtFilter(props) {
     const {
         filterSlice,

@@ -48,7 +48,7 @@ const testAktiviteter = !visTestAktiviteter()
               avtalt: false,
               lagtInnAv: 'NAV',
               transaksjonsType: 'OPPRETTET',
-              etikett: 'AVSLAG',
+              etikett: 'SOKNAD_SENDT',
               kontaktperson: 'Sabeltann',
               arbeidsgiver: 'Skipet AS',
               arbeidssted: 'Skipet',

@@ -1,4 +1,4 @@
-import { Aktivitet, StillingsStatus, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
+import { Aktivitet, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
 import { formaterDatoKortManed } from '../../../../utils';
 import {
     aktivitetStatusMap,
@@ -42,9 +42,7 @@ export const endringsTekst = (erBruker: boolean, aktivitet: Aktivitet, forrigeAk
         }
 
         case TransaksjonsType.ETIKETT_ENDRET: {
-            const tilStatus = aktivitet.etikett
-                ? stillingsEtikettMapper[aktivitet.etikett as StillingsStatus]
-                : 'Ingen';
+            const tilStatus = aktivitet.etikett ? stillingsEtikettMapper[aktivitet.etikett] : 'Ingen';
             return `endret tilstand til ${tilStatus}`;
         }
         case TransaksjonsType.DEL_CV_SVART: {

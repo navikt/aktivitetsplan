@@ -25,7 +25,7 @@ const ArenaEtikettFilter = () => {
     const aktivitetEtiketter = aktiviteter.filter(isArenaAktivitet).reduce((etiketter: FilterType, aktivitet) => {
         const { etikett } = aktivitet;
         if (etikett) {
-            etiketter[etikett] = aktivitetEtiketterFilter[etikett]; // eslint-disable-line no-param-reassign
+            etiketter[etikett] = aktivitetEtiketterFilter[etikett];
         }
         return etiketter;
     }, {});
