@@ -1,6 +1,4 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { subDays } from 'date-fns';
-import { dateToISODateString } from 'nav-datovelger/lib/utils/dateFormatUtils';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { RadioGruppe } from 'nav-frontend-skjema';
@@ -11,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { RadioPanel } from '../../../../felles-komponenter/skjema/input/Radio';
-import { formaterDatoManed, toDate } from '../../../../utils';
+import { formaterDatoManed } from '../../../../utils';
 import { dagerSiden, todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
