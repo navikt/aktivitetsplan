@@ -85,6 +85,15 @@ interface AktivitetRequiredProps {
     stillingFraNavData: StillingFraNavAktivitetData | null;
 }
 
+export type AlleAktiviteter = Aktivitet | ArenaAktivitet;
+
+export function isArenaAktivitet(aktivitet: AlleAktiviteter): aktivitet is ArenaAktivitet {
+    return !!aktivitet.arenaAktivitet;
+}
+export function isVeilarbAktivitetAktivitet(aktivitet: AlleAktiviteter): aktivitet is Aktivitet {
+    return !aktivitet.arenaAktivitet;
+}
+
 export interface Aktivitet extends AktivitetRequiredProps {
     fraDato?: string;
     tilDato?: string;
@@ -101,7 +110,7 @@ export interface Aktivitet extends AktivitetRequiredProps {
     arbeidsgiver?: StringOrNull;
     antallStillingerSokes?: number;
     antallStillingerIUken?: number;
-    arenaAktivitet?: boolean;
+    arenaAktivitet?: false;
     avsluttetBegrunnelse?: string;
 }
 
@@ -144,7 +153,7 @@ export interface StillingFraNavAktivitetData {
     livslopsstatus: Livslopsstatus;
 }
 
-enum ArenaEtikett {
+export enum ArenaEtikett {
     AKTUELL = 'AKTUELL',
     AVSLAG = 'AVSLAG',
     IKKAKTUELL = 'IKKAKTUELL',
@@ -181,6 +190,8 @@ export interface ArenaAktivitet {
     opprettetDato: string;
     avtalt: boolean;
     etikett: ArenaEtikett;
+    arenaAktivitet: true;
+
     forhaandsorientering?: Forhaandsorientering;
 
     // Tiltaksaktivitet

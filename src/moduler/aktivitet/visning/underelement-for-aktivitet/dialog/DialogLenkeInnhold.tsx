@@ -32,7 +32,7 @@ const DialogLenkeInnhold = (props: DialogLenkeInnholdProps) => {
     const { henvendelser, uleste, erVeileder, erStillingFraNav } = props;
 
     if (!henvendelser) {
-        const tittel = !erVeileder && erStillingFraNav ? 'Spørsmål om stillingen?' : 'Send en melding om aktiviteten';
+        const tittel = erStillingFraNav ? 'Spørsmål om stillingen?' : 'Send en melding om aktiviteten';
         if (erVeileder) return <Message tittel={tittel} />;
         const undertekst = erStillingFraNav ? 'send en melding til veilederen din' : 'til veilederen din';
         return <Message tittel={tittel} undertekst={undertekst} />;

@@ -10,7 +10,7 @@ import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import { RadioPanel } from '../../../../felles-komponenter/skjema/input/Radio';
 import { formaterDatoManed } from '../../../../utils';
-import { todayIsoString } from '../../../../utils/dateUtils';
+import { dagerSiden, todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
 import detaljVisningStyles from '../Aktivitetsvisning.module.less';
@@ -45,11 +45,14 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
     const erVeileder = useSelector(selectErVeileder);
     const opprettetDato = aktivitet.opprettetDato;
 
+    const syvDagerFoerOpprettet = dagerSiden(opprettetDato, 7) ?? '';
+
     const validator = useFormstate<KanDeles, ValidatorProps>({
         avtaltDato: (value, values, props) => {
             if (!props.erVeileder) return;
             if (props.erVeileder && !value) return 'Du må fylle ut datoen for når du var i dialog med brukeren';
-            if (value < props.opprettetDato) return 'Dato for dialog må være etter at kortet ble opprettet';
+            if (value < syvDagerFoerOpprettet)
+                return 'Dato for dialog kan ikke være mer enn syv dager før kortet ble opprettet';
             if (value > todayIsoString()) return 'Dato for dialog kan ikke være frem i tid';
         },
         kanDeles: (value) => {
@@ -77,7 +80,7 @@ export const MeldInteresseForStilling = ({ aktivitet }: PropTypes) => {
 
     const svarfrist = aktivitet.stillingFraNavData?.svarfrist;
     const datobegrensninger = {
-        minDate: opprettetDato,
+        minDate: syvDagerFoerOpprettet,
         maxDate: todayIsoString(),
     };
 

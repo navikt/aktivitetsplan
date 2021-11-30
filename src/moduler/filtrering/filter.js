@@ -3,14 +3,16 @@ import PT from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { isArenaAktivitet } from '../../datatypes/aktivitetTypes';
 import Dropdown from '../../felles-komponenter/dropdown/dropdown';
 import Innholdslaster from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { OPNE_AKTIVITETFILTER } from '../../felles-komponenter/utils/logging';
 import VisibleIfDiv from '../../felles-komponenter/utils/visible-if-div';
 import * as AppPT from '../../proptypes';
 import { selectAktiviterForAktuellePerioden, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
+import ArenaEtikettFilter from './filter/ArenaEtikettFilter';
 import AvtaltMedNavFilter from './filter/avtalt-filter';
-import EtikettFilter from './filter/etikett-filter';
+import EtikettFilter from './filter/EtikettFilter';
 import StatusFilter from './filter/status-filter';
 import TypeFilter from './filter/type-filter';
 
@@ -21,7 +23,11 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
             res.muligeStatus.add(status);
             res.muligeTyper.add(type);
             if (etikett) {
-                res.muligeEtiketter.add(etikett);
+                if (isArenaAktivitet(aktivitet)) {
+                    res.muligeArenaEtiketter.add(etikett);
+                } else {
+                    res.muligeEtiketter.add(etikett);
+                }
             }
             res.muligeAvtalt.add(avtalt);
             return res;
@@ -30,6 +36,7 @@ function sjekkAttFinnesFilteringsAlternativ(aktivitetsListe) {
             muligeStatus: new Set(),
             muligeTyper: new Set(),
             muligeEtiketter: new Set(),
+            muligeArenaEtiketter: new Set(),
             muligeAvtalt: new Set(),
         }
     );
@@ -47,22 +54,22 @@ function Filter({ avhengigheter, harAktivitet, className }) {
     return (
         <Innholdslaster avhengigheter={avhengigheter}>
             <VisibleIfDiv className={resolvedClassNames}>
-                        <Dropdown
-                            name="filter"
-                            knappeTekst="Filtrer"
-                            className="dropdown--alignright"
-                            onOpen={() => {
-                                loggEvent(OPNE_AKTIVITETFILTER);
-                            }}
-                        >
-                            <div className="filter__container">
-                                <AvtaltMedNavFilter />
-                                <EtikettFilter />
-                                <StatusFilter />
-                                <TypeFilter />
-                            </div>
-                        </Dropdown>
-
+                <Dropdown
+                    name="filter"
+                    knappeTekst="Filtrer"
+                    className="dropdown--alignright"
+                    onOpen={() => {
+                        loggEvent(OPNE_AKTIVITETFILTER);
+                    }}
+                >
+                    <div className="filter__container">
+                        <AvtaltMedNavFilter />
+                        <EtikettFilter />
+                        <ArenaEtikettFilter />
+                        <StatusFilter />
+                        <TypeFilter />
+                    </div>
+                </Dropdown>
             </VisibleIfDiv>
         </Innholdslaster>
     );
