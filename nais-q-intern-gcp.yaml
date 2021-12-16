@@ -35,14 +35,14 @@ spec:
         - host: navtestb2c.b2clogin.com
   gcp:
     buckets:
-      - name: aktivitetsplan-dev
+      - name: aktivitetsplan-dev-intern
   envFrom:
     - configmap: pto-config
   env:
     - name: ENFORCE_LOGIN
       value: "false"
     - name: GCS_BUCKET_NAME
-      value: aktivitetsplan-dev
+      value: aktivitetsplan-dev-intern
     - name: PUBLIC_STILLING_FRA_NAV_BASE_URL
       value: 'https://rekrutteringsbistand.nais.preprod.local/stillinger/stilling/'
     - name: CORS_DOMAIN
