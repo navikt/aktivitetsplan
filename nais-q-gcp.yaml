@@ -36,7 +36,6 @@ spec:
   gcp:
     buckets:
       - name: aktivitetsplan-dev
-        cascadingDelete: true
   envFrom:
     - configmap: pto-config
   env:

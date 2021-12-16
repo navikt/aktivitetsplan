@@ -36,7 +36,6 @@ spec:
   gcp:
     buckets:
       - name: aktivitetsplan-dev
-        cascadingDelete: true
   envFrom:
     - configmap: pto-config
   env:
@@ -48,8 +47,3 @@ spec:
       value: 'https://rekrutteringsbistand.nais.preprod.local/stillinger/stilling/'
     - name: CORS_DOMAIN
       value: "*"
-    - name: JSON_CONFIG
-      value: >
-        {
-          C
-        }
