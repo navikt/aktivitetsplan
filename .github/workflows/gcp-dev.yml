@@ -15,12 +15,8 @@ concurrency:
 jobs:
   deploy-dev:
     name: Deploy application to dev
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - uses: ./.github/workflows/gcp-root.yml
-        with:
-          kommando: npm run build-ekstern-dev
-          bucket: aktivitetsplan-dev
-          releseName: dev-ekstern
+    uses: ./.github/workflows/gcp-root.yml
+      with:
+        kommando: npm run build-ekstern-dev
+        bucket: aktivitetsplan-dev
+        releseName: dev-ekstern
