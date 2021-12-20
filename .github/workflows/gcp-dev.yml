@@ -1,4 +1,4 @@
-name: GCP dev intern
+name: GCP dev
 
 on:
   push:
@@ -9,11 +9,20 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: gcp_dev_intern
+  group: gcp_dev
   cancel-in-progress: true
 
 jobs:
-  deploy-dev:
+  deploy-dev-ekstern:
+    name: Deploy application to dev
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@dev-gcp
+    with:
+      kommando: npm run build-ekstern-dev
+      bucket: aktivitetsplan-dev
+      releseName: dev-ekstern
+    secrets:
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+  deploy-dev-intern:
     name: Deploy application to dev
     uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@dev-gcp
     with:
@@ -22,3 +31,4 @@ jobs:
       releseName: dev-intern
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+
