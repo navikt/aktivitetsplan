@@ -15,7 +15,7 @@ concurrency:
 jobs:
   deploy-dev:
     name: Deploy application to dev
-    uses: ./.github/workflows/gcp-root.yml
+    uses: ./.github/workflows/gcp-root.yml@v1
     with:
       kommando: npm run build-ekstern-dev
       bucket: aktivitetsplan-dev
