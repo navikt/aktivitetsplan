@@ -16,7 +16,7 @@ jobs:
   deploy-dev:
     name: Deploy application to dev
     uses: ./.github/workflows/gcp-root.yml
-      with:
-        kommando: npm run build-ekstern-dev
-        bucket: aktivitetsplan-dev
-        releseName: dev-ekstern
+    with:
+      kommando: npm run build-ekstern-dev
+      bucket: aktivitetsplan-dev
+      releseName: dev-ekstern
