@@ -1,4 +1,4 @@
-name: GCP dev intern
+name: GCP prod intern
 
 on:
   push:
