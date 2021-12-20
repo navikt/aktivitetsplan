@@ -3,7 +3,7 @@ name: pto frontend container dev
 on:
   push:
     paths:
-      - '.github/workflows/pto-frontend-container.yml'
+      - '.github/workflows/pto-frontend-container-dev.yml'
       - 'nais-q-gcp.yaml'
       - 'nais-q-intern-gcp.yaml'
   workflow_dispatch:

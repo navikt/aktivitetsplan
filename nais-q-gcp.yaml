@@ -51,8 +51,6 @@ spec:
       value: selvbetjening-idtoken
     - name: GCS_BUCKET_NAME
       value: aktivitetsplan-dev
-    - name: PUBLIC_STILLING_FRA_NAV_BASE_URL
-      value: 'https://vis-stilling.dev.nav.no/arbeid/stilling/'
     - name: JSON_CONFIG
       value: >
         {
