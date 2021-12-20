@@ -1,4 +1,4 @@
-name: GCP dev ekstern
+name: GCP dev intern
 
 on:
   push:
@@ -17,8 +17,8 @@ jobs:
     name: Deploy application to dev
     uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@dev-gcp
     with:
-      kommando: npm run build-ekstern-dev
+      kommando: npm run build-intern-dev
       bucket: aktivitetsplan-dev
-      releseName: dev-ekstern
+      releseName: dev-intern
     secrets:
       GCS_SA_KEY_DEV: ${{ secrets.GCS_SA_KEY_DEV }}
