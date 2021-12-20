@@ -13,18 +13,6 @@ on:
         required: true
         type: string
 
-
-  push:
-    paths-ignore:
-      - '.github/workflows/pto-frontend-container.yml'
-      - 'nais-q-gcp.yaml'
-      - 'nais-q-intern-gcp.yaml'
-  workflow_dispatch:
-
-concurrency:
-  group: gcp_dev
-  cancel-in-progress: true
-
 jobs:
   deploy-dev:
     name: Deploy application to dev
