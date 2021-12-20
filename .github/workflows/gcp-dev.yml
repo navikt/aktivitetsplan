@@ -20,3 +20,6 @@ jobs:
       kommando: npm run build-ekstern-dev
       bucket: aktivitetsplan-dev
       releseName: dev-ekstern
+    secrets:
+      GCS_SA_KEY_DEV: ${{ secrets.GCS_SA_KEY_DEV }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

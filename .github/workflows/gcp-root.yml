@@ -12,6 +12,9 @@ on:
       releseName:
         required: true
         type: string
+    secrets:
+      GCS_SA_KEY_DEV:
+      GITHUB_TOKEN:
 
 jobs:
   deploy-dev:
