@@ -21,7 +21,7 @@
             htmlLinkElement.rel
 
         </script>
-        <link href="https://www.nav.no/dekoratoren/css/client.css" rel="stylesheet" />
+        <link href="%REACT_APP_DEKORATOR_URL%/dekoratoren/css/client.css" rel="stylesheet" />
     </head>
     <body style="background-color: white">
     <div id="decorator-header"></div>
@@ -30,11 +30,11 @@
             <div id="mainapp" class="appContainer"></div>
         </div>
         <div id="decorator-footer"></div>
-        <div id="decorator-env" data-src="https://www.nav.no/dekoratoren/env?feedback=false&chatbot=false&footer=true"></div>
+        <div id="decorator-env" data-src="%REACT_APP_DEKORATOR_URL%/dekoratoren/env?feedback=false&chatbot=false&footer=true"></div>
     </body>
 
 
-    <script src="https://www.nav.no/dekoratoren/client.js"></script>
+    <script src="%REACT_APP_DEKORATOR_URL%/dekoratoren/client.js"></script>
     <script>
         function render() {
             return window.NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));

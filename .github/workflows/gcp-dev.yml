@@ -28,7 +28,7 @@ jobs:
       - name: Run tests
         run: npm run test
       - name: Build application
-        run: npm run build
+        run: npm run build-ekstern-dev
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@master
         with:
