@@ -42,6 +42,6 @@ spec:
     - name: ENFORCE_LOGIN
       value: "false"
     - name: GCS_BUCKET_NAME
-      value: aktivitetsplan-dev-intern
+      value: aktivitetsplan-prod-intern
     - name: CORS_DOMAIN
       value: "*"
