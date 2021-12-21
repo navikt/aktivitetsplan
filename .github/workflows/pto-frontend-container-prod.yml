@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - '.github/workflows/pto-frontend-container-prod.yml'
-      - 'nais-prod-gcp.yaml'
       - 'nais-prod-intern-gcp.yaml'
   workflow_dispatch:
 
