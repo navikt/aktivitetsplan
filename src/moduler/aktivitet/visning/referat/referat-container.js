@@ -78,9 +78,7 @@ const mapStateToProps = (state, props) => {
     const underOppfolging = selectUnderOppfolging(state);
     const visReferat =
         (erVeileder || erReferatPublisert) &&
-        (harReferat || !aktivitet.historisk) &&
-        (harReferat || underOppfolging) &&
-        (harReferat || aktivitet.status !== STATUS_AVBRUTT);
+        (harReferat || (!aktivitet.historisk && underOppfolging && aktivitet.status !== STATUS_AVBRUTT));
 
     return {
         publiserer: selectAktivitetStatus(state) === (STATUS.PENDING || STATUS.RELOADING),
