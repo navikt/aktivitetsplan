@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
-import { MOTE_TYPE, SAMTALEREFERAT_TYPE } from '../../../../constant';
+import { MOTE_TYPE, SAMTALEREFERAT_TYPE, STATUS_AVBRUTT } from '../../../../constant';
 import { section as HiddenIfSection } from '../../../../felles-komponenter/hidden-if/hidden-if';
 import { autobind } from '../../../../utils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
@@ -77,7 +77,10 @@ const mapStateToProps = (state, props) => {
     const erVeileder = selectErVeileder(state);
     const underOppfolging = selectUnderOppfolging(state);
     const visReferat =
-        (erVeileder || erReferatPublisert) && (harReferat || !aktivitet.historisk) && (harReferat || underOppfolging);
+        (erVeileder || erReferatPublisert) &&
+        (harReferat || !aktivitet.historisk) &&
+        (harReferat || underOppfolging) &&
+        (harReferat || aktivitet.status !== STATUS_AVBRUTT);
 
     return {
         publiserer: selectAktivitetStatus(state) === (STATUS.PENDING || STATUS.RELOADING),
