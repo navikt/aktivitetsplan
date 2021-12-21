@@ -4,8 +4,7 @@ on:
   push:
     paths-ignore:
       - '.github/workflows/pto-frontend-container-dev.yml'
-      - 'nais-q-gcp.yaml'
-      - 'nais-q-intern-gcp.yaml'
+      - 'nais-prod-intern-gcp.yaml'
   workflow_dispatch:
 
 concurrency:

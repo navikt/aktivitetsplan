@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/pto-frontend-container-dev.yml'
-      - 'nais-q-gcp.yaml'
-      - 'nais-q-intern-gcp.yaml'
+      - 'nais-dev-ekstern-gcp.yaml'
+      - 'nais-dev-intern-gcp.yaml'
   workflow_dispatch:
 
 concurrency:
@@ -25,9 +25,14 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-gcp
-          RESOURCE: nais-q-gcp.yaml
+          RESOURCE: nais-dev-ekstern-gcp.yaml
       - name: deploy gcp dev intern
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-gcp
-          RESOURCE: nais-q-intern-gcp.yaml
+          RESOURCE: nais-dev-intern-gcp.yaml
+      - name: deploy gcp dev ekstern
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: nais-dev-ekstern-gcp.yaml
