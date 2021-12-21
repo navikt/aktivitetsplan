@@ -14,6 +14,10 @@ export function selectAktivitetEtiketterFilter(state) {
     return selectFilterSlice(state).aktivitetEtiketter;
 }
 
+export function selectArenaAktivitetEtiketterFilter(state) {
+    return selectFilterSlice(state).arenaAktivitetEtiketter;
+}
+
 export function selectAktivitetStatusFilter(state) {
     return selectFilterSlice(state).aktivitetStatus;
 }

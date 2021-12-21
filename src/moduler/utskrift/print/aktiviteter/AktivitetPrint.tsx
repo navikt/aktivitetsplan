@@ -5,7 +5,8 @@ import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { Dialog } from '../../../../datatypes/dialogTypes';
 import { aktivitetTypeMap } from '../../../../utils/textMappers';
 import AvtaltMarkering from '../../../aktivitet/avtalt-markering/AvtaltMarkering';
-import SokeStatusEtikett from '../../../aktivitet/etikett/SokeStatusEtikett';
+import StillingEtikett from '../../../aktivitet/etikett/StillingEtikett';
+import TiltakEtikett from '../../../aktivitet/etikett/TiltakEtikett';
 import Aktivitetsdetaljer from '../../../aktivitet/visning/detaljer/aktivitetsdetaljer';
 import { DialogPrint } from '../dialoger';
 import AktivitetReferat from './AktivitetReferat';
@@ -32,9 +33,10 @@ const AktivitetPrint = (props: Props) => {
             <AvtaltMarkering hidden={!aktivitet.avtalt} className="etikett-print" />
             <ForhaandsorienteringPrint
                 forhaandsorienteringTekst={forhaandsorientering?.tekst}
-                forhaandsorienteringLest={forhaandsorientering?.lest}
+                forhaandsorienteringLest={forhaandsorientering?.lestDato}
             />
-            <SokeStatusEtikett hidden={!aktivitet.etikett} etikett={aktivitet.etikett} className="etikett-print" />
+            <StillingEtikett aktivitet={aktivitet} className="etikett-print" />
+            <TiltakEtikett aktivitet={aktivitet} className="etikett-print" />
             <DialogPrint dialog={dialog} />
         </div>
     );

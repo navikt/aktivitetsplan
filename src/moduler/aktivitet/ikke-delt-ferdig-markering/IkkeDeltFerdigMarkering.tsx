@@ -20,7 +20,7 @@ interface Props {
     className?: string;
 }
 
-const IkkeDeltFerdigMarkering = (props: Props) => {
+const ReferatIkkeDelt = (props: Props) => {
     const { className } = props;
 
     const erBruker = useSelector(selectErBruker);
@@ -29,4 +29,4 @@ const IkkeDeltFerdigMarkering = (props: Props) => {
     return <EtikettBase className={classNames(styles.etikett, className)}>{tekst}</EtikettBase>;
 };
 
-export default visibleIfHOC(IkkeDeltFerdigMarkering);
+export default visibleIfHOC(ReferatIkkeDelt);

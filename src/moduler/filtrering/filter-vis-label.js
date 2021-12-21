@@ -9,16 +9,19 @@ import {
     toggleAktivitetsEtikett,
     toggleAktivitetsStatus,
     toggleAktivitetsType,
+    toggleArenaAktivitetsEtikett,
     velgHistoriskPeriode,
 } from './filter/filter-reducer';
 import { selectFilterSlice } from './filter/filter-selector';
 import { PeriodeLabel } from './filter/periode-filter';
 import FiltreringLabel from './filteringslabel/FiltreringLabel';
 
+//TODO se på det her, trengs kanskje ikke. hvis nødvendig, skriv det bort fra FormattedMessage
 function VisValgtFilter(props) {
     const {
         filterSlice,
         doToggleAktivitetsEtikett,
+        doToggleArenaAktivitetsEtikett,
         doToggleAktivitetsStatus,
         doToggleAktivitetsType,
         doVelgHistoriskPeriode,
@@ -36,6 +39,11 @@ function VisValgtFilter(props) {
                 return {
                     tekstPath: `aktivitet.etikett.${filterVerdi}`,
                     func: doToggleAktivitetsEtikett,
+                };
+            case 'arenaAktivitetEtiketter':
+                return {
+                    tekstPath: `aktivitet.etikett.${filterVerdi}`,
+                    func: doToggleArenaAktivitetsEtikett,
                 };
             case 'aktivitetStatus':
                 return {
@@ -95,6 +103,7 @@ VisValgtFilter.defaultProps = {
 VisValgtFilter.propTypes = {
     filterSlice: PT.object.isRequired,
     doToggleAktivitetsEtikett: PT.func.isRequired,
+    doToggleArenaAktivitetsEtikett: PT.func.isRequired,
     doToggleAktivitetsStatus: PT.func.isRequired,
     doToggleAktivitetsType: PT.func.isRequired,
     doVelgHistoriskPeriode: PT.func.isRequired,
@@ -108,6 +117,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     doToggleAktivitetsEtikett: (aktivitetsEtikett) => dispatch(toggleAktivitetsEtikett(aktivitetsEtikett)),
+    doToggleArenaAktivitetsEtikett: (aktivitetsEtikett) => dispatch(toggleArenaAktivitetsEtikett(aktivitetsEtikett)),
     doToggleAktivitetsStatus: (aktivitetsStatus) => dispatch(toggleAktivitetsStatus(aktivitetsStatus)),
     doToggleAktivitetsType: (aktivitetsType) => dispatch(toggleAktivitetsType(aktivitetsType)),
     doVelgHistoriskPeriode: (historiskPeriode) => dispatch(velgHistoriskPeriode(historiskPeriode)),

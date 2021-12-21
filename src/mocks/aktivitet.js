@@ -217,7 +217,7 @@ const testAktiviteter = !visTestAktiviteter()
               forhaandsorientering: {
                   tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
                   type: 'SEND_FORHAANDSORIENTERING',
-                  lest: null,
+                  lestDato: null,
               },
           }),
           wrapAktivitet({
@@ -263,7 +263,7 @@ const testAktiviteter = !visTestAktiviteter()
               forhaandsorientering: {
                   tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
                   type: 'SEND_FORHAANDSORIENTERING',
-                  lest: '2021-05-30T10:46:40.459+00:00',
+                  lestDato: '2021-05-30T10:46:40.459+00:00',
               },
           }),
           wrapAktivitet({
@@ -789,7 +789,7 @@ export function oppdaterLestFho(__params, { aktivitetId }) {
     const nyeAktivitetAttributter = {
         forhaandsorientering: {
             ...gammelAktivitet.forhaandsorientering,
-            lest: moment().toISOString(),
+            lestDato: moment().toISOString(),
         },
         transaksjonsType: 'FORHAANDSORIENTERING_LEST',
     };

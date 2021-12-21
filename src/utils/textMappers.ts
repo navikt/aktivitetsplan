@@ -1,3 +1,5 @@
+import { ArenaEtikett } from '../datatypes/aktivitetTypes';
+
 export const aktivitetTypeMap = {
     EGEN: 'Jobbrettet egenaktivitet',
     STILLING: 'Stilling',
@@ -25,7 +27,7 @@ export const avtaltMapper = {
     ikkeAvtaltMedNav: 'Ikke avtalt med NAV',
 };
 
-export const etikettMapper = {
+export const stillingsEtikettMapper = {
     INGEN_VALGT: 'Ingen',
     SOKNAD_SENDT: 'Søknaden er sendt',
     INNKALT_TIL_INTERVJU: 'Skal på intervju',
@@ -38,4 +40,16 @@ export const stillingFraNavSoknadsstatusMapper = {
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Fått avslag',
+};
+
+export const tiltakEtikettMapper = {
+    [ArenaEtikett.AKTUELL]: 'Søkt inn på tiltaket',
+    [ArenaEtikett.AVSLAG]: 'Fått avslag',
+    [ArenaEtikett.IKKAKTUELL]: 'Ikke aktuell for tiltaket',
+    [ArenaEtikett.IKKEM]: 'Ikke møtt på tiltaket',
+    [ArenaEtikett.INFOMOETE]: 'Infomøte før tiltaket',
+    [ArenaEtikett.JATAKK]: 'Takket ja til tilbud',
+    [ArenaEtikett.NEITAKK]: 'Takket nei til tilbud',
+    [ArenaEtikett.TILBUD]: 'Fått plass på tiltaket',
+    [ArenaEtikett.VENTELISTE]: 'På venteliste',
 };

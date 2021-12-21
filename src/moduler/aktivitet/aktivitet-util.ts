@@ -33,8 +33,8 @@ function samenlingDato(a?: string, b?: string): number {
 }
 
 export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
-    const aIkkeSvartMarkering = ikkeSvartMarkeringSkalVises(a);
-    const bIkkeSvartMarkering = ikkeSvartMarkeringSkalVises(b);
+    const aIkkeSvartMarkering = delCvikkeSvartSkalVises(a);
+    const bIkkeSvartMarkering = delCvikkeSvartSkalVises(b);
 
     if (bIkkeSvartMarkering && !aIkkeSvartMarkering) return 1;
     if (!bIkkeSvartMarkering && aIkkeSvartMarkering) return -1;
@@ -48,7 +48,7 @@ export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
     return fradato === 0 || manglerFraDato ? samenlingDato(a.opprettetDato, b.opprettetDato) : fradato;
 }
 
-export function ikkeSvartMarkeringSkalVises(aktivitet: Aktivitet): boolean {
+export function delCvikkeSvartSkalVises(aktivitet: Aktivitet): boolean {
     const erStillingFraNav = aktivitet.type === STILLING_FRA_NAV_TYPE;
     const harIkkeSvart = !aktivitet.stillingFraNavData?.cvKanDelesData;
     const status = aktivitet.status;

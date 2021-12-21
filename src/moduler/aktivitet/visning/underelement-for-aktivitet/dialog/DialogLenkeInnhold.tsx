@@ -2,21 +2,21 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 interface MessageProps {
-    titel: string;
+    tittel: string;
     undertekst?: string;
 }
 
 function Message(props: MessageProps) {
-    const { titel, undertekst } = props;
+    const { tittel, undertekst } = props;
     if (undertekst) {
         return (
             <div>
-                <Element>{titel}</Element>
+                <Element>{tittel}</Element>
                 <Normaltekst>{undertekst}</Normaltekst>
             </div>
         );
     }
-    return <Element>{titel}</Element>;
+    return <Element>{tittel}</Element>;
 }
 
 const melding_er = (antall: number) => (antall > 1 ? 'meldinger' : 'melding');
@@ -25,22 +25,25 @@ interface DialogLenkeInnholdProps {
     henvendelser: number;
     uleste: number;
     erVeileder: boolean;
+    erStillingFraNav: boolean;
 }
 
 const DialogLenkeInnhold = (props: DialogLenkeInnholdProps) => {
-    const { henvendelser, uleste, erVeileder } = props;
+    const { henvendelser, uleste, erVeileder, erStillingFraNav } = props;
 
     if (!henvendelser) {
-        const underteks = erVeileder ? undefined : 'til veilederen din';
-        return <Message titel="Send en melding om aktiviteten" undertekst={underteks} />;
+        const tittel = erStillingFraNav ? 'Spørsmål om stillingen?' : 'Send en melding om aktiviteten';
+        if (erVeileder) return <Message tittel={tittel} />;
+        const undertekst = erStillingFraNav ? 'send en melding til veilederen din' : 'til veilederen din';
+        return <Message tittel={tittel} undertekst={undertekst} />;
     }
 
     if (uleste) {
-        const titel = uleste === 1 ? '1 ulest melding' : `${uleste} uleste meldinger`;
-        return <Message titel={titel} />;
+        const tittel = uleste === 1 ? '1 ulest melding' : `${uleste} uleste meldinger`;
+        return <Message tittel={tittel} />;
     }
 
-    return <Message titel={`Se ${henvendelser} ${melding_er(henvendelser)} om aktiviteten`} />;
+    return <Message tittel={`Se ${henvendelser} ${melding_er(henvendelser)} om aktiviteten`} />;
 };
 
 export default DialogLenkeInnhold;

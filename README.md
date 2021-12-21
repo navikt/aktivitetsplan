@@ -19,6 +19,6 @@ npm build
 npm start
 ```
 
-### Kontakt og spørsmål
+### Kontakt og spørsmål.
 
 Opprett et issue i GitHub for eventuelle spørsmål.

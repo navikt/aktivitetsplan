@@ -45,7 +45,8 @@ const filterBase = 'aktivitetsplan.filter.';
 export const AKTIVITESTYPE_FILER_METRIKK = `${filterBase}aktivitestype`;
 export const STATUS_FILER_METRIKK = `${filterBase}status`;
 export const AVTALT_FILER_METRIKK = `${filterBase}avtalt`;
-export const TILSTAND_FILTER_METRIKK = `${filterBase}Tilstand`;
+export const ETIKETT_FILTER_METRIKK = `${filterBase}etikett`;
+export const ARENA_ETIKETT_FILTER_METRIKK = `${filterBase}arenatEtikett`;
 
 const AKTIVITET_FLYTTET = 'aktivitetsplan.aktivitet.flyttet';
 

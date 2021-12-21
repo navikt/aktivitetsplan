@@ -1,4 +1,4 @@
-FROM docker.pkg.github.com/navikt/pus-decorator/pus-decorator
+FROM ghcr.io/navikt/pus-decorator/pus-decorator
 
 # medfører 2 ting i pus-decorator:
 #  - /environment.js-endepunktet legger public properties på window.aktivitetsplan
