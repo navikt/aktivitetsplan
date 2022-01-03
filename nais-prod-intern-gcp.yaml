@@ -27,17 +27,9 @@ spec:
       memory: 256Mi
   ingresses:
     - https://aktivitetsplan.intern.nav.no
-  accessPolicy:
-    outbound:
-      rules:
-        - application: pto-proxy
-      external:
-        - host: navtestb2c.b2clogin.com
   gcp:
     buckets:
       - name: aktivitetsplan-prod-intern
-  envFrom:
-    - configmap: pto-config
   env:
     - name: ENFORCE_LOGIN
       value: "false"
