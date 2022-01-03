@@ -1,40 +1,43 @@
 <!DOCTYPE html>
-<html lang="no">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <title>Aktivitetsplan</title>
-        <script>
-            window.app = 'aktivitetsplan';
-
-            // NOTE: This is bad, don't use it if you don't HAVE to
-            window.appconfig = {
-                CONTEXT_PATH: '',
-                TILLAT_SET_AVTALT: false,
-                FNR_I_URL: false,
-                VIS_MALER: false,
-                TIMEOUTBOX: true
-            };
-        </script>
-        <link href="%REACT_APP_DEKORATOR_URL%/css/client.css" rel="stylesheet" />
-    </head>
-    <body style="background-color: white">
-    <div id="decorator-header"></div>
-    <div id="modal-a11y-wrapper">
-            <div id="demo"></div>
-            <div id="mainapp" class="appContainer"></div>
-        </div>
-        <div id="decorator-footer"></div>
-        <div id="decorator-env" data-src="%REACT_APP_DEKORATOR_URL%/env?feedback=false&chatbot=false&footer=true"></div>
-    </body>
-
-
-    <script src="%REACT_APP_DEKORATOR_URL%/client.js"></script>
+<html lang='no'>
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <meta name='theme-color' content='#000000' />
+    <title>Aktivitetsplan</title>
     <script>
-        function render() {
-            return window.NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));
-        }
-        render();
+        window.app = 'aktivitetsplan';
+
+        // NOTE: This is bad, don't use it if you don't HAVE to
+        window.appconfig = {
+            CONTEXT_PATH: '',
+            TILLAT_SET_AVTALT: false,
+            FNR_I_URL: false,
+            VIS_MALER: false,
+            TIMEOUTBOX: true
+        };
     </script>
+    <link href='%REACT_APP_DEKORATOR_URL%/css/client.css' rel='stylesheet' />
+</head>
+<body style='background-color: white; height: 100%;'>
+<div style='min-height: 100%; height: auto;'>
+    <div id='decorator-header'></div>
+    <div id='modal-a11y-wrapper'>
+        <div id='demo'></div>
+        <div id='mainapp' class='appContainer'></div>
+    </div>
+</div>
+<div id='decorator-footer'></div>
+<div id='decorator-env' data-src='%REACT_APP_DEKORATOR_URL%/env?feedback=false&chatbot=false&footer=true'></div>
+</body>
+
+
+<script src='%REACT_APP_DEKORATOR_URL%/client.js'></script>
+<script>
+    function render() {
+        return window.NAVSPA['aktivitetsplan'](document.getElementById('mainapp'));
+    }
+
+    render();
+</script>
 </html>
