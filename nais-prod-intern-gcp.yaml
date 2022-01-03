@@ -45,3 +45,4 @@ spec:
       value: aktivitetsplan-prod-intern
     - name: CORS_DOMAIN
       value: "*"
+
