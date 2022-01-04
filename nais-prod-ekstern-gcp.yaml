@@ -19,7 +19,7 @@ spec:
     max: 4
     cpuThresholdPercentage: 50
   ingresses:
-    - https://aktivitetsplantest.nav.no
+    - https://www.nav.no/arbeid/aktivitetsplantest
   resources:
     limits:
       cpu: "3"
@@ -54,6 +54,7 @@ spec:
     - name: JSON_CONFIG
       value: >
         {
+          "contextPath": "/arbeid/aktivitetsplantest",
           "fallbackStrategy": "serve",
           "proxies": [
             { "from": "/veilarbvedtakinfo", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
