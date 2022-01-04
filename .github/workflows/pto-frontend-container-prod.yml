@@ -25,7 +25,7 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: nais-prod-intern-gcp.yaml
       - name: deploy gcp prod ekstern
-          uses: nais/deploy/actions/deploy@v1
-          env:
-            CLUSTER: prod-gcp
-            RESOURCE: nais-prod-ekstern-gcp.yaml
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: nais-prod-ekstern-gcp.yaml
