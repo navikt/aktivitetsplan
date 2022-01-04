@@ -19,7 +19,7 @@ jobs:
     with:
       kommando: npm run build-ekstern-dev
       bucket: aktivitetsplan-dev
-      releseName: dev-ekstern
+      releaseName: dev-ekstern
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
   deploy-dev-intern:
@@ -28,7 +28,7 @@ jobs:
     with:
       kommando: npm run build-intern-dev
       bucket: aktivitetsplan-dev-intern
-      releseName: dev-intern
+      releaseName: dev-intern
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
 

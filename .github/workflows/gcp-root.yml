@@ -9,7 +9,7 @@ on:
       bucket:
         required: true
         type: string
-      releseName:
+      releaseName:
         required: true
         type: string
     secrets:
@@ -38,14 +38,14 @@ jobs:
           service_account_key: ${{ secrets.GCS_SA_KEY }}
           export_default_credentials: true
       - name: Upload files to GCS
-        run: gsutil -m rsync -r build "$BUKET"
+        run: gsutil -m rsync -r build "$BUCKET"
         env:
-          BUKET: gs://${{ inputs.bucket }}
+          BUCKET: gs://${{ inputs.bucket }}
       - name: Create release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: release/dev/${{inputs.releseName}}@${{ github.sha }}
-          release_name: ${{ inputs.releseName }}
+          tag_name: release/dev/${{inputs.releaseName}}@${{ github.sha }}
+          release_name: ${{ inputs.releaseName }}
           prerelease: true
