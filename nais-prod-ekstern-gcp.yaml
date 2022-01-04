@@ -46,14 +46,12 @@ spec:
       value: https://loginservice.nav.no/login?redirect={RETURN_TO_URL}&level=Level4
     - name: OIDC_DISCOVERY_URL
       valueFrom:
-        configMapKeyRef:
-          name: loginservice-idporten
-          key: LOGINSERVICE_IDPORTEN_DISCOVERY_URL
+        fieldRef:
+          fieldPath: LOGINSERVICE_IDPORTEN_DISCOVERY_URL
     - name: OIDC_CLIENT_ID
       valueFrom:
-        configMapKeyRef:
-          name: loginservice-idporten
-          key: LOGINSERVICE_IDPORTEN_AUDIENCE
+        fieldRef:
+          fieldPath: LOGINSERVICE_IDPORTEN_AUDIENCE
     - name: TOKEN_COOKIE_NAME
       value: selvbetjening-idtoken
     - name: GCS_BUCKET_NAME
