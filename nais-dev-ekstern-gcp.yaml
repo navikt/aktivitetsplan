@@ -54,6 +54,7 @@ spec:
     - name: JSON_CONFIG
       value: >
         {
+          "fallbackStrategy": "serve",
           "proxies": [
             { "from": "/veilarbvedtakinfo", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
             { "from": "/veilarblest", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
