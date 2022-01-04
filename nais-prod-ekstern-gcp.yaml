@@ -1,0 +1,103 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: aktivitetsplan
+  namespace: pto
+  labels:
+    team: pto
+spec:
+  image: ghcr.io/navikt/pto-frontend/pto-frontend:2021.12.08_11.47-8932ed45220a
+  port: 8080
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: /internal/isReady
+    initialDelay: 20
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  ingresses:
+    - https://www.nav.no/arbeid/aktivitetsplantest
+  resources:
+    limits:
+      cpu: "3"
+      memory: 2048Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  accessPolicy:
+    outbound:
+      rules:
+        - application: pto-proxy
+      external:
+        - host: navnob2c.b2clogin.com
+  gcp:
+    buckets:
+      - name: aktivitetsplan-prod
+  envFrom:
+    - configmap: pto-config
+    - configmap: loginservice-idporten
+  env:
+    - name: ENFORCE_LOGIN
+      value: "true"
+    - name: LOGIN_REDIRECT_URL
+      value: https://loginservice.nav.no/login?redirect={RETURN_TO_URL}&level=Level4
+    - name: OIDC_DISCOVERY_URL
+      valueFrom:
+        configMapKeyRef:
+          name: loginservice-idporten
+          key: LOGINSERVICE_IDPORTEN_DISCOVERY_URL
+    - name: OIDC_CLIENT_ID
+      valueFrom:
+        configMapKeyRef:
+          name: loginservice-idporten
+          key: LOGINSERVICE_IDPORTEN_AUDIENCE
+    - name: TOKEN_COOKIE_NAME
+      value: selvbetjening-idtoken
+    - name: GCS_BUCKET_NAME
+      value: aktivitetsplan-prod
+    - name: JSON_CONFIG
+      value: >
+        {
+          "proxies": [
+            { "from": "/veilarbvedtakinfo", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
+            { "from": "/veilarblest", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
+            { "from": "/veilarboppfolging", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
+            { "from": "/veilarbdialog", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
+            { "from": "/veilarbaktivitet", "to": "http://pto-proxy/proxy", "preserveContextPath": true }
+          ],
+          "redirects": [
+            {
+              "from": "/api/auth",
+              "to": "/auth/info"
+            },
+            {
+              "from": "/aktivitetsplan",
+              "to": "{{AKTIVITETSPLAN_URL}}"
+            },
+            {
+              "from": "/arbeidssokerregistrering",
+              "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
+            },
+            {
+              "from": "/dittnav",
+              "to": "{{DITTNAV_URL}}"
+            },
+            {
+              "from": "/veientilarbeid",
+              "to": "{{VEIENTILARBEID_URL}}"
+            },
+            {
+              "from": "/arbeidsrettet-dialog",
+              "to": "{{ARBEIDSRETTET_DIALOG_URL}}",
+              "preserveContextPath": "true"
+            },
+            {
+              "from": "/dialog",
+              "to": "{{ARBEIDSRETTET_DIALOG_URL}}",
+              "preserveContextPath": "true"
+            }
+          ]
+        }
