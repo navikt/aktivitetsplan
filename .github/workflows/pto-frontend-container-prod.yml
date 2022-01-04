@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/pto-frontend-container-prod.yml'
       - 'nais-prod-intern-gcp.yaml'
+      - 'nais-prod-ekstern-gcp.yaml'
   workflow_dispatch:
 
 concurrency:
