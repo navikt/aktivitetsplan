@@ -38,7 +38,6 @@ spec:
       - name: aktivitetsplan-prod
   envFrom:
     - configmap: pto-config
-    - configmap: loginservice-idporten
   env:
     - name: ENFORCE_LOGIN
       value: "true"
