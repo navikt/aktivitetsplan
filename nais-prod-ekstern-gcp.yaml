@@ -54,7 +54,6 @@ spec:
     - name: JSON_CONFIG
       value: >
         {
-          "contextPath": "/arbeid/aktivitetsplantest",
           "fallbackStrategy": "serve",
           "proxies": [
             { "from": "/veilarbvedtakinfo", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
