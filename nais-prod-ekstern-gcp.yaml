@@ -19,7 +19,7 @@ spec:
     max: 4
     cpuThresholdPercentage: 50
   ingresses:
-    - https://aktivitetsplantest.intern.nav.no
+    - https://aktivitetsplan.nav.no
   resources:
     limits:
       cpu: "3"
