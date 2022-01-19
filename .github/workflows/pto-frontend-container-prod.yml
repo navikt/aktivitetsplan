@@ -2,11 +2,12 @@ name: pto frontend container prod
 
 on:
   push:
+    branches:
+      - 'main'
     paths:
       - '.github/workflows/pto-frontend-container-prod.yml'
-      - 'nais-prod-intern-gcp.yaml'
-      - 'nais-prod-ekstern-gcp.yaml'
-  workflow_dispatch:
+      - 'nais/prod-intern.yaml'
+      - 'nais/prod-ekstern.yaml'
 
 concurrency:
   group: pto_frontend_container_prod
@@ -24,9 +25,9 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-gcp
-          RESOURCE: nais-prod-intern-gcp.yaml
+          RESOURCE: prod-intern.yaml
       - name: deploy gcp prod ekstern
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-gcp
-          RESOURCE: nais-prod-ekstern-gcp.yaml
+          RESOURCE: prod-ekstern.yaml
