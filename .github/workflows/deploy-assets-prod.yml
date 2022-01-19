@@ -18,7 +18,7 @@ concurrency:
 jobs:
   prod-ekstern:
     name: Deploy application to prod ekstern
-    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@dev-gcp
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build-ekstern-prod
       bucket: aktivitetsplan-prod
@@ -27,7 +27,7 @@ jobs:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
   prod-intern:
     name: Deploy application to prod intern
-    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@dev-gcp
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build-intern-prod
       bucket: aktivitetsplan-prod-intern
