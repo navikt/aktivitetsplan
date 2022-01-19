@@ -1,0 +1,40 @@
+name: pto frontend container dev
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '.github/workflows/pto-frontend-container-dev.yml'
+      - 'nais/dev-ekstern.yaml'
+      - 'nais/dev-intern.yaml'
+  workflow_dispatch:
+
+concurrency:
+  group: pto_frontend_container_dev
+  cancel-in-progress: true
+
+env:
+  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy gcp dev
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: dev-ekstern.yaml
+      - name: deploy gcp dev intern
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: dev-intern.yaml
+      - name: deploy gcp dev ekstern
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: dev-ekstern.yaml

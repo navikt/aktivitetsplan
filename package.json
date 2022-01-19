@@ -4,6 +4,10 @@
   "description": "Aktivitetsplan",
   "license": "MIT",
   "scripts": {
+    "build-ekstern-prod": "cp nais/.env.prod.ekstern .env.production && npm run build",
+    "build-intern-prod": "cp nais/.env.prod.intern .env.production && npm run build",
+    "build-ekstern-dev": "cp nais/.env.dev.ekstern .env.development && npm run build",
+    "build-intern-dev": "cp nais/.env.dev.intern .env.development && npm run build",
     "start": "cross-env REACT_APP_MOCK=true craco start",
     "build:tekster": "node ./scripts/build-tekster.js",
     "build": "npm run build:tekster && craco build",

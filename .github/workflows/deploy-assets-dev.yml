@@ -1,0 +1,37 @@
+name: deploy asseets
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/workflows/pto-frontend-container-prod.yml'
+      - 'nais/prod-intern.yaml'
+      - 'nais/prod-ekstern.yaml'
+      - 'nais/dev-intern.yaml'
+      - 'nais/dev-ekstern.yaml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-assets-dev
+  cancel-in-progress: true
+
+jobs:
+  dev-ekstern:
+    name: Deploy to dev extern
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
+    with:
+      kommando: npm run build-ekstern-prod
+      bucket: aktivitetsplan-prod
+      releaseName: prod-ekstern
+    secrets:
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
+  dev-intern:
+    name: Deploy application to dev intern
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
+    with:
+      kommando: npm run build-intern-prod
+      bucket: aktivitetsplan-prod-intern
+      releaseName: prod-intern
+    secrets:
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}

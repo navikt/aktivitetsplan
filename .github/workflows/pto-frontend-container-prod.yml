@@ -1,0 +1,33 @@
+name: pto frontend container prod
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '.github/workflows/pto-frontend-container-prod.yml'
+      - 'nais/prod-intern.yaml'
+      - 'nais/prod-ekstern.yaml'
+
+concurrency:
+  group: pto_frontend_container_prod
+  cancel-in-progress: true
+
+env:
+  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy gcp prod intern
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: prod-intern.yaml
+      - name: deploy gcp prod ekstern
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: prod-ekstern.yaml

@@ -1,0 +1,97 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: aktivitetsplan
+  namespace: pto
+  labels:
+    team: pto
+spec:
+  image: ghcr.io/navikt/pto-frontend/pto-frontend:2022.01.05_11.06-a439c18e8d0d
+  port: 8080
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: /internal/isReady
+    initialDelay: 20
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  ingresses:
+    - https://aktivitetsplan.nav.no
+  resources:
+    limits:
+      cpu: "3"
+      memory: 2048Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  accessPolicy:
+    outbound:
+      rules:
+        - application: pto-proxy
+      external:
+        - host: navnob2c.b2clogin.com
+  gcp:
+    buckets:
+      - name: aktivitetsplan-prod
+  envFrom:
+    - configmap: pto-config
+  env:
+    - name: ENFORCE_LOGIN
+      value: "true"
+    - name: LOGIN_REDIRECT_URL
+      value: https://loginservice.nav.no/login?redirect={RETURN_TO_URL}&level=Level4
+    - name: OIDC_DISCOVERY_URL
+      value: https://navnob2c.b2clogin.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
+    - name: OIDC_CLIENT_ID
+      value: 45104d6a-f5bc-4e8c-b352-4bbfc9381f25
+    - name: TOKEN_COOKIE_NAME
+      value: selvbetjening-idtoken
+    - name: GCS_BUCKET_NAME
+      value: aktivitetsplan-prod
+    - name: JSON_CONFIG
+      value: >
+        {
+          "fallbackStrategy": "serve",
+          "proxies": [
+            { "from": "/veilarbvedtakinfo", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
+            { "from": "/veilarblest", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
+            { "from": "/veilarboppfolging", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
+            { "from": "/veilarbdialog", "to": "http://pto-proxy/proxy", "preserveContextPath": true },
+            { "from": "/veilarbaktivitet", "to": "http://pto-proxy/proxy", "preserveContextPath": true }
+          ],
+          "redirects": [
+            {
+              "from": "/api/auth",
+              "to": "/auth/info"
+            },
+            {
+              "from": "/aktivitetsplan",
+              "to": "{{AKTIVITETSPLAN_URL}}"
+            },
+            {
+              "from": "/arbeidssokerregistrering",
+              "to": "{{ARBEIDSSOKERREGISTRERING_URL}}"
+            },
+            {
+              "from": "/dittnav",
+              "to": "{{DITTNAV_URL}}"
+            },
+            {
+              "from": "/veientilarbeid",
+              "to": "{{VEIENTILARBEID_URL}}"
+            },
+            {
+              "from": "/arbeidsrettet-dialog",
+              "to": "{{ARBEIDSRETTET_DIALOG_URL}}",
+              "preserveContextPath": "true"
+            },
+            {
+              "from": "/dialog",
+              "to": "{{ARBEIDSRETTET_DIALOG_URL}}",
+              "preserveContextPath": "true"
+            }
+          ]
+        }
