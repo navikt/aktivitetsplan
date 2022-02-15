@@ -33,19 +33,7 @@ function samenlingDato(a?: string, b?: string): number {
 }
 
 export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
-    const aIkkeSvartMarkering = delCvikkeSvartSkalVises(a);
-    const bIkkeSvartMarkering = delCvikkeSvartSkalVises(b);
-
-    if (bIkkeSvartMarkering && !aIkkeSvartMarkering) return 1;
-    if (!bIkkeSvartMarkering && aIkkeSvartMarkering) return -1;
-
-    if (b.avtalt && !a.avtalt) return 1;
-    if (!b.avtalt && a.avtalt) return -1;
-
-    const manglerFraDato = !!a.fraDato || !!b.fraDato;
-    const fradato = samenlingDato(a.fraDato, b.fraDato);
-
-    return fradato === 0 || manglerFraDato ? samenlingDato(a.opprettetDato, b.opprettetDato) : fradato;
+    return samenlingDato(a.endretDato, b.endretDato);
 }
 
 export function delCvikkeSvartSkalVises(aktivitet: Aktivitet): boolean {
