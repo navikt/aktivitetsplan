@@ -12,21 +12,8 @@ env:
   CI: true
 
 jobs:
-  test-and-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 12
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test
-      - run: npm run build
-
   dev-ekstern:
     name: Deploy to dev extern
-    needs: test-and-build
     uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build-ekstern-dev
@@ -37,7 +24,6 @@ jobs:
 
   dev-intern:
     name: Deploy application to dev intern
-    needs: test-and-build
     uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build-intern-dev
