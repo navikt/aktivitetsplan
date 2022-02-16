@@ -1,24 +1,32 @@
-name: deploy assets dev
-
+name: deploy feature branch
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - '.github/workflows/pto-frontend-container-prod.yml'
-      - 'nais/prod-intern.yaml'
-      - 'nais/prod-ekstern.yaml'
-      - 'nais/dev-intern.yaml'
-      - 'nais/dev-ekstern.yaml'
   workflow_dispatch:
 
 concurrency:
-  group: deploy-assets-dev
+  group: deploy-feature-branch
   cancel-in-progress: true
 
+env:
+  PRINT_PAYLOAD: true
+  TZ: Europe/Amsterdam
+  CI: true
+
 jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 12
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test
+      - run: npm run build
+
   dev-ekstern:
     name: Deploy to dev extern
+    needs: test-and-build
     uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build-ekstern-dev
@@ -26,8 +34,10 @@ jobs:
       releaseName: dev-ekstern
     secrets:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
+
   dev-intern:
     name: Deploy application to dev intern
+    needs: test-and-build
     uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build-intern-dev
