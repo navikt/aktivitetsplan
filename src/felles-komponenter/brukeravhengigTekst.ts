@@ -1,19 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-
-import { selectErBruker } from '../moduler/identitet/identitet-selector';
 import { BrukerType } from '../datatypes/aktivitetTypes';
 
-interface Props {
-    lagtInnAv: BrukerType;
-    endretAv?: string;
-}
 // Senere: fjern tekster lagtInnAv.*
-const BrukeravhengigTekst = (props: Props) => {
-    const { lagtInnAv, endretAv } = props;
-
-    const erBruker = useSelector(selectErBruker);
-
+export const hentBrukeravhengigTekst = (erBruker: boolean, lagtInnAv: BrukerType, endretAv?: string) => {
     let brukeravhengigTekst;
 
     if (erBruker) {
@@ -29,7 +17,5 @@ const BrukeravhengigTekst = (props: Props) => {
             brukeravhengigTekst = 'Bruker';
         }
     }
-    return <>{brukeravhengigTekst}</>
+    return brukeravhengigTekst;
 };
-
-export default BrukeravhengigTekst;

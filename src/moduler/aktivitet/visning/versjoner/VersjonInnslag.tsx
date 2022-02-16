@@ -1,12 +1,11 @@
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
-import BrukeravhengigTekst from '../../../../felles-komponenter/BrukeravhengigTekst';
 import { formaterDatoEllerTidSiden } from '../../../../utils';
 import { selectErBruker } from '../../../identitet/identitet-selector';
-import { endringsTekst } from './versjonTekster';
+import Endringstekst from './Endringstekst';
 
 interface Props {
     aktivitet: Aktivitet;
@@ -20,11 +19,7 @@ const VersjonInnslag = (props: Props) => {
 
     return (
         <div className="versjon-for-aktivitet-innslag">
-            <Element className="versjon-for-aktivitet-innslag__identitet">
-                <BrukeravhengigTekst lagtInnAv={aktivitet.lagtInnAv} endretAv={aktivitet.endretAv} />
-                &nbsp;
-            </Element>
-            {endringsTekst(erBruker, aktivitet, forrigeAktivitet)}
+            <Endringstekst aktivitet={aktivitet} erBruker={erBruker} forrigeAktivitet={forrigeAktivitet} />
             <Normaltekst>{formaterDatoEllerTidSiden(aktivitet.endretDato)}</Normaltekst>
         </div>
     );
