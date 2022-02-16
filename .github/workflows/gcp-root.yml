@@ -1,4 +1,4 @@
-name: GCP dev
+name: GCP root
 
 on:
   workflow_call:
@@ -17,7 +17,7 @@ on:
         required: true
 
 jobs:
-  deploy-dev:
+  deploy:
     name: Deploy application to dev
     runs-on: ubuntu-latest
     steps:

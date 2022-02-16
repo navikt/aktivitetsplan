@@ -1,4 +1,4 @@
-name: deploy asseets
+name: deploy assets dev
 
 on:
   push:
@@ -21,17 +21,17 @@ jobs:
     name: Deploy to dev extern
     uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
-      kommando: npm run build-ekstern-prod
+      kommando: npm run build-ekstern-dev
       bucket: aktivitetsplan-dev
       releaseName: dev-ekstern
     secrets:
-      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
   dev-intern:
     name: Deploy application to dev intern
     uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
-      kommando: npm run build-intern-prod
+      kommando: npm run build-intern-dev
       bucket: aktivitetsplan-dev-intern
       releaseName: dev-intern
     secrets:
-      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_PROD }}
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEV }}
