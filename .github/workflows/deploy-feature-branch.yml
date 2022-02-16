@@ -6,11 +6,6 @@ concurrency:
   group: deploy-feature-branch
   cancel-in-progress: true
 
-env:
-  PRINT_PAYLOAD: true
-  TZ: Europe/Amsterdam
-  CI: true
-
 jobs:
   dev-ekstern:
     name: Deploy to dev extern
