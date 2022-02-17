@@ -1,26 +1,29 @@
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { Aktivitet, TransaksjonsType } from '../../../../datatypes/aktivitetTypes';
-import { hentBrukeravhengigTekst } from '../../../../felles-komponenter/brukeravhengigTekst';
 import { formaterDatoKortManed } from '../../../../utils';
 import {
     aktivitetStatusMap,
     stillingFraNavSoknadsstatusMapper,
     stillingsEtikettMapper,
 } from '../../../../utils/textMappers';
+import { selectErBruker } from '../../../identitet/identitet-selector';
+import { hentBrukeravhengigTekst } from './brukeravhengigTekst';
+import styles from './Endringstekst.module.less';
 
 interface Props {
     aktivitet: Aktivitet;
-    erBruker: boolean;
     forrigeAktivitet?: Aktivitet;
 }
 
 const Endringstekst = (props: Props) => {
-    const { erBruker, aktivitet, forrigeAktivitet } = props;
+    const { aktivitet, forrigeAktivitet } = props;
+    const erBruker = useSelector(selectErBruker);
 
     const brukeravhengigTekst = (
-        <Element className="versjon-for-aktivitet-innslag__identitet">
+        <Element className={styles.identitet}>
             {hentBrukeravhengigTekst(erBruker, aktivitet.lagtInnAv, aktivitet.endretAv)}
         </Element>
     );
@@ -75,7 +78,7 @@ const Endringstekst = (props: Props) => {
             const tilStatus = aktivitet.etikett ? stillingsEtikettMapper[aktivitet.etikett] : 'Ingen';
             return (
                 <>
-                    {brukeravhengigTekst} endret tilstand til {tilStatus}{' '}
+                    {brukeravhengigTekst} endret tilstand til {tilStatus}
                 </>
             );
         }
@@ -98,7 +101,7 @@ const Endringstekst = (props: Props) => {
             );
         }
         default:
-            return <>{brukeravhengigTekst} Gjorde noe</>;
+            return <>{brukeravhengigTekst} gjorde noe</>;
     }
 };
 

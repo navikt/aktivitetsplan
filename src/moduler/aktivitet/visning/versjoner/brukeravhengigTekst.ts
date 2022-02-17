@@ -1,6 +1,5 @@
-import { BrukerType } from '../datatypes/aktivitetTypes';
+import { BrukerType } from '../../../../datatypes/aktivitetTypes';
 
-// Senere: fjern tekster lagtInnAv.*
 export const hentBrukeravhengigTekst = (erBruker: boolean, lagtInnAv: BrukerType, endretAv?: string) => {
     let brukeravhengigTekst;
 
