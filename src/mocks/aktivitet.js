@@ -129,7 +129,7 @@ const testAktiviteter = !visTestAktiviteter()
               avsluttetKommentar: null,
               avtalt: true,
               lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
+              transaksjonsType: 'BLE_HISTORISK',
               etikett: null,
               kontaktperson: null,
               arbeidsgiver: null,
