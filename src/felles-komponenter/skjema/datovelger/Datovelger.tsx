@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 import { datePickerToISODate, erGyldigISODato } from '../../../utils';
 import { FieldStateInput } from '../input/inputTypes';
-import styles from './datovelger.module.less';
+import styles from './Datovelger.module.less';
 
 function DatoFeil(props: { feil?: string }) {
     if (!props.feil) {
