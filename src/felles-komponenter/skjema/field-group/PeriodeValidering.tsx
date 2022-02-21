@@ -3,6 +3,7 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { ReactNode } from 'react';
 
 import { erGyldigISODato } from '../../../utils';
+import styles from './PeriodeValidering.module.less';
 
 export const validerPeriode = (fradato: string, tildato: string) => {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {
@@ -33,7 +34,12 @@ const PeriodeValidering = (props: Props) => {
     const { valideringFelt, children } = props;
 
     return (
-        <SkjemaGruppe feilmeldingId="periode-feil" feil={valideringFelt.error} tag="div">
+        <SkjemaGruppe
+            className={styles.marginBottom}
+            feilmeldingId="periode-feil"
+            feil={valideringFelt.error}
+            tag="div"
+        >
             {children}
         </SkjemaGruppe>
     );
