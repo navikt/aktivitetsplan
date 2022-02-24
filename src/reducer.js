@@ -18,7 +18,7 @@ import malListeReducer from './moduler/mal/malliste-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import tilgangReducer from './moduler/tilgang/tilgang-reducer';
-import veilederReducer from './moduler/veileder/veileder-reducer';
+import veilederReducer from './moduler/veileder/veilederReducer';
 
 const combinedReducers = combineReducers({
     data: combineReducers({
