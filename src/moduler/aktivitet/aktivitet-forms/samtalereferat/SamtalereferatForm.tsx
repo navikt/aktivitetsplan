@@ -1,7 +1,6 @@
 import useFormstate from '@nutgaard/use-formstate';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import PT from 'prop-types';
 import React from 'react';
 
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
@@ -15,11 +14,18 @@ import VelgKanal from '../VelgKanal';
 import { useReferatStartTekst } from './useReferatStartTekst';
 import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
 
-function SamtalereferatForm(props) {
-    const { onSubmit, isDirtyRef } = props;
+interface Props {
+    onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
+    isDirtyRef?: { current: boolean };
+}
+
+type SamtalereferatInputProps = { tittel: string; fraDato: string; kanal: string; referat: string };
+
+const SamtalereferatForm = (props: Props) => {
+    const { onSubmit, isDirtyRef = undefined } = props;
     const startTekst = useReferatStartTekst();
 
-    const validator = useFormstate({
+    const validator = useFormstate<SamtalereferatInputProps>({
         tittel: validateTittel,
         fraDato: validateFraDato,
         kanal: validateKanal,
@@ -95,15 +101,6 @@ function SamtalereferatForm(props) {
             </div>
         </form>
     );
-}
-
-SamtalereferatForm.defaultProps = {
-    isDirtyRef: undefined,
-};
-
-SamtalereferatForm.propTypes = {
-    onSubmit: PT.func.isRequired,
-    isDirtyRef: PT.shape({ current: PT.bool }),
 };
 
 export default SamtalereferatForm;
