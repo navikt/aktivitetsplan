@@ -1,21 +1,28 @@
 import useFormstate from '@nutgaard/use-formstate';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
+import {Hovedknapp, Knapp} from 'nav-frontend-knapper';
+import {SkjemaGruppe} from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import React from 'react';
 
-import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
+import {SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL} from '../../../../constant';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import VelgKanal from '../VelgKanal';
-import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
-import { todayIsoString } from '../../../../utils/dateUtils';
+import {validateFraDato, validateKanal, validateReferat, validateTittel} from './validate';
+import {todayIsoString} from '../../../../utils/dateUtils';
+import {useSelector} from "react-redux";
+import {selectVeilederNavn, selectVeilederStatus} from "../../../veileder/veileder-selector";
+import Innholdslaster from "../../../../felles-komponenter/utils/Innholdslaster";
 
 function SamtalereferatForm(props) {
     const { onSubmit, isDirtyRef } = props;
+
+    const avhengigheter = [useSelector(selectVeilederStatus)];
+    const veilederNavn = useSelector(selectVeilederNavn);
+    const startTekst = `\nHilsen ${veilederNavn}`;
 
     const validator = useFormstate({
         tittel: validateTittel,
@@ -28,7 +35,7 @@ function SamtalereferatForm(props) {
         tittel: '',
         fraDato: todayIsoString(),
         kanal: TELEFON_KANAL,
-        referat: '',
+        referat: startTekst,
     });
 
     if (isDirtyRef) {
@@ -66,14 +73,16 @@ function SamtalereferatForm(props) {
 
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
 
-                <Textarea
-                    label="Samtalereferat *"
-                    placeholder="Skriv her"
-                    maxLength={5000}
-                    visTellerFra={500}
-                    required
-                    {...state.fields.referat}
-                />
+                <Innholdslaster avhengigheter={avhengigheter} spinnerStorrelse="S">
+                    <Textarea
+                        label="Samtalereferat *"
+                        placeholder="Skriv her"
+                        maxLength={5000}
+                        visTellerFra={500}
+                        required
+                        {...state.fields.referat}
+                    />
+                </Innholdslaster>
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
             </SkjemaGruppe>
             <div className="aktivitetskjema__lagre-knapp">

@@ -20,6 +20,7 @@ import { hentArenaAktiviteter } from '../../moduler/aktivitet/arena-aktiviteter-
 import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
+import { hentVeilederInfo } from '../../moduler/veileder/veileder-reducer';
 import { getFodselsnummer } from '../../utils/fnr-util';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
@@ -46,6 +47,7 @@ const Aktivitetstavle = () => {
             if (erVeileder) {
                 doLesAktivitetsplan();
                 dispatch(hentNivaa4(getFodselsnummer()));
+                dispatch(hentVeilederInfo());
             }
             dispatch(hentAktiviteter());
             dispatch(hentArenaAktiviteter());
