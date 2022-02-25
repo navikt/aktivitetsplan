@@ -1,14 +1,17 @@
 import useFormstate from '@nutgaard/use-formstate';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import { STATUS } from '../../../../api/utils';
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { todayIsoString } from '../../../../utils/dateUtils';
+import { selectVeilederStatus } from '../../../veileder/veilederSelector';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import VelgKanal from '../VelgKanal';
 import { useReferatStartTekst } from './useReferatStartTekst';
@@ -22,6 +25,27 @@ interface Props {
 type SamtalereferatInputProps = { tittel: string; fraDato: string; kanal: string; referat: string };
 
 const SamtalereferatForm = (props: Props) => {
+    const status = useSelector(selectVeilederStatus);
+    const [ignorePending, setIgnorePending] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (status === STATUS.PENDING) {
+                setIgnorePending(true);
+            }
+        }, 400);
+        return clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    if (status === STATUS.PENDING && !ignorePending) {
+        return null;
+    }
+
+    return <InnerSamtalereferatForm {...props} />;
+};
+
+const InnerSamtalereferatForm = (props: Props) => {
     const { onSubmit, isDirtyRef = undefined } = props;
     const startTekst = useReferatStartTekst();
 
