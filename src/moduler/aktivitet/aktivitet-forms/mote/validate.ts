@@ -9,15 +9,15 @@ const HENSIKT_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${HENSIKT_MAKS_L
 export const FORBEREDELSER_MAKS_LENGDE = 500;
 const FORBEREDELSER_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${FORBEREDELSER_MAKS_LENGDE} tegn`;
 
-function tekstForLang(maxLengde, value) {
+const tekstForLang = (maxLengde: number, value: string) => {
     return value.length > maxLengde;
-}
+};
 
-function erVerdiSatt(value) {
+const erVerdiSatt = (value: string) => {
     return value && value.trim().length > 0;
-}
+};
 
-export function validateTittel(avtalt, value) {
+export const validateTittel = (avtalt: boolean, value: string) => {
     if (avtalt) {
         return;
     }
@@ -29,9 +29,9 @@ export function validateTittel(avtalt, value) {
     if (tekstForLang(TITTEL_MAKS_LENGDE, value)) {
         return TITTEL_MAKS_LENGDE_TEKST;
     }
-}
+};
 
-export function validateAdresse(avtalt, value) {
+export const validateAdresse = (avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut møtested eller annen praktisk informasjon';
     }
@@ -39,17 +39,17 @@ export function validateAdresse(avtalt, value) {
     if (tekstForLang(ADRESSE_MAKS_LENGDE, value)) {
         return ADRESSE_MAKS_LENGDE_TEKST;
     }
-}
+};
 
-export function validateFraDato(avtalt, tilDato, value) {
+export const validateFraDato = (avtalt: boolean, tilDato: string, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut dato for møtet';
     }
 
-    return validerDato(value, tilDato, null);
-}
+    return validerDato(value, tilDato);
+};
 
-export function validateHensikt(avtalt, value) {
+export const validateHensikt = (avtalt: boolean, value: string) => {
     if (avtalt) {
         return;
     }
@@ -61,9 +61,9 @@ export function validateHensikt(avtalt, value) {
     if (tekstForLang(HENSIKT_MAKS_LENGDE, value)) {
         return HENSIKT_MAKS_LENGDE_TEKST;
     }
-}
+};
 
-export function validateForberedelser(avtalt, value) {
+export const validateForberedelser = (avtalt: boolean, value: string) => {
     if (avtalt) {
         return;
     }
@@ -71,21 +71,21 @@ export function validateForberedelser(avtalt, value) {
     if (tekstForLang(FORBEREDELSER_MAKS_LENGDE, value)) {
         return FORBEREDELSER_MAKS_LENGDE_TEKST;
     }
-}
+};
 
-export function validateKlokkeslett(avtalt, value) {
+export const validateKlokkeslett = (avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut klokkeslett';
     }
-}
+};
 
-export function validateVarighet(avtalt, value) {
+export const validateVarighet = (avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut varighet';
     }
-}
-export function validateKanal(avtalt, value) {
+};
+export const validateKanal = (avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut møteform';
     }
-}
+};

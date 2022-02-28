@@ -114,6 +114,17 @@ export interface Aktivitet extends AktivitetRequiredProps {
     avsluttetBegrunnelse?: string;
 }
 
+export interface MoteAktivitet extends AktivitetRequiredProps {
+    fraDato: string;
+    tilDato: string;
+    klokkeslett: string;
+    varighet: string;
+    kanal: string;
+    adresse: string;
+    beskrivelse: string;
+    forberedelser: string;
+}
+
 export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
     fraDato: string;
     tilDato: string;

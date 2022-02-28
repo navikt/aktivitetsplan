@@ -2,38 +2,48 @@ import useFormstate from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
-import PT from 'prop-types';
 import React, { useContext, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../../api/utils';
-import hiddenIfHOC from '../../../../felles-komponenter/hidden-if/hidden-if';
+import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { HiddenIfHovedknapp } from '../../../../felles-komponenter/hidden-if/HiddenIfHovedknapp';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
-import * as AppPT from '../../../../proptypes';
 import { DirtyContext } from '../../../context/dirty-context';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 
-const FlatKnappVisible = hiddenIfHOC(Flatknapp);
-
-function validate(val) {
+const validate = (val: string) => {
     if (val.trim().length === 0) {
         return 'Du må fylle ut samtalereferat';
     }
     if (val.length > 5000) {
         return 'Du må korte ned teksten til 5000 tegn';
     }
+};
+
+interface Props {
+    aktivitet: Aktivitet;
+    onFerdig: () => void;
 }
 
-const label = <Undertittel>Samtalereferat</Undertittel>;
+type ReferatInputProps = {
+    referat: string;
+};
 
-function OppdaterReferatForm(props) {
-    const { onSubmit, aktivitet, oppdaterer, erReferatPublisert, dispatchPubliserReferat, onFerdig } = props;
+const OppdaterReferatForm = (props: Props) => {
+    const { aktivitet, onFerdig } = props;
 
-    const validator = useFormstate({
+    const dispatch = useDispatch();
+
+    const aktivitetsStatus = useSelector(selectAktivitetStatus);
+    const oppdaterer = aktivitetsStatus === (STATUS.PENDING || STATUS.RELOADING);
+
+    const erReferatPublisert = aktivitet.erReferatPublisert;
+
+    const validator = useFormstate<ReferatInputProps>({
         referat: validate,
     });
 
@@ -46,15 +56,25 @@ function OppdaterReferatForm(props) {
     useEffect(() => {
         setFormIsDirty('referat', !state.pristine);
 
-        return function cleanup() {
-            setFormIsDirty('referat', false);
-        };
+        return () => setFormIsDirty('referat', false);
     }, [setFormIsDirty, state.pristine]);
 
+    const onSubmit = (referatData: ReferatInputProps) => {
+        const aktivitetMedOppdatertReferat = {
+            ...props.aktivitet,
+            ...referatData,
+        };
+
+        return oppdaterReferat(aktivitetMedOppdatertReferat)(dispatch).then((res: any) => {
+            onFerdig();
+            return res;
+        });
+    };
+
     const oppdaterOgPubliser = state.onSubmit((values) => {
-        return onSubmit(values).then((response) => {
+        return onSubmit(values).then((response: { data: any }) => {
             if (response.data) {
-                dispatchPubliserReferat(response.data);
+                dispatch(publiserReferat(response.data));
             }
         });
     });
@@ -66,7 +86,7 @@ function OppdaterReferatForm(props) {
         >
             <FormErrorSummary errors={state.errors} submittoken={state.submittoken} />
             <Textarea
-                label={label}
+                label={<Undertittel>Samtalereferat</Undertittel>}
                 disabled={oppdaterer}
                 maxLength={5000}
                 visTellerFra={500}
@@ -88,42 +108,13 @@ function OppdaterReferatForm(props) {
                 {erReferatPublisert ? 'Del endring' : 'Lagre utkast'}
             </Knapp>
 
-            <FlatKnappVisible hidden={!aktivitet.referat} kompakt onClick={onFerdig}>
-                Avbryt
-            </FlatKnappVisible>
+            {aktivitet.referat && (
+                <Flatknapp kompakt onClick={onFerdig}>
+                    Avbryt
+                </Flatknapp>
+            )}
         </form>
     );
-}
-
-OppdaterReferatForm.propTypes = {
-    onSubmit: PT.func.isRequired,
-    aktivitet: AppPT.aktivitet.isRequired,
-    erReferatPublisert: PT.bool.isRequired,
-    oppdaterer: PT.bool.isRequired,
-    dispatchPubliserReferat: PT.func.isRequired,
-    onFerdig: PT.func.isRequired,
 };
 
-const mapStateToProps = (state, props) => {
-    const { erReferatPublisert } = props.aktivitet;
-    return {
-        oppdaterer: selectAktivitetStatus(state) === (STATUS.PENDING || STATUS.RELOADING),
-        erReferatPublisert,
-    };
-};
-
-const mapDispatchToProps = (dispatch, props) => ({
-    dispatchPubliserReferat: (aktivitet) => dispatch(publiserReferat(aktivitet)),
-    onSubmit: (referatData) => {
-        const aktivitetMedOppdatertReferat = {
-            ...props.aktivitet,
-            ...referatData,
-        };
-        return dispatch(oppdaterReferat(aktivitetMedOppdatertReferat)).then((res) => {
-            props.onFerdig();
-            return res;
-        });
-    },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(OppdaterReferatForm);
+export default OppdaterReferatForm;

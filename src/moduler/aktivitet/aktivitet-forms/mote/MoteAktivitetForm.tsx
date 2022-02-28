@@ -3,16 +3,15 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
-import PT from 'prop-types';
 import React from 'react';
 
-import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL } from '../../../../constant';
+import { INTERNET_KANAL, MOTE_TYPE, OPPMOTE_KANAL, STATUS_PLANLAGT } from '../../../../constant';
+import { MoteAktivitet } from '../../../../datatypes/aktivitetTypes';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import EksternLenkeIkon from '../../../../felles-komponenter/utils/EksternLenkeIkon';
-import * as AppPT from '../../../../proptypes';
 import { beregnFraTil, beregnKlokkeslettVarighet } from '../../aktivitet-util';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import LagreAktivitet from '../LagreAktivitet';
@@ -30,12 +29,26 @@ import {
     validateVarighet,
 } from './validate';
 
-function erAvtalt(aktivitet) {
-    return aktivitet.avtalt === true;
+interface Props {
+    onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
+    isDirtyRef?: { current: boolean };
+    aktivitet: MoteAktivitet;
+    endre: boolean;
 }
 
-const HuskVarsleBruker = (props) => {
-    if (!props.avtalt || props.pristine) {
+type FormType = {
+    tittel: string;
+    dato: string;
+    klokkeslett: string;
+    varighet: string;
+    kanal: string;
+    adresse: string;
+    beskrivelse: string;
+    forberedelser: string;
+};
+
+const HuskVarsleBruker = ({ avtalt, pristine }: { avtalt: boolean; pristine: boolean }) => {
+    if (!avtalt || pristine) {
         return null;
     }
     return (
@@ -45,8 +58,8 @@ const HuskVarsleBruker = (props) => {
     );
 };
 
-function VideoInfo(props) {
-    if (props.kanal === INTERNET_KANAL) {
+const VideoInfo = ({ kanal }: { kanal: string }) => {
+    if (kanal === INTERNET_KANAL) {
         return (
             <Normaltekst className="mote-aktivitet-form__video-info">
                 Les om{' '}
@@ -61,22 +74,22 @@ function VideoInfo(props) {
         );
     }
     return null;
-}
+};
 
-export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
+const MoteAktivitetForm = (props: Props) => {
+    const { aktivitet, isDirtyRef, onSubmit, endre = false } = props;
 
-function MoteAktivitetForm(props) {
-    const { aktivitet, isDirtyRef, onSubmit, endre } = props;
+    const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
-    const validator = useFormstate({
-        tittel: (val, values, aktivitet) => validateTittel(erAvtalt(aktivitet), val),
-        dato: (val, values, aktivitet) => validateFraDato(erAvtalt(aktivitet), aktivitet.fraDato, val),
-        klokkeslett: (val, values, aktivitet) => validateKlokkeslett(erAvtalt(aktivitet), val),
-        varighet: (val, values, aktivitet) => validateVarighet(erAvtalt(aktivitet), val),
-        kanal: (val, values, aktivitet) => validateKanal(erAvtalt(aktivitet), val),
-        adresse: (val, values, aktivitet) => validateAdresse(erAvtalt(aktivitet), val),
-        beskrivelse: (val, values, aktivitet) => validateHensikt(erAvtalt(aktivitet), val),
-        forberedelser: (val, values, aktivitet) => validateForberedelser(erAvtalt(aktivitet), val),
+    const validator = useFormstate<FormType, MoteAktivitet>({
+        tittel: (val, values, a) => validateTittel(a.avtalt, val),
+        dato: (val, values, a) => validateFraDato(a.avtalt, a.fraDato, val),
+        klokkeslett: (val, values, a) => validateKlokkeslett(a.avtalt, val),
+        varighet: (val, values, a) => validateVarighet(a.avtalt, val),
+        kanal: (val, values, a) => validateKanal(a.avtalt, val),
+        adresse: (val, values, a) => validateAdresse(a.avtalt, val),
+        beskrivelse: (val, values, a) => validateHensikt(a.avtalt, val),
+        forberedelser: (val, values, a) => validateForberedelser(a.avtalt, val),
     });
 
     const maybeAktivitet = aktivitet || {};
@@ -102,7 +115,18 @@ function MoteAktivitetForm(props) {
     }
 
     return (
-        <form onSubmit={state.onSubmit((x) => onSubmit({ ...x, ...beregnFraTil(x) }))} autoComplete="off" noValidate>
+        <form
+            onSubmit={state.onSubmit((x) =>
+                onSubmit({
+                    ...x,
+                    ...beregnFraTil(x),
+                    status: STATUS_PLANLAGT,
+                    avtalt: false,
+                })
+            )}
+            autoComplete="off"
+            noValidate
+        >
             <SkjemaGruppe className="skjema-innlogget aktivitetskjema">
                 <AktivitetFormHeader tittel="Møte med NAV" aktivitetsType={MOTE_TYPE} />
                 <HuskVarsleBruker avtalt={avtalt} pristine={state.pristine} />
@@ -137,19 +161,6 @@ function MoteAktivitetForm(props) {
             <LagreAktivitet />
         </form>
     );
-}
-
-MoteAktivitetForm.propTypes = {
-    onSubmit: PT.func.isRequired,
-    isDirtyRef: PT.shape({ current: PT.bool }),
-    aktivitet: AppPT.aktivitet,
-    endre: PT.bool,
-};
-
-MoteAktivitetForm.defaultProps = {
-    aktivitet: undefined,
-    isDirtyRef: false,
-    endre: false,
 };
 
 export default MoteAktivitetForm;
