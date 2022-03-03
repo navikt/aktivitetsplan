@@ -24,7 +24,7 @@ function compareUndefindedOrNull(a: any, b: any): number {
     return 0;
 }
 
-function samenlingDato(a?: string, b?: string): number {
+function sammenlignDato(a?: string, b?: string): number {
     if (!a || !b) {
         return compareUndefindedOrNull(a, b);
     }
@@ -33,7 +33,9 @@ function samenlingDato(a?: string, b?: string): number {
 }
 
 export function compareAktivitet(a: Aktivitet, b: Aktivitet): number {
-    return samenlingDato(a.endretDato, b.endretDato);
+    const aDato = a.endretDato ? a.endretDato : a.fraDato;
+    const bDato = b.endretDato ? b.endretDato : b.fraDato;
+    return sammenlignDato(aDato, bDato);
 }
 
 export function delCvikkeSvartSkalVises(aktivitet: Aktivitet): boolean {
