@@ -27,6 +27,7 @@ spec:
       memory: 256Mi
   ingresses:
     - https://aktivitetsplan-gcp.dev.nav.no
+    - https://aktivitetsplan-gcp.dev.nav.no/static
   accessPolicy:
     outbound:
       rules:
