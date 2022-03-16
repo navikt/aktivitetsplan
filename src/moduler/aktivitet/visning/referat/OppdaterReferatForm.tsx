@@ -12,6 +12,7 @@ import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-s
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
 import { DirtyContext } from '../../../context/dirty-context';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
+import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
 import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
 
@@ -35,6 +36,7 @@ type ReferatInputProps = {
 
 const OppdaterReferatForm = (props: Props) => {
     const { aktivitet, onFerdig } = props;
+    const startTekst = useReferatStartTekst();
 
     const dispatch = useDispatch();
 
@@ -48,7 +50,7 @@ const OppdaterReferatForm = (props: Props) => {
     });
 
     const state = validator({
-        referat: aktivitet.referat || '',
+        referat: aktivitet.referat || startTekst,
     });
 
     const { setFormIsDirty } = useContext(DirtyContext);
