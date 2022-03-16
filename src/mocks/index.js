@@ -41,6 +41,7 @@ import getOppfolging, { avslutningStatus, settDigital, startEskalering, stoppEsk
 import getPerson from './person';
 import getNivaa4 from './tilgang';
 import { fetchmockMiddleware, jsonResponse } from './utils';
+import { veilederMe } from './Veileder';
 import { veilederTilgang } from './veilederTilgang';
 
 const mock = fetchMock.configure({
@@ -192,3 +193,6 @@ mock.get('/api/auth', jsonResponse(auth));
 ///veilarblest/api
 mock.get('/veilarblest/api/aktivitetsplan/les', (req, res, ctx) => res(ctx.json(lest)));
 mock.put('/veilarblest/api/informasjon/les', ({ queryParams }, res, ctx) => res(ctx.json(lest)));
+
+//veilarbveileder-api
+mock.get('/veilarbveileder/api/veileder/me', jsonResponse(veilederMe));

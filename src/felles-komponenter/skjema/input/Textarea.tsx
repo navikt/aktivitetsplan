@@ -33,6 +33,7 @@ interface Props {
     textareaClass?: string;
     required?: boolean;
     disabled?: boolean;
+    placeholder?: string;
     setValue?: (value: string) => void;
 }
 

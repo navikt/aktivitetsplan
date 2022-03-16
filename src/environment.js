@@ -5,3 +5,4 @@ export const VEILARBLEST_BASE_URL = '/veilarblest/api';
 export const VEILARBVEDTAKINFO_BASE_URL = '/veilarbvedtakinfo/api';
 export const PERSON_BASE_URL = '/veilarbperson/api';
 export const MALVERK_BASE_URL = '/veilarbmalverk/api';
+export const VEILEDER_BASE_URL = '/veilarbveileder/api';

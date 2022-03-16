@@ -29,3 +29,10 @@ interface GateAdresse {
     husnummer?: string;
     postnummer?: string;
 }
+
+export interface VeilederInfo {
+    ident: string;
+    navn: string;
+    fornavn: string;
+    etternavn: string;
+}

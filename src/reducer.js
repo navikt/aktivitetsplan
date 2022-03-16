@@ -18,6 +18,7 @@ import malListeReducer from './moduler/mal/malliste-reducer';
 import malverkReducer from './moduler/malverk/malverk-reducer';
 import oppfolgingReducer from './moduler/oppfolging-status/oppfolging-reducer';
 import tilgangReducer from './moduler/tilgang/tilgang-reducer';
+import veilederReducer from './moduler/veileder/veilederReducer';
 
 const combinedReducers = combineReducers({
     data: combineReducers({
@@ -36,6 +37,7 @@ const combinedReducers = combineReducers({
         malverk: malverkReducer,
         lest: lestReducer,
         auth: authReducer,
+        veileder: veilederReducer,
     }),
     view: combineReducers({
         visteAktiviteterMedEndringer: aktivitetViewReducer,

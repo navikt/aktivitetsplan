@@ -1,7 +1,6 @@
 import useFormstate from '@nutgaard/use-formstate';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import PT from 'prop-types';
 import React from 'react';
 
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
@@ -9,15 +8,24 @@ import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelg
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
 import Textarea from '../../../../felles-komponenter/skjema/input/Textarea';
+import { todayIsoString } from '../../../../utils/dateUtils';
 import AktivitetFormHeader from '../aktivitet-form-header';
 import VelgKanal from '../VelgKanal';
+import { useReferatStartTekst } from './useReferatStartTekst';
 import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
-import { todayIsoString } from '../../../../utils/dateUtils';
 
-function SamtalereferatForm(props) {
-    const { onSubmit, isDirtyRef } = props;
+interface Props {
+    onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
+    isDirtyRef?: { current: boolean };
+}
 
-    const validator = useFormstate({
+type SamtalereferatInputProps = { tittel: string; fraDato: string; kanal: string; referat: string };
+
+const InnerSamtalereferatForm = (props: Props) => {
+    const { onSubmit, isDirtyRef = undefined } = props;
+    const startTekst = useReferatStartTekst();
+
+    const validator = useFormstate<SamtalereferatInputProps>({
         tittel: validateTittel,
         fraDato: validateFraDato,
         kanal: validateKanal,
@@ -28,7 +36,7 @@ function SamtalereferatForm(props) {
         tittel: '',
         fraDato: todayIsoString(),
         kanal: TELEFON_KANAL,
-        referat: '',
+        referat: startTekst,
     });
 
     if (isDirtyRef) {
@@ -74,6 +82,7 @@ function SamtalereferatForm(props) {
                     required
                     {...state.fields.referat}
                 />
+
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
             </SkjemaGruppe>
             <div className="aktivitetskjema__lagre-knapp">
@@ -92,15 +101,6 @@ function SamtalereferatForm(props) {
             </div>
         </form>
     );
-}
-
-SamtalereferatForm.defaultProps = {
-    isDirtyRef: undefined,
 };
 
-SamtalereferatForm.propTypes = {
-    onSubmit: PT.func.isRequired,
-    isDirtyRef: PT.shape({ current: PT.bool }),
-};
-
-export default SamtalereferatForm;
+export default InnerSamtalereferatForm;
