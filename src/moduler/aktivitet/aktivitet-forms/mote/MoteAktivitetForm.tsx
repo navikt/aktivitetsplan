@@ -33,7 +33,6 @@ interface Props {
     onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
     isDirtyRef?: { current: boolean };
     aktivitet: MoteAktivitet;
-    endre: boolean;
 }
 
 type FormType = {
@@ -76,10 +75,10 @@ const VideoInfo = ({ kanal }: { kanal: string }) => {
     return null;
 };
 
-const MoteAktivitetForm = (props: Props) => {
-    const { aktivitet, isDirtyRef, onSubmit, endre = false } = props;
+export const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
 
-    const defaultBeskrivelse = 'Vi ønsker å snakke med deg om aktiviteter du har gjennomført og videre oppfølging.';
+const MoteAktivitetForm = (props: Props) => {
+    const { aktivitet, isDirtyRef, onSubmit } = props;
 
     const validator = useFormstate<FormType, MoteAktivitet>({
         tittel: (val, values, a) => validateTittel(a.avtalt, val),
@@ -104,7 +103,7 @@ const MoteAktivitetForm = (props: Props) => {
         varighet: dato.varighet ? dato.varighet : '00:45',
         kanal: maybeAktivitet.kanal || OPPMOTE_KANAL,
         adresse: maybeAktivitet.adresse || '',
-        beskrivelse: endre ? beskrivelse : defaultBeskrivelse,
+        beskrivelse: beskrivelse ? beskrivelse : defaultBeskrivelse,
         forberedelser: maybeAktivitet.forberedelser || '',
     };
 

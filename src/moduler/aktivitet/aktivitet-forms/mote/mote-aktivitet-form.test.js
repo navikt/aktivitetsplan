@@ -84,19 +84,21 @@ describe('MoteAktivitetForm', () => {
     it('Skal populere beskrivelse(hensikt) med defaultverdi', () => {
         const aktivitet = undefined;
         const wrapper = shallow(
-            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre={false} />
+            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />
         );
 
         expect(wrapper.find('Textarea[label="Hensikt med møtet *"]').prop('initialValue')).toEqual(defaultBeskrivelse);
     });
 
     it('Skal ikke populere beskrivelse(hensikt) med defaultverdi når man endrer', () => {
-        const aktivitet = undefined;
+        const aktivitet = { beskrivelse: 'Dette er en beskrivelse' };
         const wrapper = shallow(
-            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre />
+            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />
         );
 
-        expect(wrapper.find('Textarea[label="Hensikt med møtet *"]').prop('initialValue')).toEqual('');
+        expect(wrapper.find('Textarea[label="Hensikt med møtet *"]').prop('initialValue')).toEqual(
+            'Dette er en beskrivelse'
+        );
     });
 
     it('Skal være disablede felter ved endring av aktivitet', () => {
@@ -110,7 +112,7 @@ describe('MoteAktivitetForm', () => {
             avtalt: true,
         };
         const wrapper = shallow(
-            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} endre />
+            <MoteAktivitetForm onSubmit={() => null} isDirtyRef={dirtyRef} aktivitet={aktivitet} />
         );
         expect(wrapper.find('Input[label="Tema for møtet *"]').prop('disabled')).toBeTruthy();
         expect(wrapper.find('DatovelgerWrapper').prop('disabled')).not.toBeTruthy();
