@@ -14,7 +14,7 @@ export interface OppfolgingStatus {
     underOppfolging: boolean;
     underKvp: boolean;
 
-    gjeldendeEskaleringsvarsel: Eskaleringsvarsel;
+    gjeldendeEskaleringsvarsel: EskaleringsvarselGammel;
     kanStarteOppfolging: boolean;
 
     oppfolgingsPerioder: OppfolgingsPeriode;
@@ -37,7 +37,7 @@ export interface OppfolgingsPeriode {
     veileder?: string;
 }
 
-interface Eskaleringsvarsel {
+interface EskaleringsvarselGammel {
     varselId: string;
     aktorId: string;
     opprettetAv: string;

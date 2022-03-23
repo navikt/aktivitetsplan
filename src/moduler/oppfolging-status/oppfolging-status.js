@@ -45,6 +45,7 @@ OppfolgingStatus.propTypes = {
     doHentOppfolging: PT.func.isRequired,
     doHentIdentitet: PT.func.isRequired,
     sevicegruppe: PT.string,
+    children: PT.node,
 };
 
 OppfolgingStatus.defaultProps = {

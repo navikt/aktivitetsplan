@@ -38,3 +38,11 @@ export interface NyHenvendelse {
 export interface SistOppdatert {
     sistOppdatert: Date;
 }
+
+export interface Eskaleringsvarsel {
+    id: string;
+    tilhorendeDialogId: string;
+    opprettetAv: string;
+    opprettetDato: string;
+    opprettetBegrunnelse: string;
+}

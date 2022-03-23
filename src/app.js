@@ -8,7 +8,7 @@ import { useEventListener } from './felles-komponenter/hooks/useEventListner';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
 import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
 import createHistory from './history';
-import Hovedside from './hovedside/hovedside';
+import Hovedside from './hovedside/Hovedside';
 import Provider from './provider';
 import { HiddenIf } from './utils';
 import { UppdateEventHandler } from './utils/UpdateHandler';

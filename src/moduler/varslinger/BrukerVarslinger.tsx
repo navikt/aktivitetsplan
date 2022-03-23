@@ -6,11 +6,9 @@ import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatc
 import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
 import {
-    selectErEskalert,
     selectErUnderOppfolging,
     selectInaktiveringsDato,
     selectKanReaktiveres,
-    selectTilHorendeDialogId,
 } from '../oppfolging-status/oppfolging-selector';
 import { HiddenIfAdvarselMedLenke, HiddenIfVarslingMedLenke } from './varsel-alertstriper';
 import styls from './varslinger.module.less';
@@ -32,14 +30,19 @@ function infotekstTilInaktivertBrukere(antallDagerIgjen?: number): string | unde
     return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
 }
 
-function BrukerVarslinger() {
+interface Props {
+    tilhorendeDialogId?: string;
+    erEskalert: boolean;
+}
+
+function BrukerVarslinger(props: Props) {
+    const { tilhorendeDialogId, erEskalert } = props;
+
     const dispatch = useReduxDispatch();
     const doVelgNavarendePeriode = () => dispatch(velgHistoriskPeriode(null));
     const inaktiveringsdato = useSelector(selectInaktiveringsDato, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging);
-    const erEskalert = useSelector(selectErEskalert);
     const kanReaktiveres = useSelector(selectKanReaktiveres);
-    const tilhorendeId = useSelector(selectTilHorendeDialogId);
 
     const dagensDato = moment();
     const dato28dagerEtterIserv = moment(inaktiveringsdato).add(28, 'day');
@@ -51,7 +54,7 @@ function BrukerVarslinger() {
                 hidden={!erEskalert}
                 tekstId="oppfolgning.bruker.bruker-er-eskalert"
                 lenkeTekstId="oppfolgning.bruker.bruker-er-eskalert.lenke-tekst"
-                href={`/dialog/${tilhorendeId}`}
+                href={`/dialog/${tilhorendeDialogId}`}
                 className={styls.varsling}
                 onClick={() => {
                     doVelgNavarendePeriode();

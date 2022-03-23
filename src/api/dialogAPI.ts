@@ -1,4 +1,4 @@
-import { Dialog, NyHenvendelse, SistOppdatert } from '../datatypes/dialogTypes';
+import { Dialog, Eskaleringsvarsel, NyHenvendelse, SistOppdatert } from '../datatypes/dialogTypes';
 import { DIALOG_BASE_URL } from '../environment';
 import { fetchToJson, postAsJson, putAsJson } from './utils';
 
@@ -14,3 +14,6 @@ export const postDialogLest = (dialogId: string): Promise<Dialog> =>
 
 export const postForhandsorientering = (henvendelse: NyHenvendelse): Promise<Dialog> =>
     postAsJson(`${DIALOG_BASE_URL}/dialog/forhandsorientering`, henvendelse);
+
+export const fetchEskaleringsvarsel = (): Promise<Eskaleringsvarsel> =>
+    fetchToJson(`${DIALOG_BASE_URL}/eskaleringsvarsel/gjeldende`);

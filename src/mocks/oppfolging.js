@@ -1,5 +1,5 @@
 import {
-    erEskalertBruker,
+    erEskalertBrukerGammel,
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
@@ -58,7 +58,7 @@ const oppfolging = {
     underOppfolging: !erPrivatBruker(),
     underKvp: false,
     oppfolgingUtgang: null,
-    gjeldendeEskaleringsvarsel: erEskalertBruker()
+    gjeldendeEskaleringsvarsel: erEskalertBrukerGammel()
         ? {
               tilhorendeDialogId: 2,
           }

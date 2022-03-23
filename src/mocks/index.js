@@ -29,6 +29,7 @@ import {
     oppfFeilet,
 } from './demo/sessionstorage';
 import dialog, { opprettDialog, setFerdigBehandlet, setVenterPaSvar } from './dialog';
+import { eskaleringsvarsel } from './eskaleringsvarsel';
 import { failOrGetResponse } from './failOrGetResponse';
 import getFeatures from './features';
 import { innstillingsHistorikk } from './innstillings-historikk';
@@ -113,6 +114,8 @@ mock.put('/veilarbdialog/api/dialog/:dialogId/ferdigbehandlet/:bool', ({ pathPar
 );
 mock.post('/veilarbdialog/api/dialog', ({ body }, res, ctx) => res(ctx.json(opprettDialog(body))));
 mock.post('/veilarbdialog/api/dialog/forhandsorientering', ({ body }, res, ctx) => res(ctx.json(opprettDialog(body))));
+
+mock.get('/veilarbdialog/api/eskaleringsvarsel/gjeldende', jsonResponse(eskaleringsvarsel));
 
 // veilarbaktivitet-api
 
