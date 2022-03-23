@@ -11,9 +11,9 @@ import {
     selectKanReaktiveres,
 } from '../oppfolging-status/oppfolging-selector';
 import { HiddenIfAdvarselMedLenke, HiddenIfVarslingMedLenke } from './varsel-alertstriper';
-import styls from './varslinger.module.less';
+import styls from './Varslinger.module.less';
 
-function infotekstTilInaktivertBrukere(antallDagerIgjen?: number): string | undefined {
+const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string | undefined => {
     if (!antallDagerIgjen) {
         return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
     }
@@ -28,14 +28,14 @@ function infotekstTilInaktivertBrukere(antallDagerIgjen?: number): string | unde
         return 'oppfolging.inaktivert-mindre-enn-10-dager.reaktiveres';
     }
     return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
-}
+};
 
 interface Props {
     tilhorendeDialogId?: string;
     erEskalert: boolean;
 }
 
-function BrukerVarslinger(props: Props) {
+const BrukerVarslinger = (props: Props) => {
     const { tilhorendeDialogId, erEskalert } = props;
 
     const dispatch = useReduxDispatch();
@@ -78,6 +78,6 @@ function BrukerVarslinger(props: Props) {
             />
         </div>
     );
-}
+};
 
 export default BrukerVarslinger;
