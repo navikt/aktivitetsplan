@@ -9,16 +9,22 @@ import {
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
 import BrukerVarslinger from './BrukerVarslinger';
-import { selectErEskalert, selectEskaleringsvarselData } from './eskaleringsvarselSelector';
+import {
+    selectErEskalert,
+    selectEskaleringsvarselData,
+    selectEskaleringsvarselStatus,
+} from './eskaleringsvarselSelector';
 import VeilederVarsel from './VeilederVarsel';
 
 const Varslinger = () => {
-    const oppfolgingstatus = useSelector(selectOppfolgingStatus, shallowEqual);
     const ident = useSelector(selectIdentitetStatus, shallowEqual);
     const erBruker = useSelector(selectErBruker);
 
+    const eskaleringsvarselStatus = useSelector(selectEskaleringsvarselStatus, shallowEqual);
     const nyEskaleringsvarsel = useSelector(selectEskaleringsvarselData, shallowEqual);
     const nyErEskalert = useSelector(selectErEskalert);
+
+    const oppfolgingstatus = useSelector(selectOppfolgingStatus, shallowEqual);
     const gammelEskaleringsvarsel = useSelector(selectGjeldendeEskaleringsVarsel, shallowEqual);
     const gammelErEskalert = useSelector(selectGammelErEskalert);
 
@@ -35,7 +41,7 @@ const Varslinger = () => {
         />
     );
 
-    return <Innholdslaster avhengigheter={[oppfolgingstatus, ident]}> {child}</Innholdslaster>;
+    return <Innholdslaster avhengigheter={[oppfolgingstatus, ident, eskaleringsvarselStatus]}> {child}</Innholdslaster>;
 };
 
 export default Varslinger;
