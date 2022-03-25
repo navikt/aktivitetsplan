@@ -17,7 +17,7 @@ function isValueOrGetDefault(value, defaultValue) {
     return value === undefined ? defaultValue : value;
 }
 
-function App({ fnr }) {
+function App({ fnr, key }) {
     // NOTE: This is bad, don't use it if you dont HAVE to.
     window.appconfig = window.appconfig || {};
     const path = window.appconfig.CONTEXT_PATH === '' ? '' : '/veilarbpersonflatefs';
@@ -40,7 +40,7 @@ function App({ fnr }) {
 
     return (
         <div className="aktivitetsplanfs">
-            <Provider key={fnr}>
+            <Provider key={fnr + key}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
                         <Router history={history}>
