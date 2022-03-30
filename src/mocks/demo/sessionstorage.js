@@ -2,6 +2,7 @@ export const SessionStorageElement = {
     PRIVAT_BRUKER: 'privatbruker',
     MANUELL_BRUKER: 'manuellbruker',
     KRR_BRUKER: 'krrbruker',
+    GAMMEL_ESKALERT_BRUKER: 'eskalertbruker_gammel',
     ESKALERT_BRUKER: 'eskalertbruker',
     INNLOGGET_NIVAA4: 'innlogget_nivaa4',
     OPPF_FEILET: 'oppffeilet',
@@ -42,6 +43,8 @@ export const erPrivatBruker = () => erSatt(SessionStorageElement.PRIVAT_BRUKER);
 export const erManuellBruker = () => erSatt(SessionStorageElement.MANUELL_BRUKER);
 
 export const erKRRBruker = () => erSatt(SessionStorageElement.KRR_BRUKER);
+
+export const erEskalertBrukerGammel = () => erSatt(SessionStorageElement.GAMMEL_ESKALERT_BRUKER);
 
 export const erEskalertBruker = () => erSatt(SessionStorageElement.ESKALERT_BRUKER);
 

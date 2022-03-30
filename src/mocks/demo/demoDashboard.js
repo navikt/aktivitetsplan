@@ -13,6 +13,7 @@ import {
     dialogFeilet,
     erEksternBruker,
     erEskalertBruker,
+    erEskalertBrukerGammel,
     erKRRBruker,
     erManuellBruker,
     erPrivatBruker,
@@ -116,6 +117,11 @@ class DemoDashboard extends React.Component {
                             label: 'Ingen oppfølgingsperioder',
                             id: SessionStorageElement.INGEN_OPPF_PERIODER,
                             checked: ingenOppfPerioder(),
+                        },
+                        {
+                            label: 'Gammel eskaleringsvarsel',
+                            id: SessionStorageElement.GAMMEL_ESKALERT_BRUKER,
+                            checked: erEskalertBrukerGammel(),
                         },
                         {
                             label: 'Eskaleringsvarsel',

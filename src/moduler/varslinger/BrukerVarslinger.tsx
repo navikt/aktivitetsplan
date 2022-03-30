@@ -2,20 +2,17 @@ import moment from 'moment';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
-import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
 import {
-    selectErEskalert,
     selectErUnderOppfolging,
     selectInaktiveringsDato,
     selectKanReaktiveres,
-    selectTilHorendeDialogId,
 } from '../oppfolging-status/oppfolging-selector';
-import { HiddenIfAdvarselMedLenke, HiddenIfVarslingMedLenke } from './varsel-alertstriper';
-import styls from './varslinger.module.less';
+import AdvarselMedDialogLenke from './AdvarselMedDialogLenke';
+import { HiddenIfAdvarselMedLenke } from './varsel-alertstriper';
+import styls from './Varslinger.module.less';
 
-function infotekstTilInaktivertBrukere(antallDagerIgjen?: number): string | undefined {
+const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string | undefined => {
     if (!antallDagerIgjen) {
         return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
     }
@@ -30,16 +27,19 @@ function infotekstTilInaktivertBrukere(antallDagerIgjen?: number): string | unde
         return 'oppfolging.inaktivert-mindre-enn-10-dager.reaktiveres';
     }
     return 'oppfolging.inaktivert-mer-enn-28-dager.reaktiveres';
+};
+
+interface Props {
+    tilhorendeDialogId?: string;
+    erEskalert: boolean;
 }
 
-function BrukerVarslinger() {
-    const dispatch = useReduxDispatch();
-    const doVelgNavarendePeriode = () => dispatch(velgHistoriskPeriode(null));
+const BrukerVarslinger = (props: Props) => {
+    const { tilhorendeDialogId, erEskalert } = props;
+
     const inaktiveringsdato = useSelector(selectInaktiveringsDato, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging);
-    const erEskalert = useSelector(selectErEskalert);
     const kanReaktiveres = useSelector(selectKanReaktiveres);
-    const tilhorendeId = useSelector(selectTilHorendeDialogId);
 
     const dagensDato = moment();
     const dato28dagerEtterIserv = moment(inaktiveringsdato).add(28, 'day');
@@ -47,15 +47,12 @@ function BrukerVarslinger() {
 
     return (
         <div className="container">
-            <HiddenIfVarslingMedLenke
-                hidden={!erEskalert}
-                tekstId="oppfolgning.bruker.bruker-er-eskalert"
-                lenkeTekstId="oppfolgning.bruker.bruker-er-eskalert.lenke-tekst"
-                href={`/dialog/${tilhorendeId}`}
+            <AdvarselMedDialogLenke
+                lenkeTekst="Les hva du må gjøre."
+                tekst="Du har fått en viktig melding fra NAV."
+                dialogId={tilhorendeDialogId}
                 className={styls.varsling}
-                onClick={() => {
-                    doVelgNavarendePeriode();
-                }}
+                hidden={!erEskalert}
             />
             <HiddenIfAdvarselMedLenke
                 hidden={!kanReaktiveres}
@@ -75,6 +72,6 @@ function BrukerVarslinger() {
             />
         </div>
     );
-}
+};
 
 export default BrukerVarslinger;
