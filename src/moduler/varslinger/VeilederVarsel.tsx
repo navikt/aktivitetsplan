@@ -23,7 +23,7 @@ const VeilederVarsel = (props: Props) => {
 
     return (
         <div className="container">
-            <AlertStripeAdvarsel className={styles.varsling}>
+            <AlertStripeAdvarsel className={styles.varslingVeileder}>
                 <Normaltekst>
                     NAV har sendt varsel {dato}{' '}
                     <LenkeTilDialog dialogId={tilhorendeDialogId}>Les meldingen</LenkeTilDialog>

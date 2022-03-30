@@ -22,11 +22,13 @@ const AdvarselMedDialogLenke = (props: Props) => {
 
     return (
         <AlertStripeAdvarsel className={className}>
-            <Normaltekst>{tekst}</Normaltekst>
-            &nbsp;
-            <LenkeTilDialog dialogId={dialogId} onClick={onClick}>
-                {lenkeTekst}
-            </LenkeTilDialog>
+            <Normaltekst>
+                {tekst}
+                &nbsp;
+                <LenkeTilDialog dialogId={dialogId} onClick={onClick}>
+                    {lenkeTekst}
+                </LenkeTilDialog>
+            </Normaltekst>
         </AlertStripeAdvarsel>
     );
 };
