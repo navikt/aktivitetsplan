@@ -2,15 +2,14 @@ import moment from 'moment';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { useReduxDispatch } from '../../felles-komponenter/hooks/useReduxDispatch';
-import { velgHistoriskPeriode } from '../filtrering/filter/filter-reducer';
 import { arbeidssokerregistreringHref } from '../oppfolging-status/har-ikke-aktivitetsplan';
 import {
     selectErUnderOppfolging,
     selectInaktiveringsDato,
     selectKanReaktiveres,
 } from '../oppfolging-status/oppfolging-selector';
-import { HiddenIfAdvarselMedLenke, HiddenIfVarslingMedLenke } from './varsel-alertstriper';
+import AdvarselMedDialogLenke from './AdvarselMedDialogLenke';
+import { HiddenIfAdvarselMedLenke } from './varsel-alertstriper';
 import styls from './Varslinger.module.less';
 
 const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string | undefined => {
@@ -38,8 +37,6 @@ interface Props {
 const BrukerVarslinger = (props: Props) => {
     const { tilhorendeDialogId, erEskalert } = props;
 
-    const dispatch = useReduxDispatch();
-    const doVelgNavarendePeriode = () => dispatch(velgHistoriskPeriode(null));
     const inaktiveringsdato = useSelector(selectInaktiveringsDato, shallowEqual);
     const underOppfolging = useSelector(selectErUnderOppfolging);
     const kanReaktiveres = useSelector(selectKanReaktiveres);
@@ -50,15 +47,12 @@ const BrukerVarslinger = (props: Props) => {
 
     return (
         <div className="container">
-            <HiddenIfVarslingMedLenke
-                hidden={!erEskalert}
-                tekstId="oppfolgning.bruker.bruker-er-eskalert"
-                lenkeTekstId="oppfolgning.bruker.bruker-er-eskalert.lenke-tekst"
-                href={`/dialog/${tilhorendeDialogId}`}
+            <AdvarselMedDialogLenke
+                lenkeTekst="Les hva du må gjøre."
+                tekst="Du har fått en viktig melding fra NAV."
+                dialogId={tilhorendeDialogId}
                 className={styls.varsling}
-                onClick={() => {
-                    doVelgNavarendePeriode();
-                }}
+                hidden={!erEskalert}
             />
             <HiddenIfAdvarselMedLenke
                 hidden={!kanReaktiveres}
