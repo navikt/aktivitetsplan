@@ -23,18 +23,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: deploy gcp dev
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-gcp
-          RESOURCE: dev-ekstern.yaml
-      - name: deploy gcp dev intern
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: dev-gcp
-          RESOURCE: dev-intern.yaml
       - name: deploy gcp dev ekstern
         uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-gcp
-          RESOURCE: dev-ekstern.yaml
+          RESOURCE: nais/dev-ekstern.yaml
+      - name: deploy gcp dev intern
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: nais/dev-intern.yaml
