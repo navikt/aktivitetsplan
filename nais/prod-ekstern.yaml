@@ -38,15 +38,12 @@ spec:
       - name: aktivitetsplan-prod
   envFrom:
     - configmap: pto-config
+    - configmap: loginservice-idporten
   env:
     - name: ENFORCE_LOGIN
       value: "true"
     - name: LOGIN_REDIRECT_URL
       value: https://loginservice.nav.no/login?redirect={RETURN_TO_URL}&level=Level4
-    - name: OIDC_DISCOVERY_URL
-      value: https://navnob2c.b2clogin.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
-    - name: OIDC_CLIENT_ID
-      value: 45104d6a-f5bc-4e8c-b352-4bbfc9381f25
     - name: TOKEN_COOKIE_NAME
       value: selvbetjening-idtoken
     - name: GCS_BUCKET_NAME

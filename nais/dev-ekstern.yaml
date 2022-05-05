@@ -38,15 +38,12 @@ spec:
       - name: aktivitetsplan-dev
   envFrom:
     - configmap: pto-config
+    - configmap: loginservice-idporten
   env:
     - name: ENFORCE_LOGIN
       value: "true"
     - name: LOGIN_REDIRECT_URL
       value: https://loginservice.dev.nav.no/login?redirect={RETURN_TO_URL}&level=Level4
-    - name: OIDC_DISCOVERY_URL
-      value: https://oidc-ver2.difi.no/idporten-oidc-provider/.well-known/openid-configuration
-    - name: OIDC_CLIENT_ID
-      value: https://nav.no
     - name: TOKEN_COOKIE_NAME
       value: selvbetjening-idtoken
     - name: GCS_BUCKET_NAME
