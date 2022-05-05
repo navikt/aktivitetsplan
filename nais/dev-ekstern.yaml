@@ -46,7 +46,7 @@ spec:
     - name: OIDC_DISCOVERY_URL
       value: https://oidc-ver2.difi.no/idporten-oidc-provider/.well-known/openid-configuration
     - name: OIDC_CLIENT_ID
-      value: 0090b6e1-ffcc-4c37-bc21-049f7d1f0fe5
+      value: https://nav.no
     - name: TOKEN_COOKIE_NAME
       value: selvbetjening-idtoken
     - name: GCS_BUCKET_NAME
