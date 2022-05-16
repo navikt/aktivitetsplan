@@ -27,6 +27,7 @@ spec:
       memory: 256Mi
   ingresses:
     - https://aktivitetsplan-gcp.dev.nav.no
+    - https://www.dev.nav.no/person/dittnav/veientilarbeid/aktivitetsplan
   accessPolicy:
     outbound:
       rules:
