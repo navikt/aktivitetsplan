@@ -1,4 +1,4 @@
-import { validerDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
+import { validateTidligstDato } from '../../../../felles-komponenter/skjema/datovelger/utils';
 
 const TITTEL_MAKS_LENGDE = 100;
 const TITTEL_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${TITTEL_MAKS_LENGDE} tegn`;
@@ -41,12 +41,12 @@ export const validateAdresse = (avtalt: boolean, value: string) => {
     }
 };
 
-export const validateFraDato = (avtalt: boolean, tilDato: string, value: string) => {
+export const validateMoteDato = (value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut dato for møtet';
     }
 
-    return validerDato(value, tilDato);
+    return validateTidligstDato(value);
 };
 
 export const validateHensikt = (avtalt: boolean, value: string) => {

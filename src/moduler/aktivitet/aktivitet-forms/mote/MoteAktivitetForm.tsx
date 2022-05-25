@@ -21,10 +21,10 @@ import {
     HENSIKT_MAKS_LENGDE,
     validateAdresse,
     validateForberedelser,
-    validateFraDato,
     validateHensikt,
     validateKanal,
     validateKlokkeslett,
+    validateMoteDato,
     validateTittel,
     validateVarighet,
 } from './validate';
@@ -81,14 +81,14 @@ const MoteAktivitetForm = (props: Props) => {
     const { aktivitet, isDirtyRef, onSubmit } = props;
 
     const validator = useFormstate<FormType, MoteAktivitet>({
-        tittel: (val, values, a) => validateTittel(a.avtalt, val),
-        dato: (val, values, a) => validateFraDato(a.avtalt, a.fraDato, val),
-        klokkeslett: (val, values, a) => validateKlokkeslett(a.avtalt, val),
-        varighet: (val, values, a) => validateVarighet(a.avtalt, val),
-        kanal: (val, values, a) => validateKanal(a.avtalt, val),
-        adresse: (val, values, a) => validateAdresse(a.avtalt, val),
-        beskrivelse: (val, values, a) => validateHensikt(a.avtalt, val),
-        forberedelser: (val, values, a) => validateForberedelser(a.avtalt, val),
+        tittel: (val, _, a) => validateTittel(a.avtalt, val),
+        dato: validateMoteDato,
+        klokkeslett: (val, _, a) => validateKlokkeslett(a.avtalt, val),
+        varighet: (val, _, a) => validateVarighet(a.avtalt, val),
+        kanal: (val, _, a) => validateKanal(a.avtalt, val),
+        adresse: (val, _, a) => validateAdresse(a.avtalt, val),
+        beskrivelse: (val, _, a) => validateHensikt(a.avtalt, val),
+        forberedelser: (val, _, a) => validateForberedelser(a.avtalt, val),
     });
 
     const maybeAktivitet = aktivitet || {};
