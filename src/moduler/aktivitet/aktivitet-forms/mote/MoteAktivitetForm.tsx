@@ -1,4 +1,5 @@
 import useFormstate from '@nutgaard/use-formstate';
+import moment, { now } from 'moment';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
@@ -132,7 +133,12 @@ const MoteAktivitetForm = (props: Props) => {
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    <DatoField label="Dato *" {...state.fields.dato} required />
+                    <DatoField
+                        limitations={{ minDate: moment(now()).toISOString() }}
+                        label="Dato *"
+                        {...state.fields.dato}
+                        required
+                    />
                     <Input bredde="S" label="Klokkeslett *" {...state.fields.klokkeslett} type="time" step="300" />
                     <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
                 </div>
