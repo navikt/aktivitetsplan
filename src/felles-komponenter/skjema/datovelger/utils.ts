@@ -1,4 +1,4 @@
-import moment, { now } from 'moment';
+import moment from 'moment';
 
 import { erGyldigISODato, toDatePrettyPrint } from '../../../utils';
 
@@ -24,22 +24,5 @@ export const validerDato = (value: string | null, tidligsteFom?: string, seneste
         const prettyTil = toDatePrettyPrint(tilDato.toDate());
 
         return `Datoen må være innenfor perioden ${prettyFra}-${prettyTil}`;
-    }
-};
-
-export const validateTidligstDato = (value: string | null) => {
-    if (!value || value.trim().length === 0) {
-        return;
-    }
-
-    if (!erGyldigISODato(value)) {
-        return 'Datoen må være en gyldig dato på formatet dd.mm.åååå';
-    }
-
-    const inputDato = moment(value);
-    const tidligsteDato = moment(now());
-
-    if (tidligsteDato.isAfter(inputDato, 'day')) {
-        return `Datoen må tidligst være i dag`;
     }
 };
