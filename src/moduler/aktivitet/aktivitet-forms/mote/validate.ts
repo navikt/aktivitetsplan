@@ -10,7 +10,7 @@ export const HENSIKT_MAKS_LENGDE = 5000;
 const HENSIKT_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${HENSIKT_MAKS_LENGDE} tegn`;
 export const FORBEREDELSER_MAKS_LENGDE = 500;
 const FORBEREDELSER_MAKS_LENGDE_TEKST = `Du må korte ned teksten til ${FORBEREDELSER_MAKS_LENGDE} tegn`;
-
+const INGEN_FEIL: string | undefined = undefined;
 const tekstForLang = (maxLengde: number, value: string) => {
     return value.length > maxLengde;
 };
@@ -21,7 +21,7 @@ const erVerdiSatt = (value: string) => {
 
 export const validateTittel = (avtalt: boolean, value: string) => {
     if (avtalt) {
-        return;
+        return INGEN_FEIL;
     }
 
     if (!erVerdiSatt(value)) {
@@ -42,7 +42,7 @@ export const validateAdresse = (_avtalt: boolean, value: string) => {
         return ADRESSE_MAKS_LENGDE_TEKST;
     }
 
-    return;
+    return INGEN_FEIL;
 };
 
 export const validateMoteDato = (value: string) => {
@@ -61,7 +61,7 @@ export const validateMoteDato = (value: string) => {
 
 export const validateHensikt = (avtalt: boolean, value: string) => {
     if (avtalt) {
-        return;
+        return INGEN_FEIL;
     }
 
     if (!erVerdiSatt(value)) {
@@ -75,7 +75,7 @@ export const validateHensikt = (avtalt: boolean, value: string) => {
 
 export const validateForberedelser = (avtalt: boolean, value: string) => {
     if (avtalt) {
-        return;
+        return INGEN_FEIL;
     }
 
     if (tekstForLang(FORBEREDELSER_MAKS_LENGDE, value)) {
@@ -87,19 +87,19 @@ export const validateKlokkeslett = (_avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut klokkeslett';
     }
-    return;
+    return INGEN_FEIL;
 };
 
 export const validateVarighet = (_avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut varighet';
     }
-    return;
+    return INGEN_FEIL;
 };
 
 export const validateKanal = (_avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut møteform';
     }
-    return;
+    return INGEN_FEIL;
 };
