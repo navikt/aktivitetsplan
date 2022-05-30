@@ -41,6 +41,8 @@ export const validateAdresse = (_avtalt: boolean, value: string) => {
     if (tekstForLang(ADRESSE_MAKS_LENGDE, value)) {
         return ADRESSE_MAKS_LENGDE_TEKST;
     }
+
+    return;
 };
 
 export const validateMoteDato = (value: string) => {
@@ -50,7 +52,9 @@ export const validateMoteDato = (value: string) => {
 
     const fraDato = moment(value);
 
-    if (fraDato.isBefore(moment(now()), 'day')) return 'Datoen må tidligst være i dag';
+    if (fraDato.isBefore(moment(now()), 'day')) {
+        return 'Datoen må tidligst være i dag';
+    }
 
     return validerDato(value);
 };
@@ -83,15 +87,19 @@ export const validateKlokkeslett = (_avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut klokkeslett';
     }
+    return;
 };
 
 export const validateVarighet = (_avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut varighet';
     }
+    return;
 };
+
 export const validateKanal = (_avtalt: boolean, value: string) => {
     if (!erVerdiSatt(value)) {
         return 'Du må fylle ut møteform';
     }
+    return;
 };
