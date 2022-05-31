@@ -9,7 +9,6 @@ export interface Bruker {
     fornavn?: string;
     mellomnavn?: string;
     etternavn?: string;
-    forkortetNavn?: string;
     geografiskEnhet?: GeografiskEnhet;
 }
 

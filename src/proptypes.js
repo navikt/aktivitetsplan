@@ -128,7 +128,6 @@ export const bruker = PT.shape({
     fornavn: PT.string,
     mellomnavn: PT.string,
     etternavn: PT.string,
-    sammensattNavn: PT.string,
 });
 
 export const oppfolgingsPeriode = PT.shape({
