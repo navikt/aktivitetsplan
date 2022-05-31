@@ -9,7 +9,6 @@ import { div as HiddenIfDiv, section as HiddenIfSection } from '../../../felles-
 import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstaver';
 import { formaterDatoKortManed } from '../../../utils';
 import logoPng from '../ikoner/logo.png';
-import Adresse from './adresse';
 import Aktiviteter from './aktiviteter/Aktiviteter';
 import { DialogerUtenAktivitet } from './dialoger';
 import { filtrerAktiviteter, filtrerDialoger } from './filter-utils';
@@ -28,17 +27,8 @@ interface Props {
 }
 
 function Print(props: Props) {
-    const {
-        aktiviteter,
-        bruker,
-        printMelding,
-        mittMal,
-        erVeileder,
-        dialoger,
-        utskriftPlanType,
-        kvpPerioder,
-        hidden,
-    } = props;
+    const { aktiviteter, bruker, printMelding, mittMal, erVeileder, dialoger, utskriftPlanType, kvpPerioder, hidden } =
+        props;
 
     const { fodselsnummer, fornavn, etternavn, geografiskEnhet } = bruker;
     const enhetsNavn = geografiskEnhet && geografiskEnhet.navn;
@@ -62,7 +52,6 @@ function Print(props: Props) {
                 <div className="printmodal-body__adresse">
                     <HiddenIfDiv hidden={!erVeileder}>
                         <StoreForbokstaver>{`${fornavn} ${etternavn}`}</StoreForbokstaver>
-                        <Adresse bruker={bruker} />
                     </HiddenIfDiv>
                 </div>
                 <div className="printmodal-body__dato">

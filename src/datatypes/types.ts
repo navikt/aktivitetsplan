@@ -9,25 +9,8 @@ export interface Bruker {
     fornavn?: string;
     mellomnavn?: string;
     etternavn?: string;
-    sammensattNavn?: string;
+    forkortetNavn?: string;
     geografiskEnhet?: GeografiskEnhet;
-    bostedsadresse?: Bostedsadresse;
-}
-
-interface Bostedsadresse {
-    strukturertAdresse?: StrukturertAdresse;
-}
-
-interface StrukturertAdresse {
-    Gateadresse: GateAdresse;
-}
-
-interface GateAdresse {
-    gatenavn?: string;
-    poststed?: string;
-    husbokstav?: string;
-    husnummer?: string;
-    postnummer?: string;
 }
 
 export interface VeilederInfo {
