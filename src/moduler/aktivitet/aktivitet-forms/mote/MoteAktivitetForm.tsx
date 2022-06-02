@@ -1,4 +1,5 @@
 import useFormstate from '@nutgaard/use-formstate';
+import moment, { now } from 'moment';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
@@ -21,10 +22,10 @@ import {
     HENSIKT_MAKS_LENGDE,
     validateAdresse,
     validateForberedelser,
-    validateFraDato,
     validateHensikt,
     validateKanal,
     validateKlokkeslett,
+    validateMoteDato,
     validateTittel,
     validateVarighet,
 } from './validate';
@@ -81,14 +82,14 @@ const MoteAktivitetForm = (props: Props) => {
     const { aktivitet, isDirtyRef, onSubmit } = props;
 
     const validator = useFormstate<FormType, MoteAktivitet>({
-        tittel: (val, values, a) => validateTittel(a.avtalt, val),
-        dato: (val, values, a) => validateFraDato(a.avtalt, a.fraDato, val),
-        klokkeslett: (val, values, a) => validateKlokkeslett(a.avtalt, val),
-        varighet: (val, values, a) => validateVarighet(a.avtalt, val),
-        kanal: (val, values, a) => validateKanal(a.avtalt, val),
-        adresse: (val, values, a) => validateAdresse(a.avtalt, val),
-        beskrivelse: (val, values, a) => validateHensikt(a.avtalt, val),
-        forberedelser: (val, values, a) => validateForberedelser(a.avtalt, val),
+        tittel: (val, _, a) => validateTittel(a.avtalt, val),
+        dato: validateMoteDato,
+        klokkeslett: (val, _, a) => validateKlokkeslett(a.avtalt, val),
+        varighet: (val, _, a) => validateVarighet(a.avtalt, val),
+        kanal: (val, _, a) => validateKanal(a.avtalt, val),
+        adresse: (val, _, a) => validateAdresse(a.avtalt, val),
+        beskrivelse: (val, _, a) => validateHensikt(a.avtalt, val),
+        forberedelser: (val, _, a) => validateForberedelser(a.avtalt, val),
     });
 
     const maybeAktivitet = aktivitet || {};
@@ -132,7 +133,12 @@ const MoteAktivitetForm = (props: Props) => {
                 <Input disabled={avtalt} label="Tema for møtet *" {...state.fields.tittel} />
 
                 <div className="mote-aktivitet-form__velg-mote-klokkeslett">
-                    <DatoField label="Dato *" {...state.fields.dato} required />
+                    <DatoField
+                        limitations={{ minDate: moment(now()).toISOString() }}
+                        label="Dato *"
+                        {...state.fields.dato}
+                        required
+                    />
                     <Input bredde="S" label="Klokkeslett *" {...state.fields.klokkeslett} type="time" step="300" />
                     <Input bredde="S" label="Varighet *" {...state.fields.varighet} type="time" step="900" />
                 </div>
