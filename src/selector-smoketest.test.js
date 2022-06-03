@@ -5,7 +5,6 @@ import * as dialogSelector from './moduler/dialog/dialog-selector';
 import * as identitetSelector from './moduler/identitet/identitet-selector';
 /* eslint-env mocha */
 import * as malSelector from './moduler/mal/aktivitetsmal-selector';
-import * as motpartSelector from './moduler/motpart/motpart-selector';
 import * as oppfolgingSelector from './moduler/oppfolging-status/oppfolging-selector';
 import reducer from './reducer';
 
@@ -44,4 +43,3 @@ selectorModulTest(dialogSelector);
 selectorModulTest(arenaAktivitetSelector);
 selectorModulTest(aktivitetSelector);
 selectorModulTest(aktivitetListeSelector);
-selectorModulTest(motpartSelector);
