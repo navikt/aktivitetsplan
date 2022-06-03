@@ -41,7 +41,6 @@ selectorModulTest(malSelector);
 selectorModulTest(oppfolgingSelector);
 selectorModulTest(identitetSelector);
 selectorModulTest(dialogSelector);
-selectorModulTest(brukerSelector);
 selectorModulTest(arenaAktivitetSelector);
 selectorModulTest(aktivitetSelector);
 selectorModulTest(aktivitetListeSelector);
