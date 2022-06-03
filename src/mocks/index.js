@@ -185,7 +185,7 @@ mock.put(
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/v2/person', ({ queryParams }, res, ctx) => res(ctx.json(getPerson(queryParams.fnr))));
-mock.get('/veilarbperson/api/v2/postadresse', ({ queryParams }, res, ctx) => res(ctx.json(getPostadresse())));
+mock.get('/veilarbperson/api/v2/person/postadresse', ({ queryParams }, res, ctx) => res(ctx.json(getPostadresse())));
 mock.get('/veilarbperson/api/person/:fnr/harNivaa4', failOrGetResponse(nivaa4Feilet, getNivaa4));
 
 //veilarbmalverk-api
