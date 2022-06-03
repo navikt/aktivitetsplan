@@ -39,7 +39,7 @@ import { hentMalverkMedType } from './malverk';
 import { me } from './me';
 import { oppfoelgingsstatus } from './oppfoelgingsstatus';
 import getOppfolging, { avslutningStatus, settDigital, startEskalering, stoppEskalering } from './oppfolging';
-import getPerson from './person';
+import getPerson, { getPostadresse } from './person';
 import getNivaa4 from './tilgang';
 import { fetchmockMiddleware, jsonResponse } from './utils';
 import { veilederMe } from './Veileder';
@@ -185,6 +185,7 @@ mock.put(
 
 //veilarbperson-api
 mock.get('/veilarbperson/api/v2/person', ({ queryParams }, res, ctx) => res(ctx.json(getPerson(queryParams.fnr))));
+mock.get('/veilarbperson/api/v2/postadresse', ({ queryParams }, res, ctx) => res(ctx.json(getPostadresse())));
 mock.get('/veilarbperson/api/person/:fnr/harNivaa4', failOrGetResponse(nivaa4Feilet, getNivaa4));
 
 //veilarbmalverk-api

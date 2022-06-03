@@ -159,3 +159,19 @@ export default function getPerson(fnr) {
         malform: 'se',
     };
 }
+
+export function getPostadresse() {
+    return {
+        navn: 'Navn Navnesen',
+        adresse: {
+            type: 'NORSKPOSTADRESSE',
+            adresselinje1: 'Adresselinje 1',
+            adresselinje2: 'Adresselinje 2',
+            adresselinje3: 'Adresselinje 3',
+            postnummer: '0000',
+            poststed: 'Sted',
+            landkode: 'NO',
+            land: 'Norge',
+        },
+    };
+}

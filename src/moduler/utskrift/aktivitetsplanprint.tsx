@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
+import { hentAdresse, hentPerson } from '../../api/personAPI';
 import { Aktivitet } from '../../datatypes/aktivitetTypes';
 import { Dialog } from '../../datatypes/dialogTypes';
 import { KvpPeriode, Mal } from '../../datatypes/oppfolgingTypes';
-import { Bruker } from '../../datatypes/types';
+import { Bruker, Postadresse } from '../../datatypes/types';
 import Modal from '../../felles-komponenter/modal/Modal';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
+import { getFodselsnummer } from '../../utils/fnr-util';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
-import { selectBruker, selectBrukerStatus } from '../bruker/bruker-selector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
 import { hentMal, selectGjeldendeMal, selectMalStatus } from '../mal/aktivitetsmal-reducer';
@@ -19,7 +20,6 @@ import {
     selectKvpPeriodeForValgteOppfolging,
     selectOppfolgingStatus,
 } from '../oppfolging-status/oppfolging-selector';
-import FnrProvider from './fnr-provider';
 import ModalHeader from './modalHeader';
 import Print from './print/print';
 import PrintMeldingForm from './printMelding';
@@ -64,7 +64,6 @@ function AktivitetsplanPrint(props: Props) {
         doHentMalListe,
         avhengigheter,
         doResetUtskrift,
-        bruker,
         kvpPerioder,
         dialoger,
         mittMal,
@@ -78,6 +77,24 @@ function AktivitetsplanPrint(props: Props) {
         doHentMalListe();
         loggEvent(PRINT_MODSAL_OPEN);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const fnr = getFodselsnummer();
+    const [adresse, setAdresse] = useState<null | Postadresse>(null);
+    const [bruker, setBruker] = useState<Bruker>(tomBruker());
+
+    const [isLoadingAdresse, setIsLoadingAdresse] = useState(true);
+    const [isLoadingBruker, setIsLoadingBruker] = useState(true);
+
+    useEffect(() => {
+        if (fnr) {
+            hentPerson(fnr)
+                .then((bruker) => setBruker(bruker))
+                .finally(() => setIsLoadingBruker(false));
+            hentAdresse(fnr)
+                .then((a) => setAdresse(a?.adresse))
+                .finally(() => setIsLoadingAdresse(false));
+        }
+    }, [fnr]);
 
     const [stepIndex, setStepIndex] = useState(0);
     const [printMelding, setPrintMelding] = useState('');
@@ -103,47 +120,48 @@ function AktivitetsplanPrint(props: Props) {
     const kanHaPrintMelding = erManuell && erVeileder;
 
     const steps = getSteps(kanHaPrintValg, kanHaPrintMelding);
-
+    if (fnr && (isLoadingAdresse || isLoadingBruker)) {
+        return <></>;
+    }
     return (
         <section>
-            <FnrProvider>
-                <Modal
-                    contentLabel="aktivitetsplanPrint"
-                    className="aktivitetsplanprint"
-                    header={
-                        <ModalHeader
-                            avhengigheter={avhengigheter}
-                            tilbake={back}
-                            kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
-                        />
-                    }
-                    onRequestClose={doResetUtskrift}
-                >
-                    <Innholdslaster avhengigheter={avhengigheter}>
-                        <PrintMeldingForm
-                            bruker={bruker}
-                            onSubmit={printMeldingSubmit}
-                            hidden={steps[stepIndex] !== STEP_MELDING_FORM}
-                        />
-                        <VelgPlanUtskriftForm
-                            kvpPerioder={kvpPerioder}
-                            onSubmit={velgPlanSubmint}
-                            hidden={steps[stepIndex] !== STEP_VELG_PLAN}
-                        />
-                        <Print
-                            dialoger={dialoger}
-                            bruker={bruker}
-                            printMelding={printMelding}
-                            aktiviteter={aktiviteter}
-                            mittMal={mittMal}
-                            erVeileder={erVeileder}
-                            utskriftPlanType={utskriftform}
-                            kvpPerioder={kvpPerioder}
-                            hidden={steps[stepIndex] !== STEP_UTSKRIFT}
-                        />
-                    </Innholdslaster>
-                </Modal>
-            </FnrProvider>
+            <Modal
+                contentLabel="aktivitetsplanPrint"
+                className="aktivitetsplanprint"
+                header={
+                    <ModalHeader
+                        avhengigheter={avhengigheter}
+                        tilbake={back}
+                        kanSkriveUt={steps[stepIndex] === STEP_UTSKRIFT}
+                    />
+                }
+                onRequestClose={doResetUtskrift}
+            >
+                <Innholdslaster avhengigheter={avhengigheter}>
+                    <PrintMeldingForm
+                        bruker={bruker}
+                        onSubmit={printMeldingSubmit}
+                        hidden={steps[stepIndex] !== STEP_MELDING_FORM}
+                    />
+                    <VelgPlanUtskriftForm
+                        kvpPerioder={kvpPerioder}
+                        onSubmit={velgPlanSubmint}
+                        hidden={steps[stepIndex] !== STEP_VELG_PLAN}
+                    />
+                    <Print
+                        dialoger={dialoger}
+                        bruker={bruker}
+                        adresse={adresse}
+                        printMelding={printMelding}
+                        aktiviteter={aktiviteter}
+                        mittMal={mittMal}
+                        erVeileder={erVeileder}
+                        utskriftPlanType={utskriftform}
+                        kvpPerioder={kvpPerioder}
+                        hidden={steps[stepIndex] !== STEP_UTSKRIFT}
+                    />
+                </Innholdslaster>
+            </Modal>
         </section>
     );
 }
@@ -153,7 +171,6 @@ const mapStateToProps = (state: any) => {
     const kvpPerioder = selectKvpPeriodeForValgteOppfolging(state);
     const dialoger = selectDialoger(state);
 
-    const bruker = selectBruker(state);
     const mittMal = selectGjeldendeMal(state);
     const erVeileder = selectErVeileder(state);
     const erManuell = selectErBrukerManuell(state);
@@ -163,18 +180,20 @@ const mapStateToProps = (state: any) => {
             selectMalStatus(state),
             selectOppfolgingStatus(state),
             selectAktivitetListeStatus(state),
-            selectBrukerStatus(state),
             selectDialogStatus(state),
         ],
         aktiviteter,
         dialoger,
-        bruker,
         mittMal,
         erManuell,
         kvpPerioder,
         erVeileder,
     };
 };
+
+function tomBruker(): Bruker {
+    return {};
+}
 
 function mapDispatchToProps(dispatch: any, props: any) {
     return {
