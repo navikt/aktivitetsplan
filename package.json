@@ -29,7 +29,7 @@
     "history": "^4.10.1",
     "intl": "^1.2.5",
     "lodash.throttle": "^4.1.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.28",
     "nav-datovelger": "^12.1.2",
