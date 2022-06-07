@@ -117,6 +117,11 @@ const defaultHeaders = {
     'Nav-Consumer-Id': 'aktivitetsplan',
 };
 
+export function fetchToJsonPlain(url, config = { headers: defaultHeaders }) {
+    const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
+    return fetch(url, configMedCredentials).then(sjekkStatuskode).then(toJson);
+}
+
 export function fetchToJson(url, config = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
 

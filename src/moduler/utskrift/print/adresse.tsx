@@ -1,24 +1,29 @@
 import React from 'react';
 
-import { Bruker } from '../../../datatypes/types';
+import { Postadresse } from '../../../datatypes/types';
 import StoreForbokstaver from '../../../felles-komponenter/utils/StoreForbokstaver';
 
-interface Props {
-    bruker: Bruker;
+interface AdresseProps {
+    adresse: Postadresse;
 }
 
-function Adresse(props: Props) {
-    const { bostedsadresse } = props.bruker;
-    const strukturertAdresse = bostedsadresse && bostedsadresse.strukturertAdresse;
-    const gateadresse = strukturertAdresse && strukturertAdresse.Gateadresse;
-    if (!gateadresse) {
+function Adresse({ adresse }: AdresseProps) {
+    const adresselinje1 = adresse.adresselinje1;
+
+    if (!adresselinje1) {
         return <div />;
     }
-    const { gatenavn, poststed, husbokstav, husnummer, postnummer } = gateadresse;
     return (
         <div>
-            <StoreForbokstaver tag="div">{`${gatenavn} ${husnummer} ${husbokstav || ''}`}</StoreForbokstaver>
-            <StoreForbokstaver tag="div">{`${postnummer} ${poststed}`}</StoreForbokstaver>
+            <StoreForbokstaver tag="div">{`${adresselinje1}`}</StoreForbokstaver>
+            {adresse.adresselinje2 && <StoreForbokstaver tag="div">{`${adresse.adresselinje2}`}</StoreForbokstaver>}
+            {adresse.adresselinje3 && <StoreForbokstaver tag="div">{`${adresse.adresselinje3}`}</StoreForbokstaver>}
+            {adresse.postnummer && adresse.poststed && (
+                <StoreForbokstaver tag="div">{`${adresse.postnummer} ${adresse.poststed}`}</StoreForbokstaver>
+            )}
+            {adresse.land && adresse.type !== 'NORSKPOSTADRESSE' && (
+                <StoreForbokstaver tag="div">{`${adresse.land}`}</StoreForbokstaver>
+            )}
         </div>
     );
 }
