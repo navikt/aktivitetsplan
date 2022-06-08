@@ -26,6 +26,7 @@ type SamtalereferatInputProps = { tittel: string; fraDato: string; kanal: string
 const InnerSamtalereferatForm = (props: Props) => {
     const { aktivitet, onSubmit, isDirtyRef = undefined } = props;
     const startTekst = useReferatStartTekst();
+    const nyAktivitet = !aktivitet;
     const validator = useFormstate<SamtalereferatInputProps>({
         tittel: validateTittel,
         fraDato: validateFraDato,
@@ -84,14 +85,16 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
 
-                <Textarea
-                    label="Samtalereferat *"
-                    placeholder="Skriv her"
-                    maxLength={5000}
-                    visTellerFra={500}
-                    required
-                    {...state.fields.referat}
-                />
+                {nyAktivitet && (
+                    <Textarea
+                        label="Samtalereferat *"
+                        placeholder="Skriv her"
+                        maxLength={5000}
+                        visTellerFra={500}
+                        required
+                        {...state.fields.referat}
+                    />
+                )}
 
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
             </SkjemaGruppe>
