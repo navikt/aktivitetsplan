@@ -19,7 +19,7 @@ npm build
 npm start
 ```
 
-kake
+kake2
 
 ### Kontakt og spørsmål.
 
