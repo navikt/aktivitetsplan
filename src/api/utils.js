@@ -1,4 +1,4 @@
-import { getFodselsnummer } from '../utils/fnr-util';
+import { hentFnrFraUrl } from '../utils/fnr-util';
 
 /* eslint-env browser */
 export const STATUS = {
@@ -125,7 +125,7 @@ export function fetchToJsonPlain(url, config = { headers: defaultHeaders }) {
 export function fetchToJson(url, config = { headers: defaultHeaders }) {
     const configMedCredentials = { ...DEFAULT_CONFIG, ...config };
 
-    const fodselsnummer = getFodselsnummer();
+    const fodselsnummer = hentFnrFraUrl();
     let fetchUrl = url;
     if (fodselsnummer) {
         fetchUrl = `${url}${url.indexOf('?') >= 0 ? '&' : '?'}fnr=${fodselsnummer}`;

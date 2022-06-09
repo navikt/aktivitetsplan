@@ -13,7 +13,7 @@ const store = createStore(window.history);
 
 class Provider extends Component {
     render() {
-        const { children } = this.props;
+        const { children, innsidenFnr } = this.props;
         return (
             <ReduxProvider store={store}>
                 <DndProvider backend={HTML5Backend}>
