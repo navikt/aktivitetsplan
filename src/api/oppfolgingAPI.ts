@@ -1,6 +1,6 @@
 import { Mal, Me, OppfolgingStatus } from '../datatypes/oppfolgingTypes';
 import { OPPFOLGING_BASE_URL } from '../environment';
-import { getFodselsnummer } from '../utils/fnr-util';
+import { hentFnrFraUrl } from '../utils/fnr-util';
 import { fetchToJson, postAsJson } from './utils';
 
 export const fetchIdentitet = (): Promise<Me> => fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/me`);
@@ -19,6 +19,6 @@ export const fetchHarFlereAktorId = (): Promise<boolean> =>
     fetchToJson(`${OPPFOLGING_BASE_URL}/oppfolging/harFlereAktorIderMedOppfolging`);
 
 export const doLesAktivitetsplan = () => {
-    const fnr = getFodselsnummer();
+    const fnr = hentFnrFraUrl();
     return postAsJson(`${OPPFOLGING_BASE_URL}/${fnr}/lestaktivitetsplan`);
 };

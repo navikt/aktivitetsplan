@@ -21,7 +21,7 @@ import { selectErVeileder } from '../../moduler/identitet/identitet-selector';
 import { selectUnderOppfolging } from '../../moduler/oppfolging-status/oppfolging-selector';
 import { hentNivaa4 } from '../../moduler/tilgang/tilgang-reducer';
 import { hentVeilederInfo } from '../../moduler/veileder/veilederReducer';
-import { getFodselsnummer } from '../../utils/fnr-util';
+import { hentFnrFraUrl } from '../../utils/fnr-util';
 import Kolonne from './kolonne/Kolonne';
 import KolonneSomSkjulerEldreAktiviteter from './kolonne/KolonneSomSkjulerEldreAktiviteter';
 import Tavle from './Tavle';
@@ -46,7 +46,7 @@ const Aktivitetstavle = () => {
         if (aktivitetNotStarted) {
             if (erVeileder) {
                 doLesAktivitetsplan();
-                dispatch(hentNivaa4(getFodselsnummer()));
+                dispatch(hentNivaa4(hentFnrFraUrl()));
                 dispatch(hentVeilederInfo());
             }
             dispatch(hentAktiviteter());

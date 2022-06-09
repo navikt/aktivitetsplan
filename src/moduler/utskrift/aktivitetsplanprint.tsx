@@ -9,7 +9,7 @@ import { Bruker, Postadresse } from '../../datatypes/types';
 import Modal from '../../felles-komponenter/modal/Modal';
 import Innholdslaster, { InnholdslasterProps } from '../../felles-komponenter/utils/Innholdslaster';
 import loggEvent, { PRINT_MODSAL_OPEN } from '../../felles-komponenter/utils/logging';
-import { getFodselsnummer } from '../../utils/fnr-util';
+import { hentFnrFraUrl } from '../../utils/fnr-util';
 import { selectAktivitetListe, selectAktivitetListeStatus } from '../aktivitet/aktivitetlisteSelector';
 import { selectDialogStatus, selectDialoger } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
@@ -78,7 +78,7 @@ function AktivitetsplanPrint(props: Props) {
         loggEvent(PRINT_MODSAL_OPEN);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const fnr = getFodselsnummer();
+    const fnr = hentFnrFraUrl();
     const [adresse, setAdresse] = useState<null | Postadresse>(null);
     const [bruker, setBruker] = useState<Bruker>(tomBruker());
 
