@@ -19,6 +19,8 @@ npm build
 npm start
 ```
 
+kake
+
 ### Kontakt og spørsmål.
 
 Opprett et issue i GitHub for eventuelle spørsmål.
