@@ -1,11 +1,11 @@
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import {
     BEHANDLING_AKTIVITET_TYPE,
     EGEN_AKTIVITET_TYPE,
     IJOBB_AKTIVITET_TYPE,
+    SAMTALEREFERAT_TYPE,
     STILLING_AKTIVITET_TYPE,
 } from '../../../../constant';
 import { Aktivitet, AktivitetType } from '../../../../datatypes/aktivitetTypes';
@@ -63,7 +63,8 @@ const AktivitetinformasjonVisning = (props: Props) => {
                         onClick={() => loggEvent(APNE_ENDRE_AKTIVITET)}
                         disabled={laster || !underOppfolging}
                     >
-                        <FormattedMessage id="aktivitetvisning.endre-knapp" />
+                        {/* Endrer for samtalereferat nå, vi faser over til å bruke teksten "Endre detaljer" for flere typer etter hvert*/}
+                        {SAMTALEREFERAT_TYPE === type ? 'Endre detaljer' : 'Endre'}
                     </InternLenke>
                 </div>
                 <VisningIngress aktivitetstype={type} />

@@ -38,7 +38,7 @@ function EndreLinje(props) {
                     <div>{endring ? null : visning}</div>
                 </div>
                 <VisibleIfDiv visible={kanEndre} className={styles.endreKnapp}>
-                    <div className={styles.endreKnappInnhold}>{endring ? 'Avbryt' : 'Endre'}</div>
+                    <div className={styles.endreKnappInnhold}>{endring ? 'Avbryt' : 'Endre status'}</div>
                     <div className={endring ? styles.endreIndikasjonLukket : styles.endreIndikasjonApen} />
                 </VisibleIfDiv>
             </button>
