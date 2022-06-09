@@ -40,7 +40,7 @@ function App({ fnr, key }) {
 
     return (
         <div className="aktivitetsplanfs">
-            <Provider key={fnr + key} innsidenFnr={fnr}>
+            <Provider key={fnr + key}>
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
                         <Router history={history}>
