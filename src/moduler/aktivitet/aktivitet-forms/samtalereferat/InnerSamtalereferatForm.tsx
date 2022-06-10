@@ -98,22 +98,38 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
             </SkjemaGruppe>
+            <Lagreknapper isLoading={state.submitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
+        </form>
+    );
+};
+
+function Lagreknapper(props: { isLoading: boolean; isNy: boolean; lagreOgDel: (event: React.FormEvent) => void }) {
+    const { isLoading, isNy, lagreOgDel } = props;
+    if (isNy) {
+        return (
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp
                     kompakt
-                    spinner={state.submitting}
+                    spinner={isLoading}
                     autoDisableVedSpinner
                     onClick={lagreOgDel}
                     className="samtalereferat-form__lagre-og-publiser"
                 >
                     Del med bruker
                 </Hovedknapp>
-                <Knapp kompakt spinner={state.submitting} autoDisableVedSpinner>
+                <Knapp kompakt spinner={isLoading} autoDisableVedSpinner>
                     Lagre utkast
                 </Knapp>
             </div>
-        </form>
+        );
+    }
+    return (
+        <div className="aktivitetskjema__lagre-knapp">
+            <Hovedknapp kompakt spinner={isLoading} autoDisableVedSpinner>
+                Lagre
+            </Hovedknapp>
+        </div>
     );
-};
+}
 
 export default InnerSamtalereferatForm;
