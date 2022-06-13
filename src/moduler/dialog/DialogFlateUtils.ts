@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react';
 
-import { getFodselsnummer } from '../../utils/fnr-util';
+import { hentFnrFraUrl } from '../../utils/fnr-util';
 
 export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialogId?: string) => {
     event.preventDefault();
@@ -17,7 +17,7 @@ export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialo
 
 export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogId?: string) => {
     if (erVeileder) {
-        const fnr = getFodselsnummer();
+        const fnr = hentFnrFraUrl();
         if (dialogId) {
             return `/veilarbpersonflatefs/${fnr}/${dialogId}`;
         }
