@@ -23,6 +23,7 @@ export interface Periode {
 
 export function selectDatoErIPeriode(dato: string, state: any): boolean {
     const historiskPeriode = selectHistoriskPeriode(state);
+    // @ts-ignore : for å unngå runtimefeil "Argument of type 'any' is not assignable to parameter of type 'never'".
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
     return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);

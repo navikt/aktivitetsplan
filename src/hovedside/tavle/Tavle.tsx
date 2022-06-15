@@ -31,8 +31,9 @@ const Tavle = (props: Props) => {
     };
 
     const visNeste = () => {
-        const clientWidth = scrollbars.current?.getClientWidth();
-        const scrollLeft = scrollbars.current?.getScrollLeft();
+        if (!scrollbars.current) return;
+        const clientWidth = scrollbars.current!!.getClientWidth();
+        const scrollLeft = scrollbars.current!!.getScrollLeft();
         const clientWidthWithOffset = clientWidth + KOLONNEMARGIN;
         const nesteIndex = Math.floor((clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE);
         const newClickIndex = Math.max(nesteIndex, clickIndex) + 1;
