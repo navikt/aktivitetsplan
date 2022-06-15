@@ -31,7 +31,9 @@ const Tavle = (props: Props) => {
     };
 
     const visNeste = () => {
-        if (!scrollbars.current) return;
+        if (!scrollbars.current) {
+            return;
+        }
         const clientWidth = scrollbars.current!!.getClientWidth();
         const scrollLeft = scrollbars.current!!.getScrollLeft();
         const clientWidthWithOffset = clientWidth + KOLONNEMARGIN;
