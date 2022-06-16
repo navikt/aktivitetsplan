@@ -4,6 +4,7 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 
 import { SAMTALEREFERAT_TYPE, STATUS_GJENNOMFOERT, TELEFON_KANAL } from '../../../../constant';
+import { SamtalereferatAktivitet } from '../../../../datatypes/aktivitetTypes';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import FormErrorSummary from '../../../../felles-komponenter/skjema/form-error-summary/form-error-summary';
 import Input from '../../../../felles-komponenter/skjema/input/Input';
@@ -15,6 +16,7 @@ import { useReferatStartTekst } from './useReferatStartTekst';
 import { validateFraDato, validateKanal, validateReferat, validateTittel } from './validate';
 
 interface Props {
+    aktivitet?: SamtalereferatAktivitet;
     onSubmit: (data: { status: string; avtalt: boolean }) => Promise<any>;
     isDirtyRef?: { current: boolean };
 }
@@ -22,9 +24,9 @@ interface Props {
 type SamtalereferatInputProps = { tittel: string; fraDato: string; kanal: string; referat: string };
 
 const InnerSamtalereferatForm = (props: Props) => {
-    const { onSubmit, isDirtyRef = undefined } = props;
+    const { aktivitet, onSubmit, isDirtyRef = undefined } = props;
     const startTekst = useReferatStartTekst();
-
+    const nyAktivitet = !aktivitet;
     const validator = useFormstate<SamtalereferatInputProps>({
         tittel: validateTittel,
         fraDato: validateFraDato,
@@ -32,12 +34,21 @@ const InnerSamtalereferatForm = (props: Props) => {
         referat: validateReferat,
     });
 
-    const state = validator({
-        tittel: '',
-        fraDato: todayIsoString(),
-        kanal: TELEFON_KANAL,
-        referat: startTekst,
-    });
+    const state = validator(
+        aktivitet
+            ? {
+                  tittel: aktivitet.tittel,
+                  fraDato: aktivitet.fraDato ? aktivitet.fraDato : '',
+                  kanal: aktivitet.kanal as string,
+                  referat: aktivitet.referat ? aktivitet.referat : '',
+              }
+            : {
+                  tittel: '',
+                  fraDato: todayIsoString(),
+                  kanal: TELEFON_KANAL,
+                  referat: startTekst,
+              }
+    );
 
     if (isDirtyRef) {
         isDirtyRef.current = !state.pristine;
@@ -74,33 +85,51 @@ const InnerSamtalereferatForm = (props: Props) => {
 
                 <VelgKanal label="Møteform *" {...state.fields.kanal} />
 
-                <Textarea
-                    label="Samtalereferat *"
-                    placeholder="Skriv her"
-                    maxLength={5000}
-                    visTellerFra={500}
-                    required
-                    {...state.fields.referat}
-                />
+                {nyAktivitet && (
+                    <Textarea
+                        label="Samtalereferat *"
+                        placeholder="Skriv her"
+                        maxLength={5000}
+                        visTellerFra={500}
+                        required
+                        {...state.fields.referat}
+                    />
+                )}
 
                 <FormErrorSummary submittoken={state.submittoken} errors={state.errors} />
             </SkjemaGruppe>
+            <Lagreknapper isLoading={state.submitting} isNy={nyAktivitet} lagreOgDel={lagreOgDel} />
+        </form>
+    );
+};
+
+function Lagreknapper(props: { isLoading: boolean; isNy: boolean; lagreOgDel: (event: React.FormEvent) => void }) {
+    const { isLoading, isNy, lagreOgDel } = props;
+    if (isNy) {
+        return (
             <div className="aktivitetskjema__lagre-knapp">
                 <Hovedknapp
                     kompakt
-                    spinner={state.submitting}
+                    spinner={isLoading}
                     autoDisableVedSpinner
                     onClick={lagreOgDel}
                     className="samtalereferat-form__lagre-og-publiser"
                 >
                     Del med bruker
                 </Hovedknapp>
-                <Knapp kompakt spinner={state.submitting} autoDisableVedSpinner>
+                <Knapp kompakt spinner={isLoading} autoDisableVedSpinner>
                     Lagre utkast
                 </Knapp>
             </div>
-        </form>
+        );
+    }
+    return (
+        <div className="aktivitetskjema__lagre-knapp">
+            <Hovedknapp kompakt spinner={isLoading} autoDisableVedSpinner>
+                Lagre
+            </Hovedknapp>
+        </div>
     );
-};
+}
 
 export default InnerSamtalereferatForm;

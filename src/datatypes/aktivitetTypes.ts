@@ -48,6 +48,7 @@ export type Livslopsstatus =
     | 'HAR_SVART'
     | 'AVBRUTT_AV_SYSTEM'
     | 'AVBRUTT_AV_BRUKER';
+
 export enum TransaksjonsType {
     OPPRETTET = 'OPPRETTET',
     STATUS_ENDRET = 'STATUS_ENDRET',
@@ -64,7 +65,9 @@ export enum TransaksjonsType {
     DEL_CV_SVART = 'DEL_CV_SVART',
     SOKNADSSTATUS_ENDRET = 'SOKNADSSTATUS_ENDRET',
 }
+
 export type BrukerType = 'NAV' | 'BRUKER';
+
 export interface Lest {
     tidspunkt: string;
     verdi?: string;
@@ -90,6 +93,7 @@ export type AlleAktiviteter = Aktivitet | ArenaAktivitet;
 export function isArenaAktivitet(aktivitet: AlleAktiviteter): aktivitet is ArenaAktivitet {
     return !!aktivitet.arenaAktivitet;
 }
+
 export function isVeilarbAktivitetAktivitet(aktivitet: AlleAktiviteter): aktivitet is Aktivitet {
     return !aktivitet.arenaAktivitet;
 }
@@ -114,6 +118,16 @@ export interface Aktivitet extends AktivitetRequiredProps {
     avsluttetBegrunnelse?: string;
 }
 
+export interface SamtalereferatAktivitet extends AktivitetRequiredProps {
+    fraDato: string;
+    varighet: string;
+    kanal: string;
+    adresse: string;
+    beskrivelse: string;
+    forberedelser: string;
+    referat: string;
+}
+
 export interface MoteAktivitet extends AktivitetRequiredProps {
     fraDato: string;
     tilDato: string;
@@ -123,6 +137,7 @@ export interface MoteAktivitet extends AktivitetRequiredProps {
     adresse: string;
     beskrivelse: string;
     forberedelser: string;
+    referat: string;
 }
 
 export interface MedisinskBehandlingAktivitet extends AktivitetRequiredProps {
