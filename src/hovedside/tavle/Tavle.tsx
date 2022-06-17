@@ -33,15 +33,16 @@ const Tavle = (props: Props) => {
     const visNeste = () => {
         if (!scrollbars.current) {
             return;
+        } else {
+            const clientWidth = scrollbars.current.getClientWidth();
+            const scrollLeft = scrollbars.current.getScrollLeft();
+            const clientWidthWithOffset = clientWidth + KOLONNEMARGIN;
+            const nesteIndex = Math.floor((clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE);
+            const newClickIndex = Math.max(nesteIndex, clickIndex) + 1;
+            const scrollTo = newClickIndex * KOLONNEBREDDE - clientWidthWithOffset;
+            scrollbars.current?.scrollLeft(scrollTo);
+            setClickIndex(newClickIndex);
         }
-        const clientWidth = scrollbars.current!!.getClientWidth();
-        const scrollLeft = scrollbars.current!!.getScrollLeft();
-        const clientWidthWithOffset = clientWidth + KOLONNEMARGIN;
-        const nesteIndex = Math.floor((clientWidthWithOffset + scrollLeft) / KOLONNEBREDDE);
-        const newClickIndex = Math.max(nesteIndex, clickIndex) + 1;
-        const scrollTo = newClickIndex * KOLONNEBREDDE - clientWidthWithOffset;
-        scrollbars.current?.scrollLeft(scrollTo);
-        setClickIndex(newClickIndex);
     };
 
     const updateState = (values: { scrollLeft: number; left: number }) => {
