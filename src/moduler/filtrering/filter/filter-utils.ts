@@ -1,7 +1,7 @@
 import { isBefore, isWithinInterval } from 'date-fns';
 
 import { isArenaAktivitet, isVeilarbAktivitetAktivitet } from '../../../datatypes/aktivitetTypes';
-import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selector';
+import { selectForrigeHistoriskeSluttDato } from '../../oppfolging-status/oppfolging-selectorts';
 import {
     selectAktivitetAvtaltMedNavFilter,
     selectAktivitetEtiketterFilter,
@@ -21,9 +21,8 @@ export interface Periode {
     til: string;
 }
 
-export function selectDatoErIPeriode(dato: string, state: any): boolean {
+export function selectDatoErIPeriode(dato: string, state: { sluttDato: any }[]): boolean {
     const historiskPeriode = selectHistoriskPeriode(state);
-    // @ts-ignore : for å unngå runtimefeil "Argument of type 'any' is not assignable to parameter of type 'never'".
     const forrigeHistoriskeSluttDato = selectForrigeHistoriskeSluttDato(state);
 
     return datoErIPeriode(dato, historiskPeriode, forrigeHistoriskeSluttDato);
