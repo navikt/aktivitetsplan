@@ -1,7 +1,6 @@
-import { createSelector } from 'reselect';
-
 import { STATUS } from '../../api/utils';
 import { getNowAsISODate } from '../../utils';
+import { selectHistoriskeOppfolgingsPerioder } from './oppfolging-selectorts';
 
 export function selectOppfolgingSlice(state) {
     return state.data.oppfolging;
@@ -14,6 +13,7 @@ function selectOppfolgingData(state) {
 export function selectOppfolgingStatus(state) {
     return selectOppfolgingSlice(state).status;
 }
+
 export const selectReservasjonKRR = (state) => selectOppfolgingData(state).reservasjonKRR;
 
 export function selectServicegruppe(state) {
@@ -23,19 +23,6 @@ export function selectServicegruppe(state) {
 export function selectOppfolgingsPerioder(state) {
     return selectOppfolgingData(state).oppfolgingsPerioder || [];
 }
-
-export const selectHistoriskeOppfolgingsPerioder = createSelector(selectOppfolgingsPerioder, (oppfolgingsPerioder) =>
-    oppfolgingsPerioder.filter((p) => p.sluttDato)
-);
-
-export const selectForrigeHistoriskeSluttDato = createSelector(
-    selectHistoriskeOppfolgingsPerioder,
-    (historiskeOppfolgingsPerioder) =>
-        (historiskeOppfolgingsPerioder || [])
-            .map((p) => p.sluttDato)
-            .sort()
-            .reverse()[0]
-);
 
 export function selectSorterteHistoriskeOppfolgingsPerioder(state) {
     let nesteFra = getNowAsISODate();
