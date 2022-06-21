@@ -9,7 +9,7 @@ concurrency:
 jobs:
   dev-ekstern:
     name: Deploy to dev extern
-    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@npm_update
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build-ekstern-dev
       bucket: aktivitetsplan-dev
@@ -19,7 +19,7 @@ jobs:
 
   dev-intern:
     name: Deploy application to dev intern
-    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@npm_update
+    uses: navikt/aktivitetsplan/.github/workflows/gcp-root.yml@main
     with:
       kommando: npm run build-intern-dev
       bucket: aktivitetsplan-dev-intern
