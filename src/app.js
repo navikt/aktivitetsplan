@@ -10,7 +10,7 @@ import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
 import createHistory from './history';
 import Hovedside from './hovedside/Hovedside';
 import Provider from './provider';
-import { HiddenIf } from './utils';
+import { HiddenIf, getContextPath } from './utils';
 import { UppdateEventHandler } from './utils/UpdateHandler';
 
 function isValueOrGetDefault(value, defaultValue) {
@@ -20,7 +20,7 @@ function isValueOrGetDefault(value, defaultValue) {
 function App({ fnr, key }) {
     // NOTE: This is bad, don't use it if you dont HAVE to.
     window.appconfig = window.appconfig || {};
-    const path = window.appconfig.CONTEXT_PATH === '' ? '' : '/veilarbpersonflatefs';
+    const path = window.appconfig.CONTEXT_PATH === '' ? '' : getContextPath();
     window.appconfig = {
         CONTEXT_PATH: path,
         TILLAT_SET_AVTALT: isValueOrGetDefault(window.appconfig.TILLAT_SET_AVTALT, true),

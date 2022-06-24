@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react';
 
+import { getContextPath } from '../../utils';
 import { hentFnrFraUrl } from '../../utils/fnr-util';
 
 export const byttTilDialogFlate = (event: MouseEvent, aktiviteId?: string, dialogId?: string) => {
@@ -19,12 +20,12 @@ export const getDialogLenke = (erVeileder: boolean, aktiviteId?: string, dialogI
     if (erVeileder) {
         const fnr = hentFnrFraUrl();
         if (dialogId) {
-            return `/veilarbpersonflatefs/${fnr}/${dialogId}`;
+            return `${getContextPath()}/${fnr}/${dialogId}`;
         }
         if (aktiviteId) {
-            return `/veilarbpersonflatefs/${fnr}/ny?aktivitetId=${aktiviteId}`;
+            return `${getContextPath()}/${fnr}/ny?aktivitetId=${aktiviteId}`;
         }
-        return `/veilarbpersonflatefs/${fnr}`;
+        return `${getContextPath()}/${fnr}`;
     }
 
     if (dialogId) {
