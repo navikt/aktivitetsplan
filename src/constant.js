@@ -19,6 +19,7 @@ export const STILLING_FRA_NAV_TYPE = 'STILLING_FRA_NAV';
 export const INGEN_VALGT = 'INGEN_VALGT';
 export const VENTER = 'VENTER';
 export const SOKNAD_SENDT = 'SOKNAD_SENDT';
+export const CV_DELT = 'CV_DELT';
 export const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
 export const SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU';
 export const AVSLAG = 'AVSLAG';

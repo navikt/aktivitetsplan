@@ -37,6 +37,7 @@ export const stillingsEtikettMapper = {
 
 export const stillingFraNavSoknadsstatusMapper = {
     VENTER: 'Venter på å bli kontaktet',
+    CV_DELT: 'CV er delt med arbeidsgiver',
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Fått avslag',
