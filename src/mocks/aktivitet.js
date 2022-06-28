@@ -394,6 +394,38 @@ const testAktiviteter = !visTestAktiviteter()
                   soknadsstatus: 'VENTER',
               },
           }),
+          wrapAktivitet({
+              versjon: '5343446',
+              id: '5349857000',
+              tittel: 'Assisterende skipskokk',
+              type: 'STILLING_FRA_NAV',
+              lenke: null,
+              status: 'GJENNOMFORES',
+              opprettetDato: '2020-05-31T10:46:51.622+01:00',
+              endretDato: '2020-09-30T10:46:51.622+01:00',
+              endretAv: 'z990207',
+              historisk: false,
+              kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
+              lagtInnAv: 'NAV',
+              transaksjonsType: 'STATUS_ENDRET',
+              stillingFraNavData: {
+                  cvKanDelesData: {
+                      kanDeles: true,
+                      endretTidspunkt: new Date(),
+                      endretAv: 'V123',
+                      endretAvType: 'BRUKER',
+                  },
+                  arbeidsgiver: 'Havsalt AS',
+                  arbeidssted: 'Kristiansand',
+                  lenke: 'www.nav.no',
+                  kontaktpersonData: {
+                      navn: 'Skælken Dolmen',
+                      tittel: 'Skipskokk',
+                      mobil: '99999998',
+                  },
+                  soknadsstatus: 'CV_DELT',
+              },
+          }),
       ];
 
 const automatiskeAktiviteter = !visAutomatiskeAktiviteter()

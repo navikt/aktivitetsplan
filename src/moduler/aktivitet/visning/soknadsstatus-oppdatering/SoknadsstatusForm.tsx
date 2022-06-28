@@ -52,6 +52,12 @@ const SoknadsstatusForm = (props: Props) => {
                     {...state.fields.soknadsstatus}
                 />
                 <Radio
+                    label="CV er delt med arbeidsgiver"
+                    value={konstanter.CV_DELT}
+                    disabled={disable}
+                    {...state.fields.soknadsstatus}
+                />
+                <Radio
                     label="Skal på intervju"
                     value={konstanter.SKAL_PAA_INTERVJU}
                     disabled={disable}
