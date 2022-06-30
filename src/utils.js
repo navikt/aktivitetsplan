@@ -174,3 +174,11 @@ export function HiddenIf({ hidden, children }) {
 export function dagerTil(dato) {
     return moment(dato).startOf('day').diff(moment().startOf('day'), 'day');
 }
+
+function erGCP() {
+    return window.location.hostname.endsWith('intern.nav.no');
+}
+
+export function getContextPath() {
+    return erGCP() ? '' : '/veilarbpersonflatefs';
+}
