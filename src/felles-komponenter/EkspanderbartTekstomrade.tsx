@@ -1,7 +1,8 @@
+import { LinebreakRule, LinkRule } from '@navikt/textparser';
 import classNames from 'classnames';
 import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 import { Knapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 import React, { useState } from 'react';
 
 import styles from './EkspanderbartTekstomrade.module.less';
@@ -20,9 +21,12 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
         setHasLongText(!hasLongText);
     };
     if (text.length > maxCharacters) {
+        const rules = [LinebreakRule, LinkRule];
         return (
-            <Normaltekst className={contentClassNames}>
-                {hasLongText ? text.slice(0, maxCharacters) + ' ... ' : text + ' '}
+            <div className={contentClassNames}>
+                <Tekstomrade className={styles.inline} rules={rules}>
+                    {hasLongText ? text.slice(0, maxCharacters) + ' ... ' : text + ' '}
+                </Tekstomrade>
                 <Knapp onClick={toggleMoreOrLess} className={styles.button}>
                     {hasLongText ? 'Les mer' : 'Vis mindre'}
                     {hasLongText ? (
@@ -31,10 +35,11 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
                         <OppChevron className={styles.padding} />
                     )}
                 </Knapp>
-            </Normaltekst>
+            </div>
         );
     }
-    return <Normaltekst className={contentClassNames}>{text}</Normaltekst>;
+
+    return <Tekstomrade className={contentClassNames}>{text}</Tekstomrade>;
 };
 
 interface Props {
