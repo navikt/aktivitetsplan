@@ -21,10 +21,9 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
         setHasLongText(!hasLongText);
     };
     if (text.length > maxCharacters) {
-        const rules = [LinebreakRule, LinkRule];
         return (
             <div className={contentClassNames}>
-                <Tekstomrade className={styles.inline} rules={rules}>
+                <Tekstomrade className={styles.inline} rules={[LinebreakRule, LinkRule]}>
                     {hasLongText ? text.slice(0, maxCharacters) + ' ... ' : text + ' '}
                 </Tekstomrade>
                 <Knapp onClick={toggleMoreOrLess} className={styles.button}>
