@@ -10,6 +10,9 @@ import {
     navAnsatt1,
     navAnsatt2,
 } from './fixtures/stillingFraNavFixtures';
+import { enLestForhaandsorientering, enUlestForhaandsorientering } from './forhaandsorienteringFixtures';
+import { etSamtalereferat } from './samtalereferatFixtures';
+import { enSokeAktivitet } from './sokeAktivitetFixtures';
 import { rndId } from './utils';
 
 const eksternBruker = erEksternBruker();
@@ -159,136 +162,30 @@ const testAktiviteter = !visTestAktiviteter()
               erReferatPublisert: false,
           }),
           wrapAktivitet({
-              id: '1550',
-              versjon: '9825',
-              tittel: 'Denne har en ulest forhåndsorientering',
+              ...enSokeAktivitet({ tittel: 'Denne har en ulest forhåndsorientering' }),
+              forhaandsorientering: enUlestForhaandsorientering,
+          }),
+          wrapAktivitet({
+              ...enSokeAktivitet({ tittel: 'Gi aldri opp! Kjemp hvis du kan.' }),
               beskrivelse:
-                  'NAV forventer at du søker omtrent 20 stillinger i denne perioden. Det er viktig at du søker på de jobbene du mener du er kvalifisert for. Det er også viktig å søke på mange stillinger, det øker sjansene dine til å finne en jobb. Legg til hver stilling du søker i aktiviteten «En jobb jeg vil søke på».',
-              lenke: null,
-              type: 'SOKEAVTALE',
-              status: 'GJENNOMFORES',
-              fraDato: '2030-08-21T08:00:00+02:00',
-              tilDato: '2020-08-21T12:15:00+02:00',
-              opprettetDato: '2018-08-21T11:55:14.044+02:00',
-              endretDato: '2018-08-21T11:57:57.636+02:00',
-              endretAv: 'z990207',
-              historisk: false,
-              avsluttetKommentar: null,
-              avtalt: true,
-              lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
-              etikett: null,
-              kontaktperson: null,
-              arbeidsgiver: null,
-              arbeidssted: null,
-              stillingsTittel: null,
-              hensikt: null,
-              oppfolging: null,
-              antallStillingerSokes: null,
-              antallStillingerIUken: 5,
-              avtaleOppfolging: null,
-              jobbStatus: null,
-              ansettelsesforhold: null,
-              arbeidstid: null,
-              behandlingType: null,
-              behandlingSted: null,
-              effekt: null,
-              behandlingOppfolging: null,
-              kanal: null,
-              erReferatPublisert: false,
-              forhaandsorientering: {
-                  tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
-                  type: 'SEND_FORHAANDSORIENTERING',
-                  lestDato: null,
-              },
+                  'Du er unik. Vi vet at det finnes en arbeidsgiver der ute som ser etter akkurat deg. Plutselig klaffer det, det vet jeg. Har du sett denne lenken? Det er Rick Astley.\n' +
+                  'https://www.youtube.com/watch?v=xvFZjo5PgG0',
           }),
           wrapAktivitet({
-              adresse: null,
-              ansettelsesforhold: null,
-              antallStillingerIUken: null,
-              antallStillingerSokes: null,
-              arbeidsgiver: null,
-              arbeidssted: null,
-              arbeidstid: null,
-              avsluttetKommentar: null,
-              avtaleOppfolging: null,
-              avtalt: false,
-              behandlingOppfolging: null,
-              behandlingSted: null,
-              behandlingType: null,
-              beskrivelse: null,
-              effekt: null,
-              endretAv: '1602677081175',
-              endretDato: '2020-10-14T12:04:41.175Z',
-              erReferatPublisert: true,
-              etikett: null,
-              forberedelser: null,
-              fraDato: '2020-10-14T12:04:33.649Z',
-              hensikt: null,
-              historisk: false,
-              id: '7005970',
-              jobbStatus: null,
-              kanal: 'TELEFON',
-              kontaktperson: null,
-              lagtInnAv: 'NAV',
-              lenke: null,
-              oppfolging: null,
-              opprettetDato: '2020-10-14T12:04:41.175Z',
-              referat: 'Dette er et referat\n\nMed flere avsnitt.\nOg linjeskift.',
-              status: 'GJENNOMFORES',
-              stillingsTittel: null,
-              tilDato: null,
-              tittel: 'Denne har en lest forhåndsorientering',
-              transaksjonsType: 'OPPRETTET',
-              type: 'SAMTALEREFERAT',
-              versjon: '2',
-              forhaandsorientering: {
-                  tekst: 'Det er viktig at du gjennomfører denne aktiviteten med NAV. Gjør du ikke det, kan det medføre at stønaden du mottar fra NAV bortfaller for en periode eller stanses. Hvis du ikke kan gjennomføre aktiviteten, ber vi deg ta kontakt med veilederen din så snart som mulig.',
-                  type: 'SEND_FORHAANDSORIENTERING',
-                  lestDato: '2021-05-30T10:46:40.459+00:00',
-              },
+              ...etSamtalereferat({ tittel: 'Denne har en lest forhåndsorientering' }),
+              forhaandsorientering: enLestForhaandsorientering,
           }),
           wrapAktivitet({
-              adresse: null,
-              ansettelsesforhold: null,
-              antallStillingerIUken: null,
-              antallStillingerSokes: null,
-              arbeidsgiver: null,
-              arbeidssted: null,
-              arbeidstid: null,
-              avsluttetKommentar: null,
-              avtaleOppfolging: null,
-              avtalt: false,
-              behandlingOppfolging: null,
-              behandlingSted: null,
-              behandlingType: null,
-              beskrivelse: null,
-              effekt: null,
-              endretAv: '1602677081175',
-              endretDato: '2020-10-14T12:04:41.175Z',
+              ...etSamtalereferat({ tittel: 'Inneholder et langt referat' }),
               erReferatPublisert: false,
-              etikett: null,
-              forberedelser: null,
-              fraDato: '2020-10-14T12:04:33.649Z',
-              hensikt: null,
-              historisk: false,
-              id: '7005964',
-              jobbStatus: null,
-              kanal: 'TELEFON',
-              kontaktperson: null,
-              lagtInnAv: 'NAV',
-              lenke: null,
-              oppfolging: null,
-              opprettetDato: '2020-10-14T12:04:41.175Z',
               referat:
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-              status: 'GJENNOMFORES',
-              stillingsTittel: null,
-              tilDato: null,
-              tittel: 'Inneholder et langt referat',
-              transaksjonsType: 'OPPRETTET',
-              type: 'SAMTALEREFERAT',
-              versjon: '1',
+          }),
+          wrapAktivitet({
+              ...etSamtalereferat({ tittel: 'Et rykte sprer seg raskt som en brann' }),
+              referat:
+                  'Nå kommer Sabeltann: https://www.youtube.com/watch?v=zyCpj5WWH4k \n' +
+                  'Her er litt mer informasjon om hva dette innebærer: https://no.wikipedia.org/wiki/Sj%C3%B8r%C3%B8veri',
           }),
           wrapAktivitet(enStillingFraNavAktivitet({ tittel: 'Servitør historisk', arstall: 2017 })),
           wrapAktivitet({
@@ -559,7 +456,7 @@ export function getAktivitetVersjoner({ aktivitetId }) {
     return versjoner.filter((aktivitet) => aktivitet.id === aktivitetId);
 }
 
-export function opprettAktivitet(pathParams, body) {
+export function opprettAktivitet(_pathParams, body) {
     const nyAktivitet = wrapAktivitet({
         id: rndId(),
         opprettetDato: new Date(),
@@ -638,7 +535,7 @@ export function oppdaterAvtaltMedNav(__params, { forhaandsorientering }, { aktiv
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles, avtaltDato }, { aktivitetId }) {
+export function oppdaterCVKanDelesSvar(__params, { _aktivitetVersjon, kanDeles, avtaltDato }, { aktivitetId }) {
     const gammelAktivitet = aktiviteter.find((akivitet) => akivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         status: kanDeles ? STATUS_GJENNOMFOERT : STATUS_AVBRUTT,
@@ -658,7 +555,7 @@ export function oppdaterCVKanDelesSvar(__params, { aktivitetVersjon, kanDeles, a
     return doOppdaterInternMockStateOgReturnerNyAktivitet(aktivitetId, nyeAktivitetAttributter);
 }
 
-export function oppdaterStillingFraNavSoknadsstatus(__params, { aktivitetVersjon, soknadsstatus }, { aktivitetId }) {
+export function oppdaterStillingFraNavSoknadsstatus(__params, { _aktivitetVersjon, soknadsstatus }, { aktivitetId }) {
     const gammelAktivitet = aktiviteter.find((aktivitet) => aktivitet.id === aktivitetId);
     const nyeAktivitetAttributter = {
         stillingFraNavData: {
