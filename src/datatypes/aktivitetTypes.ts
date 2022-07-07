@@ -40,7 +40,7 @@ export type AktivitetStatus =
     | typeof STATUS_BRUKER_ER_INTRESSERT;
 
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
-export type StillingFraNavSoknadsstatus = 'VENTER' | 'SKAL_PAA_INTERVJU' | 'JOBBTILBUD' | 'AVSLAG';
+export type StillingFraNavSoknadsstatus = 'VENTER' | 'CV_DELT' | 'SKAL_PAA_INTERVJU' | 'JOBBTILBUD' | 'AVSLAG';
 export type Livslopsstatus =
     | 'PROVER_VARSLING'
     | 'HAR_VARSLET'
