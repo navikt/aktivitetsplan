@@ -24,10 +24,12 @@ export const enStillingFraNavAktivitet = ({ tittel, arstall }) => {
 
     let endretDate = new Date(etTidspunkt(arstall));
     endretDate.setFullYear(endretDate.getFullYear() + 2);
+    versjon += 1000;
+    id += 1000;
 
     return {
-        versjon: (versjon += 1000),
-        id: (id += 1000),
+        versjon,
+        id,
         tittel,
         type: 'STILLING_FRA_NAV',
         lenke: null,
