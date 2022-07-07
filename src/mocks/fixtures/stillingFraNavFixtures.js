@@ -28,8 +28,8 @@ export const enStillingFraNavAktivitet = ({ tittel, arstall }) => {
     id += 1000;
 
     return {
-        versjon,
-        id,
+        versjon: `${versjon}`,
+        id: `${id}`,
         tittel,
         type: 'STILLING_FRA_NAV',
         lenke: null,
