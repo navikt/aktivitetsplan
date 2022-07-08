@@ -40,7 +40,7 @@ const ToggleBetweenDisplayingTruncatedOrFullText = (props: ToggleBetweenDisplayi
     }
 
     return (
-        <Tekstomrade className={contentClassNames} rules={[LinebreakRule, ShortenedLinkRule]}>
+        <Tekstomrade className={contentClassNames} rules={[ShortenedLinkRule]}>
             {text}
         </Tekstomrade>
     );
