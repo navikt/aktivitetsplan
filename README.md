@@ -16,6 +16,7 @@ npm i
 npm build
 
 # Lokal utvikling
+npm build:tekster
 npm start
 ```
 
