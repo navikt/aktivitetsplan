@@ -11,7 +11,7 @@ export const ShortenedLinkRule: Rule = {
 
         return {
             type: ForkortetLenke,
-            props: { lenke: href, target: '_blank' },
+            props: { lenke: href },
         };
     },
 };
