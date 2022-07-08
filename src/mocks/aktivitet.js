@@ -184,7 +184,7 @@ const testAktiviteter = !visTestAktiviteter()
           wrapAktivitet({
               ...etSamtalereferat({ tittel: 'Et rykte sprer seg raskt som en brann' }),
               referat:
-                  'Nå kommer Sabeltann: https://www.youtube.com/watch?v=zyCpj5WWH4k \n' +
+                  'Nå kommer Sabeltann til Stortinget: https://www.stortinget.no/no/ \n' +
                   'Her er litt mer informasjon om hva dette innebærer: https://no.wikipedia.org/wiki/Sj%C3%B8r%C3%B8veri',
           }),
           wrapAktivitet(enStillingFraNavAktivitet({ tittel: 'Servitør historisk', arstall: 2017 })),
