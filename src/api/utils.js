@@ -78,18 +78,6 @@ export function handterFeil(dispatch, FEILET_TYPE) {
                         melding: parseError(data),
                     },
                 });
-                const errorData = JSON.parse(data);
-
-                if (window.frontendlogger) {
-                    window.frontendlogger.error({
-                        message: [
-                            error.stack,
-                            `Id: ${errorData.id}`,
-                            `Type: ${errorData.type} ${errorData.detaljer ? errorData.detaljer.detaljertType : ''}`,
-                            errorData.detaljer ? errorData.detaljer.stackTrace : '',
-                        ].join('\n'),
-                    });
-                }
             });
         } else {
             console.error(error, error.stack); // eslint-disable-line no-console
