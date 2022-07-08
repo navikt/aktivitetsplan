@@ -1,7 +1,7 @@
 import { ASTNode, LinkRule as OriginalLinkRule, ReactElementDescription, Rule } from '@navikt/textparser';
 import { getText } from '@navikt/textparser/dist/utils';
 
-import DetaljvisningLenke from '../../moduler/aktivitet/visning/hjelpekomponenter/detaljvisning-lenke';
+import ForkortetLenke from '../../moduler/aktivitet/visning/hjelpekomponenter/ForkortetLenke';
 
 export const ShortenedLinkRule: Rule = {
     ...OriginalLinkRule,
@@ -10,7 +10,7 @@ export const ShortenedLinkRule: Rule = {
         const href = this.startsWithHttp.test(text) ? text : `https://${text}`;
 
         return {
-            type: DetaljvisningLenke,
+            type: ForkortetLenke,
             props: { lenke: href, target: '_blank' },
         };
     },
