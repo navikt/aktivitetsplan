@@ -18,11 +18,10 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
             'Nav-Consumer-Id': 'aktivitetsplan',
             'Content-Type': 'application/json',
         },
-        credentials: 'same-origin',
+        credentials: 'same-origin' as const,
         method: 'post',
         body: JSON.stringify({ event }),
     };
-    // @ts-ignore
     return fetch(url, config);
 }
 
