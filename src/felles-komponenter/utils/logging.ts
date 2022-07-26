@@ -20,7 +20,7 @@ export default function loggEvent(eventNavn: string, feltObjekt?: object, tagObj
         },
         credentials: 'same-origin' as const,
         method: 'post',
-        body: JSON.stringify({ event }),
+        body: JSON.stringify(event),
     };
     return fetch(url, config);
 }
