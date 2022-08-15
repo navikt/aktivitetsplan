@@ -40,7 +40,7 @@ export const stillingFraNavSoknadsstatusMapper = {
     CV_DELT: 'CV er delt med arbeidsgiver',
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
-    AVSLAG: 'Fått avslag',
+    AVSLAG: 'Ikke fått jobben',
 };
 
 export const tiltakEtikettMapper = {
