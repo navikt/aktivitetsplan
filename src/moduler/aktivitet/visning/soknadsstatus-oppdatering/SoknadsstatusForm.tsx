@@ -70,7 +70,7 @@ const SoknadsstatusForm = (props: Props) => {
                     {...state.fields.soknadsstatus}
                 />
                 <Radio
-                    label="Fått avslag"
+                    label="Ikke fått jobben"
                     value={konstanter.AVSLAG}
                     disabled={disable}
                     {...state.fields.soknadsstatus}
