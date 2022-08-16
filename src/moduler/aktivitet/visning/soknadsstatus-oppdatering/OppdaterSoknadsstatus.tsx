@@ -52,9 +52,9 @@ const OppdaterSoknadsstatus = (props: Props) => {
             document.querySelector<HTMLElement>('.aktivitet-modal')?.focus();
         });
 
-    const endretAvOss = aktivitet.lagtInnAv == 'BRUKER';
-    const ikkeAvslag = AVSLAG != aktivitet.stillingFraNavData?.soknadsstatus;
-    const kanEndre = ikkeAvslag || endretAvOss;
+    const endretAvBruker = aktivitet.lagtInnAv === 'BRUKER';
+    const ikkeAvslag = AVSLAG !== aktivitet.stillingFraNavData?.soknadsstatus;
+    const kanEndre = ikkeAvslag || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;
 
     const visning = (
