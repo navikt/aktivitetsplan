@@ -184,8 +184,8 @@ mock.put(
 );
 
 mock.post('/veilarbaktivitet/api/logger/event', (req, res, ctx) => {
-    const event = req.body.event;
-    console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
+    const event = req.body.event ?? req.body;
+    event && console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
     return res(ctx.status(200));
 });
 
