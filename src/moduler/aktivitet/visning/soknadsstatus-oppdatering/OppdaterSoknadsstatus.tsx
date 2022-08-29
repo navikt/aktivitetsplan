@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { FIKK_IKKE_JOBBEN } from '../../../../constant';
+import { IKKE_FATT_JOBBEN } from '../../../../constant';
 import { Aktivitet, StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
@@ -53,7 +53,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
         });
 
     const endretAvBruker = aktivitet.lagtInnAv === 'BRUKER';
-    const ikkeAvslag = FIKK_IKKE_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
+    const ikkeAvslag = IKKE_FATT_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
     const kanEndre = ikkeAvslag || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;
 

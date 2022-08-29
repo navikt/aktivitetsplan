@@ -41,7 +41,7 @@ export const stillingFraNavSoknadsstatusMapper = {
     SKAL_PAA_INTERVJU: 'Skal på intervju',
     JOBBTILBUD: 'Fått jobbtilbud',
     AVSLAG: 'Ikke fått jobben',
-    FIKK_IKKE_JOBBEN: 'Ikke fått jobben',
+    IKKE_FATT_JOBBEN: 'Ikke fått jobben',
 };
 
 export const tiltakEtikettMapper = {

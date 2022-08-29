@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
+import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 import {
     enStillingFraNavAktivitet,
@@ -225,10 +225,11 @@ const testAktiviteter = !visTestAktiviteter()
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Greve av Gral', arstall: 2023 }),
               status: STATUS_FULLFOERT,
+              transaksjonsType: 'IKKE_FATT_JOBBEN',
               stillingFraNavData: {
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
-                  soknadsstatus: 'FIKK_IKKE_JOBBEN',
+                  soknadsstatus: IKKE_FATT_JOBBEN,
                   ikkefattjobbendetaljer: `Vi har fått beskjed om at arbeidsgiveren ikke skal ansatte en person allikevel. Vi beklager at det ikke ble en jobbmulighet denne gangen. Lykke til videre med jobbsøkingen.`,
               },
           }),

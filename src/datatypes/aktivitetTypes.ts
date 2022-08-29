@@ -46,7 +46,7 @@ export type StillingFraNavSoknadsstatus =
     | 'SKAL_PAA_INTERVJU'
     | 'JOBBTILBUD'
     | 'AVSLAG'
-    | 'FIKK_IKKE_JOBBEN';
+    | 'IKKE_FATT_JOBBEN';
 export type Livslopsstatus =
     | 'PROVER_VARSLING'
     | 'HAR_VARSLET'
@@ -70,6 +70,7 @@ export enum TransaksjonsType {
     FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
     DEL_CV_SVART = 'DEL_CV_SVART',
     SOKNADSSTATUS_ENDRET = 'SOKNADSSTATUS_ENDRET',
+    IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN',
 }
 
 export type BrukerType = 'NAV' | 'BRUKER';
