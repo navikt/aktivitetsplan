@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { AVSLAG } from '../../../../constant';
+import { FIKK_IKKE_JOBBEN } from '../../../../constant';
 import { Aktivitet, StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
@@ -53,7 +53,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
         });
 
     const endretAvBruker = aktivitet.lagtInnAv === 'BRUKER';
-    const ikkeAvslag = AVSLAG !== aktivitet.stillingFraNavData?.soknadsstatus;
+    const ikkeAvslag = FIKK_IKKE_JOBBEN !== aktivitet.stillingFraNavData?.soknadsstatus;
     const kanEndre = ikkeAvslag || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;
 
@@ -62,8 +62,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
             <StillingFraNavEtikett etikett={aktivitet.stillingFraNavData?.soknadsstatus} />
             {skalViseInfoBoks && (
                 <AlertStripeInfo className={styles.infoStripe}>
-                    Vi har fått beskjed om at arbeidsgiver har ansatt en person. Dessverre var det ikke deg denne
-                    gangen. Ansettelsesprosessen er ferdig.
+                    {aktivitet.stillingFraNavData?.ikkefattjobbendetaljer}
                 </AlertStripeInfo>
             )}
         </>

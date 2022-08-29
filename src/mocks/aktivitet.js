@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { STATUS_AVBRUTT, STATUS_GJENNOMFOERT } from '../constant';
+import { STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
 import {
     enStillingFraNavAktivitet,
@@ -36,7 +36,7 @@ const testAktiviteter = !visTestAktiviteter()
               endretAv: 'z990207',
               historisk: false,
               avtalt: false,
-              arbeidsgiver: 'Skipet AS',
+              arbeidsgiver: 'Den sorte dame AS',
               kontaktperson: 'Sabeltann sin mor',
               arbeidssted: 'Karibien',
               lagtInnAv: 'NAV',
@@ -62,8 +62,8 @@ const testAktiviteter = !visTestAktiviteter()
               transaksjonsType: 'OPPRETTET',
               etikett: 'SOKNAD_SENDT',
               kontaktperson: 'Sabeltann',
-              arbeidsgiver: 'Skipet AS',
-              arbeidssted: 'Skipet',
+              arbeidsgiver: 'Den sorte dame AS',
+              arbeidssted: 'Den sorte dame',
               erReferatPublisert: false,
           }),
           wrapAktivitet({
@@ -203,7 +203,7 @@ const testAktiviteter = !visTestAktiviteter()
           }),
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Servitør ikke svart innen fristen' }),
-              status: 'AVBRUTT',
+              status: STATUS_AVBRUTT,
               opprettetDato: etTidspunkt(2020),
               endretDato: etTidspunkt(2018),
               historisk: false,
@@ -221,6 +221,16 @@ const testAktiviteter = !visTestAktiviteter()
           wrapAktivitet({
               ...enStillingFraNavAktivitet({ tittel: 'Assisterende skipskokk', arstall: 2020 }),
               stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles, soknadsstatus: 'CV_DELT' },
+          }),
+          wrapAktivitet({
+              ...enStillingFraNavAktivitet({ tittel: 'Greve av Gral', arstall: 2023 }),
+              status: STATUS_FULLFOERT,
+              stillingFraNavData: {
+                  ...enStillingFraNavData,
+                  cvKanDelesData: jaCvKanDeles,
+                  soknadsstatus: 'FIKK_IKKE_JOBBEN',
+                  ikkefattjobbendetaljer: `Vi har fått beskjed om at arbeidsgiveren ikke skal ansatte en person allikevel. Vi beklager at det ikke ble en jobbmulighet denne gangen. Lykke til videre med jobbsøkingen.`,
+              },
           }),
       ];
 
