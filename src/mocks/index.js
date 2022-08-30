@@ -86,7 +86,7 @@ mock.post('/veilarboppfolging/api/oppfolging/startEskalering', ({ body }, res, c
 mock.post('/veilarboppfolging/api/oppfolging/stoppEskalering', ({ body }, res, ctx) =>
     res(ctx.json(stoppEskalering(body)))
 );
-mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(200)));
+mock.post('/veilarboppfolging/api/:fnr/lestaktivitetsplan', (_, res, ctx) => res(ctx.status(204)));
 
 mock.post('/veilarboppfolging/api/oppfolging/settDigital', failOrGetResponse(oppfFeilet, settDigital));
 
@@ -184,8 +184,8 @@ mock.put(
 );
 
 mock.post('/veilarbaktivitet/api/logger/event', (req, res, ctx) => {
-    const event = req.body.event;
-    console.log('Event', event.name, 'Fields:', event.fields, 'Tags:', event.tags);
+    const { name, fields, tags } = req.body;
+    console.log('Event', name, 'Fields:', fields, 'Tags:', tags);
     return res(ctx.status(200));
 });
 
