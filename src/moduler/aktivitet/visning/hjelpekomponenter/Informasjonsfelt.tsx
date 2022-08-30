@@ -1,3 +1,4 @@
+import { LinebreakRule, ParagraphRule } from '@navikt/textparser';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
@@ -19,11 +20,11 @@ interface ChildProps {
     formattertTekst?: boolean;
 }
 
-const InholdsWrapper = (props: ChildProps) => {
+const InnholdsWrapper = (props: ChildProps) => {
     const { children, formattertTekst } = props;
     if (formattertTekst) {
         return (
-            <Tekstomrade className="detaljfelt__tekst" rules={[ShortenedLinkRule]}>
+            <Tekstomrade className="detaljfelt__tekst" rules={[ShortenedLinkRule, LinebreakRule, ParagraphRule]}>
                 {children}
             </Tekstomrade>
         );
@@ -40,7 +41,7 @@ const Informasjonsfelt = (props: Props) => {
 
     return (
         <DetaljFelt tittel={tittel} fullbredde={fullbredde} beskrivelse={beskrivelse}>
-            <InholdsWrapper formattertTekst={formattertTekst}>{innhold}</InholdsWrapper>
+            <InnholdsWrapper formattertTekst={formattertTekst}>{innhold}</InnholdsWrapper>
         </DetaljFelt>
     );
 };
