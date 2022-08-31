@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import EtikettBase from '../../../../felles-komponenter/etikett-base/EtikettBase';
 import DatoField from '../../../../felles-komponenter/skjema/datovelger/Datovelger';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
-import styles from './SvarPaaVegneAvBruker.module.less';
+import styles from './SvarPaaVegneAvBruker.module.css';
 
 interface Props {
     formhandler: FieldState;

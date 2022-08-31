@@ -1,0 +1,66 @@
+.navigasjonslinje {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 4rem;
+    padding: 0 0 0.25rem 0;
+}
+.navigasjonslinje .lenkepanel {
+    margin-bottom: 0;
+    color: #0067c5;
+}
+.navigasjonslinje .lenkepanel:hover {
+    box-shadow: none;
+    outline: 2px solid #0067c5;
+}
+.navigasjonslinje .tilDittNav {
+    margin-bottom: 0;
+    color: #0067c5;
+    left: -0.8rem;
+    transform: scaleX(-1);
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+.navigasjonslinje .tilDittNav:hover {
+    box-shadow: none;
+    outline: 2px solid #0067c5;
+}
+.navigasjonslinje .tilDittNav .tilDittNavTekst {
+    transform: scaleX(-1);
+    vertical-align: middle;
+}
+.navigasjonslinje .tittel {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 1.5rem;
+}
+.navigasjonslinje .tilDialog {
+    color: #0067c5;
+    border: 2px solid transparent;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    text-decoration: none;
+}
+.navigasjonslinje .tilDialog:hover:not(:disabled),
+.navigasjonslinje .tilDialog:focus:not(:disabled) {
+    background-color: transparent;
+    border: 2px solid #0067c5;
+    color: #0067c5;
+}
+.navigasjonslinje .tilDialog.navigasjonslinje .tilDialog:active {
+    background-color: #005b82;
+    border: 2px solid transparent;
+    color: #fff;
+}
+.navigasjonslinje .tilDialog .dialogIkonMedUleste {
+    position: relative;
+    top: -0.3rem;
+    font-size: 14px;
+}
+.navigasjonslinje .tilDialog .avstand {
+    padding-left: 1rem;
+}
+.navigasjonslinje .tilDialog .tilDialogTekst {
+    padding-right: 0.5rem;
+}

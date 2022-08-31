@@ -12,7 +12,7 @@ import { selectAktivitetFhoLestStatus } from '../../../aktivitet-selector';
 import { selectArenaAktivitetFhoLestStatus } from '../../../arena-aktivitet-selector';
 import { markerForhaandsorienteringSomLestArenaAktivitet } from '../../../arena-aktiviteter-reducer';
 import { skalMarkereForhaandsorienteringSomLest } from '../../avtalt-container/utilsForhaandsorientering';
-import styles from './Forhaandsorienteringsvisning.module.less';
+import styles from './Forhaandsorienteringsvisning.module.css';
 import LestDatoVisning from './LestDatoVisning';
 import LestKnapp from './LestKnapp';
 import Tittel from './Tittel';

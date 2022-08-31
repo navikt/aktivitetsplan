@@ -1,0 +1,8 @@
+.ulestMarkering {
+    margin-right: 0.6rem;
+    display: flex;
+    align-items: flex-end;
+}
+.varselIkon {
+    margin-right: 0.3rem;
+}

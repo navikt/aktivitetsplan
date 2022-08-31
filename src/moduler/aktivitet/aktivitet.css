@@ -1,0 +1,254 @@
+.mote-aktivitet-form__velg-mote-klokkeslett {
+    display: flex;
+    justify-content: space-between;
+}
+.mote-aktivitet-form__velg-mote-klokkeslett .input--xs {
+    width: 85px;
+}
+@media (max-width: 560px) {
+    .mote-aktivitet-form__velg-mote-klokkeslett {
+        flex-direction: column;
+    }
+}
+.mote-aktivitet-form__video-info {
+    margin-bottom: 1rem;
+}
+.mote-aktivitet_husk_bruker {
+    margin-bottom: 2rem;
+}
+.samtalereferat-form__lagre-og-publiser {
+    margin-right: 1rem;
+}
+.skjema-header__tittel {
+    margin: 1.2rem 0;
+    line-height: 1.1;
+}
+.dato-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    column-gap: 1rem;
+}
+.dato-container .skjemaelement__feilmelding {
+    width: 210px;
+}
+.enhet-veileder-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.radio-container {
+    display: flex;
+    flex-direction: column;
+}
+.skjemaelement__label {
+    margin-bottom: 0.25em;
+}
+.input--m {
+    width: 210px;
+}
+.aktivitetskjema__lagre-knapp {
+    margin-bottom: 1rem;
+    padding: 1rem 2rem;
+    border-top: 1px #a0a0a0 solid;
+}
+.feedbacksummary {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 4px;
+    background-color: #ba3a26;
+    color: #fff;
+    list-style-position: inside;
+}
+.feedbacksummary ul {
+    margin: 0;
+    padding-left: 0;
+}
+.feedbacksummary h3 {
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+.feedbacksummary a {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    text-decoration: none;
+}
+.feedbacksummary a:focus {
+    outline: none;
+    background-color: #00347d;
+    color: #262626;
+    border-bottom: 1px solid #00347d;
+}
+.feedbacksummary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.detaljfelt {
+    margin-bottom: 20px;
+    margin-right: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 0 9rem;
+}
+@media (min-width: 992px) {
+    .detaljfelt {
+        flex: 0 0 13rem;
+        margin-right: 2rem;
+    }
+}
+.detaljfelt__tittel {
+    color: #6a6a6a;
+    text-transform: uppercase;
+}
+.detaljfelt__lenke {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.detaljfelt__tekst p {
+    margin: 0.3rem 0;
+}
+.detaljfelt--fullbredde {
+    flex: 1 0 auto;
+    width: 100%;
+}
+.detaljfelt--beskrivelse {
+    flex: auto;
+    min-width: 13rem;
+    overflow-wrap: break-word;
+}
+.varsling-boks {
+    margin-top: 1rem;
+}
+.oppdater-referat textarea {
+    margin-bottom: 1rem;
+}
+.oppdater-referat button {
+    margin-right: 1rem;
+}
+.oppdater-referat__referat {
+    margin: -0.4rem 0 1.6rem;
+}
+.oppdater-referat .oppdater-referat-knapper {
+    display: flex;
+}
+.oppdater-referat .oppdater-referat-status {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 1.5rem 0 0;
+}
+.oppdater-referat .oppdater-referat-status .alertstripe__ikon {
+    margin-right: 0.5rem;
+}
+.oppdater-referat .oppdater-referat-status .alertstripe__tekst {
+    font-weight: bold;
+}
+.aktivitetvisning {
+    max-width: 40rem;
+    margin: 0 auto;
+}
+.aktivitetvisning > .feilmelding {
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+.aktivitetvisning__underseksjon {
+    padding: 0 1rem;
+    margin: 1rem 0;
+}
+.aktivitetvisning__underseksjon .typo-sidetittel {
+    margin: 1.2rem 0;
+    line-height: 1.1;
+}
+.aktivitetvisning__underseksjon .typo-undertekst {
+    text-transform: uppercase;
+}
+.aktivitetvisning__underseksjon .col-xs-4 {
+    float: none;
+    width: 100%;
+}
+.aktivitetvisning__underseksjon .skjemaelement__label img {
+    width: 14px;
+    height: 20px;
+    margin: -2px 0 0 0.3rem;
+}
+.aktivitetvisning .oppdater-status {
+    margin-top: 0.5rem;
+}
+.aktivitetvisning__detaljer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 32rem;
+    width: 100%;
+}
+.aktivitetvisning .typo-undertittel {
+    margin: 1.1rem 0 1rem;
+}
+.aktivitetvisning .tilDittNavTekst {
+    white-space: pre-wrap;
+}
+.aktivitetvisning .aktivitetsbeskrivelse {
+    margin-bottom: 20px;
+    margin-right: 2rem;
+}
+.aktivitetvisning .aktivitetsbeskrivelse__tittel {
+    color: #6a6a6a;
+}
+.aktivitetvisning .aktivitetsbeskrivelse__tekst {
+    white-space: pre-wrap;
+}
+.aktivitetvisning .aktivitetsdetaljer {
+    margin-bottom: 20px;
+}
+.aktivitetvisning__delelinje {
+    margin-top: 0;
+    color: #a0a0a0;
+}
+.aktivitetvisning__historikk {
+    margin-bottom: 2rem;
+}
+.aktivitetvisning__historikk .endringslogg-for-aktivitet__lenke-knapp {
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+.aktivitetvisning__historikk .endringslogg-for-aktivitet__innslag {
+    margin-bottom: 20px;
+}
+@media (max-width: 991px) {
+    .aktivitetvisning .endreknapp {
+        margin-left: 20px;
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetvisning__detaljer {
+        width: 32rem;
+    }
+    .aktivitetvisning .endreknapp {
+        margin-left: 29px;
+        margin-right: -13px;
+    }
+}
+.avtalt-container {
+    margin: 1rem 0;
+}
+.avtalt-container__vis-avtalt {
+    display: flex;
+    align-items: center;
+}
+.avtalt-container .alertstripe--info {
+    margin-bottom: 1rem;
+}
+.avtalt-container .alertstripe--info:first-child {
+    margin-top: 1rem;
+}
+.aktivitetingress {
+    margin-bottom: 2rem;
+}
+.aktivitetingress__tekst {
+    white-space: pre-wrap;
+    margin: -0.4rem 0;
+}
+.publiser-referat {
+    padding: 2rem;
+}

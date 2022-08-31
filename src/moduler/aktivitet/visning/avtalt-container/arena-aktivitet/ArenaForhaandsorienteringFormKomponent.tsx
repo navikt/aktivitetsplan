@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Aktivitet, ForhaandsorienteringType } from '../../../../../datatypes/aktivitetTypes';
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
-import aktivitetsvisningStyles from '../../Aktivitetsvisning.module.less';
+import aktivitetsvisningStyles from '../../Aktivitetsvisning.module.css';
 import DeleLinje from '../../delelinje/delelinje';
 import { useKanSendeVarsel } from '../avtaltHooks';
 import ForhaandsorienteringForm from './ForhaandsorienteringForm';

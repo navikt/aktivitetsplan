@@ -3,7 +3,7 @@ import React from 'react';
 
 import { AktivitetType } from '../../../datatypes/aktivitetTypes';
 import { aktivitetTypeMap } from '../../../utils/textMappers';
-import styles from './Aktivitetskort.module.less';
+import styles from './Aktivitetskort.module.css';
 
 interface Props {
     type: AktivitetType;

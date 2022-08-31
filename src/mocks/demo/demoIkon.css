@@ -1,0 +1,18 @@
+.demo-ikon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1;
+}
+.demo-ikon polygon {
+    fill: #ffa500;
+}
+.demo-ikon :hover {
+    text-decoration: underline;
+}
+.demo-ikon polygon:hover {
+    fill: #ffb30f;
+}

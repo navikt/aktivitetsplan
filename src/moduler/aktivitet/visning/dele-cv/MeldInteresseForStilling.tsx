@@ -13,10 +13,10 @@ import { formaterDatoManed } from '../../../../utils';
 import { dagerSiden, todayIsoString } from '../../../../utils/dateUtils';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import { oppdaterCVSvar } from '../../aktivitet-actions';
-import detaljVisningStyles from '../Aktivitetsvisning.module.less';
+import detaljVisningStyles from '../Aktivitetsvisning.module.css';
 import { CustomAlertstripe } from '../hjelpekomponenter/CustomAlertstripe';
 import { Ingress } from './DeleCvContainer';
-import styles from './MeldInteresseForStilling.module.less';
+import styles from './MeldInteresseForStilling.module.css';
 import { SvarPaaVegneAvBruker } from './SvarPaaVegneAvBruker';
 import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
 

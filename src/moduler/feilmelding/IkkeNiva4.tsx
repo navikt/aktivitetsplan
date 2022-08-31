@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { selectErBrukerManuell, selectReservasjonKRR } from '../oppfolging-status/oppfolging-selector';
 import { selectNivaa4, selectNivaa4LastetOk } from '../tilgang/tilgang-selector';
-import styles from './Feilmelding.module.less';
+import styles from './Feilmelding.module.css';
 
 const Mere = () => (
     <Hjelpetekst type={PopoverOrientering.Under}>

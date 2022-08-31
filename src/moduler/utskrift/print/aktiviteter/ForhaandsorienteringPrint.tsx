@@ -3,7 +3,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
 import { formaterDatoManed } from '../../../../utils';
-import styles from './ForhaandsorienteringPrint.module.less';
+import styles from './ForhaandsorienteringPrint.module.css';
 
 interface Props {
     forhaandsorienteringTekst?: string;

@@ -1,0 +1,16 @@
+.invertedLesMer :global .ReactCollapse--collapse {
+    transition: height 500ms;
+}
+.invertedLesMer .toggle :global .lesMerPanel__toggle {
+    margin-top: 0;
+    padding-bottom: 0.5rem;
+}
+.invertedLesMer .toggle :global .lesMerPanel__toggle .lesMerPanel__togglelink {
+    color: #262626;
+}
+.invertedLesMer .toggle :global .lesMerPanel__toggle .lesMerPanel__toggleChevron {
+    margin-top: 0.3rem;
+}
+.invertedLesMer .toggle :global .lesMerPanel__toggle .lesMerPanel__togglelink--erApen .lesMerPanel__toggleChevron {
+    margin-bottom: 0.3rem;
+}

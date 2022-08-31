@@ -1,4 +1,4 @@
-import './mitt-maal.less';
+import './mitt-maal.css';
 
 import { Add } from '@navikt/ds-icons';
 import classNames from 'classnames';

@@ -1,0 +1,20 @@
+.etikett {
+    color: #a0a0a0;
+    display: flex;
+    justify-content: flex-end;
+}
+.svarPaaVegneAvBruker .label {
+    font-weight: normal;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+.feil .etikett {
+    color: #ba3a26;
+}
+.feil .panel {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.panel {
+    padding-bottom: 0 !important;
+}

@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import NotifikasjonMarkering from '../../../felles-komponenter/utils/NotifikasjonMarkering';
-import styles from './Aktivitetskort.module.less';
+import styles from './Aktivitetskort.module.css';
 
 interface Props {
     aktivitet: Aktivitet;

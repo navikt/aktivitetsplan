@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import styles from './EtikettBase.module.less';
+import styles from './EtikettBase.module.css';
 
 interface Props {
     className?: string;

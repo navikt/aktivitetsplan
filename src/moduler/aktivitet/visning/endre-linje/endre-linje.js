@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import { UnmountClosed } from 'react-collapse';
 
 import VisibleIfDiv from '../../../../felles-komponenter/utils/visible-if-div';
-import styles from './endre-linje.module.less';
+import styles from './endre-linje.module.css';
 
 function moveElementIntoView(id) {
     // moves the element into view after the react-collapse animation is finished

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import { DROP_TYPE } from '../../../hovedside/tavle/kolonne/DropTargetKolonne';
 import Aktivitetskort from './Aktivitetskort';
-import styles from './Aktivitetskort.module.less';
+import styles from './Aktivitetskort.module.css';
 import { startDragging, stopDragging } from './dragAndDropReducer';
 
 interface Props {

@@ -1,0 +1,139 @@
+.endreVisning {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    width: 100%;
+}
+.endreTittel {
+    padding-right: 1rem;
+    width: 100%;
+    max-width: 100%;
+}
+.endreContainer {
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    margin-bottom: 3px;
+    color: #3e3832;
+    border: none;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+}
+@media (min-width: 992px) {
+    .endreContainer {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+.endreContainer:focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+@media (pointer: fine) {
+    .endreContainer:hover:enabled {
+        text-decoration: underline;
+    }
+    .endreContainer:hover:enabled .endreKnappInnhold {
+        text-decoration: underline;
+    }
+}
+.endreForm {
+    padding: 0.2rem 1rem 1rem 1rem;
+}
+@media (min-width: 992px) {
+    .endreForm {
+        padding: 0.2rem 2rem 1rem 2rem;
+    }
+}
+.endreKnapp {
+    margin-left: auto;
+    white-space: nowrap;
+    color: #0067c5;
+}
+.endreKnappInnhold {
+    display: inline-block;
+    padding-right: 2px;
+}
+.endreIndikasjonApen {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.endreIndikasjonApen::before,
+.endreIndikasjonApen::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.endreIndikasjonApen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.endreIndikasjonApen::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.endreIndikasjonApen::before {
+    transform: translateX(2px) rotate(45deg);
+}
+.endreIndikasjonApen::after {
+    transform: translateX(-2px) rotate(-45deg);
+}
+.endreIndikasjonLukket {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.endreIndikasjonLukket::before,
+.endreIndikasjonLukket::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.endreIndikasjonLukket::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.endreIndikasjonLukket::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.endreIndikasjonLukket::before {
+    transform: translateX(2px) rotate(-45deg);
+}
+.endreIndikasjonLukket::after {
+    transform: translateX(-2px) rotate(45deg);
+}

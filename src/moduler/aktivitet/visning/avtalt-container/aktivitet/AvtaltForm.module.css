@@ -1,0 +1,12 @@
+.checkbox {
+    display: flex;
+}
+.checkbox .checkboxNoSpace {
+    margin-bottom: 0 !important;
+}
+.innhold {
+    margin-left: 2rem;
+}
+.maxWidth300 {
+    max-width: 300px;
+}

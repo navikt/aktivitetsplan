@@ -1,7 +1,7 @@
 import { Undertekst } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 
-import styles from './ForNavAnsattMarkeringWrapper.module.less';
+import styles from './ForNavAnsattMarkeringWrapper.module.css';
 
 interface Props {
     children: ReactNode;

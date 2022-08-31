@@ -7,7 +7,7 @@ import { Aktivitet } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import visibleIfHOC from '../../../hocs/visible-if';
 import { selectErBruker } from '../../identitet/identitet-selector';
-import styles from './ikke-delt-ferdig-markering.module.less';
+import styles from './ikke-delt-ferdig-markering.module.css';
 
 export const SkalIkkeDeltFerdigMarkeringVises = ({ type, erReferatPublisert, referat }: Aktivitet): boolean => {
     const harIkkeDeltSamtalereferat = type === SAMTALEREFERAT_TYPE && !erReferatPublisert;

@@ -1,0 +1,34 @@
+.detaljfelt {
+    margin-bottom: 20px;
+    margin-right: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 0 9rem;
+}
+@media (min-width: 992px) {
+    .detaljfelt {
+        flex: 0 0 13rem;
+        margin-right: 2rem;
+    }
+}
+.detaljfelt__tittel {
+    color: #6a6a6a;
+    text-transform: uppercase;
+}
+.detaljfelt__lenke {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.detaljfelt__tekst p {
+    margin: 0.3rem 0;
+}
+.detaljfelt--fullbredde {
+    flex: 1 0 auto;
+    width: 100%;
+}
+.detaljfelt--beskrivelse {
+    flex: auto;
+    min-width: 13rem;
+    overflow-wrap: break-word;
+}

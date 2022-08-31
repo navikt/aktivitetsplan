@@ -1,0 +1,8 @@
+.feilmeldingdetaljer {
+    font-size: 70%;
+    text-align: left;
+    max-height: 400px;
+    overflow: auto;
+    padding: 1rem;
+    background: #c9c9c9;
+}

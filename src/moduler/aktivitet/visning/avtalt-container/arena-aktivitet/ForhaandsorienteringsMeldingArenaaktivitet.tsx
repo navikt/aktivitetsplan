@@ -7,7 +7,7 @@ import Select from '../../../../../felles-komponenter/skjema/input/Select';
 import Textarea from '../../../../../felles-komponenter/skjema/input/Textarea';
 import VisibleIfDiv from '../../../../../felles-komponenter/utils/visible-if-div';
 import VarslingInfo from '../VarslingInfo';
-import styles from './ForhaandsorienteringsMeldingArenaaktivitet.module.less';
+import styles from './ForhaandsorienteringsMeldingArenaaktivitet.module.css';
 
 interface Props {
     visible: boolean;

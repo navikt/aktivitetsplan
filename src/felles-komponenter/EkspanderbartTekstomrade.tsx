@@ -5,7 +5,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import React, { useState } from 'react';
 
-import styles from './EkspanderbartTekstomrade.module.less';
+import styles from './EkspanderbartTekstomrade.module.css';
 import { ShortenedLinkRule } from './utils/rules';
 
 interface ToggleBetweenDisplayingTruncatedOrFullTextProps {

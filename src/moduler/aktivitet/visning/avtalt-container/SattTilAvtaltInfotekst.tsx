@@ -2,7 +2,7 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import React from 'react';
 
 import { ForhaandsorienteringType } from '../../../../datatypes/aktivitetTypes';
-import aktivitetvisningStyles from '../Aktivitetsvisning.module.less';
+import aktivitetvisningStyles from '../Aktivitetsvisning.module.css';
 import { useKanSendeVarsel } from './avtaltHooks';
 
 const getText = (

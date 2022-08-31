@@ -3,7 +3,7 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import React, { ReactNode } from 'react';
 
 import { erGyldigISODato } from '../../../utils';
-import styles from './PeriodeValidering.module.less';
+import styles from './PeriodeValidering.module.css';
 
 export const validerPeriode = (fradato: string, tildato: string) => {
     if (erGyldigISODato(fradato) && erGyldigISODato(tildato)) {

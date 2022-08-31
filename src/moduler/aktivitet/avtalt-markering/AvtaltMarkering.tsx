@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
-import styles from './AvtaltMarkering.module.less';
+import styles from './AvtaltMarkering.module.css';
 
 interface Props {
     className?: string;

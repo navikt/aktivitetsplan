@@ -1,0 +1,27 @@
+.modal-container .varselmodal {
+    padding: 1rem 2rem;
+}
+.modal-container .aktivitetskjema {
+    padding: 1rem 2rem;
+}
+.modal-container .aktivitetskjema__redigering-header {
+    display: flex;
+}
+.modal-container .aktivitetskjema__header {
+    margin-bottom: 4rem;
+}
+.modal-container .aktivitetskjema__header .skjema-header__pakrevd-info {
+    align-self: flex-end;
+    float: right;
+}
+.modal-container .aktivitetskjema__header .typo-innholdstittel {
+    margin: 0.5rem 0 1.2rem;
+}
+.modal-container .aktivitetskjema__datofelt-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.modal-container .aktivitetskjema__datofelt,
+.modal-container .aktivitetskjema .datovelger {
+    font-size: 1rem;
+}

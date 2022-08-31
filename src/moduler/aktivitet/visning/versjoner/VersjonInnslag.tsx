@@ -4,7 +4,7 @@ import React from 'react';
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import { formaterDatoEllerTidSiden } from '../../../../utils';
 import Endringstekst from './Endringstekst';
-import styles from './VersjonInnslag.module.less';
+import styles from './VersjonInnslag.module.css';
 
 interface Props {
     aktivitet: Aktivitet;

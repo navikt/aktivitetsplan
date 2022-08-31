@@ -4,7 +4,7 @@ import React from 'react';
 import * as statuskoder from '../../../constant';
 import { StillingFraNavSoknadsstatus } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
-import styles from './etikett.module.less';
+import styles from './etikett.module.css';
 
 const getCls = (etikettnavn: StillingFraNavSoknadsstatus): string => {
     switch (etikettnavn) {

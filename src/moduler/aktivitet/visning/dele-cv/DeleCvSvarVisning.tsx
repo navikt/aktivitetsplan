@@ -6,7 +6,7 @@ import { CvKanDelesData } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinjeBase from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinjeBase';
 import { formaterDatoManed } from '../../../../utils';
 import { Ingress } from './DeleCvContainer';
-import styles from './DeleCvSvarVisning.module.less';
+import styles from './DeleCvSvarVisning.module.css';
 import { JaSvarTekst, NeiSvarTekst, overskrift } from './tekster';
 
 interface Props {

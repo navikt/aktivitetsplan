@@ -1,4 +1,4 @@
-import './mal.less';
+import './mal.css';
 
 import { Innholdstittel, Undertekst } from 'nav-frontend-typografi';
 import React, { useEffect, useRef } from 'react';

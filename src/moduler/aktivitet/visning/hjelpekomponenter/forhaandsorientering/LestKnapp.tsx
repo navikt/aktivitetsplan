@@ -1,7 +1,7 @@
 import { Knapp } from 'nav-frontend-knapper';
 import React from 'react';
 
-import styles from './LestKnapp.module.less';
+import styles from './LestKnapp.module.css';
 
 interface Props {
     hidden: boolean;

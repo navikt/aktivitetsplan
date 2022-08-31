@@ -1,7 +1,7 @@
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import React, { Component } from 'react';
 
-import styles from './video.module.less';
+import styles from './video.module.css';
 
 const ONBOARDING_VIDEO_URL =
     'https://video.qbrick.com/play2/embed/player?accountId=763558&mediaId=74420478-00015227-993dea3a&configId=default&pageStyling=adaptive&autoplay=true&repeat=true&sharing=true';

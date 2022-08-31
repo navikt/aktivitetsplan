@@ -12,7 +12,7 @@ import { selectErBruker } from '../identitet/identitet-selector';
 import { selectLestInformasjon } from '../lest/lest-reducer';
 import { selectErUnderOppfolging } from '../oppfolging-status/oppfolging-selector';
 import { BrukePlanenPanel } from './brukePlanenPanel';
-import styles from './informasjon-modal.module.less';
+import styles from './informasjon-modal.module.css';
 import { selectBackPath, setBackPath } from './informasjon-reducer';
 import { OkonomiskStotte } from './okonomiskStottePanel';
 import { RettigheterPanel } from './rettigheterPanel';

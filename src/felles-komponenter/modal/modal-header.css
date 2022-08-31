@@ -1,0 +1,23 @@
+.modal-header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 4rem;
+    border-bottom: 1px solid #a0a0a0;
+    padding: 1.13rem 1rem;
+}
+.modal-header-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.modal-header-wrapper + .feilmelding {
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+.modal-header-skillestrek {
+    width: 37px;
+    padding-right: 16px;
+    margin-right: 16px;
+    border-right: 1px solid #262626;
+    height: 26px;
+}

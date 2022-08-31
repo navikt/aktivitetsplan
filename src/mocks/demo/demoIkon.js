@@ -1,4 +1,4 @@
-import './demoIkon.less';
+import './demoIkon.css';
 
 import React from 'react';
 

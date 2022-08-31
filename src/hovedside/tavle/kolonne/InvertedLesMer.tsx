@@ -2,7 +2,7 @@ import LesMerToggle from 'nav-frontend-lesmerpanel/lib/lesmerpanelToggle';
 import React, { useState } from 'react';
 import { Collapse } from 'react-collapse';
 
-import style from './InvertedLesMer.module.less';
+import style from './InvertedLesMer.module.css';
 
 interface Props {
     apneTekst: string;

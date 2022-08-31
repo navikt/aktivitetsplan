@@ -13,7 +13,7 @@ import ReferatIkkeDelt, {
     SkalIkkeDeltFerdigMarkeringVises,
 } from '../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
 import DialogIkon from '../visning/underelement-for-aktivitet/dialog/DialogIkon';
-import styles from './Aktivitetskort.module.less';
+import styles from './Aktivitetskort.module.css';
 import UlestAvtaltMarkering from './UlestAvtaltMarkering';
 
 interface Props {

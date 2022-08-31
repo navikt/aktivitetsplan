@@ -1,0 +1,23 @@
+.knappelenke {
+    color: #0067c5;
+    border: 0;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+.knappelenke:focus {
+    outline: none;
+    background-color: #00347d;
+    color: #fff;
+}
+.knappelenke:focus span {
+    border-bottom-color: #00347d;
+}
+.knappelenke:hover span {
+    border-bottom-color: #0067c5;
+}
+.knappelenke span {
+    display: inline-block;
+    border-bottom: 1px solid #a0a0a0;
+}

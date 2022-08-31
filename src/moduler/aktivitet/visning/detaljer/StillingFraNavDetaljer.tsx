@@ -6,7 +6,7 @@ import { StillingFraNavAktivitetData } from '../../../../datatypes/aktivitetType
 import { loggStillingFraNavStillingslenkeKlikk } from '../../../../felles-komponenter/utils/logging';
 import { selectErVeileder } from '../../../identitet/identitet-selector';
 import Informasjonsfelt from '../hjelpekomponenter/Informasjonsfelt';
-import styles from './AktivitetDetaljer.module.less';
+import styles from './AktivitetDetaljer.module.css';
 
 type Props = {
     stillingFraNavData: StillingFraNavAktivitetData;

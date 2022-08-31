@@ -11,7 +11,7 @@ import { loggForhandsorienteringTiltak } from '../../../../../felles-komponenter
 import { selectDialogStatus } from '../../../../dialog/dialog-selector';
 import { sendForhaandsorienteringArenaAktivitet } from '../../../arena-aktiviteter-reducer';
 import ForNavAnsattMarkeringWrapper from '../../hjelpekomponenter/ForNavAnsattMarkeringWrapper';
-import styles from './ForhaandsorienteringForm.module.less';
+import styles from './ForhaandsorienteringForm.module.css';
 import ForhaandsorienteringsMeldingArenaaktivitet from './ForhaandsorienteringsMeldingArenaaktivitet';
 
 const avtaltTekst =
@@ -41,10 +41,10 @@ interface Props {
 }
 
 type FormType = {
-    tekst: string,
-    checked: string,
-    forhaandsorienteringType: string
-}
+    tekst: string;
+    checked: string;
+    forhaandsorienteringType: string;
+};
 
 const ForhaandsorienteringForm = (props: Props) => {
     const { setSendtAtErAvtaltMedNav, setForhandsorienteringType, aktivitet, hidden } = props;

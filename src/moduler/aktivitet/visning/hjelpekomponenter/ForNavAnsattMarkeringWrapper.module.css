@@ -1,0 +1,15 @@
+.navAnsattTekst {
+    text-align: right;
+    color: #6a6a6a;
+}
+@media (min-width: 992px) {
+    .navAnsattTekst {
+        min-width: 8rem;
+    }
+}
+.navAnsattChildren {
+    width: 100%;
+}
+.navAnsattContainer {
+    display: flex;
+}

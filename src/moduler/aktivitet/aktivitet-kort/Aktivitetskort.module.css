@@ -1,0 +1,79 @@
+.aktivitetskort {
+    margin-bottom: 0.5rem;
+    display: block;
+    background-color: #fff;
+    color: #262626;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    border-radius: 4px;
+    padding: 0.75rem 1rem 1rem;
+    cursor: pointer;
+}
+.aktivitetskort:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetskort:hover {
+    box-shadow: 1px 1px 3px 0 #6a6a6a;
+}
+.aktivitetskort:hover .tittel {
+    color: #0067c5;
+    text-decoration: underline;
+}
+.type {
+    text-transform: uppercase;
+}
+.drag {
+    background-color: #f1f1f1;
+}
+.tittel {
+    display: inline-block;
+    margin-bottom: 4px;
+}
+.frist {
+    font-style: italic;
+    color: #a13a28;
+}
+.fristUtgaat {
+    font-style: italic;
+}
+.ikon {
+    height: 0;
+    align-self: flex-end;
+}
+.tillegg {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+.etikett {
+    margin-top: 2px;
+}
+.etikettWrapper {
+    display: flex;
+    flex-flow: column;
+    row-gap: 0.2rem;
+    align-items: flex-start;
+}
+.flyttbar {
+    cursor: move;
+    cursor: grab;
+}
+.header {
+    display: flex;
+}
+.dialogIkonUtenUleste {
+    position: relative;
+    float: right;
+    top: -1.25rem;
+    left: 0.25rem;
+}
+.dialogIkonMedUleste {
+    position: relative;
+    float: right;
+    top: -1.75rem;
+    left: 0.25rem;
+    font-size: 14px;
+}

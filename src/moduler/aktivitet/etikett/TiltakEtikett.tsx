@@ -4,7 +4,7 @@ import React from 'react';
 import { AlleAktiviteter, ArenaEtikett, isArenaAktivitet } from '../../../datatypes/aktivitetTypes';
 import EtikettBase from '../../../felles-komponenter/etikett-base/EtikettBase';
 import { tiltakEtikettMapper } from '../../../utils/textMappers';
-import styles from './etikett.module.less';
+import styles from './etikett.module.css';
 
 const getCls = (etikettnavn: ArenaEtikett): string => {
     switch (etikettnavn) {

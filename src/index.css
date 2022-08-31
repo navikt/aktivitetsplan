@@ -1,0 +1,3953 @@
+/*!
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/*
+-------------
+CLEARFIX
+-------------
+*/
+/* stylelint-disable */
+/* stylelint-enable */
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/* Document
+   ========================================================================== */
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+html {
+    line-height: 1.15;
+    /* 1 */
+    -webkit-text-size-adjust: 100%;
+    /* 2 */
+    font-family: sans-serif;
+    /* 3 */
+}
+/* Sections
+   ========================================================================== */
+/**
+ * Remove the margin in all browsers.
+ */
+body {
+    margin: 0;
+}
+/**
+ * Render the `main` element consistently in IE.
+ */
+main {
+    display: block;
+}
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+/* Grouping content
+   ========================================================================== */
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+    box-sizing: content-box;
+    /* 1 */
+    height: 0;
+    /* 1 */
+    overflow: visible;
+    /* 2 */
+}
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+    font-family: monospace, monospace;
+    /* 1 */
+    font-size: 1em;
+    /* 2 */
+}
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a {
+    background-color: transparent;
+}
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+    border-bottom: none;
+    /* 1 */
+    text-decoration: underline;
+    /* 2 */
+    text-decoration: underline dotted;
+    /* 2 */
+}
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+    font-weight: bolder;
+}
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+    font-family: monospace, monospace;
+    /* 1 */
+    font-size: 1em;
+    /* 2 */
+}
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+    font-size: 80%;
+}
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+sub {
+    bottom: -0.25em;
+}
+sup {
+    top: -0.5em;
+}
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+img {
+    border-style: none;
+}
+/* Forms
+   ========================================================================== */
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    /* 1 */
+    font-size: 100%;
+    /* 1 */
+    line-height: 1.15;
+    /* 1 */
+    margin: 0;
+    /* 2 */
+}
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+button,
+input {
+    /* 1 */
+    overflow: visible;
+}
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select {
+    /* 1 */
+    text-transform: none;
+}
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+    -webkit-appearance: button;
+}
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+}
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+button:-moz-focusring,
+[type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring {
+    outline: 1px dotted ButtonText;
+}
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+    padding: 0.35em 0.75em 0.625em;
+}
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+legend {
+    box-sizing: border-box;
+    /* 1 */
+    color: inherit;
+    /* 2 */
+    display: table;
+    /* 1 */
+    max-width: 100%;
+    /* 1 */
+    padding: 0;
+    /* 3 */
+    white-space: normal;
+    /* 1 */
+}
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+    vertical-align: baseline;
+}
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+textarea {
+    overflow: auto;
+}
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+[type='checkbox'],
+[type='radio'] {
+    box-sizing: border-box;
+    /* 1 */
+    padding: 0;
+    /* 2 */
+}
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+    height: auto;
+}
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type='search'] {
+    -webkit-appearance: textfield;
+    /* 1 */
+    outline-offset: -2px;
+    /* 2 */
+}
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+[type='search']::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    /* 1 */
+    font: inherit;
+    /* 2 */
+}
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+details {
+    display: block;
+}
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+    display: list-item;
+}
+/* Misc
+   ========================================================================== */
+/**
+ * Add the correct display in IE 10+.
+ */
+template {
+    display: none;
+}
+/**
+ * Add the correct display in IE 10.
+ */
+[hidden] {
+    display: none;
+}
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+@media print {
+    *,
+    *::before,
+    *::after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+    a[href]::after {
+        content: ' (' attr(href) ')';
+    }
+    abbr[title]::after {
+        content: ' (' attr(title) ')';
+    }
+    a[href^='#']::after,
+    a[href^='javascript:']::after {
+        content: '';
+    }
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+    thead {
+        display: table-header-group;
+    }
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+    img {
+        max-width: 100% !important;
+    }
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*::before,
+*::after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html {
+    font-size: 100%;
+    font-family: sans-serif;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+input,
+button,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+figure {
+    margin: 0;
+}
+img {
+    vertical-align: middle;
+}
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.img-rounded {
+    border-radius: 6px;
+}
+.img-circle {
+    border-radius: 50%;
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+}
+[role='button'] {
+    cursor: pointer;
+}
+body .clearfix::before,
+body .clearfix::after {
+    content: ' ';
+    display: table;
+}
+body .clearfix::after {
+    clear: both;
+}
+body .center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+body .pull-right {
+    float: right !important;
+}
+body .pull-left {
+    float: left !important;
+}
+body .hide {
+    display: none !important;
+}
+body .show {
+    display: block !important;
+}
+body .hidden {
+    display: none !important;
+}
+body .invisible {
+    visibility: hidden;
+}
+body .text-hide {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+body .ustilet {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+body .blokk {
+    margin-bottom: 2rem;
+}
+body .blokk-null {
+    margin-bottom: 0;
+}
+body .blokk-xxxs {
+    margin-bottom: 4px;
+}
+body .blokk-xxs {
+    margin-bottom: 0.5rem;
+}
+body .blokk-xs {
+    margin-bottom: 1rem;
+}
+body .blokk-s {
+    margin-bottom: 20px;
+}
+body .blokk-m {
+    margin-bottom: 2rem;
+}
+body .blokk-l {
+    margin-bottom: 2.5rem;
+}
+body .blokk-xl {
+    margin-bottom: 4rem;
+}
+@-ms-viewport {
+    width: device-width;
+}
+@media (max-width: 767px) {
+    .hidden-xs {
+        display: none !important;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .hidden-sm {
+        display: none !important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .hidden-md {
+        display: none !important;
+    }
+}
+@media (min-width: 1200px) {
+    .hidden-lg {
+        display: none !important;
+    }
+}
+.aktivitetsplanfs {
+    /* Beholdes i kode for å unngå breaking change */
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    color: #262626;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    line-height: 1.42857143;
+}
+.aktivitetsplanfs .alertstripe {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-content: center;
+    border-radius: 0.25rem;
+    color: #262626;
+}
+.aktivitetsplanfs .alertstripe--info {
+    border: 1px solid #368da8;
+    background-color: #d8f9ff;
+}
+.aktivitetsplanfs .alertstripe--suksess {
+    border: 1px solid #06893a;
+    background-color: #ccf1d6;
+}
+.aktivitetsplanfs .alertstripe--advarsel {
+    border: 1px solid #d47b00;
+    background-color: #ffeccc;
+}
+.aktivitetsplanfs .alertstripe--feil {
+    border: 1px solid #ba3a26;
+    background-color: #f9d2cc;
+}
+.aktivitetsplanfs .alertstripe__ikon {
+    margin-right: 0.75rem;
+    display: flex;
+    top: 1rem;
+    flex-shrink: 0;
+}
+.aktivitetsplanfs .alertstripe--inline {
+    background-color: unset;
+    border: 0;
+    padding: 0;
+}
+.aktivitetsplanfs .alertstripe:not(.alertstripe--inline) .lenke:not(:focus) {
+    color: #262626;
+}
+.aktivitetsplanfs .alertstripe .alertstripe__tekst {
+    margin: auto 0;
+    max-width: 37.5rem;
+    display: block;
+    flex: 1;
+}
+.aktivitetsplanfs .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+}
+.aktivitetsplanfs .chevron--ned {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.aktivitetsplanfs .chevron--ned::before,
+.aktivitetsplanfs .chevron--ned::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--ned::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--ned::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--ned::before {
+    transform: translateX(2px) rotate(45deg);
+}
+.aktivitetsplanfs .chevron--ned::after {
+    transform: translateX(-2px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--ned.chevron--stor {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 3px;
+    line-height: 2px;
+    width: 32px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.aktivitetsplanfs .chevron--ned.chevron--stor::before,
+.aktivitetsplanfs .chevron--ned.chevron--stor::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--ned.chevron--stor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--ned.chevron--stor::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--ned.chevron--stor::before {
+    transform: translateX(3px) rotate(45deg);
+}
+.aktivitetsplanfs .chevron--ned.chevron--stor::after {
+    transform: translateX(-3px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--opp {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.aktivitetsplanfs .chevron--opp::before,
+.aktivitetsplanfs .chevron--opp::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--opp::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--opp::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--opp::before {
+    transform: translateX(2px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--opp::after {
+    transform: translateX(-2px) rotate(45deg);
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 3px;
+    line-height: 2px;
+    width: 32px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::before,
+.aktivitetsplanfs .chevron--opp.chevron--stor::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::before {
+    transform: translateX(3px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::after {
+    transform: translateX(-3px) rotate(45deg);
+}
+.aktivitetsplanfs .chevron--hoyre {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+}
+.aktivitetsplanfs .chevron--hoyre::before,
+.aktivitetsplanfs .chevron--hoyre::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--hoyre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--hoyre::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--hoyre::before {
+    transform: translateX(2px) rotate(45deg);
+}
+.aktivitetsplanfs .chevron--hoyre::after {
+    transform: translateX(-2px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--hoyre.chevron--stor {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 3px;
+    line-height: 2px;
+    width: 32px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+}
+.aktivitetsplanfs .chevron--hoyre.chevron--stor::before,
+.aktivitetsplanfs .chevron--hoyre.chevron--stor::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--hoyre.chevron--stor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--hoyre.chevron--stor::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--hoyre.chevron--stor::before {
+    transform: translateX(3px) rotate(45deg);
+}
+.aktivitetsplanfs .chevron--hoyre.chevron--stor::after {
+    transform: translateX(-3px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--venstre {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+}
+.aktivitetsplanfs .chevron--venstre::before,
+.aktivitetsplanfs .chevron--venstre::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--venstre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--venstre::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--venstre::before {
+    transform: translateX(2px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--venstre::after {
+    transform: translateX(-2px) rotate(45deg);
+}
+.aktivitetsplanfs .chevron--venstre.chevron--stor {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 3px;
+    line-height: 2px;
+    width: 32px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+}
+.aktivitetsplanfs .chevron--venstre.chevron--stor::before,
+.aktivitetsplanfs .chevron--venstre.chevron--stor::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--venstre.chevron--stor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--venstre.chevron--stor::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--venstre.chevron--stor::before {
+    transform: translateX(3px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--venstre.chevron--stor::after {
+    transform: translateX(-3px) rotate(45deg);
+}
+.aktivitetsplanfs .ReactCollapse--collapse {
+    transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.aktivitetsplanfs .ekspanderbartPanel {
+    position: relative;
+    background: white;
+    border-radius: 0.25rem;
+}
+.aktivitetsplanfs .ekspanderbartPanel:hover,
+.aktivitetsplanfs .ekspanderbartPanel--hover {
+    box-shadow: #a0a0a0 0 2px 1px 0;
+}
+.aktivitetsplanfs .ekspanderbartPanel:focus,
+.aktivitetsplanfs .ekspanderbartPanel--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .ekspanderbartPanel__hode {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .ekspanderbartPanel__hode .ekspanderbartPanel__tittel {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.5625rem;
+    font-weight: 600;
+    color: #262626;
+}
+.aktivitetsplanfs .ekspanderbartPanel__hode:hover,
+.aktivitetsplanfs .ekspanderbartPanel__hode--hover {
+    cursor: pointer;
+}
+.aktivitetsplanfs .ekspanderbartPanel__hode:hover .ekspanderbartPanel__tittel,
+.aktivitetsplanfs .ekspanderbartPanel__hode--hover .ekspanderbartPanel__tittel {
+    text-decoration: underline;
+    color: #0067c5;
+}
+.aktivitetsplanfs .ekspanderbartPanel__hode:focus,
+.aktivitetsplanfs .ekspanderbartPanel__hode--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .ekspanderbartPanel__flex-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.aktivitetsplanfs .ekspanderbartPanel__innhold {
+    padding: 1rem;
+    padding-top: 0.5rem;
+}
+.aktivitetsplanfs .ekspanderbartPanel--lukket .ekspanderbartPanel__indikator {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.aktivitetsplanfs .ekspanderbartPanel--lukket .ekspanderbartPanel__indikator::before,
+.aktivitetsplanfs .ekspanderbartPanel--lukket .ekspanderbartPanel__indikator::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .ekspanderbartPanel--lukket .ekspanderbartPanel__indikator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .ekspanderbartPanel--lukket .ekspanderbartPanel__indikator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .ekspanderbartPanel--lukket .ekspanderbartPanel__indikator::before {
+    transform: translateX(2px) rotate(45deg);
+}
+.aktivitetsplanfs .ekspanderbartPanel--lukket .ekspanderbartPanel__indikator::after {
+    transform: translateX(-2px) rotate(-45deg);
+}
+.aktivitetsplanfs .ekspanderbartPanel--border {
+    border: 1px solid #6a6a6a;
+}
+.aktivitetsplanfs .ekspanderbartPanel--border:hover,
+.aktivitetsplanfs .ekspanderbartPanel--border.panel-interaktiv-mixin--hover {
+    border: 1px solid #0067c5;
+}
+.aktivitetsplanfs .ekspanderbartPanel--border.ekspanderbartPanel--apen {
+    border: 1px solid #6a6a6a;
+}
+.aktivitetsplanfs .ekspanderbartPanel--apen > .ekspanderbartPanel__hode {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.aktivitetsplanfs .ekspanderbartPanel--apen .ekspanderbartPanel__innhold {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.aktivitetsplanfs .ekspanderbartPanel--apen > .ekspanderbartPanel__hode .ekspanderbartPanel__indikator {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.aktivitetsplanfs .ekspanderbartPanel--apen > .ekspanderbartPanel__hode .ekspanderbartPanel__indikator::before,
+.aktivitetsplanfs .ekspanderbartPanel--apen > .ekspanderbartPanel__hode .ekspanderbartPanel__indikator::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .ekspanderbartPanel--apen > .ekspanderbartPanel__hode .ekspanderbartPanel__indikator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .ekspanderbartPanel--apen > .ekspanderbartPanel__hode .ekspanderbartPanel__indikator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .ekspanderbartPanel--apen > .ekspanderbartPanel__hode .ekspanderbartPanel__indikator::before {
+    transform: translateX(2px) rotate(-45deg);
+}
+.aktivitetsplanfs .ekspanderbartPanel--apen > .ekspanderbartPanel__hode .ekspanderbartPanel__indikator::after {
+    transform: translateX(-2px) rotate(45deg);
+}
+.aktivitetsplanfs .knappmini-mixin {
+    padding: calc(0.25rem - 1px) 1.5rem calc(0.25rem - 1px) 1.5rem;
+    min-height: 2rem;
+}
+.aktivitetsplanfs .knappdisabled-mixin:disabled,
+.aktivitetsplanfs .knappdisabled-mixin--disabled {
+    background-color: #a0a0a0;
+    border-color: #a0a0a0;
+    color: #fff;
+    box-shadow: none;
+    transform: none;
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .knappdisabled-mixin:disabled::after,
+.aktivitetsplanfs .knappdisabled-mixin--disabled::after {
+    display: none;
+}
+.aktivitetsplanfs .knappdisabled-mixin:disabled:hover,
+.aktivitetsplanfs .knappdisabled-mixin--disabled:hover,
+.aktivitetsplanfs .knappdisabled-mixin:disabled:focus,
+.aktivitetsplanfs .knappdisabled-mixin--disabled:focus {
+    box-shadow: none;
+    background-color: #a0a0a0;
+    border-color: #a0a0a0;
+    color: #fff;
+}
+.aktivitetsplanfs .knapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1em;
+    white-space: nowrap;
+    border-radius: 0.125em;
+    cursor: pointer;
+    user-select: none;
+    letter-spacing: 0.0625em;
+    line-height: 1.375rem;
+    text-decoration: none;
+    background-color: #fff;
+    padding: calc(0.475rem - 1px) 2.5rem calc(0.525rem - 1px) 2.5rem;
+    min-height: 2.5rem;
+    vertical-align: middle;
+    border: 2px solid #0067c5;
+    color: #0067c5;
+}
+.aktivitetsplanfs .knapp:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .knapp:hover {
+    background-color: #0067c5;
+    color: #fff;
+}
+.aktivitetsplanfs .knapp:active {
+    background-color: #005b82;
+    border-color: #005b82;
+    color: #fff;
+}
+.aktivitetsplanfs .knapp:disabled,
+.aktivitetsplanfs .knapp--disabled {
+    background-color: #a0a0a0;
+    border-color: #a0a0a0;
+    color: #fff;
+    box-shadow: none;
+    transform: none;
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .knapp:disabled::after,
+.aktivitetsplanfs .knapp--disabled::after {
+    display: none;
+}
+.aktivitetsplanfs .knapp:disabled:hover,
+.aktivitetsplanfs .knapp--disabled:hover,
+.aktivitetsplanfs .knapp:disabled:focus,
+.aktivitetsplanfs .knapp--disabled:focus {
+    box-shadow: none;
+    background-color: #a0a0a0;
+    border-color: #a0a0a0;
+    color: #fff;
+}
+.aktivitetsplanfs .knapp .knapp__spinner {
+    border: 2px solid #0067c5;
+    border-left-color: #99c3ff;
+    border-bottom-color: #99c3ff;
+}
+.aktivitetsplanfs .knapp:hover .knapp__spinner {
+    border-top-color: #fff;
+    border-right-color: #fff;
+}
+.aktivitetsplanfs .knapp.knapp--hoved:focus .knapp__spinner {
+    border-top-color: #0067c5;
+    border-right-color: #0067c5;
+}
+.aktivitetsplanfs .knapp.knapp--hoved .knapp__spinner,
+.aktivitetsplanfs .knapp.knapp--hoved:hover .knapp__spinner {
+    border-top-color: #fff;
+    border-right-color: #fff;
+}
+.aktivitetsplanfs .knapp.knapp--fare:focus .knapp__spinner {
+    border-top-color: #ba3a26;
+    border-right-color: #ba3a26;
+}
+.aktivitetsplanfs .knapp.knapp--fare .knapp__spinner,
+.aktivitetsplanfs .knapp.knapp--fare:hover .knapp__spinner {
+    border: 2px solid #fff;
+    border-left-color: #efa89d;
+    border-bottom-color: #efa89d;
+}
+.aktivitetsplanfs .knapp.knapp--flat:hover .knapp__spinner {
+    border-top-color: #0067c5;
+    border-right-color: #0067c5;
+}
+.aktivitetsplanfs .knapp:disabled .knapp__spinner,
+.aktivitetsplanfs .knapp--disabled .knapp__spinner {
+    border: 2px solid #fff;
+    border-top-color: #f1f1f1;
+    border-right-color: #f1f1f1;
+}
+.aktivitetsplanfs .knapp svg {
+    width: 1rem;
+    height: 1rem;
+    fill: #0067c5;
+}
+.aktivitetsplanfs .knapp .nav-frontend-chevron + span:not(.sr-only),
+.aktivitetsplanfs .knapp span:not(.sr-only) + .nav-frontend-chevron {
+    margin-left: 0.33333rem;
+}
+.aktivitetsplanfs .knapp svg + span:not(.sr-only),
+.aktivitetsplanfs .knapp span:not(.sr-only) + svg {
+    margin-left: 0.5rem;
+}
+.aktivitetsplanfs .knapp > span {
+    display: inline-block;
+}
+.aktivitetsplanfs .knapp:hover svg {
+    fill: white;
+}
+.aktivitetsplanfs .knapp.knapp--flat:hover svg {
+    fill: #0067c5;
+}
+.aktivitetsplanfs .knapp.knapp--fare:focus svg {
+    fill: #ba3a26;
+}
+.aktivitetsplanfs .knapp:disabled:not(:focus) svg,
+.aktivitetsplanfs .knapp.knapp--disabled:not(:focus) svg,
+.aktivitetsplanfs .knapp.knapp--hoved:not(:focus) svg,
+.aktivitetsplanfs .knapp.knapp--fare:not(:focus) svg {
+    fill: white;
+}
+.aktivitetsplanfs .knapp:disabled:active svg,
+.aktivitetsplanfs .knapp.knapp--disabled:active svg,
+.aktivitetsplanfs .knapp.knapp--hoved:active svg,
+.aktivitetsplanfs .knapp.knapp--fare:active svg,
+.aktivitetsplanfs .knapp:disabled:hover svg,
+.aktivitetsplanfs .knapp.knapp--disabled:hover svg,
+.aktivitetsplanfs .knapp.knapp--hoved:hover svg,
+.aktivitetsplanfs .knapp.knapp--fare:hover svg {
+    fill: white;
+}
+.aktivitetsplanfs .knapp--hoved {
+    color: white;
+    border-color: #0067c5;
+    background-color: #0067c5;
+    position: relative;
+    border-width: 1px;
+}
+.aktivitetsplanfs .knapp--hoved:hover {
+    background-color: #0056b4;
+    border-color: #0056b4;
+}
+.aktivitetsplanfs .knapp--hoved:hover.aktivitetsplanfs .knapp--hoved:focus {
+    background-color: #0056b4;
+    border-color: #0056b4;
+    border-color: white;
+}
+.aktivitetsplanfs .knapp--hoved:focus {
+    outline: none;
+    border-color: white;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .knapp--hoved:active {
+    background-color: #005b82;
+    border-color: transparent;
+    border-color: white;
+}
+.aktivitetsplanfs .knapp--hoved:hover.aktivitetsplanfs .knapp--hoved:focus.aktivitetsplanfs .knapp--hoved:active {
+    background-color: #005b82;
+    border-color: #005b82;
+    border-color: white;
+}
+.aktivitetsplanfs .knapp--fare {
+    color: white;
+    border-color: #ba3a26;
+    background-color: #ba3a26;
+    position: relative;
+    border-width: 1px;
+}
+.aktivitetsplanfs .knapp--fare:hover {
+    background-color: #a32a17;
+    border-color: #a32a17;
+}
+.aktivitetsplanfs .knapp--fare:hover.aktivitetsplanfs .knapp--fare:focus {
+    background-color: #a32a17;
+    border-color: #a32a17;
+    border-color: white;
+}
+.aktivitetsplanfs .knapp--fare:focus {
+    outline: none;
+    border-color: white;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .knapp--fare:active {
+    background-color: #881d0c;
+    border-color: transparent;
+    border-color: white;
+}
+.aktivitetsplanfs .knapp--fare:hover.aktivitetsplanfs .knapp--fare:focus.aktivitetsplanfs .knapp--fare:active {
+    background-color: #881d0c;
+    border-color: #881d0c;
+    border-color: white;
+}
+.aktivitetsplanfs .knapp--flat {
+    color: #0067c5;
+    border: 2px solid transparent;
+    background: transparent;
+}
+.aktivitetsplanfs .knapp--flat:hover:not(:disabled),
+.aktivitetsplanfs .knapp--flat:focus:not(:disabled) {
+    background-color: transparent;
+    border: 2px solid #0067c5;
+    color: #0067c5;
+}
+.aktivitetsplanfs .knapp--flat.aktivitetsplanfs .knapp--flat:active {
+    background-color: #005b82;
+    border: 2px solid transparent;
+    color: #fff;
+}
+.aktivitetsplanfs .knapp--mini {
+    padding: calc(0.25rem - 1px) 1.5rem calc(0.25rem - 1px) 1.5rem;
+    min-height: 2rem;
+}
+.aktivitetsplanfs .knapp--kompakt {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+.aktivitetsplanfs .knapp--kompakt.knapp--mini {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.aktivitetsplanfs .knapp__spinner {
+    width: 0.8em;
+    height: 0.8em;
+    display: inline-block;
+    border-radius: 100%;
+    animation: knapp__spinner 1s infinite linear;
+    position: relative;
+    margin-left: 0.5em;
+    top: 0.1em;
+}
+@keyframes knapp__spinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.aktivitetsplanfs .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+}
+.aktivitetsplanfs .lenkepanel {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #262626;
+}
+.aktivitetsplanfs .lenkepanel:hover,
+.aktivitetsplanfs .lenkepanel--hover {
+    box-shadow: #a0a0a0 0 2px 1px 0;
+}
+.aktivitetsplanfs .lenkepanel:focus,
+.aktivitetsplanfs .lenkepanel--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .lenkepanel__indikator {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+    left: 0;
+    transition: left 250ms;
+}
+.aktivitetsplanfs .lenkepanel__indikator::before,
+.aktivitetsplanfs .lenkepanel__indikator::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .lenkepanel__indikator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .lenkepanel__indikator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .lenkepanel__indikator::before {
+    transform: translateX(2px) rotate(45deg);
+}
+.aktivitetsplanfs .lenkepanel__indikator::after {
+    transform: translateX(-2px) rotate(-45deg);
+}
+.aktivitetsplanfs .lenkepanel:hover .lenkepanel__heading,
+.aktivitetsplanfs .lenkepanel--hover .lenkepanel__heading {
+    text-decoration: underline;
+    color: #0067c5;
+}
+.aktivitetsplanfs .lenkepanel:hover .lenkepanel__indikator,
+.aktivitetsplanfs .lenkepanel--hover .lenkepanel__indikator {
+    left: 6px;
+}
+.aktivitetsplanfs .lenkepanel--border {
+    border: 1px solid #c9c9c9;
+    border: 1px solid #6a6a6a;
+}
+.aktivitetsplanfs .lenkepanel--border:hover,
+.aktivitetsplanfs .lenkepanel--border.panel-interaktiv-mixin--hover {
+    border: 1px solid #0067c5;
+}
+.aktivitetsplanfs .lenkemedikon-mixin svg {
+    width: 1em;
+    height: 1em;
+    fill: #0067c5;
+    stroke: #0067c5;
+    vertical-align: middle;
+    position: relative;
+    top: -0.125em;
+}
+.aktivitetsplanfs .lenkemedikon-mixin svg + span:not(.sr-only),
+.aktivitetsplanfs .lenkemedikon-mixin span:not(.sr-only) + svg {
+    margin-left: 0.25em;
+}
+.aktivitetsplanfs .lenkemedikon-mixin:focus svg {
+    fill: white;
+    stroke: white;
+}
+.aktivitetsplanfs .lenke {
+    color: #0067c5;
+    background: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.aktivitetsplanfs .lenke:hover,
+.aktivitetsplanfs .lenke--hover {
+    text-decoration: none;
+}
+.aktivitetsplanfs .lenke:focus,
+.aktivitetsplanfs .lenke--focus {
+    outline: none;
+    color: white;
+    text-decoration: none;
+    background-color: #00347d;
+    box-shadow: 0 0 0 2px #00347d;
+}
+.aktivitetsplanfs .lenke:active,
+.aktivitetsplanfs .lenke--active {
+    outline: none;
+    color: white;
+    text-decoration: none;
+    background-color: #00347d;
+    box-shadow: 0 0 0 2px #00347d;
+}
+.aktivitetsplanfs .lenke svg {
+    width: 1em;
+    height: 1em;
+    fill: #0067c5;
+    stroke: #0067c5;
+    vertical-align: middle;
+    position: relative;
+    top: -0.125em;
+}
+.aktivitetsplanfs .lenke svg + span:not(.sr-only),
+.aktivitetsplanfs .lenke span:not(.sr-only) + svg {
+    margin-left: 0.25em;
+}
+.aktivitetsplanfs .lenke:focus svg {
+    fill: white;
+    stroke: white;
+}
+.aktivitetsplanfs .panel {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+}
+.aktivitetsplanfs .panel--stor {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    padding: 1.25rem 1rem 1.25rem 1rem;
+}
+.aktivitetsplanfs .panel--border {
+    border: 1px solid #c9c9c9;
+}
+.aktivitetsplanfs .checkboks,
+.aktivitetsplanfs .radioknapp {
+    position: absolute;
+    opacity: 0;
+}
+.aktivitetsplanfs .checkboks + .skjemaelement__label,
+.aktivitetsplanfs .radioknapp + .skjemaelement__label {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    padding-left: 32px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0;
+    line-height: 24px;
+}
+.aktivitetsplanfs .checkboks + .skjemaelement__label::before,
+.aktivitetsplanfs .radioknapp + .skjemaelement__label::before {
+    content: '';
+    position: absolute;
+    display: block;
+    text-align: center;
+    background-color: #fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 1px solid #6a6a6a;
+    width: 24px;
+    height: 24px;
+    left: 0;
+    top: 0;
+}
+.aktivitetsplanfs .checkboks:hover + .skjemaelement__label,
+.aktivitetsplanfs .radioknapp:hover + .skjemaelement__label {
+    color: #0067c5;
+}
+.aktivitetsplanfs .checkboks:hover + .skjemaelement__label::before,
+.aktivitetsplanfs .radioknapp:hover + .skjemaelement__label::before {
+    border-color: #0067c5;
+    background-color: #cce1ff;
+}
+.aktivitetsplanfs .checkboks:disabled + .skjemaelement__label,
+.aktivitetsplanfs .radioknapp:disabled + .skjemaelement__label {
+    color: #6a6a6a;
+}
+.aktivitetsplanfs .checkboks:disabled + .skjemaelement__label:hover,
+.aktivitetsplanfs .radioknapp:disabled + .skjemaelement__label:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .checkboks:disabled + .skjemaelement__label::before,
+.aktivitetsplanfs .radioknapp:disabled + .skjemaelement__label::before {
+    background-color: #f1f1f1;
+    border-color: #6a6a6a;
+    box-shadow: none;
+}
+.aktivitetsplanfs .checkboks--mork + .skjemaelement__label::before,
+.aktivitetsplanfs .radioknapp--mork + .skjemaelement__label::before {
+    border-color: #6a6a6a;
+}
+.aktivitetsplanfs .checkboks {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    position: absolute;
+    opacity: 0;
+}
+.aktivitetsplanfs .checkboks:focus + .skjemaelement__label::before {
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .checkboks + .skjemaelement__label::before {
+    border-radius: 4px;
+}
+.aktivitetsplanfs .checkboks:checked:disabled + .skjemaelement__label::before {
+    border-color: #a0a0a0;
+    background-color: #a0a0a0;
+}
+.aktivitetsplanfs .checkboks:checked:focus + .skjemaelement__label::before {
+    background-color: white;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjMDA2N0M1IiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+}
+.aktivitetsplanfs .checkboks:checked + .skjemaelement__label::before {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 75%;
+    border-color: #0067c5;
+    border-width: 2px;
+    background-color: #0067c5;
+}
+.aktivitetsplanfs .radioknapp {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+}
+.aktivitetsplanfs .radioknapp + .skjemaelement__label::before {
+    border-radius: 50%;
+}
+.aktivitetsplanfs .radioknapp:checked + .skjemaelement__label::before {
+    border: 2px solid #0067c5;
+    box-shadow: 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
+}
+.aktivitetsplanfs .radioknapp:disabled:checked + .skjemaelement__label::before {
+    border: 2px solid #a0a0a0;
+    box-shadow: 0 0 0 3px #fff inset, 0 0 0 12px #a0a0a0 inset;
+}
+.aktivitetsplanfs .radioknapp:focus + .skjemaelement__label::before {
+    box-shadow: 0 0 0 3px #00347d, 0 0 0 12px #fff inset;
+}
+.aktivitetsplanfs .radioknapp:checked:focus + .skjemaelement__label::before {
+    transition: box-shadow 200ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    box-shadow: 0 0 0 3px #00347d, 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
+}
+.aktivitetsplanfs .textarea--medMeta {
+    resize: none;
+    width: 100%;
+    overflow: hidden;
+    min-height: 4rem;
+    transition: height 0.1s ease-out;
+    display: block;
+}
+.aktivitetsplanfs .textarea--medMeta__wrapper {
+    width: 100%;
+    position: relative;
+}
+.aktivitetsplanfs .textarea--medMeta__teller {
+    pointer-events: none;
+    color: #6a6a6a;
+    font-style: italic;
+    position: absolute;
+    text-align: right;
+    left: 32px;
+    right: 12px;
+    bottom: 10px;
+    margin: 0;
+    padding: 0;
+}
+.aktivitetsplanfs .textarea--medMeta__teller .teller-tekst--overflow {
+    color: #ba3a26;
+    font-weight: bold;
+}
+.aktivitetsplanfs .textareamirror {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    appearance: none;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #6a6a6a;
+    box-sizing: border-box;
+    line-height: 1.375rem;
+    white-space: pre-wrap;
+    display: inline-block;
+    width: 100%;
+    word-wrap: break-word;
+    position: absolute;
+    left: -99999px;
+    top: 0;
+}
+.aktivitetsplanfs .textareamirror:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .textareamirror:hover {
+    border-color: #0067c5;
+}
+.aktivitetsplanfs .textareamirror:disabled,
+.aktivitetsplanfs .textareamirror[readonly] {
+    background-color: #f1f1f1;
+    border-color: #6a6a6a;
+    box-shadow: none;
+    color: #262626;
+}
+.aktivitetsplanfs .textareamirror:disabled:hover,
+.aktivitetsplanfs .textareamirror[readonly]:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .textareamirror--mini {
+    padding: 0.25rem;
+}
+.aktivitetsplanfs .textareamirror:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .textareamirror:hover {
+    border-color: #0067c5;
+}
+.aktivitetsplanfs .textareamirror:disabled,
+.aktivitetsplanfs .textareamirror[readonly] {
+    background-color: #f1f1f1;
+    border-color: #6a6a6a;
+    box-shadow: none;
+    color: #262626;
+}
+.aktivitetsplanfs .textareamirror:disabled:hover,
+.aktivitetsplanfs .textareamirror[readonly]:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .textareamirror--mini {
+    padding: 0.25rem;
+}
+.aktivitetsplanfs .textarea__container {
+    position: relative;
+}
+.aktivitetsplanfs .selectContainer {
+    position: relative;
+    display: inline-block;
+}
+.aktivitetsplanfs .selectContainer select {
+    padding-right: 1.5em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    width: 100%;
+}
+.aktivitetsplanfs .selectContainer select::-ms-expand {
+    display: none;
+}
+.aktivitetsplanfs .selectContainer::before {
+    pointer-events: none;
+    content: '';
+    background: #262626;
+    height: 2px;
+    width: 10px;
+    border-radius: 10px;
+    right: 0.75rem;
+    top: 50%;
+    z-index: 4;
+    position: absolute;
+    transform: translateX(3px) rotate(-45deg);
+}
+.aktivitetsplanfs .selectContainer::after {
+    pointer-events: none;
+    content: '';
+    background: #262626;
+    height: 2px;
+    width: 10px;
+    border-radius: 10px;
+    right: 0.75rem;
+    top: 50%;
+    z-index: 4;
+    position: absolute;
+    transform: translateX(-3px) rotate(45deg);
+}
+.aktivitetsplanfs .input--xxs {
+    width: 35px;
+}
+.aktivitetsplanfs .input--xs {
+    width: 70px;
+}
+.aktivitetsplanfs .input--s {
+    width: 140px;
+}
+.aktivitetsplanfs .input--m {
+    width: 100%;
+    max-width: 210px;
+}
+.aktivitetsplanfs .input--l {
+    width: 100%;
+    max-width: 280px;
+}
+.aktivitetsplanfs .input--xl {
+    width: 100%;
+    max-width: 350px;
+}
+.aktivitetsplanfs .input--xxl {
+    width: 100%;
+    max-width: 420px;
+}
+.aktivitetsplanfs .input--fullbredde {
+    width: 100%;
+}
+.aktivitetsplanfs .skjemaelement__input {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    appearance: none;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #6a6a6a;
+    box-sizing: border-box;
+    line-height: 1.375rem;
+}
+.aktivitetsplanfs .skjemaelement__input:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .skjemaelement__input:hover {
+    border-color: #0067c5;
+}
+.aktivitetsplanfs .skjemaelement__input:disabled,
+.aktivitetsplanfs .skjemaelement__input[readonly] {
+    background-color: #f1f1f1;
+    border-color: #6a6a6a;
+    box-shadow: none;
+    color: #262626;
+}
+.aktivitetsplanfs .skjemaelement__input:disabled:hover,
+.aktivitetsplanfs .skjemaelement__input[readonly]:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .skjemaelement__input--mini {
+    padding: 0.25rem;
+}
+.aktivitetsplanfs .skjemaelement__input-fodselsnr::-webkit-outer-spin-button,
+.aktivitetsplanfs .skjemaelement__input-fodselsnr::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.aktivitetsplanfs .skjemaelement__input-fodselsnr [type='number'] {
+    -moz-appearance: textfield;
+}
+.aktivitetsplanfs .skjemagruppe--feil .skjemaelement__input:not(:focus):not(:hover):not(:active):not(:checked) {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs
+    .skjemagruppe--feil
+    .skjemaelement__input:not(:focus):not(:hover):not(:active):not(:checked).checkboks
+    + .skjemaelement__label::before,
+.aktivitetsplanfs
+    .skjemagruppe--feil
+    .skjemaelement__input:not(:focus):not(:hover):not(:active):not(:checked).radioknapp
+    + .skjemaelement__label::before {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs
+    .skjemagruppe--feil
+    .inputPanel:not(.inputPanel--focused):not(.inputPanel--checked):not(.inputPanel--disabled) {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs .skjemaelement__feilmelding {
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .skjemaelement__feilmelding:empty {
+    margin: 0;
+}
+.aktivitetsplanfs .skjemaelement__input--harFeil:not(:focus):not(:hover):not(:active):not(.inputPanel--focused) {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs
+    .skjemaelement__input--harFeil:not(:focus):not(:hover):not(:active):not(.inputPanel--focused).checkboks:not(:checked)
+    + .skjemaelement__label::before,
+.aktivitetsplanfs
+    .skjemaelement__input--harFeil:not(:focus):not(:hover):not(:active):not(.inputPanel--focused).radio:not(:checked)
+    + .skjemaelement__label::before,
+.aktivitetsplanfs
+    .skjemaelement__input--harFeil:not(:focus):not(:hover):not(:active):not(.inputPanel--focused).radioknapp:not(:checked)
+    + .skjemaelement__label::before {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs .toggle {
+    display: flex;
+}
+.aktivitetsplanfs .toggle > :first-child .toggle__label {
+    border-radius: 2px 0 0 2px;
+}
+.aktivitetsplanfs .toggle > :last-child .toggle__label {
+    border-radius: 0 2px 2px 0;
+    border-right: 1px solid #262626;
+    margin-left: -1px;
+}
+.aktivitetsplanfs .toggle__label {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #262626;
+    border-right: 0;
+    color: #262626;
+    cursor: pointer;
+    min-width: 6.25rem;
+    height: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0;
+}
+.aktivitetsplanfs .toggle__label:hover {
+    border-color: #0067c5;
+    color: #0067c5;
+}
+.aktivitetsplanfs .toggle__input:checked + label {
+    background-color: #005b82;
+    color: #fff;
+    border-color: #005b82;
+}
+.aktivitetsplanfs .toggle__input:focus + label {
+    position: relative;
+    z-index: 999;
+    box-shadow: 0 0 0 3px #ffc166;
+}
+.aktivitetsplanfs .inputPanelGruppe__inner + div > .skjemaelement__feilmelding {
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .inputPanelGruppe .inputPanel:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .inputPanel {
+    background-color: #fff;
+    border: 1px solid #6a6a6a;
+    border-radius: 0.25rem;
+    display: block;
+    padding: 1rem 1rem 1rem 3rem;
+    position: relative;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+}
+.aktivitetsplanfs .inputPanel__field {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    position: absolute;
+    width: 0;
+    height: 1px;
+    opacity: 0;
+}
+.aktivitetsplanfs .inputPanel__field:checked + .inputPanel__label::before {
+    border: 1px solid #0067c5;
+    background-color: #0067c5;
+}
+.aktivitetsplanfs .inputPanel__field:disabled + .inputPanel__label::before {
+    background-color: #f1f1f1;
+}
+.aktivitetsplanfs .inputPanel__label {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    line-height: 24px;
+}
+.aktivitetsplanfs .inputPanel__label::before {
+    border: 1px solid #6a6a6a;
+    border-radius: 50%;
+    background-color: #fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 75%;
+    content: '';
+    height: 1.5rem;
+    width: 1.5rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+.aktivitetsplanfs .inputPanel__subtext {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    display: block;
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .inputPanel--checked {
+    background-color: #cce1ff;
+    border: 1px solid transparent;
+}
+.aktivitetsplanfs .inputPanel--disabled {
+    background-color: #f1f1f1;
+    box-shadow: none;
+}
+.aktivitetsplanfs .inputPanel--disabled:hover,
+.aktivitetsplanfs .inputPanel--disabled .inputPanel__field:hover,
+.aktivitetsplanfs .inputPanel--disabled + .inputPanel__label:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .inputPanel--focused {
+    box-shadow: 0 0 0 3px #00347d;
+    border: 1px solid transparent;
+}
+.aktivitetsplanfs .inputPanel:active:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+    background-color: #cce1ff;
+}
+.aktivitetsplanfs .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+    border: 1px solid #0067c5;
+    box-shadow: #a0a0a0 0 2px 1px 0;
+    cursor: pointer;
+}
+.aktivitetsplanfs
+    .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel):not(.inputPanel--checked)
+    .inputPanel__field
+    + .inputPanel__label::before {
+    background-color: #99c3ff;
+    border: 0;
+}
+.aktivitetsplanfs .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) .inputPanel__label {
+    color: #0067c5;
+}
+.aktivitetsplanfs .checkboksPanel .inputPanel__label::before {
+    border-radius: 4px;
+}
+.aktivitetsplanfs .checkboksPanel .inputPanel__field:checked + .inputPanel__label::before {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+}
+.aktivitetsplanfs .radioPanel.inputPanel--checked .inputPanel__label::before {
+    border: 2px solid #0067c5;
+    box-shadow: 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
+    border-radius: 50%;
+}
+.aktivitetsplanfs .radioPanel.inputPanel--checked.inputPanel--focused .inputPanel__label::before {
+    transition: box-shadow 200ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    box-shadow: 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    background-color: #ffeccc;
+    border-color: #ffeccc;
+    cursor: unset;
+    transition: background-color linear 100ms;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel:focus,
+.aktivitetsplanfs .bekreftCheckboksPanel--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel .bekreftCheckboksPanel__innhold {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    max-width: 80ch;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel .skjemaelement {
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel .checkboks:hover + .skjemaelement__label {
+    text-decoration: underline;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked {
+    background-color: #ccf1d6;
+    border-color: #ccf1d6;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .bekreftCheckboksPanel__innhold .lenke:not(:focus) {
+    color: #262626;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks + .skjemaelement__label::before {
+    transition: none;
+    background-color: #06893a;
+    border-color: #06893a;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks + .skjemaelement__label:hover {
+    color: #262626;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks + .skjemaelement__label:hover::before {
+    background-color: #006a23;
+    border-color: #006a23;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks:focus + .skjemaelement__label::before {
+    border-color: #00347d;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks:focus + .skjemaelement__label:hover::before {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--error {
+    background-color: #f3e3e3;
+    border: 1px solid transparent;
+}
+.aktivitetsplanfs .feiloppsummering {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    border-radius: 0;
+    border: 4px solid #ba3a26;
+}
+.aktivitetsplanfs .feiloppsummering:focus,
+.aktivitetsplanfs .feiloppsummering--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .feiloppsummering__liste {
+    margin: 1rem 0;
+}
+.aktivitetsplanfs .feiloppsummering__liste li {
+    margin-bottom: 0.25rem;
+}
+.aktivitetsplanfs .skjemagruppe,
+.aktivitetsplanfs .skjemagruppe fieldset,
+.aktivitetsplanfs .skjemagruppe__fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.aktivitetsplanfs .skjemagruppe .skjemaelement,
+.aktivitetsplanfs .skjemagruppe fieldset .skjemaelement,
+.aktivitetsplanfs .skjemagruppe__fieldset .skjemaelement {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .skjemagruppe .skjemagruppe.inputPanelGruppe,
+.aktivitetsplanfs .skjemagruppe fieldset .skjemagruppe.inputPanelGruppe,
+.aktivitetsplanfs .skjemagruppe__fieldset .skjemagruppe.inputPanelGruppe,
+.aktivitetsplanfs .skjemagruppe .skjemagruppe.radiogruppe,
+.aktivitetsplanfs .skjemagruppe fieldset .skjemagruppe.radiogruppe,
+.aktivitetsplanfs .skjemagruppe__fieldset .skjemagruppe.radiogruppe,
+.aktivitetsplanfs .skjemagruppe .skjemagruppe.checkboxgruppe,
+.aktivitetsplanfs .skjemagruppe fieldset .skjemagruppe.checkboxgruppe,
+.aktivitetsplanfs .skjemagruppe__fieldset .skjemagruppe.checkboxgruppe {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .skjemagruppe__description {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .skjemagruppe legend,
+.aktivitetsplanfs .skjemagruppe__legend {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+@media (min-width: 30em) {
+    .aktivitetsplanfs .skjemagruppe legend,
+    .aktivitetsplanfs .skjemagruppe__legend {
+        font-size: 1.25rem;
+        line-height: 1.625rem;
+    }
+}
+.aktivitetsplanfs .skjemagruppe.inputPanelGruppe .skjemaelement,
+.aktivitetsplanfs .skjemagruppe.radiogruppe .skjemaelement,
+.aktivitetsplanfs .skjemagruppe.checkboxgruppe .skjemaelement {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .skjemagruppe.inputPanelGruppe legend,
+.aktivitetsplanfs .skjemagruppe.radiogruppe legend,
+.aktivitetsplanfs .skjemagruppe.checkboxgruppe legend,
+.aktivitetsplanfs .skjemagruppe.inputPanelGruppe .skjemagruppe__legend,
+.aktivitetsplanfs .skjemagruppe.radiogruppe .skjemagruppe__legend,
+.aktivitetsplanfs .skjemagruppe.checkboxgruppe .skjemagruppe__legend {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs [autocomplete='off']::-webkit-contacts-auto-fill-button {
+    visibility: hidden;
+    display: none;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+}
+.aktivitetsplanfs .skjemaelement {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    position: relative;
+}
+.aktivitetsplanfs .skjemaelement__label {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 600;
+    display: block;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .skjemaelement__label + .skjemaelement__description {
+    margin-top: -0.25rem;
+}
+.aktivitetsplanfs .skjemaelement__description {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .spinner {
+    display: inline-block;
+    position: relative;
+    animation: spinner-rotate 1.4s linear infinite;
+}
+.aktivitetsplanfs .spinner circle:nth-child(3) {
+    animation: spinner-dasharray 1.4s ease-in-out infinite;
+    stroke-dasharray: 80px, 200px;
+    stroke-dashoffset: 0;
+}
+.aktivitetsplanfs .spinner--xxs {
+    height: 16px;
+    width: 16px;
+    background-size: 16px 16px;
+}
+.aktivitetsplanfs .spinner--xs {
+    height: 20px;
+    width: 20px;
+    background-size: 20px 20px;
+}
+.aktivitetsplanfs .spinner--s {
+    height: 24px;
+    width: 24px;
+    background-size: 24px 24px;
+}
+.aktivitetsplanfs .spinner--m {
+    height: 32px;
+    width: 32px;
+    background-size: 32px 32px;
+}
+.aktivitetsplanfs .spinner--l {
+    height: 40px;
+    width: 40px;
+    background-size: 40px 40px;
+}
+.aktivitetsplanfs .spinner--xl {
+    height: 64px;
+    width: 64px;
+    background-size: 64px 64px;
+}
+.aktivitetsplanfs .spinner--xxl {
+    height: 128px;
+    width: 128px;
+    background-size: 128px 128px;
+}
+.aktivitetsplanfs .spinner--xxxl {
+    height: 256px;
+    width: 256px;
+    background-size: 256px 256px;
+}
+@keyframes spinner-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes spinner-dasharray {
+    0% {
+        stroke-dasharray: 1px, 200px;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 100px, 200px;
+        stroke-dashoffset: -15px;
+    }
+    100% {
+        stroke-dasharray: 100px, 200px;
+        stroke-dashoffset: -120px;
+    }
+}
+.aktivitetsplanfs .ReactModal__Body--open {
+    overflow: hidden;
+}
+.aktivitetsplanfs .modal {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    position: relative;
+    flex-grow: 0;
+    overflow: auto;
+    max-height: 100%;
+    margin-bottom: 0;
+    z-index: 1010;
+}
+.aktivitetsplanfs .modal:focus,
+.aktivitetsplanfs .modal--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .modal__overlay {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(61, 56, 49, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+.aktivitetsplanfs .modal__overlay:active .modal:not(:active) .modal__lukkknapp--shake {
+    transform: rotate(10deg);
+    transition: transform 100ms cubic-bezier(0.82, -2, 1, 0.3);
+}
+.aktivitetsplanfs .modal__lukkknapp--shake {
+    transform: rotate(0deg);
+    transition: transform 100ms cubic-bezier(0.82, 2, 1, 0.3);
+}
+.aktivitetsplanfs .snakkeboble {
+    display: flex;
+}
+.aktivitetsplanfs .snakkeboble__snakkeboble-pil-container {
+    position: relative;
+    width: 1.2rem;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+.aktivitetsplanfs .snakkeboble--hoyre {
+    flex-direction: row-reverse;
+    margin-left: 3rem;
+}
+.aktivitetsplanfs .snakkeboble--venstre {
+    flex-direction: row;
+    margin-right: 3rem;
+}
+.aktivitetsplanfs .snakkeboble__snakkebole-pil {
+    position: absolute;
+    top: 1px;
+    width: 1rem;
+    height: 1rem;
+    background: #fff;
+    transform: rotate(54deg) skew(17deg);
+}
+.aktivitetsplanfs .snakkeboble--hoyre .snakkeboble__snakkebole-pil {
+    right: 72%;
+    box-shadow: 0 1px 4px 1px #c9c9c9;
+}
+.aktivitetsplanfs .snakkeboble--venstre .snakkeboble__snakkebole-pil {
+    left: 72%;
+    box-shadow: 0 2px 4px -1px #c9c9c9;
+}
+.aktivitetsplanfs .snakkeboble__ikon {
+    flex-shrink: 0;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-top: 2px;
+}
+.aktivitetsplanfs .snakkeboble--hoyre .snakkeboble__ikon {
+    background: #368da8;
+}
+.aktivitetsplanfs .snakkeboble--venstre .snakkeboble__ikon {
+    background: #134852;
+}
+.aktivitetsplanfs .snakkeboble-panel {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px 0 #c9c9c9;
+    padding: 0.5rem 1rem 1rem;
+}
+.aktivitetsplanfs .snakkeboble-panel__topp {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .snakkeboble-panel__tekst {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+}
+.aktivitetsplanfs .snakkeboble--hoyre .snakkeboble-panel {
+    text-align: right;
+}
+.aktivitetsplanfs .lesMerPanel {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+}
+.aktivitetsplanfs .lesMerPanel--border {
+    border: 1px solid #c9c9c9;
+}
+.aktivitetsplanfs .lesMerPanel__toggle {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.aktivitetsplanfs .lesMerPanel__togglelink {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: #0067c5;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 0.25rem;
+}
+.aktivitetsplanfs .lesMerPanel__togglelink:focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .lesMerPanel__togglelink:hover .lesMerPanel__toggleChevron {
+    transform: translateY(0.25rem);
+}
+.aktivitetsplanfs .lesMerPanel__toggleChevron {
+    align-self: center;
+    margin-top: 1rem;
+}
+.aktivitetsplanfs .lesMerPanel__togglelink--erApen {
+    flex-direction: column;
+    padding-bottom: 0;
+    padding-top: 0.25rem;
+}
+.aktivitetsplanfs .lesMerPanel__togglelink--erApen .lesMerPanel__toggleChevron {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .lesMerPanel__togglelink--erApen:hover .lesMerPanel__toggleChevron {
+    transform: translateY(-0.25rem);
+}
+.aktivitetsplanfs .lesMerPanel__merContainer:focus {
+    outline: none;
+}
+.aktivitetsplanfs .lesMerPanel__merContainer--medAnimasjon {
+    overflow: hidden;
+    transition: height 300ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    transform: translate3d(0, 0, 0);
+}
+.aktivitetsplanfs .lesMerPanel__mer {
+    padding-top: 1rem;
+}
+.aktivitetsplanfs .lesMerPanel__mer:focus {
+    outline: none;
+}
+.aktivitetsplanfs .lesMerPanel__mer:empty {
+    padding: 0;
+}
+.aktivitetsplanfs .modal-container .varselmodal {
+    padding: 1rem 2rem;
+}
+.aktivitetsplanfs .modal-container .aktivitetskjema {
+    padding: 1rem 2rem;
+}
+.aktivitetsplanfs .modal-container .aktivitetskjema__redigering-header {
+    display: flex;
+}
+.aktivitetsplanfs .modal-container .aktivitetskjema__header {
+    margin-bottom: 4rem;
+}
+.aktivitetsplanfs .modal-container .aktivitetskjema__header .skjema-header__pakrevd-info {
+    align-self: flex-end;
+    float: right;
+}
+.aktivitetsplanfs .modal-container .aktivitetskjema__header .typo-innholdstittel {
+    margin: 0.5rem 0 1.2rem;
+}
+.aktivitetsplanfs .modal-container .aktivitetskjema__datofelt-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.aktivitetsplanfs .modal-container .aktivitetskjema__datofelt,
+.aktivitetsplanfs .modal-container .aktivitetskjema .datovelger {
+    font-size: 1rem;
+}
+.aktivitetsplanfs .modal-footer {
+    display: flex;
+    border-top: 1px solid #a0a0a0;
+    padding: 1.7rem 2rem;
+}
+.aktivitetsplanfs .modal-footer__knapp {
+    flex: 0 0 7.8rem;
+}
+.aktivitetsplanfs .modal-header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 4rem;
+    border-bottom: 1px solid #a0a0a0;
+    padding: 1.13rem 1rem;
+}
+.aktivitetsplanfs .modal-header-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.aktivitetsplanfs .modal-header-wrapper + .feilmelding {
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+.aktivitetsplanfs .modal-header-skillestrek {
+    width: 37px;
+    padding-right: 16px;
+    margin-right: 16px;
+    border-right: 1px solid #262626;
+    height: 26px;
+}
+.aktivitetsplanfs .ReactModal__Content {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+.aktivitetsplanfs .ReactModal__Content .aktivitetskjema {
+    width: 100%;
+}
+.aktivitetsplanfs .ReactModal__Content .aktivitetskjema__datofelt-wrapper {
+    flex-direction: column;
+}
+.aktivitetsplanfs .modal {
+    overflow: auto;
+    border-radius: 0;
+    padding: 0;
+}
+.aktivitetsplanfs .modal__overlay {
+    display: block;
+    padding: 0;
+}
+.aktivitetsplanfs .aktivitet-modal-portal {
+    z-index: 9999;
+}
+.aktivitetsplanfs .aktivitet-modal-portal .aktivitet-modal {
+    position: relative;
+    border: 1px solid #a0a0a0;
+    outline: none;
+}
+.aktivitetsplanfs .aktivitet-modal-portal .aktivitet-modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.74902);
+}
+.aktivitetsplanfs .timeout-modal-portal {
+    z-index: 9999;
+    z-index: 10000;
+}
+.aktivitetsplanfs .timeout-modal-portal .aktivitet-modal {
+    position: relative;
+    border: 1px solid #a0a0a0;
+    outline: none;
+}
+.aktivitetsplanfs .timeout-modal-portal .aktivitet-modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.74902);
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .modal {
+        max-height: none;
+        overflow: visible;
+        padding: 0;
+        border-radius: 3px;
+    }
+    .aktivitetsplanfs .ReactModal__Body--open {
+        overflow: hidden;
+    }
+    .aktivitetsplanfs .ReactModal__Overlay {
+        overflow-y: auto;
+    }
+    .aktivitetsplanfs .ReactModal__Content {
+        width: 640px;
+        margin: 4rem auto;
+        min-height: inherit;
+    }
+    .aktivitetsplanfs.aktivitet-modal-portal {
+        z-index: 9999;
+    }
+    .aktivitetsplanfs.aktivitet-modal-portal .aktivitet-modal {
+        position: relative;
+        border: 1px solid #a0a0a0;
+        outline: none;
+    }
+}
+.aktivitetsplanfs .dropdown {
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .dropdown__btnwrapper {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+.aktivitetsplanfs .dropdown__btn {
+    text-align: left;
+    width: 100%;
+    padding: 0.7rem 3rem 0.7rem 2rem;
+    background: #fff;
+    border: 1px solid #6a6a6a;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+.aktivitetsplanfs .dropdown__btn:before {
+    pointer-events: none;
+    content: '';
+    background: #262626;
+    height: 2px;
+    width: 10px;
+    border-radius: 10px;
+    right: 1.75rem;
+    top: 1.45rem;
+    position: absolute;
+    transform: translateX(3px) rotate(-45deg);
+    transition: transform 0.3s;
+}
+.aktivitetsplanfs .dropdown__btn:after {
+    pointer-events: none;
+    content: '';
+    background: #262626;
+    height: 2px;
+    width: 10px;
+    border-radius: 10px;
+    right: 1.75rem;
+    top: 1.45rem;
+    position: absolute;
+    transform: translateX(-3px) rotate(45deg);
+    transition: transform 0.3s;
+}
+.aktivitetsplanfs .dropdown__btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .dropdown__innhold {
+    position: absolute;
+    z-index: 110;
+    border: 1px solid #6a6a6a;
+    top: calc(100% - 1px);
+    background-color: #fff;
+    border-radius: 0 0 2px 2px;
+    width: 100%;
+}
+.aktivitetsplanfs .dropdown--apen .dropdown__btnwrapper:after,
+.aktivitetsplanfs .dropdown--apen .dropdown__btnwrapper:before {
+    z-index: 200;
+}
+.aktivitetsplanfs .dropdown--apen .dropdown__btn {
+    position: relative;
+    z-index: 120;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 1px solid #fff;
+}
+.aktivitetsplanfs .dropdown--apen .dropdown__btn:before {
+    transform: translateX(3px) rotate(45deg);
+    transition: transform 0.3s;
+}
+.aktivitetsplanfs .dropdown--apen .dropdown__btn:after {
+    transform: translateX(-3px) rotate(-45deg);
+    transition: transform 0.3s;
+}
+.aktivitetsplanfs .dropdown--alignright .dropdown__innhold {
+    right: 0;
+    border-radius: 2px 0 2px 2px;
+}
+.aktivitetsplanfs .dropdown .knapperad {
+    padding: 0;
+}
+.aktivitetsplanfs .dropdown .knapperad--alignleft {
+    padding-left: 0.5rem;
+}
+.aktivitetsplanfs .knappelenke {
+    color: #0067c5;
+    border: 0;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+.aktivitetsplanfs .knappelenke:focus {
+    outline: none;
+    background-color: #00347d;
+    color: #fff;
+}
+.aktivitetsplanfs .knappelenke:focus span {
+    border-bottom-color: #00347d;
+}
+.aktivitetsplanfs .knappelenke:hover span {
+    border-bottom-color: #0067c5;
+}
+.aktivitetsplanfs .knappelenke span {
+    display: inline-block;
+    border-bottom: 1px solid #a0a0a0;
+}
+.aktivitetsplanfs .tilbakeknapp {
+    text-decoration: none;
+    border-bottom: 0;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold {
+    border-bottom: 0 !important;
+    color: #0067c5;
+    background: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold:hover,
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold--hover {
+    text-decoration: none;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold:focus,
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold--focus {
+    outline: none;
+    color: white;
+    text-decoration: none;
+    background-color: #00347d;
+    box-shadow: 0 0 0 2px #00347d;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold:active,
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold--active {
+    outline: none;
+    color: white;
+    text-decoration: none;
+    background-color: #00347d;
+    box-shadow: 0 0 0 2px #00347d;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold svg {
+    width: 1em;
+    height: 1em;
+    fill: #0067c5;
+    stroke: #0067c5;
+    vertical-align: middle;
+    position: relative;
+    top: -0.125em;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold svg + span:not(.sr-only),
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold span:not(.sr-only) + svg {
+    margin-left: 0.25em;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold:focus svg {
+    fill: white;
+    stroke: white;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold .chevronboks {
+    top: -1px;
+    margin-right: 0.75rem;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst {
+    text-decoration: none;
+    color: #0067c5;
+    background: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst:hover,
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst--hover {
+    text-decoration: none;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst:focus,
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst--focus {
+    outline: none;
+    color: white;
+    text-decoration: none;
+    background-color: #00347d;
+    box-shadow: 0 0 0 2px #00347d;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst:active,
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst--active {
+    outline: none;
+    color: white;
+    text-decoration: none;
+    background-color: #00347d;
+    box-shadow: 0 0 0 2px #00347d;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst svg {
+    width: 1em;
+    height: 1em;
+    fill: #0067c5;
+    stroke: #0067c5;
+    vertical-align: middle;
+    position: relative;
+    top: -0.125em;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst svg + span:not(.sr-only),
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst span:not(.sr-only) + svg {
+    margin-left: 0.25em;
+}
+.aktivitetsplanfs .tilbakeknapp .tilbakeknapp-innhold__tekst:focus svg {
+    fill: white;
+    stroke: white;
+}
+.aktivitetsplanfs .tilbakeknapp:focus {
+    outline: none;
+}
+.aktivitetsplanfs .tilbakeknapp:focus .tilbakeknapp-innhold__tekst {
+    background: #00347d;
+    color: #fff;
+}
+.aktivitetsplanfs .clearfix {
+    *zoom: 1;
+}
+.aktivitetsplanfs .clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+}
+.aktivitetsplanfs .text-left {
+    text-align: left;
+}
+.aktivitetsplanfs .blokk-center {
+    margin: 0 auto;
+}
+.aktivitetsplanfs .unsafe-html *:last-child {
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .no-resize {
+    resize: none;
+}
+.aktivitetsplanfs .spinner {
+    display: block;
+    margin: 1rem auto;
+}
+.aktivitetsplanfs .clearfix {
+    *zoom: 1;
+}
+.aktivitetsplanfs .clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+}
+.aktivitetsplanfs .center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.aktivitetsplanfs .pull-right {
+    float: right !important;
+}
+.aktivitetsplanfs .pull-left {
+    float: left !important;
+}
+.aktivitetsplanfs .hide {
+    display: none !important;
+}
+.aktivitetsplanfs .show {
+    display: block !important;
+}
+.aktivitetsplanfs .hidden {
+    display: none !important;
+}
+.aktivitetsplanfs .invisible {
+    visibility: hidden;
+}
+.aktivitetsplanfs .text-hide {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+.aktivitetsplanfs .max-width-300 {
+    max-width: 300px;
+}
+.aktivitetsplanfs .ustilet {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.aktivitetsplanfs .blokk {
+    margin-bottom: 2rem;
+}
+.aktivitetsplanfs .blokk-null {
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .blokk-xxxs {
+    margin-bottom: 4px;
+}
+.aktivitetsplanfs .blokk-xxs {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .blokk-xs {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .blokk-s {
+    margin-bottom: 20px;
+}
+.aktivitetsplanfs .blokk-m {
+    margin-bottom: 2rem;
+}
+.aktivitetsplanfs .blokk-l {
+    margin-bottom: 2.5rem;
+}
+.aktivitetsplanfs .blokk-xl {
+    margin-bottom: 4rem;
+}
+.aktivitetsplanfs .mote-aktivitet-form__velg-mote-klokkeslett {
+    display: flex;
+    justify-content: space-between;
+}
+.aktivitetsplanfs .mote-aktivitet-form__velg-mote-klokkeslett .input--xs {
+    width: 85px;
+}
+@media (max-width: 560px) {
+    .aktivitetsplanfs .mote-aktivitet-form__velg-mote-klokkeslett {
+        flex-direction: column;
+    }
+}
+.aktivitetsplanfs .mote-aktivitet-form__video-info {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .mote-aktivitet_husk_bruker {
+    margin-bottom: 2rem;
+}
+.aktivitetsplanfs .samtalereferat-form__lagre-og-publiser {
+    margin-right: 1rem;
+}
+.aktivitetsplanfs .skjema-header__tittel {
+    margin: 1.2rem 0;
+    line-height: 1.1;
+}
+.aktivitetsplanfs .dato-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    column-gap: 1rem;
+}
+.aktivitetsplanfs .dato-container .skjemaelement__feilmelding {
+    width: 100%;
+    max-width: 210px;
+    width: 210px;
+}
+.aktivitetsplanfs .enhet-veileder-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.aktivitetsplanfs .radio-container {
+    display: flex;
+    flex-direction: column;
+}
+.aktivitetsplanfs .skjemaelement__label {
+    margin-bottom: 0.25em;
+}
+.aktivitetsplanfs .input--m {
+    width: 210px;
+}
+.aktivitetsplanfs .aktivitetskjema__lagre-knapp {
+    margin-bottom: 1rem;
+    padding: 1rem 2rem;
+    border-top: 1px #a0a0a0 solid;
+}
+.aktivitetsplanfs .feedbacksummary {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 4px;
+    background-color: #ba3a26;
+    color: #fff;
+    list-style-position: inside;
+}
+.aktivitetsplanfs .feedbacksummary ul {
+    margin: 0;
+    padding-left: 0;
+}
+.aktivitetsplanfs .feedbacksummary h3 {
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .feedbacksummary a {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    text-decoration: none;
+}
+.aktivitetsplanfs .feedbacksummary a:focus {
+    outline: none;
+    background-color: #00347d;
+    color: #262626;
+    border-bottom: 1px solid #00347d;
+}
+.aktivitetsplanfs .feedbacksummary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .detaljfelt {
+    margin-bottom: 20px;
+    margin-right: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 0 9rem;
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .detaljfelt {
+        flex: 0 0 13rem;
+        margin-right: 2rem;
+    }
+}
+.aktivitetsplanfs .detaljfelt__tittel {
+    color: #6a6a6a;
+    text-transform: uppercase;
+}
+.aktivitetsplanfs .detaljfelt__lenke {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.aktivitetsplanfs .detaljfelt__tekst p {
+    margin: 0.3rem 0;
+}
+.aktivitetsplanfs .detaljfelt--fullbredde {
+    flex: 1 0 auto;
+    width: 100%;
+}
+.aktivitetsplanfs .detaljfelt--beskrivelse {
+    flex: auto;
+    min-width: 13rem;
+    overflow-wrap: break-word;
+}
+.aktivitetsplanfs .varsling-boks {
+    margin-top: 1rem;
+}
+.aktivitetsplanfs .oppdater-referat textarea {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .oppdater-referat button {
+    margin-right: 1rem;
+}
+.aktivitetsplanfs .oppdater-referat__referat {
+    margin: -0.4rem 0 1.6rem;
+}
+.aktivitetsplanfs .oppdater-referat .oppdater-referat-knapper {
+    display: flex;
+}
+.aktivitetsplanfs .oppdater-referat .oppdater-referat-status {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 1.5rem 0 0;
+}
+.aktivitetsplanfs .oppdater-referat .oppdater-referat-status .alertstripe__ikon {
+    margin-right: 0.5rem;
+}
+.aktivitetsplanfs .oppdater-referat .oppdater-referat-status .alertstripe__tekst {
+    font-weight: bold;
+}
+.aktivitetsplanfs .aktivitetvisning {
+    max-width: 40rem;
+    margin: 0 auto;
+}
+.aktivitetsplanfs .aktivitetvisning > .feilmelding {
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon {
+    padding: 0 1rem;
+    margin: 1rem 0;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon .typo-sidetittel {
+    margin: 1.2rem 0;
+    line-height: 1.1;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon .typo-undertekst {
+    text-transform: uppercase;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon .col-xs-4 {
+    float: none;
+    width: 100%;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon .skjemaelement__label img {
+    width: 14px;
+    height: 20px;
+    margin: -2px 0 0 0.3rem;
+}
+.aktivitetsplanfs .aktivitetvisning .oppdater-status {
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .aktivitetvisning__detaljer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 32rem;
+    width: 100%;
+}
+.aktivitetsplanfs .aktivitetvisning .typo-undertittel {
+    margin: 1.1rem 0 1rem;
+}
+.aktivitetsplanfs .aktivitetvisning .tilDittNavTekst {
+    white-space: pre-wrap;
+}
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse {
+    margin-bottom: 20px;
+    margin-right: 2rem;
+}
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse__tittel {
+    color: #6a6a6a;
+}
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse__tekst {
+    white-space: pre-wrap;
+}
+.aktivitetsplanfs .aktivitetvisning .aktivitetsdetaljer {
+    margin-bottom: 20px;
+}
+.aktivitetsplanfs .aktivitetvisning__delelinje {
+    margin-top: 0;
+    color: #a0a0a0;
+}
+.aktivitetsplanfs .aktivitetvisning__historikk {
+    margin-bottom: 2rem;
+}
+.aktivitetsplanfs .aktivitetvisning__historikk .endringslogg-for-aktivitet__lenke-knapp {
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+.aktivitetsplanfs .aktivitetvisning__historikk .endringslogg-for-aktivitet__innslag {
+    margin-bottom: 20px;
+}
+@media (max-width: 991px) {
+    .aktivitetsplanfs .aktivitetvisning .endreknapp {
+        margin-left: 20px;
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .aktivitetvisning__detaljer {
+        width: 32rem;
+    }
+    .aktivitetsplanfs .aktivitetvisning .endreknapp {
+        margin-left: 29px;
+        margin-right: -13px;
+    }
+}
+.aktivitetsplanfs .avtalt-container {
+    margin: 1rem 0;
+}
+.aktivitetsplanfs .avtalt-container__vis-avtalt {
+    display: flex;
+    align-items: center;
+}
+.aktivitetsplanfs .avtalt-container .alertstripe--info {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .avtalt-container .alertstripe--info:first-child {
+    margin-top: 1rem;
+}
+.aktivitetsplanfs .aktivitetingress {
+    margin-bottom: 2rem;
+}
+.aktivitetsplanfs .aktivitetingress__tekst {
+    white-space: pre-wrap;
+    margin: -0.4rem 0;
+}
+.aktivitetsplanfs .publiser-referat {
+    padding: 2rem;
+}
+.aktivitetsplanfs .filtrering-label-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.aktivitetsplanfs .filtreringlabel {
+    border: 0;
+    border-radius: 2px;
+    display: flex;
+    min-width: 7rem;
+    max-width: 13.75rem;
+    background: #c9c9c9 none;
+    padding: 0.5rem;
+    justify-content: space-between;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .filtreringlabel:hover {
+    box-shadow: inset 0 -0.125rem 0 #262626;
+}
+.aktivitetsplanfs .filtreringlabel:active {
+    background-color: #005b82;
+    color: #fff;
+}
+.aktivitetsplanfs .filtreringlabel:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.1875rem #00347d;
+}
+.aktivitetsplanfs .filtreringlabel__label {
+    padding-right: 1rem;
+    max-width: 11.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.aktivitetsplanfs .filtrering-label-slett {
+    margin: 1.25rem 0.5rem 2rem 0.1875rem;
+    cursor: pointer;
+    background-color: #a0a0a0;
+    border: 0;
+    padding: 5px;
+}
+.aktivitetsplanfs .filter-ikon-x-svg {
+    font-size: 1.1rem;
+    color: #3e3832;
+    align-self: center;
+}
+.aktivitetsplanfs .filtreringlabel:active svg path {
+    fill: #fff;
+}
+.aktivitetsplanfs .filter {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .filter__innhold {
+    width: 400px;
+}
+.aktivitetsplanfs .filter__container {
+    display: block;
+    padding: 2rem 2rem 0 2rem;
+}
+.aktivitetsplanfs .filter__overskrift {
+    margin: 1rem 0;
+}
+.aktivitetsplanfs .filter__tittel {
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+}
+.aktivitetsplanfs .skjult {
+    visibility: hidden;
+}
+.aktivitetsplanfs .verktoylinje .filter {
+    margin-left: 0;
+}
+.aktivitetsplanfs .verktoylinje .filter .dropdown--apen .dropdown__btn {
+    padding-bottom: 1.7rem;
+}
+.aktivitetsplanfs .periode-filter-dropdown__innhold {
+    top: 2.6rem;
+}
+.aktivitetsplanfs .periode-filter-dropdown__innhold .filter__radio--periode label {
+    white-space: nowrap;
+}
+.aktivitetsplanfs .filter-dropdown__innhold .skjemaelement__label {
+    white-space: nowrap;
+}
+@media (min-width: 768px) {
+    .aktivitetsplanfs .periode-filter-dropdown__innhold {
+        padding-right: 1rem;
+    }
+    .aktivitetsplanfs .filter-dropdown__innhold {
+        width: auto;
+    }
+    .aktivitetsplanfs .filter-dropdown__innhold .filter {
+        margin-left: 1rem;
+    }
+    .aktivitetsplanfs .filter-dropdown__innhold .filter:last-child {
+        margin-left: 0.5rem;
+    }
+    .aktivitetsplanfs .filter {
+        width: auto;
+        margin-bottom: 0;
+    }
+    .aktivitetsplanfs .filter__container {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        padding: 1rem 1rem 0 1rem;
+    }
+}
+.aktivitetsplanfs .verktoylinje {
+    display: flex;
+    flex-direction: column;
+}
+.aktivitetsplanfs .verktoylinje__verktoy {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .verktoylinje__verktoy.filter {
+    width: auto;
+}
+.aktivitetsplanfs .verktoylinje__verktoy.filter .dropdown {
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .verktoylinje__verktoy.filter .dropdown .filter-dropdown__innhold {
+    width: auto;
+    left: inherit;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(1) {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(1) .knappelenke span {
+    border: 0;
+    font-weight: bolder;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(2) .indre {
+    display: inherit;
+    flex-wrap: inherit;
+    justify-content: inherit;
+    align-items: inherit;
+    width: 100%;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(3) {
+    order: 4;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke span:hover {
+    border-bottom: 1px solid #0067c5;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke span {
+    border: 0;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke.knappelenke--disabled {
+    color: #a0a0a0;
+    cursor: default;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke.knappelenke--disabled span:hover {
+    border-bottom: 0;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser:focus {
+    background-color: transparent;
+    color: #0067c5;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser:hover > span:last-child {
+    border-bottom: 1px solid #0067c5;
+    margin-bottom: -1px;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser {
+    margin: 0 auto;
+    position: relative;
+    padding: 0.6rem 1rem 0.9rem 1.5rem;
+    background-position-y: 1rem;
+    top: -0.1rem;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser > span:last-child {
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+    margin-top: 0.1rem;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .lenkeknapp {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .verktoylinje {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        flex-wrap: wrap;
+        flex-direction: inherit;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy {
+        margin-bottom: 0.5rem;
+        margin-right: 0;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container {
+        display: flex;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(1) {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(2) {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(2) > .indre {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(3) {
+        width: 69%;
+        order: inherit;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(4) {
+        width: 31%;
+        align-items: flex-start;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container .navigasjonslinje-meny__knapp--print,
+    .aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke {
+        margin-right: 1rem;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser {
+        margin-left: 1.2rem;
+        margin-right: 1rem;
+        top: -0.1rem;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container .lenkeknapp {
+        width: auto;
+        margin-top: 1px;
+    }
+}
+@media (max-width: 360px) {
+    .aktivitetsplanfs .utskrift-lenke {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    .aktivitetsplanfs .ny-aktivitet-lenke {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+.aktivitetsplanfs .ny-aktivitet-lenke {
+    padding: 0.3rem 1rem 0.3rem 1rem;
+}
+.aktivitetsplanfs .oppfolgingstatus__krr {
+    width: 800px;
+    margin: 0 auto;
+}
+.aktivitetsplanfs .feil-container {
+    max-width: 40rem;
+}
+.aktivitetsplanfs .har-ikke-aktivitetsplan-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.aktivitetsplanfs .har-ikke-aktivitetsplan-advarsel {
+    margin: 0 0.5rem;
+    max-width: 40rem;
+}
+.aktivitetsplanfs .sett-digital {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.aktivitetsplanfs .sett-digital__varsel {
+    margin: 0 0.5rem;
+    margin-bottom: 20px;
+    max-width: 40rem;
+}
+.aktivitetsplanfs .tavle .tavle__scrollknapp {
+    display: none;
+    cursor: pointer;
+}
+.aktivitetsplanfs .tavle .tavle__scrollknapp:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .tavle .tavle__scrollknapp:disabled {
+    cursor: default;
+    color: #a0a0a0;
+    border-color: #a0a0a0;
+}
+.aktivitetsplanfs .tavle .tavle__scrollknapp:disabled:hover {
+    color: #a0a0a0;
+    border: 0.1rem solid #a0a0a0;
+    background-color: white;
+}
+.aktivitetsplanfs .tavle .kolonner {
+    display: block;
+    padding-bottom: 2rem;
+    min-height: 300px;
+}
+@media (min-width: 768px) {
+    .aktivitetsplanfs .tavle.aktivitetstavle {
+        width: 736px;
+        margin: 0 auto;
+    }
+    .aktivitetsplanfs .tavle .knapp-forrige {
+        margin: 1rem 0.5rem 0 0;
+    }
+    .aktivitetsplanfs .tavle .knapp-forrige-ikon {
+        margin-right: 0.1rem;
+    }
+    .aktivitetsplanfs .tavle .knapp-neste {
+        margin: 1rem 0 0 0.5rem;
+    }
+    .aktivitetsplanfs .tavle .knapp-neste-ikon {
+        margin-left: 0.1rem;
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .tavle {
+        display: flex;
+        justify-content: space-around;
+    }
+    .aktivitetsplanfs .tavle.aktivitetstavle {
+        width: 992px;
+        margin: 0 auto;
+    }
+    .aktivitetsplanfs .tavle .kolonner {
+        display: flex;
+        justify-content: space-between;
+        transition: margin 0.2s ease-in-out;
+        margin-bottom: 0;
+    }
+    .aktivitetsplanfs .tavle .tavle__scrollknapp {
+        height: 42px;
+        width: 42px;
+        display: flex;
+        align-items: center;
+        border-radius: 100%;
+        border: 0.1rem solid;
+        font-size: 2rem;
+        background: none;
+    }
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:hover,
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:active,
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:active:hover {
+        background-color: #4f4f4f;
+        border: 0;
+        color: white;
+    }
+    .aktivitetsplanfs .tavle .tavle-kolonne {
+        min-width: 31.33333%;
+        margin: 1%;
+    }
+}
+@media (min-width: 1480px) {
+    .aktivitetsplanfs .tavle.aktivitetstavle {
+        width: 100%;
+    }
+    .aktivitetsplanfs .tavle .tavle__scrollknapp {
+        display: none !important;
+    }
+    .aktivitetsplanfs .tavle .tavle-kolonne {
+        min-width: 18%;
+    }
+}
+@media print {
+    @page {
+        size: auto;
+        margin: 5%;
+    }
+}
+.aktivitetsplanfs .aktivitetstavle {
+    align-self: center;
+}
+.aktivitetsplanfs .aktivitetstavle:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .aktivitetstavle-advarsel {
+    opacity: 0.2;
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne {
+    background-color: #c9c9c9;
+    padding: 1rem 0.5rem 0.1rem;
+    transition: padding 0.05s ease-in-out;
+    min-height: 2rem;
+    border-radius: 4px;
+    margin: 0.5rem 8px;
+}
+@media (min-width: 480px) {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        right: -0.5rem;
+    }
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:before {
+        right: 0.95rem;
+    }
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:focus:after {
+        right: calc(0.95rem - 2px);
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        width: 17.5rem;
+    }
+}
+@media (min-width: 1480px) {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        width: 15rem;
+    }
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne-wrapper {
+    height: 100%;
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne-header {
+    text-align: left;
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne--drag {
+    background-color: #a0a0a0;
+    padding-bottom: 2rem;
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .aktivitetstavle__kolonne {
+        margin: 0;
+    }
+}
+.aktivitetsplanfs .fullbredde {
+    width: 100%;
+}
+.aktivitetsplanfs .begrensetbredde {
+    width: 950px;
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .hovedsideinnhold {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+    }
+}
+.aktivitetsplanfs .aktivitetsplanprint {
+    display: block;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-header {
+    width: 100%;
+    position: relative;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-header__tilbakeknapp + .printmodal-header__printknapp {
+    margin-left: calc(50% - 120px);
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-header__tilbakeknapp[hidden] + .printmodal-header__printknapp {
+    margin-left: 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .modal-header-wrapper {
+    background-color: #f1f1f1;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body__utskrift--overskrift {
+    margin: 0 3rem 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body {
+    background-color: #fff;
+    padding: 2rem 0 3rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__adresse-dato {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 3rem 3rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__adresse-dato .printmodal-body__dato {
+    text-align: right;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__visprintmelding,
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__vismittmal {
+    margin: 0 3rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__visprintmelding:empty,
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__vismittmal:empty {
+    display: none;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__visprintmelding + .statusgruppe,
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__visprintmelding
+    + .printmodal-body__vismittmal {
+    margin-top: 2rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__vismittmal {
+    margin-bottom: 2rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__nav-logo-print {
+    margin: 0 3rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__statusgrupper {
+    padding: 2rem 3rem;
+    border-top: 1px solid #a0a0a0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__statusgrupper .printmodal-body__statusgruppe {
+    margin: 2rem 0;
+}
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__statusgruppe:last-child {
+    margin: 0;
+}
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__statusgruppe
+    .henvendelse {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__visprintmelding--overskrift,
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__vismittmal--overskrift,
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__statusgruppe--overskrift {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__statusgrupper .printmodal-body__dialog {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__dialog
+    .henvendelse {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__statusgruppe--type {
+    margin: 0.25rem 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .etikett-print {
+    background: none;
+    color: #262626;
+    border: 1pt solid #a0a0a0;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer {
+    margin-top: 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer + .aktivitetsdetaljer {
+    margin-top: 20px;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt {
+    display: inline-block;
+    width: calc(50% - 2rem);
+    margin-bottom: 0;
+    padding-bottom: 0.75rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt--fullbredde {
+    width: 100%;
+    margin-right: 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt--fullbredde:last-child {
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt__lenke {
+    text-decoration: none;
+    border-bottom: 0;
+    color: #262626;
+    cursor: default;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsbeskrivelse {
+    padding-bottom: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsbeskrivelse + .aktivitetsbeskrivelse {
+    margin-top: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__aktivitetreferat {
+    margin: -0.25rem 0 0.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body__nav-logo-print {
+    width: 80px;
+    margin-bottom: 1.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .feilmelding--systemfeil {
+    background-color: #fff;
+    margin: 0;
+    padding: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__form {
+    background-color: #fff;
+    padding-top: 1.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__skjema {
+    margin: 0 3rem 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__skjema .kvp-plan-valg {
+    padding-left: 26px;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__skjema .kvp-periode-valg {
+    padding-top: 0.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__skjema .radioknapp + .skjemaelement__label:before {
+    margin-top: 4px;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__tittel {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__knapperad {
+    padding: 1.2rem 3rem 1.5rem;
+    border-top: 1px solid #a0a0a0;
+    margin-top: 2rem;
+}
+@media print {
+    @page {
+        size: auto;
+        margin: 5%;
+    }
+    .aktivitetsplanfs * {
+        line-height: 1 !important;
+    }
+    .aktivitetsplanfs body,
+    .aktivitetsplanfs .aktivitetsplanfs {
+        font-size: 16pt;
+    }
+    .aktivitetsplanfs .ReactModal__Overlay {
+        position: relative;
+    }
+    .aktivitetsplanfs .aktivitetsplanprint {
+        overflow: visible;
+    }
+    .aktivitetsplanfs .modal-header,
+    .aktivitetsplanfs .lukknapp {
+        display: none;
+    }
+    .aktivitetsplanfs .aktivitetsdetaljer {
+        page-break-inside: avoid;
+    }
+}
+.aktivitetsplanfs .informasjon-modal-container {
+    padding: 1rem 2rem;
+}
+.aktivitetsplanfs .videotekst-accordion {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .informasjon-modal-container .ekspanderbartPanel {
+    margin-top: 1rem;
+}
+.aktivitetsplanfs .modal-a11y-wrapper {
+    background-color: #f1f1f1;
+}
+.aktivitetsplanfs .aktivitetsplan {
+    width: 100%;
+}
+.aktivitetsplanfs .radioknapp + label:before {
+    top: 3px;
+}
+.aktivitetsplanfs .selectContainer {
+    background: none;
+}
+.aktivitetsplanfs .lukknapp:before,
+.aktivitetsplanfs .lukknapp:after {
+    height: 2px;
+    top: calc(50% - 2px);
+}
+.aktivitetsplanfs .alertstripe:not(.alertstripe--solid) .alertstripe__ikon:after {
+    background-color: #fff;
+}
+.aktivitetsplanfs .row + .alertstripe {
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .status-alert {
+    margin: 1rem 0;
+}
+.aktivitetsplanfs .status-alert .alertstripe {
+    margin: 1rem 0;
+}
+.aktivitetsplanfs .skjemaelement__input.textarea--medMeta {
+    padding: 0.35rem;
+}
+.aktivitetsplanfs .softbreak {
+    word-break: break-word;
+    display: block;
+}
+.aktivitetsplanfs .container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 8px;
+    padding-right: 8px;
+    box-sizing: border-box;
+    *zoom: 1;
+}
+.aktivitetsplanfs .container:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+}
+.aktivitetsplanfs .container:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+}
+@media (min-width: 768px) {
+    .aktivitetsplanfs .container {
+        width: 736px;
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .container {
+        width: 890px;
+    }
+}
+.aktivitetsplanfs .row {
+    margin-left: -8px;
+    margin-right: -8px;
+    *zoom: 1;
+    box-sizing: border-box;
+}
+.aktivitetsplanfs .row:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+}
+.aktivitetsplanfs .row:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+}
+.aktivitetsplanfs .col-xs-4 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.aktivitetsplanfs .hjelpetekst {
+    margin-left: 1rem;
+}
+.ReactModal__Body--open {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+.ReactModal__Body--open .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']) {
+    display: none;
+}
+@media (min-width: 992px) {
+    .ReactModal__Body--open .aktivitetsplanfs:not([class*='timeout-modal']):not([class*='aktivitet-modal']) {
+        display: block;
+    }
+    .container,
+    .hovedsideinnhold div.feil-container {
+        width: 890px;
+        margin: 0 auto;
+    }
+}
+@media (min-width: 1480px) {
+    .aktivitetsplan-wrapper {
+        padding: 0 0.5rem;
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+    .container,
+    .hovedsideinnhold div.feil-container {
+        width: 956px;
+        margin: 0 auto;
+    }
+}
+@media print {
+    .ReactModal__Body--open {
+        position: relative;
+    }
+    .aktivitetsplanfs [href]:after {
+        content: none;
+    }
+    .hodefot,
+    .navno-dekorator,
+    .decorator-wrapper,
+    .pagewrapper[aria-hidden='true'],
+    .appContainer[aria-hidden='true'],
+    .veilarbpersonflatefs[aria-hidden='true'] {
+        display: none;
+    }
+}
+body {
+    margin: 0;
+}

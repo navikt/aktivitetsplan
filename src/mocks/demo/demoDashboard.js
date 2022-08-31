@@ -1,4 +1,4 @@
-import './demoDashboard.less';
+import './demoDashboard.css';
 
 import { CheckboksPanelGruppe, RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Innholdstittel } from 'nav-frontend-typografi';

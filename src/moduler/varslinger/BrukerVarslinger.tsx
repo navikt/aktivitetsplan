@@ -10,7 +10,7 @@ import {
 } from '../oppfolging-status/oppfolging-selector';
 import AdvarselMedDialogLenke from './AdvarselMedDialogLenke';
 import { HiddenIfAdvarselMedLenke } from './varsel-alertstriper';
-import styls from './Varslinger.module.less';
+import styls from './Varslinger.module.css';
 
 const infotekstTilInaktivertBrukere = (antallDagerIgjen?: number): string | undefined => {
     if (!antallDagerIgjen) {

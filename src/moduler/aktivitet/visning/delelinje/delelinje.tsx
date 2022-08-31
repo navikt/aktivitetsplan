@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './delelinje.module.less';
+import styles from './delelinje.module.css';
 
 interface Props {
     hidden?: boolean;

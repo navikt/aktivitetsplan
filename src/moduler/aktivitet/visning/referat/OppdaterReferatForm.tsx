@@ -14,7 +14,7 @@ import { DirtyContext } from '../../../context/dirty-context';
 import { oppdaterReferat, publiserReferat } from '../../aktivitet-actions';
 import { useReferatStartTekst } from '../../aktivitet-forms/samtalereferat/useReferatStartTekst';
 import { selectAktivitetStatus } from '../../aktivitet-selector';
-import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
+import aktivitetsvisningStyles from './../Aktivitetsvisning.module.css';
 
 const validate = (val: string) => {
     if (val.trim().length === 0) {

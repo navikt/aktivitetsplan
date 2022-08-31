@@ -1,0 +1,12 @@
+.detaljer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 32rem;
+    width: 100%;
+}
+@media (min-width: 992px) {
+    .detaljer {
+        width: 32rem;
+    }
+}

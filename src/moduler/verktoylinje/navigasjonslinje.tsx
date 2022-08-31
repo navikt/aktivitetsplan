@@ -10,7 +10,7 @@ import DialogIkon from '../aktivitet/visning/underelement-for-aktivitet/dialog/D
 import { hentDialog } from '../dialog/dialog-reducer';
 import { selectDialoger, selectSistOppdatert } from '../dialog/dialog-selector';
 import { selectErVeileder } from '../identitet/identitet-selector';
-import styles from './navigasjonslinje.module.less';
+import styles from './navigasjonslinje.module.css';
 
 const DITTNAV_PATH = '/dittnav/';
 const DIALOG_PATH = '/arbeidsrettet-dialog';
@@ -18,8 +18,9 @@ const DIALOG_PATH = '/arbeidsrettet-dialog';
 function Navigasjonslinje() {
     const erVeileder = useSelector(selectErVeileder, shallowEqual);
     const sistOppdatert = useSelector(selectSistOppdatert, shallowEqual);
-    const antallUlesteDialoger: number = useSelector(selectDialoger, shallowEqual).filter((d: Dialog) => !d.lest)
-        .length;
+    const antallUlesteDialoger: number = useSelector(selectDialoger, shallowEqual).filter(
+        (d: Dialog) => !d.lest
+    ).length;
 
     const dispatch = useDispatch();
 

@@ -5,7 +5,7 @@ import { STATUS_AVBRUTT, STATUS_FULLFOERT, STILLING_FRA_NAV_TYPE } from '../../.
 import { Aktivitet } from '../../../../datatypes/aktivitetTypes';
 import DeleLinje from '../delelinje/delelinje';
 import { DeleCVAvbruttVisning } from './DeleCVAvbruttVisning';
-import styles from './DeleCvContainer.module.less';
+import styles from './DeleCvContainer.module.css';
 import { DeleCvSvarVisning } from './DeleCvSvarVisning';
 import { MeldInteresseForStilling } from './MeldInteresseForStilling';
 

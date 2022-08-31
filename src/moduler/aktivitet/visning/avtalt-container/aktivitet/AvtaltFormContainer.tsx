@@ -8,7 +8,7 @@ import { Aktivitet, Forhaandsorientering, ForhaandsorienteringType } from '../..
 import { erMerEnnSyvDagerTil } from '../../../../../utils';
 import { settAktivitetTilAvtalt } from '../../../aktivitet-actions';
 import { selectAktivitetFhoBekreftStatus, selectAktivitetStatus } from '../../../aktivitet-selector';
-import aktivitetvisningStyles from './../../Aktivitetsvisning.module.less';
+import aktivitetvisningStyles from './../../Aktivitetsvisning.module.css';
 import DeleLinje from '../../delelinje/delelinje';
 import { useSendAvtaltMetrikker } from '../avtaltHooks';
 import { ForhaandsorienteringDialogProps, getForhaandsorienteringText } from '../utilsForhaandsorientering';

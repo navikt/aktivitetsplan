@@ -1,4 +1,4 @@
-import './index.less';
+import './index.css';
 
 import PT from 'prop-types';
 import React from 'react';

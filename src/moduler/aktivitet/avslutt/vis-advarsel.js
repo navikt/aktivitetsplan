@@ -6,7 +6,7 @@ import React from 'react';
 
 import ModalContainer from '../../../felles-komponenter/modal/ModalContainer';
 import ModalFooter from '../../../felles-komponenter/modal/ModalFooter';
-import aktivitetvisningStyles from '../../aktivitet/visning/Aktivitetsvisning.module.less';
+import aktivitetvisningStyles from '../../aktivitet/visning/Aktivitetsvisning.module.css';
 
 function VisAdvarsel({ onSubmit, headerTekst }) {
     return (

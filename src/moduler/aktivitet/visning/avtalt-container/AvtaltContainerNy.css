@@ -1,0 +1,13 @@
+.avtalt-container {
+    margin: 1rem 0;
+}
+.avtalt-container__vis-avtalt {
+    display: flex;
+    align-items: center;
+}
+.avtalt-container .alertstripe--info {
+    margin-bottom: 1rem;
+}
+.avtalt-container .alertstripe--info:first-child {
+    margin-top: 1rem;
+}

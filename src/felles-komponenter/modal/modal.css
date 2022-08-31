@@ -1,0 +1,138 @@
+.modal-container .varselmodal {
+    padding: 1rem 2rem;
+}
+.modal-container .aktivitetskjema {
+    padding: 1rem 2rem;
+}
+.modal-container .aktivitetskjema__redigering-header {
+    display: flex;
+}
+.modal-container .aktivitetskjema__header {
+    margin-bottom: 4rem;
+}
+.modal-container .aktivitetskjema__header .skjema-header__pakrevd-info {
+    align-self: flex-end;
+    float: right;
+}
+.modal-container .aktivitetskjema__header .typo-innholdstittel {
+    margin: 0.5rem 0 1.2rem;
+}
+.modal-container .aktivitetskjema__datofelt-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.modal-container .aktivitetskjema__datofelt,
+.modal-container .aktivitetskjema .datovelger {
+    font-size: 1rem;
+}
+.modal-footer {
+    display: flex;
+    border-top: 1px solid #a0a0a0;
+    padding: 1.7rem 2rem;
+}
+.modal-footer__knapp {
+    flex: 0 0 7.8rem;
+}
+.modal-header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 4rem;
+    border-bottom: 1px solid #a0a0a0;
+    padding: 1.13rem 1rem;
+}
+.modal-header-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.modal-header-wrapper + .feilmelding {
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+.modal-header-skillestrek {
+    width: 37px;
+    padding-right: 16px;
+    margin-right: 16px;
+    border-right: 1px solid #262626;
+    height: 26px;
+}
+.ReactModal__Content {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+.ReactModal__Content .aktivitetskjema {
+    width: 100%;
+}
+.ReactModal__Content .aktivitetskjema__datofelt-wrapper {
+    flex-direction: column;
+}
+.modal {
+    overflow: auto;
+    border-radius: 0;
+    padding: 0;
+}
+.modal__overlay {
+    display: block;
+    padding: 0;
+}
+.aktivitet-modal-portal {
+    z-index: 9999;
+}
+.aktivitet-modal-portal .aktivitet-modal {
+    position: relative;
+    border: 1px solid #a0a0a0;
+    outline: none;
+}
+.aktivitet-modal-portal .aktivitet-modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.74902);
+}
+.timeout-modal-portal {
+    z-index: 9999;
+    z-index: 10000;
+}
+.timeout-modal-portal .aktivitet-modal {
+    position: relative;
+    border: 1px solid #a0a0a0;
+    outline: none;
+}
+.timeout-modal-portal .aktivitet-modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.74902);
+}
+@media (min-width: 992px) {
+    .modal {
+        max-height: none;
+        overflow: visible;
+        padding: 0;
+        border-radius: 3px;
+    }
+    .ReactModal__Body--open {
+        overflow: hidden;
+    }
+    .ReactModal__Overlay {
+        overflow-y: auto;
+    }
+    .ReactModal__Content {
+        width: 640px;
+        margin: 4rem auto;
+        min-height: inherit;
+    }
+    .aktivitet-modal-portal {
+        z-index: 9999;
+    }
+    .aktivitet-modal-portal .aktivitet-modal {
+        position: relative;
+        border: 1px solid #a0a0a0;
+        outline: none;
+    }
+}

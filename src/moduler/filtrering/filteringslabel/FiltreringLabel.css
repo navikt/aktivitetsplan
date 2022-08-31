@@ -1,0 +1,49 @@
+.filtrering-label-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.filtreringlabel {
+    border: 0;
+    border-radius: 2px;
+    display: flex;
+    min-width: 7rem;
+    max-width: 13.75rem;
+    background: #c9c9c9 none;
+    padding: 0.5rem;
+    justify-content: space-between;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+.filtreringlabel:hover {
+    box-shadow: inset 0 -0.125rem 0 #262626;
+}
+.filtreringlabel:active {
+    background-color: #005b82;
+    color: #fff;
+}
+.filtreringlabel:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.1875rem #00347d;
+}
+.filtreringlabel__label {
+    padding-right: 1rem;
+    max-width: 11.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.filtrering-label-slett {
+    margin: 1.25rem 0.5rem 2rem 0.1875rem;
+    cursor: pointer;
+    background-color: #a0a0a0;
+    border: 0;
+    padding: 5px;
+}
+.filter-ikon-x-svg {
+    font-size: 1.1rem;
+    color: #3e3832;
+    align-self: center;
+}
+.filtreringlabel:active svg path {
+    fill: #fff;
+}

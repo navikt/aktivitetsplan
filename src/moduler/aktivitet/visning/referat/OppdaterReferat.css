@@ -1,0 +1,23 @@
+.oppdater-referat textarea {
+    margin-bottom: 1rem;
+}
+.oppdater-referat button {
+    margin-right: 1rem;
+}
+.oppdater-referat__referat {
+    margin: -0.4rem 0 1.6rem;
+}
+.oppdater-referat .oppdater-referat-knapper {
+    display: flex;
+}
+.oppdater-referat .oppdater-referat-status {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 1.5rem 0 0;
+}
+.oppdater-referat .oppdater-referat-status .alertstripe__ikon {
+    margin-right: 0.5rem;
+}
+.oppdater-referat .oppdater-referat-status .alertstripe__tekst {
+    font-weight: bold;
+}

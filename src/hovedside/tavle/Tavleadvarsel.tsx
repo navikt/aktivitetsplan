@@ -13,7 +13,7 @@ import {
 } from '../../constant';
 import { Aktivitet } from '../../datatypes/aktivitetTypes';
 import { ReactComponent as ObsSVG } from './obs.svg';
-import styles from './Tavleadvarsel.module.less';
+import styles from './Tavleadvarsel.module.css';
 
 const getAdvarseltekst = (aktivitet: Aktivitet, erVeileder: boolean) => {
     if (aktivitet.status === STATUS_FULLFOERT) {

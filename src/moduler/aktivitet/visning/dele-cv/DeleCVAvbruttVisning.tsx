@@ -6,7 +6,7 @@ import { AVBRUTT_AV_SYSTEM, STATUS_AVBRUTT, STATUS_FULLFOERT } from '../../../..
 import { AktivitetStatus, Livslopsstatus } from '../../../../datatypes/aktivitetTypes';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoManed } from '../../../../utils';
-import styles from './DeleCVAvbruttVisning.module.less';
+import styles from './DeleCVAvbruttVisning.module.css';
 import { overskrift } from './tekster';
 
 const getTitteltekst = (status: AktivitetStatus, livslopsstatus: Livslopsstatus, erHistorisk: boolean): string => {

@@ -1,0 +1,71 @@
+@media print {
+    @page {
+        size: auto;
+        margin: 5%;
+    }
+}
+@media print {
+    @page {
+        size: auto;
+        margin: 5%;
+    }
+}
+.aktivitetstavle {
+    align-self: center;
+}
+.aktivitetstavle:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetstavle-advarsel {
+    opacity: 0.2;
+}
+.aktivitetstavle__kolonne {
+    background-color: #c9c9c9;
+    padding: 1rem 0.5rem 0.1rem;
+    transition: padding 0.05s ease-in-out;
+    min-height: 2rem;
+    border-radius: 4px;
+    margin: 0.5rem 8px;
+}
+@media (min-width: 480px) {
+    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        right: -0.5rem;
+    }
+    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:before {
+        right: 0.95rem;
+    }
+    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:focus:after {
+        right: calc(0.95rem - 2px);
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        width: 17.5rem;
+    }
+}
+@media (min-width: 1480px) {
+    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        width: 15rem;
+    }
+}
+.aktivitetstavle__kolonne-wrapper {
+    height: 100%;
+}
+.aktivitetstavle__kolonne-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+}
+.aktivitetstavle__kolonne-header {
+    text-align: left;
+}
+.aktivitetstavle__kolonne--drag {
+    background-color: #a0a0a0;
+    padding-bottom: 2rem;
+}
+@media (min-width: 992px) {
+    .aktivitetstavle__kolonne {
+        margin: 0;
+    }
+}

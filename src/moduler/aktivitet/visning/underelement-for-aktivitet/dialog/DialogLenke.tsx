@@ -12,7 +12,7 @@ import { selectErBrukerManuell, selectReservasjonKRR } from '../../../../oppfolg
 import DeleLinje from '../../delelinje/delelinje';
 import DialogIkon from './DialogIkon';
 import DialogLenkeInnhold from './DialogLenkeInnhold';
-import styles from './Dialogunderelement.module.less';
+import styles from './Dialogunderelement.module.css';
 
 interface Props {
     aktivitet: Aktivitet;

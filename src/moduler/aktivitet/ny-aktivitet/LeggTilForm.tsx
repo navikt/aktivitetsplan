@@ -7,7 +7,7 @@ import Lenkepanel from '../../../felles-komponenter/lenkepanel';
 import Modal from '../../../felles-komponenter/modal/Modal';
 import { selectErVeileder } from '../../identitet/identitet-selector';
 import { selectAktivitetFeilmeldinger } from '../aktivitet-selector';
-import styles from './LeggTilForm.module.less';
+import styles from './LeggTilForm.module.css';
 
 const LeggTilForm = () => {
     const erVeileder = useSelector(selectErVeileder);

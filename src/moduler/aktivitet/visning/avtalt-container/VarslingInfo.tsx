@@ -2,7 +2,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 
-import styles from './VarslingInfo.module.less';
+import styles from './VarslingInfo.module.css';
 
 const VarslingInfo = () => (
     <>

@@ -11,7 +11,7 @@ import {
 } from '../../../../utils/textMappers';
 import { selectErBruker } from '../../../identitet/identitet-selector';
 import { hentBrukeravhengigTekst } from './brukeravhengigTekst';
-import styles from './Endringstekst.module.less';
+import styles from './Endringstekst.module.css';
 
 interface Props {
     aktivitet: Aktivitet;

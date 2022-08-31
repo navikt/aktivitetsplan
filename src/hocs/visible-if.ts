@@ -9,7 +9,7 @@ interface Props {
 }
 
 // Todo deprecate it
-export default function visibleIfHOC<P>(Component: React.ComponentType<P>) {
+export default function visibleIfHOC<P extends {}>(Component: React.ComponentType<P>) {
     return class WithVisibleIf extends React.Component<P & Props> {
         render() {
             const { visible, ...props } = this.props;

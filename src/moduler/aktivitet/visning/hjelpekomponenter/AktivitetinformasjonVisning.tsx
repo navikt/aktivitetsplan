@@ -16,12 +16,12 @@ import AvtaltMarkering from '../../avtalt-markering/AvtaltMarkering';
 import IkkeDeltFerdigMarkering, {
     SkalIkkeDeltFerdigMarkeringVises,
 } from '../../ikke-delt-ferdig-markering/IkkeDeltFerdigMarkering';
-import aktivitetsvisningStyles from './../Aktivitetsvisning.module.less';
+import aktivitetsvisningStyles from './../Aktivitetsvisning.module.css';
 import AktivitetIngress from '../aktivitetingress/AktivitetIngress';
 import AvtaltContainer from '../avtalt-container/AvtaltContainer';
 import DeleLinje from '../delelinje/delelinje';
 import Aktivitetsdetaljer from '../detaljer/aktivitetsdetaljer';
-import styles from './AktivitetinformasjonVisning.module.less';
+import styles from './AktivitetinformasjonVisning.module.css';
 
 const VisningIngress = ({ aktivitetstype }: { aktivitetstype: AktivitetType }) => {
     if (

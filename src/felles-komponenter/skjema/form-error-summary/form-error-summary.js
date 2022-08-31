@@ -2,7 +2,7 @@ import { Feiloppsummering } from 'nav-frontend-skjema';
 import PT from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 
-import styles from './feiloppsummering.module.less';
+import styles from './feiloppsummering.module.css';
 
 function FormErrorSummary({ submittoken, errors }) {
     const summaryRef = useRef(null);

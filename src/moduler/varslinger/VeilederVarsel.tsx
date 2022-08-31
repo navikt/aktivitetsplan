@@ -4,7 +4,7 @@ import React from 'react';
 
 import { formaterDatoKortManed } from '../../utils';
 import LenkeTilDialog from '../dialog/DialogLink';
-import styles from './Varslinger.module.less';
+import styles from './Varslinger.module.css';
 
 interface Props {
     tilhorendeDialogId?: string;

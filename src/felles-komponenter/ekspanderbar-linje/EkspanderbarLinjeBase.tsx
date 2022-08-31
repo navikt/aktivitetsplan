@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { UnmountClosed } from 'react-collapse';
 
 import VisibleIfDiv from '../utils/visible-if-div';
-import styles from './EkspanderbarLinjeBase.module.less';
+import styles from './EkspanderbarLinjeBase.module.css';
 
 export interface PropsBase {
     tittel: string | React.ReactNode;

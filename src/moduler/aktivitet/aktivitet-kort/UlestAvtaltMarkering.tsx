@@ -6,7 +6,7 @@ import { selectErBruker } from '../../identitet/identitet-selector';
 import AvtaltMarkering from '../avtalt-markering/AvtaltMarkering';
 import UlestMarkering from '../ulest-markering/UlestMarkering';
 import { skalMarkereForhaandsorienteringSomLest } from '../visning/avtalt-container/utilsForhaandsorientering';
-import styles from './UlestAvtaltMarkering.module.less';
+import styles from './UlestAvtaltMarkering.module.css';
 
 interface Props {
     aktivitet: Aktivitet;

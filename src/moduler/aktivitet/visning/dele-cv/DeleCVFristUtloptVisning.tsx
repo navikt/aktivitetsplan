@@ -4,7 +4,7 @@ import React from 'react';
 import EkspanderbarLinje from '../../../../felles-komponenter/ekspanderbar-linje/EkspanderbarLinje';
 import { formaterDatoManed } from '../../../../utils';
 import { Ingress } from './DeleCvContainer';
-import styles from './DeleCVFristUtloptVisning.module.less';
+import styles from './DeleCVFristUtloptVisning.module.css';
 
 interface Props {
     overskrift: string;

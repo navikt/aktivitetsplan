@@ -1,0 +1,75 @@
+.aktivitetmal {
+    text-align: left;
+}
+.aktivitetmal__header {
+    padding: 1rem 1rem 0.5rem;
+}
+.aktivitetmal__sub-header {
+    padding: 0 1rem 1rem;
+    font-weight: bold;
+}
+.aktivitetmal__modal .modal-header {
+    margin: 0 !important;
+}
+.aktivitetmal__tekst {
+    margin-bottom: 2rem;
+    white-space: pre-wrap;
+}
+.aktivitetmal__tekst a {
+    text-decoration: none;
+    border-bottom: 1px solid #0067c5;
+}
+.aktivitetmal__tekst a:focus {
+    outline: none;
+    background-color: #00347d;
+    border-bottom: 1px solid #00347d;
+}
+.aktivitetmal__delelinje {
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid #a0a0a0;
+}
+.aktivitetmal__innhold {
+    padding: 0 1rem 1rem;
+}
+.aktivitetmal__innhold p:not(.textarea--medMeta__teller) {
+    margin-top: 0;
+}
+.aktivitetmal__redigering--knapp {
+    margin-right: 1rem;
+}
+.aktivitetmal__slett-knapp {
+    margin-left: 1rem;
+}
+.aktivitetmal__historikk {
+    padding-bottom: 0.5rem;
+}
+.aktivitetmal__historikk-skrevetav {
+    font-weight: bold;
+}
+.aktivitetmal__historikk-skrevetav span:first-child:after {
+    content: ' ';
+}
+.aktivitetmal__historikk-tekst {
+    white-space: pre-wrap;
+}
+.aktivitetmal .skjemaelement__label {
+    margin-bottom: 20px;
+}
+.aktivitetmal .skjemaelement.textarea--container {
+    margin-bottom: 2rem;
+}
+@media (min-width: 992px) {
+    .aktivitetmal__header {
+        padding: 1rem 2rem 0.5rem;
+    }
+    .aktivitetmal__sub-header {
+        padding: 0 2rem 1rem;
+    }
+    .aktivitetmal__innhold {
+        padding: 0 2rem 1rem;
+    }
+    .aktivitetmal__footer {
+        padding: 0 1rem;
+    }
+}
