@@ -132,7 +132,7 @@ export function erMerEnnSyvDagerTil(dato) {
 }
 
 export function erMerEnnEnManederSiden(aktivitet) {
-    const datoVerdi = aktivitet.tilDato ? moment(aktivitet.tilDato) : moment(aktivitet.fraDato);
+    const datoVerdi = aktivitet.tilDato ? moment(aktivitet.tilDato) : moment(aktivitet.endretDato);
     return datoVerdi.isValid ? datoVerdi.isBefore(moment().subtract(1, 'month').startOf('day'), 'd') : false;
 }
 
