@@ -46,7 +46,7 @@ spec:
             "bucketName": "aktivitetsplan-dev-intern"
           },
           "cors": {
-            "origin": ["nav.no"],
+            "origin": ["https://veilarbpersonflate.dev.intern.nav.no", "https://veilarbpersonflate.intern.nav.no"],
             "credentials": true,
             "maxAge": 7200
           },
