@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/pto-frontend/pto-frontend:2022.05.06_06.20-7942c207e953
+  image: ghcr.io/navikt/poao-frontend/poao-frontend:2022.09.09_12.03-17f7a5dfa7e4
   port: 8080
   liveness:
     path: /internal/isAlive
@@ -39,9 +39,20 @@ spec:
   envFrom:
     - configmap: pto-config
   env:
-    - name: ENFORCE_LOGIN
-      value: "false"
-    - name: GCS_BUCKET_NAME
-      value: aktivitetsplan-dev-intern
-    - name: CORS_DOMAIN
-      value: "*"
+    - name: JSON_CONFIG
+      value: >
+        {
+          "gcs": {
+            "bucketName": "aktivitetsplan-dev-intern"
+          },
+          "cors": {
+            "origin": ["nav.no"],
+            "credentials": false,
+            "maxAge": 7200
+          },
+          "header": {
+            "csp": {
+              "frameSrc": ["vars.hotjar.com", "video.qbrick.com"]
+            }
+          }
+        }
