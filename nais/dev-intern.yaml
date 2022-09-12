@@ -47,7 +47,7 @@ spec:
           },
           "cors": {
             "origin": ["nav.no"],
-            "credentials": false,
+            "credentials": true,
             "maxAge": 7200
           },
           "header": {
