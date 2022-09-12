@@ -37,3 +37,6 @@ spec:
       value: aktivitetsplan-prod-intern
     - name: CORS_DOMAIN
       value: "*"
+    - name: JSON_CONFIG
+      value: >
+        { "header": { "csp": { "frameSrc": ["vars.hotjar.com", "video.qbrick.com"] } } }
