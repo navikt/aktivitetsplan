@@ -100,6 +100,17 @@ const Endringstekst = (props: Props) => {
                 </>
             );
         }
+        case TransaksjonsType.IKKE_FATT_JOBBEN: {
+            // Denne transaksjonen endrer også på aktivitetsstatus, som settes til fullført
+            const tilStatus = aktivitet.stillingFraNavData?.soknadsstatus
+                ? stillingFraNavSoknadsstatusMapper[aktivitet.stillingFraNavData.soknadsstatus]
+                : 'Ingen';
+            return (
+                <>
+                    {brukeravhengigTekst} avsluttet aktiviteten fordi kandidaten har {tilStatus}
+                </>
+            );
+        }
         default:
             return <>{brukeravhengigTekst} gjorde noe</>;
     }
