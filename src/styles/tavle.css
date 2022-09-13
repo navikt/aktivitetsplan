@@ -1,0 +1,154 @@
+.aktivitetsplanfs .tavle .tavle__scrollknapp {
+    display: none;
+    cursor: pointer;
+}
+.aktivitetsplanfs .tavle .tavle__scrollknapp:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .tavle .tavle__scrollknapp:disabled {
+    cursor: default;
+    color: #a0a0a0;
+    border-color: #a0a0a0;
+}
+.aktivitetsplanfs .tavle .tavle__scrollknapp:disabled:hover {
+    color: #a0a0a0;
+    border: 0.1rem solid #a0a0a0;
+    background-color: white;
+}
+.aktivitetsplanfs .tavle .kolonner {
+    display: block;
+    padding-bottom: 2rem;
+    min-height: 300px;
+}
+@media (min-width: 768px) {
+    .aktivitetsplanfs .tavle.aktivitetstavle {
+        width: 736px;
+        margin: 0 auto;
+    }
+    .aktivitetsplanfs .tavle .knapp-forrige {
+        margin: 1rem 0.5rem 0 0;
+    }
+    .aktivitetsplanfs .tavle .knapp-forrige-ikon {
+        margin-right: 0.1rem;
+    }
+    .aktivitetsplanfs .tavle .knapp-neste {
+        margin: 1rem 0 0 0.5rem;
+    }
+    .aktivitetsplanfs .tavle .knapp-neste-ikon {
+        margin-left: 0.1rem;
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .tavle {
+        display: flex;
+        justify-content: space-around;
+    }
+    .aktivitetsplanfs .tavle.aktivitetstavle {
+        width: 992px;
+        margin: 0 auto;
+    }
+    .aktivitetsplanfs .tavle .kolonner {
+        display: flex;
+        justify-content: space-between;
+        transition: margin 0.2s ease-in-out;
+        margin-bottom: 0;
+    }
+    .aktivitetsplanfs .tavle .tavle__scrollknapp {
+        height: 42px;
+        width: 42px;
+        display: flex;
+        align-items: center;
+        border-radius: 100%;
+        border: 0.1rem solid;
+        font-size: 2rem;
+        background: none;
+    }
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:hover,
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:active,
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:active:hover {
+        background-color: #4f4f4f;
+        border: 0;
+        color: white;
+    }
+    .aktivitetsplanfs .tavle .tavle-kolonne {
+        min-width: 31.33333%;
+        margin: 1%;
+    }
+}
+@media (min-width: 1480px) {
+    .aktivitetsplanfs .tavle.aktivitetstavle {
+        width: 100%;
+    }
+    .aktivitetsplanfs .tavle .tavle__scrollknapp {
+        display: none !important;
+    }
+    .aktivitetsplanfs .tavle .tavle-kolonne {
+        min-width: 18%;
+    }
+}
+@media print {
+    @page {
+        size: auto;
+        margin: 5%;
+    }
+}
+.aktivitetsplanfs .aktivitetstavle {
+    align-self: center;
+}
+.aktivitetsplanfs .aktivitetstavle:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .aktivitetstavle-advarsel {
+    opacity: 0.2;
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne {
+    background-color: #c9c9c9;
+    padding: 1rem 0.5rem 0.1rem;
+    transition: padding 0.05s ease-in-out;
+    min-height: 2rem;
+    border-radius: 4px;
+    margin: 0.5rem 8px;
+}
+@media (min-width: 480px) {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        right: -0.5rem;
+    }
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:before {
+        right: 0.95rem;
+    }
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:focus:after {
+        right: calc(0.95rem - 2px);
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        width: 17.5rem;
+    }
+}
+@media (min-width: 1480px) {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+        width: 15rem;
+    }
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne-wrapper {
+    height: 100%;
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne-header {
+    text-align: left;
+}
+.aktivitetsplanfs .aktivitetstavle__kolonne--drag {
+    background-color: #a0a0a0;
+    padding-bottom: 2rem;
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .aktivitetstavle__kolonne {
+        margin: 0;
+    }
+}

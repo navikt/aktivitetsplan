@@ -1,0 +1,85 @@
+.aktivitetsplanfs .aktivitetvisning {
+    max-width: 40rem;
+    margin: 0 auto;
+}
+.aktivitetsplanfs .aktivitetvisning > .feilmelding {
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon {
+    padding: 0 1rem;
+    margin: 1rem 0;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon .typo-sidetittel {
+    margin: 1.2rem 0;
+    line-height: 1.1;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon .typo-undertekst {
+    text-transform: uppercase;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon .col-xs-4 {
+    float: none;
+    width: 100%;
+}
+.aktivitetsplanfs .aktivitetvisning__underseksjon .skjemaelement__label img {
+    width: 14px;
+    height: 20px;
+    margin: -2px 0 0 0.3rem;
+}
+.aktivitetsplanfs .aktivitetvisning .oppdater-status {
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .aktivitetvisning__detaljer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 32rem;
+    width: 100%;
+}
+.aktivitetsplanfs .aktivitetvisning .typo-undertittel {
+    margin: 1.1rem 0 1rem;
+}
+.aktivitetsplanfs .aktivitetvisning .tilDittNavTekst {
+    white-space: pre-wrap;
+}
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse {
+    margin-bottom: 20px;
+    margin-right: 2rem;
+}
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse__tittel {
+    color: #6a6a6a;
+}
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse__tekst {
+    white-space: pre-wrap;
+}
+.aktivitetsplanfs .aktivitetvisning .aktivitetsdetaljer {
+    margin-bottom: 20px;
+}
+.aktivitetsplanfs .aktivitetvisning__delelinje {
+    margin-top: 0;
+    color: #a0a0a0;
+}
+.aktivitetsplanfs .aktivitetvisning__historikk {
+    margin-bottom: 2rem;
+}
+.aktivitetsplanfs .aktivitetvisning__historikk .endringslogg-for-aktivitet__lenke-knapp {
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+.aktivitetsplanfs .aktivitetvisning__historikk .endringslogg-for-aktivitet__innslag {
+    margin-bottom: 20px;
+}
+@media (max-width: 991px) {
+    .aktivitetsplanfs .aktivitetvisning .endreknapp {
+        margin-left: 20px;
+    }
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .aktivitetvisning__detaljer {
+        width: 32rem;
+    }
+    .aktivitetsplanfs .aktivitetvisning .endreknapp {
+        margin-left: 29px;
+        margin-right: -13px;
+    }
+}

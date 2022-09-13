@@ -1,3 +1,5 @@
+import '../../styles/dropdown.css';
+
 import classNames from 'classnames';
 import PT from 'prop-types';
 import React, { Children, Component, cloneElement } from 'react';

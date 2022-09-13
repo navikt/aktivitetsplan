@@ -1,0 +1,82 @@
+.aktivitetsplanfs .lenkepanel {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #262626;
+}
+.aktivitetsplanfs .lenkepanel:hover,
+.aktivitetsplanfs .lenkepanel--hover {
+    box-shadow: #a0a0a0 0 2px 1px 0;
+}
+.aktivitetsplanfs .lenkepanel:focus,
+.aktivitetsplanfs .lenkepanel--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .lenkepanel__indikator {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+    left: 0;
+    transition: left 250ms;
+}
+.aktivitetsplanfs .lenkepanel__indikator::before,
+.aktivitetsplanfs .lenkepanel__indikator::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .lenkepanel__indikator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .lenkepanel__indikator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .lenkepanel__indikator::before {
+    transform: translateX(2px) rotate(45deg);
+}
+.aktivitetsplanfs .lenkepanel__indikator::after {
+    transform: translateX(-2px) rotate(-45deg);
+}
+.aktivitetsplanfs .lenkepanel:hover .lenkepanel__heading,
+.aktivitetsplanfs .lenkepanel--hover .lenkepanel__heading {
+    text-decoration: underline;
+    color: #0067c5;
+}
+.aktivitetsplanfs .lenkepanel:hover .lenkepanel__indikator,
+.aktivitetsplanfs .lenkepanel--hover .lenkepanel__indikator {
+    left: 6px;
+}
+.aktivitetsplanfs .lenkepanel--border {
+    border: 1px solid #c9c9c9;
+    border: 1px solid #6a6a6a;
+}
+.aktivitetsplanfs .lenkepanel--border:hover,
+.aktivitetsplanfs .lenkepanel--border.panel-interaktiv-mixin--hover {
+    border: 1px solid #0067c5;
+}

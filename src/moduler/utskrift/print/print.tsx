@@ -1,3 +1,5 @@
+import '../../../styles/aktivitetsplan-print.css';
+
 import { Sidetittel } from 'nav-frontend-typografi';
 import React from 'react';
 

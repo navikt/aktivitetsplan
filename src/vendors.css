@@ -1,3 +1,4 @@
+/*
 .alertstripe {
     background-color: #fff;
     display: block;
@@ -562,6 +563,7 @@
     color: #fff;
 }
 /* Beholdes i kode for å unngå breaking change */
+/*
 .knapp {
     display: inline-flex;
     align-items: center;
@@ -1893,4 +1895,4 @@
 }
 .lesMerPanel__mer:empty {
     padding: 0;
-}
+}*/

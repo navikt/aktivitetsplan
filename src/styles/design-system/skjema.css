@@ -1,0 +1,693 @@
+.aktivitetsplanfs .checkboks,
+.aktivitetsplanfs .radioknapp {
+    position: absolute;
+    opacity: 0;
+}
+.aktivitetsplanfs .checkboks + .skjemaelement__label,
+.aktivitetsplanfs .radioknapp + .skjemaelement__label {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    padding-left: 32px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0;
+    line-height: 24px;
+}
+.aktivitetsplanfs .checkboks + .skjemaelement__label::before,
+.aktivitetsplanfs .radioknapp + .skjemaelement__label::before {
+    content: '';
+    position: absolute;
+    display: block;
+    text-align: center;
+    background-color: #fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 1px solid #6a6a6a;
+    width: 24px;
+    height: 24px;
+    left: 0;
+    top: 0;
+}
+.aktivitetsplanfs .checkboks:hover + .skjemaelement__label,
+.aktivitetsplanfs .radioknapp:hover + .skjemaelement__label {
+    color: #0067c5;
+}
+.aktivitetsplanfs .checkboks:hover + .skjemaelement__label::before,
+.aktivitetsplanfs .radioknapp:hover + .skjemaelement__label::before {
+    border-color: #0067c5;
+    background-color: #cce1ff;
+}
+.aktivitetsplanfs .checkboks:disabled + .skjemaelement__label,
+.aktivitetsplanfs .radioknapp:disabled + .skjemaelement__label {
+    color: #6a6a6a;
+}
+.aktivitetsplanfs .checkboks:disabled + .skjemaelement__label:hover,
+.aktivitetsplanfs .radioknapp:disabled + .skjemaelement__label:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .checkboks:disabled + .skjemaelement__label::before,
+.aktivitetsplanfs .radioknapp:disabled + .skjemaelement__label::before {
+    background-color: #f1f1f1;
+    border-color: #6a6a6a;
+    box-shadow: none;
+}
+.aktivitetsplanfs .checkboks--mork + .skjemaelement__label::before,
+.aktivitetsplanfs .radioknapp--mork + .skjemaelement__label::before {
+    border-color: #6a6a6a;
+}
+.aktivitetsplanfs .checkboks {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    position: absolute;
+    opacity: 0;
+}
+.aktivitetsplanfs .checkboks:focus + .skjemaelement__label::before {
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .checkboks + .skjemaelement__label::before {
+    border-radius: 4px;
+}
+.aktivitetsplanfs .checkboks:checked:disabled + .skjemaelement__label::before {
+    border-color: #a0a0a0;
+    background-color: #a0a0a0;
+}
+.aktivitetsplanfs .checkboks:checked:focus + .skjemaelement__label::before {
+    background-color: white;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjMDA2N0M1IiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+}
+.aktivitetsplanfs .checkboks:checked + .skjemaelement__label::before {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 75%;
+    border-color: #0067c5;
+    border-width: 2px;
+    background-color: #0067c5;
+}
+.aktivitetsplanfs .radioknapp {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+}
+.aktivitetsplanfs .radioknapp + .skjemaelement__label::before {
+    border-radius: 50%;
+}
+.aktivitetsplanfs .radioknapp:checked + .skjemaelement__label::before {
+    border: 2px solid #0067c5;
+    box-shadow: 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
+}
+.aktivitetsplanfs .radioknapp:disabled:checked + .skjemaelement__label::before {
+    border: 2px solid #a0a0a0;
+    box-shadow: 0 0 0 3px #fff inset, 0 0 0 12px #a0a0a0 inset;
+}
+.aktivitetsplanfs .radioknapp:focus + .skjemaelement__label::before {
+    box-shadow: 0 0 0 3px #00347d, 0 0 0 12px #fff inset;
+}
+.aktivitetsplanfs .radioknapp:checked:focus + .skjemaelement__label::before {
+    transition: box-shadow 200ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    box-shadow: 0 0 0 3px #00347d, 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
+}
+.aktivitetsplanfs .textarea--medMeta {
+    resize: none;
+    width: 100%;
+    overflow: hidden;
+    min-height: 4rem;
+    transition: height 0.1s ease-out;
+    display: block;
+}
+.aktivitetsplanfs .textarea--medMeta__wrapper {
+    width: 100%;
+    position: relative;
+}
+.aktivitetsplanfs .textarea--medMeta__teller {
+    pointer-events: none;
+    color: #6a6a6a;
+    font-style: italic;
+    position: absolute;
+    text-align: right;
+    left: 32px;
+    right: 12px;
+    bottom: 10px;
+    margin: 0;
+    padding: 0;
+}
+.aktivitetsplanfs .textarea--medMeta__teller .teller-tekst--overflow {
+    color: #ba3a26;
+    font-weight: bold;
+}
+.aktivitetsplanfs .textareamirror {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    appearance: none;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #6a6a6a;
+    box-sizing: border-box;
+    line-height: 1.375rem;
+    white-space: pre-wrap;
+    display: inline-block;
+    width: 100%;
+    word-wrap: break-word;
+    position: absolute;
+    left: -99999px;
+    top: 0;
+}
+.aktivitetsplanfs .textareamirror:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .textareamirror:hover {
+    border-color: #0067c5;
+}
+.aktivitetsplanfs .textareamirror:disabled,
+.aktivitetsplanfs .textareamirror[readonly] {
+    background-color: #f1f1f1;
+    border-color: #6a6a6a;
+    box-shadow: none;
+    color: #262626;
+}
+.aktivitetsplanfs .textareamirror:disabled:hover,
+.aktivitetsplanfs .textareamirror[readonly]:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .textareamirror--mini {
+    padding: 0.25rem;
+}
+.aktivitetsplanfs .textareamirror:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .textareamirror:hover {
+    border-color: #0067c5;
+}
+.aktivitetsplanfs .textareamirror:disabled,
+.aktivitetsplanfs .textareamirror[readonly] {
+    background-color: #f1f1f1;
+    border-color: #6a6a6a;
+    box-shadow: none;
+    color: #262626;
+}
+.aktivitetsplanfs .textareamirror:disabled:hover,
+.aktivitetsplanfs .textareamirror[readonly]:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .textareamirror--mini {
+    padding: 0.25rem;
+}
+.aktivitetsplanfs .textarea__container {
+    position: relative;
+}
+
+.aktivitetsplanfs .selectContainer {
+    position: relative;
+    display: inline-block;
+}
+.aktivitetsplanfs .selectContainer select {
+    padding-right: 1.5em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    width: 100%;
+}
+.aktivitetsplanfs .selectContainer select::-ms-expand {
+    display: none;
+}
+.aktivitetsplanfs .selectContainer::before {
+    pointer-events: none;
+    content: '';
+    background: #262626;
+    height: 2px;
+    width: 10px;
+    border-radius: 10px;
+    right: 0.75rem;
+    top: 50%;
+    z-index: 4;
+    position: absolute;
+    transform: translateX(3px) rotate(-45deg);
+}
+.aktivitetsplanfs .selectContainer::after {
+    pointer-events: none;
+    content: '';
+    background: #262626;
+    height: 2px;
+    width: 10px;
+    border-radius: 10px;
+    right: 0.75rem;
+    top: 50%;
+    z-index: 4;
+    position: absolute;
+    transform: translateX(-3px) rotate(45deg);
+}
+
+.aktivitetsplanfs .input--xxs {
+    width: 35px;
+}
+.aktivitetsplanfs .input--xs {
+    width: 70px;
+}
+.aktivitetsplanfs .input--s {
+    width: 140px;
+}
+.aktivitetsplanfs .input--m {
+    width: 100%;
+    max-width: 210px;
+}
+.aktivitetsplanfs .input--l {
+    width: 100%;
+    max-width: 280px;
+}
+.aktivitetsplanfs .input--xl {
+    width: 100%;
+    max-width: 350px;
+}
+.aktivitetsplanfs .input--xxl {
+    width: 100%;
+    max-width: 420px;
+}
+.aktivitetsplanfs .input--fullbredde {
+    width: 100%;
+}
+.aktivitetsplanfs .skjemaelement__input {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    appearance: none;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #6a6a6a;
+    box-sizing: border-box;
+    line-height: 1.375rem;
+}
+.aktivitetsplanfs .skjemaelement__input:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px #00347d;
+}
+.aktivitetsplanfs .skjemaelement__input:hover {
+    border-color: #0067c5;
+}
+.aktivitetsplanfs .skjemaelement__input:disabled,
+.aktivitetsplanfs .skjemaelement__input[readonly] {
+    background-color: #f1f1f1;
+    border-color: #6a6a6a;
+    box-shadow: none;
+    color: #262626;
+}
+.aktivitetsplanfs .skjemaelement__input:disabled:hover,
+.aktivitetsplanfs .skjemaelement__input[readonly]:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .skjemaelement__input--mini {
+    padding: 0.25rem;
+}
+.aktivitetsplanfs .skjemaelement__input-fodselsnr::-webkit-outer-spin-button,
+.aktivitetsplanfs .skjemaelement__input-fodselsnr::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.aktivitetsplanfs .skjemaelement__input-fodselsnr [type='number'] {
+    -moz-appearance: textfield;
+}
+.aktivitetsplanfs .skjemagruppe--feil .skjemaelement__input:not(:focus):not(:hover):not(:active):not(:checked) {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs
+    .skjemagruppe--feil
+    .skjemaelement__input:not(:focus):not(:hover):not(:active):not(:checked).checkboks
+    + .skjemaelement__label::before,
+.aktivitetsplanfs
+    .skjemagruppe--feil
+    .skjemaelement__input:not(:focus):not(:hover):not(:active):not(:checked).radioknapp
+    + .skjemaelement__label::before {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs
+    .skjemagruppe--feil
+    .inputPanel:not(.inputPanel--focused):not(.inputPanel--checked):not(.inputPanel--disabled) {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs .skjemaelement__feilmelding {
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .skjemaelement__feilmelding:empty {
+    margin: 0;
+}
+.aktivitetsplanfs .skjemaelement__input--harFeil:not(:focus):not(:hover):not(:active):not(.inputPanel--focused) {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs
+    .skjemaelement__input--harFeil:not(:focus):not(:hover):not(:active):not(.inputPanel--focused).checkboks:not(:checked)
+    + .skjemaelement__label::before,
+.aktivitetsplanfs
+    .skjemaelement__input--harFeil:not(:focus):not(:hover):not(:active):not(.inputPanel--focused).radio:not(:checked)
+    + .skjemaelement__label::before,
+.aktivitetsplanfs
+    .skjemaelement__input--harFeil:not(:focus):not(:hover):not(:active):not(.inputPanel--focused).radioknapp:not(:checked)
+    + .skjemaelement__label::before {
+    border-color: #ba3a26;
+    box-shadow: 0 0 0 1px #ba3a26;
+}
+.aktivitetsplanfs .toggle {
+    display: flex;
+}
+.aktivitetsplanfs .toggle > :first-child .toggle__label {
+    border-radius: 2px 0 0 2px;
+}
+.aktivitetsplanfs .toggle > :last-child .toggle__label {
+    border-radius: 0 2px 2px 0;
+    border-right: 1px solid #262626;
+    margin-left: -1px;
+}
+.aktivitetsplanfs .toggle__label {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #262626;
+    border-right: 0;
+    color: #262626;
+    cursor: pointer;
+    min-width: 6.25rem;
+    height: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0;
+}
+.aktivitetsplanfs .toggle__label:hover {
+    border-color: #0067c5;
+    color: #0067c5;
+}
+.aktivitetsplanfs .toggle__input:checked + label {
+    background-color: #005b82;
+    color: #fff;
+    border-color: #005b82;
+}
+.aktivitetsplanfs .toggle__input:focus + label {
+    position: relative;
+    z-index: 999;
+    box-shadow: 0 0 0 3px #ffc166;
+}
+.aktivitetsplanfs .inputPanelGruppe__inner + div > .skjemaelement__feilmelding {
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .inputPanelGruppe .inputPanel:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .inputPanel {
+    background-color: #fff;
+    border: 1px solid #6a6a6a;
+    border-radius: 0.25rem;
+    display: block;
+    padding: 1rem 1rem 1rem 3rem;
+    position: relative;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+}
+.aktivitetsplanfs .inputPanel__field {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    position: absolute;
+    width: 0;
+    height: 1px;
+    opacity: 0;
+}
+.aktivitetsplanfs .inputPanel__field:checked + .inputPanel__label::before {
+    border: 1px solid #0067c5;
+    background-color: #0067c5;
+}
+.aktivitetsplanfs .inputPanel__field:disabled + .inputPanel__label::before {
+    background-color: #f1f1f1;
+}
+.aktivitetsplanfs .inputPanel__label {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    line-height: 24px;
+}
+.aktivitetsplanfs .inputPanel__label::before {
+    border: 1px solid #6a6a6a;
+    border-radius: 50%;
+    background-color: #fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 75%;
+    content: '';
+    height: 1.5rem;
+    width: 1.5rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+.aktivitetsplanfs .inputPanel__subtext {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    display: block;
+    margin-top: 0.5rem;
+}
+.aktivitetsplanfs .inputPanel--checked {
+    background-color: #cce1ff;
+    border: 1px solid transparent;
+}
+.aktivitetsplanfs .inputPanel--disabled {
+    background-color: #f1f1f1;
+    box-shadow: none;
+}
+.aktivitetsplanfs .inputPanel--disabled:hover,
+.aktivitetsplanfs .inputPanel--disabled .inputPanel__field:hover,
+.aktivitetsplanfs .inputPanel--disabled + .inputPanel__label:hover {
+    cursor: not-allowed;
+}
+.aktivitetsplanfs .inputPanel--focused {
+    box-shadow: 0 0 0 3px #00347d;
+    border: 1px solid transparent;
+}
+.aktivitetsplanfs .inputPanel:active:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+    background-color: #cce1ff;
+}
+.aktivitetsplanfs .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) {
+    border: 1px solid #0067c5;
+    box-shadow: #a0a0a0 0 2px 1px 0;
+    cursor: pointer;
+}
+.aktivitetsplanfs
+    .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel):not(.inputPanel--checked)
+    .inputPanel__field
+    + .inputPanel__label::before {
+    background-color: #99c3ff;
+    border: 0;
+}
+.aktivitetsplanfs .inputPanel:hover:not(.inputPanel--disabled):not(.bekreftCheckboksPanel) .inputPanel__label {
+    color: #0067c5;
+}
+.aktivitetsplanfs .checkboksPanel .inputPanel__label::before {
+    border-radius: 4px;
+}
+.aktivitetsplanfs .checkboksPanel .inputPanel__field:checked + .inputPanel__label::before {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+}
+.aktivitetsplanfs .radioPanel.inputPanel--checked .inputPanel__label::before {
+    border: 2px solid #0067c5;
+    box-shadow: 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
+    border-radius: 50%;
+}
+.aktivitetsplanfs .radioPanel.inputPanel--checked.inputPanel--focused .inputPanel__label::before {
+    transition: box-shadow 200ms cubic-bezier(0.465, 0.183, 0.153, 0.946);
+    box-shadow: 0 0 0 3px #fff inset, 0 0 0 12px #0067c5 inset;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    background-color: #ffeccc;
+    border-color: #ffeccc;
+    cursor: unset;
+    transition: background-color linear 100ms;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel:focus,
+.aktivitetsplanfs .bekreftCheckboksPanel--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel .bekreftCheckboksPanel__innhold {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    max-width: 80ch;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel .skjemaelement {
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel .checkboks:hover + .skjemaelement__label {
+    text-decoration: underline;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked {
+    background-color: #ccf1d6;
+    border-color: #ccf1d6;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .bekreftCheckboksPanel__innhold .lenke:not(:focus) {
+    color: #262626;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks + .skjemaelement__label::before {
+    transition: none;
+    background-color: #06893a;
+    border-color: #06893a;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks + .skjemaelement__label:hover {
+    color: #262626;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks + .skjemaelement__label:hover::before {
+    background-color: #006a23;
+    border-color: #006a23;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks:focus + .skjemaelement__label::before {
+    border-color: #00347d;
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--checked .checkboks:focus + .skjemaelement__label:hover::before {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
+}
+.aktivitetsplanfs .bekreftCheckboksPanel--error {
+    background-color: #f3e3e3;
+    border: 1px solid transparent;
+}
+.aktivitetsplanfs .feiloppsummering {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    border-radius: 0;
+    border: 4px solid #ba3a26;
+}
+.aktivitetsplanfs .feiloppsummering:focus,
+.aktivitetsplanfs .feiloppsummering--focus {
+    box-shadow: 0 0 0 3px #00347d;
+    outline: none;
+}
+.aktivitetsplanfs .feiloppsummering__liste {
+    margin: 1rem 0;
+}
+.aktivitetsplanfs .feiloppsummering__liste li {
+    margin-bottom: 0.25rem;
+}
+.aktivitetsplanfs .skjemagruppe,
+.aktivitetsplanfs .skjemagruppe fieldset,
+.aktivitetsplanfs .skjemagruppe__fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.aktivitetsplanfs .skjemagruppe .skjemaelement,
+.aktivitetsplanfs .skjemagruppe fieldset .skjemaelement,
+.aktivitetsplanfs .skjemagruppe__fieldset .skjemaelement {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .skjemagruppe .skjemagruppe.inputPanelGruppe,
+.aktivitetsplanfs .skjemagruppe fieldset .skjemagruppe.inputPanelGruppe,
+.aktivitetsplanfs .skjemagruppe__fieldset .skjemagruppe.inputPanelGruppe,
+.aktivitetsplanfs .skjemagruppe .skjemagruppe.radiogruppe,
+.aktivitetsplanfs .skjemagruppe fieldset .skjemagruppe.radiogruppe,
+.aktivitetsplanfs .skjemagruppe__fieldset .skjemagruppe.radiogruppe,
+.aktivitetsplanfs .skjemagruppe .skjemagruppe.checkboxgruppe,
+.aktivitetsplanfs .skjemagruppe fieldset .skjemagruppe.checkboxgruppe,
+.aktivitetsplanfs .skjemagruppe__fieldset .skjemagruppe.checkboxgruppe {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .skjemagruppe__description {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .skjemagruppe legend,
+.aktivitetsplanfs .skjemagruppe__legend {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+@media (min-width: 30em) {
+    .aktivitetsplanfs .skjemagruppe legend,
+    .aktivitetsplanfs .skjemagruppe__legend {
+        font-size: 1.25rem;
+        line-height: 1.625rem;
+    }
+}
+.aktivitetsplanfs .skjemagruppe.inputPanelGruppe .skjemaelement,
+.aktivitetsplanfs .skjemagruppe.radiogruppe .skjemaelement,
+.aktivitetsplanfs .skjemagruppe.checkboxgruppe .skjemaelement {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .skjemagruppe.inputPanelGruppe legend,
+.aktivitetsplanfs .skjemagruppe.radiogruppe legend,
+.aktivitetsplanfs .skjemagruppe.checkboxgruppe legend,
+.aktivitetsplanfs .skjemagruppe.inputPanelGruppe .skjemagruppe__legend,
+.aktivitetsplanfs .skjemagruppe.radiogruppe .skjemagruppe__legend,
+.aktivitetsplanfs .skjemagruppe.checkboxgruppe .skjemagruppe__legend {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs [autocomplete='off']::-webkit-contacts-auto-fill-button {
+    visibility: hidden;
+    display: none;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+}
+.aktivitetsplanfs .skjemaelement {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+    position: relative;
+}
+.aktivitetsplanfs .skjemaelement__label {
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.375rem;
+    font-weight: 600;
+    display: block;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .skjemaelement__label + .skjemaelement__description {
+    margin-top: -0.25rem;
+}
+.aktivitetsplanfs .skjemaelement__description {
+    margin-bottom: 0.5rem;
+}

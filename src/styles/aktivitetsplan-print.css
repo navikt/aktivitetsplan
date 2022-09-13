@@ -1,0 +1,179 @@
+.aktivitetsplanfs .aktivitetsplanprint {
+    display: block;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-header {
+    width: 100%;
+    position: relative;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-header__tilbakeknapp + .printmodal-header__printknapp {
+    margin-left: calc(50% - 120px);
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-header__tilbakeknapp[hidden] + .printmodal-header__printknapp {
+    margin-left: 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .modal-header-wrapper {
+    background-color: #f1f1f1;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body__utskrift--overskrift {
+    margin: 0 3rem 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body {
+    background-color: #fff;
+    padding: 2rem 0 3rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__adresse-dato {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 3rem 3rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__adresse-dato .printmodal-body__dato {
+    text-align: right;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__visprintmelding,
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__vismittmal {
+    margin: 0 3rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__visprintmelding:empty,
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__vismittmal:empty {
+    display: none;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__visprintmelding + .statusgruppe,
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__visprintmelding
+    + .printmodal-body__vismittmal {
+    margin-top: 2rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__vismittmal {
+    margin-bottom: 2rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__nav-logo-print {
+    margin: 0 3rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__statusgrupper {
+    padding: 2rem 3rem;
+    border-top: 1px solid #a0a0a0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__statusgrupper .printmodal-body__statusgruppe {
+    margin: 2rem 0;
+}
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__statusgruppe:last-child {
+    margin: 0;
+}
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__statusgruppe
+    .henvendelse {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__visprintmelding--overskrift,
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__vismittmal--overskrift,
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__statusgruppe--overskrift {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__statusgrupper .printmodal-body__dialog {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs
+    .aktivitetsplanprint
+    .printmodal-body
+    .printmodal-body__statusgrupper
+    .printmodal-body__dialog
+    .henvendelse {
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__statusgruppe--type {
+    margin: 0.25rem 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .etikett-print {
+    background: none;
+    color: #262626;
+    border: 1pt solid #a0a0a0;
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer {
+    margin-top: 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer + .aktivitetsdetaljer {
+    margin-top: 20px;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt {
+    display: inline-block;
+    width: calc(50% - 2rem);
+    margin-bottom: 0;
+    padding-bottom: 0.75rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt--fullbredde {
+    width: 100%;
+    margin-right: 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt--fullbredde:last-child {
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt__lenke {
+    text-decoration: none;
+    border-bottom: 0;
+    color: #262626;
+    cursor: default;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsbeskrivelse {
+    padding-bottom: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .aktivitetsbeskrivelse + .aktivitetsbeskrivelse {
+    margin-top: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body .printmodal-body__aktivitetreferat {
+    margin: -0.25rem 0 0.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmodal-body__nav-logo-print {
+    width: 80px;
+    margin-bottom: 1.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .feilmelding--systemfeil {
+    background-color: #fff;
+    margin: 0;
+    padding: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__form {
+    background-color: #fff;
+    padding-top: 1.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__skjema {
+    margin: 0 3rem 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__skjema .kvp-plan-valg {
+    padding-left: 26px;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__skjema .kvp-periode-valg {
+    padding-top: 0.5rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__skjema .radioknapp + .skjemaelement__label:before {
+    margin-top: 4px;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__tittel {
+    margin-bottom: 1rem;
+}
+.aktivitetsplanfs .aktivitetsplanprint .printmelding__knapperad {
+    padding: 1.2rem 3rem 1.5rem;
+    border-top: 1px solid #a0a0a0;
+    margin-top: 2rem;
+}

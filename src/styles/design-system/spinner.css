@@ -1,0 +1,73 @@
+.aktivitetsplanfs .spinner {
+    display: inline-block;
+    position: relative;
+    animation: spinner-rotate 1.4s linear infinite;
+}
+.aktivitetsplanfs .spinner {
+    display: block;
+    margin: 1rem auto;
+}
+.aktivitetsplanfs .spinner circle:nth-child(3) {
+    animation: spinner-dasharray 1.4s ease-in-out infinite;
+    stroke-dasharray: 80px, 200px;
+    stroke-dashoffset: 0;
+}
+.aktivitetsplanfs .spinner--xxs {
+    height: 16px;
+    width: 16px;
+    background-size: 16px 16px;
+}
+.aktivitetsplanfs .spinner--xs {
+    height: 20px;
+    width: 20px;
+    background-size: 20px 20px;
+}
+.aktivitetsplanfs .spinner--s {
+    height: 24px;
+    width: 24px;
+    background-size: 24px 24px;
+}
+.aktivitetsplanfs .spinner--m {
+    height: 32px;
+    width: 32px;
+    background-size: 32px 32px;
+}
+.aktivitetsplanfs .spinner--l {
+    height: 40px;
+    width: 40px;
+    background-size: 40px 40px;
+}
+.aktivitetsplanfs .spinner--xl {
+    height: 64px;
+    width: 64px;
+    background-size: 64px 64px;
+}
+.aktivitetsplanfs .spinner--xxl {
+    height: 128px;
+    width: 128px;
+    background-size: 128px 128px;
+}
+.aktivitetsplanfs .spinner--xxxl {
+    height: 256px;
+    width: 256px;
+    background-size: 256px 256px;
+}
+@keyframes spinner-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes spinner-dasharray {
+    0% {
+        stroke-dasharray: 1px, 200px;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 100px, 200px;
+        stroke-dashoffset: -15px;
+    }
+    100% {
+        stroke-dasharray: 100px, 200px;
+        stroke-dashoffset: -120px;
+    }
+}

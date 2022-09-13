@@ -1,0 +1,137 @@
+.aktivitetsplanfs .verktoylinje {
+    display: flex;
+    flex-direction: column;
+}
+.aktivitetsplanfs .verktoylinje__verktoy {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .verktoylinje__verktoy.filter {
+    width: auto;
+}
+.aktivitetsplanfs .verktoylinje__verktoy.filter .dropdown {
+    margin-bottom: 0;
+}
+.aktivitetsplanfs .verktoylinje__verktoy.filter .dropdown .filter-dropdown__innhold {
+    width: auto;
+    left: inherit;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(1) {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(1) .knappelenke span {
+    border: 0;
+    font-weight: bolder;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(2) .indre {
+    display: inherit;
+    flex-wrap: inherit;
+    justify-content: inherit;
+    align-items: inherit;
+    width: 100%;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(3) {
+    order: 4;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke span:hover {
+    border-bottom: 1px solid #0067c5;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke span {
+    border: 0;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke.knappelenke--disabled {
+    color: #a0a0a0;
+    cursor: default;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke.knappelenke--disabled span:hover {
+    border-bottom: 0;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser:focus {
+    background-color: transparent;
+    color: #0067c5;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser:hover > span:last-child {
+    border-bottom: 1px solid #0067c5;
+    margin-bottom: -1px;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser {
+    margin: 0 auto;
+    position: relative;
+    padding: 0.6rem 1rem 0.9rem 1.5rem;
+    background-position-y: 1rem;
+    top: -0.1rem;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser > span:last-child {
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+    margin-top: 0.1rem;
+}
+.aktivitetsplanfs .verktoylinje__verktoy-container .lenkeknapp {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+@media (min-width: 992px) {
+    .aktivitetsplanfs .verktoylinje {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        flex-wrap: wrap;
+        flex-direction: inherit;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy {
+        margin-bottom: 0.5rem;
+        margin-right: 0;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container {
+        display: flex;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(1) {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(2) {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(2) > .indre {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(3) {
+        width: 69%;
+        order: inherit;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container:nth-child(4) {
+        width: 31%;
+        align-items: flex-start;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container .navigasjonslinje-meny__knapp--print,
+    .aktivitetsplanfs .verktoylinje__verktoy-container .knappelenke {
+        margin-right: 1rem;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container .aktivitetskort__henvendelser {
+        margin-left: 1.2rem;
+        margin-right: 1rem;
+        top: -0.1rem;
+    }
+    .aktivitetsplanfs .verktoylinje__verktoy-container .lenkeknapp {
+        width: auto;
+        margin-top: 1px;
+    }
+}

@@ -1,3 +1,5 @@
+import '../../styles/verktoylinje.css';
+
 import { Add } from '@navikt/ds-icons';
 import React from 'react';
 import { useSelector } from 'react-redux';

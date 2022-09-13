@@ -1,0 +1,46 @@
+.aktivitetsplanfs .alertstripe {
+    background-color: #fff;
+    display: block;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-content: center;
+    border-radius: 0.25rem;
+    color: #262626;
+}
+.aktivitetsplanfs .alertstripe--info {
+    border: 1px solid #368da8;
+    background-color: #d8f9ff;
+}
+.aktivitetsplanfs .alertstripe--suksess {
+    border: 1px solid #06893a;
+    background-color: #ccf1d6;
+}
+.aktivitetsplanfs .alertstripe--advarsel {
+    border: 1px solid #d47b00;
+    background-color: #ffeccc;
+}
+.aktivitetsplanfs .alertstripe--feil {
+    border: 1px solid #ba3a26;
+    background-color: #f9d2cc;
+}
+.aktivitetsplanfs .alertstripe__ikon {
+    margin-right: 0.75rem;
+    display: flex;
+    top: 1rem;
+    flex-shrink: 0;
+}
+.aktivitetsplanfs .alertstripe--inline {
+    background-color: unset;
+    border: 0;
+    padding: 0;
+}
+.aktivitetsplanfs .alertstripe:not(.alertstripe--inline) .lenke:not(:focus) {
+    color: #262626;
+}
+.aktivitetsplanfs .alertstripe .alertstripe__tekst {
+    margin: auto 0;
+    max-width: 37.5rem;
+    display: block;
+    flex: 1;
+}

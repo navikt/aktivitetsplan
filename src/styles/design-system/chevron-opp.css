@@ -1,0 +1,80 @@
+.aktivitetsplanfs .chevron--opp {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 2px;
+    line-height: 2px;
+    width: 20px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.aktivitetsplanfs .chevron--opp::before,
+.aktivitetsplanfs .chevron--opp::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--opp::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--opp::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--opp::before {
+    transform: translateX(2px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--opp::after {
+    transform: translateX(-2px) rotate(45deg);
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor {
+    display: inline-block;
+    flex-shrink: 0;
+    height: 3px;
+    line-height: 2px;
+    width: 32px;
+    position: relative;
+    text-align: center;
+    transition: 200ms transform;
+    vertical-align: middle;
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::before,
+.aktivitetsplanfs .chevron--opp.chevron--stor::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background: currentColor;
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::before {
+    transform: translateX(3px) rotate(-45deg);
+}
+.aktivitetsplanfs .chevron--opp.chevron--stor::after {
+    transform: translateX(-3px) rotate(45deg);
+}

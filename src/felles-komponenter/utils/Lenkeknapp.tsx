@@ -1,3 +1,5 @@
+// import '../../styles/knapp.css';
+
 import classNames from 'classnames';
 import { Knapp } from 'nav-frontend-knapper';
 import React, { ReactNode } from 'react';
