@@ -9,7 +9,7 @@ import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-s
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
 import StillingFraNavEtikett from '../../etikett/StillingFraNavEtikett';
-import styles from '../dele-cv/DeleCvSvarVisning.module.less';
+import styles from '../dele-cv/DeleCvSvarVisning.module.css';
 import EndreLinje from '../endre-linje/endre-linje';
 import SoknadsstatusForm from './SoknadsstatusForm';
 
