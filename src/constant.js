@@ -23,6 +23,7 @@ export const CV_DELT = 'CV_DELT';
 export const INNKALT_TIL_INTERVJU = 'INNKALT_TIL_INTERVJU';
 export const SKAL_PAA_INTERVJU = 'SKAL_PAA_INTERVJU';
 export const AVSLAG = 'AVSLAG';
+export const IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN';
 export const JOBBTILBUD = 'JOBBTILBUD';
 
 export const PROVER_VARSLING = 'PROVER_VARSLING';

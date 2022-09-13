@@ -38,7 +38,7 @@ export const enStillingFraNavAktivitet = ({ tittel, arstall }) => {
         opprettetDato: date,
         endretDato: arstall ? endretDate : null,
         endretAv: 'z990207',
-        historisk: true,
+        historisk: false,
         kontaktperson: 'Vidar Vidarsen,\n NAV-ansatt, 99 99 99 99,vidar.vidarsen@nav.no',
         lagtInnAv: 'NAV',
         transaksjonsType: 'STATUS_ENDRET',

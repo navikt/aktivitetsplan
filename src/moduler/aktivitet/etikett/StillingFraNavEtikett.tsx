@@ -17,6 +17,7 @@ const getCls = (etikettnavn: StillingFraNavSoknadsstatus): string => {
         case statuskoder.JOBBTILBUD:
             return styles.navOransjeLighten60;
         case statuskoder.AVSLAG:
+        case statuskoder.IKKE_FATT_JOBBEN:
         case undefined:
             return styles.navGra20;
     }
@@ -33,7 +34,8 @@ const getText = (etikettnavn: StillingFraNavSoknadsstatus): string => {
         case statuskoder.JOBBTILBUD:
             return 'Fått jobbtilbud 🎉';
         case statuskoder.AVSLAG:
-            return 'Fått avslag';
+        case statuskoder.IKKE_FATT_JOBBEN:
+            return 'Ikke fått jobben';
     }
 };
 

@@ -40,7 +40,13 @@ export type AktivitetStatus =
     | typeof STATUS_BRUKER_ER_INTRESSERT;
 
 export type StillingsStatus = 'INGEN_VALGT' | 'SOKNAD_SENDT' | 'INNKALT_TIL_INTERVJU' | 'AVSLAG' | 'JOBBTILBUD';
-export type StillingFraNavSoknadsstatus = 'VENTER' | 'CV_DELT' | 'SKAL_PAA_INTERVJU' | 'JOBBTILBUD' | 'AVSLAG';
+export type StillingFraNavSoknadsstatus =
+    | 'VENTER'
+    | 'CV_DELT'
+    | 'SKAL_PAA_INTERVJU'
+    | 'JOBBTILBUD'
+    | 'AVSLAG'
+    | 'IKKE_FATT_JOBBEN';
 export type Livslopsstatus =
     | 'PROVER_VARSLING'
     | 'HAR_VARSLET'
@@ -64,6 +70,7 @@ export enum TransaksjonsType {
     FORHAANDSORIENTERING_LEST = 'FORHAANDSORIENTERING_LEST',
     DEL_CV_SVART = 'DEL_CV_SVART',
     SOKNADSSTATUS_ENDRET = 'SOKNADSSTATUS_ENDRET',
+    IKKE_FATT_JOBBEN = 'IKKE_FATT_JOBBEN',
 }
 
 export type BrukerType = 'NAV' | 'BRUKER';
@@ -177,6 +184,7 @@ export interface StillingFraNavAktivitetData {
     kontaktpersonData: KontaktInfo;
     soknadsstatus: StillingFraNavSoknadsstatus;
     livslopsstatus: Livslopsstatus;
+    ikkefattjobbendetaljer: string;
 }
 
 export enum ArenaEtikett {
