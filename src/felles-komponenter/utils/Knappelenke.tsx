@@ -1,3 +1,5 @@
+import './Knappelenke.css';
+
 import classNames from 'classnames';
 import React from 'react';
 

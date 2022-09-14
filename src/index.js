@@ -21,6 +21,8 @@ import 'nav-frontend-veileder-style/dist/main.css';
 import 'nav-frontend-veilederpanel-style/dist/main.css';
 import 'nav-datovelger/lib/styles/main.css';
 
+import './index.css';
+import './styles/print.css';
 import './polyfill';
 
 import NAVSPA from '@navikt/navspa';

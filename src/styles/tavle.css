@@ -87,12 +87,6 @@
         min-width: 18%;
     }
 }
-@media print {
-    @page {
-        size: auto;
-        margin: 5%;
-    }
-}
 .aktivitetsplanfs .aktivitetstavle {
     align-self: center;
 }

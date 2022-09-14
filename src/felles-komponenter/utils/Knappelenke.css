@@ -1,4 +1,4 @@
-.knappelenke {
+.aktivitetsplanfs .knappelenke {
     color: #0067c5;
     border: 0;
     text-decoration: none;
@@ -6,18 +6,18 @@
     cursor: pointer;
     padding: 0;
 }
-.knappelenke:focus {
+.aktivitetsplanfs .knappelenke:focus {
     outline: none;
     background-color: #00347d;
     color: #fff;
 }
-.knappelenke:focus span {
+.aktivitetsplanfs .knappelenke:focus span {
     border-bottom-color: #00347d;
 }
-.knappelenke:hover span {
+.aktivitetsplanfs .knappelenke:hover span {
     border-bottom-color: #0067c5;
 }
-.knappelenke span {
+.aktivitetsplanfs .knappelenke span {
     display: inline-block;
     border-bottom: 1px solid #a0a0a0;
 }

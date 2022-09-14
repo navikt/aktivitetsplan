@@ -1,5 +1,3 @@
-import './index.css';
-
 import PT from 'prop-types';
 import React from 'react';
 import { Router } from 'react-router-dom';

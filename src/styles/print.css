@@ -1,0 +1,93 @@
+@media print {
+    *,
+    *::before,
+    *::after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+    a[href]::after {
+        content: ' (' attr(href) ')';
+    }
+    abbr[title]::after {
+        content: ' (' attr(title) ')';
+    }
+    a[href^='#']::after,
+    a[href^='javascript:']::after {
+        content: '';
+    }
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+    thead {
+        display: table-header-group;
+    }
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+    img {
+        max-width: 100% !important;
+    }
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+@media print {
+    @page {
+        size: auto;
+        margin: 5%;
+    }
+    .aktivitetsplanfs * {
+        line-height: 1 !important;
+    }
+    .aktivitetsplanfs body,
+    .aktivitetsplanfs .aktivitetsplanfs {
+        font-size: 16pt;
+    }
+    .aktivitetsplanfs .ReactModal__Overlay {
+        position: relative;
+    }
+    .aktivitetsplanfs .aktivitetsplanprint {
+        overflow: visible;
+    }
+    .aktivitetsplanfs .modal-header,
+    .aktivitetsplanfs .lukknapp {
+        display: none;
+    }
+    .aktivitetsplanfs .aktivitetsdetaljer {
+        page-break-inside: avoid;
+    }
+}
+
+@media print {
+    .ReactModal__Body--open {
+        position: relative;
+    }
+    .aktivitetsplanfs [href]:after {
+        content: none;
+    }
+    .hodefot,
+    .navno-dekorator,
+    .decorator-wrapper,
+    .pagewrapper[aria-hidden='true'],
+    .appContainer[aria-hidden='true'],
+    .veilarbpersonflatefs[aria-hidden='true'] {
+        display: none;
+    }
+}
