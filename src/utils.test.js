@@ -167,8 +167,8 @@ describe('app utils', () => {
     });
 });
 
-describe('tilEllerFraEllerEndretDatoerMerEnnEnManedSiden', () => {
-    it('should say no when tilDato is less than a month ago', () =>
+describe('tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden', () => {
+    it('should say yes when tilDato is less than a month ago', () =>
         expect(
             tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
                 ...enStillingFraNavAktivitet({}),
@@ -176,8 +176,8 @@ describe('tilEllerFraEllerEndretDatoerMerEnnEnManedSiden', () => {
                 tilDato: moment().subtract(2, 'day').format(),
                 endretDato: moment().subtract(3, 'year').format(),
             })
-        ).toBeFalsy());
-    it('should say no when fraDato is less than a month ago', () =>
+        ).toBeTruthy());
+    it('should say yes when fraDato is less than a month ago', () =>
         expect(
             tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
                 ...enStillingFraNavAktivitet({}),
@@ -185,8 +185,8 @@ describe('tilEllerFraEllerEndretDatoerMerEnnEnManedSiden', () => {
                 tilDato: moment().subtract(2, 'year').format(),
                 endretDato: moment().subtract(3, 'year').format(),
             })
-        ).toBeFalsy());
-    it('should say no when endretDato is less than a month ago', () =>
+        ).toBeTruthy());
+    it('should say yes when endretDato is less than a month ago', () =>
         expect(
             tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
                 ...enStillingFraNavAktivitet({}),
@@ -194,8 +194,8 @@ describe('tilEllerFraEllerEndretDatoerMerEnnEnManedSiden', () => {
                 tilDato: moment().subtract(2, 'year').format(),
                 endretDato: moment().subtract(3, 'day').format(),
             })
-        ).toBeFalsy());
-    it('should say yes when all dates are older than a month', () =>
+        ).toBeTruthy());
+    it('should say no when all dates are older than a month', () =>
         expect(
             tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
                 ...enStillingFraNavAktivitet({}),
@@ -203,8 +203,8 @@ describe('tilEllerFraEllerEndretDatoerMerEnnEnManedSiden', () => {
                 tilDato: moment().subtract(1, 'month').subtract(1, 'day').format(),
                 endretDato: moment().subtract(2, 'year').format(),
             })
-        ).toBeTruthy());
-    it('should say yes when a date is missing', () =>
+        ).toBeFalsy());
+    it('should say no when a date is missing', () =>
         expect(
             tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
                 ...enStillingFraNavAktivitet({}),
@@ -212,8 +212,8 @@ describe('tilEllerFraEllerEndretDatoerMerEnnEnManedSiden', () => {
                 tilDato: '',
                 endretDato: moment().subtract(2, 'year').format(),
             })
-        ).toBeTruthy());
-    it('should say no when all dates are missing', () =>
+        ).toBeFalsy());
+    it('should say yes when all dates are missing', () =>
         expect(
             tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
                 ...enStillingFraNavAktivitet({}),
@@ -221,5 +221,5 @@ describe('tilEllerFraEllerEndretDatoerMerEnnEnManedSiden', () => {
                 tilDato: '',
                 endretDato: '',
             })
-        ).toBeFalsy());
+        ).toBeTruthy());
 });

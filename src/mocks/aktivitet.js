@@ -212,7 +212,7 @@ const testAktiviteter = !visTestAktiviteter()
               arbeidsgiver: 'De verste sjørøverne',
               status: STATUS_FULLFOERT,
               fraDato: moment().subtract(120, 'year').format(),
-              tilDato: moment().subtract(100, 'year').format(),
+              tilDato: undefined,
               endretDato: moment().subtract(100, 'year').format(),
           }),
           wrapAktivitet({
