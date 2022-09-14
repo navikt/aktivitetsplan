@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
+import { enStillingAktivitet } from './fixtures/stillingFixtures';
 import {
     enStillingFraNavAktivitet,
     enStillingFraNavData,
@@ -22,49 +23,20 @@ const testAktiviteter = !visTestAktiviteter()
     ? []
     : [
           wrapAktivitet({
-              id: '1',
-              versjon: '693',
-              tittel: 'Kaptein sabeltann',
+              ...enStillingAktivitet({ tittel: 'Kaptein sabeltann' }),
               beskrivelse: 'Vi reiste fra karibien og ankret opp i natt',
-              lenke: 'www.nav.no',
-              type: 'STILLING',
-              status: 'PLANLAGT',
-              fraDato: '2018-01-24T12:00:00+01:00',
-              tilDato: '2030-01-24T12:00:00+01:00',
-              opprettetDato: '2018-01-31T10:46:51.622+01:00',
-              endretDato: '2018-09-30T10:46:51.622+01:00',
-              endretAv: 'z990207',
-              historisk: false,
-              avtalt: false,
               arbeidsgiver: 'Den sorte dame AS',
               kontaktperson: 'Sabeltann sin mor',
               arbeidssted: 'Karibien',
-              lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
-              erReferatPublisert: false,
           }),
           wrapAktivitet({
-              id: '2',
-              versjon: '691',
-              tittel: 'Langemann',
+              ...enStillingAktivitet({ tittel: 'Langemann' }),
               beskrivelse: 'Ute på åpent hav, er jeg kjent som sabeltanns skygge',
-              lenke: 'www.nav.no',
-              type: 'STILLING',
               status: 'GJENNOMFORES',
-              fraDato: '2018-01-29T12:00:00+01:00',
-              tilDato: '2030-01-30T12:00:00+01:00',
-              opprettetDato: '2018-01-31T10:46:24.189+01:00',
-              endretDato: '2018-01-31T10:46:25.801+01:00',
-              endretAv: 'Z123456',
-              historisk: false,
-              avtalt: false,
-              lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
               etikett: 'SOKNAD_SENDT',
               kontaktperson: 'Sabeltann',
-              arbeidsgiver: 'Den sorte dame AS',
+              arbeidsgiver: 'Kaptein Sabeltann',
               arbeidssted: 'Den sorte dame',
-              erReferatPublisert: false,
           }),
           wrapAktivitet({
               id: '5',
@@ -232,6 +204,26 @@ const testAktiviteter = !visTestAktiviteter()
                   soknadsstatus: IKKE_FATT_JOBBEN,
                   ikkefattjobbendetaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
               },
+          }),
+          wrapAktivitet({
+              ...enStillingAktivitet({ tittel: 'Grusomme Gabriel' }),
+              beskrivelse: 'I hundre år har jeg lært å skremme',
+              arbeidssted: 'De syv hav',
+              arbeidsgiver: 'De verste sjørøverne',
+              status: STATUS_FULLFOERT,
+              fraDato: moment().subtract(120, 'year').format(),
+              tilDato: moment().subtract(100, 'year').format(),
+              endretDato: moment().subtract(100, 'year').format(),
+          }),
+          wrapAktivitet({
+              ...enStillingAktivitet({ tittel: 'Ana Baroma' }),
+              beskrivelse: 'Jeg får det alltid som jeg vil',
+              arbeidssted: 'Øya Gral',
+              arbeidsgiver: 'Heksesprell',
+              status: STATUS_FULLFOERT,
+              fraDato: moment().subtract(120, 'year').format(),
+              tilDato: undefined,
+              endretDato: moment().subtract(1, 'day').format(),
           }),
       ];
 

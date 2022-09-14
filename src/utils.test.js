@@ -1,3 +1,7 @@
+import moment from 'moment/moment';
+
+import { enStillingFraNavAktivitet } from './mocks/fixtures/stillingFraNavFixtures';
+import { tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden } from './moduler/aktivitet/aktivitet-util';
 import * as Utils from './utils';
 
 describe('app utils', () => {
@@ -161,4 +165,61 @@ describe('app utils', () => {
             expect(Utils.storeForbokstaver(undefined)).toEqual('');
         });
     });
+});
+
+describe('tilEllerFraEllerEndretDatoerMerEnnEnManedSiden', () => {
+    it('should say no when tilDato is less than a month ago', () =>
+        expect(
+            tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
+                ...enStillingFraNavAktivitet({}),
+                fraDato: moment().subtract(1, 'year').format(),
+                tilDato: moment().subtract(2, 'day').format(),
+                endretDato: moment().subtract(3, 'year').format(),
+            })
+        ).toBeFalsy());
+    it('should say no when fraDato is less than a month ago', () =>
+        expect(
+            tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
+                ...enStillingFraNavAktivitet({}),
+                fraDato: moment().subtract(1, 'month').format(),
+                tilDato: moment().subtract(2, 'year').format(),
+                endretDato: moment().subtract(3, 'year').format(),
+            })
+        ).toBeFalsy());
+    it('should say no when endretDato is less than a month ago', () =>
+        expect(
+            tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
+                ...enStillingFraNavAktivitet({}),
+                fraDato: moment().subtract(1, 'year').format(),
+                tilDato: moment().subtract(2, 'year').format(),
+                endretDato: moment().subtract(3, 'day').format(),
+            })
+        ).toBeFalsy());
+    it('should say yes when all dates are older than a month', () =>
+        expect(
+            tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
+                ...enStillingFraNavAktivitet({}),
+                fraDato: moment().subtract(3, 'year').format(),
+                tilDato: moment().subtract(1, 'month').subtract(1, 'day').format(),
+                endretDato: moment().subtract(2, 'year').format(),
+            })
+        ).toBeTruthy());
+    it('should say yes when a date is missing', () =>
+        expect(
+            tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
+                ...enStillingFraNavAktivitet({}),
+                fraDato: moment().subtract(1, 'year').format(),
+                tilDato: '',
+                endretDato: moment().subtract(2, 'year').format(),
+            })
+        ).toBeTruthy());
+    it('should say no when all dates are missing', () =>
+        expect(
+            tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden({
+                ...enStillingFraNavAktivitet({}),
+                fraDato: '',
+                tilDato: '',
+                endretDato: '',
+            })
+        ).toBeFalsy());
 });

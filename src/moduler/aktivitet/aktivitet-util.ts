@@ -11,7 +11,6 @@ import {
 } from '../../constant';
 import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
-import { erMerEnnEnManederSiden } from '../../utils';
 
 function compareUndefindedOrNull(a: any, b: any): number {
     if (a != null && b == null) {
@@ -194,8 +193,15 @@ export function sorterAktiviteter(aktiviteter: Aktivitet[], status: AktivitetSta
         .sort(compareAktivitet);
 }
 
-function tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet: Aktivitet): boolean {
-    return !erMerEnnEnManederSiden(aktivitet);
+export function tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden(aktivitet: Aktivitet): boolean {
+    let tilFraOgEndretDatoer = [moment(aktivitet.tilDato), moment(aktivitet.fraDato), moment(aktivitet.endretDato)];
+    const senesteDato = tilFraOgEndretDatoer.reduce((a, b) => (!a.isValid() || a.isBefore(b) ? b : a));
+
+    let merEnnEnManedSiden = senesteDato.isValid()
+        ? senesteDato.isBefore(moment().subtract(1, 'month').startOf('day'), 'd')
+        : false;
+
+    return !merEnnEnManedSiden;
 }
 
 interface GamleNyeAktiviteter {
@@ -206,7 +212,7 @@ interface GamleNyeAktiviteter {
 export function splitIEldreOgNyereAktiviteter(aktiviteter: Aktivitet[]): GamleNyeAktiviteter {
     return aktiviteter.reduce<GamleNyeAktiviteter>(
         (gamleNyeAktiviter, aktivitet) => {
-            if (tilDatoEllerFraDatoerMindreEnnEnManederSiden(aktivitet)) {
+            if (tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden(aktivitet)) {
                 gamleNyeAktiviter.nyereAktiviteter.push(aktivitet);
                 return gamleNyeAktiviter;
             }
