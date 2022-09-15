@@ -62,7 +62,7 @@ const OppdaterSoknadsstatus = (props: Props) => {
             <StillingFraNavEtikett etikett={aktivitet.stillingFraNavData?.soknadsstatus} />
             {skalViseInfoBoks && (
                 <AlertStripeInfo className={styles.infoStripe}>
-                    {aktivitet.stillingFraNavData?.ikkefattjobbendetaljer}
+                    {mapTilTekst(aktivitet.stillingFraNavData?.ikkefattjobbendetaljer)}
                 </AlertStripeInfo>
             )}
         </>
