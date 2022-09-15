@@ -1,3 +1,5 @@
+import './detalj-felt.css';
+
 import classNames from 'classnames';
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';

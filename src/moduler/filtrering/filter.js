@@ -1,3 +1,5 @@
+import './filter.css';
+
 import classNames from 'classnames';
 import PT from 'prop-types';
 import React from 'react';

@@ -1,13 +1,13 @@
-.dropdown {
+.aktivitetsplanfs .dropdown {
     position: relative;
     margin-bottom: 0.5rem;
 }
-.dropdown__btnwrapper {
+.aktivitetsplanfs .dropdown__btnwrapper {
     width: 100%;
     position: relative;
     display: inline-block;
 }
-.dropdown__btn {
+.aktivitetsplanfs .dropdown__btn {
     text-align: left;
     width: 100%;
     padding: 0.7rem 3rem 0.7rem 2rem;
@@ -16,7 +16,7 @@
     border-radius: 2px;
     white-space: nowrap;
 }
-.dropdown__btn:before {
+.aktivitetsplanfs .dropdown__btn:before {
     pointer-events: none;
     content: '';
     background: #262626;
@@ -29,7 +29,7 @@
     transform: translateX(3px) rotate(-45deg);
     transition: transform 0.3s;
 }
-.dropdown__btn:after {
+.aktivitetsplanfs .dropdown__btn:after {
     pointer-events: none;
     content: '';
     background: #262626;
@@ -42,11 +42,11 @@
     transform: translateX(-3px) rotate(45deg);
     transition: transform 0.3s;
 }
-.dropdown__btn:focus {
+.aktivitetsplanfs .dropdown__btn:focus {
     outline: none;
     box-shadow: 0 0 0 3px #00347d;
 }
-.dropdown__innhold {
+.aktivitetsplanfs .dropdown__innhold {
     position: absolute;
     z-index: 110;
     border: 1px solid #6a6a6a;
@@ -55,32 +55,32 @@
     border-radius: 0 0 2px 2px;
     width: 100%;
 }
-.dropdown--apen .dropdown__btnwrapper:after,
-.dropdown--apen .dropdown__btnwrapper:before {
+.aktivitetsplanfs .dropdown--apen .dropdown__btnwrapper:after,
+.aktivitetsplanfs .dropdown--apen .dropdown__btnwrapper:before {
     z-index: 200;
 }
-.dropdown--apen .dropdown__btn {
+.aktivitetsplanfs .dropdown--apen .dropdown__btn {
     position: relative;
     z-index: 120;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom: 1px solid #fff;
 }
-.dropdown--apen .dropdown__btn:before {
+.aktivitetsplanfs .dropdown--apen .dropdown__btn:before {
     transform: translateX(3px) rotate(45deg);
     transition: transform 0.3s;
 }
-.dropdown--apen .dropdown__btn:after {
+.aktivitetsplanfs .dropdown--apen .dropdown__btn:after {
     transform: translateX(-3px) rotate(-45deg);
     transition: transform 0.3s;
 }
-.dropdown--alignright .dropdown__innhold {
+.aktivitetsplanfs .dropdown--alignright .dropdown__innhold {
     right: 0;
     border-radius: 2px 0 2px 2px;
 }
-.dropdown .knapperad {
+.aktivitetsplanfs .dropdown .knapperad {
     padding: 0;
 }
-.dropdown .knapperad--alignleft {
+.aktivitetsplanfs .dropdown .knapperad--alignleft {
     padding-left: 0.5rem;
 }

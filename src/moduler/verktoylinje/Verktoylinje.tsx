@@ -1,4 +1,4 @@
-import '../../styles/verktoylinje.css';
+import './Verktoylinje.css';
 
 import { Add } from '@navikt/ds-icons';
 import React from 'react';

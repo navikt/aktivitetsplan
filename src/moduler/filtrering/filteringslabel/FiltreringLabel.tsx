@@ -1,3 +1,5 @@
+import './FiltreringLabel.css';
+
 import { Close } from '@navikt/ds-icons';
 import React from 'react';
 

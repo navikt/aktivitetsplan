@@ -10,6 +10,7 @@ import {
     STATUS_PLANLAGT,
 } from '../../constant';
 import { AktivitetStatus } from '../../datatypes/aktivitetTypes';
+import styles from './AktivitetsplanHjelpetexts.module.css';
 
 const hjelpetekster = {
     [STATUS_BRUKER_ER_INTRESSERT]: {
@@ -42,7 +43,7 @@ interface Props {
     status: AktivitetStatus;
 }
 
-const AktivitetsplanHjelpetekst = ({ status }: Props) => {
+const AktivitetsplanHjelpeteksts = ({ status }: Props) => {
     const config = hjelpetekster[status];
 
     if (!config) {
@@ -52,9 +53,9 @@ const AktivitetsplanHjelpetekst = ({ status }: Props) => {
     const { tittel, innhold } = config;
     return (
         <Hjelpetekst type={PopoverOrientering.UnderHoyre} id={status} tittel={tittel}>
-            <div className="max-width-300">{innhold}</div>
+            <div className={styles.maxWidth300}>{innhold}</div>
         </Hjelpetekst>
     );
 };
 
-export default AktivitetsplanHjelpetekst;
+export default AktivitetsplanHjelpeteksts;

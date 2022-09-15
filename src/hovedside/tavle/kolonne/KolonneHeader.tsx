@@ -10,7 +10,7 @@ import {
     STATUS_PLANLAGT,
 } from '../../../constant';
 import { AktivitetStatus } from '../../../datatypes/aktivitetTypes';
-import AktivitetsplanHjelpetekst from '../../../moduler/hjelpetekst/AktivitetsplanHjelpetekst';
+import AktivitetsplanHjelpeteksts from '../../../moduler/hjelpetekst/AktivitetsplanHjelpeteksts';
 
 const mapKlassenavn = (aktivitetStatus: string) => {
     switch (aktivitetStatus) {
@@ -40,7 +40,7 @@ const KolonneHeader = (props: Props) => {
             <Undertittel className="aktivitetstavle__kolonne-header" tag="h2">
                 <FormattedMessage id={`aktivitetstavle.${status}`} />
             </Undertittel>
-            <AktivitetsplanHjelpetekst status={status} />
+            <AktivitetsplanHjelpeteksts status={status} />
         </div>
     );
 };

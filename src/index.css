@@ -32,76 +32,6 @@
 [role='button'] {
     cursor: pointer;
 }
-body .clearfix::before,
-body .clearfix::after {
-    content: ' ';
-    display: table;
-}
-body .clearfix::after {
-    clear: both;
-}
-body .center-block {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-body .pull-right {
-    float: right !important;
-}
-body .pull-left {
-    float: left !important;
-}
-body .hide {
-    display: none !important;
-}
-body .show {
-    display: block !important;
-}
-body .hidden {
-    display: none !important;
-}
-body .invisible {
-    visibility: hidden;
-}
-body .text-hide {
-    font: 0/0 a;
-    color: transparent;
-    text-shadow: none;
-    background-color: transparent;
-    border: 0;
-}
-body .ustilet {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-body .blokk {
-    margin-bottom: 2rem;
-}
-body .blokk-null {
-    margin-bottom: 0;
-}
-body .blokk-xxxs {
-    margin-bottom: 4px;
-}
-body .blokk-xxs {
-    margin-bottom: 0.5rem;
-}
-body .blokk-xs {
-    margin-bottom: 1rem;
-}
-body .blokk-s {
-    margin-bottom: 20px;
-}
-body .blokk-m {
-    margin-bottom: 2rem;
-}
-body .blokk-l {
-    margin-bottom: 2.5rem;
-}
-body .blokk-xl {
-    margin-bottom: 4rem;
-}
 @-ms-viewport {
     width: device-width;
 }
@@ -453,40 +383,6 @@ body .blokk-xl {
     outline: none;
     box-shadow: 0 0 0 3px #00347d;
 }
-.aktivitetsplanfs .detaljfelt {
-    margin-bottom: 20px;
-    margin-right: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 0 0 9rem;
-}
-@media (min-width: 992px) {
-    .aktivitetsplanfs .detaljfelt {
-        flex: 0 0 13rem;
-        margin-right: 2rem;
-    }
-}
-.aktivitetsplanfs .detaljfelt__tittel {
-    color: #6a6a6a;
-    text-transform: uppercase;
-}
-.aktivitetsplanfs .detaljfelt__lenke {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-.aktivitetsplanfs .detaljfelt__tekst p {
-    margin: 0.3rem 0;
-}
-.aktivitetsplanfs .detaljfelt--fullbredde {
-    flex: 1 0 auto;
-    width: 100%;
-}
-.aktivitetsplanfs .detaljfelt--beskrivelse {
-    flex: auto;
-    min-width: 13rem;
-    overflow-wrap: break-word;
-}
 .aktivitetsplanfs .varsling-boks {
     margin-top: 1rem;
 }
@@ -535,128 +431,6 @@ body .blokk-xl {
 }
 .aktivitetsplanfs .publiser-referat {
     padding: 2rem;
-}
-.aktivitetsplanfs .filtrering-label-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-.aktivitetsplanfs .filtreringlabel {
-    border: 0;
-    border-radius: 2px;
-    display: flex;
-    min-width: 7rem;
-    max-width: 13.75rem;
-    background: #c9c9c9 none;
-    padding: 0.5rem;
-    justify-content: space-between;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-}
-.aktivitetsplanfs .filtreringlabel:hover {
-    box-shadow: inset 0 -0.125rem 0 #262626;
-}
-.aktivitetsplanfs .filtreringlabel:active {
-    background-color: #005b82;
-    color: #fff;
-}
-.aktivitetsplanfs .filtreringlabel:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.1875rem #00347d;
-}
-.aktivitetsplanfs .filtreringlabel__label {
-    padding-right: 1rem;
-    max-width: 11.75rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.aktivitetsplanfs .filtrering-label-slett {
-    margin: 1.25rem 0.5rem 2rem 0.1875rem;
-    cursor: pointer;
-    background-color: #a0a0a0;
-    border: 0;
-    padding: 5px;
-}
-.aktivitetsplanfs .filter-ikon-x-svg {
-    font-size: 1.1rem;
-    color: #3e3832;
-    align-self: center;
-}
-.aktivitetsplanfs .filtreringlabel:active svg path {
-    fill: #fff;
-}
-.aktivitetsplanfs .filter {
-    margin-bottom: 1rem;
-}
-.aktivitetsplanfs .filter__innhold {
-    width: 400px;
-}
-.aktivitetsplanfs .filter__container {
-    display: block;
-    padding: 2rem 2rem 0 2rem;
-}
-.aktivitetsplanfs .filter__overskrift {
-    margin: 1rem 0;
-}
-.aktivitetsplanfs .filter__tittel {
-    margin-bottom: 0.5rem;
-    font-size: 1.125rem;
-}
-.aktivitetsplanfs .skjult {
-    visibility: hidden;
-}
-.aktivitetsplanfs .verktoylinje .filter {
-    margin-left: 0;
-}
-.aktivitetsplanfs .verktoylinje .filter .dropdown--apen .dropdown__btn {
-    padding-bottom: 1.7rem;
-}
-.aktivitetsplanfs .periode-filter-dropdown__innhold {
-    top: 2.6rem;
-}
-.aktivitetsplanfs .periode-filter-dropdown__innhold .filter__radio--periode label {
-    white-space: nowrap;
-}
-.aktivitetsplanfs .filter-dropdown__innhold .skjemaelement__label {
-    white-space: nowrap;
-}
-@media (min-width: 768px) {
-    .aktivitetsplanfs .periode-filter-dropdown__innhold {
-        padding-right: 1rem;
-    }
-    .aktivitetsplanfs .filter-dropdown__innhold {
-        width: auto;
-    }
-    .aktivitetsplanfs .filter-dropdown__innhold .filter {
-        margin-left: 1rem;
-    }
-    .aktivitetsplanfs .filter-dropdown__innhold .filter:last-child {
-        margin-left: 0.5rem;
-    }
-    .aktivitetsplanfs .filter {
-        width: auto;
-        margin-bottom: 0;
-    }
-    .aktivitetsplanfs .filter__container {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: flex-start;
-        padding: 1rem 1rem 0 1rem;
-    }
-}
-@media (max-width: 360px) {
-    .aktivitetsplanfs .utskrift-lenke {
-        display: none;
-    }
-}
-@media (max-width: 480px) {
-    .aktivitetsplanfs .ny-aktivitet-lenke {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-}
-.aktivitetsplanfs .ny-aktivitet-lenke {
-    padding: 0.3rem 1rem 0.3rem 1rem;
 }
 .aktivitetsplanfs .oppfolgingstatus__krr {
     width: 800px;
@@ -773,30 +547,6 @@ body .blokk-xl {
     .aktivitetsplanfs .container {
         width: 890px;
     }
-}
-.aktivitetsplanfs .row {
-    margin-left: -8px;
-    margin-right: -8px;
-    *zoom: 1;
-    box-sizing: border-box;
-}
-.aktivitetsplanfs .row:after {
-    content: '';
-    display: block;
-    clear: both;
-    height: 0;
-}
-.aktivitetsplanfs .row:after {
-    content: '';
-    display: block;
-    clear: both;
-    height: 0;
-}
-.aktivitetsplanfs .col-xs-4 {
-    position: relative;
-    min-height: 1px;
-    padding-left: 8px;
-    padding-right: 8px;
 }
 .aktivitetsplanfs .hjelpetekst {
     margin-left: 1rem;

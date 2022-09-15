@@ -1,4 +1,4 @@
-import '../../styles/dropdown.css';
+import './dropdown.css';
 
 import classNames from 'classnames';
 import PT from 'prop-types';
