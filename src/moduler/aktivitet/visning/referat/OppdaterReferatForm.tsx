@@ -1,3 +1,5 @@
+import './OppdaterReferat.css';
+
 import useFormstate from '@nutgaard/use-formstate';
 import classNames from 'classnames';
 import { Flatknapp, Knapp } from 'nav-frontend-knapper';

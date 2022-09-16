@@ -1,3 +1,5 @@
+import './aktivitetvisning.css';
+
 import React from 'react';
 
 import { GRUPPE_AKTIVITET_TYPE, TILTAK_AKTIVITET_TYPE, UTDANNING_AKTIVITET_TYPE } from '../../../constant';

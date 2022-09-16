@@ -51,7 +51,6 @@
     margin-right: 0.75rem;
 }
 .tilbakeknapp .tilbakeknapp-innhold__tekst {
-    text-decoration: none;
     color: var(--bla);
     background: none;
     text-decoration: underline;

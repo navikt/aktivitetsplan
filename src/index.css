@@ -32,9 +32,11 @@
 [role='button'] {
     cursor: pointer;
 }
+/*
+What is this?
 @-ms-viewport {
     width: device-width;
-}
+}*/
 @media (max-width: 767px) {
     .hidden-xs {
         display: none !important;
@@ -59,7 +61,6 @@
 .aktivitetsplanfs {
     /* Beholdes i kode for å unngå breaking change */
     font-size: 1rem;
-    line-height: 1.375rem;
     font-weight: 400;
     color: var(--gray-text);
     font-family: 'Source Sans Pro', Arial, sans-serif;
@@ -88,17 +89,6 @@
         transform: rotate(360deg);
     }
 }
-.aktivitetsplanfs .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-    white-space: nowrap;
-}
 
 .aktivitetsplanfs .panel {
     background-color: var(--white);
@@ -109,7 +99,6 @@
 .aktivitetsplanfs .panel--stor {
     background-color: var(--white);
     display: block;
-    padding: 1rem 1rem 1rem 1rem;
     border-radius: 4px;
     padding: 1.25rem 1rem 1.25rem 1rem;
 }
@@ -122,14 +111,14 @@
 .aktivitetsplanfs .modal {
     background-color: var(--white);
     display: block;
-    padding: 1rem 1rem 1rem 1rem;
-    border-radius: 4px;
     position: relative;
     flex-grow: 0;
-    overflow: auto;
     max-height: 100%;
     margin-bottom: 0;
     z-index: 1010;
+    overflow: auto;
+    border-radius: 0;
+    padding: 0;
 }
 .aktivitetsplanfs .modal:focus,
 .aktivitetsplanfs .modal--focus {
@@ -226,11 +215,6 @@
 .aktivitetsplanfs .ReactModal__Content .aktivitetskjema__datofelt-wrapper {
     flex-direction: column;
 }
-.aktivitetsplanfs .modal {
-    overflow: auto;
-    border-radius: 0;
-    padding: 0;
-}
 .aktivitetsplanfs .modal__overlay {
     display: block;
     padding: 0;
@@ -252,7 +236,6 @@
     background-color: rgba(0, 0, 0, 0.74902);
 }
 .aktivitetsplanfs .timeout-modal-portal {
-    z-index: 9999;
     z-index: 10000;
 }
 .aktivitetsplanfs .timeout-modal-portal .aktivitet-modal {
@@ -385,29 +368,6 @@
 }
 .aktivitetsplanfs .varsling-boks {
     margin-top: 1rem;
-}
-.aktivitetsplanfs .oppdater-referat textarea {
-    margin-bottom: 1rem;
-}
-.aktivitetsplanfs .oppdater-referat button {
-    margin-right: 1rem;
-}
-.aktivitetsplanfs .oppdater-referat__referat {
-    margin: -0.4rem 0 1.6rem;
-}
-.aktivitetsplanfs .oppdater-referat .oppdater-referat-knapper {
-    display: flex;
-}
-.aktivitetsplanfs .oppdater-referat .oppdater-referat-status {
-    background-color: transparent;
-    border: none;
-    padding: 0.5rem 1.5rem 0 0;
-}
-.aktivitetsplanfs .oppdater-referat .oppdater-referat-status .alertstripe__ikon {
-    margin-right: 0.5rem;
-}
-.aktivitetsplanfs .oppdater-referat .oppdater-referat-status .alertstripe__tekst {
-    font-weight: bold;
 }
 .aktivitetsplanfs .avtalt-container {
     margin: 1rem 0;

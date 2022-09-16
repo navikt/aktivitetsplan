@@ -63,11 +63,6 @@
     transition: 200ms transform;
     vertical-align: middle;
 }
-.endreIndikasjonApen::before,
-.endreIndikasjonApen::after {
-    transition: 200ms transform;
-    border-radius: 10px;
-}
 .endreIndikasjonApen::before {
     content: '';
     position: absolute;
@@ -76,6 +71,9 @@
     height: 100%;
     width: 50%;
     background: currentColor;
+    transform: translateX(2px) rotate(45deg);
+    transition: 200ms transform;
+    border-radius: 10px;
 }
 .endreIndikasjonApen::after {
     content: '';
@@ -85,12 +83,9 @@
     height: 100%;
     width: 50%;
     background: currentColor;
-}
-.endreIndikasjonApen::before {
-    transform: translateX(2px) rotate(45deg);
-}
-.endreIndikasjonApen::after {
     transform: translateX(-2px) rotate(-45deg);
+    transition: 200ms transform;
+    border-radius: 10px;
 }
 .endreIndikasjonLukket {
     display: inline-block;
@@ -103,12 +98,10 @@
     transition: 200ms transform;
     vertical-align: middle;
 }
-.endreIndikasjonLukket::before,
-.endreIndikasjonLukket::after {
+.endreIndikasjonLukket::before {
     transition: 200ms transform;
     border-radius: 10px;
-}
-.endreIndikasjonLukket::before {
+    transform: translateX(-2px) rotate(45deg);
     content: '';
     position: absolute;
     top: 0;
@@ -118,6 +111,9 @@
     background: currentColor;
 }
 .endreIndikasjonLukket::after {
+    transition: 200ms transform;
+    border-radius: 10px;
+    transform: translateX(2px) rotate(-45deg);
     content: '';
     position: absolute;
     top: 0;
@@ -125,10 +121,4 @@
     height: 100%;
     width: 50%;
     background: currentColor;
-}
-.endreIndikasjonLukket::before {
-    transform: translateX(2px) rotate(-45deg);
-}
-.endreIndikasjonLukket::after {
-    transform: translateX(-2px) rotate(45deg);
 }

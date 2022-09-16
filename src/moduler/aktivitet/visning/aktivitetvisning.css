@@ -1,84 +1,84 @@
-.aktivitetvisning {
+.aktivitetsplanfs .aktivitetvisning {
     max-width: 40rem;
     margin: 0 auto;
 }
-.aktivitetvisning > .feilmelding {
+.aktivitetsplanfs .aktivitetvisning > .feilmelding {
     margin-top: 1rem;
     padding: 0 2rem;
 }
-.aktivitetvisning__underseksjon {
+.aktivitetsplanfs .aktivitetvisning__underseksjon {
     padding: 0 1rem;
     margin: 1rem 0;
 }
-.aktivitetvisning__underseksjon .typo-sidetittel {
+.aktivitetsplanfs .aktivitetvisning__underseksjon .typo-sidetittel {
     margin: 1.2rem 0;
     line-height: 1.1;
 }
-.aktivitetvisning__underseksjon .typo-undertekst {
+.aktivitetsplanfs .aktivitetvisning__underseksjon .typo-undertekst {
     text-transform: uppercase;
 }
-.aktivitetvisning__underseksjon .col-xs-4 {
+.aktivitetsplanfs .aktivitetvisning__underseksjon .col-xs-4 {
     float: none;
     width: 100%;
 }
-.aktivitetvisning__underseksjon .skjemaelement__label img {
+.aktivitetsplanfs .aktivitetvisning__underseksjon .skjemaelement__label img {
     width: 14px;
     height: 20px;
     margin: -2px 0 0 0.3rem;
 }
-.aktivitetvisning .oppdater-status {
+.aktivitetsplanfs .aktivitetvisning .oppdater-status {
     margin-top: 0.5rem;
 }
-.aktivitetvisning__detaljer {
+.aktivitetsplanfs .aktivitetvisning__detaljer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 32rem;
     width: 100%;
 }
-.aktivitetvisning .typo-undertittel {
+.aktivitetsplanfs .aktivitetvisning .typo-undertittel {
     margin: 1.1rem 0 1rem;
 }
-.aktivitetvisning .tilDittNavTekst {
+.aktivitetsplanfs .aktivitetvisning .tilDittNavTekst {
     white-space: pre-wrap;
 }
-.aktivitetvisning .aktivitetsbeskrivelse {
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse {
     margin-bottom: 20px;
     margin-right: 2rem;
 }
-.aktivitetvisning .aktivitetsbeskrivelse__tittel {
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse__tittel {
     color: var(--grey-inactive);
 }
-.aktivitetvisning .aktivitetsbeskrivelse__tekst {
+.aktivitetsplanfs .aktivitetvisning .aktivitetsbeskrivelse__tekst {
     white-space: pre-wrap;
 }
-.aktivitetvisning .aktivitetsdetaljer {
+.aktivitetsplanfs .aktivitetvisning .aktivitetsdetaljer {
     margin-bottom: 20px;
 }
-.aktivitetvisning__delelinje {
+.aktivitetsplanfs .aktivitetvisning__delelinje {
     margin-top: 0;
     color: var(--gray-foreground);
 }
-.aktivitetvisning__historikk {
+.aktivitetsplanfs .aktivitetvisning__historikk {
     margin-bottom: 2rem;
 }
-.aktivitetvisning__historikk .endringslogg-for-aktivitet__lenke-knapp {
+.aktivitetsplanfs .aktivitetvisning__historikk .endringslogg-for-aktivitet__lenke-knapp {
     margin-bottom: 2rem;
     display: inline-block;
 }
-.aktivitetvisning__historikk .endringslogg-for-aktivitet__innslag {
+.aktivitetsplanfs .aktivitetvisning__historikk .endringslogg-for-aktivitet__innslag {
     margin-bottom: 20px;
 }
 @media (max-width: 991px) {
-    .aktivitetvisning .endreknapp {
+    .aktivitetsplanfs .aktivitetvisning .endreknapp {
         margin-left: 20px;
     }
 }
 @media (min-width: 992px) {
-    .aktivitetvisning__detaljer {
+    .aktivitetsplanfs .aktivitetvisning__detaljer {
         width: 32rem;
     }
-    .aktivitetvisning .endreknapp {
+    .aktivitetsplanfs .aktivitetvisning .endreknapp {
         margin-left: 29px;
         margin-right: -13px;
     }
