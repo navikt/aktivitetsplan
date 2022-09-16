@@ -8,12 +8,12 @@
 }
 .tavle .tavle__scrollknapp:disabled {
     cursor: default;
-    color: #a0a0a0;
-    border-color: #a0a0a0;
+    color: var(--gray-foreground);
+    border-color: var(--gray-foreground);
 }
 .tavle .tavle__scrollknapp:disabled:hover {
-    color: #a0a0a0;
-    border: 0.1rem solid #a0a0a0;
+    color: var(--gray-foreground);
+    border: 0.1rem solid var(--gray-foreground);
     background-color: white;
 }
 .tavle .kolonner {
@@ -45,7 +45,7 @@
         justify-content: space-around;
     }
     .tavle.aktivitetstavle {
-        width: 992px;
+        width: var(--screen-md-min);
         margin: 0 auto;
     }
     .tavle .kolonner {

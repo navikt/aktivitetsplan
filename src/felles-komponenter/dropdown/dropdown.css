@@ -11,15 +11,15 @@
     text-align: left;
     width: 100%;
     padding: 0.7rem 3rem 0.7rem 2rem;
-    background: #fff;
-    border: 1px solid #6a6a6a;
+    background: var(--white);
+    border: 1px solid var(--grey-inactive);
     border-radius: 2px;
     white-space: nowrap;
 }
 .aktivitetsplanfs .dropdown__btn:before {
     pointer-events: none;
     content: '';
-    background: #262626;
+    background: var(--gray-text);
     height: 2px;
     width: 10px;
     border-radius: 10px;
@@ -32,7 +32,7 @@
 .aktivitetsplanfs .dropdown__btn:after {
     pointer-events: none;
     content: '';
-    background: #262626;
+    background: var(--gray-text);
     height: 2px;
     width: 10px;
     border-radius: 10px;
@@ -49,9 +49,9 @@
 .aktivitetsplanfs .dropdown__innhold {
     position: absolute;
     z-index: 110;
-    border: 1px solid #6a6a6a;
+    border: 1px solid var(--grey-inactive);
     top: calc(100% - 1px);
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 0 0 2px 2px;
     width: 100%;
 }
@@ -64,7 +64,7 @@
     z-index: 120;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid var(--white);
 }
 .aktivitetsplanfs .dropdown--apen .dropdown__btn:before {
     transform: translateX(3px) rotate(45deg);

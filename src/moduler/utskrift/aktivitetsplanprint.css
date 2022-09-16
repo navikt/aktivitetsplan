@@ -12,13 +12,13 @@
     margin-left: 0;
 }
 .aktivitetsplanprint .modal-header-wrapper {
-    background-color: #f1f1f1;
+    background-color: var(--gray-background);
 }
 .aktivitetsplanprint .printmodal-body__utskrift--overskrift {
     margin: 0 3rem 1rem;
 }
 .aktivitetsplanprint .printmodal-body {
-    background-color: #fff;
+    background-color: var(--white);
     padding: 2rem 0 3rem;
 }
 .aktivitetsplanprint .printmodal-body .printmodal-body__adresse-dato {
@@ -49,7 +49,7 @@
 }
 .aktivitetsplanprint .printmodal-body .printmodal-body__statusgrupper {
     padding: 2rem 3rem;
-    border-top: 1px solid #a0a0a0;
+    border-top: 1px solid var(--gray-foreground);
 }
 .aktivitetsplanprint .printmodal-body .printmodal-body__statusgrupper .printmodal-body__statusgruppe {
     margin: 2rem 0;
@@ -76,8 +76,8 @@
 }
 .aktivitetsplanprint .printmodal-body .etikett-print {
     background: none;
-    color: #262626;
-    border: 1pt solid #a0a0a0;
+    color: var(--gray-text);
+    border: 1pt solid var(--gray-foreground);
     margin-bottom: 1rem;
 }
 .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer {
@@ -102,7 +102,7 @@
 .aktivitetsplanprint .printmodal-body .aktivitetsdetaljer .detaljfelt__lenke {
     text-decoration: none;
     border-bottom: 0;
-    color: #262626;
+    color: var(--gray-text);
     cursor: default;
 }
 .aktivitetsplanprint .printmodal-body .aktivitetsbeskrivelse {
@@ -119,12 +119,12 @@
     margin-bottom: 1.5rem;
 }
 .aktivitetsplanprint .feilmelding--systemfeil {
-    background-color: #fff;
+    background-color: var(--white);
     margin: 0;
     padding: 1rem;
 }
 .aktivitetsplanprint .printmelding__form {
-    background-color: #fff;
+    background-color: var(--white);
     padding-top: 1.5rem;
 }
 .aktivitetsplanprint .printmelding__skjema {
@@ -144,7 +144,7 @@
 }
 .aktivitetsplanprint .printmelding__knapperad {
     padding: 1.2rem 3rem 1.5rem;
-    border-top: 1px solid #a0a0a0;
+    border-top: 1px solid var(--gray-foreground);
     margin-top: 2rem;
 }
 @media print {

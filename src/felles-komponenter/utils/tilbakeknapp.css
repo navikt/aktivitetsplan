@@ -4,7 +4,7 @@
 }
 .tilbakeknapp .tilbakeknapp-innhold {
     border-bottom: 0 !important;
-    color: #0067c5;
+    color: var(--bla);
     background: none;
     text-decoration: underline;
     cursor: pointer;
@@ -32,8 +32,8 @@
 .tilbakeknapp .tilbakeknapp-innhold svg {
     width: 1em;
     height: 1em;
-    fill: #0067c5;
-    stroke: #0067c5;
+    fill: var(--bla);
+    stroke: var(--bla);
     vertical-align: middle;
     position: relative;
     top: -0.125em;
@@ -52,7 +52,7 @@
 }
 .tilbakeknapp .tilbakeknapp-innhold__tekst {
     text-decoration: none;
-    color: #0067c5;
+    color: var(--bla);
     background: none;
     text-decoration: underline;
     cursor: pointer;
@@ -80,8 +80,8 @@
 .tilbakeknapp .tilbakeknapp-innhold__tekst svg {
     width: 1em;
     height: 1em;
-    fill: #0067c5;
-    stroke: #0067c5;
+    fill: var(--bla);
+    stroke: var(--bla);
     vertical-align: middle;
     position: relative;
     top: -0.125em;
@@ -99,5 +99,5 @@
 }
 .tilbakeknapp:focus .tilbakeknapp-innhold__tekst {
     background: #00347d;
-    color: #fff;
+    color: var(--white);
 }

@@ -3,7 +3,7 @@
     align-items: center;
     flex-direction: row;
     height: 4rem;
-    border-bottom: 1px solid #a0a0a0;
+    border-bottom: 1px solid var(--gray-foreground);
     padding: 1.13rem 1rem;
 }
 .modal-header-wrapper {
@@ -18,6 +18,6 @@
     width: 37px;
     padding-right: 16px;
     margin-right: 16px;
-    border-right: 1px solid #262626;
+    border-right: 1px solid var(--gray-text);
     height: 26px;
 }

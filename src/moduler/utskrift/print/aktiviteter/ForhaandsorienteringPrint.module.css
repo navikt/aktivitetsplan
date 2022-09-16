@@ -5,5 +5,5 @@
     font-style: italic;
 }
 .tittel {
-    color: #6a6a6a;
+    color: var(--grey-inactive);
 }

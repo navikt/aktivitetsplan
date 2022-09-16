@@ -1,8 +1,8 @@
 .aktivitetskort {
     margin-bottom: 0.5rem;
     display: block;
-    background-color: #fff;
-    color: #262626;
+    background-color: var(--white);
+    color: var(--gray-text);
     position: relative;
     text-align: left;
     text-decoration: none;
@@ -15,17 +15,17 @@
     box-shadow: 0 0 0 3px #00347d;
 }
 .aktivitetskort:hover {
-    box-shadow: 1px 1px 3px 0 #6a6a6a;
+    box-shadow: 1px 1px 3px 0 var(--grey-inactive);
 }
 .aktivitetskort:hover .tittel {
-    color: #0067c5;
+    color: var(--bla);
     text-decoration: underline;
 }
 .type {
     text-transform: uppercase;
 }
 .drag {
-    background-color: #f1f1f1;
+    background-color: var(--gray-background);
 }
 .tittel {
     display: inline-block;

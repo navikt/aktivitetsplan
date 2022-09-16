@@ -4,7 +4,7 @@ a.mitt-maal {
 }
 a.mitt-maal:hover,
 a.mitt-maal--hover {
-    box-shadow: #a0a0a0 0 2px 1px 0;
+    box-shadow: var(--gray-foreground) 0 2px 1px 0;
 }
 a.mitt-maal:focus,
 a.mitt-maal--focus {
@@ -13,7 +13,7 @@ a.mitt-maal--focus {
 }
 a.mitt-maal:hover #mittmal_header {
     text-decoration: underline;
-    color: #0067c5;
+    color: var(--bla);
 }
 .mitt-maal {
     display: block;
@@ -21,25 +21,25 @@ a.mitt-maal:hover #mittmal_header {
     padding: 1rem 1rem 0.75rem 1rem;
     text-decoration: none;
     background-color: #ccf1d6;
-    color: #262626;
+    color: var(--gray-text);
     margin-bottom: 1rem;
 }
 .mitt-maal:focus {
     background-color: #cde7d8;
 }
 .mitt-maal.empty {
-    background-color: #fff;
+    background-color: var(--white);
     border-style: dashed;
-    border-color: #6a6a6a;
+    border-color: var(--grey-inactive);
     border-width: 2px;
 }
 .mitt-maal.empty:hover,
 .mitt-maal.empty--hover {
-    box-shadow: #a0a0a0 0 0 5px 0;
+    box-shadow: var(--gray-foreground) 0 0 5px 0;
 }
 #mittmal_header {
     margin: 0 1rem 0 1rem;
-    color: #262626;
+    color: var(--gray-text);
     display: flex;
     text-transform: uppercase;
 }

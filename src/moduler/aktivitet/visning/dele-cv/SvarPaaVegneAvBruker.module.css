@@ -1,5 +1,5 @@
 .etikett {
-    color: #a0a0a0;
+    color: var(--gray-foreground);
     display: flex;
     justify-content: flex-end;
 }
@@ -9,11 +9,11 @@
     margin-bottom: 0.75rem;
 }
 .feil .etikett {
-    color: #ba3a26;
+    color: var(--red-error);
 }
 .feil .panel {
-    border-color: #ba3a26;
-    box-shadow: 0 0 0 1px #ba3a26;
+    border-color: var(--red-error);
+    box-shadow: 0 0 0 1px var(--red-error);
 }
 .panel {
     padding-bottom: 0 !important;

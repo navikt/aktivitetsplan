@@ -61,7 +61,7 @@
     font-size: 1rem;
     line-height: 1.375rem;
     font-weight: 400;
-    color: #262626;
+    color: var(--gray-text);
     font-family: 'Source Sans Pro', Arial, sans-serif;
     line-height: 1.42857143;
 }
@@ -101,13 +101,13 @@
 }
 
 .aktivitetsplanfs .panel {
-    background-color: #fff;
+    background-color: var(--white);
     display: block;
     padding: 1rem 1rem 1rem 1rem;
     border-radius: 4px;
 }
 .aktivitetsplanfs .panel--stor {
-    background-color: #fff;
+    background-color: var(--white);
     display: block;
     padding: 1rem 1rem 1rem 1rem;
     border-radius: 4px;
@@ -120,7 +120,7 @@
     overflow: hidden;
 }
 .aktivitetsplanfs .modal {
-    background-color: #fff;
+    background-color: var(--white);
     display: block;
     padding: 1rem 1rem 1rem 1rem;
     border-radius: 4px;
@@ -186,7 +186,7 @@
 }
 .aktivitetsplanfs .modal-footer {
     display: flex;
-    border-top: 1px solid #a0a0a0;
+    border-top: 1px solid var(--gray-foreground);
     padding: 1.7rem 2rem;
 }
 .aktivitetsplanfs .modal-footer__knapp {
@@ -197,7 +197,7 @@
     align-items: center;
     flex-direction: row;
     height: 4rem;
-    border-bottom: 1px solid #a0a0a0;
+    border-bottom: 1px solid var(--gray-foreground);
     padding: 1.13rem 1rem;
 }
 .aktivitetsplanfs .modal-header-wrapper {
@@ -212,7 +212,7 @@
     width: 37px;
     padding-right: 16px;
     margin-right: 16px;
-    border-right: 1px solid #262626;
+    border-right: 1px solid var(--gray-text);
     height: 26px;
 }
 .aktivitetsplanfs .ReactModal__Content {
@@ -240,7 +240,7 @@
 }
 .aktivitetsplanfs .aktivitet-modal-portal .aktivitet-modal {
     position: relative;
-    border: 1px solid #a0a0a0;
+    border: 1px solid var(--gray-foreground);
     outline: none;
 }
 .aktivitetsplanfs .aktivitet-modal-portal .aktivitet-modal__overlay {
@@ -257,7 +257,7 @@
 }
 .aktivitetsplanfs .timeout-modal-portal .aktivitet-modal {
     position: relative;
-    border: 1px solid #a0a0a0;
+    border: 1px solid var(--gray-foreground);
     outline: none;
 }
 .aktivitetsplanfs .timeout-modal-portal .aktivitet-modal__overlay {
@@ -291,7 +291,7 @@
     }
     .aktivitetsplanfs.aktivitet-modal-portal .aktivitet-modal {
         position: relative;
-        border: 1px solid #a0a0a0;
+        border: 1px solid var(--gray-foreground);
         outline: none;
     }
 }
@@ -350,14 +350,14 @@
 .aktivitetsplanfs .aktivitetskjema__lagre-knapp {
     margin-bottom: 1rem;
     padding: 1rem 2rem;
-    border-top: 1px #a0a0a0 solid;
+    border-top: 1px var(--gray-foreground) solid;
 }
 .aktivitetsplanfs .feedbacksummary {
     margin-bottom: 2rem;
     padding: 1.5rem;
     border-radius: 4px;
-    background-color: #ba3a26;
-    color: #fff;
+    background-color: var(--red-error);
+    color: var(--white);
     list-style-position: inside;
 }
 .aktivitetsplanfs .feedbacksummary ul {
@@ -369,14 +369,14 @@
     margin-bottom: 0.5rem;
 }
 .aktivitetsplanfs .feedbacksummary a {
-    color: #fff;
-    border-bottom: 1px solid #fff;
+    color: var(--white);
+    border-bottom: 1px solid var(--white);
     text-decoration: none;
 }
 .aktivitetsplanfs .feedbacksummary a:focus {
     outline: none;
     background-color: #00347d;
-    color: #262626;
+    color: var(--gray-text);
     border-bottom: 1px solid #00347d;
 }
 .aktivitetsplanfs .feedbacksummary:focus {
@@ -458,12 +458,6 @@
     margin-bottom: 20px;
     max-width: 40rem;
 }
-.aktivitetsplanfs .fullbredde {
-    width: 100%;
-}
-.aktivitetsplanfs .begrensetbredde {
-    width: 950px;
-}
 @media (min-width: 992px) {
     .aktivitetsplanfs .hovedsideinnhold {
         display: flex;
@@ -483,7 +477,7 @@
     margin-top: 1rem;
 }
 .aktivitetsplanfs .modal-a11y-wrapper {
-    background-color: #f1f1f1;
+    background-color: var(--gray-background);
 }
 .aktivitetsplanfs .aktivitetsplan {
     width: 100%;
@@ -500,7 +494,7 @@
     top: calc(50% - 2px);
 }
 .aktivitetsplanfs .alertstripe:not(.alertstripe--solid) .alertstripe__ikon:after {
-    background-color: #fff;
+    background-color: var(--white);
 }
 .aktivitetsplanfs .row + .alertstripe {
     margin-top: 0.5rem;

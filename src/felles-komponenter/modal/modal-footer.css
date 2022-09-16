@@ -1,6 +1,6 @@
 .modal-footer {
     display: flex;
-    border-top: 1px solid #a0a0a0;
+    border-top: 1px solid var(--gray-foreground);
     padding: 1.7rem 2rem;
 }
 .modal-footer__knapp {

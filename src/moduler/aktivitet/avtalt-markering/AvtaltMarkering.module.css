@@ -1,4 +1,4 @@
 .etikett {
-    background-color: #005b82;
-    color: #fff;
+    background-color: var(--blue-active);
+    color: var(--white);
 }

@@ -1,5 +1,5 @@
 .aktivitetsplanfs .knappelenke {
-    color: #0067c5;
+    color: var(--bla);
     border: 0;
     text-decoration: none;
     background-color: transparent;
@@ -9,15 +9,15 @@
 .aktivitetsplanfs .knappelenke:focus {
     outline: none;
     background-color: #00347d;
-    color: #fff;
+    color: var(--white);
 }
 .aktivitetsplanfs .knappelenke:focus span {
     border-bottom-color: #00347d;
 }
 .aktivitetsplanfs .knappelenke:hover span {
-    border-bottom-color: #0067c5;
+    border-bottom-color: var(--bla);
 }
 .aktivitetsplanfs .knappelenke span {
     display: inline-block;
-    border-bottom: 1px solid #a0a0a0;
+    border-bottom: 1px solid var(--gray-foreground);
 }

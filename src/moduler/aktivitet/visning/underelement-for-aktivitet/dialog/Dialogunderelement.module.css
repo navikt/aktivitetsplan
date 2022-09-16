@@ -1,7 +1,7 @@
 .dialogPil {
     display: flex;
     align-items: center;
-    color: #0067c5;
+    color: var(--bla);
     font-size: 0.875rem;
 }
 .dialogLinke {

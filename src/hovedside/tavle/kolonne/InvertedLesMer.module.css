@@ -6,7 +6,7 @@
     padding-bottom: 0.5rem;
 }
 .invertedLesMer .toggle :global .lesMerPanel__toggle .lesMerPanel__togglelink {
-    color: #262626;
+    color: var(--gray-text);
 }
 .invertedLesMer .toggle :global .lesMerPanel__toggle .lesMerPanel__toggleChevron {
     margin-top: 0.3rem;

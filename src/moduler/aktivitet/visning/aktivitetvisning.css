@@ -47,7 +47,7 @@
     margin-right: 2rem;
 }
 .aktivitetvisning .aktivitetsbeskrivelse__tittel {
-    color: #6a6a6a;
+    color: var(--grey-inactive);
 }
 .aktivitetvisning .aktivitetsbeskrivelse__tekst {
     white-space: pre-wrap;
@@ -57,7 +57,7 @@
 }
 .aktivitetvisning__delelinje {
     margin-top: 0;
-    color: #a0a0a0;
+    color: var(--gray-foreground);
 }
 .aktivitetvisning__historikk {
     margin-bottom: 2rem;

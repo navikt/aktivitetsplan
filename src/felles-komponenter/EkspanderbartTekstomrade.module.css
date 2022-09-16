@@ -14,7 +14,7 @@
 .button:hover {
     box-shadow: inherit !important;
     background: inherit !important;
-    color: #0067c5 !important;
+    color: var(--bla) !important;
     text-decoration: underline !important;
 }
 .content {

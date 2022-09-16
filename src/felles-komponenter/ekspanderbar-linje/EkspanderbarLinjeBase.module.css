@@ -46,7 +46,7 @@
 .endreKnapp {
     margin-left: auto;
     white-space: nowrap;
-    color: #0067c5;
+    color: var(--bla);
 }
 .endreKnappInnhold {
     display: inline-block;

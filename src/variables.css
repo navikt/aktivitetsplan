@@ -1,0 +1,29 @@
+:root {
+    --white: #fff;
+    --gray-background: #f1f1f1;
+    --gray-foreground: #a0a0a0;
+    --gray-icon: #a0a0a0;
+    --grey-inactive: #6a6a6a;
+    --gray-text: #262626;
+    --navGra80: #4f4f4f;
+
+    --bla: #0067c5;
+    --blue-active: #005b82;
+    --lys-bla: #66cbec;
+
+    --red-nav: #c30000;
+    --red-error: #ba3a26;
+
+    --screen-md-min: 992px;
+    --screen-md-max: 1199px;
+}
+/*
+@fokus-farge: @fokusFarge;
+@color-background-hover: darken(@color-background, 10%);
+@color-background: @white;
+@color-border: @grayIcon;
+
+@color-type: @gray-inactive;
+
+@color-hr: @navGra40;
+ */

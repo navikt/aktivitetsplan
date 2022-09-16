@@ -1,4 +1,4 @@
 .lestDato {
-    color: #6a6a6a;
+    color: var(--grey-inactive);
     margin-top: 1rem !important;
 }

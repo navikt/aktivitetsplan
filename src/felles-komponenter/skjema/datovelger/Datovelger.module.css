@@ -2,6 +2,6 @@
     margin-bottom: 1rem !important;
 }
 .harFeil input:nth-child(1):not(:focus):not(:hover):not(:active) {
-    border-color: #ba3a26;
-    box-shadow: 0 0 0 1px #ba3a26;
+    border-color: var(--red-error);
+    box-shadow: 0 0 0 1px var(--red-error);
 }

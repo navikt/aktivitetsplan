@@ -1,60 +1,60 @@
-.tavle .tavle__scrollknapp {
+.aktivitetsplanfs .tavle .tavle__scrollknapp {
     display: none;
     cursor: pointer;
 }
-.tavle .tavle__scrollknapp:focus {
+.aktivitetsplanfs .tavle .tavle__scrollknapp:focus {
     outline: 0;
     box-shadow: 0 0 0 3px #00347d;
 }
-.tavle .tavle__scrollknapp:disabled {
+.aktivitetsplanfs .tavle .tavle__scrollknapp:disabled {
     cursor: default;
-    color: #a0a0a0;
-    border-color: #a0a0a0;
+    color: var(--gray-foreground);
+    border-color: var(--gray-foreground);
 }
-.tavle .tavle__scrollknapp:disabled:hover {
-    color: #a0a0a0;
-    border: 0.1rem solid #a0a0a0;
+.aktivitetsplanfs .tavle .tavle__scrollknapp:disabled:hover {
+    color: var(--gray-foreground);
+    border: 0.1rem solid var(--gray-foreground);
     background-color: white;
 }
-.tavle .kolonner {
+.aktivitetsplanfs .tavle .kolonner {
     display: block;
     padding-bottom: 2rem;
     min-height: 300px;
 }
 @media (min-width: 768px) {
-    .tavle.aktivitetstavle {
+    .aktivitetsplanfs .tavle.aktivitetstavle {
         width: 736px;
         margin: 0 auto;
     }
-    .tavle .knapp-forrige {
+    .aktivitetsplanfs .tavle .knapp-forrige {
         margin: 1rem 0.5rem 0 0;
     }
-    .tavle .knapp-forrige-ikon {
+    .aktivitetsplanfs .tavle .knapp-forrige-ikon {
         margin-right: 0.1rem;
     }
-    .tavle .knapp-neste {
+    .aktivitetsplanfs .tavle .knapp-neste {
         margin: 1rem 0 0 0.5rem;
     }
-    .tavle .knapp-neste-ikon {
+    .aktivitetsplanfs .tavle .knapp-neste-ikon {
         margin-left: 0.1rem;
     }
 }
 @media (min-width: 992px) {
-    .tavle {
+    .aktivitetsplanfs .tavle {
         display: flex;
         justify-content: space-around;
     }
-    .tavle.aktivitetstavle {
-        width: 992px;
+    .aktivitetsplanfs .tavle.aktivitetstavle {
+        width: var(--screen-md-min);
         margin: 0 auto;
     }
-    .tavle .kolonner {
+    .aktivitetsplanfs .tavle .kolonner {
         display: flex;
         justify-content: space-between;
         transition: margin 0.2s ease-in-out;
         margin-bottom: 0;
     }
-    .tavle .tavle__scrollknapp {
+    .aktivitetsplanfs .tavle .tavle__scrollknapp {
         height: 42px;
         width: 42px;
         display: flex;
@@ -64,46 +64,40 @@
         font-size: 2rem;
         background: none;
     }
-    .tavle .tavle__scrollknapp:hover,
-    .tavle .tavle__scrollknapp:active,
-    .tavle .tavle__scrollknapp:active:hover {
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:hover,
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:active,
+    .aktivitetsplanfs .tavle .tavle__scrollknapp:active:hover {
         background-color: #4f4f4f;
         border: 0;
         color: white;
     }
-    .tavle .tavle-kolonne {
+    .aktivitetsplanfs .tavle .tavle-kolonne {
         min-width: 31.33333%;
         margin: 1%;
     }
 }
 @media (min-width: 1480px) {
-    .tavle.aktivitetstavle {
+    .aktivitetsplanfs .tavle.aktivitetstavle {
         width: 100%;
     }
-    .tavle .tavle__scrollknapp {
+    .aktivitetsplanfs .tavle .tavle__scrollknapp {
         display: none !important;
     }
-    .tavle .tavle-kolonne {
+    .aktivitetsplanfs .tavle .tavle-kolonne {
         min-width: 18%;
     }
 }
-@media print {
-    @page {
-        size: auto;
-        margin: 5%;
-    }
-}
-.aktivitetstavle {
+.aktivitetsplanfs .aktivitetstavle {
     align-self: center;
 }
-.aktivitetstavle:focus {
+.aktivitetsplanfs .aktivitetstavle:focus {
     outline: 0;
     box-shadow: 0 0 0 3px #00347d;
 }
-.aktivitetstavle-advarsel {
+.aktivitetsplanfs .aktivitetstavle-advarsel {
     opacity: 0.2;
 }
-.aktivitetstavle__kolonne {
+.aktivitetsplanfs .aktivitetstavle__kolonne {
     background-color: #c9c9c9;
     padding: 1rem 0.5rem 0.1rem;
     transition: padding 0.05s ease-in-out;
@@ -112,54 +106,51 @@
     margin: 0.5rem 8px;
 }
 @media (min-width: 480px) {
-    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
         right: -0.5rem;
     }
-    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:before {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:before {
         right: 0.95rem;
     }
-    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:focus:after {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre:focus:after {
         right: calc(0.95rem - 2px);
     }
 }
 @media (min-width: 992px) {
-    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
         width: 17.5rem;
     }
 }
 @media (min-width: 1480px) {
-    .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
+    .aktivitetsplanfs .aktivitetstavle__kolonne .hjelpetekst__tooltip--under-venstre {
         width: 15rem;
     }
 }
-.aktivitetstavle__kolonne-wrapper {
+.aktivitetsplanfs .aktivitetstavle__kolonne-wrapper {
     height: 100%;
 }
-.aktivitetstavle__kolonne-header-wrapper {
+.aktivitetsplanfs .aktivitetstavle__kolonne-header-wrapper {
     display: flex;
     justify-content: space-between;
     padding-bottom: 0.5rem;
 }
-.aktivitetstavle__kolonne-header {
+.aktivitetsplanfs .aktivitetstavle__kolonne-header {
     text-align: left;
 }
-.aktivitetstavle__kolonne--drag {
-    background-color: #a0a0a0;
+.aktivitetsplanfs .aktivitetstavle__kolonne--drag {
+    background-color: var(--gray-foreground);
     padding-bottom: 2rem;
 }
 @media (min-width: 992px) {
-    .aktivitetstavle__kolonne {
+    .aktivitetsplanfs .aktivitetstavle__kolonne {
         margin: 0;
     }
 }
-.fullbredde {
+.aktivitetsplanfs .fullbredde {
     width: 100%;
 }
-.begrensetbredde {
-    width: 950px;
-}
 @media (min-width: 992px) {
-    .hovedsideinnhold {
+    .aktivitetsplanfs .hovedsideinnhold {
         display: flex;
         align-items: center;
         flex-direction: column;

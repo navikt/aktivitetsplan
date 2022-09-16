@@ -15,11 +15,11 @@
     margin-bottom: 1rem;
 }
 .aktivitetsplanfs .filtreringlabel:hover {
-    box-shadow: inset 0 -0.125rem 0 #262626;
+    box-shadow: inset 0 -0.125rem 0 var(--gray-text);
 }
 .aktivitetsplanfs .filtreringlabel:active {
-    background-color: #005b82;
-    color: #fff;
+    background-color: var(--blue-active);
+    color: var(--white);
 }
 .aktivitetsplanfs .filtreringlabel:focus {
     outline: none;
@@ -35,7 +35,7 @@
 .aktivitetsplanfs .filtrering-label-slett {
     margin: 1.25rem 0.5rem 2rem 0.1875rem;
     cursor: pointer;
-    background-color: #a0a0a0;
+    background-color: var(--gray-foreground);
     border: 0;
     padding: 5px;
 }
@@ -45,5 +45,5 @@
     align-self: center;
 }
 .aktivitetsplanfs .filtreringlabel:active svg path {
-    fill: #fff;
+    fill: var(--white);
 }

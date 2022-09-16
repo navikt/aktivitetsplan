@@ -51,14 +51,14 @@
 .aktivitetskjema__lagre-knapp {
     margin-bottom: 1rem;
     padding: 1rem 2rem;
-    border-top: 1px #a0a0a0 solid;
+    border-top: 1px var(--gray-foreground) solid;
 }
 .feedbacksummary {
     margin-bottom: 2rem;
     padding: 1.5rem;
     border-radius: 4px;
-    background-color: #ba3a26;
-    color: #fff;
+    background-color: var(--red-error);
+    color: var(--white);
     list-style-position: inside;
 }
 .feedbacksummary ul {
@@ -70,14 +70,14 @@
     margin-bottom: 0.5rem;
 }
 .feedbacksummary a {
-    color: #fff;
-    border-bottom: 1px solid #fff;
+    color: var(--white);
+    border-bottom: 1px solid var(--white);
     text-decoration: none;
 }
 .feedbacksummary a:focus {
     outline: none;
     background-color: #00347d;
-    color: #262626;
+    color: var(--gray-text);
     border-bottom: 1px solid #00347d;
 }
 .feedbacksummary:focus {
@@ -98,7 +98,7 @@
     }
 }
 .detaljfelt__tittel {
-    color: #6a6a6a;
+    color: var(--grey-inactive);
     text-transform: uppercase;
 }
 .detaljfelt__lenke {
@@ -193,7 +193,7 @@
     margin-right: 2rem;
 }
 .aktivitetvisning .aktivitetsbeskrivelse__tittel {
-    color: #6a6a6a;
+    color: var(--grey-inactive);
 }
 .aktivitetvisning .aktivitetsbeskrivelse__tekst {
     white-space: pre-wrap;
@@ -203,7 +203,7 @@
 }
 .aktivitetvisning__delelinje {
     margin-top: 0;
-    color: #a0a0a0;
+    color: var(--gray-foreground);
 }
 .aktivitetvisning__historikk {
     margin-bottom: 2rem;

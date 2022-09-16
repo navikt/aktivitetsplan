@@ -1,7 +1,7 @@
 .avtaltTekstEtikett {
     float: left;
     text-transform: uppercase;
-    color: #6a6a6a;
+    color: var(--grey-inactive);
 }
 .maxWidth300 {
     max-width: 300px;

@@ -17,7 +17,7 @@
 }
 .aktivitetmal__tekst a {
     text-decoration: none;
-    border-bottom: 1px solid #0067c5;
+    border-bottom: 1px solid var(--bla);
 }
 .aktivitetmal__tekst a:focus {
     outline: none;
@@ -27,7 +27,7 @@
 .aktivitetmal__delelinje {
     margin: 0;
     border: 0;
-    border-bottom: 1px solid #a0a0a0;
+    border-bottom: 1px solid var(--gray-foreground);
 }
 .aktivitetmal__innhold {
     padding: 0 1rem 1rem;

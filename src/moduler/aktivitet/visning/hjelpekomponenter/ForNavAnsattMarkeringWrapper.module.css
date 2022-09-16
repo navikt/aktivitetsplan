@@ -1,6 +1,6 @@
 .navAnsattTekst {
     text-align: right;
-    color: #6a6a6a;
+    color: var(--grey-inactive);
 }
 @media (min-width: 992px) {
     .navAnsattTekst {
