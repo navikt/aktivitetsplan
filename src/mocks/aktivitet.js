@@ -39,6 +39,26 @@ const testAktiviteter = !visTestAktiviteter()
               arbeidssted: 'Den sorte dame',
           }),
           wrapAktivitet({
+              ...enStillingAktivitet({ tittel: 'Grusomme Gabriel' }),
+              beskrivelse: 'Skal skjules bak nedtrekksmeny for eldre aktiviteter',
+              arbeidssted: 'De syv hav',
+              arbeidsgiver: 'Uendret i lang tid',
+              status: STATUS_FULLFOERT,
+              fraDato: moment().subtract(120, 'year').format(),
+              tilDato: undefined,
+              endretDato: moment().subtract(100, 'year').format(),
+          }),
+          wrapAktivitet({
+              ...enStillingAktivitet({ tittel: 'Ana Baroma' }),
+              beskrivelse: 'Skal ikke skjules bak nedtrekksmeny for eldre aktiviteter',
+              arbeidssted: 'Øya Gral',
+              arbeidsgiver: 'Endret nylig',
+              status: STATUS_FULLFOERT,
+              fraDato: moment().subtract(120, 'year').format(),
+              tilDato: undefined,
+              endretDato: moment().subtract(1, 'day').format(),
+          }),
+          wrapAktivitet({
               id: '5',
               versjon: '2410',
               tittel: 'Ta et webkurs',
@@ -156,12 +176,16 @@ const testAktiviteter = !visTestAktiviteter()
           wrapAktivitet({
               ...etSamtalereferat({ tittel: 'Et rykte sprer seg raskt som en brann' }),
               referat:
-                  'Nå kommer Sabeltann til Stortinget: https://www.stortinget.no/no/ \n' +
-                  'Her er litt mer informasjon om hva dette innebærer: https://no.wikipedia.org/wiki/Sj%C3%B8r%C3%B8veri',
+                  'Nå kommer Sabeltann: https://www.britannica.com/animal/Smilodon \n' +
+                  'Her er litt mer informasjon om hva dette innebærer for deg: https://no.wikipedia.org/wiki/Sj%C3%B8r%C3%B8veri',
           }),
-          wrapAktivitet(enStillingFraNavAktivitet({ tittel: 'Servitør historisk', arstall: 2017 })),
           wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør ikke svart' }),
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør', arstall: 2017 }),
+              arbeidsgiver: 'Historisk',
+          }),
+          wrapAktivitet({
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør' }),
+              arbeidsgiver: 'Har ikke svart ennå',
               status: 'PLANLAGT',
               opprettetDato: etTidspunkt(2020),
               endretDato: etTidspunkt(2018),
@@ -174,7 +198,8 @@ const testAktiviteter = !visTestAktiviteter()
               },
           }),
           wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør ikke svart innen fristen' }),
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør' }),
+              arbeidsgiver: 'Har ikke svart innen fristen',
               status: STATUS_AVBRUTT,
               opprettetDato: etTidspunkt(2020),
               endretDato: etTidspunkt(2018),
@@ -187,7 +212,8 @@ const testAktiviteter = !visTestAktiviteter()
               },
           }),
           wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør har svart', arstall: 2020 }),
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør', arstall: 2020 }),
+              arbeidsgiver: 'Har svart innen fristen',
               stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles },
           }),
           wrapAktivitet({
@@ -204,26 +230,6 @@ const testAktiviteter = !visTestAktiviteter()
                   soknadsstatus: IKKE_FATT_JOBBEN,
                   ikkefattjobbendetaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
               },
-          }),
-          wrapAktivitet({
-              ...enStillingAktivitet({ tittel: 'Grusomme Gabriel' }),
-              beskrivelse: 'I hundre år har jeg lært å skremme',
-              arbeidssted: 'De syv hav',
-              arbeidsgiver: 'De verste sjørøverne',
-              status: STATUS_FULLFOERT,
-              fraDato: moment().subtract(120, 'year').format(),
-              tilDato: undefined,
-              endretDato: moment().subtract(100, 'year').format(),
-          }),
-          wrapAktivitet({
-              ...enStillingAktivitet({ tittel: 'Ana Baroma' }),
-              beskrivelse: 'Jeg får det alltid som jeg vil',
-              arbeidssted: 'Øya Gral',
-              arbeidsgiver: 'Heksesprell',
-              status: STATUS_FULLFOERT,
-              fraDato: moment().subtract(120, 'year').format(),
-              tilDato: undefined,
-              endretDato: moment().subtract(1, 'day').format(),
           }),
       ];
 

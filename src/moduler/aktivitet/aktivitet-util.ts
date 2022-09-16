@@ -12,6 +12,32 @@ import {
 import { Aktivitet, AktivitetStatus, AktivitetType, Lest } from '../../datatypes/aktivitetTypes';
 import { Me } from '../../datatypes/oppfolgingTypes';
 
+interface MoteTid {
+    dato?: string;
+    klokkeslett?: string;
+    varighet?: string;
+}
+
+interface Data {
+    dato?: string;
+    klokkeslett?: string;
+    varighet?: string;
+}
+
+interface FraTil {
+    fraDato?: string;
+    tilDato?: string;
+}
+
+interface NoeSomKanHaEnEndretdato {
+    endretDato?: string;
+}
+
+interface GamleNyeAktiviteter {
+    nyereAktiviteter: Aktivitet[];
+    eldreAktiviteter: Aktivitet[];
+}
+
 function compareUndefindedOrNull(a: any, b: any): number {
     if (a != null && b == null) {
         return -1;
@@ -73,12 +99,6 @@ export function erNyEndringIAktivitet(aktivitet: Aktivitet, lestInformasjon: Les
     return false;
 }
 
-interface MoteTid {
-    dato?: string;
-    klokkeslett?: string;
-    varighet?: string;
-}
-
 export function beregnKlokkeslettVarighet(aktivitet: Aktivitet): MoteTid {
     const { fraDato } = aktivitet;
     const { tilDato } = aktivitet;
@@ -95,17 +115,6 @@ export function beregnKlokkeslettVarighet(aktivitet: Aktivitet): MoteTid {
         };
     }
     return {};
-}
-
-interface Data {
-    dato?: string;
-    klokkeslett?: string;
-    varighet?: string;
-}
-
-interface FraTil {
-    fraDato?: string;
-    tilDato?: string;
 }
 
 export function beregnFraTil(data: Data): FraTil {
@@ -193,33 +202,16 @@ export function sorterAktiviteter(aktiviteter: Aktivitet[], status: AktivitetSta
         .sort(compareAktivitet);
 }
 
-export function tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden(aktivitet: Aktivitet): boolean {
-    let tilFraOgEndretDatoer = [moment(aktivitet.tilDato), moment(aktivitet.fraDato), moment(aktivitet.endretDato)];
-    const senesteDato = tilFraOgEndretDatoer.reduce((a, b) => (!a.isValid() || a.isBefore(b) ? b : a));
-
-    let merEnnEnManedSiden = senesteDato.isValid()
-        ? senesteDato.isBefore(moment().subtract(1, 'month').startOf('day'), 'd')
-        : false;
-
-    return !merEnnEnManedSiden;
+export function endretSenereEnnEnManedSiden(aktivitet: NoeSomKanHaEnEndretdato): boolean {
+    let endretDato = moment(aktivitet.endretDato);
+    return endretDato.isValid() && endretDato.isAfter(moment().subtract(1, 'month').startOf('day'), 'd');
 }
 
-interface GamleNyeAktiviteter {
-    nyereAktiviteter: Aktivitet[];
-    eldreAktiviteter: Aktivitet[];
-}
-
-export function splitIEldreOgNyereAktiviteter(aktiviteter: Aktivitet[]): GamleNyeAktiviteter {
-    return aktiviteter.reduce<GamleNyeAktiviteter>(
-        (gamleNyeAktiviter, aktivitet) => {
-            if (tilEllerFraEllerEndretDatoerMindreEnnEnManedSiden(aktivitet)) {
-                gamleNyeAktiviter.nyereAktiviteter.push(aktivitet);
-                return gamleNyeAktiviter;
-            }
-
-            gamleNyeAktiviter.eldreAktiviteter.push(aktivitet);
-            return gamleNyeAktiviter;
-        },
+export const splitIEldreOgNyereAktiviteter = (aktiviteter: Aktivitet[]): GamleNyeAktiviteter =>
+    aktiviteter.reduce<GamleNyeAktiviteter>(
+        (forrige, aktivitet) =>
+            endretSenereEnnEnManedSiden(aktivitet)
+                ? { ...forrige, nyereAktiviteter: [...forrige.nyereAktiviteter, aktivitet] }
+                : { ...forrige, eldreAktiviteter: [...forrige.eldreAktiviteter, aktivitet] },
         { nyereAktiviteter: [], eldreAktiviteter: [] }
     );
-}
