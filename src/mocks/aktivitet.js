@@ -230,7 +230,7 @@ const testAktiviteter = !visTestAktiviteter()
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
                   soknadsstatus: IKKE_FATT_JOBBEN,
-                  ikkefattjobbendetaljer: `Vi har fått beskjed om at arbeidsgiver har ansatt en person. Dessverre var det ikke deg denne gangen. Ansettelsesprosessen er ferdig.`,
+                  ikkefattjobbendetaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
               },
           }),
       ];
