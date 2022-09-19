@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 
 import { IKKE_FATT_JOBBEN } from '../../../../constant';
 import { Aktivitet, StillingFraNavSoknadsstatus } from '../../../../datatypes/aktivitetTypes';
+import { fikkikkejobbendetaljermapping } from '../../../../tekster/fikkIkkeJobbenDetaljer';
 import { selectErUnderOppfolging } from '../../../oppfolging-status/oppfolging-selector';
 import { oppdaterStillingFraNavSoknadsstatus } from '../../aktivitet-actions';
 import { selectLasterAktivitetData } from '../../aktivitet-selector';
@@ -57,13 +58,14 @@ const OppdaterSoknadsstatus = (props: Props) => {
     const kanEndre = ikkeAvslag || endretAvBruker;
     const skalViseInfoBoks = !kanEndre;
 
+    let ikkefattjobbendetaljer = fikkikkejobbendetaljermapping.get(
+        aktivitet.stillingFraNavData?.ikkefattjobbendetaljer
+    );
     const visning = (
         <>
             <StillingFraNavEtikett etikett={aktivitet.stillingFraNavData?.soknadsstatus} />
             {skalViseInfoBoks && (
-                <AlertStripeInfo className={styles.infoStripe}>
-                    {aktivitet.stillingFraNavData?.ikkefattjobbendetaljer}
-                </AlertStripeInfo>
+                <AlertStripeInfo className={styles.infoStripe}>{ikkefattjobbendetaljer}</AlertStripeInfo>
             )}
         </>
     );
