@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import { IKKE_FATT_JOBBEN, STATUS_AVBRUTT, STATUS_FULLFOERT, STATUS_GJENNOMFOERT } from '../constant';
 import { erEksternBruker, visAutomatiskeAktiviteter, visTestAktiviteter } from './demo/sessionstorage';
+import { enStillingAktivitet } from './fixtures/stillingFixtures';
 import {
     enStillingFraNavAktivitet,
     enStillingFraNavData,
@@ -22,49 +23,40 @@ const testAktiviteter = !visTestAktiviteter()
     ? []
     : [
           wrapAktivitet({
-              id: '1',
-              versjon: '693',
-              tittel: 'Kaptein sabeltann',
+              ...enStillingAktivitet({ tittel: 'Kaptein sabeltann' }),
               beskrivelse: 'Vi reiste fra karibien og ankret opp i natt',
-              lenke: 'www.nav.no',
-              type: 'STILLING',
-              status: 'PLANLAGT',
-              fraDato: '2018-01-24T12:00:00+01:00',
-              tilDato: '2030-01-24T12:00:00+01:00',
-              opprettetDato: '2018-01-31T10:46:51.622+01:00',
-              endretDato: '2018-09-30T10:46:51.622+01:00',
-              endretAv: 'z990207',
-              historisk: false,
-              avtalt: false,
               arbeidsgiver: 'Den sorte dame AS',
               kontaktperson: 'Sabeltann sin mor',
               arbeidssted: 'Karibien',
-              lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
-              erReferatPublisert: false,
           }),
           wrapAktivitet({
-              id: '2',
-              versjon: '691',
-              tittel: 'Langemann',
+              ...enStillingAktivitet({ tittel: 'Langemann' }),
               beskrivelse: 'Ute på åpent hav, er jeg kjent som sabeltanns skygge',
-              lenke: 'www.nav.no',
-              type: 'STILLING',
               status: 'GJENNOMFORES',
-              fraDato: '2018-01-29T12:00:00+01:00',
-              tilDato: '2030-01-30T12:00:00+01:00',
-              opprettetDato: '2018-01-31T10:46:24.189+01:00',
-              endretDato: '2018-01-31T10:46:25.801+01:00',
-              endretAv: 'Z123456',
-              historisk: false,
-              avtalt: false,
-              lagtInnAv: 'NAV',
-              transaksjonsType: 'OPPRETTET',
               etikett: 'SOKNAD_SENDT',
               kontaktperson: 'Sabeltann',
-              arbeidsgiver: 'Den sorte dame AS',
+              arbeidsgiver: 'Kaptein Sabeltann',
               arbeidssted: 'Den sorte dame',
-              erReferatPublisert: false,
+          }),
+          wrapAktivitet({
+              ...enStillingAktivitet({ tittel: 'Grusomme Gabriel' }),
+              beskrivelse: 'Skal skjules bak nedtrekksmeny for eldre aktiviteter',
+              arbeidssted: 'De syv hav',
+              arbeidsgiver: 'Uendret i lang tid',
+              status: STATUS_FULLFOERT,
+              fraDato: moment().subtract(120, 'year').format(),
+              tilDato: undefined,
+              endretDato: moment().subtract(100, 'year').format(),
+          }),
+          wrapAktivitet({
+              ...enStillingAktivitet({ tittel: 'Ana Baroma' }),
+              beskrivelse: 'Skal ikke skjules bak nedtrekksmeny for eldre aktiviteter',
+              arbeidssted: 'Øya Gral',
+              arbeidsgiver: 'Endret nylig',
+              status: STATUS_FULLFOERT,
+              fraDato: moment().subtract(120, 'year').format(),
+              tilDato: undefined,
+              endretDato: moment().subtract(1, 'day').format(),
           }),
           wrapAktivitet({
               id: '5',
@@ -184,12 +176,16 @@ const testAktiviteter = !visTestAktiviteter()
           wrapAktivitet({
               ...etSamtalereferat({ tittel: 'Et rykte sprer seg raskt som en brann' }),
               referat:
-                  'Nå kommer Sabeltann til Stortinget: https://www.stortinget.no/no/ \n' +
-                  'Her er litt mer informasjon om hva dette innebærer: https://no.wikipedia.org/wiki/Sj%C3%B8r%C3%B8veri',
+                  'Nå kommer Sabeltann: https://www.britannica.com/animal/Smilodon \n' +
+                  'Her er litt mer informasjon om hva dette innebærer for deg: https://no.wikipedia.org/wiki/Sj%C3%B8r%C3%B8veri',
           }),
-          wrapAktivitet(enStillingFraNavAktivitet({ tittel: 'Servitør historisk', arstall: 2017 })),
           wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør ikke svart' }),
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør', arstall: 2017 }),
+              arbeidsgiver: 'Historisk',
+          }),
+          wrapAktivitet({
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør' }),
+              arbeidsgiver: 'Har ikke svart ennå',
               status: 'PLANLAGT',
               opprettetDato: etTidspunkt(2020),
               endretDato: etTidspunkt(2018),
@@ -202,7 +198,8 @@ const testAktiviteter = !visTestAktiviteter()
               },
           }),
           wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør ikke svart innen fristen' }),
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør' }),
+              arbeidsgiver: 'Har ikke svart innen fristen',
               status: STATUS_AVBRUTT,
               opprettetDato: etTidspunkt(2020),
               endretDato: etTidspunkt(2018),
@@ -215,7 +212,8 @@ const testAktiviteter = !visTestAktiviteter()
               },
           }),
           wrapAktivitet({
-              ...enStillingFraNavAktivitet({ tittel: 'Servitør har svart', arstall: 2020 }),
+              ...enStillingFraNavAktivitet({ tittel: 'Servitør', arstall: 2020 }),
+              arbeidsgiver: 'Har svart innen fristen',
               stillingFraNavData: { ...enStillingFraNavData, cvKanDelesData: jaCvKanDeles },
           }),
           wrapAktivitet({
@@ -230,7 +228,7 @@ const testAktiviteter = !visTestAktiviteter()
                   ...enStillingFraNavData,
                   cvKanDelesData: jaCvKanDeles,
                   soknadsstatus: IKKE_FATT_JOBBEN,
-                  ikkefattjobbendetaljer: `Vi har fått beskjed om at arbeidsgiver har ansatt en person. Dessverre var det ikke deg denne gangen. Ansettelsesprosessen er ferdig.`,
+                  ikkefattjobbendetaljer: `KANDIDATLISTE_LUKKET_NOEN_ANDRE_FIKK_JOBBEN`,
               },
           }),
           wrapAktivitet({
