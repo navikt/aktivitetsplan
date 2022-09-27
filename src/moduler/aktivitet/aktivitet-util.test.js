@@ -68,15 +68,16 @@ describe('aktivitet-util', () => {
         expect(formatterTelefonnummer('04545')).toEqual('04545');
     });
 
-    it('skallSplitteRiktigt', () => {
-        const mangladeTilDato = [{ tilDato: null }];
-        const tilDatoMerEnnToManederSiden = {
-            tilDato: moment().subtract(3, 'month').format(),
+    it('skal splitte basert på endretDato', () => {
+        const manglendeDato = [{ endretDato: null }];
+        const merEnnToManederSiden = {
+            endretDato: moment().subtract(3, 'month').format(),
         };
-        const tilDatoMindreEnnToManederSiden = { tilDato: moment().format() };
-        const aktiviteter = [mangladeTilDato, tilDatoMerEnnToManederSiden, tilDatoMindreEnnToManederSiden];
+        const tilDatoMindreEnnToManederSiden = { endretDato: moment().format() };
+        const aktiviteter = [manglendeDato, merEnnToManederSiden, tilDatoMindreEnnToManederSiden];
         const { nyereAktiviteter, eldreAktiviteter } = splitIEldreOgNyereAktiviteter(aktiviteter);
-        expect(nyereAktiviteter).toEqual([mangladeTilDato, tilDatoMindreEnnToManederSiden]);
-        expect(eldreAktiviteter).toEqual([tilDatoMerEnnToManederSiden]);
+
+        expect(nyereAktiviteter).toEqual([manglendeDato, tilDatoMindreEnnToManederSiden]);
+        expect(eldreAktiviteter).toEqual([merEnnToManederSiden]);
     });
 });
