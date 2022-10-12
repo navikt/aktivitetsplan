@@ -6,7 +6,7 @@ import { Router } from 'react-router-dom';
 
 import { useEventListener } from './felles-komponenter/hooks/useEventListner';
 import Timeoutbox from './felles-komponenter/timeoutbox/timeoutbox';
-import ScrollToTop from './felles-komponenter/utils/scroll-to-top';
+import ScrollToFocused from './felles-komponenter/utils/ScrollToFocused';
 import createHistory from './history';
 import Hovedside from './hovedside/Hovedside';
 import Provider from './provider';
@@ -44,9 +44,9 @@ function App({ fnr, key }) {
                 <div className="aktivitetsplan-wrapper">
                     <div className="fullbredde">
                         <Router history={history}>
-                            <ScrollToTop>
+                            <ScrollToFocused>
                                 <Hovedside />
-                            </ScrollToTop>
+                            </ScrollToFocused>
                         </Router>
                         <HiddenIf hidden={!window.appconfig.TIMEOUTBOX}>
                             <Timeoutbox />
