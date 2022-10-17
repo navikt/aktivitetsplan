@@ -11,6 +11,8 @@ const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<
             state?.view?.visteAktiviteterMedEndringer?.reduce((a: Aktivitet | null, b: Aktivitet) => b, null)?.id
     );
 
+    console.log(useSelector((state) => state));
+
     useEffect(() => {
         console.log({ sistVisteAktivitetId });
         document.getElementById(sistVisteAktivitetId)?.scrollIntoView({
