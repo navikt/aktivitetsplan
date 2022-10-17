@@ -40,6 +40,9 @@ const Aktivitetskort = (props: Props) => {
         (vistAktivitet: Aktivitet) => aktivitet.id === vistAktivitet.id
     );
 
+    const aktivitetBleVistSist: boolean =
+        aktivitet.id === aktiviteterSomHarBlittVist?.reduce((a: Aktivitet | null, b: Aktivitet) => b, null)?.id;
+
     const me = useSelector(selectIdentitetData, shallowEqual);
 
     const harEndringerIAktivitet =
@@ -52,7 +55,11 @@ const Aktivitetskort = (props: Props) => {
     return (
         <LinkAsDiv
             id={genererAktivtetskortId(aktivitet)}
-            className={classNames(styles.aktivitetskort, className)}
+            className={
+                aktivitetBleVistSist
+                    ? classNames(styles.aktivitetskort, styles.sistVist, className)
+                    : classNames(styles.aktivitetskort, className)
+            }
             to={aktivitetRoute(id)}
             ariaLabel={ariaLabel}
             onClick={() => dispatch(settAktivitetSomVist(aktivitet))}
