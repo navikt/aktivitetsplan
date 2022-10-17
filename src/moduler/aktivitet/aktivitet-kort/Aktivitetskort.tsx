@@ -30,7 +30,7 @@ export const genererAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitet
 const Aktivitetskort = (props: Props) => {
     const { aktivitet, className } = props;
     const { id, type } = aktivitet;
-
+    console.log(`Rendrer Aktivitetskort med ${{ props }}`);
     const dispatch = useDispatch();
 
     const lest = useSelector(selectLestAktivitetsplan, shallowEqual);
