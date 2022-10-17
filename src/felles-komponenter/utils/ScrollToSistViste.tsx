@@ -10,6 +10,7 @@ const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<
             `aktivitetskort-` +
             state?.view?.visteAktiviteterMedEndringer?.reduce((a: Aktivitet | null, b: Aktivitet) => b, null)?.id
     );
+    console.log(`Rendrer ScrollToSistViste med ${{ props }}`);
 
     useEffect(() => {
         document.getElementById(sistVisteAktivitetId)?.scrollIntoView({
