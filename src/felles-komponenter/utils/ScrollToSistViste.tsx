@@ -12,6 +12,7 @@ const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<
     );
 
     useEffect(() => {
+        console.log({ sistVisteAktivitetId });
         document.getElementById(sistVisteAktivitetId)?.scrollIntoView({
             behavior: 'auto',
             block: 'center',
