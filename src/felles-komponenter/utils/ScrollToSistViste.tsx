@@ -18,27 +18,18 @@ const ScrollToSistViste = (props: RouteProps): ReactElement<RouteComponentProps<
     );
     let [skalScrolleTil, setSkalScrolleTil] = useState(false);
 
-    useEventListener('veilarbpersonflatefs.tab-clicked', () => {
-        console.log('EVENT veilarbpersonflatefs.tab-clicked:');
-        console.log('Setter skal scrolle til TRUE');
-        setSkalScrolleTil(true);
-    });
+    if (skalScrolleTil && !!sistVisteAktivitetId) {
+        doScroll(sistVisteAktivitetId);
+        (() => setSkalScrolleTil(false))();
+    }
 
     useEffect(() => {
-        console.log('effect sist vist eller skal scrolle til');
-        if (skalScrolleTil && !!sistVisteAktivitetId) {
-            console.log('effect sist vist OG skal scrolle til');
-            doScroll(sistVisteAktivitetId);
-            console.log('Setter skal scrolle til FALSE');
-            setSkalScrolleTil(false);
-        }
-    }, [skalScrolleTil, sistVisteAktivitetId]);
-
-    useEffect(() => {
-        console.log('Endring i location:');
-        console.log('Setter skal scrolle til TRUE');
         setSkalScrolleTil(true);
     }, [props.location]);
+
+    useEventListener('veilarbpersonflatefs.tab-clicked', () => {
+        setSkalScrolleTil(true);
+    });
 
     return <>{props.children}</>;
 };
