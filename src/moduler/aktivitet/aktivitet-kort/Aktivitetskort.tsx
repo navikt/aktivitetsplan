@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { STATUS } from '../../../api/utils';
@@ -11,7 +11,11 @@ import { aktivitetTypeMap } from '../../../utils/textMappers';
 import { selectIdentitetData } from '../../identitet/identitet-selector';
 import { selectLestAktivitetsplan, selectLestStatus } from '../../lest/lest-reducer';
 import { erNyEndringIAktivitet } from '../aktivitet-util';
-import { selectAktiviteterSomHarBlittVist, settAktivitetSomVist } from '../aktivitetview-reducer';
+import {
+    selectAktiviteterSomHarBlittVist,
+    selectSistVisteAktivitet,
+    settAktivitetSomVist,
+} from '../aktivitetview-reducer';
 import styles from './Aktivitetskort.module.less';
 import AktiviteskortPeriodeVisning from './AktivitetskortPeriode';
 import AktivitetskortTillegg from './AktivitetskortTillegg';
@@ -26,8 +30,12 @@ interface Props {
 }
 
 export const genererAktivtetskortId = (aktivitet: AlleAktiviteter) => `aktivitetskort-${aktivitet.id}`;
+const ALIGN_TO_BOTTOM: ScrollIntoViewOptions = { block: 'end', inline: 'nearest' };
 
 const Aktivitetskort = (props: Props) => {
+    const ref = useRef<HTMLDivElement | null>(null);
+    const [firstTime, setFirstTime] = useState<boolean>(true);
+
     const { aktivitet, className } = props;
     const { id, type } = aktivitet;
     const dispatch = useDispatch();
@@ -40,10 +48,7 @@ const Aktivitetskort = (props: Props) => {
         (vistAktivitet: VeilarbAktivitet) => aktivitet.id === vistAktivitet.id
     );
 
-    const aktivitetBleVistSist: boolean =
-        aktivitet.id === aktiviteterSomHarBlittVist?.reduce((a: Aktivitet | null, b: Aktivitet) => b, null)?.id;
-
-    if (aktivitetBleVistSist) console.log(`Rendrer Aktivitetskort med ${{ props }}`);
+    const aktivitetBleVistSist: boolean = aktivitet.id === useSelector((state) => selectSistVisteAktivitet(state))?.id;
 
     const me = useSelector(selectIdentitetData, shallowEqual);
 
@@ -56,6 +61,17 @@ const Aktivitetskort = (props: Props) => {
     const headerId = `aktivitetskort__header__${id}`;
     const datoId = `aktivitetskort__dato__${id}`;
     const ariaLabel = `${aktivitetTypeMap[type]}: ${aktivitet.tittel}`;
+
+    useEffect(() => {
+        const dialogElement: HTMLElement | null | undefined = ref?.current?.parentElement;
+        if (aktivitetBleVistSist)
+            console.log(`Sist vist, scroll til?(${firstTime} ${!!dialogElement} ${aktivitetBleVistSist})`);
+        if (firstTime && dialogElement && aktivitetBleVistSist) {
+            dialogElement.scrollIntoView(ALIGN_TO_BOTTOM);
+            setFirstTime(false);
+            console.log('I did it');
+        }
+    }, [ref, aktivitetBleVistSist, firstTime]);
 
     return (
         <LinkAsDiv
@@ -79,6 +95,7 @@ const Aktivitetskort = (props: Props) => {
                 ) : null}
                 <AktivitetskortTillegg aktivitet={aktivitet} />
             </article>
+            <div ref={ref}></div>
         </LinkAsDiv>
     );
 };
